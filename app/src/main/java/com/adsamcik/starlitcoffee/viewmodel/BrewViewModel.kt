@@ -12,17 +12,20 @@ import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.data.model.InputMode
-import com.adsamcik.starlitcoffee.data.model.StrengthPreset
+import com.adsamcik.starlitcoffee.data.model.RatioPreset
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
+import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
+import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.service.TimerStateHolder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -44,7 +47,8 @@ data class BrewUiState(
     val method: BrewMethod = BrewMethod.PULSAR,
     val inputMode: InputMode = InputMode.COFFEE_TO_WATER,
     val amount: String = "20",
-    val strengthPreset: StrengthPreset = StrengthPreset.BALANCED,
+    val ratioPresets: List<RatioPreset> = BrewMethod.PULSAR.defaultRatioPresets,
+    val selectedPresetIndex: Int = BrewMethod.PULSAR.defaultRatioPresets.indexOfFirst { it.isDefault }.coerceAtLeast(0),
     val customRatio: String = "",
     val tempC: String = "",
     val bloomMultiplier: String = "",
@@ -82,6 +86,8 @@ class BrewViewModel(
     private val recipeRepository: RecipeRepository? = null,
     private val brewLogRepository: BrewLogRepository? = null,
     private val coffeeBagRepository: CoffeeBagRepository? = null,
+    private val ratioPresetRepository: RatioPresetRepository? = null,
+    private val userPreferencesRepository: UserPreferencesRepository? = null,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(BrewUiState())
@@ -96,6 +102,7 @@ class BrewViewModel(
     private var timerJob: Job? = null
     private var timerStartMs: Long = 0L
     private var pausedAccumulatedMs: Long = 0L
+    private var ratioPresetJob: Job? = null
 
     init {
         viewModelScope.launch {
@@ -113,10 +120,30 @@ class BrewViewModel(
                 _coffeeBags.value = bags
             }
         }
+        collectRatioPresets(_uiState.value.method)
         recalculate()
+        applyUserDefaults()
+    }
+
+    private fun applyUserDefaults() {
+        viewModelScope.launch {
+            val prefs = userPreferencesRepository?.userPreferences?.first() ?: return@launch
+            if (!prefs.onboardingCompleted) return@launch
+            _uiState.update {
+                it.copy(
+                    method = prefs.defaultMethod,
+                    filterType = prefs.defaultFilterType,
+                    selectedGrinderId = prefs.selectedGrinderId,
+                )
+            }
+            collectRatioPresets(prefs.defaultMethod)
+            recalculate()
+        }
     }
 
     fun setMethod(method: BrewMethod) {
+        val defaultPresets = method.defaultRatioPresets
+        val defaultIndex = defaultPresets.indexOfFirst { it.isDefault }.coerceAtLeast(0)
         _uiState.update {
             it.copy(
                 method = method,
@@ -125,8 +152,11 @@ class BrewViewModel(
                 bloomMultiplier = "",
                 pulseCount = "",
                 calibrationStyle = null,
+                ratioPresets = defaultPresets,
+                selectedPresetIndex = defaultIndex,
             )
         }
+        collectRatioPresets(method)
         recalculate()
     }
 
@@ -141,8 +171,8 @@ class BrewViewModel(
         recalculate()
     }
 
-    fun setStrengthPreset(preset: StrengthPreset) {
-        _uiState.update { it.copy(strengthPreset = preset) }
+    fun selectRatioPreset(index: Int) {
+        _uiState.update { it.copy(selectedPresetIndex = index.coerceIn(0, it.ratioPresets.lastIndex)) }
         recalculate()
     }
 
@@ -302,24 +332,27 @@ class BrewViewModel(
     fun loadRecipe(entity: SavedRecipeEntity) {
         val method = BrewMethod.entries.find { it.name == entity.method } ?: BrewMethod.PULSAR
         val filterType = entity.filterType?.let { raw -> FilterType.entries.find { it.name == raw } }
-        val matchedPreset = StrengthPreset.entries.find {
-            (method.defaultRatio + it.ratioOffset) == entity.ratio
+        val presets = _uiState.value.let { state ->
+            if (state.method == method) state.ratioPresets else method.defaultRatioPresets
         }
+        val matchedIndex = presets.indexOfFirst { it.ratio == entity.ratio }
         _uiState.update {
             it.copy(
                 method = method,
                 inputMode = InputMode.COFFEE_TO_WATER,
                 amount = entity.doseG.toString(),
-                customRatio = if (matchedPreset != null) "" else entity.ratio.toString(),
+                ratioPresets = presets,
+                selectedPresetIndex = if (matchedIndex >= 0) matchedIndex else presets.indexOfFirst { p -> p.isDefault }.coerceAtLeast(0),
+                customRatio = if (matchedIndex >= 0) "" else entity.ratio.toString(),
                 filterType = filterType,
                 selectedGrinderId = entity.grinderId,
                 bloomMultiplier = "",
                 pulseCount = "",
                 tempC = "",
                 calibrationStyle = null,
-                strengthPreset = matchedPreset ?: StrengthPreset.BALANCED,
             )
         }
+        collectRatioPresets(method)
         recalculate()
     }
 
@@ -433,8 +466,30 @@ class BrewViewModel(
         timerJob = null
         pausedAccumulatedMs = 0L
         _uiState.value = BrewUiState()
+        collectRatioPresets(BrewMethod.PULSAR)
         recalculate()
         TimerStateHolder.reset()
+        applyUserDefaults()
+    }
+
+    private fun collectRatioPresets(method: BrewMethod) {
+        ratioPresetJob?.cancel()
+        val repository = ratioPresetRepository ?: return
+        ratioPresetJob = viewModelScope.launch {
+            repository.getPresetsForMethod(method).collect { presets ->
+                val currentState = _uiState.value
+                if (currentState.method == method) {
+                    val defaultIndex = presets.indexOfFirst { it.isDefault }.coerceAtLeast(0)
+                    val selectedIndex = if (currentState.selectedPresetIndex < presets.size) {
+                        currentState.selectedPresetIndex
+                    } else {
+                        defaultIndex
+                    }
+                    _uiState.update { it.copy(ratioPresets = presets, selectedPresetIndex = selectedIndex) }
+                    recalculate()
+                }
+            }
+        }
     }
 
     private fun recalculate() {
@@ -442,11 +497,13 @@ class BrewViewModel(
             val amount = state.amount.toFloatOrNull() ?: 0f
             val method = state.method
 
+            val selectedPreset = state.ratioPresets.getOrNull(state.selectedPresetIndex)
+            val presetRatio = selectedPreset?.ratio ?: method.defaultRatio
+
             val effectiveRatio = if (state.customRatio.isNotEmpty()) {
-                state.customRatio.toFloatOrNull()
-                    ?: (method.defaultRatio + state.strengthPreset.ratioOffset)
+                state.customRatio.toFloatOrNull() ?: presetRatio
             } else {
-                method.defaultRatio + state.strengthPreset.ratioOffset
+                presetRatio
             }
 
             val coffeeG: Float

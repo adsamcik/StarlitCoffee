@@ -69,6 +69,9 @@ dependencies {
     // Navigation
     implementation(libs.navigation.compose)
 
+    // DataStore
+    implementation(libs.datastore.preferences)
+
     // Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)

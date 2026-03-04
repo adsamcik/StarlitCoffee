@@ -28,3 +28,12 @@ object BrewLogList
 
 @Serializable
 object BarcodeScanner
+
+@Serializable
+object OnboardingMethods
+
+@Serializable
+object OnboardingPersonalize
+
+@Serializable
+object Settings
