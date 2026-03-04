@@ -50,7 +50,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.navigation.AmountStrength
-import com.adsamcik.starlitcoffee.navigation.Result
+import com.adsamcik.starlitcoffee.navigation.BrewTimer
 import com.adsamcik.starlitcoffee.navigation.Settings
 import com.adsamcik.starlitcoffee.viewmodel.BrewUiState
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -116,7 +116,7 @@ fun MethodPickerScreen(
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(bottom = 16.dp),
+            contentPadding = PaddingValues(bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -200,7 +200,7 @@ private fun QuickBrewCard(
     navController: NavController,
 ) {
     ElevatedCard(
-        onClick = { navController.navigate(Result) },
+        onClick = { navController.navigate(BrewTimer) },
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
             .fillMaxWidth()

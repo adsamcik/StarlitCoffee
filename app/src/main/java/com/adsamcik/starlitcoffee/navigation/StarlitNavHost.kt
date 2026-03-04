@@ -46,7 +46,6 @@ import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.MethodPickerScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
-import com.adsamcik.starlitcoffee.ui.screen.ResultScreen
 import com.adsamcik.starlitcoffee.ui.screen.SavedRecipesScreen
 import com.adsamcik.starlitcoffee.ui.screen.SettingsScreen
 import com.adsamcik.starlitcoffee.ui.screen.TasteFeedbackScreen
@@ -156,6 +155,8 @@ fun StarlitNavHost() {
             // Onboarding flow
             composable<OnboardingMethods> {
                 OnboardingMethodsScreen(
+                    initialMethods = onboardingMethods.value,
+                    initialDefault = onboardingDefault.value.takeIf { onboardingMethods.value.isNotEmpty() },
                     onNext = { methods, default ->
                         onboardingMethods.value = methods
                         onboardingDefault.value = default
@@ -198,9 +199,6 @@ fun StarlitNavHost() {
             }
             composable<AmountStrength> {
                 AmountStrengthScreen(navController = navController, brewViewModel = brewViewModel)
-            }
-            composable<Result> {
-                ResultScreen(navController = navController, brewViewModel = brewViewModel)
             }
             composable<BrewTimer> {
                 BrewTimerScreen(navController = navController, brewViewModel = brewViewModel)

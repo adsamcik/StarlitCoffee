@@ -59,14 +59,16 @@ private fun iconForMethod(method: BrewMethod): ImageVector = when (method) {
 
 @Composable
 fun OnboardingMethodsScreen(
+    initialMethods: Set<BrewMethod> = emptySet(),
+    initialDefault: BrewMethod? = null,
     onNext: (selectedMethods: Set<BrewMethod>, defaultMethod: BrewMethod) -> Unit,
 ) {
     val selectedMethods = remember {
         mutableStateMapOf<BrewMethod, Boolean>().apply {
-            BrewMethod.entries.forEach { put(it, false) }
+            BrewMethod.entries.forEach { put(it, initialMethods.contains(it)) }
         }
     }
-    val defaultMethod = remember { mutableStateOf<BrewMethod?>(null) }
+    val defaultMethod = remember { mutableStateOf(initialDefault) }
 
     val enabledSet = selectedMethods.filter { it.value }.keys
 
@@ -173,9 +175,7 @@ fun OnboardingMethodsScreen(
                         if (isSelected) {
                             IconButton(
                                 onClick = { defaultMethod.value = method },
-                                modifier = Modifier
-                                    .align(Alignment.TopEnd)
-                                    .size(36.dp),
+                                modifier = Modifier.align(Alignment.TopEnd),
                             ) {
                                 Icon(
                                     imageVector = if (isDefault) {
@@ -193,7 +193,6 @@ fun OnboardingMethodsScreen(
                                     } else {
                                         MaterialTheme.colorScheme.onSurfaceVariant
                                     },
-                                    modifier = Modifier.size(20.dp),
                                 )
                             }
                         }
