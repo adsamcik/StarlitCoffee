@@ -987,6 +987,21 @@ class BrewViewModelTest {
         assertEquals(3, persistenceViewModel.coffeeBags.value.size)
     }
 
+    // --- setMethod clears recipe overrides ---
+
+    @Test
+    fun `setMethod clears stale customRatio from loaded recipe`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setAmount("20")
+        viewModel.setCustomRatio("17")
+
+        viewModel.setMethod(BrewMethod.ESPRESSO)
+
+        val state = viewModel.uiState.value
+        assertEquals(2f, state.effectiveRatio, 0.01f)
+        assertEquals(40f, state.waterG, 0.01f)
+    }
+
     // --- Backward Compatibility ---
 
     @Test

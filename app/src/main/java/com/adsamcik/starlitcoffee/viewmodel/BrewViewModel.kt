@@ -117,7 +117,16 @@ class BrewViewModel(
     }
 
     fun setMethod(method: BrewMethod) {
-        _uiState.update { it.copy(method = method, filterType = null) }
+        _uiState.update {
+            it.copy(
+                method = method,
+                filterType = null,
+                customRatio = "",
+                bloomMultiplier = "",
+                pulseCount = "",
+                calibrationStyle = null,
+            )
+        }
         recalculate()
     }
 
