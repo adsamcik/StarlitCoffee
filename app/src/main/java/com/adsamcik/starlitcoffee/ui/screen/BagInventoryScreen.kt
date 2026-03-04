@@ -230,6 +230,13 @@ private fun BagCard(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+                bag.weightG?.let { w ->
+                    Text(
+                        text = "${"%.0f".format(w)}g",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
                 if (bag.roastDate != null) {
                     Text(
                         text = "Roasted: ${dateFormat.format(Date(bag.roastDate))}",
