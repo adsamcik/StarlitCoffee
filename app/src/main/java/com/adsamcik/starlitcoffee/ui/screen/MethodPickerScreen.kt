@@ -203,6 +203,12 @@ fun MethodPickerScreen(
 
         // Ratio presets
         if (state.ratioPresets.isNotEmpty()) {
+            Text(
+                text = "Ratio",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(start = 8.dp, bottom = 4.dp),
+            )
             SingleChoiceSegmentedButtonRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -278,12 +284,12 @@ fun MethodPickerScreen(
             Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
+
         // Customize link → full AmountStrength screen
         TextButton(
             onClick = { navController.navigate(AmountStrength) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp),
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Text("Customize brew parameters")
         }

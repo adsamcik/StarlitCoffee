@@ -150,7 +150,8 @@ class BrewViewModel(
         _uiState.update {
             it.copy(
                 method = method,
-                filterType = null,
+                // Preserve filterType when switching back to a filter-capable method
+                filterType = if (method.capacityMaxG != null) it.filterType else null,
                 customRatio = "",
                 bloomMultiplier = "",
                 pulseCount = "",
@@ -170,7 +171,15 @@ class BrewViewModel(
 
     fun setAmount(amount: String) {
         if (amount.isNotEmpty() && amount.toFloatOrNull() == null) return
-        _uiState.update { it.copy(amount = amount) }
+        // Cap extreme values at 100g for coffee / 2000g for water/cup
+        val maxAmount = when (_uiState.value.inputMode) {
+            InputMode.COFFEE_TO_WATER -> 100f
+            else -> 2000f
+        }
+        val capped = amount.toFloatOrNull()?.let {
+            if (it > maxAmount) maxAmount.toInt().toString() else amount
+        } ?: amount
+        _uiState.update { it.copy(amount = capped) }
         recalculate()
     }
 

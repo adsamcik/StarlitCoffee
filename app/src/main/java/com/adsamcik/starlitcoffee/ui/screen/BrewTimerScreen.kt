@@ -233,7 +233,7 @@ fun BrewTimerScreen(
         }
 
         // Phase remaining countdown
-        if (currentPhase != null && running && !finished) {
+        if (currentPhase != null && !finished) {
             Text(
                 text = "${phaseRemaining}s",
                 style = MaterialTheme.typography.titleLarge,
