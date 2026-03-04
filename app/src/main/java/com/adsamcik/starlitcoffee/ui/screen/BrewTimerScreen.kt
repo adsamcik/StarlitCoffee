@@ -67,7 +67,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.navigation.TasteFeedback
 import com.adsamcik.starlitcoffee.service.BrewTimerService
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
 import com.adsamcik.starlitcoffee.util.VibrationHelper
@@ -352,13 +351,16 @@ fun BrewTimerScreen(
             }
         } else {
             Button(
-                onClick = { navController.navigate(TasteFeedback) },
+                onClick = {
+                    brewViewModel.requestFeedbackSnackbar()
+                    navController.popBackStack()
+                },
                 shape = RoundedCornerShape(28.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(72.dp),
             ) {
-                Text("Rate this brew", style = MaterialTheme.typography.titleMedium)
+                Text("Done", style = MaterialTheme.typography.titleMedium)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }
@@ -368,14 +370,15 @@ fun BrewTimerScreen(
         AlertDialog(
             onDismissRequest = { showStopDialog = false },
             title = { Text("Stop brewing?") },
-            text = { Text("You can rate this brew now or discard it.") },
+            text = { Text("End brew and go back?") },
             confirmButton = {
                 TextButton(onClick = {
                     showStopDialog = false
                     brewViewModel.stopTimer()
                     BrewTimerService.stop(context)
-                    navController.navigate(TasteFeedback)
-                }) { Text("End & Rate") }
+                    brewViewModel.requestFeedbackSnackbar()
+                    navController.popBackStack()
+                }) { Text("End Brew") }
             },
             dismissButton = {
                 Row {

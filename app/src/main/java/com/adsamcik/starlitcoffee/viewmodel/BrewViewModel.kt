@@ -78,6 +78,7 @@ data class BrewUiState(
     val elapsedSeconds: Int = 0,
     val phaseSecondsRemaining: Int = 0,
     val showNextPreview: Boolean = false,
+    val showFeedbackSnackbar: Boolean = false,
     // Feedback state
     val tasteFeedback: TasteFeedback? = null,
     val rating: Int = 0,
@@ -283,6 +284,14 @@ class BrewViewModel(
         timerJob?.cancel()
         timerJob = null
         TimerStateHolder.reset()
+    }
+
+    fun requestFeedbackSnackbar() {
+        _uiState.update { it.copy(showFeedbackSnackbar = true) }
+    }
+
+    fun clearFeedbackSnackbar() {
+        _uiState.update { it.copy(showFeedbackSnackbar = false) }
     }
 
     fun advancePhase() {

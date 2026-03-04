@@ -18,8 +18,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -106,8 +110,10 @@ fun StarlitNavHost() {
     }
 
     val startDestination: Any = if (prefs.onboardingCompleted) MethodPicker else OnboardingMethods
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
             if (showBottomBar) {
                 NavigationBar {
@@ -191,10 +197,25 @@ fun StarlitNavHost() {
 
             // Main app screens
             composable<MethodPicker> {
+                val state by brewViewModel.uiState.collectAsStateWithLifecycle()
+                LaunchedEffect(state.showFeedbackSnackbar) {
+                    if (state.showFeedbackSnackbar) {
+                        val result = snackbarHostState.showSnackbar(
+                            message = "How was your brew? ☕",
+                            actionLabel = "Rate",
+                            withDismissAction = true,
+                        )
+                        brewViewModel.clearFeedbackSnackbar()
+                        if (result == SnackbarResult.ActionPerformed) {
+                            navController.navigate(TasteFeedback)
+                        }
+                    }
+                }
                 MethodPickerScreen(
                     navController = navController,
                     brewViewModel = brewViewModel,
                     userPreferencesRepository = userPreferencesRepository,
+                    snackbarHostState = snackbarHostState,
                 )
             }
             composable<AmountStrength> {
