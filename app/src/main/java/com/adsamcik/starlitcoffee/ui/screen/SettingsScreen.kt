@@ -10,12 +10,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +38,10 @@ import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import kotlinx.coroutines.launch
+
+private val checkIcon: @Composable () -> Unit = {
+    Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize))
+}
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -115,6 +122,7 @@ fun SettingsScreen(
                                     }
                                 },
                                 label = { Text(method.displayName) },
+                                leadingIcon = if (enabled) checkIcon else null,
                             )
                         }
                     }
@@ -134,14 +142,16 @@ fun SettingsScreen(
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         prefs.enabledMethods.forEach { method ->
+                            val isDefault = prefs.defaultMethod == method
                             FilterChip(
-                                selected = prefs.defaultMethod == method,
+                                selected = isDefault,
                                 onClick = {
                                     scope.launch {
                                         userPreferencesRepository.updateDefaultMethod(method)
                                     }
                                 },
                                 label = { Text(method.displayName) },
+                                leadingIcon = if (isDefault) checkIcon else null,
                             )
                         }
                     }
@@ -172,16 +182,19 @@ fun SettingsScreen(
                                 }
                             },
                             label = { Text("None") },
+                            leadingIcon = if (prefs.defaultFilterType == null) checkIcon else null,
                         )
                         FilterType.entries.forEach { filter ->
+                            val isFilterSelected = prefs.defaultFilterType == filter
                             FilterChip(
-                                selected = prefs.defaultFilterType == filter,
+                                selected = isFilterSelected,
                                 onClick = {
                                     scope.launch {
                                         userPreferencesRepository.updateDefaultFilterType(filter)
                                     }
                                 },
                                 label = { Text(filter.displayName) },
+                                leadingIcon = if (isFilterSelected) checkIcon else null,
                             )
                         }
                     }
@@ -208,10 +221,12 @@ fun SettingsScreen(
                                 }
                             },
                             label = { Text("No grinder") },
+                            leadingIcon = if (prefs.selectedGrinderId == null) checkIcon else null,
                         )
                         DefaultGrinders.grinders.forEach { grinder ->
+                            val isGrinderSelected = prefs.selectedGrinderId == grinder.id
                             FilterChip(
-                                selected = prefs.selectedGrinderId == grinder.id,
+                                selected = isGrinderSelected,
                                 onClick = {
                                     scope.launch {
                                         userPreferencesRepository.updateSelectedGrinder(grinder.id)
@@ -225,6 +240,7 @@ fun SettingsScreen(
                                     }
                                     Text(label)
                                 },
+                                leadingIcon = if (isGrinderSelected) checkIcon else null,
                             )
                         }
                     }

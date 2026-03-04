@@ -15,8 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AcUnit
@@ -99,7 +100,18 @@ fun OnboardingMethodsScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.weight(1f),
         ) {
-            items(BrewMethod.entries.toList()) { method ->
+            val methods = BrewMethod.entries.toList()
+            val isOddCount = methods.size % 2 != 0
+            itemsIndexed(
+                items = methods,
+                span = { index, _ ->
+                    if (isOddCount && index == methods.lastIndex) {
+                        GridItemSpan(2)
+                    } else {
+                        GridItemSpan(1)
+                    }
+                },
+            ) { _, method ->
                 val isSelected = selectedMethods[method] == true
                 val isDefault = defaultMethod.value == method
 

@@ -11,14 +11,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -109,6 +112,11 @@ fun OnboardingPersonalizeScreen(
                                         }
                                     },
                                     label = { Text(filter.displayName) },
+                                    leadingIcon = if (filterType.value == filter) {
+                                        { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
+                                    } else {
+                                        null
+                                    },
                                 )
                             }
                         }
@@ -147,12 +155,18 @@ fun OnboardingPersonalizeScreen(
                             selected = selectedGrinderId.value == null,
                             onClick = { selectedGrinderId.value = null },
                             label = { Text("No grinder") },
+                            leadingIcon = if (selectedGrinderId.value == null) {
+                                { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
+                            } else {
+                                null
+                            },
                         )
                         DefaultGrinders.grinders.forEach { grinder ->
+                            val isGrinderSelected = selectedGrinderId.value == grinder.id
                             FilterChip(
-                                selected = selectedGrinderId.value == grinder.id,
+                                selected = isGrinderSelected,
                                 onClick = {
-                                    selectedGrinderId.value = if (selectedGrinderId.value == grinder.id) {
+                                    selectedGrinderId.value = if (isGrinderSelected) {
                                         null
                                     } else {
                                         grinder.id
@@ -165,6 +179,11 @@ fun OnboardingPersonalizeScreen(
                                         "${grinder.brand} ${grinder.model}"
                                     }
                                     Text(label)
+                                },
+                                leadingIcon = if (isGrinderSelected) {
+                                    { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
+                                } else {
+                                    null
                                 },
                             )
                         }
