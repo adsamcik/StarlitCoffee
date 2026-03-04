@@ -68,6 +68,7 @@ fun BrewLogScreen(
         EmptyStateBox(
             icon = Icons.Filled.History,
             message = "Start brewing to see your history",
+            subtitle = "Each completed brew with feedback will appear here",
             modifier = Modifier.fillMaxSize(),
         )
     } else {

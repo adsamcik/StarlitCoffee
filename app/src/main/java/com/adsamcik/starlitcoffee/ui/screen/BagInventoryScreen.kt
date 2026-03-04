@@ -110,6 +110,7 @@ fun BagInventoryScreen(
             EmptyStateBox(
                 icon = Icons.Filled.ShoppingBag,
                 message = "No coffee bags yet",
+                subtitle = "Track your beans — add roast details and tasting notes",
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),

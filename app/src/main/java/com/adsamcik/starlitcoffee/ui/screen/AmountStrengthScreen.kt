@@ -139,7 +139,7 @@ fun AmountStrengthScreen(
                         count = InputMode.entries.size,
                     ),
                 ) {
-                    Text(mode.displayName)
+                    Text(mode.shortLabel, maxLines = 1)
                 }
             }
         }

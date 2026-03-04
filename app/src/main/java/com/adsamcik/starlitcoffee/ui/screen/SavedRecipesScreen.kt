@@ -68,6 +68,7 @@ fun SavedRecipesScreen(
             EmptyStateBox(
                 icon = Icons.Filled.Bookmark,
                 message = "No saved recipes yet",
+                subtitle = "Brew a coffee and tap Save Recipe to keep it here",
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),

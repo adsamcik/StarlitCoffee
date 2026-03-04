@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.Stop
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalButton
@@ -34,12 +35,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -71,6 +75,7 @@ fun BrewTimerScreen(
     val uiState by brewViewModel.uiState.collectAsStateWithLifecycle()
     val haptic = LocalHapticFeedback.current
     val context = LocalContext.current
+    var showStopDialog by remember { mutableStateOf(false) }
 
     // Request notification permission for the foreground service (Android 13+)
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
@@ -324,8 +329,7 @@ fun BrewTimerScreen(
                 }
                 OutlinedButton(
                     onClick = {
-                        brewViewModel.stopTimer()
-                        BrewTimerService.stop(context)
+                        showStopDialog = true
                     },
                     shape = RoundedCornerShape(28.dp),
                     modifier = Modifier
@@ -356,5 +360,40 @@ fun BrewTimerScreen(
             }
             Spacer(modifier = Modifier.height(32.dp))
         }
+    }
+
+    if (showStopDialog) {
+        AlertDialog(
+            onDismissRequest = { showStopDialog = false },
+            title = { Text("Stop brewing?") },
+            text = { Text("You can rate this brew now or discard it.") },
+            confirmButton = {
+                TextButton(onClick = {
+                    showStopDialog = false
+                    brewViewModel.stopTimer()
+                    BrewTimerService.stop(context)
+                    navController.navigate(TasteFeedback)
+                }) {
+                    Text("End & Rate")
+                }
+            },
+            dismissButton = {
+                Row {
+                    TextButton(onClick = {
+                        showStopDialog = false
+                    }) {
+                        Text("Cancel")
+                    }
+                    TextButton(onClick = {
+                        showStopDialog = false
+                        brewViewModel.stopTimer()
+                        BrewTimerService.stop(context)
+                        navController.popBackStack()
+                    }) {
+                        Text("Discard")
+                    }
+                }
+            },
+        )
     }
 }
