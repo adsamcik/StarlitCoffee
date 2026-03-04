@@ -217,7 +217,14 @@ fun SettingsScreen(
                                         userPreferencesRepository.updateSelectedGrinder(grinder.id)
                                     }
                                 },
-                                label = { Text("${grinder.brand} ${grinder.model}") },
+                                label = {
+                                    val label = if (grinder.brand == grinder.model) {
+                                        grinder.model
+                                    } else {
+                                        "${grinder.brand} ${grinder.model}"
+                                    }
+                                    Text(label)
+                                },
                             )
                         }
                     }
