@@ -40,8 +40,7 @@ import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.navigation.BrewTimer
 import com.adsamcik.starlitcoffee.navigation.MethodPicker
-import com.adsamcik.starlitcoffee.ui.component.BrewPlanVisualization
-import com.adsamcik.starlitcoffee.ui.component.PulsarDoseInsights
+import com.adsamcik.starlitcoffee.ui.component.BrewGuide
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
@@ -125,13 +124,14 @@ fun ResultScreen(
             WarningCard(message = warning)
         }
 
-        // Interactive brew plan visualization (Pulsar only)
+        // Interactive brew guide (Pulsar only)
         if (method == BrewMethod.PULSAR && uiState.timerPhases.isNotEmpty()) {
-            BrewPlanVisualization(
+            BrewGuide(
                 phases = uiState.timerPhases,
                 coffeeG = uiState.coffeeG,
                 waterG = uiState.waterG,
                 capacityMaxG = method.capacityMaxG?.toFloat(),
+                refillCount = uiState.refillCount,
             )
         }
 
@@ -251,14 +251,6 @@ fun ResultScreen(
                     }
                 }
             }
-        }
-
-        // Pulsar dose insights (research-backed recommendations)
-        if (method == BrewMethod.PULSAR && uiState.coffeeG > 0f) {
-            PulsarDoseInsights(
-                coffeeG = uiState.coffeeG,
-                refillCount = uiState.refillCount,
-            )
         }
 
         // Grind section

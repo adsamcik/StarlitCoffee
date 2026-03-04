@@ -7,9 +7,12 @@ import android.os.Build
 import android.view.WindowManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,7 +24,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -29,7 +34,6 @@ import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -50,21 +54,24 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.navigation.TasteFeedback
 import com.adsamcik.starlitcoffee.service.BrewTimerService
+import com.adsamcik.starlitcoffee.ui.component.BrewGuide
+import com.adsamcik.starlitcoffee.util.VibrationHelper
+import com.adsamcik.starlitcoffee.util.VibrationHelper.BrewHaptic
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 
 @Composable
@@ -73,35 +80,35 @@ fun BrewTimerScreen(
     brewViewModel: BrewViewModel,
 ) {
     val uiState by brewViewModel.uiState.collectAsStateWithLifecycle()
-    val haptic = LocalHapticFeedback.current
     val context = LocalContext.current
     var showStopDialog by remember { mutableStateOf(false) }
 
-    // Request notification permission for the foreground service (Android 13+)
+    // Request notification permission for foreground service (Android 13+)
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
-    ) { /* Timer works regardless of permission */ }
+    ) { /* Timer works regardless */ }
 
-    // Keep screen on during brew
+    // Keep screen on
     val view = LocalView.current
     DisposableEffect(Unit) {
         val window = (view.context as Activity).window
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        onDispose {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        }
+        onDispose { window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) }
     }
 
     val phases = uiState.timerPhases
     val currentPhaseIndex = uiState.currentPhaseIndex
     val totalElapsed = uiState.elapsedSeconds
     val running = uiState.timerRunning
+    val phaseRemaining = uiState.phaseSecondsRemaining
+    val showNext = uiState.showNextPreview
 
     val currentPhase = phases.getOrNull(currentPhaseIndex)
+    val nextPhase = phases.getOrNull(currentPhaseIndex + 1)
     val totalDuration = phases.sumOf { it.durationSeconds }
     val finished = !running && totalElapsed > 0 && totalElapsed >= totalDuration
 
-    // Auto-start on first composition + start foreground service
+    // Auto-start on first composition
     LaunchedEffect(Unit) {
         if (!running && totalElapsed == 0) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -116,22 +123,37 @@ fun BrewTimerScreen(
         }
     }
 
-    // Auto-pause when timer exceeds total duration
+    // Auto-pause at end + brew-complete vibration
     LaunchedEffect(totalElapsed, totalDuration, running) {
         if (phases.isNotEmpty() && totalElapsed >= totalDuration && running) {
-            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            VibrationHelper.vibrate(context, BrewHaptic.BREW_COMPLETE)
             brewViewModel.pauseTimer()
             BrewTimerService.stop(context)
         }
     }
 
-    // Haptic on phase change
-    var previousPhaseIndex = remember { mutableIntStateOf(0) }
+    // Phase-change vibrations
+    var previousPhaseIndex by remember { mutableIntStateOf(0) }
     LaunchedEffect(currentPhaseIndex) {
-        if (currentPhaseIndex != previousPhaseIndex.intValue && currentPhaseIndex > 0) {
-            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        if (currentPhaseIndex != previousPhaseIndex && currentPhaseIndex > 0) {
+            val phase = phases.getOrNull(currentPhaseIndex)
+            val haptic = when {
+                phase?.name == "Bloom" -> BrewHaptic.BLOOM
+                phase?.name?.startsWith("Pour") == true -> BrewHaptic.POUR
+                phase?.name?.startsWith("Drain") == true -> BrewHaptic.DRAIN
+                phase?.name == "Drawdown" -> BrewHaptic.DRAWDOWN
+                else -> BrewHaptic.POUR
+            }
+            VibrationHelper.vibrate(context, haptic)
         }
-        previousPhaseIndex.intValue = currentPhaseIndex
+        previousPhaseIndex = currentPhaseIndex
+    }
+
+    // "Get ready" vibration 5s before phase ends
+    LaunchedEffect(phaseRemaining) {
+        if (phaseRemaining == 5 && running && currentPhaseIndex < phases.lastIndex) {
+            VibrationHelper.vibrate(context, BrewHaptic.GET_READY)
+        }
     }
 
     val progress = if (totalDuration > 0) totalElapsed.toFloat() / totalDuration else 0f
@@ -147,39 +169,24 @@ fun BrewTimerScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(24.dp))
 
-        // Circular timer
+        // Circular timer — kept as user preferred
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.size(260.dp),
+            modifier = Modifier.size(220.dp),
         ) {
             Canvas(modifier = Modifier.fillMaxSize()) {
-                val stroke = Stroke(width = 14.dp.toPx(), cap = StrokeCap.Round)
+                val stroke = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round)
                 val arcSize = Size(size.width - stroke.width, size.height - stroke.width)
                 val topLeft = Offset(stroke.width / 2, stroke.width / 2)
 
-                drawArc(
-                    color = trackColor,
-                    startAngle = -90f,
-                    sweepAngle = 360f,
-                    useCenter = false,
-                    topLeft = topLeft,
-                    size = arcSize,
-                    style = stroke,
-                )
-                drawArc(
-                    color = primaryColor,
-                    startAngle = -90f,
-                    sweepAngle = 360f * animatedProgress,
-                    useCenter = false,
-                    topLeft = topLeft,
-                    size = arcSize,
-                    style = stroke,
-                )
+                drawArc(trackColor, -90f, 360f, false, topLeft, arcSize, style = stroke)
+                drawArc(primaryColor, -90f, 360f * animatedProgress, false, topLeft, arcSize, style = stroke)
             }
 
             Column(
@@ -190,9 +197,8 @@ fun BrewTimerScreen(
             ) {
                 val min = totalElapsed / 60
                 val sec = totalElapsed % 60
-                val timeText = "%d:%02d".format(min, sec)
                 Text(
-                    text = timeText,
+                    text = "%d:%02d".format(min, sec),
                     style = MaterialTheme.typography.displayLarge,
                     modifier = Modifier.semantics {
                         contentDescription = "$min minutes $sec seconds elapsed"
@@ -201,7 +207,8 @@ fun BrewTimerScreen(
                 if (currentPhase != null) {
                     Text(
                         text = currentPhase.name,
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.semantics { heading() },
                     )
@@ -209,62 +216,60 @@ fun BrewTimerScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // Phase instruction (Pulsar-specific valve guidance, brew steps)
-        if (currentPhase != null && currentPhase.instruction.isNotEmpty()) {
-            ElevatedCard(
-                shape = RoundedCornerShape(20.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    if (currentPhase.valveState.isNotEmpty()) {
-                        Text(
-                            text = "🔧 Valve: ${currentPhase.valveState}",
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(bottom = 4.dp),
-                        )
-                    }
-                    Text(
-                        text = currentPhase.instruction,
-                        style = MaterialTheme.typography.bodyLarge,
-                        textAlign = TextAlign.Start,
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(12.dp))
+        // Brew Guide visualization (Pulsar only)
+        if (uiState.method == BrewMethod.PULSAR && phases.isNotEmpty()) {
+            BrewGuide(
+                phases = phases,
+                coffeeG = uiState.coffeeG,
+                waterG = uiState.waterG,
+                capacityMaxG = uiState.method.capacityMaxG?.toFloat(),
+                refillCount = uiState.refillCount,
+                activePhaseIndex = currentPhaseIndex,
+                nextPhaseName = nextPhase?.name,
+                nextPhaseWaterG = nextPhase?.waterG,
+                showNextPreview = showNext,
+            )
         }
 
-        // Phase info
-        if (currentPhase != null && currentPhase.waterG > 0) {
+        // Phase remaining countdown
+        if (currentPhase != null && running && !finished) {
             Text(
-                text = "${"%.0f".format(currentPhase.cumulativeWaterG)}g of ${"%.0f".format(uiState.waterG)}g poured",
+                text = "${phaseRemaining}s",
                 style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
+        // Next-up preview (non-Pulsar fallback, or when brew guide not shown)
+        if (uiState.method != BrewMethod.PULSAR) {
+            AnimatedVisibility(
+                visible = showNext && nextPhase != null,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                Text(
+                    text = "Next: ${nextPhase?.name ?: ""}" +
+                        if ((nextPhase?.waterG ?: 0f) > 0f) " · +${"%.0f".format(nextPhase?.waterG)}g" else "",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(vertical = 8.dp),
+                )
+            }
         }
 
         if (finished) {
             Text(
-                text = "Brew complete!",
+                text = "Brew complete! ☕",
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(top = 16.dp),
             )
         }
-
-        val remaining = (totalDuration - totalElapsed).coerceAtLeast(0)
-        val remMin = remaining / 60
-        val remSec = remaining % 60
-        Text(
-            text = "Remaining: %d:%02d".format(remMin, remSec),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(top = 8.dp),
-        )
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -273,7 +278,7 @@ fun BrewTimerScreen(
             if (phases.size > 1) {
                 Button(
                     onClick = {
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        VibrationHelper.vibrate(context, BrewHaptic.POUR)
                         brewViewModel.advancePhase()
                     },
                     shape = RoundedCornerShape(28.dp),
@@ -292,7 +297,6 @@ fun BrewTimerScreen(
                         modifier = Modifier.padding(start = 8.dp),
                     )
                 }
-
                 Spacer(modifier = Modifier.height(12.dp))
             }
 
@@ -318,7 +322,7 @@ fun BrewTimerScreen(
                 ) {
                     Icon(
                         if (running) Icons.Filled.Pause else Icons.Filled.PlayArrow,
-                        contentDescription = if (running) "Pause timer" else "Resume timer",
+                        contentDescription = if (running) "Pause" else "Resume",
                         modifier = Modifier.size(28.dp),
                     )
                     Text(
@@ -328,9 +332,7 @@ fun BrewTimerScreen(
                     )
                 }
                 OutlinedButton(
-                    onClick = {
-                        showStopDialog = true
-                    },
+                    onClick = { showStopDialog = true },
                     shape = RoundedCornerShape(28.dp),
                     modifier = Modifier
                         .weight(1f)
@@ -338,7 +340,7 @@ fun BrewTimerScreen(
                 ) {
                     Icon(
                         Icons.Filled.Stop,
-                        contentDescription = "Stop timer",
+                        contentDescription = "Stop",
                         modifier = Modifier.size(28.dp),
                     )
                     Text(
@@ -373,25 +375,17 @@ fun BrewTimerScreen(
                     brewViewModel.stopTimer()
                     BrewTimerService.stop(context)
                     navController.navigate(TasteFeedback)
-                }) {
-                    Text("End & Rate")
-                }
+                }) { Text("End & Rate") }
             },
             dismissButton = {
                 Row {
-                    TextButton(onClick = {
-                        showStopDialog = false
-                    }) {
-                        Text("Cancel")
-                    }
+                    TextButton(onClick = { showStopDialog = false }) { Text("Cancel") }
                     TextButton(onClick = {
                         showStopDialog = false
                         brewViewModel.stopTimer()
                         BrewTimerService.stop(context)
                         navController.popBackStack()
-                    }) {
-                        Text("Discard")
-                    }
+                    }) { Text("Discard") }
                 }
             },
         )

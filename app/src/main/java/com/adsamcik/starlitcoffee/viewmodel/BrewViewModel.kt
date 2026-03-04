@@ -76,6 +76,8 @@ data class BrewUiState(
     val currentPhaseIndex: Int = 0,
     val timerRunning: Boolean = false,
     val elapsedSeconds: Int = 0,
+    val phaseSecondsRemaining: Int = 0,
+    val showNextPreview: Boolean = false,
     // Feedback state
     val tasteFeedback: TasteFeedback? = null,
     val rating: Int = 0,
@@ -230,9 +232,15 @@ class BrewViewModel(
                 val totalElapsedSeconds = (totalElapsedMs / 1000).toInt()
                 _uiState.update { state ->
                     val newPhaseIndex = computePhaseIndex(state.timerPhases, totalElapsedSeconds)
+                    val phaseStartSec = state.timerPhases.take(newPhaseIndex).sumOf { it.durationSeconds }
+                    val phaseElapsed = totalElapsedSeconds - phaseStartSec
+                    val phaseDuration = state.timerPhases.getOrNull(newPhaseIndex)?.durationSeconds ?: 0
+                    val remaining = (phaseDuration - phaseElapsed).coerceAtLeast(0)
                     state.copy(
                         elapsedSeconds = totalElapsedSeconds,
                         currentPhaseIndex = newPhaseIndex,
+                        phaseSecondsRemaining = remaining,
+                        showNextPreview = remaining in 1..10 && newPhaseIndex < state.timerPhases.lastIndex,
                     )
                 }
                 val state = _uiState.value

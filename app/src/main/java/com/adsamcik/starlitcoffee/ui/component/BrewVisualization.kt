@@ -1,9 +1,12 @@
 package com.adsamcik.starlitcoffee.ui.component
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,14 +22,23 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,7 +60,10 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adsamcik.starlitcoffee.viewmodel.BrewPhase
+import kotlinx.coroutines.launch
 import kotlin.math.sin
+
+// ─── Phase helpers ───────────────────────────────────────────
 
 private data class PhaseVisualState(
     val phaseName: String,
@@ -56,6 +71,7 @@ private data class PhaseVisualState(
     val fillFraction: Float,
     val valveOpen: Boolean,
     val instruction: String,
+    val valveState: String,
     val waterThisPhase: Float,
     val cumulativeWater: Float,
     val emoji: String,
@@ -67,14 +83,6 @@ private fun phaseEmoji(name: String): String = when {
     name.startsWith("Drain") -> "🔄"
     name == "Drawdown" -> "⏬"
     else -> "☕"
-}
-
-private fun phaseShortLabel(name: String): String = when {
-    name == "Bloom" -> "Bloom"
-    name.startsWith("Pour") -> name.substringAfter("Pour ").trim()
-    name.startsWith("Drain") -> "Drain"
-    name == "Drawdown" -> "Done"
-    else -> name.take(5)
 }
 
 private fun computePhaseVisualStates(
@@ -97,15 +105,17 @@ private fun computePhaseVisualStates(
                 fillFraction = if (capacity > 0f) (waterInBrewer / capacity).coerceIn(0f, 1f) else 0f,
                 valveOpen = !phase.name.startsWith("Bloom"),
                 instruction = phase.instruction,
+                valveState = phase.valveState,
                 waterThisPhase = phase.waterG,
                 cumulativeWater = phase.cumulativeWaterG,
                 emoji = phaseEmoji(phase.name),
             ),
         )
     }
-
     return states
 }
+
+// ─── Wavy water surface ──────────────────────────────────────
 
 private fun DrawScope.drawWavyWaterSurface(
     left: Float,
@@ -132,10 +142,8 @@ private fun DrawScope.drawWavyWaterSurface(
     drawPath(path, brush, style = Fill)
 }
 
-/**
- * Large, expressive Canvas cross-section of the Pulsar brewer.
- * M3 Expressive: bold strokes, gradient water, wavy surface, chunky valve.
- */
+// ─── Pulsar brewer cross-section ─────────────────────────────
+
 @Composable
 private fun PulsarBrewerDiagram(
     waterFillFraction: Float,
@@ -145,7 +153,7 @@ private fun PulsarBrewerDiagram(
     modifier: Modifier = Modifier,
 ) {
     val waterTop = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-    val waterBottom = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
+    val waterBot = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
     val bedColor = Color(0xFF8D6E63)
     val bedHighlight = Color(0xFFA1887F)
     val outlineColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
@@ -164,21 +172,14 @@ private fun PulsarBrewerDiagram(
         val stroke = 4f
         val thick = 6f
 
-        // Barrel geometry — big and centered
-        val bL = w * 0.15f
-        val bR = w * 0.85f
-        val bT = h * 0.04f
-        val bB = h * 0.62f
-        val bW = bR - bL
-        val bH = bB - bT
+        val bL = w * 0.15f; val bR = w * 0.85f
+        val bT = h * 0.04f; val bB = h * 0.62f
+        val bW = bR - bL; val bH = bB - bT
 
-        // Base geometry
-        val xL = bL - w * 0.08f
-        val xR = bR + w * 0.08f
-        val xT = bB + 4f
-        val xB = h * 0.78f
+        val xL = bL - w * 0.08f; val xR = bR + w * 0.08f
+        val xT = bB + 4f; val xB = h * 0.78f
 
-        // Coffee bed with gradient
+        // Coffee bed
         val bedH = bH * bedFraction.coerceIn(0.1f, 0.4f)
         val bedTop = bB - bedH
         drawRoundRect(
@@ -188,42 +189,40 @@ private fun PulsarBrewerDiagram(
             cornerRadius = CornerRadius(4f, 4f),
         )
 
-        // Water above the bed — gradient fill with wavy top
+        // Water
         val waterSpace = bedTop - bT - bH * 0.08f
         val waterH = waterSpace * waterFillFraction.coerceIn(0f, 1f)
         if (waterH > 2f) {
             val wSurfaceY = bedTop - waterH
             drawWavyWaterSurface(
-                left = bL + 4f,
-                right = bR - 4f,
+                left = bL + 4f, right = bR - 4f,
                 surfaceY = wSurfaceY,
                 amplitude = 3f.coerceAtMost(waterH * 0.2f),
                 waterBottom = bedTop,
-                brush = Brush.verticalGradient(listOf(waterTop, waterBottom), wSurfaceY, bedTop),
+                brush = Brush.verticalGradient(listOf(waterTop, waterBot), wSurfaceY, bedTop),
             )
         }
 
         // Filter line
         drawLine(filterColor, Offset(bL + 8f, bedTop), Offset(bR - 8f, bedTop), 2.5f)
 
-        // Dispersion cap (chunky dashed line)
+        // Dispersion cap
         val capY = bT + bH * 0.06f
         drawLine(
             capColor, Offset(bL + 14f, capY), Offset(bR - 14f, capY), 3.5f,
             pathEffect = PathEffect.dashPathEffect(floatArrayOf(8f, 6f)),
         )
 
-        // Barrel walls — bold
+        // Barrel walls
         drawLine(outlineColor, Offset(bL, bT), Offset(bL, bB), thick)
         drawLine(outlineColor, Offset(bR, bT), Offset(bR, bB), thick)
         drawLine(outlineColor, Offset(bL, bB), Offset(bR, bB), thick)
-        // Rim
         drawRoundRect(
             outlineColor, Offset(bL - 6f, bT - 4f), Size(bW + 12f, 10f),
             cornerRadius = CornerRadius(5f, 5f),
         )
 
-        // Base walls — bold
+        // Base walls
         drawLine(outlineColor, Offset(xL, xT), Offset(xL, xB), thick)
         drawLine(outlineColor, Offset(xR, xT), Offset(xR, xB), thick)
         drawLine(outlineColor, Offset(xL, xT), Offset(bL, xT), stroke)
@@ -233,7 +232,7 @@ private fun PulsarBrewerDiagram(
             cornerRadius = CornerRadius(3f, 3f),
         )
 
-        // Valve — chunky circle with label
+        // Valve
         val vR = w * 0.055f
         val vCenter = Offset(w * 0.5f, (xT + xB) / 2f)
         val vColor = if (valveOpen) valveOpenColor else valveClosedColor
@@ -241,47 +240,257 @@ private fun PulsarBrewerDiagram(
         drawCircle(vColor, vR, vCenter)
         drawCircle(outlineColor, vR, vCenter, style = Stroke(2.5f))
 
-        // Valve label
         val vlText = if (valveOpen) "OPEN" else "SHUT"
         val vlResult = textMeasurer.measure(vlText, labelStyle)
-        drawText(
-            vlResult,
-            topLeft = Offset(vCenter.x - vlResult.size.width / 2f, vCenter.y + vR + 6f),
-        )
+        drawText(vlResult, topLeft = Offset(vCenter.x - vlResult.size.width / 2f, vCenter.y + vR + 6f))
 
         // Drip drops
         if (showDrip && valveOpen) {
             val dripX = w * 0.5f
-            val dropY1 = xB + h * 0.06f
-            val dropY2 = xB + h * 0.13f
-            val dropY3 = xB + h * 0.19f
-            drawCircle(dripColor, 4f, Offset(dripX, dropY1))
-            drawCircle(dripColor, 3f, Offset(dripX - 4f, dropY2))
-            drawCircle(dripColor, 2.5f, Offset(dripX + 3f, dropY3))
+            drawCircle(dripColor, 4f, Offset(dripX, xB + h * 0.06f))
+            drawCircle(dripColor, 3f, Offset(dripX - 4f, xB + h * 0.13f))
+            drawCircle(dripColor, 2.5f, Offset(dripX + 3f, xB + h * 0.19f))
         }
 
-        // Labels on diagram
+        // Coffee label
         val bedLabel = textMeasurer.measure("coffee", labelStyle)
-        drawText(
-            bedLabel,
-            topLeft = Offset(bL + (bW - bedLabel.size.width) / 2f, bedTop + bedH * 0.25f),
+        drawText(bedLabel, topLeft = Offset(bL + (bW - bedLabel.size.width) / 2f, bedTop + bedH * 0.25f))
+    }
+}
+
+// ─── Info bottom sheet ───────────────────────────────────────
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun BrewInfoSheet(
+    coffeeG: Float,
+    waterG: Float,
+    refillCount: Int,
+    currentPhase: PhaseVisualState?,
+    onDismiss: () -> Unit,
+) {
+    val sheetState = rememberModalBottomSheetState()
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = sheetState,
+        shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 24.dp)
+                .padding(bottom = 32.dp),
+        ) {
+            // Summary
+            Text(
+                text = "Brew Details",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            InfoRow("☕", "Coffee", "${"%.1f".format(coffeeG)}g")
+            InfoRow("💧", "Water", "${"%.0f".format(waterG)}g")
+            InfoRow("⚖️", "Ratio", "1:${"%.1f".format(if (coffeeG > 0f) waterG / coffeeG else 0f)}")
+
+            if (refillCount > 0) {
+                InfoRow("🔄", "Refills", "$refillCount — timer guides you")
+            }
+
+            // Valve state
+            currentPhase?.let { phase ->
+                if (phase.valveState.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "Current Phase",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    InfoRow("🔧", "Valve", phase.valveState.replaceFirstChar { it.uppercaseChar() })
+                }
+                if (phase.instruction.isNotEmpty()) {
+                    Text(
+                        text = phase.instruction,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 8.dp),
+                    )
+                }
+            }
+
+            // Bed depth
+            val bedDepthMm = coffeeG * 0.7f
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Dose Insights",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            InfoRow("📏", "Bed depth", "~${"%.0f".format(bedDepthMm)}mm")
+
+            val bedBarFraction = (bedDepthMm / 25f).coerceIn(0f, 1f)
+            val bedBarColor = when {
+                bedDepthMm < 14f -> Color(0xFFEF5350)
+                bedDepthMm <= 20f -> Color(0xFF66BB6A)
+                else -> Color(0xFFFFA726)
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 6.dp)
+                    .height(10.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(bedBarFraction)
+                        .height(10.dp)
+                        .clip(RoundedCornerShape(5.dp))
+                        .background(bedBarColor),
+                )
+            }
+
+            val grindNote = when {
+                coffeeG <= 20f -> "Similar to V60"
+                coffeeG <= 25f -> "Coarser than V60 · ~800μm"
+                coffeeG <= 30f -> "Approaching batch grind"
+                else -> "Batch territory — adjust by taste"
+            }
+            InfoRow("⚙️", "Grind", grindNote)
+
+            val doseNote = when {
+                coffeeG < 20f -> "Below 20g risks astringency"
+                coffeeG in 20f..25f -> "Sweet spot for clarity & balance"
+                coffeeG in 25f..30f -> "Rich, full-bodied results"
+                else -> "Go coarser, expect longer brew"
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = doseNote,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.primary,
+            )
+
+            // Tips
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Tips",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            val tips = listOf(
+                "No gooseneck needed — dispersion cap distributes water",
+                "Level the bed before brewing",
+                "Gentle swirl after last pour (hold by the base!)",
+                "Dose 20–25g recommended for best bed depth",
+            )
+            tips.forEach { tip ->
+                Text(
+                    text = "• $tip",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 4.dp),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun InfoRow(emoji: String, label: String, value: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(emoji, style = MaterialTheme.typography.bodyLarge)
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.width(80.dp),
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Medium,
         )
     }
 }
 
+// ─── Segmented phase progress bar ────────────────────────────
+
+@Composable
+private fun PhaseSegmentBar(
+    states: List<PhaseVisualState>,
+    selectedPhase: Int,
+    onPhaseSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(6.dp),
+        horizontalArrangement = Arrangement.spacedBy(3.dp),
+    ) {
+        states.forEachIndexed { index, state ->
+            val isActive = index == selectedPhase
+            val isPast = index < selectedPhase
+            val segColor = when {
+                state.phaseName == "Bloom" -> MaterialTheme.colorScheme.tertiary
+                state.phaseName.startsWith("Drain") -> MaterialTheme.colorScheme.error
+                state.phaseName == "Drawdown" -> MaterialTheme.colorScheme.secondary
+                else -> MaterialTheme.colorScheme.primary
+            }
+            val alpha = when {
+                isActive -> 1f
+                isPast -> 0.6f
+                else -> 0.2f
+            }
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(6.dp)
+                    .clip(RoundedCornerShape(3.dp))
+                    .background(segColor.copy(alpha = alpha))
+                    .clickable { onPhaseSelected(index) },
+            )
+        }
+    }
+}
+
+// ─── Main composable: Minimalist Brew Guide ──────────────────
+
 /**
- * Interactive brew plan visualization: M3 Expressive design with large
- * animated Pulsar diagram, emoji phase pills, and bold typography.
+ * Minimalist brew guide. Hero brewer diagram, single bold water number,
+ * thin segmented progress bar, ⓘ for details. Shows only what matters now.
  */
 @Composable
-fun BrewPlanVisualization(
+fun BrewGuide(
     phases: List<BrewPhase>,
     coffeeG: Float,
     waterG: Float,
     capacityMaxG: Float?,
+    refillCount: Int,
     modifier: Modifier = Modifier,
+    activePhaseIndex: Int = -1,
+    nextPhaseName: String? = null,
+    nextPhaseWaterG: Float? = null,
+    showNextPreview: Boolean = false,
 ) {
-    var selectedPhase by remember { mutableIntStateOf(0) }
+    // When activePhaseIndex is provided (timer running), follow it.
+    // Otherwise use internal state for manual browsing.
+    var manualPhase by remember { mutableIntStateOf(0) }
+    val selectedPhase = if (activePhaseIndex >= 0) activePhaseIndex else manualPhase
+    var showInfoSheet by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
     val capacity = capacityMaxG ?: waterG
     val states = remember(phases, capacity) { computePhaseVisualStates(phases, capacity) }
     if (states.isEmpty()) return
@@ -294,7 +503,6 @@ fun BrewPlanVisualization(
     )
     val bedFraction = (coffeeG * 0.7f / 82f).coerceIn(0.12f, 0.35f)
 
-    // Card background animates with phase type
     val cardColor by animateColorAsState(
         targetValue = when {
             current.phaseName == "Bloom" -> MaterialTheme.colorScheme.tertiaryContainer
@@ -324,20 +532,37 @@ fun BrewPlanVisualization(
             .padding(bottom = 16.dp),
     ) {
         Column(
-            modifier = Modifier.padding(24.dp),
+            modifier = Modifier.padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // Phase emoji + name — big and bold
-            Text(
-                text = "${current.emoji} ${current.phaseName}",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = contentColor,
-            )
+            // Top row: phase label + info button
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "${current.emoji} ${current.phaseName}",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = contentColor,
+                )
+                IconButton(
+                    onClick = { showInfoSheet = true },
+                    modifier = Modifier.size(40.dp),
+                ) {
+                    Icon(
+                        Icons.Outlined.Info,
+                        contentDescription = "Brew details",
+                        tint = contentColor.copy(alpha = 0.5f),
+                        modifier = Modifier.size(24.dp),
+                    )
+                }
+            }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-            // Diagram — large and centered
+            // Hero diagram
             PulsarBrewerDiagram(
                 waterFillFraction = animatedFill,
                 bedFraction = bedFraction,
@@ -345,233 +570,79 @@ fun BrewPlanVisualization(
                 showDrip = current.valveOpen && current.waterInBrewer > 0f,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(220.dp),
+                    .height(200.dp),
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            // Water progress — bold numbers
+            // Single bold water number
             if (current.waterThisPhase > 0f) {
                 Text(
                     text = "+${"%.0f".format(current.waterThisPhase)}g",
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = contentColor,
+                )
+            } else {
+                Text(
+                    text = current.phaseName,
+                    style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     color = contentColor,
                 )
             }
-            Text(
-                text = "${"%.0f".format(current.cumulativeWater)}g of ${"%.0f".format(waterG)}g total",
-                style = MaterialTheme.typography.bodyLarge,
-                color = contentColor.copy(alpha = 0.7f),
-            )
-
-            // Water progress bar
-            Spacer(modifier = Modifier.height(10.dp))
-            val progressFraction = if (waterG > 0f) (current.cumulativeWater / waterG).coerceIn(0f, 1f) else 0f
-            val animatedProgress by animateFloatAsState(
-                targetValue = progressFraction,
-                animationSpec = spring(stiffness = Spring.StiffnessLow),
-                label = "progress",
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(10.dp)
-                    .clip(RoundedCornerShape(5.dp))
-                    .background(contentColor.copy(alpha = 0.15f)),
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(animatedProgress)
-                        .height(10.dp)
-                        .clip(RoundedCornerShape(5.dp))
-                        .background(contentColor.copy(alpha = 0.5f)),
-                )
-            }
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Instruction text
-            Text(
-                text = current.instruction,
-                style = MaterialTheme.typography.bodyMedium,
-                color = contentColor.copy(alpha = 0.8f),
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Phase pills — scrollable row of tappable chips
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
-                verticalAlignment = Alignment.CenterVertically,
+            // Next-up preview
+            AnimatedVisibility(
+                visible = showNextPreview && nextPhaseName != null,
+                enter = fadeIn(),
+                exit = fadeOut(),
             ) {
-                states.forEachIndexed { index, state ->
-                    val isSelected = index == selectedPhase
-                    val pillBg = when {
-                        isSelected -> contentColor
-                        state.phaseName.startsWith("Drain") -> MaterialTheme.colorScheme.error.copy(alpha = 0.15f)
-                        else -> contentColor.copy(alpha = 0.12f)
-                    }
-                    val pillText = when {
-                        isSelected -> cardColor
-                        else -> contentColor.copy(alpha = 0.6f)
-                    }
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(pillBg)
-                            .clickable { selectedPhase = index }
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(contentColor.copy(alpha = 0.1f))
+                        .padding(horizontal = 14.dp, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Text(
+                        text = "Next: ${nextPhaseName ?: ""}",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = contentColor.copy(alpha = 0.7f),
+                    )
+                    if (nextPhaseWaterG != null && nextPhaseWaterG > 0f) {
                         Text(
-                            text = if (isSelected) "${state.emoji} ${phaseShortLabel(state.phaseName)}" else phaseShortLabel(state.phaseName),
-                            style = MaterialTheme.typography.labelSmall,
-                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                            color = pillText,
+                            text = " · +${"%.0f".format(nextPhaseWaterG)}g",
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = contentColor.copy(alpha = 0.7f),
                         )
                     }
                 }
             }
-        }
-    }
-}
-
-/**
- * Dose insights with visual bed depth bar and grind recommendation.
- * M3 Expressive: vibrant container, visual meter, bold type.
- */
-@Composable
-fun PulsarDoseInsights(
-    coffeeG: Float,
-    refillCount: Int,
-    modifier: Modifier = Modifier,
-) {
-    val bedDepthMm = coffeeG * 0.7f
-    // Ideal range is 14-25mm (20-35g). Fraction for visual bar:
-    val bedBarFraction = (bedDepthMm / 25f).coerceIn(0f, 1f)
-    val bedBarColor = when {
-        bedDepthMm < 14f -> Color(0xFFEF5350) // too shallow
-        bedDepthMm <= 20f -> Color(0xFF66BB6A) // great
-        else -> Color(0xFFFFA726) // deep (fine, but different)
-    }
-
-    val grindNote = when {
-        coffeeG <= 20f -> "Similar to V60"
-        coffeeG <= 25f -> "Coarser than V60 · ~800μm"
-        coffeeG <= 30f -> "Approaching batch grind"
-        else -> "Batch territory — adjust by taste"
-    }
-
-    val doseEmoji = when {
-        coffeeG < 20f -> "⚠️"
-        coffeeG <= 25f -> "✨"
-        coffeeG <= 30f -> "💪"
-        else -> "🔥"
-    }
-
-    val doseNote = when {
-        coffeeG < 20f -> "Below 20g risks astringency"
-        coffeeG in 20f..25f -> "Sweet spot for clarity & balance"
-        coffeeG in 25f..30f -> "Rich, full-bodied results"
-        else -> "Go coarser, expect longer brew"
-    }
-
-    ElevatedCard(
-        shape = RoundedCornerShape(32.dp),
-        colors = CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-        ),
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(bottom = 12.dp),
-    ) {
-        Column(modifier = Modifier.padding(24.dp)) {
-            Text(
-                text = "$doseEmoji Dose Insights",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Bed depth visual bar
-            Text(
-                text = "Bed depth: ~${"%.0f".format(bedDepthMm)}mm",
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(14.dp)
-                    .clip(RoundedCornerShape(7.dp))
-                    .background(MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.1f)),
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(bedBarFraction)
-                        .height(14.dp)
-                        .clip(RoundedCornerShape(7.dp))
-                        .background(bedBarColor),
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 2.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text("Shallow", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.5f))
-                Text("Deep", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.5f))
-            }
-
-            Spacer(modifier = Modifier.height(14.dp))
-
-            // Grind recommendation
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("⚙️", style = MaterialTheme.typography.titleMedium)
-                Spacer(modifier = Modifier.width(8.dp))
-                Column {
-                    Text(
-                        text = "Grind",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.6f),
-                    )
-                    Text(
-                        text = grindNote,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
-                    )
-                }
-            }
-
-            if (refillCount > 0) {
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("🔄", style = MaterialTheme.typography.titleMedium)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "$refillCount refill${if (refillCount > 1) "s" else ""} — timer guides you",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
-                    )
-                }
-            }
 
             Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = doseNote,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
+
+            // Segmented progress bar
+            PhaseSegmentBar(
+                states = states,
+                selectedPhase = selectedPhase,
+                onPhaseSelected = { manualPhase = it },
             )
         }
+    }
+
+    // Info bottom sheet
+    if (showInfoSheet) {
+        BrewInfoSheet(
+            coffeeG = coffeeG,
+            waterG = waterG,
+            refillCount = refillCount,
+            currentPhase = current,
+            onDismiss = { showInfoSheet = false },
+        )
     }
 }

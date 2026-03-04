@@ -39,7 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.navigation.AmountStrength
-import com.adsamcik.starlitcoffee.navigation.Result
+import com.adsamcik.starlitcoffee.navigation.BrewTimer
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
@@ -100,7 +100,7 @@ fun SavedRecipesScreen(
                         dateFormat = dateFormat,
                         onTap = {
                             brewViewModel.loadRecipe(recipe)
-                            navController.navigate(Result)
+                            navController.navigate(BrewTimer)
                         },
                         onDelete = { brewViewModel.deleteRecipe(recipe) },
                     )
