@@ -302,19 +302,22 @@ class BrewViewModel(
     fun loadRecipe(entity: SavedRecipeEntity) {
         val method = BrewMethod.entries.find { it.name == entity.method } ?: BrewMethod.PULSAR
         val filterType = entity.filterType?.let { raw -> FilterType.entries.find { it.name == raw } }
+        val matchedPreset = StrengthPreset.entries.find {
+            (method.defaultRatio + it.ratioOffset) == entity.ratio
+        }
         _uiState.update {
             it.copy(
                 method = method,
                 inputMode = InputMode.COFFEE_TO_WATER,
                 amount = entity.doseG.toString(),
-                customRatio = entity.ratio.toString(),
+                customRatio = if (matchedPreset != null) "" else entity.ratio.toString(),
                 filterType = filterType,
                 selectedGrinderId = entity.grinderId,
                 bloomMultiplier = "",
                 pulseCount = "",
                 tempC = "",
                 calibrationStyle = null,
-                strengthPreset = StrengthPreset.BALANCED,
+                strengthPreset = matchedPreset ?: StrengthPreset.BALANCED,
             )
         }
         recalculate()
@@ -503,6 +506,7 @@ class BrewViewModel(
             }
 
             val ratioWarning = when {
+                effectiveRatio <= 0f -> "Ratio must be greater than zero"
                 coffeeG <= 0f || waterG <= 0f -> null
                 method == BrewMethod.ESPRESSO -> null
                 effectiveRatio < 10f -> "Ratio 1:${"%.1f".format(effectiveRatio)} is unusually strong"

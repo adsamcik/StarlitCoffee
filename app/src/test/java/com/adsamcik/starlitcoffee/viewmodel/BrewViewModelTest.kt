@@ -987,6 +987,42 @@ class BrewViewModelTest {
         assertEquals(3, persistenceViewModel.coffeeBags.value.size)
     }
 
+    // --- loadRecipe preset matching ---
+
+    @Test
+    fun `loadRecipe matches standard ratio to strength preset`() {
+        // Pulsar default=17, Strong offset=-1, so ratio 16 = Strong
+        val entity = SavedRecipeEntity(
+            method = "PULSAR", ratio = 16f, doseG = 20f, waterG = 320f,
+        )
+        viewModel.loadRecipe(entity)
+        val state = viewModel.uiState.value
+        assertEquals(StrengthPreset.STRONG, state.strengthPreset)
+        assertEquals("", state.customRatio)
+        assertEquals(16f, state.effectiveRatio, 0.01f)
+    }
+
+    @Test
+    fun `loadRecipe uses customRatio for non-standard ratio`() {
+        val entity = SavedRecipeEntity(
+            method = "PULSAR", ratio = 15.5f, doseG = 20f, waterG = 310f,
+        )
+        viewModel.loadRecipe(entity)
+        val state = viewModel.uiState.value
+        assertEquals(StrengthPreset.BALANCED, state.strengthPreset)
+        assertEquals("15.5", state.customRatio)
+        assertEquals(15.5f, state.effectiveRatio, 0.01f)
+    }
+
+    // --- Guardrail for extreme ratios ---
+
+    @Test
+    fun `ratio zero shows guardrail warning`() {
+        viewModel.setCustomRatio("0")
+        val state = viewModel.uiState.value
+        assertEquals("Ratio must be greater than zero", state.ratioWarning)
+    }
+
     // --- setMethod clears recipe overrides ---
 
     @Test

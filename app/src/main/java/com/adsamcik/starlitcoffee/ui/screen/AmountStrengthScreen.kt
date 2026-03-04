@@ -365,6 +365,16 @@ fun AmountStrengthScreen(
             }
         }
 
+        // Guardrail warnings
+        uiState.ratioWarning?.let { warning ->
+            Text(
+                text = "⚠️ $warning",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            )
+        }
+
         // Navigate to full details + timer
         FilledTonalButton(
             onClick = {
