@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
+import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
@@ -101,6 +102,8 @@ class BrewViewModel(
     val brewLogs: StateFlow<List<BrewLogEntity>> = _brewLogs.asStateFlow()
     private val _coffeeBags = MutableStateFlow(emptyList<CoffeeBagEntity>())
     val coffeeBags: StateFlow<List<CoffeeBagEntity>> = _coffeeBags.asStateFlow()
+    private val _selectedBagId = MutableStateFlow<Long?>(null)
+    val selectedBagId: StateFlow<Long?> = _selectedBagId.asStateFlow()
 
     private var timerJob: Job? = null
     private var timerStartMs: Long = 0L
@@ -388,6 +391,7 @@ class BrewViewModel(
         viewModelScope.launch {
             repository.insertLog(
                 BrewLogEntity(
+                    coffeeBagId = _selectedBagId.value,
                     method = state.method.name,
                     doseG = state.coffeeG,
                     waterG = state.waterG,
@@ -405,7 +409,59 @@ class BrewViewModel(
                     brewTimeSeconds = state.elapsedSeconds.takeIf { it > 0 },
                 ),
             )
+            // Auto-decrement bag weight
+            _selectedBagId.value?.let { bagId ->
+                val bag = _coffeeBags.value.find { it.id == bagId }
+                if (bag != null && bag.weightG != null) {
+                    val newWeight = (bag.weightG - state.coffeeG).coerceAtLeast(0f)
+                    coffeeBagRepository?.updateBag(bag.copy(weightG = newWeight))
+                }
+            }
         }
+    }
+
+    fun saveBrewWithRating(
+        rating: Float,
+        descriptors: List<String>,
+        notes: String,
+    ) {
+        val repository = brewLogRepository ?: return
+        val state = _uiState.value
+        viewModelScope.launch {
+            val log = BrewLogEntity(
+                coffeeBagId = _selectedBagId.value,
+                method = state.method.name,
+                doseG = state.coffeeG,
+                waterG = state.waterG,
+                ratio = state.effectiveRatio,
+                grindSetting = when (val result = state.grindResult) {
+                    is GrindResult.Generic -> result.descriptor.displayName
+                    is GrindResult.Specific -> {
+                        "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
+                    }
+                },
+                filterType = state.filterType?.name,
+                rating = rating.toInt().coerceIn(1, 5),
+                freeformNotes = notes.takeIf { it.isNotBlank() },
+                brewTimeSeconds = state.elapsedSeconds.takeIf { it > 0 },
+            )
+            val tags = descriptors.map { descriptor ->
+                FlavorTagEntity(brewLogId = 0, descriptor = descriptor)
+            }
+            repository.saveBrewWithTags(log, tags)
+            // Auto-decrement bag weight
+            _selectedBagId.value?.let { bagId ->
+                val bag = _coffeeBags.value.find { it.id == bagId }
+                if (bag != null && bag.weightG != null) {
+                    val newWeight = (bag.weightG - state.coffeeG).coerceAtLeast(0f)
+                    coffeeBagRepository?.updateBag(bag.copy(weightG = newWeight))
+                }
+            }
+        }
+    }
+
+    fun selectBag(bagId: Long?) {
+        _selectedBagId.value = bagId
     }
 
     fun deleteBrewLog(entity: BrewLogEntity) {
@@ -421,6 +477,8 @@ class BrewViewModel(
         origin: String? = null,
         roastLevel: String? = null,
         processType: String? = null,
+        variety: String? = null,
+        tastingNotes: String? = null,
         roastDate: Long? = null,
         openedDate: Long? = null,
         barcode: String? = null,
@@ -440,6 +498,8 @@ class BrewViewModel(
                     origin = origin,
                     roastLevel = roastLevel,
                     processType = processType,
+                    variety = variety,
+                    tastingNotes = tastingNotes,
                     roastDate = roastDate,
                     openedDate = openedDate,
                     barcode = barcode,

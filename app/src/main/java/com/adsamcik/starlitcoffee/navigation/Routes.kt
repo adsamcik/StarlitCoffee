@@ -30,6 +30,9 @@ object BrewLogList
 object BarcodeScanner
 
 @Serializable
+object CameraCapture
+
+@Serializable
 object OnboardingMethods
 
 @Serializable

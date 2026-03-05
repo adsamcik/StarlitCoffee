@@ -40,6 +40,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.screen.AmountStrengthScreen
@@ -47,6 +48,7 @@ import com.adsamcik.starlitcoffee.ui.screen.BagInventoryScreen
 import com.adsamcik.starlitcoffee.ui.screen.BarcodeScannerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewLogScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
+import com.adsamcik.starlitcoffee.ui.screen.CameraCaptureScreen
 import com.adsamcik.starlitcoffee.ui.screen.MethodPickerScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
@@ -96,6 +98,8 @@ fun StarlitNavHost() {
     // Track onboarding state for methods screen → personalize screen
     val onboardingMethods = remember { mutableStateOf(emptySet<BrewMethod>()) }
     val onboardingDefault = remember { mutableStateOf(BrewMethod.PULSAR) }
+    val onboardingFilter = remember { mutableStateOf<FilterType?>(null) }
+    val onboardingGrinder = remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
 
     val showBottomBar = currentDestination?.let { dest ->
@@ -173,7 +177,16 @@ fun StarlitNavHost() {
             composable<OnboardingPersonalize> {
                 OnboardingPersonalizeScreen(
                     selectedMethods = onboardingMethods.value,
-                    onBack = { navController.popBackStack() },
+                    initialFilter = onboardingFilter.value,
+                    initialGrinder = onboardingGrinder.value,
+                    onBack = {
+                        // Save personalize state before going back
+                        navController.popBackStack()
+                    },
+                    onSelectionChanged = { filter, grinder ->
+                        onboardingFilter.value = filter
+                        onboardingGrinder.value = grinder
+                    },
                     onFinish = { filterType, grinderId ->
                         scope.launch {
                             userPreferencesRepository.completeOnboarding(
@@ -183,7 +196,6 @@ fun StarlitNavHost() {
                                 selectedGrinderId = grinderId,
                             )
                         }
-                        // Apply defaults to ViewModel immediately
                         brewViewModel.setMethod(onboardingDefault.value)
                         if (filterType != null) brewViewModel.setFilterType(filterType)
                         if (grinderId != null) brewViewModel.setGrinder(grinderId)
@@ -244,6 +256,12 @@ fun StarlitNavHost() {
                             ?.savedStateHandle
                             ?.set("scanned_barcode", barcode)
                     },
+                )
+            }
+            composable<CameraCapture> {
+                CameraCaptureScreen(
+                    navController = navController,
+                    brewViewModel = brewViewModel,
                 )
             }
             composable<Settings> {

@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -77,7 +79,10 @@ fun BagInventoryScreen(
     var showAddSheet by remember { mutableStateOf(false) }
     var selectedBag by remember { mutableStateOf<CoffeeBagEntity?>(null) }
     var pendingBarcode by remember { mutableStateOf<String?>(null) }
+    var ocrPrefill by remember { mutableStateOf<com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult?>(null) }
+    var capturedPhotoUris by remember { mutableStateOf<String?>(null) }
 
+    // Handle scanned barcode result
     LaunchedEffect(scannedBarcode) {
         val barcode = scannedBarcode ?: return@LaunchedEffect
         currentBackStackEntry?.savedStateHandle?.set("scanned_barcode", null)
@@ -91,6 +96,43 @@ fun BagInventoryScreen(
                 showAddSheet = true
             }
         }
+    }
+
+    // Handle captured photos result
+    val capturedPhotos by (currentBackStackEntry
+        ?.savedStateHandle
+        ?.getStateFlow<String?>("captured_photos", null)
+        ?.collectAsStateWithLifecycle()
+        ?: remember { mutableStateOf(null) })
+
+    LaunchedEffect(capturedPhotos) {
+        val photos = capturedPhotos ?: return@LaunchedEffect
+        currentBackStackEntry?.savedStateHandle?.set("captured_photos", null)
+        capturedPhotoUris = photos
+        // Run OCR on the first photo
+        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            val firstUri = photos.split(",").firstOrNull() ?: return@withContext
+            try {
+                val file = java.io.File(android.net.Uri.parse(firstUri).path ?: return@withContext)
+                val bitmap = android.graphics.BitmapFactory.decodeFile(file.absolutePath) ?: return@withContext
+                val image = com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0)
+                val recognizer = com.google.mlkit.vision.text.TextRecognition.getClient(
+                    com.google.mlkit.vision.text.latin.TextRecognizerOptions.DEFAULT_OPTIONS,
+                )
+                val result = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+                    recognizer.process(image)
+                        .addOnSuccessListener { text -> cont.resume(text, null) }
+                        .addOnFailureListener { cont.resume(null, null) }
+                }
+                if (result != null) {
+                    val extraction = com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFields(result.text)
+                    ocrPrefill = extraction
+                }
+            } catch (_: Exception) {
+                // OCR failed silently — user fills manually
+            }
+        }
+        showAddSheet = true
     }
 
     Scaffold(
@@ -151,15 +193,22 @@ fun BagInventoryScreen(
     if (showAddSheet) {
         AddBagSheet(
             initialBarcode = pendingBarcode,
+            ocrPrefill = ocrPrefill,
             onDismiss = {
                 showAddSheet = false
                 pendingBarcode = null
+                ocrPrefill = null
+                capturedPhotoUris = null
             },
             onScanBarcode = {
                 showAddSheet = false
                 navController.navigate(BarcodeScanner)
             },
-            onSave = { name, roaster, origin, roastLevel, barcode, weightG, notes ->
+            onScanLabel = {
+                showAddSheet = false
+                navController.navigate(com.adsamcik.starlitcoffee.navigation.CameraCapture)
+            },
+            onSave = { name, roaster, origin, roastLevel, barcode, weightG, notes, variety, processType, tastingNotes ->
                 brewViewModel.addCoffeeBag(
                     name = name,
                     roaster = roaster,
@@ -168,9 +217,15 @@ fun BagInventoryScreen(
                     barcode = barcode,
                     weightG = weightG,
                     notes = notes,
+                    variety = variety,
+                    processType = processType,
+                    tastingNotes = tastingNotes,
+                    photoUri = capturedPhotoUris?.split(",")?.firstOrNull(),
                 )
                 showAddSheet = false
                 pendingBarcode = null
+                ocrPrefill = null
+                capturedPhotoUris = null
             },
         )
     }
@@ -265,8 +320,10 @@ private fun BagCard(
 @Composable
 private fun AddBagSheet(
     initialBarcode: String? = null,
+    ocrPrefill: com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult? = null,
     onDismiss: () -> Unit,
     onScanBarcode: () -> Unit,
+    onScanLabel: () -> Unit,
     onSave: (
         name: String,
         roaster: String?,
@@ -275,12 +332,18 @@ private fun AddBagSheet(
         barcode: String?,
         weightG: Float?,
         notes: String?,
+        variety: String?,
+        processType: String?,
+        tastingNotes: String?,
     ) -> Unit,
 ) {
-    var name by remember { mutableStateOf("") }
-    var roaster by remember { mutableStateOf("") }
-    var origin by remember { mutableStateOf("") }
-    var roastLevel by remember { mutableStateOf("") }
+    var name by remember(ocrPrefill) { mutableStateOf("") }
+    var roaster by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.roaster ?: "") }
+    var origin by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.origin ?: "") }
+    var roastLevel by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.roastLevel ?: "") }
+    var variety by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.variety ?: "") }
+    var processType by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.processType ?: "") }
+    var tastingNotes by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.tastingNotes ?: "") }
     var barcode by remember(initialBarcode) { mutableStateOf(initialBarcode.orEmpty()) }
     var weight by remember { mutableStateOf("") }
     var notes by remember { mutableStateOf("") }
@@ -293,106 +356,181 @@ private fun AddBagSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 16.dp),
+                .padding(horizontal = 24.dp),
         ) {
             Text(
                 text = "Add Coffee Bag",
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 16.dp),
+                modifier = Modifier.padding(bottom = 16.dp, top = 16.dp),
             )
 
-            if (initialBarcode != null) {
-                OutlinedTextField(
-                    value = initialBarcode,
-                    onValueChange = {},
-                    label = { Text("Barcode") },
-                    shape = RoundedCornerShape(16.dp),
-                    readOnly = true,
-                    enabled = false,
-                    singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                )
-            }
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                label = { Text("Name *") },
-                shape = RoundedCornerShape(16.dp),
-                singleLine = true,
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-            )
-            OutlinedTextField(
-                value = roaster,
-                onValueChange = { roaster = it },
-                label = { Text("Roaster") },
-                shape = RoundedCornerShape(16.dp),
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-            )
-            OutlinedTextField(
-                value = origin,
-                onValueChange = { origin = it },
-                label = { Text("Origin") },
-                shape = RoundedCornerShape(16.dp),
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-            )
-            OutlinedTextField(
-                value = roastLevel,
-                onValueChange = { roastLevel = it },
-                label = { Text("Roast level") },
-                shape = RoundedCornerShape(16.dp),
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-            )
-            OutlinedTextField(
-                value = weight,
-                onValueChange = { weight = it },
-                label = { Text("Weight (g)") },
-                shape = RoundedCornerShape(16.dp),
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-            )
-            OutlinedTextField(
-                value = notes,
-                onValueChange = { notes = it },
-                label = { Text("Notes") },
-                shape = RoundedCornerShape(16.dp),
-                minLines = 2,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-            )
-
-            OutlinedButton(
-                onClick = {
-                    onDismiss()
-                    onScanBarcode()
-                },
-                shape = RoundedCornerShape(28.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(bottom = 0.dp),
+                    .weight(1f),
             ) {
-                Icon(Icons.Filled.CameraAlt, contentDescription = null)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Scan Barcode")
+                if (initialBarcode != null) {
+                    item {
+                        OutlinedTextField(
+                            value = initialBarcode,
+                            onValueChange = {},
+                            label = { Text("Barcode") },
+                            shape = RoundedCornerShape(16.dp),
+                            readOnly = true,
+                            enabled = false,
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                        )
+                    }
+                }
+                item {
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = { name = it },
+                        label = { Text("Name *") },
+                        shape = RoundedCornerShape(16.dp),
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                item {
+                    OutlinedTextField(
+                        value = roaster,
+                        onValueChange = { roaster = it },
+                        label = { Text("Roaster") },
+                        shape = RoundedCornerShape(16.dp),
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                item {
+                    OutlinedTextField(
+                        value = origin,
+                        onValueChange = { origin = it },
+                        label = { Text("Origin") },
+                        shape = RoundedCornerShape(16.dp),
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                item {
+                    OutlinedTextField(
+                        value = roastLevel,
+                        onValueChange = { roastLevel = it },
+                        label = { Text("Roast level") },
+                        shape = RoundedCornerShape(16.dp),
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                item {
+                    OutlinedTextField(
+                        value = variety,
+                        onValueChange = { variety = it },
+                        label = { Text("Variety") },
+                        shape = RoundedCornerShape(16.dp),
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                item {
+                    OutlinedTextField(
+                        value = processType,
+                        onValueChange = { processType = it },
+                        label = { Text("Process") },
+                        shape = RoundedCornerShape(16.dp),
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                item {
+                    OutlinedTextField(
+                        value = tastingNotes,
+                        onValueChange = { tastingNotes = it },
+                        label = { Text("Tasting notes") },
+                        shape = RoundedCornerShape(16.dp),
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                item {
+                    OutlinedTextField(
+                        value = weight,
+                        onValueChange = { weight = it },
+                        label = { Text("Weight (g)") },
+                        shape = RoundedCornerShape(16.dp),
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                item {
+                    OutlinedTextField(
+                        value = notes,
+                        onValueChange = { notes = it },
+                        label = { Text("Notes") },
+                        shape = RoundedCornerShape(16.dp),
+                        minLines = 2,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                item {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    ) {
+                        OutlinedButton(
+                            onClick = {
+                                onDismiss()
+                                onScanLabel()
+                            },
+                            shape = RoundedCornerShape(28.dp),
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp),
+                        ) {
+                            Icon(Icons.Filled.CameraAlt, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("OCR", style = MaterialTheme.typography.labelMedium)
+                        }
+                        OutlinedButton(
+                            onClick = {
+                                onDismiss()
+                                onScanBarcode()
+                            },
+                            shape = RoundedCornerShape(28.dp),
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp),
+                        ) {
+                            Icon(Icons.Filled.CameraAlt, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Barcode", style = MaterialTheme.typography.labelMedium)
+                        }
+                    }
+                }
             }
-
-            Spacer(modifier = Modifier.height(12.dp))
 
             Button(
                 onClick = {
@@ -405,6 +543,9 @@ private fun AddBagSheet(
                             barcode.takeIf { it.isNotBlank() },
                             weight.toFloatOrNull(),
                             notes.takeIf { it.isNotBlank() },
+                            variety.takeIf { it.isNotBlank() },
+                            processType.takeIf { it.isNotBlank() },
+                            tastingNotes.takeIf { it.isNotBlank() },
                         )
                     }
                 },
@@ -412,12 +553,11 @@ private fun AddBagSheet(
                 enabled = name.isNotBlank(),
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(vertical = 12.dp)
                     .height(56.dp),
             ) {
                 Text("Save", style = MaterialTheme.typography.labelLarge)
             }
-
-            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }

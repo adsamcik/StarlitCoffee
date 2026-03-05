@@ -9,6 +9,7 @@ lifecycle = "2.10.0"
 coreKtx = "1.17.0"
 activityCompose = "1.12.4"
 mlkitBarcodeScanning = "17.3.0"
+mlkitTextRecognition = "16.0.1"
 cameraX = "1.5.3"
 datastore = "1.1.4"
 coroutines = "1.10.2"
@@ -46,6 +47,7 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 
 # ML Kit Barcode
 mlkit-barcode = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "mlkitBarcodeScanning" }
+mlkit-text-recognition = { group = "com.google.mlkit", name = "text-recognition", version.ref = "mlkitTextRecognition" }
 
 # CameraX
 camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraX" }
