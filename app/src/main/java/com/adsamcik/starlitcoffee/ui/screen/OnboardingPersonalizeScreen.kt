@@ -43,14 +43,17 @@ import com.adsamcik.starlitcoffee.data.model.FilterType
 @Composable
 fun OnboardingPersonalizeScreen(
     selectedMethods: Set<BrewMethod>,
+    initialFilter: FilterType? = null,
+    initialGrinder: String? = null,
     onBack: () -> Unit,
+    onSelectionChanged: (FilterType?, String?) -> Unit = { _, _ -> },
     onFinish: (
         filterType: FilterType?,
         grinderId: String?,
     ) -> Unit,
 ) {
-    val filterType = remember { mutableStateOf<FilterType?>(null) }
-    val selectedGrinderId = remember { mutableStateOf<String?>(null) }
+    val filterType = remember { mutableStateOf(initialFilter) }
+    val selectedGrinderId = remember { mutableStateOf(initialGrinder) }
 
     val showFilterSection = selectedMethods.contains(BrewMethod.PULSAR)
 
@@ -60,7 +63,10 @@ fun OnboardingPersonalizeScreen(
             .padding(horizontal = 16.dp, vertical = 24.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = {
+                    onSelectionChanged(filterType.value, selectedGrinderId.value)
+                    onBack()
+                }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
