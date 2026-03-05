@@ -46,6 +46,42 @@ kotlin {
     }
 }
 
+// Push coffee bag test images to connected device/emulator
+tasks.register("pushTestImages") {
+    group = "verification"
+    description = "Push test coffee bag images to connected device/emulator"
+
+    doLast {
+        val testDataDir = rootProject.file("testdata/coffee-bags")
+        require(testDataDir.exists() && testDataDir.isDirectory) {
+            "testdata/coffee-bags/ not found. See testdata/README.md for setup instructions."
+        }
+
+        val adb = (extensions.getByName("android") as com.android.build.gradle.BaseExtension)
+            .adbExecutable.absolutePath
+
+        val deviceDir = "/data/local/tmp/coffee-bags"
+
+        fun adb(vararg args: String) {
+            val cmd = listOf(adb) + args.toList()
+            val proc = ProcessBuilder(cmd).inheritIO().start()
+            require(proc.waitFor() == 0) { "adb command failed: ${cmd.joinToString(" ")}" }
+        }
+
+        adb("shell", "mkdir", "-p", deviceDir)
+
+        val images = testDataDir.listFiles()
+            ?.filter { it.extension.lowercase() in listOf("jpg", "jpeg", "png") }
+            ?: emptyList()
+
+        images.forEach { file ->
+            adb("push", file.absolutePath, "$deviceDir/${file.name}")
+        }
+
+        println("Pushed ${images.size} images to $deviceDir")
+    }
+}
+
 dependencies {
     // Compose BOM
     val composeBom = platform(libs.compose.bom)
@@ -80,6 +116,9 @@ dependencies {
     // ML Kit Barcode Scanning
     implementation(libs.mlkit.barcode)
     implementation(libs.mlkit.text.recognition)
+
+    // ML Kit GenAI (on-device Gemini Nano)
+    implementation(libs.mlkit.genai.prompt)
 
     // OpenCV (image preprocessing for OCR)
     implementation(libs.opencv)

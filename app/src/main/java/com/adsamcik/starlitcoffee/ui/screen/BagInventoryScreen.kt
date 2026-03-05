@@ -70,6 +70,8 @@ import java.util.Locale
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
 
+private const val LOW_COFFEE_THRESHOLD_G = 30f
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BagInventoryScreen(
@@ -443,11 +445,38 @@ private fun BagCard(
                     )
                 }
                 bag.weightG?.let { w ->
-                    Text(
-                        text = "${"%.0f".format(w)}g",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+                    val initial = bag.initialWeightG ?: w
+                    val progress = if (initial > 0f) (w / initial).coerceIn(0f, 1f) else 0f
+                    val isLow = w in 0.01f..LOW_COFFEE_THRESHOLD_G
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        androidx.compose.material3.LinearProgressIndicator(
+                            progress = { progress },
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(6.dp)
+                                .clip(RoundedCornerShape(3.dp)),
+                            color = when {
+                                isLow -> MaterialTheme.colorScheme.error
+                                progress < 0.3f -> MaterialTheme.colorScheme.tertiary
+                                else -> MaterialTheme.colorScheme.primary
+                            },
+                            trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "${"%.0f".format(w)}g",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = if (isLow) MaterialTheme.colorScheme.error
+                                else MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    if (isLow) {
+                        Text(
+                            text = "⚠ Low coffee",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
                 }
                 if (bag.roastDate != null) {
                     Text(
@@ -697,6 +726,7 @@ private fun BagDetailSheet(
     onDismiss: () -> Unit,
     onStatusChange: (CoffeeBagStatus) -> Unit,
     onDelete: () -> Unit,
+    onWeightAdjust: (Long, Float) -> Unit = { _, _ -> },
 ) {
     var statusMenuExpanded by remember { mutableStateOf(false) }
 
@@ -766,7 +796,92 @@ private fun BagDetailSheet(
                     if (bag.variety != null) DetailRow("Variety", bag.variety)
                     if (bag.roastLevel != null) DetailRow("Roast", bag.roastLevel)
                     if (bag.roastDate != null) DetailRow("Roast date", dateFormat.format(Date(bag.roastDate)))
-                    if (bag.weightG != null) DetailRow("Weight", "${"%.0f".format(bag.weightG)}g")
+                    // Weight section with progress bar, estimated doses, and adjust button
+                    if (bag.weightG != null) {
+                        val remaining = bag.weightG
+                        val initial = bag.initialWeightG ?: remaining
+                        val progress = if (initial > 0f) (remaining / initial).coerceIn(0f, 1f) else 0f
+                        val isLow = remaining in 0.01f..LOW_COFFEE_THRESHOLD_G
+
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Remaining Coffee",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier.padding(bottom = 4.dp),
+                        )
+                        androidx.compose.material3.LinearProgressIndicator(
+                            progress = { progress },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(8.dp)
+                                .clip(RoundedCornerShape(4.dp)),
+                            color = when {
+                                isLow -> MaterialTheme.colorScheme.error
+                                progress < 0.3f -> MaterialTheme.colorScheme.tertiary
+                                else -> MaterialTheme.colorScheme.primary
+                            },
+                            trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                text = "${"%.0f".format(remaining)}g / ${"%.0f".format(initial)}g",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = if (isLow) MaterialTheme.colorScheme.error
+                                    else MaterialTheme.colorScheme.onSurface,
+                            )
+                            Text(
+                                text = "${"%.0f".format(progress * 100)}%",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        // Estimated doses remaining
+                        val avgDose = brewLogs.takeIf { it.isNotEmpty() }
+                            ?.map { it.doseG }?.average()?.toFloat()
+                            ?: 20f
+                        if (remaining > 0f) {
+                            val estimatedDoses = (remaining / avgDose).toInt()
+                            Text(
+                                text = "~$estimatedDoses dose${if (estimatedDoses != 1) "s" else ""} remaining" +
+                                    " (at ${"%.0f".format(avgDose)}g/dose)",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(top = 2.dp),
+                            )
+                        }
+                        if (isLow) {
+                            Text(
+                                text = "⚠ Running low — consider reordering",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.padding(top = 4.dp),
+                            )
+                        }
+                        // Manual adjust button
+                        var showWeightDialog by remember { mutableStateOf(false) }
+                        OutlinedButton(
+                            onClick = { showWeightDialog = true },
+                            modifier = Modifier.padding(top = 8.dp),
+                        ) {
+                            Text("Adjust weight")
+                        }
+                        if (showWeightDialog) {
+                            WeightAdjustDialog(
+                                currentWeight = remaining,
+                                onDismiss = { showWeightDialog = false },
+                                onConfirm = { newWeight ->
+                                    showWeightDialog = false
+                                    onWeightAdjust(bag.id, newWeight)
+                                },
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                     if (bag.tastingNotes != null) DetailRow("Tasting notes", bag.tastingNotes)
                     if (bag.notes != null) DetailRow("Notes", bag.notes)
                     if (bag.traceabilityUrl != null) {
@@ -895,6 +1010,35 @@ private fun BagDetailSheet(
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
+}
+
+@Composable
+private fun WeightAdjustDialog(
+    currentWeight: Float,
+    onDismiss: () -> Unit,
+    onConfirm: (Float) -> Unit,
+) {
+    var text by remember { mutableStateOf(currentWeight.toString()) }
+    androidx.compose.material3.AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Adjust weight") },
+        text = {
+            OutlinedTextField(
+                value = text,
+                onValueChange = { text = it },
+                label = { Text("Remaining weight (g)") },
+                singleLine = true,
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = { text.toFloatOrNull()?.let(onConfirm) }) {
+                Text("Save")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("Cancel") }
+        },
+    )
 }
 
 /**
