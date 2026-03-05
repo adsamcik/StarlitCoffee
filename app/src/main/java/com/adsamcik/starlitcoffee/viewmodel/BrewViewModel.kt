@@ -24,6 +24,7 @@ import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.audio.BrewAudioManager
 import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
+import com.adsamcik.starlitcoffee.data.model.BrewAudioEvent
 import com.adsamcik.starlitcoffee.service.TimerStateHolder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -89,6 +90,8 @@ data class BrewUiState(
     val phaseOvertime: Boolean = false,
     val showNextPreview: Boolean = false,
     val showFeedbackSnackbar: Boolean = false,
+    // Audio auto-advance
+    val audioAutoAdvanceEnabled: Boolean = true,
     // Feedback state
     val tasteFeedback: TasteFeedback? = null,
     val rating: Int = 0,
@@ -118,6 +121,7 @@ class BrewViewModel(
     private var _audioManager: BrewAudioManager? = null
     val audioState: StateFlow<AudioAnalysisState>
         get() = _audioManager?.analysisState ?: MutableStateFlow(AudioAnalysisState())
+    private var brewEventJob: Job? = null
 
     private var timerJob: Job? = null
     private var timerStartMs: Long = 0L
@@ -326,6 +330,46 @@ class BrewViewModel(
     fun initAudioManager(outputDirectory: java.io.File) {
         if (_audioManager != null) return
         _audioManager = BrewAudioManager(outputDirectory = outputDirectory)
+        startBrewEventCollection()
+    }
+
+    private fun startBrewEventCollection() {
+        brewEventJob?.cancel()
+        val manager = _audioManager ?: return
+        brewEventJob = viewModelScope.launch {
+            manager.brewEvents.collect { event ->
+                handleBrewAudioEvent(event)
+            }
+        }
+    }
+
+    /**
+     * Handles brew audio events for auto-advance.
+     * Only advances EVENT_GATED phases when the matching event is detected.
+     */
+    private fun handleBrewAudioEvent(event: BrewAudioEvent) {
+        val state = _uiState.value
+        if (!state.audioAutoAdvanceEnabled || !state.timerRunning) return
+        if (state.currentPhaseIndex >= state.timerPhases.lastIndex) return
+
+        val phase = state.timerPhases.getOrNull(state.currentPhaseIndex) ?: return
+        if (phase.mode != PhaseMode.EVENT_GATED) return
+
+        val shouldAdvance = when (phase.phaseType) {
+            // Drawdown complete: silence sustained after dripping
+            PhaseType.DRAWDOWN -> event is BrewAudioEvent.DrawdownComplete
+            // Drain & refill: user started pouring again
+            PhaseType.DRAIN_AND_REFILL -> event is BrewAudioEvent.PourStarted
+            else -> false
+        }
+
+        if (shouldAdvance) {
+            advancePhase()
+        }
+    }
+
+    fun setAudioAutoAdvance(enabled: Boolean) {
+        _uiState.update { it.copy(audioAutoAdvanceEnabled = enabled) }
     }
 
     fun startAudioMonitoring() {
@@ -493,12 +537,30 @@ class BrewViewModel(
                 ),
             )
             lastLoggedBrewId = logId
-            // Auto-decrement bag weight
+            // Auto-decrement bag weight + auto-status transitions
             _selectedBagId.value?.let { bagId ->
                 val bag = _coffeeBags.value.find { it.id == bagId }
-                if (bag != null && bag.weightG != null) {
-                    val newWeight = (bag.weightG - state.coffeeG).coerceAtLeast(0f)
-                    coffeeBagRepository?.updateBag(bag.copy(weightG = newWeight))
+                if (bag != null) {
+                    var updated = bag
+                    // SEALED → OPEN on first brew
+                    if (bag.status == "SEALED") {
+                        updated = updated.copy(
+                            status = "OPEN",
+                            openedDate = System.currentTimeMillis(),
+                        )
+                    }
+                    // Decrement weight
+                    if (updated.weightG != null) {
+                        val newWeight = (updated.weightG - state.coffeeG).coerceAtLeast(0f)
+                        updated = updated.copy(weightG = newWeight)
+                        // OPEN → FINISHED when depleted
+                        if (newWeight <= 0f && updated.status == "OPEN") {
+                            updated = updated.copy(status = "FINISHED")
+                        }
+                    }
+                    if (updated != bag) {
+                        coffeeBagRepository?.updateBag(updated)
+                    }
                 }
             }
         }
@@ -569,6 +631,7 @@ class BrewViewModel(
         name: String,
         roaster: String? = null,
         origin: String? = null,
+        region: String? = null,
         roastLevel: String? = null,
         processType: String? = null,
         variety: String? = null,
@@ -592,6 +655,7 @@ class BrewViewModel(
                     name = name,
                     roaster = roaster,
                     origin = origin,
+                    region = region,
                     roastLevel = roastLevel,
                     processType = processType,
                     variety = variety,
@@ -600,6 +664,7 @@ class BrewViewModel(
                     openedDate = openedDate,
                     barcode = barcode,
                     weightG = weightG,
+                    initialWeightG = weightG,
                     priceAmount = priceAmount,
                     priceCurrency = priceCurrency,
                     notes = notes,
@@ -631,6 +696,21 @@ class BrewViewModel(
         val bag = _coffeeBags.value.find { it.id == bagId } ?: return
         viewModelScope.launch {
             repository.updateBag(bag.copy(status = status))
+        }
+    }
+
+    fun adjustBagWeight(bagId: Long, newWeightG: Float) {
+        val repository = coffeeBagRepository ?: return
+        val bag = _coffeeBags.value.find { it.id == bagId } ?: return
+        viewModelScope.launch {
+            var updated = bag.copy(weightG = newWeightG.coerceAtLeast(0f))
+            if (updated.initialWeightG == null && newWeightG > 0f) {
+                updated = updated.copy(initialWeightG = newWeightG)
+            }
+            if (newWeightG <= 0f && updated.status == "OPEN") {
+                updated = updated.copy(status = "FINISHED")
+            }
+            repository.updateBag(updated)
         }
     }
 

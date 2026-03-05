@@ -38,6 +38,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
+import com.adsamcik.starlitcoffee.data.model.BrewAudioEvent
+import com.adsamcik.starlitcoffee.data.model.DetectorState
+import com.adsamcik.starlitcoffee.data.model.FrequencyBand
 
 /**
  * Debug overlay card showing real-time audio analysis during brew.
@@ -120,6 +123,16 @@ fun AudioDebugOverlay(
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+
+                    // Detector state mini-badge (collapsed view)
+                    if (audioState.detectorState != DetectorState.IDLE) {
+                        Spacer(Modifier.width(4.dp))
+                        val (stateLabel, _) = detectorStateDisplay(audioState.detectorState)
+                        Text(
+                            text = stateLabel,
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                    }
                 }
 
                 // Recording indicator
@@ -201,6 +214,11 @@ fun AudioDebugOverlay(
                     // Audio features
                     if (isMonitoring) {
                         AudioFeaturesGrid(audioState)
+
+                        Spacer(Modifier.height(8.dp))
+
+                        // Detector state + spectral features
+                        DetectorStateSection(audioState)
 
                         Spacer(Modifier.height(8.dp))
 
@@ -318,6 +336,146 @@ private fun LevelHistoryChart(
             )
         }
     }
+}
+
+/**
+ * Shows the brew event detector state, band energy levels, and drip rate.
+ */
+@Composable
+private fun DetectorStateSection(audioState: AudioAnalysisState) {
+    Column {
+        // Detector state badge + last event
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            val (stateLabel, stateColor) = detectorStateDisplay(audioState.detectorState)
+            Text(
+                text = stateLabel,
+                style = MaterialTheme.typography.labelMedium,
+                color = stateColor,
+            )
+
+            Spacer(Modifier.width(12.dp))
+
+            // Drip rate (only during DRIPPING)
+            if (audioState.detectorState == DetectorState.DRIPPING && audioState.dripRate > 0f) {
+                Text(
+                    text = "💧 %.1f/s".format(audioState.dripRate),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.tertiary,
+                )
+                Spacer(Modifier.width(12.dp))
+            }
+
+            // Spectral tilt (water signature indicator)
+            val tilt = audioState.spectralFeatures.spectralTilt
+            if (tilt > 1.5f) {
+                Text(
+                    text = "🌊 %.1f".format(tilt),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+
+        Spacer(Modifier.height(4.dp))
+
+        // Band energy bars
+        for (band in FrequencyBand.entries) {
+            val energy = audioState.spectralFeatures.bandEnergyDb[band] ?: -96f
+            val floor = audioState.noiseFloorDb[band] ?: -60f
+            BandEnergyBar(band, energy, floor)
+        }
+
+        // Last event
+        audioState.lastBrewEvent?.let { event ->
+            Text(
+                text = "Event: ${formatBrewEvent(event)}",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 4.dp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun BandEnergyBar(
+    band: FrequencyBand,
+    energyDb: Float,
+    noiseFloorDb: Float,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 1.dp),
+    ) {
+        Text(
+            text = band.displayName,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.width(52.dp),
+        )
+
+        val fraction = dbToFraction(energyDb)
+        val floorFraction = dbToFraction(noiseFloorDb)
+        val barColor = when (band) {
+            FrequencyBand.POUR -> MaterialTheme.colorScheme.primary
+            FrequencyBand.DRIP -> MaterialTheme.colorScheme.tertiary
+            FrequencyBand.HIGH_MID -> MaterialTheme.colorScheme.secondary
+        }
+        val floorColor = MaterialTheme.colorScheme.outlineVariant
+
+        Canvas(
+            modifier = Modifier
+                .weight(1f)
+                .height(10.dp),
+        ) {
+            // Noise floor marker
+            val floorX = size.width * floorFraction
+            drawLine(
+                color = floorColor,
+                start = Offset(floorX, 0f),
+                end = Offset(floorX, size.height),
+                strokeWidth = 2f,
+            )
+            // Energy bar
+            drawLine(
+                color = barColor,
+                start = Offset(0f, size.height / 2),
+                end = Offset(size.width * fraction, size.height / 2),
+                strokeWidth = size.height * 0.6f,
+                cap = StrokeCap.Round,
+            )
+        }
+
+        Text(
+            text = "${energyDb.toInt()}",
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.width(32.dp),
+        )
+    }
+}
+
+@Composable
+private fun detectorStateDisplay(state: DetectorState): Pair<String, Color> {
+    return when (state) {
+        DetectorState.IDLE -> "⏸ Idle" to MaterialTheme.colorScheme.onSurfaceVariant
+        DetectorState.POURING -> "🫗 Pouring" to MaterialTheme.colorScheme.primary
+        DetectorState.DRIPPING -> "💧 Dripping" to MaterialTheme.colorScheme.tertiary
+        DetectorState.COMPLETE -> "✅ Complete" to MaterialTheme.colorScheme.secondary
+    }
+}
+
+private fun formatBrewEvent(event: BrewAudioEvent): String = when (event) {
+    is BrewAudioEvent.PourStarted -> "Pour started (+%.1fdB)".format(event.confidenceDb)
+    is BrewAudioEvent.PourStopped -> "Pour stopped (${event.durationMs / 1000}s)"
+    is BrewAudioEvent.DripDetected -> "Drip (${event.energyDb.toInt()}dB)"
+    is BrewAudioEvent.DripRateUpdated -> "Rate: %.1f/s".format(event.dripsPerSecond)
+    is BrewAudioEvent.DrawdownComplete -> "Drawdown done (${event.totalDrainTimeMs / 1000}s)"
 }
 
 /**
