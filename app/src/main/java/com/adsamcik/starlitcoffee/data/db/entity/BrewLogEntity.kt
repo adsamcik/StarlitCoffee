@@ -16,7 +16,7 @@ data class BrewLogEntity(
     val grindSetting: String? = null,
     val filterType: String? = null,
     val tasteFeedback: String? = null,
-    val rating: Int? = null,
+    val rating: Float? = null,
     val freeformNotes: String? = null,
     val brewTimeSeconds: Int? = null,
     val createdAt: Long = System.currentTimeMillis(),

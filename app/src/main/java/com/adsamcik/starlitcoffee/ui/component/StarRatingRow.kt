@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.ui.component
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.StarHalf
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Icon
@@ -14,16 +15,21 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun StarRatingRow(
-    rating: Int,
+    rating: Float,
     modifier: Modifier = Modifier,
     starSize: Dp = 16.dp,
 ) {
     Row(modifier = modifier) {
         for (i in 1..5) {
+            val icon = when {
+                rating >= i -> Icons.Filled.Star
+                rating >= i - 0.5f -> Icons.AutoMirrored.Filled.StarHalf
+                else -> Icons.Filled.StarBorder
+            }
             Icon(
-                imageVector = if (i <= rating) Icons.Filled.Star else Icons.Filled.StarBorder,
+                imageVector = icon,
                 contentDescription = null,
-                tint = if (i <= rating) {
+                tint = if (rating >= i - 0.5f) {
                     MaterialTheme.colorScheme.primary
                 } else {
                     MaterialTheme.colorScheme.onSurfaceVariant

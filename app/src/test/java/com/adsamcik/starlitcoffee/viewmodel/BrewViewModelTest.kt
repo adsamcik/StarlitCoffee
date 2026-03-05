@@ -769,7 +769,7 @@ class BrewViewModelTest {
         assertEquals(20f, logs.first().doseG, 0.01f)
         assertEquals(320f, logs.first().waterG, 0.01f)
         assertEquals("BALANCED", logs.first().tasteFeedback)
-        assertEquals(4, logs.first().rating)
+        assertEquals(4f, logs.first().rating)
     }
 
     @Test
@@ -789,7 +789,7 @@ class BrewViewModelTest {
 
         persistenceViewModel.logBrew()
 
-        assertEquals(4, persistenceViewModel.brewLogs.value.first().rating)
+        assertEquals(4f, persistenceViewModel.brewLogs.value.first().rating)
     }
 
     @Test
@@ -1141,7 +1141,7 @@ private class FakeBrewLogDao : BrewLogDao {
         flow.value = logs.toList()
     }
 
-    override suspend fun updateRating(logId: Long, rating: Int, notes: String?) {
+    override suspend fun updateRating(logId: Long, rating: Float, notes: String?) {
         val index = logs.indexOfFirst { it.id == logId }
         if (index >= 0) {
             logs[index] = logs[index].copy(rating = rating, freeformNotes = notes)

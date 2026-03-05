@@ -405,7 +405,7 @@ class BrewViewModel(
                     },
                     filterType = state.filterType?.name,
                     tasteFeedback = state.tasteFeedback?.name,
-                    rating = state.rating.takeIf { it > 0 },
+                    rating = state.rating.takeIf { it > 0 }?.toFloat(),
                     freeformNotes = state.feedbackNotes.takeIf { it.isNotBlank() },
                     brewTimeSeconds = state.elapsedSeconds.takeIf { it > 0 },
                 ),
@@ -430,7 +430,7 @@ class BrewViewModel(
         val repository = brewLogRepository ?: return
         val logId = lastLoggedBrewId ?: return
         viewModelScope.launch {
-            repository.updateRating(logId, rating.toInt().coerceIn(1, 5), notes.takeIf { it.isNotBlank() })
+            repository.updateRating(logId, rating, notes.takeIf { it.isNotBlank() })
             if (descriptors.isNotEmpty()) {
                 val tags = descriptors.map { descriptor ->
                     FlavorTagEntity(brewLogId = logId, descriptor = descriptor)

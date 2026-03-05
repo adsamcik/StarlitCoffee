@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AcUnit
 import androidx.compose.material.icons.filled.Air
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Coffee
 import androidx.compose.material.icons.filled.FilterDrama
 import androidx.compose.material.icons.filled.FilterList
@@ -303,7 +304,13 @@ fun MethodPickerScreen(
         if (activeBags.isNotEmpty()) {
             FilterChip(
                 selected = selectedBag != null,
-                onClick = { showBagPicker = true },
+                onClick = {
+                    if (selectedBag != null) {
+                        brewViewModel.selectBag(null)
+                    } else {
+                        showBagPicker = true
+                    }
+                },
                 label = {
                     Text(
                         text = selectedBag?.let { "☕ ${it.name}" } ?: "Select coffee bag",
@@ -313,12 +320,11 @@ fun MethodPickerScreen(
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
                 trailingIcon = if (selectedBag != null) {
                     {
-                        IconButton(
-                            onClick = { brewViewModel.selectBag(null) },
+                        Icon(
+                            Icons.Filled.Close,
+                            contentDescription = "Clear bag",
                             modifier = Modifier.size(18.dp),
-                        ) {
-                            Text("✕", style = MaterialTheme.typography.labelSmall)
-                        }
+                        )
                     }
                 } else {
                     null
