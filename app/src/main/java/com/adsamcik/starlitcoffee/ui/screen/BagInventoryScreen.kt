@@ -3,6 +3,8 @@ package com.adsamcik.starlitcoffee.ui.screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +30,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -52,6 +55,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.CoffeeBagStatus
 import com.adsamcik.starlitcoffee.navigation.BarcodeScanner
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
@@ -68,6 +72,7 @@ fun BagInventoryScreen(
     brewViewModel: BrewViewModel,
 ) {
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+    val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
     val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val scannedBarcode by (currentBackStackEntry
@@ -83,6 +88,8 @@ fun BagInventoryScreen(
     var capturedPhotoUris by remember { mutableStateOf<String?>(null) }
 
     // Handle scanned barcode result
+    var offLookupName by remember { mutableStateOf<String?>(null) }
+    var offLookupRoaster by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(scannedBarcode) {
         val barcode = scannedBarcode ?: return@LaunchedEffect
         currentBackStackEntry?.savedStateHandle?.set("scanned_barcode", null)
@@ -95,6 +102,22 @@ fun BagInventoryScreen(
                 pendingBarcode = barcode
                 showAddSheet = true
             }
+        }
+    }
+
+    // Open Food Facts lookup when we have a pending barcode
+    LaunchedEffect(pendingBarcode) {
+        val barcode = pendingBarcode ?: return@LaunchedEffect
+        try {
+            val result = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                com.adsamcik.starlitcoffee.data.network.OpenFoodFactsClient.lookupBarcode(barcode)
+            }
+            if (result != null) {
+                offLookupName = result.name
+                offLookupRoaster = result.brand
+            }
+        } catch (_: Exception) {
+            // OFF lookup failed — user fills manually
         }
     }
 
@@ -194,11 +217,15 @@ fun BagInventoryScreen(
         AddBagSheet(
             initialBarcode = pendingBarcode,
             ocrPrefill = ocrPrefill,
+            initialName = offLookupName,
+            initialRoaster = offLookupRoaster,
             onDismiss = {
                 showAddSheet = false
                 pendingBarcode = null
                 ocrPrefill = null
                 capturedPhotoUris = null
+                offLookupName = null
+                offLookupRoaster = null
             },
             onScanBarcode = {
                 showAddSheet = false
@@ -232,8 +259,10 @@ fun BagInventoryScreen(
 
     // Bag detail bottom sheet
     selectedBag?.let { bag ->
+        val bagBrewLogs = allBrewLogs.filter { it.coffeeBagId == bag.id }
         BagDetailSheet(
             bag = bag,
+            brewLogs = bagBrewLogs,
             dateFormat = dateFormat,
             onDismiss = { selectedBag = null },
             onStatusChange = { status ->
@@ -321,6 +350,8 @@ private fun BagCard(
 private fun AddBagSheet(
     initialBarcode: String? = null,
     ocrPrefill: com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult? = null,
+    initialName: String? = null,
+    initialRoaster: String? = null,
     onDismiss: () -> Unit,
     onScanBarcode: () -> Unit,
     onScanLabel: () -> Unit,
@@ -337,8 +368,8 @@ private fun AddBagSheet(
         tastingNotes: String?,
     ) -> Unit,
 ) {
-    var name by remember(ocrPrefill) { mutableStateOf("") }
-    var roaster by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.roaster ?: "") }
+    var name by remember(ocrPrefill, initialName) { mutableStateOf(initialName ?: "") }
+    var roaster by remember(ocrPrefill, initialRoaster) { mutableStateOf(ocrPrefill?.roaster ?: initialRoaster ?: "") }
     var origin by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.origin ?: "") }
     var roastLevel by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.roastLevel ?: "") }
     var variety by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.variety ?: "") }
@@ -562,10 +593,11 @@ private fun AddBagSheet(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun BagDetailSheet(
     bag: CoffeeBagEntity,
+    brewLogs: List<BrewLogEntity>,
     dateFormat: SimpleDateFormat,
     onDismiss: () -> Unit,
     onStatusChange: (CoffeeBagStatus) -> Unit,
@@ -581,12 +613,12 @@ private fun BagDetailSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 16.dp),
+                .padding(horizontal = 24.dp),
         ) {
             Text(
                 text = bag.name,
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 4.dp),
+                modifier = Modifier.padding(bottom = 4.dp, top = 16.dp),
             )
             if (bag.roaster != null) {
                 Text(
@@ -597,32 +629,105 @@ private fun BagDetailSheet(
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            if (bag.origin != null) {
-                DetailRow("Origin", bag.origin)
-            }
-            if (bag.roastLevel != null) {
-                DetailRow("Roast", bag.roastLevel)
-            }
-            if (bag.roastDate != null) {
-                DetailRow("Roast date", dateFormat.format(Date(bag.roastDate)))
-            }
-            if (bag.weightG != null) {
-                DetailRow("Weight", "${"%.0f".format(bag.weightG)}g")
-            }
-            if (bag.notes != null) {
-                DetailRow("Notes", bag.notes)
-            }
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                // Bag details
+                item {
+                    if (bag.origin != null) DetailRow("Origin", bag.origin)
+                    if (bag.variety != null) DetailRow("Variety", bag.variety)
+                    if (bag.roastLevel != null) DetailRow("Roast", bag.roastLevel)
+                    if (bag.roastDate != null) DetailRow("Roast date", dateFormat.format(Date(bag.roastDate)))
+                    if (bag.weightG != null) DetailRow("Weight", "${"%.0f".format(bag.weightG)}g")
+                    if (bag.tastingNotes != null) DetailRow("Tasting notes", bag.tastingNotes)
+                    if (bag.notes != null) DetailRow("Notes", bag.notes)
+                }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                // Brew history section
+                if (brewLogs.isNotEmpty()) {
+                    item {
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+                        Text(
+                            text = "Brew History",
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.padding(bottom = 8.dp),
+                        )
+                    }
+
+                    // Stats summary
+                    item {
+                        val avgRating = brewLogs.mapNotNull { it.rating }.let { ratings ->
+                            if (ratings.isNotEmpty()) ratings.average().toFloat() else null
+                        }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                text = "${brewLogs.size} brew${if (brewLogs.size != 1) "s" else ""}",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            if (avgRating != null) {
+                                Text(
+                                    text = "⭐ ${"%.1f".format(avgRating)} avg",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
+                            }
+                        }
+                    }
+
+                    // Individual brew entries
+                    items(brewLogs.sortedByDescending { it.createdAt }) { log ->
+                        ElevatedCard(
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 6.dp),
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = "${log.method} · ${"%.0f".format(log.doseG)}g → ${"%.0f".format(log.waterG)}g",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                    )
+                                    Text(
+                                        text = dateFormat.format(Date(log.createdAt)),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                                log.rating?.let { rating ->
+                                    Text(
+                                        text = "⭐ $rating",
+                                        style = MaterialTheme.typography.labelLarge,
+                                        color = MaterialTheme.colorScheme.primary,
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             // Status changer
-            Box {
+            Box(modifier = Modifier.padding(top = 8.dp)) {
                 OutlinedButton(
                     onClick = { statusMenuExpanded = true },
                     shape = RoundedCornerShape(28.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(56.dp),
+                        .height(48.dp),
                 ) {
                     Text("Status: ${bag.status.lowercase().replaceFirstChar { it.uppercase() }}")
                 }
@@ -642,8 +747,6 @@ private fun BagDetailSheet(
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
-
             TextButton(
                 onClick = onDelete,
                 modifier = Modifier.fillMaxWidth(),
@@ -654,7 +757,7 @@ private fun BagDetailSheet(
                 )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

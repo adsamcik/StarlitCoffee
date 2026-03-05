@@ -352,6 +352,7 @@ fun BrewTimerScreen(
         } else {
             Button(
                 onClick = {
+                    brewViewModel.logBrew()
                     brewViewModel.requestFeedbackSnackbar()
                     navController.popBackStack()
                 },
@@ -376,6 +377,7 @@ fun BrewTimerScreen(
                     showStopDialog = false
                     brewViewModel.stopTimer()
                     BrewTimerService.stop(context)
+                    brewViewModel.logBrew()
                     brewViewModel.requestFeedbackSnackbar()
                     navController.popBackStack()
                 }) { Text("End Brew") }

@@ -18,6 +18,12 @@ class BrewLogRepository(
 
     suspend fun insertLog(entity: BrewLogEntity): Long = brewLogDao.insert(entity)
 
+    suspend fun updateRating(logId: Long, rating: Int, notes: String?) =
+        brewLogDao.updateRating(logId, rating, notes)
+
+    suspend fun insertFlavorTags(tags: List<FlavorTagEntity>) =
+        flavorTagDao.insertAll(tags)
+
     suspend fun deleteLog(entity: BrewLogEntity) = brewLogDao.delete(entity)
 
     suspend fun saveBrewWithTags(log: BrewLogEntity, tags: List<FlavorTagEntity>): Long {

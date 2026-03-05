@@ -104,6 +104,7 @@ class BrewViewModel(
     val coffeeBags: StateFlow<List<CoffeeBagEntity>> = _coffeeBags.asStateFlow()
     private val _selectedBagId = MutableStateFlow<Long?>(null)
     val selectedBagId: StateFlow<Long?> = _selectedBagId.asStateFlow()
+    private var lastLoggedBrewId: Long? = null
 
     private var timerJob: Job? = null
     private var timerStartMs: Long = 0L
@@ -389,7 +390,7 @@ class BrewViewModel(
         val repository = brewLogRepository ?: return
         val state = _uiState.value
         viewModelScope.launch {
-            repository.insertLog(
+            val logId = repository.insertLog(
                 BrewLogEntity(
                     coffeeBagId = _selectedBagId.value,
                     method = state.method.name,
@@ -409,6 +410,7 @@ class BrewViewModel(
                     brewTimeSeconds = state.elapsedSeconds.takeIf { it > 0 },
                 ),
             )
+            lastLoggedBrewId = logId
             // Auto-decrement bag weight
             _selectedBagId.value?.let { bagId ->
                 val bag = _coffeeBags.value.find { it.id == bagId }
@@ -426,37 +428,16 @@ class BrewViewModel(
         notes: String,
     ) {
         val repository = brewLogRepository ?: return
-        val state = _uiState.value
+        val logId = lastLoggedBrewId ?: return
         viewModelScope.launch {
-            val log = BrewLogEntity(
-                coffeeBagId = _selectedBagId.value,
-                method = state.method.name,
-                doseG = state.coffeeG,
-                waterG = state.waterG,
-                ratio = state.effectiveRatio,
-                grindSetting = when (val result = state.grindResult) {
-                    is GrindResult.Generic -> result.descriptor.displayName
-                    is GrindResult.Specific -> {
-                        "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
-                    }
-                },
-                filterType = state.filterType?.name,
-                rating = rating.toInt().coerceIn(1, 5),
-                freeformNotes = notes.takeIf { it.isNotBlank() },
-                brewTimeSeconds = state.elapsedSeconds.takeIf { it > 0 },
-            )
-            val tags = descriptors.map { descriptor ->
-                FlavorTagEntity(brewLogId = 0, descriptor = descriptor)
-            }
-            repository.saveBrewWithTags(log, tags)
-            // Auto-decrement bag weight
-            _selectedBagId.value?.let { bagId ->
-                val bag = _coffeeBags.value.find { it.id == bagId }
-                if (bag != null && bag.weightG != null) {
-                    val newWeight = (bag.weightG - state.coffeeG).coerceAtLeast(0f)
-                    coffeeBagRepository?.updateBag(bag.copy(weightG = newWeight))
+            repository.updateRating(logId, rating.toInt().coerceIn(1, 5), notes.takeIf { it.isNotBlank() })
+            if (descriptors.isNotEmpty()) {
+                val tags = descriptors.map { descriptor ->
+                    FlavorTagEntity(brewLogId = logId, descriptor = descriptor)
                 }
+                repository.insertFlavorTags(tags)
             }
+            lastLoggedBrewId = null
         }
     }
 

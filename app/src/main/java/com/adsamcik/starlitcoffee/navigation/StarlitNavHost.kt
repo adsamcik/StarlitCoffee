@@ -28,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -43,6 +44,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.ui.component.BrewRatingSheet
 import com.adsamcik.starlitcoffee.ui.screen.AmountStrengthScreen
 import com.adsamcik.starlitcoffee.ui.screen.BagInventoryScreen
 import com.adsamcik.starlitcoffee.ui.screen.BarcodeScannerScreen
@@ -210,18 +212,21 @@ fun StarlitNavHost() {
             // Main app screens
             composable<MethodPicker> {
                 val state by brewViewModel.uiState.collectAsStateWithLifecycle()
+                var showRatingSheet by remember { mutableStateOf(false) }
                 LaunchedEffect(state.showFeedbackSnackbar) {
                     if (state.showFeedbackSnackbar) {
-                        val result = snackbarHostState.showSnackbar(
-                            message = "How was your brew? ☕",
-                            actionLabel = "Rate",
-                            withDismissAction = true,
-                        )
                         brewViewModel.clearFeedbackSnackbar()
-                        if (result == SnackbarResult.ActionPerformed) {
-                            navController.navigate(TasteFeedback)
-                        }
+                        showRatingSheet = true
                     }
+                }
+                if (showRatingSheet) {
+                    BrewRatingSheet(
+                        onDismiss = { showRatingSheet = false },
+                        onSave = { rating, descriptors, notes ->
+                            brewViewModel.saveBrewWithRating(rating, descriptors, notes)
+                            showRatingSheet = false
+                        },
+                    )
                 }
                 MethodPickerScreen(
                     navController = navController,
