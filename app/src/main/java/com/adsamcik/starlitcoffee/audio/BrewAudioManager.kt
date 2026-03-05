@@ -3,6 +3,8 @@ package com.adsamcik.starlitcoffee.audio
 import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
 import com.adsamcik.starlitcoffee.data.model.AudioConfig
 import com.adsamcik.starlitcoffee.data.model.AudioDetectionEvent
+import com.adsamcik.starlitcoffee.data.model.BrewAudioEvent
+import com.adsamcik.starlitcoffee.data.model.DetectorConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,20 +21,27 @@ import java.io.File
 /**
  * Orchestrates audio capture, analysis, and recording during a brew session.
  *
+ * Full pipeline: AudioCapture → PreProcessor → SpectralAnalyzer → BrewEventDetector
+ *
  * Lifecycle:
  * 1. [startMonitoring] — begins capturing audio and running real-time analysis
  * 2. [startRecording] — additionally writes audio to WAV files (opt-in)
  * 3. [onPhaseChanged] — closes current recording segment, opens new one
  * 4. [stopRecording] / [stopMonitoring] — clean shutdown
  *
- * Exposes [analysisState] for UI and [detectionEvents] for event-driven integration.
+ * Exposes [analysisState] for UI, [detectionEvents] for legacy events,
+ * and [brewEvents] for brew-specific detection events.
  */
 class BrewAudioManager(
     private val config: AudioConfig = AudioConfig(),
+    private val detectorConfig: DetectorConfig = DetectorConfig(),
     private val outputDirectory: File? = null,
 ) {
     private val captureSession = AudioCaptureSession(config)
     private val recorder = AudioRecorder(config)
+    private val preProcessor = AudioPreProcessor(sampleRate = config.sampleRate)
+    private val spectralAnalyzer = SpectralAnalyzer()
+    private val eventDetector = BrewEventDetector(detectorConfig)
 
     private var scope: CoroutineScope? = null
     private var captureJob: Job? = null
@@ -42,6 +51,9 @@ class BrewAudioManager(
 
     private val _detectionEvents = MutableSharedFlow<AudioDetectionEvent>(extraBufferCapacity = 16)
     val detectionEvents: SharedFlow<AudioDetectionEvent> = _detectionEvents
+
+    private val _brewEvents = MutableSharedFlow<BrewAudioEvent>(extraBufferCapacity = 16)
+    val brewEvents: SharedFlow<BrewAudioEvent> = _brewEvents
 
     private var silenceStartTimeMs: Long = 0L
     private var wasSilent: Boolean = true
@@ -63,6 +75,11 @@ class BrewAudioManager(
         val newScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
         scope = newScope
         brewTimestamp = System.currentTimeMillis().toString()
+
+        // Reset pipeline state for new session
+        preProcessor.reset()
+        spectralAnalyzer.reset()
+        eventDetector.reset()
 
         captureJob = newScope.launch {
             captureSession.audioBufferFlow().collect { buffer ->
@@ -143,16 +160,32 @@ class BrewAudioManager(
     }
 
     private fun processBuffer(samples: ShortArray) {
-        val features = AudioAnalyzer.analyze(samples, samples.size, config.sampleRate)
+        val timeFeatures = AudioAnalyzer.analyze(samples, samples.size, config.sampleRate)
 
-        // Write to file if recording
+        // Write raw audio to file if recording
         if (recorder.isOpen) {
             recorder.write(samples)
         }
 
-        // Silence detection
+        // Spectral pipeline: PreProcessor → SpectralAnalyzer → EventDetector
+        val frames = preProcessor.process(samples)
+        var latestSpectral = _analysisState.value.spectralFeatures
+        var latestBrewEvent: BrewAudioEvent? = null
+
+        for (frame in frames) {
+            val spectral = spectralAnalyzer.analyze(frame)
+            latestSpectral = spectral
+
+            val events = eventDetector.processFrame(spectral)
+            for (event in events) {
+                _brewEvents.tryEmit(event)
+                latestBrewEvent = event
+            }
+        }
+
+        // Silence detection (legacy, still useful for basic monitoring)
         val now = System.currentTimeMillis()
-        val isSilent = features.rmsDb < config.silenceThresholdDb
+        val isSilent = timeFeatures.rmsDb < config.silenceThresholdDb
 
         if (isSilent) {
             if (!wasSilent) {
@@ -160,44 +193,34 @@ class BrewAudioManager(
             }
             val silenceDuration = now - silenceStartTimeMs
 
-            if (silenceDuration >= config.silenceDurationThresholdMs && wasSilent) {
-                // Already reported — just update duration
-            } else if (silenceDuration >= config.silenceDurationThresholdMs) {
+            if (silenceDuration >= config.silenceDurationThresholdMs && !wasSilent) {
                 _detectionEvents.tryEmit(AudioDetectionEvent.SilenceDetected(silenceDuration))
-            }
-
-            _analysisState.update { state ->
-                val newHistory = (state.levelHistory + features.rmsDb)
-                    .takeLast(AudioAnalysisState.LEVEL_HISTORY_SIZE)
-                state.copy(
-                    rmsDb = features.rmsDb,
-                    peakDb = features.peakDb,
-                    dominantFrequencyHz = features.dominantFrequencyHz,
-                    zeroCrossingRate = features.zeroCrossingRate,
-                    isSilent = true,
-                    silenceDurationMs = now - silenceStartTimeMs,
-                    levelHistory = newHistory,
-                )
             }
         } else {
             if (wasSilent && silenceStartTimeMs > 0) {
                 _detectionEvents.tryEmit(AudioDetectionEvent.SoundResumed)
             }
             silenceStartTimeMs = 0L
+        }
 
-            _analysisState.update { state ->
-                val newHistory = (state.levelHistory + features.rmsDb)
-                    .takeLast(AudioAnalysisState.LEVEL_HISTORY_SIZE)
-                state.copy(
-                    rmsDb = features.rmsDb,
-                    peakDb = features.peakDb,
-                    dominantFrequencyHz = features.dominantFrequencyHz,
-                    zeroCrossingRate = features.zeroCrossingRate,
-                    isSilent = false,
-                    silenceDurationMs = 0L,
-                    levelHistory = newHistory,
-                )
-            }
+        // Update UI state with both time-domain and spectral features
+        _analysisState.update { state ->
+            val newHistory = (state.levelHistory + timeFeatures.rmsDb)
+                .takeLast(AudioAnalysisState.LEVEL_HISTORY_SIZE)
+            state.copy(
+                rmsDb = timeFeatures.rmsDb,
+                peakDb = timeFeatures.peakDb,
+                dominantFrequencyHz = timeFeatures.dominantFrequencyHz,
+                zeroCrossingRate = timeFeatures.zeroCrossingRate,
+                isSilent = isSilent,
+                silenceDurationMs = if (isSilent) now - silenceStartTimeMs else 0L,
+                levelHistory = newHistory,
+                spectralFeatures = latestSpectral,
+                detectorState = eventDetector.state,
+                dripRate = eventDetector.dripRate,
+                noiseFloorDb = eventDetector.noiseFloorDb,
+                lastBrewEvent = latestBrewEvent ?: state.lastBrewEvent,
+            )
         }
 
         wasSilent = isSilent

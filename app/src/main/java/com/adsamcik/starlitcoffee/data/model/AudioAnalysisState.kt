@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.data.model
 
 /**
  * Real-time audio analysis state exposed to UI.
+ * Combines time-domain features (RMS, ZCR) with spectral features and detector state.
  */
 data class AudioAnalysisState(
     val rmsDb: Float = SILENCE_DB,
@@ -15,6 +16,13 @@ data class AudioAnalysisState(
     val currentPhaseLabel: String = "",
     val recordingFilePath: String? = null,
     val levelHistory: List<Float> = emptyList(),
+
+    // Spectral features (Phase 2)
+    val spectralFeatures: SpectralFeatures = SpectralFeatures.EMPTY,
+    val detectorState: DetectorState = DetectorState.IDLE,
+    val dripRate: Float = 0f,
+    val noiseFloorDb: Map<FrequencyBand, Float> = emptyMap(),
+    val lastBrewEvent: BrewAudioEvent? = null,
 ) {
     companion object {
         const val SILENCE_DB = -96f
