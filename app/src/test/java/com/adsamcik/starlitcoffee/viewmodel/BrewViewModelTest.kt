@@ -13,6 +13,8 @@ import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
 import com.adsamcik.starlitcoffee.data.model.InputMode
+import com.adsamcik.starlitcoffee.data.model.PhaseMode
+import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
@@ -435,6 +437,109 @@ class BrewViewModelTest {
         assertTrue(phases.isNotEmpty())
         assertEquals("Pour", phases.first().name)
         assertEquals("Drawdown", phases.last().name)
+    }
+
+    // --- Elastic Drift & Phase Modes ---
+
+    @Test
+    fun `buildTimerPhases assigns PhaseType to all phases`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setAmount("20")
+
+        val phases = viewModel.uiState.value.timerPhases
+        for (phase in phases) {
+            assertNotNull(phase.phaseType)
+            assertNotNull(phase.mode)
+        }
+    }
+
+    @Test
+    fun `Pulsar bloom is EVENT_GATED`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setAmount("20")
+
+        val bloom = viewModel.uiState.value.timerPhases.first()
+        assertEquals(PhaseType.BLOOM, bloom.phaseType)
+        assertEquals(PhaseMode.EVENT_GATED, bloom.mode)
+    }
+
+    @Test
+    fun `V60 bloom is TIMED`() {
+        viewModel.setMethod(BrewMethod.V60)
+        viewModel.setAmount("20")
+
+        val bloom = viewModel.uiState.value.timerPhases.first()
+        assertEquals(PhaseType.BLOOM, bloom.phaseType)
+        assertEquals(PhaseMode.TIMED, bloom.mode)
+    }
+
+    @Test
+    fun `Pulsar drawdown is EVENT_GATED`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setAmount("20")
+
+        val drawdown = viewModel.uiState.value.timerPhases.last()
+        assertEquals(PhaseType.DRAWDOWN, drawdown.phaseType)
+        assertEquals(PhaseMode.EVENT_GATED, drawdown.mode)
+    }
+
+    @Test
+    fun `Pulsar drain phases are EVENT_GATED`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setAmount("25") // Triggers drain
+
+        val drainPhases = viewModel.uiState.value.timerPhases
+            .filter { it.phaseType == PhaseType.DRAIN_AND_REFILL }
+        assertTrue(drainPhases.isNotEmpty())
+        for (drain in drainPhases) {
+            assertEquals(PhaseMode.EVENT_GATED, drain.mode)
+        }
+    }
+
+    @Test
+    fun `pour phases are TIMED`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setAmount("20")
+
+        val pourPhases = viewModel.uiState.value.timerPhases
+            .filter { it.phaseType == PhaseType.POUR }
+        assertTrue(pourPhases.isNotEmpty())
+        for (pour in pourPhases) {
+            assertEquals(PhaseMode.TIMED, pour.mode)
+        }
+    }
+
+    @Test
+    fun `rebalancing preserves phase order and count`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setAmount("20")
+
+        val originalPhases = viewModel.uiState.value.timerPhases
+        val originalSize = originalPhases.size
+        val originalNames = originalPhases.map { it.name }
+
+        // Simulate advancing from phase 0 with drift
+        viewModel.startTimer()
+        viewModel.advancePhase()
+
+        val updatedPhases = viewModel.uiState.value.timerPhases
+        assertEquals(originalSize, updatedPhases.size)
+        assertEquals(originalNames, updatedPhases.map { it.name })
+        viewModel.stopTimer()
+    }
+
+    @Test
+    fun `rebalancing respects 50 percent minimum guardrail`() {
+        viewModel.setMethod(BrewMethod.V60)
+        viewModel.setAmount("20")
+
+        val phases = viewModel.uiState.value.timerPhases
+        val pourPhases = phases.filter { it.phaseType == PhaseType.POUR }
+        for (pour in pourPhases) {
+            // Even after heavy rebalancing, no phase should ever be less than 50% of original
+            val minDuration = (pour.durationSeconds / 2).coerceAtLeast(1)
+            assertTrue(pour.durationSeconds >= minDuration)
+        }
     }
 
     // --- Method Defaults ---

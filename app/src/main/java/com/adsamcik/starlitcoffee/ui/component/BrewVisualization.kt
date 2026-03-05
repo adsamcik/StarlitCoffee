@@ -59,6 +59,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.viewmodel.BrewPhase
 import kotlinx.coroutines.launch
 import kotlin.math.sin
@@ -67,6 +68,7 @@ import kotlin.math.sin
 
 private data class PhaseVisualState(
     val phaseName: String,
+    val phaseType: PhaseType,
     val waterInBrewer: Float,
     val fillFraction: Float,
     val valveOpen: Boolean,
@@ -77,14 +79,6 @@ private data class PhaseVisualState(
     val emoji: String,
 )
 
-private fun phaseEmoji(name: String): String = when {
-    name == "Bloom" -> "🌱"
-    name.startsWith("Pour") -> "💧"
-    name.startsWith("Drain") -> "🔄"
-    name == "Drawdown" -> "⏬"
-    else -> "☕"
-}
-
 private fun computePhaseVisualStates(
     phases: List<BrewPhase>,
     capacity: Float,
@@ -93,22 +87,23 @@ private fun computePhaseVisualStates(
     var waterInBrewer = 0f
 
     for (phase in phases) {
-        when {
-            phase.name.startsWith("Drain") -> waterInBrewer = 0f
-            phase.name == "Drawdown" -> waterInBrewer *= 0.1f
+        when (phase.phaseType) {
+            PhaseType.DRAIN_AND_REFILL -> waterInBrewer = 0f
+            PhaseType.DRAWDOWN -> waterInBrewer *= 0.1f
             else -> waterInBrewer += phase.waterG
         }
         states.add(
             PhaseVisualState(
                 phaseName = phase.name,
+                phaseType = phase.phaseType,
                 waterInBrewer = waterInBrewer,
                 fillFraction = if (capacity > 0f) (waterInBrewer / capacity).coerceIn(0f, 1f) else 0f,
-                valveOpen = !phase.name.startsWith("Bloom"),
+                valveOpen = phase.phaseType != PhaseType.BLOOM,
                 instruction = phase.instruction,
                 valveState = phase.valveState,
                 waterThisPhase = phase.waterG,
                 cumulativeWater = phase.cumulativeWaterG,
-                emoji = phaseEmoji(phase.name),
+                emoji = phase.phaseType.emoji,
             ),
         )
     }
@@ -443,11 +438,11 @@ private fun PhaseSegmentBar(
         states.forEachIndexed { index, state ->
             val isActive = index == selectedPhase
             val isPast = index < selectedPhase
-            val segColor = when {
-                state.phaseName == "Bloom" -> MaterialTheme.colorScheme.tertiary
-                state.phaseName.startsWith("Drain") -> MaterialTheme.colorScheme.error
-                state.phaseName == "Drawdown" -> MaterialTheme.colorScheme.secondary
-                else -> MaterialTheme.colorScheme.primary
+            val segColor = when (state.phaseType) {
+                PhaseType.BLOOM -> MaterialTheme.colorScheme.tertiary
+                PhaseType.DRAIN_AND_REFILL -> MaterialTheme.colorScheme.error
+                PhaseType.DRAWDOWN -> MaterialTheme.colorScheme.secondary
+                PhaseType.POUR -> MaterialTheme.colorScheme.primary
             }
             val alpha = when {
                 isActive -> 1f
@@ -504,21 +499,21 @@ fun BrewGuide(
     val bedFraction = (coffeeG * 0.7f / 82f).coerceIn(0.12f, 0.35f)
 
     val cardColor by animateColorAsState(
-        targetValue = when {
-            current.phaseName == "Bloom" -> MaterialTheme.colorScheme.tertiaryContainer
-            current.phaseName.startsWith("Drain") -> MaterialTheme.colorScheme.errorContainer
-            current.phaseName == "Drawdown" -> MaterialTheme.colorScheme.secondaryContainer
-            else -> MaterialTheme.colorScheme.primaryContainer
+        targetValue = when (current.phaseType) {
+            PhaseType.BLOOM -> MaterialTheme.colorScheme.tertiaryContainer
+            PhaseType.DRAIN_AND_REFILL -> MaterialTheme.colorScheme.errorContainer
+            PhaseType.DRAWDOWN -> MaterialTheme.colorScheme.secondaryContainer
+            PhaseType.POUR -> MaterialTheme.colorScheme.primaryContainer
         },
         animationSpec = spring(stiffness = Spring.StiffnessLow),
         label = "cardBg",
     )
     val contentColor by animateColorAsState(
-        targetValue = when {
-            current.phaseName == "Bloom" -> MaterialTheme.colorScheme.onTertiaryContainer
-            current.phaseName.startsWith("Drain") -> MaterialTheme.colorScheme.onErrorContainer
-            current.phaseName == "Drawdown" -> MaterialTheme.colorScheme.onSecondaryContainer
-            else -> MaterialTheme.colorScheme.onPrimaryContainer
+        targetValue = when (current.phaseType) {
+            PhaseType.BLOOM -> MaterialTheme.colorScheme.onTertiaryContainer
+            PhaseType.DRAIN_AND_REFILL -> MaterialTheme.colorScheme.onErrorContainer
+            PhaseType.DRAWDOWN -> MaterialTheme.colorScheme.onSecondaryContainer
+            PhaseType.POUR -> MaterialTheme.colorScheme.onPrimaryContainer
         },
         animationSpec = spring(stiffness = Spring.StiffnessLow),
         label = "cardContent",

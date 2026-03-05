@@ -28,6 +28,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SkipNext
@@ -71,6 +72,7 @@ import com.adsamcik.starlitcoffee.service.BrewTimerService
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.util.VibrationHelper.BrewHaptic
+import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 
 @Composable
@@ -100,12 +102,13 @@ fun BrewTimerScreen(
     val totalElapsed = uiState.elapsedSeconds
     val running = uiState.timerRunning
     val phaseRemaining = uiState.phaseSecondsRemaining
+    val phaseOvertime = uiState.phaseOvertime
     val showNext = uiState.showNextPreview
 
     val currentPhase = phases.getOrNull(currentPhaseIndex)
     val nextPhase = phases.getOrNull(currentPhaseIndex + 1)
     val totalDuration = phases.sumOf { it.durationSeconds }
-    val finished = !running && totalElapsed > 0 && totalElapsed >= totalDuration
+    val finished = !running && totalElapsed > 0 && currentPhaseIndex >= phases.lastIndex && phaseOvertime
 
     // Auto-start on first composition
     LaunchedEffect(Unit) {
@@ -122,26 +125,20 @@ fun BrewTimerScreen(
         }
     }
 
-    // Auto-pause at end + brew-complete vibration
-    LaunchedEffect(totalElapsed, totalDuration, running) {
-        if (phases.isNotEmpty() && totalElapsed >= totalDuration && running) {
-            VibrationHelper.vibrate(context, BrewHaptic.BREW_COMPLETE)
-            brewViewModel.pauseTimer()
-            BrewTimerService.stop(context)
-        }
-    }
+    // Auto-pause removed: with elastic drift, phases don't auto-advance.
+    // Brew completion is detected when user advances past the last phase.
 
     // Phase-change vibrations
     var previousPhaseIndex by remember { mutableIntStateOf(0) }
     LaunchedEffect(currentPhaseIndex) {
         if (currentPhaseIndex != previousPhaseIndex && currentPhaseIndex > 0) {
             val phase = phases.getOrNull(currentPhaseIndex)
-            val haptic = when {
-                phase?.name == "Bloom" -> BrewHaptic.BLOOM
-                phase?.name?.startsWith("Pour") == true -> BrewHaptic.POUR
-                phase?.name?.startsWith("Drain") == true -> BrewHaptic.DRAIN
-                phase?.name == "Drawdown" -> BrewHaptic.DRAWDOWN
-                else -> BrewHaptic.POUR
+            val haptic = when (phase?.phaseType) {
+                PhaseType.BLOOM -> BrewHaptic.BLOOM
+                PhaseType.POUR -> BrewHaptic.POUR
+                PhaseType.DRAIN_AND_REFILL -> BrewHaptic.DRAIN
+                PhaseType.DRAWDOWN -> BrewHaptic.DRAWDOWN
+                null -> BrewHaptic.POUR
             }
             VibrationHelper.vibrate(context, haptic)
         }
@@ -232,12 +229,33 @@ fun BrewTimerScreen(
             )
         }
 
-        // Phase remaining countdown
+        // Phase remaining countdown (drift-aware)
         if (currentPhase != null && !finished) {
+            val isEventGated = currentPhase.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.EVENT_GATED
+            val displayText = when {
+                isEventGated -> {
+                    val elapsed = currentPhase.durationSeconds - phaseRemaining
+                    if (currentPhase.durationSeconds > 0) {
+                        "${elapsed}s / ~${currentPhase.durationSeconds}s"
+                    } else {
+                        "${elapsed}s"
+                    }
+                }
+                phaseOvertime -> "+${kotlin.math.abs(phaseRemaining)}s"
+                else -> "${phaseRemaining}s"
+            }
+            val displayColor = when {
+                phaseOvertime && kotlin.math.abs(phaseRemaining) > 15 ->
+                    MaterialTheme.colorScheme.error
+                phaseOvertime ->
+                    MaterialTheme.colorScheme.tertiary
+                else ->
+                    MaterialTheme.colorScheme.onSurfaceVariant
+            }
             Text(
-                text = "${phaseRemaining}s",
+                text = displayText,
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = displayColor,
                 textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -274,7 +292,10 @@ fun BrewTimerScreen(
 
         // Controls — large targets for wet hands
         if (!finished) {
-            if (phases.size > 1) {
+            if (phases.size > 1 && currentPhaseIndex < phases.lastIndex) {
+                val isEventGated = currentPhase?.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.EVENT_GATED
+                val buttonLabel = if (isEventGated || phaseOvertime) "Done ✓" else "Next Phase"
+                val buttonIcon = if (isEventGated || phaseOvertime) Icons.Filled.Check else Icons.Filled.SkipNext
                 Button(
                     onClick = {
                         VibrationHelper.vibrate(context, BrewHaptic.POUR)
@@ -286,12 +307,37 @@ fun BrewTimerScreen(
                         .height(72.dp),
                 ) {
                     Icon(
-                        Icons.Filled.SkipNext,
-                        contentDescription = "Skip to next phase",
+                        buttonIcon,
+                        contentDescription = buttonLabel,
                         modifier = Modifier.size(28.dp),
                     )
                     Text(
-                        "Next Phase",
+                        buttonLabel,
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(start = 8.dp),
+                    )
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+            } else if (currentPhaseIndex >= phases.lastIndex && phases.isNotEmpty()) {
+                // Last phase — show "Finish Brew" button
+                Button(
+                    onClick = {
+                        VibrationHelper.vibrate(context, BrewHaptic.BREW_COMPLETE)
+                        brewViewModel.pauseTimer()
+                        BrewTimerService.stop(context)
+                    },
+                    shape = RoundedCornerShape(28.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(72.dp),
+                ) {
+                    Icon(
+                        Icons.Filled.Check,
+                        contentDescription = "Finish brew",
+                        modifier = Modifier.size(28.dp),
+                    )
+                    Text(
+                        "Finish Brew ☕",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(start = 8.dp),
                     )

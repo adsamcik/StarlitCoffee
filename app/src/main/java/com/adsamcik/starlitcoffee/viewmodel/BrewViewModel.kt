@@ -13,6 +13,8 @@ import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.data.model.InputMode
+import com.adsamcik.starlitcoffee.data.model.PhaseMode
+import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.data.model.RatioPreset
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
@@ -39,6 +41,8 @@ sealed class GrindResult {
 
 data class BrewPhase(
     val name: String,
+    val phaseType: PhaseType,
+    val mode: PhaseMode,
     val waterG: Float,
     val cumulativeWaterG: Float,
     val durationSeconds: Int,
@@ -80,6 +84,7 @@ data class BrewUiState(
     val timerRunning: Boolean = false,
     val elapsedSeconds: Int = 0,
     val phaseSecondsRemaining: Int = 0,
+    val phaseOvertime: Boolean = false,
     val showNextPreview: Boolean = false,
     val showFeedbackSnackbar: Boolean = false,
     // Feedback state
@@ -111,6 +116,7 @@ class BrewViewModel(
     private var timerJob: Job? = null
     private var timerStartMs: Long = 0L
     private var pausedAccumulatedMs: Long = 0L
+    private var phaseStartedAccumulatedMs: Long = 0L
     private var ratioPresetJob: Job? = null
 
     init {
@@ -246,17 +252,18 @@ class BrewViewModel(
                 val nowMs = System.nanoTime() / 1_000_000L
                 val totalElapsedMs = pausedAccumulatedMs + (nowMs - timerStartMs)
                 val totalElapsedSeconds = (totalElapsedMs / 1000).toInt()
+                val phaseElapsedSeconds = ((totalElapsedMs - phaseStartedAccumulatedMs) / 1000).toInt()
                 _uiState.update { state ->
-                    val newPhaseIndex = computePhaseIndex(state.timerPhases, totalElapsedSeconds)
-                    val phaseStartSec = state.timerPhases.take(newPhaseIndex).sumOf { it.durationSeconds }
-                    val phaseElapsed = totalElapsedSeconds - phaseStartSec
-                    val phaseDuration = state.timerPhases.getOrNull(newPhaseIndex)?.durationSeconds ?: 0
-                    val remaining = (phaseDuration - phaseElapsed).coerceAtLeast(0)
+                    val phase = state.timerPhases.getOrNull(state.currentPhaseIndex)
+                    val phaseDuration = phase?.durationSeconds ?: 0
+                    val remaining = phaseDuration - phaseElapsedSeconds
+                    val overtime = remaining < 0
                     state.copy(
                         elapsedSeconds = totalElapsedSeconds,
-                        currentPhaseIndex = newPhaseIndex,
                         phaseSecondsRemaining = remaining,
-                        showNextPreview = remaining in 1..10 && newPhaseIndex < state.timerPhases.lastIndex,
+                        phaseOvertime = overtime,
+                        showNextPreview = remaining in 1..10 &&
+                            state.currentPhaseIndex < state.timerPhases.lastIndex,
                     )
                 }
                 val state = _uiState.value
@@ -289,11 +296,13 @@ class BrewViewModel(
 
     fun stopTimer() {
         pausedAccumulatedMs = 0L
+        phaseStartedAccumulatedMs = 0L
         _uiState.update {
             it.copy(
                 timerRunning = false,
                 elapsedSeconds = 0,
                 currentPhaseIndex = 0,
+                phaseOvertime = false,
             )
         }
         timerJob?.cancel()
@@ -310,11 +319,31 @@ class BrewViewModel(
     }
 
     fun advancePhase() {
+        val nowMs = System.nanoTime() / 1_000_000L
+        val totalElapsedMs = if (_uiState.value.timerRunning) {
+            pausedAccumulatedMs + (nowMs - timerStartMs)
+        } else {
+            pausedAccumulatedMs
+        }
+
         _uiState.update { state ->
             val nextIndex = (state.currentPhaseIndex + 1)
                 .coerceAtMost(state.timerPhases.lastIndex.coerceAtLeast(0))
-            state.copy(currentPhaseIndex = nextIndex)
+
+            val drift = state.phaseSecondsRemaining
+            val updatedPhases = if (drift != 0) {
+                rebalancePhases(state.timerPhases, nextIndex, drift)
+            } else {
+                state.timerPhases
+            }
+
+            state.copy(
+                currentPhaseIndex = nextIndex,
+                timerPhases = updatedPhases,
+                phaseOvertime = false,
+            )
         }
+        phaseStartedAccumulatedMs = totalElapsedMs
     }
 
     fun setTasteFeedback(feedback: TasteFeedback) {
@@ -729,10 +758,15 @@ class BrewViewModel(
         val grinder = DefaultGrinders.grinders.find { it.id == grinderId }
             ?: return GrindResult.Generic(method.defaultGrindDescriptor)
 
+        // Try exact filterType match first, then fall back to filter-agnostic recommendation
         val recommendation = DefaultGrinders.recommendations.find { rec ->
             rec.grinderId == grinder.id &&
                 rec.methodId == method.name &&
                 rec.filterType == filterType
+        } ?: DefaultGrinders.recommendations.find { rec ->
+            rec.grinderId == grinder.id &&
+                rec.methodId == method.name &&
+                rec.filterType == null
         } ?: return GrindResult.Generic(method.defaultGrindDescriptor)
 
         if (calibrationStyle == null) {
@@ -751,6 +785,38 @@ class BrewViewModel(
                 rangeEnd = adjustedEnd,
             ),
         )
+    }
+
+    /**
+     * Redistributes time drift across remaining TIMED phases.
+     * Positive [drift] = user finished early (add time), negative = late (subtract).
+     * Guardrail: no phase drops below 50% of its original duration.
+     */
+    private fun rebalancePhases(
+        phases: List<BrewPhase>,
+        fromIndex: Int,
+        drift: Int,
+    ): List<BrewPhase> {
+        val timedIndices = (fromIndex..phases.lastIndex)
+            .filter { phases[it].mode == PhaseMode.TIMED }
+        if (timedIndices.isEmpty()) return phases
+
+        val totalTimedDuration = timedIndices.sumOf { phases[it].durationSeconds }
+        if (totalTimedDuration == 0) return phases
+
+        val mutable = phases.toMutableList()
+        var remainingDrift = drift
+        for (idx in timedIndices) {
+            val phase = mutable[idx]
+            val proportion = phase.durationSeconds.toFloat() / totalTimedDuration
+            val adjustment = (drift * proportion).toInt()
+            val minDuration = (phase.durationSeconds / 2).coerceAtLeast(1)
+            val newDuration = (phase.durationSeconds + adjustment).coerceAtLeast(minDuration)
+            val actualAdjustment = newDuration - phase.durationSeconds
+            remainingDrift -= actualAdjustment
+            mutable[idx] = phase.copy(durationSeconds = newDuration)
+        }
+        return mutable
     }
 
     private fun buildTimerPhases(
@@ -775,6 +841,8 @@ class BrewViewModel(
             phases.add(
                 BrewPhase(
                     name = "Bloom",
+                    phaseType = PhaseType.BLOOM,
+                    mode = if (isPulsar) PhaseMode.EVENT_GATED else PhaseMode.TIMED,
                     waterG = bloomG,
                     cumulativeWaterG = cumulative,
                     durationSeconds = if (isPulsar) 50 else 45,
@@ -807,6 +875,8 @@ class BrewViewModel(
                         BrewPhase(
                             name = "Drain & Refill" +
                                 if (drainCount > 1) " $drainCount" else "",
+                            phaseType = PhaseType.DRAIN_AND_REFILL,
+                            mode = PhaseMode.EVENT_GATED,
                             waterG = 0f,
                             cumulativeWaterG = cumulative,
                             durationSeconds = 30,
@@ -828,6 +898,8 @@ class BrewViewModel(
                 phases.add(
                     BrewPhase(
                         name = "Pour $i/$effectivePulseCount",
+                        phaseType = PhaseType.POUR,
+                        mode = PhaseMode.TIMED,
                         waterG = pulseSizeG,
                         cumulativeWaterG = cumulative,
                         durationSeconds = pourDuration,
@@ -853,6 +925,8 @@ class BrewViewModel(
                 phases.add(
                     BrewPhase(
                         name = "Pour",
+                        phaseType = PhaseType.POUR,
+                        mode = PhaseMode.TIMED,
                         waterG = pourWater,
                         cumulativeWaterG = cumulative,
                         durationSeconds = pourDuration,
@@ -866,6 +940,8 @@ class BrewViewModel(
             phases.add(
                 BrewPhase(
                     name = "Drawdown",
+                    phaseType = PhaseType.DRAWDOWN,
+                    mode = PhaseMode.EVENT_GATED,
                     waterG = 0f,
                     cumulativeWaterG = cumulative,
                     durationSeconds = 30,
