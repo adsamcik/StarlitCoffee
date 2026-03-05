@@ -68,7 +68,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
 import com.adsamcik.starlitcoffee.service.BrewTimerService
+import com.adsamcik.starlitcoffee.ui.component.AudioDebugOverlay
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.util.VibrationHelper.BrewHaptic
@@ -81,6 +83,7 @@ fun BrewTimerScreen(
     brewViewModel: BrewViewModel,
 ) {
     val uiState by brewViewModel.uiState.collectAsStateWithLifecycle()
+    val audioState by brewViewModel.audioState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var showStopDialog by remember { mutableStateOf(false) }
 
@@ -88,6 +91,28 @@ fun BrewTimerScreen(
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { /* Timer works regardless */ }
+
+    // Audio permission — init audio manager when granted
+    val audioPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { granted ->
+        if (granted) {
+            val audioDir = java.io.File(context.getExternalFilesDir(null), "brew_audio")
+            brewViewModel.initAudioManager(audioDir)
+        }
+    }
+
+    // Request audio permission & init manager on first composition
+    LaunchedEffect(Unit) {
+        if (context.checkSelfPermission(Manifest.permission.RECORD_AUDIO)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            val audioDir = java.io.File(context.getExternalFilesDir(null), "brew_audio")
+            brewViewModel.initAudioManager(audioDir)
+        } else {
+            audioPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+        }
+    }
 
     // Keep screen on
     val view = LocalView.current
@@ -228,6 +253,16 @@ fun BrewTimerScreen(
                 showNextPreview = showNext,
             )
         }
+
+        // Audio debug overlay
+        AudioDebugOverlay(
+            audioState = audioState,
+            isMonitoring = audioState.isMonitoring,
+            isRecording = audioState.isRecording,
+            onToggleMonitoring = { brewViewModel.toggleAudioMonitoring() },
+            onToggleRecording = { brewViewModel.toggleAudioRecording() },
+            modifier = Modifier.padding(vertical = 8.dp),
+        )
 
         // Phase remaining countdown (drift-aware)
         if (currentPhase != null && !finished) {

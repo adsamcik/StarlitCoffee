@@ -22,6 +22,8 @@ import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.audio.BrewAudioManager
+import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
 import com.adsamcik.starlitcoffee.service.TimerStateHolder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -112,6 +114,10 @@ class BrewViewModel(
     private val _selectedBagId = MutableStateFlow<Long?>(null)
     val selectedBagId: StateFlow<Long?> = _selectedBagId.asStateFlow()
     private var lastLoggedBrewId: Long? = null
+
+    private var _audioManager: BrewAudioManager? = null
+    val audioState: StateFlow<AudioAnalysisState>
+        get() = _audioManager?.analysisState ?: MutableStateFlow(AudioAnalysisState())
 
     private var timerJob: Job? = null
     private var timerStartMs: Long = 0L
@@ -307,7 +313,45 @@ class BrewViewModel(
         }
         timerJob?.cancel()
         timerJob = null
+        _audioManager?.stopMonitoring()
         TimerStateHolder.reset()
+    }
+
+    // --- Audio Monitoring ---
+
+    /**
+     * Initializes the audio manager with the given output directory for recordings.
+     * Call once from the UI layer when RECORD_AUDIO permission is granted.
+     */
+    fun initAudioManager(outputDirectory: java.io.File) {
+        if (_audioManager != null) return
+        _audioManager = BrewAudioManager(outputDirectory = outputDirectory)
+    }
+
+    fun startAudioMonitoring() {
+        _audioManager?.startMonitoring()
+    }
+
+    fun stopAudioMonitoring() {
+        _audioManager?.stopMonitoring()
+    }
+
+    fun toggleAudioMonitoring() {
+        val manager = _audioManager ?: return
+        if (manager.isMonitoring) manager.stopMonitoring() else manager.startMonitoring()
+    }
+
+    fun startAudioRecording() {
+        _audioManager?.startRecording()
+    }
+
+    fun stopAudioRecording() {
+        _audioManager?.stopRecording()
+    }
+
+    fun toggleAudioRecording() {
+        val manager = _audioManager ?: return
+        if (manager.isRecording) manager.stopRecording() else manager.startRecording()
     }
 
     fun requestFeedbackSnackbar() {
@@ -344,6 +388,13 @@ class BrewViewModel(
             )
         }
         phaseStartedAccumulatedMs = totalElapsedMs
+
+        // Notify audio manager of phase change
+        val state = _uiState.value
+        val newPhase = state.timerPhases.getOrNull(state.currentPhaseIndex)
+        if (newPhase != null) {
+            _audioManager?.onPhaseChanged(state.currentPhaseIndex, newPhase.name)
+        }
     }
 
     fun setTasteFeedback(feedback: TasteFeedback) {
