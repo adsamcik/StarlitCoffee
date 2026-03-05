@@ -132,6 +132,11 @@ fun BagInventoryScreen(
                         ocrResults.add(
                             com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFields(textResult.text),
                         )
+                        // Fallback: extract barcode from OCR text if ML Kit scanner misses it
+                        if (detectedBarcode == null) {
+                            detectedBarcode = com.adsamcik.starlitcoffee.util.OcrFieldExtractor
+                                .extractBarcodeFromText(textResult.text)
+                        }
                     }
 
                     // Barcode / QR detection
@@ -166,6 +171,7 @@ fun BagInventoryScreen(
                     tastingNotes = ocrResults.firstNotNullOfOrNull { it.tastingNotes },
                     roastLevel = ocrResults.firstNotNullOfOrNull { it.roastLevel },
                     roastDate = ocrResults.firstNotNullOfOrNull { it.roastDate },
+                    weight = ocrResults.firstNotNullOfOrNull { it.weight },
                 )
             }
 
@@ -427,13 +433,17 @@ private fun AddBagSheet(
 ) {
     var name by remember(ocrPrefill, initialName) { mutableStateOf(initialName ?: "") }
     var roaster by remember(ocrPrefill, initialRoaster) { mutableStateOf(ocrPrefill?.roaster ?: initialRoaster ?: "") }
-    var origin by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.origin ?: "") }
+    var origin by remember(ocrPrefill) {
+        val o = ocrPrefill?.origin
+        val r = ocrPrefill?.region
+        mutableStateOf(listOfNotNull(o, r).joinToString(", ").ifEmpty { "" })
+    }
     var roastLevel by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.roastLevel ?: "") }
     var variety by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.variety ?: "") }
     var processType by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.processType ?: "") }
     var tastingNotes by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.tastingNotes ?: "") }
     var barcode by remember(initialBarcode) { mutableStateOf(initialBarcode.orEmpty()) }
-    var weight by remember { mutableStateOf("") }
+    var weight by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.weight ?: "") }
     var notes by remember { mutableStateOf("") }
 
     ModalBottomSheet(
