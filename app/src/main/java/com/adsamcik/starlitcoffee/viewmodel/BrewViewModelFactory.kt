@@ -19,7 +19,7 @@ class BrewViewModelFactory(
             val database = AppDatabase.getInstance(application)
             return BrewViewModel(
                 recipeRepository = RecipeRepository(database.recipeDao()),
-                brewLogRepository = BrewLogRepository(database.brewLogDao()),
+                brewLogRepository = BrewLogRepository(database.brewLogDao(), database.flavorTagDao()),
                 coffeeBagRepository = CoffeeBagRepository(database.coffeeBagDao()),
                 ratioPresetRepository = RatioPresetRepository(database.ratioPresetDao()),
                 userPreferencesRepository = UserPreferencesRepository(application),

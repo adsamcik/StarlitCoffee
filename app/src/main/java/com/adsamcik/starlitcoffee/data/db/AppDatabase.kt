@@ -6,11 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.adsamcik.starlitcoffee.data.db.dao.BrewLogDao
 import com.adsamcik.starlitcoffee.data.db.dao.CoffeeBagDao
+import com.adsamcik.starlitcoffee.data.db.dao.FlavorTagDao
 import com.adsamcik.starlitcoffee.data.db.dao.GrinderDao
+import com.adsamcik.starlitcoffee.data.db.dao.RatioPresetDao
 import com.adsamcik.starlitcoffee.data.db.dao.RecipeDao
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.GrinderEntity
+import com.adsamcik.starlitcoffee.data.db.entity.RatioPresetEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 
 @Database(
@@ -19,8 +23,10 @@ import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
         CoffeeBagEntity::class,
         BrewLogEntity::class,
         GrinderEntity::class,
+        RatioPresetEntity::class,
+        FlavorTagEntity::class,
     ],
-    version = 1,
+    version = 3,
     exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -28,6 +34,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun coffeeBagDao(): CoffeeBagDao
     abstract fun brewLogDao(): BrewLogDao
     abstract fun grinderDao(): GrinderDao
+    abstract fun ratioPresetDao(): RatioPresetDao
+    abstract fun flavorTagDao(): FlavorTagDao
 
     companion object {
         @Volatile
@@ -39,7 +47,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "starlit_coffee.db",
-                ).build().also { INSTANCE = it }
+                ).fallbackToDestructiveMigration().build().also { INSTANCE = it }
             }
         }
     }

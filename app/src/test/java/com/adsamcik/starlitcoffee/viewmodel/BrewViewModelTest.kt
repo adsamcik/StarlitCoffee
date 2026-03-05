@@ -2,16 +2,17 @@ package com.adsamcik.starlitcoffee.viewmodel
 
 import com.adsamcik.starlitcoffee.data.db.dao.BrewLogDao
 import com.adsamcik.starlitcoffee.data.db.dao.CoffeeBagDao
+import com.adsamcik.starlitcoffee.data.db.dao.FlavorTagDao
 import com.adsamcik.starlitcoffee.data.db.dao.RecipeDao
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
 import com.adsamcik.starlitcoffee.data.model.InputMode
-import com.adsamcik.starlitcoffee.data.model.StrengthPreset
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
@@ -110,13 +111,13 @@ class BrewViewModelTest {
         assertEquals(18f, state.coffeeG, 0.01f)
     }
 
-    // --- Strength Presets ---
+    // --- Ratio Presets ---
 
     @Test
-    fun `light strength increases ratio by 1`() {
-        viewModel.setMethod(BrewMethod.PULSAR) // default ratio 17
+    fun `selecting ratio preset changes effective ratio`() {
+        viewModel.setMethod(BrewMethod.PULSAR) // presets: 15, 16, 17(default), 18
         viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.setStrengthPreset(StrengthPreset.LIGHT)
+        viewModel.selectRatioPreset(3) // 1:18
         viewModel.setAmount("20")
 
         val state = viewModel.uiState.value
@@ -125,10 +126,10 @@ class BrewViewModelTest {
     }
 
     @Test
-    fun `strong strength decreases ratio by 1`() {
+    fun `selecting lower ratio preset gives stronger brew`() {
         viewModel.setMethod(BrewMethod.PULSAR)
         viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.setStrengthPreset(StrengthPreset.STRONG)
+        viewModel.selectRatioPreset(1) // 1:16
         viewModel.setAmount("20")
 
         val state = viewModel.uiState.value
@@ -137,10 +138,10 @@ class BrewViewModelTest {
     }
 
     @Test
-    fun `custom ratio overrides strength preset`() {
+    fun `custom ratio overrides selected preset`() {
         viewModel.setMethod(BrewMethod.PULSAR)
         viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.setStrengthPreset(StrengthPreset.LIGHT) // would be 18
+        viewModel.selectRatioPreset(3) // would be 18
         viewModel.setCustomRatio("16.5")
         viewModel.setAmount("20")
 
@@ -485,12 +486,12 @@ class BrewViewModelTest {
     fun `reset brew clears state`() {
         viewModel.setMethod(BrewMethod.V60)
         viewModel.setAmount("30")
-        viewModel.setStrengthPreset(StrengthPreset.STRONG)
+        viewModel.selectRatioPreset(0)
         viewModel.resetBrew()
 
         val state = viewModel.uiState.value
         assertEquals(BrewMethod.PULSAR, state.method) // default
-        assertEquals(StrengthPreset.BALANCED, state.strengthPreset)
+        assertEquals(2, state.selectedPresetIndex) // Pulsar default preset index (1:17)
     }
 
     // --- Time Target ---
@@ -990,26 +991,25 @@ class BrewViewModelTest {
     // --- loadRecipe preset matching ---
 
     @Test
-    fun `loadRecipe matches standard ratio to strength preset`() {
-        // Pulsar default=17, Strong offset=-1, so ratio 16 = Strong
+    fun `loadRecipe matches ratio to available preset`() {
+        // Pulsar presets: 15, 16, 17(default), 18 — ratio 16 matches index 1
         val entity = SavedRecipeEntity(
             method = "PULSAR", ratio = 16f, doseG = 20f, waterG = 320f,
         )
         viewModel.loadRecipe(entity)
         val state = viewModel.uiState.value
-        assertEquals(StrengthPreset.STRONG, state.strengthPreset)
+        assertEquals(1, state.selectedPresetIndex)
         assertEquals("", state.customRatio)
         assertEquals(16f, state.effectiveRatio, 0.01f)
     }
 
     @Test
-    fun `loadRecipe uses customRatio for non-standard ratio`() {
+    fun `loadRecipe uses customRatio for non-preset ratio`() {
         val entity = SavedRecipeEntity(
             method = "PULSAR", ratio = 15.5f, doseG = 20f, waterG = 310f,
         )
         viewModel.loadRecipe(entity)
         val state = viewModel.uiState.value
-        assertEquals(StrengthPreset.BALANCED, state.strengthPreset)
         assertEquals("15.5", state.customRatio)
         assertEquals(15.5f, state.effectiveRatio, 0.01f)
     }
@@ -1076,7 +1076,7 @@ class BrewViewModelTest {
 
     private fun createPersistenceViewModel(): BrewViewModel {
         val recipeRepository = RecipeRepository(FakeRecipeDao())
-        val brewLogRepository = BrewLogRepository(FakeBrewLogDao())
+        val brewLogRepository = BrewLogRepository(FakeBrewLogDao(), FakeFlavorTagDao())
         val coffeeBagRepository = CoffeeBagRepository(FakeCoffeeBagDao())
         return BrewViewModel(
             recipeRepository = recipeRepository,
@@ -1186,5 +1186,23 @@ private class FakeCoffeeBagDao : CoffeeBagDao {
     override fun getById(id: Long): Flow<CoffeeBagEntity?> = flow.map { list -> list.find { it.id == id } }
 
     override suspend fun findByBarcode(barcode: String): CoffeeBagEntity? = bags.find { it.barcode == barcode }
+}
+
+private class FakeFlavorTagDao : FlavorTagDao {
+    private val tags = mutableListOf<FlavorTagEntity>()
+
+    override suspend fun insertAll(tags: List<FlavorTagEntity>) {
+        this.tags.addAll(tags)
+    }
+
+    override fun getForBrewLog(brewLogId: Long): Flow<List<FlavorTagEntity>> =
+        MutableStateFlow(tags.filter { it.brewLogId == brewLogId })
+
+    override fun getForBag(bagId: Long): Flow<List<FlavorTagEntity>> =
+        MutableStateFlow(tags.toList())
+
+    override suspend fun deleteForBrewLog(brewLogId: Long) {
+        tags.removeAll { it.brewLogId == brewLogId }
+    }
 }
 
