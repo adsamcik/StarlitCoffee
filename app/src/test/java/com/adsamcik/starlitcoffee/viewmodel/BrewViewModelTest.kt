@@ -1149,6 +1149,18 @@ private class FakeBrewLogDao : BrewLogDao {
         }
     }
 
+    override suspend fun updateFeedback(logId: Long, rating: Float?, notes: String?, tasteFeedback: String?) {
+        val index = logs.indexOfFirst { it.id == logId }
+        if (index >= 0) {
+            logs[index] = logs[index].copy(rating = rating, freeformNotes = notes, tasteFeedback = tasteFeedback)
+            flow.value = logs.toList()
+        }
+    }
+
+    override suspend fun getById(logId: Long): BrewLogEntity? {
+        return logs.find { it.id == logId }
+    }
+
     override fun getAll(): Flow<List<BrewLogEntity>> = flow
 
     override fun getByBag(bagId: Long): Flow<List<BrewLogEntity>> = flow.map { list ->

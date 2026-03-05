@@ -23,10 +23,12 @@ import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.service.TimerStateHolder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -449,6 +451,37 @@ class BrewViewModel(
         val repository = brewLogRepository ?: return
         viewModelScope.launch {
             repository.deleteLog(entity)
+        }
+    }
+
+    fun getFlavorTagsForLog(logId: Long): Flow<List<FlavorTagEntity>> {
+        return brewLogRepository?.getFlavorTagsForBrewLog(logId)
+            ?: flowOf(emptyList())
+    }
+
+    suspend fun getBrewLogById(logId: Long): BrewLogEntity? {
+        return brewLogRepository?.getLogById(logId)
+    }
+
+    fun updateBrewLogFeedback(
+        logId: Long,
+        rating: Float?,
+        notes: String?,
+        tasteFeedback: String?,
+        descriptors: List<String>,
+    ) {
+        val repository = brewLogRepository ?: return
+        viewModelScope.launch {
+            val tags = descriptors.map { descriptor ->
+                FlavorTagEntity(brewLogId = logId, descriptor = descriptor)
+            }
+            repository.updateFeedback(
+                logId = logId,
+                rating = rating,
+                notes = notes?.takeIf { it.isNotBlank() },
+                tasteFeedback = tasteFeedback,
+                flavorTags = tags,
+            )
         }
     }
 

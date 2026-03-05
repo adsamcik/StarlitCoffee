@@ -40,6 +40,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
@@ -49,6 +50,7 @@ import com.adsamcik.starlitcoffee.ui.screen.AmountStrengthScreen
 import com.adsamcik.starlitcoffee.ui.screen.BagInventoryScreen
 import com.adsamcik.starlitcoffee.ui.screen.BarcodeScannerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewLogScreen
+import com.adsamcik.starlitcoffee.ui.screen.BrewLogDetailScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.CameraCaptureScreen
 import com.adsamcik.starlitcoffee.ui.screen.MethodPickerScreen
@@ -252,6 +254,14 @@ fun StarlitNavHost() {
             }
             composable<BrewLogList> {
                 BrewLogScreen(navController = navController, brewViewModel = brewViewModel)
+            }
+            composable<BrewLogDetail> { backStackEntry ->
+                val route = backStackEntry.toRoute<BrewLogDetail>()
+                BrewLogDetailScreen(
+                    navController = navController,
+                    brewViewModel = brewViewModel,
+                    logId = route.logId,
+                )
             }
             composable<BarcodeScanner> {
                 BarcodeScannerScreen(

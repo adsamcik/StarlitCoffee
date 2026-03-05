@@ -27,6 +27,9 @@ object BagInventory
 object BrewLogList
 
 @Serializable
+data class BrewLogDetail(val logId: Long)
+
+@Serializable
 object BarcodeScanner
 
 @Serializable

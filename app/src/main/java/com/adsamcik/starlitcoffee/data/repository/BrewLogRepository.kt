@@ -21,6 +21,22 @@ class BrewLogRepository(
     suspend fun updateRating(logId: Long, rating: Float, notes: String?) =
         brewLogDao.updateRating(logId, rating, notes)
 
+    suspend fun updateFeedback(
+        logId: Long,
+        rating: Float?,
+        notes: String?,
+        tasteFeedback: String?,
+        flavorTags: List<FlavorTagEntity>,
+    ) {
+        brewLogDao.updateFeedback(logId, rating, notes, tasteFeedback)
+        flavorTagDao.deleteForBrewLog(logId)
+        if (flavorTags.isNotEmpty()) {
+            flavorTagDao.insertAll(flavorTags.map { it.copy(brewLogId = logId) })
+        }
+    }
+
+    suspend fun getLogById(logId: Long): BrewLogEntity? = brewLogDao.getById(logId)
+
     suspend fun insertFlavorTags(tags: List<FlavorTagEntity>) =
         flavorTagDao.insertAll(tags)
 
