@@ -242,4 +242,53 @@ class OcrPipelineInstrumentedTest {
         assertNotNull("Should detect roast date", merged.roastDate)
         assertTrue("Should find barcode via OCR fallback", detectedBarcodes.isNotEmpty())
     } }
+
+    @Test
+    fun preprocessingImprovesOcrExtraction() { runBlocking {
+        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+
+        for ((label, path) in listOf("FRONT" to FRONT_PATH, "BACK" to BACK_PATH)) {
+            val bitmap = BitmapFactory.decodeFile(path) ?: continue
+
+            // Original
+            val origImage = InputImage.fromBitmap(bitmap, 0)
+            val origResult = suspendCancellableCoroutine { cont ->
+                recognizer.process(origImage)
+                    .addOnSuccessListener { cont.resume(it, null) }
+                    .addOnFailureListener { cont.resume(null, null) }
+            }
+            val origText = origResult?.text ?: ""
+            val origFields = OcrFieldExtractor.extractFields(origText)
+
+            // Preprocessed
+            val preprocessed = ImagePreprocessor.preprocessForOcr(bitmap)
+            val ppImage = InputImage.fromBitmap(preprocessed, 0)
+            val ppResult = suspendCancellableCoroutine { cont ->
+                recognizer.process(ppImage)
+                    .addOnSuccessListener { cont.resume(it, null) }
+                    .addOnFailureListener { cont.resume(null, null) }
+            }
+            val ppText = ppResult?.text ?: ""
+            val ppFields = OcrFieldExtractor.extractFields(ppText)
+
+            fun countFields(r: OcrFieldExtractor.OcrExtractionResult): Int =
+                listOfNotNull(r.roaster, r.origin, r.region, r.variety, r.processType,
+                    r.altitude, r.tastingNotes, r.roastLevel, r.roastDate, r.weight).size
+
+            Log.d(TAG, "=== $label PREPROCESSING COMPARISON ===")
+            Log.d(TAG, "Original text length: ${origText.length}, fields: ${countFields(origFields)}")
+            Log.d(TAG, "Preprocessed text length: ${ppText.length}, fields: ${countFields(ppFields)}")
+            Log.d(TAG, "Original OCR: ${origText.take(200)}")
+            Log.d(TAG, "Preprocessed OCR: ${ppText.take(200)}")
+            Log.d(TAG, "Orig fields: origin=${origFields.origin}, region=${origFields.region}, " +
+                "variety=${origFields.variety}, process=${origFields.processType}, " +
+                "roastLevel=${origFields.roastLevel}, roastDate=${origFields.roastDate}, " +
+                "weight=${origFields.weight}, roaster=${origFields.roaster}")
+            Log.d(TAG, "PP fields: origin=${ppFields.origin}, region=${ppFields.region}, " +
+                "variety=${ppFields.variety}, process=${ppFields.processType}, " +
+                "roastLevel=${ppFields.roastLevel}, roastDate=${ppFields.roastDate}, " +
+                "weight=${ppFields.weight}, roaster=${ppFields.roaster}")
+            Log.d(TAG, "=== END $label COMPARISON ===")
+        }
+    } }
 }

@@ -81,6 +81,9 @@ dependencies {
     implementation(libs.mlkit.barcode)
     implementation(libs.mlkit.text.recognition)
 
+    // OpenCV (image preprocessing for OCR)
+    implementation(libs.opencv)
+
     // CameraX
     implementation(libs.camera.core)
     implementation(libs.camera.camera2)

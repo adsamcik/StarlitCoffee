@@ -12,6 +12,7 @@ mlkitBarcodeScanning = "17.3.0"
 mlkitTextRecognition = "16.0.1"
 cameraX = "1.5.3"
 datastore = "1.1.4"
+opencv = "4.13.0"
 coroutines = "1.10.2"
 junit = "4.13.2"
 junitExt = "1.2.1"
@@ -57,6 +58,9 @@ camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "
 
 # DataStore
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+
+# OpenCV
+opencv = { group = "org.opencv", name = "opencv", version.ref = "opencv" }
 
 # Coroutines
 coroutines-android= { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }

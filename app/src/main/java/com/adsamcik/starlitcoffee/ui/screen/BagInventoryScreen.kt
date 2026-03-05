@@ -89,6 +89,7 @@ fun BagInventoryScreen(
     var detectedQrUrl by remember { mutableStateOf<String?>(null) }
     var offLookupName by remember { mutableStateOf<String?>(null) }
     var offLookupRoaster by remember { mutableStateOf<String?>(null) }
+    var lastProcessedPhotos by remember { mutableStateOf<String?>(null) }
 
     // Handle captured photos result (from CameraCaptureScreen)
     val capturedPhotos by (currentBackStackEntry
@@ -99,7 +100,8 @@ fun BagInventoryScreen(
 
     LaunchedEffect(capturedPhotos) {
         val photos = capturedPhotos ?: return@LaunchedEffect
-        currentBackStackEntry?.savedStateHandle?.set("captured_photos", null)
+        if (photos == lastProcessedPhotos) return@LaunchedEffect
+        lastProcessedPhotos = photos
 
         // User skipped camera → open empty form
         if (photos == "skipped") {
@@ -117,32 +119,64 @@ fun BagInventoryScreen(
                 try {
                     val file = java.io.File(android.net.Uri.parse(uriStr).path ?: continue)
                     val bitmap = android.graphics.BitmapFactory.decodeFile(file.absolutePath) ?: continue
-                    val image = com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0)
+                    val originalImage = com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0)
 
-                    // OCR text recognition
+                    // Preprocess for better OCR: grayscale → CLAHE → adaptive threshold
+                    val preprocessed = com.adsamcik.starlitcoffee.util.ImagePreprocessor
+                        .preprocessForOcr(bitmap)
+                    val preprocessedImage = com.google.mlkit.vision.common.InputImage
+                        .fromBitmap(preprocessed, 0)
+
+                    // OCR on both preprocessed and original, merge for best coverage
                     val recognizer = com.google.mlkit.vision.text.TextRecognition.getClient(
                         com.google.mlkit.vision.text.latin.TextRecognizerOptions.DEFAULT_OPTIONS,
                     )
-                    val textResult = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-                        recognizer.process(image)
+                    val preprocessedText = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+                        recognizer.process(preprocessedImage)
                             .addOnSuccessListener { text -> cont.resume(text, null) }
                             .addOnFailureListener { cont.resume(null, null) }
                     }
-                    if (textResult != null) {
-                        ocrResults.add(
-                            com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFields(textResult.text),
-                        )
-                        // Fallback: extract barcode from OCR text if ML Kit scanner misses it
-                        if (detectedBarcode == null) {
-                            detectedBarcode = com.adsamcik.starlitcoffee.util.OcrFieldExtractor
-                                .extractBarcodeFromText(textResult.text)
-                        }
+                    val originalText = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+                        recognizer.process(originalImage)
+                            .addOnSuccessListener { text -> cont.resume(text, null) }
+                            .addOnFailureListener { cont.resume(null, null) }
                     }
 
-                    // Barcode / QR detection
+                    // Extract fields from both and merge (prefer non-null from either)
+                    val ppResult = preprocessedText?.let {
+                        com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFields(it.text)
+                    }
+                    val origResult = originalText?.let {
+                        com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFields(it.text)
+                    }
+                    if (ppResult != null || origResult != null) {
+                        ocrResults.add(
+                            com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult(
+                                roaster = ppResult?.roaster ?: origResult?.roaster,
+                                origin = ppResult?.origin ?: origResult?.origin,
+                                region = ppResult?.region ?: origResult?.region,
+                                variety = ppResult?.variety ?: origResult?.variety,
+                                processType = ppResult?.processType ?: origResult?.processType,
+                                altitude = ppResult?.altitude ?: origResult?.altitude,
+                                tastingNotes = ppResult?.tastingNotes ?: origResult?.tastingNotes,
+                                roastLevel = ppResult?.roastLevel ?: origResult?.roastLevel,
+                                roastDate = ppResult?.roastDate ?: origResult?.roastDate,
+                                weight = ppResult?.weight ?: origResult?.weight,
+                            ),
+                        )
+                    }
+                    // Fallback: extract barcode from OCR text if ML Kit scanner misses it
+                    val allOcrText = listOfNotNull(preprocessedText?.text, originalText?.text)
+                        .joinToString("\n")
+                    if (detectedBarcode == null && allOcrText.isNotEmpty()) {
+                        detectedBarcode = com.adsamcik.starlitcoffee.util.OcrFieldExtractor
+                            .extractBarcodeFromText(allOcrText)
+                    }
+
+                    // Barcode / QR detection (use original — binarization hurts barcode scanning)
                     val scanner = com.google.mlkit.vision.barcode.BarcodeScanning.getClient()
                     val barcodes = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-                        scanner.process(image)
+                        scanner.process(originalImage)
                             .addOnSuccessListener { codes -> cont.resume(codes, null) }
                             .addOnFailureListener { cont.resume(null, null) }
                     }
@@ -154,11 +188,8 @@ fun BagInventoryScreen(
                             if (detectedBarcode == null) detectedBarcode = raw
                         }
                     }
-                } catch (_: Exception) {
-                    // Processing failed for this photo — continue with others
-                }
+                } catch (_: Exception) { }
             }
-
             // Merge OCR results: prefer first non-null for each field
             if (ocrResults.isNotEmpty()) {
                 ocrPrefill = com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult(
