@@ -155,9 +155,11 @@ private fun CameraCaptureContent(
         }
     }
 
-    val currentLabel = when (capturedPhotos.size) {
-        0 -> "Front"
-        else -> "Back"
+    val step = capturedPhotos.size + 1 // 1 = front, 2 = back
+
+    val guideText = when (step) {
+        1 -> "Front of bag — name, roaster, origin"
+        else -> "Back of bag — tasting notes, barcode"
     }
 
     fun capturePhoto() {
@@ -194,12 +196,10 @@ private fun CameraCaptureContent(
         )
     }
 
-    fun skipAndFinish() {
-        if (capturedPhotos.isNotEmpty()) {
-            navController.previousBackStackEntry
-                ?.savedStateHandle
-                ?.set("captured_photos", capturedPhotos.joinToString(","))
-        }
+    fun skipCamera() {
+        navController.previousBackStackEntry
+            ?.savedStateHandle
+            ?.set("captured_photos", "skipped")
         navController.popBackStack()
     }
 
@@ -215,17 +215,33 @@ private fun CameraCaptureContent(
             modifier = Modifier.fillMaxSize(),
         )
 
-        // Top bar — back button
-        IconButton(
-            onClick = { navController.popBackStack() },
+        // Top bar
+        Row(
             modifier = Modifier
                 .align(Alignment.TopStart)
+                .fillMaxWidth()
                 .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Go back",
-                tint = Color.White,
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Go back",
+                    tint = Color.White,
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            // Step indicator
+            Text(
+                text = "Step $step of 2",
+                style = MaterialTheme.typography.labelLarge,
+                color = Color.White,
+                modifier = Modifier
+                    .background(
+                        color = Color.Black.copy(alpha = 0.5f),
+                        shape = RoundedCornerShape(16.dp),
+                    )
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             )
         }
 
@@ -247,7 +263,7 @@ private fun CameraCaptureContent(
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = "Position coffee bag label here",
+                text = guideText,
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White.copy(alpha = 0.9f),
             )
@@ -261,7 +277,7 @@ private fun CameraCaptureContent(
                 .padding(bottom = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // Thumbnail + prompt after first capture
+            // Thumbnail after first capture
             if (capturedPhotos.isNotEmpty()) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -283,7 +299,7 @@ private fun CameraCaptureContent(
                     }
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
-                        text = "Next: Back of bag",
+                        text = "✓ Front captured",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.White,
                     )
@@ -318,22 +334,14 @@ private fun CameraCaptureContent(
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            Text(
-                text = currentLabel,
-                style = MaterialTheme.typography.labelLarge,
-                color = Color.White,
-            )
-
-            // Skip button after first photo
-            if (capturedPhotos.isNotEmpty()) {
-                TextButton(onClick = { skipAndFinish() }) {
-                    Text(
-                        text = "Skip back photo",
-                        color = Color.White.copy(alpha = 0.8f),
-                    )
-                }
+            // "Add manually" skip button
+            TextButton(onClick = { skipCamera() }) {
+                Text(
+                    text = "Add manually instead",
+                    color = Color.White.copy(alpha = 0.8f),
+                )
             }
         }
     }

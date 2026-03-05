@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -18,9 +19,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -57,13 +60,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.CoffeeBagStatus
-import com.adsamcik.starlitcoffee.navigation.BarcodeScanner
+import com.adsamcik.starlitcoffee.navigation.CameraCapture
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,53 +80,17 @@ fun BagInventoryScreen(
     val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
     val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    val scannedBarcode by (currentBackStackEntry
-        ?.savedStateHandle
-        ?.getStateFlow<String?>("scanned_barcode", null)
-        ?.collectAsStateWithLifecycle()
-        ?: remember { mutableStateOf(null) })
 
     var showAddSheet by remember { mutableStateOf(false) }
     var selectedBag by remember { mutableStateOf<CoffeeBagEntity?>(null) }
-    var pendingBarcode by remember { mutableStateOf<String?>(null) }
     var ocrPrefill by remember { mutableStateOf<com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult?>(null) }
     var capturedPhotoUris by remember { mutableStateOf<String?>(null) }
-
-    // Handle scanned barcode result
+    var detectedBarcode by remember { mutableStateOf<String?>(null) }
+    var detectedQrUrl by remember { mutableStateOf<String?>(null) }
     var offLookupName by remember { mutableStateOf<String?>(null) }
     var offLookupRoaster by remember { mutableStateOf<String?>(null) }
-    LaunchedEffect(scannedBarcode) {
-        val barcode = scannedBarcode ?: return@LaunchedEffect
-        currentBackStackEntry?.savedStateHandle?.set("scanned_barcode", null)
-        brewViewModel.findBagByBarcode(barcode) { bag ->
-            if (bag != null) {
-                selectedBag = bag
-                showAddSheet = false
-                pendingBarcode = null
-            } else {
-                pendingBarcode = barcode
-                showAddSheet = true
-            }
-        }
-    }
 
-    // Open Food Facts lookup when we have a pending barcode
-    LaunchedEffect(pendingBarcode) {
-        val barcode = pendingBarcode ?: return@LaunchedEffect
-        try {
-            val result = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                com.adsamcik.starlitcoffee.data.network.OpenFoodFactsClient.lookupBarcode(barcode)
-            }
-            if (result != null) {
-                offLookupName = result.name
-                offLookupRoaster = result.brand
-            }
-        } catch (_: Exception) {
-            // OFF lookup failed — user fills manually
-        }
-    }
-
-    // Handle captured photos result
+    // Handle captured photos result (from CameraCaptureScreen)
     val capturedPhotos by (currentBackStackEntry
         ?.savedStateHandle
         ?.getStateFlow<String?>("captured_photos", null)
@@ -131,28 +100,84 @@ fun BagInventoryScreen(
     LaunchedEffect(capturedPhotos) {
         val photos = capturedPhotos ?: return@LaunchedEffect
         currentBackStackEntry?.savedStateHandle?.set("captured_photos", null)
+
+        // User skipped camera → open empty form
+        if (photos == "skipped") {
+            showAddSheet = true
+            return@LaunchedEffect
+        }
+
         capturedPhotoUris = photos
-        // Run OCR on the first photo
+        val photoUriList = photos.split(",")
+
+        // Run OCR + barcode detection on all captured photos
         kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-            val firstUri = photos.split(",").firstOrNull() ?: return@withContext
-            try {
-                val file = java.io.File(android.net.Uri.parse(firstUri).path ?: return@withContext)
-                val bitmap = android.graphics.BitmapFactory.decodeFile(file.absolutePath) ?: return@withContext
-                val image = com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0)
-                val recognizer = com.google.mlkit.vision.text.TextRecognition.getClient(
-                    com.google.mlkit.vision.text.latin.TextRecognizerOptions.DEFAULT_OPTIONS,
+            val ocrResults = mutableListOf<com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult>()
+            for (uriStr in photoUriList) {
+                try {
+                    val file = java.io.File(android.net.Uri.parse(uriStr).path ?: continue)
+                    val bitmap = android.graphics.BitmapFactory.decodeFile(file.absolutePath) ?: continue
+                    val image = com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0)
+
+                    // OCR text recognition
+                    val recognizer = com.google.mlkit.vision.text.TextRecognition.getClient(
+                        com.google.mlkit.vision.text.latin.TextRecognizerOptions.DEFAULT_OPTIONS,
+                    )
+                    val textResult = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+                        recognizer.process(image)
+                            .addOnSuccessListener { text -> cont.resume(text, null) }
+                            .addOnFailureListener { cont.resume(null, null) }
+                    }
+                    if (textResult != null) {
+                        ocrResults.add(
+                            com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFields(textResult.text),
+                        )
+                    }
+
+                    // Barcode / QR detection
+                    val scanner = com.google.mlkit.vision.barcode.BarcodeScanning.getClient()
+                    val barcodes = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+                        scanner.process(image)
+                            .addOnSuccessListener { codes -> cont.resume(codes, null) }
+                            .addOnFailureListener { cont.resume(null, null) }
+                    }
+                    barcodes?.forEach { code ->
+                        val raw = code.rawValue ?: return@forEach
+                        if (raw.startsWith("http://") || raw.startsWith("https://")) {
+                            if (detectedQrUrl == null) detectedQrUrl = raw
+                        } else {
+                            if (detectedBarcode == null) detectedBarcode = raw
+                        }
+                    }
+                } catch (_: Exception) {
+                    // Processing failed for this photo — continue with others
+                }
+            }
+
+            // Merge OCR results: prefer first non-null for each field
+            if (ocrResults.isNotEmpty()) {
+                ocrPrefill = com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult(
+                    roaster = ocrResults.firstNotNullOfOrNull { it.roaster },
+                    origin = ocrResults.firstNotNullOfOrNull { it.origin },
+                    region = ocrResults.firstNotNullOfOrNull { it.region },
+                    variety = ocrResults.firstNotNullOfOrNull { it.variety },
+                    processType = ocrResults.firstNotNullOfOrNull { it.processType },
+                    altitude = ocrResults.firstNotNullOfOrNull { it.altitude },
+                    tastingNotes = ocrResults.firstNotNullOfOrNull { it.tastingNotes },
+                    roastLevel = ocrResults.firstNotNullOfOrNull { it.roastLevel },
+                    roastDate = ocrResults.firstNotNullOfOrNull { it.roastDate },
                 )
-                val result = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-                    recognizer.process(image)
-                        .addOnSuccessListener { text -> cont.resume(text, null) }
-                        .addOnFailureListener { cont.resume(null, null) }
-                }
-                if (result != null) {
-                    val extraction = com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFields(result.text)
-                    ocrPrefill = extraction
-                }
-            } catch (_: Exception) {
-                // OCR failed silently — user fills manually
+            }
+
+            // If we found a barcode, look up on Open Food Facts
+            detectedBarcode?.let { barcode ->
+                try {
+                    val result = com.adsamcik.starlitcoffee.data.network.OpenFoodFactsClient.lookupBarcode(barcode)
+                    if (result != null) {
+                        offLookupName = result.name
+                        offLookupRoaster = result.brand
+                    }
+                } catch (_: Exception) { }
             }
         }
         showAddSheet = true
@@ -162,8 +187,8 @@ fun BagInventoryScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    pendingBarcode = null
-                    showAddSheet = true
+                    // Navigate to camera guide
+                    navController.navigate(CameraCapture)
                 },
                 shape = RoundedCornerShape(28.dp),
             ) {
@@ -212,47 +237,59 @@ fun BagInventoryScreen(
         }
     }
 
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val coroutineScope = androidx.compose.runtime.rememberCoroutineScope()
+
     // Add bag bottom sheet
     if (showAddSheet) {
         AddBagSheet(
-            initialBarcode = pendingBarcode,
+            initialBarcode = detectedBarcode,
             ocrPrefill = ocrPrefill,
             initialName = offLookupName,
             initialRoaster = offLookupRoaster,
+            traceabilityUrl = detectedQrUrl,
+            capturedPhotoUris = capturedPhotoUris,
             onDismiss = {
                 showAddSheet = false
-                pendingBarcode = null
                 ocrPrefill = null
                 capturedPhotoUris = null
                 offLookupName = null
                 offLookupRoaster = null
-            },
-            onScanBarcode = {
-                showAddSheet = false
-                navController.navigate(BarcodeScanner)
-            },
-            onScanLabel = {
-                showAddSheet = false
-                navController.navigate(com.adsamcik.starlitcoffee.navigation.CameraCapture)
+                detectedBarcode = null
+                detectedQrUrl = null
             },
             onSave = { name, roaster, origin, roastLevel, barcode, weightG, notes, variety, processType, tastingNotes ->
-                brewViewModel.addCoffeeBag(
-                    name = name,
-                    roaster = roaster,
-                    origin = origin,
-                    roastLevel = roastLevel,
-                    barcode = barcode,
-                    weightG = weightG,
-                    notes = notes,
-                    variety = variety,
-                    processType = processType,
-                    tastingNotes = tastingNotes,
-                    photoUri = capturedPhotoUris?.split(",")?.firstOrNull(),
-                )
+                val rawPhotoUris = capturedPhotoUris
+                val qrUrl = detectedQrUrl
                 showAddSheet = false
-                pendingBarcode = null
                 ocrPrefill = null
                 capturedPhotoUris = null
+                detectedBarcode = null
+                detectedQrUrl = null
+
+                // Copy photos to permanent storage on background thread
+                coroutineScope.launch {
+                    val permanentUris = rawPhotoUris?.let { uris ->
+                        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            copyPhotosToPermanentStorage(context, uris)
+                        }
+                    }
+                    brewViewModel.addCoffeeBag(
+                        name = name,
+                        roaster = roaster,
+                        origin = origin,
+                        roastLevel = roastLevel,
+                        barcode = barcode,
+                        weightG = weightG,
+                        notes = notes,
+                        variety = variety,
+                        processType = processType,
+                        tastingNotes = tastingNotes,
+                        photoUri = permanentUris?.split(",")?.firstOrNull(),
+                        photoUris = permanentUris,
+                        traceabilityUrl = qrUrl,
+                    )
+                }
             },
         )
     }
@@ -302,6 +339,26 @@ private fun BagCard(
                 .padding(20.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            // Photo thumbnail
+            bag.photoUri?.let { uri ->
+                val bitmap = remember(uri) {
+                    try {
+                        val file = java.io.File(android.net.Uri.parse(uri).path ?: return@remember null)
+                        android.graphics.BitmapFactory.decodeFile(file.absolutePath)
+                    } catch (_: Exception) { null }
+                }
+                if (bitmap != null) {
+                    Image(
+                        bitmap = bitmap.asImageBitmap(),
+                        contentDescription = "Bag photo",
+                        modifier = Modifier
+                            .size(56.dp)
+                            .clip(RoundedCornerShape(12.dp)),
+                        contentScale = ContentScale.Crop,
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                }
+            }
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = bag.name,
@@ -352,9 +409,9 @@ private fun AddBagSheet(
     ocrPrefill: com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult? = null,
     initialName: String? = null,
     initialRoaster: String? = null,
+    traceabilityUrl: String? = null,
+    capturedPhotoUris: String? = null,
     onDismiss: () -> Unit,
-    onScanBarcode: () -> Unit,
-    onScanLabel: () -> Unit,
     onSave: (
         name: String,
         roaster: String?,
@@ -524,43 +581,6 @@ private fun AddBagSheet(
                             .padding(bottom = 8.dp),
                     )
                 }
-                item {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp),
-                    ) {
-                        OutlinedButton(
-                            onClick = {
-                                onDismiss()
-                                onScanLabel()
-                            },
-                            shape = RoundedCornerShape(28.dp),
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp),
-                        ) {
-                            Icon(Icons.Filled.CameraAlt, contentDescription = null, modifier = Modifier.size(18.dp))
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text("OCR", style = MaterialTheme.typography.labelMedium)
-                        }
-                        OutlinedButton(
-                            onClick = {
-                                onDismiss()
-                                onScanBarcode()
-                            },
-                            shape = RoundedCornerShape(28.dp),
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp),
-                        ) {
-                            Icon(Icons.Filled.CameraAlt, contentDescription = null, modifier = Modifier.size(18.dp))
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text("Barcode", style = MaterialTheme.typography.labelMedium)
-                        }
-                    }
-                }
             }
 
             Button(
@@ -627,6 +647,37 @@ private fun BagDetailSheet(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
+
+            // Photo gallery
+            bag.photoUris?.let { urisStr ->
+                val uriList = urisStr.split(",").filter { it.isNotBlank() }
+                if (uriList.isNotEmpty()) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.padding(top = 12.dp),
+                    ) {
+                        uriList.forEach { uriStr ->
+                            val bitmap = remember(uriStr) {
+                                try {
+                                    val file = java.io.File(android.net.Uri.parse(uriStr).path ?: return@remember null)
+                                    android.graphics.BitmapFactory.decodeFile(file.absolutePath)
+                                } catch (_: Exception) { null }
+                            }
+                            bitmap?.let {
+                                Image(
+                                    bitmap = it.asImageBitmap(),
+                                    contentDescription = "Bag photo",
+                                    modifier = Modifier
+                                        .size(80.dp)
+                                        .clip(RoundedCornerShape(12.dp)),
+                                    contentScale = ContentScale.Crop,
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
 
             LazyColumn(
@@ -643,6 +694,15 @@ private fun BagDetailSheet(
                     if (bag.weightG != null) DetailRow("Weight", "${"%.0f".format(bag.weightG)}g")
                     if (bag.tastingNotes != null) DetailRow("Tasting notes", bag.tastingNotes)
                     if (bag.notes != null) DetailRow("Notes", bag.notes)
+                    if (bag.traceabilityUrl != null) {
+                        val uriHandler = androidx.compose.ui.platform.LocalUriHandler.current
+                        TextButton(
+                            onClick = { uriHandler.openUri(bag.traceabilityUrl) },
+                            modifier = Modifier.padding(top = 4.dp),
+                        ) {
+                            Text("🔗 Traceability info")
+                        }
+                    }
                 }
 
                 // Brew history section
@@ -760,5 +820,27 @@ private fun BagDetailSheet(
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
+}
+
+/**
+ * Copies photos from cache to permanent storage (filesDir/bag_photos/).
+ * Returns comma-separated permanent URI strings.
+ */
+private fun copyPhotosToPermanentStorage(
+    context: android.content.Context,
+    cacheUris: String,
+): String {
+    val bagPhotosDir = java.io.File(context.filesDir, "bag_photos").apply { mkdirs() }
+    return cacheUris.split(",").mapNotNull { uriStr ->
+        try {
+            val sourceFile = java.io.File(android.net.Uri.parse(uriStr).path ?: return@mapNotNull null)
+            if (!sourceFile.exists()) return@mapNotNull null
+            val destFile = java.io.File(bagPhotosDir, "bag_${System.currentTimeMillis()}_${sourceFile.name}")
+            sourceFile.copyTo(destFile, overwrite = true)
+            destFile.toUri().toString()
+        } catch (_: Exception) {
+            null
+        }
+    }.joinToString(",")
 }
 

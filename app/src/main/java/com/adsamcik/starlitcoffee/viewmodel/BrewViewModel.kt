@@ -468,6 +468,8 @@ class BrewViewModel(
         priceCurrency: String? = "USD",
         notes: String? = null,
         photoUri: String? = null,
+        photoUris: String? = null,
+        traceabilityUrl: String? = null,
         status: String = "SEALED",
     ) {
         val repository = coffeeBagRepository ?: return
@@ -489,6 +491,8 @@ class BrewViewModel(
                     priceCurrency = priceCurrency,
                     notes = notes,
                     photoUri = photoUri,
+                    photoUris = photoUris,
+                    traceabilityUrl = traceabilityUrl,
                     status = status,
                 ),
             )

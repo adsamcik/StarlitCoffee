@@ -26,6 +26,7 @@ data class CoffeeBagEntity(
     val notes: String? = null,
     val photoUri: String? = null,
     val photoUris: String? = null,
+    val traceabilityUrl: String? = null,
     val status: String = "SEALED",
     val createdAt: Long = System.currentTimeMillis(),
 )
