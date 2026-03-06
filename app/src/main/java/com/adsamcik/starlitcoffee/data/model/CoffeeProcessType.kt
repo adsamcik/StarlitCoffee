@@ -10,9 +10,9 @@ sealed interface CoffeeProcessType {
         override val displayName: String,
         val searchAliases: List<String> = emptyList(),
     ) : CoffeeProcessType {
-        WASHED("Washed", listOf("praný", "praná", "lavado", "lavé", "gewaschen", "lavato")),
-        NATURAL("Natural", listOf("sun-dried", "sun dried", "sundried", "přírodní", "naturell", "naturale")),
-        HONEY("Honey", listOf("honey process", "miel", "medový", "medová")),
+        WASHED("Washed", listOf("praný", "praná", "lavado", "lavé", "gewaschen", "lavato", "vasket")),
+        NATURAL("Natural", listOf("sun-dried", "sun dried", "sundried", "přírodní", "naturell", "naturale", "naturlig", "soltørret")),
+        HONEY("Honey", listOf("honey process", "miel", "medový", "medová", "honningproces")),
         ANAEROBIC("Anaerobic", listOf("anaerobic fermentation", "anaerobní")),
         CARBONIC_MACERATION("Carbonic Maceration"),
         SEMI_WASHED("Semi-Washed", listOf("semi washed", "polopraný")),

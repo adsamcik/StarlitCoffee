@@ -32,6 +32,8 @@ import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
@@ -45,9 +47,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -77,7 +81,9 @@ import com.adsamcik.starlitcoffee.navigation.CameraCapture
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.ui.component.FieldChipPicker
+import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import com.adsamcik.starlitcoffee.ui.component.SuggestingTextField
+import com.adsamcik.starlitcoffee.util.DateParser
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -229,7 +235,7 @@ fun BagInventoryScreen(
                 detectedBarcode = null
                 detectedQrUrl = null
             },
-            onSave = { name, roaster, origin, region, roastLevel, barcode, weightG, notes, variety, processType, tastingNotes ->
+            onSave = { name, roaster, origin, region, roastLevel, barcode, weightG, notes, variety, processType, tastingNotes, roastDateMillis, expiryDateMillis ->
                 val rawPhotoUris = capturedPhotoUris
                 val qrUrl = detectedQrUrl
                 showAddSheet = false
@@ -257,6 +263,8 @@ fun BagInventoryScreen(
                         variety = variety,
                         processType = processType,
                         tastingNotes = tastingNotes,
+                        roastDate = roastDateMillis,
+                        expiryDate = expiryDateMillis,
                         photoUri = permanentUris?.split(",")?.firstOrNull(),
                         photoUris = permanentUris,
                         traceabilityUrl = qrUrl,
@@ -298,7 +306,7 @@ fun BagInventoryScreen(
             bagToEdit = bag,
             existingBags = bags,
             onDismiss = { editBag = null },
-            onSave = { _, _, _, _, _, _, _, _, _, _, _ -> },
+            onSave = { _, _, _, _, _, _, _, _, _, _, _, _, _ -> },
             onEdit = { updatedBag ->
                 brewViewModel.updateCoffeeBag(updatedBag)
                 editBag = null
@@ -337,7 +345,9 @@ private fun BagCard(
                 val bitmap = remember(uri) {
                     try {
                         val file = java.io.File(android.net.Uri.parse(uri).path ?: return@remember null)
-                        android.graphics.BitmapFactory.decodeFile(file.absolutePath)
+                        val raw = android.graphics.BitmapFactory.decodeFile(file.absolutePath)
+                            ?: return@remember null
+                        ImagePreprocessor.applyExifRotation(raw, file.absolutePath)
                     } catch (e: Exception) {
                         Log.w(TAG, "Failed to load bag thumbnail", e)
                         null
@@ -407,6 +417,16 @@ private fun BagCard(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+                    val freshness = DateParser.assessFreshness(bag.roastDate)
+                    Text(
+                        "${freshness.emoji} ${freshness.label}",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = when (freshness) {
+                            DateParser.Freshness.PEAK -> MaterialTheme.colorScheme.primary
+                            DateParser.Freshness.STALE, DateParser.Freshness.OLD -> MaterialTheme.colorScheme.error
+                            else -> MaterialTheme.colorScheme.onSurfaceVariant
+                        },
+                    )
                 }
                 if (bag.isDecaf) {
                     Text(
@@ -456,6 +476,8 @@ private fun AddBagSheet(
         variety: String?,
         processType: String?,
         tastingNotes: String?,
+        roastDate: Long?,
+        expiryDate: Long?,
     ) -> Unit,
     onEdit: ((CoffeeBagEntity) -> Unit)? = null,
 ) {
@@ -519,6 +541,12 @@ private fun AddBagSheet(
     }
     var notes by remember(bagToEdit) { mutableStateOf(bagToEdit?.notes ?: "") }
     var isDecaf by remember(bagToEdit) { mutableStateOf(bagToEdit?.isDecaf ?: false) }
+    var roastDateMillis by remember(ocrPrefill, bagToEdit) {
+        mutableStateOf(bagToEdit?.roastDate ?: ocrPrefill?.roastDate?.let { DateParser.parse(it) })
+    }
+    var expiryDateMillis by remember(ocrPrefill, bagToEdit) {
+        mutableStateOf(bagToEdit?.expiryDate ?: ocrPrefill?.expiryDate?.let { DateParser.parse(it) })
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -682,6 +710,114 @@ private fun AddBagSheet(
                         }
                     }
                 }
+                // Roast date picker
+                item {
+                    var showRoastDatePicker by remember { mutableStateOf(false) }
+
+                    OutlinedTextField(
+                        value = roastDateMillis?.let { DateParser.format(it) } ?: "",
+                        onValueChange = {},
+                        label = { Text("Roast date") },
+                        shape = RoundedCornerShape(16.dp),
+                        readOnly = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                        trailingIcon = {
+                            if (roastDateMillis != null) {
+                                IconButton(onClick = { roastDateMillis = null }) {
+                                    Icon(Icons.Filled.Close, "Clear")
+                                }
+                            }
+                        },
+                        enabled = false,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                            disabledBorderColor = MaterialTheme.colorScheme.outline,
+                            disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        ),
+                    )
+                    OutlinedButton(
+                        onClick = { showRoastDatePicker = true },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    ) {
+                        Text(if (roastDateMillis != null) "Change roast date" else "Set roast date")
+                    }
+
+                    if (showRoastDatePicker) {
+                        val datePickerState = rememberDatePickerState(initialSelectedDateMillis = roastDateMillis)
+                        DatePickerDialog(
+                            onDismissRequest = { showRoastDatePicker = false },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    roastDateMillis = datePickerState.selectedDateMillis
+                                    showRoastDatePicker = false
+                                }) { Text("OK") }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { showRoastDatePicker = false }) { Text("Cancel") }
+                            },
+                        ) {
+                            DatePicker(state = datePickerState)
+                        }
+                    }
+                }
+                // Expiry date picker
+                item {
+                    var showExpiryDatePicker by remember { mutableStateOf(false) }
+
+                    OutlinedTextField(
+                        value = expiryDateMillis?.let { DateParser.format(it) } ?: "",
+                        onValueChange = {},
+                        label = { Text("Best before") },
+                        shape = RoundedCornerShape(16.dp),
+                        readOnly = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                        trailingIcon = {
+                            if (expiryDateMillis != null) {
+                                IconButton(onClick = { expiryDateMillis = null }) {
+                                    Icon(Icons.Filled.Close, "Clear")
+                                }
+                            }
+                        },
+                        enabled = false,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                            disabledBorderColor = MaterialTheme.colorScheme.outline,
+                            disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        ),
+                    )
+                    OutlinedButton(
+                        onClick = { showExpiryDatePicker = true },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    ) {
+                        Text(if (expiryDateMillis != null) "Change best before" else "Set best before")
+                    }
+
+                    if (showExpiryDatePicker) {
+                        val datePickerState = rememberDatePickerState(initialSelectedDateMillis = expiryDateMillis)
+                        DatePickerDialog(
+                            onDismissRequest = { showExpiryDatePicker = false },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    expiryDateMillis = datePickerState.selectedDateMillis
+                                    showExpiryDatePicker = false
+                                }) { Text("OK") }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { showExpiryDatePicker = false }) { Text("Cancel") }
+                            },
+                        ) {
+                            DatePicker(state = datePickerState)
+                        }
+                    }
+                }
                 item {
                     FilterChip(
                         selected = isDecaf,
@@ -722,6 +858,8 @@ private fun AddBagSheet(
                                     processType = processType.takeIf { it.isNotBlank() },
                                     tastingNotes = tastingNotes.takeIf { it.isNotBlank() },
                                     isDecaf = isDecaf,
+                                    roastDate = roastDateMillis,
+                                    expiryDate = expiryDateMillis,
                                 ),
                             )
                         } else {
@@ -737,6 +875,8 @@ private fun AddBagSheet(
                                 variety.takeIf { it.isNotBlank() },
                                 processType.takeIf { it.isNotBlank() },
                                 tastingNotes.takeIf { it.isNotBlank() },
+                                roastDateMillis,
+                                expiryDateMillis,
                             )
                         }
                     }
@@ -820,7 +960,9 @@ private fun BagDetailSheet(
                             val bitmap = remember(uriStr) {
                                 try {
                                     val file = java.io.File(android.net.Uri.parse(uriStr).path ?: return@remember null)
-                                    android.graphics.BitmapFactory.decodeFile(file.absolutePath)
+                                    val raw = android.graphics.BitmapFactory.decodeFile(file.absolutePath)
+                                        ?: return@remember null
+                                    ImagePreprocessor.applyExifRotation(raw, file.absolutePath)
                                 } catch (e: Exception) {
                                     Log.w(TAG, "Failed to load bag detail photo", e)
                                     null

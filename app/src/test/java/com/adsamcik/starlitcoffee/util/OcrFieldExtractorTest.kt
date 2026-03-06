@@ -485,4 +485,39 @@ class OcrFieldExtractorTest {
         val result = OcrFieldExtractor.extractFields(text)
         assertNotNull("Should extract Czech roast date", result.roastDate)
     }
+
+    // --- Danish language ---
+
+    @Test
+    fun `extracts Danish vasket as Washed`() {
+        val result = OcrFieldExtractor.extractFields("Kenya\nVasket")
+        assertNotNull(result.processType)
+    }
+
+    @Test
+    fun `extracts Danish lys ristet as Light roast`() {
+        val result = OcrFieldExtractor.extractFields("Ethiopia\nLys ristet")
+        assertNotNull(result.roastLevel)
+    }
+
+    @Test
+    fun `extracts Danish smagsnoter label`() {
+        val text = "Smagsnoter: bær, chokolade, blomst"
+        val result = OcrFieldExtractor.extractFields(text)
+        assertNotNull("Should extract Danish tasting notes", result.tastingNotes)
+    }
+
+    @Test
+    fun `extracts Danish ristet date label`() {
+        val text = "Ristet: 15.01.2026"
+        val result = OcrFieldExtractor.extractFields(text)
+        assertNotNull("Should extract Danish roast date", result.roastDate)
+    }
+
+    @Test
+    fun `extracts Danish bedst før expiry label`() {
+        val text = "Bedst før: 15.06.2026"
+        val result = OcrFieldExtractor.extractFields(text)
+        assertNotNull("Should extract Danish expiry date", result.expiryDate)
+    }
 }

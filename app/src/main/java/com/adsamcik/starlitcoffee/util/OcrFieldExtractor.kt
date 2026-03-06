@@ -74,7 +74,7 @@ object OcrFieldExtractor {
     private val roastLevelRegex = buildRegex(CoffeeRoastLevel.allSearchTerms)
 
     private val tastingNotesLabelRegex = Regex(
-        """(?:tasting\s+notes|cupping\s+notes|notes|flavor|flavour|tastes?\s+like|chuťové?\s+poznámky|chuť|geschmacksnoten|geschmack|notas?\s+de\s+cata|note\s+di\s+degustazione)\s*:\s*(.+)""",
+        """(?:tasting\s+notes|cupping\s+notes|notes|flavor|flavour|tastes?\s+like|chuťové?\s+poznámky|chuť|geschmacksnoten|geschmack|notas?\s+de\s+cata|note\s+di\s+degustazione|smagsnoter|smag)\s*:\s*(.+)""",
         RegexOption.IGNORE_CASE,
     )
 
@@ -96,7 +96,7 @@ object OcrFieldExtractor {
 
     // Matches common roaster label patterns like "ROASTERY", "COFFEE ROASTERS", "KAFFEERÖSTEREI"
     private val roasteryLabelRegex = Regex(
-        """([\w\s':.\u00C0-\u024F]+(?:roaster[sy]?|coffee\s*roaster[sy]?|rösterei|pražírna|torrefazione|torréfacteur|tostador|palarnia))\b""",
+        """([\w\s':.\u00C0-\u024F]+(?:roaster[sy]?|coffee\s*roaster[sy]?|rösterei|pražírna|torrefazione|torréfacteur|tostador|palarnia|risteri))\b""",
         RegexOption.IGNORE_CASE,
     )
 
@@ -247,12 +247,12 @@ object OcrFieldExtractor {
     }
 
     private val roastLabelRegex = Regex(
-        """(?:(?:datum\s+)?(?:roast(?:ed)?|pražen[íoá]|geröst(?:et)?|tostado|torrado|tostato|torréfié))\s*(?:on|date|:)?\s*""",
+        """(?:(?:datum\s+)?(?:roast(?:ed)?|pražen[íoá]|geröst(?:et)?|tostado|torrado|tostato|torréfié|ristet))\s*(?:on|date|:)?\s*""",
         RegexOption.IGNORE_CASE,
     )
 
     private val expiryLabelRegex = Regex(
-        """(?:(?:best\s*before|use\s*by|expir(?:y|es?|ation)|consume\s*before|BB|EXP|MHD|spotřebujte\s*do|nejlépe\s*do|datum\s+minimální\s+trvanlivosti|mindestens\s*haltbar|à\s*consommer\s*avant)\s*(?:date)?)\s*[:.]?\s*""",
+        """(?:(?:best\s*before|use\s*by|expir(?:y|es?|ation)|consume\s*before|BB|EXP|MHD|spotřebujte\s*do|nejlépe\s*do|datum\s+minimální\s+trvanlivosti|mindestens\s*haltbar|à\s*consommer\s*avant|bedst\s*før)\s*(?:date)?)\s*[:.]?\s*""",
         RegexOption.IGNORE_CASE,
     )
 
