@@ -356,6 +356,9 @@ class BrewViewModel(
      * - BLOOM (any mode): PourStarted → bloom is done, user started pouring
      * - DRAIN_AND_REFILL (EVENT_GATED): PourStarted → user resumed pouring
      * - DRAWDOWN (EVENT_GATED): DrawdownComplete → silence after dripping
+     *
+     * Guard: ignores events in the first 3 seconds of a phase to prevent
+     * false triggers from detector startup/calibration transients.
      */
     private fun handleBrewAudioEvent(event: BrewAudioEvent) {
         val state = _uiState.value
@@ -363,6 +366,11 @@ class BrewViewModel(
         if (state.currentPhaseIndex >= state.timerPhases.lastIndex) return
 
         val phase = state.timerPhases.getOrNull(state.currentPhaseIndex) ?: return
+
+        // Ignore audio events in the first seconds of a phase — detector needs
+        // time to calibrate its noise floor for the new acoustic environment
+        val phaseElapsedSeconds = phase.durationSeconds - state.phaseSecondsRemaining
+        if (phaseElapsedSeconds < AUDIO_ADVANCE_MIN_PHASE_SECONDS) return
 
         val shouldAdvance = when (phase.phaseType) {
             // Bloom ends when user starts pouring (regardless of TIMED/EVENT_GATED)
@@ -385,6 +393,12 @@ class BrewViewModel(
 
     fun setAudioAutoAdvance(enabled: Boolean) {
         _uiState.update { it.copy(audioAutoAdvanceEnabled = enabled) }
+    }
+
+    companion object {
+        /** Minimum seconds into a phase before audio can trigger auto-advance.
+         *  Prevents false triggers during detector calibration. */
+        private const val AUDIO_ADVANCE_MIN_PHASE_SECONDS = 3
     }
 
     fun startAudioMonitoring() {

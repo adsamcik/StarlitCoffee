@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Build
 import android.view.WindowManager
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -88,6 +89,11 @@ fun BrewTimerScreen(
     val context = LocalContext.current
     var showStopDialog by remember { mutableStateOf(false) }
 
+    // Intercept system back — show stop dialog instead of silently leaving
+    BackHandler(enabled = uiState.timerRunning || uiState.elapsedSeconds > 0) {
+        showStopDialog = true
+    }
+
     // Request notification permission for foreground service (Android 13+)
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
@@ -115,12 +121,15 @@ fun BrewTimerScreen(
         }
     }
 
-    // Keep screen on
+    // Keep screen on + stop audio on dispose (safety net for unexpected exits)
     val view = LocalView.current
     DisposableEffect(Unit) {
         val window = (view.context as Activity).window
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        onDispose { window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) }
+        onDispose {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            brewViewModel.stopAudioMonitoring()
+        }
     }
 
     val phases = uiState.timerPhases
