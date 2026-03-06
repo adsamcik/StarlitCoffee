@@ -80,6 +80,8 @@ class BrewAudioManager(
         preProcessor.reset()
         spectralAnalyzer.reset()
         eventDetector.reset()
+        silenceStartTimeMs = System.currentTimeMillis()
+        wasSilent = true
 
         captureJob = newScope.launch {
             captureSession.audioBufferFlow().collect { buffer ->
