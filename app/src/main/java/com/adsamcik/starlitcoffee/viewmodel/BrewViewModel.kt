@@ -889,6 +889,10 @@ class BrewViewModel(
                         coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
                     }
                 }
+                InputMode.CUP_SIZE_TO_BOTH -> {
+                    waterG = amount
+                    coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
+                }
             }
 
             val effectiveBloomMultiplier = if (state.bloomMultiplier.isNotEmpty()) {

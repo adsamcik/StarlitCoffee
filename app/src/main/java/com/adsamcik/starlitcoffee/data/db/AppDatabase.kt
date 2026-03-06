@@ -28,8 +28,8 @@ import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
         RatioPresetEntity::class,
         FlavorTagEntity::class,
     ],
-    version = 8,
-    exportSchema = false,
+    version = 10,
+    exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
@@ -62,14 +62,28 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_8_9 = object : Migration(8, 9) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE coffee_bags ADD COLUMN isDecaf INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
+        private val MIGRATION_9_10 = object : Migration(9, 10) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_brew_logs_coffeeBagId ON brew_logs(coffeeBagId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_brew_logs_recipeId ON brew_logs(recipeId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_coffee_bags_barcode ON coffee_bags(barcode)")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "starlit_coffee.db",
-                ).addMigrations(MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
-                    .fallbackToDestructiveMigration()
+                ).addMigrations(MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
+                    .fallbackToDestructiveMigration(true)
                     .build().also { INSTANCE = it }
             }
         }

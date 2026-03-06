@@ -1,9 +1,16 @@
 package com.adsamcik.starlitcoffee.data.db.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "brew_logs")
+@Entity(
+    tableName = "brew_logs",
+    indices = [
+        Index("coffeeBagId"),
+        Index("recipeId"),
+    ]
+)
 data class BrewLogEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,

@@ -1,9 +1,13 @@
 package com.adsamcik.starlitcoffee.data.db.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "coffee_bags")
+@Entity(
+    tableName = "coffee_bags",
+    indices = [Index("barcode")]
+)
 data class CoffeeBagEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
@@ -30,6 +34,7 @@ data class CoffeeBagEntity(
     val traceabilityUrl: String? = null,
     val grindSetting: String? = null,
     val expiryDate: Long? = null,
+    val isDecaf: Boolean = false,
     val status: String = "SEALED",
     val createdAt: Long = System.currentTimeMillis(),
 )

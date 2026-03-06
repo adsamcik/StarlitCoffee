@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -61,6 +62,8 @@ import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
+private const val TAG = "BrewLogDetailScreen"
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -250,7 +253,8 @@ fun BrewLogDetailScreen(
                     if (entity.tasteFeedback != null) {
                         val feedback = try {
                             TasteFeedbackModel.valueOf(entity.tasteFeedback)
-                        } catch (_: Exception) {
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Failed to parse taste feedback", e)
                             null
                         }
                         if (feedback != null) {

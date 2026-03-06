@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.audio
 
+import android.util.Log
 import com.adsamcik.starlitcoffee.data.model.BrewAudioEvent
 import com.adsamcik.starlitcoffee.data.model.DetectorState
 import com.adsamcik.starlitcoffee.data.model.FrequencyBand
@@ -111,8 +112,8 @@ class FlightRecorder(
                 // Flush periodically (every 10 snapshots) for crash safety
                 if (snapshotCount % 10 == 0) flush()
             }
-        } catch (_: Exception) {
-            // Don't crash the pipeline if file I/O fails
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to write flight recorder snapshot", e)
         }
 
         return true
@@ -123,8 +124,8 @@ class FlightRecorder(
         try {
             writer?.flush()
             writer?.close()
-        } catch (_: Exception) {
-            // Ignore cleanup errors
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to close flight recorder file", e)
         }
         writer = null
         isOpen = false
@@ -233,6 +234,8 @@ class FlightRecorder(
     }
 
     companion object {
+        private const val TAG = "FlightRecorder"
+
         /** Default snapshot interval: 250ms = 4 snapshots/second */
         const val DEFAULT_INTERVAL_MS = 250L
     }

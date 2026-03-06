@@ -75,6 +75,7 @@ fun AmountStrengthScreen(
         InputMode.COFFEE_TO_WATER -> "Coffee (g)"
         InputMode.WATER_TO_COFFEE -> "Water (g)"
         InputMode.BREW_SIZE_TO_BOTH -> "Brew size (ml)"
+        InputMode.CUP_SIZE_TO_BOTH -> "Cup size (ml)"
     }
 
     val amountFloat = amount.toFloatOrNull() ?: 0f
@@ -165,7 +166,7 @@ fun AmountStrengthScreen(
             onValueChange = { brewViewModel.setAmount(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             shape = RoundedCornerShape(16.dp),
-            suffix = { Text(if (inputMode == InputMode.BREW_SIZE_TO_BOTH) "ml" else "g") },
+            suffix = { Text(if (inputMode == InputMode.BREW_SIZE_TO_BOTH || inputMode == InputMode.CUP_SIZE_TO_BOTH) "ml" else "g") },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
         )

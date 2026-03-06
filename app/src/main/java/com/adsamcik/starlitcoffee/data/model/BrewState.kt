@@ -20,6 +20,10 @@ data class BrewState(
         get() = when (inputMode) {
             InputMode.COFFEE_TO_WATER -> amount
             InputMode.WATER_TO_COFFEE -> amount / effectiveRatio
+            InputMode.BREW_SIZE_TO_BOTH -> {
+                val divisor = effectiveRatio - 2.0f
+                if (divisor > 0f) amount / divisor else amount / effectiveRatio
+            }
             InputMode.CUP_SIZE_TO_BOTH -> amount / effectiveRatio
         }
 
@@ -27,6 +31,10 @@ data class BrewState(
         get() = when (inputMode) {
             InputMode.COFFEE_TO_WATER -> amount * effectiveRatio
             InputMode.WATER_TO_COFFEE -> amount
+            InputMode.BREW_SIZE_TO_BOTH -> {
+                val divisor = effectiveRatio - 2.0f
+                if (divisor > 0f) (amount / divisor) * effectiveRatio else amount
+            }
             InputMode.CUP_SIZE_TO_BOTH -> amount
         }
 

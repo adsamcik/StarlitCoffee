@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,7 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.heading
@@ -45,6 +47,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+private const val TAG = "BrewLogScreen"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BrewLogScreen(
@@ -52,7 +56,7 @@ fun BrewLogScreen(
     brewViewModel: BrewViewModel,
 ) {
     val logs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
-    val dateFormat = SimpleDateFormat("MMM d, yyyy · h:mm a", Locale.getDefault())
+    val dateFormat = remember { SimpleDateFormat("MMM d, yyyy · h:mm a", Locale.getDefault()) }
 
     if (logs.isEmpty()) {
         EmptyStateBox(
@@ -108,7 +112,8 @@ private fun BrewLogCard(
     val feedbackEmoji = log.tasteFeedback?.let { name ->
         try {
             TasteFeedbackModel.valueOf(name).emoji
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to parse taste feedback", e)
             null
         }
     }

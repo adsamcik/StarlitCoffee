@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.audio
 
 import android.media.AudioAttributes
+import android.util.Log
 import android.media.AudioFormat
 import android.media.AudioTrack
 import kotlin.math.PI
@@ -133,8 +134,8 @@ class ActiveProbe(
             try {
                 track.stop()
                 track.release()
-            } catch (_: Exception) {
-                // Ignore cleanup errors
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to stop audio probe", e)
             }
         }
         audioTrack = null
@@ -213,6 +214,8 @@ class ActiveProbe(
     }
 
     companion object {
+        private const val TAG = "ActiveProbe"
+
         /** Default probe frequency: 18kHz (inaudible to most adults >25y) */
         const val DEFAULT_PROBE_FREQ = 18000
 

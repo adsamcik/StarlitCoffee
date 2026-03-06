@@ -120,4 +120,17 @@ enum class BrewMethod(
         capacityMaxG = null,
         defaultGrindDescriptor = GrindDescriptor.COARSE,
     ),
+    ;
+
+    val defaultRatioPresets: List<RatioPreset>
+        get() {
+            val base = defaultRatio.toInt()
+            return listOf(
+                RatioPreset(base - 2f, "1:${base - 2}"),
+                RatioPreset(base - 1f, "1:${base - 1}"),
+                RatioPreset(base.toFloat(), "1:$base", isDefault = true),
+                RatioPreset(base + 1f, "1:${base + 1}"),
+                RatioPreset(base + 2f, "1:${base + 2}"),
+            )
+        }
 }

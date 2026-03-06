@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.data.network
 
+import android.util.Log
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -11,6 +12,7 @@ import java.net.URL
  * No API key required. Rate limit: ~100 req/min.
  */
 object OpenFoodFactsClient {
+    private const val TAG = "OpenFoodFactsClient"
     private const val BASE_URL = "https://world.openfoodfacts.org/api/v0/product"
     private const val USER_AGENT = "StarlitCoffee/1.0 (Android)"
 
@@ -43,7 +45,8 @@ object OpenFoodFactsClient {
                 imageUrl = product.imageUrl?.takeIf { it.isNotBlank() },
                 quantity = product.quantity?.takeIf { it.isNotBlank() },
             )
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to fetch product info from OpenFoodFacts", e)
             null
         }
     }

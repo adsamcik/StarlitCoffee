@@ -1,5 +1,7 @@
 package com.adsamcik.starlitcoffee.data.repository
 
+import androidx.room.RoomDatabase
+import androidx.room.withTransaction
 import com.adsamcik.starlitcoffee.data.db.dao.BrewLogDao
 import com.adsamcik.starlitcoffee.data.db.dao.FlavorTagDao
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
@@ -7,6 +9,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import kotlinx.coroutines.flow.Flow
 
 class BrewLogRepository(
+    private val database: RoomDatabase? = null,
     private val brewLogDao: BrewLogDao,
     private val flavorTagDao: FlavorTagDao,
 ) {
@@ -28,11 +31,14 @@ class BrewLogRepository(
         tasteFeedback: String?,
         flavorTags: List<FlavorTagEntity>,
     ) {
-        brewLogDao.updateFeedback(logId, rating, notes, tasteFeedback)
-        flavorTagDao.deleteForBrewLog(logId)
-        if (flavorTags.isNotEmpty()) {
-            flavorTagDao.insertAll(flavorTags.map { it.copy(brewLogId = logId) })
+        val block: suspend () -> Unit = {
+            brewLogDao.updateFeedback(logId, rating, notes, tasteFeedback)
+            flavorTagDao.deleteForBrewLog(logId)
+            if (flavorTags.isNotEmpty()) {
+                flavorTagDao.insertAll(flavorTags.map { it.copy(brewLogId = logId) })
+            }
         }
+        if (database != null) database.withTransaction { block() } else block()
     }
 
     suspend fun getLogById(logId: Long): BrewLogEntity? = brewLogDao.getById(logId)
@@ -43,11 +49,14 @@ class BrewLogRepository(
     suspend fun deleteLog(entity: BrewLogEntity) = brewLogDao.delete(entity)
 
     suspend fun saveBrewWithTags(log: BrewLogEntity, tags: List<FlavorTagEntity>): Long {
-        val logId = brewLogDao.insert(log)
-        if (tags.isNotEmpty()) {
-            flavorTagDao.insertAll(tags.map { it.copy(brewLogId = logId) })
+        val block: suspend () -> Long = {
+            val logId = brewLogDao.insert(log)
+            if (tags.isNotEmpty()) {
+                flavorTagDao.insertAll(tags.map { it.copy(brewLogId = logId) })
+            }
+            logId
         }
-        return logId
+        return if (database != null) database.withTransaction { block() } else block()
     }
 
     fun getFlavorTagsForBag(bagId: Long): Flow<List<FlavorTagEntity>> =

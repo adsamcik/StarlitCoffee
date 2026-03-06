@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.util
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.graphics.Matrix
 import android.graphics.Rect
 import android.media.ExifInterface
@@ -26,6 +27,7 @@ import kotlin.math.roundToInt
  */
 object ImagePreprocessor {
 
+    private const val TAG = "ImagePreprocessor"
     private var initialized = false
 
     private fun ensureInitialized() {
@@ -71,7 +73,8 @@ object ImagePreprocessor {
             return Bitmap.createBitmap(
                 bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true,
             )
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to apply EXIF rotation", e)
             return bitmap
         }
     }
@@ -139,7 +142,8 @@ object ImagePreprocessor {
             }
 
             return result
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to apply text alignment", e)
             return bitmap
         }
     }
@@ -235,7 +239,8 @@ object ImagePreprocessor {
             rgba.release()
 
             return result
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to preprocess image for OCR", e)
             return bitmap
         }
     }

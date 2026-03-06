@@ -144,10 +144,13 @@ class SyntheticBrewScenarioTest {
         // This is expected — documents the SNR boundary
         // Either detects wrong frequency or 0 (no clear periodicity)
         val freqError = kotlin.math.abs(features.dominantFrequencyHz - 440f)
-        // We just document the behavior — not asserting it must work
+        // Heavy noise (amp 0.5) exceeds signal (amp 0.3) — detection should degrade
+        // beyond the clean-signal tolerance (10 Hz) used in the pure tone test.
+        // Either frequency error exceeds clean tolerance or detector reports 0 (no periodicity).
         assertTrue(
-            "With heavy noise, frequency detection degrades (freq=${features.dominantFrequencyHz})",
-            true,
+            "With heavy noise, freq error ($freqError Hz) should exceed clean tolerance (10 Hz) " +
+                "or detection should fail (freq=${features.dominantFrequencyHz})",
+            freqError > 10f || features.dominantFrequencyHz == 0f,
         )
     }
 

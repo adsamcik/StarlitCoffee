@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.Manifest
+import android.util.Log
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,6 +42,8 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
+
+private const val TAG = "BarcodeScannerScreen"
 
 @Composable
 fun BarcodeScannerScreen(
@@ -144,7 +147,8 @@ private fun BarcodeCamera(
                                 preview,
                                 analysis,
                             )
-                        } catch (_: Exception) {
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Failed to bind camera for barcode scanning", e)
                         }
                     },
                     ContextCompat.getMainExecutor(ctx),

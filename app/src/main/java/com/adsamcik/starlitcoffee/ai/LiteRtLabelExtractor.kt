@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ai
 
+import android.util.Log
 import com.google.ai.edge.litertlm.Backend
 import com.google.ai.edge.litertlm.Contents
 import com.google.ai.edge.litertlm.ConversationConfig
@@ -56,7 +57,8 @@ class LiteRtLabelExtractor(private val modelPath: String) : AiLabelExtractor {
                     parseResponse(response.toString())
                 }
             }
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to extract label via LiteRT", e)
             null
         }
     }
@@ -68,6 +70,7 @@ class LiteRtLabelExtractor(private val modelPath: String) : AiLabelExtractor {
     }
 
     internal companion object {
+        private const val TAG = "LiteRtLabelExtractor"
 
         /**
          * Parses a JSON response string into [AiExtractionResult].
@@ -106,7 +109,8 @@ class LiteRtLabelExtractor(private val modelPath: String) : AiLabelExtractor {
                     roastDate = getString("roastDate"),
                     weight = getString("weight"),
                 )
-            } catch (_: Exception) {
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to parse AI extraction response", e)
                 null
             }
         }
