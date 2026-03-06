@@ -132,6 +132,23 @@ fun BrewTimerScreen(
         }
     }
 
+    // Restart audio monitoring and ensure timer coroutine on app resume
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+                brewViewModel.ensureTimerRunning()
+                if (uiState.timerRunning) {
+                    brewViewModel.startAudioMonitoring()
+                }
+            } else if (event == androidx.lifecycle.Lifecycle.Event.ON_PAUSE) {
+                brewViewModel.stopAudioMonitoring()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
     val phases = uiState.timerPhases
     val currentPhaseIndex = uiState.currentPhaseIndex
     val totalElapsed = uiState.elapsedSeconds

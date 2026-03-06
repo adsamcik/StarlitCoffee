@@ -262,6 +262,22 @@ class BrewViewModel(
             _audioManager!!.startMonitoring()
         }
 
+        launchTimerLoop()
+    }
+
+    /**
+     * Ensures the timer coroutine is running. Call on app resume to recover
+     * from Doze or battery optimization pausing the coroutine.
+     * Does NOT reset the clock — wall-clock anchoring handles the gap.
+     */
+    fun ensureTimerRunning() {
+        if (!_uiState.value.timerRunning) return
+        if (timerJob?.isActive == true) return
+        // Timer state says running but coroutine died — restart the loop
+        launchTimerLoop()
+    }
+
+    private fun launchTimerLoop() {
         timerJob = viewModelScope.launch {
             while (_uiState.value.timerRunning) {
                 delay(250L)
@@ -352,10 +368,12 @@ class BrewViewModel(
 
     /**
      * Handles brew audio events for auto-advance.
-     * Advances phases when matching audio events are detected:
-     * - BLOOM (any mode): PourStarted → bloom is done, user started pouring
-     * - DRAIN_AND_REFILL (EVENT_GATED): PourStarted → user resumed pouring
-     * - DRAWDOWN (EVENT_GATED): DrawdownComplete → silence after dripping
+     * Advances EVENT_GATED phases when matching audio events are detected:
+     * - DRAIN_AND_REFILL: PourStarted → user resumed pouring
+     * - DRAWDOWN: DrawdownComplete → silence after dripping
+     *
+     * BLOOM is excluded — user pours bloom water then waits, so PourStarted
+     * during bloom is expected behavior, not a phase transition signal.
      *
      * Guard: ignores events in the first 3 seconds of a phase to prevent
      * false triggers from detector startup/calibration transients.
@@ -373,8 +391,9 @@ class BrewViewModel(
         if (phaseElapsedSeconds < AUDIO_ADVANCE_MIN_PHASE_SECONDS) return
 
         val shouldAdvance = when (phase.phaseType) {
-            // Bloom ends when user starts pouring (regardless of TIMED/EVENT_GATED)
-            PhaseType.BLOOM -> event is BrewAudioEvent.PourStarted
+            // Bloom should NOT auto-advance — user pours bloom water then waits.
+            // Detecting PourStarted during bloom is expected, not a phase transition.
+            PhaseType.BLOOM -> false
             // Drawdown complete: silence sustained after dripping
             PhaseType.DRAWDOWN -> {
                 phase.mode == PhaseMode.EVENT_GATED && event is BrewAudioEvent.DrawdownComplete
