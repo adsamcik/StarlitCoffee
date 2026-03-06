@@ -26,10 +26,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
-import com.adsamcik.starlitcoffee.navigation.CameraCapture
 import com.adsamcik.starlitcoffee.ui.component.AddBagSheet
 import com.adsamcik.starlitcoffee.ui.component.BagCard
 import com.adsamcik.starlitcoffee.ui.component.BagDetailSheet
@@ -45,13 +42,13 @@ private const val TAG = "BagInventoryScreen"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BagInventoryScreen(
-    navController: NavController,
     brewViewModel: BrewViewModel,
-) {
+    onNavigateToCamera: () -> Unit,
+    capturedPhotosResult: String? = null,
+){
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
     var showAddSheet by remember { mutableStateOf(false) }
     var selectedBag by remember { mutableStateOf<CoffeeBagEntity?>(null) }
@@ -73,11 +70,7 @@ fun BagInventoryScreen(
     }
 
     // Handle captured photos result (from CameraCaptureScreen)
-    val capturedPhotos by (currentBackStackEntry
-        ?.savedStateHandle
-        ?.getStateFlow<String?>("captured_photos", null)
-        ?.collectAsStateWithLifecycle()
-        ?: remember { mutableStateOf(null) })
+    val capturedPhotos = capturedPhotosResult
 
     // Observe bag photo processing results from ViewModel
     val bagPhotoResult by brewViewModel.bagPhotoResult.collectAsStateWithLifecycle()
@@ -110,10 +103,7 @@ fun BagInventoryScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {
-                    // Navigate to camera guide
-                    navController.navigate(CameraCapture)
-                },
+                onClick = onNavigateToCamera,
                 shape = MaterialTheme.shapes.large,
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "Add Bag")

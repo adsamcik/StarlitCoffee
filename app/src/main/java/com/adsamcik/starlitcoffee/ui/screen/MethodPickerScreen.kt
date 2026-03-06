@@ -43,7 +43,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
@@ -51,19 +50,18 @@ import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
-import com.adsamcik.starlitcoffee.navigation.AmountStrength
-import com.adsamcik.starlitcoffee.navigation.BrewTimer
-import com.adsamcik.starlitcoffee.navigation.Settings
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MethodPickerScreen(
-    navController: NavController,
     brewViewModel: BrewViewModel,
     userPreferencesRepository: UserPreferencesRepository,
+    onNavigateToAmount: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTimer: () -> Unit,
     snackbarHostState: SnackbarHostState? = null,
-) {
+){
     val state by brewViewModel.uiState.collectAsStateWithLifecycle()
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
@@ -107,7 +105,7 @@ fun MethodPickerScreen(
                     .weight(1f)
                     .semantics { heading() },
             )
-            IconButton(onClick = { navController.navigate(Settings) }) {
+            IconButton(onClick = onNavigateToSettings) {
                 Icon(
                     imageVector = Icons.Filled.Settings,
                     contentDescription = "Settings",
@@ -318,7 +316,7 @@ fun MethodPickerScreen(
 
         // Start Brewing button
         FilledTonalButton(
-            onClick = { navController.navigate(BrewTimer) },
+            onClick = onNavigateToTimer,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
@@ -331,7 +329,7 @@ fun MethodPickerScreen(
 
         // Customize link → full AmountStrength screen
         TextButton(
-            onClick = { navController.navigate(AmountStrength) },
+            onClick = onNavigateToAmount,
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text("Customize brew parameters")

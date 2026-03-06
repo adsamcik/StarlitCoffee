@@ -39,7 +39,6 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
@@ -58,10 +57,10 @@ private const val TAG = "BrewLogDetailScreen"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BrewLogDetailScreen(
-    navController: NavHostController,
     brewViewModel: BrewViewModel,
     logId: Long,
-) {
+    onBack: () -> Unit,
+){
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy · h:mm a", Locale.getDefault()) }
     var log by remember { mutableStateOf<BrewLogEntity?>(null) }
     var isLoading by remember { mutableStateOf(true) }
@@ -119,7 +118,7 @@ fun BrewLogDetailScreen(
                 TextButton(onClick = {
                     log?.let { brewViewModel.deleteBrewLog(it) }
                     showDeleteDialog = false
-                    navController.popBackStack()
+                    onBack()
                 }) {
                     Text("Delete", color = MaterialTheme.colorScheme.error)
                 }
@@ -137,7 +136,7 @@ fun BrewLogDetailScreen(
             TopAppBar(
                 title = { Text("Brew Details") },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = onBack) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",

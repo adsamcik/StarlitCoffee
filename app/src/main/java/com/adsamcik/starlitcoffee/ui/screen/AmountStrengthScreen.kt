@@ -40,12 +40,10 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.ui.util.shortLabel
-import com.adsamcik.starlitcoffee.navigation.BrewTimer
 import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
@@ -54,9 +52,10 @@ import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 
 @Composable
 fun AmountStrengthScreen(
-    navController: NavController,
     brewViewModel: BrewViewModel,
-) {
+    onBack: () -> Unit,
+    onNavigateToTimer: () -> Unit,
+){
     val uiState by brewViewModel.uiState.collectAsStateWithLifecycle()
 
     val method = uiState.method
@@ -113,7 +112,7 @@ fun AmountStrengthScreen(
         // Back button + method context
         ScreenTopBar(
             title = "",
-            onBack = { navController.popBackStack() },
+            onBack = onBack,
             modifier = Modifier.padding(top = 8.dp),
             actions = {
                 Text(
@@ -369,7 +368,7 @@ fun AmountStrengthScreen(
         FilledTonalButton(
             onClick = {
                 focusManager.clearFocus()
-                navController.navigate(BrewTimer)
+                onNavigateToTimer()
             },
             shape = MaterialTheme.shapes.large,
             modifier = Modifier

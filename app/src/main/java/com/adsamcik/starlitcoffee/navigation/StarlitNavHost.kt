@@ -231,58 +231,100 @@ fun StarlitNavHost() {
                     )
                 }
                 MethodPickerScreen(
-                    navController = navController,
                     brewViewModel = brewViewModel,
                     userPreferencesRepository = userPreferencesRepository,
+                    onNavigateToAmount = { navController.navigate(AmountStrength) },
+                    onNavigateToSettings = { navController.navigate(Settings) },
+                    onNavigateToTimer = { navController.navigate(BrewTimer) },
                     snackbarHostState = snackbarHostState,
                 )
             }
             composable<AmountStrength> {
-                AmountStrengthScreen(navController = navController, brewViewModel = brewViewModel)
+                AmountStrengthScreen(
+                    brewViewModel = brewViewModel,
+                    onBack = { navController.popBackStack() },
+                    onNavigateToTimer = { navController.navigate(BrewTimer) },
+                )
             }
             composable<BrewTimer> {
-                BrewTimerScreen(navController = navController, brewViewModel = brewViewModel)
+                BrewTimerScreen(
+                    brewViewModel = brewViewModel,
+                    onBack = { navController.popBackStack() },
+                )
             }
             composable<TasteFeedback> {
-                TasteFeedbackScreen(navController = navController, brewViewModel = brewViewModel)
+                TasteFeedbackScreen(
+                    brewViewModel = brewViewModel,
+                    onSaveAndFinish = {
+                        navController.navigate(MethodPicker) {
+                            popUpTo(MethodPicker) { inclusive = true }
+                        }
+                    },
+                    onNavigateToResult = {
+                        navController.popBackStack(Result, inclusive = false)
+                    },
+                )
             }
             composable<SavedRecipes> {
-                SavedRecipesScreen(navController = navController, brewViewModel = brewViewModel)
+                SavedRecipesScreen(
+                    brewViewModel = brewViewModel,
+                    onNavigateToAmount = { navController.navigate(AmountStrength) },
+                    onNavigateToTimer = { navController.navigate(BrewTimer) },
+                )
             }
-            composable<BagInventory> {
-                BagInventoryScreen(navController = navController, brewViewModel = brewViewModel)
+            composable<BagInventory> { backStackEntry ->
+                val capturedPhotos by backStackEntry.savedStateHandle
+                    .getStateFlow<String?>("captured_photos", null)
+                    .collectAsStateWithLifecycle()
+                BagInventoryScreen(
+                    brewViewModel = brewViewModel,
+                    onNavigateToCamera = { navController.navigate(CameraCapture) },
+                    capturedPhotosResult = capturedPhotos,
+                )
             }
             composable<BrewLogList> {
-                BrewLogScreen(navController = navController, brewViewModel = brewViewModel)
+                BrewLogScreen(
+                    brewViewModel = brewViewModel,
+                    onNavigateToDetail = { logId ->
+                        navController.navigate(BrewLogDetail(logId = logId))
+                    },
+                )
             }
             composable<BrewLogDetail> { backStackEntry ->
                 val route = backStackEntry.toRoute<BrewLogDetail>()
                 BrewLogDetailScreen(
-                    navController = navController,
                     brewViewModel = brewViewModel,
                     logId = route.logId,
+                    onBack = { navController.popBackStack() },
                 )
             }
             composable<BarcodeScanner> {
                 BarcodeScannerScreen(
-                    navController = navController,
+                    onBack = { navController.popBackStack() },
                     onBarcodeScanned = { barcode ->
                         navController.previousBackStackEntry
                             ?.savedStateHandle
                             ?.set("scanned_barcode", barcode)
+                        navController.popBackStack()
                     },
                 )
             }
             composable<CameraCapture> {
                 CameraCaptureScreen(
-                    navController = navController,
                     brewViewModel = brewViewModel,
+                    onBack = { navController.popBackStack() },
+                    onPhotosCaptured = { result ->
+                        navController.previousBackStackEntry
+                            ?.savedStateHandle
+                            ?.set("captured_photos", result)
+                        navController.popBackStack()
+                    },
                 )
             }
             composable<Settings> {
                 SettingsScreen(
-                    navController = navController,
                     userPreferencesRepository = userPreferencesRepository,
+                    onBack = { navController.popBackStack() },
                 )
             }
         }

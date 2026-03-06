@@ -30,10 +30,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
-import com.adsamcik.starlitcoffee.navigation.AmountStrength
-import com.adsamcik.starlitcoffee.navigation.BrewTimer
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.ui.component.SwipeToDismissCard
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -43,16 +40,17 @@ import java.util.Locale
 
 @Composable
 fun SavedRecipesScreen(
-    navController: NavController,
     brewViewModel: BrewViewModel,
-) {
+    onNavigateToAmount: () -> Unit,
+    onNavigateToTimer: () -> Unit,
+){
     val recipes by brewViewModel.savedRecipes.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navController.navigate(AmountStrength) },
+                onClick = onNavigateToAmount,
                 shape = MaterialTheme.shapes.large,
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "New brew")
@@ -95,7 +93,7 @@ fun SavedRecipesScreen(
                         dateFormat = dateFormat,
                         onTap = {
                             brewViewModel.loadRecipe(recipe)
-                            navController.navigate(BrewTimer)
+                            onNavigateToTimer()
                         },
                         onDelete = { brewViewModel.deleteRecipe(recipe) },
                     )

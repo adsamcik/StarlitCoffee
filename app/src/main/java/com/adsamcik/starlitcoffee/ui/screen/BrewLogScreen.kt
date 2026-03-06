@@ -27,11 +27,9 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.util.emoji
-import com.adsamcik.starlitcoffee.navigation.BrewLogDetail
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.ui.component.StarRatingRow
 import com.adsamcik.starlitcoffee.ui.component.SwipeToDismissCard
@@ -44,9 +42,9 @@ private const val TAG = "BrewLogScreen"
 
 @Composable
 fun BrewLogScreen(
-    navController: NavController,
     brewViewModel: BrewViewModel,
-) {
+    onNavigateToDetail: (Long) -> Unit,
+){
     val logs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy · h:mm a", Locale.getDefault()) }
 
@@ -78,7 +76,7 @@ fun BrewLogScreen(
                 BrewLogCard(
                     log = log,
                     dateFormat = dateFormat,
-                    onTap = { navController.navigate(BrewLogDetail(logId = log.id)) },
+                    onTap = { onNavigateToDetail(log.id) },
                     onDelete = { brewViewModel.deleteBrewLog(log) },
                 )
             }

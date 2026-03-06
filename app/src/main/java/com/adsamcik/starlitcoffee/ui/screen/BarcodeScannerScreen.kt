@@ -39,7 +39,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavController
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
@@ -47,9 +46,9 @@ private const val TAG = "BarcodeScannerScreen"
 
 @Composable
 fun BarcodeScannerScreen(
-    navController: NavController,
+    onBack: () -> Unit,
     onBarcodeScanned: (String) -> Unit,
-) {
+){
     val context = LocalContext.current
     var hasCameraPermission by remember {
         mutableStateOf(
@@ -75,9 +74,8 @@ fun BarcodeScannerScreen(
         BarcodeCamera(
             onBarcodeDetected = { barcode ->
                 onBarcodeScanned(barcode)
-                navController.popBackStack()
             },
-            onCancel = { navController.popBackStack() },
+            onCancel = onBack,
         )
     } else {
         Box(
@@ -90,7 +88,7 @@ fun BarcodeScannerScreen(
                     style = MaterialTheme.typography.bodyLarge,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = { navController.popBackStack() }) {
+                Button(onClick = onBack) {
                     Text("Go Back")
                 }
             }

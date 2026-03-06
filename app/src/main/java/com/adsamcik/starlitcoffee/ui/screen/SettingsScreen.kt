@@ -35,7 +35,6 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
@@ -51,9 +50,9 @@ private val checkIcon: @Composable () -> Unit = {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SettingsScreen(
-    navController: NavController,
     userPreferencesRepository: UserPreferencesRepository,
-) {
+    onBack: () -> Unit,
+){
     val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = com.adsamcik.starlitcoffee.data.repository.UserPreferences(),
     )
@@ -67,7 +66,7 @@ fun SettingsScreen(
     ) {
         ScreenTopBar(
             title = "Settings",
-            onBack = { navController.popBackStack() },
+            onBack = onBack,
         )
 
         Spacer(modifier = Modifier.height(16.dp))

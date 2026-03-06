@@ -34,10 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.navigation.BrewTimer
-import com.adsamcik.starlitcoffee.navigation.MethodPicker
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
@@ -46,9 +43,11 @@ import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 
 @Composable
 fun ResultScreen(
-    navController: NavController,
     brewViewModel: BrewViewModel,
-) {
+    onBack: () -> Unit,
+    onNavigateToTimer: () -> Unit,
+    onStartOver: () -> Unit,
+){
     val uiState by brewViewModel.uiState.collectAsStateWithLifecycle()
     val method = uiState.method
 
@@ -63,7 +62,7 @@ fun ResultScreen(
     ) {
         ScreenTopBar(
             title = "",
-            onBack = { navController.popBackStack() },
+            onBack = onBack,
             modifier = Modifier.padding(top = 8.dp),
         )
 
@@ -303,7 +302,7 @@ fun ResultScreen(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Button(
-                onClick = { navController.navigate(BrewTimer) },
+                onClick = { onNavigateToTimer() },
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .weight(1f)
@@ -325,9 +324,7 @@ fun ResultScreen(
         TextButton(
             onClick = {
                 brewViewModel.resetBrew()
-                navController.navigate(MethodPicker) {
-                    popUpTo(MethodPicker) { inclusive = true }
-                }
+                onStartOver()
             },
             modifier = Modifier
                 .fillMaxWidth()

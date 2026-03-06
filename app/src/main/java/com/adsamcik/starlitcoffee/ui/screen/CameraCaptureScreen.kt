@@ -56,15 +56,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.io.File
 
 @Composable
 fun CameraCaptureScreen(
-    navController: NavController,
     brewViewModel: BrewViewModel,
-) {
+    onBack: () -> Unit,
+    onPhotosCaptured: (String) -> Unit,
+){
     val context = LocalContext.current
     var hasCameraPermission by remember {
         mutableStateOf(
@@ -88,12 +88,13 @@ fun CameraCaptureScreen(
 
     if (hasCameraPermission) {
         CameraCaptureContent(
-            navController = navController,
+            onBack = onBack,
+            onPhotosCaptured = onPhotosCaptured,
         )
     } else {
         PermissionRequestContent(
             onRequestPermission = { permissionLauncher.launch(Manifest.permission.CAMERA) },
-            onBack = { navController.popBackStack() },
+            onBack = onBack,
         )
     }
 }
@@ -142,8 +143,9 @@ private fun PermissionRequestContent(
 
 @Composable
 private fun CameraCaptureContent(
-    navController: NavController,
-) {
+    onBack: () -> Unit,
+    onPhotosCaptured: (String) -> Unit,
+){
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val capturedPhotos = remember { mutableStateListOf<Uri>() }
@@ -183,10 +185,7 @@ private fun CameraCaptureContent(
                     isCapturing = false
 
                     if (capturedPhotos.size >= 2) {
-                        navController.previousBackStackEntry
-                            ?.savedStateHandle
-                            ?.set("captured_photos", capturedPhotos.joinToString(","))
-                        navController.popBackStack()
+                        onPhotosCaptured(capturedPhotos.joinToString(","))
                     }
                 }
 
@@ -198,10 +197,7 @@ private fun CameraCaptureContent(
     }
 
     fun skipCamera() {
-        navController.previousBackStackEntry
-            ?.savedStateHandle
-            ?.set("captured_photos", "skipped")
-        navController.popBackStack()
+        onPhotosCaptured("skipped")
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -224,7 +220,7 @@ private fun CameraCaptureContent(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(onClick = { navController.popBackStack() }) {
+            IconButton(onClick = onBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Go back",

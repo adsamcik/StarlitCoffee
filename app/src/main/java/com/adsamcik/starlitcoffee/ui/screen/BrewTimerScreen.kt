@@ -69,12 +69,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
-import com.adsamcik.starlitcoffee.data.model.DetectorState
 import com.adsamcik.starlitcoffee.service.BrewTimerService
 import com.adsamcik.starlitcoffee.ui.component.AudioDebugOverlay
+import com.adsamcik.starlitcoffee.ui.component.AudioDetectionIndicator
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.util.VibrationHelper.BrewHaptic
@@ -83,9 +82,9 @@ import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 
 @Composable
 fun BrewTimerScreen(
-    navController: NavController,
     brewViewModel: BrewViewModel,
-) {
+    onBack: () -> Unit,
+){
     val uiState by brewViewModel.uiState.collectAsStateWithLifecycle()
     val audioState by brewViewModel.audioState.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -524,7 +523,7 @@ fun BrewTimerScreen(
                 onClick = {
                     brewViewModel.logBrew()
                     brewViewModel.requestFeedbackSnackbar()
-                    navController.popBackStack()
+                    onBack()
                 },
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier
@@ -565,7 +564,7 @@ fun BrewTimerScreen(
                     BrewTimerService.stop(context)
                     brewViewModel.logBrew()
                     brewViewModel.requestFeedbackSnackbar()
-                    navController.popBackStack()
+                    onBack()
                 }) { Text("End Brew") }
             },
             dismissButton = {
@@ -575,46 +574,10 @@ fun BrewTimerScreen(
                         showStopDialog = false
                         brewViewModel.stopTimer()
                         BrewTimerService.stop(context)
-                        navController.popBackStack()
+                        onBack()
                     }) { Text("Discard") }
                 }
             },
-        )
-    }
-}
-
-/**
- * Subtle user-facing audio detection status. Shows what the mic is hearing
- * as a single-line chip below the timer circle.
- */
-@Composable
-private fun AudioDetectionIndicator(
-    audioState: AudioAnalysisState,
-    modifier: Modifier = Modifier,
-) {
-    val (icon, label, color) = when (audioState.detectorState) {
-        DetectorState.IDLE -> Triple("🎙️", "Listening…", MaterialTheme.colorScheme.onSurfaceVariant)
-        DetectorState.POURING -> Triple("🫗", "Pour detected", MaterialTheme.colorScheme.primary)
-        DetectorState.DRIPPING -> {
-            val rateText = if (audioState.dripRate > 0.1f) {
-                " · %.0f/s".format(audioState.dripRate)
-            } else {
-                ""
-            }
-            Triple("💧", "Dripping$rateText", MaterialTheme.colorScheme.tertiary)
-        }
-        DetectorState.COMPLETE -> Triple("✅", "Drawdown complete", MaterialTheme.colorScheme.secondary)
-    }
-
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
-        modifier = modifier.fillMaxWidth(),
-    ) {
-        Text(
-            text = "$icon $label",
-            style = MaterialTheme.typography.labelMedium,
-            color = color,
         )
     }
 }

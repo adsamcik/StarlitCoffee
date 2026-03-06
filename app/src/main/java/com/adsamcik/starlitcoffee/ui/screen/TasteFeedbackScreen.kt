@@ -31,10 +31,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
-import com.adsamcik.starlitcoffee.navigation.MethodPicker
-import com.adsamcik.starlitcoffee.navigation.Result
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 
 private data class FeedbackOption(
@@ -53,9 +50,10 @@ private val feedbackOptions = listOf(
 
 @Composable
 fun TasteFeedbackScreen(
-    navController: NavController,
     brewViewModel: BrewViewModel,
-) {
+    onSaveAndFinish: () -> Unit,
+    onNavigateToResult: () -> Unit,
+){
     val uiState by brewViewModel.uiState.collectAsStateWithLifecycle()
     val selectedFeedback = uiState.tasteFeedback
     val rating = uiState.rating
@@ -160,9 +158,7 @@ fun TasteFeedbackScreen(
         Button(
             onClick = {
                 brewViewModel.logBrew()
-                navController.navigate(MethodPicker) {
-                    popUpTo(MethodPicker) { inclusive = true }
-                }
+                onSaveAndFinish()
             },
             shape = MaterialTheme.shapes.large,
             modifier = Modifier
@@ -176,7 +172,7 @@ fun TasteFeedbackScreen(
 
         OutlinedButton(
             onClick = {
-                navController.popBackStack(Result, inclusive = false)
+                onNavigateToResult()
             },
             shape = MaterialTheme.shapes.large,
             modifier = Modifier
