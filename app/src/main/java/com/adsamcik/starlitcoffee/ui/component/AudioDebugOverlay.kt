@@ -248,6 +248,32 @@ fun AudioDebugOverlay(
                         )
                     }
 
+                    // Baseline + trajectory info
+                    if (audioState.baselineCalibrated) {
+                        val waterColor = if (audioState.waterLikeness > 0.5f) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        }
+                        Text(
+                            text = "🎯 Water: %.0f%%  Trajectory: %s (%.0f%%)".format(
+                                audioState.waterLikeness * 100,
+                                audioState.trajectoryPhase,
+                                audioState.brewConfidence * 100,
+                            ),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = waterColor,
+                            modifier = Modifier.padding(top = 2.dp),
+                        )
+                    } else {
+                        Text(
+                            text = "⏳ Calibrating ambient…",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(top = 2.dp),
+                        )
+                    }
+
                     // Phase label
                     if (audioState.currentPhaseLabel.isNotEmpty()) {
                         Text(

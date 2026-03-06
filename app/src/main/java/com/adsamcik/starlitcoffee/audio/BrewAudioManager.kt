@@ -45,6 +45,8 @@ class BrewAudioManager(
     private val spectralAnalyzer = SpectralAnalyzer()
     private val eventDetector = BrewEventDetector(detectorConfig)
     private val activeProbe: ActiveProbe? = if (activeProbeEnabled) ActiveProbe() else null
+    private val ambientBaseline = AmbientBaseline()
+    private val trajectoryMatcher = BrewTrajectoryMatcher()
 
     private var scope: CoroutineScope? = null
     private var captureJob: Job? = null
@@ -83,6 +85,8 @@ class BrewAudioManager(
         preProcessor.reset()
         spectralAnalyzer.reset()
         eventDetector.reset()
+        ambientBaseline.reset()
+        trajectoryMatcher.reset()
         silenceStartTimeMs = System.currentTimeMillis()
         wasSilent = true
         activeProbe?.start()
@@ -174,28 +178,50 @@ class BrewAudioManager(
             recorder.write(samples)
         }
 
-        // Spectral pipeline: PreProcessor → SpectralAnalyzer → EventDetector
+        // Spectral pipeline: PreProcessor → SpectralAnalyzer → Baseline → EventDetector
         val frames = preProcessor.process(samples)
         var latestSpectral = _analysisState.value.spectralFeatures
         var latestBrewEvent: BrewAudioEvent? = null
 
         for (frame in frames) {
-            val spectral = spectralAnalyzer.analyze(frame, includePowerSpectrum = activeProbe?.isActive == true)
+            // Always include power spectrum for baseline subtraction
+            val spectral = spectralAnalyzer.analyze(frame, includePowerSpectrum = true)
+            val rawPower = spectral.powerSpectrum ?: continue
 
-            // Active probe: analyze the probe bin in the power spectrum
-            val probeTurbulence = if (activeProbe?.isActive == true && spectral.powerSpectrum != null) {
-                activeProbe.analyzeProbeResponse(spectral.powerSpectrum)
+            // Ambient baseline: calibrate during first ~5s, then subtract
+            if (!ambientBaseline.isCalibrated) {
+                ambientBaseline.feedCalibrationFrame(rawPower)
+            }
+            val residualPower = ambientBaseline.subtract(rawPower)
+
+            // Water likeness score from residual shape vs Pulsar template
+            val waterScore = if (ambientBaseline.isCalibrated) {
+                ambientBaseline.scoreWaterLikeness(residualPower)
             } else {
                 0f
             }
 
-            // Attach probe turbulence to features for the detector
-            val enrichedSpectral = if (probeTurbulence > 0f) {
-                spectral.copy(probeTurbulence = probeTurbulence)
+            // Active probe: analyze the probe bin in the raw power spectrum
+            val probeTurbulence = if (activeProbe?.isActive == true) {
+                activeProbe.analyzeProbeResponse(rawPower)
             } else {
-                spectral
+                0f
             }
+
+            // Enrich spectral features with subtraction results
+            val enrichedSpectral = spectral.copy(
+                probeTurbulence = probeTurbulence,
+                waterLikeness = waterScore,
+                isBaselineCalibrated = ambientBaseline.isCalibrated,
+            )
             latestSpectral = enrichedSpectral
+
+            // Feed trajectory matcher (1-second downsampled)
+            trajectoryMatcher.feedFrame(
+                pourEnergyDb = spectral.bandEnergyDb[com.adsamcik.starlitcoffee.data.model.FrequencyBand.POUR] ?: -96f,
+                spectralFlatness = spectral.spectralFlatness,
+                bandCoincidence = spectral.bandCoincidenceCount,
+            )
 
             val events = eventDetector.processFrame(enrichedSpectral)
             for (event in events) {
@@ -243,6 +269,10 @@ class BrewAudioManager(
                 lastBrewEvent = latestBrewEvent ?: state.lastBrewEvent,
                 probeActive = activeProbe?.isActive == true,
                 probeTurbulence = activeProbe?.turbulenceScore ?: 0f,
+                waterLikeness = latestSpectral.waterLikeness,
+                baselineCalibrated = ambientBaseline.isCalibrated,
+                trajectoryPhase = trajectoryMatcher.trajectoryPhase.displayName,
+                brewConfidence = trajectoryMatcher.brewConfidence,
             )
         }
 

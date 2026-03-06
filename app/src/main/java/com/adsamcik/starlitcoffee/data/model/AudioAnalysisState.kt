@@ -27,6 +27,12 @@ data class AudioAnalysisState(
     // Active probe (experimental)
     val probeActive: Boolean = false,
     val probeTurbulence: Float = 0f,
+
+    // Spectral subtraction + trajectory
+    val waterLikeness: Float = 0f,
+    val baselineCalibrated: Boolean = false,
+    val trajectoryPhase: String = "",
+    val brewConfidence: Float = 0f,
 ){
     companion object {
         const val SILENCE_DB = -96f

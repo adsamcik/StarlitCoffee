@@ -63,9 +63,15 @@ data class SpectralFeatures(
     val bandCoincidenceCount: Int = 0,
 
     /** Active probe turbulence score (0 = calm, >0.5 = water turbulence).
-     *  Only populated when active probe is enabled.
-     *  Based on amplitude modulation of near-ultrasonic probe tone. */
+     *  Only populated when active probe is enabled. */
     val probeTurbulence: Float = 0f,
+
+    /** Water likeness score (0-1) from ambient-subtracted residual vs Pulsar template.
+     *  High = residual spectral shape matches expected water pour curve. */
+    val waterLikeness: Float = 0f,
+
+    /** Whether the ambient baseline has completed calibration */
+    val isBaselineCalibrated: Boolean = false,
 
     /** Full power spectrum (N/2 + 1 bins) — available for debug UI */
     val powerSpectrum: FloatArray? = null,
