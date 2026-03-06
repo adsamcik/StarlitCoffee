@@ -1309,11 +1309,8 @@ class BrewViewModelTest {
     }
 
     private fun setElapsedSeconds(targetViewModel: BrewViewModel, elapsedSeconds: Int) {
-        val uiStateField = BrewViewModel::class.java.getDeclaredField("_uiState")
-        uiStateField.isAccessible = true
-        @Suppress("UNCHECKED_CAST")
-        val stateFlow = uiStateField.get(targetViewModel) as MutableStateFlow<BrewUiState>
-        stateFlow.value = stateFlow.value.copy(elapsedSeconds = elapsedSeconds)
+        val currentState = targetViewModel.uiState.value
+        targetViewModel.setUiStateForTesting(currentState.copy(elapsedSeconds = elapsedSeconds))
     }
 }
 

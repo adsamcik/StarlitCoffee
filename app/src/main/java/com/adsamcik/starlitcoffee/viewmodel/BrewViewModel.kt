@@ -11,6 +11,7 @@ import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
+import com.adsamcik.starlitcoffee.data.model.GrinderDataProvider
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.data.model.PhaseMode
@@ -36,6 +37,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import android.util.Log
+import androidx.annotation.VisibleForTesting
+import com.adsamcik.starlitcoffee.data.network.OpenFoodFactsClient
+import com.adsamcik.starlitcoffee.util.ImagePreprocessor
+import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 sealed class GrindResult {
     data class Generic(val descriptor: GrindDescriptor) : GrindResult()
@@ -101,12 +109,22 @@ data class BrewUiState(
     val feedbackNotes: String = "",
 )
 
+data class BagPhotoProcessingResult(
+    val ocrPrefill: OcrFieldExtractor.OcrExtractionResult? = null,
+    val capturedPhotoUris: String? = null,
+    val detectedBarcode: String? = null,
+    val detectedQrUrl: String? = null,
+    val offLookupName: String? = null,
+    val offLookupRoaster: String? = null,
+)
+
 class BrewViewModel(
     private val recipeRepository: RecipeRepository? = null,
     private val brewLogRepository: BrewLogRepository? = null,
     private val coffeeBagRepository: CoffeeBagRepository? = null,
     private val ratioPresetRepository: RatioPresetRepository? = null,
     private val userPreferencesRepository: UserPreferencesRepository? = null,
+    private val grinderData: GrinderDataProvider = DefaultGrinders,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(BrewUiState())
@@ -120,6 +138,8 @@ class BrewViewModel(
     private val _selectedBagId = MutableStateFlow<Long?>(null)
     val selectedBagId: StateFlow<Long?> = _selectedBagId.asStateFlow()
     private var lastLoggedBrewId: Long? = null
+    private val _bagPhotoResult = MutableStateFlow<BagPhotoProcessingResult?>(null)
+    val bagPhotoResult: StateFlow<BagPhotoProcessingResult?> = _bagPhotoResult.asStateFlow()
 
     private var _audioManager: BrewAudioManager? = null
     val audioState: StateFlow<AudioAnalysisState>
@@ -430,6 +450,7 @@ class BrewViewModel(
         /** Minimum seconds into a phase before audio can trigger auto-advance.
          *  Prevents false triggers during detector calibration. */
         private const val AUDIO_ADVANCE_MIN_PHASE_SECONDS = 3
+        private const val BAG_PHOTO_TAG = "BagPhotoProcessing"
     }
 
     fun startAudioMonitoring() {
@@ -820,6 +841,162 @@ class BrewViewModel(
         }
     }
 
+
+    fun processNewBagPhotos(photosCsv: String, knownRoasters: List<String>, knownNames: List<String>) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val photoUriList = photosCsv.split(",")
+                val ocrResults = mutableListOf<OcrFieldExtractor.OcrExtractionResult>()
+                var detectedBarcode: String? = null
+                var detectedQrUrl: String? = null
+
+                for (uriStr in photoUriList) {
+                    try {
+                        val file = java.io.File(android.net.Uri.parse(uriStr).path ?: continue)
+                        val rawBitmap = android.graphics.BitmapFactory.decodeFile(file.absolutePath) ?: continue
+
+                        val bitmap = ImagePreprocessor.applyExifRotation(rawBitmap, file.absolutePath)
+
+                        val recognizer = com.google.mlkit.vision.text.TextRecognition.getClient(
+                            com.google.mlkit.vision.text.latin.TextRecognizerOptions.DEFAULT_OPTIONS,
+                        )
+
+                        val originalText = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+                            recognizer.process(
+                                com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0),
+                            )
+                                .addOnSuccessListener { text -> cont.resume(text, null) }
+                                .addOnFailureListener { cont.resume(null, null) }
+                        }
+
+                        val aligned = if (originalText != null && originalText.textBlocks.isNotEmpty()) {
+                            val alignment = ImagePreprocessor.computeAlignment(originalText.textBlocks)
+                            ImagePreprocessor.applyAlignment(bitmap, alignment)
+                        } else {
+                            bitmap
+                        }
+
+                        val enhanced = ImagePreprocessor.preprocessForOcr(aligned)
+                        val enhancedText = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+                            recognizer.process(
+                                com.google.mlkit.vision.common.InputImage.fromBitmap(enhanced, 0),
+                            )
+                                .addOnSuccessListener { text -> cont.resume(text, null) }
+                                .addOnFailureListener { cont.resume(null, null) }
+                        }
+
+                        val origResult = originalText?.let { text ->
+                            val blocks = text.textBlocks.map { block ->
+                                OcrFieldExtractor.OcrTextBlock(
+                                    text = block.text,
+                                    heightPx = block.boundingBox?.height() ?: 0,
+                                    topPx = block.boundingBox?.top ?: 0,
+                                )
+                            }
+                            OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownRoasters, knownNames)
+                        }
+                        val enhResult = enhancedText?.let { text ->
+                            val blocks = text.textBlocks.map { block ->
+                                OcrFieldExtractor.OcrTextBlock(
+                                    text = block.text,
+                                    heightPx = block.boundingBox?.height() ?: 0,
+                                    topPx = block.boundingBox?.top ?: 0,
+                                )
+                            }
+                            OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownRoasters, knownNames)
+                        }
+                        if (origResult != null || enhResult != null) {
+                            ocrResults.add(
+                                OcrFieldExtractor.OcrExtractionResult(
+                                    name = enhResult?.name ?: origResult?.name,
+                                    roaster = enhResult?.roaster ?: origResult?.roaster,
+                                    origin = enhResult?.origin ?: origResult?.origin,
+                                    region = enhResult?.region ?: origResult?.region,
+                                    variety = enhResult?.variety ?: origResult?.variety,
+                                    processType = enhResult?.processType ?: origResult?.processType,
+                                    altitude = enhResult?.altitude ?: origResult?.altitude,
+                                    tastingNotes = enhResult?.tastingNotes ?: origResult?.tastingNotes,
+                                    roastLevel = enhResult?.roastLevel ?: origResult?.roastLevel,
+                                    roastDate = enhResult?.roastDate ?: origResult?.roastDate,
+                                    weight = enhResult?.weight ?: origResult?.weight,
+                                ),
+                            )
+                        }
+                        val allOcrText = listOfNotNull(originalText?.text, enhancedText?.text)
+                            .joinToString("\n")
+                        if (detectedBarcode == null && allOcrText.isNotEmpty()) {
+                            detectedBarcode = OcrFieldExtractor.extractBarcodeFromText(allOcrText)
+                        }
+
+                        val scanner = com.google.mlkit.vision.barcode.BarcodeScanning.getClient()
+                        val barcodes = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+                            scanner.process(
+                                com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0),
+                            )
+                                .addOnSuccessListener { codes -> cont.resume(codes, null) }
+                                .addOnFailureListener { cont.resume(null, null) }
+                        }
+                        barcodes?.forEach { code ->
+                            val raw = code.rawValue ?: return@forEach
+                            if (raw.startsWith("http://") || raw.startsWith("https://")) {
+                                if (detectedQrUrl == null) detectedQrUrl = raw
+                            } else {
+                                if (detectedBarcode == null) detectedBarcode = raw
+                            }
+                        }
+                    } catch (e: Exception) {
+                        Log.w(BAG_PHOTO_TAG, "Failed to process bag photo for OCR and barcode extraction", e)
+                    }
+                }
+
+                val ocrPrefill = if (ocrResults.isNotEmpty()) {
+                    OcrFieldExtractor.OcrExtractionResult(
+                        name = ocrResults.firstNotNullOfOrNull { it.name },
+                        roaster = ocrResults.firstNotNullOfOrNull { it.roaster },
+                        origin = ocrResults.firstNotNullOfOrNull { it.origin },
+                        region = ocrResults.firstNotNullOfOrNull { it.region },
+                        variety = ocrResults.firstNotNullOfOrNull { it.variety },
+                        processType = ocrResults.firstNotNullOfOrNull { it.processType },
+                        altitude = ocrResults.firstNotNullOfOrNull { it.altitude },
+                        tastingNotes = ocrResults.firstNotNullOfOrNull { it.tastingNotes },
+                        roastLevel = ocrResults.firstNotNullOfOrNull { it.roastLevel },
+                        roastDate = ocrResults.firstNotNullOfOrNull { it.roastDate },
+                        weight = ocrResults.firstNotNullOfOrNull { it.weight },
+                    )
+                } else {
+                    null
+                }
+
+                var offLookupName: String? = null
+                var offLookupRoaster: String? = null
+                detectedBarcode?.let { barcode ->
+                    try {
+                        val result = OpenFoodFactsClient.lookupBarcode(barcode)
+                        if (result != null) {
+                            offLookupName = result.name
+                            offLookupRoaster = result.brand
+                        }
+                    } catch (e: Exception) {
+                        Log.w(BAG_PHOTO_TAG, "Failed to fetch product info from OpenFoodFacts", e)
+                    }
+                }
+
+                _bagPhotoResult.value = BagPhotoProcessingResult(
+                    ocrPrefill = ocrPrefill,
+                    capturedPhotoUris = photosCsv,
+                    detectedBarcode = detectedBarcode,
+                    detectedQrUrl = detectedQrUrl,
+                    offLookupName = offLookupName,
+                    offLookupRoaster = offLookupRoaster,
+                )
+            }
+        }
+    }
+
+    fun clearBagPhotoResult() {
+        _bagPhotoResult.value = null
+    }
+
     fun resetBrew() {
         timerJob?.cancel()
         timerJob = null
@@ -992,15 +1169,15 @@ class BrewViewModel(
             return GrindResult.Generic(method.defaultGrindDescriptor)
         }
 
-        val grinder = DefaultGrinders.grinders.find { it.id == grinderId }
+        val grinder = grinderData.grinders.find { it.id == grinderId }
             ?: return GrindResult.Generic(method.defaultGrindDescriptor)
 
         // Try exact filterType match first, then fall back to filter-agnostic recommendation
-        var recommendation = DefaultGrinders.recommendations.find { rec ->
+        var recommendation = grinderData.recommendations.find { rec ->
             rec.grinderId == grinder.id &&
                 rec.methodId == method.name &&
                 rec.filterType == filterType
-        } ?: DefaultGrinders.recommendations.find { rec ->
+        } ?: grinderData.recommendations.find { rec ->
             rec.grinderId == grinder.id &&
                 rec.methodId == method.name &&
                 rec.filterType == null
@@ -1221,6 +1398,11 @@ class BrewViewModel(
             if (elapsedSeconds <= cumulativeTime) return i
         }
         return phases.lastIndex
+    }
+
+    @VisibleForTesting
+    internal fun setUiStateForTesting(state: BrewUiState) {
+        _uiState.value = state
     }
 }
 

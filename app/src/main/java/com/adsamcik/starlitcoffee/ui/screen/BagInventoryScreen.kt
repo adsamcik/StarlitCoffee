@@ -126,6 +126,20 @@ fun BagInventoryScreen(
         ?.collectAsStateWithLifecycle()
         ?: remember { mutableStateOf(null) })
 
+    // Observe bag photo processing results from ViewModel
+    val bagPhotoResult by brewViewModel.bagPhotoResult.collectAsStateWithLifecycle()
+    LaunchedEffect(bagPhotoResult) {
+        val result = bagPhotoResult ?: return@LaunchedEffect
+        ocrPrefill = result.ocrPrefill
+        capturedPhotoUris = result.capturedPhotoUris
+        detectedBarcode = result.detectedBarcode
+        detectedQrUrl = result.detectedQrUrl
+        offLookupName = result.offLookupName
+        offLookupRoaster = result.offLookupRoaster
+        brewViewModel.clearBagPhotoResult()
+        showAddSheet = true
+    }
+
     LaunchedEffect(capturedPhotos) {
         val photos = capturedPhotos ?: return@LaunchedEffect
         if (photos == lastProcessedPhotos) return@LaunchedEffect
@@ -137,153 +151,7 @@ fun BagInventoryScreen(
             return@LaunchedEffect
         }
 
-        capturedPhotoUris = photos
-        val photoUriList = photos.split(",")
-
-        // Run OCR + barcode detection on all captured photos
-        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-            val ocrResults = mutableListOf<com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult>()
-            for (uriStr in photoUriList) {
-                try {
-                    val file = java.io.File(android.net.Uri.parse(uriStr).path ?: continue)
-                    val rawBitmap = android.graphics.BitmapFactory.decodeFile(file.absolutePath) ?: continue
-
-                    // Step 1: Fix EXIF rotation (camera photos often appear sideways)
-                    val bitmap = com.adsamcik.starlitcoffee.util.ImagePreprocessor
-                        .applyExifRotation(rawBitmap, file.absolutePath)
-
-                    val recognizer = com.google.mlkit.vision.text.TextRecognition.getClient(
-                        com.google.mlkit.vision.text.latin.TextRecognizerOptions.DEFAULT_OPTIONS,
-                    )
-
-                    // Step 2: Text detection for alignment + original text extraction
-                    val originalText = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-                        recognizer.process(
-                            com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0),
-                        )
-                            .addOnSuccessListener { text -> cont.resume(text, null) }
-                            .addOnFailureListener { cont.resume(null, null) }
-                    }
-
-                    // Step 3: Deskew + crop to text region using detected text positions
-                    val aligned = if (originalText != null && originalText.textBlocks.isNotEmpty()) {
-                        val alignment = com.adsamcik.starlitcoffee.util.ImagePreprocessor
-                            .computeAlignment(originalText.textBlocks)
-                        com.adsamcik.starlitcoffee.util.ImagePreprocessor
-                            .applyAlignment(bitmap, alignment)
-                    } else {
-                        bitmap
-                    }
-
-                    // Step 4: CLAHE + sharpen on aligned image
-                    val enhanced = com.adsamcik.starlitcoffee.util.ImagePreprocessor
-                        .preprocessForOcr(aligned)
-                    val enhancedText = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-                        recognizer.process(
-                            com.google.mlkit.vision.common.InputImage.fromBitmap(enhanced, 0),
-                        )
-                            .addOnSuccessListener { text -> cont.resume(text, null) }
-                            .addOnFailureListener { cont.resume(null, null) }
-                    }
-
-                    // Extract fields from both passes and merge
-                    val origResult = originalText?.let { text ->
-                        val blocks = text.textBlocks.map { block ->
-                            com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrTextBlock(
-                                text = block.text,
-                                heightPx = block.boundingBox?.height() ?: 0,
-                                topPx = block.boundingBox?.top ?: 0,
-                            )
-                        }
-                        com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownRoasters, knownNames)
-                    }
-                    val enhResult = enhancedText?.let { text ->
-                        val blocks = text.textBlocks.map { block ->
-                            com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrTextBlock(
-                                text = block.text,
-                                heightPx = block.boundingBox?.height() ?: 0,
-                                topPx = block.boundingBox?.top ?: 0,
-                            )
-                        }
-                        com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownRoasters, knownNames)
-                    }
-                    if (origResult != null || enhResult != null) {
-                        ocrResults.add(
-                            com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult(
-                                name = enhResult?.name ?: origResult?.name,
-                                roaster = enhResult?.roaster ?: origResult?.roaster,
-                                origin = enhResult?.origin ?: origResult?.origin,
-                                region = enhResult?.region ?: origResult?.region,
-                                variety = enhResult?.variety ?: origResult?.variety,
-                                processType = enhResult?.processType ?: origResult?.processType,
-                                altitude = enhResult?.altitude ?: origResult?.altitude,
-                                tastingNotes = enhResult?.tastingNotes ?: origResult?.tastingNotes,
-                                roastLevel = enhResult?.roastLevel ?: origResult?.roastLevel,
-                                roastDate = enhResult?.roastDate ?: origResult?.roastDate,
-                                weight = enhResult?.weight ?: origResult?.weight,
-                            ),
-                        )
-                    }
-                    // Fallback: extract barcode from OCR text if ML Kit scanner misses it
-                    val allOcrText = listOfNotNull(originalText?.text, enhancedText?.text)
-                        .joinToString("\n")
-                    if (detectedBarcode == null && allOcrText.isNotEmpty()) {
-                        detectedBarcode = com.adsamcik.starlitcoffee.util.OcrFieldExtractor
-                            .extractBarcodeFromText(allOcrText)
-                    }
-
-                    // Barcode / QR detection (use EXIF-rotated original — cropping may lose edge barcodes)
-                    val scanner = com.google.mlkit.vision.barcode.BarcodeScanning.getClient()
-                    val barcodes = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-                        scanner.process(
-                            com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0),
-                        )
-                            .addOnSuccessListener { codes -> cont.resume(codes, null) }
-                            .addOnFailureListener { cont.resume(null, null) }
-                    }
-                    barcodes?.forEach { code ->
-                        val raw = code.rawValue ?: return@forEach
-                        if (raw.startsWith("http://") || raw.startsWith("https://")) {
-                            if (detectedQrUrl == null) detectedQrUrl = raw
-                        } else {
-                            if (detectedBarcode == null) detectedBarcode = raw
-                        }
-                    }
-                } catch (e: Exception) {
-                    Log.w(TAG, "Failed to process bag photo for OCR and barcode extraction", e)
-                }
-            }
-            // Merge OCR results: prefer first non-null for each field
-            if (ocrResults.isNotEmpty()) {
-                ocrPrefill = com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult(
-                    name = ocrResults.firstNotNullOfOrNull { it.name },
-                    roaster = ocrResults.firstNotNullOfOrNull { it.roaster },
-                    origin = ocrResults.firstNotNullOfOrNull { it.origin },
-                    region = ocrResults.firstNotNullOfOrNull { it.region },
-                    variety = ocrResults.firstNotNullOfOrNull { it.variety },
-                    processType = ocrResults.firstNotNullOfOrNull { it.processType },
-                    altitude = ocrResults.firstNotNullOfOrNull { it.altitude },
-                    tastingNotes = ocrResults.firstNotNullOfOrNull { it.tastingNotes },
-                    roastLevel = ocrResults.firstNotNullOfOrNull { it.roastLevel },
-                    roastDate = ocrResults.firstNotNullOfOrNull { it.roastDate },
-                    weight = ocrResults.firstNotNullOfOrNull { it.weight },
-                )
-            }
-
-            // If we found a barcode, look up on Open Food Facts
-            detectedBarcode?.let { barcode ->
-                try {
-                    val result = com.adsamcik.starlitcoffee.data.network.OpenFoodFactsClient.lookupBarcode(barcode)
-                    if (result != null) {
-                        offLookupName = result.name
-                        offLookupRoaster = result.brand
-                    }
-                } catch (e: Exception) {
-                    Log.w(TAG, "Failed to fetch product info from OpenFoodFacts", e)
-                }
-            }
-        }
-        showAddSheet = true
+        brewViewModel.processNewBagPhotos(photos, knownRoasters, knownNames)
     }
 
     Scaffold(

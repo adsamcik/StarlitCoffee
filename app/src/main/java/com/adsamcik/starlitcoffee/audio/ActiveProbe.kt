@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.audio
 
 import android.media.AudioAttributes
+import androidx.annotation.VisibleForTesting
 import android.util.Log
 import android.media.AudioFormat
 import android.media.AudioTrack
@@ -211,6 +212,11 @@ class ActiveProbe(
         probeHistory.fill(0f)
         historyPos = 0
         historyCount = 0
+    }
+
+    @VisibleForTesting
+    internal fun setActiveForTesting(active: Boolean) {
+        isActive = active
     }
 
     companion object {

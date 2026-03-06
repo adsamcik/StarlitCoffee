@@ -42,11 +42,9 @@ class ActiveProbeTest {
         return spectrum
     }
 
-    /** Use reflection to set isActive without needing Android AudioTrack */
+    /** Set isActive without needing Android AudioTrack */
     private fun setProbeActive(probe: ActiveProbe, active: Boolean) {
-        val field = ActiveProbe::class.java.getDeclaredField("isActive")
-        field.isAccessible = true
-        field.set(probe, active)
+        probe.setActiveForTesting(active)
     }
 
     // --- Tests ---
