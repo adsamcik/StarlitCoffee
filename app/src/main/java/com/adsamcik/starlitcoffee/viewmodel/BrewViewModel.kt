@@ -599,6 +599,15 @@ class BrewViewModel(
                             openedDate = System.currentTimeMillis(),
                         )
                     }
+                    // Save dialed-in grind setting to bag
+                    val grindStr = when (val result = state.grindResult) {
+                        is GrindResult.Specific ->
+                            "%.1f".format(result.recommendation.suggestedStart)
+                        is GrindResult.Generic -> null
+                    }
+                    if (grindStr != null && updated.grindSetting != grindStr) {
+                        updated = updated.copy(grindSetting = grindStr)
+                    }
                     // Decrement weight
                     if (updated.weightG != null) {
                         val newWeight = (updated.weightG - state.coffeeG).coerceAtLeast(0f)
@@ -610,6 +619,22 @@ class BrewViewModel(
                     }
                     if (updated != bag) {
                         coffeeBagRepository?.updateBag(updated)
+                    }
+                    // Auto-rotate: when bag finishes, open next sealed bag of same coffee
+                    if (updated.status == "FINISHED" && bag.status != "FINISHED") {
+                        val nextBag = coffeeBagRepository?.findNextSealed(
+                            updated.name,
+                            updated.roaster,
+                        )
+                        if (nextBag != null) {
+                            val opened = nextBag.copy(
+                                status = "OPEN",
+                                openedDate = System.currentTimeMillis(),
+                                grindSetting = updated.grindSetting,
+                            )
+                            coffeeBagRepository?.updateBag(opened)
+                            _selectedBagId.value = opened.id
+                        }
                     }
                 }
             }

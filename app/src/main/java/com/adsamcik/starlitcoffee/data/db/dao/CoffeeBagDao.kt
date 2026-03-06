@@ -30,4 +30,11 @@ interface CoffeeBagDao {
 
     @Query("SELECT * FROM coffee_bags WHERE barcode = :barcode LIMIT 1")
     suspend fun findByBarcode(barcode: String): CoffeeBagEntity?
+
+    @Query(
+        "SELECT * FROM coffee_bags WHERE name = :name AND " +
+            "(roaster = :roaster OR (roaster IS NULL AND :roaster IS NULL)) AND " +
+            "status = 'SEALED' ORDER BY createdAt ASC LIMIT 1",
+    )
+    suspend fun findNextSealed(name: String, roaster: String?): CoffeeBagEntity?
 }

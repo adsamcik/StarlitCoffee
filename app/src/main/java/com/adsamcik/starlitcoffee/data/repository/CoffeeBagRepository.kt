@@ -20,4 +20,7 @@ class CoffeeBagRepository(
     suspend fun deleteBag(entity: CoffeeBagEntity) = coffeeBagDao.delete(entity)
 
     suspend fun findByBarcode(barcode: String): CoffeeBagEntity? = coffeeBagDao.findByBarcode(barcode)
+
+    suspend fun findNextSealed(name: String, roaster: String?): CoffeeBagEntity? =
+        coffeeBagDao.findNextSealed(name, roaster)
 }

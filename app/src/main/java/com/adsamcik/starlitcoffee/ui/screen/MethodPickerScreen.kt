@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.navigation.AmountStrength
@@ -330,6 +331,37 @@ fun MethodPickerScreen(
                     null
                 },
             )
+        }
+
+        // Grind preview
+        val grindText = when (val gr = state.grindResult) {
+            is GrindResult.Generic ->
+                "${gr.descriptor.displayName} – ${gr.descriptor.visualCue}"
+            is GrindResult.Specific ->
+                "Setting: ${"%.1f".format(gr.recommendation.suggestedStart)} (${gr.recommendation.adjustmentNote})"
+        }
+        val bagGrindHint = selectedBag?.grindSetting
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = "⚙️ $grindText",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.weight(1f),
+            )
+            if (bagGrindHint != null) {
+                Text(
+                    text = "☕ Dialed in: $bagGrindHint",
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.tertiary,
+                    modifier = Modifier.padding(start = 8.dp),
+                )
+            }
         }
 
         // Start Brewing button

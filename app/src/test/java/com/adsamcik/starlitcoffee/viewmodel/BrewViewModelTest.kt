@@ -78,33 +78,33 @@ class BrewViewModelTest {
     }
 
     @Test
-    fun `cup size accounts for ground absorption`() {
+    fun `brew size accounts for ground absorption`() {
         viewModel.setMethod(BrewMethod.V60) // ratio 16
-        viewModel.setInputMode(InputMode.CUP_SIZE_TO_BOTH)
+        viewModel.setInputMode(InputMode.BREW_SIZE_TO_BOTH)
         viewModel.setAmount("250")
 
         val state = viewModel.uiState.value
-        // 250ml cup: coffeeG = 250 / (16 - 2) = 17.86g, waterG = 17.86 * 16 = 285.71g
+        // 250ml brew: coffeeG = 250 / (16 - 2) = 17.86g, waterG = 17.86 * 16 = 285.71g
         assertEquals(250f / 14f, state.coffeeG, 0.01f)
         assertEquals(250f / 14f * 16f, state.waterG, 0.01f)
     }
 
     @Test
-    fun `cup size with Pulsar accounts for absorption`() {
+    fun `brew size with Pulsar accounts for absorption`() {
         viewModel.setMethod(BrewMethod.PULSAR) // ratio 17
-        viewModel.setInputMode(InputMode.CUP_SIZE_TO_BOTH)
+        viewModel.setInputMode(InputMode.BREW_SIZE_TO_BOTH)
         viewModel.setAmount("300")
 
         val state = viewModel.uiState.value
-        // 300ml cup: coffeeG = 300 / (17 - 2) = 20g, waterG = 20 * 17 = 340g
+        // 300ml brew: coffeeG = 300 / (17 - 2) = 20g, waterG = 20 * 17 = 340g
         assertEquals(20f, state.coffeeG, 0.01f)
         assertEquals(340f, state.waterG, 0.01f)
     }
 
     @Test
-    fun `cup size falls back for low ratio methods`() {
+    fun `brew size falls back for low ratio methods`() {
         viewModel.setMethod(BrewMethod.ESPRESSO) // ratio 2
-        viewModel.setInputMode(InputMode.CUP_SIZE_TO_BOTH)
+        viewModel.setInputMode(InputMode.BREW_SIZE_TO_BOTH)
         viewModel.setAmount("36")
 
         val state = viewModel.uiState.value
@@ -1093,6 +1093,124 @@ class BrewViewModelTest {
         assertEquals(3, persistenceViewModel.coffeeBags.value.size)
     }
 
+    @Test
+    fun `addCoffeeBag stores region separately`() {
+        val persistenceViewModel = createPersistenceViewModel()
+        persistenceViewModel.addCoffeeBag(name = "Test", origin = "Ethiopia", region = "Guji")
+
+        val bag = persistenceViewModel.coffeeBags.value.first()
+        assertEquals("Ethiopia", bag.origin)
+        assertEquals("Guji", bag.region)
+    }
+
+    @Test
+    fun `addCoffeeBag sets initialWeightG equal to weightG`() {
+        val persistenceViewModel = createPersistenceViewModel()
+        persistenceViewModel.addCoffeeBag(name = "Test", weightG = 250f)
+
+        val bag = persistenceViewModel.coffeeBags.value.first()
+        assertEquals(250f, bag.weightG!!, 0.01f)
+        assertEquals(250f, bag.initialWeightG!!, 0.01f)
+    }
+
+    // --- Auto-status transitions ---
+
+    @Test
+    fun `logBrew changes bag status from SEALED to OPEN`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Sealed Bag", weightG = 250f)
+        val bagId = vm.coffeeBags.value.first().id
+
+        vm.selectBag(bagId)
+        vm.setAmount("20")
+        vm.logBrew()
+
+        val bag = vm.coffeeBags.value.first()
+        assertEquals("OPEN", bag.status)
+        assertNotNull("openedDate should be set", bag.openedDate)
+    }
+
+    @Test
+    fun `logBrew that depletes weight changes status to FINISHED`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Almost Empty", weightG = 15f)
+        val bagId = vm.coffeeBags.value.first().id
+
+        vm.selectBag(bagId)
+        vm.setAmount("20")
+        vm.logBrew()
+
+        val bag = vm.coffeeBags.value.first()
+        assertEquals(0f, bag.weightG!!, 0.01f)
+        assertEquals("FINISHED", bag.status)
+    }
+
+    @Test
+    fun `logBrew on bag without weight does not crash`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "No Weight Bag")
+        val bagId = vm.coffeeBags.value.first().id
+
+        vm.selectBag(bagId)
+        vm.setAmount("20")
+        vm.logBrew()
+
+        val bag = vm.coffeeBags.value.first()
+        assertEquals("OPEN", bag.status)
+        assertNull("weightG should remain null", bag.weightG)
+    }
+
+    // --- adjustBagWeight ---
+
+    @Test
+    fun `adjustBagWeight sets new weight`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Test", weightG = 250f)
+        val bagId = vm.coffeeBags.value.first().id
+
+        vm.adjustBagWeight(bagId, 180f)
+
+        assertEquals(180f, vm.coffeeBags.value.first().weightG!!, 0.01f)
+    }
+
+    @Test
+    fun `adjustBagWeight sets initialWeightG for legacy bags`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Legacy")
+        val bagId = vm.coffeeBags.value.first().id
+
+        vm.adjustBagWeight(bagId, 200f)
+
+        val bag = vm.coffeeBags.value.first()
+        assertEquals(200f, bag.weightG!!, 0.01f)
+        assertEquals(200f, bag.initialWeightG!!, 0.01f)
+    }
+
+    @Test
+    fun `adjustBagWeight to zero marks bag FINISHED`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Deplete", weightG = 50f)
+        val bagId = vm.coffeeBags.value.first().id
+        vm.updateBagStatus(bagId, "OPEN")
+
+        vm.adjustBagWeight(bagId, 0f)
+
+        val bag = vm.coffeeBags.value.first()
+        assertEquals(0f, bag.weightG!!, 0.01f)
+        assertEquals("FINISHED", bag.status)
+    }
+
+    @Test
+    fun `adjustBagWeight clamps negative to zero`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Negative", weightG = 50f)
+        val bagId = vm.coffeeBags.value.first().id
+
+        vm.adjustBagWeight(bagId, -10f)
+
+        assertEquals(0f, vm.coffeeBags.value.first().weightG!!, 0.01f)
+    }
+
     // --- loadRecipe preset matching ---
 
     @Test
@@ -1311,6 +1429,9 @@ private class FakeCoffeeBagDao : CoffeeBagDao {
     override fun getById(id: Long): Flow<CoffeeBagEntity?> = flow.map { list -> list.find { it.id == id } }
 
     override suspend fun findByBarcode(barcode: String): CoffeeBagEntity? = bags.find { it.barcode == barcode }
+
+    override suspend fun findNextSealed(name: String, roaster: String?): CoffeeBagEntity? =
+        bags.find { it.name == name && it.roaster == roaster && it.status == "SEALED" }
 }
 
 private class FakeFlavorTagDao : FlavorTagDao {
