@@ -91,6 +91,8 @@ data class BrewUiState(
     val showNextPreview: Boolean = false,
     val showFeedbackSnackbar: Boolean = false,
     val lastDriftSeconds: Int = 0,
+    // Decaf
+    val isDecafBrew: Boolean = false,
     // Audio auto-advance
     val audioAutoAdvanceEnabled: Boolean = true,
     // Feedback state
@@ -263,6 +265,12 @@ class BrewViewModel(
             _audioManager!!.startMonitoring()
         }
 
+        // Notify audio manager of initial phase (phase 0)
+        val initialPhase = _uiState.value.timerPhases.firstOrNull()
+        if (initialPhase != null) {
+            _audioManager?.onPhaseChanged(0, initialPhase.name)
+        }
+
         launchTimerLoop()
     }
 
@@ -353,7 +361,10 @@ class BrewViewModel(
      */
     fun initAudioManager(outputDirectory: java.io.File) {
         if (_audioManager != null) return
-        _audioManager = BrewAudioManager(outputDirectory = outputDirectory)
+        _audioManager = BrewAudioManager(
+            outputDirectory = outputDirectory,
+            autoRecord = true, // Always capture WAV + JSONL for debugging
+        )
         startBrewEventCollection()
     }
 
@@ -662,6 +673,15 @@ class BrewViewModel(
 
     fun selectBag(bagId: Long?) {
         _selectedBagId.value = bagId
+        // Auto-set decaf from bag
+        val bag = _coffeeBags.value.find { it.id == bagId }
+        _uiState.update { it.copy(isDecafBrew = bag?.isDecaf ?: false) }
+        recalculate()
+    }
+
+    fun setDecafBrew(isDecaf: Boolean) {
+        _uiState.update { it.copy(isDecafBrew = isDecaf) }
+        recalculate()
     }
 
     fun deleteBrewLog(entity: BrewLogEntity) {
@@ -892,8 +912,12 @@ class BrewViewModel(
                 0f
             }
 
-            val timeTargetLowS = method.timeTargetLow
-            val timeTargetHighS = method.timeTargetHigh
+            val timeTargetLowS = method.timeTargetLow.let {
+                if (state.isDecafBrew) (it - 30).coerceAtLeast(120) else it
+            }
+            val timeTargetHighS = method.timeTargetHigh.let {
+                if (state.isDecafBrew) (it - 30).coerceAtLeast(150) else it
+            }
 
             val refillCount = if (method.capacityMaxG != null && waterG > method.capacityMaxG) {
                 kotlin.math.ceil(waterG.toDouble() / method.capacityMaxG).toInt() - 1
@@ -921,6 +945,7 @@ class BrewViewModel(
                 method = method,
                 filterType = state.filterType,
                 calibrationStyle = state.calibrationStyle,
+                isDecaf = state.isDecafBrew,
             )
 
             val timerPhases = buildTimerPhases(
@@ -930,6 +955,7 @@ class BrewViewModel(
                 effectivePulseCount = effectivePulseCount,
                 waterG = waterG,
                 timeTargetLowS = timeTargetLowS,
+                isDecaf = state.isDecafBrew,
             )
 
             state.copy(
@@ -956,6 +982,7 @@ class BrewViewModel(
         method: BrewMethod,
         filterType: FilterType?,
         calibrationStyle: CalibrationStyle?,
+        isDecaf: Boolean = false,
     ): GrindResult {
         if (grinderId == null) {
             return GrindResult.Generic(method.defaultGrindDescriptor)
@@ -965,7 +992,7 @@ class BrewViewModel(
             ?: return GrindResult.Generic(method.defaultGrindDescriptor)
 
         // Try exact filterType match first, then fall back to filter-agnostic recommendation
-        val recommendation = DefaultGrinders.recommendations.find { rec ->
+        var recommendation = DefaultGrinders.recommendations.find { rec ->
             rec.grinderId == grinder.id &&
                 rec.methodId == method.name &&
                 rec.filterType == filterType
@@ -974,6 +1001,17 @@ class BrewViewModel(
                 rec.methodId == method.name &&
                 rec.filterType == null
         } ?: return GrindResult.Generic(method.defaultGrindDescriptor)
+
+        // Decaf offset: grind finer by ~2 steps (decaf beans are more brittle, extract faster)
+        if (isDecaf) {
+            val decafSteps = 2
+            val offset = recommendation.adjustmentStepSize * decafSteps
+            recommendation = recommendation.copy(
+                suggestedStart = (recommendation.suggestedStart - offset)
+                    .coerceAtLeast(recommendation.rangeStart),
+                adjustmentNote = recommendation.adjustmentNote + " · Decaf: ${decafSteps} steps finer",
+            )
+        }
 
         if (calibrationStyle == null) {
             return GrindResult.Specific(recommendation)
@@ -1032,6 +1070,7 @@ class BrewViewModel(
         effectivePulseCount: Int,
         waterG: Float,
         timeTargetLowS: Int,
+        isDecaf: Boolean = false,
     ): List<BrewPhase> {
         val phases = mutableListOf<BrewPhase>()
         var cumulative = 0f
@@ -1051,9 +1090,15 @@ class BrewViewModel(
                     mode = if (isPulsar) PhaseMode.EVENT_GATED else PhaseMode.TIMED,
                     waterG = bloomG,
                     cumulativeWaterG = cumulative,
-                    durationSeconds = if (isPulsar) 50 else 45,
+                    durationSeconds = when {
+                        isDecaf && isPulsar -> 35
+                        isDecaf -> 30
+                        isPulsar -> 50
+                        else -> 45
+                    },
                     instruction = if (isPulsar) {
-                        "Valve OPEN → pour to ${"%.0f".format(cumulative)}g → wait ~10s → CLOSE valve → gentle swirl"
+                        val decafHint = if (isDecaf) " · Decaf: shorter steep" else ""
+                        "Valve OPEN → pour to ${"%.0f".format(cumulative)}g → wait ~10s → CLOSE valve → gentle swirl$decafHint"
                     } else {
                         "Pour to ${"%.0f".format(cumulative)}g, let CO₂ escape"
                     },

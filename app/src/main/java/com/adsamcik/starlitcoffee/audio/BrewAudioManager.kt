@@ -38,7 +38,9 @@ class BrewAudioManager(
     private val outputDirectory: File? = null,
     /** Enable the active acoustic probe (experimental). Off by default. */
     private val activeProbeEnabled: Boolean = false,
-) {
+    /** Auto-start WAV + JSONL recording when monitoring begins. */
+    private val autoRecord: Boolean = false,
+){
     private val captureSession = AudioCaptureSession(config)
     private val recorder = AudioRecorder(config)
     private val preProcessor = AudioPreProcessor(sampleRate = config.sampleRate)
@@ -103,6 +105,11 @@ class BrewAudioManager(
 
         _analysisState.update {
             it.copy(isMonitoring = true)
+        }
+
+        // Auto-start recording if enabled (captures WAV + JSONL for debugging)
+        if (autoRecord && outputDirectory != null) {
+            startRecording()
         }
     }
 

@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.audio
 
+import android.util.Log
 import com.adsamcik.starlitcoffee.data.model.AudioConfig
 import java.io.File
 import java.io.RandomAccessFile
@@ -28,9 +29,10 @@ class AudioRecorder(
     /**
      * Opens a new WAV file for writing. Writes a placeholder header
      * that will be finalized on [close].
+     * If already recording, closes the previous file first.
      */
     fun open(file: File) {
-        require(raf == null) { "Already recording — call close() first" }
+        if (raf != null) close()
         file.parentFile?.mkdirs()
         raf = RandomAccessFile(file, "rw").apply {
             write(buildWavHeader(dataSize = 0))
@@ -54,13 +56,21 @@ class AudioRecorder(
 
     /**
      * Finalizes the WAV header with actual data sizes and closes the file.
+     * Safe to call multiple times.
      */
     fun close() {
         val out = raf ?: return
-        val dataSize = totalSamplesWritten * 2 // 16-bit = 2 bytes per sample
-        out.seek(0)
-        out.write(buildWavHeader(dataSize = dataSize.toInt()))
-        out.close()
+        try {
+            val dataSize = totalSamplesWritten * 2 // 16-bit = 2 bytes per sample
+            out.seek(0)
+            out.write(buildWavHeader(dataSize = dataSize.toInt()))
+            out.close()
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to finalize WAV header", e)
+            try { out.close() } catch (e2: Exception) {
+                Log.w(TAG, "Failed to close audio output stream", e2)
+            }
+        }
         raf = null
     }
 
@@ -99,6 +109,7 @@ class AudioRecorder(
     }
 
     companion object {
+        private const val TAG = "AudioRecorder"
         const val HEADER_SIZE = 44
         private const val CHANNELS = 1
         private const val BITS_PER_SAMPLE = 16
