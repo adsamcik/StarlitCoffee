@@ -90,6 +90,7 @@ data class BrewUiState(
     val phaseOvertime: Boolean = false,
     val showNextPreview: Boolean = false,
     val showFeedbackSnackbar: Boolean = false,
+    val lastDriftSeconds: Int = 0,
     // Audio auto-advance
     val audioAutoAdvanceEnabled: Boolean = true,
     // Feedback state
@@ -477,6 +478,7 @@ class BrewViewModel(
                 currentPhaseIndex = nextIndex,
                 timerPhases = updatedPhases,
                 phaseOvertime = false,
+                lastDriftSeconds = drift,
             )
         }
         phaseStartedAccumulatedMs = totalElapsedMs

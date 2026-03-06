@@ -9,6 +9,7 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -214,6 +215,20 @@ fun BrewTimerScreen(
 
     val primaryColor = MaterialTheme.colorScheme.primary
     val trackColor = MaterialTheme.colorScheme.surfaceVariant
+    val errorColor = MaterialTheme.colorScheme.error
+    val tertiaryColor = MaterialTheme.colorScheme.tertiary
+
+    // Arc color responds to phase overtime state
+    val arcColor by animateColorAsState(
+        targetValue = when {
+            finished -> MaterialTheme.colorScheme.tertiary
+            phaseOvertime && kotlin.math.abs(phaseRemaining) > 15 -> errorColor
+            phaseOvertime -> tertiaryColor
+            else -> primaryColor
+        },
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+        label = "arc_color",
+    )
 
     Column(
         modifier = Modifier
@@ -235,7 +250,7 @@ fun BrewTimerScreen(
                 val topLeft = Offset(stroke.width / 2, stroke.width / 2)
 
                 drawArc(trackColor, -90f, 360f, false, topLeft, arcSize, style = stroke)
-                drawArc(primaryColor, -90f, 360f * animatedProgress, false, topLeft, arcSize, style = stroke)
+                drawArc(arcColor, -90f, 360f * animatedProgress, false, topLeft, arcSize, style = stroke)
             }
 
             Column(
@@ -329,7 +344,33 @@ fun BrewTimerScreen(
             Spacer(modifier = Modifier.height(8.dp))
         }
 
-        // Next-up preview (non-Pulsar fallback, or when brew guide not shown)
+        // Drift rebalance feedback — shows briefly when phases are adjusted
+        val drift = uiState.lastDriftSeconds
+        var showDriftHint by remember { mutableStateOf(false) }
+        LaunchedEffect(uiState.currentPhaseIndex, drift) {
+            if (drift != 0 && uiState.currentPhaseIndex > 0) {
+                showDriftHint = true
+                kotlinx.coroutines.delay(3000L)
+                showDriftHint = false
+            }
+        }
+        AnimatedVisibility(
+            visible = showDriftHint,
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
+            val driftText = if (drift > 0) {
+                "⏩ ${drift}s early · remaining phases extended"
+            } else {
+                "⏪ ${kotlin.math.abs(drift)}s over · remaining phases shortened"
+            }
+            Text(
+                text = driftText,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+                textAlign = TextAlign.Center,
+            )
+        }
         if (uiState.method != BrewMethod.PULSAR) {
             AnimatedVisibility(
                 visible = showNext && nextPhase != null,
@@ -497,10 +538,26 @@ fun BrewTimerScreen(
     }
 
     if (showStopDialog) {
+        val stopMin = totalElapsed / 60
+        val stopSec = totalElapsed % 60
+        val phasesCompleted = currentPhaseIndex
+        val totalPhases = phases.size
         AlertDialog(
             onDismissRequest = { showStopDialog = false },
             title = { Text("Stop brewing?") },
-            text = { Text("End brew and go back?") },
+            text = {
+                Column {
+                    Text("End brew and go back?")
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "%d:%02d elapsed · Phase %d/%d · ${"%.0f".format(uiState.coffeeG)}g dose".format(
+                            stopMin, stopSec, phasesCompleted + 1, totalPhases,
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            },
             confirmButton = {
                 TextButton(onClick = {
                     showStopDialog = false
