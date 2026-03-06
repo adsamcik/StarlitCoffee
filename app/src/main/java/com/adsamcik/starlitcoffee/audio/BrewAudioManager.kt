@@ -47,6 +47,10 @@ class BrewAudioManager(
     private val activeProbe: ActiveProbe? = if (activeProbeEnabled) ActiveProbe() else null
     private val ambientBaseline = AmbientBaseline()
     private val trajectoryMatcher = BrewTrajectoryMatcher()
+    private val flightRecorder = FlightRecorder()
+
+    // Accumulate events between snapshots for the flight recorder
+    private val pendingEvents = mutableListOf<BrewAudioEvent>()
 
     private var scope: CoroutineScope? = null
     private var captureJob: Job? = null
@@ -129,6 +133,13 @@ class BrewAudioManager(
         if (isRecording) return
 
         openNewRecordingFile()
+
+        // Open flight recorder sidecar (same name, .jsonl extension)
+        recorder.outputFile?.let { wavFile ->
+            val jsonlFile = File(wavFile.parentFile, wavFile.nameWithoutExtension + ".jsonl")
+            flightRecorder.open(jsonlFile)
+        }
+
         _analysisState.update {
             it.copy(
                 isRecording = true,
@@ -141,6 +152,7 @@ class BrewAudioManager(
      * Stops recording to files. Monitoring continues.
      */
     fun stopRecording() {
+        flightRecorder.close()
         if (recorder.isOpen) {
             recorder.close()
         }
@@ -162,8 +174,13 @@ class BrewAudioManager(
         }
 
         if (isRecording) {
+            flightRecorder.close()
             recorder.close()
             openNewRecordingFile()
+            recorder.outputFile?.let { wavFile ->
+                val jsonlFile = File(wavFile.parentFile, wavFile.nameWithoutExtension + ".jsonl")
+                flightRecorder.open(jsonlFile)
+            }
             _analysisState.update {
                 it.copy(recordingFilePath = recorder.outputFile?.absolutePath)
             }
@@ -227,6 +244,26 @@ class BrewAudioManager(
             for (event in events) {
                 _brewEvents.tryEmit(event)
                 latestBrewEvent = event
+            }
+
+            // Flight recorder: accumulate events, write snapshot at interval
+            if (flightRecorder.isOpen) {
+                pendingEvents.addAll(events)
+                val wrote = flightRecorder.recordSnapshot(
+                    spectralFeatures = enrichedSpectral,
+                    detectorState = eventDetector.state,
+                    noiseFloorDb = eventDetector.noiseFloorDb,
+                    dripRate = eventDetector.dripRate,
+                    rmsDb = timeFeatures.rmsDb,
+                    brewPhaseLabel = currentPhaseLabel,
+                    trajectoryPhase = trajectoryMatcher.trajectoryPhase.displayName,
+                    brewConfidence = trajectoryMatcher.brewConfidence,
+                    waterLikeness = waterScore,
+                    baselineCalibrated = ambientBaseline.isCalibrated,
+                    probeTurbulence = probeTurbulence,
+                    events = pendingEvents.toList(),
+                )
+                if (wrote) pendingEvents.clear()
             }
         }
 
