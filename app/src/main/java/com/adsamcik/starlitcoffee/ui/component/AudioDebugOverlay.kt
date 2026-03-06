@@ -1,8 +1,8 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -63,16 +63,15 @@ fun AudioDebugOverlay(
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
         ),
-        modifier = modifier
-            .fillMaxWidth()
-            .animateContentSize(),
-        onClick = { expanded = !expanded },
+        modifier = modifier.fillMaxWidth(),
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
-            // Header row: mic icon, level bar, controls
+            // Header row: clickable to expand/collapse
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { expanded = !expanded },
             ) {
                 Icon(
                     imageVector = if (isMonitoring) Icons.Filled.Mic else Icons.Filled.MicOff,
