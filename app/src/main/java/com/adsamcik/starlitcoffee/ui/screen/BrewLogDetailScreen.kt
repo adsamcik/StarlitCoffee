@@ -223,6 +223,16 @@ fun BrewLogDetailScreen(
                     DetailRow("Water", "${"%.0f".format(entity.waterG)}g")
                     DetailRow("Ratio", "1:${"%.1f".format(entity.ratio)}")
 
+                    if (entity.coffeeBagId != null) {
+                        val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+                        val bagName = bags.find { it.id == entity.coffeeBagId }?.let { bag ->
+                            bag.name + (bag.roaster?.let { " ($it)" } ?: "")
+                        }
+                        if (bagName != null) {
+                            DetailRow("Coffee bag", bagName)
+                        }
+                    }
+
                     if (entity.brewTimeSeconds != null && entity.brewTimeSeconds > 0) {
                         val min = entity.brewTimeSeconds / 60
                         val sec = entity.brewTimeSeconds % 60

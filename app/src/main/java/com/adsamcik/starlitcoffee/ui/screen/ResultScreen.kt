@@ -253,6 +253,22 @@ fun ResultScreen(
             }
         }
 
+        // Coffee bag info
+        val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+        val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
+        val selectedBag = bags.find { it.id == selectedBagId }
+        if (selectedBag != null) {
+            val weightText = selectedBag.weightG?.let { w ->
+                " · ${"%.0f".format(w)}g remaining"
+            } ?: ""
+            Text(
+                text = "☕ ${selectedBag.name}${selectedBag.roaster?.let { " by $it" } ?: ""}$weightText",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
+            )
+        }
+
         // Grind section
         ElevatedCard(
             shape = RoundedCornerShape(28.dp),
@@ -269,9 +285,11 @@ fun ResultScreen(
                 val grindText = when (val gr = uiState.grindResult) {
                     is GrindResult.Generic ->
                         "${gr.descriptor.displayName} – ${gr.descriptor.visualCue}"
-                    is GrindResult.Specific ->
-                        "Setting: ${"%.1f".format(gr.recommendation.suggestedStart)} " +
+                    is GrindResult.Specific -> {
+                        val fmt = { v: Float -> if (v % 1f == 0f) "%.0f".format(v) else "%.1f".format(v) }
+                        "Setting: ${fmt(gr.recommendation.suggestedStart)} " +
                             "(${gr.recommendation.adjustmentNote})"
+                    }
                 }
                 Text(
                     text = grindText,

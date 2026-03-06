@@ -313,8 +313,14 @@ fun MethodPickerScreen(
                     }
                 },
                 label = {
+                    val bagLabel = selectedBag?.let { bag ->
+                        val weightHint = bag.weightG?.let { w ->
+                            " · ${"%.0f".format(w)}g left"
+                        } ?: ""
+                        "☕ ${bag.name}$weightHint"
+                    } ?: "Select coffee bag"
                     Text(
-                        text = selectedBag?.let { "☕ ${it.name}" } ?: "Select coffee bag",
+                        text = bagLabel,
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 },
