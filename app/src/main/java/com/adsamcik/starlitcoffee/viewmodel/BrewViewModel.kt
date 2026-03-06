@@ -26,9 +26,8 @@ import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.audio.BrewAudioManager
 import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
 import com.adsamcik.starlitcoffee.data.model.BrewAudioEvent
-import com.adsamcik.starlitcoffee.service.TimerStateHolder
+import com.adsamcik.starlitcoffee.domain.TimerController
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -146,10 +145,8 @@ class BrewViewModel(
         get() = _audioManager?.analysisState ?: MutableStateFlow(AudioAnalysisState())
     private var brewEventJob: Job? = null
 
-    private var timerJob: Job? = null
-    private var timerStartMs: Long = 0L
-    private var pausedAccumulatedMs: Long = 0L
-    private var phaseStartedAccumulatedMs: Long = 0L
+    @VisibleForTesting
+    internal val timerController = TimerController(viewModelScope)
     private var ratioPresetJob: Job? = null
 
     init {
@@ -171,6 +168,22 @@ class BrewViewModel(
         collectRatioPresets(_uiState.value.method)
         recalculate()
         applyUserDefaults()
+        // Sync TimerController state → BrewUiState
+        viewModelScope.launch {
+            timerController.state.collect { ts ->
+                _uiState.update { ui ->
+                    ui.copy(
+                        timerRunning = ts.timerRunning,
+                        elapsedSeconds = ts.elapsedSeconds,
+                        currentPhaseIndex = ts.currentPhaseIndex,
+                        phaseSecondsRemaining = ts.phaseSecondsRemaining,
+                        phaseOvertime = ts.phaseOvertime,
+                        showNextPreview = ts.showNextPreview,
+                        lastDriftSeconds = ts.lastDriftSeconds,
+                    )
+                }
+            }
+        }
     }
 
     private fun applyUserDefaults() {
@@ -276,9 +289,8 @@ class BrewViewModel(
     }
 
     fun startTimer() {
-        if (timerJob?.isActive == true) return
-        _uiState.update { it.copy(timerRunning = true) }
-        timerStartMs = System.nanoTime() / 1_000_000L
+        timerController.setPhases(_uiState.value.timerPhases)
+        timerController.start()
 
         // Auto-start audio monitoring when timer begins
         if (_audioManager != null && !_audioManager!!.isMonitoring) {
@@ -290,8 +302,6 @@ class BrewViewModel(
         if (initialPhase != null) {
             _audioManager?.onPhaseChanged(0, initialPhase.name)
         }
-
-        launchTimerLoop()
     }
 
     /**
@@ -300,77 +310,17 @@ class BrewViewModel(
      * Does NOT reset the clock — wall-clock anchoring handles the gap.
      */
     fun ensureTimerRunning() {
-        if (!_uiState.value.timerRunning) return
-        if (timerJob?.isActive == true) return
-        // Timer state says running but coroutine died — restart the loop
-        launchTimerLoop()
-    }
-
-    private fun launchTimerLoop() {
-        timerJob = viewModelScope.launch {
-            while (_uiState.value.timerRunning) {
-                delay(250L)
-                val nowMs = System.nanoTime() / 1_000_000L
-                val totalElapsedMs = pausedAccumulatedMs + (nowMs - timerStartMs)
-                val totalElapsedSeconds = (totalElapsedMs / 1000).toInt()
-                val phaseElapsedSeconds = ((totalElapsedMs - phaseStartedAccumulatedMs) / 1000).toInt()
-                _uiState.update { state ->
-                    val phase = state.timerPhases.getOrNull(state.currentPhaseIndex)
-                    val phaseDuration = phase?.durationSeconds ?: 0
-                    val remaining = phaseDuration - phaseElapsedSeconds
-                    val overtime = remaining < 0
-                    state.copy(
-                        elapsedSeconds = totalElapsedSeconds,
-                        phaseSecondsRemaining = remaining,
-                        phaseOvertime = overtime,
-                        showNextPreview = remaining in 1..10 &&
-                            state.currentPhaseIndex < state.timerPhases.lastIndex,
-                    )
-                }
-                val state = _uiState.value
-                val phase = state.timerPhases.getOrNull(state.currentPhaseIndex)
-                TimerStateHolder.update(
-                    phaseName = phase?.name ?: "",
-                    elapsedSeconds = totalElapsedSeconds,
-                    instruction = phase?.instruction ?: "",
-                    isRunning = true,
-                )
-            }
-        }
+        timerController.ensureRunning()
     }
 
     fun pauseTimer() {
-        val nowMs = System.nanoTime() / 1_000_000L
-        pausedAccumulatedMs += (nowMs - timerStartMs)
-        _uiState.update { it.copy(timerRunning = false) }
-        timerJob?.cancel()
-        timerJob = null
+        timerController.pause()
         _audioManager?.stopMonitoring()
-        val state = _uiState.value
-        val phase = state.timerPhases.getOrNull(state.currentPhaseIndex)
-        TimerStateHolder.update(
-            phaseName = phase?.name ?: "",
-            elapsedSeconds = state.elapsedSeconds,
-            instruction = phase?.instruction ?: "",
-            isRunning = false,
-        )
     }
 
     fun stopTimer() {
-        pausedAccumulatedMs = 0L
-        phaseStartedAccumulatedMs = 0L
-        _uiState.update {
-            it.copy(
-                timerRunning = false,
-                elapsedSeconds = 0,
-                currentPhaseIndex = 0,
-                phaseOvertime = false,
-            )
-        }
-        timerJob?.cancel()
-        timerJob = null
+        timerController.stop()
         _audioManager?.stopMonitoring()
-        TimerStateHolder.reset()
     }
 
     // --- Audio Monitoring ---
@@ -488,32 +438,8 @@ class BrewViewModel(
     }
 
     fun advancePhase() {
-        val nowMs = System.nanoTime() / 1_000_000L
-        val totalElapsedMs = if (_uiState.value.timerRunning) {
-            pausedAccumulatedMs + (nowMs - timerStartMs)
-        } else {
-            pausedAccumulatedMs
-        }
-
-        _uiState.update { state ->
-            val nextIndex = (state.currentPhaseIndex + 1)
-                .coerceAtMost(state.timerPhases.lastIndex.coerceAtLeast(0))
-
-            val drift = state.phaseSecondsRemaining
-            val updatedPhases = if (drift != 0) {
-                rebalancePhases(state.timerPhases, nextIndex, drift)
-            } else {
-                state.timerPhases
-            }
-
-            state.copy(
-                currentPhaseIndex = nextIndex,
-                timerPhases = updatedPhases,
-                phaseOvertime = false,
-                lastDriftSeconds = drift,
-            )
-        }
-        phaseStartedAccumulatedMs = totalElapsedMs
+        timerController.advancePhase(::rebalancePhases)
+        _uiState.update { it.copy(timerPhases = timerController.phases) }
 
         // Notify audio manager of phase change
         val state = _uiState.value
@@ -1000,13 +926,10 @@ class BrewViewModel(
     }
 
     fun resetBrew() {
-        timerJob?.cancel()
-        timerJob = null
-        pausedAccumulatedMs = 0L
+        timerController.resetForBrew()
         _uiState.value = BrewUiState()
         collectRatioPresets(BrewMethod.PULSAR)
         recalculate()
-        TimerStateHolder.reset()
         applyUserDefaults()
     }
 
@@ -1158,6 +1081,7 @@ class BrewViewModel(
                 timerPhases = timerPhases,
             )
         }
+        timerController.setPhases(_uiState.value.timerPhases)
     }
 
     private fun resolveGrindResult(

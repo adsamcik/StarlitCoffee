@@ -147,6 +147,7 @@ dependencies {
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.compose.ui.test.junit4)
