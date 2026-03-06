@@ -189,37 +189,37 @@ class BrewEventDetectorTest {
 
     @Test
     fun `noise floor adapts to ambient level`() {
-        val initialFloor = detector.noiseFloorDb[FrequencyBand.POUR] ?: -60f
+        val initialFloor = detector.noiseFloorDb[FrequencyBand.POUR] ?: -40f
 
-        // Feed moderate ambient noise
+        // Feed ambient noise louder than initial floor
         repeat(100) {
-            detector.processFrame(ambientNoiseFeatures(-40f))
+            detector.processFrame(ambientNoiseFeatures(-25f))
             advanceTime()
         }
 
-        val adaptedFloor = detector.noiseFloorDb[FrequencyBand.POUR] ?: -60f
+        val adaptedFloor = detector.noiseFloorDb[FrequencyBand.POUR] ?: -40f
         assertTrue(
-            "Noise floor should adapt upward from $initialFloor toward -40, got $adaptedFloor",
+            "Noise floor should adapt upward from $initialFloor toward -25, got $adaptedFloor",
             adaptedFloor > initialFloor,
         )
     }
 
     @Test
     fun `noise floor freezes during water signature detection`() {
-        // Establish baseline
+        // Establish baseline with ambient (high tilt = no water)
         repeat(50) {
             detector.processFrame(silenceFeatures())
             advanceTime()
         }
-        val floorBefore = detector.noiseFloorDb[FrequencyBand.POUR] ?: -60f
+        val floorBefore = detector.noiseFloorDb[FrequencyBand.POUR] ?: -40f
 
-        // Feed pour features with high spectral tilt (water signature)
+        // Feed pour features with low spectral tilt (water signature = broadband)
         repeat(50) {
             detector.processFrame(pourFeatures())
             advanceTime()
         }
 
-        val floorAfter = detector.noiseFloorDb[FrequencyBand.POUR] ?: -60f
+        val floorAfter = detector.noiseFloorDb[FrequencyBand.POUR] ?: -40f
 
         // POUR band noise floor should not have jumped significantly
         // (water signature detection should freeze it)
@@ -314,57 +314,57 @@ class BrewEventDetectorTest {
     }
 
     private fun silenceFeatures(): SpectralFeatures = SpectralFeatures(
-        bandEnergyDb = FrequencyBand.entries.associateWith { -80f },
+        bandEnergyDb = FrequencyBand.entries.associateWith { -35f },
         spectralFlux = FrequencyBand.entries.associateWith { 0f },
-        spectralTilt = 0f,
+        spectralTilt = 20f, // Real ambient: low-freq dominant
     )
 
     private fun pourFeatures(): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = mapOf(
-            FrequencyBand.POUR to -15f,
-            FrequencyBand.DRIP to -20f,
-            FrequencyBand.HIGH_MID to -30f,
+            FrequencyBand.POUR to -10f,
+            FrequencyBand.DRIP to -15f,
+            FrequencyBand.HIGH_MID to -25f,
         ),
         spectralFlux = mapOf(
             FrequencyBand.POUR to 15f,
             FrequencyBand.DRIP to 10f,
             FrequencyBand.HIGH_MID to 5f,
         ),
-        spectralTilt = 3.0f, // Water-like: low energy dominates high
+        spectralTilt = 4.0f, // Real pour: broadband, low tilt
     )
 
     private fun dripFeatures(): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = mapOf(
-            FrequencyBand.POUR to -50f,
-            FrequencyBand.DRIP to -45f,
-            FrequencyBand.HIGH_MID to -60f,
+            FrequencyBand.POUR to -30f,
+            FrequencyBand.DRIP to -28f,
+            FrequencyBand.HIGH_MID to -40f,
         ),
         spectralFlux = mapOf(
             FrequencyBand.POUR to 0.5f,
             FrequencyBand.DRIP to 0.5f,
             FrequencyBand.HIGH_MID to 0.2f,
         ),
-        spectralTilt = 0.5f,
+        spectralTilt = 20f, // Real drip: low-freq dominant
     )
 
     private fun dripImpulseFeatures(): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = mapOf(
-            FrequencyBand.POUR to -35f,
-            FrequencyBand.DRIP to -25f,
-            FrequencyBand.HIGH_MID to -50f,
+            FrequencyBand.POUR to -25f,
+            FrequencyBand.DRIP to -18f,
+            FrequencyBand.HIGH_MID to -35f,
         ),
         spectralFlux = mapOf(
             FrequencyBand.POUR to 8f,
             FrequencyBand.DRIP to 12f,
             FrequencyBand.HIGH_MID to 2f,
         ),
-        spectralTilt = 0.8f,
+        spectralTilt = 12f, // Impulse: somewhat broadband
     )
 
     private fun ambientNoiseFeatures(level: Float): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = FrequencyBand.entries.associateWith { level },
         spectralFlux = FrequencyBand.entries.associateWith { 0.1f },
-        spectralTilt = 1f,
+        spectralTilt = 20f, // Ambient: low-freq dominant
     )
 
     private fun feedSilence(frames: Int, events: MutableList<BrewAudioEvent>? = null) {

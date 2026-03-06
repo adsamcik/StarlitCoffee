@@ -79,9 +79,12 @@ class BrewEventDetector(
         val now = timeProvider()
         frameCount++
 
-        // Update water signature detection from spectral tilt
-        // Turbulent water has tilt > 2.0 (low frequencies dominate high frequencies)
-        waterSignatureDetected = features.spectralTilt > WATER_TILT_THRESHOLD
+        // Update water signature detection from spectral tilt.
+        // Real pour data: tilt 1-10 (broadband, flat spectrum).
+        // Ambient/drip: tilt 15-30 (low frequencies dominate).
+        // LOW tilt = water present (broadband energy fills both sub-bands).
+        waterSignatureDetected = features.spectralTilt < WATER_TILT_THRESHOLD
+            && features.spectralTilt > 0.1f // guard against silence (tilt ≈ 0)
 
         // Update per-band noise floors (continuous calibration)
         updateNoiseFloors(features)
@@ -366,15 +369,19 @@ class BrewEventDetector(
     }
 
     companion object {
-        private const val INITIAL_NOISE_FLOOR = -60f
+        // Real-world ambient is ~-30 dB in POUR band (from Pulsar recordings).
+        // Starting at -40 gives a conservative buffer that calibrates upward quickly.
+        private const val INITIAL_NOISE_FLOOR = -40f
         private const val INITIAL_THRESHOLD = 5f
         private const val MIN_THRESHOLD = 1f
 
         // Noise history: ~5 seconds at 86fps
         private const val NOISE_HISTORY_SIZE = 430
 
-        // Water spectral tilt threshold — turbulent water has low/high energy ratio > 2
-        private const val WATER_TILT_THRESHOLD = 2.0f
+        // Water spectral tilt threshold — real pour data shows tilt 1-10 (broadband),
+        // while ambient/drip shows tilt 15-30 (low-freq dominant).
+        // Low tilt = broadband water noise present → freeze noise floor.
+        private const val WATER_TILT_THRESHOLD = 8.0f
 
         // ODF weights for pour detection
         private const val ODF_FLUX_WEIGHT = 0.7f
