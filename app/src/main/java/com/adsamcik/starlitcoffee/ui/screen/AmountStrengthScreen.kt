@@ -46,9 +46,9 @@ import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.InputMode
-import com.adsamcik.starlitcoffee.data.model.StrengthPreset
-import com.adsamcik.starlitcoffee.navigation.Result
+import com.adsamcik.starlitcoffee.navigation.BrewTimer
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
+import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 
 @Composable
 fun AmountStrengthScreen(
@@ -60,7 +60,8 @@ fun AmountStrengthScreen(
     val method = uiState.method
     val inputMode = uiState.inputMode
     val amount = uiState.amount
-    val strength = uiState.strengthPreset
+    val ratioPresets = uiState.ratioPresets
+    val selectedPresetIndex = uiState.selectedPresetIndex
     val customRatio = uiState.customRatio
     val tempC = uiState.tempC
     val filterType = uiState.filterType
@@ -73,7 +74,7 @@ fun AmountStrengthScreen(
     val amountLabel = when (inputMode) {
         InputMode.COFFEE_TO_WATER -> "Coffee (g)"
         InputMode.WATER_TO_COFFEE -> "Water (g)"
-        InputMode.CUP_SIZE_TO_BOTH -> "Cup size (ml)"
+        InputMode.BREW_SIZE_TO_BOTH -> "Brew size (ml)"
     }
 
     val amountFloat = amount.toFloatOrNull() ?: 0f
@@ -89,7 +90,11 @@ fun AmountStrengthScreen(
                 50f
             }
         }
-        else -> method.capacityMaxG?.toFloat() ?: 1000f
+        else -> {
+            // Water/brew-size modes: allow up to ~3 fills, refills handle the rest
+            val singleFill = method.capacityMaxG?.toFloat()
+            if (singleFill != null) (singleFill * 3f).coerceAtLeast(500f) else 1000f
+        }
     }
 
     val capacityHint = method.capacityMaxG?.let {
@@ -117,7 +122,7 @@ fun AmountStrengthScreen(
                 )
             }
             Text(
-                text = "${method.displayName} · 1:${method.defaultRatio.toInt()}",
+                text = "${method.displayName} · ${ratioPresets.getOrNull(selectedPresetIndex)?.label ?: "1:${method.defaultRatio.toInt()}"}",
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(end = 8.dp),
@@ -160,7 +165,7 @@ fun AmountStrengthScreen(
             onValueChange = { brewViewModel.setAmount(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             shape = RoundedCornerShape(16.dp),
-            suffix = { Text(if (inputMode == InputMode.CUP_SIZE_TO_BOTH) "ml" else "g") },
+            suffix = { Text(if (inputMode == InputMode.BREW_SIZE_TO_BOTH) "ml" else "g") },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
         )
@@ -188,9 +193,9 @@ fun AmountStrengthScreen(
             Spacer(modifier = Modifier.height(16.dp))
         }
 
-        // Strength section
+        // Ratio section
         Text(
-            text = "Strength",
+            text = "Ratio",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier
                 .padding(start = 8.dp, bottom = 8.dp)
@@ -202,33 +207,17 @@ fun AmountStrengthScreen(
                 .fillMaxWidth()
                 .padding(bottom = 4.dp),
         ) {
-            StrengthPreset.entries.forEachIndexed { index, preset ->
+            ratioPresets.forEachIndexed { index, preset ->
                 SegmentedButton(
-                    selected = strength == preset,
-                    onClick = { brewViewModel.setStrengthPreset(preset) },
+                    selected = selectedPresetIndex == index,
+                    onClick = { brewViewModel.selectRatioPreset(index) },
                     shape = SegmentedButtonDefaults.itemShape(
                         index = index,
-                        count = StrengthPreset.entries.size,
+                        count = ratioPresets.size,
                     ),
                 ) {
-                    Text(preset.displayName)
+                    Text(preset.label)
                 }
-            }
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 4.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            StrengthPreset.entries.forEach { preset ->
-                val ratio = method.defaultRatio + preset.ratioOffset
-                Text(
-                    text = "1:${ratio.toInt()}",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
             }
         }
 
@@ -365,6 +354,45 @@ fun AmountStrengthScreen(
             }
         }
 
+        // Grind recommendation
+        ElevatedCard(
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 12.dp),
+        ) {
+            Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)) {
+                Text(
+                    text = "Grind",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 4.dp),
+                )
+                when (val gr = uiState.grindResult) {
+                    is GrindResult.Generic -> {
+                        Text(
+                            text = "${gr.descriptor.displayName} – ${gr.descriptor.visualCue}",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
+                    is GrindResult.Specific -> {
+                        val fmt = { v: Float -> if (v % 1f == 0f) "%.0f".format(v) else "%.1f".format(v) }
+                        Text(
+                            text = "Setting: ${fmt(gr.recommendation.suggestedStart)} (range ${fmt(gr.recommendation.rangeStart)}–${fmt(gr.recommendation.rangeEnd)})",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                        Text(
+                            text = "${gr.recommendation.adjustmentNote} · Adjust by ±${fmt(gr.recommendation.adjustmentStepSize)} to taste",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(top = 2.dp),
+                        )
+                    }
+                }
+            }
+        }
+
         // Guardrail warnings
         uiState.ratioWarning?.let { warning ->
             Text(
@@ -379,14 +407,14 @@ fun AmountStrengthScreen(
         FilledTonalButton(
             onClick = {
                 focusManager.clearFocus()
-                navController.navigate(Result)
+                navController.navigate(BrewTimer)
             },
             shape = RoundedCornerShape(28.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
         ) {
-            Text("Full Details & Timer →", style = MaterialTheme.typography.labelLarge)
+            Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
