@@ -117,8 +117,8 @@ dependencies {
     implementation(libs.mlkit.barcode)
     implementation(libs.mlkit.text.recognition)
 
-    // ML Kit GenAI (on-device Gemini Nano)
-    implementation(libs.mlkit.genai.prompt)
+    // LiteRT-LM (on-device LLM inference with Gemma 3n)
+    implementation(libs.litertlm.android)
 
     // OpenCV (image preprocessing for OCR)
     implementation(libs.opencv)

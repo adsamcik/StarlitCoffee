@@ -11,7 +11,7 @@ class ExtractionParsingTest {
 
     @Test
     fun `prompt includes front and back text`() {
-        val prompt = PromptTemplates.buildExtractionPrompt(
+        val prompt = PromptTemplates.buildUserMessage(
             frontText = "YÖDER COFFEE CO.\nGEDEB",
             backText = "Washed · Heirloom\n250g",
         )
@@ -23,17 +23,16 @@ class ExtractionParsingTest {
 
     @Test
     fun `prompt handles null front text`() {
-        val prompt = PromptTemplates.buildExtractionPrompt(
+        val prompt = PromptTemplates.buildUserMessage(
             frontText = null,
             backText = "Washed · Heirloom",
         )
-        // The user label section should not have "Front of bag:" but few-shot examples do
         assert("Washed · Heirloom" in prompt)
     }
 
     @Test
     fun `prompt handles null back text`() {
-        val prompt = PromptTemplates.buildExtractionPrompt(
+        val prompt = PromptTemplates.buildUserMessage(
             frontText = "YÖDER COFFEE CO.",
             backText = null,
         )
@@ -41,12 +40,12 @@ class ExtractionParsingTest {
     }
 
     @Test
-    fun `prompt includes extraction instructions`() {
-        val prompt = PromptTemplates.buildExtractionPrompt("test", "test")
-        assert("JSON" in prompt)
-        assert("null" in prompt)
-        assert("name" in prompt)
-        assert("roaster" in prompt)
+    fun `system instruction includes extraction instructions`() {
+        val instruction = PromptTemplates.SYSTEM_INSTRUCTION
+        assert("JSON" in instruction)
+        assert("null" in instruction)
+        assert("name" in instruction)
+        assert("roaster" in instruction)
     }
 
     // --- JSON Response Parsing ---
@@ -70,7 +69,7 @@ class ExtractionParsingTest {
             }
         """.trimIndent()
 
-        val result = GeminiNanoLabelExtractor.parseJsonResponse(json)
+        val result = LiteRtLabelExtractor.parseResponse(json)
 
         assertNotNull(result)
         assertEquals("Gedeb", result!!.name)
@@ -95,7 +94,7 @@ class ExtractionParsingTest {
             ```
         """.trimIndent()
 
-        val result = GeminiNanoLabelExtractor.parseJsonResponse(json)
+        val result = LiteRtLabelExtractor.parseResponse(json)
 
         assertNotNull(result)
         assertEquals("Test", result!!.name)
@@ -104,13 +103,13 @@ class ExtractionParsingTest {
 
     @Test
     fun `malformed JSON returns null`() {
-        val result = GeminiNanoLabelExtractor.parseJsonResponse("this is not json at all")
+        val result = LiteRtLabelExtractor.parseResponse("this is not json at all")
         assertNull(result)
     }
 
     @Test
     fun `empty string returns null`() {
-        val result = GeminiNanoLabelExtractor.parseJsonResponse("")
+        val result = LiteRtLabelExtractor.parseResponse("")
         assertNull(result)
     }
 
@@ -118,7 +117,7 @@ class ExtractionParsingTest {
     fun `partial JSON with only some fields parses correctly`() {
         val json = """{"name": "Test Blend", "origin": "Brazil"}"""
 
-        val result = GeminiNanoLabelExtractor.parseJsonResponse(json)
+        val result = LiteRtLabelExtractor.parseResponse(json)
 
         assertNotNull(result)
         assertEquals("Test Blend", result!!.name)
@@ -131,7 +130,7 @@ class ExtractionParsingTest {
     fun `JSON null values become Kotlin null`() {
         val json = """{"name": "Test", "roaster": null, "origin": null}"""
 
-        val result = GeminiNanoLabelExtractor.parseJsonResponse(json)
+        val result = LiteRtLabelExtractor.parseResponse(json)
 
         assertNotNull(result)
         assertEquals("Test", result!!.name)
@@ -143,7 +142,7 @@ class ExtractionParsingTest {
     fun `JSON empty string values become null`() {
         val json = """{"name": "Test", "roaster": "", "origin": "Brazil"}"""
 
-        val result = GeminiNanoLabelExtractor.parseJsonResponse(json)
+        val result = LiteRtLabelExtractor.parseResponse(json)
 
         assertNotNull(result)
         assertEquals("Test", result!!.name)

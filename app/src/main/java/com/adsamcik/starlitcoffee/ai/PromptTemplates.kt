@@ -10,10 +10,13 @@ package com.adsamcik.starlitcoffee.ai
 object PromptTemplates {
 
     /**
-     * Builds the full extraction prompt from front and back label OCR text.
+     * Builds a user message for the Conversation API containing just the label text.
+     * System instruction and few-shot examples are provided via [SYSTEM_INSTRUCTION].
      */
-    fun buildExtractionPrompt(frontText: String?, backText: String?): String {
-        val labelSection = buildString {
+    fun buildUserMessage(frontText: String?, backText: String?): String {
+        return buildString {
+            appendLine("Extract from this label:")
+            appendLine()
             if (!frontText.isNullOrBlank()) {
                 appendLine("Front of bag:")
                 appendLine("\"\"\"")
@@ -28,21 +31,13 @@ object PromptTemplates {
                 appendLine("\"\"\"")
             }
         }.trim()
-
-        return """
-$SYSTEM_INSTRUCTION
-
-$FEW_SHOT_EXAMPLES
-
-Now extract from this label:
-
-$labelSection
-
-$OUTPUT_INSTRUCTION
-        """.trim()
     }
 
-    private val SYSTEM_INSTRUCTION = """
+    /**
+     * Full system instruction for the Conversation API.
+     * Includes persona, rules, few-shot examples, and output format.
+     */
+    internal val SYSTEM_INSTRUCTION = """
 You are a coffee bag label parser. Extract structured information from OCR text of a coffee bag label.
 
 Rules:
@@ -55,9 +50,7 @@ Rules:
 - For "weight", include the unit (e.g., "250g" or "12oz").
 - For "roastDate", preserve the original date format from the label.
 - Return valid JSON only, no markdown formatting.
-    """.trim()
 
-    private val FEW_SHOT_EXAMPLES = """
 Example 1:
 Front of bag:
 ${"\"\"\""}
@@ -95,9 +88,7 @@ ${"\"\"\""}
 
 Output:
 {"name":"The Filter Blend","roaster":"Square Mile Coffee Roasters","origin":"Brazil","region":null,"farm":"Fazenda Cachoeira","variety":null,"altitude":null,"processType":"Natural","tastingNotes":"Chocolate, hazelnut, caramel","roastLevel":"Medium","roastDate":null,"weight":"350g"}
-    """.trim()
 
-    private val OUTPUT_INSTRUCTION = """
 Output the extracted fields as a single JSON object with these keys:
 name, roaster, origin, region, farm, variety, altitude, processType, tastingNotes, roastLevel, roastDate, weight
 

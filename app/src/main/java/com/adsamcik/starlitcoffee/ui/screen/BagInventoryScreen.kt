@@ -22,8 +22,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -35,11 +37,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -60,9 +64,16 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.CoffeeBagStatus
+import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
+import com.adsamcik.starlitcoffee.data.model.CoffeeProcessType
+import com.adsamcik.starlitcoffee.data.model.CoffeeRegion
+import com.adsamcik.starlitcoffee.data.model.CoffeeRoastLevel
+import com.adsamcik.starlitcoffee.data.model.CoffeeVariety
 import com.adsamcik.starlitcoffee.navigation.CameraCapture
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
+import com.adsamcik.starlitcoffee.ui.component.FieldChipPicker
+import com.adsamcik.starlitcoffee.ui.component.SuggestingTextField
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -322,6 +333,7 @@ fun BagInventoryScreen(
             initialRoaster = offLookupRoaster,
             traceabilityUrl = detectedQrUrl,
             capturedPhotoUris = capturedPhotoUris,
+            existingBags = bags,
             onDismiss = {
                 showAddSheet = false
                 ocrPrefill = null
@@ -331,7 +343,7 @@ fun BagInventoryScreen(
                 detectedBarcode = null
                 detectedQrUrl = null
             },
-            onSave = { name, roaster, origin, roastLevel, barcode, weightG, notes, variety, processType, tastingNotes ->
+            onSave = { name, roaster, origin, region, roastLevel, barcode, weightG, notes, variety, processType, tastingNotes ->
                 val rawPhotoUris = capturedPhotoUris
                 val qrUrl = detectedQrUrl
                 showAddSheet = false
@@ -351,6 +363,7 @@ fun BagInventoryScreen(
                         name = name,
                         roaster = roaster,
                         origin = origin,
+                        region = region,
                         roastLevel = roastLevel,
                         barcode = barcode,
                         weightG = weightG,
@@ -511,11 +524,13 @@ private fun AddBagSheet(
     initialRoaster: String? = null,
     traceabilityUrl: String? = null,
     capturedPhotoUris: String? = null,
+    existingBags: List<CoffeeBagEntity> = emptyList(),
     onDismiss: () -> Unit,
     onSave: (
         name: String,
         roaster: String?,
         origin: String?,
+        region: String?,
         roastLevel: String?,
         barcode: String?,
         weightG: Float?,
@@ -525,13 +540,37 @@ private fun AddBagSheet(
         tastingNotes: String?,
     ) -> Unit,
 ) {
+    // History suggestions from existing bags (already sorted newest-first by DAO)
+    val recentNames = remember(existingBags) {
+        existingBags.map { it.name }.distinct().take(10)
+    }
+    val recentRoasters = remember(existingBags) {
+        existingBags.mapNotNull { it.roaster }.distinct().take(10)
+    }
+    val recentOrigins = remember(existingBags) {
+        existingBags.mapNotNull { it.origin }.distinct().take(10)
+    }
+    val recentRegions = remember(existingBags) {
+        existingBags.mapNotNull { it.region }.distinct().take(10)
+    }
+    val recentVarieties = remember(existingBags) {
+        existingBags.mapNotNull { it.variety }
+            .flatMap { it.split(",").map { part -> part.trim() } }
+            .filter { it.isNotBlank() }.distinct().take(10)
+    }
+    val recentProcesses = remember(existingBags) {
+        existingBags.mapNotNull { it.processType }.distinct().take(10)
+    }
+    val recentRoastLevels = remember(existingBags) {
+        existingBags.mapNotNull { it.roastLevel }
+            .flatMap { it.split(",").map { part -> part.trim() } }
+            .filter { it.isNotBlank() }.distinct().take(10)
+    }
+
     var name by remember(ocrPrefill, initialName) { mutableStateOf(initialName ?: ocrPrefill?.name ?: "") }
     var roaster by remember(ocrPrefill, initialRoaster) { mutableStateOf(ocrPrefill?.roaster ?: initialRoaster ?: "") }
-    var origin by remember(ocrPrefill) {
-        val o = ocrPrefill?.origin
-        val r = ocrPrefill?.region
-        mutableStateOf(listOfNotNull(o, r).joinToString(", ").ifEmpty { "" })
-    }
+    var originCountry by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.origin ?: "") }
+    var originRegion by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.region ?: "") }
     var roastLevel by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.roastLevel ?: "") }
     var variety by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.variety ?: "") }
     var processType by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.processType ?: "") }
@@ -543,18 +582,31 @@ private fun AddBagSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         shape = RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp),
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        sheetState = rememberModalBottomSheetState(
+            skipPartiallyExpanded = true,
+            confirmValueChange = { it != SheetValue.Hidden },
+        ),
     ) {
+        BackHandler { onDismiss() }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
         ) {
-            Text(
-                text = "Add Coffee Bag",
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 16.dp, top = 16.dp),
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "Add Coffee Bag",
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp, top = 16.dp),
+                )
+                IconButton(onClick = onDismiss) {
+                    Icon(Icons.Default.Close, contentDescription = "Close")
+                }
+            }
 
             LazyColumn(
                 modifier = Modifier
@@ -578,75 +630,78 @@ private fun AddBagSheet(
                     }
                 }
                 item {
-                    OutlinedTextField(
+                    SuggestingTextField(
                         value = name,
                         onValueChange = { name = it },
-                        label = { Text("Name *") },
-                        shape = RoundedCornerShape(16.dp),
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp),
+                        label = "Name *",
+                        suggestions = recentNames,
+                        modifier = Modifier.padding(bottom = 8.dp),
                     )
                 }
                 item {
-                    OutlinedTextField(
+                    SuggestingTextField(
                         value = roaster,
                         onValueChange = { roaster = it },
-                        label = { Text("Roaster") },
-                        shape = RoundedCornerShape(16.dp),
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp),
+                        label = "Roaster",
+                        suggestions = recentRoasters,
+                        modifier = Modifier.padding(bottom = 8.dp),
                     )
                 }
                 item {
-                    OutlinedTextField(
-                        value = origin,
-                        onValueChange = { origin = it },
-                        label = { Text("Origin") },
-                        shape = RoundedCornerShape(16.dp),
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp),
+                    FieldChipPicker(
+                        label = "Origin",
+                        knownValues = CoffeeOrigin.known,
+                        selectedValue = originCountry,
+                        onValueChange = { originCountry = it },
+                        displayName = { it.displayName },
+                        recentValues = recentOrigins,
+                        modifier = Modifier.padding(bottom = 12.dp),
                     )
                 }
                 item {
-                    OutlinedTextField(
-                        value = roastLevel,
+                    FieldChipPicker(
+                        label = "Region",
+                        knownValues = CoffeeRegion.known,
+                        selectedValue = originRegion,
+                        onValueChange = { originRegion = it },
+                        displayName = { it.displayName },
+                        recentValues = recentRegions,
+                        modifier = Modifier.padding(bottom = 12.dp),
+                    )
+                }
+                item {
+                    FieldChipPicker(
+                        label = "Roast level",
+                        knownValues = CoffeeRoastLevel.known,
+                        selectedValue = roastLevel,
                         onValueChange = { roastLevel = it },
-                        label = { Text("Roast level") },
-                        shape = RoundedCornerShape(16.dp),
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp),
+                        displayName = { it.displayName },
+                        recentValues = recentRoastLevels,
+                        multiSelect = true,
+                        modifier = Modifier.padding(bottom = 12.dp),
                     )
                 }
                 item {
-                    OutlinedTextField(
-                        value = variety,
+                    FieldChipPicker(
+                        label = "Variety",
+                        knownValues = CoffeeVariety.known,
+                        selectedValue = variety,
                         onValueChange = { variety = it },
-                        label = { Text("Variety") },
-                        shape = RoundedCornerShape(16.dp),
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp),
+                        displayName = { it.displayName },
+                        recentValues = recentVarieties,
+                        multiSelect = true,
+                        modifier = Modifier.padding(bottom = 12.dp),
                     )
                 }
                 item {
-                    OutlinedTextField(
-                        value = processType,
+                    FieldChipPicker(
+                        label = "Process",
+                        knownValues = CoffeeProcessType.known,
+                        selectedValue = processType,
                         onValueChange = { processType = it },
-                        label = { Text("Process") },
-                        shape = RoundedCornerShape(16.dp),
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp),
+                        displayName = { it.displayName },
+                        recentValues = recentProcesses,
+                        modifier = Modifier.padding(bottom = 12.dp),
                     )
                 }
                 item {
@@ -693,7 +748,8 @@ private fun AddBagSheet(
                         onSave(
                             name,
                             roaster.takeIf { it.isNotBlank() },
-                            origin.takeIf { it.isNotBlank() },
+                            originCountry.takeIf { it.isNotBlank() },
+                            originRegion.takeIf { it.isNotBlank() },
                             roastLevel.takeIf { it.isNotBlank() },
                             barcode.takeIf { it.isNotBlank() },
                             weight.toFloatOrNull(),
@@ -733,8 +789,12 @@ private fun BagDetailSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         shape = RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp),
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        sheetState = rememberModalBottomSheetState(
+            skipPartiallyExpanded = true,
+            confirmValueChange = { it != SheetValue.Hidden },
+        ),
     ) {
+        BackHandler { onDismiss() }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -881,6 +941,25 @@ private fun BagDetailSheet(
                             )
                         }
                         Spacer(modifier = Modifier.height(8.dp))
+                    } else {
+                        // No weight tracked yet — offer to add it
+                        var showWeightDialog by remember { mutableStateOf(false) }
+                        OutlinedButton(
+                            onClick = { showWeightDialog = true },
+                            modifier = Modifier.padding(vertical = 8.dp),
+                        ) {
+                            Text("Add weight tracking")
+                        }
+                        if (showWeightDialog) {
+                            WeightAdjustDialog(
+                                currentWeight = 0f,
+                                onDismiss = { showWeightDialog = false },
+                                onConfirm = { newWeight ->
+                                    showWeightDialog = false
+                                    onWeightAdjust(bag.id, newWeight)
+                                },
+                            )
+                        }
                     }
                     if (bag.tastingNotes != null) DetailRow("Tasting notes", bag.tastingNotes)
                     if (bag.notes != null) DetailRow("Notes", bag.notes)
