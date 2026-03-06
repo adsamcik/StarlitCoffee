@@ -78,6 +78,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // TODO: Replace with Hilt @Provides when DI is adopted
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(

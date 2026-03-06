@@ -11,6 +11,7 @@ import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 
+// TODO: Replace with Hilt @Provides when DI is adopted
 class BrewViewModelFactory(
     private val application: Application,
 ) : ViewModelProvider.Factory {
