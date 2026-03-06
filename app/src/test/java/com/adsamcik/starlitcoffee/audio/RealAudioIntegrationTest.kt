@@ -66,6 +66,9 @@ class RealAudioIntegrationTest {
         val states = mutableListOf<DetectorState>()
         val pourEnergies = mutableListOf<Float>()
         val tilts = mutableListOf<Float>()
+        val flatnesses = mutableListOf<Float>()
+        val cpps = mutableListOf<Float>()
+        val coincidences = mutableListOf<Int>()
 
         // Process in 1024-sample chunks (matching AudioCaptureSession)
         val chunkSize = 1024
@@ -79,11 +82,14 @@ class RealAudioIntegrationTest {
                 states.add(detector.state)
                 pourEnergies.add(spectral.bandEnergyDb[FrequencyBand.POUR] ?: -96f)
                 tilts.add(spectral.spectralTilt)
+                flatnesses.add(spectral.spectralFlatness)
+                cpps.add(spectral.cepstralPeakProminence)
+                coincidences.add(spectral.bandCoincidenceCount)
                 fakeTimeMs += 12L
             }
         }
 
-        return PipelineResult(allEvents, states, pourEnergies, tilts)
+        return PipelineResult(allEvents, states, pourEnergies, tilts, flatnesses, cpps, coincidences)
     }
 
     data class PipelineResult(
@@ -91,6 +97,9 @@ class RealAudioIntegrationTest {
         val states: List<DetectorState>,
         val pourEnergies: List<Float>,
         val tilts: List<Float>,
+        val flatnesses: List<Float>,
+        val cpps: List<Float>,
+        val coincidences: List<Int>,
     )
 
     // --- Tests ---
@@ -222,6 +231,70 @@ class RealAudioIntegrationTest {
         assertTrue(
             "Energy gap between pour ($pourMean dB) and silence ($silenceMean dB) should be >= 10 dB, got $gap",
             gap >= 10.0,
+        )
+    }
+
+    // --- Noise-Robust Feature Tests ---
+
+    @Test
+    fun `real pour has high spectral flatness`() {
+        val samples = loadPcm("real_pour_loud.pcm")
+        assumeTrue("Test PCM file not found", samples != null)
+
+        val result = runPipeline(samples!!)
+        val meanFlatness = result.flatnesses.average()
+
+        assertTrue(
+            "Pour should have spectral flatness > 0.15 (noise-like), got $meanFlatness",
+            meanFlatness > 0.15,
+        )
+    }
+
+    @Test
+    fun `real pour has low cepstral peak prominence`() {
+        val samples = loadPcm("real_pour_loud.pcm")
+        assumeTrue("Test PCM file not found", samples != null)
+
+        val result = runPipeline(samples!!)
+        val meanCpp = result.cpps.average()
+
+        assertTrue(
+            "Pour should have CPP < 3.0 (no pitch), got $meanCpp",
+            meanCpp < 3.0,
+        )
+    }
+
+    @Test
+    fun `real pour has high band coincidence`() {
+        val samples = loadPcm("real_pour_loud.pcm")
+        assumeTrue("Test PCM file not found", samples != null)
+
+        val result = runPipeline(samples!!)
+        val meanCoincidence = result.coincidences.average()
+
+        assertTrue(
+            "Pour should have band coincidence >= 3.0 (broadband), got $meanCoincidence",
+            meanCoincidence >= 3.0,
+        )
+    }
+
+    @Test
+    fun `flatness separates pour from drip-silence`() {
+        val pourSamples = loadPcm("real_pour_loud.pcm")
+        val silenceSamples = loadPcm("real_drip_silence.pcm")
+        assumeTrue("Test PCM files not found", pourSamples != null && silenceSamples != null)
+
+        val pourResult = runPipeline(pourSamples!!)
+        preProcessor.reset()
+        analyzer.reset()
+        val silenceResult = runPipeline(silenceSamples!!)
+
+        val pourFlatness = pourResult.flatnesses.average()
+        val silenceFlatness = silenceResult.flatnesses.average()
+
+        assertTrue(
+            "Pour flatness ($pourFlatness) should be higher than silence flatness ($silenceFlatness)",
+            pourFlatness > silenceFlatness,
         )
     }
 }

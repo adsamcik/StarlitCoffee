@@ -45,12 +45,26 @@ data class SpectralFeatures(
     val spectralFlux: Map<FrequencyBand, Float>,
 
     /** Spectral tilt: ratio of low-pour energy to high-pour energy.
-     *  High values indicate turbulent broadband noise (water). */
+     *  Low values (1-10) indicate broadband water noise. */
     val spectralTilt: Float,
+
+    /** Spectral flatness (Wiener entropy) over 200-6kHz.
+     *  Ratio of geometric mean to arithmetic mean of power spectrum.
+     *  Range 0..1: near 1 = noise-like (water), near 0 = tonal (speech/music). */
+    val spectralFlatness: Float = 0f,
+
+    /** Cepstral peak prominence in dB.
+     *  High values (>3) indicate strong pitch (speech/music/hum) → use as veto.
+     *  Low values (<2) indicate aperiodic noise (water). */
+    val cepstralPeakProminence: Float = 0f,
+
+    /** Number of octave sub-bands (out of 5) with energy above noise floor.
+     *  Water lights ≥4/5 bands (broadband); speech/fan typically 2-3. */
+    val bandCoincidenceCount: Int = 0,
 
     /** Full power spectrum (N/2 + 1 bins) — available for debug UI */
     val powerSpectrum: FloatArray? = null,
-) {
+){
     companion object {
         val EMPTY = SpectralFeatures(
             bandEnergyDb = FrequencyBand.entries.associateWith { AudioAnalysisState.SILENCE_DB },

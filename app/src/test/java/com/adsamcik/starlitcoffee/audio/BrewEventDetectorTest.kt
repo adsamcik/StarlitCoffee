@@ -244,6 +244,37 @@ class BrewEventDetectorTest {
         assertEquals(0f, detector.dripRate, 0.01f)
     }
 
+    // --- Noise Robustness ---
+
+    @Test
+    fun `speech with high CPP does not trigger POURING`() {
+        feedSilence(20)
+
+        // Feed speech-like features (loud but tonal with strong pitch)
+        repeat(30) {
+            detector.processFrame(speechFeatures())
+            advanceTime()
+        }
+
+        assertEquals(
+            "Speech should NOT trigger POURING (cepstral veto)",
+            DetectorState.IDLE,
+            detector.state,
+        )
+    }
+
+    @Test
+    fun `pour with high flatness and coincidence triggers POURING`() {
+        feedSilence(20)
+        feedPour(20)
+
+        assertEquals(
+            "Broadband water with high flatness and 5/5 bands should trigger POURING",
+            DetectorState.POURING,
+            detector.state,
+        )
+    }
+
     // --- Full Brew Scenario ---
 
     @Test
@@ -316,7 +347,10 @@ class BrewEventDetectorTest {
     private fun silenceFeatures(): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = FrequencyBand.entries.associateWith { -35f },
         spectralFlux = FrequencyBand.entries.associateWith { 0f },
-        spectralTilt = 20f, // Real ambient: low-freq dominant
+        spectralTilt = 20f,
+        spectralFlatness = 0.05f, // Ambient: tonal/structured
+        cepstralPeakProminence = 0f,
+        bandCoincidenceCount = 1,
     )
 
     private fun pourFeatures(): SpectralFeatures = SpectralFeatures(
@@ -330,7 +364,28 @@ class BrewEventDetectorTest {
             FrequencyBand.DRIP to 10f,
             FrequencyBand.HIGH_MID to 5f,
         ),
-        spectralTilt = 4.0f, // Real pour: broadband, low tilt
+        spectralTilt = 4.0f,
+        spectralFlatness = 0.5f, // Water: noise-like
+        cepstralPeakProminence = 0.5f, // No pitch
+        bandCoincidenceCount = 5, // All bands lit
+    )
+
+    /** Speech-like features: tonal, strong pitch, concentrated bands */
+    private fun speechFeatures(): SpectralFeatures = SpectralFeatures(
+        bandEnergyDb = mapOf(
+            FrequencyBand.POUR to -10f,
+            FrequencyBand.DRIP to -12f,
+            FrequencyBand.HIGH_MID to -35f,
+        ),
+        spectralFlux = mapOf(
+            FrequencyBand.POUR to 12f,
+            FrequencyBand.DRIP to 8f,
+            FrequencyBand.HIGH_MID to 1f,
+        ),
+        spectralTilt = 15f,
+        spectralFlatness = 0.08f, // Tonal
+        cepstralPeakProminence = 6.0f, // Strong pitch → veto
+        bandCoincidenceCount = 2, // Only low bands
     )
 
     private fun dripFeatures(): SpectralFeatures = SpectralFeatures(
@@ -344,7 +399,10 @@ class BrewEventDetectorTest {
             FrequencyBand.DRIP to 0.5f,
             FrequencyBand.HIGH_MID to 0.2f,
         ),
-        spectralTilt = 20f, // Real drip: low-freq dominant
+        spectralTilt = 20f,
+        spectralFlatness = 0.1f,
+        cepstralPeakProminence = 0f,
+        bandCoincidenceCount = 2,
     )
 
     private fun dripImpulseFeatures(): SpectralFeatures = SpectralFeatures(
@@ -358,13 +416,19 @@ class BrewEventDetectorTest {
             FrequencyBand.DRIP to 12f,
             FrequencyBand.HIGH_MID to 2f,
         ),
-        spectralTilt = 12f, // Impulse: somewhat broadband
+        spectralTilt = 12f,
+        spectralFlatness = 0.2f,
+        cepstralPeakProminence = 0f,
+        bandCoincidenceCount = 3,
     )
 
     private fun ambientNoiseFeatures(level: Float): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = FrequencyBand.entries.associateWith { level },
         spectralFlux = FrequencyBand.entries.associateWith { 0.1f },
-        spectralTilt = 20f, // Ambient: low-freq dominant
+        spectralTilt = 20f,
+        spectralFlatness = 0.05f,
+        cepstralPeakProminence = 0f,
+        bandCoincidenceCount = 1,
     )
 
     private fun feedSilence(frames: Int, events: MutableList<BrewAudioEvent>? = null) {

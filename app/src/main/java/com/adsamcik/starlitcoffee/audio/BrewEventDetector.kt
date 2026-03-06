@@ -261,8 +261,29 @@ class BrewEventDetector(
         val floor = _noiseFloorDb[FrequencyBand.POUR] ?: INITIAL_NOISE_FLOOR
         val energyAboveFloor = max(0f, energy - floor)
 
-        // Weighted combination: spectral flux (shape changes) + energy above floor (level changes)
-        return ODF_FLUX_WEIGHT * flux + ODF_ENERGY_WEIGHT * energyAboveFloor
+        // Spectral flatness bonus: water is noise-like (flatness 0.3-0.8)
+        // Scale: flatness 0.0→0x, 0.25→0.5x, 0.5→1x, 0.75→1.25x
+        val flatnessBonus = (features.spectralFlatness * 2f).coerceIn(0f, 1.5f)
+
+        // Band coincidence bonus: water lights ≥4/5 bands
+        val coincidenceBonus = when {
+            features.bandCoincidenceCount >= 4 -> 1.0f
+            features.bandCoincidenceCount == 3 -> 0.5f
+            else -> 0.2f
+        }
+
+        // Cepstral veto: strong pitch (speech/music) → suppress
+        // CPP > 4 dB = almost certainly speech/music → multiply by 0
+        val cepstralGate = when {
+            features.cepstralPeakProminence > CPP_HARD_VETO -> 0f
+            features.cepstralPeakProminence > CPP_SOFT_VETO -> 0.3f
+            else -> 1f
+        }
+
+        // Composite ODF: weighted sum of energy + flux, scaled by flatness,
+        // coincidence, and cepstral gate
+        val rawOdf = ODF_FLUX_WEIGHT * flux + ODF_ENERGY_WEIGHT * energyAboveFloor
+        return rawOdf * flatnessBonus * coincidenceBonus * cepstralGate
     }
 
     private fun computeDripOdf(features: SpectralFeatures): Float {
@@ -386,5 +407,11 @@ class BrewEventDetector(
         // ODF weights for pour detection
         private const val ODF_FLUX_WEIGHT = 0.7f
         private const val ODF_ENERGY_WEIGHT = 0.3f
+
+        // Cepstral Peak Prominence veto thresholds
+        // CPP > 4 dB = strong pitch → hard veto (speech/music)
+        // CPP > 2.5 dB = moderate pitch → soft suppression
+        private const val CPP_HARD_VETO = 4.0f
+        private const val CPP_SOFT_VETO = 2.5f
     }
 }
