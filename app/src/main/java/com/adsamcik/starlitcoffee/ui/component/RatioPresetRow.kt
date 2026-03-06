@@ -6,6 +6,8 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 import com.adsamcik.starlitcoffee.data.model.RatioPreset
 
 @Composable
@@ -28,5 +30,21 @@ fun RatioPresetRow(
                 Text(preset.label)
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun RatioPresetRowPreview() {
+    StarlitCoffeeTheme {
+        RatioPresetRow(
+            presets = listOf(
+                RatioPreset(ratio = 15f, label = "1:15"),
+                RatioPreset(ratio = 16f, label = "1:16", isDefault = true),
+                RatioPreset(ratio = 17f, label = "1:17"),
+            ),
+            selectedIndex = 1,
+            onSelectPreset = {},
+        )
     }
 }

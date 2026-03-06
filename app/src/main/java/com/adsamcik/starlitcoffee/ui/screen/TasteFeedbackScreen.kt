@@ -27,11 +27,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
+import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 
 private data class FeedbackOption(
@@ -83,7 +86,8 @@ fun TasteFeedbackScreen(
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 10.dp),
+                    .padding(bottom = 10.dp)
+                    .testTag("taste_feedback_${option.feedback.name}"),
             ) {
                 Row(
                     modifier = Modifier
@@ -151,7 +155,8 @@ fun TasteFeedbackScreen(
             maxLines = 4,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 20.dp),
+                .padding(bottom = 20.dp)
+                .testTag("feedback_notes_input"),
         )
 
         // Action buttons
@@ -163,7 +168,8 @@ fun TasteFeedbackScreen(
             shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
+                .height(56.dp)
+                .testTag("save_done_button"),
         ) {
             Text("Save & Done", style = MaterialTheme.typography.labelLarge)
         }
@@ -177,11 +183,24 @@ fun TasteFeedbackScreen(
             shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
+                .height(56.dp)
+                .testTag("brew_again_button"),
         ) {
             Text("Brew Again", style = MaterialTheme.typography.labelLarge)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun TasteFeedbackScreenPreview() {
+    StarlitCoffeeTheme {
+        TasteFeedbackScreen(
+            brewViewModel = BrewViewModel(),
+            onSaveAndFinish = {},
+            onNavigateToResult = {},
+        )
     }
 }

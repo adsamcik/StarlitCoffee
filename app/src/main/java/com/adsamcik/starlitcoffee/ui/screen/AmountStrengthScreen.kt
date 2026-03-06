@@ -34,16 +34,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.ui.util.shortLabel
+import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
@@ -162,7 +165,7 @@ fun AmountStrengthScreen(
             shape = MaterialTheme.shapes.small,
             suffix = { Text(if (inputMode == InputMode.BREW_SIZE_TO_BOTH || inputMode == InputMode.CUP_SIZE_TO_BOTH) "ml" else "g") },
             singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("amount_input"),
         )
 
         Slider(
@@ -174,7 +177,8 @@ fun AmountStrengthScreen(
             valueRange = 0f..maxSlider,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp),
+                .padding(horizontal = 8.dp)
+                .testTag("amount_slider"),
         )
 
         if (capacityHint != null) {
@@ -258,7 +262,8 @@ fun AmountStrengthScreen(
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 8.dp),
+                        .padding(bottom = 8.dp)
+                        .testTag("custom_ratio_input"),
                 )
 
                 OutlinedTextField(
@@ -373,11 +378,24 @@ fun AmountStrengthScreen(
             shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
+                .height(56.dp)
+                .testTag("start_timer_button"),
         ) {
             Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun AmountStrengthScreenPreview() {
+    StarlitCoffeeTheme {
+        AmountStrengthScreen(
+            brewViewModel = BrewViewModel(),
+            onBack = {},
+            onNavigateToTimer = {},
+        )
     }
 }

@@ -32,9 +32,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
@@ -306,7 +309,8 @@ fun ResultScreen(
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .weight(1f)
-                    .height(56.dp),
+                    .height(56.dp)
+                    .testTag("start_timer_button"),
             ) {
                 Text("Start Timer", style = MaterialTheme.typography.labelLarge)
             }
@@ -315,7 +319,8 @@ fun ResultScreen(
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .weight(1f)
-                    .height(56.dp),
+                    .height(56.dp)
+                    .testTag("save_recipe_button"),
             ) {
                 Text("Save Recipe", style = MaterialTheme.typography.labelLarge)
             }
@@ -347,7 +352,7 @@ fun ResultScreen(
                     label = { Text("Recipe name (optional)") },
                     singleLine = true,
                     shape = MaterialTheme.shapes.small,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().testTag("recipe_name_input"),
                 )
             },
             confirmButton = {
@@ -364,6 +369,19 @@ fun ResultScreen(
                     Text("Cancel")
                 }
             },
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ResultScreenPreview() {
+    StarlitCoffeeTheme {
+        ResultScreen(
+            brewViewModel = BrewViewModel(),
+            onBack = {},
+            onNavigateToTimer = {},
+            onStartOver = {},
         )
     }
 }

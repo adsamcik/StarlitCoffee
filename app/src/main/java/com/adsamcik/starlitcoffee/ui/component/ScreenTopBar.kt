@@ -13,8 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
+import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 
 @Composable
 fun ScreenTopBar(
@@ -28,7 +31,7 @@ fun ScreenTopBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (onBack != null) {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = onBack, modifier = Modifier.testTag("back_button")) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
@@ -48,5 +51,16 @@ fun ScreenTopBar(
             Spacer(modifier = Modifier.weight(1f))
         }
         actions()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ScreenTopBarPreview() {
+    StarlitCoffeeTheme {
+        ScreenTopBar(
+            title = "Settings",
+            onBack = {},
+        )
     }
 }

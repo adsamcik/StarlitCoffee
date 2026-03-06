@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -105,6 +106,7 @@ fun BagInventoryScreen(
             FloatingActionButton(
                 onClick = onNavigateToCamera,
                 shape = MaterialTheme.shapes.large,
+                modifier = Modifier.testTag("add_bag_fab"),
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "Add Bag")
             }

@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -52,6 +53,7 @@ fun SavedRecipesScreen(
             FloatingActionButton(
                 onClick = onNavigateToAmount,
                 shape = MaterialTheme.shapes.large,
+                modifier = Modifier.testTag("new_brew_fab"),
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "New brew")
             }
@@ -114,7 +116,7 @@ private fun RecipeCard(
         ElevatedCard(
             onClick = onTap,
             shape = MaterialTheme.shapes.large,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("recipe_card_${recipe.id}"),
         ) {
             Row(
                 modifier = Modifier

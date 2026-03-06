@@ -10,7 +10,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -40,5 +42,16 @@ fun FlavorTagPicker(
                 ),
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun FlavorTagPickerPreview() {
+    StarlitCoffeeTheme {
+        FlavorTagPicker(
+            selectedTags = setOf(FlavorDescriptor.entries.first()),
+            onTagToggle = {},
+        )
     }
 }

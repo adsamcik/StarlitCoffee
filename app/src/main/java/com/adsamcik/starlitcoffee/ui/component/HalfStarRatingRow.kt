@@ -21,7 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 
 @Composable
 fun HalfStarRatingRow(
@@ -96,5 +98,16 @@ fun HalfStarRatingRow(
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HalfStarRatingRowPreview() {
+    StarlitCoffeeTheme {
+        HalfStarRatingRow(
+            rating = 3.5f,
+            onRatingChange = {},
+        )
     }
 }

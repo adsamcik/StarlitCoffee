@@ -1,0 +1,50 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :app
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/build.gradle.kts:81:80: 'class BaseExtension : AndroidConfig, Lockable' is deprecated. Replaced by com.android.build.api.dsl.CommonExtension.
+This class is not used for the public extensions in AGP when android.newDsl=true, which is the default in AGP 9.0, and will be removed in AGP 10.0.
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugResources
+> Task :app:packageDebugResources
+> Task :app:processDebugNavigationResources
+> Task :app:parseDebugLocalResources
+> Task :app:generateDebugRFile
+> Task :app:kspDebugKotlin
+
+> Task :app:compileDebugKotlin
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:129:58 Unnecessary safe call on a non-null receiver of type 'NavDestination'.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/component/AddBagSheet.kt:447:43 Condition is always 'true'.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/BarcodeScannerScreen.kt:105:26 'val LocalLifecycleOwner: ProvidableCompositionLocal<LifecycleOwner>' is deprecated. Moved to lifecycle-runtime-compose library in androidx.lifecycle.compose package.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/BarcodeScannerScreen.kt:183:8 Annotation 'androidx.camera.core.ExperimentalGetImage' is not annotated with '@RequiresOptIn'. '@OptIn' has no effect.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/CameraCaptureScreen.kt:150:26 'val LocalLifecycleOwner: ProvidableCompositionLocal<LifecycleOwner>' is deprecated. Moved to lifecycle-runtime-compose library in androidx.lifecycle.compose package.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/theme/Theme.kt:98:20 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:594:48 Unnecessary safe call on a non-null receiver of type 'CoffeeBagRepository'.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:797:70 'fun resume(value: Text?, onCancellation: ((Throwable) -> Unit)?): Unit' is deprecated. Use the overload that also accepts the `value` and the coroutine context in lambda.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:798:62 'fun resume(value: Text?, onCancellation: ((Throwable) -> Unit)?): Unit' is deprecated. Use the overload that also accepts the `value` and the coroutine context in lambda.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:813:70 'fun resume(value: Text?, onCancellation: ((Throwable) -> Unit)?): Unit' is deprecated. Use the overload that also accepts the `value` and the coroutine context in lambda.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:814:62 'fun resume(value: Text?, onCancellation: ((Throwable) -> Unit)?): Unit' is deprecated. Use the overload that also accepts the `value` and the coroutine context in lambda.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:865:71 'fun resume(value: (Mutable)List<Barcode!>?, onCancellation: ((Throwable) -> Unit)?): Unit' is deprecated. Use the overload that also accepts the `value` and the coroutine context in lambda.
+w: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:866:62 'fun resume(value: (Mutable)List<Barcode!>?, onCancellation: ((Throwable) -> Unit)?): Unit' is deprecated. Use the overload that also accepts the `value` and the coroutine context in lambda.
+
+[Incubating] Problems report is available at: file:///C:/Users/adam-/GitHub/StarlitCoffee/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 12s
+7 actionable tasks: 7 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.3.1/userguide/configuration_cache_enabling.html

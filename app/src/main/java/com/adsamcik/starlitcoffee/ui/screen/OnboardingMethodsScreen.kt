@@ -35,11 +35,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
+import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 
 @Composable
 fun OnboardingMethodsScreen(
@@ -145,7 +148,8 @@ fun OnboardingMethodsScreen(
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(120.dp),
+                        .height(120.dp)
+                        .testTag("onboarding_method_${method.name}"),
                 ) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         Column(
@@ -218,9 +222,20 @@ fun OnboardingMethodsScreen(
                     onNext(methods, default)
                 },
                 enabled = enabledSet.isNotEmpty(),
+                modifier = Modifier.testTag("onboarding_next_button"),
             ) {
                 Text("Next")
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun OnboardingMethodsScreenPreview() {
+    StarlitCoffeeTheme {
+        OnboardingMethodsScreen(
+            onNext = { _, _ -> },
+        )
     }
 }

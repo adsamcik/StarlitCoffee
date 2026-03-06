@@ -31,11 +31,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
+import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -196,7 +199,7 @@ fun OnboardingPersonalizeScreen(
         ) {
             TextButton(onClick = {
                 onFinish(null, null)
-            }) {
+            }, modifier = Modifier.testTag("onboarding_skip_button")) {
                 Text("Skip")
             }
             Spacer(modifier = Modifier.width(8.dp))
@@ -204,9 +207,22 @@ fun OnboardingPersonalizeScreen(
                 onClick = {
                     onFinish(filterType.value, selectedGrinderId.value)
                 },
+                modifier = Modifier.testTag("onboarding_finish_button"),
             ) {
                 Text("Finish")
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun OnboardingPersonalizeScreenPreview() {
+    StarlitCoffeeTheme {
+        OnboardingPersonalizeScreen(
+            selectedMethods = setOf(BrewMethod.V60, BrewMethod.PULSAR),
+            onBack = {},
+            onFinish = { _, _ -> },
+        )
     }
 }

@@ -38,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -105,7 +106,7 @@ fun MethodPickerScreen(
                     .weight(1f)
                     .semantics { heading() },
             )
-            IconButton(onClick = onNavigateToSettings) {
+            IconButton(onClick = onNavigateToSettings, modifier = Modifier.testTag("settings_button")) {
                 Icon(
                     imageVector = Icons.Filled.Settings,
                     contentDescription = "Settings",
@@ -128,6 +129,7 @@ fun MethodPickerScreen(
                     FilterChip(
                         selected = state.method == method,
                         onClick = { brewViewModel.setMethod(method) },
+                        modifier = Modifier.testTag("method_chip_${method.name}"),
                         label = { Text(method.displayName) },
                         leadingIcon = {
                             Icon(
@@ -197,7 +199,7 @@ fun MethodPickerScreen(
                     brewViewModel.setAmount(rounded.toInt().toString())
                 },
                 valueRange = 0f..maxSlider,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).testTag("coffee_slider"),
             )
             Text(
                 text = "${amountFloat.toInt()}g",
@@ -320,7 +322,8 @@ fun MethodPickerScreen(
             shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
+                .height(56.dp)
+                .testTag("start_brewing_button"),
         ) {
             Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
         }
@@ -330,7 +333,7 @@ fun MethodPickerScreen(
         // Customize link → full AmountStrength screen
         TextButton(
             onClick = onNavigateToAmount,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("customize_button"),
         ) {
             Text("Customize brew parameters")
         }
