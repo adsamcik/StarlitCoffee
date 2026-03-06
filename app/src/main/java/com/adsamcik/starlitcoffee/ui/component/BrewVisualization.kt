@@ -680,7 +680,7 @@ fun BrewGuide(
             ) {
                 Row(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(16.dp))
+                        .clip(MaterialTheme.shapes.small)
                         .background(contentColor.copy(alpha = 0.1f))
                         .padding(horizontal = 14.dp, vertical = 6.dp),
                     verticalAlignment = Alignment.CenterVertically,

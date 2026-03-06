@@ -239,7 +239,7 @@ private fun CameraCaptureContent(
                 modifier = Modifier
                     .background(
                         color = Color.Black.copy(alpha = 0.5f),
-                        shape = RoundedCornerShape(16.dp),
+                        shape = MaterialTheme.shapes.small,
                     )
                     .padding(horizontal = 16.dp, vertical = 8.dp),
             )
@@ -254,11 +254,11 @@ private fun CameraCaptureContent(
                 .border(
                     width = 2.dp,
                     color = Color.White.copy(alpha = 0.7f),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.small,
                 )
                 .background(
                     color = Color.Black.copy(alpha = 0.15f),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.small,
                 ),
             contentAlignment = Alignment.Center,
         ) {

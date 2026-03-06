@@ -73,7 +73,7 @@ object OcrFieldExtractor {
     private val roastLevelRegex = buildRegex(CoffeeRoastLevel.allSearchTerms)
 
     private val tastingNotesLabelRegex = Regex(
-        """(?:tasting\s+notes|cupping\s+notes|notes|flavor|flavour|tastes\s+like)\s*:\s*(.+)""",
+        """(?:tasting\s+notes|cupping\s+notes|notes|flavor|flavour|tastes?\s+like|chuťové?\s+poznámky|chuť|geschmacksnoten|geschmack|notas?\s+de\s+cata|note\s+di\s+degustazione)\s*:\s*(.+)""",
         RegexOption.IGNORE_CASE,
     )
 
@@ -95,13 +95,13 @@ object OcrFieldExtractor {
 
     // Matches common roaster label patterns like "ROASTERY", "COFFEE ROASTERS", "KAFFEERÖSTEREI"
     private val roasteryLabelRegex = Regex(
-        """([\w\s':.\u00C0-\u024F]+(?:roaster[sy]?|coffee\s*roaster[sy]?|rösterei|pražírna|torrefazione))\b""",
+        """([\w\s':.\u00C0-\u024F]+(?:roaster[sy]?|coffee\s*roaster[sy]?|rösterei|pražírna|torrefazione|torréfacteur|tostador|palarnia))\b""",
         RegexOption.IGNORE_CASE,
     )
 
     // Matches farm/producer/estate labels
     private val farmLabelRegex = Regex(
-        """(?:farm|finca|producer|estate|fazenda|hacienda)\s*[:.]?\s*(.+)""",
+        """(?:farm|finca|producer|estate|fazenda|hacienda|producent|statek|gut|plantáž|plantation)\s*[:.]?\s*(.+)""",
         RegexOption.IGNORE_CASE,
     )
 
@@ -246,12 +246,12 @@ object OcrFieldExtractor {
     }
 
     private val roastLabelRegex = Regex(
-        """(?:(?:datum\s+)?(?:roast(?:ed)?|pražen[íoá]|geröst(?:et)?))\s*(?:on|date|:)?\s*""",
+        """(?:(?:datum\s+)?(?:roast(?:ed)?|pražen[íoá]|geröst(?:et)?|tostado|torrado|tostato|torréfié))\s*(?:on|date|:)?\s*""",
         RegexOption.IGNORE_CASE,
     )
 
     private val expiryLabelRegex = Regex(
-        """(?:(?:best\s*before|use\s*by|expir(?:y|es?|ation)|consume\s*before|BB|EXP|MHD|spotřebujte\s*do|mindestens\s*haltbar)\s*(?:date)?)\s*[:.]?\s*""",
+        """(?:(?:best\s*before|use\s*by|expir(?:y|es?|ation)|consume\s*before|BB|EXP|MHD|spotřebujte\s*do|nejlépe\s*do|datum\s+minimální\s+trvanlivosti|mindestens\s*haltbar|à\s*consommer\s*avant)\s*(?:date)?)\s*[:.]?\s*""",
         RegexOption.IGNORE_CASE,
     )
 
@@ -357,13 +357,81 @@ object OcrFieldExtractor {
         return remaining.length < 3
     }
 
+    // --- Multi-signal scoring for name/roaster detection ---
+
+    internal data class CandidateScore(
+        val block: OcrTextBlock,
+        val score: Float,
+        val isKnownRoaster: Boolean = false,
+        val isKnownName: Boolean = false,
+    )
+
+    internal fun scoreCandidateBlocks(
+        candidates: List<OcrTextBlock>,
+        maxHeight: Int,
+        knownRoasters: List<String>,
+        knownNames: List<String>,
+    ): List<CandidateScore> {
+        return candidates.map { block ->
+            val text = block.text.trim()
+            var score = 0f
+
+            // Signal 1: Font size (normalized to 0-1 range, weighted heavily)
+            val fontScore = block.heightPx.toFloat() / maxHeight
+            score += fontScore * 40f
+
+            // Signal 2: Position — blocks near top score higher
+            val maxTop = candidates.maxOf { it.topPx }.coerceAtLeast(1)
+            val positionScore = 1f - (block.topPx.toFloat() / maxTop)
+            score += positionScore * 15f
+
+            // Signal 3: ALL CAPS — brand names and coffee names are often stylized
+            val isAllCaps = text.length >= 3 && text == text.uppercase() && text.any { it.isLetter() }
+            if (isAllCaps) score += 10f
+
+            // Signal 4: Known roaster match (strongest signal)
+            val matchesKnownRoaster = knownRoasters.any { known ->
+                text.equals(known, ignoreCase = true) ||
+                    text.contains(known, ignoreCase = true) ||
+                    known.contains(text, ignoreCase = true)
+            }
+            if (matchesKnownRoaster) score += 50f
+
+            // Signal 5: Known name match
+            val matchesKnownName = knownNames.any { known ->
+                text.equals(known, ignoreCase = true) ||
+                    text.contains(known, ignoreCase = true) ||
+                    known.contains(text, ignoreCase = true)
+            }
+            if (matchesKnownName) score += 50f
+
+            // Signal 6: Contains roastery keyword
+            val hasRoasteryKeyword = roasteryLabelRegex.containsMatchIn(text)
+            if (hasRoasteryKeyword) score += 30f
+
+            // Signal 7: Short text (1-4 words) — more likely a name/brand
+            val wordCount = text.split(Regex("""\s+""")).size
+            if (wordCount in 1..4) score += 5f
+
+            CandidateScore(
+                block = block,
+                score = score,
+                isKnownRoaster = matchesKnownRoaster || hasRoasteryKeyword,
+                isKnownName = matchesKnownName,
+            )
+        }.sortedByDescending { it.score }
+    }
+
     /**
      * Enhanced extraction that uses ML Kit text block spatial data to identify
-     * name and roaster. Blocks are ranked by bounding-box height (font-size proxy);
-     * the most prominent blocks that aren't explained by known fields become
-     * the roaster (largest) and coffee name (second largest).
+     * name and roaster. Blocks are ranked by a multi-signal scoring system;
+     * known roasters/names from saved bags boost matching confidence.
      */
-    fun extractFieldsFromBlocks(blocks: List<OcrTextBlock>): OcrExtractionResult {
+    fun extractFieldsFromBlocks(
+        blocks: List<OcrTextBlock>,
+        knownRoasters: List<String> = emptyList(),
+        knownNames: List<String> = emptyList(),
+    ): OcrExtractionResult {
         if (blocks.isEmpty()) return OcrExtractionResult()
 
         val fullText = blocks.joinToString("\n") { it.text }
@@ -380,35 +448,33 @@ object OcrFieldExtractor {
             if (text.contains("www.", ignoreCase = true)) return@filter false
             if (text.startsWith("http", ignoreCase = true)) return@filter false
             !isBlockConsumedByKnownFields(text)
-        }.sortedWith(
-            compareByDescending<OcrTextBlock> { it.heightPx }
-                .thenBy { it.topPx },
-        )
+        }
+
+        val scored = scoreCandidateBlocks(candidates, maxHeight, knownRoasters, knownNames)
 
         val keywordRoaster = baseResult.roaster
-
         val roaster: String?
         val name: String?
 
         if (keywordRoaster != null) {
+            // Roaster found by keyword — pick name from highest-scoring non-roaster
             roaster = keywordRoaster
-            // Name = most prominent candidate that isn't the roaster text
-            name = candidates.firstOrNull {
-                !it.text.contains(keywordRoaster, ignoreCase = true)
-            }?.text?.trim()
-        } else if (candidates.size >= 2) {
-            roaster = candidates[0].text.trim()
-            name = candidates[1].text.trim()
-        } else if (candidates.size == 1) {
-            // Single candidate — use as name; roaster unknown
-            name = candidates[0].text.trim()
-            roaster = null
+            name = scored.firstOrNull {
+                !it.block.text.contains(keywordRoaster, ignoreCase = true)
+            }?.block?.text?.trim()
         } else {
-            name = null
-            roaster = null
+            // No keyword roaster — use scoring
+            val roasterCandidate = scored.firstOrNull { it.isKnownRoaster }
+                ?: scored.firstOrNull()
+
+            roaster = roasterCandidate?.block?.text?.trim()
+
+            // Name = highest-scoring block that isn't the roaster
+            name = scored.firstOrNull { candidate ->
+                candidate.block != roasterCandidate?.block
+            }?.block?.text?.trim()
         }
 
-        // Fall back to origin+region for name if spatial analysis found nothing
         val derivedName = name ?: baseResult.name
 
         return baseResult.copy(

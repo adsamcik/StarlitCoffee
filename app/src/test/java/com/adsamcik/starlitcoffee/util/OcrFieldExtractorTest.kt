@@ -411,4 +411,78 @@ class OcrFieldExtractorTest {
     fun `farm label block is consumed by known fields`() {
         assertTrue(OcrFieldExtractor.isBlockConsumedByKnownFields("Farm: La Esperanza"))
     }
+
+    // --- Multi-signal scoring ---
+
+    @Test
+    fun `known roaster from DB gets matched even without keyword`() {
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("DOUBLESHOT", heightPx = 80, topPx = 50),
+            OcrFieldExtractor.OcrTextBlock("ETHIOPIA SIDAMO", heightPx = 60, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("Washed", heightPx = 25, topPx = 250),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(
+            blocks,
+            knownRoasters = listOf("Doubleshot"),
+        )
+        assertEquals("DOUBLESHOT", result.roaster)
+        assertNotEquals("DOUBLESHOT", result.name)
+    }
+
+    @Test
+    fun `known name from DB gets matched`() {
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("TIM WENDELBOE", heightPx = 80, topPx = 50),
+            OcrFieldExtractor.OcrTextBlock("FINCA TAMANA", heightPx = 60, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("Colombia", heightPx = 30, topPx = 250),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(
+            blocks,
+            knownNames = listOf("Finca Tamana"),
+        )
+        assertNotNull(result.name)
+        assertTrue(result.name!!.contains("TAMANA", ignoreCase = true))
+    }
+
+    @Test
+    fun `all caps text scores higher for brand detection`() {
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("PROUD MARY", heightPx = 70, topPx = 50),
+            OcrFieldExtractor.OcrTextBlock("Golden Child Blend", heightPx = 70, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("Ethiopia", heightPx = 30, topPx = 250),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(blocks)
+        assertEquals("PROUD MARY", result.roaster)
+    }
+
+    // --- Czech language ---
+
+    @Test
+    fun `extracts Czech praný as Washed`() {
+        val result = OcrFieldExtractor.extractFields("Etiopie Yirgacheffe\nPraný")
+        assertNotNull(result.processType)
+        assertTrue(result.processType!!.contains("praný", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts Czech světlý as Light roast`() {
+        val result = OcrFieldExtractor.extractFields("Kolumbie\nSvětlý")
+        assertNotNull(result.roastLevel)
+        assertTrue(result.roastLevel!!.contains("světlý", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts Czech tasting notes label`() {
+        val text = "Chuťové poznámky: borůvka, jasmín, med"
+        val result = OcrFieldExtractor.extractFields(text)
+        assertNotNull("Should extract Czech-labeled tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("borůvka"))
+    }
+
+    @Test
+    fun `extracts Czech roast date label`() {
+        val text = "Datum pražení: 15.01.2026"
+        val result = OcrFieldExtractor.extractFields(text)
+        assertNotNull("Should extract Czech roast date", result.roastDate)
+    }
 }

@@ -26,7 +26,7 @@ fun WarningCard(
     showIcon: Boolean = true,
 ) {
     ElevatedCard(
-        shape = RoundedCornerShape(28.dp),
+        shape = MaterialTheme.shapes.large,
         colors = CardDefaults.elevatedCardColors(containerColor = containerColor),
         modifier = modifier
             .fillMaxWidth()

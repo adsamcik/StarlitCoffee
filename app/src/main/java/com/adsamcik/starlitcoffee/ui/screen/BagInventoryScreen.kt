@@ -27,6 +27,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -101,6 +102,7 @@ fun BagInventoryScreen(
 
     var showAddSheet by remember { mutableStateOf(false) }
     var selectedBag by remember { mutableStateOf<CoffeeBagEntity?>(null) }
+    var editBag by remember { mutableStateOf<CoffeeBagEntity?>(null) }
     var ocrPrefill by remember { mutableStateOf<com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult?>(null) }
     var capturedPhotoUris by remember { mutableStateOf<String?>(null) }
     var detectedBarcode by remember { mutableStateOf<String?>(null) }
@@ -108,6 +110,14 @@ fun BagInventoryScreen(
     var offLookupName by remember { mutableStateOf<String?>(null) }
     var offLookupRoaster by remember { mutableStateOf<String?>(null) }
     var lastProcessedPhotos by remember { mutableStateOf<String?>(null) }
+
+    // Known roasters/names from saved bags for OCR scoring
+    val knownRoasters = remember(bags) {
+        bags.mapNotNull { it.roaster }.distinct()
+    }
+    val knownNames = remember(bags) {
+        bags.map { it.name }.distinct()
+    }
 
     // Handle captured photos result (from CameraCaptureScreen)
     val capturedPhotos by (currentBackStackEntry
@@ -185,7 +195,7 @@ fun BagInventoryScreen(
                                 topPx = block.boundingBox?.top ?: 0,
                             )
                         }
-                        com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFieldsFromBlocks(blocks)
+                        com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownRoasters, knownNames)
                     }
                     val enhResult = enhancedText?.let { text ->
                         val blocks = text.textBlocks.map { block ->
@@ -195,7 +205,7 @@ fun BagInventoryScreen(
                                 topPx = block.boundingBox?.top ?: 0,
                             )
                         }
-                        com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFieldsFromBlocks(blocks)
+                        com.adsamcik.starlitcoffee.util.OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownRoasters, knownNames)
                     }
                     if (origResult != null || enhResult != null) {
                         ocrResults.add(
@@ -405,6 +415,27 @@ fun BagInventoryScreen(
                 brewViewModel.deleteCoffeeBag(bag)
                 selectedBag = null
             },
+            onEdit = {
+                selectedBag = null
+                editBag = bag
+            },
+            onWeightAdjust = { bagId, weight ->
+                brewViewModel.adjustBagWeight(bagId, weight)
+            },
+        )
+    }
+
+    // Edit bag sheet
+    editBag?.let { bag ->
+        AddBagSheet(
+            bagToEdit = bag,
+            existingBags = bags,
+            onDismiss = { editBag = null },
+            onSave = { _, _, _, _, _, _, _, _, _, _, _ -> },
+            onEdit = { updatedBag ->
+                brewViewModel.updateCoffeeBag(updatedBag)
+                editBag = null
+            },
         )
     }
 }
@@ -544,6 +575,7 @@ private fun AddBagSheet(
     traceabilityUrl: String? = null,
     capturedPhotoUris: String? = null,
     existingBags: List<CoffeeBagEntity> = emptyList(),
+    bagToEdit: CoffeeBagEntity? = null,
     onDismiss: () -> Unit,
     onSave: (
         name: String,
@@ -558,6 +590,7 @@ private fun AddBagSheet(
         processType: String?,
         tastingNotes: String?,
     ) -> Unit,
+    onEdit: ((CoffeeBagEntity) -> Unit)? = null,
 ) {
     // History suggestions from existing bags (already sorted newest-first by DAO)
     val recentNames = remember(existingBags) {
@@ -586,17 +619,39 @@ private fun AddBagSheet(
             .filter { it.isNotBlank() }.distinct().take(10)
     }
 
-    var name by remember(ocrPrefill, initialName) { mutableStateOf(initialName ?: ocrPrefill?.name ?: "") }
-    var roaster by remember(ocrPrefill, initialRoaster) { mutableStateOf(ocrPrefill?.roaster ?: initialRoaster ?: "") }
-    var originCountry by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.origin ?: "") }
-    var originRegion by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.region ?: "") }
-    var roastLevel by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.roastLevel ?: "") }
-    var variety by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.variety ?: "") }
-    var processType by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.processType ?: "") }
-    var tastingNotes by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.tastingNotes ?: "") }
-    var barcode by remember(initialBarcode) { mutableStateOf(initialBarcode.orEmpty()) }
-    var weight by remember(ocrPrefill) { mutableStateOf(ocrPrefill?.weight ?: "") }
-    var notes by remember { mutableStateOf("") }
+    val isEditMode = bagToEdit != null
+    var name by remember(ocrPrefill, initialName, bagToEdit) {
+        mutableStateOf(bagToEdit?.name ?: initialName ?: ocrPrefill?.name ?: "")
+    }
+    var roaster by remember(ocrPrefill, initialRoaster, bagToEdit) {
+        mutableStateOf(bagToEdit?.roaster ?: ocrPrefill?.roaster ?: initialRoaster ?: "")
+    }
+    var originCountry by remember(ocrPrefill, bagToEdit) {
+        mutableStateOf(bagToEdit?.origin ?: ocrPrefill?.origin ?: "")
+    }
+    var originRegion by remember(ocrPrefill, bagToEdit) {
+        mutableStateOf(bagToEdit?.region ?: ocrPrefill?.region ?: "")
+    }
+    var roastLevel by remember(ocrPrefill, bagToEdit) {
+        mutableStateOf(bagToEdit?.roastLevel ?: ocrPrefill?.roastLevel ?: "")
+    }
+    var variety by remember(ocrPrefill, bagToEdit) {
+        mutableStateOf(bagToEdit?.variety ?: ocrPrefill?.variety ?: "")
+    }
+    var processType by remember(ocrPrefill, bagToEdit) {
+        mutableStateOf(bagToEdit?.processType ?: ocrPrefill?.processType ?: "")
+    }
+    var tastingNotes by remember(ocrPrefill, bagToEdit) {
+        mutableStateOf(bagToEdit?.tastingNotes ?: ocrPrefill?.tastingNotes ?: "")
+    }
+    var barcode by remember(initialBarcode, bagToEdit) {
+        mutableStateOf(bagToEdit?.barcode ?: initialBarcode.orEmpty())
+    }
+    var weight by remember(ocrPrefill, bagToEdit) {
+        mutableStateOf(bagToEdit?.weightG?.let { "%.0f".format(it) } ?: ocrPrefill?.weight ?: "")
+    }
+    var notes by remember(bagToEdit) { mutableStateOf(bagToEdit?.notes ?: "") }
+    var isDecaf by remember(bagToEdit) { mutableStateOf(bagToEdit?.isDecaf ?: false) }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -618,7 +673,7 @@ private fun AddBagSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "Add Coffee Bag",
+                    text = if (isEditMode) "Edit Coffee Bag" else "Add Coffee Bag",
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(bottom = 16.dp, top = 16.dp),
                 )
@@ -762,6 +817,14 @@ private fun AddBagSheet(
                     }
                 }
                 item {
+                    FilterChip(
+                        selected = isDecaf,
+                        onClick = { isDecaf = !isDecaf },
+                        label = { Text("☘ Decaf") },
+                        modifier = Modifier.padding(bottom = 8.dp),
+                    )
+                }
+                item {
                     OutlinedTextField(
                         value = notes,
                         onValueChange = { notes = it },
@@ -778,19 +841,38 @@ private fun AddBagSheet(
             Button(
                 onClick = {
                     if (name.isNotBlank()) {
-                        onSave(
-                            name,
-                            roaster.takeIf { it.isNotBlank() },
-                            originCountry.takeIf { it.isNotBlank() },
-                            originRegion.takeIf { it.isNotBlank() },
-                            roastLevel.takeIf { it.isNotBlank() },
-                            barcode.takeIf { it.isNotBlank() },
-                            weight.toFloatOrNull(),
-                            notes.takeIf { it.isNotBlank() },
-                            variety.takeIf { it.isNotBlank() },
-                            processType.takeIf { it.isNotBlank() },
-                            tastingNotes.takeIf { it.isNotBlank() },
-                        )
+                        if (isEditMode && bagToEdit != null && onEdit != null) {
+                            onEdit(
+                                bagToEdit.copy(
+                                    name = name,
+                                    roaster = roaster.takeIf { it.isNotBlank() },
+                                    origin = originCountry.takeIf { it.isNotBlank() },
+                                    region = originRegion.takeIf { it.isNotBlank() },
+                                    roastLevel = roastLevel.takeIf { it.isNotBlank() },
+                                    barcode = barcode.takeIf { it.isNotBlank() },
+                                    weightG = weight.toFloatOrNull() ?: bagToEdit.weightG,
+                                    notes = notes.takeIf { it.isNotBlank() },
+                                    variety = variety.takeIf { it.isNotBlank() },
+                                    processType = processType.takeIf { it.isNotBlank() },
+                                    tastingNotes = tastingNotes.takeIf { it.isNotBlank() },
+                                    isDecaf = isDecaf,
+                                ),
+                            )
+                        } else {
+                            onSave(
+                                name,
+                                roaster.takeIf { it.isNotBlank() },
+                                originCountry.takeIf { it.isNotBlank() },
+                                originRegion.takeIf { it.isNotBlank() },
+                                roastLevel.takeIf { it.isNotBlank() },
+                                barcode.takeIf { it.isNotBlank() },
+                                weight.toFloatOrNull(),
+                                notes.takeIf { it.isNotBlank() },
+                                variety.takeIf { it.isNotBlank() },
+                                processType.takeIf { it.isNotBlank() },
+                                tastingNotes.takeIf { it.isNotBlank() },
+                            )
+                        }
                     }
                 },
                 shape = MaterialTheme.shapes.large,
@@ -800,7 +882,7 @@ private fun AddBagSheet(
                     .padding(vertical = 12.dp)
                     .height(56.dp),
             ) {
-                Text("Save", style = MaterialTheme.typography.labelLarge)
+                Text(if (isEditMode) "Save Changes" else "Save", style = MaterialTheme.typography.labelLarge)
             }
         }
     }
@@ -815,6 +897,7 @@ private fun BagDetailSheet(
     onDismiss: () -> Unit,
     onStatusChange: (CoffeeBagStatus) -> Unit,
     onDelete: () -> Unit,
+    onEdit: () -> Unit,
     onWeightAdjust: (Long, Float) -> Unit = { _, _ -> },
 ) {
     var statusMenuExpanded by remember { mutableStateOf(false) }
@@ -833,17 +916,31 @@ private fun BagDetailSheet(
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
         ) {
-            Text(
-                text = bag.name,
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 4.dp, top = 16.dp),
-            )
-            if (bag.roaster != null) {
-                Text(
-                    text = "by ${bag.roaster}",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = bag.name,
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier.padding(bottom = 4.dp, top = 16.dp),
+                    )
+                    if (bag.roaster != null) {
+                        Text(
+                            text = "by ${bag.roaster}",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+                IconButton(onClick = onEdit) {
+                    Icon(
+                        Icons.Filled.Edit,
+                        contentDescription = "Edit bag",
+                    )
+                }
             }
 
             // Photo gallery

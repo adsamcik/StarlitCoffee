@@ -147,7 +147,7 @@ fun OnboardingMethodsScreen(
                             defaultMethod.value = method
                         }
                     },
-                    shape = RoundedCornerShape(20.dp),
+                    shape = MaterialTheme.shapes.medium,
                     colors = CardDefaults.outlinedCardColors(
                         containerColor = containerColor.value,
                         contentColor = contentColor.value,

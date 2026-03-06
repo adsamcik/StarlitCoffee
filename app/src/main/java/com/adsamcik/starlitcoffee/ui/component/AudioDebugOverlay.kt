@@ -59,7 +59,7 @@ fun AudioDebugOverlay(
     var expanded by remember { mutableStateOf(false) }
 
     ElevatedCard(
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.small,
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
         ),

@@ -82,7 +82,7 @@ fun TasteFeedbackScreen(
             val selected = selectedFeedback == option.feedback
             ElevatedCard(
                 onClick = { brewViewModel.setTasteFeedback(option.feedback) },
-                shape = RoundedCornerShape(28.dp),
+                shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 10.dp),
@@ -148,7 +148,7 @@ fun TasteFeedbackScreen(
             value = notes,
             onValueChange = { brewViewModel.setFeedbackNotes(it) },
             label = { Text("Notes (optional)") },
-            shape = RoundedCornerShape(16.dp),
+            shape = MaterialTheme.shapes.small,
             minLines = 2,
             maxLines = 4,
             modifier = Modifier
@@ -164,7 +164,7 @@ fun TasteFeedbackScreen(
                     popUpTo(MethodPicker) { inclusive = true }
                 }
             },
-            shape = RoundedCornerShape(28.dp),
+            shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
@@ -178,7 +178,7 @@ fun TasteFeedbackScreen(
             onClick = {
                 navController.popBackStack(Result, inclusive = false)
             },
-            shape = RoundedCornerShape(28.dp),
+            shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),

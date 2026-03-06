@@ -425,7 +425,7 @@ fun BrewTimerScreen(
                         VibrationHelper.vibrate(context, BrewHaptic.POUR)
                         brewViewModel.advancePhase()
                     },
-                    shape = RoundedCornerShape(28.dp),
+                    shape = MaterialTheme.shapes.large,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(72.dp),
@@ -450,7 +450,7 @@ fun BrewTimerScreen(
                         brewViewModel.pauseTimer()
                         BrewTimerService.stop(context)
                     },
-                    shape = RoundedCornerShape(28.dp),
+                    shape = MaterialTheme.shapes.large,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(72.dp),
@@ -484,7 +484,7 @@ fun BrewTimerScreen(
                             BrewTimerService.start(context)
                         }
                     },
-                    shape = RoundedCornerShape(28.dp),
+                    shape = MaterialTheme.shapes.large,
                     modifier = Modifier
                         .weight(1f)
                         .height(72.dp),
@@ -502,7 +502,7 @@ fun BrewTimerScreen(
                 }
                 OutlinedButton(
                     onClick = { showStopDialog = true },
-                    shape = RoundedCornerShape(28.dp),
+                    shape = MaterialTheme.shapes.large,
                     modifier = Modifier
                         .weight(1f)
                         .height(72.dp),
@@ -526,7 +526,7 @@ fun BrewTimerScreen(
                     brewViewModel.requestFeedbackSnackbar()
                     navController.popBackStack()
                 },
-                shape = RoundedCornerShape(28.dp),
+                shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(72.dp),
