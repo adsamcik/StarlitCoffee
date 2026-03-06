@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
+import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ai.ModelManager
@@ -58,6 +58,7 @@ fun SettingsScreen(
         initialValue = com.adsamcik.starlitcoffee.data.repository.UserPreferences(),
     )
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -218,7 +219,7 @@ fun SettingsScreen(
                             label = { Text("No grinder") },
                             leadingIcon = if (prefs.selectedGrinderId == null) checkIcon else null,
                         )
-                        DefaultGrinders.grinders.forEach { grinder ->
+                        GrinderDataSource.getInstance(context).grinders.forEach { grinder ->
                             val isGrinderSelected = prefs.selectedGrinderId == grinder.id
                             FilterChip(
                                 selected = isGrinderSelected,
@@ -251,7 +252,6 @@ fun SettingsScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            val context = LocalContext.current
             val modelState by ModelManager.state.collectAsStateWithLifecycle()
             val downloadProgress by ModelManager.downloadProgress.collectAsStateWithLifecycle()
             val aiEnabled = ModelManager.isAiEnabled(context)

@@ -1,12 +1,8 @@
 package com.adsamcik.starlitcoffee.data.model
 
-enum class InputMode(
-    val displayName: String,
-    val shortLabel: String,
-    val description: String,
-) {
-    COFFEE_TO_WATER("Coffee → Water", "Coffee→Water", "Enter coffee dose, calculate water"),
-    WATER_TO_COFFEE("Water → Coffee", "Water→Coffee", "Enter water amount, calculate coffee"),
-    BREW_SIZE_TO_BOTH("Brew Size → Both", "Brew→Both", "Enter target brew size, calculate coffee and water accounting for absorption"),
-    CUP_SIZE_TO_BOTH("Cup Size → Both", "Cup→Both", "Enter cup size, calculate coffee and water"),
+enum class InputMode {
+    COFFEE_TO_WATER,
+    WATER_TO_COFFEE,
+    BREW_SIZE_TO_BOTH,
+    CUP_SIZE_TO_BOTH,
 }

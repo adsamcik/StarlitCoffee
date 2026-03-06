@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.adsamcik.starlitcoffee.data.db.dao.BrewLogDao
@@ -31,6 +32,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
     version = 10,
     exportSchema = true,
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
     abstract fun coffeeBagDao(): CoffeeBagDao

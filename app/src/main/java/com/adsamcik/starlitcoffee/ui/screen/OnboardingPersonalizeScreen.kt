@@ -30,10 +30,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
+import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -51,6 +52,7 @@ fun OnboardingPersonalizeScreen(
 ) {
     val filterType = remember { mutableStateOf(initialFilter) }
     val selectedGrinderId = remember { mutableStateOf(initialGrinder) }
+    val context = LocalContext.current
 
     val showFilterSection = selectedMethods.contains(BrewMethod.PULSAR)
 
@@ -154,7 +156,7 @@ fun OnboardingPersonalizeScreen(
                                 null
                             },
                         )
-                        DefaultGrinders.grinders.forEach { grinder ->
+                        GrinderDataSource.getInstance(context).grinders.forEach { grinder ->
                             val isGrinderSelected = selectedGrinderId.value == grinder.id
                             FilterChip(
                                 selected = isGrinderSelected,

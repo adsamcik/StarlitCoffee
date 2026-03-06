@@ -1,7 +1,11 @@
 package com.adsamcik.starlitcoffee.data.model
 
-object DefaultGrinders {
-    val grinders: List<Grinder> = listOf(
+/**
+ * Static fallback grinder data — used in tests and when [GrinderDataSource] is unavailable.
+ * Production code should prefer [GrinderDataSource.getInstance] which loads from `assets/grinders.json`.
+ */
+object DefaultGrinders : GrinderDataProvider {
+    override val grinders: List<Grinder> = listOf(
         Grinder(
             id = "1zpresso-zp6-special",
             brand = "1Zpresso",
@@ -47,7 +51,7 @@ object DefaultGrinders {
         ),
     )
 
-    val recommendations: List<GrindRecommendation> = listOf(
+    override val recommendations: List<GrindRecommendation> = listOf(
         GrindRecommendation(
             grinderId = "1zpresso-zp6-special",
             methodId = "PULSAR",

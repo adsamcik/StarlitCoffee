@@ -62,6 +62,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adsamcik.starlitcoffee.data.model.PhaseType
+import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.viewmodel.BrewPhase
 import kotlinx.coroutines.launch
 import kotlin.math.sin
@@ -105,7 +106,7 @@ private fun computePhaseVisualStates(
                 valveState = phase.valveState,
                 waterThisPhase = phase.waterG,
                 cumulativeWater = phase.cumulativeWaterG,
-                emoji = phase.phaseType.emoji,
+                emoji = phase.phaseType.emoji(),
             ),
         )
     }

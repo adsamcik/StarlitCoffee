@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.adsamcik.starlitcoffee.data.db.AppDatabase
+import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
@@ -23,6 +24,7 @@ class BrewViewModelFactory(
                 coffeeBagRepository = CoffeeBagRepository(database.coffeeBagDao()),
                 ratioPresetRepository = RatioPresetRepository(database.ratioPresetDao()),
                 userPreferencesRepository = UserPreferencesRepository(application),
+                grinderData = GrinderDataSource.getInstance(application),
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

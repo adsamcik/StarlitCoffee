@@ -44,6 +44,7 @@ import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.InputMode
+import com.adsamcik.starlitcoffee.ui.util.shortLabel
 import com.adsamcik.starlitcoffee.navigation.BrewTimer
 import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
@@ -141,7 +142,7 @@ fun AmountStrengthScreen(
                         count = InputMode.entries.size,
                     ),
                 ) {
-                    Text(mode.shortLabel, maxLines = 1)
+                    Text(mode.shortLabel(), maxLines = 1)
                 }
             }
         }

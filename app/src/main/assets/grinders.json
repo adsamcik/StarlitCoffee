@@ -1,0 +1,79 @@
+{
+  "grinders": [
+    {
+      "id": "1zpresso-zp6-special",
+      "brand": "1Zpresso",
+      "model": "ZP6 Special",
+      "isManual": true,
+      "scaleType": "DIAL_CLICKS",
+      "clicksPerRotation": 90
+    },
+    {
+      "id": "comandante-c40",
+      "brand": "Comandante",
+      "model": "C40",
+      "isManual": true,
+      "scaleType": "PURE_CLICKS"
+    },
+    {
+      "id": "fellow-ode-gen2",
+      "brand": "Fellow",
+      "model": "Ode Gen 2",
+      "isManual": false,
+      "scaleType": "NUMBERED_DIAL"
+    },
+    {
+      "id": "baratza-encore-esp",
+      "brand": "Baratza",
+      "model": "Encore ESP",
+      "isManual": false,
+      "scaleType": "NUMBERED_DIAL"
+    },
+    {
+      "id": "niche-zero",
+      "brand": "Niche",
+      "model": "Zero",
+      "isManual": false,
+      "scaleType": "NUMBERED_DIAL"
+    },
+    {
+      "id": "df64",
+      "brand": "DF64",
+      "model": "DF64",
+      "isManual": false,
+      "scaleType": "NUMBERED_DIAL"
+    }
+  ],
+  "recommendations": [
+    {
+      "grinderId": "1zpresso-zp6-special",
+      "methodId": "PULSAR",
+      "filterType": "PAPER",
+      "rangeStart": 5.0,
+      "rangeEnd": 5.4,
+      "suggestedStart": 5.2,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Paper filter Pulsar on ZP6 Special"
+    },
+    {
+      "grinderId": "1zpresso-zp6-special",
+      "methodId": "PULSAR",
+      "filterType": "METAL_19K",
+      "rangeStart": 5.2,
+      "rangeEnd": 5.6,
+      "suggestedStart": 5.4,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Metal 19K filter Pulsar on ZP6 Special"
+    },
+    {
+      "grinderId": "1zpresso-zp6-special",
+      "methodId": "PULSAR",
+      "filterType": "METAL_40K",
+      "rangeStart": 5.5,
+      "rangeEnd": 5.9,
+      "suggestedStart": 5.7,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Metal 40K filter Pulsar on ZP6 Special"
+    }
+  ]
+}

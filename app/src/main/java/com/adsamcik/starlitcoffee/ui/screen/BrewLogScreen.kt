@@ -30,6 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
+import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.navigation.BrewLogDetail
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.ui.component.StarRatingRow
@@ -94,7 +95,7 @@ private fun BrewLogCard(
 ) {
     val feedbackEmoji = log.tasteFeedback?.let { name ->
         try {
-            TasteFeedbackModel.valueOf(name).emoji
+            TasteFeedbackModel.valueOf(name).emoji()
         } catch (e: Exception) {
             Log.w(TAG, "Failed to parse taste feedback", e)
             null

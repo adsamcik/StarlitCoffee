@@ -44,6 +44,8 @@ import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
+import com.adsamcik.starlitcoffee.ui.util.displayName
+import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.ui.component.FlavorTagPicker
 import com.adsamcik.starlitcoffee.ui.component.HalfStarRatingRow
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -246,7 +248,7 @@ fun BrewLogDetailScreen(
                             null
                         }
                         if (feedback != null) {
-                            DetailRow("Taste", "${feedback.emoji} ${feedback.displayName}")
+                            DetailRow("Taste", "${feedback.emoji()} ${feedback.displayName()}")
                         }
                     }
                 }
