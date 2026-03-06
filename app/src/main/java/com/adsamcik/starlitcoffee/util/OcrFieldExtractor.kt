@@ -45,7 +45,8 @@ object OcrFieldExtractor {
             .sortedByDescending { it.length }
             .joinToString("|") { Regex.escape(it) }
         return if (wordBoundary) {
-            Regex("\\b(?:$pattern)\\b", RegexOption.IGNORE_CASE)
+            // Use Unicode-aware boundaries instead of \b (which only handles ASCII)
+            Regex("(?<![\\p{L}\\p{N}])(?:$pattern)(?![\\p{L}\\p{N}])", RegexOption.IGNORE_CASE)
         } else {
             Regex(pattern, RegexOption.IGNORE_CASE)
         }
@@ -101,7 +102,7 @@ object OcrFieldExtractor {
 
     // Matches farm/producer/estate labels
     private val farmLabelRegex = Regex(
-        """(?:farm|finca|producer|estate|fazenda|hacienda|producent|statek|gut|plantáž|plantation)\s*[:.]?\s*(.+)""",
+        """(?:farm|finca|producer|estate|fazenda|hacienda|producent|statek|gut|plantáž|plantation)\s*[:.]\s*(.+)""",
         RegexOption.IGNORE_CASE,
     )
 
@@ -465,6 +466,7 @@ object OcrFieldExtractor {
         } else {
             // No keyword roaster — use scoring
             val roasterCandidate = scored.firstOrNull { it.isKnownRoaster }
+                ?: scored.firstOrNull { !it.isKnownName }
                 ?: scored.firstOrNull()
 
             roaster = roasterCandidate?.block?.text?.trim()
