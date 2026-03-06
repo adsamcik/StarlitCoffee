@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.ui.screen
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -285,7 +286,9 @@ private fun CameraCaptureContent(
                     modifier = Modifier.padding(bottom = 16.dp),
                 ) {
                     val bitmap = remember(capturedPhotos.size) {
-                        BitmapFactory.decodeFile(capturedPhotos.last().path)
+                        val path = capturedPhotos.last().path ?: return@remember null
+                        val raw = BitmapFactory.decodeFile(path) ?: return@remember null
+                        ImagePreprocessor.applyExifRotation(raw, path)
                     }
                     bitmap?.let {
                         Image(
