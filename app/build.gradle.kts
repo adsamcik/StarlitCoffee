@@ -38,12 +38,18 @@ android {
     buildFeatures {
         compose = true
     }
+
+    assetPacks += listOf(":ai_model_pack")
 }
 
 kotlin {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 // Push coffee bag test images to connected device/emulator
@@ -128,6 +134,9 @@ dependencies {
     implementation(libs.camera.camera2)
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
+
+    // Play Asset Delivery
+    implementation(libs.play.asset.delivery.ktx)
 
     // Coroutines
     implementation(libs.coroutines.android)

@@ -1,21 +1,27 @@
 package com.adsamcik.starlitcoffee.ai
 
 import android.content.Context
+import com.google.android.play.core.assetpacks.AssetPackManagerFactory
+import com.google.android.play.core.assetpacks.AssetPackStates
+import com.google.android.play.core.assetpacks.model.AssetPackStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlin.coroutines.resume
 
 /**
- * Singleton managing the Gemma 3n E2B model lifecycle — download, storage, and readiness.
+ * Manages Gemma 3n E2B model lifecycle with dual delivery:
+ * - **Play Asset Delivery** for Play Store installs (on-demand asset pack)
+ * - **HTTP download** from HuggingFace for debug/sideloaded builds
  *
- * The model file is stored at `context.filesDir/models/[MODEL_FILENAME]`.
- * AI-enabled preference is persisted in SharedPreferences.
+ * The resolved model path is always returned via [getModelPath], regardless of source.
  */
 object ModelManager {
 
@@ -23,6 +29,8 @@ object ModelManager {
         "https://huggingface.co/google/gemma-3n-E2B-it-litert-lm/resolve/main/gemma-3n-E2B-it-int4.litertlm"
     private const val MODEL_FILENAME = "gemma-3n-e2b.litertlm"
     private const val MODELS_DIR = "models"
+    private const val ASSET_PACK_NAME = "ai_model_pack"
+    private const val ASSET_MODEL_PATH = "gemma-3n-E2B-it-int4.litertlm"
     private const val PREFS_NAME = "ai_prefs"
     private const val KEY_AI_ENABLED = "ai_enabled"
     private const val BUFFER_SIZE = 8192
@@ -42,9 +50,9 @@ object ModelManager {
 
     private var downloadJob: Job? = null
 
-    /** Check current file state and update [_state] accordingly. */
+    /** Check all sources (asset pack + local file) and update state. */
     fun refreshState(context: Context) {
-        if (isModelDownloaded(context)) {
+        if (getModelPath(context) != null) {
             _state.value = ModelState.DOWNLOADED
         } else if (_state.value != ModelState.DOWNLOADING) {
             _state.value = ModelState.NOT_DOWNLOADED
@@ -52,8 +60,7 @@ object ModelManager {
     }
 
     /**
-     * Downloads the model from HuggingFace to local storage.
-     * Supports resume via HTTP Range header when a partial file already exists.
+     * Downloads the model. Tries Play Asset Delivery first, falls back to HTTP.
      */
     suspend fun downloadModel(context: Context) {
         if (_state.value == ModelState.DOWNLOADING) return
@@ -61,6 +68,88 @@ object ModelManager {
         _downloadProgress.value = 0f
         _errorMessage.value = null
 
+        // Try Play Asset Delivery first
+        if (tryAssetPackDelivery(context)) return
+
+        // Fallback to HTTP download
+        downloadViaHttp(context)
+    }
+
+    /**
+     * Attempts to fetch the model via Play Asset Delivery.
+     * Returns true if the asset pack was successfully fetched or was already available.
+     */
+    private suspend fun tryAssetPackDelivery(context: Context): Boolean {
+        return try {
+            val manager = AssetPackManagerFactory.getInstance(context)
+            val packStates = suspendCancellableCoroutine<AssetPackStates?> { cont ->
+                manager.getPackStates(listOf(ASSET_PACK_NAME))
+                    .addOnSuccessListener { state -> cont.resume(state) }
+                    .addOnFailureListener { cont.resume(null) }
+            } ?: return false
+
+            val packState = packStates.packStates()[ASSET_PACK_NAME] ?: return false
+
+            when (packState.status()) {
+                AssetPackStatus.COMPLETED -> {
+                    _downloadProgress.value = 1f
+                    _state.value = ModelState.DOWNLOADED
+                    true
+                }
+                AssetPackStatus.NOT_INSTALLED -> {
+                    val fetchResult = suspendCancellableCoroutine<Boolean> { cont ->
+                        manager.fetch(listOf(ASSET_PACK_NAME))
+                            .addOnSuccessListener { cont.resume(true) }
+                            .addOnFailureListener { cont.resume(false) }
+                    }
+                    if (!fetchResult) return false
+
+                    monitorAssetPackProgress(context)
+                }
+                AssetPackStatus.DOWNLOADING, AssetPackStatus.TRANSFERRING -> {
+                    monitorAssetPackProgress(context)
+                }
+                else -> false
+            }
+        } catch (_: Exception) {
+            false // PAD not available, fall back to HTTP
+        }
+    }
+
+    /** Polls asset pack download progress until complete or failed. */
+    private suspend fun monitorAssetPackProgress(context: Context): Boolean {
+        val manager = AssetPackManagerFactory.getInstance(context)
+        while (true) {
+            val states = suspendCancellableCoroutine<AssetPackStates?> { cont ->
+                manager.getPackStates(listOf(ASSET_PACK_NAME))
+                    .addOnSuccessListener { state -> cont.resume(state) }
+                    .addOnFailureListener { cont.resume(null) }
+            } ?: return false
+
+            val packState = states.packStates()[ASSET_PACK_NAME] ?: return false
+            val total = packState.totalBytesToDownload()
+            val downloaded = packState.bytesDownloaded()
+
+            when (packState.status()) {
+                AssetPackStatus.COMPLETED -> {
+                    _downloadProgress.value = 1f
+                    _state.value = ModelState.DOWNLOADED
+                    return true
+                }
+                AssetPackStatus.DOWNLOADING, AssetPackStatus.TRANSFERRING -> {
+                    if (total > 0) {
+                        _downloadProgress.value = (downloaded.toFloat() / total).coerceIn(0f, 1f)
+                    }
+                }
+                AssetPackStatus.FAILED, AssetPackStatus.CANCELED -> return false
+                else -> { /* keep waiting */ }
+            }
+            kotlinx.coroutines.delay(500)
+        }
+    }
+
+    /** Downloads the model directly from HuggingFace via HTTP. */
+    private suspend fun downloadViaHttp(context: Context) {
         withContext(Dispatchers.IO) {
             try {
                 val dir = File(context.filesDir, MODELS_DIR)
@@ -83,7 +172,6 @@ object ModelManager {
 
                 when (responseCode) {
                     HttpURLConnection.HTTP_PARTIAL -> {
-                        // Server supports resume
                         totalBytes = existingBytes + connection.contentLengthLong
                         append = true
                     }
@@ -118,7 +206,7 @@ object ModelManager {
                 _state.value = ModelState.DOWNLOADED
             } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) {
-                    _state.value = if (isModelDownloaded(context)) {
+                    _state.value = if (getModelPath(context) != null) {
                         ModelState.DOWNLOADED
                     } else {
                         ModelState.NOT_DOWNLOADED
@@ -131,7 +219,6 @@ object ModelManager {
         }
     }
 
-    /** Cancels an in-progress download. */
     fun cancelDownload() {
         downloadJob?.cancel()
         downloadJob = null
@@ -140,12 +227,11 @@ object ModelManager {
         }
     }
 
-    /** Stores the download [Job] so it can be cancelled. */
     fun setDownloadJob(job: Job) {
         downloadJob = job
     }
 
-    /** Deletes the model file and resets state. */
+    /** Deletes the locally stored model file and resets state. */
     suspend fun deleteModel(context: Context) {
         withContext(Dispatchers.IO) {
             val file = File(context.filesDir, "$MODELS_DIR/$MODEL_FILENAME")
@@ -155,21 +241,35 @@ object ModelManager {
         _state.value = ModelState.NOT_DOWNLOADED
     }
 
-    /** Returns the model file path if the file exists, null otherwise. */
+    /**
+     * Returns the model file path from either:
+     * 1. Local storage (HTTP download)
+     * 2. Play Asset Delivery asset pack
+     * Returns null if the model is not available from any source.
+     */
     fun getModelPath(context: Context): String? {
-        val file = File(context.filesDir, "$MODELS_DIR/$MODEL_FILENAME")
-        return if (file.exists()) file.absolutePath else null
+        // Check local storage first (HTTP download)
+        val localFile = File(context.filesDir, "$MODELS_DIR/$MODEL_FILENAME")
+        if (localFile.exists()) return localFile.absolutePath
+
+        // Check Play Asset Delivery
+        return try {
+            val manager = AssetPackManagerFactory.getInstance(context)
+            val packLocation = manager.getPackLocation(ASSET_PACK_NAME)
+            if (packLocation != null) {
+                val assetFile = File(packLocation.assetsPath(), ASSET_MODEL_PATH)
+                if (assetFile.exists()) assetFile.absolutePath else null
+            } else null
+        } catch (_: Exception) {
+            null
+        }
     }
 
-    /** True when the model file exists on disk. */
-    fun isModelDownloaded(context: Context): Boolean {
-        return File(context.filesDir, "$MODELS_DIR/$MODEL_FILENAME").exists()
-    }
+    fun isModelDownloaded(context: Context): Boolean = getModelPath(context) != null
 
-    /** Size of the model file in bytes, or 0 if not present. */
     fun getModelSizeBytes(context: Context): Long {
-        val file = File(context.filesDir, "$MODELS_DIR/$MODEL_FILENAME")
-        return if (file.exists()) file.length() else 0L
+        val path = getModelPath(context) ?: return 0L
+        return File(path).length()
     }
 
     // --- AI-enabled preference ---
