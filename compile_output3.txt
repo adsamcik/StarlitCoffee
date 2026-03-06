@@ -1,0 +1,516 @@
+
+> Configure project :app
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:kspDebugKotlin
+
+> Task :app:compileDebugKotlin
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:17:4 Syntax error: Expecting ';' after the last enum entry or '}' to close enum class body.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:30:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:30:11 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:31:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:31:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:31:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:31:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:31:30 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:31:31 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:32:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:32:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:32:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:32:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:32:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:32:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:33:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:33:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:33:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:33:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:34:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:34:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:34:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:34:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:35:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:35:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:35:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:35:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:36:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:36:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:36:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:36:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:37:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:37:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:37:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:37:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:38:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:38:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:38:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:38:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:39:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:39:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:39:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:39:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:40:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:40:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:40:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:40:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:41:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:41:19 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:41:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:41:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:42:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:42:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:42:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:42:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:43:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:43:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:43:34 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:43:49 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:43:50 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:43:63 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:44:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:44:6 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:45:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:45:8 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:46:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:46:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:46:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:46:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:46:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:46:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:47:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:47:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:47:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:47:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:47:31 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:47:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:48:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:48:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:48:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:48:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:49:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:49:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:49:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:49:31 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:50:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:50:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:50:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:50:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:51:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:51:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:51:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:51:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:52:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:52:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:52:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:52:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:53:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:53:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:53:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:53:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:54:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:54:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:54:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:54:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:55:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:55:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:55:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:55:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:56:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:56:19 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:56:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:56:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:57:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:57:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:57:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:57:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:58:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:58:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:58:34 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:58:49 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:58:50 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:58:61 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:59:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:59:6 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:60:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:60:17 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:61:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:61:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:61:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:61:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:61:36 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:61:37 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:62:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:62:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:62:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:62:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:62:33 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:62:34 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:63:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:63:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:63:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:63:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:64:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:64:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:64:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:64:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:65:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:65:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:65:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:65:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:66:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:66:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:66:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:66:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:67:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:67:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:67:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:67:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:68:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:68:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:68:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:68:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:69:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:69:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:69:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:69:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:70:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:70:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:70:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:70:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:71:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:71:19 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:71:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:71:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:72:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:72:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:72:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:72:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:73:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:73:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:73:34 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:73:49 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:73:50 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:73:56 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:74:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:74:6 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:75:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:75:14 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:76:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:76:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:76:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:76:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:76:33 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:76:34 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:77:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:77:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:77:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:77:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:77:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:77:30 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:78:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:78:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:78:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:78:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:79:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:79:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:79:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:79:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:80:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:80:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:80:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:80:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:81:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:81:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:81:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:81:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:82:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:82:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:82:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:82:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:83:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:83:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:83:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:83:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:84:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:84:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:84:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:84:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:85:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:85:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:85:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:85:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:86:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:86:19 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:86:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:86:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:87:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:87:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:87:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:87:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:88:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:88:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:88:34 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:88:49 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:88:50 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:88:61 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:89:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:89:6 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:90:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:90:13 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:91:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:91:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:91:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:91:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:91:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:91:33 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:92:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:92:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:92:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:92:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:92:31 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:92:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:93:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:93:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:93:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:93:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:94:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:94:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:94:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:94:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:95:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:95:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:95:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:95:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:96:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:96:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:96:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:96:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:97:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:97:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:97:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:97:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:98:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:98:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:98:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:98:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:99:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:99:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:99:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:99:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:100:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:100:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:100:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:100:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:101:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:101:19 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:101:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:101:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:102:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:102:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:102:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:102:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:103:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:103:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:103:34 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:103:49 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:103:50 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:103:59 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:104:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:104:6 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:105:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:105:13 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:106:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:106:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:106:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:106:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:106:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:106:33 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:107:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:107:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:107:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:107:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:107:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:107:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:108:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:108:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:108:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:108:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:109:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:109:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:109:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:109:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:110:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:110:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:110:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:110:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:111:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:111:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:111:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:111:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:112:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:112:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:112:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:112:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:113:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:113:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:113:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:113:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:114:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:114:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:114:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:114:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:115:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:115:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:115:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:115:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:116:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:116:19 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:116:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:116:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:117:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:117:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:117:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:117:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:118:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:118:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:118:34 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:118:49 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:118:50 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:118:54 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:119:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:119:6 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:120:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:120:14 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:121:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:121:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:121:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:121:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:121:33 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:121:34 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:122:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:122:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:122:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:122:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:122:31 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:122:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:123:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:123:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:123:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:123:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:124:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:124:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:124:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:124:29 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:125:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:125:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:125:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:125:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:126:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:126:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:126:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:126:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:127:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:127:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:127:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:127:27 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:128:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:128:23 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:128:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:128:30 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:129:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:129:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:129:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:129:31 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:130:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:130:18 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:130:20 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:130:25 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:131:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:131:19 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:131:21 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:131:26 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:132:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:132:22 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:132:24 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:132:28 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:133:9 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:133:32 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:133:34 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:133:49 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:133:50 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:133:56 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:134:5 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:134:6 Syntax error: Expecting member declaration.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/repository/UserPreferencesRepository.kt:21:48 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/repository/UserPreferencesRepository.kt:45:31 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:104:29 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:104:40 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:104:66 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:173:56 Unresolved reference 'value'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:173:62 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:173:69 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:174:30 Argument type mismatch: actual type is 'Function2<Set<BrewMethod>, BrewMethod, Unit>', but 'Function2<Set<BrewMethod>, BrewMethod, Unit>' was expected.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:176:43 Unresolved reference 'value'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:198:67 Unresolved reference 'value'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt:203:67 Unresolved reference 'value'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/AmountStrengthScreen.kt:228:34 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/BrewTimerScreen.kt:293:42 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/BrewTimerScreen.kt:374:42 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/MethodPickerScreen.kt:68:16 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/MethodPickerScreen.kt:69:16 Unresolved reference 'V60'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/MethodPickerScreen.kt:70:16 Unresolved reference 'FRENCH_PRESS'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/MethodPickerScreen.kt:71:16 Unresolved reference 'AEROPRESS'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/MethodPickerScreen.kt:72:16 Unresolved reference 'ESPRESSO'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/MethodPickerScreen.kt:73:16 Unresolved reference 'MOKA_POT'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/MethodPickerScreen.kt:74:16 Unresolved reference 'COLD_BREW'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/OnboardingMethodsScreen.kt:52:16 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/OnboardingMethodsScreen.kt:53:16 Unresolved reference 'V60'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/OnboardingMethodsScreen.kt:54:16 Unresolved reference 'FRENCH_PRESS'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/OnboardingMethodsScreen.kt:55:16 Unresolved reference 'AEROPRESS'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/OnboardingMethodsScreen.kt:56:16 Unresolved reference 'ESPRESSO'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/OnboardingMethodsScreen.kt:57:16 Unresolved reference 'MOKA_POT'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/OnboardingMethodsScreen.kt:58:16 Unresolved reference 'COLD_BREW'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/OnboardingPersonalizeScreen.kt:58:65 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/ResultScreen.kt:128:34 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/ResultScreen.kt:159:50 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/ResultScreen.kt:177:50 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/ResultScreen.kt:199:38 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:57:41 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:60:54 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:61:47 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:61:89 Unresolved reference 'it'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:550:89 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:828:40 Unresolved reference 'PULSAR'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:935:38 Unresolved reference 'ESPRESSO'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:1081:45 Unresolved reference 'PULSAR'.
+
+> Task :app:compileDebugKotlin FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 31s
+7 actionable tasks: 2 executed, 5 up-to-date

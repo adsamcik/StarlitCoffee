@@ -627,9 +627,15 @@ private fun AddBagSheet(
                     )
                 }
                 item {
+                    // Filter regions by selected origin country, sorted alphabetically
+                    val filteredRegions = if (originCountry.isNotBlank()) {
+                        CoffeeRegion.forCountry(originCountry).ifEmpty { CoffeeRegion.known }
+                    } else {
+                        CoffeeRegion.known
+                    }
                     FieldChipPicker(
-                        label = "Region",
-                        knownValues = CoffeeRegion.known,
+                        label = if (originCountry.isNotBlank()) "Region ($originCountry)" else "Region",
+                        knownValues = filteredRegions,
                         selectedValue = originRegion,
                         onValueChange = { originRegion = it },
                         displayName = { it.displayName },

@@ -1,0 +1,86 @@
+Starting a Gradle Daemon, 2 stopped Daemons could not be reused, use --status for details
+
+> Configure project :app
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+WARNING: The property android.dependency.excludeLibraryComponentsFromConstraints improves project import performance for very large projects. It should be enabled to improve performance.
+To suppress this warning, add android.generateSyncIssueWhenLibraryConstraintsAreEnabled=false to gradle.properties
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest
+> Task :app:processDebugResources
+> Task :app:kspDebugKotlin
+
+> Task :app:compileDebugKotlin
+
+> Task :app:compileDebugKotlin FAILED
+19 actionable tasks: 4 executed, 15 up-to-date
+Failed to delete old native lib: C:\Users\adam-\AppData\Local\Temp\sqlite-3.41.2.2-77c708a4-dfbd-488c-a3ef-691b21bad344-sqlitejdbc.dll
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ai/ModelManager.kt:88:66 Argument type mismatch: actual type is 'AssetPackStates!', but 'Nothing?' was expected.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ai/ModelManager.kt:92:40 Unresolved reference 'packStates'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ai/ModelManager.kt:94:29 Unresolved reference 'status'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ai/ModelManager.kt:127:57 Argument type mismatch: actual type is 'AssetPackStates!', but 'Nothing?' was expected.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ai/ModelManager.kt:131:36 Unresolved reference 'packStates'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ai/ModelManager.kt:132:35 Unresolved reference 'totalBytesToDownload'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ai/ModelManager.kt:133:40 Unresolved reference 'bytesDownloaded'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ai/ModelManager.kt:135:29 Unresolved reference 'status'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/repository/RatioPresetRepository.kt:15:24 Unresolved reference 'defaultRatioPresets'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/AmountStrengthScreen.kt:74:23 'when' expression must be exhaustive. Add the 'CUP_SIZE_TO_BOTH' branch or an 'else' branch.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/AmountStrengthScreen.kt:77:19 Unresolved reference 'BREW_SIZE_TO_BOTH'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/AmountStrengthScreen.kt:168:56 Unresolved reference 'BREW_SIZE_TO_BOTH'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:60:61 Unresolved reference 'defaultRatioPresets'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:61:54 Unresolved reference 'defaultRatioPresets'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:61:89 Unresolved reference 'it'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:173:37 Unresolved reference 'defaultRatioPresets'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:174:58 Unresolved reference 'it'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:553:72 Unresolved reference 'defaultRatioPresets'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:870:13 'when' expression must be exhaustive. Add the 'CUP_SIZE_TO_BOTH' branch or an 'else' branch.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:879:27 Unresolved reference 'BREW_SIZE_TO_BOTH'.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:899:47 Variable 'coffeeG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:901:35 Variable 'waterG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:922:66 Variable 'waterG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:923:34 Variable 'waterG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:930:17 Variable 'coffeeG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:930:34 Variable 'waterG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:937:64 Variable 'waterG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:937:74 Variable 'waterG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:938:89 Variable 'waterG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:956:26 Variable 'waterG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:962:27 Variable 'coffeeG' must be initialized.
+e: file:///C:/Users/adam-/GitHub/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt:963:26 Variable 'waterG' must be initialized.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 3m 27s

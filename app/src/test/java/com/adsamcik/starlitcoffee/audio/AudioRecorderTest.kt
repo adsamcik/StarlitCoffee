@@ -155,12 +155,16 @@ class AudioRecorderTest {
         assertEquals(totalSamples * 2, headerDataSize)
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `cannot open while already open`() {
+    @Test
+    fun `open while already open closes previous file gracefully`() {
         val file1 = File(tempDir, "test1.wav")
         val file2 = File(tempDir, "test2.wav")
         recorder.open(file1)
-        recorder.open(file2) // should throw
+        recorder.write(ShortArray(100) { 500 })
+        recorder.open(file2) // should close file1, open file2
+        assertTrue("First file should exist and be finalized", file1.exists())
+        assertTrue("Second file should be the active output", recorder.outputFile == file2)
+        recorder.close()
     }
 
     @Test
