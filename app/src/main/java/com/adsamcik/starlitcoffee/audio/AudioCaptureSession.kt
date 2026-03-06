@@ -37,13 +37,19 @@ class AudioCaptureSession(
      */
     @SuppressLint("MissingPermission")
     fun audioBufferFlow(): Flow<ShortArray> = callbackFlow {
-        val recorder = AudioRecord(
-            MediaRecorder.AudioSource.MIC,
-            config.sampleRate,
-            channelConfig,
-            audioFormat,
-            bufferSizeBytes,
-        )
+        val recorder = try {
+            AudioRecord(
+                MediaRecorder.AudioSource.MIC,
+                config.sampleRate,
+                channelConfig,
+                audioFormat,
+                bufferSizeBytes,
+            )
+        } catch (_: SecurityException) {
+            // Permission revoked at runtime
+            close(SecurityException("RECORD_AUDIO permission not granted"))
+            return@callbackFlow
+        }
 
         if (recorder.state != AudioRecord.STATE_INITIALIZED) {
             recorder.release()
@@ -68,7 +74,11 @@ class AudioCaptureSession(
         }
 
         awaitClose {
-            recorder.stop()
+            try {
+                recorder.stop()
+            } catch (_: IllegalStateException) {
+                // Already stopped
+            }
             recorder.release()
         }
     }

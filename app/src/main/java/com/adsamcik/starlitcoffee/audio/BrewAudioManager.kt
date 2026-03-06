@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
+import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Orchestrates audio capture, analysis, and recording during a brew session.
@@ -40,7 +42,7 @@ class BrewAudioManager(
     private val activeProbeEnabled: Boolean = false,
     /** Auto-start WAV + JSONL recording when monitoring begins. */
     private val autoRecord: Boolean = false,
-){
+) {
     private val captureSession = AudioCaptureSession(config)
     private val recorder = AudioRecorder(config)
     private val preProcessor = AudioPreProcessor(sampleRate = config.sampleRate)
@@ -51,8 +53,11 @@ class BrewAudioManager(
     private val trajectoryMatcher = BrewTrajectoryMatcher()
     private val flightRecorder = FlightRecorder()
 
-    // Accumulate events between snapshots for the flight recorder
-    private val pendingEvents = mutableListOf<BrewAudioEvent>()
+    // Thread-safe event accumulation for flight recorder
+    private val pendingEvents = ConcurrentLinkedQueue<BrewAudioEvent>()
+
+    // Guards against concurrent start/stop races
+    private val monitoringLock = AtomicBoolean(false)
 
     private var scope: CoroutineScope? = null
     private var captureJob: Job? = null
@@ -73,7 +78,7 @@ class BrewAudioManager(
     private var currentPhaseLabel: String = ""
     private var brewTimestamp: String = ""
 
-    val isMonitoring: Boolean get() = captureJob?.isActive == true
+    val isMonitoring: Boolean get() = monitoringLock.get()
     val isRecording: Boolean get() = recorder.isOpen
 
     /**
@@ -81,7 +86,7 @@ class BrewAudioManager(
      * Does NOT start recording to files — call [startRecording] separately.
      */
     fun startMonitoring() {
-        if (isMonitoring) return
+        if (!monitoringLock.compareAndSet(false, true)) return
 
         val newScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
         scope = newScope
@@ -117,8 +122,10 @@ class BrewAudioManager(
      * Stops audio capture and analysis. Also stops recording if active.
      */
     fun stopMonitoring() {
+        if (!monitoringLock.compareAndSet(true, false)) return
         if (isRecording) stopRecording()
         activeProbe?.stop()
+        // Cancel capture job and wait for in-flight processBuffer to complete
         captureJob?.cancel()
         captureJob = null
         scope?.cancel()
@@ -143,7 +150,8 @@ class BrewAudioManager(
 
         // Open flight recorder sidecar (same name, .jsonl extension)
         recorder.outputFile?.let { wavFile ->
-            val jsonlFile = File(wavFile.parentFile, wavFile.nameWithoutExtension + ".jsonl")
+            val parent = wavFile.parentFile ?: return@let
+            val jsonlFile = File(parent, wavFile.nameWithoutExtension + ".jsonl")
             flightRecorder.open(jsonlFile)
         }
 
@@ -185,7 +193,8 @@ class BrewAudioManager(
             recorder.close()
             openNewRecordingFile()
             recorder.outputFile?.let { wavFile ->
-                val jsonlFile = File(wavFile.parentFile, wavFile.nameWithoutExtension + ".jsonl")
+                val parent = wavFile.parentFile ?: return@let
+                val jsonlFile = File(parent, wavFile.nameWithoutExtension + ".jsonl")
                 flightRecorder.open(jsonlFile)
             }
             _analysisState.update {
@@ -255,7 +264,12 @@ class BrewAudioManager(
 
             // Flight recorder: accumulate events, write snapshot at interval
             if (flightRecorder.isOpen) {
-                pendingEvents.addAll(events)
+                events.forEach { pendingEvents.offer(it) }
+                // Drain queue into snapshot
+                val snapshotEvents = mutableListOf<BrewAudioEvent>()
+                while (true) {
+                    snapshotEvents.add(pendingEvents.poll() ?: break)
+                }
                 val wrote = flightRecorder.recordSnapshot(
                     spectralFeatures = enrichedSpectral,
                     detectorState = eventDetector.state,
@@ -268,9 +282,12 @@ class BrewAudioManager(
                     waterLikeness = waterScore,
                     baselineCalibrated = ambientBaseline.isCalibrated,
                     probeTurbulence = probeTurbulence,
-                    events = pendingEvents.toList(),
+                    events = snapshotEvents,
                 )
-                if (wrote) pendingEvents.clear()
+                // If not written (throttled), put events back for next snapshot
+                if (!wrote) {
+                    snapshotEvents.forEach { pendingEvents.offer(it) }
+                }
             }
         }
 
