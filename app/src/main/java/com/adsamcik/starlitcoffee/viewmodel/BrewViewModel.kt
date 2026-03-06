@@ -193,7 +193,7 @@ class BrewViewModel(
 
     fun setAmount(amount: String) {
         if (amount.isNotEmpty() && amount.toFloatOrNull() == null) return
-        // Cap extreme values at 100g for coffee / 2000g for water/cup
+        // Cap extreme values at 100g for coffee / 2000g for water/brew size
         val maxAmount = when (_uiState.value.inputMode) {
             InputMode.COFFEE_TO_WATER -> 100f
             else -> 2000f
@@ -256,6 +256,12 @@ class BrewViewModel(
         if (timerJob?.isActive == true) return
         _uiState.update { it.copy(timerRunning = true) }
         timerStartMs = System.nanoTime() / 1_000_000L
+
+        // Auto-start audio monitoring when timer begins
+        if (_audioManager != null && !_audioManager!!.isMonitoring) {
+            _audioManager!!.startMonitoring()
+        }
+
         timerJob = viewModelScope.launch {
             while (_uiState.value.timerRunning) {
                 delay(250L)
@@ -294,6 +300,7 @@ class BrewViewModel(
         _uiState.update { it.copy(timerRunning = false) }
         timerJob?.cancel()
         timerJob = null
+        _audioManager?.stopMonitoring()
         val state = _uiState.value
         val phase = state.timerPhases.getOrNull(state.currentPhaseIndex)
         TimerStateHolder.update(
@@ -345,7 +352,10 @@ class BrewViewModel(
 
     /**
      * Handles brew audio events for auto-advance.
-     * Only advances EVENT_GATED phases when the matching event is detected.
+     * Advances phases when matching audio events are detected:
+     * - BLOOM (any mode): PourStarted → bloom is done, user started pouring
+     * - DRAIN_AND_REFILL (EVENT_GATED): PourStarted → user resumed pouring
+     * - DRAWDOWN (EVENT_GATED): DrawdownComplete → silence after dripping
      */
     private fun handleBrewAudioEvent(event: BrewAudioEvent) {
         val state = _uiState.value
@@ -353,13 +363,18 @@ class BrewViewModel(
         if (state.currentPhaseIndex >= state.timerPhases.lastIndex) return
 
         val phase = state.timerPhases.getOrNull(state.currentPhaseIndex) ?: return
-        if (phase.mode != PhaseMode.EVENT_GATED) return
 
         val shouldAdvance = when (phase.phaseType) {
+            // Bloom ends when user starts pouring (regardless of TIMED/EVENT_GATED)
+            PhaseType.BLOOM -> event is BrewAudioEvent.PourStarted
             // Drawdown complete: silence sustained after dripping
-            PhaseType.DRAWDOWN -> event is BrewAudioEvent.DrawdownComplete
+            PhaseType.DRAWDOWN -> {
+                phase.mode == PhaseMode.EVENT_GATED && event is BrewAudioEvent.DrawdownComplete
+            }
             // Drain & refill: user started pouring again
-            PhaseType.DRAIN_AND_REFILL -> event is BrewAudioEvent.PourStarted
+            PhaseType.DRAIN_AND_REFILL -> {
+                phase.mode == PhaseMode.EVENT_GATED && event is BrewAudioEvent.PourStarted
+            }
             else -> false
         }
 
@@ -781,16 +796,16 @@ class BrewViewModel(
                     waterG = amount
                     coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
                 }
-                InputMode.CUP_SIZE_TO_BOTH -> {
-                    val cupMl = amount
+                InputMode.BREW_SIZE_TO_BOTH -> {
+                    val brewMl = amount
                     val absorptionFactor = 2.0f
                     val divisor = effectiveRatio - absorptionFactor
                     if (divisor > 0f) {
-                        coffeeG = cupMl / divisor
+                        coffeeG = brewMl / divisor
                         waterG = coffeeG * effectiveRatio
                     } else {
                         // For espresso/moka where ratio ≤ absorption, treat as water input
-                        waterG = cupMl
+                        waterG = brewMl
                         coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
                     }
                 }

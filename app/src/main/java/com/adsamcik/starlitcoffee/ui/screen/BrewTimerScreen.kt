@@ -69,6 +69,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
+import com.adsamcik.starlitcoffee.data.model.DetectorState
 import com.adsamcik.starlitcoffee.service.BrewTimerService
 import com.adsamcik.starlitcoffee.ui.component.AudioDebugOverlay
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
@@ -238,6 +239,13 @@ fun BrewTimerScreen(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        // Audio detection status indicator (subtle, user-facing)
+        if (audioState.isMonitoring) {
+            AudioDetectionIndicator(audioState = audioState)
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         // Brew Guide visualization (Pulsar only)
         if (uiState.method == BrewMethod.PULSAR && phases.isNotEmpty()) {
@@ -474,6 +482,42 @@ fun BrewTimerScreen(
                     }) { Text("Discard") }
                 }
             },
+        )
+    }
+}
+
+/**
+ * Subtle user-facing audio detection status. Shows what the mic is hearing
+ * as a single-line chip below the timer circle.
+ */
+@Composable
+private fun AudioDetectionIndicator(
+    audioState: AudioAnalysisState,
+    modifier: Modifier = Modifier,
+) {
+    val (icon, label, color) = when (audioState.detectorState) {
+        DetectorState.IDLE -> Triple("🎙️", "Listening…", MaterialTheme.colorScheme.onSurfaceVariant)
+        DetectorState.POURING -> Triple("🫗", "Pour detected", MaterialTheme.colorScheme.primary)
+        DetectorState.DRIPPING -> {
+            val rateText = if (audioState.dripRate > 0.1f) {
+                " · %.0f/s".format(audioState.dripRate)
+            } else {
+                ""
+            }
+            Triple("💧", "Dripping$rateText", MaterialTheme.colorScheme.tertiary)
+        }
+        DetectorState.COMPLETE -> Triple("✅", "Drawdown complete", MaterialTheme.colorScheme.secondary)
+    }
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        Text(
+            text = "$icon $label",
+            style = MaterialTheme.typography.labelMedium,
+            color = color,
         )
     }
 }
