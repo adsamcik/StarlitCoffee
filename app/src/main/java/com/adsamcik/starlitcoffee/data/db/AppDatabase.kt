@@ -28,7 +28,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
         RatioPresetEntity::class,
         FlavorTagEntity::class,
     ],
-    version = 7,
+    version = 8,
     exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -56,13 +56,19 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_7_8 = object : Migration(7, 8) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE coffee_bags ADD COLUMN expiryDate INTEGER")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "starlit_coffee.db",
-                ).addMigrations(MIGRATION_5_6, MIGRATION_6_7)
+                ).addMigrations(MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
                     .fallbackToDestructiveMigration()
                     .build().also { INSTANCE = it }
             }

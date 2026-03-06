@@ -49,6 +49,7 @@ Rules:
 - For "tastingNotes", extract flavor descriptors, stripping marketing language.
 - For "weight", include the unit (e.g., "250g" or "12oz").
 - For "roastDate", preserve the original date format from the label.
+- For "expiryDate", extract any best-before, use-by, or expiration date. Preserve original format.
 - Return valid JSON only, no markdown formatting.
 
 Example 1:
@@ -66,10 +67,11 @@ Roasted 2026-02-20
 Tasting notes: Bergamot, peach tea, raw honey
 Grown at 1,950–2,100 masl
 Net weight: 250g
+Best before: 2026-08-20
 ${"\"\"\""}
 
 Output:
-{"name":"Gedeb","roaster":"Yöder Coffee Co.","origin":"Ethiopia","region":"Yirgacheffe","farm":null,"variety":"Heirloom","altitude":"1950-2100 masl","processType":"Washed","tastingNotes":"Bergamot, peach tea, raw honey","roastLevel":null,"roastDate":"2026-02-20","weight":"250g"}
+{"name":"Gedeb","roaster":"Yöder Coffee Co.","origin":"Ethiopia","region":"Yirgacheffe","farm":null,"variety":"Heirloom","altitude":"1950-2100 masl","processType":"Washed","tastingNotes":"Bergamot, peach tea, raw honey","roastLevel":null,"roastDate":"2026-02-20","expiryDate":"2026-08-20","weight":"250g"}
 
 Example 2:
 Front of bag:
@@ -87,10 +89,10 @@ Medium roast · 350g
 ${"\"\"\""}
 
 Output:
-{"name":"The Filter Blend","roaster":"Square Mile Coffee Roasters","origin":"Brazil","region":null,"farm":"Fazenda Cachoeira","variety":null,"altitude":null,"processType":"Natural","tastingNotes":"Chocolate, hazelnut, caramel","roastLevel":"Medium","roastDate":null,"weight":"350g"}
+{"name":"The Filter Blend","roaster":"Square Mile Coffee Roasters","origin":"Brazil","region":null,"farm":"Fazenda Cachoeira","variety":null,"altitude":null,"processType":"Natural","tastingNotes":"Chocolate, hazelnut, caramel","roastLevel":"Medium","roastDate":null,"expiryDate":null,"weight":"350g"}
 
 Output the extracted fields as a single JSON object with these keys:
-name, roaster, origin, region, farm, variety, altitude, processType, tastingNotes, roastLevel, roastDate, weight
+name, roaster, origin, region, farm, variety, altitude, processType, tastingNotes, roastLevel, roastDate, expiryDate, weight
 
 Use null for any field not found on the label. Return ONLY the JSON object, no other text.
     """.trim()

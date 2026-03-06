@@ -70,6 +70,7 @@ class OcrFieldExtractorTest {
         val back = OcrFieldExtractor.extractFields(backText)
 
         val merged = OcrFieldExtractor.OcrExtractionResult(
+            name = front.name ?: back.name,
             roaster = front.roaster ?: back.roaster,
             origin = front.origin ?: back.origin,
             region = front.region ?: back.region,
@@ -79,6 +80,7 @@ class OcrFieldExtractorTest {
             tastingNotes = front.tastingNotes ?: back.tastingNotes,
             roastLevel = front.roastLevel ?: back.roastLevel,
             roastDate = front.roastDate ?: back.roastDate,
+            expiryDate = front.expiryDate ?: back.expiryDate,
             weight = front.weight ?: back.weight,
         )
 
@@ -113,5 +115,193 @@ class OcrFieldExtractorTest {
         val barcodeFromBack = OcrFieldExtractor.extractBarcodeFromText(backText)
         assertNotNull("Should extract barcode from OCR text", barcodeFromBack)
         assertEquals("8594206183060", barcodeFromBack)
+    }
+
+    @Test
+    fun `text-only extractFields derives name from origin and region`() {
+        val result = OcrFieldExtractor.extractFields(frontText)
+        assertNotNull("Name should be derived from origin+region", result.name)
+        assertTrue(
+            "Name should contain Ethiopia",
+            result.name!!.contains("Ethiopia", ignoreCase = true),
+        )
+        assertTrue(
+            "Name should contain Gedeb",
+            result.name!!.contains("Gedeb", ignoreCase = true),
+        )
+    }
+
+    // --- Block-based (spatial) extraction ---
+
+    @Test
+    fun `extractFieldsFromBlocks identifies roaster from largest block`() {
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("SQUARE MILE", heightPx = 80, topPx = 50),
+            OcrFieldExtractor.OcrTextBlock("LA ESPERANZA", heightPx = 60, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("Colombia, Huila", heightPx = 30, topPx = 250),
+            OcrFieldExtractor.OcrTextBlock("Caturra", heightPx = 25, topPx = 310),
+            OcrFieldExtractor.OcrTextBlock("Washed", heightPx = 25, topPx = 350),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(blocks)
+        assertEquals("SQUARE MILE", result.roaster)
+    }
+
+    @Test
+    fun `extractFieldsFromBlocks identifies name from second largest block`() {
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("SQUARE MILE", heightPx = 80, topPx = 50),
+            OcrFieldExtractor.OcrTextBlock("LA ESPERANZA", heightPx = 60, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("Colombia, Huila", heightPx = 30, topPx = 250),
+            OcrFieldExtractor.OcrTextBlock("Caturra", heightPx = 25, topPx = 310),
+            OcrFieldExtractor.OcrTextBlock("Washed", heightPx = 25, topPx = 350),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(blocks)
+        assertEquals("LA ESPERANZA", result.name)
+    }
+
+    @Test
+    fun `extractFieldsFromBlocks consumes known-field blocks`() {
+        // All blocks are known fields — no name or roaster candidates
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("Ethiopia", heightPx = 40, topPx = 100),
+            OcrFieldExtractor.OcrTextBlock("Yirgacheffe", heightPx = 35, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("Washed", heightPx = 25, topPx = 200),
+            OcrFieldExtractor.OcrTextBlock("Heirloom", heightPx = 25, topPx = 250),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(blocks)
+        // Name falls back to origin+region
+        assertNotNull("Name should fallback to origin+region", result.name)
+        assertTrue(result.name!!.contains("Ethiopia", ignoreCase = true))
+        assertTrue(result.name!!.contains("Yirgacheffe", ignoreCase = true))
+    }
+
+    @Test
+    fun `extractFieldsFromBlocks uses keyword roaster when present`() {
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("BEANSMITH'S\nCOFFEE ROASTERY", heightPx = 80, topPx = 50),
+            OcrFieldExtractor.OcrTextBlock("ETHIOPIA GEDEB", heightPx = 50, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("HEIRLOOM - WASHED", heightPx = 30, topPx = 250),
+            OcrFieldExtractor.OcrTextBlock("FILTER", heightPx = 25, topPx = 310),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(blocks)
+        assertNotNull("Roaster should be detected via keyword", result.roaster)
+        assertTrue(
+            "Roaster should contain Beansmith",
+            result.roaster!!.contains("BEANSMITH", ignoreCase = true),
+        )
+    }
+
+    @Test
+    fun `extractFieldsFromBlocks still extracts all known fields`() {
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("TIM WENDELBOE", heightPx = 80, topPx = 50),
+            OcrFieldExtractor.OcrTextBlock("FINCA TAMANA", heightPx = 60, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("Colombia", heightPx = 30, topPx = 250),
+            OcrFieldExtractor.OcrTextBlock("Caturra", heightPx = 25, topPx = 310),
+            OcrFieldExtractor.OcrTextBlock("Washed", heightPx = 25, topPx = 350),
+            OcrFieldExtractor.OcrTextBlock("1800 masl", heightPx = 20, topPx = 400),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(blocks)
+        assertEquals("TIM WENDELBOE", result.roaster)
+        assertEquals("FINCA TAMANA", result.name)
+        assertTrue(result.origin!!.equals("Colombia", ignoreCase = true))
+        assertTrue(result.variety!!.contains("Caturra", ignoreCase = true))
+        assertTrue(result.processType!!.contains("Washed", ignoreCase = true))
+        assertNotNull("Altitude should be extracted", result.altitude)
+    }
+
+    @Test
+    fun `extractFieldsFromBlocks filters small fine-print blocks`() {
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("PROUD MARY", heightPx = 100, topPx = 50),
+            OcrFieldExtractor.OcrTextBlock("GOLDEN CHILD", heightPx = 70, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("Ethiopia Guji", heightPx = 40, topPx = 250),
+            OcrFieldExtractor.OcrTextBlock("100% Arabica", heightPx = 15, topPx = 500),
+            OcrFieldExtractor.OcrTextBlock("www.proudmarycoffee.com.au", heightPx = 12, topPx = 550),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(blocks)
+        assertEquals("PROUD MARY", result.roaster)
+        assertEquals("GOLDEN CHILD", result.name)
+    }
+
+    // --- isBlockConsumedByKnownFields ---
+
+    @Test
+    fun `known-field block Ethiopia Gedeb is consumed`() {
+        assertTrue(OcrFieldExtractor.isBlockConsumedByKnownFields("Ethiopia Gedeb"))
+    }
+
+    @Test
+    fun `known-field block Heirloom - Washed is consumed`() {
+        assertTrue(OcrFieldExtractor.isBlockConsumedByKnownFields("HEIRLOOM - WASHED"))
+    }
+
+    @Test
+    fun `known-field block FILTER is consumed`() {
+        assertTrue(OcrFieldExtractor.isBlockConsumedByKnownFields("FILTER"))
+    }
+
+    @Test
+    fun `known-field block 250g is consumed`() {
+        assertTrue(OcrFieldExtractor.isBlockConsumedByKnownFields("250g"))
+    }
+
+    @Test
+    fun `unknown block SQUARE MILE is not consumed`() {
+        assertFalse(OcrFieldExtractor.isBlockConsumedByKnownFields("SQUARE MILE"))
+    }
+
+    @Test
+    fun `block with only noise words is consumed`() {
+        assertTrue(OcrFieldExtractor.isBlockConsumedByKnownFields("Single Origin Coffee"))
+    }
+
+    // --- Multiple roast levels ---
+
+    @Test
+    fun `extracts multiple roast levels when both filter and espresso present`() {
+        val text = """
+            Ethiopia Gedeb
+            Heirloom
+            Washed
+            Filter / Espresso
+        """.trimIndent()
+        val result = OcrFieldExtractor.extractFields(text)
+        assertNotNull("Roast level should be extracted", result.roastLevel)
+        assertTrue(
+            "Should contain filter",
+            result.roastLevel!!.contains("filter", ignoreCase = true),
+        )
+        assertTrue(
+            "Should contain espresso",
+            result.roastLevel!!.contains("espresso", ignoreCase = true),
+        )
+    }
+
+    @Test
+    fun `does not duplicate filter when filter roast and filter both appear`() {
+        val text = """
+            Filter Roast
+            +FILTER 250g
+        """.trimIndent()
+        val result = OcrFieldExtractor.extractFields(text)
+        assertNotNull("Roast level should be extracted", result.roastLevel)
+        assertTrue(
+            "Should contain filter roast",
+            result.roastLevel!!.contains("filter roast", ignoreCase = true),
+        )
+        // Should NOT have a redundant standalone "filter"
+        val parts = result.roastLevel!!.split(",").map { it.trim().lowercase() }
+        assertFalse(
+            "Should not have redundant standalone 'filter'",
+            parts.contains("filter"),
+        )
+    }
+
+    @Test
+    fun `single roast level still works`() {
+        val text = "Ethiopia Yirgacheffe\nLight"
+        val result = OcrFieldExtractor.extractFields(text)
+        assertEquals("Light", result.roastLevel)
     }
 }

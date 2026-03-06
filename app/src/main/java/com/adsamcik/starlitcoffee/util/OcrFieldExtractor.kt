@@ -1,11 +1,18 @@
 package com.adsamcik.starlitcoffee.util
 
+import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
+import com.adsamcik.starlitcoffee.data.model.CoffeeProcessType
+import com.adsamcik.starlitcoffee.data.model.CoffeeRegion
+import com.adsamcik.starlitcoffee.data.model.CoffeeRoastLevel
+import com.adsamcik.starlitcoffee.data.model.CoffeeVariety
+
 /**
  * Extracts structured coffee bag label fields from raw OCR text.
  */
 object OcrFieldExtractor {
 
     data class OcrExtractionResult(
+        val name: String? = null,
         val roaster: String? = null,
         val origin: String? = null,
         val region: String? = null,
@@ -15,102 +22,54 @@ object OcrFieldExtractor {
         val tastingNotes: String? = null,
         val roastLevel: String? = null,
         val roastDate: String? = null,
+        val expiryDate: String? = null,
         val weight: String? = null,
     )
 
-    private val COUNTRIES = listOf(
-        "Ethiopia", "Colombia", "Brazil", "Kenya", "Guatemala", "Costa Rica",
-        "Honduras", "Peru", "Rwanda", "Burundi", "Indonesia", "Papua New Guinea",
-        "Yemen", "Panama", "El Salvador", "Mexico", "Nicaragua", "Tanzania",
-        "Uganda", "DR Congo", "India", "Vietnam", "Myanmar", "Laos",
-        "Thailand", "China", "Ecuador", "Bolivia", "Malawi", "Zambia",
+    /**
+     * Lightweight representation of an ML Kit text block with spatial info.
+     * [heightPx] is the bounding box height (font-size proxy).
+     * [topPx] is the Y position from the top of the image.
+     */
+    data class OcrTextBlock(
+        val text: String,
+        val heightPx: Int,
+        val topPx: Int,
     )
 
-    // Common OCR abbreviations and misspellings for country names
-    private val COUNTRY_ABBREVIATIONS = mapOf(
-        "ETH" to "Ethiopia", "COL" to "Colombia", "BRA" to "Brazil",
-        "KEN" to "Kenya", "GUA" to "Guatemala", "HON" to "Honduras",
-        "PER" to "Peru", "RWA" to "Rwanda", "IND" to "Indonesia",
-        "PAN" to "Panama", "MEX" to "Mexico", "NIC" to "Nicaragua",
-        "TAN" to "Tanzania", "ECU" to "Ecuador", "BOL" to "Bolivia",
+    // --- Regexes built from sealed interface search terms (single source of truth) ---
+
+    private fun buildRegex(terms: List<String>, wordBoundary: Boolean = true): Regex {
+        val pattern = terms
+            .sortedByDescending { it.length }
+            .joinToString("|") { Regex.escape(it) }
+        return if (wordBoundary) {
+            Regex("\\b(?:$pattern)\\b", RegexOption.IGNORE_CASE)
+        } else {
+            Regex(pattern, RegexOption.IGNORE_CASE)
+        }
+    }
+
+    private val countryRegex = buildRegex(
+        CoffeeOrigin.Known.entries.map { it.displayName },
+        wordBoundary = false,
     )
 
-    private val REGIONS = listOf(
-        // Ethiopia
-        "Yirgacheffe", "Sidamo", "Sidama", "Guji", "Gedeb", "Gedeo",
-        "Limmu", "Djimmah", "Harrar", "Harar", "Bench Maji", "Kaffa",
-        "Bale", "Arsi", "West Arsi", "Borena",
-        // Colombia
-        "Huila", "Nariño", "Cauca", "Tolima", "Antioquia", "Quindio",
-        "Risaralda", "Santander", "Sierra Nevada", "Caldas",
-        // Brazil
-        "Cerrado", "Mogiana", "Sul de Minas", "Matas de Minas",
-        "Chapada de Minas", "Bahia", "Espírito Santo",
-        // Kenya
-        "Nyeri", "Kiambu", "Kirinyaga", "Murang'a", "Embu", "Meru",
-        "Thika", "Ruiru",
-        // Central America
-        "Antigua", "Acatenango", "Tarrazu", "West Valley", "Marcala",
-        "Copan", "Atitlan", "Fraijanes",
-        // South America
-        "Cajamarca", "Chanchamayo", "San Martin", "Junin",
-        // Indonesia
-        "Sumatra", "Mandheling", "Gayo", "Toraja", "Flores", "Bali",
-        // Africa
-        "Kivu", "Kayanza", "Ngozi", "Kigali",
+    private val regionRegex = buildRegex(
+        CoffeeRegion.allSearchTerms,
+        wordBoundary = false,
     )
 
-    private val VARIETIES = listOf(
-        "Pink Bourbon", "Yellow Bourbon", "Red Bourbon", "Yellow Catuai", "Red Catuai",
-        "Mundo Novo", "Ruiru 11", "SL28", "SL34",
-        "Bourbon", "Typica", "Geisha", "Gesha", "Caturra", "Catuai", "Pacamara",
-        "Maragogype", "Castillo", "Heirloom", "Java", "Catimor", "Batian",
-        "Marsellesa", "Parainema", "Obata", "Tabi", "74110", "74112", "74158",
-        "Sidra", "Eugenioides", "Liberica", "Maracaturra", "Villa Sarchi",
-    )
+    private val varietyRegex = buildRegex(CoffeeVariety.allSearchTerms)
 
-    private val PROCESSES = listOf(
-        "carbonic maceration", "double fermented", "pulped natural",
-        "semi-washed", "wet-hulled", "anaerobic", "thermal shock",
-        "washed", "natural", "honey",
-    )
-
-    private val ROAST_LEVELS = listOf(
-        "medium-light", "medium-dark",
-        "espresso roast", "filter roast", "omniroast",
-        "light", "medium", "dark",
-        "filter", "espresso",
-    )
-
-    private val countryRegex = COUNTRIES
-        .sortedByDescending { it.length }
-        .joinToString("|") { Regex.escape(it) }
-        .let { Regex(it, RegexOption.IGNORE_CASE) }
-
-    private val regionRegex = REGIONS
-        .sortedByDescending { it.length }
-        .joinToString("|") { Regex.escape(it) }
-        .let { Regex(it, RegexOption.IGNORE_CASE) }
-
-    private val varietyRegex = VARIETIES
-        .sortedByDescending { it.length }
-        .joinToString("|") { Regex.escape(it) }
-        .let { Regex("\\b(?:$it)\\b", RegexOption.IGNORE_CASE) }
-
-    private val processRegex = PROCESSES
-        .sortedByDescending { it.length }
-        .joinToString("|") { Regex.escape(it) }
-        .let { Regex("\\b(?:$it)\\b", RegexOption.IGNORE_CASE) }
+    private val processRegex = buildRegex(CoffeeProcessType.allSearchTerms)
 
     private val altitudeRegex = Regex(
         """(\d{3,4}\s*[-–]\s*\d{3,4}\s*(?:m\.?a\.?s\.?l\.?|meters?|masl|m)\b|\d{3,4}\s*(?:m\.?a\.?s\.?l\.?|meters?|masl|m)\b)""",
         RegexOption.IGNORE_CASE,
     )
 
-    private val roastLevelRegex = ROAST_LEVELS
-        .sortedByDescending { it.length }
-        .joinToString("|") { Regex.escape(it) }
-        .let { Regex("\\b(?:$it)\\b", RegexOption.IGNORE_CASE) }
+    private val roastLevelRegex = buildRegex(CoffeeRoastLevel.allSearchTerms)
 
     private val tastingNotesLabelRegex = Regex(
         """(?:tasting\s+notes|cupping\s+notes|notes|flavor|flavour|tastes\s+like)\s*:\s*(.+)""",
@@ -134,10 +93,9 @@ object OcrFieldExtractor {
         RegexOption.IGNORE_CASE,
     )
 
-    private val abbreviationRegex = COUNTRY_ABBREVIATIONS.keys
-        .sortedByDescending { it.length }
-        .joinToString("|") { Regex.escape(it) }
-        .let { Regex("\\b(?:$it)\\b", RegexOption.IGNORE_CASE) }
+    private val abbreviationRegex = buildRegex(
+        CoffeeOrigin.abbreviationMap.keys.toList(),
+    )
 
     private val datePatterns = listOf(
         // DD/MM/YYYY or MM/DD/YYYY
@@ -157,19 +115,23 @@ object OcrFieldExtractor {
         // Try full country name first, then abbreviations
         val origin = countryRegex.find(fullText)?.value
             ?: abbreviationRegex.find(fullText)?.let { match ->
-                COUNTRY_ABBREVIATIONS[match.value.uppercase()]
+                CoffeeOrigin.abbreviationMap[match.value.uppercase()]
             }
         val region = regionRegex.find(fullText)?.value
         val variety = extractAll(fullText, varietyRegex)
         val processType = processRegex.find(fullText)?.value
         val altitude = altitudeRegex.find(fullText)?.value
-        val roastLevel = roastLevelRegex.find(fullText)?.value
-        val roastDate = extractRoastDate(fullText)
+        val roastLevel = extractAllRoastLevels(fullText)
+        val labeledDates = extractLabeledDates(fullText)
         val tastingNotes = extractTastingNotes(lines)
         val weight = extractWeight(fullText)
         val roaster = extractRoaster(lines)
 
+        // Derive name from origin + region as fallback for text-only extraction
+        val name = listOfNotNull(origin, region).joinToString(" ").ifEmpty { null }
+
         return OcrExtractionResult(
+            name = name,
             origin = origin,
             region = region,
             variety = variety,
@@ -177,10 +139,30 @@ object OcrFieldExtractor {
             altitude = altitude,
             tastingNotes = tastingNotes,
             roastLevel = roastLevel,
-            roastDate = roastDate,
+            roastDate = labeledDates.roastDate,
+            expiryDate = labeledDates.expiryDate,
             weight = weight,
             roaster = roaster,
         )
+    }
+
+    /**
+     * Extracts all distinct roast levels, suppressing shorter matches
+     * that are substrings of longer ones (e.g., "filter" is dropped
+     * when "filter roast" is also found).
+     */
+    private fun extractAllRoastLevels(text: String): String? {
+        val matches = roastLevelRegex.findAll(text)
+            .map { it.value }
+            .distinct()
+            .toList()
+        // Remove shorter matches that are substrings of longer ones
+        val filtered = matches.filter { match ->
+            matches.none { other ->
+                other.length > match.length && other.contains(match, ignoreCase = true)
+            }
+        }
+        return filtered.joinToString(", ").ifEmpty { null }
     }
 
     private fun extractAll(text: String, regex: Regex): String? {
@@ -226,12 +208,174 @@ object OcrFieldExtractor {
         return null
     }
 
-    private fun extractRoastDate(text: String): String? {
+    private val roastLabelRegex = Regex(
+        """(?:(?:datum\s+)?(?:roast(?:ed)?|pražen[íoá]|geröst(?:et)?))\s*(?:on|date|:)?\s*""",
+        RegexOption.IGNORE_CASE,
+    )
+
+    private val expiryLabelRegex = Regex(
+        """(?:(?:best\s*before|use\s*by|expir(?:y|es?|ation)|consume\s*before|BB|EXP|MHD|spotřebujte\s*do|mindestens\s*haltbar)\s*(?:date)?)\s*[:.]?\s*""",
+        RegexOption.IGNORE_CASE,
+    )
+
+    private data class LabeledDates(val roastDate: String?, val expiryDate: String?)
+
+    private fun extractLabeledDates(text: String): LabeledDates {
+        var roastDate: String? = null
+        var expiryDate: String? = null
+
+        // Try labeled dates first (label immediately preceding a date pattern)
+        for (line in text.lines()) {
+            val trimmed = line.trim()
+            // Check for expiry label + date
+            if (expiryDate == null) {
+                val expiryLabel = expiryLabelRegex.find(trimmed)
+                if (expiryLabel != null) {
+                    val afterLabel = trimmed.substring(expiryLabel.range.last + 1)
+                    for (pattern in datePatterns) {
+                        val match = pattern.find(afterLabel)
+                        if (match != null) { expiryDate = match.value; break }
+                    }
+                }
+            }
+            // Check for roast label + date
+            if (roastDate == null) {
+                val roastLabel = roastLabelRegex.find(trimmed)
+                if (roastLabel != null) {
+                    val afterLabel = trimmed.substring(roastLabel.range.last + 1)
+                    for (pattern in datePatterns) {
+                        val match = pattern.find(afterLabel)
+                        if (match != null) { roastDate = match.value; break }
+                    }
+                }
+            }
+        }
+
+        // Fallback: first unlabeled date → roastDate (most common on specialty bags)
+        if (roastDate == null && expiryDate == null) {
+            roastDate = extractFirstDate(text)
+        }
+
+        return LabeledDates(roastDate, expiryDate)
+    }
+
+    private fun extractFirstDate(text: String): String? {
         for (pattern in datePatterns) {
             val match = pattern.find(text)
             if (match != null) return match.value
         }
         return null
+    }
+
+    // --- Spatial (block-based) extraction for name & roaster ---
+
+    private val NOISE_WORDS = setOf(
+        "the", "a", "an", "of", "by", "from", "for", "in", "to", "and", "or", "with",
+        "coffee", "café", "kaffee", "káva", "kaffe",
+        "single", "origin", "blend", "micro", "lot",
+        "specialty", "speciality",
+        "arabica", "robusta",
+        "net", "wt", "netto",
+    )
+
+    private val noiseWordRegex = NOISE_WORDS
+        .sortedByDescending { it.length }
+        .joinToString("|") { Regex.escape(it) }
+        .let { Regex("\\b(?:$it)\\b", RegexOption.IGNORE_CASE) }
+
+    /**
+     * Checks whether a text block is fully explained by known-field regex matches
+     * (origin, variety, process, etc.) and noise words — meaning it's NOT a
+     * candidate for name or roaster.
+     */
+    internal fun isBlockConsumedByKnownFields(blockText: String): Boolean {
+        val text = blockText.trim()
+        if (text.isEmpty()) return true
+
+        // Entire-block patterns that explain the whole block
+        if (tastingNotesLabelRegex.containsMatchIn(text)) return true
+        if (text.length <= 80 && commaFlavorLineRegex.containsMatchIn(text)) return true
+
+        // Strip all known-field regex matches
+        var remaining = text
+        val fieldRegexes = listOf(
+            countryRegex, regionRegex, varietyRegex, processRegex,
+            altitudeRegex, roastLevelRegex, weightRegex, abbreviationRegex,
+        )
+        for (regex in fieldRegexes) {
+            remaining = regex.replace(remaining, " ")
+        }
+        for (pattern in datePatterns) {
+            remaining = pattern.replace(remaining, " ")
+        }
+
+        // Strip noise words
+        remaining = noiseWordRegex.replace(remaining, " ")
+
+        // Strip punctuation, digits, and whitespace
+        remaining = remaining.replace(Regex("""[\s\d\-–—,.:;/|+*#@!?'"()\[\]{}%]+"""), "")
+
+        return remaining.length < 3
+    }
+
+    /**
+     * Enhanced extraction that uses ML Kit text block spatial data to identify
+     * name and roaster. Blocks are ranked by bounding-box height (font-size proxy);
+     * the most prominent blocks that aren't explained by known fields become
+     * the roaster (largest) and coffee name (second largest).
+     */
+    fun extractFieldsFromBlocks(blocks: List<OcrTextBlock>): OcrExtractionResult {
+        if (blocks.isEmpty()) return OcrExtractionResult()
+
+        val fullText = blocks.joinToString("\n") { it.text }
+        val baseResult = extractFields(fullText)
+
+        val maxHeight = blocks.maxOf { it.heightPx }
+        val minCandidateHeight = (maxHeight * 0.25).toInt()
+
+        // Filter to candidate blocks: prominent + not explained by known fields
+        val candidates = blocks.filter { block ->
+            val text = block.text.trim()
+            if (text.length < 2) return@filter false
+            if (block.heightPx < minCandidateHeight) return@filter false
+            if (text.contains("www.", ignoreCase = true)) return@filter false
+            if (text.startsWith("http", ignoreCase = true)) return@filter false
+            !isBlockConsumedByKnownFields(text)
+        }.sortedWith(
+            compareByDescending<OcrTextBlock> { it.heightPx }
+                .thenBy { it.topPx },
+        )
+
+        val keywordRoaster = baseResult.roaster
+
+        val roaster: String?
+        val name: String?
+
+        if (keywordRoaster != null) {
+            roaster = keywordRoaster
+            // Name = most prominent candidate that isn't the roaster text
+            name = candidates.firstOrNull {
+                !it.text.contains(keywordRoaster, ignoreCase = true)
+            }?.text?.trim()
+        } else if (candidates.size >= 2) {
+            roaster = candidates[0].text.trim()
+            name = candidates[1].text.trim()
+        } else if (candidates.size == 1) {
+            // Single candidate — use as name; roaster unknown
+            name = candidates[0].text.trim()
+            roaster = null
+        } else {
+            name = null
+            roaster = null
+        }
+
+        // Fall back to origin+region for name if spatial analysis found nothing
+        val derivedName = name ?: baseResult.name
+
+        return baseResult.copy(
+            name = derivedName,
+            roaster = roaster ?: baseResult.roaster,
+        )
     }
 
     // EAN-13 barcode regex: OCR may read spaces between digit groups (e.g., "8 594206 183060")

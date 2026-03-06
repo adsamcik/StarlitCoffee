@@ -10,162 +10,170 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.junit.Assert.*
+import org.junit.Assume.assumeTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 
 /**
- * Instrumented test that loads real coffee bag images from /sdcard/Download/
+ * Instrumented test that loads real coffee bag images from device storage
  * and validates the full OCR + barcode extraction pipeline.
  *
- * Pre-requisite: push sample images to emulator:
- *   adb push front.jpeg /sdcard/Download/bag_front.jpeg
- *   adb push back.jpeg /sdcard/Download/bag_back.jpeg
+ * Pre-requisite: push test images to emulator via Gradle:
+ *   ./gradlew pushTestImages
+ *
+ * See testdata/README.md for setup instructions.
  */
 @RunWith(AndroidJUnit4::class)
 class OcrPipelineInstrumentedTest {
 
     companion object {
         private const val TAG = "OcrPipelineTest"
-        private const val FRONT_PATH = "/data/local/tmp/bag_front.jpeg"
-        private const val BACK_PATH = "/data/local/tmp/bag_back.jpeg"
+        private const val BAGS_DIR = "/data/local/tmp/coffee-bags"
+        private const val BEANSMITHS = "beansmiths_ethiopia_gedeb"
     }
 
-    @Test
-    fun ocrExtractsTextFromFrontOfBag() { runBlocking {
-        val file = File(FRONT_PATH)
-        assertTrue("Front image must exist at $FRONT_PATH", file.exists())
+    // --- Helpers ---
 
-        val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-        assertNotNull("Bitmap should decode", bitmap)
+    data class BagImageSet(
+        val name: String,
+        val frontPath: String?,
+        val backPath: String?,
+    )
 
-        val image = InputImage.fromBitmap(bitmap!!, 0)
+    private fun discoverBags(): List<BagImageSet> {
+        val dir = File(BAGS_DIR)
+        if (!dir.exists() || !dir.isDirectory) return emptyList()
+
+        val files = dir.listFiles() ?: return emptyList()
+        val grouped = files
+            .filter { it.extension.lowercase() in listOf("jpg", "jpeg", "png") }
+            .groupBy {
+                it.nameWithoutExtension
+                    .removeSuffix("_front")
+                    .removeSuffix("_back")
+            }
+
+        return grouped.map { (name, bagFiles) ->
+            BagImageSet(
+                name = name,
+                frontPath = bagFiles.find { "_front" in it.name }?.absolutePath,
+                backPath = bagFiles.find { "_back" in it.name }?.absolutePath,
+            )
+        }.sortedBy { it.name }
+    }
+
+    private fun bagPath(filename: String) = "$BAGS_DIR/$filename"
+
+    private suspend fun runOcr(path: String): Pair<String, OcrFieldExtractor.OcrExtractionResult>? {
+        val bitmap = BitmapFactory.decodeFile(path) ?: return null
+        val image = InputImage.fromBitmap(bitmap, 0)
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
-        val result = suspendCancellableCoroutine { cont ->
+        val result = suspendCancellableCoroutine<com.google.mlkit.vision.text.Text?> { cont ->
             recognizer.process(image)
                 .addOnSuccessListener { cont.resume(it, null) }
                 .addOnFailureListener { cont.resume(null, null) }
+        } ?: return null
+
+        val blocks = result.textBlocks.map { block ->
+            OcrFieldExtractor.OcrTextBlock(
+                text = block.text,
+                heightPx = block.boundingBox?.height() ?: 0,
+                topPx = block.boundingBox?.top ?: 0,
+            )
         }
+        return result.text to OcrFieldExtractor.extractFieldsFromBlocks(blocks)
+    }
 
-        assertNotNull("OCR should produce result", result)
-        val text = result!!.text
-        Log.d(TAG, "=== FRONT OCR RAW TEXT ===")
-        Log.d(TAG, text)
-        Log.d(TAG, "=== END FRONT OCR ===")
-
-        assertTrue("Front should contain some text", text.isNotBlank())
-
-        // Extract fields
-        val extracted = OcrFieldExtractor.extractFields(text)
-        Log.d(TAG, "=== FRONT EXTRACTION ===")
-        Log.d(TAG, "Origin: ${extracted.origin}")
-        Log.d(TAG, "Region: ${extracted.region}")
-        Log.d(TAG, "Variety: ${extracted.variety}")
-        Log.d(TAG, "Process: ${extracted.processType}")
-        Log.d(TAG, "Altitude: ${extracted.altitude}")
-        Log.d(TAG, "Tasting notes: ${extracted.tastingNotes}")
-        Log.d(TAG, "Roast level: ${extracted.roastLevel}")
-        Log.d(TAG, "Roast date: ${extracted.roastDate}")
-        Log.d(TAG, "Roaster: ${extracted.roaster}")
-        Log.d(TAG, "=== END FRONT EXTRACTION ===")
-    } }
-
-    @Test
-    fun ocrExtractsTextFromBackOfBag() { runBlocking {
-        val file = File(BACK_PATH)
-        assertTrue("Back image must exist at $BACK_PATH", file.exists())
-
-        val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-        assertNotNull("Bitmap should decode", bitmap)
-
-        val image = InputImage.fromBitmap(bitmap!!, 0)
-        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-
-        val result = suspendCancellableCoroutine { cont ->
-            recognizer.process(image)
-                .addOnSuccessListener { cont.resume(it, null) }
-                .addOnFailureListener { cont.resume(null, null) }
-        }
-
-        assertNotNull("OCR should produce result", result)
-        val text = result!!.text
-        Log.d(TAG, "=== BACK OCR RAW TEXT ===")
-        Log.d(TAG, text)
-        Log.d(TAG, "=== END BACK OCR ===")
-
-        assertTrue("Back should contain some text", text.isNotBlank())
-
-        val extracted = OcrFieldExtractor.extractFields(text)
-        Log.d(TAG, "=== BACK EXTRACTION ===")
-        Log.d(TAG, "Origin: ${extracted.origin}")
-        Log.d(TAG, "Region: ${extracted.region}")
-        Log.d(TAG, "Variety: ${extracted.variety}")
-        Log.d(TAG, "Process: ${extracted.processType}")
-        Log.d(TAG, "Altitude: ${extracted.altitude}")
-        Log.d(TAG, "Tasting notes: ${extracted.tastingNotes}")
-        Log.d(TAG, "Roast level: ${extracted.roastLevel}")
-        Log.d(TAG, "Roast date: ${extracted.roastDate}")
-        Log.d(TAG, "Roaster: ${extracted.roaster}")
-        Log.d(TAG, "=== END BACK EXTRACTION ===")
-    } }
-
-    @Test
-    fun barcodeDetectionWithOcrFallback() { runBlocking {
-        val file = File(BACK_PATH)
-        assertTrue("Back image must exist at $BACK_PATH", file.exists())
-
-        val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-        assertNotNull("Bitmap should decode", bitmap)
-
-        val image = InputImage.fromBitmap(bitmap!!, 0)
-
-        // Try ML Kit barcode scanner first
+    private suspend fun runBarcodeScan(path: String): List<String> {
+        val bitmap = BitmapFactory.decodeFile(path) ?: return emptyList()
+        val image = InputImage.fromBitmap(bitmap, 0)
         val scanner = BarcodeScanning.getClient()
+
         val barcodes = suspendCancellableCoroutine { cont ->
             scanner.process(image)
                 .addOnSuccessListener { cont.resume(it, null) }
-                .addOnFailureListener { cont.resume(null, null) }
+                .addOnFailureListener { cont.resume(emptyList(), null) }
         }
 
-        Log.d(TAG, "=== BARCODES DETECTED ===")
-        val mlKitCount = barcodes?.size ?: 0
-        barcodes?.forEach { code ->
-            Log.d(TAG, "Format: ${code.format}, Type: ${code.valueType}, Raw: ${code.rawValue}")
-        }
-        Log.d(TAG, "ML Kit found $mlKitCount barcode(s)")
+        return barcodes?.mapNotNull { it.rawValue } ?: emptyList()
+    }
 
-        // Fallback: extract barcode from OCR text
-        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-        val textResult = suspendCancellableCoroutine { cont ->
-            recognizer.process(image)
-                .addOnSuccessListener { cont.resume(it, null) }
-                .addOnFailureListener { cont.resume(null, null) }
-        }
-        val ocrBarcode = textResult?.let { OcrFieldExtractor.extractBarcodeFromText(it.text) }
+    private fun logExtraction(label: String, r: OcrFieldExtractor.OcrExtractionResult) {
+        Log.d(TAG, "=== $label EXTRACTION ===")
+        Log.d(TAG, "Name: ${r.name}, Roaster: ${r.roaster}")
+        Log.d(TAG, "Origin: ${r.origin}, Region: ${r.region}")
+        Log.d(TAG, "Variety: ${r.variety}, Process: ${r.processType}")
+        Log.d(TAG, "Altitude: ${r.altitude}, Roast level: ${r.roastLevel}")
+        Log.d(TAG, "Roast date: ${r.roastDate}")
+        Log.d(TAG, "Tasting notes: ${r.tastingNotes}, Weight: ${r.weight}")
+        Log.d(TAG, "=== END $label ===")
+    }
+
+    private fun countFields(r: OcrFieldExtractor.OcrExtractionResult): Int =
+        listOfNotNull(
+            r.roaster, r.origin, r.region, r.variety, r.processType,
+            r.altitude, r.tastingNotes, r.roastLevel, r.roastDate, r.weight
+        ).size
+
+    // --- Beansmith's Ethiopia Gedeb (specific assertions) ---
+
+    @Test
+    fun `front OCR extracts text from Beansmith bag`() { runBlocking {
+        val path = bagPath("${BEANSMITHS}_front.jpg")
+        assumeTrue("Beansmith front image must exist", File(path).exists())
+
+        val (text, extracted) = runOcr(path)!!
+        Log.d(TAG, "=== FRONT OCR RAW TEXT ===\n$text\n=== END ===")
+        logExtraction("FRONT", extracted)
+
+        assertTrue("Front should contain some text", text.isNotBlank())
+    } }
+
+    @Test
+    fun `back OCR extracts text from Beansmith bag`() { runBlocking {
+        val path = bagPath("${BEANSMITHS}_back.jpg")
+        assumeTrue("Beansmith back image must exist", File(path).exists())
+
+        val (text, extracted) = runOcr(path)!!
+        Log.d(TAG, "=== BACK OCR RAW TEXT ===\n$text\n=== END ===")
+        logExtraction("BACK", extracted)
+
+        assertTrue("Back should contain some text", text.isNotBlank())
+    } }
+
+    @Test
+    fun `barcode detection finds barcode on Beansmith back via ML Kit or OCR fallback`() { runBlocking {
+        val path = bagPath("${BEANSMITHS}_back.jpg")
+        assumeTrue("Beansmith back image must exist", File(path).exists())
+
+        // ML Kit barcode scanner
+        val mlKitBarcodes = runBarcodeScan(path)
+        Log.d(TAG, "ML Kit found ${mlKitBarcodes.size} barcode(s): $mlKitBarcodes")
+
+        // OCR fallback
+        val (text, _) = runOcr(path)!!
+        val ocrBarcode = OcrFieldExtractor.extractBarcodeFromText(text)
         Log.d(TAG, "OCR barcode fallback: $ocrBarcode")
-        Log.d(TAG, "=== END BARCODES ===")
 
-        // At least one method should find the barcode
-        val foundBarcode = barcodes?.firstOrNull()?.rawValue ?: ocrBarcode
+        val foundBarcode = mlKitBarcodes.firstOrNull() ?: ocrBarcode
         assertNotNull("Should detect barcode via ML Kit or OCR fallback", foundBarcode)
     } }
 
     @Test
-    fun fullPipelineMergesFrontAndBackResults() { runBlocking {
-        val frontFile = File(FRONT_PATH)
-        val backFile = File(BACK_PATH)
-        assertTrue("Front image must exist", frontFile.exists())
-        assertTrue("Back image must exist", backFile.exists())
+    fun `full pipeline merges Beansmith front and back correctly`() { runBlocking {
+        val frontPath = bagPath("${BEANSMITHS}_front.jpg")
+        val backPath = bagPath("${BEANSMITHS}_back.jpg")
+        assumeTrue("Beansmith front image must exist", File(frontPath).exists())
+        assumeTrue("Beansmith back image must exist", File(backPath).exists())
 
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-        val scanner = BarcodeScanning.getClient()
         val ocrResults = mutableListOf<OcrFieldExtractor.OcrExtractionResult>()
         val detectedBarcodes = mutableListOf<String>()
         val detectedUrls = mutableListOf<String>()
-        val rawOcrTexts = mutableListOf<String>()
 
-        for (path in listOf(FRONT_PATH, BACK_PATH)) {
+        for (path in listOf(frontPath, backPath)) {
             val bitmap = BitmapFactory.decodeFile(path) ?: continue
             val image = InputImage.fromBitmap(bitmap, 0)
 
@@ -177,8 +185,6 @@ class OcrPipelineInstrumentedTest {
             }
             if (textResult != null) {
                 ocrResults.add(OcrFieldExtractor.extractFields(textResult.text))
-                rawOcrTexts.add(textResult.text)
-                // OCR barcode fallback
                 if (detectedBarcodes.isEmpty()) {
                     OcrFieldExtractor.extractBarcodeFromText(textResult.text)?.let {
                         detectedBarcodes.add(it)
@@ -187,13 +193,8 @@ class OcrPipelineInstrumentedTest {
             }
 
             // ML Kit barcode scanner
-            val codes = suspendCancellableCoroutine { cont ->
-                scanner.process(image)
-                    .addOnSuccessListener { cont.resume(it, null) }
-                    .addOnFailureListener { cont.resume(null, null) }
-            }
-            codes?.forEach { code ->
-                val raw = code.rawValue ?: return@forEach
+            val codes = runBarcodeScan(path)
+            codes.forEach { raw ->
                 if (raw.startsWith("http://") || raw.startsWith("https://")) {
                     detectedUrls.add(raw)
                 } else {
@@ -202,7 +203,7 @@ class OcrPipelineInstrumentedTest {
             }
         }
 
-        // Merge OCR
+        // Merge OCR results (first non-null per field)
         val merged = OcrFieldExtractor.OcrExtractionResult(
             roaster = ocrResults.firstNotNullOfOrNull { it.roaster },
             origin = ocrResults.firstNotNullOfOrNull { it.origin },
@@ -213,26 +214,14 @@ class OcrPipelineInstrumentedTest {
             tastingNotes = ocrResults.firstNotNullOfOrNull { it.tastingNotes },
             roastLevel = ocrResults.firstNotNullOfOrNull { it.roastLevel },
             roastDate = ocrResults.firstNotNullOfOrNull { it.roastDate },
+            expiryDate = ocrResults.firstNotNullOfOrNull { it.expiryDate },
             weight = ocrResults.firstNotNullOfOrNull { it.weight },
         )
 
-        Log.d(TAG, "=== MERGED PIPELINE RESULT ===")
-        Log.d(TAG, "Origin: ${merged.origin}")
-        Log.d(TAG, "Region: ${merged.region}")
-        Log.d(TAG, "Variety: ${merged.variety}")
-        Log.d(TAG, "Process: ${merged.processType}")
-        Log.d(TAG, "Altitude: ${merged.altitude}")
-        Log.d(TAG, "Tasting notes: ${merged.tastingNotes}")
-        Log.d(TAG, "Roast level: ${merged.roastLevel}")
-        Log.d(TAG, "Roast date: ${merged.roastDate}")
-        Log.d(TAG, "Weight: ${merged.weight}")
-        Log.d(TAG, "Roaster: ${merged.roaster}")
-        Log.d(TAG, "Barcodes: $detectedBarcodes")
-        Log.d(TAG, "QR URLs: $detectedUrls")
-        Log.d(TAG, "=== END MERGED RESULT ===")
+        logExtraction("MERGED BEANSMITH", merged)
+        Log.d(TAG, "Barcodes: $detectedBarcodes, QR URLs: $detectedUrls")
 
-        // Expected results for Beansmith's Ethiopia Gedeb bag
-        assertNotNull("Should detect origin (Ethiopia)", merged.origin)
+        // Beansmith's Ethiopia Gedeb specific assertions
         assertEquals("Ethiopia", merged.origin)
         assertNotNull("Should detect region (Gedeb)", merged.region)
         assertNotNull("Should detect variety (Heirloom)", merged.variety)
@@ -240,14 +229,15 @@ class OcrPipelineInstrumentedTest {
         assertNotNull("Should detect tasting notes", merged.tastingNotes)
         assertNotNull("Should detect roast level", merged.roastLevel)
         assertNotNull("Should detect roast date", merged.roastDate)
-        assertTrue("Should find barcode via OCR fallback", detectedBarcodes.isNotEmpty())
+        assertTrue("Should find barcode", detectedBarcodes.isNotEmpty())
     } }
 
     @Test
-    fun preprocessingImprovesOcrExtraction() { runBlocking {
+    fun `preprocessing improves OCR on Beansmith bag`() { runBlocking {
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
-        for ((label, path) in listOf("FRONT" to FRONT_PATH, "BACK" to BACK_PATH)) {
+        for ((label, suffix) in listOf("FRONT" to "front", "BACK" to "back")) {
+            val path = bagPath("${BEANSMITHS}_$suffix.jpg")
             val bitmap = BitmapFactory.decodeFile(path) ?: continue
 
             // Original
@@ -271,24 +261,71 @@ class OcrPipelineInstrumentedTest {
             val ppText = ppResult?.text ?: ""
             val ppFields = OcrFieldExtractor.extractFields(ppText)
 
-            fun countFields(r: OcrFieldExtractor.OcrExtractionResult): Int =
-                listOfNotNull(r.roaster, r.origin, r.region, r.variety, r.processType,
-                    r.altitude, r.tastingNotes, r.roastLevel, r.roastDate, r.weight).size
-
             Log.d(TAG, "=== $label PREPROCESSING COMPARISON ===")
-            Log.d(TAG, "Original text length: ${origText.length}, fields: ${countFields(origFields)}")
-            Log.d(TAG, "Preprocessed text length: ${ppText.length}, fields: ${countFields(ppFields)}")
-            Log.d(TAG, "Original OCR: ${origText.take(200)}")
-            Log.d(TAG, "Preprocessed OCR: ${ppText.take(200)}")
-            Log.d(TAG, "Orig fields: origin=${origFields.origin}, region=${origFields.region}, " +
-                "variety=${origFields.variety}, process=${origFields.processType}, " +
-                "roastLevel=${origFields.roastLevel}, roastDate=${origFields.roastDate}, " +
-                "weight=${origFields.weight}, roaster=${origFields.roaster}")
-            Log.d(TAG, "PP fields: origin=${ppFields.origin}, region=${ppFields.region}, " +
-                "variety=${ppFields.variety}, process=${ppFields.processType}, " +
-                "roastLevel=${ppFields.roastLevel}, roastDate=${ppFields.roastDate}, " +
-                "weight=${ppFields.weight}, roaster=${ppFields.roaster}")
-            Log.d(TAG, "=== END $label COMPARISON ===")
+            Log.d(TAG, "Original: ${origText.length} chars, ${countFields(origFields)} fields")
+            Log.d(TAG, "Preprocessed: ${ppText.length} chars, ${countFields(ppFields)} fields")
+            logExtraction("$label ORIG", origFields)
+            logExtraction("$label PP", ppFields)
         }
+    } }
+
+    // --- All bags (generic pipeline validation) ---
+
+    @Test
+    fun `pipeline extracts at least one field from every bag image`() { runBlocking {
+        val bags = discoverBags()
+        assumeTrue(
+            "No bag images found at $BAGS_DIR — run ./gradlew pushTestImages first",
+            bags.isNotEmpty()
+        )
+
+        Log.d(TAG, "=== DISCOVERED ${bags.size} BAG(S) ===")
+        val failures = mutableListOf<String>()
+
+        for (bag in bags) {
+            Log.d(TAG, "--- ${bag.name} (front=${bag.frontPath != null}, back=${bag.backPath != null}) ---")
+
+            val allResults = mutableListOf<OcrFieldExtractor.OcrExtractionResult>()
+
+            for (path in listOfNotNull(bag.frontPath, bag.backPath)) {
+                val result = runOcr(path)
+                if (result != null) {
+                    val (text, extracted) = result
+                    assertTrue("OCR should produce text for ${File(path).name}", text.isNotBlank())
+                    logExtraction("${bag.name} / ${File(path).name}", extracted)
+                    allResults.add(extracted)
+                }
+            }
+
+            // Merge fields across sides
+            val merged = if (allResults.isNotEmpty()) {
+                OcrFieldExtractor.OcrExtractionResult(
+                    roaster = allResults.firstNotNullOfOrNull { it.roaster },
+                    origin = allResults.firstNotNullOfOrNull { it.origin },
+                    region = allResults.firstNotNullOfOrNull { it.region },
+                    variety = allResults.firstNotNullOfOrNull { it.variety },
+                    processType = allResults.firstNotNullOfOrNull { it.processType },
+                    altitude = allResults.firstNotNullOfOrNull { it.altitude },
+                    tastingNotes = allResults.firstNotNullOfOrNull { it.tastingNotes },
+                    roastLevel = allResults.firstNotNullOfOrNull { it.roastLevel },
+                    roastDate = allResults.firstNotNullOfOrNull { it.roastDate },
+                    expiryDate = allResults.firstNotNullOfOrNull { it.expiryDate },
+                    weight = allResults.firstNotNullOfOrNull { it.weight },
+                )
+            } else null
+
+            val fields = if (merged != null) countFields(merged) else 0
+            Log.d(TAG, "${bag.name}: $fields merged fields extracted")
+
+            if (fields == 0) {
+                failures.add(bag.name)
+            }
+        }
+
+        Log.d(TAG, "=== SUMMARY: ${bags.size - failures.size}/${bags.size} bags produced fields ===")
+        assertTrue(
+            "Pipeline extracted zero fields from: ${failures.joinToString()}",
+            failures.isEmpty()
+        )
     } }
 }

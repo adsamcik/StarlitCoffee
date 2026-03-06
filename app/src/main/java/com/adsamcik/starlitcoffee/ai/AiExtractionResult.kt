@@ -21,6 +21,7 @@ data class AiExtractionResult(
     val tastingNotes: String? = null,
     val roastLevel: String? = null,
     val roastDate: String? = null,
+    val expiryDate: String? = null,
     val weight: String? = null,
     /** Per-field confidence from grounding check. Key = field name. */
     val fieldConfidence: Map<String, FieldConfidence> = emptyMap(),
@@ -43,6 +44,7 @@ data class AiExtractionResult(
             tastingNotes = keepIf("tastingNotes", tastingNotes),
             roastLevel = keepIf("roastLevel", roastLevel),
             roastDate = keepIf("roastDate", roastDate),
+            expiryDate = keepIf("expiryDate", expiryDate),
             weight = keepIf("weight", weight),
         )
     }
@@ -59,6 +61,7 @@ data class AiExtractionResult(
         tastingNotes = tastingNotes,
         roastLevel = roastLevel,
         roastDate = roastDate,
+        expiryDate = expiryDate,
         weight = weight,
     )
 
@@ -67,7 +70,7 @@ data class AiExtractionResult(
         val FIELD_NAMES = listOf(
             "name", "roaster", "origin", "region", "farm", "variety",
             "altitude", "processType", "tastingNotes", "roastLevel",
-            "roastDate", "weight",
+            "roastDate", "expiryDate", "weight",
         )
     }
 }
