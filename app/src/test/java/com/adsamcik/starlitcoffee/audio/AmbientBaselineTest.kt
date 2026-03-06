@@ -99,18 +99,15 @@ class AmbientBaselineTest {
         val ambient = FloatArray(spectrumSize) { 1e-8f }
         repeat(10) { baseline.feedCalibrationFrame(ambient) }
 
-        // Create a water-like residual: broadband with rolloff above 1kHz
+        // Create a water-like residual matching the real Pulsar template:
+        // Peak at ~1kHz (bin 25), rolloff both below and above
         val waterResidual = FloatArray(spectrumSize) { 1e-8f }
-        // Fill 200-6000Hz bins with energy that rolls off
         for (bin in 5..139) {
             val freq = bin * (44100f / 1024f)
-            // Gentle rolloff: -3dB/octave above 500Hz
-            val rolloff = if (freq > 500) {
-                Math.pow(500.0 / freq, 0.5).toFloat()
-            } else {
-                1f
-            }
-            waterResidual[bin] = 0.1f * rolloff
+            // Bell curve centered at 1kHz, plus secondary plateau at 4-6kHz
+            val dist = kotlin.math.abs(kotlin.math.ln(freq / 1077.0))
+            val amplitude = kotlin.math.exp(-dist * 1.5).toFloat()
+            waterResidual[bin] = 0.1f * amplitude.coerceAtLeast(0.005f)
         }
 
         val score = baseline.scoreWaterLikeness(waterResidual)

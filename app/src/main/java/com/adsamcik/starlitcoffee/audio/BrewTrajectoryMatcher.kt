@@ -137,24 +137,21 @@ class BrewTrajectoryMatcher {
         var confidence = 0f
 
         trajectoryPhase = when {
-            // POUR: high energy + high flatness + high coincidence + stable
+            // POUR: high residual energy + high coincidence + stable
+            // Flatness is a bonus, not a gate — sustained pour can have low flatness
             currentEnergy > POUR_ENERGY_THRESHOLD &&
-                currentFlatness > POUR_FLATNESS_THRESHOLD &&
                 currentCoincidence > POUR_COINCIDENCE_THRESHOLD -> {
-                // Stability bonus: sustained pour has low variance
                 val stabilityScore = 1f - (energyVariance / 50f).coerceIn(0f, 1f)
-                // Flatness bonus
                 val flatnessScore = (currentFlatness / 0.15f).coerceIn(0f, 1f)
-                // Coincidence bonus
                 val coincidenceScore = (currentCoincidence / 4f).coerceIn(0f, 1f)
 
-                confidence = (stabilityScore * 0.3f + flatnessScore * 0.3f + coincidenceScore * 0.4f)
+                confidence = (stabilityScore * 0.3f + flatnessScore * 0.2f + coincidenceScore * 0.5f)
                 TrajectoryPhase.POURING
             }
 
-            // POUR_ONSET: energy rising rapidly + broadband
+            // POUR_ONSET: energy rising rapidly + broadband coincidence
             energyTrend > ONSET_ENERGY_RISE &&
-                currentFlatness > POUR_FLATNESS_THRESHOLD -> {
+                currentCoincidence >= 3 -> {
                 confidence = min(1f, energyTrend / 15f)
                 TrajectoryPhase.POUR_ONSET
             }

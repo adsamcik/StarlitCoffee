@@ -165,9 +165,10 @@ class AmbientBaseline(
      * @return water likeness score (0 = nothing like water, 1 = perfect match)
      */
     fun scoreWaterLikeness(residualPowerSpectrum: FloatArray): Float {
-        // Convert residual to dB shape (normalized — remove level, keep shape)
+        // Extract dB values at template frequency points
         val residualDb = FloatArray(WATER_TEMPLATE.size)
         var maxDb = -200f
+        var minDb = 200f
 
         for (i in WATER_TEMPLATE.indices) {
             val bin = WATER_TEMPLATE_BINS[i]
@@ -176,31 +177,45 @@ class AmbientBaseline(
             val db = if (power > EPSILON) (10.0 * log10(power.toDouble())).toFloat() else -96f
             residualDb[i] = db
             if (db > maxDb) maxDb = db
+            if (db < minDb) minDb = db
         }
 
-        // Normalize to peak (shape only, level-independent)
-        if (maxDb < -80f) return 0f // Nothing above noise floor
-        for (i in residualDb.indices) {
-            residualDb[i] -= maxDb
-        }
+        // Gate: need significant energy above noise floor
+        if (maxDb < -60f) return 0f
 
-        // Cosine similarity between normalized residual shape and water template
-        var dotProduct = 0.0
-        var normA = 0.0
-        var normB = 0.0
+        // Gate: need dynamic range (flat silence scores 0)
+        val dynamicRange = maxDb - minDb
+        if (dynamicRange < 3f) return 0f
+
+        // Normalize both to 0-1 range for shape comparison
+        val residualNorm = FloatArray(WATER_TEMPLATE.size)
+        val templateNorm = FloatArray(WATER_TEMPLATE.size)
+        val templateMin = WATER_TEMPLATE.min()
+        val templateMax = WATER_TEMPLATE.max()
+        val templateRange = templateMax - templateMin
+
         for (i in WATER_TEMPLATE.indices) {
-            val a = residualDb[i].toDouble()
-            val b = WATER_TEMPLATE[i].toDouble()
-            dotProduct += a * b
-            normA += a * a
-            normB += b * b
+            residualNorm[i] = (residualDb[i] - minDb) / dynamicRange
+            templateNorm[i] = (WATER_TEMPLATE[i] - templateMin) / templateRange
         }
 
-        val denominator = kotlin.math.sqrt(normA * normB)
-        if (denominator < EPSILON) return 0f
+        // Pearson correlation: +1 = perfect match, 0 = unrelated, -1 = inverse
+        val meanR = residualNorm.average().toFloat()
+        val meanT = templateNorm.average().toFloat()
+        var cov = 0f; var varR = 0f; var varT = 0f
+        for (i in residualNorm.indices) {
+            val dr = residualNorm[i] - meanR
+            val dt = templateNorm[i] - meanT
+            cov += dr * dt
+            varR += dr * dr
+            varT += dt * dt
+        }
+        val denom = kotlin.math.sqrt(varR * varT)
+        if (denom < EPSILON) return 0f
 
-        // Cosine similarity range [-1, 1] → map to [0, 1]
-        return ((dotProduct / denominator + 1.0) / 2.0).toFloat().coerceIn(0f, 1f)
+        val correlation = cov / denom
+        // Map [-1, 1] to [0, 1], clamp
+        return ((correlation + 1f) / 2f).coerceIn(0f, 1f)
     }
 
     /** Resets all state for a new session. */
@@ -262,24 +277,23 @@ class AmbientBaseline(
 
         /**
          * Expected relative dB shape of Pulsar water pour (normalized to peak = 0).
-         * From real recordings:
-         * - Fairly flat 200-800 Hz (peak energy region)
-         * - Gentle rolloff -3 to -5 dB/octave above 1kHz
-         * - Still significant energy up to 6kHz
+         * Derived from real Draindown recording, peak pour segment 20-35s.
+         * Peak energy at ~1kHz, with rolloff both below and above.
+         * Notable dip at ~2.8kHz, secondary plateau at 4-6kHz.
          */
         private val WATER_TEMPLATE = floatArrayOf(
-            -2f,   // 215 Hz: slightly below peak
-             0f,   // 301 Hz: peak region
-            -1f,   // 431 Hz: near peak
-            -2f,   // 603 Hz: near peak
-            -3f,   // 818 Hz: slight rolloff starts
-            -5f,   // 1076 Hz: rolloff
-            -8f,   // 1507 Hz: moderate rolloff
-            -11f,  // 2024 Hz: continuing rolloff
-            -14f,  // 2798 Hz: significant rolloff
-            -18f,  // 3874 Hz: steep rolloff
-            -22f,  // 5165 Hz: low but present
-            -25f,  // 5984 Hz: near noise floor
+            -17f,  // 215 Hz: well below peak
+            -16f,  // 301 Hz: well below peak
+            -15f,  // 431 Hz: below peak
+            -15f,  // 603 Hz: below peak
+            -14f,  // 818 Hz: approaching peak
+             0f,   // 1077 Hz: PEAK
+            -2f,   // 1507 Hz: near peak
+            -7f,   // 2024 Hz: rolloff begins
+            -21f,  // 2799 Hz: deep dip
+            -13f,  // 3876 Hz: secondary plateau
+            -15f,  // 5168 Hz: secondary plateau
+            -12f,  // 5986 Hz: still present
         )
     }
 }
