@@ -464,8 +464,9 @@ private fun PhaseSegmentBar(
 // ─── Main composable: Minimalist Brew Guide ──────────────────
 
 /**
- * Minimalist brew guide. Hero brewer diagram, single bold water number,
- * thin segmented progress bar, ⓘ for details. Shows only what matters now.
+ * Minimalist brew guide. Hero brewer diagram, phase-semantic display
+ * (cumulative target for pours, valve state for Pulsar, bloom ratio),
+ * thin segmented progress bar, ⓘ for details.
  */
 @Composable
 fun BrewGuide(
@@ -476,8 +477,6 @@ fun BrewGuide(
     refillCount: Int,
     modifier: Modifier = Modifier,
     activePhaseIndex: Int = -1,
-    nextPhaseName: String? = null,
-    nextPhaseWaterG: Float? = null,
     showNextPreview: Boolean = false,
 ) {
     // When activePhaseIndex is provided (timer running), follow it.
@@ -570,28 +569,69 @@ fun BrewGuide(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Single bold water number
-            if (current.waterThisPhase > 0f) {
-                Text(
-                    text = "+${"%.0f".format(current.waterThisPhase)}g",
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = contentColor,
-                )
-            } else {
-                Text(
-                    text = current.phaseName,
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = contentColor,
-                )
+            // Phase-semantic hero — each phase type shows exactly what the user needs
+            when (current.phaseType) {
+                PhaseType.BLOOM -> {
+                    val bloomRatio = if (coffeeG > 0f) current.waterThisPhase / coffeeG else 0f
+                    Text(
+                        text = "POUR TO ${"%.0f".format(current.cumulativeWater)}g",
+                        style = MaterialTheme.typography.headlineLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = contentColor,
+                    )
+                    Text(
+                        text = "${"%.1f".format(bloomRatio)}× dose · 🔓 Open → 🔒 Close → Steep",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = contentColor.copy(alpha = 0.6f),
+                    )
+                }
+                PhaseType.POUR -> {
+                    Text(
+                        text = "🔓 POUR TO ${"%.0f".format(current.cumulativeWater)}g",
+                        style = MaterialTheme.typography.headlineLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = contentColor,
+                    )
+                    Text(
+                        text = "+${"%.0f".format(current.waterThisPhase)}g this phase",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = contentColor.copy(alpha = 0.6f),
+                    )
+                }
+                PhaseType.DRAIN_AND_REFILL -> {
+                    Text(
+                        text = "🔓 Drain & Refill",
+                        style = MaterialTheme.typography.headlineLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = contentColor,
+                    )
+                    Text(
+                        text = "Open valve · drain completely",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = contentColor.copy(alpha = 0.6f),
+                    )
+                }
+                PhaseType.DRAWDOWN -> {
+                    Text(
+                        text = "🔓 Drawdown",
+                        style = MaterialTheme.typography.headlineLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = contentColor,
+                    )
+                    Text(
+                        text = "Open valve · let it drain",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = contentColor.copy(alpha = 0.6f),
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Next-up preview
+            // Next-up preview — cumulative target for next phase
+            val nextState = states.getOrNull(selectedPhase + 1)
             AnimatedVisibility(
-                visible = showNextPreview && nextPhaseName != null,
+                visible = showNextPreview && nextState != null,
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
@@ -604,13 +644,13 @@ fun BrewGuide(
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Text(
-                        text = "Next: ${nextPhaseName ?: ""}",
+                        text = "Next: ${nextState?.phaseName ?: ""}",
                         style = MaterialTheme.typography.labelMedium,
                         color = contentColor.copy(alpha = 0.7f),
                     )
-                    if (nextPhaseWaterG != null && nextPhaseWaterG > 0f) {
+                    if (nextState != null && nextState.waterThisPhase > 0f) {
                         Text(
-                            text = " · +${"%.0f".format(nextPhaseWaterG)}g",
+                            text = " · → ${"%.0f".format(nextState.cumulativeWater)}g",
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Bold,
                             color = contentColor.copy(alpha = 0.7f),

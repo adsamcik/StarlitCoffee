@@ -282,8 +282,6 @@ fun BrewTimerScreen(
                 capacityMaxG = uiState.method.capacityMaxG?.toFloat(),
                 refillCount = uiState.refillCount,
                 activePhaseIndex = currentPhaseIndex,
-                nextPhaseName = nextPhase?.name,
-                nextPhaseWaterG = nextPhase?.waterG,
                 showNextPreview = showNext,
             )
         }
@@ -339,7 +337,7 @@ fun BrewTimerScreen(
             ) {
                 Text(
                     text = "Next: ${nextPhase?.name ?: ""}" +
-                        if ((nextPhase?.waterG ?: 0f) > 0f) " · +${"%.0f".format(nextPhase?.waterG)}g" else "",
+                        if ((nextPhase?.waterG ?: 0f) > 0f) " · → ${"%.0f".format(nextPhase?.cumulativeWaterG)}g" else "",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Center,
