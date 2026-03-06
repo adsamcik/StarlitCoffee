@@ -261,9 +261,9 @@ class BrewEventDetector(
         val floor = _noiseFloorDb[FrequencyBand.POUR] ?: INITIAL_NOISE_FLOOR
         val energyAboveFloor = max(0f, energy - floor)
 
-        // Spectral flatness bonus: water is noise-like (flatness 0.3-0.8)
-        // Scale: flatness 0.0→0x, 0.25→0.5x, 0.5→1x, 0.75→1.25x
-        val flatnessBonus = (features.spectralFlatness * 2f).coerceIn(0f, 1.5f)
+        // Spectral flatness bonus: water is noise-like (flatness ~0.1-0.5 for real pours)
+        // Scale: flatness 0→0x, 0.08→0.5x, 0.15→1x, 0.3+→1.5x
+        val flatnessBonus = (features.spectralFlatness / 0.15f).coerceIn(0f, 1.5f)
 
         // Band coincidence bonus: water lights ≥4/5 bands
         val coincidenceBonus = when {

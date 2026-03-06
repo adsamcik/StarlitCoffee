@@ -62,6 +62,11 @@ data class SpectralFeatures(
      *  Water lights ≥4/5 bands (broadband); speech/fan typically 2-3. */
     val bandCoincidenceCount: Int = 0,
 
+    /** Active probe turbulence score (0 = calm, >0.5 = water turbulence).
+     *  Only populated when active probe is enabled.
+     *  Based on amplitude modulation of near-ultrasonic probe tone. */
+    val probeTurbulence: Float = 0f,
+
     /** Full power spectrum (N/2 + 1 bins) — available for debug UI */
     val powerSpectrum: FloatArray? = null,
 ){

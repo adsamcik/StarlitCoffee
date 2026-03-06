@@ -257,6 +257,21 @@ fun AudioDebugOverlay(
                             modifier = Modifier.padding(top = 2.dp),
                         )
                     }
+
+                    // Active probe indicator
+                    if (audioState.probeActive) {
+                        val turbColor = if (audioState.probeTurbulence > 0.3f) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        }
+                        Text(
+                            text = "📡 Probe: %.2f turbulence".format(audioState.probeTurbulence),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = turbColor,
+                            modifier = Modifier.padding(top = 2.dp),
+                        )
+                    }
                 }
             }
         }

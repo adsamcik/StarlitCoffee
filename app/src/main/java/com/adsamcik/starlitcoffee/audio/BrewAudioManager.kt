@@ -36,12 +36,15 @@ class BrewAudioManager(
     private val config: AudioConfig = AudioConfig(),
     private val detectorConfig: DetectorConfig = DetectorConfig(),
     private val outputDirectory: File? = null,
+    /** Enable the active acoustic probe (experimental). Off by default. */
+    private val activeProbeEnabled: Boolean = false,
 ) {
     private val captureSession = AudioCaptureSession(config)
     private val recorder = AudioRecorder(config)
     private val preProcessor = AudioPreProcessor(sampleRate = config.sampleRate)
     private val spectralAnalyzer = SpectralAnalyzer()
     private val eventDetector = BrewEventDetector(detectorConfig)
+    private val activeProbe: ActiveProbe? = if (activeProbeEnabled) ActiveProbe() else null
 
     private var scope: CoroutineScope? = null
     private var captureJob: Job? = null
@@ -82,6 +85,7 @@ class BrewAudioManager(
         eventDetector.reset()
         silenceStartTimeMs = System.currentTimeMillis()
         wasSilent = true
+        activeProbe?.start()
 
         captureJob = newScope.launch {
             captureSession.audioBufferFlow().collect { buffer ->
@@ -99,6 +103,7 @@ class BrewAudioManager(
      */
     fun stopMonitoring() {
         if (isRecording) stopRecording()
+        activeProbe?.stop()
         captureJob?.cancel()
         captureJob = null
         scope?.cancel()
@@ -175,10 +180,24 @@ class BrewAudioManager(
         var latestBrewEvent: BrewAudioEvent? = null
 
         for (frame in frames) {
-            val spectral = spectralAnalyzer.analyze(frame)
-            latestSpectral = spectral
+            val spectral = spectralAnalyzer.analyze(frame, includePowerSpectrum = activeProbe?.isActive == true)
 
-            val events = eventDetector.processFrame(spectral)
+            // Active probe: analyze the probe bin in the power spectrum
+            val probeTurbulence = if (activeProbe?.isActive == true && spectral.powerSpectrum != null) {
+                activeProbe.analyzeProbeResponse(spectral.powerSpectrum)
+            } else {
+                0f
+            }
+
+            // Attach probe turbulence to features for the detector
+            val enrichedSpectral = if (probeTurbulence > 0f) {
+                spectral.copy(probeTurbulence = probeTurbulence)
+            } else {
+                spectral
+            }
+            latestSpectral = enrichedSpectral
+
+            val events = eventDetector.processFrame(enrichedSpectral)
             for (event in events) {
                 _brewEvents.tryEmit(event)
                 latestBrewEvent = event
@@ -222,6 +241,8 @@ class BrewAudioManager(
                 dripRate = eventDetector.dripRate,
                 noiseFloorDb = eventDetector.noiseFloorDb,
                 lastBrewEvent = latestBrewEvent ?: state.lastBrewEvent,
+                probeActive = activeProbe?.isActive == true,
+                probeTurbulence = activeProbe?.turbulenceScore ?: 0f,
             )
         }
 

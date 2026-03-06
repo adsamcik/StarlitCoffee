@@ -23,7 +23,11 @@ data class AudioAnalysisState(
     val dripRate: Float = 0f,
     val noiseFloorDb: Map<FrequencyBand, Float> = emptyMap(),
     val lastBrewEvent: BrewAudioEvent? = null,
-) {
+
+    // Active probe (experimental)
+    val probeActive: Boolean = false,
+    val probeTurbulence: Float = 0f,
+){
     companion object {
         const val SILENCE_DB = -96f
         const val LEVEL_HISTORY_SIZE = 50
