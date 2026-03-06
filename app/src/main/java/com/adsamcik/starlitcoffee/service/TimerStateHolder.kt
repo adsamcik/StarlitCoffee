@@ -10,7 +10,7 @@ data class TimerNotificationState(
     val isRunning: Boolean = false,
 )
 
-object TimerStateHolder {
+class TimerStateHolder {
 
     private val _state = MutableStateFlow(TimerNotificationState())
     val state: StateFlow<TimerNotificationState> = _state
@@ -21,5 +21,9 @@ object TimerStateHolder {
 
     fun reset() {
         _state.value = TimerNotificationState()
+    }
+
+    companion object {
+        val instance = TimerStateHolder()
     }
 }

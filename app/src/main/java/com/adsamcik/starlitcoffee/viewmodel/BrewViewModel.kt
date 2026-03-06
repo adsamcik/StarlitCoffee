@@ -27,6 +27,7 @@ import com.adsamcik.starlitcoffee.audio.BrewAudioManager
 import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
 import com.adsamcik.starlitcoffee.data.model.BrewAudioEvent
 import com.adsamcik.starlitcoffee.domain.TimerController
+import com.adsamcik.starlitcoffee.service.TimerStateHolder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -146,7 +147,7 @@ class BrewViewModel(
     private var brewEventJob: Job? = null
 
     @VisibleForTesting
-    internal val timerController = TimerController(viewModelScope)
+    internal val timerController = TimerController(viewModelScope, TimerStateHolder.instance)
     private var ratioPresetJob: Job? = null
 
     init {

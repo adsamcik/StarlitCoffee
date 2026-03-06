@@ -23,6 +23,7 @@ data class TimerState(
 
 class TimerController(
     private val scope: CoroutineScope,
+    private val timerStateHolder: TimerStateHolder,
 ) {
     private val _state = MutableStateFlow(TimerState())
     val state: StateFlow<TimerState> = _state.asStateFlow()
@@ -67,7 +68,7 @@ class TimerController(
 
         val s = _state.value
         val phase = phases.getOrNull(s.currentPhaseIndex)
-        TimerStateHolder.update(
+        timerStateHolder.update(
             phaseName = phase?.name ?: "",
             elapsedSeconds = s.elapsedSeconds,
             instruction = phase?.instruction ?: "",
@@ -83,7 +84,7 @@ class TimerController(
         }
         timerJob?.cancel()
         timerJob = null
-        TimerStateHolder.reset()
+        timerStateHolder.reset()
     }
 
     fun advancePhase(rebalance: (List<BrewPhase>, Int, Int) -> List<BrewPhase>) {
@@ -125,10 +126,10 @@ class TimerController(
         pausedAccumulatedMs = 0L
         phaseStartedAccumulatedMs = 0L
         _state.value = TimerState()
-        TimerStateHolder.reset()
+        timerStateHolder.reset()
     }
 
-    // ---- internal ------------------------------------------------------------
+    // ---- internal------------------------------------------------------------
 
     private fun launchTimerLoop() {
         timerJob = scope.launch {
@@ -156,7 +157,7 @@ class TimerController(
 
                 val s = _state.value
                 val phase = phases.getOrNull(s.currentPhaseIndex)
-                TimerStateHolder.update(
+                timerStateHolder.update(
                     phaseName = phase?.name ?: "",
                     elapsedSeconds = totalElapsedSeconds,
                     instruction = phase?.instruction ?: "",

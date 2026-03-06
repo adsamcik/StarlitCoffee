@@ -62,7 +62,7 @@ class BrewTimerService : Service() {
         notificationJob = scope.launch {
             while (isActive) {
                 delay(1000L)
-                val state = TimerStateHolder.state.value
+                val state = TimerStateHolder.instance.state.value
                 val min = state.elapsedSeconds / 60
                 val sec = state.elapsedSeconds % 60
                 val timeText = "%d:%02d".format(min, sec)
@@ -119,7 +119,7 @@ class BrewTimerService : Service() {
 
         fun stop(context: Context) {
             context.stopService(Intent(context, BrewTimerService::class.java))
-            TimerStateHolder.reset()
+            TimerStateHolder.instance.reset()
         }
     }
 }
