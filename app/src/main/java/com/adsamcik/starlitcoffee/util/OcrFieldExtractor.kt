@@ -16,6 +16,7 @@ object OcrFieldExtractor {
         val roaster: String? = null,
         val origin: String? = null,
         val region: String? = null,
+        val farm: String? = null,
         val variety: String? = null,
         val processType: String? = null,
         val altitude: String? = null,
@@ -82,14 +83,25 @@ object OcrFieldExtractor {
         """^([\w\s\u00C0-\u024F]+,\s*[\w\s\u00C0-\u024F]+(?:,\s*[\w\s\u00C0-\u024F]+)+)$""",
     )
 
+    // Matches lines using alternative delimiters: · • | /
+    private val altDelimiterFlavorRegex = Regex(
+        """^([\w\s\u00C0-\u024F]+[·•|/]\s*[\w\s\u00C0-\u024F]+(?:\s*[·•|/]\s*[\w\s\u00C0-\u024F]+)*)$""",
+    )
+
     private val weightRegex = Regex(
-        """(?<!\d)\b(\d{2,4})\s*(?:g|grams?|oz)\b""",
+        """(?<!\d)\b(\d{1,4}(?:[.,]\d{1,2})?)\s*(?:kg|kilogram[s]?|lb[s]?|pound[s]?|g|gram[s]?|oz|ounce[s]?)\b""",
         RegexOption.IGNORE_CASE,
     )
 
     // Matches common roaster label patterns like "ROASTERY", "COFFEE ROASTERS", "KAFFEERÖSTEREI"
     private val roasteryLabelRegex = Regex(
         """([\w\s':.\u00C0-\u024F]+(?:roaster[sy]?|coffee\s*roaster[sy]?|rösterei|pražírna|torrefazione))\b""",
+        RegexOption.IGNORE_CASE,
+    )
+
+    // Matches farm/producer/estate labels
+    private val farmLabelRegex = Regex(
+        """(?:farm|finca|producer|estate|fazenda|hacienda)\s*[:.]?\s*(.+)""",
         RegexOption.IGNORE_CASE,
     )
 
@@ -126,6 +138,7 @@ object OcrFieldExtractor {
         val tastingNotes = extractTastingNotes(lines)
         val weight = extractWeight(fullText)
         val roaster = extractRoaster(lines)
+        val farm = extractFarm(lines)
 
         // Derive name from origin + region as fallback for text-only extraction
         val name = listOfNotNull(origin, region).joinToString(" ").ifEmpty { null }
@@ -134,6 +147,7 @@ object OcrFieldExtractor {
             name = name,
             origin = origin,
             region = region,
+            farm = farm,
             variety = variety,
             processType = processType,
             altitude = altitude,
@@ -187,6 +201,14 @@ object OcrFieldExtractor {
             if (commaMatch != null) {
                 return commaMatch.groupValues[1].trim()
             }
+            // Check alternative delimiters: · • | /
+            val altMatch = altDelimiterFlavorRegex.find(line)
+            if (altMatch != null && line.length <= 80) {
+                // Normalize delimiters to commas for consistency
+                return altMatch.groupValues[1]
+                    .replace(Regex("""[·•|/]"""), ",")
+                    .split(",").joinToString(", ") { it.trim() }
+            }
         }
         return null
     }
@@ -195,7 +217,12 @@ object OcrFieldExtractor {
         val match = weightRegex.find(text) ?: return null
         val value = match.groupValues[1]
         val unit = match.value.replace(value, "").trim().lowercase()
-        return if (unit.startsWith("oz")) "${value}oz" else "${value}g"
+        return when {
+            unit.startsWith("kg") || unit.startsWith("kilogram") -> "${value}kg"
+            unit.startsWith("lb") || unit.startsWith("pound") -> "${value}lb"
+            unit.startsWith("oz") || unit.startsWith("ounce") -> "${value}oz"
+            else -> "${value}g"
+        }
     }
 
     private fun extractRoaster(lines: List<String>): String? {
@@ -204,6 +231,16 @@ object OcrFieldExtractor {
         if (match != null) {
             return match.groupValues[1].trim()
                 .replace(Regex("""\s+"""), " ")
+        }
+        return null
+    }
+
+    private fun extractFarm(lines: List<String>): String? {
+        for (line in lines) {
+            val match = farmLabelRegex.find(line)
+            if (match != null) {
+                return match.groupValues[1].trim()
+            }
         }
         return null
     }
@@ -295,6 +332,8 @@ object OcrFieldExtractor {
         // Entire-block patterns that explain the whole block
         if (tastingNotesLabelRegex.containsMatchIn(text)) return true
         if (text.length <= 80 && commaFlavorLineRegex.containsMatchIn(text)) return true
+        if (text.length <= 80 && altDelimiterFlavorRegex.containsMatchIn(text)) return true
+        if (farmLabelRegex.containsMatchIn(text)) return true
 
         // Strip all known-field regex matches
         var remaining = text

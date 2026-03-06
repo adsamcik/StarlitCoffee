@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -84,6 +85,7 @@ import java.util.Locale
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
 
+private const val TAG = "BagInventoryScreen"
 private const val LOW_COFFEE_THRESHOLD_G = 30f
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,7 +96,7 @@ fun BagInventoryScreen(
 ) {
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
-    val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
+    val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
     var showAddSheet by remember { mutableStateOf(false) }
@@ -237,7 +239,9 @@ fun BagInventoryScreen(
                             if (detectedBarcode == null) detectedBarcode = raw
                         }
                     }
-                } catch (_: Exception) { }
+                } catch (e: Exception) {
+                    Log.w(TAG, "Failed to process bag photo for OCR and barcode extraction", e)
+                }
             }
             // Merge OCR results: prefer first non-null for each field
             if (ocrResults.isNotEmpty()) {
@@ -264,7 +268,9 @@ fun BagInventoryScreen(
                         offLookupName = result.name
                         offLookupRoaster = result.brand
                     }
-                } catch (_: Exception) { }
+                } catch (e: Exception) {
+                    Log.w(TAG, "Failed to fetch product info from OpenFoodFacts", e)
+                }
             }
         }
         showAddSheet = true
@@ -434,7 +440,10 @@ private fun BagCard(
                     try {
                         val file = java.io.File(android.net.Uri.parse(uri).path ?: return@remember null)
                         android.graphics.BitmapFactory.decodeFile(file.absolutePath)
-                    } catch (_: Exception) { null }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Failed to load bag thumbnail", e)
+                        null
+                    }
                 }
                 if (bitmap != null) {
                     Image(
@@ -499,6 +508,13 @@ private fun BagCard(
                         text = "Roasted: ${dateFormat.format(Date(bag.roastDate))}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                if (bag.isDecaf) {
+                    Text(
+                        text = "☘ Decaf",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 }
             }
@@ -843,7 +859,10 @@ private fun BagDetailSheet(
                                 try {
                                     val file = java.io.File(android.net.Uri.parse(uriStr).path ?: return@remember null)
                                     android.graphics.BitmapFactory.decodeFile(file.absolutePath)
-                                } catch (_: Exception) { null }
+                                } catch (e: Exception) {
+                                    Log.w(TAG, "Failed to load bag detail photo", e)
+                                    null
+                                }
                             }
                             bitmap?.let {
                                 Image(
@@ -1153,7 +1172,8 @@ private fun copyPhotosToPermanentStorage(
             val destFile = java.io.File(bagPhotosDir, "bag_${System.currentTimeMillis()}_${sourceFile.name}")
             sourceFile.copyTo(destFile, overwrite = true)
             destFile.toUri().toString()
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to copy photo to permanent storage", e)
             null
         }
     }.joinToString(",")

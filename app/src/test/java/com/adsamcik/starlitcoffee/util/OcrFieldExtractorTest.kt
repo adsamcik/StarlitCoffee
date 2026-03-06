@@ -54,13 +54,12 @@ class OcrFieldExtractorTest {
     fun `front of bag attempts tasting notes extraction`() {
         val result = OcrFieldExtractor.extractFields(frontText)
         // Czech tasting notes without a label — tests comma-separated line regex
-        println("Tasting notes from front: ${result.tastingNotes ?: "NOT EXTRACTED"}")
+        assertNotNull("Tasting notes should be extracted from comma-separated line", result.tastingNotes)
     }
 
     @Test
     fun `back of bag extracts roast date`() {
         val result = OcrFieldExtractor.extractFields(backText)
-        println("Roast date from back: ${result.roastDate ?: "NOT EXTRACTED"}")
         assertNotNull("Roast date should be extracted", result.roastDate)
     }
 
@@ -74,6 +73,7 @@ class OcrFieldExtractorTest {
             roaster = front.roaster ?: back.roaster,
             origin = front.origin ?: back.origin,
             region = front.region ?: back.region,
+            farm = front.farm ?: back.farm,
             variety = front.variety ?: back.variety,
             processType = front.processType ?: back.processType,
             altitude = front.altitude ?: back.altitude,
@@ -83,18 +83,6 @@ class OcrFieldExtractorTest {
             expiryDate = front.expiryDate ?: back.expiryDate,
             weight = front.weight ?: back.weight,
         )
-
-        println("=== MERGED EXTRACTION RESULTS ===")
-        println("Roaster:       ${merged.roaster ?: "MISSED"}")
-        println("Origin:        ${merged.origin ?: "MISSED"}")
-        println("Region:        ${merged.region ?: "MISSED"}")
-        println("Variety:       ${merged.variety ?: "MISSED"}")
-        println("Process:       ${merged.processType ?: "MISSED"}")
-        println("Altitude:      ${merged.altitude ?: "N/A"}")
-        println("Tasting notes: ${merged.tastingNotes ?: "MISSED"}")
-        println("Roast level:   ${merged.roastLevel ?: "MISSED"}")
-        println("Roast date:    ${merged.roastDate ?: "MISSED"}")
-        println("Weight:        ${merged.weight ?: "MISSED"}")
 
         // Fields that regex CAN extract
         assertTrue("Origin should be Ethiopia", merged.origin!!.equals("Ethiopia", ignoreCase = true))
@@ -303,5 +291,124 @@ class OcrFieldExtractorTest {
         val text = "Ethiopia Yirgacheffe\nLight"
         val result = OcrFieldExtractor.extractFields(text)
         assertEquals("Light", result.roastLevel)
+    }
+
+    // --- Weight improvements ---
+
+    @Test
+    fun `extracts weight in kilograms`() {
+        val result = OcrFieldExtractor.extractFields("Net weight: 1kg")
+        assertEquals("1kg", result.weight)
+    }
+
+    @Test
+    fun `extracts weight in pounds`() {
+        val result = OcrFieldExtractor.extractFields("12oz / 1lb bag")
+        assertNotNull(result.weight)
+    }
+
+    @Test
+    fun `extracts decimal kilogram weight`() {
+        val result = OcrFieldExtractor.extractFields("2.5kg premium bag")
+        assertEquals("2.5kg", result.weight)
+    }
+
+    // --- Tasting notes delimiters ---
+
+    @Test
+    fun `extracts tasting notes with middot delimiter`() {
+        val result = OcrFieldExtractor.extractFields("Chocolate · Caramel · Hazelnut")
+        assertNotNull("Should extract middot-separated notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("Chocolate", ignoreCase = true))
+        assertTrue(result.tastingNotes!!.contains("Caramel", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts tasting notes with bullet delimiter`() {
+        val result = OcrFieldExtractor.extractFields("Blueberry • Jasmine • Honey")
+        assertNotNull("Should extract bullet-separated notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("Blueberry", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts tasting notes with pipe delimiter`() {
+        val result = OcrFieldExtractor.extractFields("Stone fruit | Dark chocolate | Citrus")
+        assertNotNull("Should extract pipe-separated notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("chocolate", ignoreCase = true))
+    }
+
+    // --- Process type synonyms ---
+
+    @Test
+    fun `extracts sun-dried as Natural`() {
+        val result = OcrFieldExtractor.extractFields("Ethiopia Yirgacheffe\nSun-dried on raised beds")
+        assertNotNull("Should extract sun-dried process", result.processType)
+        assertTrue(result.processType!!.contains("sun-dried", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts sundried as Natural`() {
+        val result = OcrFieldExtractor.extractFields("Kenya AA\nSundried")
+        assertNotNull(result.processType)
+    }
+
+    // --- Farm extraction ---
+
+    @Test
+    fun `extracts farm from labeled text`() {
+        val result = OcrFieldExtractor.extractFields("Farm: La Esperanza\nColombia Huila\nWashed")
+        assertNotNull("Should extract farm", result.farm)
+        assertTrue(result.farm!!.contains("Esperanza", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts finca from labeled text`() {
+        val result = OcrFieldExtractor.extractFields("Finca: El Paraiso\nHonduras\nNatural")
+        assertNotNull("Should extract finca", result.farm)
+        assertTrue(result.farm!!.contains("Paraiso", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts producer from labeled text`() {
+        val result = OcrFieldExtractor.extractFields("Producer: Juan Rodriguez\nColombia")
+        assertNotNull("Should extract producer", result.farm)
+    }
+
+    // --- Origin abbreviations ---
+
+    @Test
+    fun `extracts PNG abbreviation as Papua New Guinea`() {
+        val result = OcrFieldExtractor.extractFields("PNG Sigri Estate\nWashed")
+        assertNotNull("Should extract PNG as Papua New Guinea", result.origin)
+        assertEquals("Papua New Guinea", result.origin)
+    }
+
+    @Test
+    fun `extracts SAL abbreviation as El Salvador`() {
+        val result = OcrFieldExtractor.extractFields("SAL Pacamara\nHoney process")
+        assertNotNull(result.origin)
+        assertEquals("El Salvador", result.origin)
+    }
+
+    // --- Roast level aliases ---
+
+    @Test
+    fun `extracts cinnamon roast level`() {
+        val result = OcrFieldExtractor.extractFields("Ethiopia\nCinnamon roast\nHeirloom")
+        assertNotNull(result.roastLevel)
+        assertTrue(result.roastLevel!!.contains("cinnamon", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts city roast level`() {
+        val result = OcrFieldExtractor.extractFields("Colombia\nCity roast")
+        assertNotNull(result.roastLevel)
+    }
+
+    // --- Farm block consumed ---
+
+    @Test
+    fun `farm label block is consumed by known fields`() {
+        assertTrue(OcrFieldExtractor.isBlockConsumedByKnownFields("Farm: La Esperanza"))
     }
 }

@@ -1299,7 +1299,7 @@ class BrewViewModelTest {
 
     private fun createPersistenceViewModel(): BrewViewModel {
         val recipeRepository = RecipeRepository(FakeRecipeDao())
-        val brewLogRepository = BrewLogRepository(FakeBrewLogDao(), FakeFlavorTagDao())
+        val brewLogRepository = BrewLogRepository(null, FakeBrewLogDao(), FakeFlavorTagDao())
         val coffeeBagRepository = CoffeeBagRepository(FakeCoffeeBagDao())
         return BrewViewModel(
             recipeRepository = recipeRepository,
