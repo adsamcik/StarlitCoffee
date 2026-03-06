@@ -14,14 +14,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SegmentedButton
@@ -47,6 +45,9 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.navigation.BrewTimer
+import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
+import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
+import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 
@@ -109,26 +110,19 @@ fun AmountStrengthScreen(
             .padding(horizontal = 16.dp),
     ) {
         // Back button + method context
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
-        ) {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+        ScreenTopBar(
+            title = "",
+            onBack = { navController.popBackStack() },
+            modifier = Modifier.padding(top = 8.dp),
+            actions = {
+                Text(
+                    text = "${method.displayName} · ${ratioPresets.getOrNull(selectedPresetIndex)?.label ?: "1:${method.defaultRatio.toInt()}"}",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(end = 8.dp),
                 )
-            }
-            Text(
-                text = "${method.displayName} · ${ratioPresets.getOrNull(selectedPresetIndex)?.label ?: "1:${method.defaultRatio.toInt()}"}",
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(end = 8.dp),
-            )
-        }
+            },
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -165,7 +159,7 @@ fun AmountStrengthScreen(
             value = amount,
             onValueChange = { brewViewModel.setAmount(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            shape = RoundedCornerShape(16.dp),
+            shape = MaterialTheme.shapes.small,
             suffix = { Text(if (inputMode == InputMode.BREW_SIZE_TO_BOTH || inputMode == InputMode.CUP_SIZE_TO_BOTH) "ml" else "g") },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
@@ -203,24 +197,14 @@ fun AmountStrengthScreen(
                 .semantics { heading() },
         )
 
-        SingleChoiceSegmentedButtonRow(
+        RatioPresetRow(
+            presets = ratioPresets,
+            selectedIndex = selectedPresetIndex,
+            onSelectPreset = { brewViewModel.selectRatioPreset(it) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 4.dp),
-        ) {
-            ratioPresets.forEachIndexed { index, preset ->
-                SegmentedButton(
-                    selected = selectedPresetIndex == index,
-                    onClick = { brewViewModel.selectRatioPreset(index) },
-                    shape = SegmentedButtonDefaults.itemShape(
-                        index = index,
-                        count = ratioPresets.size,
-                    ),
-                ) {
-                    Text(preset.label)
-                }
-            }
-        }
+        )
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -270,7 +254,7 @@ fun AmountStrengthScreen(
                     onValueChange = { brewViewModel.setCustomRatio(it) },
                     label = { Text("Custom ratio (e.g. 16)") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.small,
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -282,7 +266,7 @@ fun AmountStrengthScreen(
                     onValueChange = { brewViewModel.setTempC(it) },
                     label = { Text("Temperature (°C)") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.small,
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -295,7 +279,7 @@ fun AmountStrengthScreen(
                         onValueChange = { brewViewModel.setBloomMultiplier(it) },
                         label = { Text("Bloom multiplier (e.g. 3.0)") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                        shape = RoundedCornerShape(16.dp),
+                        shape = MaterialTheme.shapes.small,
                         singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -309,7 +293,7 @@ fun AmountStrengthScreen(
                         onValueChange = { brewViewModel.setPulseCount(it) },
                         label = { Text("Pulse count") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        shape = RoundedCornerShape(16.dp),
+                        shape = MaterialTheme.shapes.small,
                         singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -322,42 +306,18 @@ fun AmountStrengthScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         // Live result preview
-        ElevatedCard(
-            shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.elevatedCardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 12.dp),
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text(
-                    text = "☕ ${"%.1f".format(uiState.coffeeG)}g",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
-                Text(
-                    text = "💧 ${"%.0f".format(uiState.waterG)}g",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
-                Text(
-                    text = "1:${"%.1f".format(uiState.effectiveRatio)}",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
-            }
-        }
+        BrewPreviewCard(
+            coffeeG = uiState.coffeeG,
+            waterG = uiState.waterG,
+            ratio = uiState.effectiveRatio,
+            coffeeFormat = "%.1f",
+            ratioFormat = "%.1f",
+            modifier = Modifier.padding(bottom = 12.dp),
+        )
 
         // Grind recommendation
         ElevatedCard(
-            shape = RoundedCornerShape(20.dp),
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 12.dp),
@@ -410,7 +370,7 @@ fun AmountStrengthScreen(
                 focusManager.clearFocus()
                 navController.navigate(BrewTimer)
             },
-            shape = RoundedCornerShape(28.dp),
+            shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),

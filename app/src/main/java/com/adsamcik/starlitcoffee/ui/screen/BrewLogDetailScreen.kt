@@ -1,36 +1,23 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.util.Log
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.StarHalf
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -58,6 +45,8 @@ import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
+import com.adsamcik.starlitcoffee.ui.component.FlavorTagPicker
+import com.adsamcik.starlitcoffee.ui.component.HalfStarRatingRow
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -65,7 +54,7 @@ import java.util.Locale
 
 private const val TAG = "BrewLogDetailScreen"
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BrewLogDetailScreen(
     navController: NavHostController,
@@ -214,7 +203,7 @@ fun BrewLogDetailScreen(
             )
 
             ElevatedCard(
-                shape = RoundedCornerShape(28.dp),
+                shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Column(
@@ -277,7 +266,7 @@ fun BrewLogDetailScreen(
 
             HalfStarRatingRow(
                 rating = rating,
-                onRatingChanged = { rating = it },
+                onRatingChange = { rating = it },
                 modifier = Modifier.padding(start = 8.dp),
             )
 
@@ -289,33 +278,17 @@ fun BrewLogDetailScreen(
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
             )
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+            FlavorTagPicker(
+                selectedTags = selectedDescriptors,
+                onTagToggle = { descriptor ->
+                    selectedDescriptors = if (descriptor in selectedDescriptors) {
+                        selectedDescriptors - descriptor
+                    } else {
+                        selectedDescriptors + descriptor
+                    }
+                },
                 modifier = Modifier.padding(horizontal = 8.dp),
-            ) {
-                FlavorDescriptor.entries.forEach { descriptor ->
-                    val selected = descriptor in selectedDescriptors
-                    FilterChip(
-                        selected = selected,
-                        onClick = {
-                            selectedDescriptors = if (selected) {
-                                selectedDescriptors - descriptor
-                            } else {
-                                selectedDescriptors + descriptor
-                            }
-                        },
-                        label = {
-                            Text("${descriptor.emoji} ${descriptor.displayName}")
-                        },
-                        shape = RoundedCornerShape(28.dp),
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                            selectedLabelColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                        ),
-                    )
-                }
-            }
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -334,7 +307,7 @@ fun BrewLogDetailScreen(
                     .padding(horizontal = 8.dp),
                 minLines = 2,
                 maxLines = 4,
-                shape = RoundedCornerShape(16.dp),
+                shape = MaterialTheme.shapes.small,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = MaterialTheme.colorScheme.outline,
@@ -362,87 +335,13 @@ fun BrewLogDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp),
-                    shape = RoundedCornerShape(28.dp),
+                    shape = MaterialTheme.shapes.large,
                 ) {
                     Text("Save Changes")
                 }
             }
 
             Spacer(modifier = Modifier.height(32.dp))
-        }
-    }
-}
-
-@Composable
-private fun HalfStarRatingRow(
-    rating: Float,
-    onRatingChanged: (Float) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier,
-    ) {
-        for (i in 1..5) {
-            Box(
-                modifier = Modifier.size(36.dp),
-            ) {
-                // Left half — half star
-                Box(
-                    modifier = Modifier
-                        .size(width = 18.dp, height = 36.dp)
-                        .align(Alignment.CenterStart)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                        ) { onRatingChanged(i - 0.5f) },
-                )
-
-                // Right half — full star
-                Box(
-                    modifier = Modifier
-                        .size(width = 18.dp, height = 36.dp)
-                        .align(Alignment.CenterEnd)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                        ) { onRatingChanged(i.toFloat()) },
-                )
-
-                val icon = when {
-                    rating >= i -> Icons.Filled.Star
-                    rating >= i - 0.5f -> Icons.AutoMirrored.Filled.StarHalf
-                    else -> Icons.Outlined.Star
-                }
-                val tint = if (rating >= i - 0.5f) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                }
-
-                Icon(
-                    imageVector = icon,
-                    contentDescription = "Star $i",
-                    tint = tint,
-                    modifier = Modifier
-                        .size(36.dp)
-                        .align(Alignment.Center),
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        if (rating > 0f) {
-            Text(
-                text = if (rating % 1f == 0f) {
-                    "${rating.toInt()}.0"
-                } else {
-                    "%.1f".format(rating)
-                },
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
         }
     }
 }

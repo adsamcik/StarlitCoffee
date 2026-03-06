@@ -13,7 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.AlertDialog
@@ -21,7 +20,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -41,6 +39,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.navigation.BrewTimer
 import com.adsamcik.starlitcoffee.navigation.MethodPicker
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
+import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
@@ -62,21 +61,17 @@ fun ResultScreen(
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 16.dp),
     ) {
-        IconButton(
-            onClick = { navController.popBackStack() },
+        ScreenTopBar(
+            title = "",
+            onBack = { navController.popBackStack() },
             modifier = Modifier.padding(top = 8.dp),
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
-            )
-        }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Core result card
         ElevatedCard(
-            shape = RoundedCornerShape(28.dp),
+            shape = MaterialTheme.shapes.large,
             colors = CardDefaults.elevatedCardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
             ),
@@ -138,7 +133,7 @@ fun ResultScreen(
         // Brew breakdown card
         if (method.hasBloom || method.hasPulses) {
             ElevatedCard(
-                shape = RoundedCornerShape(28.dp),
+                shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
@@ -200,7 +195,7 @@ fun ResultScreen(
                 var tipsExpanded by remember { mutableStateOf(false) }
                 ElevatedCard(
                     onClick = { tipsExpanded = !tipsExpanded },
-                    shape = RoundedCornerShape(28.dp),
+                    shape = MaterialTheme.shapes.large,
                     colors = CardDefaults.elevatedCardColors(
                         containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     ),
@@ -271,7 +266,7 @@ fun ResultScreen(
 
         // Grind section
         ElevatedCard(
-            shape = RoundedCornerShape(28.dp),
+            shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
@@ -309,7 +304,7 @@ fun ResultScreen(
         ) {
             Button(
                 onClick = { navController.navigate(BrewTimer) },
-                shape = RoundedCornerShape(28.dp),
+                shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .weight(1f)
                     .height(56.dp),
@@ -318,7 +313,7 @@ fun ResultScreen(
             }
             OutlinedButton(
                 onClick = { showSaveDialog = true },
-                shape = RoundedCornerShape(28.dp),
+                shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .weight(1f)
                     .height(56.dp),
@@ -354,7 +349,7 @@ fun ResultScreen(
                     onValueChange = { recipeName = it },
                     label = { Text("Recipe name (optional)") },
                     singleLine = true,
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.small,
                     modifier = Modifier.fillMaxWidth(),
                 )
             },

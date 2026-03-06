@@ -283,7 +283,7 @@ fun BagInventoryScreen(
                     // Navigate to camera guide
                     navController.navigate(CameraCapture)
                 },
-                shape = RoundedCornerShape(28.dp),
+                shape = MaterialTheme.shapes.large,
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "Add Bag")
             }
@@ -425,7 +425,7 @@ private fun BagCard(
 
     ElevatedCard(
         onClick = onTap,
-        shape = RoundedCornerShape(28.dp),
+        shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
     ) {
         Row(
@@ -451,7 +451,7 @@ private fun BagCard(
                         contentDescription = "Bag photo",
                         modifier = Modifier
                             .size(56.dp)
-                            .clip(RoundedCornerShape(12.dp)),
+                            .clip(MaterialTheme.shapes.small),
                         contentScale = ContentScale.Crop,
                     )
                     Spacer(modifier = Modifier.width(16.dp))
@@ -638,7 +638,7 @@ private fun AddBagSheet(
                             value = initialBarcode,
                             onValueChange = {},
                             label = { Text("Barcode") },
-                            shape = RoundedCornerShape(16.dp),
+                            shape = MaterialTheme.shapes.small,
                             readOnly = true,
                             enabled = false,
                             singleLine = true,
@@ -728,7 +728,7 @@ private fun AddBagSheet(
                         value = tastingNotes,
                         onValueChange = { tastingNotes = it },
                         label = { Text("Tasting notes") },
-                        shape = RoundedCornerShape(16.dp),
+                        shape = MaterialTheme.shapes.small,
                         singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -740,7 +740,7 @@ private fun AddBagSheet(
                         value = weight,
                         onValueChange = { weight = it },
                         label = { Text("Weight (g)") },
-                        shape = RoundedCornerShape(16.dp),
+                        shape = MaterialTheme.shapes.small,
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         suffix = { Text("g") },
@@ -766,7 +766,7 @@ private fun AddBagSheet(
                         value = notes,
                         onValueChange = { notes = it },
                         label = { Text("Notes") },
-                        shape = RoundedCornerShape(16.dp),
+                        shape = MaterialTheme.shapes.small,
                         minLines = 2,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -793,7 +793,7 @@ private fun AddBagSheet(
                         )
                     }
                 },
-                shape = RoundedCornerShape(28.dp),
+                shape = MaterialTheme.shapes.large,
                 enabled = name.isNotBlank(),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -870,7 +870,7 @@ private fun BagDetailSheet(
                                     contentDescription = "Bag photo",
                                     modifier = Modifier
                                         .size(80.dp)
-                                        .clip(RoundedCornerShape(12.dp)),
+                                        .clip(MaterialTheme.shapes.small),
                                     contentScale = ContentScale.Crop,
                                 )
                             }
@@ -1050,7 +1050,7 @@ private fun BagDetailSheet(
                     // Individual brew entries
                     items(brewLogs.sortedByDescending { it.createdAt }) { log ->
                         ElevatedCard(
-                            shape = RoundedCornerShape(16.dp),
+                            shape = MaterialTheme.shapes.small,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 6.dp),
@@ -1089,7 +1089,7 @@ private fun BagDetailSheet(
             Box(modifier = Modifier.padding(top = 8.dp)) {
                 OutlinedButton(
                     onClick = { statusMenuExpanded = true },
-                    shape = RoundedCornerShape(28.dp),
+                    shape = MaterialTheme.shapes.large,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),

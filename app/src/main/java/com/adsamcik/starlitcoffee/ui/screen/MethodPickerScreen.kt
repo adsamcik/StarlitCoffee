@@ -15,14 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AcUnit
-import androidx.compose.material.icons.filled.Air
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Coffee
-import androidx.compose.material.icons.filled.FilterDrama
-import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.LocalCafe
-import androidx.compose.material.icons.filled.OutdoorGrill
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -33,9 +26,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -48,7 +38,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -56,6 +45,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
+import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
+import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
@@ -63,16 +55,6 @@ import com.adsamcik.starlitcoffee.navigation.AmountStrength
 import com.adsamcik.starlitcoffee.navigation.BrewTimer
 import com.adsamcik.starlitcoffee.navigation.Settings
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
-
-private fun iconForMethod(method: BrewMethod): ImageVector = when (method) {
-    BrewMethod.PULSAR -> Icons.Filled.FilterDrama
-    BrewMethod.V60 -> Icons.Filled.FilterList
-    BrewMethod.FRENCH_PRESS -> Icons.Filled.Coffee
-    BrewMethod.AEROPRESS -> Icons.Filled.Air
-    BrewMethod.ESPRESSO -> Icons.Filled.LocalCafe
-    BrewMethod.MOKA_POT -> Icons.Filled.OutdoorGrill
-    BrewMethod.COLD_BREW -> Icons.Filled.AcUnit
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -237,59 +219,23 @@ fun MethodPickerScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp, bottom = 4.dp),
             )
-            SingleChoiceSegmentedButtonRow(
+            RatioPresetRow(
+                presets = state.ratioPresets,
+                selectedIndex = state.selectedPresetIndex,
+                onSelectPreset = { brewViewModel.selectRatioPreset(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
-            ) {
-                state.ratioPresets.forEachIndexed { index, preset ->
-                    SegmentedButton(
-                        selected = state.selectedPresetIndex == index,
-                        onClick = { brewViewModel.selectRatioPreset(index) },
-                        shape = SegmentedButtonDefaults.itemShape(
-                            index = index,
-                            count = state.ratioPresets.size,
-                        ),
-                    ) {
-                        Text(preset.label)
-                    }
-                }
-            }
+            )
         }
 
         // Live preview
-        ElevatedCard(
-            shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.elevatedCardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 12.dp),
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 14.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text(
-                    text = "☕ ${"%.0f".format(state.coffeeG)}g",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
-                Text(
-                    text = "💧 ${"%.0f".format(state.waterG)}g",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
-                Text(
-                    text = "1:${"%.0f".format(state.effectiveRatio)}",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
-            }
-        }
+        BrewPreviewCard(
+            coffeeG = state.coffeeG,
+            waterG = state.waterG,
+            ratio = state.effectiveRatio,
+            modifier = Modifier.padding(bottom = 12.dp),
+        )
 
         // Guardrail warning
         state.ratioWarning?.let { warning ->
@@ -373,7 +319,7 @@ fun MethodPickerScreen(
         // Start Brewing button
         FilledTonalButton(
             onClick = { navController.navigate(BrewTimer) },
-            shape = RoundedCornerShape(28.dp),
+            shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
@@ -425,7 +371,7 @@ fun MethodPickerScreen(
                                 brewViewModel.selectBag(bag.id)
                                 showBagPicker = false
                             },
-                            shape = RoundedCornerShape(20.dp),
+                            shape = MaterialTheme.shapes.medium,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 8.dp),
