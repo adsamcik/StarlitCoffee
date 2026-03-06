@@ -1026,9 +1026,9 @@ class BrewViewModel(
                     cumulativeWaterG = cumulative,
                     durationSeconds = if (isPulsar) 50 else 45,
                     instruction = if (isPulsar) {
-                        "Valve OPEN → pour ${"%.0f".format(bloomG)}g → wait ~10s → CLOSE valve → gentle swirl"
+                        "Valve OPEN → pour to ${"%.0f".format(cumulative)}g → wait ~10s → CLOSE valve → gentle swirl"
                     } else {
-                        "Pour ${"%.0f".format(bloomG)}g, let CO₂ escape"
+                        "Pour to ${"%.0f".format(cumulative)}g, let CO₂ escape"
                     },
                     valveState = if (isPulsar) "open → close" else "",
                 ),
@@ -1090,7 +1090,7 @@ class BrewViewModel(
                                 if (isLast) append(" → gentle swirl")
                             }
                         } else {
-                            "Pour ${"%.0f".format(pulseSizeG)}g (total ${"%.0f".format(cumulative)}g)"
+                            "Pour to ${"%.0f".format(cumulative)}g (+${"%.0f".format(pulseSizeG)}g)"
                         },
                         valveState = if (isPulsar) "open" else "",
                     ),
@@ -1109,7 +1109,7 @@ class BrewViewModel(
                         waterG = pourWater,
                         cumulativeWaterG = cumulative,
                         durationSeconds = pourDuration,
-                        instruction = "Pour ${"%.0f".format(pourWater)}g total",
+                        instruction = "Pour to ${"%.0f".format(cumulative)}g total",
                     ),
                 )
             }

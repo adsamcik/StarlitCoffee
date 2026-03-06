@@ -53,6 +53,8 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
@@ -289,19 +291,22 @@ private fun BrewInfoSheet(
             InfoRow("⚖️", "Ratio", "1:${"%.1f".format(if (coffeeG > 0f) waterG / coffeeG else 0f)}")
 
             if (refillCount > 0) {
-                InfoRow("🔄", "Refills", "$refillCount — timer guides you")
+                InfoRow("🔄", "Refills", "$refillCount — drains between pours")
             }
 
-            // Valve state
+            // Current phase details
             currentPhase?.let { phase ->
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Current Phase",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                if (phase.cumulativeWater > 0f) {
+                    InfoRow("🎯", "Target", "Pour to ${"%.0f".format(phase.cumulativeWater)}g total")
+                }
                 if (phase.valveState.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "Current Phase",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
                     InfoRow("🔧", "Valve", phase.valveState.replaceFirstChar { it.uppercaseChar() })
                 }
                 if (phase.instruction.isNotEmpty()) {
@@ -429,34 +434,72 @@ private fun PhaseSegmentBar(
     onPhaseSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(6.dp),
-        horizontalArrangement = Arrangement.spacedBy(3.dp),
-    ) {
-        states.forEachIndexed { index, state ->
-            val isActive = index == selectedPhase
-            val isPast = index < selectedPhase
-            val segColor = when (state.phaseType) {
-                PhaseType.BLOOM -> MaterialTheme.colorScheme.tertiary
-                PhaseType.DRAIN_AND_REFILL -> MaterialTheme.colorScheme.error
-                PhaseType.DRAWDOWN -> MaterialTheme.colorScheme.secondary
-                PhaseType.POUR -> MaterialTheme.colorScheme.primary
+    Column(modifier = modifier.fillMaxWidth()) {
+        // Gram labels above the bar — show on active and adjacent pour/bloom phases
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(3.dp),
+        ) {
+            states.forEachIndexed { index, state ->
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    val showLabel = (index in (selectedPhase - 1)..(selectedPhase + 1)) &&
+                        state.cumulativeWater > 0f &&
+                        state.phaseType in listOf(PhaseType.BLOOM, PhaseType.POUR)
+                    if (showLabel) {
+                        Text(
+                            text = "${"%.0f".format(state.cumulativeWater)}g",
+                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = 9.sp,
+                            fontWeight = if (index == selectedPhase) FontWeight.Bold else FontWeight.Normal,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                                alpha = if (index == selectedPhase) 0.9f else 0.5f,
+                            ),
+                        )
+                    }
+                }
             }
-            val alpha = when {
-                isActive -> 1f
-                isPast -> 0.6f
-                else -> 0.2f
+        }
+
+        // Segment bar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(3.dp),
+        ) {
+            states.forEachIndexed { index, state ->
+                val isActive = index == selectedPhase
+                val isPast = index < selectedPhase
+                val segColor = when (state.phaseType) {
+                    PhaseType.BLOOM -> MaterialTheme.colorScheme.tertiary
+                    PhaseType.DRAIN_AND_REFILL -> MaterialTheme.colorScheme.error
+                    PhaseType.DRAWDOWN -> MaterialTheme.colorScheme.secondary
+                    PhaseType.POUR -> MaterialTheme.colorScheme.primary
+                }
+                val alpha = when {
+                    isActive -> 1f
+                    isPast -> 0.6f
+                    else -> 0.2f
+                }
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(3.dp))
+                        .background(segColor.copy(alpha = alpha))
+                        .semantics {
+                            contentDescription = "${state.phaseName}: " +
+                                if (state.cumulativeWater > 0f) "${"%.0f".format(state.cumulativeWater)}g cumulative"
+                                else state.phaseName
+                        }
+                        .clickable { onPhaseSelected(index) },
+                )
             }
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(6.dp)
-                    .clip(RoundedCornerShape(3.dp))
-                    .background(segColor.copy(alpha = alpha))
-                    .clickable { onPhaseSelected(index) },
-            )
         }
     }
 }

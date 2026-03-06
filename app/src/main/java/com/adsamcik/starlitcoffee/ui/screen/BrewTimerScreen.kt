@@ -14,6 +14,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -346,13 +347,28 @@ fun BrewTimerScreen(
             }
         }
 
-        if (finished) {
-            Text(
-                text = "Brew complete! ☕",
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.primary,
+        AnimatedVisibility(
+            visible = finished,
+            enter = fadeIn() + scaleIn(initialScale = 0.8f),
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(top = 16.dp),
-            )
+            ) {
+                Text(
+                    text = "Brew complete! ☕",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                val brewMin = totalElapsed / 60
+                val brewSec = totalElapsed % 60
+                Text(
+                    text = "Brewed in %d:%02d · ${"%.0f".format(uiState.waterG)}g water".format(brewMin, brewSec),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 4.dp),
+                )
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
