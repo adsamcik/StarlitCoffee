@@ -1,33 +1,70 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.adsamcik.starlitcoffee.audio.BrewAudioManager
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
-import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
+import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
+import com.adsamcik.starlitcoffee.data.model.BrewAudioEvent
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
-import com.adsamcik.starlitcoffee.data.model.GrinderDataProvider
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
+import com.adsamcik.starlitcoffee.data.model.GrinderDataProvider
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.data.model.PhaseMode
 import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.data.model.RatioPreset
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
+import com.adsamcik.starlitcoffee.data.network.OpenFoodFactsClient
+import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
+import com.adsamcik.starlitcoffee.data.network.QrLinkExploreResult
+import com.adsamcik.starlitcoffee.data.network.QrLinkMetadataExplorer
+import com.adsamcik.starlitcoffee.data.network.SafeQrLinkMetadataExplorer
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
-import com.adsamcik.starlitcoffee.audio.BrewAudioManager
-import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
-import com.adsamcik.starlitcoffee.data.model.BrewAudioEvent
 import com.adsamcik.starlitcoffee.domain.TimerController
 import com.adsamcik.starlitcoffee.service.TimerStateHolder
+import com.adsamcik.starlitcoffee.util.BagCaptureQuality
+import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
+import com.adsamcik.starlitcoffee.util.BagCaptureSide
+import com.adsamcik.starlitcoffee.util.BagFieldCandidate
+import com.adsamcik.starlitcoffee.util.BagFieldConfidence
+import com.adsamcik.starlitcoffee.util.BagFieldEvidence
+import com.adsamcik.starlitcoffee.util.BagFieldSourceType
+import com.adsamcik.starlitcoffee.util.BagPhotoAnalysis
+import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
+import com.adsamcik.starlitcoffee.util.BagPhotoRect
+import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
+import com.adsamcik.starlitcoffee.util.BagPhotoScanSupport
+import com.adsamcik.starlitcoffee.util.BarcodeInsights
+import com.adsamcik.starlitcoffee.util.CoffeeMetadataMatchStrategy
+import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
+import com.adsamcik.starlitcoffee.util.ImagePreprocessor
+import com.adsamcik.starlitcoffee.util.KnownFieldValues
+import com.adsamcik.starlitcoffee.util.NormalizedCoffeeField
+import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
+import com.adsamcik.starlitcoffee.util.BagReviewSeverity
+import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.Text
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,13 +74,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import android.util.Log
-import androidx.annotation.VisibleForTesting
-import com.adsamcik.starlitcoffee.data.network.OpenFoodFactsClient
-import com.adsamcik.starlitcoffee.util.ImagePreprocessor
-import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.Locale
 
 sealed class GrindResult {
     data class Generic(val descriptor: GrindDescriptor) : GrindResult()
@@ -109,15 +141,6 @@ data class BrewUiState(
     val feedbackNotes: String = "",
 )
 
-data class BagPhotoProcessingResult(
-    val ocrPrefill: OcrFieldExtractor.OcrExtractionResult? = null,
-    val capturedPhotoUris: String? = null,
-    val detectedBarcode: String? = null,
-    val detectedQrUrl: String? = null,
-    val offLookupName: String? = null,
-    val offLookupRoaster: String? = null,
-)
-
 class BrewViewModel(
     private val recipeRepository: RecipeRepository? = null,
     private val brewLogRepository: BrewLogRepository? = null,
@@ -125,6 +148,7 @@ class BrewViewModel(
     private val ratioPresetRepository: RatioPresetRepository? = null,
     private val userPreferencesRepository: UserPreferencesRepository? = null,
     private val grinderData: GrinderDataProvider = DefaultGrinders,
+    private val qrLinkMetadataExplorer: QrLinkMetadataExplorer = SafeQrLinkMetadataExplorer(),
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(BrewUiState())
@@ -133,8 +157,12 @@ class BrewViewModel(
     val savedRecipes: StateFlow<List<SavedRecipeEntity>> = _savedRecipes.asStateFlow()
     private val _brewLogs = MutableStateFlow(emptyList<BrewLogEntity>())
     val brewLogs: StateFlow<List<BrewLogEntity>> = _brewLogs.asStateFlow()
+    private val _flavorTags = MutableStateFlow(emptyList<FlavorTagEntity>())
+    val flavorTags: StateFlow<List<FlavorTagEntity>> = _flavorTags.asStateFlow()
     private val _coffeeBags = MutableStateFlow(emptyList<CoffeeBagEntity>())
     val coffeeBags: StateFlow<List<CoffeeBagEntity>> = _coffeeBags.asStateFlow()
+    private val _knownFieldValues = MutableStateFlow(KnownFieldValues.EMPTY)
+    val knownFieldValues: StateFlow<KnownFieldValues> = _knownFieldValues.asStateFlow()
     private val _selectedBagId = MutableStateFlow<Long?>(null)
     val selectedBagId: StateFlow<Long?> = _selectedBagId.asStateFlow()
     private var lastLoggedBrewId: Long? = null
@@ -162,8 +190,14 @@ class BrewViewModel(
             }
         }
         viewModelScope.launch {
+            brewLogRepository?.getAllFlavorTags()?.collect { tags ->
+                _flavorTags.value = tags
+            }
+        }
+        viewModelScope.launch {
             coffeeBagRepository?.getAllBags()?.collect { bags ->
                 _coffeeBags.value = bags
+                loadKnownFieldValues()
             }
         }
         collectRatioPresets(_uiState.value.method)
@@ -402,6 +436,29 @@ class BrewViewModel(
          *  Prevents false triggers during detector calibration. */
         private const val AUDIO_ADVANCE_MIN_PHASE_SECONDS = 3
         private const val BAG_PHOTO_TAG = "BagPhotoProcessing"
+        private val CANONICAL_METADATA_FIELDS = setOf(
+            "origin",
+            "region",
+            "variety",
+            "processType",
+            "tastingNotes",
+            "roastLevel",
+        )
+        private val BAG_PHOTO_FIELD_NAMES = listOf(
+            "name",
+            "roaster",
+            "origin",
+            "region",
+            "farm",
+            "variety",
+            "processType",
+            "altitude",
+            "tastingNotes",
+            "roastLevel",
+            "roastDate",
+            "expiryDate",
+            "weight",
+        )
     }
 
     fun startAudioMonitoring() {
@@ -644,6 +701,11 @@ class BrewViewModel(
             ?: flowOf(emptyList())
     }
 
+    fun getFlavorTagsForBag(bagId: Long): Flow<List<FlavorTagEntity>> {
+        return brewLogRepository?.getFlavorTagsForBag(bagId)
+            ?: flowOf(emptyList())
+    }
+
     suspend fun getBrewLogById(logId: Long): BrewLogEntity? {
         return brewLogRepository?.getLogById(logId)
     }
@@ -693,8 +755,11 @@ class BrewViewModel(
         status: String = "SEALED",
     ) {
         val repository = coffeeBagRepository ?: return
+        val normalizedBarcode = BarcodeInsights.normalizeBarcode(barcode)
+            ?: barcode?.trim()?.takeIf { it.isNotBlank() }
+        val locale = Locale.getDefault()
         viewModelScope.launch {
-            repository.insertBag(
+            val entity = CoffeeMetadataNormalizer.applyToBagEntity(
                 CoffeeBagEntity(
                     name = name,
                     roaster = roaster,
@@ -707,7 +772,7 @@ class BrewViewModel(
                     roastDate = roastDate,
                     expiryDate = expiryDate,
                     openedDate = openedDate,
-                    barcode = barcode,
+                    barcode = normalizedBarcode,
                     weightG = weightG,
                     initialWeightG = weightG,
                     priceAmount = priceAmount,
@@ -718,14 +783,38 @@ class BrewViewModel(
                     traceabilityUrl = traceabilityUrl,
                     status = status,
                 ),
+                origin = origin,
+                region = region,
+                roastLevel = roastLevel,
+                processType = processType,
+                variety = variety,
+                tastingNotes = tastingNotes,
+                locale = locale,
             )
+            repository.insertBag(entity)
+            loadKnownFieldValues()
         }
     }
 
     fun updateCoffeeBag(entity: CoffeeBagEntity) {
         val repository = coffeeBagRepository ?: return
+        val normalizedBarcode = BarcodeInsights.normalizeBarcode(entity.barcode)
+            ?: entity.barcode?.trim()?.takeIf { it.isNotBlank() }
+        val locale = Locale.getDefault()
         viewModelScope.launch {
-            repository.updateBag(entity)
+            repository.updateBag(
+                CoffeeMetadataNormalizer.applyToBagEntity(
+                    bag = entity.copy(barcode = normalizedBarcode),
+                    origin = entity.origin,
+                    region = entity.region,
+                    roastLevel = entity.roastLevel,
+                    processType = entity.processType,
+                    variety = entity.variety,
+                    tastingNotes = entity.tastingNotes,
+                    locale = locale,
+                ),
+            )
+            loadKnownFieldValues()
         }
     }
 
@@ -733,6 +822,7 @@ class BrewViewModel(
         val repository = coffeeBagRepository ?: return
         viewModelScope.launch {
             repository.deleteBag(entity)
+            loadKnownFieldValues()
         }
     }
 
@@ -760,167 +850,612 @@ class BrewViewModel(
     }
 
     fun findBagByBarcode(barcode: String, onResult: (CoffeeBagEntity?) -> Unit) {
-        val repository = coffeeBagRepository ?: run {
+        if (coffeeBagRepository == null) {
             onResult(null)
             return
         }
         viewModelScope.launch {
-            val bag = repository.findByBarcode(barcode)
-            onResult(bag)
+            onResult(findLocalBagByBarcode(barcode))
         }
     }
-
-
-    fun processNewBagPhotos(photosCsv: String, knownRoasters: List<String>, knownNames: List<String>) {
+    fun processNewBagPhotos(
+        photosCsv: String,
+        knownFieldValues: KnownFieldValues = _knownFieldValues.value,
+    ) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val photoUriList = photosCsv.split(",")
-                val ocrResults = mutableListOf<OcrFieldExtractor.OcrExtractionResult>()
-                var detectedBarcode: String? = null
-                var detectedQrUrl: String? = null
+                val photoUriList = photosCsv.split(",").map(String::trim).filter(String::isNotBlank)
+                if (photoUriList.isEmpty()) {
+                    _bagPhotoResult.value = BagPhotoProcessingResult(capturedPhotoUris = photosCsv)
+                    return@withContext
+                }
 
-                for (uriStr in photoUriList) {
-                    try {
-                        val file = java.io.File(android.net.Uri.parse(uriStr).path ?: continue)
-                        val rawBitmap = android.graphics.BitmapFactory.decodeFile(file.absolutePath) ?: continue
-
-                        val bitmap = ImagePreprocessor.applyExifRotation(rawBitmap, file.absolutePath)
-
-                        val recognizer = com.google.mlkit.vision.text.TextRecognition.getClient(
-                            com.google.mlkit.vision.text.latin.TextRecognizerOptions.DEFAULT_OPTIONS,
+                val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+                val barcodeScanner = BarcodeScanning.getClient()
+                try {
+                    val processedPhotos= photoUriList.mapIndexedNotNull { index, uriStr ->
+                        processBagPhoto(
+                            uriStr = uriStr,
+                            side = if (index == 0) BagCaptureSide.FRONT else BagCaptureSide.BACK,
+                            knownFieldValues = knownFieldValues,
+                            recognizer = recognizer,
+                            barcodeScanner = barcodeScanner,
                         )
-
-                        val originalText = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-                            recognizer.process(
-                                com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0),
-                            )
-                                .addOnSuccessListener { text -> cont.resume(text, null) }
-                                .addOnFailureListener { cont.resume(null, null) }
-                        }
-
-                        val aligned = if (originalText != null && originalText.textBlocks.isNotEmpty()) {
-                            val alignment = ImagePreprocessor.computeAlignment(originalText.textBlocks)
-                            ImagePreprocessor.applyAlignment(bitmap, alignment)
-                        } else {
-                            bitmap
-                        }
-
-                        val enhanced = ImagePreprocessor.preprocessForOcr(aligned)
-                        val enhancedText = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-                            recognizer.process(
-                                com.google.mlkit.vision.common.InputImage.fromBitmap(enhanced, 0),
-                            )
-                                .addOnSuccessListener { text -> cont.resume(text, null) }
-                                .addOnFailureListener { cont.resume(null, null) }
-                        }
-
-                        val origResult = originalText?.let { text ->
-                            val blocks = text.textBlocks.map { block ->
-                                OcrFieldExtractor.OcrTextBlock(
-                                    text = block.text,
-                                    heightPx = block.boundingBox?.height() ?: 0,
-                                    topPx = block.boundingBox?.top ?: 0,
-                                )
-                            }
-                            OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownRoasters, knownNames)
-                        }
-                        val enhResult = enhancedText?.let { text ->
-                            val blocks = text.textBlocks.map { block ->
-                                OcrFieldExtractor.OcrTextBlock(
-                                    text = block.text,
-                                    heightPx = block.boundingBox?.height() ?: 0,
-                                    topPx = block.boundingBox?.top ?: 0,
-                                )
-                            }
-                            OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownRoasters, knownNames)
-                        }
-                        if (origResult != null || enhResult != null) {
-                            ocrResults.add(
-                                OcrFieldExtractor.OcrExtractionResult(
-                                    name = enhResult?.name ?: origResult?.name,
-                                    roaster = enhResult?.roaster ?: origResult?.roaster,
-                                    origin = enhResult?.origin ?: origResult?.origin,
-                                    region = enhResult?.region ?: origResult?.region,
-                                    variety = enhResult?.variety ?: origResult?.variety,
-                                    processType = enhResult?.processType ?: origResult?.processType,
-                                    altitude = enhResult?.altitude ?: origResult?.altitude,
-                                    tastingNotes = enhResult?.tastingNotes ?: origResult?.tastingNotes,
-                                    roastLevel = enhResult?.roastLevel ?: origResult?.roastLevel,
-                                    roastDate = enhResult?.roastDate ?: origResult?.roastDate,
-                                    weight = enhResult?.weight ?: origResult?.weight,
-                                ),
-                            )
-                        }
-                        val allOcrText = listOfNotNull(originalText?.text, enhancedText?.text)
-                            .joinToString("\n")
-                        if (detectedBarcode == null && allOcrText.isNotEmpty()) {
-                            detectedBarcode = OcrFieldExtractor.extractBarcodeFromText(allOcrText)
-                        }
-
-                        val scanner = com.google.mlkit.vision.barcode.BarcodeScanning.getClient()
-                        val barcodes = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-                            scanner.process(
-                                com.google.mlkit.vision.common.InputImage.fromBitmap(bitmap, 0),
-                            )
-                                .addOnSuccessListener { codes -> cont.resume(codes, null) }
-                                .addOnFailureListener { cont.resume(null, null) }
-                        }
-                        barcodes?.forEach { code ->
-                            val raw = code.rawValue ?: return@forEach
-                            if (raw.startsWith("http://") || raw.startsWith("https://")) {
-                                if (detectedQrUrl == null) detectedQrUrl = raw
-                            } else {
-                                if (detectedBarcode == null) detectedBarcode = raw
-                            }
-                        }
-                    } catch (e: Exception) {
-                        Log.w(BAG_PHOTO_TAG, "Failed to process bag photo for OCR and barcode extraction", e)
                     }
-                }
 
-                val ocrPrefill = if (ocrResults.isNotEmpty()) {
-                    OcrFieldExtractor.OcrExtractionResult(
-                        name = ocrResults.firstNotNullOfOrNull { it.name },
-                        roaster = ocrResults.firstNotNullOfOrNull { it.roaster },
-                        origin = ocrResults.firstNotNullOfOrNull { it.origin },
-                        region = ocrResults.firstNotNullOfOrNull { it.region },
-                        variety = ocrResults.firstNotNullOfOrNull { it.variety },
-                        processType = ocrResults.firstNotNullOfOrNull { it.processType },
-                        altitude = ocrResults.firstNotNullOfOrNull { it.altitude },
-                        tastingNotes = ocrResults.firstNotNullOfOrNull { it.tastingNotes },
-                        roastLevel = ocrResults.firstNotNullOfOrNull { it.roastLevel },
-                        roastDate = ocrResults.firstNotNullOfOrNull { it.roastDate },
-                        weight = ocrResults.firstNotNullOfOrNull { it.weight },
+                    val photoAnalyses = processedPhotos.map { photo ->
+                        BagPhotoAnalysis(
+                            uri = photo.uri,
+                            side = photo.side,
+                            quality = photo.quality,
+                            extractedText = photo.fullText,
+                        )
+                    }
+
+                    var detectedBarcode = processedPhotos.firstNotNullOfOrNull { it.detectedBarcode }
+                    val rawDetectedQrUrl = processedPhotos.firstNotNullOfOrNull { it.detectedQrUrl }
+                    val allCandidates = processedPhotos
+                        .flatMap { photo -> buildFieldCandidates(photo) }
+                        .toMutableList()
+                    val combinedOcrText = processedPhotos.joinToString("\n\n") { it.fullText }.trim()
+
+                    if (detectedBarcode == null && combinedOcrText.isNotBlank()) {
+                        detectedBarcode = OcrFieldExtractor.extractBarcodeFromText(combinedOcrText)
+                    }
+                    detectedBarcode = BarcodeInsights.normalizeBarcode(detectedBarcode)
+                        ?: detectedBarcode?.trim()?.takeIf { it.isNotBlank() }
+                    val matchedBagByBarcode = findLocalBagByBarcode(detectedBarcode)
+                    matchedBagByBarcode?.let { matchedBag ->
+                        allCandidates += BarcodeInsights.buildLocalMatchCandidates(matchedBag)
+                    }
+                    val observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode)
+                    allCandidates += BarcodeInsights.buildObservedStemCandidates(observedStemMatch)
+
+                    var offLookupName: String? = null
+                    var offLookupRoaster: String? = null
+                    detectedBarcode?.let { barcode ->
+                        try {
+                            val lookup = OpenFoodFactsClient.lookupBarcode(barcode)
+                            if (lookup != null) {
+                                offLookupName = lookup.name
+                                offLookupRoaster = lookup.brand
+                                if (!lookup.name.isNullOrBlank()) {
+                                    allCandidates += BagFieldCandidate(
+                                        fieldName = "name",
+                                        value = lookup.name,
+                                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                                        confidenceHint = BagFieldConfidence.HIGH,
+                                    )
+                                }
+                                if (!lookup.brand.isNullOrBlank()) {
+                                    allCandidates += BagFieldCandidate(
+                                        fieldName = "roaster",
+                                        value = lookup.brand,
+                                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                                        confidenceHint = BagFieldConfidence.HIGH,
+                                    )
+                                }
+                            }
+                        } catch (e: Exception) {
+                            Log.w(BAG_PHOTO_TAG, "Failed to fetch product info from OpenFoodFacts", e)
+                        }
+                    }
+
+                    val qrEnrichment= buildQrLinkEnrichment(rawDetectedQrUrl)
+                    allCandidates += qrEnrichment.candidates
+
+                    val fieldEvidence = buildMap<String, BagFieldEvidence> {
+                        for (fieldName in BAG_PHOTO_FIELD_NAMES) {
+                            val resolved = BagPhotoScanSupport.resolveField(
+                                fieldName = fieldName,
+                                candidates = allCandidates.filter { it.fieldName == fieldName },
+                            )
+                            if (resolved != null) {
+                                put(fieldName, resolved)
+                            }
+                        }
+                    }
+
+                    val reviewHints = BagPhotoScanSupport.buildReviewHints(
+                        photoAnalyses = photoAnalyses,
+                        resolvedFields = fieldEvidence,
+                        additionalHints = BarcodeInsights.buildBarcodeReviewHints(
+                            barcode = detectedBarcode,
+                            matchedBag = matchedBagByBarcode,
+                            observedStemMatch = observedStemMatch,
+                        ) + qrEnrichment.reviewHints,
                     )
-                } else {
-                    null
-                }
+                    val ocrPrefill = fieldEvidence
+                        .takeIf { it.isNotEmpty() }
+                        ?.let(BagPhotoScanSupport::buildPrefill)
 
-                var offLookupName: String? = null
-                var offLookupRoaster: String? = null
-                detectedBarcode?.let { barcode ->
-                    try {
-                        val result = OpenFoodFactsClient.lookupBarcode(barcode)
-                        if (result != null) {
-                            offLookupName = result.name
-                            offLookupRoaster = result.brand
-                        }
-                    } catch (e: Exception) {
-                        Log.w(BAG_PHOTO_TAG, "Failed to fetch product info from OpenFoodFacts", e)
-                    }
+                    _bagPhotoResult.value = BagPhotoProcessingResult(
+                        ocrPrefill = ocrPrefill,
+                        capturedPhotoUris = photosCsv,
+                        detectedBarcode = detectedBarcode,
+                        detectedQrUrl = qrEnrichment.safeUrl,
+                        offLookupName = offLookupName,
+                        offLookupRoaster = offLookupRoaster,
+                        fieldEvidence = fieldEvidence,
+                        photoAnalyses = photoAnalyses,
+                        reviewHints = reviewHints,
+                    )
+                } finally {
+                    recognizer.close()
+                    barcodeScanner.close()
                 }
-
-                _bagPhotoResult.value = BagPhotoProcessingResult(
-                    ocrPrefill = ocrPrefill,
-                    capturedPhotoUris = photosCsv,
-                    detectedBarcode = detectedBarcode,
-                    detectedQrUrl = detectedQrUrl,
-                    offLookupName = offLookupName,
-                    offLookupRoaster = offLookupRoaster,
-                )
             }
         }
     }
+
+    fun processNewBagPhotos(
+        photosCsv: String,
+        knownRoasters: List<String>,
+        knownNames: List<String>,
+    ) {
+        processNewBagPhotos(
+            photosCsv = photosCsv,
+            knownFieldValues = _knownFieldValues.value.copy(
+                roasters = knownRoasters,
+                names = knownNames,
+            ),
+        )
+    }
+
+    private suspend fun processBagPhoto(
+        uriStr: String,
+        side: BagCaptureSide,
+        knownFieldValues: KnownFieldValues,
+        recognizer: com.google.mlkit.vision.text.TextRecognizer,
+        barcodeScanner: com.google.mlkit.vision.barcode.BarcodeScanner,
+    ): ProcessedBagPhoto? {
+        return try {
+            val file = java.io.File(Uri.parse(uriStr).path ?: return null)
+            val rawBitmap = BitmapFactory.decodeFile(file.absolutePath) ?: return null
+            val bitmap = ImagePreprocessor.applyExifRotation(rawBitmap, file.absolutePath)
+
+            val originalText = recognizeText(recognizer, bitmap)
+            val alignedBitmap = if (originalText != null && originalText.textBlocks.isNotEmpty()) {
+                val alignment = ImagePreprocessor.computeAlignment(originalText.textBlocks)
+                ImagePreprocessor.applyAlignment(bitmap, alignment)
+            } else {
+                bitmap
+            }
+            val alignedText = recognizeText(recognizer, alignedBitmap)
+            val enhancedBitmap = ImagePreprocessor.preprocessForOcr(alignedBitmap)
+            val enhancedText = recognizeText(recognizer, enhancedBitmap)
+
+            val passes = listOfNotNull(
+                buildScanPass("original", bitmap, originalText, knownFieldValues),
+                buildScanPass("aligned", alignedBitmap, alignedText, knownFieldValues),
+                buildScanPass("enhanced", enhancedBitmap, enhancedText, knownFieldValues),
+            )
+
+            val mergedText = passes.joinToString("\n") { it.fullText }.trim()
+            val textBlockCount = passes.maxOfOrNull { it.blocks.size } ?: 0
+            val quality = BagCaptureQualityAnalyzer.analyzeBitmap(
+                bitmap = bitmap,
+                textBlockCount = textBlockCount,
+                textDetected = textBlockCount > 0,
+            )
+
+            var detectedBarcode = if (mergedText.isNotBlank()) {
+                OcrFieldExtractor.extractBarcodeFromText(mergedText)
+            } else {
+                null
+            }
+            var detectedQrUrl: String? = null
+
+            scanBarcodes(barcodeScanner, bitmap)?.forEach { code ->
+                val rawValue = code.rawValue ?: return@forEach
+                if (rawValue.startsWith("http://") || rawValue.startsWith("https://")) {
+                    if (detectedQrUrl == null) detectedQrUrl = rawValue
+                } else if (detectedBarcode == null) {
+                    detectedBarcode = rawValue
+                }
+            }
+
+            ProcessedBagPhoto(
+                uri = uriStr,
+                side = side,
+                quality = quality,
+                passes = passes,
+                fullText = mergedText,
+                detectedBarcode = detectedBarcode,
+                detectedQrUrl = detectedQrUrl,
+            )
+        } catch (e: Exception) {
+            Log.w(BAG_PHOTO_TAG, "Failed to process bag photo for OCR and barcode extraction", e)
+            null
+        }
+    }
+
+    private fun buildScanPass(
+        label: String,
+        bitmap: Bitmap,
+        text: Text?,
+        knownFieldValues: KnownFieldValues,
+    ): ScanPass? {
+        val ocrText = text ?: return null
+        val blocks = ocrText.textBlocks.map { block ->
+            OcrFieldExtractor.OcrTextBlock(
+                text = block.text,
+                heightPx = block.boundingBox?.height() ?: 0,
+                topPx = block.boundingBox?.top ?: 0,
+                leftPx = block.boundingBox?.left ?: 0,
+                widthPx = block.boundingBox?.width() ?: 0,
+                imageWidthPx = bitmap.width,
+                imageHeightPx = bitmap.height,
+            )
+        }
+        return ScanPass(
+            label = label,
+            result = OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownFieldValues),
+            blocks = blocks,
+            fullText = ocrText.text,
+        )
+    }
+
+    private fun loadKnownFieldValues() {
+        val repository = coffeeBagRepository ?: run {
+            _knownFieldValues.value = KnownFieldValues.EMPTY
+            return
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val bags = repository.getAllBags().first()
+            val locale = Locale.getDefault()
+            val resolvedMetadata = bags.map { bag -> CoffeeMetadataNormalizer.resolveBagMetadata(bag, locale) }
+            _knownFieldValues.value = KnownFieldValues(
+                names = bags.map { it.name }.sanitizeKnownValues(),
+                roasters = bags.mapNotNull { it.roaster }.sanitizeKnownValues(),
+                origins = resolvedMetadata.mapNotNull { it.origin }.sanitizeKnownValues(),
+                regions = resolvedMetadata.mapNotNull { it.region }.sanitizeKnownValues(),
+                varieties = resolvedMetadata
+                    .mapNotNull { it.variety }
+                    .flatMap(::splitMetadataValues)
+                    .sanitizeKnownValues(),
+                processTypes = resolvedMetadata.mapNotNull { it.processType }.sanitizeKnownValues(),
+                roastLevels = resolvedMetadata
+                    .mapNotNull { it.roastLevel }
+                    .flatMap(::splitMetadataValues)
+                    .sanitizeKnownValues(),
+                farms = bags.mapNotNull { it.farm }.sanitizeKnownValues(),
+            )
+        }
+    }
+
+    private fun buildFieldCandidates(photo: ProcessedBagPhoto): List<BagFieldCandidate> = buildList {
+        val locale = Locale.getDefault()
+        photo.passes.forEach { pass ->
+            val confidenceHint = confidenceHintForPass(photo.quality, pass.blocks.size)
+            addFieldCandidate("name", pass.result.name, photo, pass, confidenceHint, locale)
+            addFieldCandidate("roaster", pass.result.roaster, photo, pass, confidenceHint, locale)
+            addFieldCandidate("origin", pass.result.origin, photo, pass, confidenceHint, locale)
+            addFieldCandidate("region", pass.result.region, photo, pass, confidenceHint, locale)
+            addFieldCandidate("farm", pass.result.farm, photo, pass, confidenceHint, locale)
+            addFieldCandidate("variety", pass.result.variety, photo, pass, confidenceHint, locale)
+            addFieldCandidate("processType", pass.result.processType, photo, pass, confidenceHint, locale)
+            addFieldCandidate("altitude", pass.result.altitude, photo, pass, confidenceHint, locale)
+            addFieldCandidate("tastingNotes", pass.result.tastingNotes, photo, pass, confidenceHint, locale)
+            addFieldCandidate("roastLevel", pass.result.roastLevel, photo, pass, confidenceHint, locale)
+            addFieldCandidate("roastDate", pass.result.roastDate, photo, pass, confidenceHint, locale)
+            addFieldCandidate("expiryDate", pass.result.expiryDate, photo, pass, confidenceHint, locale)
+            addFieldCandidate("weight", pass.result.weight, photo, pass, confidenceHint, locale)
+        }
+    }
+
+    private fun MutableList<BagFieldCandidate>.addFieldCandidate(
+        fieldName: String,
+        value: String?,
+        photo: ProcessedBagPhoto,
+        pass: ScanPass,
+        confidenceHint: BagFieldConfidence,
+        locale: Locale,
+    ) {
+        val cleanValue = value?.trim()?.takeIf { it.isNotBlank() } ?: return
+        val supportingBlock = findSupportingBlock(pass.blocks, cleanValue)
+        val normalized = normalizeMetadataField(fieldName, cleanValue, locale)
+        add(
+            BagFieldCandidate(
+                fieldName = fieldName,
+                value = normalized?.value ?: cleanValue,
+                rawValue = cleanValue,
+                canonicalKey = normalized?.canonicalKey,
+                sourceType = BagFieldSourceType.OCR,
+                side = photo.side,
+                confidenceHint = confidenceHint,
+                matchStrategy = normalized?.matchStrategy,
+                supportingText = supportingBlock?.text ?: pass.fullText.lineSequence().firstOrNull { line ->
+                    line.contains(cleanValue, ignoreCase = true)
+                },
+                previewUri = photo.uri,
+                previewRect = supportingBlock?.normalizedBounds(),
+            ),
+        )
+        addInferredMetadataCandidates(
+            normalized = normalized,
+            rawValue = cleanValue,
+            sourceType = BagFieldSourceType.OCR,
+            confidenceHint = confidenceHint,
+            side = photo.side,
+            supportingText = supportingBlock?.text ?: pass.fullText.lineSequence().firstOrNull { line ->
+                line.contains(cleanValue, ignoreCase = true)
+            },
+            previewUri = photo.uri,
+            previewRect = supportingBlock?.normalizedBounds(),
+            locale = locale,
+        )
+    }
+
+    private suspend fun buildQrLinkEnrichment(rawUrl: String?): QrLinkEnrichment {
+        val safeUrl = SafeQrLinkMetadataExplorer.sanitizePublicWebUrl(rawUrl)
+        if (rawUrl != null && safeUrl == null) {
+            return QrLinkEnrichment(
+                reviewHints = listOf(
+                    BagPhotoReviewHint(
+                        severity = BagReviewSeverity.INFO,
+                        message = "Ignored an unsafe QR website link. Only public http(s) pages are supported.",
+                    ),
+                ),
+            )
+        }
+        if (safeUrl == null) return QrLinkEnrichment()
+
+        val qrLookupEnabled = userPreferencesRepository
+            ?.userPreferences
+            ?.first()
+            ?.qrLinkExplorerEnabled == true
+
+        if (!qrLookupEnabled) {
+            return QrLinkEnrichment(
+                safeUrl = safeUrl,
+                reviewHints = listOf(
+                    BagPhotoReviewHint(
+                        severity = BagReviewSeverity.INFO,
+                        message = "QR website saved, but automatic QR exploration is off in Settings.",
+                    ),
+                ),
+            )
+        }
+
+        return when (val result = qrLinkMetadataExplorer.explore(safeUrl)) {
+            is QrLinkExploreResult.Success -> {
+                val candidates = buildQrLinkCandidates(result.metadata)
+                QrLinkEnrichment(
+                    safeUrl = safeUrl,
+                    candidates = candidates,
+                    reviewHints = listOf(
+                        BagPhotoReviewHint(
+                            severity = BagReviewSeverity.INFO,
+                            message = if (candidates.isEmpty()) {
+                                "QR website reached, but it did not expose usable coffee details."
+                            } else {
+                                "Fetched extra coffee hints from ${result.metadata.host}. Review them before saving."
+                            },
+                        ),
+                    ),
+                )
+            }
+            is QrLinkExploreResult.Skipped -> QrLinkEnrichment(
+                safeUrl = safeUrl.takeIf { result.keepUrl },
+                reviewHints = listOf(
+                    BagPhotoReviewHint(
+                        severity = BagReviewSeverity.INFO,
+                        message = result.reason,
+                    ),
+                ),
+            )
+        }
+    }
+
+    private fun buildQrLinkCandidates(metadata: QrCoffeeMetadata): List<BagFieldCandidate> = buildList {
+        val locale = Locale.getDefault()
+        addQrLinkCandidate("name", metadata.name, BagFieldConfidence.HIGH, metadata, locale)
+        addQrLinkCandidate("roaster", metadata.roaster, BagFieldConfidence.HIGH, metadata, locale)
+        addQrLinkCandidate("origin", metadata.origin, BagFieldConfidence.MEDIUM, metadata, locale)
+        addQrLinkCandidate("region", metadata.region, BagFieldConfidence.MEDIUM, metadata, locale)
+        addQrLinkCandidate("processType", metadata.processType, BagFieldConfidence.MEDIUM, metadata, locale)
+        addQrLinkCandidate("tastingNotes", metadata.tastingNotes, BagFieldConfidence.MEDIUM, metadata, locale)
+    }
+
+    private fun MutableList<BagFieldCandidate>.addQrLinkCandidate(
+        fieldName: String,
+        value: String?,
+        confidenceHint: BagFieldConfidence,
+        metadata: QrCoffeeMetadata,
+        locale: Locale,
+    ) {
+        val cleanValue = value?.trim()?.takeIf { it.isNotBlank() } ?: return
+        val normalized = normalizeMetadataField(fieldName, cleanValue, locale)
+        add(
+            BagFieldCandidate(
+                fieldName = fieldName,
+                value = normalized?.value ?: cleanValue,
+                rawValue = cleanValue,
+                canonicalKey = normalized?.canonicalKey,
+                sourceType = BagFieldSourceType.QR_LINK_LOOKUP,
+                confidenceHint = confidenceHint,
+                matchStrategy = normalized?.matchStrategy,
+                supportingText = buildQrSupportingText(fieldName, metadata),
+            ),
+        )
+        addInferredMetadataCandidates(
+            normalized = normalized,
+            rawValue = cleanValue,
+            sourceType = BagFieldSourceType.QR_LINK_LOOKUP,
+            confidenceHint = confidenceHint,
+            supportingText = buildQrSupportingText(fieldName, metadata),
+            locale = locale,
+        )
+    }
+
+    private fun normalizeMetadataField(
+        fieldName: String,
+        rawValue: String,
+        locale: Locale,
+    ): NormalizedCoffeeField? =
+        rawValue.takeIf { fieldName in CANONICAL_METADATA_FIELDS }
+            ?.let { CoffeeMetadataNormalizer.normalizeField(fieldName, it, locale) }
+
+    private fun MutableList<BagFieldCandidate>.addInferredMetadataCandidates(
+        normalized: NormalizedCoffeeField?,
+        rawValue: String,
+        sourceType: BagFieldSourceType,
+        confidenceHint: BagFieldConfidence,
+        side: BagCaptureSide? = null,
+        supportingText: String? = null,
+        previewUri: String? = null,
+        previewRect: BagPhotoRect? = null,
+        locale: Locale,
+    ) {
+        normalized?.relatedCanonicalKeys
+            ?.filterKeys { it in BAG_PHOTO_FIELD_NAMES }
+            ?.forEach { (fieldName, canonicalKey) ->
+                val localizedValue = CoffeeMetadataNormalizer.displayField(
+                    fieldName = fieldName,
+                    canonicalKey = canonicalKey,
+                    fallbackRaw = rawValue,
+                    locale = locale,
+                ) ?: return@forEach
+                add(
+                    BagFieldCandidate(
+                        fieldName = fieldName,
+                        value = localizedValue,
+                        rawValue = rawValue,
+                        canonicalKey = canonicalKey,
+                        sourceType = sourceType,
+                        side = side,
+                        confidenceHint = inferredConfidence(confidenceHint),
+                        matchStrategy = CoffeeMetadataMatchStrategy.RELATION_INFERENCE,
+                        supportingText = supportingText,
+                        previewUri = previewUri,
+                        previewRect = previewRect,
+                    ),
+                )
+            }
+    }
+
+    private fun inferredConfidence(confidence: BagFieldConfidence): BagFieldConfidence = when (confidence) {
+        BagFieldConfidence.HIGH -> BagFieldConfidence.MEDIUM
+        BagFieldConfidence.MEDIUM -> BagFieldConfidence.LOW
+        BagFieldConfidence.LOW -> BagFieldConfidence.LOW
+        BagFieldConfidence.NEEDS_REVIEW -> BagFieldConfidence.NEEDS_REVIEW
+    }
+
+    private fun splitMetadataValues(values: String): List<String> = values
+        .split(",")
+        .map(String::trim)
+        .filter(String::isNotBlank)
+
+    private fun buildQrSupportingText(
+        fieldName: String,
+        metadata: QrCoffeeMetadata,
+    ): String {
+        val hostLabel = metadata.host.removePrefix("www.")
+        val detail = when (fieldName) {
+            "name" -> metadata.pageTitle ?: metadata.pageDescription
+            "roaster" -> metadata.pageTitle ?: metadata.pageDescription
+            "origin", "region", "processType", "tastingNotes" ->
+                metadata.supportingSnippet ?: metadata.pageDescription ?: metadata.pageTitle
+            else -> metadata.pageTitle ?: metadata.pageDescription
+        }?.take(160)
+
+        return if (detail.isNullOrBlank()) {
+            "Parsed from $hostLabel"
+        } else {
+            "Parsed from $hostLabel: $detail"
+        }
+    }
+
+    private suspend fun findLocalBagByBarcode(barcode: String?): CoffeeBagEntity? {
+        val repository = coffeeBagRepository ?: return null
+        val rawBarcode = barcode?.trim()?.takeIf { it.isNotBlank() } ?: return null
+        val normalizedBarcode = BarcodeInsights.normalizeBarcode(rawBarcode)
+
+        return when {
+            normalizedBarcode != null && normalizedBarcode != rawBarcode ->
+                repository.findByBarcode(normalizedBarcode) ?: repository.findByBarcode(rawBarcode)
+            normalizedBarcode != null -> repository.findByBarcode(normalizedBarcode)
+            else -> repository.findByBarcode(rawBarcode)
+        }
+    }
+
+    private fun confidenceHintForPass(
+        quality: BagCaptureQuality,
+        blockCount: Int,
+    ): BagFieldConfidence = when {
+        quality.readyForCapture && blockCount >= 2 -> BagFieldConfidence.MEDIUM
+        quality.textDetected -> BagFieldConfidence.LOW
+        else -> BagFieldConfidence.NEEDS_REVIEW
+    }
+
+    private fun findSupportingBlock(
+        blocks: List<OcrFieldExtractor.OcrTextBlock>,
+        value: String,
+    ): OcrFieldExtractor.OcrTextBlock? {
+        val normalizedValue = normalizeMatchText(value)
+        if (normalizedValue.isBlank()) return null
+
+        blocks.firstOrNull { block ->
+            normalizeMatchText(block.text).contains(normalizedValue)
+        }?.let { return it }
+
+        val targetTokens = normalizedValue.split(" ").filter { it.length >= 3 }
+        if (targetTokens.isEmpty()) return null
+
+        return blocks.maxByOrNull { block ->
+            val normalizedBlock = normalizeMatchText(block.text)
+            targetTokens.count { token -> normalizedBlock.contains(token) }
+        }?.takeIf { block ->
+            val normalizedBlock = normalizeMatchText(block.text)
+            targetTokens.any { token -> normalizedBlock.contains(token) }
+        }
+    }
+
+    private fun normalizeMatchText(text: String): String =
+        text.lowercase().replace(Regex("[^\\p{L}\\p{N}]+"), " ").trim()
+
+    private suspend fun recognizeText(
+        recognizer: com.google.mlkit.vision.text.TextRecognizer,
+        bitmap: Bitmap,
+    ): Text? = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+        recognizer.process(InputImage.fromBitmap(bitmap, 0))
+            .addOnSuccessListener { result -> cont.resume(result, null) }
+            .addOnFailureListener { cont.resume(null, null) }
+    }
+
+    private suspend fun scanBarcodes(
+        scanner: com.google.mlkit.vision.barcode.BarcodeScanner,
+        bitmap: Bitmap,
+    ): List<Barcode>? = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+        scanner.process(InputImage.fromBitmap(bitmap, 0))
+            .addOnSuccessListener { codes -> cont.resume(codes, null) }
+            .addOnFailureListener { cont.resume(null, null) }
+    }
+
+    private data class ProcessedBagPhoto(
+        val uri: String,
+        val side: BagCaptureSide,
+        val quality: BagCaptureQuality,
+        val passes: List<ScanPass>,
+        val fullText: String,
+        val detectedBarcode: String?,
+        val detectedQrUrl: String?,
+    )
+
+    private data class QrLinkEnrichment(
+        val safeUrl: String? = null,
+        val candidates: List<BagFieldCandidate> = emptyList(),
+        val reviewHints: List<BagPhotoReviewHint> = emptyList(),
+    )
+
+    private data class ScanPass(
+        val label: String,
+        val result: OcrFieldExtractor.OcrExtractionResult,
+        val blocks: List<OcrFieldExtractor.OcrTextBlock>,
+        val fullText: String,
+    )
 
     fun clearBagPhotoResult() {
         _bagPhotoResult.value = null
@@ -1332,4 +1867,10 @@ class BrewViewModel(
         _uiState.value = state
     }
 }
+
+private fun List<String>.sanitizeKnownValues(): List<String> = this
+    .map { it.trim() }
+    .filter { it.isNotEmpty() }
+    .distinct()
+    .sorted()
 

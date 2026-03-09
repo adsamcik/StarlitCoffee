@@ -9,12 +9,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ShoppingBag
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -32,6 +35,8 @@ import com.adsamcik.starlitcoffee.ui.component.AddBagSheet
 import com.adsamcik.starlitcoffee.ui.component.BagCard
 import com.adsamcik.starlitcoffee.ui.component.BagDetailSheet
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
+import com.adsamcik.starlitcoffee.util.BagFieldEvidence
+import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -49,6 +54,7 @@ fun BagInventoryScreen(
 ){
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
+    val knownFieldValues by brewViewModel.knownFieldValues.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
 
     var showAddSheet by remember { mutableStateOf(false) }
@@ -60,15 +66,12 @@ fun BagInventoryScreen(
     var detectedQrUrl by remember { mutableStateOf<String?>(null) }
     var offLookupName by remember { mutableStateOf<String?>(null) }
     var offLookupRoaster by remember { mutableStateOf<String?>(null) }
+    var fieldEvidence by remember { mutableStateOf<Map<String, BagFieldEvidence>>(emptyMap()) }
+    var reviewHints by remember { mutableStateOf<List<BagPhotoReviewHint>>(emptyList()) }
+    var isProcessingScan by remember { mutableStateOf(false) }
+    var showRetakeDialog by remember { mutableStateOf(false) }
     var lastProcessedPhotos by remember { mutableStateOf<String?>(null) }
-
-    // Known roasters/names from saved bags for OCR scoring
-    val knownRoasters = remember(bags) {
-        bags.mapNotNull { it.roaster }.distinct()
-    }
-    val knownNames = remember(bags) {
-        bags.map { it.name }.distinct()
-    }
+    val context = LocalContext.current
 
     // Handle captured photos result (from CameraCaptureScreen)
     val capturedPhotos = capturedPhotosResult
@@ -83,8 +86,13 @@ fun BagInventoryScreen(
         detectedQrUrl = result.detectedQrUrl
         offLookupName = result.offLookupName
         offLookupRoaster = result.offLookupRoaster
+        fieldEvidence = result.fieldEvidence
+        reviewHints = result.reviewHints
+        isProcessingScan = false
+        showRetakeDialog = result.shouldSuggestRetake
         brewViewModel.clearBagPhotoResult()
-        showAddSheet = true
+        // Sheet is already open from LaunchedEffect(capturedPhotos) — don't force-reopen
+        // if the user dismissed it during processing
     }
 
     LaunchedEffect(capturedPhotos) {
@@ -94,11 +102,25 @@ fun BagInventoryScreen(
 
         // User skipped camera → open empty form
         if (photos == "skipped") {
+            isProcessingScan = false
+            fieldEvidence = emptyMap()
+            reviewHints = emptyList()
             showAddSheet = true
             return@LaunchedEffect
         }
 
-        brewViewModel.processNewBagPhotos(photos, knownRoasters, knownNames)
+        showAddSheet = true
+        isProcessingScan = true
+        capturedPhotoUris = photos
+        ocrPrefill = null
+        detectedBarcode = null
+        detectedQrUrl = null
+        offLookupName = null
+        offLookupRoaster = null
+        fieldEvidence = emptyMap()
+        reviewHints = emptyList()
+
+        brewViewModel.processNewBagPhotos(photos, knownFieldValues)
     }
 
     Scaffold(
@@ -153,7 +175,6 @@ fun BagInventoryScreen(
         }
     }
 
-    val context = androidx.compose.ui.platform.LocalContext.current
     val coroutineScope = androidx.compose.runtime.rememberCoroutineScope()
 
     // Add bag bottom sheet
@@ -165,24 +186,49 @@ fun BagInventoryScreen(
             initialRoaster = offLookupRoaster,
             traceabilityUrl = detectedQrUrl,
             capturedPhotoUris = capturedPhotoUris,
+            fieldEvidence = fieldEvidence,
+            reviewHints = reviewHints,
+            isProcessing = isProcessingScan,
             existingBags = bags,
             onDismiss = {
                 showAddSheet = false
+                isProcessingScan = false
+                showRetakeDialog = false
                 ocrPrefill = null
                 capturedPhotoUris = null
                 offLookupName = null
                 offLookupRoaster = null
                 detectedBarcode = null
                 detectedQrUrl = null
+                fieldEvidence = emptyMap()
+                reviewHints = emptyList()
             },
-            onSave = { name, roaster, origin, region, roastLevel, barcode, weightG, notes, variety, processType, tastingNotes, roastDateMillis, expiryDateMillis ->
+            onSave = {
+                name,
+                roaster,
+                origin,
+                region,
+                roastLevel,
+                barcode,
+                weightG,
+                notes,
+                variety,
+                processType,
+                tastingNotes,
+                roastDateMillis,
+                expiryDateMillis,
+                ->
                 val rawPhotoUris = capturedPhotoUris
                 val qrUrl = detectedQrUrl
                 showAddSheet = false
+                isProcessingScan = false
+                showRetakeDialog = false
                 ocrPrefill = null
                 capturedPhotoUris = null
                 detectedBarcode = null
                 detectedQrUrl = null
+                fieldEvidence = emptyMap()
+                reviewHints = emptyList()
 
                 // Copy photos to permanent storage on background thread
                 coroutineScope.launch {
@@ -214,12 +260,54 @@ fun BagInventoryScreen(
         )
     }
 
+    if (showRetakeDialog) {
+        AlertDialog(
+            onDismissRequest = { showRetakeDialog = false },
+            title = { Text("Retake recommended") },
+            text = {
+                Text(
+                    reviewHints.joinToString("\n") { hint -> "• ${hint.message}" }
+                        .ifBlank { "We could not confidently read this bag yet." },
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showRetakeDialog = false
+                        showAddSheet = false
+                        isProcessingScan = false
+                        fieldEvidence = emptyMap()
+                        reviewHints = emptyList()
+                        ocrPrefill = null
+                        capturedPhotoUris = null
+                        detectedBarcode = null
+                        detectedQrUrl = null
+                        offLookupName = null
+                        offLookupRoaster = null
+                        onNavigateToCamera()
+                    },
+                ) {
+                    Text("Retake photos")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showRetakeDialog = false }) {
+                    Text("Continue manually")
+                }
+            },
+        )
+    }
+
     // Bag detail bottom sheet
     selectedBag?.let { bag ->
         val bagBrewLogs = allBrewLogs.filter { it.coffeeBagId == bag.id }
+        val bagFlavorTags by brewViewModel.getFlavorTagsForBag(bag.id).collectAsStateWithLifecycle(
+            initialValue = emptyList(),
+        )
         BagDetailSheet(
             bag = bag,
             brewLogs = bagBrewLogs,
+            flavorTags = bagFlavorTags,
             dateFormat = dateFormat,
             onDismiss = { selectedBag = null },
             onStatusChange = { status ->

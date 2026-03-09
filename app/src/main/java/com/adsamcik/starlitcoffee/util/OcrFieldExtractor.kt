@@ -25,6 +25,7 @@ object OcrFieldExtractor {
         val roastDate: String? = null,
         val expiryDate: String? = null,
         val weight: String? = null,
+        val fieldConfidence: Map<String, BagFieldConfidence> = emptyMap(),
     )
 
     /**
@@ -36,7 +37,26 @@ object OcrFieldExtractor {
         val text: String,
         val heightPx: Int,
         val topPx: Int,
-    )
+        val leftPx: Int = 0,
+        val widthPx: Int = 0,
+        val imageWidthPx: Int = 0,
+        val imageHeightPx: Int = 0,
+    ) {
+        fun normalizedBounds(paddingFraction: Float = 0.04f): BagPhotoRect? {
+            if (widthPx <= 0 || heightPx <= 0 || imageWidthPx <= 0 || imageHeightPx <= 0) return null
+            val left = ((leftPx.toFloat() / imageWidthPx) - paddingFraction).coerceIn(0f, 1f)
+            val top = ((topPx.toFloat() / imageHeightPx) - paddingFraction).coerceIn(0f, 1f)
+            val right = (((leftPx + widthPx).toFloat() / imageWidthPx) + paddingFraction).coerceIn(0f, 1f)
+            val bottom = (((topPx + heightPx).toFloat() / imageHeightPx) + paddingFraction).coerceIn(0f, 1f)
+            if (right <= left || bottom <= top) return null
+            return BagPhotoRect(
+                leftFraction = left,
+                topFraction = top,
+                rightFraction = right,
+                bottomFraction = bottom,
+            )
+        }
+    }
 
     // --- Regexes built from sealed interface search terms (single source of truth) ---
 
@@ -53,25 +73,25 @@ object OcrFieldExtractor {
     }
 
     private val countryRegex = buildRegex(
-        CoffeeOrigin.Known.entries.map { it.displayName },
+        CoffeeMetadataNormalizer.searchTermsForField("origin").filter { it.length > 3 },
         wordBoundary = false,
     )
 
     private val regionRegex = buildRegex(
-        CoffeeRegion.allSearchTerms,
+        CoffeeMetadataNormalizer.searchTermsForField("region"),
         wordBoundary = false,
     )
 
-    private val varietyRegex = buildRegex(CoffeeVariety.allSearchTerms)
+    private val varietyRegex = buildRegex(CoffeeMetadataNormalizer.searchTermsForField("variety"))
 
-    private val processRegex = buildRegex(CoffeeProcessType.allSearchTerms)
+    private val processRegex = buildRegex(CoffeeMetadataNormalizer.searchTermsForField("processType"))
 
     private val altitudeRegex = Regex(
         """(\d{3,4}\s*[-–]\s*\d{3,4}\s*(?:m\.?a\.?s\.?l\.?|meters?|masl|m)\b|\d{3,4}\s*(?:m\.?a\.?s\.?l\.?|meters?|masl|m)\b)""",
         RegexOption.IGNORE_CASE,
     )
 
-    private val roastLevelRegex = buildRegex(CoffeeRoastLevel.allSearchTerms)
+    private val roastLevelRegex = buildRegex(CoffeeMetadataNormalizer.searchTermsForField("roastLevel"))
 
     private val tastingNotesLabelRegex = Regex(
         """(?:tasting\s+notes|cupping\s+notes|notes|flavor|flavour|tastes?\s+like|chuťové?\s+poznámky|chuť|geschmacksnoten|geschmack|notas?\s+de\s+cata|note\s+di\s+degustazione|smagsnoter|smag)\s*:\s*(.+)""",
@@ -121,28 +141,108 @@ object OcrFieldExtractor {
         Regex("""\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}\b""", RegexOption.IGNORE_CASE),
     )
 
-    fun extractFields(rawText: String): OcrExtractionResult {
+    fun extractFields(
+        rawText: String,
+        knownFields: KnownFieldValues = KnownFieldValues.EMPTY,
+    ): OcrExtractionResult {
         val fullText = rawText.trim()
         val lines = fullText.lines().map { it.trim() }.filter { it.isNotEmpty() }
 
+        var originConfidence: BagFieldConfidence? = null
         // Try full country name first, then abbreviations
         val origin = countryRegex.find(fullText)?.value
+            ?.also { originConfidence = BagFieldConfidence.HIGH }
             ?: abbreviationRegex.find(fullText)?.let { match ->
                 CoffeeOrigin.abbreviationMap[match.value.uppercase()]
             }
+                ?.also { originConfidence = BagFieldConfidence.HIGH }
+            ?: findKnownMatch(fullText, knownFields.origins)
+                ?.also { originConfidence = BagFieldConfidence.HIGH }
+            ?: fuzzyMatchField(
+                fullText,
+                CoffeeMetadataNormalizer.searchTermsForField("origin"),
+                knownFields.origins,
+            )
+                ?.also { originConfidence = BagFieldConfidence.MEDIUM }
+
+        var regionConfidence: BagFieldConfidence? = null
         val region = regionRegex.find(fullText)?.value
+            ?.also { regionConfidence = BagFieldConfidence.HIGH }
+            ?: findKnownMatch(fullText, knownFields.regions)
+                ?.also { regionConfidence = BagFieldConfidence.HIGH }
+            ?: fuzzyMatchField(fullText, CoffeeMetadataNormalizer.searchTermsForField("region"), knownFields.regions)
+                ?.also { regionConfidence = BagFieldConfidence.MEDIUM }
+
+        var varietyConfidence: BagFieldConfidence? = null
         val variety = extractAll(fullText, varietyRegex)
+            ?.also { varietyConfidence = BagFieldConfidence.HIGH }
+            ?: findKnownMatch(fullText, knownFields.varieties)
+                ?.also { varietyConfidence = BagFieldConfidence.HIGH }
+            ?: fuzzyMatchField(fullText, CoffeeMetadataNormalizer.searchTermsForField("variety"), knownFields.varieties)
+                ?.also { varietyConfidence = BagFieldConfidence.MEDIUM }
+
+        var processTypeConfidence: BagFieldConfidence? = null
         val processType = processRegex.find(fullText)?.value
+            ?.also { processTypeConfidence = BagFieldConfidence.HIGH }
+            ?: findKnownMatch(fullText, knownFields.processTypes)
+                ?.also { processTypeConfidence = BagFieldConfidence.HIGH }
+            ?: fuzzyMatchField(fullText, CoffeeMetadataNormalizer.searchTermsForField("processType"), knownFields.processTypes)
+                ?.also { processTypeConfidence = BagFieldConfidence.MEDIUM }
+
         val altitude = altitudeRegex.find(fullText)?.value
+        val altitudeConfidence = altitude?.let { BagFieldConfidence.HIGH }
+
+        var roastLevelConfidence: BagFieldConfidence? = null
         val roastLevel = extractAllRoastLevels(fullText)
+            ?.also { roastLevelConfidence = BagFieldConfidence.HIGH }
+            ?: findKnownMatch(fullText, knownFields.roastLevels)
+                ?.also { roastLevelConfidence = BagFieldConfidence.HIGH }
+            ?: fuzzyMatchField(fullText, CoffeeMetadataNormalizer.searchTermsForField("roastLevel"), knownFields.roastLevels)
+                ?.also { roastLevelConfidence = BagFieldConfidence.MEDIUM }
         val labeledDates = extractLabeledDates(fullText)
+        val roastDateConfidence = labeledDates.roastDate?.let { BagFieldConfidence.HIGH }
+        val expiryDateConfidence = labeledDates.expiryDate?.let { BagFieldConfidence.HIGH }
         val tastingNotes = extractTastingNotes(lines)
+        val tastingNotesConfidence = tastingNotes?.let { BagFieldConfidence.HIGH }
         val weight = extractWeight(fullText)
+        val weightConfidence = weight?.let { BagFieldConfidence.HIGH }
+
+        var roasterConfidence: BagFieldConfidence? = null
         val roaster = extractRoaster(lines)
+            ?.also { roasterConfidence = BagFieldConfidence.HIGH }
+            ?: findKnownMatch(fullText, knownFields.roasters)
+                ?.also { roasterConfidence = BagFieldConfidence.HIGH }
+
+        var farmConfidence: BagFieldConfidence? = null
         val farm = extractFarm(lines)
+            ?.also { farmConfidence = BagFieldConfidence.HIGH }
+            ?: findKnownMatch(fullText, knownFields.farms)
+                ?.also { farmConfidence = BagFieldConfidence.HIGH }
 
         // Derive name from origin + region as fallback for text-only extraction
         val name = listOfNotNull(origin, region).joinToString(" ").ifEmpty { null }
+            ?: findKnownMatch(fullText, knownFields.names)
+        val nameConfidence = when {
+            !name.isNullOrBlank() && !origin.isNullOrBlank() && !region.isNullOrBlank() -> BagFieldConfidence.LOW
+            name != null -> BagFieldConfidence.HIGH
+            else -> null
+        }
+
+        val fieldConfidence = buildMap {
+            originConfidence?.let { put("origin", it) }
+            regionConfidence?.let { put("region", it) }
+            varietyConfidence?.let { put("variety", it) }
+            processTypeConfidence?.let { put("processType", it) }
+            altitudeConfidence?.let { put("altitude", it) }
+            roastLevelConfidence?.let { put("roastLevel", it) }
+            roastDateConfidence?.let { put("roastDate", it) }
+            expiryDateConfidence?.let { put("expiryDate", it) }
+            tastingNotesConfidence?.let { put("tastingNotes", it) }
+            weightConfidence?.let { put("weight", it) }
+            roasterConfidence?.let { put("roaster", it) }
+            farmConfidence?.let { put("farm", it) }
+            nameConfidence?.let { put("name", it) }
+        }
 
         return OcrExtractionResult(
             name = name,
@@ -158,7 +258,25 @@ object OcrFieldExtractor {
             expiryDate = labeledDates.expiryDate,
             weight = weight,
             roaster = roaster,
+            fieldConfidence = fieldConfidence,
         )
+    }
+
+    private fun findKnownMatch(text: String, knownValues: List<String>): String? {
+        return knownValues.firstOrNull { known ->
+            text.contains(known, ignoreCase = true)
+        }
+    }
+
+    private fun fuzzyMatchField(
+        text: String,
+        sealedTerms: List<String>,
+        historyTerms: List<String>,
+        maxDistance: Int = 2,
+        minLength: Int = 5,
+    ): String? {
+        return FuzzyMatcher.fuzzyMatchInText(text, sealedTerms, maxDistance, minLength)
+            ?: FuzzyMatcher.fuzzyMatchInText(text, historyTerms, maxDistance, minLength)
     }
 
     /**
@@ -372,6 +490,10 @@ object OcrFieldExtractor {
         maxHeight: Int,
         knownRoasters: List<String>,
         knownNames: List<String>,
+        knownFields: KnownFieldValues = KnownFieldValues(
+            names = knownNames,
+            roasters = knownRoasters,
+        ),
     ): List<CandidateScore> {
         return candidates.map { block ->
             val text = block.text.trim()
@@ -398,6 +520,13 @@ object OcrFieldExtractor {
             }
             if (matchesKnownRoaster) score += 50f
 
+            // Signal 4b: Fuzzy roaster match (weaker than exact)
+            var fuzzyRoaster: String? = null
+            if (!matchesKnownRoaster) {
+                fuzzyRoaster = FuzzyMatcher.fuzzyMatch(text, knownRoasters, maxDistance = 2, minLength = 4)
+                if (fuzzyRoaster != null) score += 30f
+            }
+
             // Signal 5: Known name match
             val matchesKnownName = knownNames.any { known ->
                 text.equals(known, ignoreCase = true) ||
@@ -406,19 +535,31 @@ object OcrFieldExtractor {
             }
             if (matchesKnownName) score += 50f
 
-            // Signal 6: Contains roastery keyword
+            // Signal 5b: Fuzzy name match (weaker than exact)
+            var fuzzyName: String? = null
+            if (!matchesKnownName) {
+                fuzzyName = FuzzyMatcher.fuzzyMatch(text, knownNames, maxDistance = 2, minLength = 4)
+                if (fuzzyName != null) score += 30f
+            }
+
+            // Signal 6: Known field matches from bag history
+            if (findKnownMatch(text, knownFields.origins) != null) score += 20f
+            if (findKnownMatch(text, knownFields.regions) != null) score += 15f
+            if (findKnownMatch(text, knownFields.varieties) != null) score += 15f
+
+            // Signal 7: Contains roastery keyword
             val hasRoasteryKeyword = roasteryLabelRegex.containsMatchIn(text)
             if (hasRoasteryKeyword) score += 30f
 
-            // Signal 7: Short text (1-4 words) — more likely a name/brand
+            // Signal 8: Short text (1-4 words) — more likely a name/brand
             val wordCount = text.split(Regex("""\s+""")).size
             if (wordCount in 1..4) score += 5f
 
             CandidateScore(
                 block = block,
                 score = score,
-                isKnownRoaster = matchesKnownRoaster || hasRoasteryKeyword,
-                isKnownName = matchesKnownName,
+                isKnownRoaster = matchesKnownRoaster || fuzzyRoaster != null || hasRoasteryKeyword,
+                isKnownName = matchesKnownName || fuzzyName != null,
             )
         }.sortedByDescending { it.score }
     }
@@ -432,11 +573,15 @@ object OcrFieldExtractor {
         blocks: List<OcrTextBlock>,
         knownRoasters: List<String> = emptyList(),
         knownNames: List<String> = emptyList(),
+        knownFields: KnownFieldValues = KnownFieldValues(
+            names = knownNames,
+            roasters = knownRoasters,
+        ),
     ): OcrExtractionResult {
         if (blocks.isEmpty()) return OcrExtractionResult()
 
         val fullText = blocks.joinToString("\n") { it.text }
-        val baseResult = extractFields(fullText)
+        val baseResult = extractFields(fullText, knownFields)
 
         val maxHeight = blocks.maxOf { it.heightPx }
         val minCandidateHeight = (maxHeight * 0.25).toInt()
@@ -451,7 +596,7 @@ object OcrFieldExtractor {
             !isBlockConsumedByKnownFields(text)
         }
 
-        val scored = scoreCandidateBlocks(candidates, maxHeight, knownRoasters, knownNames)
+        val scored = scoreCandidateBlocks(candidates, maxHeight, knownRoasters, knownNames, knownFields)
 
         val keywordRoaster = baseResult.roaster
         val roaster: String?
@@ -459,9 +604,11 @@ object OcrFieldExtractor {
 
         if (keywordRoaster != null) {
             // Roaster found by keyword — pick name from highest-scoring non-roaster
-            roaster = keywordRoaster
+            roaster = scored.firstOrNull {
+                it.isKnownRoaster || it.block.text.contains(keywordRoaster, ignoreCase = true)
+            }?.block?.text?.trim() ?: keywordRoaster
             name = scored.firstOrNull {
-                !it.block.text.contains(keywordRoaster, ignoreCase = true)
+                it.block.text.trim() != roaster
             }?.block?.text?.trim()
         } else {
             // No keyword roaster — use scoring
@@ -484,6 +631,16 @@ object OcrFieldExtractor {
             roaster = roaster ?: baseResult.roaster,
         )
     }
+
+    fun extractFieldsFromBlocks(
+        blocks: List<OcrTextBlock>,
+        knownFields: KnownFieldValues,
+    ): OcrExtractionResult = extractFieldsFromBlocks(
+        blocks = blocks,
+        knownRoasters = knownFields.roasters,
+        knownNames = knownFields.names,
+        knownFields = knownFields,
+    )
 
     // EAN-13 barcode regex: OCR may read spaces between digit groups (e.g., "8 594206 183060")
     private val eanBarcodeRegex = Regex("""(\d[\d ]{11,15}\d)""")

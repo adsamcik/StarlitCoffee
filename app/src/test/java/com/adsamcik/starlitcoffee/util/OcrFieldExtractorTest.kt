@@ -37,6 +37,22 @@ class OcrFieldExtractorTest {
     }
 
     @Test
+    fun `extractFields recognizes multilingual origin aliases`() {
+        val result = OcrFieldExtractor.extractFields(
+            """
+            Etiopie Guji
+            Gesha
+            Lavado
+            """.trimIndent(),
+        )
+
+        assertNotNull("Origin should be extracted from localized alias", result.origin)
+        assertTrue(result.origin!!.equals("Etiopie", ignoreCase = true))
+        assertNotNull("Region should still be extracted", result.region)
+        assertTrue(result.region!!.contains("Guji", ignoreCase = true))
+    }
+
+    @Test
     fun `front of bag extracts variety Heirloom`() {
         val result = OcrFieldExtractor.extractFields(frontText)
         assertNotNull("Variety should be extracted", result.variety)
@@ -405,6 +421,54 @@ class OcrFieldExtractorTest {
         assertNotNull(result.roastLevel)
     }
 
+    // --- Fuzzy field extraction ---
+
+    @Test
+    fun `extractFields falls back to fuzzy origin matching`() {
+        val result = OcrFieldExtractor.extractFields("Ethiopa Gedeb\nHeirloom")
+        assertNotNull("Should fuzzy match Ethiopia", result.origin)
+        assertEquals("Ethiopia", result.origin)
+    }
+
+    @Test
+    fun `extractFields falls back to fuzzy process matching`() {
+        val result = OcrFieldExtractor.extractFields("Colombia Huila\nWahsed")
+        assertNotNull("Should fuzzy match Washed", result.processType)
+        assertEquals("Washed", result.processType)
+    }
+
+    @Test
+    fun `extractFields marks regex and abbreviation matches as high confidence`() {
+        val result = OcrFieldExtractor.extractFields("PNG Sigri Estate\nWashed\n250g")
+
+        assertEquals(BagFieldConfidence.HIGH, result.fieldConfidence["origin"])
+        assertEquals(BagFieldConfidence.HIGH, result.fieldConfidence["processType"])
+        assertEquals(BagFieldConfidence.HIGH, result.fieldConfidence["weight"])
+    }
+
+    @Test
+    fun `extractFields marks history matches as high confidence`() {
+        val result = OcrFieldExtractor.extractFields(
+            rawText = "Producer: Juan Rodriguez\nLimited release",
+            knownFields = KnownFieldValues(
+                farms = listOf("Juan Rodriguez"),
+                names = listOf("Limited release"),
+            ),
+        )
+
+        assertEquals(BagFieldConfidence.HIGH, result.fieldConfidence["farm"])
+        assertEquals(BagFieldConfidence.HIGH, result.fieldConfidence["name"])
+    }
+
+    @Test
+    fun `extractFields marks fuzzy matches medium and derived name low confidence`() {
+        val result = OcrFieldExtractor.extractFields("Ethiopa Gedeb\nWahsed")
+
+        assertEquals(BagFieldConfidence.MEDIUM, result.fieldConfidence["origin"])
+        assertEquals(BagFieldConfidence.MEDIUM, result.fieldConfidence["processType"])
+        assertEquals(BagFieldConfidence.LOW, result.fieldConfidence["name"])
+    }
+
     // --- Farm block consumed ---
 
     @Test
@@ -453,6 +517,36 @@ class OcrFieldExtractorTest {
         )
         val result = OcrFieldExtractor.extractFieldsFromBlocks(blocks)
         assertEquals("PROUD MARY", result.roaster)
+    }
+
+    @Test
+    fun `block scoring uses fuzzy roaster match when OCR is slightly wrong`() {
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("DOUBLESH0T", heightPx = 80, topPx = 50),
+            OcrFieldExtractor.OcrTextBlock("ETHIOPIA SIDAMO", heightPx = 60, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("Washed", heightPx = 25, topPx = 250),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(
+            blocks,
+            knownRoasters = listOf("Doubleshot"),
+        )
+
+        assertEquals("DOUBLESH0T", result.roaster)
+    }
+
+    @Test
+    fun `block scoring uses fuzzy name match when OCR is slightly wrong`() {
+        val blocks = listOf(
+            OcrFieldExtractor.OcrTextBlock("TIM WENDELBOE", heightPx = 80, topPx = 50),
+            OcrFieldExtractor.OcrTextBlock("FINCA TAMNAA", heightPx = 60, topPx = 150),
+            OcrFieldExtractor.OcrTextBlock("Colombia", heightPx = 30, topPx = 250),
+        )
+        val result = OcrFieldExtractor.extractFieldsFromBlocks(
+            blocks,
+            knownNames = listOf("Finca Tamana"),
+        )
+
+        assertEquals("FINCA TAMNAA", result.name)
     }
 
     // --- Czech language ---
@@ -519,5 +613,58 @@ class OcrFieldExtractorTest {
         val text = "Bedst før: 15.06.2026"
         val result = OcrFieldExtractor.extractFields(text)
         assertNotNull("Should extract Danish expiry date", result.expiryDate)
+    }
+
+    // --- Additional multilingual edge cases ---
+
+    @Test
+    fun `extracts German origin with Italian process and roast aliases`() {
+        val result = OcrFieldExtractor.extractFields(
+            """
+            Äthiopien Guji
+            Lavato
+            Chiaro
+            """.trimIndent(),
+        )
+
+        assertEquals("Äthiopien", result.origin)
+        assertNotNull(result.processType)
+        assertTrue(result.processType!!.contains("Lavato", ignoreCase = true))
+        assertNotNull(result.roastLevel)
+        assertTrue(result.roastLevel!!.contains("Chiaro", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts Spanish notas de cata label`() {
+        val result = OcrFieldExtractor.extractFields(
+            "Notas de cata: fresa silvestre, yuzu, té verde",
+        )
+
+        assertNotNull("Should extract Spanish tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("fresa silvestre", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts Italian note di degustazione label`() {
+        val result = OcrFieldExtractor.extractFields(
+            "Note di degustazione: pesca, miele, bergamotto",
+        )
+
+        assertNotNull("Should extract Italian tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("bergamotto", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts German gerostet roast date label`() {
+        val result = OcrFieldExtractor.extractFields("Geröstet: 15.01.2026")
+
+        assertEquals("15.01.2026", result.roastDate)
+    }
+
+    @Test
+    fun `extracts French a consommer avant expiry label`() {
+        val result = OcrFieldExtractor.extractFields("À consommer avant: 15.06.2026")
+
+        assertEquals("15.06.2026", result.expiryDate)
     }
 }

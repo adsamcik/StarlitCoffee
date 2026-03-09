@@ -23,4 +23,16 @@ class CoffeeBagRepository(
 
     suspend fun findNextSealed(name: String, roaster: String?): CoffeeBagEntity? =
         coffeeBagDao.findNextSealed(name, roaster)
+
+    suspend fun getDistinctOrigins(): List<String> = coffeeBagDao.getDistinctOrigins()
+
+    suspend fun getDistinctRegions(): List<String> = coffeeBagDao.getDistinctRegions()
+
+    suspend fun getDistinctVarieties(): List<String> = coffeeBagDao.getDistinctVarieties()
+
+    suspend fun getDistinctProcessTypes(): List<String> = coffeeBagDao.getDistinctProcessTypes()
+
+    suspend fun getDistinctRoastLevels(): List<String> = coffeeBagDao.getDistinctRoastLevels()
+
+    suspend fun getDistinctFarms(): List<String> = coffeeBagDao.getDistinctFarms()
 }

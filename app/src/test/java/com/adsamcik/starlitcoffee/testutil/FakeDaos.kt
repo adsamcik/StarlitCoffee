@@ -127,22 +127,39 @@ internal class FakeCoffeeBagDao : CoffeeBagDao {
 
     override suspend fun findNextSealed(name: String, roaster: String?): CoffeeBagEntity? =
         bags.find { it.name == name && it.roaster == roaster && it.status == "SEALED" }
+
+    override suspend fun getDistinctOrigins(): List<String> = bags.mapNotNull { it.origin }.distinct()
+
+    override suspend fun getDistinctRegions(): List<String> = bags.mapNotNull { it.region }.distinct()
+
+    override suspend fun getDistinctVarieties(): List<String> = bags.mapNotNull { it.variety }.distinct()
+
+    override suspend fun getDistinctProcessTypes(): List<String> = bags.mapNotNull { it.processType }.distinct()
+
+    override suspend fun getDistinctRoastLevels(): List<String> = bags.mapNotNull { it.roastLevel }.distinct()
+
+    override suspend fun getDistinctFarms(): List<String> = bags.mapNotNull { it.farm }.distinct()
 }
 
 internal class FakeFlavorTagDao : FlavorTagDao {
     private val tags = mutableListOf<FlavorTagEntity>()
+    private val flow = MutableStateFlow<List<FlavorTagEntity>>(emptyList())
 
     override suspend fun insertAll(tags: List<FlavorTagEntity>) {
         this.tags.addAll(tags)
+        flow.value = this.tags.toList()
     }
 
+    override fun getAll(): Flow<List<FlavorTagEntity>> = flow
+
     override fun getForBrewLog(brewLogId: Long): Flow<List<FlavorTagEntity>> =
-        MutableStateFlow(tags.filter { it.brewLogId == brewLogId })
+        flow.map { list -> list.filter { it.brewLogId == brewLogId } }
 
     override fun getForBag(bagId: Long): Flow<List<FlavorTagEntity>> =
-        MutableStateFlow(tags.toList())
+        flow
 
     override suspend fun deleteForBrewLog(brewLogId: Long) {
         tags.removeAll { it.brewLogId == brewLogId }
+        flow.value = tags.toList()
     }
 }

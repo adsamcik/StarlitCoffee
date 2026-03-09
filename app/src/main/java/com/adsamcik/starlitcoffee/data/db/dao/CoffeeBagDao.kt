@@ -37,4 +37,22 @@ interface CoffeeBagDao {
             "status = 'SEALED' ORDER BY createdAt ASC LIMIT 1",
     )
     suspend fun findNextSealed(name: String, roaster: String?): CoffeeBagEntity?
+
+    @Query("SELECT DISTINCT origin FROM coffee_bags WHERE origin IS NOT NULL")
+    suspend fun getDistinctOrigins(): List<String>
+
+    @Query("SELECT DISTINCT region FROM coffee_bags WHERE region IS NOT NULL")
+    suspend fun getDistinctRegions(): List<String>
+
+    @Query("SELECT DISTINCT variety FROM coffee_bags WHERE variety IS NOT NULL")
+    suspend fun getDistinctVarieties(): List<String>
+
+    @Query("SELECT DISTINCT processType FROM coffee_bags WHERE processType IS NOT NULL")
+    suspend fun getDistinctProcessTypes(): List<String>
+
+    @Query("SELECT DISTINCT roastLevel FROM coffee_bags WHERE roastLevel IS NOT NULL")
+    suspend fun getDistinctRoastLevels(): List<String>
+
+    @Query("SELECT DISTINCT farm FROM coffee_bags WHERE farm IS NOT NULL")
+    suspend fun getDistinctFarms(): List<String>
 }
