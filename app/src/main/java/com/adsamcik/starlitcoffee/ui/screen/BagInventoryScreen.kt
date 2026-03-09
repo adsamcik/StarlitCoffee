@@ -263,11 +263,11 @@ fun BagInventoryScreen(
     if (showRetakeDialog) {
         AlertDialog(
             onDismissRequest = { showRetakeDialog = false },
-            title = { Text("Retake recommended") },
+            title = { Text("Could not read label") },
             text = {
                 Text(
                     reviewHints.joinToString("\n") { hint -> "• ${hint.message}" }
-                        .ifBlank { "We could not confidently read this bag yet." },
+                        .ifBlank { "No text was detected on this bag. Try a closer shot or add details manually." },
                 )
             },
             confirmButton = {
@@ -287,12 +287,12 @@ fun BagInventoryScreen(
                         onNavigateToCamera()
                     },
                 ) {
-                    Text("Retake photos")
+                    Text("Retake photo")
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showRetakeDialog = false }) {
-                    Text("Continue manually")
+                    Text("Add details manually")
                 }
             },
         )

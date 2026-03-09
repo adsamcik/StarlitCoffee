@@ -22,9 +22,9 @@ import androidx.camera.view.PreviewView
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -65,6 +65,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -77,6 +78,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
+import com.adsamcik.starlitcoffee.util.BagPhotoImportSupport
 import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
@@ -115,6 +117,7 @@ fun CameraCaptureScreen(
     onPhotosCaptured: (String) -> Unit,
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val knownFieldValues by brewViewModel.knownFieldValues.collectAsStateWithLifecycle()
     var hasCameraPermission by remember {
         mutableStateOf(
@@ -129,8 +132,28 @@ fun CameraCaptureScreen(
     ) { granted ->
         hasCameraPermission = granted
     }
+    var isImportingGallery by remember { mutableStateOf(false) }
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetMultipleContents(),
+    ) { selectedPhotos ->
+        if (selectedPhotos.isEmpty()) return@rememberLauncherForActivityResult
+        scope.launch {
+            isImportingGallery = true
+            try {
+                val importedPhotos = BagPhotoImportSupport.importPhotosToCache(
+                    context = context,
+                    sourceUris = selectedPhotos,
+                )
+                if (importedPhotos.isNotEmpty()) {
+                    onPhotosCaptured(importedPhotos.joinToString(","))
+                }
+            } finally {
+                isImportingGallery = false
+            }
+        }
+    }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(hasCameraPermission) {
         if (!hasCameraPermission) {
             permissionLauncher.launch(Manifest.permission.CAMERA)
         }
@@ -141,10 +164,14 @@ fun CameraCaptureScreen(
             knownFieldValues = knownFieldValues,
             onBack = onBack,
             onPhotosCaptured = onPhotosCaptured,
+            onUseGallery = { galleryLauncher.launch("image/*") },
+            isImportingGallery = isImportingGallery,
         )
     } else {
         PermissionRequestContent(
             onRequestPermission = { permissionLauncher.launch(Manifest.permission.CAMERA) },
+            onChooseFromGallery = { galleryLauncher.launch("image/*") },
+            isImportingGallery = isImportingGallery,
             onBack = onBack,
         )
     }
@@ -153,6 +180,8 @@ fun CameraCaptureScreen(
 @Composable
 private fun PermissionRequestContent(
     onRequestPermission: () -> Unit,
+    onChooseFromGallery: () -> Unit,
+    isImportingGallery: Boolean,
     onBack: () -> Unit,
 ) {
     Box(
@@ -180,13 +209,32 @@ private fun PermissionRequestContent(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Camera permission needed",
+                text = "Camera permission needed for live capture",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "You can still import bag photos from your gallery instead.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
             Spacer(modifier = Modifier.height(24.dp))
             Button(onClick = onRequestPermission) {
-                Text("Grant Permission")
+                Text("Grant Camera Permission")
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            TextButton(
+                onClick = onChooseFromGallery,
+                enabled = !isImportingGallery,
+            ) {
+                Text(
+                    text = if (isImportingGallery) {
+                        "Importing gallery photos..."
+                    } else {
+                        "Choose from gallery instead"
+                    },
+                )
             }
         }
     }
@@ -197,6 +245,8 @@ private fun CameraCaptureContent(
     knownFieldValues: KnownFieldValues,
     onBack: () -> Unit,
     onPhotosCaptured: (String) -> Unit,
+    onUseGallery: () -> Unit,
+    isImportingGallery: Boolean,
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -272,11 +322,12 @@ private fun CameraCaptureContent(
     val backOptional = capturedPhotos.isNotEmpty()
     val stepLabel = if (backOptional) "Step 2 of 2 optional" else "Step 1 of 2"
     val guideText = if (backOptional) {
-        "Back of bag — optional for notes, roast date, and barcode"
+        "Back of bag - optional for notes, roast date, and barcode"
     } else {
-        "Front of bag — name, roaster, origin"
+        "Front of bag - name, roaster, origin"
     }
-    val captureArmed = guidance.quality.readyForCapture && motionStable && !isCapturing
+    val isBusy = isCapturing || isImportingGallery
+    val captureArmed = guidance.quality.readyForCapture && motionStable && !isBusy
     val guideColor = when {
         guidance.quality.readyForCapture -> READY_GUIDE_COLOR
         guidance.quality.textDetected -> CAUTION_GUIDE_COLOR
@@ -358,27 +409,20 @@ private fun CameraCaptureContent(
                 .fillMaxWidth(0.88f),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Box(
+            Text(
+                text = guideText,
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.White.copy(alpha = 0.92f),
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            CornerBracketGuide(
+                color = guideColor,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(220.dp)
-                    .border(
-                        width = 3.dp,
-                        color = guideColor,
-                        shape = MaterialTheme.shapes.small,
-                    )
-                    .background(
-                        color = Color.Black.copy(alpha = 0.15f),
-                        shape = MaterialTheme.shapes.small,
-                    ),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = guideText,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White.copy(alpha = 0.92f),
-                )
-            }
+                    .height(220.dp),
+            )
 
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -391,7 +435,7 @@ private fun CameraCaptureContent(
                     label = "Sharp",
                     ok = guidance.quality.sharpEnough,
                     readyText = "Ready",
-                    blockedText = "Hold steady",
+                    blockedText = "Stabilizing…",
                 )
                 GuidanceBadge(
                     modifier = Modifier.weight(1f),
@@ -434,10 +478,11 @@ private fun CameraCaptureContent(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (capturedPhotos.isNotEmpty()) {
+                // Step 2: front captured, back optional
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(bottom = 16.dp),
+                    modifier = Modifier.padding(bottom = 8.dp),
                 ) {
                     val bitmap = remember(capturedPhotos.size) {
                         val path = capturedPhotos.last().path ?: return@remember null
@@ -447,7 +492,7 @@ private fun CameraCaptureContent(
                     bitmap?.let {
                         Image(
                             bitmap = it.asImageBitmap(),
-                            contentDescription = "Captured photo",
+                            contentDescription = "Selected photo",
                             modifier = Modifier
                                 .size(52.dp)
                                 .clip(RoundedCornerShape(10.dp)),
@@ -457,16 +502,26 @@ private fun CameraCaptureContent(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "Front captured",
+                            text = "Front captured ✓",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color.White,
+                            color = READY_GUIDE_COLOR,
                         )
                         Text(
-                            text = "Back is optional — add it for notes and barcode.",
+                            text = "Add back photo or continue with front only.",
                             style = MaterialTheme.typography.bodySmall,
                             color = Color.White.copy(alpha = 0.8f),
                         )
                     }
+                }
+
+                // Primary action on Step 2: skip back
+                Button(
+                    onClick = { completeCapture(capturedPhotos.joinToString(",")) },
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .padding(bottom = 12.dp),
+                ) {
+                    Text("Use front only →")
                 }
             }
 
@@ -504,7 +559,7 @@ private fun CameraCaptureContent(
                             scope = scope,
                         )
                     },
-                    enabled = !isCapturing,
+                    enabled = !isBusy,
                     modifier = Modifier
                         .size(72.dp)
                         .background(
@@ -528,17 +583,26 @@ private fun CameraCaptureContent(
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
             Text(
-                text = "Burst x3 — keeps the sharpest shot",
+                text = if (backOptional) "Capture back of bag" else "Burst x3 — keeps the sharpest shot",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White.copy(alpha = 0.8f),
             )
 
-            if (backOptional) {
+            if (!backOptional) {
                 Spacer(modifier = Modifier.height(12.dp))
-                Button(onClick = { completeCapture(capturedPhotos.joinToString(",")) }) {
-                    Text("Use front only")
+                Button(
+                    onClick = onUseGallery,
+                    enabled = !isBusy,
+                ) {
+                    Text(
+                        text = if (isImportingGallery) {
+                            "Importing gallery photos..."
+                        } else {
+                            "Use gallery instead"
+                        },
+                    )
                 }
             }
 
@@ -551,6 +615,34 @@ private fun CameraCaptureContent(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun CornerBracketGuide(
+    color: Color,
+    modifier: Modifier = Modifier,
+) {
+    Canvas(modifier = modifier) {
+        val strokeWidth = 3.dp.toPx()
+        val bracketLen = 28.dp.toPx()
+        val cornerRadius = 6.dp.toPx()
+
+        // Top-left
+        drawLine(color, Offset(0f, cornerRadius), Offset(0f, bracketLen), strokeWidth = strokeWidth)
+        drawLine(color, Offset(cornerRadius, 0f), Offset(bracketLen, 0f), strokeWidth = strokeWidth)
+
+        // Top-right
+        drawLine(color, Offset(size.width, cornerRadius), Offset(size.width, bracketLen), strokeWidth = strokeWidth)
+        drawLine(color, Offset(size.width - cornerRadius, 0f), Offset(size.width - bracketLen, 0f), strokeWidth = strokeWidth)
+
+        // Bottom-left
+        drawLine(color, Offset(0f, size.height - cornerRadius), Offset(0f, size.height - bracketLen), strokeWidth = strokeWidth)
+        drawLine(color, Offset(cornerRadius, size.height), Offset(bracketLen, size.height), strokeWidth = strokeWidth)
+
+        // Bottom-right
+        drawLine(color, Offset(size.width, size.height - cornerRadius), Offset(size.width, size.height - bracketLen), strokeWidth = strokeWidth)
+        drawLine(color, Offset(size.width - cornerRadius, size.height), Offset(size.width - bracketLen, size.height), strokeWidth = strokeWidth)
     }
 }
 
