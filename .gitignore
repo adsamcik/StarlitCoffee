@@ -18,3 +18,34 @@ local.properties
 *.log
 build_output.txt
 test_output.log
+
+# Temp build/debug output
+compile_output.txt
+compile_output*.txt
+compile_clean.txt
+compile_diag.txt
+compile_fresh.txt
+compile_phase*.txt
+test_output.txt
+test_result.txt
+test_result*.txt
+test_full_output.txt
+test_phase*_out.txt
+test_pad_output.txt
+test-output.log
+test-stderr.txt
+test-stdout.txt
+testresults.log
+build_result.txt
+build_retry*.log
+stop_output.txt
+temp_diff*.txt
+__diff_output.txt
+
+# Diagnostic notes
+METHODPICKERSCREEN_DIAGNOSTIC.md
+gemini_brief.md
+
+# Misc artifacts
+classes.jar
+*.litertlm
