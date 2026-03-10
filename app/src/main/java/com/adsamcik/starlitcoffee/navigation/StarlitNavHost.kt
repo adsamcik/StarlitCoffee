@@ -52,7 +52,7 @@ import com.adsamcik.starlitcoffee.ui.screen.BarcodeScannerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewLogScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewLogDetailScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
-import com.adsamcik.starlitcoffee.ui.screen.CameraCaptureScreen
+import com.adsamcik.starlitcoffee.ui.screen.LiveScanScreen
 import com.adsamcik.starlitcoffee.ui.screen.MethodPickerScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
@@ -61,6 +61,7 @@ import com.adsamcik.starlitcoffee.ui.screen.SettingsScreen
 import com.adsamcik.starlitcoffee.ui.screen.TasteFeedbackScreen
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModelFactory
+import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
 import kotlinx.coroutines.launch
 
 private data class BottomNavItem(
@@ -236,7 +237,6 @@ fun StarlitNavHost() {
                     onNavigateToAmount = { navController.navigate(AmountStrength) },
                     onNavigateToSettings = { navController.navigate(Settings) },
                     onNavigateToTimer = { navController.navigate(BrewTimer) },
-                    snackbarHostState = snackbarHostState,
                 )
             }
             composable<AmountStrength> {
@@ -276,10 +276,14 @@ fun StarlitNavHost() {
                 val capturedPhotos by backStackEntry.savedStateHandle
                     .getStateFlow<String?>("captured_photos", null)
                     .collectAsStateWithLifecycle()
+                val scanFields by backStackEntry.savedStateHandle
+                    .getStateFlow<String?>("scan_fields", null)
+                    .collectAsStateWithLifecycle()
                 BagInventoryScreen(
                     brewViewModel = brewViewModel,
-                    onNavigateToCamera = { navController.navigate(CameraCapture) },
+                    onNavigateToCamera = { navController.navigate(LiveScan) },
                     capturedPhotosResult = capturedPhotos,
+                    scanFieldsResult = scanFields,
                 )
             }
             composable<BrewLogList> {
@@ -309,14 +313,22 @@ fun StarlitNavHost() {
                     },
                 )
             }
-            composable<CameraCapture> {
-                CameraCaptureScreen(
+            composable<LiveScan> {
+                val liveScanViewModel: LiveScanViewModel = viewModel()
+                LiveScanScreen(
+                    liveScanViewModel = liveScanViewModel,
                     brewViewModel = brewViewModel,
-                    onBack = { navController.popBackStack() },
-                    onPhotosCaptured = { result ->
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onSaveComplete = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToReview = { resolvedFields ->
+                        // Pass resolved fields to BagInventory via savedStateHandle
                         navController.previousBackStackEntry
                             ?.savedStateHandle
-                            ?.set("captured_photos", result)
+                            ?.set("scan_fields", resolvedFields.entries.joinToString("|") { "${it.key}=${it.value}" })
                         navController.popBackStack()
                     },
                 )

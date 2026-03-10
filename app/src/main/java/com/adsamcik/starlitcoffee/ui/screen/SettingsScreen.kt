@@ -41,7 +41,6 @@ import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
-import com.adsamcik.starlitcoffee.ai.ModelManager
 import kotlinx.coroutines.launch
 
 private val checkIcon: @Composable () -> Unit = {
@@ -243,120 +242,40 @@ fun SettingsScreen(
                 }
             }
 
-            // --- AI Features ---
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                "AI Features",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.semantics { heading() },
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-
-            val modelState by ModelManager.state.collectAsStateWithLifecycle()
-            val downloadProgress by ModelManager.downloadProgress.collectAsStateWithLifecycle()
-            val aiEnabled = ModelManager.isAiEnabled(context)
-
-            LaunchedEffect(Unit) { ModelManager.refreshState(context) }
-
-            ElevatedCard(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text("AI-powered extraction", style = MaterialTheme.typography.bodyLarge)
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 16.dp),
+                        ) {
                             Text(
-                                "Uses on-device Gemma 3n to extract bag info from photos",
+                                text = "QR link explorer",
+                                style = MaterialTheme.typography.titleMedium,
+                            )
+                            Text(
+                                text = "When a bag photo includes a public HTTPS QR website, " +
+                                    "fetch it safely and offer reviewable coffee hints. " +
+                                    "Local/private addresses stay blocked, and nothing is " +
+                                    "applied silently.",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                         Switch(
-                            checked = aiEnabled,
-                            modifier = Modifier.testTag("ai_toggle"),
+                            checked = prefs.qrLinkExplorerEnabled,
+                            modifier = Modifier.testTag("qr_link_explorer_toggle"),
                             onCheckedChange = { enabled ->
-                                ModelManager.setAiEnabled(context, enabled)
-                                if (enabled) ModelManager.refreshState(context)
+                                scope.launch {
+                                    userPreferencesRepository.updateQrLinkExplorerEnabled(enabled)
+                                }
                             },
                         )
-                    }
-
-                    if (aiEnabled) {
-                        Spacer(modifier = Modifier.height(12.dp))
-                        when (modelState) {
-                            ModelManager.ModelState.NOT_DOWNLOADED -> {
-                                androidx.compose.material3.OutlinedButton(
-                                    onClick = {
-                                        val job = scope.launch { ModelManager.downloadModel(context) }
-                                        ModelManager.setDownloadJob(job)
-                                    },
-                                    modifier = Modifier.fillMaxWidth(),
-                                ) {
-                                    Text("Download AI Model (~1.5 GB)")
-                                }
-                            }
-                            ModelManager.ModelState.DOWNLOADING -> {
-                                LinearProgressIndicator(
-                                    progress = { downloadProgress },
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                ) {
-                                    Text(
-                                        "${(downloadProgress * 100).toInt()}%",
-                                        style = MaterialTheme.typography.bodySmall,
-                                    )
-                                    androidx.compose.material3.TextButton(
-                                        onClick = { ModelManager.cancelDownload() },
-                                    ) {
-                                        Text("Cancel")
-                                    }
-                                }
-                            }
-                            ModelManager.ModelState.DOWNLOADED, ModelManager.ModelState.LOADING, ModelManager.ModelState.READY -> {
-                                val sizeBytes = ModelManager.getModelSizeBytes(context)
-                                val sizeMb = sizeBytes / (1024 * 1024)
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Icon(Icons.Filled.Check, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Text("AI Model Ready (${sizeMb}MB)", style = MaterialTheme.typography.bodyMedium)
-                                    }
-                                    androidx.compose.material3.TextButton(
-                                        onClick = { scope.launch { ModelManager.deleteModel(context) } },
-                                    ) {
-                                        Text("Delete", color = MaterialTheme.colorScheme.error)
-                                    }
-                                }
-                            }
-                            ModelManager.ModelState.ERROR -> {
-                                val errorMsg by ModelManager.errorMessage.collectAsStateWithLifecycle()
-                                Text(
-                                    errorMsg ?: "Download failed",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.error,
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                androidx.compose.material3.OutlinedButton(
-                                    onClick = {
-                                        val job = scope.launch { ModelManager.downloadModel(context) }
-                                        ModelManager.setDownloadJob(job)
-                                    },
-                                    modifier = Modifier.fillMaxWidth(),
-                                ) {
-                                    Text("Retry Download")
-                                }
-                            }
-                        }
                     }
                 }
             }

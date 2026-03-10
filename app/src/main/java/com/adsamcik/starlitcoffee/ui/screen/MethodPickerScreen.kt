@@ -27,7 +27,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -46,11 +45,17 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
+import com.adsamcik.starlitcoffee.ui.component.ChipEmphasis
+import com.adsamcik.starlitcoffee.ui.component.FreshnessRing
+import com.adsamcik.starlitcoffee.ui.component.InsightChip
+import com.adsamcik.starlitcoffee.ui.component.InsightChipRow
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
+import com.adsamcik.starlitcoffee.util.RankedBagSuggestion
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,17 +66,29 @@ fun MethodPickerScreen(
     onNavigateToAmount: () -> Unit,
     onNavigateToSettings: () -> Unit,
     onNavigateToTimer: () -> Unit,
-    snackbarHostState: SnackbarHostState? = null,
 ){
     val state by brewViewModel.uiState.collectAsStateWithLifecycle()
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+    val brewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
+    val flavorTags by brewViewModel.flavorTags.collectAsStateWithLifecycle()
     val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
     val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = UserPreferences(),
     )
 
     val activeBags = bags.filter { it.status != "FINISHED" }
-    val selectedBag = activeBags.find { it.id == selectedBagId }
+    val rankedBags = remember(activeBags, brewLogs, flavorTags, state.coffeeG) {
+        CoffeeBagInsights.rankBagsForBrew(
+            bags = activeBags,
+            brewLogs = brewLogs,
+            flavorTags = flavorTags,
+            targetDoseG = state.coffeeG.takeIf { it > 0f } ?: 20f,
+        )
+    }
+    val selectedRankedBag = remember(rankedBags, selectedBagId) {
+        rankedBags.find { it.bag.id == selectedBagId }
+    }
+    val selectedBag = selectedRankedBag?.bag
     var showBagPicker by remember { mutableStateOf(false) }
 
     val enabledMethods = BrewMethod.entries.filter { prefs.enabledMethods.contains(it) }
@@ -259,11 +276,12 @@ fun MethodPickerScreen(
                     }
                 },
                 label = {
-                    val bagLabel = selectedBag?.let { bag ->
-                        val weightHint = bag.weightG?.let { w ->
+                    val bagLabel = selectedRankedBag?.let { option ->
+                        val decafLabel = if (option.bag.isDecaf) " · Decaf" else ""
+                        val weightHint = option.bag.weightG?.let { w ->
                             " · ${"%.0f".format(w)}g left"
                         } ?: ""
-                        "☕ ${bag.name}$weightHint"
+                        "☕ ${option.bag.name}$decafLabel · ${option.freshness.phase.displayName}$weightHint"
                     } ?: "Select coffee bag"
                     Text(
                         text = bagLabel,
@@ -283,6 +301,66 @@ fun MethodPickerScreen(
                     null
                 },
             )
+
+            val topRecommendation = rankedBags.firstOrNull()
+            if (selectedRankedBag != null) {
+                ElevatedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp, bottom = 12.dp),
+                    shape = MaterialTheme.shapes.large,
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        FreshnessRing(
+                            insight = selectedRankedBag.freshness,
+                            size = 68.dp,
+                        )
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 16.dp),
+                        ) {
+                            Text(
+                                text = "Peak window coach",
+                                style = MaterialTheme.typography.titleMedium,
+                            )
+                            Text(
+                                text = selectedRankedBag.freshness.coachText,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(top = 4.dp),
+                            )
+                            selectedRankedBag.grindInsight.adjustmentHint?.let { hint ->
+                                Text(
+                                    text = hint,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.padding(top = 8.dp),
+                                )
+                            }
+                            if (selectedRankedBag.sensorySnapshot.topChips.isNotEmpty()) {
+                                InsightChipRow(
+                                    chips = selectedRankedBag.sensorySnapshot.topChips,
+                                    modifier = Modifier.padding(top = 12.dp),
+                                    maxVisible = 4,
+                                )
+                            }
+                        }
+                    }
+                }
+            } else if (topRecommendation != null) {
+                Text(
+                    text = "Recommended now: ${topRecommendation.bag.name}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(start = 12.dp, bottom = 8.dp),
+                )
+            }
         }
 
         // Grind preview
@@ -292,7 +370,7 @@ fun MethodPickerScreen(
             is GrindResult.Specific ->
                 "Setting: ${"%.1f".format(gr.recommendation.suggestedStart)} (${gr.recommendation.adjustmentNote})"
         }
-        val bagGrindHint = selectedBag?.grindSetting
+        val bagGrindHint = selectedRankedBag?.grindInsight?.bestGrindSetting ?: selectedBag?.grindSetting
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -351,6 +429,7 @@ fun MethodPickerScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
                     .padding(horizontal = 24.dp, vertical = 16.dp),
             ) {
                 Text(
@@ -358,7 +437,7 @@ fun MethodPickerScreen(
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(bottom = 16.dp),
                 )
-                if (activeBags.isEmpty()) {
+                if (rankedBags.isEmpty()) {
                     Text(
                         text = "No active bags. Add one in the Bags tab.",
                         style = MaterialTheme.typography.bodyMedium,
@@ -366,42 +445,15 @@ fun MethodPickerScreen(
                         modifier = Modifier.padding(bottom = 16.dp),
                     )
                 } else {
-                    activeBags.forEach { bag ->
-                        ElevatedCard(
-                            onClick = {
-                                brewViewModel.selectBag(bag.id)
+                    rankedBags.forEachIndexed { index, option ->
+                        BagPickerOptionCard(
+                            option = option,
+                            isRecommended = index == 0,
+                            onSelect = {
+                                brewViewModel.selectBag(option.bag.id)
                                 showBagPicker = false
                             },
-                            shape = MaterialTheme.shapes.medium,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 8.dp),
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text(bag.name, style = MaterialTheme.typography.titleMedium)
-                                    bag.roaster?.let {
-                                        Text(
-                                            it,
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        )
-                                    }
-                                }
-                                bag.weightG?.let { w ->
-                                    Text(
-                                        "${"%.0f".format(w)}g",
-                                        style = MaterialTheme.typography.labelLarge,
-                                        color = MaterialTheme.colorScheme.primary,
-                                    )
-                                }
-                            }
-                        }
+                        )
                     }
                 }
                 // None option
@@ -415,6 +467,85 @@ fun MethodPickerScreen(
                     Text("Brew without selecting a bag")
                 }
                 Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+    }
+}
+
+@Composable
+private fun BagPickerOptionCard(
+    option: RankedBagSuggestion,
+    isRecommended: Boolean,
+    onSelect: () -> Unit,
+) {
+    ElevatedCard(
+        onClick = onSelect,
+        shape = MaterialTheme.shapes.medium,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 12.dp),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            FreshnessRing(
+                insight = option.freshness,
+                size = 58.dp,
+            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 16.dp),
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = option.bag.name,
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.weight(1f),
+                    )
+                    if (option.bag.isDecaf) {
+                        InsightChip(
+                            label = "Decaf",
+                            emphasis = ChipEmphasis.NEUTRAL,
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
+                    if (isRecommended) {
+                        InsightChip(
+                            label = "Best now",
+                            emphasis = ChipEmphasis.POSITIVE,
+                        )
+                    }
+                }
+                option.bag.roaster?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 2.dp),
+                    )
+                }
+                Text(
+                    text = option.freshness.coachText,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 8.dp),
+                )
+                InsightChipRow(
+                    chips = option.reasons,
+                    modifier = Modifier.padding(top = 12.dp),
+                    maxVisible = 3,
+                )
+                if (option.sensorySnapshot.topChips.isNotEmpty()) {
+                    InsightChipRow(
+                        chips = option.sensorySnapshot.topChips,
+                        modifier = Modifier.padding(top = 8.dp),
+                        maxVisible = 3,
+                    )
+                }
             }
         }
     }

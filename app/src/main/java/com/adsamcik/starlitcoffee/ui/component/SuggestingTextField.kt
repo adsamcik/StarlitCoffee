@@ -35,6 +35,7 @@ fun SuggestingTextField(
     modifier: Modifier = Modifier,
     maxSuggestions: Int = 5,
     singleLine: Boolean = true,
+    onFocusChanged: (Boolean) -> Unit = {},
 ) {
     var hasFocus by remember { mutableStateOf(false) }
     val filtered by remember(value, suggestions) {
@@ -60,7 +61,10 @@ fun SuggestingTextField(
             singleLine = singleLine,
             modifier = Modifier
                 .fillMaxWidth()
-                .onFocusChanged { hasFocus = it.isFocused },
+                .onFocusChanged {
+                    hasFocus = it.isFocused
+                    onFocusChanged(it.isFocused)
+                },
         )
 
         AnimatedVisibility(visible = showSuggestions) {

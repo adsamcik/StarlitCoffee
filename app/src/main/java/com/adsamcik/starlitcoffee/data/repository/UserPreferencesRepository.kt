@@ -21,6 +21,7 @@ data class UserPreferences(
     val defaultMethod: BrewMethod = BrewMethod.PULSAR,
     val defaultFilterType: FilterType? = null,
     val selectedGrinderId: String? = null,
+    val qrLinkExplorerEnabled: Boolean = false,
 )
 
 class UserPreferencesRepository(private val context: Context) {
@@ -31,6 +32,7 @@ class UserPreferencesRepository(private val context: Context) {
         val DEFAULT_METHOD = stringPreferencesKey("default_method")
         val DEFAULT_FILTER_TYPE = stringPreferencesKey("default_filter_type")
         val SELECTED_GRINDER_ID = stringPreferencesKey("selected_grinder_id")
+        val QR_LINK_EXPLORER_ENABLED = booleanPreferencesKey("qr_link_explorer_enabled")
     }
 
     val userPreferences: Flow<UserPreferences> = context.dataStore.data.map { prefs ->
@@ -46,6 +48,7 @@ class UserPreferencesRepository(private val context: Context) {
             defaultFilterType = prefs[Keys.DEFAULT_FILTER_TYPE]
                 ?.let { name -> FilterType.entries.find { it.name == name } },
             selectedGrinderId = prefs[Keys.SELECTED_GRINDER_ID],
+            qrLinkExplorerEnabled = prefs[Keys.QR_LINK_EXPLORER_ENABLED] ?: false,
         )
     }
 
@@ -101,6 +104,12 @@ class UserPreferencesRepository(private val context: Context) {
             } else {
                 prefs.remove(Keys.SELECTED_GRINDER_ID)
             }
+        }
+    }
+
+    suspend fun updateQrLinkExplorerEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.QR_LINK_EXPLORER_ENABLED] = enabled
         }
     }
 

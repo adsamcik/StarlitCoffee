@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +28,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -60,6 +62,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.heading
@@ -108,6 +111,7 @@ fun AddBagSheet(
         variety: String?,
         processType: String?,
         tastingNotes: String?,
+        isDecaf: Boolean,
         roastDate: Long?,
         expiryDate: Long?,
     ) -> Unit,
@@ -709,12 +713,43 @@ fun AddBagSheet(
                             }
                         }
                         item {
-                            FilterChip(
-                                selected = isDecaf,
-                                onClick = { isDecaf = !isDecaf },
-                                label = { Text("☘ Decaf") },
-                                modifier = Modifier.padding(bottom = 8.dp),
-                            )
+                            ElevatedCard(
+                                shape = MaterialTheme.shapes.medium,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 8.dp),
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .toggleable(
+                                            value = isDecaf,
+                                            role = Role.Checkbox,
+                                            onValueChange = { isDecaf = it },
+                                        )
+                                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Checkbox(
+                                        checked = isDecaf,
+                                        onCheckedChange = null,
+                                    )
+                                    Column(
+                                        modifier = Modifier.padding(start = 12.dp),
+                                        verticalArrangement = Arrangement.spacedBy(2.dp),
+                                    ) {
+                                        Text(
+                                            text = "Decaf coffee",
+                                            style = MaterialTheme.typography.titleSmall,
+                                        )
+                                        Text(
+                                            text = "Keeps brew guidance in sync with decaf beans and shorter steep targets.",
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                    }
+                                }
+                            }
                         }
                         item {
                             OutlinedTextField(
@@ -767,6 +802,7 @@ fun AddBagSheet(
                                 variety.takeIf { it.isNotBlank() },
                                 processType.takeIf { it.isNotBlank() },
                                 tastingNotes.takeIf { it.isNotBlank() },
+                                isDecaf,
                                 roastDateMillis,
                                 expiryDateMillis,
                             )

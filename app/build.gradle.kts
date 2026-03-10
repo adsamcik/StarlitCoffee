@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
@@ -40,8 +41,6 @@ android {
     buildFeatures {
         compose = true
     }
-
-    assetPacks += listOf(":ai_model_pack")
 }
 
 kotlin {
@@ -64,6 +63,13 @@ tasks.withType<Test> {
     configure<JacocoTaskExtension> {
         isIncludeNoLocationClasses = true
         excludes = listOf("jdk.internal.*")
+    }
+    doFirst {
+        extensions.getByType(JacocoTaskExtension::class.java)
+            .destinationFile
+            ?.parentFile
+            ?.mkdirs()
+        binaryResultsDirectory.get().asFile.mkdirs()
     }
 }
 
@@ -138,9 +144,6 @@ dependencies {
     implementation(libs.mlkit.barcode)
     implementation(libs.mlkit.text.recognition)
 
-    // LiteRT-LM (on-device LLM inference with Gemma 3n)
-    implementation(libs.litertlm.android)
-
     // OpenCV (image preprocessing for OCR)
     implementation(libs.opencv)
 
@@ -149,9 +152,6 @@ dependencies {
     implementation(libs.camera.camera2)
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
-
-    // Play Asset Delivery
-    implementation(libs.play.asset.delivery.ktx)
 
     // Coroutines
     implementation(libs.coroutines.android)

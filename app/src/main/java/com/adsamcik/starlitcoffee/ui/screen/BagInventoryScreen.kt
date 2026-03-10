@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.ui.screen
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -51,6 +52,7 @@ fun BagInventoryScreen(
     brewViewModel: BrewViewModel,
     onNavigateToCamera: () -> Unit,
     capturedPhotosResult: String? = null,
+    scanFieldsResult: String? = null,
 ){
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
@@ -123,6 +125,32 @@ fun BagInventoryScreen(
         brewViewModel.processNewBagPhotos(photos, knownFieldValues)
     }
 
+    // Handle resolved scan fields from LiveScan "Review First"
+    var lastProcessedScanFields by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(scanFieldsResult) {
+        val fields = scanFieldsResult ?: return@LaunchedEffect
+        if (fields == lastProcessedScanFields) return@LaunchedEffect
+        lastProcessedScanFields = fields
+
+        // Parse pipe-delimited "key=value" pairs into BagFieldEvidence
+        val parsed = fields.split("|").mapNotNull { entry ->
+            val parts = entry.split("=", limit = 2)
+            if (parts.size == 2) parts[0] to parts[1] else null
+        }.toMap()
+
+        fieldEvidence = parsed.map { (key, value) ->
+            key to BagFieldEvidence(
+                fieldName = key,
+                value = value,
+                sourceType = com.adsamcik.starlitcoffee.util.BagFieldSourceType.OCR,
+                confidence = com.adsamcik.starlitcoffee.util.BagFieldConfidence.MEDIUM,
+            )
+        }.toMap()
+        reviewHints = emptyList()
+        isProcessingScan = false
+        showAddSheet = true
+    }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -156,13 +184,21 @@ fun BagInventoryScreen(
                 ),
             ) {
                 item {
-                    Text(
-                        text = "Coffee Bags",
-                        style = MaterialTheme.typography.headlineMedium,
-                        modifier = Modifier
-                            .padding(start = 8.dp, bottom = 8.dp)
-                            .semantics { heading() },
-                    )
+                    Column(
+                        modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        Text(
+                            text = "Coffee Bags",
+                            style = MaterialTheme.typography.headlineMedium,
+                            modifier = Modifier.semantics { heading() },
+                        )
+                        Text(
+                            text = "Freshness, stock, and the next step at a glance.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
                 }
                 items(bags, key = { it.id }) { bag ->
                     BagCard(
@@ -215,6 +251,7 @@ fun BagInventoryScreen(
                 variety,
                 processType,
                 tastingNotes,
+                isDecaf,
                 roastDateMillis,
                 expiryDateMillis,
                 ->
@@ -249,6 +286,7 @@ fun BagInventoryScreen(
                         variety = variety,
                         processType = processType,
                         tastingNotes = tastingNotes,
+                        isDecaf = isDecaf,
                         roastDate = roastDateMillis,
                         expiryDate = expiryDateMillis,
                         photoUri = permanentUris?.split(",")?.firstOrNull(),

@@ -1014,6 +1014,7 @@ class BrewViewModelTest {
             priceAmount = 18.5f,
             priceCurrency = "USD",
             notes = "Berry and chocolate",
+            isDecaf = true,
             photoUri = "content://photo",
             status = "OPEN",
         )
@@ -1031,8 +1032,54 @@ class BrewViewModelTest {
         assertEquals(18.5f, bag.priceAmount!!, 0.01f)
         assertEquals("USD", bag.priceCurrency)
         assertEquals("Berry and chocolate", bag.notes)
+        assertTrue(bag.isDecaf)
         assertEquals("content://photo", bag.photoUri)
         assertEquals("OPEN", bag.status)
+    }
+
+    @Test
+    fun `selectBag syncs decaf flag into brew ui state`() {
+        val persistenceViewModel = createPersistenceViewModel()
+
+        persistenceViewModel.addCoffeeBag(name = "Half Caf", isDecaf = true)
+        persistenceViewModel.addCoffeeBag(name = "Daily Driver", isDecaf = false)
+
+        val decafBagId = persistenceViewModel.coffeeBags.value.first { it.isDecaf }.id
+        val regularBagId = persistenceViewModel.coffeeBags.value.first { !it.isDecaf }.id
+
+        persistenceViewModel.selectBag(decafBagId)
+        assertTrue(persistenceViewModel.uiState.value.isDecafBrew)
+
+        persistenceViewModel.selectBag(regularBagId)
+        assertFalse(persistenceViewModel.uiState.value.isDecafBrew)
+    }
+
+    @Test
+    fun `addCoffeeBag normalizes barcode digits before storing`() {
+        val persistenceViewModel = createPersistenceViewModel()
+
+        persistenceViewModel.addCoffeeBag(
+            name = "Beansmith's Gedeb",
+            barcode = "859 4206 183060",
+        )
+
+        assertEquals("8594206183060", persistenceViewModel.coffeeBags.value.first().barcode)
+    }
+
+    @Test
+    fun `findBagByBarcode matches normalized scanner input`() {
+        val persistenceViewModel = createPersistenceViewModel()
+        var foundName: String? = null
+
+        persistenceViewModel.addCoffeeBag(
+            name = "Beansmith's Gedeb",
+            barcode = "8594206183060",
+        )
+        persistenceViewModel.findBagByBarcode("859 4206 183060") { bag ->
+            foundName = bag?.name
+        }
+
+        assertEquals("Beansmith's Gedeb", foundName)
     }
 
     @Test
@@ -1096,6 +1143,61 @@ class BrewViewModelTest {
         val bag = persistenceViewModel.coffeeBags.value.first()
         assertEquals("Ethiopia", bag.origin)
         assertEquals("Guji", bag.region)
+    }
+
+    @Test
+    fun `addCoffeeBag stores canonical ids for multilingual metadata`() {
+        val persistenceViewModel = createPersistenceViewModel()
+
+        persistenceViewModel.addCoffeeBag(
+            name = "Vacation Bag",
+            origin = "Etiopie",
+            region = "Guji",
+            roastLevel = "Světlé",
+            processType = "Lavado",
+            variety = "Gesha",
+            tastingNotes = "Lesní jahoda, Zelený čaj",
+        )
+
+        val bag = persistenceViewModel.coffeeBags.value.first()
+        assertEquals("Etiopie", bag.origin)
+        assertEquals("ETHIOPIA", bag.originId)
+        assertEquals("Guji", bag.region)
+        assertEquals("GUJI", bag.regionId)
+        assertEquals("Světlé", bag.roastLevel)
+        assertEquals("LIGHT", bag.roastLevelIds)
+        assertEquals("Lavado", bag.processType)
+        assertEquals("WASHED", bag.processTypeId)
+        assertEquals("Gesha", bag.variety)
+        assertEquals("GEISHA", bag.varietyIds)
+        assertEquals("Lesní jahoda, Zelený čaj", bag.tastingNotes)
+        assertEquals("green_tea,wild_strawberry", bag.tasteNoteIds)
+    }
+
+    @Test
+    fun `updateCoffeeBag refreshes canonical ids from edited multilingual fields`() {
+        val persistenceViewModel = createPersistenceViewModel()
+        persistenceViewModel.addCoffeeBag(name = "Editable Bag")
+
+        val original = persistenceViewModel.coffeeBags.value.first()
+        persistenceViewModel.updateCoffeeBag(
+            original.copy(
+                origin = "Etiopia",
+                region = "Gedeb",
+                roastLevel = "Oscuro",
+                processType = "Praný",
+                variety = "Gesha",
+                tastingNotes = "Yuzu, Lesní jahoda",
+            ),
+        )
+
+        val updated = persistenceViewModel.coffeeBags.value.first()
+        assertEquals("ETHIOPIA", updated.originId)
+        assertEquals("GEDEB", updated.regionId)
+        assertEquals("DARK", updated.roastLevelIds)
+        assertEquals("WASHED", updated.processTypeId)
+        assertEquals("GEISHA", updated.varietyIds)
+        assertEquals("wild_strawberry,yuzu", updated.tasteNoteIds)
     }
 
     @Test

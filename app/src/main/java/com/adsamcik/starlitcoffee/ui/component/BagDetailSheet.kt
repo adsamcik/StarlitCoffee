@@ -44,10 +44,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.model.CoffeeBagStatus
+import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
+import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
+import com.adsamcik.starlitcoffee.util.FreshnessPhase
 import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 private const val TAG = "BagDetailSheet"
 private const val LOW_COFFEE_THRESHOLD_G = 30f
@@ -57,6 +62,7 @@ private const val LOW_COFFEE_THRESHOLD_G = 30f
 fun BagDetailSheet(
     bag: CoffeeBagEntity,
     brewLogs: List<BrewLogEntity>,
+    flavorTags: List<FlavorTagEntity> = emptyList(),
     dateFormat: SimpleDateFormat,
     onDismiss: () -> Unit,
     onStatusChange: (CoffeeBagStatus) -> Unit,
@@ -65,6 +71,23 @@ fun BagDetailSheet(
     onWeightAdjust: (Long, Float) -> Unit = { _, _ -> },
 ) {
     var statusMenuExpanded by remember { mutableStateOf(false) }
+    val localizedMetadata = CoffeeMetadataNormalizer.resolveBagMetadata(bag)
+    val freshness = remember(bag.roastDate) {
+        CoffeeBagInsights.freshnessInsight(bag.roastDate)
+    }
+    val sensorySnapshot = remember(bag, brewLogs, flavorTags) {
+        CoffeeBagInsights.buildSensorySnapshot(
+            bag = bag,
+            brewLogs = brewLogs,
+            flavorTags = flavorTags,
+        )
+    }
+    val grindInsight = remember(bag, brewLogs) {
+        CoffeeBagInsights.buildGrindInsight(
+            bag = bag,
+            brewLogs = brewLogs,
+        )
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -146,14 +169,171 @@ fun BagDetailSheet(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
+                .weight(1f),
             ) {
                 // Bag details
                 item {
-                    if (bag.origin != null) DetailRow("Origin", bag.origin)
-                    if (bag.variety != null) DetailRow("Variety", bag.variety)
-                    if (bag.roastLevel != null) DetailRow("Roast", bag.roastLevel)
+                    ElevatedCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 12.dp),
+                        shape = MaterialTheme.shapes.large,
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            FreshnessRing(
+                                insight = freshness,
+                                size = 72.dp,
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(start = 16.dp),
+                            ) {
+                                val phaseColor = when (freshness.phase) {
+                                    FreshnessPhase.DEGASSING -> MaterialTheme.colorScheme.secondary
+                                    FreshnessPhase.PEAK -> MaterialTheme.colorScheme.primary
+                                    FreshnessPhase.MELLOWING -> MaterialTheme.colorScheme.tertiary
+                                    FreshnessPhase.VINTAGE -> MaterialTheme.colorScheme.error
+                                    FreshnessPhase.UNKNOWN -> MaterialTheme.colorScheme.onSurfaceVariant
+                                }
+                                Text(
+                                    text = freshness.phase.displayName,
+                                    style = MaterialTheme.typography.titleLarge,
+                                    color = phaseColor,
+                                )
+                                Text(
+                                    text = freshness.headline,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                                Text(
+                                    text = freshness.coachText,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.padding(top = 6.dp),
+                                )
+                                Text(
+                                    text = freshness.windowText,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = phaseColor,
+                                    modifier = Modifier.padding(top = 6.dp),
+                                )
+                            }
+                        }
+                    }
+
+                    if (sensorySnapshot.topChips.isNotEmpty() || sensorySnapshot.averageRating != null) {
+                        ElevatedCard(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp),
+                            shape = MaterialTheme.shapes.large,
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                            ) {
+                                Text(
+                                    text = "Sensory snapshot",
+                                    style = MaterialTheme.typography.titleMedium,
+                                )
+                                Text(
+                                    text = sensorySnapshot.summary,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.padding(top = 4.dp),
+                                )
+                                sensorySnapshot.averageRating?.let { averageRating ->
+                                    Text(
+                                        text = "Average bag rating: ${"%.1f".format(Locale.US, averageRating)} stars",
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.padding(top = 8.dp),
+                                    )
+                                }
+                                InsightChipRow(
+                                    chips = sensorySnapshot.topChips,
+                                    modifier = Modifier.padding(top = 12.dp),
+                                    maxVisible = 6,
+                                )
+                            }
+                        }
+                    }
+
+                    if (
+                        grindInsight.lastGrindSetting != null ||
+                        grindInsight.bestGrindSetting != null ||
+                        grindInsight.recentOutcomes.isNotEmpty()
+                    ) {
+                        ElevatedCard(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp),
+                            shape = MaterialTheme.shapes.large,
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                            ) {
+                                Text(
+                                    text = "Grind intelligence",
+                                    style = MaterialTheme.typography.titleMedium,
+                                )
+                                Text(
+                                    text = grindInsight.summary,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.padding(top = 4.dp),
+                                )
+                                grindInsight.adjustmentHint?.let { hint ->
+                                    Text(
+                                        text = hint,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.padding(top = 8.dp),
+                                    )
+                                }
+                                if (grindInsight.recentOutcomes.isNotEmpty()) {
+                                    androidx.compose.foundation.layout.FlowRow(
+                                        modifier = Modifier.padding(top = 12.dp),
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                                    ) {
+                                        grindInsight.recentOutcomes.forEach { outcome ->
+                                            GrindOutcomeChip(entry = outcome)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    localizedMetadata.origin?.let { DetailRow("Origin", it) }
+                    localizedMetadata.region?.let { DetailRow("Region", it) }
+                    if (bag.farm != null) DetailRow("Farm", bag.farm)
+                    localizedMetadata.variety?.let { DetailRow("Variety", it) }
+                    localizedMetadata.processType?.let { DetailRow("Process", it) }
+                    if (bag.altitude != null) DetailRow("Altitude", bag.altitude)
+                    localizedMetadata.roastLevel?.let { DetailRow("Roast", it) }
                     if (bag.roastDate != null) DetailRow("Roast date", dateFormat.format(Date(bag.roastDate)))
+                    if (bag.openedDate != null) DetailRow("Opened", dateFormat.format(Date(bag.openedDate)))
+                    if (bag.expiryDate != null) DetailRow("Best before", dateFormat.format(Date(bag.expiryDate)))
+                    if (bag.grindSetting != null) DetailRow("Dialed-in grind", bag.grindSetting)
+                    if (bag.priceAmount != null) {
+                        DetailRow(
+                            "Price",
+                            "${"%.2f".format(Locale.US, bag.priceAmount)} ${bag.priceCurrency ?: "USD"}",
+                        )
+                    }
+                    if (bag.barcode != null) DetailRow("Barcode", bag.barcode)
+                    if (bag.isDecaf) DetailRow("Decaf", "Yes")
                     // Weight section with progress bar, estimated doses, and adjust button
                     if (bag.weightG != null) {
                         val remaining = bag.weightG
@@ -259,7 +439,7 @@ fun BagDetailSheet(
                             )
                         }
                     }
-                    if (bag.tastingNotes != null) DetailRow("Tasting notes", bag.tastingNotes)
+                    localizedMetadata.tastingNotes?.let { DetailRow("Tasting notes", it) }
                     if (bag.notes != null) DetailRow("Notes", bag.notes)
                     if (bag.traceabilityUrl != null) {
                         val uriHandler = androidx.compose.ui.platform.LocalUriHandler.current
@@ -333,6 +513,23 @@ fun BagDetailSheet(
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
+                                    val grindLine = buildString {
+                                        log.grindSetting?.let {
+                                            append("Grind $it")
+                                        }
+                                        log.tasteFeedback?.let { feedback ->
+                                            if (isNotEmpty()) append(" • ")
+                                            append(formatTasteFeedback(feedback))
+                                        }
+                                    }
+                                    if (grindLine.isNotBlank()) {
+                                        Text(
+                                            text = grindLine,
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            modifier = Modifier.padding(top = 4.dp),
+                                        )
+                                    }
                                 }
                                 log.rating?.let { rating ->
                                     Text(
@@ -387,4 +584,16 @@ fun BagDetailSheet(
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
+}
+
+private fun formatTasteFeedback(raw: String): String {
+    return raw.lowercase(Locale.getDefault())
+        .replace('_', ' ')
+        .replaceFirstChar { first ->
+            if (first.isLowerCase()) {
+                first.titlecase(Locale.getDefault())
+            } else {
+                first.toString()
+            }
+        }
 }

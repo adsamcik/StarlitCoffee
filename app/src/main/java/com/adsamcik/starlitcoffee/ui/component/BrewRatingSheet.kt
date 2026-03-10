@@ -53,10 +53,16 @@ fun BrewRatingSheet(
         ) {
             // Title
             Text(
-                text = "How was your brew?",
+                text = "Quick sensory snapshot",
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.semantics { heading() },
+            )
+            Text(
+                text = "Save the cup in a few taps while the taste is still fresh.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 8.dp),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -86,6 +92,13 @@ fun BrewRatingSheet(
                     }
                 },
             )
+            if (selectedDescriptors.isNotEmpty()) {
+                InsightChipRow(
+                    chips = selectedDescriptors.map { it.displayName },
+                    modifier = Modifier.padding(top = 12.dp),
+                    maxVisible = 4,
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -94,7 +107,7 @@ fun BrewRatingSheet(
                 value = notes,
                 onValueChange = { notes = it },
                 placeholder = {
-                    Text("Add notes...")
+                    Text("Optional note - what stood out?")
                 },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 2,
@@ -121,7 +134,7 @@ fun BrewRatingSheet(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.large,
             ) {
-                Text("Save Rating")
+                Text("Save snapshot")
             }
         }
     }

@@ -25,4 +25,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "StarlitCoffee"
 include(":app")
-include(":ai_model_pack")

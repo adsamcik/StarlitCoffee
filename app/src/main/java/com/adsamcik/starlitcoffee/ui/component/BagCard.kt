@@ -2,7 +2,10 @@ package com.adsamcik.starlitcoffee.ui.component
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,10 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -25,26 +29,32 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
-import com.adsamcik.starlitcoffee.util.DateParser
+import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import java.text.SimpleDateFormat
 import java.util.Date
 
 private const val TAG = "BagCard"
-private const val LOW_COFFEE_THRESHOLD_G = 30f
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BagCard(
     bag: CoffeeBagEntity,
     dateFormat: SimpleDateFormat,
     onTap: () -> Unit,
 ) {
-    val statusColor = when (bag.status) {
-        "SEALED" -> MaterialTheme.colorScheme.outline
-        "OPEN" -> MaterialTheme.colorScheme.primary
-        "FROZEN" -> MaterialTheme.colorScheme.tertiary
-        "FINISHED" -> MaterialTheme.colorScheme.onSurfaceVariant
-        else -> MaterialTheme.colorScheme.outline
+    val freshness = remember(bag.roastDate) {
+        CoffeeBagInsights.freshnessInsight(bag.roastDate)
+    }
+    val summary = remember(bag, freshness) {
+        buildBagCardSummary(
+            bag = bag,
+            freshness = freshness,
+        )
+    }
+    val subtitle = bag.roaster ?: bag.origin ?: bag.region
+    val supportingText = bag.roastDate?.let { roastDate ->
+        "Roasted ${dateFormat.format(Date(roastDate))} - ${summary.freshnessSupportingText}"
     }
 
     ElevatedCard(
@@ -52,120 +62,152 @@ fun BagCard(
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
-            // Photo thumbnail
-            bag.photoUri?.let { uri ->
-                val bitmap = remember(uri) {
-                    try {
-                        val file = java.io.File(android.net.Uri.parse(uri).path ?: return@remember null)
-                        val raw = android.graphics.BitmapFactory.decodeFile(file.absolutePath)
-                            ?: return@remember null
-                        ImagePreprocessor.applyExifRotation(raw, file.absolutePath)
-                    } catch (e: Exception) {
-                        Log.w(TAG, "Failed to load bag thumbnail", e)
-                        null
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.Top,
+            ) {
+                bag.photoUri?.let { uri ->
+                    val bitmap = remember(uri) {
+                        try {
+                            val file = java.io.File(android.net.Uri.parse(uri).path ?: return@remember null)
+                            val raw = android.graphics.BitmapFactory.decodeFile(file.absolutePath)
+                                ?: return@remember null
+                            ImagePreprocessor.applyExifRotation(raw, file.absolutePath)
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Failed to load bag thumbnail", e)
+                            null
+                        }
+                    }
+                    if (bitmap != null) {
+                        Image(
+                            bitmap = bitmap.asImageBitmap(),
+                            contentDescription = "Bag photo",
+                            modifier = Modifier
+                                .size(68.dp)
+                                .clip(MaterialTheme.shapes.medium),
+                            contentScale = ContentScale.Crop,
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
                     }
                 }
-                if (bitmap != null) {
-                    Image(
-                        bitmap = bitmap.asImageBitmap(),
-                        contentDescription = "Bag photo",
-                        modifier = Modifier
-                            .size(56.dp)
-                            .clip(MaterialTheme.shapes.small),
-                        contentScale = ContentScale.Crop,
+
+                Column(
+                    modifier = Modifier
+                        .weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(
+                        text = bag.name,
+                        style = MaterialTheme.typography.titleMedium,
                     )
-                    Spacer(modifier = Modifier.width(16.dp))
+                    subtitle?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        InsightChip(
+                            label = summary.statusLabel,
+                            emphasis = summary.statusEmphasis,
+                        )
+                        InsightChip(
+                            label = summary.freshnessLabel,
+                            emphasis = summary.freshnessEmphasis,
+                        )
+                        if (bag.isDecaf) {
+                            InsightChip(
+                                label = "Decaf",
+                                emphasis = ChipEmphasis.NEUTRAL,
+                            )
+                        }
+                    }
                 }
             }
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = bag.name,
-                    style = MaterialTheme.typography.titleMedium,
-                )
-                if (bag.roaster != null) {
-                    Text(
-                        text = bag.roaster,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+
+            summary.warningText?.let { warningText ->
+                Surface(
+                    color = when (summary.stockEmphasis) {
+                        ChipEmphasis.CRITICAL -> MaterialTheme.colorScheme.errorContainer
+                        else -> MaterialTheme.colorScheme.tertiaryContainer
+                    },
+                    contentColor = when (summary.stockEmphasis) {
+                        ChipEmphasis.CRITICAL -> MaterialTheme.colorScheme.onErrorContainer
+                        else -> MaterialTheme.colorScheme.onTertiaryContainer
+                    },
+                    shape = MaterialTheme.shapes.medium,
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = warningText,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
+            }
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = summary.stockLabel,
+                            style = MaterialTheme.typography.titleSmall,
+                        )
+                        Text(
+                            text = summary.stockSupportingText,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(12.dp))
+                    FilledTonalButton(onClick = onTap) {
+                        Text(summary.primaryActionLabel)
+                    }
+                }
+                summary.stockProgress?.let { progress ->
+                    LinearProgressIndicator(
+                        progress = { progress },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(8.dp)
+                            .clip(RoundedCornerShape(999.dp)),
+                        color = when (summary.stockEmphasis) {
+                            ChipEmphasis.CRITICAL -> MaterialTheme.colorScheme.error
+                            ChipEmphasis.WARNING -> MaterialTheme.colorScheme.tertiary
+                            else -> MaterialTheme.colorScheme.primary
+                        },
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
                     )
                 }
-                bag.weightG?.let { w ->
-                    val initial = bag.initialWeightG ?: w
-                    val progress = if (initial > 0f) (w / initial).coerceIn(0f, 1f) else 0f
-                    val isLow = w in 0.01f..LOW_COFFEE_THRESHOLD_G
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        androidx.compose.material3.LinearProgressIndicator(
-                            progress = { progress },
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(6.dp)
-                                .clip(RoundedCornerShape(3.dp)),
-                            color = when {
-                                isLow -> MaterialTheme.colorScheme.error
-                                progress < 0.3f -> MaterialTheme.colorScheme.tertiary
-                                else -> MaterialTheme.colorScheme.primary
-                            },
-                            trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "${"%.0f".format(w)}g",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = if (isLow) MaterialTheme.colorScheme.error
-                                else MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    if (isLow) {
-                        Text(
-                            text = "⚠ Low coffee",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.error,
-                        )
-                    }
-                }
-                if (bag.roastDate != null) {
+                supportingText?.let {
                     Text(
-                        text = "Roasted: ${dateFormat.format(Date(bag.roastDate))}",
+                        text = it,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    val freshness = DateParser.assessFreshness(bag.roastDate)
-                    Text(
-                        "${freshness.emoji} ${freshness.label}",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = when (freshness) {
-                            DateParser.Freshness.PEAK -> MaterialTheme.colorScheme.primary
-                            DateParser.Freshness.STALE, DateParser.Freshness.OLD -> MaterialTheme.colorScheme.error
-                            else -> MaterialTheme.colorScheme.onSurfaceVariant
-                        },
-                    )
-                }
-                if (bag.isDecaf) {
-                    Text(
-                        text = "☘ Decaf",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.tertiary,
-                    )
                 }
             }
-            AssistChip(
-                onClick = {},
-                label = {
-                    Text(
-                        bag.status.lowercase()
-                            .replaceFirstChar { it.uppercase() },
-                    )
-                },
-                colors = AssistChipDefaults.assistChipColors(
-                    labelColor = statusColor,
-                ),
-            )
         }
     }
 }

@@ -255,11 +255,12 @@ fun ResultScreen(
         val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
         val selectedBag = bags.find { it.id == selectedBagId }
         if (selectedBag != null) {
+            val decafText = if (selectedBag.isDecaf) " · Decaf" else ""
             val weightText = selectedBag.weightG?.let { w ->
                 " · ${"%.0f".format(w)}g remaining"
             } ?: ""
             Text(
-                text = "☕ ${selectedBag.name}${selectedBag.roaster?.let { " by $it" } ?: ""}$weightText",
+                text = "☕ ${selectedBag.name}${selectedBag.roaster?.let { " by $it" } ?: ""}$decafText$weightText",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),

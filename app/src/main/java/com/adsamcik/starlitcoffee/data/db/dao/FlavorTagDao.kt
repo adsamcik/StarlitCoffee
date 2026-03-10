@@ -11,6 +11,9 @@ interface FlavorTagDao {
     @Insert
     suspend fun insertAll(tags: List<FlavorTagEntity>)
 
+    @Query("SELECT * FROM flavor_tags")
+    fun getAll(): Flow<List<FlavorTagEntity>>
+
     @Query("SELECT * FROM flavor_tags WHERE brewLogId = :brewLogId")
     fun getForBrewLog(brewLogId: Long): Flow<List<FlavorTagEntity>>
 

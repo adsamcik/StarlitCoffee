@@ -15,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -48,19 +47,14 @@ fun <T> FieldChipPicker(
     recentValues: List<String> = emptyList(),
     multiSelect: Boolean = false,
     modifier: Modifier = Modifier,
+    onInteraction: () -> Unit = {},
 ) {
-    val knownDisplayNames = remember(knownValues) {
-        knownValues.map { displayName(it).lowercase() }.toSet()
-    }
+    val knownDisplayNames = knownValues.map { displayName(it).lowercase() }.toSet()
     // Recent values that aren't in the Known enum — show as extra chips
-    val recentOtherValues = remember(recentValues, knownDisplayNames) {
-        recentValues.filter { it.lowercase() !in knownDisplayNames }.distinct()
-    }
+    val recentOtherValues = recentValues.filter { it.lowercase() !in knownDisplayNames }.distinct()
     // Known values sorted: recently-used first, then the rest
-    val sortedKnownValues = remember(knownValues, recentValues) {
-        val recentLower = recentValues.map { it.lowercase() }.toSet()
-        knownValues.sortedByDescending { displayName(it).lowercase() in recentLower }
-    }
+    val recentLower = recentValues.map { it.lowercase() }.toSet()
+    val sortedKnownValues = knownValues.sortedByDescending { displayName(it).lowercase() in recentLower }
 
     // Multi-select helpers
     fun isItemInSelection(name: String): Boolean {
@@ -82,7 +76,7 @@ fun <T> FieldChipPicker(
         recentOtherValues.none { it.equals(selectedValue, ignoreCase = true) }
     val isRecentOtherSelected = !multiSelect && selectedValue.isNotBlank() &&
         recentOtherValues.any { it.equals(selectedValue, ignoreCase = true) }
-    var otherText by remember(selectedValue) {
+    var otherText by androidx.compose.runtime.remember(selectedValue) {
         mutableStateOf(if (isOtherSelected) selectedValue else "")
     }
 
@@ -105,6 +99,7 @@ fun <T> FieldChipPicker(
                 FilterChip(
                     selected = isSelected,
                     onClick = {
+                        onInteraction()
                         if (multiSelect) {
                             toggleInSelection(name)
                         } else {
@@ -123,6 +118,7 @@ fun <T> FieldChipPicker(
                 FilterChip(
                     selected = isSelected,
                     onClick = {
+                        onInteraction()
                         if (multiSelect) {
                             toggleInSelection(recent)
                         } else {
@@ -140,6 +136,7 @@ fun <T> FieldChipPicker(
             FilterChip(
                 selected = isOtherSelected,
                 onClick = {
+                    onInteraction()
                     if (!isOtherSelected) {
                         onValueChange(otherText)
                     }
@@ -152,6 +149,7 @@ fun <T> FieldChipPicker(
             OutlinedTextField(
                 value = otherText,
                 onValueChange = {
+                    onInteraction()
                     otherText = it
                     onValueChange(it)
                 },

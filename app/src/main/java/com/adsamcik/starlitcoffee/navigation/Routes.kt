@@ -33,7 +33,7 @@ data class BrewLogDetail(val logId: Long)
 object BarcodeScanner
 
 @Serializable
-object CameraCapture
+object LiveScan
 
 @Serializable
 object OnboardingMethods

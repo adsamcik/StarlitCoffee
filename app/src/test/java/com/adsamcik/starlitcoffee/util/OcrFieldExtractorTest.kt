@@ -667,4 +667,56 @@ class OcrFieldExtractorTest {
 
         assertEquals("15.06.2026", result.expiryDate)
     }
+
+    // --- Country hint wiring ---
+
+    @Test
+    fun `country hint extracts Czech section labels that match dictionary keywords`() {
+        val text = "Původ: Etiopie\nZpracování: Praný\nStupeň pražení: Světlé"
+        val result = OcrFieldExtractor.extractFields(
+            text,
+            countryHint = CoffeeCountryDictionaries.CZECH,
+        )
+        assertEquals("Etiopie", result.origin)
+    }
+
+    @Test
+    fun `country hint extracts German tasting notes label from dictionary`() {
+        val text = "Geschmacksnoten: Schokolade, Haselnuss, Karamell"
+        val result = OcrFieldExtractor.extractFields(
+            text,
+            countryHint = CoffeeCountryDictionaries.GERMAN,
+        )
+        assertNotNull("Should extract German-labeled tasting notes with hint", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("Schokolade"))
+    }
+
+    @Test
+    fun `country hint extracts Polish tasting notes label`() {
+        val text = "Nuty smakowe: czekolada, karmel, orzechy"
+        val result = OcrFieldExtractor.extractFields(
+            text,
+            countryHint = CoffeeCountryDictionaries.POLISH,
+        )
+        assertNotNull("Should extract Polish-labeled tasting notes with hint", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("czekolada"))
+    }
+
+    @Test
+    fun `extraction works without country hint using default labels`() {
+        val text = "Tasting notes: blueberry, jasmine, honey"
+        val result = OcrFieldExtractor.extractFields(text)
+        assertNotNull("Should extract English tasting notes without hint", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("blueberry"))
+    }
+
+    @Test
+    fun `country hint extracts Czech farm label from dictionary`() {
+        val text = "Farma: El Paraiso\nOdrůda: Caturra"
+        val result = OcrFieldExtractor.extractFields(
+            text,
+            countryHint = CoffeeCountryDictionaries.CZECH,
+        )
+        assertEquals("El Paraiso", result.farm)
+    }
 }

@@ -15,6 +15,8 @@ class BrewLogRepository(
 ) {
     fun getAllLogs(): Flow<List<BrewLogEntity>> = brewLogDao.getAll()
 
+    fun getAllFlavorTags(): Flow<List<FlavorTagEntity>> = flavorTagDao.getAll()
+
     fun getLogsByBag(bagId: Long): Flow<List<BrewLogEntity>> = brewLogDao.getByBag(bagId)
 
     fun getLogsByRecipe(recipeId: Long): Flow<List<BrewLogEntity>> = brewLogDao.getByRecipe(recipeId)

@@ -51,7 +51,9 @@ import com.adsamcik.starlitcoffee.util.BagPhotoRect
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.BagPhotoScanSupport
 import com.adsamcik.starlitcoffee.util.BarcodeInsights
+import com.adsamcik.starlitcoffee.util.CoffeeCountryDictionaries
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataMatchStrategy
+import com.adsamcik.starlitcoffee.util.CoffeeCountryDictionary
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
@@ -749,6 +751,7 @@ class BrewViewModel(
         priceAmount: Float? = null,
         priceCurrency: String? = "USD",
         notes: String? = null,
+        isDecaf: Boolean = false,
         photoUri: String? = null,
         photoUris: String? = null,
         traceabilityUrl: String? = null,
@@ -778,6 +781,7 @@ class BrewViewModel(
                     priceAmount = priceAmount,
                     priceCurrency = priceCurrency,
                     notes = notes,
+                    isDecaf = isDecaf,
                     photoUri = photoUri,
                     photoUris = photoUris,
                     traceabilityUrl = traceabilityUrl,
@@ -905,8 +909,17 @@ class BrewViewModel(
                     detectedBarcode = BarcodeInsights.normalizeBarcode(detectedBarcode)
                         ?: detectedBarcode?.trim()?.takeIf { it.isNotBlank() }
                     val matchedBagByBarcode = findLocalBagByBarcode(detectedBarcode)
+
+                    // Infer country dictionary from barcode for locale-aware OCR and display
+                    val barcodeCountry = CoffeeCountryDictionaries.localeFromBarcode(detectedBarcode)
+                        ?.let { locale -> CoffeeCountryDictionaries.ALL.firstOrNull { it.locale == locale } }
+                    val inferredLocale = barcodeCountry?.locale
+
                     matchedBagByBarcode?.let { matchedBag ->
-                        allCandidates += BarcodeInsights.buildLocalMatchCandidates(matchedBag)
+                        allCandidates += BarcodeInsights.buildLocalMatchCandidates(
+                            matchedBag,
+                            locale = inferredLocale ?: Locale.getDefault(),
+                        )
                     }
                     val observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode)
                     allCandidates += BarcodeInsights.buildObservedStemCandidates(observedStemMatch)
@@ -1075,6 +1088,7 @@ class BrewViewModel(
         bitmap: Bitmap,
         text: Text?,
         knownFieldValues: KnownFieldValues,
+        countryHint: CoffeeCountryDictionary? = null,
     ): ScanPass? {
         val ocrText = text ?: return null
         val blocks = ocrText.textBlocks.map { block ->
@@ -1090,7 +1104,7 @@ class BrewViewModel(
         }
         return ScanPass(
             label = label,
-            result = OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownFieldValues),
+            result = OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownFieldValues, countryHint),
             blocks = blocks,
             fullText = ocrText.text,
         )
@@ -1125,8 +1139,11 @@ class BrewViewModel(
         }
     }
 
-    private fun buildFieldCandidates(photo: ProcessedBagPhoto): List<BagFieldCandidate> = buildList {
-        val locale = Locale.getDefault()
+    private fun buildFieldCandidates(
+        photo: ProcessedBagPhoto,
+        inferredLocale: Locale? = null,
+    ): List<BagFieldCandidate> = buildList {
+        val locale = inferredLocale ?: Locale.getDefault()
         photo.passes.forEach { pass ->
             val confidenceHint = confidenceHintForPass(photo.quality, pass.blocks.size)
             addFieldCandidate("name", pass.result.name, photo, pass, confidenceHint, locale)

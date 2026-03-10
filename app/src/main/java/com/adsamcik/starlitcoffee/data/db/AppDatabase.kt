@@ -29,7 +29,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
         RatioPresetEntity::class,
         FlavorTagEntity::class,
     ],
-    version = 10,
+    version = 11,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -78,6 +78,20 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_10_11 = object : Migration(10, 11) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE coffee_bags ADD COLUMN originId TEXT")
+                db.execSQL("ALTER TABLE coffee_bags ADD COLUMN regionId TEXT")
+                db.execSQL("ALTER TABLE coffee_bags ADD COLUMN varietyIds TEXT")
+                db.execSQL("ALTER TABLE coffee_bags ADD COLUMN roastLevelIds TEXT")
+                db.execSQL("ALTER TABLE coffee_bags ADD COLUMN processTypeId TEXT")
+                db.execSQL("ALTER TABLE coffee_bags ADD COLUMN tasteNoteIds TEXT")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_coffee_bags_originId ON coffee_bags(originId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_coffee_bags_regionId ON coffee_bags(regionId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_coffee_bags_processTypeId ON coffee_bags(processTypeId)")
+            }
+        }
+
         // TODO: Replace with Hilt @Provides when DI is adopted
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -85,7 +99,14 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "starlit_coffee.db",
-                ).addMigrations(MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
+                ).addMigrations(
+                    MIGRATION_5_6,
+                    MIGRATION_6_7,
+                    MIGRATION_7_8,
+                    MIGRATION_8_9,
+                    MIGRATION_9_10,
+                    MIGRATION_10_11,
+                )
                     .fallbackToDestructiveMigration(true)
                     .build().also { INSTANCE = it }
             }

@@ -6,7 +6,12 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "coffee_bags",
-    indices = [Index("barcode")]
+    indices = [
+        Index("barcode"),
+        Index("originId"),
+        Index("regionId"),
+        Index("processTypeId"),
+    ]
 )
 data class CoffeeBagEntity(
     @PrimaryKey(autoGenerate = true)
@@ -14,13 +19,19 @@ data class CoffeeBagEntity(
     val name: String,
     val roaster: String? = null,
     val origin: String? = null,
+    val originId: String? = null,
     val region: String? = null,
+    val regionId: String? = null,
     val farm: String? = null,
     val variety: String? = null,
+    val varietyIds: String? = null,
     val altitude: String? = null,
     val roastLevel: String? = null,
+    val roastLevelIds: String? = null,
     val processType: String? = null,
+    val processTypeId: String? = null,
     val tastingNotes: String? = null,
+    val tasteNoteIds: String? = null,
     val roastDate: Long? = null,
     val openedDate: Long? = null,
     val barcode: String? = null,
