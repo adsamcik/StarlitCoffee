@@ -277,7 +277,7 @@ fun BrewLogDetailScreen(
             Text(
                 text = "Flavor notes",
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
+                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp).semantics { heading() },
             )
             FlavorTagPicker(
                 selectedTags = selectedDescriptors,
@@ -297,7 +297,7 @@ fun BrewLogDetailScreen(
             Text(
                 text = "Notes",
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
+                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp).semantics { heading() },
             )
             OutlinedTextField(
                 value = notes,

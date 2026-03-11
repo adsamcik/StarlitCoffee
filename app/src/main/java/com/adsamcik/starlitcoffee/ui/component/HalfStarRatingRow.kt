@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,14 +38,17 @@ fun HalfStarRatingRow(
     ) {
         for (i in 1..5) {
             Box(
-                modifier = Modifier.size(36.dp),
+                modifier = Modifier.size(48.dp),
             ) {
                 // Left half — half star
                 Box(
                     modifier = Modifier
-                        .size(width = 18.dp, height = 36.dp)
+                        .size(width = 24.dp, height = 48.dp)
                         .align(Alignment.CenterStart)
-                        .semantics { role = Role.Button }
+                        .semantics {
+                            role = Role.Button
+                            contentDescription = "Rate ${i - 0.5} stars"
+                        }
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
@@ -54,9 +58,12 @@ fun HalfStarRatingRow(
                 // Right half — full star
                 Box(
                     modifier = Modifier
-                        .size(width = 18.dp, height = 36.dp)
+                        .size(width = 24.dp, height = 48.dp)
                         .align(Alignment.CenterEnd)
-                        .semantics { role = Role.Button }
+                        .semantics {
+                            role = Role.Button
+                            contentDescription = "Rate $i stars"
+                        }
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,

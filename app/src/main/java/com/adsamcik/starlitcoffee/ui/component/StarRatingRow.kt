@@ -30,7 +30,11 @@ fun StarRatingRow(
             }
             Icon(
                 imageVector = icon,
-                contentDescription = null,
+                contentDescription = when {
+                    rating >= i.toFloat() -> "$i star filled"
+                    rating >= i - 0.5f -> "$i star half filled"
+                    else -> "$i star empty"
+                },
                 tint = if (rating >= i - 0.5f) {
                     MaterialTheme.colorScheme.primary
                 } else {

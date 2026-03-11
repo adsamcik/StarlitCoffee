@@ -10,6 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
@@ -41,16 +43,19 @@ fun BrewPreviewCard(
                 text = "☕ ${coffeeFormat.format(coffeeG)}g",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.semantics { contentDescription = "Coffee: ${coffeeFormat.format(coffeeG)} grams" },
             )
             Text(
                 text = "💧 ${waterFormat.format(waterG)}g",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.semantics { contentDescription = "Water: ${waterFormat.format(waterG)} grams" },
             )
             Text(
                 text = "1:${ratioFormat.format(ratio)}",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.semantics { contentDescription = "Ratio 1 to ${ratioFormat.format(ratio)}" },
             )
         }
     }

@@ -83,6 +83,7 @@ fun SettingsScreen(
                     Text(
                         text = "Brew methods",
                         style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.semantics { heading() },
                     )
                     Text(
                         text = "Selected methods appear first. Tap to toggle.",
@@ -130,6 +131,7 @@ fun SettingsScreen(
                     Text(
                         text = "Default method",
                         style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.semantics { heading() },
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     FlowRow(
@@ -159,6 +161,7 @@ fun SettingsScreen(
                     Text(
                         text = "Pulsar filter type",
                         style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.semantics { heading() },
                     )
                     Text(
                         text = "Applied when brewing with Pulsar",
@@ -202,6 +205,7 @@ fun SettingsScreen(
                     Text(
                         text = "Your grinder",
                         style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.semantics { heading() },
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     FlowRow(
@@ -257,6 +261,7 @@ fun SettingsScreen(
                             Text(
                                 text = "QR link explorer",
                                 style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.semantics { heading() },
                             )
                             Text(
                                 text = "When a bag photo includes a public HTTPS QR website, " +
