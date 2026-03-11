@@ -3,7 +3,7 @@ package com.adsamcik.starlitcoffee.ui.component
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +21,7 @@ fun DetailRow(label: String, value: String) {
             text = "$label:",
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.width(100.dp),
+            modifier = Modifier.widthIn(min = 80.dp, max = 120.dp),
         )
         Text(
             text = value,

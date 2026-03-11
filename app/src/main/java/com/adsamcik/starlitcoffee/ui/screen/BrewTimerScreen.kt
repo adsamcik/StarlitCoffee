@@ -349,7 +349,7 @@ fun BrewTimerScreen(
         LaunchedEffect(uiState.currentPhaseIndex, drift) {
             if (drift != 0 && uiState.currentPhaseIndex > 0) {
                 showDriftHint = true
-                kotlinx.coroutines.delay(3000L)
+                kotlinx.coroutines.delay(8000L)
                 showDriftHint = false
             }
         }

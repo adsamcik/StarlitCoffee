@@ -244,10 +244,10 @@ fun AmountStrengthScreen(
             onClick = { advancedExpanded = !advancedExpanded },
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text("Advanced options")
+            Text("Advanced options", modifier = Modifier.semantics { heading() })
             Icon(
                 imageVector = if (advancedExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                contentDescription = null,
+                contentDescription = if (advancedExpanded) "Collapse advanced options" else "Expand advanced options",
             )
         }
 
