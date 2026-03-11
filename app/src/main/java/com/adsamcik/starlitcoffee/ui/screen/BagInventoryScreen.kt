@@ -372,7 +372,7 @@ fun BagInventoryScreen(
             bagToEdit = bag,
             existingBags = bags,
             onDismiss = { editBag = null },
-            onSave = { _, _, _, _, _, _, _, _, _, _, _, _, _ -> },
+            onSave = { _, _, _, _, _, _, _, _, _, _, _, _, _, _ -> },
             onEdit = { updatedBag ->
                 brewViewModel.updateCoffeeBag(updatedBag)
                 editBag = null

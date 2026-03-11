@@ -51,7 +51,7 @@ class LiveScanViewModelTest {
         val viewModel = LiveScanViewModel(testConfig())
         viewModel.start(KnownFieldValues.EMPTY)
 
-        viewModel.onFrameAnalyzed(
+        viewModel.onOcrResult(
             ocrResult = OcrExtractionResult(
                 origin = "Ethiopia",
                 fieldConfidence = mapOf("origin" to BagFieldConfidence.HIGH),
@@ -62,8 +62,7 @@ class LiveScanViewModelTest {
 
         Thread.sleep(80L)
 
-        viewModel.onFrameAnalyzed(
-            ocrResult = null,
+        viewModel.onRawFrame(
             quality = quality(blurScore = 40f),
             lumaGrid = null,
         )
