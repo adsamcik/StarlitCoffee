@@ -20,7 +20,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -395,7 +395,7 @@ fun MethodPickerScreen(
         }
 
         // Start Brewing button
-        FilledTonalButton(
+        Button(
             onClick = onNavigateToTimer,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier

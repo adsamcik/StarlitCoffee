@@ -417,8 +417,8 @@ fun BrewTimerScreen(
         if (!finished) {
             if (phases.size > 1 && currentPhaseIndex < phases.lastIndex) {
                 val isEventGated = currentPhase?.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.EVENT_GATED
-                val buttonLabel = if (isEventGated || phaseOvertime) "Done ✓" else "Next Phase"
-                val buttonIcon = if (isEventGated || phaseOvertime) Icons.Filled.Check else Icons.Filled.SkipNext
+                val buttonLabel = if (isEventGated) "Done ✓" else "Next Phase"
+                val buttonIcon = if (isEventGated) Icons.Filled.Check else Icons.Filled.SkipNext
                 Button(
                     onClick = {
                         VibrationHelper.vibrate(context, BrewHaptic.POUR)

@@ -80,10 +80,10 @@ fun InputMode.displayName(): String = when (this) {
 }
 
 fun InputMode.shortLabel(): String = when (this) {
-    InputMode.COFFEE_TO_WATER -> "Coffee→Water"
-    InputMode.WATER_TO_COFFEE -> "Water→Coffee"
-    InputMode.BREW_SIZE_TO_BOTH -> "Brew→Both"
-    InputMode.CUP_SIZE_TO_BOTH -> "Cup→Both"
+    InputMode.COFFEE_TO_WATER -> "Coffee"
+    InputMode.WATER_TO_COFFEE -> "Water"
+    InputMode.BREW_SIZE_TO_BOTH -> "Brew"
+    InputMode.CUP_SIZE_TO_BOTH -> "Cup"
 }
 
 fun InputMode.description(): String = when (this) {
