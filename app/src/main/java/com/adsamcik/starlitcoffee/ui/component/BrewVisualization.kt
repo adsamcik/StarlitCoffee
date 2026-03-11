@@ -152,13 +152,13 @@ private fun PulsarBrewerDiagram(
 ) {
     val waterTop = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
     val waterBot = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
-    val bedColor = Color(0xFF8D6E63)
-    val bedHighlight = Color(0xFFA1887F)
+    val bedColor = MaterialTheme.colorScheme.tertiary
+    val bedHighlight = MaterialTheme.colorScheme.tertiaryContainer
     val outlineColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
     val filterColor = MaterialTheme.colorScheme.outlineVariant
     val capColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.25f)
-    val valveOpenColor = Color(0xFF66BB6A)
-    val valveClosedColor = Color(0xFFEF5350)
+    val valveOpenColor = MaterialTheme.colorScheme.primary
+    val valveClosedColor = MaterialTheme.colorScheme.error
     val dripColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
     val textMeasurer = rememberTextMeasurer()
     val labelColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -333,9 +333,9 @@ private fun BrewInfoSheet(
 
             val bedBarFraction = (bedDepthMm / 25f).coerceIn(0f, 1f)
             val bedBarColor = when {
-                bedDepthMm < 14f -> Color(0xFFEF5350)
-                bedDepthMm <= 20f -> Color(0xFF66BB6A)
-                else -> Color(0xFFFFA726)
+                bedDepthMm < 14f -> MaterialTheme.colorScheme.error
+                bedDepthMm <= 20f -> MaterialTheme.colorScheme.primary
+                else -> MaterialTheme.colorScheme.errorContainer
             }
             Box(
                 modifier = Modifier
@@ -531,7 +531,26 @@ fun BrewGuide(
     val scope = rememberCoroutineScope()
     val capacity = capacityMaxG ?: waterG
     val states = remember(phases, capacity) { computePhaseVisualStates(phases, capacity) }
-    if (states.isEmpty()) return
+    if (states.isEmpty()) {
+        ElevatedCard(
+            modifier = modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.large,
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = "Preparing brew visualization…",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        return
+    }
 
     val current = states[selectedPhase.coerceIn(0, states.lastIndex)]
     val animatedFill by animateFloatAsState(
@@ -587,7 +606,7 @@ fun BrewGuide(
                 )
                 IconButton(
                     onClick = { showInfoSheet = true },
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.size(48.dp),
                 ) {
                     Icon(
                         Icons.Outlined.Info,
