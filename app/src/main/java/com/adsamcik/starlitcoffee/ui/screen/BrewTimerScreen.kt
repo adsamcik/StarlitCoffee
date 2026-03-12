@@ -75,6 +75,7 @@ import com.adsamcik.starlitcoffee.service.BrewTimerService
 import com.adsamcik.starlitcoffee.ui.component.AudioDebugOverlay
 import com.adsamcik.starlitcoffee.ui.component.AudioDetectionIndicator
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
+import com.adsamcik.starlitcoffee.ui.component.BrewRatingSheet
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.util.VibrationHelper.BrewHaptic
 import com.adsamcik.starlitcoffee.data.model.PhaseType
@@ -89,6 +90,7 @@ fun BrewTimerScreen(
     val audioState by brewViewModel.audioState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var showStopDialog by remember { mutableStateOf(false) }
+    var showRatingSheet by remember { mutableStateOf(false) }
 
     // Intercept system back — show stop dialog instead of silently leaving
     BackHandler(enabled = uiState.timerRunning || uiState.elapsedSeconds > 0) {
@@ -214,17 +216,11 @@ fun BrewTimerScreen(
 
     val primaryColor = MaterialTheme.colorScheme.primary
     val trackColor = MaterialTheme.colorScheme.surfaceVariant
-    val errorColor = MaterialTheme.colorScheme.error
     val tertiaryColor = MaterialTheme.colorScheme.tertiary
 
-    // Arc color responds to phase overtime state
+    // Arc color: two states only — on track (primary) or overtime (tertiary)
     val arcColor by animateColorAsState(
-        targetValue = when {
-            finished -> MaterialTheme.colorScheme.tertiary
-            phaseOvertime && kotlin.math.abs(phaseRemaining) > 15 -> errorColor
-            phaseOvertime -> tertiaryColor
-            else -> primaryColor
-        },
+        targetValue = if (phaseOvertime || finished) tertiaryColor else primaryColor,
         animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
         label = "arc_color",
     )
@@ -301,15 +297,17 @@ fun BrewTimerScreen(
             )
         }
 
-        // Audio debug overlay
-        AudioDebugOverlay(
-            audioState = audioState,
-            isMonitoring = audioState.isMonitoring,
-            isRecording = audioState.isRecording,
-            onToggleMonitoring = { brewViewModel.toggleAudioMonitoring() },
-            onToggleRecording = { brewViewModel.toggleAudioRecording() },
-            modifier = Modifier.padding(vertical = 8.dp),
-        )
+        // Audio debug overlay — only in debug builds
+        if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
+            AudioDebugOverlay(
+                audioState = audioState,
+                isMonitoring = audioState.isMonitoring,
+                isRecording = audioState.isRecording,
+                onToggleMonitoring = { brewViewModel.toggleAudioMonitoring() },
+                onToggleRecording = { brewViewModel.toggleAudioRecording() },
+                modifier = Modifier.padding(vertical = 8.dp),
+            )
+        }
 
         // Phase remaining countdown (drift-aware)
         if (currentPhase != null && !finished) {
@@ -359,9 +357,9 @@ fun BrewTimerScreen(
             exit = fadeOut(),
         ) {
             val driftText = if (drift > 0) {
-                "⏩ ${drift}s early · remaining phases extended"
+                "⏩ ${drift}s early · timing adjusted"
             } else {
-                "⏪ ${kotlin.math.abs(drift)}s over · remaining phases shortened"
+                "⏪ ${kotlin.math.abs(drift)}s over · timing adjusted"
             }
             Text(
                 text = driftText,
@@ -417,7 +415,7 @@ fun BrewTimerScreen(
         if (!finished) {
             if (phases.size > 1 && currentPhaseIndex < phases.lastIndex) {
                 val isEventGated = currentPhase?.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.EVENT_GATED
-                val buttonLabel = if (isEventGated) "Done ✓" else "Next Phase"
+                val buttonLabel = if (isEventGated) "Done ✓" else "Next Step"
                 val buttonIcon = if (isEventGated) Icons.Filled.Check else Icons.Filled.SkipNext
                 Button(
                     onClick = {
@@ -522,18 +520,31 @@ fun BrewTimerScreen(
             Button(
                 onClick = {
                     brewViewModel.logBrew()
-                    brewViewModel.requestFeedbackSnackbar()
-                    onBack()
+                    showRatingSheet = true
                 },
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(72.dp),
             ) {
-                Text("Done", style = MaterialTheme.typography.titleMedium)
+                Text("Rate This Brew ☕", style = MaterialTheme.typography.titleMedium)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }
+    }
+
+    if (showRatingSheet) {
+        BrewRatingSheet(
+            onDismiss = {
+                showRatingSheet = false
+                onBack()
+            },
+            onSave = { rating, descriptors, notes ->
+                brewViewModel.saveBrewWithRating(rating, descriptors, notes)
+                showRatingSheet = false
+                onBack()
+            },
+        )
     }
 
     if (showStopDialog) {
@@ -549,7 +560,7 @@ fun BrewTimerScreen(
                     Text("End brew and go back?")
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "%d:%02d elapsed · Phase %d/%d · ${"%.0f".format(uiState.coffeeG)}g dose".format(
+                        text = "%d:%02d elapsed · Step %d of %d · ${"%.0f".format(uiState.coffeeG)}g coffee".format(
                             stopMin, stopSec, phasesCompleted + 1, totalPhases,
                         ),
                         style = MaterialTheme.typography.bodySmall,
@@ -558,24 +569,25 @@ fun BrewTimerScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = {
+                Button(onClick = {
                     showStopDialog = false
-                    brewViewModel.stopTimer()
-                    BrewTimerService.stop(context)
-                    brewViewModel.logBrew()
-                    brewViewModel.requestFeedbackSnackbar()
-                    onBack()
-                }) { Text("End Brew") }
+                }) { Text("Keep Brewing") }
             },
             dismissButton = {
-                Row {
-                    TextButton(onClick = { showStopDialog = false }) { Text("Cancel") }
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     TextButton(onClick = {
                         showStopDialog = false
                         brewViewModel.stopTimer()
                         BrewTimerService.stop(context)
                         onBack()
-                    }) { Text("Discard") }
+                    }) { Text("Stop without saving") }
+                    OutlinedButton(onClick = {
+                        showStopDialog = false
+                        brewViewModel.stopTimer()
+                        BrewTimerService.stop(context)
+                        brewViewModel.logBrew()
+                        showRatingSheet = true
+                    }) { Text("Stop and save") }
                 }
             },
         )

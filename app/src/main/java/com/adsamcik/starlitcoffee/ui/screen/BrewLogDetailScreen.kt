@@ -66,6 +66,7 @@ fun BrewLogDetailScreen(
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy · h:mm a", Locale.getDefault()) }
     var log by remember { mutableStateOf<BrewLogEntity?>(null) }
     var isLoading by remember { mutableStateOf(true) }
+    var showSavedConfirmation by remember { mutableStateOf(false) }
 
     // Editable state
     var rating by remember { mutableFloatStateOf(0f) }
@@ -221,7 +222,6 @@ fun BrewLogDetailScreen(
                 ) {
                     DetailRow("Coffee", "${"%.1f".format(entity.doseG)}g")
                     DetailRow("Water", "${"%.0f".format(entity.waterG)}g")
-                    DetailRow("Ratio", "1:${"%.1f".format(entity.ratio)}")
 
                     if (entity.coffeeBagId != null) {
                         val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
@@ -340,6 +340,7 @@ fun BrewLogDetailScreen(
                         initialRating = rating
                         initialDescriptors = selectedDescriptors
                         initialNotes = notes
+                        showSavedConfirmation = true
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -349,6 +350,20 @@ fun BrewLogDetailScreen(
                 ) {
                     Text("Save Changes")
                 }
+            }
+
+            // Brief "Saved ✓" confirmation so user knows the save worked
+            if (showSavedConfirmation && !hasChanges) {
+                LaunchedEffect(Unit) {
+                    kotlinx.coroutines.delay(2000L)
+                    showSavedConfirmation = false
+                }
+                Text(
+                    text = "✓ Saved",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
+                )
             }
 
             Spacer(modifier = Modifier.height(32.dp))

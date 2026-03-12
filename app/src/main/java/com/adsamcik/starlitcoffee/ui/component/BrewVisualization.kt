@@ -238,7 +238,7 @@ private fun PulsarBrewerDiagram(
         drawCircle(vColor, vR, vCenter)
         drawCircle(outlineColor, vR, vCenter, style = Stroke(2.5f))
 
-        val vlText = if (valveOpen) "OPEN" else "SHUT"
+        val vlText = if (valveOpen) "OPEN" else "CLOSED"
         val vlResult = textMeasurer.measure(vlText, labelStyle)
         drawText(vlResult, topLeft = Offset(vCenter.x - vlResult.size.width / 2f, vCenter.y + vR + 6f))
 
@@ -324,12 +324,12 @@ private fun BrewInfoSheet(
             val bedDepthMm = coffeeG * 0.7f
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Dose Insights",
+                text = "Coffee Insights",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
             )
             Spacer(modifier = Modifier.height(8.dp))
-            InfoRow("📏", "Bed depth", "~${"%.0f".format(bedDepthMm)}mm")
+            InfoRow("📏", "Coffee depth", "~${"%.0f".format(bedDepthMm)}mm in brewer")
 
             val bedBarFraction = (bedDepthMm / 25f).coerceIn(0f, 1f)
             val bedBarColor = when {
@@ -355,15 +355,15 @@ private fun BrewInfoSheet(
             }
 
             val grindNote = when {
-                coffeeG <= 20f -> "Similar to V60"
-                coffeeG <= 25f -> "Coarser than V60 · ~800μm"
-                coffeeG <= 30f -> "Approaching batch grind"
-                else -> "Batch territory — adjust by taste"
+                coffeeG <= 20f -> "Medium-fine · like table salt"
+                coffeeG <= 25f -> "Medium · like coarse sand"
+                coffeeG <= 30f -> "Medium-coarse · adjust by taste"
+                else -> "Coarse · longer brew expected"
             }
             InfoRow("⚙️", "Grind", grindNote)
 
             val doseNote = when {
-                coffeeG < 20f -> "Below 20g risks astringency"
+                coffeeG < 20f -> "Below 20g may taste dry or harsh"
                 coffeeG in 20f..25f -> "Sweet spot for clarity & balance"
                 coffeeG in 25f..30f -> "Rich, full-bodied results"
                 else -> "Go coarser, expect longer brew"
@@ -643,7 +643,7 @@ fun BrewGuide(
                         color = contentColor,
                     )
                     Text(
-                        text = "${"%.1f".format(bloomRatio)}× dose · 🔓 Open → 🔒 Close → Steep",
+                        text = "${"%.0f".format(bloomRatio)}× your coffee · Open valve → Close → Wait",
                         style = MaterialTheme.typography.labelMedium,
                         color = contentColor.copy(alpha = 0.6f),
                     )
@@ -656,14 +656,14 @@ fun BrewGuide(
                         color = contentColor,
                     )
                     Text(
-                        text = "+${"%.0f".format(current.waterThisPhase)}g this phase",
+                        text = "+${"%.0f".format(current.waterThisPhase)}g this step",
                         style = MaterialTheme.typography.labelMedium,
                         color = contentColor.copy(alpha = 0.6f),
                     )
                 }
                 PhaseType.DRAIN_AND_REFILL -> {
                     Text(
-                        text = "🔓 Drain & Refill",
+                        text = "Let it flow through, then pour again",
                         style = MaterialTheme.typography.headlineLarge,
                         fontWeight = FontWeight.Bold,
                         color = contentColor,
@@ -676,13 +676,13 @@ fun BrewGuide(
                 }
                 PhaseType.DRAWDOWN -> {
                     Text(
-                        text = "🔓 Drawdown",
+                        text = "Open valve · let it finish draining",
                         style = MaterialTheme.typography.headlineLarge,
                         fontWeight = FontWeight.Bold,
                         color = contentColor,
                     )
                     Text(
-                        text = "Open valve · let it drain",
+                        text = "Almost there — wait for the last drops",
                         style = MaterialTheme.typography.labelMedium,
                         color = contentColor.copy(alpha = 0.6f),
                     )

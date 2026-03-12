@@ -53,13 +53,13 @@ fun BrewRatingSheet(
         ) {
             // Title
             Text(
-                text = "Quick sensory snapshot",
+                text = "How was it?",
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.semantics { heading() },
             )
             Text(
-                text = "Save the cup in a few taps while the taste is still fresh.",
+                text = "Rate this brew while the taste is still fresh.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp),
@@ -134,7 +134,7 @@ fun BrewRatingSheet(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.large,
             ) {
-                Text("Save snapshot")
+                Text("Save rating")
             }
         }
     }
