@@ -31,6 +31,7 @@ fun HomeContextCardView(
         is HomeContextCard.BagAgeWisdom -> BagAgeWisdomCard(card, modifier)
         is HomeContextCard.FreshnessAlert -> FreshnessAlertCard(card, modifier)
         is HomeContextCard.CoachingTip -> CoachingTipCard(card, modifier)
+        is HomeContextCard.OneTwist -> OneTwistCard(card, modifier)
         is HomeContextCard.LastBrewSummary -> LastBrewSummaryCard(card, modifier)
     }
 }
@@ -179,6 +180,50 @@ private fun CoachingTipCard(
                 text = card.detail,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
+            )
+        }
+    }
+}
+
+@Composable
+private fun OneTwistCard(
+    card: HomeContextCard.OneTwist,
+    modifier: Modifier = Modifier,
+) {
+    ElevatedCard(
+        shape = MaterialTheme.shapes.large,
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+        ),
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+        ) {
+            Row {
+                Text(
+                    text = card.emoji,
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = card.twistName,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    modifier = Modifier.semantics { heading() },
+                )
+            }
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = card.description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
+            )
+            Text(
+                text = card.rationale,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.7f),
+                modifier = Modifier.padding(top = 4.dp),
             )
         }
     }

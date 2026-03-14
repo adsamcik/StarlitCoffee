@@ -34,6 +34,14 @@ sealed class HomeContextCard {
         val emoji: String,
     ) : HomeContextCard()
 
+    /** Suggest a single-variable experiment to try next brew. */
+    data class OneTwist(
+        val twistName: String,
+        val description: String,
+        val rationale: String,
+        val emoji: String,
+    ) : HomeContextCard()
+
     /** Last rated brew summary — reinforcement or reminder. */
     data class LastBrewSummary(
         val brew: BrewLogEntity,
@@ -63,7 +71,11 @@ sealed class HomeContextCard {
             val coachingCard = resolveCoachingTip(brewLogs)
             if (coachingCard != null) return coachingCard
 
-            // 4. Last rated brew summary
+            // 4. One Twist experiment suggestion
+            val twistCard = resolveOneTwist(brewLogs)
+            if (twistCard != null) return twistCard
+
+            // 5. Last rated brew summary
             return resolveLastBrewSummary(brewLogs, bags)
         }
 
@@ -210,6 +222,66 @@ sealed class HomeContextCard {
                     emoji = "💡",
                 )
                 else -> null
+            }
+        }
+
+        private fun resolveOneTwist(
+            brewLogs: List<BrewLogEntity>,
+        ): OneTwist? {
+            val recentRated = brewLogs
+                .filter { it.rating != null }
+                .take(5)
+
+            if (recentRated.size < 3) return null
+
+            val avgRating = recentRated.mapNotNull { it.rating }.average()
+
+            // If recent brews are consistently good (3.5+), suggest exploration twists
+            if (avgRating >= 3.5) {
+                return pickExplorationTwist(recentRated)
+            }
+
+            // Otherwise, no twist — coaching tip handles negative feedback
+            return null
+        }
+
+        private fun pickExplorationTwist(
+            recentBrews: List<BrewLogEntity>,
+        ): OneTwist? {
+            // Suggest something they haven't tried varying recently
+            val methods = recentBrews.map { it.method }.distinct()
+            val filters = recentBrews.mapNotNull { it.filterType }.distinct()
+            val ratios = recentBrews.map { it.ratio }.distinct()
+
+            // Cycle through twist ideas — pick one based on what's been static
+            return when {
+                // Always same filter → suggest trying a different one
+                filters.size == 1 && filters.first() == "PAPER" -> OneTwist(
+                    twistName = "Try a metal filter",
+                    description = "Swap Paper for 19K metal — same recipe, more body",
+                    rationale = "Your last ${recentBrews.size} brews were all Paper. A metal filter lets more oils through for a richer, fuller cup.",
+                    emoji = "🔬",
+                )
+                filters.size == 1 && filters.first() != "PAPER" -> OneTwist(
+                    twistName = "Try paper filter",
+                    description = "Swap to Paper — same recipe, cleaner cup",
+                    rationale = "Paper filters produce a brighter, cleaner taste. Worth trying to see which you prefer.",
+                    emoji = "🔬",
+                )
+                // Always same ratio → nudge a ratio shift
+                ratios.size == 1 -> OneTwist(
+                    twistName = "Try a bolder ratio",
+                    description = "Drop from 1:${ratios.first().toInt()} to 1:${(ratios.first() - 1).toInt()} — same dose, less water",
+                    rationale = "You've been brewing at the same ratio. A slightly stronger cup might surprise you.",
+                    emoji = "🧪",
+                )
+                // Good variety already → suggest bloom extension
+                else -> OneTwist(
+                    twistName = "Extend your bloom",
+                    description = "Add 15 seconds to your bloom wait — let more CO₂ escape",
+                    rationale = "A longer bloom often brings out more sweetness and clarity. Small change, noticeable difference.",
+                    emoji = "🌱",
+                )
             }
         }
 
