@@ -143,116 +143,144 @@ private fun DrawScope.drawWavyWaterSurface(
 // ─── Pulsar brewer cross-section ─────────────────────────────
 
 @Composable
-private fun PulsarBrewerDiagram(
+private fun LiquidPillDiagram(
     waterFillFraction: Float,
     bedFraction: Float,
     valveOpen: Boolean,
     showDrip: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val waterTop = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-    val waterBot = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
-    val bedColor = MaterialTheme.colorScheme.tertiary
-    val bedHighlight = MaterialTheme.colorScheme.tertiaryContainer
-    val outlineColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-    val filterColor = MaterialTheme.colorScheme.outlineVariant
-    val capColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.25f)
+    val waterLight = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+    val waterDark = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
+    val bedColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.5f)
+    val shellColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.15f)
     val valveOpenColor = MaterialTheme.colorScheme.primary
     val valveClosedColor = MaterialTheme.colorScheme.error
-    val dripColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+    val flowColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
     val textMeasurer = rememberTextMeasurer()
     val labelColor = MaterialTheme.colorScheme.onSurfaceVariant
-    val labelStyle = TextStyle(fontSize = 9.sp, color = labelColor, fontWeight = FontWeight.Medium)
+    val labelStyle = TextStyle(fontSize = 11.sp, color = labelColor, fontWeight = FontWeight.Bold)
 
     Canvas(modifier = modifier) {
         val w = size.width
         val h = size.height
-        val stroke = 4f
-        val thick = 6f
+        val pad = 8f
+        val pillH = h * 0.55f
+        val pillTop = (h - pillH) / 2f
+        val pillBot = pillTop + pillH
+        val cornerR = pillH / 2f
 
-        val bL = w * 0.15f; val bR = w * 0.85f
-        val bT = h * 0.04f; val bB = h * 0.62f
-        val bW = bR - bL; val bH = bB - bT
+        // Valve cap zone — right 15% of the pill
+        val capWidth = w * 0.15f
+        val chamberRight = w - pad - capWidth
+        val chamberLeft = pad
 
-        val xL = bL - w * 0.08f; val xR = bR + w * 0.08f
-        val xT = bB + 4f; val xB = h * 0.78f
-
-        // Coffee bed
-        val bedH = bH * bedFraction.coerceIn(0.1f, 0.4f)
-        val bedTop = bB - bedH
+        // ── Shell (outer pill shape) ──
         drawRoundRect(
-            brush = Brush.verticalGradient(listOf(bedHighlight, bedColor), bedTop, bB),
-            topLeft = Offset(bL + 4f, bedTop),
-            size = Size(bW - 8f, bedH - 2f),
-            cornerRadius = CornerRadius(4f, 4f),
+            color = shellColor,
+            topLeft = Offset(chamberLeft, pillTop),
+            size = Size(w - pad * 2, pillH),
+            cornerRadius = CornerRadius(cornerR, cornerR),
+            style = Stroke(3f),
         )
 
-        // Water
-        val waterSpace = bedTop - bT - bH * 0.08f
+        // ── Coffee bed (thin layer at bottom of chamber) ──
+        val bedH = pillH * bedFraction.coerceIn(0.08f, 0.25f)
+        val bedTop = pillBot - bedH
+        drawRoundRect(
+            color = bedColor,
+            topLeft = Offset(chamberLeft + 4f, bedTop),
+            size = Size(chamberRight - chamberLeft - 4f, bedH - 2f),
+            cornerRadius = CornerRadius(2f, 2f),
+        )
+
+        // ── Water fill (fills chamber from bottom up to bed top) ──
+        val waterSpace = bedTop - pillTop - 6f
         val waterH = waterSpace * waterFillFraction.coerceIn(0f, 1f)
         if (waterH > 2f) {
-            val wSurfaceY = bedTop - waterH
-            drawWavyWaterSurface(
-                left = bL + 4f, right = bR - 4f,
-                surfaceY = wSurfaceY,
-                amplitude = 3f.coerceAtMost(waterH * 0.2f),
-                waterBottom = bedTop,
-                brush = Brush.verticalGradient(listOf(waterTop, waterBot), wSurfaceY, bedTop),
+            val waterTop = bedTop - waterH
+            // Meniscus-style rounded water surface
+            drawRoundRect(
+                brush = Brush.verticalGradient(
+                    listOf(waterLight, waterDark),
+                    waterTop,
+                    bedTop,
+                ),
+                topLeft = Offset(chamberLeft + 4f, waterTop),
+                size = Size(chamberRight - chamberLeft - 4f, waterH),
+                cornerRadius = CornerRadius(4f, 4f),
             )
         }
 
-        // Filter line
-        drawLine(filterColor, Offset(bL + 8f, bedTop), Offset(bR - 8f, bedTop), 2.5f)
-
-        // Dispersion cap
-        val capY = bT + bH * 0.06f
-        drawLine(
-            capColor, Offset(bL + 14f, capY), Offset(bR - 14f, capY), 3.5f,
-            pathEffect = PathEffect.dashPathEffect(floatArrayOf(8f, 6f)),
-        )
-
-        // Barrel walls
-        drawLine(outlineColor, Offset(bL, bT), Offset(bL, bB), thick)
-        drawLine(outlineColor, Offset(bR, bT), Offset(bR, bB), thick)
-        drawLine(outlineColor, Offset(bL, bB), Offset(bR, bB), thick)
-        drawRoundRect(
-            outlineColor, Offset(bL - 6f, bT - 4f), Size(bW + 12f, 10f),
-            cornerRadius = CornerRadius(5f, 5f),
-        )
-
-        // Base walls
-        drawLine(outlineColor, Offset(xL, xT), Offset(xL, xB), thick)
-        drawLine(outlineColor, Offset(xR, xT), Offset(xR, xB), thick)
-        drawLine(outlineColor, Offset(xL, xT), Offset(bL, xT), stroke)
-        drawLine(outlineColor, Offset(xR, xT), Offset(bR, xT), stroke)
-        drawRoundRect(
-            outlineColor, Offset(xL - 2f, xB - 2f), Size(xR - xL + 4f, 6f),
-            cornerRadius = CornerRadius(3f, 3f),
-        )
-
-        // Valve
-        val vR = w * 0.055f
-        val vCenter = Offset(w * 0.5f, (xT + xB) / 2f)
+        // ── Valve cap (right end) ──
+        val capLeft = chamberRight
+        val capMidY = (pillTop + pillBot) / 2f
+        val capRight = w - pad
         val vColor = if (valveOpen) valveOpenColor else valveClosedColor
-        drawCircle(vColor.copy(alpha = 0.25f), vR + 4f, vCenter)
-        drawCircle(vColor, vR, vCenter)
-        drawCircle(outlineColor, vR, vCenter, style = Stroke(2.5f))
 
-        val vlText = if (valveOpen) "OPEN" else "CLOSED"
-        val vlResult = textMeasurer.measure(vlText, labelStyle)
-        drawText(vlResult, topLeft = Offset(vCenter.x - vlResult.size.width / 2f, vCenter.y + vR + 6f))
-
-        // Drip drops
-        if (showDrip && valveOpen) {
-            val dripX = w * 0.5f
-            drawCircle(dripColor, 4f, Offset(dripX, xB + h * 0.06f))
-            drawCircle(dripColor, 3f, Offset(dripX - 4f, xB + h * 0.13f))
-            drawCircle(dripColor, 2.5f, Offset(dripX + 3f, xB + h * 0.19f))
+        if (valveOpen) {
+            // Open: two separated halves with gap
+            val gap = pillH * 0.12f
+            // Top half
+            drawRoundRect(
+                color = vColor,
+                topLeft = Offset(capLeft, pillTop),
+                size = Size(capRight - capLeft, pillH / 2f - gap),
+                cornerRadius = CornerRadius(0f, cornerR),
+            )
+            // Bottom half
+            drawRoundRect(
+                color = vColor,
+                topLeft = Offset(capLeft, capMidY + gap),
+                size = Size(capRight - capLeft, pillH / 2f - gap),
+                cornerRadius = CornerRadius(0f, cornerR),
+            )
+            // Flow streaks through gap
+            val streakY = capMidY
+            for (i in 0..2) {
+                val sx = capLeft + (capRight - capLeft) * (0.2f + i * 0.3f)
+                drawLine(
+                    flowColor,
+                    Offset(sx, streakY - 2f),
+                    Offset(sx + 12f, streakY - 2f),
+                    strokeWidth = 2f,
+                    cap = androidx.compose.ui.graphics.StrokeCap.Round,
+                )
+            }
+        } else {
+            // Closed: solid sealed cap
+            drawRoundRect(
+                color = vColor,
+                topLeft = Offset(capLeft, pillTop),
+                size = Size(capRight - capLeft, pillH),
+                cornerRadius = CornerRadius(0f, cornerR),
+            )
+            // Seal line
+            drawLine(
+                vColor.copy(alpha = 0.8f),
+                Offset(capLeft, pillTop + 3f),
+                Offset(capLeft, pillBot - 3f),
+                strokeWidth = 3f,
+            )
         }
 
-        // Coffee label
-        val bedLabel = textMeasurer.measure("coffee", labelStyle)
-        drawText(bedLabel, topLeft = Offset(bL + (bW - bedLabel.size.width) / 2f, bedTop + bedH * 0.25f))
+        // ── Valve label ──
+        val vlText = if (valveOpen) "OPEN" else "CLOSED"
+        val vlResult = textMeasurer.measure(vlText, labelStyle)
+        drawText(
+            vlResult,
+            topLeft = Offset(
+                capLeft + (capRight - capLeft - vlResult.size.width) / 2f,
+                pillBot + 6f,
+            ),
+        )
+
+        // ── Drip drops (below valve when open) ──
+        if (showDrip && valveOpen) {
+            val dripX = (capLeft + capRight) / 2f
+            drawCircle(flowColor, 3.5f, Offset(dripX, pillBot + pillH * 0.35f))
+            drawCircle(flowColor, 2.5f, Offset(dripX - 5f, pillBot + pillH * 0.55f))
+        }
     }
 }
 
@@ -289,7 +317,7 @@ private fun BrewInfoSheet(
 
             InfoRow("☕", "Coffee", "${"%.1f".format(coffeeG)}g")
             InfoRow("💧", "Water", "${"%.0f".format(waterG)}g")
-            InfoRow("⚖️", "Ratio", "1:${"%.1f".format(if (coffeeG > 0f) waterG / coffeeG else 0f)}")
+            InfoRow("⚖️", "Strength", "1:${"%.1f".format(if (coffeeG > 0f) waterG / coffeeG else 0f)}")
 
             if (refillCount > 0) {
                 InfoRow("🔄", "Refills", "$refillCount — drains between pours")
@@ -299,7 +327,7 @@ private fun BrewInfoSheet(
             currentPhase?.let { phase ->
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Current Phase",
+                    text = "Current Step",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                 )
@@ -388,7 +416,7 @@ private fun BrewInfoSheet(
                 "No gooseneck needed — dispersion cap distributes water",
                 "Level the bed before brewing",
                 "Gentle swirl after last pour (hold by the base!)",
-                "Dose 20–25g recommended for best bed depth",
+                "Use 20–25g coffee for best results",
             )
             tips.forEach { tip ->
                 Text(
@@ -619,15 +647,15 @@ fun BrewGuide(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Hero diagram
-            PulsarBrewerDiagram(
+            // Hero diagram — compact liquid pill
+            LiquidPillDiagram(
                 waterFillFraction = animatedFill,
                 bedFraction = bedFraction,
                 valveOpen = current.valveOpen,
                 showDrip = current.valveOpen && current.waterInBrewer > 0f,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp),
+                    .height(88.dp),
             )
 
             Spacer(modifier = Modifier.height(12.dp))
