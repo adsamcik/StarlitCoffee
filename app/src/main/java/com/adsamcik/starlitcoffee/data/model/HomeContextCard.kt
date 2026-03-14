@@ -2,12 +2,23 @@ package com.adsamcik.starlitcoffee.data.model
 
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.util.FreshnessInsight
+import com.adsamcik.starlitcoffee.util.FreshnessPhase
 
 /**
  * Represents a contextual card shown below "Start Brewing" on the home screen.
  * One card at a time, selected by priority.
  */
 sealed class HomeContextCard {
+
+    /** Age-aware brewing wisdom for the selected bag. */
+    data class BagAgeWisdom(
+        val bagName: String,
+        val daysSinceRoast: Int,
+        val phase: FreshnessPhase,
+        val headline: String,
+        val grindAdvice: String,
+        val brewTip: String,
+    ) : HomeContextCard()
 
     /** Open bag is getting old — nudge to use it. */
     data class FreshnessAlert(
@@ -33,23 +44,78 @@ sealed class HomeContextCard {
     companion object {
         /**
          * Resolve the highest-priority context card from available data.
-         * Priority: freshness alert > coaching tip > last brew summary.
+         * Priority: selected-bag wisdom > old-bag freshness > coaching > summary.
          */
         fun resolve(
             bags: List<com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity>,
             brewLogs: List<BrewLogEntity>,
             selectedBagId: Long?,
         ): HomeContextCard? {
-            // 1. Freshness alert for open bags past peak
+            // 1. Age wisdom for selected bag (if roast date known)
+            val wisdomCard = resolveBagAgeWisdom(bags, selectedBagId)
+            if (wisdomCard != null) return wisdomCard
+
+            // 2. Freshness alert for aging open bags
             val freshnessCard = resolveFreshnessAlert(bags, brewLogs)
             if (freshnessCard != null) return freshnessCard
 
-            // 2. Coaching tip from recent negative feedback
+            // 3. Coaching tip from recent negative feedback
             val coachingCard = resolveCoachingTip(brewLogs)
             if (coachingCard != null) return coachingCard
 
-            // 3. Last rated brew summary
+            // 4. Last rated brew summary
             return resolveLastBrewSummary(brewLogs, bags)
+        }
+
+        private fun resolveBagAgeWisdom(
+            bags: List<com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity>,
+            selectedBagId: Long?,
+        ): BagAgeWisdom? {
+            if (selectedBagId == null) return null
+            val bag = bags.find { it.id == selectedBagId } ?: return null
+            if (bag.roastDate == null) return null
+
+            val insight = com.adsamcik.starlitcoffee.util.CoffeeBagInsights
+                .freshnessInsight(bag.roastDate)
+            // Only show for non-peak phases — peak doesn't need advice
+            if (insight.phase == FreshnessPhase.PEAK || insight.phase == FreshnessPhase.UNKNOWN) {
+                return null
+            }
+
+            val days = insight.daysSinceRoast ?: return null
+            val bagName = bag.name + (bag.roaster?.let { " · $it" } ?: "")
+
+            val (headline, grindAdvice, brewTip) = when (insight.phase) {
+                FreshnessPhase.DEGASSING -> Triple(
+                    "Day $days — beans are still degassing",
+                    "Expect an active bloom with lots of CO₂",
+                    when {
+                        days < 3 -> "Consider waiting a few more days for best results"
+                        else -> "Brew-ready soon — bloom may be vigorous, extend steep 10-15s"
+                    },
+                )
+                FreshnessPhase.MELLOWING -> Triple(
+                    "Day $days — past peak, still good",
+                    "Try grinding 1-2 clicks finer to compensate",
+                    if (days > 35) "Dose up slightly (1-2g) for more body"
+                    else "Lean on grind and dose to keep it lively",
+                )
+                FreshnessPhase.VINTAGE -> Triple(
+                    "Day $days — well past prime",
+                    "Grind noticeably finer, expect less sweetness",
+                    "Use this bag up soon — freeze any extras",
+                )
+                else -> return null
+            }
+
+            return BagAgeWisdom(
+                bagName = bagName,
+                daysSinceRoast = days,
+                phase = insight.phase,
+                headline = headline,
+                grindAdvice = grindAdvice,
+                brewTip = brewTip,
+            )
         }
 
         private fun resolveFreshnessAlert(

@@ -17,6 +17,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.model.HomeContextCard
+import com.adsamcik.starlitcoffee.util.FreshnessPhase
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -27,9 +28,74 @@ fun HomeContextCardView(
     modifier: Modifier = Modifier,
 ) {
     when (card) {
+        is HomeContextCard.BagAgeWisdom -> BagAgeWisdomCard(card, modifier)
         is HomeContextCard.FreshnessAlert -> FreshnessAlertCard(card, modifier)
         is HomeContextCard.CoachingTip -> CoachingTipCard(card, modifier)
         is HomeContextCard.LastBrewSummary -> LastBrewSummaryCard(card, modifier)
+    }
+}
+
+@Composable
+private fun BagAgeWisdomCard(
+    card: HomeContextCard.BagAgeWisdom,
+    modifier: Modifier = Modifier,
+) {
+    val (containerColor, contentColor, phaseEmoji) = when (card.phase) {
+        FreshnessPhase.DEGASSING -> Triple(
+            MaterialTheme.colorScheme.secondaryContainer,
+            MaterialTheme.colorScheme.onSecondaryContainer,
+            "🌱",
+        )
+        FreshnessPhase.MELLOWING -> Triple(
+            MaterialTheme.colorScheme.tertiaryContainer,
+            MaterialTheme.colorScheme.onTertiaryContainer,
+            "🍂",
+        )
+        FreshnessPhase.VINTAGE -> Triple(
+            MaterialTheme.colorScheme.errorContainer,
+            MaterialTheme.colorScheme.onErrorContainer,
+            "⏳",
+        )
+        else -> Triple(
+            MaterialTheme.colorScheme.surfaceContainerHigh,
+            MaterialTheme.colorScheme.onSurface,
+            "☕",
+        )
+    }
+
+    ElevatedCard(
+        shape = MaterialTheme.shapes.large,
+        colors = CardDefaults.elevatedCardColors(containerColor = containerColor),
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+        ) {
+            Text(
+                text = "$phaseEmoji ${card.bagName}",
+                style = MaterialTheme.typography.titleSmall,
+                color = contentColor,
+                modifier = Modifier.semantics { heading() },
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = card.headline,
+                style = MaterialTheme.typography.bodyMedium,
+                color = contentColor,
+            )
+            Text(
+                text = card.grindAdvice,
+                style = MaterialTheme.typography.bodySmall,
+                color = contentColor.copy(alpha = 0.8f),
+                modifier = Modifier.padding(top = 2.dp),
+            )
+            Text(
+                text = card.brewTip,
+                style = MaterialTheme.typography.bodySmall,
+                color = contentColor.copy(alpha = 0.6f),
+                modifier = Modifier.padding(top = 2.dp),
+            )
+        }
     }
 }
 
