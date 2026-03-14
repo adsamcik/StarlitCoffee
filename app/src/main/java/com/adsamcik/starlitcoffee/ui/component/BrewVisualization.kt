@@ -153,8 +153,8 @@ private fun LiquidPillDiagram(
     showDrip: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val waterLight = MaterialTheme.colorScheme.primary.copy(alpha = 0.35f)
-    val waterDark = MaterialTheme.colorScheme.primary.copy(alpha = 0.65f)
+    val waterLight = Color(0xFFAEE6FF).copy(alpha = 0.42f)
+    val waterDark = Color(0xFF4D9FD6).copy(alpha = 0.74f)
     val valveOpenColor = MaterialTheme.colorScheme.primary
     val valveClosedColor = MaterialTheme.colorScheme.error
     val flowColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
@@ -169,7 +169,7 @@ private fun LiquidPillDiagram(
         val w = size.width
         val h = size.height
         val pad = 12f
-        val pillH = h * 0.58f
+        val pillH = h * 0.74f
         val pillTop = (h - pillH) / 2f - 4f
         val pillBot = pillTop + pillH
         val cornerR = pillH / 2f
@@ -198,9 +198,9 @@ private fun LiquidPillDiagram(
             drawRect(
                 brush = Brush.verticalGradient(
                     listOf(
-                        Color.White.copy(alpha = 0.08f),
-                        Color.White.copy(alpha = 0.02f),
-                        Color.Black.copy(alpha = 0.04f),
+                        Color(0xFFEAF7FF).copy(alpha = 0.22f),
+                        Color(0xFFCFE8FF).copy(alpha = 0.10f),
+                        Color(0xFF0F172A).copy(alpha = 0.08f),
                     ),
                 ),
                 topLeft = Offset(pillLeft, pillTop),
@@ -208,14 +208,14 @@ private fun LiquidPillDiagram(
             )
             // Top highlight (glass reflection)
             drawLine(
-                Color.White.copy(alpha = 0.15f),
+                Color.White.copy(alpha = 0.35f),
                 Offset(pillLeft + cornerR, pillTop + 5f),
                 Offset(capLeft - 8f, pillTop + 5f),
-                strokeWidth = 2f,
+                strokeWidth = 2.5f,
             )
 
             // ── 3. Coffee bed — curved top, dual-tone, granular ──
-            val bedH = pillH * bedFraction.coerceIn(0.14f, 0.30f)
+            val bedH = pillH * bedFraction.coerceIn(0.08f, 0.16f)
             val bedTop = pillBot - bedH
             val bedPath = Path().apply {
                 moveTo(pillLeft, pillBot)
@@ -230,7 +230,7 @@ private fun LiquidPillDiagram(
             drawPath(
                 bedPath,
                 Brush.verticalGradient(
-                    listOf(Color(0xFF8A5A32), Color(0xFF5C3820)),
+                    listOf(Color(0xFF6F5646), Color(0xFF43352C)),
                     bedTop,
                     pillBot,
                 ),
@@ -240,7 +240,7 @@ private fun LiquidPillDiagram(
             for (i in 0 until speckCount) {
                 val sx = pillLeft + 8f + i * ((capLeft - pillLeft - 16f) / speckCount)
                 val sy = bedTop + 3f + (i % 3) * 1.5f
-                drawCircle(Color(0xFF3F2416).copy(alpha = 0.20f), 1.2f, Offset(sx, sy))
+                drawCircle(Color(0xFFF2E4D7).copy(alpha = 0.10f), 1.2f, Offset(sx, sy))
             }
 
             // Filter perforations (at bed top when empty)
@@ -306,8 +306,8 @@ private fun LiquidPillDiagram(
                     )
                 }
             } else {
-                val capDark = Color(0xFF7A1F24)
-                val capDeep = Color(0xFF511216)
+                val capDark = Color(0xFF7A8791)
+                val capDeep = Color(0xFF4A5862)
                 drawRect(
                     brush = Brush.verticalGradient(listOf(capDark, capDeep)),
                     topLeft = Offset(capLeft, pillTop),
@@ -321,7 +321,7 @@ private fun LiquidPillDiagram(
                     strokeWidth = 1.5f,
                 )
                 // Vertical ribs for mechanical feel
-                val ribCount = 2
+                val ribCount = 3
                 for (i in 1..ribCount) {
                     val rx = capLeft + capWidth * i / (ribCount + 1)
                     drawLine(
@@ -750,7 +750,7 @@ fun BrewGuide(
                 showDrip = current.valveOpen && current.waterInBrewer > 0f,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(88.dp),
+                    .height(108.dp),
             )
 
             Spacer(modifier = Modifier.height(12.dp))
