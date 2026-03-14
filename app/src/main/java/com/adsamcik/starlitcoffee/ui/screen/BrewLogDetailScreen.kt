@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -45,6 +47,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
+import com.adsamcik.starlitcoffee.ui.component.shareBrewCard
 import com.adsamcik.starlitcoffee.ui.util.displayName
 import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.ui.component.FlavorTagPicker
@@ -63,6 +66,8 @@ fun BrewLogDetailScreen(
     logId: Long,
     onBack: () -> Unit,
 ){
+    val context = LocalContext.current
+    val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy · h:mm a", Locale.getDefault()) }
     var log by remember { mutableStateOf<BrewLogEntity?>(null) }
     var isLoading by remember { mutableStateOf(true) }
@@ -147,6 +152,23 @@ fun BrewLogDetailScreen(
                     }
                 },
                 actions = {
+                    IconButton(
+                        onClick = {
+                            val entity = log ?: return@IconButton
+                            val bagName = entity.coffeeBagId?.let { bagId ->
+                                bags.find { it.id == bagId }?.let { bag ->
+                                    bag.name + (bag.roaster?.let { " · $it" } ?: "")
+                                }
+                            }
+                            val tags = flavorTags.map { it.descriptor }
+                            shareBrewCard(context, entity, bagName, tags)
+                        },
+                    ) {
+                        Icon(
+                            Icons.Filled.Share,
+                            contentDescription = "Share brew",
+                        )
+                    }
                     IconButton(onClick = { showDeleteDialog = true }, modifier = Modifier.testTag("delete_brew_log_button")) {
                         Icon(
                             Icons.Filled.Delete,
@@ -224,7 +246,6 @@ fun BrewLogDetailScreen(
                     DetailRow("Water", "${"%.0f".format(entity.waterG)}g")
 
                     if (entity.coffeeBagId != null) {
-                        val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
                         val bagName = bags.find { it.id == entity.coffeeBagId }?.let { bag ->
                             bag.name + (bag.roaster?.let { " ($it)" } ?: "")
                         }
