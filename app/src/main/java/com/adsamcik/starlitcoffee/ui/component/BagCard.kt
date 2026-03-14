@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.LinearProgressIndicator
@@ -27,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
@@ -42,6 +44,8 @@ fun BagCard(
     bag: CoffeeBagEntity,
     dateFormat: SimpleDateFormat,
     onTap: () -> Unit,
+    isRecommended: Boolean = false,
+    brewsRemaining: Int? = null,
 ) {
     val freshness = remember(bag.roastDate) {
         CoffeeBagInsights.freshnessInsight(bag.roastDate)
@@ -60,14 +64,30 @@ fun BagCard(
     ElevatedCard(
         onClick = onTap,
         shape = MaterialTheme.shapes.large,
+        colors = if (isRecommended) {
+            CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            )
+        } else {
+            CardDefaults.elevatedCardColors()
+        },
         modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(18.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp),
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
+            // "Brew next" badge for recommended bag
+            if (isRecommended) {
+                Text(
+                    text = "☕ Brew this next",
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                )
+            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.Top,
@@ -205,6 +225,13 @@ fun BagCard(
                         text = it,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                if (brewsRemaining != null) {
+                    Text(
+                        text = "~$brewsRemaining brews remaining at your usual dose",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 }
             }

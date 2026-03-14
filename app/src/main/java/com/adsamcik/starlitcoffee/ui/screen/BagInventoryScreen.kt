@@ -38,6 +38,7 @@ import com.adsamcik.starlitcoffee.ui.component.BagDetailSheet
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
+import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -56,8 +57,21 @@ fun BagInventoryScreen(
 ){
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
+    val flavorTags by brewViewModel.flavorTags.collectAsStateWithLifecycle()
     val knownFieldValues by brewViewModel.knownFieldValues.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
+
+    val rankedBags = remember(bags, allBrewLogs, flavorTags) {
+        CoffeeBagInsights.rankBagsForBrew(
+            bags = bags,
+            brewLogs = allBrewLogs,
+            flavorTags = flavorTags,
+            targetDoseG = 20f,
+        )
+    }
+    val topRecommendedId = rankedBags
+        .firstOrNull { it.bag.status == "OPEN" }
+        ?.bag?.id
 
     var showAddSheet by remember { mutableStateOf(false) }
     var selectedBag by remember { mutableStateOf<CoffeeBagEntity?>(null) }
@@ -165,8 +179,8 @@ fun BagInventoryScreen(
         if (bags.isEmpty()) {
             EmptyStateBox(
                 icon = Icons.Filled.ShoppingBag,
-                message = "No coffee bags yet",
-                subtitle = "Track your beans — add roast details and tasting notes",
+                message = "No beans yet",
+                subtitle = "Add your coffee to track freshness and get brew suggestions",
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
@@ -177,7 +191,7 @@ fun BagInventoryScreen(
                     .fillMaxSize()
                     .padding(innerPadding)
                     .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(
                     top = 16.dp,
                     bottom = 88.dp,
@@ -189,22 +203,44 @@ fun BagInventoryScreen(
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         Text(
-                            text = "Coffee Bags",
+                            text = "Your Beans",
                             style = MaterialTheme.typography.headlineMedium,
                             modifier = Modifier.semantics { heading() },
                         )
+                        val openCount = bags.count { it.status == "OPEN" }
+                        val subtitle = when {
+                            openCount > 1 -> "$openCount bags open — freshest first"
+                            openCount == 1 -> "1 bag open"
+                            else -> "Add beans to start tracking freshness"
+                        }
                         Text(
-                            text = "Freshness, stock, and the next step at a glance.",
+                            text = subtitle,
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }
-                items(bags, key = { it.id }) { bag ->
+                items(
+                    items = rankedBags.map { it.bag },
+                    key = { it.id },
+                ) { bag ->
+                    val brewsRemaining = if (bag.weightG != null && bag.weightG > 0f) {
+                        val avgDose = allBrewLogs
+                            .filter { it.coffeeBagId == bag.id }
+                            .takeIf { it.isNotEmpty() }
+                            ?.map { it.doseG }
+                            ?.average()
+                            ?.toFloat()
+                            ?: 20f
+                        (bag.weightG / avgDose).toInt()
+                    } else null
+
                     BagCard(
                         bag = bag,
                         dateFormat = dateFormat,
                         onTap = { selectedBag = bag },
+                        isRecommended = bag.id == topRecommendedId,
+                        brewsRemaining = brewsRemaining,
                     )
                 }
             }

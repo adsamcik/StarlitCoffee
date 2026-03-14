@@ -52,8 +52,8 @@ fun MoreScreen(
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
             MoreItem(
                 icon = Icons.Filled.ShoppingBag,
-                title = "Coffee Bags",
-                subtitle = "Track beans, roasts and tasting notes",
+                title = "Your Beans",
+                subtitle = "Freshness, stock, and what to brew next",
                 onClick = onNavigateToBags,
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
