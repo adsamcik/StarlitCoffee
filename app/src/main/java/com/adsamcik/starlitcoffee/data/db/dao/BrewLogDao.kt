@@ -30,6 +30,9 @@ interface BrewLogDao {
     @Query("SELECT * FROM brew_logs WHERE recipeId = :recipeId ORDER BY createdAt DESC")
     fun getByRecipe(recipeId: Long): Flow<List<BrewLogEntity>>
 
+    @Query("SELECT * FROM brew_logs WHERE rating IS NULL ORDER BY createdAt DESC LIMIT 1")
+    suspend fun getLastUnrated(): BrewLogEntity?
+
     @Delete
     suspend fun delete(log: BrewLogEntity)
 }

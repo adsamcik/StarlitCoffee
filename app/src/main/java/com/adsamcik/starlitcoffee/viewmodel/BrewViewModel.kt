@@ -167,11 +167,15 @@ class BrewViewModel(
     val knownFieldValues: StateFlow<KnownFieldValues> = _knownFieldValues.asStateFlow()
     private val _selectedBagId = MutableStateFlow<Long?>(null)
     val selectedBagId: StateFlow<Long?> = _selectedBagId.asStateFlow()
-    private var lastLoggedBrewId: Long? = null
+    var lastLoggedBrewId: Long? = null
+        private set
+    private val _lastUnratedBrew = MutableStateFlow<BrewLogEntity?>(null)
+    val lastUnratedBrew: StateFlow<BrewLogEntity?> = _lastUnratedBrew.asStateFlow()
     private val _bagPhotoResult = MutableStateFlow<BagPhotoProcessingResult?>(null)
     val bagPhotoResult: StateFlow<BagPhotoProcessingResult?> = _bagPhotoResult.asStateFlow()
 
     private var _audioManager: BrewAudioManager? = null
+    private var _audioOutputDirectory: java.io.File? = null
     val audioState: StateFlow<AudioAnalysisState>
         get() = _audioManager?.analysisState ?: MutableStateFlow(AudioAnalysisState())
     private var brewEventJob: Job? = null
@@ -205,6 +209,7 @@ class BrewViewModel(
         collectRatioPresets(_uiState.value.method)
         recalculate()
         applyUserDefaults()
+        refreshLastUnrated()
         // Sync TimerController state → BrewUiState
         viewModelScope.launch {
             timerController.state.collect { ts ->
@@ -260,7 +265,35 @@ class BrewViewModel(
     }
 
     fun setInputMode(mode: InputMode) {
-        _uiState.update { it.copy(inputMode = mode) }
+        val state = _uiState.value
+        val oldMode = state.inputMode
+        val currentAmount = state.amount.toFloatOrNull() ?: 0f
+
+        // Convert amount intelligently when switching modes
+        val convertedAmount = when {
+            oldMode == mode -> currentAmount
+            // From coffee grams → water/cup/brew ml: multiply by ratio
+            oldMode == InputMode.COFFEE_TO_WATER && mode != InputMode.COFFEE_TO_WATER -> {
+                val ratio = state.ratioPresets.getOrNull(state.selectedPresetIndex)?.ratio
+                    ?: state.method.defaultRatio
+                (currentAmount * ratio).let { kotlin.math.round(it) }
+            }
+            // From water/cup/brew ml → coffee grams: divide by ratio
+            oldMode != InputMode.COFFEE_TO_WATER && mode == InputMode.COFFEE_TO_WATER -> {
+                val ratio = state.ratioPresets.getOrNull(state.selectedPresetIndex)?.ratio
+                    ?: state.method.defaultRatio
+                if (ratio > 0f) (currentAmount / ratio).let { kotlin.math.round(it) } else currentAmount
+            }
+            // Between non-coffee modes: keep the ml value
+            else -> currentAmount
+        }
+
+        _uiState.update {
+            it.copy(
+                inputMode = mode,
+                amount = convertedAmount.toInt().toString(),
+            )
+        }
         recalculate()
     }
 
@@ -331,7 +364,26 @@ class BrewViewModel(
 
         // Auto-start audio monitoring when timer begins
         if (_audioManager != null && !_audioManager!!.isMonitoring) {
+            // Start shadow comparison log for A/B testing
+            _audioOutputDirectory?.let { dir -> _audioManager?.startShadowLog(dir) }
+
             _audioManager!!.startMonitoring()
+
+            // Set brew context for metadata export
+            val state = _uiState.value
+            _audioManager?.setBrewContext(
+                method = state.method.name,
+                filterType = state.filterType?.name ?: "",
+                doseG = state.coffeeG,
+                waterG = state.waterG,
+                ratio = state.effectiveRatio,
+                grinderId = state.selectedGrinderId,
+                grinderSetting = when (val result = state.grindResult) {
+                    is GrindResult.Generic -> result.descriptor.displayName
+                    is GrindResult.Specific ->
+                        "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
+                },
+            )
         }
 
         // Notify audio manager of initial phase (phase 0)
@@ -360,6 +412,29 @@ class BrewViewModel(
         _audioManager?.stopMonitoring()
     }
 
+    /**
+     * Updates session metadata with placement and environment from lab setup dialog.
+     */
+    fun updateSessionSetup(placement: String, environment: String, notes: String) {
+        val state = _uiState.value
+        _audioManager?.setBrewContext(
+            method = state.method.name,
+            filterType = state.filterType?.name ?: "",
+            doseG = state.coffeeG,
+            waterG = state.waterG,
+            ratio = state.effectiveRatio,
+            grinderId = state.selectedGrinderId,
+            grinderSetting = when (val result = state.grindResult) {
+                is GrindResult.Generic -> result.descriptor.displayName
+                is GrindResult.Specific ->
+                    "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
+            },
+            placement = placement,
+            environment = environment,
+            notes = notes,
+        )
+    }
+
     // --- Audio Monitoring ---
 
     /**
@@ -368,6 +443,7 @@ class BrewViewModel(
      */
     fun initAudioManager(outputDirectory: java.io.File) {
         if (_audioManager != null) return
+        _audioOutputDirectory = outputDirectory
         _audioManager = BrewAudioManager(
             outputDirectory = outputDirectory,
             autoRecord = true, // Always capture WAV + JSONL for debugging
@@ -489,6 +565,63 @@ class BrewViewModel(
         if (manager.isRecording) manager.stopRecording() else manager.startRecording()
     }
 
+    /**
+     * Records a user-marked brew event for ground truth labeling.
+     * Called from debug overlay event marker buttons.
+     * Labels are approximate (±2-3s) — user taps roughly when events happen.
+     */
+    fun markBrewEvent(label: String) {
+        _audioManager?.markUserLabel(label)
+    }
+
+    /**
+     * Records a problem/feedback marker during a brew experiment.
+     */
+    fun markBrewProblem(description: String) {
+        _audioManager?.markUserProblem(description)
+    }
+
+    /**
+     * Exports the current/latest brew session as a zip file and opens the share sheet.
+     * Bundles all WAV, JSONL, metadata, labels, and shadow logs.
+     */
+    fun exportBrewSession(context: android.content.Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val audioDir = _audioOutputDirectory ?: return@launch
+
+            val result = com.adsamcik.starlitcoffee.audio.BrewDataBundler.bundleLatest(audioDir)
+            if (!result.success || result.fileCount == 0) {
+                Log.w("BrewExport", "Export failed: ${result.errors}")
+                return@launch
+            }
+
+            val zipUri = androidx.core.content.FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.fileprovider",
+                result.zipFile,
+            )
+
+            val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                type = "application/zip"
+                putExtra(android.content.Intent.EXTRA_STREAM, zipUri)
+                putExtra(
+                    android.content.Intent.EXTRA_SUBJECT,
+                    "Brew Audio Data — ${result.zipFile.nameWithoutExtension}",
+                )
+                putExtra(
+                    android.content.Intent.EXTRA_TEXT,
+                    "Brew data bundle: ${result.fileCount} files, ${result.totalSizeBytes / 1024} KB",
+                )
+                addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+
+            withContext(Dispatchers.Main) {
+                val chooser = android.content.Intent.createChooser(shareIntent, "Share Brew Data")
+                context.startActivity(chooser)
+            }
+        }
+    }
+
     fun requestFeedbackSnackbar() {
         _uiState.update { it.copy(showFeedbackSnackbar = true) }
     }
@@ -507,6 +640,13 @@ class BrewViewModel(
         if (newPhase != null) {
             _audioManager?.onPhaseChanged(state.currentPhaseIndex, newPhase.name)
         }
+
+        // Record user phase transition for shadow comparison (A/B testing)
+        val phase = _uiState.value.timerPhases.getOrNull(_uiState.value.currentPhaseIndex)
+        _audioManager?.recordUserTap(
+            _uiState.value.currentPhaseIndex,
+            phase?.name ?: "unknown"
+        )
     }
 
     fun setTasteFeedback(feedback: TasteFeedback) {
@@ -656,6 +796,7 @@ class BrewViewModel(
                     }
                 }
             }
+            refreshLastUnrated()
         }
     }
 
@@ -678,12 +819,55 @@ class BrewViewModel(
         }
     }
 
+    fun saveRatingForLog(
+        logId: Long,
+        rating: Float,
+        descriptors: List<String>,
+        notes: String,
+    ) {
+        val repository = brewLogRepository ?: return
+        viewModelScope.launch {
+            repository.updateRating(logId, rating, notes.takeIf { it.isNotBlank() })
+            if (descriptors.isNotEmpty()) {
+                val tags = descriptors.map { descriptor ->
+                    FlavorTagEntity(brewLogId = logId, descriptor = descriptor)
+                }
+                repository.insertFlavorTags(tags)
+            }
+            refreshLastUnrated()
+        }
+    }
+
     fun selectBag(bagId: Long?) {
         _selectedBagId.value = bagId
         // Auto-set decaf from bag
         val bag = _coffeeBags.value.find { it.id == bagId }
         _uiState.update { it.copy(isDecafBrew = bag?.isDecaf ?: false) }
         recalculate()
+    }
+
+    fun refreshLastUnrated() {
+        viewModelScope.launch {
+            _lastUnratedBrew.value = brewLogRepository?.getLastUnratedLog()
+        }
+    }
+
+    fun quickRateBrewLog(
+        logId: Long,
+        rating: Float,
+        tasteFeedback: TasteFeedback?,
+    ) {
+        val repository = brewLogRepository ?: return
+        viewModelScope.launch {
+            repository.updateFeedback(
+                logId = logId,
+                rating = rating,
+                notes = null,
+                tasteFeedback = tasteFeedback?.name,
+                flavorTags = emptyList(),
+            )
+            refreshLastUnrated()
+        }
     }
 
     fun setDecafBrew(isDecaf: Boolean) {

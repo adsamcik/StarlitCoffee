@@ -26,6 +26,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -38,24 +41,29 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
 import com.adsamcik.starlitcoffee.ui.component.ChipEmphasis
 import com.adsamcik.starlitcoffee.ui.component.FreshnessRing
 import com.adsamcik.starlitcoffee.ui.component.InsightChip
 import com.adsamcik.starlitcoffee.ui.component.InsightChipRow
+import com.adsamcik.starlitcoffee.ui.component.PostBrewCheckInCard
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
+import com.adsamcik.starlitcoffee.data.model.QuickRating
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.util.RankedBagSuggestion
+import com.adsamcik.starlitcoffee.ui.util.shortLabel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,7 +71,6 @@ import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 fun MethodPickerScreen(
     brewViewModel: BrewViewModel,
     userPreferencesRepository: UserPreferencesRepository,
-    onNavigateToAmount: () -> Unit,
     onNavigateToSettings: () -> Unit,
     onNavigateToTimer: () -> Unit,
 ){
@@ -72,6 +79,7 @@ fun MethodPickerScreen(
     val brewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
     val flavorTags by brewViewModel.flavorTags.collectAsStateWithLifecycle()
     val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
+    val lastUnratedBrew by brewViewModel.lastUnratedBrew.collectAsStateWithLifecycle()
     val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = UserPreferences(),
     )
@@ -115,14 +123,19 @@ fun MethodPickerScreen(
                 .padding(start = 8.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                text = "Starlit Coffee",
-                style = MaterialTheme.typography.displaySmall,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .weight(1f)
-                    .semantics { heading() },
-            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = state.method.displayName,
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.semantics { heading() },
+                )
+                Text(
+                    text = state.filterType?.displayName ?: "No filter",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
             IconButton(onClick = onNavigateToSettings, modifier = Modifier.testTag("settings_button")) {
                 Icon(
                     imageVector = Icons.Filled.Settings,
@@ -172,35 +185,45 @@ fun MethodPickerScreen(
             }
         }
 
-        // Method context line
-        Row(
-            modifier = Modifier.padding(start = 8.dp, bottom = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        // Input mode selector
+        val inputMode = state.inputMode
+        val amountLabel = when (inputMode) {
+            InputMode.COFFEE_TO_WATER -> "Coffee"
+            InputMode.WATER_TO_COFFEE -> "Water"
+            InputMode.BREW_SIZE_TO_BOTH -> "Brew size"
+            InputMode.CUP_SIZE_TO_BOTH -> "Cup size"
+        }
+        val amountUnit = when (inputMode) {
+            InputMode.COFFEE_TO_WATER, InputMode.WATER_TO_COFFEE -> "g"
+            InputMode.BREW_SIZE_TO_BOTH, InputMode.CUP_SIZE_TO_BOTH -> "ml"
+        }
+        val sliderMax = when (inputMode) {
+            InputMode.COFFEE_TO_WATER -> maxSlider
+            else -> 1000f
+        }
+
+        SingleChoiceSegmentedButtonRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
         ) {
-            Icon(
-                imageVector = iconForMethod(state.method),
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(24.dp),
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = state.method.displayName,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            if (state.filterType != null) {
-                Text(
-                    text = " · ${state.filterType?.displayName}",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+            InputMode.entries.forEachIndexed { index, mode ->
+                SegmentedButton(
+                    selected = inputMode == mode,
+                    onClick = { brewViewModel.setInputMode(mode) },
+                    shape = SegmentedButtonDefaults.itemShape(
+                        index = index,
+                        count = InputMode.entries.size,
+                    ),
+                ) {
+                    Text(mode.shortLabel(), maxLines = 1)
+                }
             }
         }
 
         // Amount slider
         Text(
-            text = "Coffee",
+            text = amountLabel,
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 8.dp),
@@ -210,16 +233,19 @@ fun MethodPickerScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Slider(
-                value = amountFloat.coerceIn(0f, maxSlider),
+                value = amountFloat.coerceIn(0f, sliderMax),
                 onValueChange = {
                     val rounded = kotlin.math.round(it)
                     brewViewModel.setAmount(rounded.toInt().toString())
                 },
-                valueRange = 0f..maxSlider,
-                modifier = Modifier.weight(1f).testTag("coffee_slider"),
+                valueRange = 0f..sliderMax,
+                modifier = Modifier
+                    .weight(1f)
+                    .testTag("coffee_slider")
+                    .semantics { contentDescription = "$amountLabel: ${amountFloat.toInt()} $amountUnit" },
             )
             Text(
-                text = "${amountFloat.toInt()}g",
+                text = "${amountFloat.toInt()}$amountUnit",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(start = 8.dp),
@@ -228,10 +254,10 @@ fun MethodPickerScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Ratio presets
+        // Strength presets
         if (state.ratioPresets.isNotEmpty()) {
             Text(
-                text = "Ratio",
+                text = "Strength",
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp, bottom = 4.dp),
@@ -326,7 +352,7 @@ fun MethodPickerScreen(
                                 .padding(start = 16.dp),
                         ) {
                             Text(
-                                text = "Peak window coach",
+                                text = "Freshness",
                                 style = MaterialTheme.typography.titleMedium,
                             )
                             Text(
@@ -363,34 +389,34 @@ fun MethodPickerScreen(
             }
         }
 
-        // Grind preview
+        // Grind preview — plain language for casual users, detail for grinder owners
         val grindText = when (val gr = state.grindResult) {
             is GrindResult.Generic ->
-                "${gr.descriptor.displayName} – ${gr.descriptor.visualCue}"
+                "Grind: ${gr.descriptor.displayName} – ${gr.descriptor.visualCue}"
             is GrindResult.Specific ->
-                "Setting: ${"%.1f".format(gr.recommendation.suggestedStart)} (${gr.recommendation.adjustmentNote})"
+                "Grind setting: ${"%.1f".format(gr.recommendation.suggestedStart)} · Adjust by taste"
         }
         val bagGrindHint = selectedRankedBag?.grindInsight?.bestGrindSetting ?: selectedBag?.grindSetting
-        Row(
+        ElevatedCard(
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .padding(bottom = 12.dp),
         ) {
-            Text(
-                text = "⚙️ $grindText",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.weight(1f),
-            )
-            if (bagGrindHint != null) {
+            Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
                 Text(
-                    text = "☕ Dialed in: $bagGrindHint",
-                    style = MaterialTheme.typography.labelSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.tertiary,
-                    modifier = Modifier.padding(start = 8.dp),
+                    text = grindText,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
+                if (bagGrindHint != null) {
+                    Text(
+                        text = "Last time: $bagGrindHint",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier.padding(top = 4.dp),
+                    )
+                }
             }
         }
 
@@ -406,14 +432,27 @@ fun MethodPickerScreen(
             Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Customize link → full AmountStrength screen
-        TextButton(
-            onClick = onNavigateToAmount,
-            modifier = Modifier.fillMaxWidth().testTag("customize_button"),
-        ) {
-            Text("Customize brew parameters")
+        // Post-brew check-in card
+        val unratedBrew = lastUnratedBrew
+        if (unratedBrew != null) {
+            Spacer(modifier = Modifier.height(16.dp))
+            PostBrewCheckInCard(
+                brew = unratedBrew,
+                onQuickRate = { rating ->
+                    brewViewModel.quickRateBrewLog(
+                        logId = unratedBrew.id,
+                        rating = rating.starRating,
+                        tasteFeedback = rating.tasteFeedback,
+                    )
+                },
+                onIssueRate = { issue ->
+                    brewViewModel.quickRateBrewLog(
+                        logId = unratedBrew.id,
+                        rating = QuickRating.NOT_GREAT.starRating,
+                        tasteFeedback = issue.tasteFeedback,
+                    )
+                },
+            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))

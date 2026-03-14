@@ -88,6 +88,11 @@ internal class FakeBrewLogDao : BrewLogDao {
     override fun getByRecipe(recipeId: Long): Flow<List<BrewLogEntity>> = flow.map { list ->
         list.filter { it.recipeId == recipeId }
     }
+
+    override suspend fun getLastUnrated(): BrewLogEntity? {
+        return logs.filter { it.rating == null }
+            .maxByOrNull { it.createdAt }
+    }
 }
 
 internal class FakeCoffeeBagDao : CoffeeBagDao {

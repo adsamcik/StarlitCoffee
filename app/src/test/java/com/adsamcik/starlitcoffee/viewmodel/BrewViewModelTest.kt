@@ -1405,6 +1405,75 @@ class BrewViewModelTest {
         )
     }
 
+    // --- Post-Brew Check-In ---
+
+    @Test
+    fun `lastUnratedBrew is null when no brews exist`() {
+        val vm = createPersistenceViewModel()
+        assertNull(vm.lastUnratedBrew.value)
+    }
+
+    @Test
+    fun `lastUnratedBrew returns brew without rating after logBrew`() {
+        val vm = createPersistenceViewModel()
+        vm.setAmount("20")
+        vm.logBrew()
+
+        assertNotNull(vm.lastUnratedBrew.value)
+        assertNull(vm.lastUnratedBrew.value?.rating)
+    }
+
+    @Test
+    fun `lastUnratedBrew is null when all brews are rated`() {
+        val vm = createPersistenceViewModel()
+        vm.setRating(4)
+        vm.setAmount("20")
+        vm.logBrew()
+
+        assertNull(vm.lastUnratedBrew.value)
+    }
+
+    @Test
+    fun `quickRateBrewLog updates rating and clears unrated state`() {
+        val vm = createPersistenceViewModel()
+        vm.setAmount("20")
+        vm.logBrew()
+
+        val unrated = vm.lastUnratedBrew.value
+        assertNotNull(unrated)
+
+        vm.quickRateBrewLog(
+            logId = unrated!!.id,
+            rating = 5f,
+            tasteFeedback = TasteFeedback.BALANCED,
+        )
+
+        assertNull(vm.lastUnratedBrew.value)
+        val log = vm.brewLogs.value.first()
+        assertEquals(5f, log.rating)
+        assertEquals("BALANCED", log.tasteFeedback)
+    }
+
+    @Test
+    fun `quickRateBrewLog with taste issue stores feedback`() {
+        val vm = createPersistenceViewModel()
+        vm.setAmount("20")
+        vm.logBrew()
+
+        val unrated = vm.lastUnratedBrew.value!!
+
+        vm.quickRateBrewLog(
+            logId = unrated.id,
+            rating = 2f,
+            tasteFeedback = TasteFeedback.TOO_BITTER,
+        )
+
+        val log = vm.brewLogs.value.first()
+        assertEquals(2f, log.rating)
+        assertEquals("TOO_BITTER", log.tasteFeedback)
+        assertNull(vm.lastUnratedBrew.value)
+    }
+
     private fun setElapsedSeconds(targetViewModel: BrewViewModel, elapsedSeconds: Int) {
         val currentState = targetViewModel.uiState.value
         targetViewModel.setUiStateForTesting(currentState.copy(elapsedSeconds = elapsedSeconds))

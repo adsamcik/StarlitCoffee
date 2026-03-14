@@ -45,6 +45,8 @@ class BrewLogRepository(
 
     suspend fun getLogById(logId: Long): BrewLogEntity? = brewLogDao.getById(logId)
 
+    suspend fun getLastUnratedLog(): BrewLogEntity? = brewLogDao.getLastUnrated()
+
     suspend fun insertFlavorTags(tags: List<FlavorTagEntity>) =
         flavorTagDao.insertAll(tags)
 
