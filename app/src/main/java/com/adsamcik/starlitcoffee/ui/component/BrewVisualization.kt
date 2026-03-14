@@ -45,11 +45,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -150,136 +153,228 @@ private fun LiquidPillDiagram(
     showDrip: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val waterLight = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-    val waterDark = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
-    val bedColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.5f)
-    val shellColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.15f)
+    val waterLight = MaterialTheme.colorScheme.primary.copy(alpha = 0.35f)
+    val waterDark = MaterialTheme.colorScheme.primary.copy(alpha = 0.65f)
     val valveOpenColor = MaterialTheme.colorScheme.primary
     val valveClosedColor = MaterialTheme.colorScheme.error
-    val flowColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+    val flowColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
     val textMeasurer = rememberTextMeasurer()
-    val labelColor = MaterialTheme.colorScheme.onSurfaceVariant
-    val labelStyle = TextStyle(fontSize = 11.sp, color = labelColor, fontWeight = FontWeight.Bold)
+    val labelStyle = TextStyle(
+        fontSize = 10.sp,
+        color = Color.White.copy(alpha = 0.85f),
+        fontWeight = FontWeight.Bold,
+    )
 
     Canvas(modifier = modifier) {
         val w = size.width
         val h = size.height
-        val pad = 8f
-        val pillH = h * 0.55f
-        val pillTop = (h - pillH) / 2f
+        val pad = 12f
+        val pillH = h * 0.58f
+        val pillTop = (h - pillH) / 2f - 4f
         val pillBot = pillTop + pillH
         val cornerR = pillH / 2f
+        val pillLeft = pad
+        val pillRight = w - pad
+        val pillW = pillRight - pillLeft
 
-        // Valve cap zone — right 15% of the pill
-        val capWidth = w * 0.15f
-        val chamberRight = w - pad - capWidth
-        val chamberLeft = pad
+        // Valve cap zone — right 16%
+        val capWidth = pillW * 0.16f
+        val capLeft = pillRight - capWidth
+        val capRight = pillRight
+        val capMidY = (pillTop + pillBot) / 2f
 
-        // ── Shell (outer pill shape) ──
-        drawRoundRect(
-            color = shellColor,
-            topLeft = Offset(chamberLeft, pillTop),
-            size = Size(w - pad * 2, pillH),
-            cornerRadius = CornerRadius(cornerR, cornerR),
-            style = Stroke(3f),
-        )
-
-        // ── Coffee bed (thin layer at bottom of chamber) ──
-        val bedH = pillH * bedFraction.coerceIn(0.08f, 0.25f)
-        val bedTop = pillBot - bedH
-        drawRoundRect(
-            color = bedColor,
-            topLeft = Offset(chamberLeft + 4f, bedTop),
-            size = Size(chamberRight - chamberLeft - 4f, bedH - 2f),
-            cornerRadius = CornerRadius(2f, 2f),
-        )
-
-        // ── Water fill (fills chamber from bottom up to bed top) ──
-        val waterSpace = bedTop - pillTop - 6f
-        val waterH = waterSpace * waterFillFraction.coerceIn(0f, 1f)
-        if (waterH > 2f) {
-            val waterTop = bedTop - waterH
-            // Meniscus-style rounded water surface
-            drawRoundRect(
-                brush = Brush.verticalGradient(
-                    listOf(waterLight, waterDark),
-                    waterTop,
-                    bedTop,
+        // ── 1. Unified pill clip path — everything draws inside this ──
+        val pillPath = Path().apply {
+            addRoundRect(
+                RoundRect(
+                    Rect(Offset(pillLeft, pillTop), Size(pillW, pillH)),
+                    CornerRadius(cornerR, cornerR),
                 ),
-                topLeft = Offset(chamberLeft + 4f, waterTop),
-                size = Size(chamberRight - chamberLeft - 4f, waterH),
-                cornerRadius = CornerRadius(4f, 4f),
             )
         }
 
-        // ── Valve cap (right end) ──
-        val capLeft = chamberRight
-        val capMidY = (pillTop + pillBot) / 2f
-        val capRight = w - pad
-        val vColor = if (valveOpen) valveOpenColor else valveClosedColor
+        clipPath(pillPath) {
+            // ── 2. Glass chamber background ──
+            drawRect(
+                brush = Brush.verticalGradient(
+                    listOf(
+                        Color.White.copy(alpha = 0.08f),
+                        Color.White.copy(alpha = 0.02f),
+                        Color.Black.copy(alpha = 0.04f),
+                    ),
+                ),
+                topLeft = Offset(pillLeft, pillTop),
+                size = Size(pillW, pillH),
+            )
+            // Top highlight (glass reflection)
+            drawLine(
+                Color.White.copy(alpha = 0.15f),
+                Offset(pillLeft + cornerR, pillTop + 5f),
+                Offset(capLeft - 8f, pillTop + 5f),
+                strokeWidth = 2f,
+            )
 
-        if (valveOpen) {
-            // Open: two separated halves with gap
-            val gap = pillH * 0.12f
-            // Top half
-            drawRoundRect(
-                color = vColor,
-                topLeft = Offset(capLeft, pillTop),
-                size = Size(capRight - capLeft, pillH / 2f - gap),
-                cornerRadius = CornerRadius(0f, cornerR),
+            // ── 3. Coffee bed — curved top, dual-tone, granular ──
+            val bedH = pillH * bedFraction.coerceIn(0.14f, 0.30f)
+            val bedTop = pillBot - bedH
+            val bedPath = Path().apply {
+                moveTo(pillLeft, pillBot)
+                lineTo(pillLeft, bedTop + 3f)
+                quadraticBezierTo(
+                    (pillLeft + capLeft) / 2f, bedTop - 2f,
+                    capLeft, bedTop + 2f,
+                )
+                lineTo(capLeft, pillBot)
+                close()
+            }
+            drawPath(
+                bedPath,
+                Brush.verticalGradient(
+                    listOf(Color(0xFF8A5A32), Color(0xFF5C3820)),
+                    bedTop,
+                    pillBot,
+                ),
             )
-            // Bottom half
-            drawRoundRect(
-                color = vColor,
-                topLeft = Offset(capLeft, capMidY + gap),
-                size = Size(capRight - capLeft, pillH / 2f - gap),
-                cornerRadius = CornerRadius(0f, cornerR),
-            )
-            // Flow streaks through gap
-            val streakY = capMidY
-            for (i in 0..2) {
-                val sx = capLeft + (capRight - capLeft) * (0.2f + i * 0.3f)
+            // Granular specks on bed surface
+            val speckCount = ((capLeft - pillLeft) / 8f).toInt().coerceIn(8, 30)
+            for (i in 0 until speckCount) {
+                val sx = pillLeft + 8f + i * ((capLeft - pillLeft - 16f) / speckCount)
+                val sy = bedTop + 3f + (i % 3) * 1.5f
+                drawCircle(Color(0xFF3F2416).copy(alpha = 0.20f), 1.2f, Offset(sx, sy))
+            }
+
+            // Filter perforations (at bed top when empty)
+            if (waterFillFraction < 0.03f) {
+                val perfCount = ((capLeft - pillLeft) / 14f).toInt().coerceIn(4, 16)
+                for (i in 0 until perfCount) {
+                    val px = pillLeft + 12f + i * ((capLeft - pillLeft - 24f) / perfCount)
+                    drawCircle(Color.Black.copy(alpha = 0.06f), 1.4f, Offset(px, bedTop - 5f))
+                }
+            }
+
+            // ── 4. Water fill ──
+            val waterSpace = bedTop - pillTop - 8f
+            val waterH = waterSpace * waterFillFraction.coerceIn(0f, 1f)
+            if (waterH > 2f) {
+                val wTop = bedTop - waterH
+                drawRect(
+                    brush = Brush.verticalGradient(
+                        listOf(waterLight, waterDark),
+                        wTop,
+                        bedTop,
+                    ),
+                    topLeft = Offset(pillLeft, wTop),
+                    size = Size(capLeft - pillLeft, waterH),
+                )
+                // Meniscus highlight
                 drawLine(
-                    flowColor,
-                    Offset(sx, streakY - 2f),
-                    Offset(sx + 12f, streakY - 2f),
-                    strokeWidth = 2f,
-                    cap = androidx.compose.ui.graphics.StrokeCap.Round,
+                    Color.White.copy(alpha = 0.20f),
+                    Offset(pillLeft + cornerR * 0.5f, wTop + 2f),
+                    Offset(capLeft - 8f, wTop + 2f),
+                    strokeWidth = 1.5f,
                 )
             }
-        } else {
-            // Closed: solid sealed cap
-            drawRoundRect(
-                color = vColor,
-                topLeft = Offset(capLeft, pillTop),
-                size = Size(capRight - capLeft, pillH),
-                cornerRadius = CornerRadius(0f, cornerR),
-            )
-            // Seal line
-            drawLine(
-                vColor.copy(alpha = 0.8f),
-                Offset(capLeft, pillTop + 3f),
-                Offset(capLeft, pillBot - 3f),
-                strokeWidth = 3f,
-            )
+
+            // ── 5. Valve cap (draws inside clip — rounded edges are free) ──
+            if (valveOpen) {
+                val gap = pillH * 0.14f
+                val capDark = valveOpenColor.copy(alpha = 0.9f)
+                val capMid = valveOpenColor.copy(alpha = 0.7f)
+                // Top half
+                drawRect(
+                    brush = Brush.verticalGradient(listOf(capMid, capDark)),
+                    topLeft = Offset(capLeft, pillTop),
+                    size = Size(capWidth, pillH / 2f - gap),
+                )
+                // Bottom half
+                drawRect(
+                    brush = Brush.verticalGradient(listOf(capDark, capMid)),
+                    topLeft = Offset(capLeft, capMidY + gap),
+                    size = Size(capWidth, pillH / 2f - gap),
+                )
+                // Tapered flow streaks through gap
+                for (i in -1..1) {
+                    val y = capMidY + i * 3.5f
+                    drawLine(
+                        brush = Brush.horizontalGradient(
+                            listOf(Color.Transparent, flowColor, Color.Transparent),
+                        ),
+                        start = Offset(capLeft + 4f, y),
+                        end = Offset(capRight - 2f, y),
+                        strokeWidth = if (i == 0) 3f else 2f,
+                        cap = androidx.compose.ui.graphics.StrokeCap.Round,
+                    )
+                }
+            } else {
+                val capDark = Color(0xFF7A1F24)
+                val capDeep = Color(0xFF511216)
+                drawRect(
+                    brush = Brush.verticalGradient(listOf(capDark, capDeep)),
+                    topLeft = Offset(capLeft, pillTop),
+                    size = Size(capWidth, pillH),
+                )
+                // Top highlight rib
+                drawLine(
+                    Color.White.copy(alpha = 0.12f),
+                    Offset(capLeft + 4f, pillTop + 5f),
+                    Offset(capRight - 6f, pillTop + 5f),
+                    strokeWidth = 1.5f,
+                )
+                // Vertical ribs for mechanical feel
+                val ribCount = 2
+                for (i in 1..ribCount) {
+                    val rx = capLeft + capWidth * i / (ribCount + 1)
+                    drawLine(
+                        Color.Black.copy(alpha = 0.18f),
+                        Offset(rx, pillTop + 8f),
+                        Offset(rx, pillBot - 8f),
+                        strokeWidth = 1.8f,
+                    )
+                }
+                // Seam line at cap/chamber junction
+                drawLine(
+                    Color.Black.copy(alpha = 0.25f),
+                    Offset(capLeft, pillTop + 4f),
+                    Offset(capLeft, pillBot - 4f),
+                    strokeWidth = 2f,
+                )
+            }
         }
 
-        // ── Valve label ──
+        // ── 6. Shell outline with depth (drawn outside clip for clean edges) ──
+        drawRoundRect(
+            Color.Black.copy(alpha = 0.14f),
+            Offset(pillLeft, pillTop),
+            Size(pillW, pillH),
+            CornerRadius(cornerR, cornerR),
+            style = Stroke(2.5f),
+        )
+        // Inner highlight
+        drawRoundRect(
+            Color.White.copy(alpha = 0.10f),
+            Offset(pillLeft + 1.5f, pillTop + 1.5f),
+            Size(pillW - 3f, pillH - 3f),
+            CornerRadius(cornerR - 1.5f, cornerR - 1.5f),
+            style = Stroke(1f),
+        )
+
+        // ── Valve label (inside cap) ──
         val vlText = if (valveOpen) "OPEN" else "CLOSED"
         val vlResult = textMeasurer.measure(vlText, labelStyle)
         drawText(
             vlResult,
             topLeft = Offset(
-                capLeft + (capRight - capLeft - vlResult.size.width) / 2f,
-                pillBot + 6f,
+                capLeft + (capWidth - vlResult.size.width) / 2f,
+                capMidY - vlResult.size.height / 2f,
             ),
         )
 
-        // ── Drip drops (below valve when open) ──
+        // ── Drip drops below valve when open ──
         if (showDrip && valveOpen) {
             val dripX = (capLeft + capRight) / 2f
-            drawCircle(flowColor, 3.5f, Offset(dripX, pillBot + pillH * 0.35f))
-            drawCircle(flowColor, 2.5f, Offset(dripX - 5f, pillBot + pillH * 0.55f))
+            drawCircle(flowColor, 3.5f, Offset(dripX + 1f, pillBot + 10f))
+            drawCircle(Color.White.copy(alpha = 0.15f), 1.2f, Offset(dripX, pillBot + 9f))
+            drawCircle(flowColor, 2.5f, Offset(dripX - 4f, pillBot + 18f))
         }
     }
 }
