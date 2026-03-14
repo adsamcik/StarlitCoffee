@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -56,6 +57,8 @@ import com.adsamcik.starlitcoffee.ui.component.InsightChip
 import com.adsamcik.starlitcoffee.ui.component.InsightChipRow
 import com.adsamcik.starlitcoffee.ui.component.PostBrewCheckInCard
 import com.adsamcik.starlitcoffee.ui.component.HomeContextCardView
+import com.adsamcik.starlitcoffee.ui.component.FavoritesRow
+import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.data.model.QuickRating
@@ -82,9 +85,12 @@ fun MethodPickerScreen(
     val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
     val lastUnratedBrew by brewViewModel.lastUnratedBrew.collectAsStateWithLifecycle()
     val contextCard by brewViewModel.homeContextCard.collectAsStateWithLifecycle()
+    val savedRecipes by brewViewModel.savedRecipes.collectAsStateWithLifecycle()
     val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = UserPreferences(),
     )
+
+    var showSaveFavoriteDialog by remember { mutableStateOf(false) }
 
     val activeBags = bags.filter { it.status != "FINISHED" }
     val rankedBags = remember(activeBags, brewLogs, flavorTags, state.coffeeG) {
@@ -145,6 +151,17 @@ fun MethodPickerScreen(
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
+        }
+
+        // Favorites row
+        if (savedRecipes.isNotEmpty()) {
+            FavoritesRow(
+                recipes = savedRecipes,
+                onTap = { recipe ->
+                    brewViewModel.loadRecipe(recipe)
+                },
+                modifier = Modifier.padding(bottom = 12.dp),
+            )
         }
 
         // Method selector — only when multiple methods enabled
@@ -422,16 +439,35 @@ fun MethodPickerScreen(
             }
         }
 
-        // Start Brewing button
-        Button(
-            onClick = onNavigateToTimer,
-            shape = MaterialTheme.shapes.large,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .testTag("start_brewing_button"),
+        // Start Brewing + Save Favorite
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
+            Button(
+                onClick = onNavigateToTimer,
+                shape = MaterialTheme.shapes.large,
+                modifier = Modifier
+                    .weight(1f)
+                    .height(56.dp)
+                    .testTag("start_brewing_button"),
+            ) {
+                Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
+            }
+            IconButton(
+                onClick = { showSaveFavoriteDialog = true },
+                modifier = Modifier
+                    .size(56.dp)
+                    .testTag("save_favorite_button"),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.FavoriteBorder,
+                    contentDescription = "Save as favorite",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(28.dp),
+                )
+            }
         }
 
         // Post-brew check-in card
@@ -517,6 +553,19 @@ fun MethodPickerScreen(
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
+    }
+
+    // Save Favorite dialog
+    if (showSaveFavoriteDialog) {
+        val suggestedName = selectedBag?.name ?: ""
+        SaveFavoriteDialog(
+            suggestedName = suggestedName,
+            onSave = { name ->
+                brewViewModel.saveRecipe(name)
+                showSaveFavoriteDialog = false
+            },
+            onDismiss = { showSaveFavoriteDialog = false },
+        )
     }
 }
 

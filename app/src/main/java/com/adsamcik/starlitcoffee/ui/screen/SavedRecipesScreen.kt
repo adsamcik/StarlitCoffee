@@ -13,11 +13,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,27 +40,16 @@ import java.util.Locale
 fun SavedRecipesScreen(
     brewViewModel: BrewViewModel,
     onNavigateToAmount: () -> Unit,
-    onNavigateToTimer: () -> Unit,
 ){
     val recipes by brewViewModel.savedRecipes.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
 
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onNavigateToAmount,
-                shape = MaterialTheme.shapes.large,
-                modifier = Modifier.testTag("new_brew_fab"),
-            ) {
-                Icon(Icons.Filled.Add, contentDescription = "New brew")
-            }
-        },
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
         if (recipes.isEmpty()) {
             EmptyStateBox(
                 icon = Icons.Filled.Bookmark,
-                message = "No saved recipes yet",
-                subtitle = "Brew a coffee and tap Save Recipe to keep it here",
+                message = "No favorites yet",
+                subtitle = "Save a recipe from the brew screen with the ♡ button",
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
@@ -74,7 +60,7 @@ fun SavedRecipesScreen(
                     .fillMaxSize()
                     .padding(innerPadding)
                     .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(
                     top = 16.dp,
                     bottom = 88.dp,
@@ -82,7 +68,7 @@ fun SavedRecipesScreen(
             ) {
                 item {
                     Text(
-                        text = "Saved Recipes",
+                        text = "Your Favorites",
                         style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier
                             .padding(start = 8.dp, bottom = 8.dp)
@@ -95,7 +81,7 @@ fun SavedRecipesScreen(
                         dateFormat = dateFormat,
                         onTap = {
                             brewViewModel.loadRecipe(recipe)
-                            onNavigateToTimer()
+                            onNavigateToAmount()
                         },
                         onDelete = { brewViewModel.deleteRecipe(recipe) },
                     )
@@ -130,12 +116,12 @@ private fun RecipeCard(
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
-                        text = "${recipe.method} · 1:${"%.1f".format(recipe.ratio)}",
+                        text = recipe.method,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Text(
-                        text = "${"%.1f".format(recipe.doseG)}g / ${"%.0f".format(recipe.waterG)}g",
+                        text = "${"%.0f".format(recipe.doseG)}g coffee / ${"%.0f".format(recipe.waterG)}g water",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
