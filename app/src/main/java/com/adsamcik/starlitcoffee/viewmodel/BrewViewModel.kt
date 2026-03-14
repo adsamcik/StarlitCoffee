@@ -19,6 +19,7 @@ import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
+import com.adsamcik.starlitcoffee.data.model.HomeContextCard
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.data.model.GrinderDataProvider
 import com.adsamcik.starlitcoffee.data.model.InputMode
@@ -171,6 +172,8 @@ class BrewViewModel(
         private set
     private val _lastUnratedBrew = MutableStateFlow<BrewLogEntity?>(null)
     val lastUnratedBrew: StateFlow<BrewLogEntity?> = _lastUnratedBrew.asStateFlow()
+    private val _homeContextCard = MutableStateFlow<HomeContextCard?>(null)
+    val homeContextCard: StateFlow<HomeContextCard?> = _homeContextCard.asStateFlow()
     private val _bagPhotoResult = MutableStateFlow<BagPhotoProcessingResult?>(null)
     val bagPhotoResult: StateFlow<BagPhotoProcessingResult?> = _bagPhotoResult.asStateFlow()
 
@@ -193,6 +196,7 @@ class BrewViewModel(
         viewModelScope.launch {
             brewLogRepository?.getAllLogs()?.collect { logs ->
                 _brewLogs.value = logs
+                refreshHomeContextCard()
             }
         }
         viewModelScope.launch {
@@ -204,6 +208,7 @@ class BrewViewModel(
             coffeeBagRepository?.getAllBags()?.collect { bags ->
                 _coffeeBags.value = bags
                 loadKnownFieldValues()
+                refreshHomeContextCard()
             }
         }
         collectRatioPresets(_uiState.value.method)
@@ -849,7 +854,16 @@ class BrewViewModel(
     fun refreshLastUnrated() {
         viewModelScope.launch {
             _lastUnratedBrew.value = brewLogRepository?.getLastUnratedLog()
+            refreshHomeContextCard()
         }
+    }
+
+    fun refreshHomeContextCard() {
+        _homeContextCard.value = HomeContextCard.resolve(
+            bags = _coffeeBags.value,
+            brewLogs = _brewLogs.value,
+            selectedBagId = _selectedBagId.value,
+        )
     }
 
     fun quickRateBrewLog(

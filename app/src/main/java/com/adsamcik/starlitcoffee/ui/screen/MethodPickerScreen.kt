@@ -55,6 +55,7 @@ import com.adsamcik.starlitcoffee.ui.component.FreshnessRing
 import com.adsamcik.starlitcoffee.ui.component.InsightChip
 import com.adsamcik.starlitcoffee.ui.component.InsightChipRow
 import com.adsamcik.starlitcoffee.ui.component.PostBrewCheckInCard
+import com.adsamcik.starlitcoffee.ui.component.HomeContextCardView
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.data.model.QuickRating
@@ -80,6 +81,7 @@ fun MethodPickerScreen(
     val flavorTags by brewViewModel.flavorTags.collectAsStateWithLifecycle()
     val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
     val lastUnratedBrew by brewViewModel.lastUnratedBrew.collectAsStateWithLifecycle()
+    val contextCard by brewViewModel.homeContextCard.collectAsStateWithLifecycle()
     val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = UserPreferences(),
     )
@@ -453,6 +455,13 @@ fun MethodPickerScreen(
                     )
                 },
             )
+        } else {
+            // Context card — shows when no unrated brews
+            val card = contextCard
+            if (card != null) {
+                Spacer(modifier = Modifier.height(16.dp))
+                HomeContextCardView(card = card)
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
