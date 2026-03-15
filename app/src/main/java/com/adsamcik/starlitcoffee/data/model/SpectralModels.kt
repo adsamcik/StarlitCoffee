@@ -11,13 +11,19 @@ enum class FrequencyBand(
     val lowBin: Int,
     val highBin: Int,
 ) {
-    /** Turbulent pour: broadband water-on-surface noise */
+    /** Turbulent pour: broadband water-on-surface noise, air-column resonance.
+     *  Partially supported by research for air-column resonance (~200-3000 Hz). */
     POUR("Pour", 200, 3000, 5, 69),
 
-    /** Drip impacts: single-drop transients on liquid surface */
-    DRIP("Drip", 300, 1500, 7, 34),
+    /** Low-frequency drip: vessel resonance modes, structure-borne impact.
+     *  Captures indirect drip energy re-radiated by container/surface. */
+    DRIP_LOW("Drip Low", 300, 2000, 7, 46),
 
-    /** Fine spray, aggressive pouring, splash */
+    /** High-frequency drip: bubble resonance transients.
+     *  Research shows dominant drip "plink" at ~8.66 kHz from entrained bubble oscillation. */
+    DRIP_HIGH("Drip High", 4000, 11000, 93, 255),
+
+    /** High-mid: fine spray, splash, and broadband transient detail. */
     HIGH_MID("High-Mid", 3000, 6000, 70, 139);
 
     val binCount: Int get() = highBin - lowBin + 1
@@ -58,17 +64,9 @@ data class SpectralFeatures(
      *  Low values (<2) indicate aperiodic noise (water). */
     val cepstralPeakProminence: Float = 0f,
 
-    /** Number of octave sub-bands (out of 5) with energy above noise floor.
-     *  Water lights ≥4/5 bands (broadband); speech/fan typically 2-3. */
+    /** Number of octave sub-bands (out of 6) with energy above noise floor.
+     *  Water lights ≥5/6 bands (broadband); speech/fan typically 2-3. */
     val bandCoincidenceCount: Int = 0,
-
-    /** Active probe turbulence score (0 = calm, >0.5 = water turbulence).
-     *  Only populated when active probe is enabled. */
-    val probeTurbulence: Float = 0f,
-
-    /** Water likeness score (0-1) from ambient-subtracted residual vs Pulsar template.
-     *  High = residual spectral shape matches expected water pour curve. */
-    val waterLikeness: Float = 0f,
 
     /** Whether the ambient baseline has completed calibration */
     val isBaselineCalibrated: Boolean = false,
@@ -144,7 +142,9 @@ data class DetectorConfig(
     /** Adaptive threshold multiplier for drip detection */
     val dripThresholdLambda: Float = DEFAULT_DRIP_LAMBDA,
 
-    /** Minimum inter-onset interval for drips in frames (7 frames ≈ 80ms) */
+    /** Minimum inter-onset interval for drips in frames.
+     *  Research: 80ms minimum is unsupported; real drip spacing is environment-dependent.
+     *  Conservative 46ms prevents double-counting while allowing fast drip sequences. */
     val dripMinIoiFrames: Int = DEFAULT_DRIP_MIN_IOI,
 
     /** Window size for drip rate estimation in frames (430 frames ≈ 5s) */
@@ -171,7 +171,9 @@ data class DetectorConfig(
         const val DEFAULT_POUR_OFF_MARGIN_DB = 15f
         const val DEFAULT_POUR_LAMBDA = 2.0f
         const val DEFAULT_DRIP_LAMBDA = 2.5f
-        const val DEFAULT_DRIP_MIN_IOI = 7
+        // Research: 80ms minimum is unsupported; real drip spacing is environment-dependent.
+        // Conservative 46ms prevents double-counting while allowing fast drip sequences.
+        const val DEFAULT_DRIP_MIN_IOI = 4
         const val DEFAULT_DRIP_RATE_WINDOW = 430
         const val DEFAULT_DRAWDOWN_COMPLETE = 430
         const val DEFAULT_TRAILING_WINDOW = 43

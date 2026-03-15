@@ -185,6 +185,29 @@ class BrewEventDetectorTest {
         assertTrue("Should detect at least 1 drip, got $dripCount", dripCount >= 1)
     }
 
+    @Test
+    fun `drip detection allows fast drips below old 80ms minimum`() {
+        // Transition to DRIPPING state
+        feedSilence(20)
+        feedPour(20)
+        feedDrip(20)
+        assertEquals(DetectorState.DRIPPING, detector.state)
+
+        // Fire drips ~5 frames apart (~58ms) — was rejected at old 80ms (7 frame) minimum
+        val events = mutableListOf<BrewAudioEvent>()
+        repeat(5) {
+            events.addAll(detector.processFrame(dripImpulseFeatures()))
+            advanceTime()
+            repeat(4) {
+                detector.processFrame(silenceFeatures())
+                advanceTime()
+            }
+        }
+
+        val drips = events.filterIsInstance<BrewAudioEvent.DripDetected>()
+        assertTrue("Should detect multiple fast drips, got ${drips.size}", drips.size >= 2)
+    }
+
     // --- Noise Floor ---
 
     @Test
@@ -275,6 +298,29 @@ class BrewEventDetectorTest {
         )
     }
 
+    @Test
+    fun `relative CPP veto adapts to ambient baseline`() {
+        // Feed quiet ambient frames to establish low CPP baseline (~0.5)
+        repeat(150) {
+            detector.processFrame(silenceFeatures(cepstralPeakProminence = 0.5f))
+            advanceTime()
+        }
+
+        // CPP = 3.8 is below old fixed hard veto (4.0 dB) but deviation above
+        // baseline ≈ 3.3 dB, exceeding the relative hard veto (3.0 dB).
+        val events = mutableListOf<BrewAudioEvent>()
+        repeat(5) {
+            events.addAll(detector.processFrame(pourFeatures(cepstralPeakProminence = 3.8f)))
+            advanceTime()
+        }
+
+        // Should NOT detect a pour because CPP deviation is high
+        assertTrue(
+            "High relative CPP should suppress pour detection",
+            events.none { it is BrewAudioEvent.PourStarted },
+        )
+    }
+
     // --- Full Brew Scenario ---
 
     @Test
@@ -344,29 +390,31 @@ class BrewEventDetectorTest {
         fakeTimeMs += ms
     }
 
-    private fun silenceFeatures(): SpectralFeatures = SpectralFeatures(
+    private fun silenceFeatures(cepstralPeakProminence: Float = 0f): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = FrequencyBand.entries.associateWith { -35f },
         spectralFlux = FrequencyBand.entries.associateWith { 0f },
         spectralTilt = 20f,
         spectralFlatness = 0.05f, // Ambient: tonal/structured
-        cepstralPeakProminence = 0f,
+        cepstralPeakProminence = cepstralPeakProminence,
         bandCoincidenceCount = 1,
     )
 
-    private fun pourFeatures(): SpectralFeatures = SpectralFeatures(
+    private fun pourFeatures(cepstralPeakProminence: Float = 0.5f): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = mapOf(
             FrequencyBand.POUR to -10f,
-            FrequencyBand.DRIP to -15f,
+            FrequencyBand.DRIP_LOW to -15f,
+            FrequencyBand.DRIP_HIGH to -20f,
             FrequencyBand.HIGH_MID to -25f,
         ),
         spectralFlux = mapOf(
             FrequencyBand.POUR to 15f,
-            FrequencyBand.DRIP to 10f,
+            FrequencyBand.DRIP_LOW to 10f,
+            FrequencyBand.DRIP_HIGH to 5f,
             FrequencyBand.HIGH_MID to 5f,
         ),
         spectralTilt = 4.0f,
         spectralFlatness = 0.5f, // Water: noise-like
-        cepstralPeakProminence = 0.5f, // No pitch
+        cepstralPeakProminence = cepstralPeakProminence, // No pitch
         bandCoincidenceCount = 5, // All bands lit
     )
 
@@ -374,12 +422,14 @@ class BrewEventDetectorTest {
     private fun speechFeatures(): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = mapOf(
             FrequencyBand.POUR to -10f,
-            FrequencyBand.DRIP to -12f,
+            FrequencyBand.DRIP_LOW to -12f,
+            FrequencyBand.DRIP_HIGH to -30f,
             FrequencyBand.HIGH_MID to -35f,
         ),
         spectralFlux = mapOf(
             FrequencyBand.POUR to 12f,
-            FrequencyBand.DRIP to 8f,
+            FrequencyBand.DRIP_LOW to 8f,
+            FrequencyBand.DRIP_HIGH to 1f,
             FrequencyBand.HIGH_MID to 1f,
         ),
         spectralTilt = 15f,
@@ -391,12 +441,14 @@ class BrewEventDetectorTest {
     private fun dripFeatures(): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = mapOf(
             FrequencyBand.POUR to -30f,
-            FrequencyBand.DRIP to -28f,
+            FrequencyBand.DRIP_LOW to -28f,
+            FrequencyBand.DRIP_HIGH to -32f,
             FrequencyBand.HIGH_MID to -40f,
         ),
         spectralFlux = mapOf(
             FrequencyBand.POUR to 0.5f,
-            FrequencyBand.DRIP to 0.5f,
+            FrequencyBand.DRIP_LOW to 0.5f,
+            FrequencyBand.DRIP_HIGH to 0.5f,
             FrequencyBand.HIGH_MID to 0.2f,
         ),
         spectralTilt = 20f,
@@ -408,12 +460,14 @@ class BrewEventDetectorTest {
     private fun dripImpulseFeatures(): SpectralFeatures = SpectralFeatures(
         bandEnergyDb = mapOf(
             FrequencyBand.POUR to -25f,
-            FrequencyBand.DRIP to -18f,
+            FrequencyBand.DRIP_LOW to -22f,
+            FrequencyBand.DRIP_HIGH to -18f,
             FrequencyBand.HIGH_MID to -35f,
         ),
         spectralFlux = mapOf(
             FrequencyBand.POUR to 8f,
-            FrequencyBand.DRIP to 12f,
+            FrequencyBand.DRIP_LOW to 8f,
+            FrequencyBand.DRIP_HIGH to 12f,
             FrequencyBand.HIGH_MID to 2f,
         ),
         spectralTilt = 12f,
@@ -453,5 +507,44 @@ class BrewEventDetectorTest {
             events?.addAll(e)
             advanceTime()
         }
+    }
+
+    // --- Energy Decay Drawdown ---
+
+    @Test
+    fun `drawdown requires energy decay not just drip silence`() {
+        // Move to DRIPPING state
+        feedSilence(20)
+        feedPour(20)
+        feedDrip(20)
+        assertEquals(DetectorState.DRIPPING, detector.state)
+
+        // Feed frames with high POUR energy but no drip activity.
+        // Simulates background noise (e.g., fan) keeping energy high while no drips occur.
+        val highEnergyNoActivity = SpectralFeatures(
+            bandEnergyDb = mapOf(
+                FrequencyBand.POUR to -15f,
+                FrequencyBand.DRIP_LOW to -35f,
+                FrequencyBand.DRIP_HIGH to -35f,
+                FrequencyBand.HIGH_MID to -40f,
+            ),
+            spectralFlux = FrequencyBand.entries.associateWith { 0f },
+            spectralTilt = 20f,
+            spectralFlatness = 0.05f,
+            cepstralPeakProminence = 0f,
+            bandCoincidenceCount = 2,
+        )
+
+        val events = mutableListOf<BrewAudioEvent>()
+        repeat(500) { // well past drawdownCompleteFrames
+            events.addAll(detector.processFrame(highEnergyNoActivity))
+            advanceTime()
+        }
+
+        val drawdowns = events.filterIsInstance<BrewAudioEvent.DrawdownComplete>()
+        assertTrue(
+            "High energy should prevent drawdown despite drip silence, got ${drawdowns.size} drawdowns",
+            drawdowns.isEmpty(),
+        )
     }
 }

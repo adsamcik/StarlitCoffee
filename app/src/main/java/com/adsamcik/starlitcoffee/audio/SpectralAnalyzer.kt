@@ -13,7 +13,7 @@ import kotlin.math.sqrt
  * Pure computation — no Android dependencies, fully testable.
  *
  * Features per frame:
- * - Band energy (dB, normalized per bin) for POUR, DRIP, HIGH_MID bands
+ * - Band energy (dB, normalized per bin) for POUR, DRIP_LOW, DRIP_HIGH, HIGH_MID bands
  * - Spectral flux (half-wave rectified, log-magnitude) per band
  * - Spectral tilt (low-pour / high-pour energy ratio)
  *
@@ -235,9 +235,9 @@ class SpectralAnalyzer(
     /**
      * Band coincidence: counts how many octave sub-bands have energy
      * significantly above a rolling reference level.
-     * Water fills ≥4/5 bands; speech/fan typically fills 2-3.
+     * Water fills ≥5/6 bands; speech/fan typically fills 2-3.
      *
-     * Sub-bands: 200-400, 400-800, 800-1600, 1600-3200, 3200-6400 Hz
+     * Sub-bands: 200-400, 400-800, 800-1600, 1600-3200, 3200-6400, 6400-11000 Hz
      */
     private fun computeBandCoincidence(bandEnergyDb: Map<FrequencyBand, Float>): Int {
         // Use the overall POUR band energy as a reference; each sub-band must
@@ -287,7 +287,7 @@ class SpectralAnalyzer(
         private const val CPP_LO_QUEFRENCY = 88  // ~500 Hz fundamental
         private const val CPP_HI_QUEFRENCY = 512  // ~86 Hz fundamental (capped by FFT)
 
-        // Band coincidence: 5 octave sub-bands
+        // Band coincidence: 6 octave sub-bands
         // Bin indices for 1024-pt FFT at 44100 Hz
         private val COINCIDENCE_BANDS = arrayOf(
             Pair(5, 9),     // 200-400 Hz
@@ -295,6 +295,7 @@ class SpectralAnalyzer(
             Pair(19, 37),   // 800-1600 Hz
             Pair(38, 74),   // 1600-3200 Hz
             Pair(75, 139),  // 3200-6400 Hz
+            Pair(140, 255), // 6400-11000 Hz (covers DRIP_HIGH bubble resonance)
         )
 
         // Band must be within this many dB of the strongest to count as "coincident"

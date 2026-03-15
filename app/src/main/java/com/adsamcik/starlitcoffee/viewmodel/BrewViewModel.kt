@@ -369,12 +369,8 @@ class BrewViewModel(
 
         // Auto-start audio monitoring when timer begins
         if (_audioManager != null && !_audioManager!!.isMonitoring) {
-            // Start shadow comparison log for A/B testing
-            _audioOutputDirectory?.let { dir -> _audioManager?.startShadowLog(dir) }
-
-            _audioManager!!.startMonitoring()
-
-            // Set brew context for metadata export
+            // Set brew context for metadata export BEFORE monitoring starts
+            // (startMonitoring triggers autoRecord which writes metadata)
             val state = _uiState.value
             _audioManager?.setBrewContext(
                 method = state.method.name,
@@ -389,6 +385,11 @@ class BrewViewModel(
                         "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
                 },
             )
+
+            _audioManager!!.startMonitoring()
+
+            // Start shadow comparison log AFTER monitoring (so brewTimestamp is set)
+            _audioOutputDirectory?.let { dir -> _audioManager?.startShadowLog(dir) }
         }
 
         // Notify audio manager of initial phase (phase 0)
@@ -592,37 +593,47 @@ class BrewViewModel(
      */
     fun exportBrewSession(context: android.content.Context) {
         viewModelScope.launch(Dispatchers.IO) {
-            val audioDir = _audioOutputDirectory ?: return@launch
+            val audioDir = _audioOutputDirectory ?: run {
+                Log.w("BrewExport", "No audio output directory set")
+                return@launch
+            }
 
+            Log.d("BrewExport", "Bundling from: $audioDir")
             val result = com.adsamcik.starlitcoffee.audio.BrewDataBundler.bundleLatest(audioDir)
             if (!result.success || result.fileCount == 0) {
                 Log.w("BrewExport", "Export failed: ${result.errors}")
                 return@launch
             }
+            Log.d("BrewExport", "Bundled ${result.fileCount} files → ${result.zipFile.name} (${result.totalSizeBytes / 1024} KB)")
 
-            val zipUri = androidx.core.content.FileProvider.getUriForFile(
-                context,
-                "${context.packageName}.fileprovider",
-                result.zipFile,
-            )
-
-            val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
-                type = "application/zip"
-                putExtra(android.content.Intent.EXTRA_STREAM, zipUri)
-                putExtra(
-                    android.content.Intent.EXTRA_SUBJECT,
-                    "Brew Audio Data — ${result.zipFile.nameWithoutExtension}",
+            try {
+                val zipUri = androidx.core.content.FileProvider.getUriForFile(
+                    context,
+                    "${context.packageName}.fileprovider",
+                    result.zipFile,
                 )
-                putExtra(
-                    android.content.Intent.EXTRA_TEXT,
-                    "Brew data bundle: ${result.fileCount} files, ${result.totalSizeBytes / 1024} KB",
-                )
-                addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            }
 
-            withContext(Dispatchers.Main) {
-                val chooser = android.content.Intent.createChooser(shareIntent, "Share Brew Data")
-                context.startActivity(chooser)
+                val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                    type = "application/zip"
+                    putExtra(android.content.Intent.EXTRA_STREAM, zipUri)
+                    putExtra(
+                        android.content.Intent.EXTRA_SUBJECT,
+                        "Brew Audio Data — ${result.zipFile.nameWithoutExtension}",
+                    )
+                    putExtra(
+                        android.content.Intent.EXTRA_TEXT,
+                        "Brew data bundle: ${result.fileCount} files, ${result.totalSizeBytes / 1024} KB",
+                    )
+                    addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                withContext(Dispatchers.Main) {
+                    val chooser = android.content.Intent.createChooser(shareIntent, "Share Brew Data")
+                    chooser.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(chooser)
+                }
+            } catch (e: Exception) {
+                Log.e("BrewExport", "Failed to share brew data", e)
             }
         }
     }

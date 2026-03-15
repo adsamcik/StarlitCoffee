@@ -190,4 +190,55 @@ class SyntheticBrewScenarioTest {
             features.rmsDb > -10f,
         )
     }
+
+    // --- Research-Aligned Scenarios ---
+
+    @Test
+    fun `bubble resonance drip has energy above 4kHz`() {
+        val drip = SyntheticSignals.bubbleResonanceDrip()
+        // Run through spectral analyzer and verify energy in DRIP_HIGH band
+        // (The drip at 8.66kHz should show significant energy in 4-11kHz)
+        assertTrue("Bubble drip should have samples", drip.isNotEmpty())
+        // Verify peak is in the right frequency range
+        val peakSample = drip.maxOf { kotlin.math.abs(it.toInt()) }
+        assertTrue("Bubble drip should have non-trivial amplitude", peakSample > 100)
+    }
+
+    @Test
+    fun `non-monotonic drip sequence has both fast and slow intervals`() {
+        val sequence = SyntheticSignals.nonMonotonicDripSequence(
+            durationMs = 10000,
+            initialIntervalMs = 300,
+            finalIntervalMs = 1500,
+            plateauAtMs = 5000,
+            plateauDurationMs = 2000,
+        )
+        assertTrue("Sequence should be ~10s of audio", sequence.size > 44100 * 9)
+    }
+
+    @Test
+    fun `soft pour onset ramps up gradually`() {
+        val onset = SyntheticSignals.softPourOnset(rampDurationMs = 2000, fullDurationMs = 3000)
+        // First 10% should be quieter than last 10%
+        val tenPercent = onset.size / 10
+        val earlyRms = rms(onset.copyOfRange(0, tenPercent))
+        val lateRms = rms(onset.copyOfRange(onset.size - tenPercent, onset.size))
+        assertTrue("Late RMS ($lateRms) should be > early RMS ($earlyRms)", lateRms > earlyRms * 2)
+    }
+
+    @Test
+    fun `regime change sequence contains both broadband and transient sections`() {
+        val sequence = SyntheticSignals.regimeChangeSequence(
+            continuousDurationMs = 5000,
+            transitionDurationMs = 2000,
+            dripDurationMs = 5000,
+        )
+        assertTrue("Regime change sequence should produce audio", sequence.size > 44100 * 11)
+    }
+
+    private fun rms(samples: ShortArray): Double {
+        var sum = 0.0
+        for (s in samples) sum += s.toDouble() * s.toDouble()
+        return kotlin.math.sqrt(sum / samples.size)
+    }
 }

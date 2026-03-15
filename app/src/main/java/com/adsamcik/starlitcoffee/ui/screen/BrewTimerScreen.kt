@@ -305,6 +305,12 @@ fun BrewTimerScreen(
                 isRecording = audioState.isRecording,
                 onToggleMonitoring = { brewViewModel.toggleAudioMonitoring() },
                 onToggleRecording = { brewViewModel.toggleAudioRecording() },
+                onMarkEvent = { label -> brewViewModel.markBrewEvent(label) },
+                onMarkProblem = { desc -> brewViewModel.markBrewProblem(desc) },
+                onSessionSetup = { placement, environment, notes ->
+                    brewViewModel.updateSessionSetup(placement, environment, notes)
+                },
+                onExportSession = { brewViewModel.exportBrewSession(context) },
                 modifier = Modifier.padding(vertical = 8.dp),
             )
         }

@@ -60,25 +60,29 @@ class FlightRecorder(
     }
 
     /**
+     * Snapshot data for a single flight recorder frame.
+     * Consolidated into a data class to avoid D8 dexer bugs with many-parameter methods.
+     */
+    data class Snapshot(
+        val spectralFeatures: SpectralFeatures,
+        val detectorState: DetectorState,
+        val noiseFloorDb: Map<FrequencyBand, Float>,
+        val dripRate: Float,
+        val rmsDb: Float,
+        val brewPhaseLabel: String,
+        val trajectoryPhase: String,
+        val brewConfidence: Float,
+        val baselineCalibrated: Boolean,
+        val events: List<BrewAudioEvent>,
+    )
+
+    /**
      * Records a pipeline state snapshot if enough time has elapsed since the last one.
      * Call this every frame (~86fps) — the recorder internally throttles.
      *
      * @return true if a snapshot was written this call
      */
-    fun recordSnapshot(
-        spectralFeatures: SpectralFeatures,
-        detectorState: DetectorState,
-        noiseFloorDb: Map<FrequencyBand, Float>,
-        dripRate: Float,
-        rmsDb: Float,
-        brewPhaseLabel: String,
-        trajectoryPhase: String,
-        brewConfidence: Float,
-        waterLikeness: Float,
-        baselineCalibrated: Boolean,
-        probeTurbulence: Float,
-        events: List<BrewAudioEvent>,
-    ): Boolean {
+    fun recordSnapshot(snapshot: Snapshot): Boolean {
         if (!isOpen) return false
 
         val now = System.currentTimeMillis()
@@ -88,22 +92,7 @@ class FlightRecorder(
         lastSnapshotMs = now
         snapshotCount++
 
-        val line = buildJsonLine(
-            timestamp = now,
-            elapsedMs = elapsed,
-            spectralFeatures = spectralFeatures,
-            detectorState = detectorState,
-            noiseFloorDb = noiseFloorDb,
-            dripRate = dripRate,
-            rmsDb = rmsDb,
-            brewPhaseLabel = brewPhaseLabel,
-            trajectoryPhase = trajectoryPhase,
-            brewConfidence = brewConfidence,
-            waterLikeness = waterLikeness,
-            baselineCalibrated = baselineCalibrated,
-            probeTurbulence = probeTurbulence,
-            events = events,
-        )
+        val line = buildJsonLine(now, elapsed, snapshot)
 
         try {
             writer?.apply {
@@ -134,62 +123,49 @@ class FlightRecorder(
     private fun buildJsonLine(
         timestamp: Long,
         elapsedMs: Long,
-        spectralFeatures: SpectralFeatures,
-        detectorState: DetectorState,
-        noiseFloorDb: Map<FrequencyBand, Float>,
-        dripRate: Float,
-        rmsDb: Float,
-        brewPhaseLabel: String,
-        trajectoryPhase: String,
-        brewConfidence: Float,
-        waterLikeness: Float,
-        baselineCalibrated: Boolean,
-        probeTurbulence: Float,
-        events: List<BrewAudioEvent>,
+        s: Snapshot,
     ): String {
         // Manual JSON construction to avoid dependency on serialization library
         val sb = StringBuilder(512)
         sb.append('{')
         sb.appendField("t", timestamp)
         sb.appendField("elapsed", elapsedMs)
-        sb.appendField("state", detectorState.name)
-        sb.appendField("phase", escapeJson(brewPhaseLabel))
-        sb.appendField("trajectory", trajectoryPhase)
-        sb.appendField("confidence", brewConfidence, 3)
-        sb.appendField("rmsDb", rmsDb, 1)
+        sb.appendField("state", s.detectorState.name)
+        sb.appendField("phase", escapeJson(s.brewPhaseLabel))
+        sb.appendField("trajectory", s.trajectoryPhase)
+        sb.appendField("confidence", s.brewConfidence, 3)
+        sb.appendField("rmsDb", s.rmsDb, 1)
 
         // Band energies
         for (band in FrequencyBand.entries) {
-            val energy = spectralFeatures.bandEnergyDb[band] ?: -96f
+            val energy = s.spectralFeatures.bandEnergyDb[band] ?: -96f
             sb.appendField("${band.name.lowercase()}Db", energy, 1)
         }
 
         // Noise floors
         for (band in FrequencyBand.entries) {
-            val floor = noiseFloorDb[band] ?: -40f
+            val floor = s.noiseFloorDb[band] ?: -40f
             sb.appendField("${band.name.lowercase()}Floor", floor, 1)
         }
 
         // Spectral features
-        sb.appendField("flatness", spectralFeatures.spectralFlatness, 4)
-        sb.appendField("cpp", spectralFeatures.cepstralPeakProminence, 2)
-        sb.appendField("coincidence", spectralFeatures.bandCoincidenceCount)
-        sb.appendField("tilt", spectralFeatures.spectralTilt, 2)
-        sb.appendField("waterLikeness", waterLikeness, 3)
-        sb.appendField("dripRate", dripRate, 2)
-        sb.appendField("calibrated", baselineCalibrated)
-        sb.appendField("probe", probeTurbulence, 3)
+        sb.appendField("flatness", s.spectralFeatures.spectralFlatness, 4)
+        sb.appendField("cpp", s.spectralFeatures.cepstralPeakProminence, 2)
+        sb.appendField("coincidence", s.spectralFeatures.bandCoincidenceCount)
+        sb.appendField("tilt", s.spectralFeatures.spectralTilt, 2)
+        sb.appendField("dripRate", s.dripRate, 2)
+        sb.appendField("calibrated", s.baselineCalibrated)
 
         // Spectral flux
         for (band in FrequencyBand.entries) {
-            val flux = spectralFeatures.spectralFlux[band] ?: 0f
+            val flux = s.spectralFeatures.spectralFlux[band] ?: 0f
             sb.appendField("${band.name.lowercase()}Flux", flux, 2)
         }
 
         // Events (if any)
-        if (events.isNotEmpty()) {
+        if (s.events.isNotEmpty()) {
             sb.append("\"events\":[")
-            events.forEachIndexed { i, event ->
+            s.events.forEachIndexed { i, event ->
                 if (i > 0) sb.append(',')
                 sb.append('"').append(formatEvent(event)).append('"')
             }

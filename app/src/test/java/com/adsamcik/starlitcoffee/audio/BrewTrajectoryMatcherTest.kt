@@ -100,4 +100,38 @@ class BrewTrajectoryMatcherTest {
             matcher.trajectoryPhase != BrewTrajectoryMatcher.TrajectoryPhase.POURING,
         )
     }
+
+    @Test
+    fun `drip decay detected despite small rebound`() {
+        // Pour phase first
+        feedSeconds(5, pourEnergyDb = -10f, flatness = 0.15f, coincidence = 5)
+        // Decay with a local rebound at second 3
+        feedSeconds(1, pourEnergyDb = -12f, flatness = 0.10f, coincidence = 4)
+        feedSeconds(1, pourEnergyDb = -15f, flatness = 0.08f, coincidence = 3)
+        feedSeconds(1, pourEnergyDb = -13f, flatness = 0.09f, coincidence = 3) // small rebound
+        feedSeconds(1, pourEnergyDb = -18f, flatness = 0.06f, coincidence = 2)
+        feedSeconds(1, pourEnergyDb = -22f, flatness = 0.05f, coincidence = 2)
+
+        val phase = matcher.trajectoryPhase
+        assertTrue(
+            "Should detect DRIP_DECAY despite local rebound, got $phase",
+            phase == BrewTrajectoryMatcher.TrajectoryPhase.DRIP_DECAY ||
+                phase == BrewTrajectoryMatcher.TrajectoryPhase.DRIPPING ||
+                phase == BrewTrajectoryMatcher.TrajectoryPhase.SILENCE,
+        )
+    }
+
+    @Test
+    fun `drip decay rejected for sustained increase`() {
+        // Pour, then energy keeps rising — not a decay
+        feedSeconds(3, pourEnergyDb = -10f, flatness = 0.15f, coincidence = 5)
+        feedSeconds(1, pourEnergyDb = -12f, flatness = 0.10f, coincidence = 4)
+        feedSeconds(1, pourEnergyDb = -8f, flatness = 0.12f, coincidence = 4) // going back up
+        feedSeconds(1, pourEnergyDb = -6f, flatness = 0.14f, coincidence = 5) // still rising
+
+        assertTrue(
+            "Sustained increase should NOT be DRIP_DECAY, got ${matcher.trajectoryPhase}",
+            matcher.trajectoryPhase != BrewTrajectoryMatcher.TrajectoryPhase.DRIP_DECAY,
+        )
+    }
 }

@@ -61,12 +61,12 @@ class SpectralAnalyzerTest {
 
         val features = analyzer.analyze(buffer)
         val highMidEnergy = features.bandEnergyDb[FrequencyBand.HIGH_MID] ?: -96f
-        val dripEnergy = features.bandEnergyDb[FrequencyBand.DRIP] ?: -96f
+        val dripLowEnergy = features.bandEnergyDb[FrequencyBand.DRIP_LOW] ?: -96f
 
-        // 4000Hz is in HIGH_MID band (3000-6000Hz), should be louder than DRIP (300-1500Hz)
+        // 4000Hz is in HIGH_MID band (3000-6000Hz), should be louder than DRIP_LOW (300-2000Hz)
         assertTrue(
-            "HIGH_MID energy ($highMidEnergy) should exceed DRIP energy ($dripEnergy)",
-            highMidEnergy > dripEnergy + 10f,
+            "HIGH_MID energy ($highMidEnergy) should exceed DRIP_LOW energy ($dripLowEnergy)",
+            highMidEnergy > dripLowEnergy + 10f,
         )
     }
 

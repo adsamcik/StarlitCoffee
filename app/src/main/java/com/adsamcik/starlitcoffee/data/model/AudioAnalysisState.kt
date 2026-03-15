@@ -24,12 +24,7 @@ data class AudioAnalysisState(
     val noiseFloorDb: Map<FrequencyBand, Float> = emptyMap(),
     val lastBrewEvent: BrewAudioEvent? = null,
 
-    // Active probe (experimental)
-    val probeActive: Boolean = false,
-    val probeTurbulence: Float = 0f,
-
     // Spectral subtraction + trajectory
-    val waterLikeness: Float = 0f,
     val baselineCalibrated: Boolean = false,
     val trajectoryPhase: String = "",
     val brewConfidence: Float = 0f,

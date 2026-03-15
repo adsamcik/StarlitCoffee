@@ -17,16 +17,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FiberManualRecord
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MicOff
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,9 +59,14 @@ fun AudioDebugOverlay(
     isRecording: Boolean,
     onToggleMonitoring: () -> Unit,
     onToggleRecording: () -> Unit,
+    onMarkEvent: ((String) -> Unit)? = null,
+    onMarkProblem: ((String) -> Unit)? = null,
+    onSessionSetup: ((placement: String, environment: String, notes: String) -> Unit)? = null,
+    onExportSession: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
-) {
+){
     var expanded by remember { mutableStateOf(false) }
+    var showLabSetup by remember { mutableStateOf(false) }
 
     ElevatedCard(
         shape = MaterialTheme.shapes.small,
@@ -191,7 +201,16 @@ fun AudioDebugOverlay(
 
                         Spacer(Modifier.width(16.dp))
 
-                        IconButton(onClick = onToggleRecording, modifier = Modifier.size(36.dp)) {
+                        IconButton(
+                            onClick = {
+                                if (isRecording) {
+                                    onToggleRecording()
+                                } else {
+                                    showLabSetup = true
+                                }
+                            },
+                            modifier = Modifier.size(36.dp),
+                        ) {
                             Icon(
                                 imageVector = Icons.Filled.FiberManualRecord,
                                 contentDescription = if (isRecording) "Stop recording" else "Start recording",
@@ -206,6 +225,108 @@ fun AudioDebugOverlay(
                             text = if (isRecording) "Recording" else "Record",
                             style = MaterialTheme.typography.bodySmall,
                         )
+
+                        // Export button — bundles all session files into a zip and shares
+                        if (onExportSession != null) {
+                            Spacer(Modifier.width(16.dp))
+
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.clickable { onExportSession() },
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Share,
+                                    contentDescription = "Export brew data",
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(24.dp),
+                                )
+                                Text(
+                                    text = "Export",
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            }
+                        }
+                    }
+
+                    // --- Event Marker Buttons (visible when recording + callbacks provided) ---
+                    if (isRecording && onMarkEvent != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        var lastMarkedLabel by remember { mutableStateOf<String?>(null) }
+                        var pourToggle by remember { mutableStateOf(false) }
+
+                        LaunchedEffect(lastMarkedLabel) {
+                            if (lastMarkedLabel != null) {
+                                kotlinx.coroutines.delay(1500L)
+                                lastMarkedLabel = null
+                            }
+                        }
+
+                        Text(
+                            text = if (lastMarkedLabel != null) "✓ Marked: $lastMarkedLabel" else "Mark Events:",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = if (lastMarkedLabel != null) MaterialTheme.colorScheme.primary
+                                    else MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            FilledTonalButton(
+                                onClick = {
+                                    val label = if (!pourToggle) "pour_start" else "pour_stop"
+                                    onMarkEvent(label)
+                                    lastMarkedLabel = label
+                                    pourToggle = !pourToggle
+                                },
+                                modifier = Modifier.weight(1f),
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                            ) {
+                                Text(
+                                    text = if (!pourToggle) "🫗 Pour" else "🛑 Stop",
+                                    style = MaterialTheme.typography.labelSmall,
+                                )
+                            }
+
+                            FilledTonalButton(
+                                onClick = {
+                                    onMarkEvent("drip_start")
+                                    lastMarkedLabel = "drip_start"
+                                },
+                                modifier = Modifier.weight(1f),
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                            ) {
+                                Text("💧 Drip", style = MaterialTheme.typography.labelSmall)
+                            }
+
+                            FilledTonalButton(
+                                onClick = {
+                                    onMarkEvent("drawdown_complete")
+                                    lastMarkedLabel = "drawdown_complete"
+                                },
+                                modifier = Modifier.weight(1f),
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                            ) {
+                                Text("✅ Done", style = MaterialTheme.typography.labelSmall)
+                            }
+
+                            FilledTonalButton(
+                                onClick = {
+                                    onMarkProblem?.invoke("incorrect_detection")
+                                    lastMarkedLabel = "problem"
+                                },
+                                modifier = Modifier.weight(1f),
+                                colors = ButtonDefaults.filledTonalButtonColors(
+                                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                                ),
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                            ) {
+                                Text("⚠️ Wrong", style = MaterialTheme.typography.labelSmall)
+                            }
+                        }
                     }
 
                     Spacer(Modifier.height(8.dp))
@@ -250,19 +371,13 @@ fun AudioDebugOverlay(
 
                     // Baseline + trajectory info
                     if (audioState.baselineCalibrated) {
-                        val waterColor = if (audioState.waterLikeness > 0.5f) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        }
                         Text(
-                            text = "🎯 Water: %.0f%%  Trajectory: %s (%.0f%%)".format(
-                                audioState.waterLikeness * 100,
+                            text = "🎯 Trajectory: %s (%.0f%%)".format(
                                 audioState.trajectoryPhase,
                                 audioState.brewConfidence * 100,
                             ),
                             style = MaterialTheme.typography.labelSmall,
-                            color = waterColor,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(top = 2.dp),
                         )
                     } else {
@@ -284,23 +399,24 @@ fun AudioDebugOverlay(
                         )
                     }
 
-                    // Active probe indicator
-                    if (audioState.probeActive) {
-                        val turbColor = if (audioState.probeTurbulence > 0.3f) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        }
-                        Text(
-                            text = "📡 Probe: %.2f turbulence".format(audioState.probeTurbulence),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = turbColor,
-                            modifier = Modifier.padding(top = 2.dp),
-                        )
-                    }
+
                 }
             }
         }
+    }
+
+    if (showLabSetup) {
+        BrewLabSetupDialog(
+            onConfirm = { placement, environment, notes ->
+                showLabSetup = false
+                onSessionSetup?.invoke(placement, environment, notes)
+                onToggleRecording()
+            },
+            onDismiss = {
+                showLabSetup = false
+                onToggleRecording()
+            },
+        )
     }
 }
 
@@ -463,7 +579,8 @@ private fun BandEnergyBar(
         val floorFraction = dbToFraction(noiseFloorDb)
         val barColor = when (band) {
             FrequencyBand.POUR -> MaterialTheme.colorScheme.primary
-            FrequencyBand.DRIP -> MaterialTheme.colorScheme.tertiary
+            FrequencyBand.DRIP_LOW -> MaterialTheme.colorScheme.tertiary
+            FrequencyBand.DRIP_HIGH -> MaterialTheme.colorScheme.tertiary
             FrequencyBand.HIGH_MID -> MaterialTheme.colorScheme.secondary
         }
         val floorColor = MaterialTheme.colorScheme.outlineVariant

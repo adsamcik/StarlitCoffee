@@ -38,8 +38,6 @@ class BrewAudioManager(
     private val config: AudioConfig = AudioConfig(),
     private val detectorConfig: DetectorConfig = DetectorConfig(),
     private val outputDirectory: File? = null,
-    /** Enable the active acoustic probe (experimental). Off by default. */
-    private val activeProbeEnabled: Boolean = false,
     /** Auto-start WAV + JSONL recording when monitoring begins. */
     private val autoRecord: Boolean = false,
 ) {
@@ -48,10 +46,11 @@ class BrewAudioManager(
     private val preProcessor = AudioPreProcessor(sampleRate = config.sampleRate)
     private val spectralAnalyzer = SpectralAnalyzer()
     private val eventDetector = BrewEventDetector(detectorConfig)
-    private val activeProbe: ActiveProbe? = if (activeProbeEnabled) ActiveProbe() else null
-    private val ambientBaseline = AmbientBaseline()
+    private val ambientBaseline= AmbientBaseline()
     private val trajectoryMatcher = BrewTrajectoryMatcher()
     private val flightRecorder = FlightRecorder()
+    private val userLabelsRecorder = UserLabelsRecorder()
+    private val shadowLog = ShadowComparisonLog()
 
     // Thread-safe event accumulation for flight recorder
     private val pendingEvents = ConcurrentLinkedQueue<BrewAudioEvent>()
@@ -77,9 +76,47 @@ class BrewAudioManager(
     private var currentPhaseIndex: Int = 0
     private var currentPhaseLabel: String = ""
     private var brewTimestamp: String = ""
+    private var brewContext = BrewContext()
+    private var ambientRmsCaptured = false
 
     val isMonitoring: Boolean get() = monitoringLock.get()
     val isRecording: Boolean get() = recorder.isOpen
+
+    /**
+     * Starts shadow comparison logging for A/B testing.
+     * Call AFTER startMonitoring() so brewTimestamp is set.
+     */
+    fun startShadowLog(outputDirectory: File) {
+        val file = File(outputDirectory, "brew_${brewTimestamp}_shadow.jsonl")
+        shadowLog.open(file)
+    }
+
+    /**
+     * Records a user-initiated phase transition for shadow comparison.
+     */
+    fun recordUserTap(phaseIndex: Int, phaseLabel: String) {
+        shadowLog.recordUserTap(phaseIndex, phaseLabel)
+    }
+
+    /**
+     * Sets the brew context for metadata export. Call before startRecording()
+     * with the current BrewUiState values.
+     */
+    fun setBrewContext(
+        method: String,
+        filterType: String,
+        doseG: Float,
+        waterG: Float,
+        ratio: Float,
+        grinderId: String? = null,
+        grinderSetting: String? = null,
+        placement: String = "unknown",
+        environment: String = "unknown",
+        notes: String = "",
+    ) {
+        brewContext = BrewContext(method, filterType, doseG, waterG, ratio,
+            grinderId, grinderSetting, placement, environment, notes)
+    }
 
     /**
      * Starts capturing audio from the microphone and running real-time analysis.
@@ -100,8 +137,7 @@ class BrewAudioManager(
         trajectoryMatcher.reset()
         silenceStartTimeMs = System.currentTimeMillis()
         wasSilent = true
-        activeProbe?.start()
-
+        ambientRmsCaptured = false
         captureJob = newScope.launch {
             captureSession.audioBufferFlow().collect { buffer ->
                 processBuffer(buffer)
@@ -118,14 +154,17 @@ class BrewAudioManager(
         }
     }
 
+    /** The current brew session timestamp. Available after [startMonitoring]. */
+    val currentBrewTimestamp: String get() = brewTimestamp
+
     /**
      * Stops audio capture and analysis. Also stops recording if active.
      */
     fun stopMonitoring() {
         if (!monitoringLock.compareAndSet(true, false)) return
         if (isRecording) stopRecording()
-        activeProbe?.stop()
-        // Cancel capture job and wait for in-flight processBuffer to complete
+        shadowLog.close()
+        // Cancel capture joband wait for in-flight processBuffer to complete
         captureJob?.cancel()
         captureJob = null
         scope?.cancel()
@@ -136,6 +175,7 @@ class BrewAudioManager(
         }
         silenceStartTimeMs = 0L
         wasSilent = true
+        brewContext = BrewContext()
     }
 
     /**
@@ -155,6 +195,32 @@ class BrewAudioManager(
             flightRecorder.open(jsonlFile)
         }
 
+        // Write recording session metadata sidecar
+        outputDirectory?.let { dir ->
+            val ambientRms = _analysisState.value.rmsDb
+            RecordingMetadata.fromCurrentSession(
+                brewTimestamp = brewTimestamp.toLongOrNull() ?: System.currentTimeMillis(),
+                method = brewContext.method,
+                filterType = brewContext.filterType,
+                doseG = brewContext.doseG,
+                waterG = brewContext.waterG,
+                ratio = brewContext.ratio,
+                grinderId = brewContext.grinderId,
+                grinderSetting = brewContext.grinderSetting,
+                placement = brewContext.placement,
+                environment = brewContext.environment,
+                ambientRmsDb = ambientRms,
+                sampleRate = config.sampleRate,
+                notes = brewContext.notes,
+            ).writeToFile(dir)
+        }
+
+        // Open user labels recorder for ground truth marking
+        outputDirectory?.let { dir ->
+            val labelsFile = File(dir, "brew_${brewTimestamp}_user_labels.txt")
+            userLabelsRecorder.open(labelsFile, System.currentTimeMillis())
+        }
+
         _analysisState.update {
             it.copy(
                 isRecording = true,
@@ -167,6 +233,7 @@ class BrewAudioManager(
      * Stops recording to files. Monitoring continues.
      */
     fun stopRecording() {
+        userLabelsRecorder.close()
         flightRecorder.close()
         if (recorder.isOpen) {
             recorder.close()
@@ -203,6 +270,20 @@ class BrewAudioManager(
         }
     }
 
+    /**
+     * Records a user-marked event label (ground truth, ±2-3s accuracy).
+     */
+    fun markUserLabel(label: String) {
+        userLabelsRecorder.markEvent(label)
+    }
+
+    /**
+     * Records a problem marker during a brew experiment.
+     */
+    fun markUserProblem(description: String) {
+        userLabelsRecorder.markProblem(description)
+    }
+
     private fun processBuffer(samples: ShortArray) {
         val timeFeatures = AudioAnalyzer.analyze(samples, samples.size, config.sampleRate)
 
@@ -223,28 +304,34 @@ class BrewAudioManager(
 
             // Ambient baseline: calibrate during first ~5s, then subtract
             if (!ambientBaseline.isCalibrated) {
-                ambientBaseline.feedCalibrationFrame(rawPower)
+                val justCalibrated = ambientBaseline.feedCalibrationFrame(rawPower)
+                // Capture ambient RMS once calibration completes, rewrite metadata
+                if (justCalibrated && !ambientRmsCaptured) {
+                    ambientRmsCaptured = true
+                    val ambientRms = timeFeatures.rmsDb
+                    outputDirectory?.let { dir ->
+                        RecordingMetadata.fromCurrentSession(
+                            brewTimestamp = brewTimestamp.toLongOrNull() ?: System.currentTimeMillis(),
+                            method = brewContext.method,
+                            filterType = brewContext.filterType,
+                            doseG = brewContext.doseG,
+                            waterG = brewContext.waterG,
+                            ratio = brewContext.ratio,
+                            grinderId = brewContext.grinderId,
+                            grinderSetting = brewContext.grinderSetting,
+                            placement = brewContext.placement,
+                            environment = brewContext.environment,
+                            ambientRmsDb = ambientRms,
+                            sampleRate = config.sampleRate,
+                            notes = brewContext.notes,
+                        ).writeToFile(dir)
+                    }
+                }
             }
             val residualPower = ambientBaseline.subtract(rawPower)
 
-            // Water likeness score from residual shape vs Pulsar template
-            val waterScore = if (ambientBaseline.isCalibrated) {
-                ambientBaseline.scoreWaterLikeness(residualPower)
-            } else {
-                0f
-            }
-
-            // Active probe: analyze the probe bin in the raw power spectrum
-            val probeTurbulence = if (activeProbe?.isActive == true) {
-                activeProbe.analyzeProbeResponse(rawPower)
-            } else {
-                0f
-            }
-
             // Enrich spectral features with subtraction results
             val enrichedSpectral = spectral.copy(
-                probeTurbulence = probeTurbulence,
-                waterLikeness = waterScore,
                 isBaselineCalibrated = ambientBaseline.isCalibrated,
             )
             latestSpectral = enrichedSpectral
@@ -260,6 +347,9 @@ class BrewAudioManager(
             for (event in events) {
                 _brewEvents.tryEmit(event)
                 latestBrewEvent = event
+                if (shadowLog.isOpen) {
+                    shadowLog.recordDetectorEvent(event)
+                }
             }
 
             // Flight recorder: accumulate events, write snapshot at interval
@@ -271,18 +361,18 @@ class BrewAudioManager(
                     snapshotEvents.add(pendingEvents.poll() ?: break)
                 }
                 val wrote = flightRecorder.recordSnapshot(
-                    spectralFeatures = enrichedSpectral,
-                    detectorState = eventDetector.state,
-                    noiseFloorDb = eventDetector.noiseFloorDb,
-                    dripRate = eventDetector.dripRate,
-                    rmsDb = timeFeatures.rmsDb,
-                    brewPhaseLabel = currentPhaseLabel,
-                    trajectoryPhase = trajectoryMatcher.trajectoryPhase.displayName,
-                    brewConfidence = trajectoryMatcher.brewConfidence,
-                    waterLikeness = waterScore,
-                    baselineCalibrated = ambientBaseline.isCalibrated,
-                    probeTurbulence = probeTurbulence,
-                    events = snapshotEvents,
+                    FlightRecorder.Snapshot(
+                        spectralFeatures = enrichedSpectral,
+                        detectorState = eventDetector.state,
+                        noiseFloorDb = eventDetector.noiseFloorDb,
+                        dripRate = eventDetector.dripRate,
+                        rmsDb = timeFeatures.rmsDb,
+                        brewPhaseLabel = currentPhaseLabel,
+                        trajectoryPhase = trajectoryMatcher.trajectoryPhase.displayName,
+                        brewConfidence = trajectoryMatcher.brewConfidence,
+                        baselineCalibrated = ambientBaseline.isCalibrated,
+                        events = snapshotEvents,
+                    )
                 )
                 // If not written (throttled), put events back for next snapshot
                 if (!wrote) {
@@ -328,9 +418,6 @@ class BrewAudioManager(
                 dripRate = eventDetector.dripRate,
                 noiseFloorDb = eventDetector.noiseFloorDb,
                 lastBrewEvent = latestBrewEvent ?: state.lastBrewEvent,
-                probeActive = activeProbe?.isActive == true,
-                probeTurbulence = activeProbe?.turbulenceScore ?: 0f,
-                waterLikeness = latestSpectral.waterLikeness,
                 baselineCalibrated = ambientBaseline.isCalibrated,
                 trajectoryPhase = trajectoryMatcher.trajectoryPhase.displayName,
                 brewConfidence = trajectoryMatcher.brewConfidence,
@@ -350,4 +437,17 @@ class BrewAudioManager(
         val file = File(dir, fileName)
         recorder.open(file)
     }
+
+    private data class BrewContext(
+        val method: String = "",
+        val filterType: String = "",
+        val doseG: Float = 0f,
+        val waterG: Float = 0f,
+        val ratio: Float = 0f,
+        val grinderId: String? = null,
+        val grinderSetting: String? = null,
+        val placement: String = "unknown",
+        val environment: String = "unknown",
+        val notes: String = "",
+    )
 }

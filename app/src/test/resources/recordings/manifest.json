@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "description": "Audio regression test recordings. WAV files stored via Git LFS.",
+  "scenarios": []
+}

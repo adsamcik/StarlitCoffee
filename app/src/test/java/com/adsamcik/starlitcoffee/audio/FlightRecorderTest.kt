@@ -32,7 +32,8 @@ class FlightRecorderTest {
     private fun sampleFeatures() = SpectralFeatures(
         bandEnergyDb = mapOf(
             FrequencyBand.POUR to -12f,
-            FrequencyBand.DRIP to -18f,
+            FrequencyBand.DRIP_LOW to -18f,
+            FrequencyBand.DRIP_HIGH to -24f,
             FrequencyBand.HIGH_MID to -30f,
         ),
         spectralFlux = FrequencyBand.entries.associateWith { 2f },
@@ -40,6 +41,29 @@ class FlightRecorderTest {
         spectralFlatness = 0.15f,
         cepstralPeakProminence = 0.5f,
         bandCoincidenceCount = 4,
+    )
+
+    private fun sampleSnapshot(
+        detectorState: DetectorState = DetectorState.IDLE,
+        noiseFloorDb: Map<FrequencyBand, Float> = emptyMap(),
+        dripRate: Float = 0f,
+        rmsDb: Float = -40f,
+        brewPhaseLabel: String = "",
+        trajectoryPhase: String = "Unknown",
+        brewConfidence: Float = 0f,
+        baselineCalibrated: Boolean = false,
+        events: List<BrewAudioEvent> = emptyList(),
+    ) = FlightRecorder.Snapshot(
+        spectralFeatures = sampleFeatures(),
+        detectorState = detectorState,
+        noiseFloorDb = noiseFloorDb,
+        dripRate = dripRate,
+        rmsDb = rmsDb,
+        brewPhaseLabel = brewPhaseLabel,
+        trajectoryPhase = trajectoryPhase,
+        brewConfidence = brewConfidence,
+        baselineCalibrated = baselineCalibrated,
+        events = events,
     )
 
     @Test
@@ -65,23 +89,18 @@ class FlightRecorderTest {
     fun `recordSnapshot writes JSON line`() {
         recorder.open(tempFile)
 
-        recorder.recordSnapshot(
-            spectralFeatures = sampleFeatures(),
+        recorder.recordSnapshot(sampleSnapshot(
             detectorState = DetectorState.POURING,
             noiseFloorDb = FrequencyBand.entries.associateWith { -35f },
-            dripRate = 0f,
             rmsDb = -15f,
             brewPhaseLabel = "Pour 1/3",
             trajectoryPhase = "Pouring",
             brewConfidence = 0.8f,
-            waterLikeness = 0.6f,
             baselineCalibrated = true,
-            probeTurbulence = 0f,
-            events = emptyList(),
-        )
+        ))
         recorder.close()
 
-        val lines = tempFile.readLines()
+        val lines= tempFile.readLines()
         assertEquals("Should write exactly 1 line", 1, lines.size)
 
         val line = lines[0]
@@ -97,22 +116,18 @@ class FlightRecorderTest {
     fun `events are included in snapshot`() {
         recorder.open(tempFile)
 
-        recorder.recordSnapshot(
-            spectralFeatures = sampleFeatures(),
+        recorder.recordSnapshot(sampleSnapshot(
             detectorState = DetectorState.POURING,
             noiseFloorDb = FrequencyBand.entries.associateWith { -35f },
-            dripRate = 0f,
             rmsDb = -15f,
             brewPhaseLabel = "Pour",
             trajectoryPhase = "Pouring",
             brewConfidence = 0.7f,
-            waterLikeness = 0.5f,
             baselineCalibrated = true,
-            probeTurbulence = 0f,
             events = listOf(
                 BrewAudioEvent.PourStarted(5.2f),
             ),
-        )
+        ))
         recorder.close()
 
         val line = tempFile.readLines().first()
@@ -127,20 +142,7 @@ class FlightRecorderTest {
 
         // Write multiple snapshots rapidly
         repeat(10) {
-            recorder.recordSnapshot(
-                spectralFeatures = sampleFeatures(),
-                detectorState = DetectorState.IDLE,
-                noiseFloorDb = emptyMap(),
-                dripRate = 0f,
-                rmsDb = -40f,
-                brewPhaseLabel = "",
-                trajectoryPhase = "Unknown",
-                brewConfidence = 0f,
-                waterLikeness = 0f,
-                baselineCalibrated = false,
-                probeTurbulence = 0f,
-                events = emptyList(),
-            )
+            recorder.recordSnapshot(sampleSnapshot())
         }
         recorder.close()
 
@@ -155,20 +157,7 @@ class FlightRecorderTest {
 
         repeat(3) {
             Thread.sleep(15) // Exceed the 10ms interval
-            recorder.recordSnapshot(
-                spectralFeatures = sampleFeatures(),
-                detectorState = DetectorState.IDLE,
-                noiseFloorDb = emptyMap(),
-                dripRate = 0f,
-                rmsDb = -40f,
-                brewPhaseLabel = "",
-                trajectoryPhase = "Unknown",
-                brewConfidence = 0f,
-                waterLikeness = 0f,
-                baselineCalibrated = false,
-                probeTurbulence = 0f,
-                events = emptyList(),
-            )
+            recorder.recordSnapshot(sampleSnapshot())
         }
         recorder.close()
 
@@ -178,20 +167,7 @@ class FlightRecorderTest {
 
     @Test
     fun `closed recorder does not write`() {
-        val result = recorder.recordSnapshot(
-            spectralFeatures = sampleFeatures(),
-            detectorState = DetectorState.IDLE,
-            noiseFloorDb = emptyMap(),
-            dripRate = 0f,
-            rmsDb = -40f,
-            brewPhaseLabel = "",
-            trajectoryPhase = "Unknown",
-            brewConfidence = 0f,
-            waterLikeness = 0f,
-            baselineCalibrated = false,
-            probeTurbulence = 0f,
-            events = emptyList(),
-        )
+        val result = recorder.recordSnapshot(sampleSnapshot())
         assertFalse(result)
     }
 }

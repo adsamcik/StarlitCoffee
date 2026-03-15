@@ -91,40 +91,28 @@ class AmbientBaselineTest {
         )
     }
 
-    // --- Water Template ---
-
     @Test
-    fun `water-like residual scores high on water likeness`() {
-        // Calibrate
-        val ambient = FloatArray(spectrumSize) { 1e-8f }
+    fun `adaptive alpha is stronger at low SNR than high SNR`() {
+        // Calibrate with moderate noise
+        val ambient = FloatArray(spectrumSize) { 0.01f }
         repeat(10) { baseline.feedCalibrationFrame(ambient) }
 
-        // Create a water-like residual matching the real Pulsar template:
-        // Peak at ~1kHz (bin 25), rolloff both below and above
-        val waterResidual = FloatArray(spectrumSize) { 1e-8f }
-        for (bin in 5..139) {
-            val freq = bin * (44100f / 1024f)
-            // Bell curve centered at 1kHz, plus secondary plateau at 4-6kHz
-            val dist = kotlin.math.abs(kotlin.math.ln(freq / 1077.0))
-            val amplitude = kotlin.math.exp(-dist * 1.5).toFloat()
-            waterResidual[bin] = 0.1f * amplitude.coerceAtLeast(0.005f)
-        }
+        // High-SNR signal (10x above ambient): should get mild subtraction
+        val highSnr = FloatArray(spectrumSize) { 0.01f }
+        highSnr[50] = 0.1f // 10x = 10dB SNR
+        val residualHigh = baseline.subtract(highSnr)
 
-        val score = baseline.scoreWaterLikeness(waterResidual)
-        assertTrue("Water-like residual should score > 0.5, got $score", score > 0.5f)
-    }
+        // Low-SNR signal (just barely above ambient): should get stronger subtraction
+        val lowSnr = FloatArray(spectrumSize) { 0.01f }
+        lowSnr[50] = 0.012f // 1.2x ≈ 0.8dB SNR
+        val residualLow = baseline.subtract(lowSnr)
 
-    @Test
-    fun `narrowband residual scores low on water likeness`() {
-        val ambient = FloatArray(spectrumSize) { 1e-8f }
-        repeat(10) { baseline.feedCalibrationFrame(ambient) }
-
-        // Narrowband: energy only at one frequency (like a tone)
-        val toneResidual = FloatArray(spectrumSize) { 1e-8f }
-        toneResidual[20] = 0.5f // Single bin spike
-
-        val score = baseline.scoreWaterLikeness(toneResidual)
-        assertTrue("Narrowband should score < 0.5, got $score", score < 0.5f)
+        // At high SNR, more signal should survive
+        // At low SNR, more should be subtracted
+        assertTrue(
+            "High-SNR residual (${residualHigh[50]}) should be > low-SNR residual (${residualLow[50]})",
+            residualHigh[50] > residualLow[50],
+        )
     }
 
     // --- Reset ---

@@ -29,8 +29,8 @@ import kotlin.math.min
  * Key invariants that distinguish brew from other sounds:
  * 1. Pour onset is a SUSTAINED broadband rise (not a transient like a clank)
  * 2. Pour plateau is STABLE (low energy variance, unlike speech)
- * 3. Pour-to-drip transition is a MONOTONIC energy decay (not oscillating)
- * 4. Drip rate DECREASES over time (gravity drainage physics)
+ * 3. Pour-to-drip transition shows an overall energy DECLINE (allowing local fluctuations)
+ * 4. Drip rate generally DECREASES over time (with allowance for local irregularity)
  * 5. The full pour→drip→silence sequence takes 30-300 seconds (not 0.5s)
  */
 class BrewTrajectoryMatcher {
@@ -42,6 +42,10 @@ class BrewTrajectoryMatcher {
     /** Which trajectory phase we think we're in */
     var trajectoryPhase: TrajectoryPhase = TrajectoryPhase.UNKNOWN
         private set
+
+    /** Ambient energy level from initial quiet period (dB). Used for relative thresholds. */
+    private var ambientEnergyDb = DEFAULT_AMBIENT_DB
+    private var ambientCalibrated = false
 
     // Rolling windows of features (1-second resolution, ~86 frames → 1 sample/sec)
     private val energyHistory = RollingWindow(HISTORY_SECONDS)
@@ -104,6 +108,8 @@ class BrewTrajectoryMatcher {
         coincidenceSum = 0f
         brewConfidence = 0f
         trajectoryPhase = TrajectoryPhase.UNKNOWN
+        ambientEnergyDb = DEFAULT_AMBIENT_DB
+        ambientCalibrated = false
     }
 
     // --- Trajectory Matching ---
@@ -115,6 +121,21 @@ class BrewTrajectoryMatcher {
             brewConfidence = 0f
             return
         }
+
+        // Calibrate ambient from initial quiet period.
+        // Cap at DEFAULT_AMBIENT_DB so loud-only sessions use the conservative fallback.
+        if (!ambientCalibrated && n >= 5) {
+            ambientEnergyDb = minOf(
+                energyHistory.lastN(n).minOrNull() ?: DEFAULT_AMBIENT_DB,
+                DEFAULT_AMBIENT_DB,
+            )
+            ambientCalibrated = true
+        }
+
+        // All thresholds relative to calibrated ambient level
+        val pourThreshold = ambientEnergyDb + POUR_ENERGY_ABOVE_AMBIENT
+        val dripCeiling = ambientEnergyDb + DRIP_ENERGY_ABOVE_AMBIENT
+        val silenceThreshold = ambientEnergyDb + SILENCE_ABOVE_AMBIENT
 
         // Compute trajectory features
         val recentEnergy = energyHistory.lastN(3)
@@ -139,7 +160,7 @@ class BrewTrajectoryMatcher {
         trajectoryPhase = when {
             // POUR: high residual energy + high coincidence + stable
             // Flatness is a bonus, not a gate — sustained pour can have low flatness
-            currentEnergy > POUR_ENERGY_THRESHOLD &&
+            currentEnergy > pourThreshold &&
                 currentCoincidence > POUR_COINCIDENCE_THRESHOLD -> {
                 val stabilityScore = 1f - (energyVariance / 50f).coerceIn(0f, 1f)
                 val flatnessScore = (currentFlatness / 0.15f).coerceIn(0f, 1f)
@@ -156,25 +177,25 @@ class BrewTrajectoryMatcher {
                 TrajectoryPhase.POUR_ONSET
             }
 
-            // DRIP_DECAY: energy falling + was recently higher
-            n >= 5 && isMonotonicDecay(energyHistory.lastN(5)) &&
-                energyHistory.lastN(5).first() > POUR_ENERGY_THRESHOLD -> {
-                // Monotonic decay is a strong brew signal
+            // DRIP_DECAY: energy trending down + was recently higher
+            n >= 5 && isTrendingDown(energyHistory.lastN(min(n, 10))) &&
+                energyHistory.lastN(min(n, 10)).first() > pourThreshold -> {
+                // Overall downward trend is a strong brew signal
                 confidence = 0.7f
                 TrajectoryPhase.DRIP_DECAY
             }
 
-            // DRIPPING: low energy + drip IOI increasing (slowing down)
-            currentEnergy < DRIP_ENERGY_CEILING &&
+            // DRIPPING: low energy + drip IOI trending up (slowing down)
+            currentEnergy < dripCeiling &&
                 dripIoiHistory.count >= 3 &&
-                isMonotonicIncrease(dripIoiHistory.lastN(3)) -> {
-                // Drip rate monotonically decreasing = physics of gravity drainage
+                isTrendingUp(dripIoiHistory.lastN(min(dripIoiHistory.count, 5))) -> {
+                // Drip rate generally decreasing = physics of gravity drainage
                 confidence = 0.8f
                 TrajectoryPhase.DRIPPING
             }
 
             // SILENCE: very low energy, low coincidence
-            currentEnergy < SILENCE_THRESHOLD -> {
+            currentEnergy < silenceThreshold -> {
                 confidence = 0.5f
                 TrajectoryPhase.SILENCE
             }
@@ -188,21 +209,63 @@ class BrewTrajectoryMatcher {
         brewConfidence = confidence
     }
 
-    private fun isMonotonicDecay(values: List<Float>): Boolean {
-        if (values.size < 2) return false
-        for (i in 1 until values.size) {
-            if (values[i] > values[i - 1] + MONOTONIC_TOLERANCE) return false
+    /**
+     * Checks if values show an overall downward trend.
+     * Uses soft monotonicity: allows local upward excursions (plateaus, rebounds)
+     * as long as the smoothed envelope trends down overall.
+     *
+     * Research basis: drip rate decay is "conditionally supported" — real drawdown
+     * has regime changes, fines-driven stalls, and channel-opening rebounds.
+     */
+    private fun isTrendingDown(values: List<Float>): Boolean {
+        if (values.size < 3) return false
+
+        // Smooth with 3-sample moving average to absorb local fluctuations
+        val smoothed = smooth(values, windowSize = 3)
+
+        // Check overall trend via first vs last (smoothed)
+        val overallDrop = smoothed.first() - smoothed.last()
+        if (overallDrop < TREND_MIN_RANGE) return false
+
+        // Count violations: smoothed samples that rise above previous
+        var violations = 0
+        for (i in 1 until smoothed.size) {
+            if (smoothed[i] > smoothed[i - 1] + TREND_TOLERANCE) {
+                violations++
+            }
         }
-        // Must actually decrease significantly
-        return values.first() - values.last() > MONOTONIC_MIN_RANGE
+
+        // Allow up to ~30% of samples to be violations
+        val maxViolations = (smoothed.size * TREND_MAX_VIOLATION_RATIO).toInt().coerceAtLeast(1)
+        return violations <= maxViolations
     }
 
-    private fun isMonotonicIncrease(values: List<Float>): Boolean {
-        if (values.size < 2) return false
-        for (i in 1 until values.size) {
-            if (values[i] < values[i - 1] - MONOTONIC_TOLERANCE) return false
+    /**
+     * Checks if values show an overall upward trend (drip IOI increasing = drips slowing).
+     * Allows local decreases (e.g., a cluster of fast drips followed by slowing).
+     */
+    private fun isTrendingUp(values: List<Float>): Boolean {
+        if (values.size < 3) return false
+
+        val smoothed = smooth(values, windowSize = 3)
+
+        val overallRise = smoothed.last() - smoothed.first()
+        if (overallRise < TREND_MIN_RANGE * 0.1f) return false
+
+        var violations = 0
+        for (i in 1 until smoothed.size) {
+            if (smoothed[i] < smoothed[i - 1] - TREND_TOLERANCE) {
+                violations++
+            }
         }
-        return values.last() - values.first() > MONOTONIC_MIN_RANGE * 0.1f
+
+        val maxViolations = (smoothed.size * TREND_MAX_VIOLATION_RATIO).toInt().coerceAtLeast(1)
+        return violations <= maxViolations
+    }
+
+    private fun smooth(values: List<Float>, windowSize: Int = 3): List<Float> {
+        if (values.size < windowSize) return values
+        return values.windowed(windowSize) { window -> window.average().toFloat() }
     }
 
     private fun computeVariance(values: List<Float>): Float {
@@ -255,16 +318,18 @@ class BrewTrajectoryMatcher {
         private const val FRAMES_PER_SECOND = 86
         private const val HISTORY_SECONDS = 60 // Track last 60 seconds
 
-        // Thresholds derived from real Pulsar recordings
-        private const val POUR_ENERGY_THRESHOLD = -20f  // dB in POUR band
-        private const val POUR_FLATNESS_THRESHOLD = 0.08f
+        // Relative thresholds (dB above ambient baseline).
+        // Research: absolute dBFS thresholds vary ±9 dB across Android phones.
+        private const val POUR_ENERGY_ABOVE_AMBIENT = 15f   // pour must be 15dB above ambient
         private const val POUR_COINCIDENCE_THRESHOLD = 3f
-        private const val DRIP_ENERGY_CEILING = -25f
-        private const val SILENCE_THRESHOLD = -35f
+        private const val DRIP_ENERGY_ABOVE_AMBIENT = 10f   // drip ceiling is 10dB above ambient
+        private const val SILENCE_ABOVE_AMBIENT = 3f         // silence is within 3dB of ambient
+        private const val DEFAULT_AMBIENT_DB = -40f           // fallback if calibration fails
         private const val ONSET_ENERGY_RISE = 5f // dB rise over 3 seconds
 
-        // Monotonic detection
-        private const val MONOTONIC_TOLERANCE = 2f // dB tolerance for "monotonic"
-        private const val MONOTONIC_MIN_RANGE = 5f // Minimum total change to count
+        // Trend detection (soft monotonicity)
+        private const val TREND_TOLERANCE = 2f // dB tolerance for trend violations
+        private const val TREND_MIN_RANGE = 5f // Minimum total change to count
+        private const val TREND_MAX_VIOLATION_RATIO = 0.3f // Allow ~30% of samples to violate
     }
 }
