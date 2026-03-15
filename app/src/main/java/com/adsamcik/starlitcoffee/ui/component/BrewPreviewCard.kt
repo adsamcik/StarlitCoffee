@@ -29,32 +29,32 @@ fun BrewPreviewCard(
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
         ),
         modifier = modifier.fillMaxWidth(),
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 14.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             Text(
                 text = "☕ ${coffeeFormat.format(coffeeG)}g",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.semantics { contentDescription = "Coffee: ${coffeeFormat.format(coffeeG)} grams" },
             )
             Text(
                 text = "💧 ${waterFormat.format(waterG)}g",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.semantics { contentDescription = "Water: ${waterFormat.format(waterG)} grams" },
             )
             Text(
                 text = "1:${ratioFormat.format(ratio)}",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.semantics { contentDescription = "Ratio 1 to ${ratioFormat.format(ratio)}" },
             )
         }

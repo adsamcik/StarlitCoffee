@@ -35,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.semantics
@@ -114,7 +115,7 @@ fun AmountStrengthScreen(
     ) {
         // Back button + method context
         ScreenTopBar(
-            title = "",
+            title = "Brew Setup",
             onBack = onBack,
             modifier = Modifier.padding(top = 8.dp),
             actions = {
@@ -178,7 +179,8 @@ fun AmountStrengthScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
-                .testTag("amount_slider"),
+                .testTag("amount_slider")
+                .semantics { contentDescription = "Coffee dose: ${amountFloat.toInt()} grams" },
         )
 
         if (capacityHint != null) {
@@ -192,9 +194,9 @@ fun AmountStrengthScreen(
             Spacer(modifier = Modifier.height(16.dp))
         }
 
-        // Ratio section
+        // Strength section
         Text(
-            text = "Ratio",
+            text = "Strength",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier
                 .padding(start = 8.dp, bottom = 8.dp)

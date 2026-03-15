@@ -139,7 +139,10 @@ fun MethodPickerScreen(
                     modifier = Modifier.semantics { heading() },
                 )
                 Text(
-                    text = state.filterType?.displayName ?: "No filter",
+                    text = buildString {
+                        append(state.filterType?.displayName ?: "No filter")
+                        if (state.isDecafBrew) append(" · Decaf")
+                    },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
