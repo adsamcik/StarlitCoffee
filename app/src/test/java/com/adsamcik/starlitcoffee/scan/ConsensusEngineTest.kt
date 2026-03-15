@@ -1134,7 +1134,7 @@ class ConsensusEngineTest {
     // --- Extract Field Values ---
 
     @Test
-    fun `extract field values includes all thirteen supported fields`() {
+    fun `extract field values includes all fourteen supported fields`() {
         val extracted = engine.extractFieldValues(
             OcrExtractionResult(
                 name = "Geometry",
@@ -1150,14 +1150,16 @@ class ConsensusEngineTest {
                 roastDate = "2025-01-01",
                 expiryDate = "2025-03-01",
                 weight = "250 g",
+                isDecaf = true,
                 fieldConfidence = mapOf(
                     "origin" to BagFieldConfidence.HIGH,
                     "weight" to BagFieldConfidence.MEDIUM,
+                    "isDecaf" to BagFieldConfidence.HIGH,
                 ),
             ),
         )
 
-        assertEquals(13, extracted.size)
+        assertEquals(14, extracted.size)
     }
 
     @Test
@@ -1200,6 +1202,19 @@ class ConsensusEngineTest {
 
         assertEquals(BagFieldConfidence.LOW, extracted["origin"]!!.second)
         assertEquals(BagFieldConfidence.LOW, extracted["variety"]!!.second)
+    }
+
+    @Test
+    fun `extract field values includes decaf when present`() {
+        val extracted = engine.extractFieldValues(
+            OcrExtractionResult(
+                isDecaf = true,
+                fieldConfidence = mapOf("isDecaf" to BagFieldConfidence.HIGH),
+            ),
+        )
+
+        assertEquals("Decaf", extracted["isDecaf"]!!.first)
+        assertEquals(BagFieldConfidence.HIGH, extracted["isDecaf"]!!.second)
     }
 
     // --- Convergence Scenario ---

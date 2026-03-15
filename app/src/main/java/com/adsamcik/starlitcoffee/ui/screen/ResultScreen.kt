@@ -94,7 +94,13 @@ fun ResultScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Ratio 1:${"%.1f".format(uiState.effectiveRatio)}",
+                    text = buildString {
+                        append(uiState.method.displayName)
+                        uiState.filterType?.displayName
+                            ?.takeIf { it.isNotBlank() }
+                            ?.let { append(" · $it") }
+                        if (uiState.isDecafBrew) append(" · Decaf")
+                    },
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
@@ -150,12 +156,12 @@ fun ResultScreen(
                         val effectiveBloomMult =
                             uiState.bloomMultiplier.toFloatOrNull() ?: method.bloomMultiplier
                         Text(
-                            text = "Bloom: ${"%.0f".format(uiState.bloomG)}g (${effectiveBloomMult}× dose)",
+                            text = "Bloom: ${"%.0f".format(uiState.bloomG)}g (${effectiveBloomMult}× your coffee)",
                             style = MaterialTheme.typography.bodyLarge,
                         )
                         if (method == BrewMethod.PULSAR) {
                             Text(
-                                text = "↳ Valve open → pour → close valve → steep 45–60s",
+                                text = "↳ Valve open → pour → close valve → wait 45–60s",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.padding(start = 12.dp, bottom = 4.dp),
@@ -255,12 +261,19 @@ fun ResultScreen(
         val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
         val selectedBag = bags.find { it.id == selectedBagId }
         if (selectedBag != null) {
-            val decafText = if (selectedBag.isDecaf) " · Decaf" else ""
+            val decafText = if (selectedBag.isDecaf || uiState.isDecafBrew) " · Decaf" else ""
             val weightText = selectedBag.weightG?.let { w ->
                 " · ${"%.0f".format(w)}g remaining"
             } ?: ""
             Text(
                 text = "☕ ${selectedBag.name}${selectedBag.roaster?.let { " by $it" } ?: ""}$decafText$weightText",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
+            )
+        } else if (uiState.isDecafBrew) {
+            Text(
+                text = "☕ Decaf brew",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),

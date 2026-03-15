@@ -177,8 +177,13 @@ private fun BrewLogCard(
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = log.method.lowercase()
-                                    .replaceFirstChar { it.uppercase() },
+                                text = buildString {
+                                    append(
+                                        log.method.lowercase()
+                                            .replaceFirstChar { it.uppercase() },
+                                    )
+                                    if (log.isDecaf) append(" · Decaf")
+                                },
                                 style = MaterialTheme.typography.titleMedium,
                             )
                             if (bagName != null) {
@@ -211,6 +216,14 @@ private fun BrewLogCard(
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = formatFilterType(log.filterType),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.outline,
+                            )
+                        }
+                        if (log.isDecaf) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Decaf",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.outline,
                             )
@@ -299,4 +312,3 @@ private fun formatFilterType(filterType: String): String = when (filterType) {
     "METAL_40K" -> "40K"
     else -> filterType
 }
-

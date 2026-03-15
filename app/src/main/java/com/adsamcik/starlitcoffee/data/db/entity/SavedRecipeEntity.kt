@@ -18,6 +18,7 @@ data class SavedRecipeEntity(
     val grinderId: String? = null,
     val grindSetting: String? = null,
     val filterType: String? = null,
+    val isDecaf: Boolean = false,
     val notes: String? = null,
     val createdAt: Long = System.currentTimeMillis(),
 )

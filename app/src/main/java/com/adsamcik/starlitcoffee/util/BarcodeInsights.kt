@@ -35,10 +35,21 @@ object BarcodeInsights {
         val prefix = normalized.take(3)
         val prefixNumber = prefix.toIntOrNull() ?: return null
         val regionName = when {
+            prefix == "858" -> "Slovakia"
             prefix == "859" -> "Czech Republic"
             prefix == "590" -> "Poland"
+            prefixNumber in 300..379 -> "France"
             prefixNumber in 400..440 -> "Germany"
+            prefixNumber in 450..459 -> "Japan"
+            prefixNumber in 560..569 -> "Portugal"
+            prefixNumber in 570..579 -> "Denmark"
+            prefixNumber in 640..649 -> "Finland"
+            prefixNumber in 700..709 -> "Norway"
+            prefixNumber in 730..739 -> "Sweden"
             prefixNumber in 800..839 -> "Italy"
+            prefixNumber in 840..849 -> "Spain"
+            prefixNumber in 870..879 -> "Netherlands"
+            prefixNumber in 880..889 -> "South Korea"
             else -> return null
         }
 
@@ -116,6 +127,15 @@ object BarcodeInsights {
                 rawValue = matchedBag.tastingNotes,
                 canonicalKey = localizedMetadata.tasteNoteIds,
             )
+            if (matchedBag.isDecaf) {
+                addLocalMatchCandidate(
+                    fieldName = "isDecaf",
+                    value = "Decaf",
+                    supportingText = supportingText,
+                    rawValue = "decaf",
+                    canonicalKey = "true",
+                )
+            }
             matchedBag.weightG
                 ?.takeIf { it > 0f }
                 ?.let { addLocalMatchCandidate("weight", formatWeight(it), supportingText) }

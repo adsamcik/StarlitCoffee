@@ -75,7 +75,7 @@ import com.adsamcik.starlitcoffee.service.BrewTimerService
 import com.adsamcik.starlitcoffee.ui.component.AudioDebugOverlay
 import com.adsamcik.starlitcoffee.ui.component.AudioDetectionIndicator
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
-import com.adsamcik.starlitcoffee.ui.component.BrewRatingSheet
+import com.adsamcik.starlitcoffee.service.RatingReminderWorker
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.util.VibrationHelper.BrewHaptic
 import com.adsamcik.starlitcoffee.data.model.PhaseType
@@ -90,7 +90,6 @@ fun BrewTimerScreen(
     val audioState by brewViewModel.audioState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var showStopDialog by remember { mutableStateOf(false) }
-    var showRatingSheet by remember { mutableStateOf(false) }
 
     // Intercept system back — show stop dialog instead of silently leaving
     BackHandler(enabled = uiState.timerRunning || uiState.elapsedSeconds > 0) {
@@ -526,31 +525,22 @@ fun BrewTimerScreen(
             Button(
                 onClick = {
                     brewViewModel.logBrew()
-                    showRatingSheet = true
+                    // Schedule a rating reminder notification for 15 minutes from now
+                    val logId = brewViewModel.lastLoggedBrewId
+                    if (logId != null) {
+                        RatingReminderWorker.schedule(context, logId)
+                    }
+                    onBack()
                 },
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(72.dp),
             ) {
-                Text("Rate This Brew ☕", style = MaterialTheme.typography.titleMedium)
+                Text("Done ☕", style = MaterialTheme.typography.titleMedium)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }
-    }
-
-    if (showRatingSheet) {
-        BrewRatingSheet(
-            onDismiss = {
-                showRatingSheet = false
-                onBack()
-            },
-            onSave = { rating, descriptors, notes ->
-                brewViewModel.saveBrewWithRating(rating, descriptors, notes)
-                showRatingSheet = false
-                onBack()
-            },
-        )
     }
 
     if (showStopDialog) {
@@ -592,7 +582,11 @@ fun BrewTimerScreen(
                         brewViewModel.stopTimer()
                         BrewTimerService.stop(context)
                         brewViewModel.logBrew()
-                        showRatingSheet = true
+                        val logId = brewViewModel.lastLoggedBrewId
+                        if (logId != null) {
+                            RatingReminderWorker.schedule(context, logId)
+                        }
+                        onBack()
                     }) { Text("Stop and save") }
                 }
             },

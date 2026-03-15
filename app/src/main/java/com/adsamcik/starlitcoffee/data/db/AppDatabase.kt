@@ -29,7 +29,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
         RatioPresetEntity::class,
         FlavorTagEntity::class,
     ],
-    version = 11,
+    version = 12,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -92,6 +92,13 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_11_12 = object : Migration(11, 12) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE saved_recipes ADD COLUMN isDecaf INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE brew_logs ADD COLUMN isDecaf INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
         // TODO: Replace with Hilt @Provides when DI is adopted
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -106,6 +113,7 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_8_9,
                     MIGRATION_9_10,
                     MIGRATION_10_11,
+                    MIGRATION_11_12,
                 )
                     .fallbackToDestructiveMigration(true)
                     .build().also { INSTANCE = it }

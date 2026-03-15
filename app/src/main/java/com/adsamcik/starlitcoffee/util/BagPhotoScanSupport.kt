@@ -236,6 +236,7 @@ object BagPhotoScanSupport {
             roastDate = value("roastDate"),
             expiryDate = value("expiryDate"),
             weight = value("weight"),
+            isDecaf = resolvedFields.containsKey("isDecaf").takeIf { it },
             fieldConfidence = fieldConfidence,
         )
     }

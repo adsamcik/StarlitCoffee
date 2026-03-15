@@ -41,7 +41,10 @@ fun FavoritesRow(
                     onClick = { onTap(recipe) },
                     label = {
                         Text(
-                            text = recipe.coffeeName ?: "Untitled",
+                            text = buildString {
+                                append(recipe.coffeeName ?: "Untitled")
+                                if (recipe.isDecaf) append(" · Decaf")
+                            },
                             style = MaterialTheme.typography.labelLarge,
                             maxLines = 1,
                         )

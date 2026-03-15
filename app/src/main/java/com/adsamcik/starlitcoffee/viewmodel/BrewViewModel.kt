@@ -541,6 +541,7 @@ class BrewViewModel(
             "roastLevel",
             "roastDate",
             "expiryDate",
+            "isDecaf",
             "weight",
         )
     }
@@ -696,6 +697,7 @@ class BrewViewModel(
                         }
                     },
                     filterType = state.filterType?.name,
+                    isDecaf = state.isDecafBrew,
                     notes = state.feedbackNotes.takeIf { it.isNotBlank() },
                 ),
             )
@@ -726,6 +728,7 @@ class BrewViewModel(
                 customRatio = if (matchedIndex >= 0) "" else entity.ratio.toString(),
                 filterType = filterType,
                 selectedGrinderId = entity.grinderId,
+                isDecafBrew = entity.isDecaf,
                 bloomMultiplier = "",
                 pulseCount = "",
                 tempC = "",
@@ -754,6 +757,7 @@ class BrewViewModel(
                         }
                     },
                     filterType = state.filterType?.name,
+                    isDecaf = state.isDecafBrew,
                     tasteFeedback = state.tasteFeedback?.name,
                     rating = state.rating.takeIf { it > 0 }?.toFloat(),
                     freeformNotes = state.feedbackNotes.takeIf { it.isNotBlank() },
@@ -1141,6 +1145,10 @@ class BrewViewModel(
                             if (lookup != null) {
                                 offLookupName = lookup.name
                                 offLookupRoaster = lookup.brand
+                                val lookupSupportingText = listOfNotNull(
+                                    lookup.name?.takeIf { it.isNotBlank() },
+                                    lookup.brand?.takeIf { it.isNotBlank() },
+                                ).joinToString(" · ").takeIf { it.isNotBlank() }
                                 if (!lookup.name.isNullOrBlank()) {
                                     allCandidates += BagFieldCandidate(
                                         fieldName = "name",
@@ -1157,6 +1165,15 @@ class BrewViewModel(
                                         confidenceHint = BagFieldConfidence.HIGH,
                                     )
                                 }
+                                allCandidates.addDecafCandidate(
+                                    isDecaf = lookupSupportingText
+                                        ?.let(CoffeeMetadataNormalizer::containsDecafMarker)
+                                        ?.takeIf { it },
+                                    sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                                    confidenceHint = BagFieldConfidence.HIGH,
+                                    rawValue = lookupSupportingText,
+                                    supportingText = lookupSupportingText,
+                                )
                             }
                         } catch (e: Exception) {
                             Log.w(BAG_PHOTO_TAG, "Failed to fetch product info from OpenFoodFacts", e)
@@ -1368,6 +1385,23 @@ class BrewViewModel(
             addFieldCandidate("roastDate", pass.result.roastDate, photo, pass, confidenceHint, locale)
             addFieldCandidate("expiryDate", pass.result.expiryDate, photo, pass, confidenceHint, locale)
             addFieldCandidate("weight", pass.result.weight, photo, pass, confidenceHint, locale)
+            val decafSupportingBlock = pass.blocks.firstOrNull { block ->
+                CoffeeMetadataNormalizer.containsDecafMarker(block.text)
+            }
+            val decafSupportingText = decafSupportingBlock?.text
+                ?: pass.fullText.lineSequence().map(String::trim).firstOrNull { line ->
+                    CoffeeMetadataNormalizer.containsDecafMarker(line)
+                }
+            addDecafCandidate(
+                isDecaf = pass.result.isDecaf,
+                sourceType = BagFieldSourceType.OCR,
+                confidenceHint = pass.result.fieldConfidence["isDecaf"] ?: confidenceHint,
+                rawValue = decafSupportingText,
+                supportingText = decafSupportingText,
+                side = photo.side,
+                previewUri = photo.uri,
+                previewRect = decafSupportingBlock?.normalizedBounds(),
+            )
         }
     }
 
@@ -1483,6 +1517,13 @@ class BrewViewModel(
         addQrLinkCandidate("region", metadata.region, BagFieldConfidence.MEDIUM, metadata, locale)
         addQrLinkCandidate("processType", metadata.processType, BagFieldConfidence.MEDIUM, metadata, locale)
         addQrLinkCandidate("tastingNotes", metadata.tastingNotes, BagFieldConfidence.MEDIUM, metadata, locale)
+        addDecafCandidate(
+            isDecaf = metadata.isDecaf,
+            sourceType = BagFieldSourceType.QR_LINK_LOOKUP,
+            confidenceHint = BagFieldConfidence.MEDIUM,
+            rawValue = metadata.supportingSnippet ?: metadata.pageDescription ?: metadata.pageTitle,
+            supportingText = buildQrSupportingText("isDecaf", metadata),
+        )
     }
 
     private fun MutableList<BagFieldCandidate>.addQrLinkCandidate(
@@ -1513,6 +1554,34 @@ class BrewViewModel(
             confidenceHint = confidenceHint,
             supportingText = buildQrSupportingText(fieldName, metadata),
             locale = locale,
+        )
+    }
+
+    private fun MutableList<BagFieldCandidate>.addDecafCandidate(
+        isDecaf: Boolean?,
+        sourceType: BagFieldSourceType,
+        confidenceHint: BagFieldConfidence,
+        rawValue: String? = null,
+        supportingText: String? = null,
+        side: BagCaptureSide? = null,
+        previewUri: String? = null,
+        previewRect: BagPhotoRect? = null,
+    ) {
+        if (isDecaf != true) return
+        val cleanRawValue = rawValue?.trim()?.takeIf { it.isNotBlank() } ?: "decaf"
+        add(
+            BagFieldCandidate(
+                fieldName = "isDecaf",
+                value = "Decaf",
+                rawValue = cleanRawValue,
+                canonicalKey = "true",
+                sourceType = sourceType,
+                side = side,
+                confidenceHint = confidenceHint,
+                supportingText = supportingText,
+                previewUri = previewUri,
+                previewRect = previewRect,
+            ),
         )
     }
 
@@ -1582,7 +1651,7 @@ class BrewViewModel(
         val detail = when (fieldName) {
             "name" -> metadata.pageTitle ?: metadata.pageDescription
             "roaster" -> metadata.pageTitle ?: metadata.pageDescription
-            "origin", "region", "processType", "tastingNotes" ->
+            "origin", "region", "processType", "tastingNotes", "isDecaf" ->
                 metadata.supportingSnippet ?: metadata.pageDescription ?: metadata.pageTitle
             else -> metadata.pageTitle ?: metadata.pageDescription
         }?.take(160)
@@ -2099,4 +2168,3 @@ private fun List<String>.sanitizeKnownValues(): List<String> = this
     .filter { it.isNotEmpty() }
     .distinct()
     .sorted()
-

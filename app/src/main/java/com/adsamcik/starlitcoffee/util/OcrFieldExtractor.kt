@@ -25,6 +25,7 @@ object OcrFieldExtractor {
         val roastDate: String? = null,
         val expiryDate: String? = null,
         val weight: String? = null,
+        val isDecaf: Boolean? = null,
         val fieldConfidence: Map<String, BagFieldConfidence> = emptyMap(),
     )
 
@@ -87,7 +88,7 @@ object OcrFieldExtractor {
     private val processRegex = buildRegex(CoffeeMetadataNormalizer.searchTermsForField("processType"))
 
     private val altitudeRegex = Regex(
-        """(\d{3,4}\s*[-–]\s*\d{3,4}\s*(?:m\.?a\.?s\.?l\.?|meters?|masl|m)\b|\d{3,4}\s*(?:m\.?a\.?s\.?l\.?|meters?|masl|m)\b)""",
+        """(\d{3,4}\s*[-–]\s*\d{3,4}\s*(?:m\.?\s*n\.?\s*m\.?|m\.?a\.?s\.?l\.?|meters?|masl|m)\b|\d{3,4}\s*(?:m\.?\s*n\.?\s*m\.?|m\.?a\.?s\.?l\.?|meters?|masl|m)\b)""",
         RegexOption.IGNORE_CASE,
     )
 
@@ -141,6 +142,11 @@ object OcrFieldExtractor {
         """^([\w\s\u00C0-\u024F]+[·•|/]\s*[\w\s\u00C0-\u024F]+(?:\s*[·•|/]\s*[\w\s\u00C0-\u024F]+)*)$""",
     )
 
+    // Matches lines using dash/en-dash delimiters with 3+ items (avoids false positives like "Heirloom - Washed")
+    private val dashDelimiterFlavorRegex = Regex(
+        """^([\w\s\u00C0-\u024F]+\s+[-–]\s+[\w\s\u00C0-\u024F]+(?:\s+[-–]\s+[\w\s\u00C0-\u024F]+)+)$""",
+    )
+
     private val weightRegex = Regex(
         """(?<!\d)\b(\d{1,4}(?:[.,]\d{1,2})?)\s*(?:kg|kilogram[s]?|lb[s]?|pound[s]?|g|gram[s]?|oz|ounce[s]?)\b""",
         RegexOption.IGNORE_CASE,
@@ -179,10 +185,14 @@ object OcrFieldExtractor {
                 ?.also { originConfidence = BagFieldConfidence.HIGH }
             ?: findKnownMatch(fullText, knownFields.origins)
                 ?.also { originConfidence = BagFieldConfidence.HIGH }
+            ?: countryHint?.let {
+                extractSectionLabelValue(lines, CountrySectionLabels::origin, it)
+            }?.also { originConfidence = BagFieldConfidence.HIGH }
             ?: fuzzyMatchField(
                 fullText,
                 CoffeeMetadataNormalizer.searchTermsForField("origin"),
                 knownFields.origins,
+                maxDistance = 1,
             )
                 ?.also { originConfidence = BagFieldConfidence.MEDIUM }
 
@@ -199,6 +209,8 @@ object OcrFieldExtractor {
             ?.also { varietyConfidence = BagFieldConfidence.HIGH }
             ?: findKnownMatch(fullText, knownFields.varieties)
                 ?.also { varietyConfidence = BagFieldConfidence.HIGH }
+            ?: extractSectionLabelValue(lines, CountrySectionLabels::variety, countryHint)
+                ?.also { varietyConfidence = BagFieldConfidence.MEDIUM }
             ?: fuzzyMatchField(fullText, CoffeeMetadataNormalizer.searchTermsForField("variety"), knownFields.varieties)
                 ?.also { varietyConfidence = BagFieldConfidence.MEDIUM }
 
@@ -227,6 +239,8 @@ object OcrFieldExtractor {
         val tastingNotesConfidence = tastingNotes?.let { BagFieldConfidence.HIGH }
         val weight = extractWeight(fullText)
         val weightConfidence = weight?.let { BagFieldConfidence.HIGH }
+        val isDecaf = CoffeeMetadataNormalizer.containsDecafMarker(fullText).takeIf { it }
+        val isDecafConfidence = isDecaf?.let { BagFieldConfidence.HIGH }
 
         var roasterConfidence: BagFieldConfidence? = null
         val roaster = extractRoaster(lines, countryHint)
@@ -263,6 +277,7 @@ object OcrFieldExtractor {
             roasterConfidence?.let { put("roaster", it) }
             farmConfidence?.let { put("farm", it) }
             nameConfidence?.let { put("name", it) }
+            isDecafConfidence?.let { put("isDecaf", it) }
         }
 
         return OcrExtractionResult(
@@ -278,6 +293,7 @@ object OcrFieldExtractor {
             roastDate = labeledDates.roastDate,
             expiryDate = labeledDates.expiryDate,
             weight = weight,
+            isDecaf = isDecaf,
             roaster = roaster,
             fieldConfidence = fieldConfidence,
         )
@@ -327,6 +343,26 @@ object OcrFieldExtractor {
         return matches.joinToString(", ").ifEmpty { null }
     }
 
+    /**
+     * Generic section-label extraction: finds a line matching a section label
+     * from the country dictionaries and returns the text after it.
+     */
+    private fun extractSectionLabelValue(
+        lines: List<String>,
+        fieldSelector: (CountrySectionLabels) -> List<String>,
+        countryHint: CoffeeCountryDictionary? = null,
+    ): String? {
+        val labelRegex = buildSectionLabelRegex(fieldSelector, countryHint)
+        for (line in lines) {
+            val match = labelRegex.find(line)
+            if (match != null) {
+                val value = match.groupValues[1].trim()
+                if (value.isNotEmpty()) return value
+            }
+        }
+        return null
+    }
+
     private fun extractTastingNotes(lines: List<String>, countryHint: CoffeeCountryDictionary? = null): String? {
         val labelRegex = if (countryHint != null) {
             buildSectionLabelRegex(CountrySectionLabels::tastingNotes, countryHint)
@@ -353,6 +389,13 @@ object OcrFieldExtractor {
                 return altMatch.groupValues[1]
                     .replace(Regex("""[·•|/]"""), ",")
                     .split(",").joinToString(", ") { it.trim() }
+            }
+            // Check dash/en-dash delimiters (requires 3+ items to avoid false positives)
+            val dashMatch = dashDelimiterFlavorRegex.find(line)
+            if (dashMatch != null && line.length <= 80) {
+                return dashMatch.groupValues[1]
+                    .split(Regex("""\s+[-–]\s+"""))
+                    .joinToString(", ") { it.trim() }
             }
         }
         return null
@@ -392,12 +435,12 @@ object OcrFieldExtractor {
     }
 
     private val roastLabelRegex = Regex(
-        """(?:(?:datum\s+)?(?:roast(?:ed)?|pražen[íoá]|geröst(?:et)?|tostado|torrado|tostato|torréfié|ristet))\s*(?:on|date|:)?\s*""",
+        """(?:(?:datum\s+)?(?:roast(?:ed)?|pražen[íoá]|upražili(?:\s+jsme)?|upražen[oá]|geröst(?:et)?|tostado|torrado|tostato|torréfié|ristet|rostad|brent|paahdettu|pražen[éý]|gebrand|palono|wypalono))\s*(?:on|date|:)?\s*""",
         RegexOption.IGNORE_CASE,
     )
 
     private val expiryLabelRegex = Regex(
-        """(?:(?:best\s*before|use\s*by|expir(?:y|es?|ation)|consume\s*before|BB|EXP|MHD|spotřebujte\s*do|nejlépe\s*do|datum\s+minimální\s+trvanlivosti|mindestens\s*haltbar|à\s*consommer\s*avant|bedst\s*før)\s*(?:date)?)\s*[:.]?\s*""",
+        """(?:(?:best\s*before|best\s*by|use\s*by|expir(?:y|es?|ation)|consume\s*(?:before|by)|BB|EXP|MHD|THT|TMC|DLUO|DDM|spotřebujte\s*do|nejlépe\s*do|(?:datum\s+)?minimální\s+trvanlivost[i]?|mindestens\s*haltbar|haltbar\s*bis|à\s*consommer\s*(?:de\s*préférence\s*)?avant|bedst\s*før|bäst\s*före|best\s*før|parasta\s*ennen|ten\s*minste\s*houdbaar\s*tot|najlepiej\s*spożyć\s*przed|termin\s*przydatności|scadenza|caducidad|validade|spotrebujte\s*do|minimálna\s*trvanlivosť|賞味期限|消費期限|유통기한|소비기한)\s*(?:date)?)\s*[:.]?\s*""",
         RegexOption.IGNORE_CASE,
     )
 
@@ -423,26 +466,21 @@ object OcrFieldExtractor {
         var roastDate: String? = null
         var expiryDate: String? = null
 
-        for (line in text.lines()) {
+        val lines = text.lines()
+        for ((i, line) in lines.withIndex()) {
             val trimmed = line.trim()
             if (expiryDate == null) {
                 val expiryLabel = activeExpiryRegex.find(trimmed)
                 if (expiryLabel != null) {
-                    val afterLabel = trimmed.substring(expiryLabel.range.last + 1)
-                    for (pattern in datePatterns) {
-                        val match = pattern.find(afterLabel)
-                        if (match != null) { expiryDate = match.value; break }
-                    }
+                    expiryDate = findDateAfterLabel(trimmed, expiryLabel)
+                        ?: findDateOnNextLine(lines, i)
                 }
             }
             if (roastDate == null) {
                 val roastLabel = activeRoastRegex.find(trimmed)
                 if (roastLabel != null) {
-                    val afterLabel = trimmed.substring(roastLabel.range.last + 1)
-                    for (pattern in datePatterns) {
-                        val match = pattern.find(afterLabel)
-                        if (match != null) { roastDate = match.value; break }
-                    }
+                    roastDate = findDateAfterLabel(trimmed, roastLabel)
+                        ?: findDateOnNextLine(lines, i)
                 }
             }
         }
@@ -453,6 +491,27 @@ object OcrFieldExtractor {
         }
 
         return LabeledDates(roastDate, expiryDate)
+    }
+
+    private fun findDateAfterLabel(line: String, labelMatch: MatchResult): String? {
+        if (labelMatch.range.last + 1 >= line.length) return null
+        val afterLabel = line.substring(labelMatch.range.last + 1)
+        for (pattern in datePatterns) {
+            val match = pattern.find(afterLabel)
+            if (match != null) return match.value
+        }
+        return null
+    }
+
+    private fun findDateOnNextLine(lines: List<String>, currentIndex: Int): String? {
+        val nextIndex = currentIndex + 1
+        if (nextIndex >= lines.size) return null
+        val nextLine = lines[nextIndex].trim()
+        for (pattern in datePatterns) {
+            val match = pattern.find(nextLine)
+            if (match != null) return match.value
+        }
+        return null
     }
 
     private fun extractFirstDate(text: String): String? {
@@ -492,6 +551,7 @@ object OcrFieldExtractor {
         if (tastingNotesLabelRegex.containsMatchIn(text)) return true
         if (text.length <= 80 && commaFlavorLineRegex.containsMatchIn(text)) return true
         if (text.length <= 80 && altDelimiterFlavorRegex.containsMatchIn(text)) return true
+        if (text.length <= 80 && dashDelimiterFlavorRegex.containsMatchIn(text)) return true
         if (farmLabelRegex.containsMatchIn(text)) return true
 
         // Strip all known-field regex matches

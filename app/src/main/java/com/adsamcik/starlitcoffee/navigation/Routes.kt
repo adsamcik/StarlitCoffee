@@ -43,3 +43,6 @@ object OnboardingPersonalize
 
 @Serializable
 object Settings
+
+@Serializable
+object More

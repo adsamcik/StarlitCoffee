@@ -14,6 +14,7 @@ import java.net.URISyntaxException
 import java.net.URL
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
+import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -43,6 +44,7 @@ data class QrCoffeeMetadata(
     val region: String? = null,
     val processType: String? = null,
     val tastingNotes: String? = null,
+    val isDecaf: Boolean? = null,
     val supportingSnippet: String? = null,
 ) {
     fun hasCoffeeData(): Boolean = listOf(
@@ -52,7 +54,7 @@ data class QrCoffeeMetadata(
         region,
         processType,
         tastingNotes,
-    ).any { !it.isNullOrBlank() }
+    ).any { !it.isNullOrBlank() } || isDecaf == true
 }
 
 interface QrLinkMetadataExplorer {
@@ -282,6 +284,17 @@ class SafeQrLinkMetadataExplorer(
                 extractNotesPhrase(visibleText),
             ),
         )
+        val isDecaf = CoffeeMetadataNormalizer.containsDecafMarker(
+            listOfNotNull(
+                structured.name,
+                structured.description,
+                openGraphTitle,
+                pageTitle,
+                metaDescription,
+                visibleText,
+                html,
+            ).joinToString("\n"),
+        ).takeIf { it }
 
         val metadata = QrCoffeeMetadata(
             sourceUrl = sourceUrl,
@@ -295,6 +308,7 @@ class SafeQrLinkMetadataExplorer(
             region = region,
             processType = processType,
             tastingNotes = tastingNotes,
+            isDecaf = isDecaf,
             supportingSnippet = firstNonBlank(
                 structured.description,
                 metaDescription,
@@ -322,6 +336,13 @@ class SafeQrLinkMetadataExplorer(
         }
 
         val structured = extractStructuredMetadataFromJson(root)
+        val isDecaf = CoffeeMetadataNormalizer.containsDecafMarker(
+            listOfNotNull(
+                structured.name,
+                structured.description,
+                body,
+            ).joinToString("\n"),
+        ).takeIf { it }
         val metadata = QrCoffeeMetadata(
             sourceUrl = sourceUrl,
             finalUrl = finalUrl,
@@ -334,6 +355,7 @@ class SafeQrLinkMetadataExplorer(
             region = canonicalRegion(structured.region),
             processType = canonicalProcessType(structured.processType),
             tastingNotes = cleanNotes(structured.tastingNotes),
+            isDecaf = isDecaf,
             supportingSnippet = cleanText(structured.description)?.take(SNIPPET_CHAR_LIMIT),
         )
 

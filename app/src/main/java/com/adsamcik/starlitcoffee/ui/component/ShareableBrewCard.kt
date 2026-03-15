@@ -74,7 +74,7 @@ fun ShareableBrewCard(
 
             // Method + bean name
             Text(
-                text = methodName,
+                text = if (brew.isDecaf) "$methodName · Decaf" else methodName,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -83,6 +83,13 @@ fun ShareableBrewCard(
                 Text(
                     text = bagName,
                     style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
+            if (brew.isDecaf) {
+                Text(
+                    text = "Decaf",
+                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                 )
             }
@@ -197,6 +204,7 @@ fun shareBrewCard(
     val text = buildString {
         if (ratingEmoji.isNotEmpty()) append("$ratingEmoji ")
         append("$methodName brew")
+        if (brew.isDecaf) append(" · Decaf")
         if (bagName != null) append(" · $bagName")
         appendLine()
         appendLine()
@@ -216,7 +224,10 @@ fun shareBrewCard(
     val shareIntent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, text)
-        putExtra(Intent.EXTRA_SUBJECT, "$ratingEmoji My $methodName brew")
+        putExtra(
+            Intent.EXTRA_SUBJECT,
+            "$ratingEmoji My ${if (brew.isDecaf) "decaf " else ""}$methodName brew",
+        )
     }
 
     context.startActivity(Intent.createChooser(shareIntent, "Share your brew"))

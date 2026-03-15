@@ -4,6 +4,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.model.CoffeeRegion
 import java.util.Locale
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -206,5 +207,13 @@ class CoffeeMetadataNormalizerTest {
         assertTrue(regions.contains(CoffeeRegion.Known.GUJI))
         assertTrue(regions.contains(CoffeeRegion.Known.YIRGACHEFFE))
         assertTrue(regions.none { it == CoffeeRegion.Known.HUILA })
+    }
+
+    @Test
+    fun `containsDecafMarker recognizes multilingual decaf aliases`() {
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("Kolumbie Tumbaga decaf"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("Bez kofeinu"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("Entkoffeiniert"))
+        assertFalse(CoffeeMetadataNormalizer.containsDecafMarker("Caffeinated espresso roast"))
     }
 }

@@ -40,6 +40,13 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+        }
     }
 }
 
@@ -155,6 +162,9 @@ dependencies {
 
     // Coroutines
     implementation(libs.coroutines.android)
+
+    // WorkManager
+    implementation(libs.work.runtime)
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)

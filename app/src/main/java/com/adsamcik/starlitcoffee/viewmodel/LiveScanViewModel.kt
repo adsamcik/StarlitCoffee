@@ -15,7 +15,6 @@ import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,7 +33,6 @@ import kotlinx.coroutines.launch
  * - Adaptive throttle management
  * - Golden frame detection and heavy-pass triggering
  * - Live enrichment (barcode/QR/API) integration
- * - Scan timeout management
  */
 class LiveScanViewModel(
     private val config: AccumulatorConfig = AccumulatorConfig.DEFAULT,
@@ -59,10 +57,6 @@ class LiveScanViewModel(
 
     private var frameIndex: Int = 0
     private var isStarted: Boolean = false
-
-    // --- Timeout ---
-
-    private var timeoutJob: Job? = null
 
     // --- Enrichment dedup tracking (for UI feedback) ---
 
@@ -117,12 +111,6 @@ class LiveScanViewModel(
             }
         }
 
-        // Start timeout timer
-        timeoutJob = viewModelScope.launch {
-            delay(config.scanTimeoutMs)
-            _liveScanUiState.value = _liveScanUiState.value.copy(isTimedOut = true)
-        }
-
         _liveScanUiState.value = _liveScanUiState.value.copy(
             isScanning = true,
             scanStartTimeMs = System.currentTimeMillis(),
@@ -143,8 +131,6 @@ class LiveScanViewModel(
         accumulatorEvidenceJob = null
         accumulator?.stop()
         accumulator = null
-        timeoutJob?.cancel()
-        timeoutJob = null
         sideDetector?.reset()
         sideDetector = null
         consensusEngine = null
@@ -307,19 +293,6 @@ class LiveScanViewModel(
         accumulator?.userResetField(fieldName)
     }
 
-    /**
-     * User dismisses the timeout prompt to continue scanning.
-     */
-    fun dismissTimeout() {
-        _liveScanUiState.value = _liveScanUiState.value.copy(isTimedOut = false)
-        // Restart timeout
-        timeoutJob?.cancel()
-        timeoutJob = viewModelScope.launch {
-            delay(config.scanTimeoutMs)
-            _liveScanUiState.value = _liveScanUiState.value.copy(isTimedOut = true)
-        }
-    }
-
     // --- Draft bag ---
 
     /**
@@ -380,7 +353,6 @@ class LiveScanViewModel(
 data class LiveScanUiState(
     val isScanning: Boolean = false,
     val scanStartTimeMs: Long = 0L,
-    val isTimedOut: Boolean = false,
     val sideFlipDetected: Boolean = false,
     val goldenFrameCount: Int = 0,
     val lastRejectionReason: String? = null,

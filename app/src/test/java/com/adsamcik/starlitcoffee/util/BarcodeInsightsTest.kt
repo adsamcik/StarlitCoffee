@@ -76,6 +76,21 @@ class BarcodeInsightsTest {
     }
 
     @Test
+    fun `build local match candidates includes decaf evidence`() {
+        val matchedBag = CoffeeBagEntity(
+            name = "Night Shift",
+            roaster = "Beansmith's",
+            isDecaf = true,
+        )
+
+        val candidates = BarcodeInsights.buildLocalMatchCandidates(matchedBag)
+
+        val decafCandidate = candidates.first { it.fieldName == "isDecaf" }
+        assertEquals("Decaf", decafCandidate.value)
+        assertEquals("true", decafCandidate.canonicalKey)
+    }
+
+    @Test
     fun `build local match candidates localizes canonical metadata for requested locale`() {
         val matchedBag = CoffeeBagEntity(
             name = "Vacation Bag",

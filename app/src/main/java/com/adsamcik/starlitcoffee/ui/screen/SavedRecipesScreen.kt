@@ -116,7 +116,10 @@ private fun RecipeCard(
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
-                        text = recipe.method,
+                        text = buildString {
+                            append(recipe.method)
+                            if (recipe.isDecaf) append(" · Decaf")
+                        },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

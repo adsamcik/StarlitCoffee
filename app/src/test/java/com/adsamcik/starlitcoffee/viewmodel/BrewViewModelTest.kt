@@ -675,6 +675,16 @@ class BrewViewModelTest {
     }
 
     @Test
+    fun `saveRecipe persists decaf flag`() {
+        val persistenceViewModel = createPersistenceViewModel()
+        persistenceViewModel.setDecafBrew(true)
+
+        persistenceViewModel.saveRecipe("Evening Brew")
+
+        assertTrue(persistenceViewModel.savedRecipes.value.first().isDecaf)
+    }
+
+    @Test
     fun `saveRecipe ignores call when repository is null`() {
         viewModel.saveRecipe("No Repo")
 
@@ -763,6 +773,22 @@ class BrewViewModelTest {
         persistenceViewModel.loadRecipe(recipe)
 
         assertEquals(FilterType.PAPER, persistenceViewModel.uiState.value.filterType)
+    }
+
+    @Test
+    fun `loadRecipe restores decaf flag`() {
+        val persistenceViewModel = createPersistenceViewModel()
+        val recipe = SavedRecipeEntity(
+            method = "PULSAR",
+            ratio = 17f,
+            doseG = 20f,
+            waterG = 340f,
+            isDecaf = true,
+        )
+
+        persistenceViewModel.loadRecipe(recipe)
+
+        assertTrue(persistenceViewModel.uiState.value.isDecafBrew)
     }
 
     @Test
@@ -946,6 +972,16 @@ class BrewViewModelTest {
         persistenceViewModel.logBrew()
 
         assertEquals("METAL_40K", persistenceViewModel.brewLogs.value.first().filterType)
+    }
+
+    @Test
+    fun `logBrew captures decaf flag`() {
+        val persistenceViewModel = createPersistenceViewModel()
+        persistenceViewModel.setDecafBrew(true)
+
+        persistenceViewModel.logBrew()
+
+        assertTrue(persistenceViewModel.brewLogs.value.first().isDecaf)
     }
 
     // --- Delete Brew Log ---
@@ -1479,5 +1515,4 @@ class BrewViewModelTest {
         targetViewModel.setUiStateForTesting(currentState.copy(elapsedSeconds = elapsedSeconds))
     }
 }
-
 

@@ -10,10 +10,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.LocalCafe
-import androidx.compose.material.icons.filled.ShoppingBag
+import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -23,7 +22,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,7 +43,6 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
-import com.adsamcik.starlitcoffee.ui.component.BrewRatingSheet
 import com.adsamcik.starlitcoffee.ui.screen.AmountStrengthScreen
 import com.adsamcik.starlitcoffee.ui.screen.BagInventoryScreen
 import com.adsamcik.starlitcoffee.ui.screen.BarcodeScannerScreen
@@ -54,6 +51,7 @@ import com.adsamcik.starlitcoffee.ui.screen.BrewLogDetailScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.LiveScanScreen
 import com.adsamcik.starlitcoffee.ui.screen.MethodPickerScreen
+import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
 import com.adsamcik.starlitcoffee.ui.screen.SavedRecipesScreen
@@ -62,6 +60,7 @@ import com.adsamcik.starlitcoffee.ui.screen.TasteFeedbackScreen
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModelFactory
 import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
+import java.util.HashMap
 import kotlinx.coroutines.launch
 
 private data class BottomNavItem(
@@ -72,9 +71,8 @@ private data class BottomNavItem(
 
 private val bottomNavItems = listOf(
     BottomNavItem("Brew", Icons.Filled.LocalCafe, MethodPicker),
-    BottomNavItem("Recipes", Icons.Filled.Bookmark, SavedRecipes),
-    BottomNavItem("Bags", Icons.Filled.ShoppingBag, BagInventory),
     BottomNavItem("Log", Icons.Filled.History, BrewLogList),
+    BottomNavItem("More", Icons.Filled.MoreHoriz, More),
 )
 
 private val onboardingRoutes = setOf(
@@ -110,6 +108,20 @@ fun StarlitNavHost() {
     val showBottomBar = currentDestination?.let { dest ->
         bottomNavItems.any { dest.hasRoute(it.route::class) }
     } ?: false
+
+    // Handle rating reminder from notification tap
+    val activity = LocalContext.current as? com.adsamcik.starlitcoffee.MainActivity
+    val pendingRatingId = activity?.pendingRatingBrewId
+    if (pendingRatingId != null) {
+        com.adsamcik.starlitcoffee.ui.component.BrewRatingSheet(
+            onDismiss = { activity.clearPendingRating() },
+            onSave = { rating, descriptors, notes ->
+                brewViewModel.saveRatingForLog(pendingRatingId, rating, descriptors, notes)
+                com.adsamcik.starlitcoffee.service.RatingReminderWorker.cancel(context, pendingRatingId)
+                activity.clearPendingRating()
+            },
+        )
+    }
 
     // Wait for prefs to load before rendering
     val prefs = userPrefs
@@ -214,27 +226,9 @@ fun StarlitNavHost() {
 
             // Main app screens
             composable<MethodPicker> {
-                val state by brewViewModel.uiState.collectAsStateWithLifecycle()
-                var showRatingSheet by remember { mutableStateOf(false) }
-                LaunchedEffect(state.showFeedbackSnackbar) {
-                    if (state.showFeedbackSnackbar) {
-                        brewViewModel.clearFeedbackSnackbar()
-                        showRatingSheet = true
-                    }
-                }
-                if (showRatingSheet) {
-                    BrewRatingSheet(
-                        onDismiss = { showRatingSheet = false },
-                        onSave = { rating, descriptors, notes ->
-                            brewViewModel.saveBrewWithRating(rating, descriptors, notes)
-                            showRatingSheet = false
-                        },
-                    )
-                }
                 MethodPickerScreen(
                     brewViewModel = brewViewModel,
                     userPreferencesRepository = userPreferencesRepository,
-                    onNavigateToAmount = { navController.navigate(AmountStrength) },
                     onNavigateToSettings = { navController.navigate(Settings) },
                     onNavigateToTimer = { navController.navigate(BrewTimer) },
                 )
@@ -269,7 +263,6 @@ fun StarlitNavHost() {
                 SavedRecipesScreen(
                     brewViewModel = brewViewModel,
                     onNavigateToAmount = { navController.navigate(AmountStrength) },
-                    onNavigateToTimer = { navController.navigate(BrewTimer) },
                 )
             }
             composable<BagInventory> { backStackEntry ->
@@ -277,7 +270,7 @@ fun StarlitNavHost() {
                     .getStateFlow<String?>("captured_photos", null)
                     .collectAsStateWithLifecycle()
                 val scanFields by backStackEntry.savedStateHandle
-                    .getStateFlow<String?>("scan_fields", null)
+                    .getStateFlow<HashMap<String, String>?>("scan_fields", null)
                     .collectAsStateWithLifecycle()
                 BagInventoryScreen(
                     brewViewModel = brewViewModel,
@@ -292,6 +285,13 @@ fun StarlitNavHost() {
                     onNavigateToDetail = { logId ->
                         navController.navigate(BrewLogDetail(logId = logId))
                     },
+                )
+            }
+            composable<More> {
+                MoreScreen(
+                    onNavigateToRecipes = { navController.navigate(SavedRecipes) },
+                    onNavigateToBags = { navController.navigate(BagInventory) },
+                    onNavigateToSettings = { navController.navigate(Settings) },
                 )
             }
             composable<BrewLogDetail> { backStackEntry ->
@@ -328,7 +328,7 @@ fun StarlitNavHost() {
                         // Pass resolved fields to BagInventory via savedStateHandle
                         navController.previousBackStackEntry
                             ?.savedStateHandle
-                            ?.set("scan_fields", resolvedFields.entries.joinToString("|") { "${it.key}=${it.value}" })
+                            ?.set("scan_fields", HashMap(resolvedFields))
                         navController.popBackStack()
                     },
                 )

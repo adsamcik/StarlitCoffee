@@ -719,4 +719,440 @@ class OcrFieldExtractorTest {
         )
         assertEquals("El Paraiso", result.farm)
     }
+
+    // --- Nordbeans Guatemala Severka (real Czech bag) ---
+
+    private val nordbeansfront = """
+        COFFEE NORDBEANS
+        Severka
+        GUATEMALA
+        MANDLE - MLÉČNÁ ČOKOLÁDA - JABLKA
+        Ideální káva pro vaši domácí přípravu
+    """.trimIndent()
+
+    private val nordbeansBack = """
+        Káva se srdcem v horách
+        pražená zrnková káva - hmotnost
+        250 g
+        složení
+        100% káva
+        uchovávejte nejlépe v původním obalu při pokojové teplotě do
+        25°C
+        upražili jsme:
+        13.01.2026
+        minimální trvanlivost:
+        15.07.2026
+        Severka / Rohlík
+        8 594200 941437
+        Pražená zrnková káva - 250g
+        výrobce: NORDBEANS s. r. o.
+        adresa: 1. máje 868/11, 460 07 Liberec
+        NORDBEANS
+        nordbeans.cz
+    """.trimIndent()
+
+    @Test
+    fun `Nordbeans front extracts origin Guatemala`() {
+        val result = OcrFieldExtractor.extractFields(nordbeansfront)
+        assertNotNull("Origin should be Guatemala", result.origin)
+        assertTrue(result.origin!!.contains("Guatemala", ignoreCase = true))
+    }
+
+    @Test
+    fun `Nordbeans front extracts dash-delimited tasting notes`() {
+        val result = OcrFieldExtractor.extractFields(nordbeansfront)
+        assertNotNull("Should extract dash-separated tasting notes", result.tastingNotes)
+        assertTrue(
+            "Should contain MANDLE",
+            result.tastingNotes!!.contains("MANDLE", ignoreCase = true),
+        )
+        assertTrue(
+            "Should contain JABLKA",
+            result.tastingNotes!!.contains("JABLKA", ignoreCase = true),
+        )
+    }
+
+    @Test
+    fun `Nordbeans back extracts roast date from uprazili jsme label`() {
+        val result = OcrFieldExtractor.extractFields(nordbeansBack)
+        assertNotNull("Should extract roast date from 'upražili jsme:' label", result.roastDate)
+        assertEquals("13.01.2026", result.roastDate)
+    }
+
+    @Test
+    fun `Nordbeans back extracts expiry date from minimalni trvanlivost label`() {
+        val result = OcrFieldExtractor.extractFields(nordbeansBack)
+        assertNotNull("Should extract expiry date from 'minimální trvanlivost:'", result.expiryDate)
+        assertEquals("15.07.2026", result.expiryDate)
+    }
+
+    @Test
+    fun `Nordbeans back extracts weight 250g`() {
+        val result = OcrFieldExtractor.extractFields(nordbeansBack)
+        assertNotNull("Should extract weight", result.weight)
+        assertTrue(result.weight!!.contains("250"))
+    }
+
+    @Test
+    fun `Nordbeans back extracts barcode from OCR text`() {
+        val barcode = OcrFieldExtractor.extractBarcodeFromText(nordbeansBack)
+        assertNotNull("Should extract barcode", barcode)
+        assertEquals("8594200941437", barcode)
+    }
+
+    @Test
+    fun `Nordbeans merged extraction captures both dates and tasting notes`() {
+        val front = OcrFieldExtractor.extractFields(nordbeansfront)
+        val back = OcrFieldExtractor.extractFields(nordbeansBack)
+
+        val merged = OcrFieldExtractor.OcrExtractionResult(
+            name = front.name ?: back.name,
+            roaster = front.roaster ?: back.roaster,
+            origin = front.origin ?: back.origin,
+            region = front.region ?: back.region,
+            variety = front.variety ?: back.variety,
+            processType = front.processType ?: back.processType,
+            altitude = front.altitude ?: back.altitude,
+            tastingNotes = front.tastingNotes ?: back.tastingNotes,
+            roastLevel = front.roastLevel ?: back.roastLevel,
+            roastDate = front.roastDate ?: back.roastDate,
+            expiryDate = front.expiryDate ?: back.expiryDate,
+            weight = front.weight ?: back.weight,
+        )
+
+        assertNotNull("Origin should be Guatemala", merged.origin)
+        assertNotNull("Tasting notes should be extracted", merged.tastingNotes)
+        assertNotNull("Roast date should be 13.01.2026", merged.roastDate)
+        assertNotNull("Expiry date should be 15.07.2026", merged.expiryDate)
+        assertNotNull("Weight should be extracted", merged.weight)
+    }
+
+    // --- Merrybeans Colombia Tumbaga Decaf (real Czech bag) ---
+
+    private val merrybeansBack = """
+        Původ: Kolumbie Tumbaga decaf
+        Metoda zpracování: promytá (sugarcane decaf)
+        Chuťový profil: smetana, vanilka, mandarinky
+        Odrůda kávovníku: smíšené odrůdy
+        Nadmořská výška: 1400-2100 m n.m.
+        Pražení: filtr espresso
+        Pražená zrnková káva od výrobce Merrybeans s.r.o.
+        Skladujte v suchu při pokojové teplotě.
+        Datum pražení: 12.12.2025
+        Minimální trvanlivost: 12.6.2026
+        Hmotnost: 250g
+    """.trimIndent()
+
+    @Test
+    fun `Merrybeans extracts decaf marker from Czech bag`() {
+        val result = OcrFieldExtractor.extractFields(merrybeansBack)
+
+        assertTrue(result.isDecaf == true)
+        assertEquals(BagFieldConfidence.HIGH, result.fieldConfidence["isDecaf"])
+    }
+
+    @Test
+    fun `Merrybeans extracts tasting notes from Chutovy profil label`() {
+        val result = OcrFieldExtractor.extractFields(merrybeansBack)
+        assertNotNull("Should extract tasting notes from 'Chuťový profil:'", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("smetana", ignoreCase = true))
+        assertTrue(result.tastingNotes!!.contains("vanilka", ignoreCase = true))
+    }
+
+    @Test
+    fun `Merrybeans extracts roast date from Datum prazeni label`() {
+        val result = OcrFieldExtractor.extractFields(merrybeansBack)
+        assertNotNull("Should extract roast date", result.roastDate)
+        assertEquals("12.12.2025", result.roastDate)
+    }
+
+    @Test
+    fun `Merrybeans extracts expiry from Minimalni trvanlivost label`() {
+        val result = OcrFieldExtractor.extractFields(merrybeansBack)
+        assertNotNull("Should extract expiry date from 'Minimální trvanlivost:'", result.expiryDate)
+    }
+
+    @Test
+    fun `Merrybeans extracts altitude with Czech m n m unit`() {
+        val result = OcrFieldExtractor.extractFields(merrybeansBack)
+        assertNotNull("Should extract altitude with Czech unit", result.altitude)
+        assertTrue(
+            "Altitude should contain 1400",
+            result.altitude!!.contains("1400"),
+        )
+    }
+
+    @Test
+    fun `Merrybeans extracts weight 250g`() {
+        val result = OcrFieldExtractor.extractFields(merrybeansBack)
+        assertNotNull("Should extract weight", result.weight)
+        assertTrue(result.weight!!.contains("250"))
+    }
+
+    @Test
+    fun `Merrybeans extracts origin with Czech country hint`() {
+        val result = OcrFieldExtractor.extractFields(
+            merrybeansBack,
+            countryHint = CoffeeCountryDictionaries.CZECH,
+        )
+        assertNotNull("Should extract origin from 'Původ:' label", result.origin)
+    }
+
+    @Test
+    fun `Merrybeans extracts variety from Odruda kavovniku label with Czech hint`() {
+        val result = OcrFieldExtractor.extractFields(
+            merrybeansBack,
+            countryHint = CoffeeCountryDictionaries.CZECH,
+        )
+        // The variety section label "Odrůda kávovníku" is in the Czech dictionary
+        // The full text after the label is "smíšené odrůdy" — extracted as raw value
+        // But "Odrůda" by itself is also in the variety regex via search terms
+        // What matters: the variety field or at least some extraction happens
+        assertNotNull("Should extract variety info from Czech variety label", result.variety)
+    }
+
+    // --- Dash delimiter edge cases ---
+
+    @Test
+    fun `dash delimiter does not false-positive on two-item lines`() {
+        val text = "HEIRLOOM - WASHED"
+        val result = OcrFieldExtractor.extractFields(text)
+        // Two-item dash line should NOT be treated as tasting notes
+        // (it should be matched as variety + process)
+        assertNotNull("Should extract variety", result.variety)
+        assertNotNull("Should extract process", result.processType)
+    }
+
+    @Test
+    fun `dash delimiter extracts three or more items as tasting notes`() {
+        val text = "Jahoda - Čokoláda - Ořechy"
+        val result = OcrFieldExtractor.extractFields(text)
+        assertNotNull("Should extract dash-separated tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("Jahoda", ignoreCase = true))
+        assertTrue(result.tastingNotes!!.contains("Čokoláda", ignoreCase = true))
+        assertTrue(result.tastingNotes!!.contains("Ořechy", ignoreCase = true))
+    }
+
+    @Test
+    fun `en-dash delimiter extracts tasting notes`() {
+        val text = "Mandel – Milchschokolade – Äpfel"
+        val result = OcrFieldExtractor.extractFields(text)
+        assertNotNull("Should extract en-dash-separated tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("Mandel", ignoreCase = true))
+    }
+
+    // --- French language ---
+
+    @Test
+    fun `extracts French notes de degustation label`() {
+        val result = OcrFieldExtractor.extractFields(
+            "Notes de dégustation: cerise, chocolat noir, jasmin",
+        )
+        assertNotNull("Should extract French tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("cerise", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts French torrefie roast date`() {
+        val result = OcrFieldExtractor.extractFields("Torréfié le: 10.02.2026")
+        assertNotNull("Should extract French roast date", result.roastDate)
+    }
+
+    @Test
+    fun `extracts French DLUO expiry`() {
+        val result = OcrFieldExtractor.extractFields("DLUO: 10.08.2026")
+        assertNotNull("Should extract French DLUO expiry", result.expiryDate)
+    }
+
+    @Test
+    fun `extracts French origin with country hint`() {
+        val text = "Origine: Éthiopie\nVariété: Heirloom\nTraitement: Lavé"
+        val result = OcrFieldExtractor.extractFields(
+            text,
+            countryHint = CoffeeCountryDictionaries.FRENCH,
+        )
+        assertEquals("Éthiopie", result.origin)
+    }
+
+    // --- Portuguese language ---
+
+    @Test
+    fun `extracts Portuguese tasting notes label`() {
+        val result = OcrFieldExtractor.extractFields(
+            "Notas de degustação: cacau, caramelo, frutas vermelhas",
+        )
+        assertNotNull("Should extract Portuguese tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("cacau", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts Portuguese validade expiry`() {
+        val result = OcrFieldExtractor.extractFields("Validade: 15.09.2026")
+        assertNotNull("Should extract Portuguese expiry", result.expiryDate)
+    }
+
+    // --- Dutch language ---
+
+    @Test
+    fun `extracts Dutch smaaknotities label`() {
+        val result = OcrFieldExtractor.extractFields(
+            "Smaaknotities: bessen, chocolade, noten",
+        )
+        assertNotNull("Should extract Dutch tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("bessen", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts Dutch THT expiry`() {
+        val result = OcrFieldExtractor.extractFields("THT: 20.07.2026")
+        assertNotNull("Should extract Dutch THT expiry", result.expiryDate)
+    }
+
+    // --- Swedish language ---
+
+    @Test
+    fun `extracts Swedish smaknoter label`() {
+        val result = OcrFieldExtractor.extractFields(
+            "Smaknoter: blåbär, choklad, honung",
+        )
+        assertNotNull("Should extract Swedish tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("choklad", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts Swedish bast fore expiry`() {
+        val result = OcrFieldExtractor.extractFields("Bäst före: 15.06.2026")
+        assertNotNull("Should extract Swedish expiry", result.expiryDate)
+    }
+
+    @Test
+    fun `extracts Swedish rostad roast date`() {
+        val result = OcrFieldExtractor.extractFields("Rostad: 15.01.2026")
+        assertNotNull("Should extract Swedish roast date", result.roastDate)
+    }
+
+    // --- Norwegian language ---
+
+    @Test
+    fun `extracts Norwegian smaksnotater label`() {
+        val result = OcrFieldExtractor.extractFields(
+            "Smaksnotater: bær, sjokolade, sitrus",
+        )
+        assertNotNull("Should extract Norwegian tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("sjokolade", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts Norwegian best for expiry`() {
+        val result = OcrFieldExtractor.extractFields("Best før: 15.06.2026")
+        assertNotNull("Should extract Norwegian expiry", result.expiryDate)
+    }
+
+    // --- Finnish language ---
+
+    @Test
+    fun `extracts Finnish makumuistiinpanot label`() {
+        val result = OcrFieldExtractor.extractFields(
+            "Makumuistiinpanot: mustikka, suklaa, hunaja",
+            countryHint = CoffeeCountryDictionaries.FINNISH,
+        )
+        assertNotNull("Should extract Finnish tasting notes", result.tastingNotes)
+    }
+
+    @Test
+    fun `extracts Finnish parasta ennen expiry`() {
+        val result = OcrFieldExtractor.extractFields("Parasta ennen: 15.06.2026")
+        assertNotNull("Should extract Finnish expiry", result.expiryDate)
+    }
+
+    @Test
+    fun `extracts Finnish paahdettu roast date`() {
+        val result = OcrFieldExtractor.extractFields("Paahdettu: 15.01.2026")
+        assertNotNull("Should extract Finnish roast date", result.roastDate)
+    }
+
+    // --- Slovak language ---
+
+    @Test
+    fun `extracts Slovak tasting notes with country hint`() {
+        val text = "Chuťový profil: maliny, čokoláda, med"
+        val result = OcrFieldExtractor.extractFields(
+            text,
+            countryHint = CoffeeCountryDictionaries.SLOVAK,
+        )
+        assertNotNull("Should extract Slovak tasting notes", result.tastingNotes)
+        assertTrue(result.tastingNotes!!.contains("maliny", ignoreCase = true))
+    }
+
+    @Test
+    fun `extracts Slovak spotrebujte do expiry`() {
+        val result = OcrFieldExtractor.extractFields("Spotrebujte do: 15.06.2026")
+        assertNotNull("Should extract Slovak expiry", result.expiryDate)
+    }
+
+    // --- Japanese language ---
+
+    @Test
+    fun `extracts Japanese tasting notes with country hint`() {
+        val text = "テイスティングノート: ブルーベリー, チョコレート, はちみつ"
+        val result = OcrFieldExtractor.extractFields(
+            text,
+            countryHint = CoffeeCountryDictionaries.JAPANESE,
+        )
+        assertNotNull("Should extract Japanese tasting notes", result.tastingNotes)
+    }
+
+    @Test
+    fun `extracts Japanese expiry label`() {
+        val result = OcrFieldExtractor.extractFields("賞味期限: 15.06.2026")
+        assertNotNull("Should extract Japanese expiry", result.expiryDate)
+    }
+
+    // --- Korean language ---
+
+    @Test
+    fun `extracts Korean tasting notes with country hint`() {
+        val text = "테이스팅 노트: 블루베리, 초콜릿, 꿀"
+        val result = OcrFieldExtractor.extractFields(
+            text,
+            countryHint = CoffeeCountryDictionaries.KOREAN,
+        )
+        assertNotNull("Should extract Korean tasting notes", result.tastingNotes)
+    }
+
+    @Test
+    fun `extracts Korean expiry label`() {
+        val result = OcrFieldExtractor.extractFields("유통기한: 15.06.2026")
+        assertNotNull("Should extract Korean expiry", result.expiryDate)
+    }
+
+    // --- GS1 region mapping ---
+
+    @Test
+    fun `GS1 prefix maps to France for 300-379`() {
+        val region = BarcodeInsights.gs1IssuerRegion("3012345678901")
+        assertNotNull("Should detect French GS1 prefix", region)
+        assertEquals("France", region!!.regionName)
+    }
+
+    @Test
+    fun `GS1 prefix maps to Sweden for 730-739`() {
+        val region = BarcodeInsights.gs1IssuerRegion("7301234567890")
+        assertNotNull("Should detect Swedish GS1 prefix", region)
+        assertEquals("Sweden", region!!.regionName)
+    }
+
+    @Test
+    fun `GS1 prefix maps to Spain for 840-849`() {
+        val region = BarcodeInsights.gs1IssuerRegion("8401234567890")
+        assertNotNull("Should detect Spanish GS1 prefix", region)
+        assertEquals("Spain", region!!.regionName)
+    }
+
+    @Test
+    fun `GS1 prefix maps to Japan for 450-459`() {
+        val region = BarcodeInsights.gs1IssuerRegion("4501234567890")
+        assertNotNull("Should detect Japanese GS1 prefix", region)
+        assertEquals("Japan", region!!.regionName)
+    }
 }

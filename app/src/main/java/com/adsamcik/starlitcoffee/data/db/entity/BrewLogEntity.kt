@@ -22,6 +22,7 @@ data class BrewLogEntity(
     val ratio: Float,
     val grindSetting: String? = null,
     val filterType: String? = null,
+    val isDecaf: Boolean = false,
     val tasteFeedback: String? = null,
     val rating: Float? = null,
     val freeformNotes: String? = null,

@@ -82,6 +82,7 @@ import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.DateParser
 import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
+import com.adsamcik.starlitcoffee.util.WeightParser
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -185,7 +186,9 @@ fun AddBagSheet(
         mutableStateOf(bagToEdit?.weightG?.let { "%.0f".format(it) } ?: ocrPrefill?.weight ?: "")
     }
     var notes by remember(bagToEdit) { mutableStateOf(bagToEdit?.notes ?: "") }
-    var isDecaf by remember(bagToEdit) { mutableStateOf(bagToEdit?.isDecaf ?: false) }
+    var isDecaf by remember(ocrPrefill, bagToEdit) {
+        mutableStateOf(bagToEdit?.isDecaf ?: ocrPrefill?.isDecaf ?: false)
+    }
     var roastDateMillis by remember(ocrPrefill, bagToEdit) {
         mutableStateOf(bagToEdit?.roastDate ?: ocrPrefill?.roastDate?.let { DateParser.parse(it) })
     }
@@ -215,6 +218,7 @@ fun AddBagSheet(
         tastingNotes = tastingNotes,
         roastDateMillis = roastDateMillis,
         expiryDateMillis = expiryDateMillis,
+        isDecaf = isDecaf,
         weight = weight,
         fieldEvidence = fieldEvidence,
         fieldConfidence = ocrPrefill?.fieldConfidence.orEmpty(),
@@ -779,7 +783,7 @@ fun AddBagSheet(
                                     region = originRegion.takeIf { it.isNotBlank() },
                                     roastLevel = roastLevel.takeIf { it.isNotBlank() },
                                     barcode = barcode.takeIf { it.isNotBlank() },
-                                    weightG = weight.toFloatOrNull() ?: bagToEdit.weightG,
+                                    weightG = WeightParser.parseToGrams(weight) ?: bagToEdit.weightG,
                                     notes = notes.takeIf { it.isNotBlank() },
                                     variety = variety.takeIf { it.isNotBlank() },
                                     processType = processType.takeIf { it.isNotBlank() },
@@ -797,7 +801,7 @@ fun AddBagSheet(
                                 originRegion.takeIf { it.isNotBlank() },
                                 roastLevel.takeIf { it.isNotBlank() },
                                 barcode.takeIf { it.isNotBlank() },
-                                weight.toFloatOrNull(),
+                                WeightParser.parseToGrams(weight),
                                 notes.takeIf { it.isNotBlank() },
                                 variety.takeIf { it.isNotBlank() },
                                 processType.takeIf { it.isNotBlank() },
@@ -842,6 +846,7 @@ private val SNAP_APPROVE_EMOJI_MAP = mapOf(
     "roastLevel" to "🌗",
     "roastDate" to "📅",
     "expiryDate" to "⏳",
+    "isDecaf" to "🌙",
     "weight" to "⚖️",
     "farm" to "🚜",
 )
@@ -855,6 +860,7 @@ private fun buildSnapApproveFieldItems(
     tastingNotes: String,
     roastDateMillis: Long?,
     expiryDateMillis: Long?,
+    isDecaf: Boolean,
     weight: String,
     fieldEvidence: Map<String, BagFieldEvidence>,
     fieldConfidence: Map<String, BagFieldConfidence>,
@@ -870,6 +876,11 @@ private fun buildSnapApproveFieldItems(
     },
     expiryDateMillis?.let {
         snapApproveFieldItem("expiryDate", DateParser.format(it), fieldEvidence, fieldConfidence)
+    },
+    if (isDecaf) {
+        snapApproveFieldItem("isDecaf", "Decaf", fieldEvidence, fieldConfidence)
+    } else {
+        null
     },
     snapApproveFieldItem("tastingNotes", tastingNotes, fieldEvidence, fieldConfidence),
 )
@@ -913,6 +924,7 @@ private fun fieldNeedsOptionalSection(fieldName: String): Boolean = fieldName in
     "processType",
     "tastingNotes",
     "expiryDate",
+    "isDecaf",
 )
 
 private fun fullFormIndexForField(

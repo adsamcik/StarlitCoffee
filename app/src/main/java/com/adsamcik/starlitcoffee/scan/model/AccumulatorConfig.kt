@@ -48,9 +48,6 @@ data class AccumulatorConfig(
     /** Time window (ms) after hash spike for text confirmation of side flip. */
     val sideFlipTextConfirmMs: Long = 2000L,
 
-    /** Maximum scan session duration (ms) before timeout prompt. */
-    val scanTimeoutMs: Long = 120_000L,
-
     /** Fields considered "core" for draft bag trigger and completion checks. */
     val coreFields: Set<String> = setOf("name", "roaster", "origin"),
 
@@ -58,7 +55,7 @@ data class AccumulatorConfig(
     val allFields: Set<String> = setOf(
         "name", "roaster", "origin", "region", "farm", "variety",
         "processType", "altitude", "tastingNotes", "roastLevel",
-        "roastDate", "weight",
+        "roastDate", "expiryDate", "weight", "isDecaf",
     ),
 
     /** Minimum core fields that must reach PROVISIONAL before showing draft bag. */

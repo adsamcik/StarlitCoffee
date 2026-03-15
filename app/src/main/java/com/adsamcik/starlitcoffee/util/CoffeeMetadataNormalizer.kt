@@ -80,6 +80,30 @@ object CoffeeMetadataNormalizer {
         Locale("da"),
     )
 
+    private val decafMarkers = listOf(
+        "decaf",
+        "decaffeinated",
+        "caffeine free",
+        "caffeine-free",
+        "without caffeine",
+        "swiss water decaf",
+        "sugarcane decaf",
+        "ethyl acetate decaf",
+        "descafeinado",
+        "descafeinada",
+        "sin cafeina",
+        "sans caffeine",
+        "entkoffeiniert",
+        "koffeinfrei",
+        "bez kofeinu",
+        "bezkofeinova",
+        "bezkofeinovy",
+        "dekofeinizovana",
+        "senza caffeina",
+        "koffeinfri",
+        "uden koffein",
+    ).map(::normalizeSearch)
+
     private val originCountryCodes = mapOf(
         CoffeeOrigin.Known.ETHIOPIA.name to "ET",
         CoffeeOrigin.Known.COLOMBIA.name to "CO",
@@ -473,6 +497,14 @@ object CoffeeMetadataNormalizer {
             .flatMap { entry -> entry.aliases }
             .distinct()
             .sortedByDescending { it.length }
+    }
+
+    fun containsDecafMarker(text: String?): Boolean {
+        val normalized = text
+            ?.takeIf { it.isNotBlank() }
+            ?.let(::normalizeSearch)
+            ?: return false
+        return decafMarkers.any { marker -> normalized.contains(marker) }
     }
 
     fun inferenceAliases(fieldName: String, value: String): Set<String> {

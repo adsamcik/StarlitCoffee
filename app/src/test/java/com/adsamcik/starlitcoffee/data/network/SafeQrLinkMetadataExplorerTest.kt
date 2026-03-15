@@ -89,6 +89,50 @@ class SafeQrLinkMetadataExplorerTest {
         assertEquals("Peach, jasmine", metadata.tastingNotes)
     }
 
+    @Test
+    fun `html parsing detects decaf markers from page content`() {
+        val explorer = SafeQrLinkMetadataExplorer()
+        val metadata = explorer.parseHtmlDocument(
+            html = """
+                <html>
+                  <head>
+                    <title>Colombia Tumbaga Decaf</title>
+                    <meta name="description" content="Sweet decaf coffee with caramel notes." />
+                  </head>
+                  <body>
+                    <p>Swiss Water decaf</p>
+                  </body>
+                </html>
+            """.trimIndent(),
+            sourceUrl = "https://roaster.example/tumbaga-decaf",
+            finalUrl = "https://roaster.example/tumbaga-decaf",
+        )
+
+        assertTrue(metadata?.isDecaf == true)
+    }
+
+    @Test
+    fun `json parsing detects decaf markers from structured payload`() {
+        val explorer = SafeQrLinkMetadataExplorer()
+        val metadata = explorer.parseJsonDocument(
+            body = """
+                {
+                  "@context": "https://schema.org",
+                  "@type": "Product",
+                  "name": "Night Shift",
+                  "description": "Sugarcane decaf coffee",
+                  "additionalProperty": [
+                    { "name": "Origin", "value": "Colombia" }
+                  ]
+                }
+            """.trimIndent(),
+            sourceUrl = "https://roaster.example/night-shift",
+            finalUrl = "https://roaster.example/night-shift",
+        )
+
+        assertTrue(metadata?.isDecaf == true)
+    }
+
     // --- URL Safety ---
 
     @Test

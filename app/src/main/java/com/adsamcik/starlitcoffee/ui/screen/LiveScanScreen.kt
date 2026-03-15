@@ -84,6 +84,7 @@ import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
+import com.adsamcik.starlitcoffee.util.ScanFieldSupport
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
 import com.google.mlkit.vision.text.TextRecognition
@@ -212,26 +213,6 @@ fun LiveScanScreen(
         previousLockedCount = currentLocked
     }
 
-    // --- Timeout dialog ---
-
-    if (uiState.isTimedOut) {
-        AlertDialog(
-            onDismissRequest = { liveScanViewModel.dismissTimeout() },
-            title = { Text("Still scanning?") },
-            text = { Text("Save what you have or keep scanning.") },
-            confirmButton = {
-                TextButton(onClick = { liveScanViewModel.dismissTimeout() }) {
-                    Text("Keep Scanning")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = onBack) {
-                    Text("Discard")
-                }
-            },
-        )
-    }
-
     // --- Discard confirmation on back ---
 
     var showDiscardDialog by remember { mutableStateOf(false) }
@@ -325,17 +306,21 @@ fun LiveScanScreen(
             onResetField = liveScanViewModel::resetField,
             onQuickSave = {
                 val fields = liveScanViewModel.buildResolvedFields()
-                val name = fields["name"] ?: fields["roaster"] ?: "Scanned Bag"
+                val draft = ScanFieldSupport.buildDraft(fields) ?: return@BottomOverlay
                 brewViewModel.addCoffeeBag(
-                    name = name,
-                    roaster = fields["roaster"],
-                    origin = fields["origin"],
-                    region = fields["region"],
-                    variety = fields["variety"],
-                    processType = fields["processType"],
-                    tastingNotes = fields["tastingNotes"],
-                    roastLevel = fields["roastLevel"],
+                    name = draft.name,
+                    roaster = draft.roaster,
+                    origin = draft.origin,
+                    region = draft.region,
+                    variety = draft.variety,
+                    processType = draft.processType,
+                    tastingNotes = draft.tastingNotes,
+                    roastLevel = draft.roastLevel,
+                    roastDate = draft.roastDateMillis,
+                    expiryDate = draft.expiryDateMillis,
                     barcode = evidence.detectedBarcode,
+                    weightG = draft.weightG,
+                    isDecaf = draft.isDecaf,
                     traceabilityUrl = evidence.detectedQrUrl,
                 )
                 onSaveComplete()
@@ -842,7 +827,9 @@ private fun fieldEmoji(fieldName: String): String = when (fieldName) {
     "tastingNotes" -> "👅"
     "roastLevel" -> "🔥"
     "roastDate" -> "📅"
+    "expiryDate" -> "🗓️"
     "weight" -> "⚖️"
+    "isDecaf" -> "🌙"
     else -> "📋"
 }
 

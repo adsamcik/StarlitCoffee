@@ -39,8 +39,10 @@ import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
+import com.adsamcik.starlitcoffee.util.ScanFieldSupport
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
+import java.util.HashMap
 import java.util.Locale
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
@@ -53,7 +55,7 @@ fun BagInventoryScreen(
     brewViewModel: BrewViewModel,
     onNavigateToCamera: () -> Unit,
     capturedPhotosResult: String? = null,
-    scanFieldsResult: String? = null,
+    scanFieldsResult: HashMap<String, String>? = null,
 ){
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
@@ -140,28 +142,22 @@ fun BagInventoryScreen(
     }
 
     // Handle resolved scan fields from LiveScan "Review First"
-    var lastProcessedScanFields by remember { mutableStateOf<String?>(null) }
+    var lastProcessedScanFields by remember { mutableStateOf<HashMap<String, String>?>(null) }
     LaunchedEffect(scanFieldsResult) {
         val fields = scanFieldsResult ?: return@LaunchedEffect
         if (fields == lastProcessedScanFields) return@LaunchedEffect
         lastProcessedScanFields = fields
 
-        // Parse pipe-delimited "key=value" pairs into BagFieldEvidence
-        val parsed = fields.split("|").mapNotNull { entry ->
-            val parts = entry.split("=", limit = 2)
-            if (parts.size == 2) parts[0] to parts[1] else null
-        }.toMap()
-
-        fieldEvidence = parsed.map { (key, value) ->
-            key to BagFieldEvidence(
-                fieldName = key,
-                value = value,
-                sourceType = com.adsamcik.starlitcoffee.util.BagFieldSourceType.OCR,
-                confidence = com.adsamcik.starlitcoffee.util.BagFieldConfidence.MEDIUM,
-            )
-        }.toMap()
+        ocrPrefill = ScanFieldSupport.buildPrefill(fields)
+        fieldEvidence = ScanFieldSupport.buildFieldEvidence(fields)
+        capturedPhotoUris = null
+        detectedBarcode = null
+        detectedQrUrl = null
+        offLookupName = null
+        offLookupRoaster = null
         reviewHints = emptyList()
         isProcessingScan = false
+        showRetakeDialog = false
         showAddSheet = true
     }
 
@@ -439,4 +435,3 @@ private fun copyPhotosToPermanentStorage(
         }
     }.joinToString(",")
 }
-

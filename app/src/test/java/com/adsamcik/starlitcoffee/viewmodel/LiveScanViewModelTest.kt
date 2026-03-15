@@ -11,6 +11,9 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -44,6 +47,27 @@ class LiveScanViewModelTest {
         viewModel.stop()
     }
 
+    @Test
+    fun `scan ui state stays steady after start`() {
+        val viewModel = LiveScanViewModel(testConfig())
+        viewModel.start(KnownFieldValues.EMPTY)
+
+        val initialUiState = viewModel.liveScanUiState.value
+        assertTrue(initialUiState.isScanning)
+        assertTrue(initialUiState.scanStartTimeMs > 0L)
+
+        Thread.sleep(80L)
+
+        val uiState = viewModel.liveScanUiState.value
+        assertTrue(uiState.isScanning)
+        assertEquals(initialUiState.scanStartTimeMs, uiState.scanStartTimeMs)
+        assertFalse(uiState.sideFlipDetected)
+        assertEquals(0, uiState.goldenFrameCount)
+        assertNull(uiState.lastRejectionReason)
+
+        viewModel.stop()
+    }
+
     // --- Best-frame windowing ---
 
     @Test
@@ -72,6 +96,12 @@ class LiveScanViewModelTest {
         assertTrue(viewModel.evidence.value.fields.containsKey("origin"))
 
         viewModel.stop()
+    }
+
+    @Test
+    fun `default accumulator config includes decaf and expiry fields`() {
+        assertTrue(AccumulatorConfig.DEFAULT.allFields.contains("isDecaf"))
+        assertTrue(AccumulatorConfig.DEFAULT.allFields.contains("expiryDate"))
     }
 
     private fun testConfig(): AccumulatorConfig {

@@ -220,7 +220,10 @@ fun BrewLogDetailScreen(
         ) {
             // --- Brew Info ---
             Text(
-                text = entity.method.lowercase().replaceFirstChar { it.uppercase() },
+                text = buildString {
+                    append(entity.method.lowercase().replaceFirstChar { it.uppercase() })
+                    if (entity.isDecaf) append(" · Decaf")
+                },
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier
                     .padding(start = 8.dp, top = 8.dp)
@@ -258,6 +261,10 @@ fun BrewLogDetailScreen(
                         val min = entity.brewTimeSeconds / 60
                         val sec = entity.brewTimeSeconds % 60
                         DetailRow("Brew time", "%d:%02d".format(min, sec))
+                    }
+
+                    if (entity.isDecaf) {
+                        DetailRow("Coffee type", "Decaf")
                     }
 
                     if (entity.grindSetting != null) {

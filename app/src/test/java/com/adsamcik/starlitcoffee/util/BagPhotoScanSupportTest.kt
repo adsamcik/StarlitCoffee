@@ -63,6 +63,24 @@ class BagPhotoScanSupportTest {
     }
 
     @Test
+    fun `buildPrefill maps decaf evidence into OCR prefill`() {
+        val prefill = BagPhotoScanSupport.buildPrefill(
+            resolvedFields = mapOf(
+                "isDecaf" to BagFieldEvidence(
+                    fieldName = "isDecaf",
+                    value = "Decaf",
+                    canonicalKey = "true",
+                    sourceType = BagFieldSourceType.CONSENSUS,
+                    confidence = BagFieldConfidence.HIGH,
+                ),
+            ),
+        )
+
+        assertEquals(true, prefill.isDecaf)
+        assertEquals(BagFieldConfidence.HIGH, prefill.fieldConfidence["isDecaf"])
+    }
+
+    @Test
     fun `resolveField keeps strongest representative while merging multilingual canonical aliases`() {
         val resolved = BagPhotoScanSupport.resolveField(
             fieldName = "origin",

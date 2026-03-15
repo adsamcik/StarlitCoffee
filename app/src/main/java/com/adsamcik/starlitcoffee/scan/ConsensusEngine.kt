@@ -9,6 +9,7 @@ import com.adsamcik.starlitcoffee.util.BagCaptureSide
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
+import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult
 import kotlin.math.min
@@ -189,6 +190,9 @@ class ConsensusEngine(
             fields["expiryDate"] = it to (conf["expiryDate"] ?: BagFieldConfidence.LOW)
         }
         result.weight?.let { fields["weight"] = it to (conf["weight"] ?: BagFieldConfidence.LOW) }
+        if (result.isDecaf == true) {
+            fields["isDecaf"] = "Decaf" to (conf["isDecaf"] ?: BagFieldConfidence.LOW)
+        }
 
         return fields
     }
@@ -313,6 +317,9 @@ class ConsensusEngine(
             roastLevel = fieldValues["roastLevel"],
             roastDate = fieldValues["roastDate"],
             weight = fieldValues["weight"],
+            isDecaf = fieldValues["isDecaf"]
+                ?.let(CoffeeMetadataNormalizer::containsDecafMarker)
+                ?.takeIf { it },
             fieldConfidence = fieldValues.keys.associateWith { BagFieldConfidence.HIGH },
         )
         val syntheticFrame = FrameResult(
