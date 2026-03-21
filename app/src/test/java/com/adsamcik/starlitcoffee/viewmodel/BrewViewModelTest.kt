@@ -112,9 +112,9 @@ class BrewViewModelTest {
 
     @Test
     fun `selecting ratio preset changes effective ratio`() {
-        viewModel.setMethod(BrewMethod.PULSAR) // presets: 15, 16, 17(default), 18
+        viewModel.setMethod(BrewMethod.PULSAR) // presets: 16(Bright), 17(Balanced,default), 18(Rich)
         viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.selectRatioPreset(3) // 1:18
+        viewModel.selectRatioPreset(2) // 1:18 Rich
         viewModel.setAmount("20")
 
         val state = viewModel.uiState.value
@@ -126,7 +126,7 @@ class BrewViewModelTest {
     fun `selecting lower ratio preset gives stronger brew`() {
         viewModel.setMethod(BrewMethod.PULSAR)
         viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.selectRatioPreset(1) // 1:16
+        viewModel.selectRatioPreset(0) // 1:16 Bright
         viewModel.setAmount("20")
 
         val state = viewModel.uiState.value
@@ -138,7 +138,7 @@ class BrewViewModelTest {
     fun `custom ratio overrides selected preset`() {
         viewModel.setMethod(BrewMethod.PULSAR)
         viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.selectRatioPreset(3) // would be 18
+        viewModel.selectRatioPreset(2) // would be 18 Rich
         viewModel.setCustomRatio("16.5")
         viewModel.setAmount("20")
 
@@ -391,8 +391,9 @@ class BrewViewModelTest {
         assertTrue(phases.isNotEmpty())
         assertEquals("Bloom", phases.first().name)
         assertEquals("Drawdown", phases.last().name)
-        // Bloom + 5 pours + drawdown = 7 phases
-        assertEquals(7, phases.size)
+        assertEquals(listOf("Bloom", "Saturate", "Close & Swirl", "Steep"), phases.take(4).map { it.name })
+        // 4 bloom sub-phases + 5 pours + drawdown = 10 phases
+        assertEquals(10, phases.size)
     }
 
     @Test
@@ -402,24 +403,37 @@ class BrewViewModelTest {
         viewModel.setAmount("25") // 25 * 17 = 425g > 380g capacity
 
         val phases = viewModel.uiState.value.timerPhases
-        // Bloom(75g) + 4 pours fit (355g total) + Drain + Pour 5/5 + Drawdown = 8
-        assertEquals(8, phases.size)
+        // 4 bloom sub-phases + 4 pours fit + Drain + Pour 5/5 + Drawdown = 11
+        assertEquals(11, phases.size)
         assertEquals("Bloom", phases[0].name)
-        assertEquals("Pour 4/5", phases[4].name)
-        assertEquals("Drain & Refill", phases[5].name)
-        assertEquals("Pour 5/5", phases[6].name)
+        assertEquals("Pour 4/5", phases[7].name)
+        assertEquals("Drain & Refill", phases[8].name)
+        assertEquals("Pour 5/5", phases[9].name)
         assertEquals("Drawdown", phases.last().name)
     }
 
     @Test
-    fun `Pulsar bloom instruction includes valve timing`() {
+    fun `Pulsar bloom splits into guided sub phases`() {
         viewModel.setMethod(BrewMethod.PULSAR)
         viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
         viewModel.setAmount("20")
 
-        val bloomPhase = viewModel.uiState.value.timerPhases.first()
-        assertTrue(bloomPhase.instruction.contains("wait ~10s"))
-        assertTrue(bloomPhase.instruction.contains("CLOSE valve"))
+        val bloomPhases = viewModel.uiState.value.timerPhases.take(4)
+        assertEquals(listOf("Bloom", "Saturate", "Close & Swirl", "Steep"), bloomPhases.map { it.name })
+        assertEquals(listOf(60f, 0f, 0f, 0f), bloomPhases.map { it.waterG })
+        assertEquals(
+            listOf(
+                PhaseMode.EVENT_GATED,
+                PhaseMode.AUTO_TIMED,
+                PhaseMode.EVENT_GATED,
+                PhaseMode.AUTO_TIMED,
+            ),
+            bloomPhases.map { it.mode },
+        )
+        assertEquals("Open valve · Pour to 60g", bloomPhases[0].instruction)
+        assertEquals("Let water saturate the grounds", bloomPhases[1].instruction)
+        assertEquals("Close valve · Gentle swirl", bloomPhases[2].instruction)
+        assertEquals("Steeping · CO₂ escaping", bloomPhases[3].instruction)
     }
 
     @Test
@@ -449,13 +463,23 @@ class BrewViewModelTest {
     }
 
     @Test
-    fun `Pulsar bloom is EVENT_GATED`() {
+    fun `Pulsar bloom pour is EVENT_GATED`() {
         viewModel.setMethod(BrewMethod.PULSAR)
         viewModel.setAmount("20")
 
         val bloom = viewModel.uiState.value.timerPhases.first()
         assertEquals(PhaseType.BLOOM, bloom.phaseType)
         assertEquals(PhaseMode.EVENT_GATED, bloom.mode)
+    }
+
+    @Test
+    fun `Pulsar bloom wait sub phases are AUTO_TIMED`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setAmount("20")
+
+        val bloomPhases = viewModel.uiState.value.timerPhases.take(4)
+        assertEquals(PhaseMode.AUTO_TIMED, bloomPhases[1].mode) // Saturate
+        assertEquals(PhaseMode.AUTO_TIMED, bloomPhases[3].mode) // Steep
     }
 
     @Test
@@ -501,6 +525,22 @@ class BrewViewModelTest {
         assertTrue(pourPhases.isNotEmpty())
         for (pour in pourPhases) {
             assertEquals(PhaseMode.TIMED, pour.mode)
+        }
+    }
+
+    @Test
+    fun `pour phases are never AUTO_TIMED`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setAmount("20")
+
+        val pourPhases = viewModel.uiState.value.timerPhases
+            .filter { it.phaseType == PhaseType.POUR }
+        assertTrue(pourPhases.isNotEmpty())
+        for (pour in pourPhases) {
+            assertTrue(
+                "Pour phase '${pour.name}' must not be AUTO_TIMED (waterG=${pour.waterG})",
+                pour.mode != PhaseMode.AUTO_TIMED,
+            )
         }
     }
 
@@ -591,7 +631,7 @@ class BrewViewModelTest {
 
         val state = viewModel.uiState.value
         assertEquals(BrewMethod.PULSAR, state.method) // default
-        assertEquals(2, state.selectedPresetIndex) // Pulsar default preset index (1:17)
+        assertEquals(1, state.selectedPresetIndex) // Pulsar default preset index (1:17 Balanced)
     }
 
     // --- Time Target ---
@@ -1348,13 +1388,13 @@ class BrewViewModelTest {
 
     @Test
     fun `loadRecipe matches ratio to available preset`() {
-        // Pulsar presets: 15, 16, 17(default), 18 — ratio 16 matches index 1
+        // Pulsar presets: 16(Bright), 17(Balanced,default), 18(Rich) — ratio 16 matches index 0
         val entity = SavedRecipeEntity(
             method = "PULSAR", ratio = 16f, doseG = 20f, waterG = 320f,
         )
         viewModel.loadRecipe(entity)
         val state = viewModel.uiState.value
-        assertEquals(1, state.selectedPresetIndex)
+        assertEquals(0, state.selectedPresetIndex)
         assertEquals("", state.customRatio)
         assertEquals(16f, state.effectiveRatio, 0.01f)
     }

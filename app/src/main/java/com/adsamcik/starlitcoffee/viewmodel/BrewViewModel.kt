@@ -185,6 +185,7 @@ class BrewViewModel(
 
     @VisibleForTesting
     internal val timerController = TimerController(viewModelScope, TimerStateHolder.instance)
+        .apply { onAutoAdvance = { advancePhase() } }
     private var ratioPresetJob: Job? = null
 
     init {
@@ -2021,28 +2022,71 @@ class BrewViewModel(
         if (method.hasBloom && bloomG > 0f) {
             cumulative += bloomG
             waterSinceDrain += bloomG
-            phases.add(
-                BrewPhase(
-                    name = "Bloom",
-                    phaseType = PhaseType.BLOOM,
-                    mode = if (isPulsar) PhaseMode.EVENT_GATED else PhaseMode.TIMED,
-                    waterG = bloomG,
-                    cumulativeWaterG = cumulative,
-                    durationSeconds = when {
-                        isDecaf && isPulsar -> 35
-                        isDecaf -> 30
-                        isPulsar -> 50
-                        else -> 45
-                    },
-                    instruction = if (isPulsar) {
-                        val decafHint = if (isDecaf) " · Decaf: shorter steep" else ""
-                        "Valve OPEN → pour to ${"%.0f".format(cumulative)}g → wait ~10s → CLOSE valve → gentle swirl$decafHint"
-                    } else {
-                        "Pour to ${"%.0f".format(cumulative)}g, let CO₂ escape"
-                    },
-                    valveState = if (isPulsar) "open → close" else "",
-                ),
-            )
+            if (isPulsar) {
+                val steepDuration = if (isDecaf) 25 else 30
+
+                phases.add(
+                    BrewPhase(
+                        name = "Bloom",
+                        phaseType = PhaseType.BLOOM,
+                        mode = PhaseMode.EVENT_GATED,
+                        waterG = bloomG,
+                        cumulativeWaterG = cumulative,
+                        durationSeconds = 10,
+                        instruction = "Open valve · Pour to ${"%.0f".format(cumulative)}g",
+                        valveState = "open",
+                    ),
+                )
+                phases.add(
+                    BrewPhase(
+                        name = "Saturate",
+                        phaseType = PhaseType.BLOOM,
+                        mode = PhaseMode.AUTO_TIMED,
+                        waterG = 0f,
+                        cumulativeWaterG = cumulative,
+                        durationSeconds = 10,
+                        instruction = "Let water saturate the grounds",
+                        valveState = "open",
+                    ),
+                )
+                phases.add(
+                    BrewPhase(
+                        name = "Close & Swirl",
+                        phaseType = PhaseType.BLOOM,
+                        mode = PhaseMode.EVENT_GATED,
+                        waterG = 0f,
+                        cumulativeWaterG = cumulative,
+                        durationSeconds = 5,
+                        instruction = "Close valve · Gentle swirl",
+                        valveState = "close",
+                    ),
+                )
+                phases.add(
+                    BrewPhase(
+                        name = "Steep",
+                        phaseType = PhaseType.BLOOM,
+                        mode = PhaseMode.AUTO_TIMED,
+                        waterG = 0f,
+                        cumulativeWaterG = cumulative,
+                        durationSeconds = steepDuration,
+                        instruction = "Steeping · CO₂ escaping",
+                        valveState = "closed",
+                    ),
+                )
+            } else {
+                phases.add(
+                    BrewPhase(
+                        name = "Bloom",
+                        phaseType = PhaseType.BLOOM,
+                        mode = PhaseMode.TIMED,
+                        waterG = bloomG,
+                        cumulativeWaterG = cumulative,
+                        durationSeconds = if (isDecaf) 30 else 45,
+                        instruction = "Pour to ${"%.0f".format(cumulative)}g, let CO₂ escape",
+                        valveState = "",
+                    ),
+                )
+            }
         }
 
         if (method.hasPulses && effectivePulseCount > 0 && pulseSizeG > 0f) {

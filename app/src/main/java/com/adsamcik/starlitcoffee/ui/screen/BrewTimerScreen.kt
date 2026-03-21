@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -65,7 +66,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -73,7 +73,6 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
 import com.adsamcik.starlitcoffee.service.BrewTimerService
 import com.adsamcik.starlitcoffee.ui.component.AudioDebugOverlay
-import com.adsamcik.starlitcoffee.ui.component.AudioDetectionIndicator
 import com.adsamcik.starlitcoffee.ui.component.BrewGuide
 import com.adsamcik.starlitcoffee.service.RatingReminderWorker
 import com.adsamcik.starlitcoffee.util.VibrationHelper
@@ -101,25 +100,13 @@ fun BrewTimerScreen(
         ActivityResultContracts.RequestPermission(),
     ) { /* Timer works regardless */ }
 
-    // Audio permission — init audio manager when granted
-    val audioPermissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-    ) { granted ->
-        if (granted) {
-            val audioDir = java.io.File(context.getExternalFilesDir(null), "brew_audio")
-            brewViewModel.initAudioManager(audioDir)
-        }
-    }
-
-    // Request audio permission & init manager on first composition
+    // Init audio manager only when permission is already granted
     LaunchedEffect(Unit) {
         if (context.checkSelfPermission(Manifest.permission.RECORD_AUDIO)
             == PackageManager.PERMISSION_GRANTED
         ) {
             val audioDir = java.io.File(context.getExternalFilesDir(null), "brew_audio")
             brewViewModel.initAudioManager(audioDir)
-        } else {
-            audioPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
         }
     }
 
@@ -216,10 +203,11 @@ fun BrewTimerScreen(
     val primaryColor = MaterialTheme.colorScheme.primary
     val trackColor = MaterialTheme.colorScheme.surfaceVariant
     val tertiaryColor = MaterialTheme.colorScheme.tertiary
+    val errorColor = MaterialTheme.colorScheme.error
 
-    // Arc color: two states only — on track (primary) or overtime (tertiary)
+    // Arc color: two states only — on track (primary) or overtime (error)
     val arcColor by animateColorAsState(
-        targetValue = if (phaseOvertime || finished) tertiaryColor else primaryColor,
+        targetValue = if (phaseOvertime || finished) errorColor else primaryColor,
         animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
         label = "arc_color",
     )
@@ -227,16 +215,21 @@ fun BrewTimerScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Spacer(modifier = Modifier.height(24.dp))
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(modifier = Modifier.height(8.dp))
 
         // Circular timer — kept as user preferred
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.size(220.dp),
+            modifier = Modifier.size(160.dp),
         ) {
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val stroke = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round)
@@ -255,33 +248,69 @@ fun BrewTimerScreen(
             ) {
                 val min = totalElapsed / 60
                 val sec = totalElapsed % 60
-                Text(
-                    text = "%d:%02d".format(min, sec),
-                    style = MaterialTheme.typography.displayLarge,
-                    modifier = Modifier.semantics {
-                        contentDescription = "$min minutes $sec seconds elapsed"
-                    },
-                )
+                val elapsedText = "%d:%02d".format(min, sec)
+                val showsTargetWeight = currentPhase?.let { phase ->
+                    phase.phaseType != com.adsamcik.starlitcoffee.data.model.PhaseType.DRAWDOWN &&
+                        phase.waterG > 0f
+                } ?: false
+                val targetWeightText = currentPhase?.takeIf { showsTargetWeight }?.let {
+                    "${"%.0f".format(it.cumulativeWaterG)}g"
+                }
                 if (currentPhase != null) {
                     Text(
+                        text = targetWeightText ?: elapsedText,
+                        style = MaterialTheme.typography.displayLarge,
+                        color = if (targetWeightText != null) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onSurface
+                        },
+                        modifier = Modifier.semantics {
+                            contentDescription = targetWeightText?.let {
+                                "Target weight $it"
+                            } ?: "$min minutes $sec seconds elapsed"
+                        },
+                    )
+                    if (targetWeightText != null) {
+                        Text(
+                            text = elapsedText,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.semantics {
+                                contentDescription = "$min minutes $sec seconds elapsed"
+                            },
+                        )
+                    }
+                    Text(
                         text = currentPhase.name,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.semantics { heading() },
+                    )
+                } else {
+                    Text(
+                        text = elapsedText,
+                        style = MaterialTheme.typography.displayLarge,
+                        modifier = Modifier.semantics {
+                            contentDescription = "$min minutes $sec seconds elapsed"
+                        },
                     )
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         // Audio detection status indicator (subtle, user-facing)
         if (audioState.isMonitoring) {
-            AudioDetectionIndicator(audioState = audioState)
+            Text(
+                text = "🎧 Listening",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+            )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         // Brew Guide visualization (Pulsar only)
         if (uiState.method == BrewMethod.PULSAR && phases.isNotEmpty()) {
@@ -317,17 +346,21 @@ fun BrewTimerScreen(
         // Phase remaining countdown (drift-aware)
         if (currentPhase != null && !finished) {
             val isEventGated = currentPhase.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.EVENT_GATED
+            val isAutoTimed = currentPhase.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.AUTO_TIMED
             val displayText = when {
                 isEventGated -> {
-                    val elapsed = currentPhase.durationSeconds - phaseRemaining
-                    if (currentPhase.durationSeconds > 0) {
-                        "${elapsed}s / ~${currentPhase.durationSeconds}s"
+                    val elapsed = (currentPhase.durationSeconds - phaseRemaining).coerceAtLeast(0)
+                    val remaining = phaseRemaining.coerceAtLeast(0)
+                    if (currentPhase.durationSeconds > 0 && remaining > 0) {
+                        "${elapsed}s elapsed · ~${remaining}s left"
                     } else {
-                        "${elapsed}s"
+                        "${elapsed}s elapsed"
                     }
                 }
-                phaseOvertime -> "+${kotlin.math.abs(phaseRemaining)}s"
-                else -> "${phaseRemaining}s"
+                isAutoTimed && !phaseOvertime -> "Auto-advancing in ${phaseRemaining}s"
+                isAutoTimed -> "Advancing…"
+                phaseOvertime -> "+${kotlin.math.abs(phaseRemaining)}s over"
+                else -> "~${phaseRemaining}s remaining"
             }
             val displayColor = when {
                 phaseOvertime && kotlin.math.abs(phaseRemaining) > 15 ->
@@ -339,7 +372,7 @@ fun BrewTimerScreen(
             }
             Text(
                 text = displayText,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.labelMedium,
                 color = displayColor,
                 textAlign = TextAlign.Center,
             )
@@ -414,14 +447,16 @@ fun BrewTimerScreen(
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        }
+        
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Controls — large targets for wet hands
         if (!finished) {
             if (phases.size > 1 && currentPhaseIndex < phases.lastIndex) {
-                val isEventGated = currentPhase?.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.EVENT_GATED
-                val buttonLabel = if (isEventGated) "Done ✓" else "Next Step"
-                val buttonIcon = if (isEventGated) Icons.Filled.Check else Icons.Filled.SkipNext
+                val isAutoTimed = currentPhase?.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.AUTO_TIMED
+                val buttonLabel = if (isAutoTimed) "Skip →" else "Phase Done →"
+                val buttonIcon = if (isAutoTimed) Icons.Filled.SkipNext else Icons.Filled.Check
                 Button(
                     onClick = {
                         VibrationHelper.vibrate(context, BrewHaptic.POUR)
@@ -474,7 +509,8 @@ fun BrewTimerScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 32.dp),
+                    .navigationBarsPadding()
+                    .padding(bottom = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
             ) {
                 FilledTonalButton(
@@ -488,7 +524,7 @@ fun BrewTimerScreen(
                     },
                     shape = MaterialTheme.shapes.large,
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(2f)
                         .height(72.dp),
                 ) {
                     Icon(

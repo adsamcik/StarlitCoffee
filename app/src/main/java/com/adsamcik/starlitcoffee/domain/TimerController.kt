@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.domain
 
+import com.adsamcik.starlitcoffee.data.model.PhaseMode
 import com.adsamcik.starlitcoffee.service.TimerStateHolder
 import com.adsamcik.starlitcoffee.viewmodel.BrewPhase
 import kotlinx.coroutines.CoroutineScope
@@ -32,10 +33,12 @@ class TimerController(
     private var timerStartMs: Long = 0L
     private var pausedAccumulatedMs: Long = 0L
     private var phaseStartedAccumulatedMs: Long = 0L
+    private var lastAutoAdvancedPhaseIndex = -1
 
     /** Current phases fed from the ViewModel. */
     var phases: List<BrewPhase> = emptyList()
         private set
+    var onAutoAdvance: (() -> Unit)? = null
 
     fun setPhases(phases: List<BrewPhase>) {
         this.phases = phases
@@ -79,6 +82,7 @@ class TimerController(
     fun stop() {
         pausedAccumulatedMs = 0L
         phaseStartedAccumulatedMs = 0L
+        lastAutoAdvancedPhaseIndex = -1
         _state.update {
             TimerState() // full reset
         }
@@ -125,6 +129,7 @@ class TimerController(
         timerJob = null
         pausedAccumulatedMs = 0L
         phaseStartedAccumulatedMs = 0L
+        lastAutoAdvancedPhaseIndex = -1
         _state.value = TimerState()
         timerStateHolder.reset()
     }
@@ -152,7 +157,20 @@ class TimerController(
                         phaseOvertime = overtime,
                         showNextPreview = remaining in 1..10 &&
                             s.currentPhaseIndex < phases.lastIndex,
-                    )
+                        )
+                }
+
+                // Auto-advance only AUTO_TIMED phases (passive waits like Saturate, Steep).
+                // TIMED phases (pours) and EVENT_GATED phases require user action.
+                val autoState = _state.value
+                val autoPhase = phases.getOrNull(autoState.currentPhaseIndex)
+                if (autoPhase?.mode == PhaseMode.AUTO_TIMED &&
+                    autoState.phaseSecondsRemaining <= 0 &&
+                    autoState.currentPhaseIndex < phases.lastIndex &&
+                    autoState.currentPhaseIndex != lastAutoAdvancedPhaseIndex
+                ) {
+                    lastAutoAdvancedPhaseIndex = autoState.currentPhaseIndex
+                    onAutoAdvance?.invoke()
                 }
 
                 val s = _state.value
