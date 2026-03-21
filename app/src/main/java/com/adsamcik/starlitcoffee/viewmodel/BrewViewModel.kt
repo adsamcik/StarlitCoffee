@@ -15,6 +15,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
 import com.adsamcik.starlitcoffee.data.model.BrewAudioEvent
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewPhase
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
@@ -84,17 +85,6 @@ sealed class GrindResult {
     data class Generic(val descriptor: GrindDescriptor) : GrindResult()
     data class Specific(val recommendation: GrindRecommendation) : GrindResult()
 }
-
-data class BrewPhase(
-    val name: String,
-    val phaseType: PhaseType,
-    val mode: PhaseMode,
-    val waterG: Float,
-    val cumulativeWaterG: Float,
-    val durationSeconds: Int,
-    val instruction: String = "",
-    val valveState: String = "",
-)
 
 data class BrewUiState(
     val method: BrewMethod = BrewMethod.PULSAR,

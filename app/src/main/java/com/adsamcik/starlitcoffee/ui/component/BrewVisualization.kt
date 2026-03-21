@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
+import com.adsamcik.starlitcoffee.data.model.BrewPhase
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -24,6 +25,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.rounded.Cancel
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.WaterDrop
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -66,7 +71,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.ui.util.emoji
-import com.adsamcik.starlitcoffee.viewmodel.BrewPhase
 import kotlinx.coroutines.launch
 import kotlin.math.sin
 
@@ -104,7 +108,8 @@ private fun computePhaseVisualStates(
                 phaseType = phase.phaseType,
                 waterInBrewer = waterInBrewer,
                 fillFraction = if (capacity > 0f) (waterInBrewer / capacity).coerceIn(0f, 1f) else 0f,
-                valveOpen = phase.phaseType != PhaseType.BLOOM,
+                valveOpen = !phase.valveState.equals("close", ignoreCase = true) &&
+                    !phase.valveState.equals("closed", ignoreCase = true),
                 instruction = phase.instruction,
                 valveState = phase.valveState,
                 waterThisPhase = phase.waterG,
@@ -153,8 +158,8 @@ private fun LiquidPillDiagram(
     showDrip: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val waterLight = Color(0xFFAEE6FF).copy(alpha = 0.42f)
-    val waterDark = Color(0xFF4D9FD6).copy(alpha = 0.74f)
+    val waterLight = Color(0xFFE1F5FE) // Light Blue 50
+    val waterDark = Color(0xFF81D4FA) // Light Blue 200
     val valveOpenColor = MaterialTheme.colorScheme.primary
     val valveClosedColor = MaterialTheme.colorScheme.error
     val flowColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
@@ -685,20 +690,21 @@ fun BrewGuide(
 
     val cardColor by animateColorAsState(
         targetValue = when (current.phaseType) {
-            PhaseType.BLOOM -> MaterialTheme.colorScheme.tertiaryContainer
-            PhaseType.DRAIN_AND_REFILL -> MaterialTheme.colorScheme.errorContainer
-            PhaseType.DRAWDOWN -> MaterialTheme.colorScheme.secondaryContainer
-            PhaseType.POUR -> MaterialTheme.colorScheme.primaryContainer
+            // Subtle, polished surface colors instead of strong container colors
+            PhaseType.BLOOM -> MaterialTheme.colorScheme.surfaceVariant
+            PhaseType.DRAIN_AND_REFILL -> MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
+            PhaseType.DRAWDOWN -> MaterialTheme.colorScheme.surfaceVariant
+            PhaseType.POUR -> MaterialTheme.colorScheme.surfaceVariant
         },
         animationSpec = spring(stiffness = Spring.StiffnessLow),
         label = "cardBg",
     )
     val contentColor by animateColorAsState(
         targetValue = when (current.phaseType) {
-            PhaseType.BLOOM -> MaterialTheme.colorScheme.onTertiaryContainer
+            PhaseType.BLOOM -> MaterialTheme.colorScheme.onSurfaceVariant
             PhaseType.DRAIN_AND_REFILL -> MaterialTheme.colorScheme.onErrorContainer
-            PhaseType.DRAWDOWN -> MaterialTheme.colorScheme.onSecondaryContainer
-            PhaseType.POUR -> MaterialTheme.colorScheme.onPrimaryContainer
+            PhaseType.DRAWDOWN -> MaterialTheme.colorScheme.onSurfaceVariant
+            PhaseType.POUR -> MaterialTheme.colorScheme.onSurfaceVariant
         },
         animationSpec = spring(stiffness = Spring.StiffnessLow),
         label = "cardContent",
@@ -722,7 +728,7 @@ fun BrewGuide(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "${current.emoji} ${current.phaseName}",
+                    text = current.phaseName, // Removed emoji
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = contentColor,
@@ -742,6 +748,38 @@ fun BrewGuide(
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Valve state badge — immediately visible
+            if (current.valveState.isNotEmpty()) {
+                val isOpen = current.valveOpen
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(
+                            if (isOpen) MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                            else MaterialTheme.colorScheme.error.copy(alpha = 0.1f)
+                        )
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Icon(
+                        imageVector = if (isOpen) Icons.Rounded.CheckCircle else Icons.Rounded.Cancel,
+                        contentDescription = null,
+                        tint = if (isOpen) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "VALVE ${if (isOpen) "OPEN" else "CLOSED"}",
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = if (isOpen) MaterialTheme.colorScheme.primary
+                        else MaterialTheme.colorScheme.error,
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
             // Hero diagram — compact liquid pill
             LiquidPillDiagram(
                 waterFillFraction = animatedFill,
@@ -750,7 +788,7 @@ fun BrewGuide(
                 showDrip = current.valveOpen && current.waterInBrewer > 0f,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(108.dp),
+                    .height(72.dp),
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -758,22 +796,32 @@ fun BrewGuide(
             // Phase-semantic hero — each phase type shows exactly what the user needs
             when (current.phaseType) {
                 PhaseType.BLOOM -> {
-                    val bloomRatio = if (coffeeG > 0f) current.waterThisPhase / coffeeG else 0f
-                    Text(
-                        text = "POUR TO ${"%.0f".format(current.cumulativeWater)}g",
-                        style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = contentColor,
-                    )
-                    Text(
-                        text = "${"%.0f".format(bloomRatio)}× your coffee · Open valve → Close → Wait",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = contentColor.copy(alpha = 0.6f),
-                    )
+                    if (current.waterThisPhase > 0f) {
+                        Text(
+                            text = "POUR TO ${"%.0f".format(current.cumulativeWater)}g",
+                            style = MaterialTheme.typography.headlineLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = contentColor,
+                        )
+                        val bloomRatio = if (coffeeG > 0f) current.waterThisPhase / coffeeG else 0f
+                        Text(
+                            text = "${"%.0f".format(bloomRatio)}× your coffee",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = contentColor.copy(alpha = 0.6f),
+                        )
+                    } else {
+                        Text(
+                            text = current.instruction.uppercase(),
+                            style = MaterialTheme.typography.headlineLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = contentColor,
+                        )
+                        // Subtitle removed to avoid redundancy with circle label
+                    }
                 }
                 PhaseType.POUR -> {
                     Text(
-                        text = "🔓 POUR TO ${"%.0f".format(current.cumulativeWater)}g",
+                        text = "POUR TO ${"%.0f".format(current.cumulativeWater)}g",
                         style = MaterialTheme.typography.headlineLarge,
                         fontWeight = FontWeight.Bold,
                         color = contentColor,
@@ -852,6 +900,12 @@ fun BrewGuide(
                 states = states,
                 selectedPhase = selectedPhase,
                 onPhaseSelected = { manualPhase = it },
+            )
+            Text(
+                text = "${"%.0f".format(current.cumulativeWater)}g / ${"%.0f".format(waterG)}g",
+                style = MaterialTheme.typography.labelSmall,
+                color = contentColor.copy(alpha = 0.5f),
+                modifier = Modifier.padding(top = 4.dp),
             )
         }
     }

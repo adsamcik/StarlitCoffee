@@ -3,7 +3,7 @@ package com.adsamcik.starlitcoffee.domain
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.PhaseMode
 import com.adsamcik.starlitcoffee.data.model.PhaseType
-import com.adsamcik.starlitcoffee.viewmodel.BrewPhase
+import com.adsamcik.starlitcoffee.data.model.BrewPhase
 
 /**
  * Pure builder for brew timer phases.

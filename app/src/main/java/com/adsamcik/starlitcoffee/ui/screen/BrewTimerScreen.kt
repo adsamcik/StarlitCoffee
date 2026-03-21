@@ -1,22 +1,16 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import android.Manifest
 import android.app.Activity
-import android.content.pm.PackageManager
-import android.os.Build
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.foundation.Canvas
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,607 +19,404 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.SkipNext
-import androidx.compose.material.icons.filled.Stop
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material.icons.filled.Check // Check as done
 import androidx.compose.material3.Button
-import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.semantics.LiveRegionMode
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.liveRegion
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
-import com.adsamcik.starlitcoffee.service.BrewTimerService
-import com.adsamcik.starlitcoffee.ui.component.AudioDebugOverlay
-import com.adsamcik.starlitcoffee.ui.component.BrewGuide
-import com.adsamcik.starlitcoffee.service.RatingReminderWorker
-import com.adsamcik.starlitcoffee.util.VibrationHelper
-import com.adsamcik.starlitcoffee.util.VibrationHelper.BrewHaptic
+import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.data.model.BrewPhase
+import com.adsamcik.starlitcoffee.data.model.PhaseMode
 import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 @Composable
 fun BrewTimerScreen(
     brewViewModel: BrewViewModel,
     onBack: () -> Unit,
-){
-    val uiState by brewViewModel.uiState.collectAsStateWithLifecycle()
-    val audioState by brewViewModel.audioState.collectAsStateWithLifecycle()
+) {
+    val state by brewViewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    var showStopDialog by remember { mutableStateOf(false) }
+    val activity = context as? Activity
 
-    // Intercept system back — show stop dialog instead of silently leaving
-    BackHandler(enabled = uiState.timerRunning || uiState.elapsedSeconds > 0) {
-        showStopDialog = true
-    }
-
-    // Request notification permission for foreground service (Android 13+)
-    val notificationPermissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-    ) { /* Timer works regardless */ }
-
-    // Init audio manager only when permission is already granted
-    LaunchedEffect(Unit) {
-        if (context.checkSelfPermission(Manifest.permission.RECORD_AUDIO)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            val audioDir = java.io.File(context.getExternalFilesDir(null), "brew_audio")
-            brewViewModel.initAudioManager(audioDir)
-        }
-    }
-
-    // Keep screen on + stop audio on dispose (safety net for unexpected exits)
-    val view = LocalView.current
+    // Keep screen on
     DisposableEffect(Unit) {
-        val window = (view.context as Activity).window
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        onDispose {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            brewViewModel.stopAudioMonitoring()
-        }
-    }
-
-    // Restart audio monitoring and ensure timer coroutine on app resume
-    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
-    DisposableEffect(lifecycleOwner) {
-        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
-            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
-                brewViewModel.ensureTimerRunning()
-                if (uiState.timerRunning) {
-                    brewViewModel.startAudioMonitoring()
-                }
-            } else if (event == androidx.lifecycle.Lifecycle.Event.ON_PAUSE) {
-                brewViewModel.stopAudioMonitoring()
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
-    }
-
-    val phases = uiState.timerPhases
-    val currentPhaseIndex = uiState.currentPhaseIndex
-    val totalElapsed = uiState.elapsedSeconds
-    val running = uiState.timerRunning
-    val phaseRemaining = uiState.phaseSecondsRemaining
-    val phaseOvertime = uiState.phaseOvertime
-    val showNext = uiState.showNextPreview
-
-    val currentPhase = phases.getOrNull(currentPhaseIndex)
-    val nextPhase = phases.getOrNull(currentPhaseIndex + 1)
-    val totalDuration = phases.sumOf { it.durationSeconds }
-    val finished = !running && totalElapsed > 0 && currentPhaseIndex >= phases.lastIndex && phaseOvertime
-
-    // Auto-start on first composition
-    LaunchedEffect(Unit) {
-        if (!running && totalElapsed == 0) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
-                    != PackageManager.PERMISSION_GRANTED
-                ) {
-                    notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            }
-            brewViewModel.startTimer()
-            BrewTimerService.start(context)
-        }
-    }
-
-    // Auto-pause removed: with elastic drift, phases don't auto-advance.
-    // Brew completion is detected when user advances past the last phase.
-
-    // Phase-change vibrations
-    var previousPhaseIndex by remember { mutableIntStateOf(0) }
-    LaunchedEffect(currentPhaseIndex) {
-        if (currentPhaseIndex != previousPhaseIndex && currentPhaseIndex > 0) {
-            val phase = phases.getOrNull(currentPhaseIndex)
-            val haptic = when (phase?.phaseType) {
-                PhaseType.BLOOM -> BrewHaptic.BLOOM
-                PhaseType.POUR -> BrewHaptic.POUR
-                PhaseType.DRAIN_AND_REFILL -> BrewHaptic.DRAIN
-                PhaseType.DRAWDOWN -> BrewHaptic.DRAWDOWN
-                null -> BrewHaptic.POUR
-            }
-            VibrationHelper.vibrate(context, haptic)
-        }
-        previousPhaseIndex = currentPhaseIndex
-    }
-
-    // "Get ready" vibration 5s before phase ends
-    LaunchedEffect(phaseRemaining) {
-        if (phaseRemaining == 5 && running && currentPhaseIndex < phases.lastIndex) {
-            VibrationHelper.vibrate(context, BrewHaptic.GET_READY)
-        }
-    }
-
-    val progress = if (totalDuration > 0) totalElapsed.toFloat() / totalDuration else 0f
-    val animatedProgress by animateFloatAsState(
-        targetValue = progress.coerceIn(0f, 1f),
-        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
-        label = "timer_progress",
-    )
-
-    val primaryColor = MaterialTheme.colorScheme.primary
-    val trackColor = MaterialTheme.colorScheme.surfaceVariant
-    val tertiaryColor = MaterialTheme.colorScheme.tertiary
-    val errorColor = MaterialTheme.colorScheme.error
-
-    // Arc color: two states only — on track (primary) or overtime (error)
-    val arcColor by animateColorAsState(
-        targetValue = if (phaseOvertime || finished) errorColor else primaryColor,
-        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
-        label = "arc_color",
-    )
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Spacer(modifier = Modifier.height(8.dp))
-
-        // Circular timer — kept as user preferred
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.size(160.dp),
-        ) {
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                val stroke = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round)
-                val arcSize = Size(size.width - stroke.width, size.height - stroke.width)
-                val topLeft = Offset(stroke.width / 2, stroke.width / 2)
-
-                drawArc(trackColor, -90f, 360f, false, topLeft, arcSize, style = stroke)
-                drawArc(arcColor, -90f, 360f * animatedProgress, false, topLeft, arcSize, style = stroke)
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.semantics(mergeDescendants = true) {
-                    liveRegion = LiveRegionMode.Polite
-                },
-            ) {
-                val min = totalElapsed / 60
-                val sec = totalElapsed % 60
-                val elapsedText = "%d:%02d".format(min, sec)
-                val showsTargetWeight = currentPhase?.let { phase ->
-                    phase.phaseType != com.adsamcik.starlitcoffee.data.model.PhaseType.DRAWDOWN &&
-                        phase.waterG > 0f
-                } ?: false
-                val targetWeightText = currentPhase?.takeIf { showsTargetWeight }?.let {
-                    "${"%.0f".format(it.cumulativeWaterG)}g"
-                }
-                if (currentPhase != null) {
-                    Text(
-                        text = targetWeightText ?: elapsedText,
-                        style = MaterialTheme.typography.displayLarge,
-                        color = if (targetWeightText != null) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onSurface
-                        },
-                        modifier = Modifier.semantics {
-                            contentDescription = targetWeightText?.let {
-                                "Target weight $it"
-                            } ?: "$min minutes $sec seconds elapsed"
-                        },
-                    )
-                    if (targetWeightText != null) {
-                        Text(
-                            text = elapsedText,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.semantics {
-                                contentDescription = "$min minutes $sec seconds elapsed"
-                            },
-                        )
-                    }
-                    Text(
-                        text = currentPhase.name,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                } else {
-                    Text(
-                        text = elapsedText,
-                        style = MaterialTheme.typography.displayLarge,
-                        modifier = Modifier.semantics {
-                            contentDescription = "$min minutes $sec seconds elapsed"
-                        },
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(4.dp))
-
-        // Audio detection status indicator (subtle, user-facing)
-        if (audioState.isMonitoring) {
-            Text(
-                text = "🎧 Listening",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-            )
-        }
-
-        Spacer(modifier = Modifier.height(4.dp))
-
-        // Brew Guide visualization (Pulsar only)
-        if (uiState.method == BrewMethod.PULSAR && phases.isNotEmpty()) {
-            BrewGuide(
-                phases = phases,
-                coffeeG = uiState.coffeeG,
-                waterG = uiState.waterG,
-                capacityMaxG = uiState.method.capacityMaxG?.toFloat(),
-                refillCount = uiState.refillCount,
-                activePhaseIndex = currentPhaseIndex,
-                showNextPreview = showNext,
-            )
-        }
-
-        // Audio debug overlay — only in debug builds
-        if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
-            AudioDebugOverlay(
-                audioState = audioState,
-                isMonitoring = audioState.isMonitoring,
-                isRecording = audioState.isRecording,
-                onToggleMonitoring = { brewViewModel.toggleAudioMonitoring() },
-                onToggleRecording = { brewViewModel.toggleAudioRecording() },
-                onMarkEvent = { label -> brewViewModel.markBrewEvent(label) },
-                onMarkProblem = { desc -> brewViewModel.markBrewProblem(desc) },
-                onSessionSetup = { placement, environment, notes ->
-                    brewViewModel.updateSessionSetup(placement, environment, notes)
-                },
-                onExportSession = { brewViewModel.exportBrewSession(context) },
-                modifier = Modifier.padding(vertical = 8.dp),
-            )
-        }
-
-        // Phase remaining countdown (drift-aware)
-        if (currentPhase != null && !finished) {
-            val isEventGated = currentPhase.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.EVENT_GATED
-            val isAutoTimed = currentPhase.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.AUTO_TIMED
-            val displayText = when {
-                isEventGated -> {
-                    val elapsed = (currentPhase.durationSeconds - phaseRemaining).coerceAtLeast(0)
-                    val remaining = phaseRemaining.coerceAtLeast(0)
-                    if (currentPhase.durationSeconds > 0 && remaining > 0) {
-                        "${elapsed}s elapsed · ~${remaining}s left"
-                    } else {
-                        "${elapsed}s elapsed"
-                    }
-                }
-                isAutoTimed && !phaseOvertime -> "Auto-advancing in ${phaseRemaining}s"
-                isAutoTimed -> "Advancing…"
-                phaseOvertime -> "+${kotlin.math.abs(phaseRemaining)}s over"
-                else -> "~${phaseRemaining}s remaining"
-            }
-            val displayColor = when {
-                phaseOvertime && kotlin.math.abs(phaseRemaining) > 15 ->
-                    MaterialTheme.colorScheme.error
-                phaseOvertime ->
-                    MaterialTheme.colorScheme.tertiary
-                else ->
-                    MaterialTheme.colorScheme.onSurfaceVariant
-            }
-            Text(
-                text = displayText,
-                style = MaterialTheme.typography.labelMedium,
-                color = displayColor,
-                textAlign = TextAlign.Center,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-
-        // Drift rebalance feedback — shows briefly when phases are adjusted
-        val drift = uiState.lastDriftSeconds
-        var showDriftHint by remember { mutableStateOf(false) }
-        LaunchedEffect(uiState.currentPhaseIndex, drift) {
-            if (drift != 0 && uiState.currentPhaseIndex > 0) {
-                showDriftHint = true
-                kotlinx.coroutines.delay(8000L)
-                showDriftHint = false
-            }
-        }
-        AnimatedVisibility(
-            visible = showDriftHint,
-            enter = fadeIn(),
-            exit = fadeOut(),
-        ) {
-            val driftText = if (drift > 0) {
-                "⏩ ${drift}s early · timing adjusted"
-            } else {
-                "⏪ ${kotlin.math.abs(drift)}s over · timing adjusted"
-            }
-            Text(
-                text = driftText,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-                textAlign = TextAlign.Center,
-            )
-        }
-        if (uiState.method != BrewMethod.PULSAR) {
-            AnimatedVisibility(
-                visible = showNext && nextPhase != null,
-                enter = fadeIn(),
-                exit = fadeOut(),
-            ) {
-                Text(
-                    text = "Next: ${nextPhase?.name ?: ""}" +
-                        if ((nextPhase?.waterG ?: 0f) > 0f) " · → ${"%.0f".format(nextPhase?.cumulativeWaterG)}g" else "",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(vertical = 8.dp),
-                )
-            }
-        }
-
-        AnimatedVisibility(
-            visible = finished,
-            enter = fadeIn() + scaleIn(initialScale = 0.8f),
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(top = 16.dp),
-            ) {
-                Text(
-                    text = "Brew complete! ☕",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-                val brewMin = totalElapsed / 60
-                val brewSec = totalElapsed % 60
-                Text(
-                    text = "Brewed in %d:%02d · ${"%.0f".format(uiState.waterG)}g water".format(brewMin, brewSec),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(top = 4.dp),
-                )
-            }
-        }
-
-        }
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         
-        Spacer(modifier = Modifier.height(16.dp))
+        // Hide system bars for immersive mode
+        // Note: Using deprecated methods for now as this is a quick prototype.
+        // In production, use WindowInsetsController or EdgeToEdge
+        @Suppress("DEPRECATION")
+        activity?.window?.decorView?.systemUiVisibility = (
+            android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            or android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            or android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            or android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+        )
+        
+        onDispose {
+            activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            @Suppress("DEPRECATION")
+            activity?.window?.decorView?.systemUiVisibility = (
+                android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            )
+        }
+    }
 
-        // Controls — large targets for wet hands
-        if (!finished) {
-            if (phases.size > 1 && currentPhaseIndex < phases.lastIndex) {
-                val isAutoTimed = currentPhase?.mode == com.adsamcik.starlitcoffee.data.model.PhaseMode.AUTO_TIMED
-                val buttonLabel = if (isAutoTimed) "Skip →" else "Phase Done →"
-                val buttonIcon = if (isAutoTimed) Icons.Filled.SkipNext else Icons.Filled.Check
-                Button(
-                    onClick = {
-                        VibrationHelper.vibrate(context, BrewHaptic.POUR)
-                        brewViewModel.advancePhase()
-                    },
-                    shape = MaterialTheme.shapes.large,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(72.dp),
-                ) {
-                    Icon(
-                        buttonIcon,
-                        contentDescription = buttonLabel,
-                        modifier = Modifier.size(28.dp),
-                    )
-                    Text(
-                        buttonLabel,
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(start = 8.dp),
-                    )
-                }
-                Spacer(modifier = Modifier.height(12.dp))
-            } else if (currentPhaseIndex >= phases.lastIndex && phases.isNotEmpty()) {
-                // Last phase — show "Finish Brew" button
-                Button(
-                    onClick = {
-                        VibrationHelper.vibrate(context, BrewHaptic.BREW_COMPLETE)
-                        brewViewModel.pauseTimer()
-                        BrewTimerService.stop(context)
-                    },
-                    shape = MaterialTheme.shapes.large,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(72.dp),
-                ) {
-                    Icon(
-                        Icons.Filled.Check,
-                        contentDescription = "Finish brew",
-                        modifier = Modifier.size(28.dp),
-                    )
-                    Text(
-                        "Finish Brew ☕",
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(start = 8.dp),
-                    )
-                }
-                Spacer(modifier = Modifier.height(12.dp))
-            }
+    // Start timer on entry if not running
+    LaunchedEffect(Unit) {
+        if (!state.timerRunning && state.elapsedSeconds == 0) {
+            brewViewModel.startTimer()
+        }
+    }
+    
+    // Back handler
+    BackHandler {
+        brewViewModel.pauseTimer()
+        onBack()
+    }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .navigationBarsPadding()
-                    .padding(bottom = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
+    val phases = state.timerPhases
+    val currentIndex = state.currentPhaseIndex
+    val currentPhase = phases.getOrNull(currentIndex)
+
+    if (currentPhase == null) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("No active brew")
+            Button(onClick = onBack) { Text("Back") }
+        }
+        return
+    }
+
+    // Determine valve state
+    val isValveOpen = currentPhase.valveState.equals("open", ignoreCase = true) || 
+                      currentPhase.instruction.contains("open", ignoreCase = true)
+    
+    // Determine primary metric
+    val showTimeAsPrimary = currentPhase.phaseType == PhaseType.BLOOM && 
+                           currentPhase.mode == PhaseMode.AUTO_TIMED
+    
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.fillMaxSize()
             ) {
-                FilledTonalButton(
-                    onClick = {
-                        if (running) {
-                            brewViewModel.pauseTimer()
-                        } else {
-                            brewViewModel.startTimer()
-                            BrewTimerService.start(context)
-                        }
+                // BAND 1: VALVE STATE (Top, fixed height)
+                ValveStateBand(
+                    isOpen = isValveOpen,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(0.8f)
+                )
+
+                // BAND 2: PRIMARY METRIC (Middle, dominant)
+                PrimaryMetricBand(
+                    phase = currentPhase,
+                    remainingSeconds = state.phaseSecondsRemaining,
+                    showTimeAsPrimary = showTimeAsPrimary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(2.2f)
+                )
+
+                // BAND 3: CONTEXT & CONTROLS (Bottom)
+                ContextBand(
+                    phase = currentPhase,
+                    phases = phases,
+                    currentIndex = currentIndex,
+                    elapsedSeconds = state.elapsedSeconds,
+                    timerRunning = state.timerRunning,
+                    onNext = { brewViewModel.advancePhase() },
+                    onToggleTimer = { 
+                        if (state.timerRunning) brewViewModel.pauseTimer() else brewViewModel.startTimer() 
                     },
-                    shape = MaterialTheme.shapes.large,
+                    showTimeAsPrimary = showTimeAsPrimary,
                     modifier = Modifier
-                        .weight(2f)
-                        .height(72.dp),
-                ) {
-                    Icon(
-                        if (running) Icons.Filled.Pause else Icons.Filled.PlayArrow,
-                        contentDescription = if (running) "Pause" else "Resume",
-                        modifier = Modifier.size(28.dp),
-                    )
-                    Text(
-                        if (running) "Pause" else "Resume",
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(start = 8.dp),
-                    )
-                }
-                OutlinedButton(
-                    onClick = { showStopDialog = true },
-                    shape = MaterialTheme.shapes.large,
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(72.dp),
-                ) {
-                    Icon(
-                        Icons.Filled.Stop,
-                        contentDescription = "Stop",
-                        modifier = Modifier.size(28.dp),
-                    )
-                    Text(
-                        "Stop",
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(start = 8.dp),
-                    )
-                }
+                        .fillMaxWidth()
+                        .weight(1.2f)
+                )
             }
-        } else {
-            Button(
+            
+            // Close button overlay
+            IconButton(
                 onClick = {
-                    brewViewModel.logBrew()
-                    // Schedule a rating reminder notification for 15 minutes from now
-                    val logId = brewViewModel.lastLoggedBrewId
-                    if (logId != null) {
-                        RatingReminderWorker.schedule(context, logId)
-                    }
+                    brewViewModel.pauseTimer()
                     onBack()
                 },
-                shape = MaterialTheme.shapes.large,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(72.dp),
+                    .align(Alignment.TopEnd)
+                    .padding(16.dp)
             ) {
-                Text("Done ☕", style = MaterialTheme.typography.titleMedium)
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Close",
+                    tint = if (isValveOpen) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
-            Spacer(modifier = Modifier.height(32.dp))
         }
     }
+}
 
-    if (showStopDialog) {
-        val stopMin = totalElapsed / 60
-        val stopSec = totalElapsed % 60
-        val phasesCompleted = currentPhaseIndex
-        val totalPhases = phases.size
-        AlertDialog(
-            onDismissRequest = { showStopDialog = false },
-            title = { Text("Stop brewing?") },
-            text = {
-                Column {
-                    Text("End brew and go back?")
-                    Spacer(modifier = Modifier.height(8.dp))
+@Composable
+fun ValveStateBand(
+    isOpen: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val backgroundColor = if (isOpen) 
+        MaterialTheme.colorScheme.primaryContainer 
+    else 
+        MaterialTheme.colorScheme.surfaceVariant
+
+    val contentColor = if (isOpen)
+        MaterialTheme.colorScheme.onPrimaryContainer
+    else
+        MaterialTheme.colorScheme.onSurfaceVariant
+
+    Box(
+        modifier = modifier.background(backgroundColor),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(24.dp)
+                    .border(
+                        width = 3.dp,
+                        color = contentColor,
+                        shape = RoundedCornerShape(4.dp)
+                    )
+                    .background(
+                        color = if (isOpen) Color.Transparent else contentColor,
+                        shape = RoundedCornerShape(4.dp)
+                    )
+            )
+            
+            Spacer(modifier = Modifier.width(16.dp))
+            
+            AnimatedContent(
+                targetState = isOpen,
+                label = "ValveState"
+            ) { open ->
+                Text(
+                    text = if (open) "OPEN" else "CLOSED",
+                    style = MaterialTheme.typography.displaySmall,
+                    color = contentColor,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun PrimaryMetricBand(
+    phase: BrewPhase,
+    remainingSeconds: Int,
+    showTimeAsPrimary: Boolean,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier.background(MaterialTheme.colorScheme.surface),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            AnimatedContent(
+                targetState = showTimeAsPrimary,
+                transitionSpec = {
+                    fadeIn() + slideInVertically { it / 2 } togetherWith fadeOut() + slideOutVertically { -it / 2 }
+                },
+                label = "MetricSwitch"
+            ) { timePrimary ->
+                if (timePrimary) {
+                    val timeText = formatTime(remainingSeconds)
                     Text(
-                        text = "%d:%02d elapsed · Step %d of %d · ${"%.0f".format(uiState.coffeeG)}g coffee".format(
-                            stopMin, stopSec, phasesCompleted + 1, totalPhases,
-                        ),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        text = timeText,
+                        style = MaterialTheme.typography.displayLarge.copy(fontSize = 96.sp),
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontWeight = FontWeight.Black
+                    )
+                } else {
+                    val weightText = "${phase.cumulativeWaterG.roundToInt()}"
+                    Row(verticalAlignment = Alignment.Bottom) {
+                        Text(
+                            text = weightText,
+                            style = MaterialTheme.typography.displayLarge.copy(fontSize = 110.sp),
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontWeight = FontWeight.Black,
+                            lineHeight = 100.sp
+                        )
+                        Text(
+                            text = "g",
+                            style = MaterialTheme.typography.displayMedium,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                            modifier = Modifier.padding(bottom = 24.dp)
+                        )
+                    }
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            Text(
+                text = phase.name.uppercase(),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                letterSpacing = 2.sp
+            )
+        }
+    }
+}
+
+@Composable
+fun ContextBand(
+    phase: BrewPhase,
+    phases: List<BrewPhase>,
+    currentIndex: Int,
+    elapsedSeconds: Int,
+    timerRunning: Boolean,
+    onNext: () -> Unit,
+    onToggleTimer: () -> Unit,
+    showTimeAsPrimary: Boolean,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(24.dp),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (showTimeAsPrimary) {
+                Column {
+                    Text(
+                        text = "${phase.cumulativeWaterG.roundToInt()}g",
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                    )
+                    Text(
+                        text = "POURED",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                     )
                 }
-            },
-            confirmButton = {
-                Button(onClick = {
-                    showStopDialog = false
-                }) { Text("Keep Brewing") }
-            },
-            dismissButton = {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    TextButton(onClick = {
-                        showStopDialog = false
-                        brewViewModel.stopTimer()
-                        BrewTimerService.stop(context)
-                        onBack()
-                    }) { Text("Stop without saving") }
-                    OutlinedButton(onClick = {
-                        showStopDialog = false
-                        brewViewModel.stopTimer()
-                        BrewTimerService.stop(context)
-                        brewViewModel.logBrew()
-                        val logId = brewViewModel.lastLoggedBrewId
-                        if (logId != null) {
-                            RatingReminderWorker.schedule(context, logId)
-                        }
-                        onBack()
-                    }) { Text("Stop and save") }
+                
+                Column(horizontalAlignment = Alignment.End) {
+                    Text(
+                        text = "${phase.durationSeconds}s",
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = "TARGET",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
-            },
-        )
+            } else {
+                Column {
+                    Text(
+                        text = "${currentIndex + 1} / ${phases.size}",
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                    )
+                    Text(
+                        text = "STEP",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                    )
+                }
+                
+                IconButton(
+                    onClick = onToggleTimer,
+                    modifier = Modifier.background(
+                        color = MaterialTheme.colorScheme.surfaceVariant,
+                        shape = androidx.compose.foundation.shape.CircleShape
+                    )
+                ) {
+                    Icon(
+                        imageVector = if (timerRunning) Icons.Default.Close else Icons.Default.PlayArrow,
+                        contentDescription = if (timerRunning) "Pause" else "Resume",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
+                Column(horizontalAlignment = Alignment.End) {
+                    Text(
+                        text = formatTime(elapsedSeconds),
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
+                    Text(
+                        text = "TOTAL",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                    )
+                }
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(24.dp))
+        
+        Button(
+            onClick = onNext,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(72.dp),
+            shape = RoundedCornerShape(36.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            )
+        ) {
+            Text(
+                text = if (currentIndex == phases.lastIndex) "Done" else "Next",
+                style = MaterialTheme.typography.displaySmall,
+                fontWeight = FontWeight.Bold
+            )
+        }
     }
+}
+
+private fun formatTime(seconds: Int): String {
+    val absSeconds = abs(seconds)
+    val m = absSeconds / 60
+    val s = absSeconds % 60
+    return "%d:%02d".format(m, s)
 }

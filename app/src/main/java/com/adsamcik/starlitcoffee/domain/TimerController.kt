@@ -1,8 +1,8 @@
 package com.adsamcik.starlitcoffee.domain
 
 import com.adsamcik.starlitcoffee.data.model.PhaseMode
+import com.adsamcik.starlitcoffee.data.model.BrewPhase
 import com.adsamcik.starlitcoffee.service.TimerStateHolder
-import com.adsamcik.starlitcoffee.viewmodel.BrewPhase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
