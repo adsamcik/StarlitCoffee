@@ -39,9 +39,9 @@ private fun RatioPresetRowPreview() {
     StarlitCoffeeTheme {
         RatioPresetRow(
             presets = listOf(
-                RatioPreset(ratio = 15f, label = "1:15"),
-                RatioPreset(ratio = 16f, label = "1:16", isDefault = true),
-                RatioPreset(ratio = 17f, label = "1:17"),
+                RatioPreset(ratio = 16f, label = "Bright · 1:16"),
+                RatioPreset(ratio = 17f, label = "Balanced · 1:17", isDefault = true),
+                RatioPreset(ratio = 18f, label = "Rich · 1:18"),
             ),
             selectedIndex = 1,
             onSelectPreset = {},

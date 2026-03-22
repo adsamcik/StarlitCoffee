@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,6 +26,9 @@ fun BrewPreviewCard(
     coffeeFormat: String = "%.0f",
     waterFormat: String = "%.0f",
     ratioFormat: String = "%.0f",
+    bloomG: Float = 0f,
+    timeTargetLowS: Int = 0,
+    timeTargetHighS: Int = 0,
 ) {
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
@@ -33,30 +37,61 @@ fun BrewPreviewCard(
         ),
         modifier = modifier.fillMaxWidth(),
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-            Text(
-                text = "☕ ${coffeeFormat.format(coffeeG)}g",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.semantics { contentDescription = "Coffee: ${coffeeFormat.format(coffeeG)} grams" },
-            )
-            Text(
-                text = "💧 ${waterFormat.format(waterG)}g",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.semantics { contentDescription = "Water: ${waterFormat.format(waterG)} grams" },
-            )
-            Text(
-                text = "1:${ratioFormat.format(ratio)}",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.semantics { contentDescription = "Ratio 1 to ${ratioFormat.format(ratio)}" },
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                Text(
+                    text = "☕ ${coffeeFormat.format(coffeeG)}g",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.semantics { contentDescription = "Coffee: ${coffeeFormat.format(coffeeG)} grams" },
+                )
+                Text(
+                    text = "💧 ${waterFormat.format(waterG)}g",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.semantics { contentDescription = "Water: ${waterFormat.format(waterG)} grams" },
+                )
+                Text(
+                    text = "1:${ratioFormat.format(ratio)}",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.semantics { contentDescription = "Ratio 1 to ${ratioFormat.format(ratio)}" },
+                )
+            }
+            if (bloomG > 0f || timeTargetLowS > 0) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 6.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    if (bloomG > 0f) {
+                        Text(
+                            text = "Bloom ${"%.0f".format(bloomG)}g",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    if (timeTargetLowS > 0 && timeTargetHighS > 0) {
+                        val lowMin = timeTargetLowS / 60
+                        val lowSec = timeTargetLowS % 60
+                        val highMin = timeTargetHighS / 60
+                        val highSec = timeTargetHighS % 60
+                        Text(
+                            text = "⏱ %d:%02d–%d:%02d".format(lowMin, lowSec, highMin, highSec),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+            }
         }
     }
 }

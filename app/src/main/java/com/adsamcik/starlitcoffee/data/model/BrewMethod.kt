@@ -126,11 +126,9 @@ enum class BrewMethod(
         get() {
             val base = defaultRatio.toInt()
             return listOf(
-                RatioPreset(base - 2f, "Lighter · 1:${base - 2}"),
-                RatioPreset(base - 1f, "Light · 1:${base - 1}"),
+                RatioPreset(base - 1f, "Bright · 1:${base - 1}"),
                 RatioPreset(base.toFloat(), "Balanced · 1:$base", isDefault = true),
-                RatioPreset(base + 1f, "Bold · 1:${base + 1}"),
-                RatioPreset(base + 2f, "Bolder · 1:${base + 2}"),
+                RatioPreset(base + 1f, "Rich · 1:${base + 1}"),
             )
         }
 }

@@ -15,14 +15,17 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -68,6 +71,7 @@ import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.util.RankedBagSuggestion
 import com.adsamcik.starlitcoffee.ui.util.shortLabel
+import com.adsamcik.starlitcoffee.ui.util.description
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -139,11 +143,16 @@ fun MethodPickerScreen(
                     modifier = Modifier.semantics { heading() },
                 )
                 Text(
+                    text = "Configure your brew",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Text(
                     text = buildString {
                         append(state.filterType?.displayName ?: "No filter")
                         if (state.isDecafBrew) append(" · Decaf")
                     },
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -227,7 +236,7 @@ fun MethodPickerScreen(
         SingleChoiceSegmentedButtonRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 8.dp),
+                .padding(bottom = 4.dp),
         ) {
             InputMode.entries.forEachIndexed { index, mode ->
                 SegmentedButton(
@@ -242,36 +251,78 @@ fun MethodPickerScreen(
                 }
             }
         }
+        Text(
+            text = inputMode.description(),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
+        )
 
-        // Amount slider
+        // Amount slider with stepper buttons
+        val stepSize = when (inputMode) {
+            InputMode.COFFEE_TO_WATER -> 1f
+            else -> 10f
+        }
+        val displayValue = when (inputMode) {
+            InputMode.COFFEE_TO_WATER -> if (amountFloat % 1f != 0f) "${"%.1f".format(amountFloat)}$amountUnit" else "${amountFloat.toInt()}$amountUnit"
+            else -> "${amountFloat.toInt()}$amountUnit"
+        }
         Text(
             text = amountLabel,
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 8.dp),
         )
+        Slider(
+            value = amountFloat.coerceIn(0f, sliderMax),
+            onValueChange = {
+                val rounded = kotlin.math.round(it / stepSize) * stepSize
+                brewViewModel.setAmount(
+                    if (stepSize < 1f) "%.1f".format(rounded)
+                    else rounded.toInt().toString()
+                )
+            },
+            valueRange = 0f..sliderMax,
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag("coffee_slider")
+                .semantics { contentDescription = "$amountLabel: ${amountFloat.toInt()} $amountUnit" },
+        )
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
         ) {
-            Slider(
-                value = amountFloat.coerceIn(0f, sliderMax),
-                onValueChange = {
-                    val rounded = kotlin.math.round(it)
-                    brewViewModel.setAmount(rounded.toInt().toString())
+            FilledTonalIconButton(
+                onClick = {
+                    val newVal = (amountFloat - stepSize).coerceAtLeast(0f)
+                    brewViewModel.setAmount(
+                        if (stepSize < 1f) "%.1f".format(newVal)
+                        else newVal.toInt().toString()
+                    )
                 },
-                valueRange = 0f..sliderMax,
-                modifier = Modifier
-                    .weight(1f)
-                    .testTag("coffee_slider")
-                    .semantics { contentDescription = "$amountLabel: ${amountFloat.toInt()} $amountUnit" },
-            )
+                modifier = Modifier.size(40.dp),
+            ) {
+                Icon(Icons.Filled.Remove, contentDescription = "Decrease $amountLabel")
+            }
             Text(
-                text = "${amountFloat.toInt()}$amountUnit",
-                style = MaterialTheme.typography.titleMedium,
+                text = displayValue,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(horizontal = 20.dp),
             )
+            FilledTonalIconButton(
+                onClick = {
+                    val newVal = (amountFloat + stepSize).coerceAtMost(sliderMax)
+                    brewViewModel.setAmount(
+                        if (stepSize < 1f) "%.1f".format(newVal)
+                        else newVal.toInt().toString()
+                    )
+                },
+                modifier = Modifier.size(40.dp),
+            ) {
+                Icon(Icons.Filled.Add, contentDescription = "Increase $amountLabel")
+            }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -299,6 +350,9 @@ fun MethodPickerScreen(
             coffeeG = state.coffeeG,
             waterG = state.waterG,
             ratio = state.effectiveRatio,
+            bloomG = state.bloomG,
+            timeTargetLowS = state.timeTargetLowS,
+            timeTargetHighS = state.timeTargetHighS,
             modifier = Modifier.padding(bottom = 12.dp),
         )
 
@@ -416,7 +470,7 @@ fun MethodPickerScreen(
             is GrindResult.Generic ->
                 "Grind: ${gr.descriptor.displayName} – ${gr.descriptor.visualCue}"
             is GrindResult.Specific ->
-                "Grind setting: ${"%.1f".format(gr.recommendation.suggestedStart)} · Adjust by taste"
+                "Grind setting: ${"%.1f".format(gr.recommendation.rangeStart)}–${"%.1f".format(gr.recommendation.rangeEnd)} · Adjust by taste"
         }
         val bagGrindHint = selectedRankedBag?.grindInsight?.bestGrindSetting ?: selectedBag?.grindSetting
         ElevatedCard(
@@ -442,35 +496,35 @@ fun MethodPickerScreen(
             }
         }
 
-        // Start Brewing + Save Favorite
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        // Start Brewing
+        Button(
+            onClick = onNavigateToTimer,
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .testTag("start_brewing_button"),
         ) {
-            Button(
-                onClick = onNavigateToTimer,
-                shape = MaterialTheme.shapes.large,
+            Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
+        }
+
+        // Save as Favorite — separate action to avoid misclicks
+        TextButton(
+            onClick = { showSaveFavoriteDialog = true },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 4.dp)
+                .testTag("save_favorite_button"),
+        ) {
+            Icon(
+                imageVector = Icons.Filled.FavoriteBorder,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
-                    .weight(1f)
-                    .height(56.dp)
-                    .testTag("start_brewing_button"),
-            ) {
-                Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
-            }
-            IconButton(
-                onClick = { showSaveFavoriteDialog = true },
-                modifier = Modifier
-                    .size(56.dp)
-                    .testTag("save_favorite_button"),
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.FavoriteBorder,
-                    contentDescription = "Save as favorite",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(28.dp),
-                )
-            }
+                    .size(20.dp)
+                    .padding(end = 4.dp),
+            )
+            Text("Save as Favorite")
         }
 
         // Post-brew check-in card
@@ -500,6 +554,10 @@ fun MethodPickerScreen(
             if (card != null) {
                 Spacer(modifier = Modifier.height(16.dp))
                 HomeContextCardView(card = card)
+            } else {
+                // Brew tip card — fills empty space with useful guidance
+                Spacer(modifier = Modifier.height(16.dp))
+                BrewTipCard(method = state.method)
             }
         }
 
@@ -648,5 +706,29 @@ private fun BagPickerOptionCard(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun BrewTipCard(method: BrewMethod) {
+    val tip = when (method) {
+        BrewMethod.PULSAR -> "💡 Pulsar tip: Keep slurry ~1cm above the coffee bed during pours. " +
+            "Most users brew 20–25g for a balanced single cup."
+        else -> "💡 Tip: Start with the default ratio and adjust strength to taste. " +
+            "Finer grinds extract more, coarser grinds extract less."
+    }
+    ElevatedCard(
+        shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+        ),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Text(
+            text = tip,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
+            modifier = Modifier.padding(16.dp),
+        )
     }
 }
