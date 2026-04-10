@@ -12,7 +12,7 @@ pluginManagement {
     }
 }
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 dependencyResolutionManagement {
@@ -20,6 +20,19 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            name = "MindlayerGitHubPackages"
+            val ghOwner = extra.properties["GITHUB_OWNER"]?.toString() ?: System.getenv("GITHUB_OWNER") ?: "OWNER"
+            val ghToken = extra.properties["GITHUB_TOKEN"]?.toString() ?: System.getenv("GITHUB_TOKEN") ?: ""
+            url = uri("https://maven.pkg.github.com/$ghOwner/Mindlayer")
+            credentials {
+                username = ghOwner
+                password = ghToken
+            }
+            content {
+                includeGroup("com.mindlayer")
+            }
+        }
     }
 }
 

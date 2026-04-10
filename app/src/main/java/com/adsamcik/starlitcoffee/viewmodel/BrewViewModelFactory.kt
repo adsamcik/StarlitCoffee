@@ -9,6 +9,7 @@ import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
+import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 
 // TODO: Replace with Hilt @Provides when DI is adopted
@@ -26,6 +27,8 @@ class BrewViewModelFactory(
                 ratioPresetRepository = RatioPresetRepository(database.ratioPresetDao()),
                 userPreferencesRepository = UserPreferencesRepository(application),
                 grinderData = GrinderDataSource.getInstance(application),
+                llmProvider = MindlayerLlmInferenceProvider(application),
+                userBarcodeStemDao = database.userBarcodeStemDao(),
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

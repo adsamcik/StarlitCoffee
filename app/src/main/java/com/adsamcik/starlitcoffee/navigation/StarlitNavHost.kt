@@ -61,6 +61,7 @@ import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModelFactory
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
 import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
+import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModelFactory
 import com.adsamcik.starlitcoffee.ui.component.RescanDeltaDialog
 import java.util.HashMap
 import kotlinx.coroutines.launch
@@ -247,6 +248,24 @@ fun StarlitNavHost() {
                 BrewTimerScreen(
                     brewViewModel = brewViewModel,
                     onBack = { navController.popBackStack() },
+                    onComplete = {
+                        // Save the brew log immediately (without feedback — user rates later)
+                        brewViewModel.logBrew()
+                        // Navigate back to calculator, clearing the brew flow from backstack
+                        navController.navigate(CalculatorBrew) {
+                            popUpTo(CalculatorBrew) { inclusive = true }
+                        }
+                        // Show snackbar prompting async feedback
+                        scope.launch {
+                            val result = snackbarHostState.showSnackbar(
+                                message = "Brew saved! Rate it after you taste it.",
+                                actionLabel = "View log",
+                            )
+                            if (result == SnackbarResult.ActionPerformed) {
+                                navController.navigate(BrewLogList)
+                            }
+                        }
+                    },
                 )
             }
             composable<TasteFeedback> {
@@ -330,7 +349,9 @@ fun StarlitNavHost() {
                 )
             }
             composable<LiveScan> {
-                val liveScanViewModel: LiveScanViewModel = viewModel()
+                val liveScanViewModel: LiveScanViewModel = viewModel(
+                    factory = LiveScanViewModelFactory(context as Application),
+                )
                 LiveScanScreen(
                     liveScanViewModel = liveScanViewModel,
                     brewViewModel = brewViewModel,
@@ -388,7 +409,9 @@ fun StarlitNavHost() {
                     )
                 } else {
                     // Launch LiveScan for rescan
-                    val liveScanViewModel: LiveScanViewModel = viewModel()
+                    val liveScanViewModel: LiveScanViewModel = viewModel(
+                        factory = LiveScanViewModelFactory(context as Application),
+                    )
                     LiveScanScreen(
                         liveScanViewModel = liveScanViewModel,
                         brewViewModel = brewViewModel,
