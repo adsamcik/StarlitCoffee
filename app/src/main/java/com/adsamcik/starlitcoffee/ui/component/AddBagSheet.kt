@@ -65,6 +65,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -76,6 +77,7 @@ import com.adsamcik.starlitcoffee.data.model.CoffeeProcessType
 import com.adsamcik.starlitcoffee.data.model.CoffeeRegion
 import com.adsamcik.starlitcoffee.data.model.CoffeeRoastLevel
 import com.adsamcik.starlitcoffee.data.model.CoffeeVariety
+import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.BagReviewSeverity
@@ -84,6 +86,7 @@ import com.adsamcik.starlitcoffee.util.DateParser
 import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.WeightParser
+import java.net.URL
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -119,6 +122,7 @@ fun AddBagSheet(
     ) -> Unit,
     onEdit: ((CoffeeBagEntity) -> Unit)? = null,
     onScanBarcode: (() -> Unit)? = null,
+    onExploreQrUrl: ((String, (QrCoffeeMetadata?) -> Unit) -> Unit)? = null,
 ) {
     val uriHandler = LocalUriHandler.current
     val configuration = LocalConfiguration.current
@@ -203,6 +207,8 @@ fun AddBagSheet(
         mutableStateOf(ocrPrefill != null && !isProcessing && bagToEdit == null)
     }
     var pendingScrollField by remember { mutableStateOf<String?>(null) }
+    var isExploringQr by remember { mutableStateOf(false) }
+    var qrExploredMetadata by remember { mutableStateOf<QrCoffeeMetadata?>(null) }
     val listState = rememberLazyListState()
 
     LaunchedEffect(fieldEvidence) {
@@ -318,10 +324,36 @@ fun AddBagSheet(
                                 )
                             }
                             traceabilityUrl?.let { qrUrl ->
-                                QrLinkCard(
-                                    url = qrUrl,
-                                    onOpen = { uriHandler.openUri(qrUrl) },
-                                )
+                                if (qrExploredMetadata != null) {
+                                    QrLinkCard(
+                                        url = qrUrl,
+                                        onOpen = { uriHandler.openUri(qrUrl) },
+                                        exploredLabel = "✓ Coffee details extracted from ${URL(qrUrl).host}",
+                                    )
+                                } else {
+                                    QrApprovalCard(
+                                        url = qrUrl,
+                                        isExploring = isExploringQr,
+                                        onExplore = {
+                                            if (onExploreQrUrl != null) {
+                                                isExploringQr = true
+                                                onExploreQrUrl(qrUrl) { metadata ->
+                                                    isExploringQr = false
+                                                    qrExploredMetadata = metadata
+                                                    if (metadata != null) {
+                                                        if (name.isBlank() && metadata.name != null) name = metadata.name
+                                                        if (roaster.isBlank() && metadata.roaster != null) roaster = metadata.roaster
+                                                        if (originCountry.isBlank() && metadata.origin != null) originCountry = metadata.origin
+                                                        if (originRegion.isBlank() && metadata.region != null) originRegion = metadata.region
+                                                        if (processType.isBlank() && metadata.processType != null) processType = metadata.processType
+                                                        if (tastingNotes.isBlank() && metadata.tastingNotes != null) tastingNotes = metadata.tastingNotes
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        onSkip = { /* URL is still saved as traceabilityUrl */ },
+                                    )
+                                }
                             }
                         }
                     }
@@ -1261,6 +1293,7 @@ private fun ReviewHintsCard(reviewHints: List<BagPhotoReviewHint>) {
 private fun QrLinkCard(
     url: String,
     onOpen: () -> Unit,
+    exploredLabel: String? = null,
 ) {
     ElevatedCard(
         modifier = Modifier
@@ -1275,6 +1308,13 @@ private fun QrLinkCard(
                 text = "QR website",
                 style = MaterialTheme.typography.titleMedium,
             )
+            if (exploredLabel != null) {
+                Text(
+                    text = exploredLabel,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
             Text(
                 text = url,
                 style = MaterialTheme.typography.bodyMedium,
@@ -1282,6 +1322,53 @@ private fun QrLinkCard(
             )
             TextButton(onClick = onOpen) {
                 Text("Open website")
+            }
+        }
+    }
+}
+
+@Composable
+private fun QrApprovalCard(
+    url: String,
+    isExploring: Boolean,
+    onExplore: () -> Unit,
+    onSkip: () -> Unit,
+) {
+    ElevatedCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 12.dp),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text("QR link found", style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = url,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                text = "This website may contain coffee details (roaster, origin, tasting notes). " +
+                    "Approve to fetch and extract them.",
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            if (isExploring) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+            } else {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Button(onClick = onExplore) {
+                        Text("Explore & extract")
+                    }
+                    TextButton(onClick = onSkip) {
+                        Text("Skip")
+                    }
+                }
             }
         }
     }

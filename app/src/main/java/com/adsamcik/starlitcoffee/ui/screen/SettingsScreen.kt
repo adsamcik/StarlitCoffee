@@ -349,40 +349,16 @@ fun SettingsScreen(
 
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 16.dp),
-                        ) {
-                            Text(
-                                text = "QR link explorer",
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.semantics { heading() },
-                            )
-                            Text(
-                                text = "When a bag photo includes a public HTTPS QR website, " +
-                                    "fetch it safely and offer reviewable coffee hints. " +
-                                    "Local/private addresses stay blocked, and nothing is " +
-                                    "applied silently.",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        Switch(
-                            checked = prefs.qrLinkExplorerEnabled,
-                            modifier = Modifier.testTag("qr_link_explorer_toggle"),
-                            onCheckedChange = { enabled ->
-                                scope.launch {
-                                    userPreferencesRepository.updateQrLinkExplorerEnabled(enabled)
-                                }
-                            },
-                        )
-                    }
+                    Text(
+                        text = "QR link explorer",
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.semantics { heading() },
+                    )
+                    Text(
+                        text = "QR links in bag photos require approval before exploration.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
             }
 

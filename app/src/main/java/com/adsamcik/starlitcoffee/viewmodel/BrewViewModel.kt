@@ -1375,57 +1375,39 @@ class BrewViewModel(
                 reviewHints = listOf(
                     BagPhotoReviewHint(
                         severity = BagReviewSeverity.INFO,
-                        message = "Ignored an unsafe QR website link. Only public http(s) pages are supported.",
+                        message = "Ignored an unsafe QR link. Only public HTTPS pages are supported.",
                     ),
                 ),
             )
         }
         if (safeUrl == null) return QrLinkEnrichment()
 
-        val qrLookupEnabled = userPreferencesRepository
-            ?.userPreferences
-            ?.first()
-            ?.qrLinkExplorerEnabled == true
-
-        if (!qrLookupEnabled) {
-            return QrLinkEnrichment(
-                safeUrl = safeUrl,
-                reviewHints = listOf(
-                    BagPhotoReviewHint(
-                        severity = BagReviewSeverity.INFO,
-                        message = "QR website saved, but automatic QR exploration is off in Settings.",
-                    ),
+        // Never auto-explore — require user approval
+        return QrLinkEnrichment(
+            safeUrl = safeUrl,
+            reviewHints = listOf(
+                BagPhotoReviewHint(
+                    severity = BagReviewSeverity.INFO,
+                    message = "QR link found. Approve exploration to extract coffee details from the website.",
                 ),
-            )
-        }
+            ),
+        )
+    }
 
-        return when (val result = qrLinkMetadataExplorer.explore(safeUrl)) {
-            is QrLinkExploreResult.Success -> {
-                val candidates = buildQrLinkCandidates(result.metadata)
-                QrLinkEnrichment(
-                    safeUrl = safeUrl,
-                    candidates = candidates,
-                    reviewHints = listOf(
-                        BagPhotoReviewHint(
-                            severity = BagReviewSeverity.INFO,
-                            message = if (candidates.isEmpty()) {
-                                "QR website reached, but it did not expose usable coffee details."
-                            } else {
-                                "Fetched extra coffee hints from ${result.metadata.host}. Review them before saving."
-                            },
-                        ),
-                    ),
-                )
+    fun exploreApprovedQrLink(url: String, onResult: (QrCoffeeMetadata?) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    qrLinkMetadataExplorer.explore(url)
+                }
+                when (result) {
+                    is QrLinkExploreResult.Success -> onResult(result.metadata)
+                    is QrLinkExploreResult.Skipped -> onResult(null)
+                }
+            } catch (e: Exception) {
+                Log.w("BrewViewModel", "QR link exploration failed", e)
+                onResult(null)
             }
-            is QrLinkExploreResult.Skipped -> QrLinkEnrichment(
-                safeUrl = safeUrl.takeIf { result.keepUrl },
-                reviewHints = listOf(
-                    BagPhotoReviewHint(
-                        severity = BagReviewSeverity.INFO,
-                        message = result.reason,
-                    ),
-                ),
-            )
         }
     }
 

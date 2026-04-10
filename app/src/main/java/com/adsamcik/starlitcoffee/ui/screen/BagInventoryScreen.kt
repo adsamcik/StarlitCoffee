@@ -383,6 +383,9 @@ fun BagInventoryScreen(
                 showAddSheet = false
                 onNavigateToBarcode()
             },
+            onExploreQrUrl = { url, callback ->
+                brewViewModel.exploreApprovedQrLink(url, callback)
+            },
             onDismiss = {
                 showAddSheet = false
                 isProcessingScan = false
