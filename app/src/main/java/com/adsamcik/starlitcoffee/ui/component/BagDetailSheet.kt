@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -68,8 +69,9 @@ fun BagDetailSheet(
     onStatusChange: (CoffeeBagStatus) -> Unit,
     onDelete: () -> Unit,
     onEdit: () -> Unit,
+    onRescan: () -> Unit = {},
     onWeightAdjust: (Long, Float) -> Unit = { _, _ -> },
-) {
+){
     var statusMenuExpanded by remember { mutableStateOf(false) }
     val localizedMetadata = CoffeeMetadataNormalizer.resolveBagMetadata(bag)
     val freshness = remember(bag.roastDate) {
@@ -120,6 +122,12 @@ fun BagDetailSheet(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
+                }
+                IconButton(onClick = onRescan) {
+                    Icon(
+                        Icons.Filled.CameraAlt,
+                        contentDescription = "Rescan label",
+                    )
                 }
                 IconButton(onClick = onEdit) {
                     Icon(

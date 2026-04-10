@@ -39,18 +39,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.adsamcik.starlitcoffee.data.db.AppDatabase
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
-import com.adsamcik.starlitcoffee.data.repository.UserPreferences
+import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
-import com.adsamcik.starlitcoffee.ui.screen.AmountStrengthScreen
 import com.adsamcik.starlitcoffee.ui.screen.BagInventoryScreen
 import com.adsamcik.starlitcoffee.ui.screen.BarcodeScannerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewLogScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewLogDetailScreen
+import com.adsamcik.starlitcoffee.ui.screen.CalculatorBrewScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.LiveScanScreen
-import com.adsamcik.starlitcoffee.ui.screen.MethodPickerScreen
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
@@ -59,7 +59,9 @@ import com.adsamcik.starlitcoffee.ui.screen.SettingsScreen
 import com.adsamcik.starlitcoffee.ui.screen.TasteFeedbackScreen
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModelFactory
+import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
 import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
+import com.adsamcik.starlitcoffee.ui.component.RescanDeltaDialog
 import java.util.HashMap
 import kotlinx.coroutines.launch
 
@@ -70,14 +72,15 @@ private data class BottomNavItem(
 )
 
 private val bottomNavItems = listOf(
-    BottomNavItem("Brew", Icons.Filled.LocalCafe, MethodPicker),
+    BottomNavItem("Brew", Icons.Filled.LocalCafe, CalculatorBrew),
     BottomNavItem("Log", Icons.Filled.History, BrewLogList),
     BottomNavItem("More", Icons.Filled.MoreHoriz, More),
 )
 
-private val onboardingRoutes = setOf(
-    OnboardingMethods::class,
-    OnboardingPersonalize::class,
+private val bottomBarRoutes = setOf(
+    CalculatorBrew::class,
+    BrewLogList::class,
+    More::class,
 )
 
 private const val TRANSITION_DURATION = 300
@@ -87,10 +90,15 @@ private const val FADE_DURATION = 200
 fun StarlitNavHost() {
     val navController = rememberNavController()
     val context = LocalContext.current.applicationContext
+    val database = remember { AppDatabase.getInstance(context) }
     val userPreferencesRepository = remember { UserPreferencesRepository(context) }
+    val cupPresetRepository = remember { CupPresetRepository(database.cupPresetDao()) }
     val brewViewModel: BrewViewModel = viewModel(
         factory = BrewViewModelFactory(context as Application),
     )
+    val calculatorViewModel: CalculatorViewModel = viewModel {
+        CalculatorViewModel(cupPresetRepository, userPreferencesRepository)
+    }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
@@ -106,7 +114,7 @@ fun StarlitNavHost() {
     val scope = rememberCoroutineScope()
 
     val showBottomBar = currentDestination?.let { dest ->
-        bottomNavItems.any { dest.hasRoute(it.route::class) }
+        bottomBarRoutes.any { dest.hasRoute(it) }
     } ?: false
 
     // Handle rating reminder from notification tap
@@ -130,7 +138,7 @@ fun StarlitNavHost() {
         return
     }
 
-    val startDestination: Any = if (prefs.onboardingCompleted) MethodPicker else OnboardingMethods
+    val startDestination: Any = if (prefs.onboardingCompleted) CalculatorBrew else OnboardingMethods
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -217,7 +225,7 @@ fun StarlitNavHost() {
                         if (filterType != null) brewViewModel.setFilterType(filterType)
                         if (grinderId != null) brewViewModel.setGrinder(grinderId)
 
-                        navController.navigate(MethodPicker) {
+                        navController.navigate(CalculatorBrew) {
                             popUpTo(0) { inclusive = true }
                         }
                     },
@@ -225,19 +233,14 @@ fun StarlitNavHost() {
             }
 
             // Main app screens
-            composable<MethodPicker> {
-                MethodPickerScreen(
+            composable<CalculatorBrew> {
+                CalculatorBrewScreen(
+                    calculatorViewModel = calculatorViewModel,
                     brewViewModel = brewViewModel,
                     userPreferencesRepository = userPreferencesRepository,
-                    onNavigateToSettings = { navController.navigate(Settings) },
-                    onNavigateToTimer = { navController.navigate(BrewTimer) },
-                )
-            }
-            composable<AmountStrength> {
-                AmountStrengthScreen(
-                    brewViewModel = brewViewModel,
-                    onBack = { navController.popBackStack() },
-                    onNavigateToTimer = { navController.navigate(BrewTimer) },
+                    onNavigateToBrew = {
+                        navController.navigate(BrewTimer)
+                    },
                 )
             }
             composable<BrewTimer> {
@@ -250,8 +253,8 @@ fun StarlitNavHost() {
                 TasteFeedbackScreen(
                     brewViewModel = brewViewModel,
                     onSaveAndFinish = {
-                        navController.navigate(MethodPicker) {
-                            popUpTo(MethodPicker) { inclusive = true }
+                        navController.navigate(CalculatorBrew) {
+                            popUpTo(CalculatorBrew) { inclusive = true }
                         }
                     },
                     onNavigateToResult = {
@@ -262,7 +265,7 @@ fun StarlitNavHost() {
             composable<SavedRecipes> {
                 SavedRecipesScreen(
                     brewViewModel = brewViewModel,
-                    onNavigateToAmount = { navController.navigate(AmountStrength) },
+                    onNavigateToAmount = { navController.navigate(CalculatorBrew) },
                 )
             }
             composable<BagInventory> { backStackEntry ->
@@ -275,6 +278,19 @@ fun StarlitNavHost() {
                 BagInventoryScreen(
                     brewViewModel = brewViewModel,
                     onNavigateToCamera = { navController.navigate(LiveScan) },
+                    onNavigateToBrewWithBag = { bagId ->
+                        brewViewModel.selectBagForBrewing(bagId)
+                        navController.navigate(CalculatorBrew) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    onNavigateToRescan = { bagId ->
+                        navController.navigate(RescanBag(bagId))
+                    },
                     capturedPhotosResult = capturedPhotos,
                     scanFieldsResult = scanFields,
                 )
@@ -333,9 +349,66 @@ fun StarlitNavHost() {
                     },
                 )
             }
+            composable<RescanBag> { backStackEntry ->
+                val route = backStackEntry.toRoute<RescanBag>()
+                val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+                val originalBag = remember(bags, route.bagId) {
+                    bags.find { it.id == route.bagId }
+                }
+                val rescanFields by backStackEntry.savedStateHandle
+                    .getStateFlow<HashMap<String, String>?>("rescan_fields", null)
+                    .collectAsStateWithLifecycle()
+
+                if (originalBag == null) {
+                    // Bag was deleted while navigating — go back
+                    navController.popBackStack()
+                    return@composable
+                }
+
+                val pendingRescan = rescanFields
+                if (pendingRescan != null) {
+                    // Scan complete — show delta dialog
+                    RescanDeltaDialog(
+                        bag = originalBag,
+                        resolvedFields = pendingRescan,
+                        onUpdateBag = { updatedBag ->
+                            brewViewModel.updateCoffeeBag(updatedBag)
+                            navController.popBackStack()
+                        },
+                        onNewBag = { fields ->
+                            // Pass fields to BagInventory for AddBagSheet
+                            navController.getBackStackEntry(BagInventory)
+                                .savedStateHandle
+                                .set("scan_fields", HashMap(fields))
+                            navController.popBackStack()
+                        },
+                        onDismiss = {
+                            navController.popBackStack()
+                        },
+                    )
+                } else {
+                    // Launch LiveScan for rescan
+                    val liveScanViewModel: LiveScanViewModel = viewModel()
+                    LiveScanScreen(
+                        liveScanViewModel = liveScanViewModel,
+                        brewViewModel = brewViewModel,
+                        onBack = {
+                            navController.popBackStack()
+                        },
+                        onSaveComplete = {
+                            navController.popBackStack()
+                        },
+                        onNavigateToReview = { resolvedFields ->
+                            backStackEntry.savedStateHandle
+                                .set("rescan_fields", HashMap(resolvedFields))
+                        },
+                    )
+                }
+            }
             composable<Settings> {
                 SettingsScreen(
                     userPreferencesRepository = userPreferencesRepository,
+                    cupPresetRepository = cupPresetRepository,
                     onBack = { navController.popBackStack() },
                 )
             }

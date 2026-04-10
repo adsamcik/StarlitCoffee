@@ -1,6 +1,14 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +17,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,6 +27,11 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -24,6 +40,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -54,6 +71,8 @@ private const val TAG = "BagInventoryScreen"
 fun BagInventoryScreen(
     brewViewModel: BrewViewModel,
     onNavigateToCamera: () -> Unit,
+    onNavigateToBrewWithBag: (Long) -> Unit,
+    onNavigateToRescan: (Long) -> Unit = {},
     capturedPhotosResult: String? = null,
     scanFieldsResult: HashMap<String, String>? = null,
 ){
@@ -89,7 +108,29 @@ fun BagInventoryScreen(
     var isProcessingScan by remember { mutableStateOf(false) }
     var showRetakeDialog by remember { mutableStateOf(false) }
     var lastProcessedPhotos by remember { mutableStateOf<String?>(null) }
+    var fabExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    // Photo picker launcher for "From photo" option
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+    ) { uri ->
+        if (uri != null) {
+            val photosCsv = uri.toString()
+            showAddSheet = true
+            isProcessingScan = true
+            capturedPhotoUris = photosCsv
+            ocrPrefill = null
+            detectedBarcode = null
+            detectedQrUrl = null
+            offLookupName = null
+            offLookupRoaster = null
+            fieldEvidence = emptyMap()
+            reviewHints = emptyList()
+            brewViewModel.processNewBagPhotos(photosCsv, knownFieldValues)
+        }
+    }
 
     // Handle captured photos result (from CameraCaptureScreen)
     val capturedPhotos = capturedPhotosResult
@@ -162,13 +203,55 @@ fun BagInventoryScreen(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = onNavigateToCamera,
-                shape = MaterialTheme.shapes.large,
-                modifier = Modifier.testTag("add_bag_fab"),
+            Column(
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                Icon(Icons.Filled.Add, contentDescription = "Add Bag")
+                AnimatedVisibility(
+                    visible = fabExpanded,
+                    enter = fadeIn() + scaleIn(),
+                    exit = fadeOut() + scaleOut(),
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.End,
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        SmallFloatingActionButton(
+                            onClick = {
+                                fabExpanded = false
+                                photoPickerLauncher.launch(
+                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
+                                )
+                            },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            modifier = Modifier.testTag("fab_from_photo"),
+                        ) {
+                            Icon(Icons.Filled.PhotoLibrary, contentDescription = "From photo")
+                        }
+                        SmallFloatingActionButton(
+                            onClick = {
+                                fabExpanded = false
+                                onNavigateToCamera()
+                            },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            modifier = Modifier.testTag("fab_scan_label"),
+                        ) {
+                            Icon(Icons.Filled.CameraAlt, contentDescription = "Scan label")
+                        }
+                    }
+                }
+                FloatingActionButton(
+                    onClick = { fabExpanded = !fabExpanded },
+                    shape = MaterialTheme.shapes.large,
+                    modifier = Modifier.testTag("add_bag_fab"),
+                ) {
+                    Icon(
+                        imageVector = if (fabExpanded) Icons.Filled.Close else Icons.Filled.Add,
+                        contentDescription = if (fabExpanded) "Close menu" else "Add Bag",
+                    )
+                }
             }
         },
     ) { innerPadding ->
@@ -324,6 +407,18 @@ fun BagInventoryScreen(
                         photoUri = permanentUris?.split(",")?.firstOrNull(),
                         photoUris = permanentUris,
                         traceabilityUrl = qrUrl,
+                        onBagAdded = { newBagId ->
+                            coroutineScope.launch {
+                                val result = snackbarHostState.showSnackbar(
+                                    message = "Bag saved — brew with it now?",
+                                    actionLabel = "Brew now",
+                                    duration = SnackbarDuration.Short,
+                                )
+                                if (result == SnackbarResult.ActionPerformed) {
+                                    onNavigateToBrewWithBag(newBagId)
+                                }
+                            }
+                        },
                     )
                 }
             },
@@ -391,6 +486,10 @@ fun BagInventoryScreen(
             onEdit = {
                 selectedBag = null
                 editBag = bag
+            },
+            onRescan = {
+                selectedBag = null
+                onNavigateToRescan(bag.id)
             },
             onWeightAdjust = { bagId, weight ->
                 brewViewModel.adjustBagWeight(bagId, weight)

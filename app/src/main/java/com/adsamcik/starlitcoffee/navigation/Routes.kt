@@ -3,10 +3,7 @@ package com.adsamcik.starlitcoffee.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-object MethodPicker
-
-@Serializable
-object AmountStrength
+object CalculatorBrew
 
 @Serializable
 object Result
@@ -46,3 +43,6 @@ object Settings
 
 @Serializable
 object More
+
+@Serializable
+data class RescanBag(val bagId: Long)
