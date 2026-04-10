@@ -6,9 +6,6 @@ package com.adsamcik.starlitcoffee.scan.model
  * All thresholds are tunable — the debug overlay exposes these at runtime.
  */
 data class AccumulatorConfig(
-    /** Ring buffer capacity — how many frame results to keep. */
-    val ringBufferSize: Int = 20,
-
     /** How often (ms) to run the consensus algorithm. */
     val consensusIntervalMs: Long = 500L,
 
@@ -23,9 +20,6 @@ data class AccumulatorConfig(
 
     /** Minimum share of votes for a candidate to be considered "strong" in conflict detection. */
     val conflictCandidateMinShare: Float = 0.30f,
-
-    /** Number of contradicting high-quality frames needed to start decaying a lock. */
-    val counterEvidenceFrames: Int = 3,
 
     /** Rate at which lock score decays per counter-evidence frame (0–1). */
     val lockDecayRate: Float = 0.15f,
@@ -75,9 +69,6 @@ data class AccumulatorConfig(
     /** OCR throttle (ms) when all fields are locked (maintenance mode). */
     val throttleMaintenanceMs: Long = 2000L,
 
-    /** Minimum time (ms) between throttle changes (hysteresis). */
-    val throttleHysteresisMs: Long = 2000L,
-
     // --- Quality gating ---
 
     /** Minimum blur score for a frame to be admitted. */
@@ -91,11 +82,6 @@ data class AccumulatorConfig(
 
     /** Factor by which to relax quality thresholds when triggered. */
     val qualityRelaxationFactor: Float = 0.70f,
-
-    // --- IMU gating ---
-
-    /** Maximum linear acceleration magnitude (m/s²) for device "stillness". */
-    val imuStillnessThreshold: Float = 1.5f,
 
     // --- History prior boost ---
 
@@ -119,8 +105,8 @@ data class AccumulatorConfig(
     /** Weight when evidence comes from QR link metadata extraction. */
     val sourceWeightQrLink: Float = 6f,
 
-    /** Weight when evidence comes from LLM-based field extraction. */
-    val sourceWeightLlm: Float = 7f,
+    /** Weight when evidence comes from LLM-based field extraction. Highest non-user source — LLM does holistic visual analysis, more reliable than character-by-character OCR. */
+    val sourceWeightLlm: Float = 10f,
 
     // --- Vote floor (Option B) ---
 

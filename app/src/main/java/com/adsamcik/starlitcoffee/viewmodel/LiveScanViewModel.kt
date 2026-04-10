@@ -86,6 +86,10 @@ class LiveScanViewModel(
 
     private var bestGoldenFrameScore: Float = 0f
 
+    // Adaptive throttle for OCR frequency
+    private val _currentThrottleMs = MutableStateFlow(config.throttleFastMs)
+    val currentThrottleMs: StateFlow<Long> = _currentThrottleMs.asStateFlow()
+
     private var currentKnownValues: KnownFieldValues = KnownFieldValues.EMPTY
 
     /**
@@ -151,6 +155,12 @@ class LiveScanViewModel(
                         lastRejectionReason = rejection.reason,
                     )
                 }
+            }
+        }
+
+        viewModelScope.launch {
+            accumulator?.currentThrottleMs?.collect { throttle ->
+                _currentThrottleMs.value = throttle
             }
         }
 

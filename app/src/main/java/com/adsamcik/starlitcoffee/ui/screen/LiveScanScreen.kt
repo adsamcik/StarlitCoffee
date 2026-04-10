@@ -193,12 +193,16 @@ fun LiveScanScreen(
                     if (quality.textDetected) latestQuality = quality
                 }
             },
+            onGoldenFrameCapture = { jpegBytes, quality, ocrResult ->
+                liveScanViewModel.onGoldenFrameCapture(jpegBytes, quality, ocrResult)
+            },
             onBarcodeDetected = { barcode ->
                 liveScanViewModel.onBarcodeDetected(barcode)
             },
             onBlankFrame = {
                 liveScanViewModel.onBlankFrame()
             },
+            throttleMsProvider = { liveScanViewModel.currentThrottleMs.value },
         )
 
         cameraController.setImageAnalysisAnalyzer(analysisExecutor, analyzer)
@@ -1001,8 +1005,14 @@ private class LiveScanAnalyzer(
         quality: BagCaptureQuality,
         lumaGrid: ByteArray?,
     ) -> Unit,
+    private val onGoldenFrameCapture: (
+        jpegBytes: ByteArray,
+        quality: BagCaptureQuality,
+        ocrResult: OcrFieldExtractor.OcrExtractionResult,
+    ) -> Unit,
     private val onBarcodeDetected: (String) -> Unit,
     private val onBlankFrame: () -> Unit,
+    private val throttleMsProvider: () -> Long = { 700L },
 ) : androidx.camera.core.ImageAnalysis.Analyzer {
 
     @Volatile
@@ -1054,6 +1064,18 @@ private class LiveScanAnalyzer(
                 "glare=${quality.glarePercent}, overExp=${quality.overexposedPercent}")
         }
 
+        // Pre-encode JPEG only for golden frame candidates (expensive — skip for regular frames)
+        val goldenFrameJpeg: ByteArray? = if (
+            quality.blurScore >= 24f &&
+            quality.glareOkay &&
+            quality.exposureOkay &&
+            quality.textBlockCount >= 3
+        ) {
+            encodeToJpeg(image)
+        } else {
+            null
+        }
+
         // Build 8×8 luma grid for side detection
         val lumaGrid = try {
             build8x8Grid(luma, image.width, image.height)
@@ -1068,10 +1090,10 @@ private class LiveScanAnalyzer(
             // Never let callback exceptions propagate
         }
 
-        // OCR text recognition (throttled at 700ms) + barcode detection
+        // OCR text recognition (adaptive throttle) + barcode detection
         val now = android.os.SystemClock.elapsedRealtime()
         val timeSinceLastOcr = now - lastTextCheckAtMs
-        val shouldRunOcr = !textDetectionInFlight && timeSinceLastOcr >= 700L
+        val shouldRunOcr = !textDetectionInFlight && timeSinceLastOcr >= throttleMsProvider()
         val shouldRunBarcode = !barcodeDetected
         val hasMediaImage = image.image != null
 
@@ -1121,6 +1143,13 @@ private class LiveScanAnalyzer(
                                 "origin=${lastOcrResult.origin}, region=${lastOcrResult.region}")
                             onOcrResult(lastOcrResult, quality, lumaGrid)
                             android.util.Log.d("LiveScanAnalyzer", "onOcrResult callback completed OK")
+                            goldenFrameJpeg?.let { jpeg ->
+                                try {
+                                    onGoldenFrameCapture(jpeg, quality, lastOcrResult)
+                                } catch (e: Exception) {
+                                    android.util.Log.e("LiveScanAnalyzer", "Golden frame capture error", e)
+                                }
+                            }
                         } catch (e: Exception) {
                             android.util.Log.e("LiveScanAnalyzer", "OCR callback error", e)
                         }
@@ -1158,6 +1187,19 @@ private class LiveScanAnalyzer(
             }
         } else {
             image.close()
+        }
+    }
+
+    private fun encodeToJpeg(image: ImageProxy, quality: Int = 85): ByteArray? {
+        return try {
+            val bitmap = image.toBitmap()
+            val stream = java.io.ByteArrayOutputStream()
+            bitmap.compress(android.graphics.Bitmap.CompressFormat.JPEG, quality, stream)
+            bitmap.recycle()
+            stream.toByteArray()
+        } catch (e: Exception) {
+            android.util.Log.e("LiveScanAnalyzer", "JPEG encoding failed", e)
+            null
         }
     }
 

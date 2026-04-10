@@ -63,9 +63,6 @@ class FrameEvidenceAccumulator(
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val stateLock = Any()
 
-    // Ring buffer of recent frame results
-    private val ringBuffer = ArrayDeque<FrameResult>(config.ringBufferSize)
-
     // Channels for frame submission
     private val frameChannel = Channel<FrameResult>(Channel.CONFLATED)
     private val goldenFrameChannel = Channel<FrameResult>(Channel.UNLIMITED)
@@ -114,6 +111,10 @@ class FrameEvidenceAccumulator(
     // Frame rejection feedback
     private val _lastRejection = MutableStateFlow<FrameRejection?>(null)
     val lastRejection: StateFlow<FrameRejection?> = _lastRejection.asStateFlow()
+
+    // Adaptive throttle
+    private val _currentThrottleMs = MutableStateFlow(config.throttleFastMs)
+    val currentThrottleMs: StateFlow<Long> = _currentThrottleMs.asStateFlow()
 
     // LLM escalation
     private val _llmEscalation = MutableSharedFlow<LlmEscalationRequest>(
@@ -210,6 +211,8 @@ class FrameEvidenceAccumulator(
     }
 
     /**
+     * Update the known values (history prior) after the user's bag history changes.
+     */
     fun boostKnownValues(updated: KnownFieldValues) {
         synchronized(stateLock) {
             knownValues = updated
@@ -261,38 +264,6 @@ class FrameEvidenceAccumulator(
                 resolvedEvidence = null,
             ))
             emitEvidenceLocked()
-        }
-    }
-
-    /**
-     * Check if a frame should be admitted based on quality thresholds.
-     */
-    fun shouldAdmitFrame(frame: FrameResult): Boolean {
-        return synchronized(stateLock) {
-            consensusEngine.framePassesQualityGate(frame, isRelaxed = isQualityRelaxed)
-        }
-    }
-
-    /**
-     * Compute the current adaptive throttle interval based on confidence state.
-     */
-    fun currentThrottleMs(): Long {
-        return synchronized(stateLock) {
-            if (fieldAccumulations.isEmpty()) return@synchronized config.throttleFastMs
-
-            val resolvedCount = fieldAccumulations.values.count { it.isResolved }
-            val resolvedFractionOfAllFields = resolvedCount.toFloat() / config.allFields.size.coerceAtLeast(1)
-            val allObservedLocked = fieldAccumulations.values.all {
-                it.status == FieldStatus.LOCKED || it.status == FieldStatus.USER_LOCKED
-            }
-
-            when {
-                allObservedLocked && resolvedFractionOfAllFields >= config.autoSaveThreshold ->
-                    config.throttleMaintenanceMs
-
-                resolvedFractionOfAllFields > 0.8f -> config.throttleSlowMs
-                else -> config.throttleFastMs
-            }
         }
     }
 
@@ -376,13 +347,6 @@ class FrameEvidenceAccumulator(
             lastAdmittedFrameTimeMs = System.currentTimeMillis()
             isQualityRelaxed = false
 
-            synchronized(ringBuffer) {
-                if (ringBuffer.size >= config.ringBufferSize) {
-                    ringBuffer.removeFirst()
-                }
-                ringBuffer.addLast(frame)
-            }
-
             checkSideFlipLocked(frame)
             val ocrResult = frame.ocrResult
             val fieldNames = listOfNotNull(
@@ -457,16 +421,22 @@ class FrameEvidenceAccumulator(
                 }
             }
 
+            // Adaptive throttle update
+            val resolvedCount = fieldAccumulations.values.count { it.isResolved }
+            val resolvedFraction = resolvedCount.toFloat() / config.allFields.size.coerceAtLeast(1)
+            val allLocked = fieldAccumulations.values.all {
+                it.status == FieldStatus.LOCKED || it.status == FieldStatus.USER_LOCKED
+            }
+            _currentThrottleMs.value = when {
+                allLocked && resolvedFraction >= config.autoSaveThreshold -> config.throttleMaintenanceMs
+                resolvedFraction > 0.8f -> config.throttleSlowMs
+                else -> config.throttleFastMs
+            }
+
             checkLlmEscalationLocked()
             emitEvidenceLocked()
             android.util.Log.d("Accumulator", "runConsensus: emitted evidence, " +
                 "processed=$totalFramesProcessed, rejected=$totalFramesRejected")
-        }
-    }
-
-    private fun emitEvidence() {
-        synchronized(stateLock) {
-            emitEvidenceLocked()
         }
     }
 
@@ -654,12 +624,6 @@ class FrameEvidenceAccumulator(
 
     // --- Side detection ---
 
-    private fun checkSideFlip(frame: FrameResult) {
-        synchronized(stateLock) {
-            checkSideFlipLocked(frame)
-        }
-    }
-
     private fun checkSideFlipLocked(frame: FrameResult) {
         // Simple perceptual hash: average luma of 8×8 grid
         // We approximate from the quality metrics — in the real implementation,
@@ -695,12 +659,6 @@ class FrameEvidenceAccumulator(
     }
 
     // --- Quality relaxation ---
-
-    private fun checkQualityRelaxation() {
-        synchronized(stateLock) {
-            checkQualityRelaxationLocked()
-        }
-    }
 
     private fun checkQualityRelaxationLocked() {
         if (isQualityRelaxed) return
