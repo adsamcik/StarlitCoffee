@@ -55,6 +55,7 @@ class LiveScanViewModel(
     private var consensusEngine: ConsensusEngine? = null
     private var accumulatorEvidenceJob: Job? = null
     private var llmEscalationJob: Job? = null
+    private var rejectionJob: Job? = null
 
     private val _evidence = MutableStateFlow(AccumulatedEvidence.EMPTY)
     val evidence: StateFlow<AccumulatedEvidence> = _evidence.asStateFlow()
@@ -81,6 +82,10 @@ class LiveScanViewModel(
 
     private val processedBarcodes = mutableSetOf<String>()
     private val processedQrUrls = mutableSetOf<String>()
+    // --- Golden frame JPEG capture ---
+
+    private var bestGoldenFrameScore: Float = 0f
+
     private var currentKnownValues: KnownFieldValues = KnownFieldValues.EMPTY
 
     /**
@@ -139,6 +144,16 @@ class LiveScanViewModel(
             }
         }
 
+        rejectionJob = viewModelScope.launch {
+            accumulator?.lastRejection?.collect { rejection ->
+                if (rejection != null) {
+                    _liveScanUiState.value = _liveScanUiState.value.copy(
+                        lastRejectionReason = rejection.reason,
+                    )
+                }
+            }
+        }
+
         _liveScanUiState.value = _liveScanUiState.value.copy(
             isScanning = true,
             scanStartTimeMs = System.currentTimeMillis(),
@@ -154,11 +169,14 @@ class LiveScanViewModel(
     fun stop(sensorManager: SensorManager? = null) {
         if (!isStarted) return
         isStarted = false
+        bestGoldenFrameScore = 0f
 
         accumulatorEvidenceJob?.cancel()
         accumulatorEvidenceJob = null
         llmEscalationJob?.cancel()
         llmEscalationJob = null
+        rejectionJob?.cancel()
+        rejectionJob = null
         accumulator?.stop()
         accumulator = null
         sideDetector?.reset()
@@ -244,10 +262,40 @@ class LiveScanViewModel(
     }
 
     /**
+     * Called when the camera analyzer captures JPEG bytes for a golden-quality frame.
+     * Scores the frame and keeps only the best one for LLM escalation.
+     */
+    fun onGoldenFrameCapture(
+        jpegBytes: ByteArray,
+        quality: BagCaptureQuality,
+        ocrResult: OcrExtractionResult,
+    ) {
+        val fieldsExtracted = listOfNotNull(
+            ocrResult.name, ocrResult.roaster, ocrResult.origin,
+            ocrResult.region, ocrResult.variety, ocrResult.processType,
+            ocrResult.roastLevel, ocrResult.tastingNotes, ocrResult.altitude,
+        ).size
+        val score = quality.blurScore * quality.textBlockCount * fieldsExtracted.coerceAtLeast(1)
+        if (score > bestGoldenFrameScore) {
+            bestGoldenFrameScore = score
+            accumulator?.setGoldenFrameBytes(jpegBytes)
+            android.util.Log.d(
+                "LiveScan",
+                "New best golden frame: score=$score, blur=${quality.blurScore}, " +
+                    "textBlocks=${quality.textBlockCount}, fields=$fieldsExtracted",
+            )
+        }
+    }
+
+    /**
      * Force-capture the current frame, bypassing IMU gating, throttle, and quality gate.
      * Used by the manual capture fallback button. Submits as a golden frame.
      */
-    fun forceCapture(ocrResult: OcrExtractionResult, quality: BagCaptureQuality) {
+    fun forceCapture(
+        ocrResult: OcrExtractionResult,
+        quality: BagCaptureQuality,
+        jpegBytes: ByteArray? = null,
+    ) {
         if (!isStarted) return
         val frame = FrameResult(
             ocrResult = ocrResult,
@@ -257,6 +305,7 @@ class LiveScanViewModel(
             isGoldenFrame = true,
         )
         accumulator?.submitGoldenFrame(frame)
+        jpegBytes?.let { onGoldenFrameCapture(it, quality, ocrResult) }
         _liveScanUiState.value = _liveScanUiState.value.copy(
             goldenFrameCount = _liveScanUiState.value.goldenFrameCount + 1,
             lastRejectionReason = null,

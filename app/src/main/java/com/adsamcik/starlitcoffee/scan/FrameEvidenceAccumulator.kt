@@ -111,6 +111,10 @@ class FrameEvidenceAccumulator(
     private val _evidence = MutableStateFlow(AccumulatedEvidence.EMPTY)
     val evidence: StateFlow<AccumulatedEvidence> = _evidence.asStateFlow()
 
+    // Frame rejection feedback
+    private val _lastRejection = MutableStateFlow<FrameRejection?>(null)
+    val lastRejection: StateFlow<FrameRejection?> = _lastRejection.asStateFlow()
+
     // LLM escalation
     private val _llmEscalation = MutableSharedFlow<LlmEscalationRequest>(
         replay = 0,
@@ -344,6 +348,23 @@ class FrameEvidenceAccumulator(
             val passesQuality = consensusEngine.framePassesQualityGate(frame, isRelaxed = isQualityRelaxed)
             if (!passesQuality && !frame.isGoldenFrame) {
                 totalFramesRejected++
+                val blurThreshold = if (isQualityRelaxed) config.minBlurScore * config.qualityRelaxationFactor else config.minBlurScore
+                val glareThreshold = if (isQualityRelaxed) config.maxGlarePercent / config.qualityRelaxationFactor else config.maxGlarePercent
+                val reason = buildString {
+                    if (frame.quality.blurScore < blurThreshold) {
+                        append("Too blurry (${frame.quality.blurScore.toInt()})")
+                    }
+                    if (frame.quality.glarePercent > glareThreshold) {
+                        if (isNotEmpty()) append(", ")
+                        append("Too much glare (${(frame.quality.glarePercent * 100).toInt()}%)")
+                    }
+                }
+                _lastRejection.value = FrameRejection(
+                    reason = reason.ifEmpty { "Quality too low" },
+                    blurScore = frame.quality.blurScore,
+                    glarePercent = frame.quality.glarePercent,
+                    frameIndex = frameIndex,
+                )
                 android.util.Log.d("Accumulator", "Frame #$frameIndex REJECTED: " +
                     "blur=${frame.quality.blurScore}, glare=${frame.quality.glarePercent}, " +
                     "relaxed=$isQualityRelaxed, total rejected=$totalFramesRejected")
@@ -689,6 +710,7 @@ class FrameEvidenceAccumulator(
         val timeSinceReference = now - referenceTime
         if (referenceTime > 0 && timeSinceReference > config.qualityRelaxationTimeMs) {
             isQualityRelaxed = true
+            _lastRejection.value = null
             android.util.Log.d("Accumulator", "Quality RELAXED: " +
                 "timeSinceRef=${timeSinceReference}ms, " +
                 "admitted=$totalFramesProcessed, rejected=$totalFramesRejected")
@@ -700,5 +722,13 @@ class FrameEvidenceAccumulator(
     private data class EnrichmentPayload(
         val fieldValues: Map<String, String>,
         val sourceType: BagFieldSourceType,
+    )
+
+    data class FrameRejection(
+        val reason: String,
+        val blurScore: Float,
+        val glarePercent: Float,
+        val frameIndex: Int,
+        val timestampMs: Long = System.currentTimeMillis(),
     )
 }
