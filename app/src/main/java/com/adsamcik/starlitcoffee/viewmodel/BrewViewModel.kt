@@ -7,25 +7,22 @@ import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.adsamcik.starlitcoffee.audio.BrewAudioManager
+import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
-import com.adsamcik.starlitcoffee.data.model.AudioAnalysisState
-import com.adsamcik.starlitcoffee.data.model.BrewAudioEvent
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.data.model.BrewPhase
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
+import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
 import com.adsamcik.starlitcoffee.data.model.HomeContextCard
+import com.adsamcik.starlitcoffee.data.model.InventoryAlert
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.data.model.GrinderDataProvider
 import com.adsamcik.starlitcoffee.data.model.InputMode
-import com.adsamcik.starlitcoffee.data.model.PhaseMode
-import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.data.model.RatioPreset
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.network.OpenFoodFactsClient
@@ -33,12 +30,16 @@ import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.data.network.QrLinkExploreResult
 import com.adsamcik.starlitcoffee.data.network.QrLinkMetadataExplorer
 import com.adsamcik.starlitcoffee.data.network.SafeQrLinkMetadataExplorer
+import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
+import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
+import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
+import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
+import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
-import com.adsamcik.starlitcoffee.domain.TimerController
 import com.adsamcik.starlitcoffee.service.TimerStateHolder
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
@@ -62,6 +63,7 @@ import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.NormalizedCoffeeField
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.BagReviewSeverity
+import com.adsamcik.starlitcoffee.util.InventoryAlertEngine
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
@@ -70,6 +72,7 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -115,19 +118,15 @@ data class BrewUiState(
     val ratioWarning: String? = null,
     val bloomWarning: String? = null,
     // Timer state
-    val timerPhases: List<BrewPhase> = emptyList(),
-    val currentPhaseIndex: Int = 0,
     val timerRunning: Boolean = false,
     val elapsedSeconds: Int = 0,
-    val phaseSecondsRemaining: Int = 0,
-    val phaseOvertime: Boolean = false,
-    val showNextPreview: Boolean = false,
+    val bloomMarkedAtSeconds: Int? = null,
+    val bloomCountdownSeconds: Int? = null,
+    val bloomFinished: Boolean = false,
+    val minuteAlertEnabled: Boolean = true,
     val showFeedbackSnackbar: Boolean = false,
-    val lastDriftSeconds: Int = 0,
     // Decaf
     val isDecafBrew: Boolean = false,
-    // Audio auto-advance
-    val audioAutoAdvanceEnabled: Boolean = true,
     // Feedback state
     val tasteFeedback: TasteFeedback? = null,
     val rating: Int = 0,
@@ -142,7 +141,11 @@ class BrewViewModel(
     private val userPreferencesRepository: UserPreferencesRepository? = null,
     private val grinderData: GrinderDataProvider = DefaultGrinders,
     private val qrLinkMetadataExplorer: QrLinkMetadataExplorer = SafeQrLinkMetadataExplorer(),
+    private val llmProvider: LlmInferenceProvider = StubLlmInferenceProvider(),
+    private val userBarcodeStemDao: UserBarcodeStemDao? = null,
 ) : ViewModel() {
+
+    private val llmCache = LlmResultCache()
 
     private val _uiState = MutableStateFlow(BrewUiState())
     val uiState: StateFlow<BrewUiState> = _uiState.asStateFlow()
@@ -166,16 +169,13 @@ class BrewViewModel(
     val homeContextCard: StateFlow<HomeContextCard?> = _homeContextCard.asStateFlow()
     private val _bagPhotoResult = MutableStateFlow<BagPhotoProcessingResult?>(null)
     val bagPhotoResult: StateFlow<BagPhotoProcessingResult?> = _bagPhotoResult.asStateFlow()
+    private val _inventoryAlerts = MutableStateFlow(emptyList<InventoryAlert>())
+    val inventoryAlerts: StateFlow<List<InventoryAlert>> = _inventoryAlerts.asStateFlow()
 
-    private var _audioManager: BrewAudioManager? = null
-    private var _audioOutputDirectory: java.io.File? = null
-    val audioState: StateFlow<AudioAnalysisState>
-        get() = _audioManager?.analysisState ?: MutableStateFlow(AudioAnalysisState())
-    private var brewEventJob: Job? = null
-
-    @VisibleForTesting
-    internal val timerController = TimerController(viewModelScope, TimerStateHolder.instance)
-        .apply { onAutoAdvance = { advancePhase() } }
+    private var timerJob: Job? = null
+    private var bloomCountdownJob: Job? = null
+    private var timerStartMs: Long = 0L
+    private var pausedAccumulatedMs: Long = 0L
     private var ratioPresetJob: Job? = null
 
     init {
@@ -200,28 +200,13 @@ class BrewViewModel(
                 _coffeeBags.value = bags
                 loadKnownFieldValues()
                 refreshHomeContextCard()
+                refreshInventoryAlerts()
             }
         }
         collectRatioPresets(_uiState.value.method)
         recalculate()
         applyUserDefaults()
         refreshLastUnrated()
-        // Sync TimerController state → BrewUiState
-        viewModelScope.launch {
-            timerController.state.collect { ts ->
-                _uiState.update { ui ->
-                    ui.copy(
-                        timerRunning = ts.timerRunning,
-                        elapsedSeconds = ts.elapsedSeconds,
-                        currentPhaseIndex = ts.currentPhaseIndex,
-                        phaseSecondsRemaining = ts.phaseSecondsRemaining,
-                        phaseOvertime = ts.phaseOvertime,
-                        showNextPreview = ts.showNextPreview,
-                        lastDriftSeconds = ts.lastDriftSeconds,
-                    )
-                }
-            }
-        }
     }
 
     private fun applyUserDefaults() {
@@ -355,38 +340,27 @@ class BrewViewModel(
     }
 
     fun startTimer() {
-        timerController.setPhases(_uiState.value.timerPhases)
-        timerController.start()
+        if (timerJob?.isActive == true) return
+        _uiState.update { it.copy(timerRunning = true) }
+        timerStartMs = System.nanoTime() / 1_000_000L
+        launchTimerLoop()
+    }
 
-        // Auto-start audio monitoring when timer begins
-        if (_audioManager != null && !_audioManager!!.isMonitoring) {
-            // Set brew context for metadata export BEFORE monitoring starts
-            // (startMonitoring triggers autoRecord which writes metadata)
-            val state = _uiState.value
-            _audioManager?.setBrewContext(
-                method = state.method.name,
-                filterType = state.filterType?.name ?: "",
-                doseG = state.coffeeG,
-                waterG = state.waterG,
-                ratio = state.effectiveRatio,
-                grinderId = state.selectedGrinderId,
-                grinderSetting = when (val result = state.grindResult) {
-                    is GrindResult.Generic -> result.descriptor.displayName
-                    is GrindResult.Specific ->
-                        "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
-                },
-            )
-
-            _audioManager!!.startMonitoring()
-
-            // Start shadow comparison log AFTER monitoring (so brewTimestamp is set)
-            _audioOutputDirectory?.let { dir -> _audioManager?.startShadowLog(dir) }
-        }
-
-        // Notify audio manager of initial phase (phase 0)
-        val initialPhase = _uiState.value.timerPhases.firstOrNull()
-        if (initialPhase != null) {
-            _audioManager?.onPhaseChanged(0, initialPhase.name)
+    private fun launchTimerLoop() {
+        timerJob = viewModelScope.launch {
+            while (_uiState.value.timerRunning) {
+                delay(250L)
+                val nowMs = System.nanoTime() / 1_000_000L
+                val totalElapsedMs = pausedAccumulatedMs + (nowMs - timerStartMs)
+                val totalElapsedSeconds = (totalElapsedMs / 1000).toInt()
+                _uiState.update { it.copy(elapsedSeconds = totalElapsedSeconds) }
+                TimerStateHolder.instance.update(
+                    phaseName = "",
+                    elapsedSeconds = totalElapsedSeconds,
+                    instruction = "",
+                    isRunning = true,
+                )
+            }
         }
     }
 
@@ -396,120 +370,74 @@ class BrewViewModel(
      * Does NOT reset the clock — wall-clock anchoring handles the gap.
      */
     fun ensureTimerRunning() {
-        timerController.ensureRunning()
+        if (!_uiState.value.timerRunning) return
+        if (timerJob?.isActive == true) return
+        launchTimerLoop()
     }
 
     fun pauseTimer() {
-        timerController.pause()
-        _audioManager?.stopMonitoring()
+        val nowMs = System.nanoTime() / 1_000_000L
+        pausedAccumulatedMs += (nowMs - timerStartMs)
+        _uiState.update { it.copy(timerRunning = false) }
+        timerJob?.cancel()
+        timerJob = null
+        bloomCountdownJob?.cancel()
+        TimerStateHolder.instance.update(
+            phaseName = "",
+            elapsedSeconds = _uiState.value.elapsedSeconds,
+            instruction = "",
+            isRunning = false,
+        )
     }
 
     fun stopTimer() {
-        timerController.stop()
-        _audioManager?.stopMonitoring()
+        pausedAccumulatedMs = 0L
+        bloomCountdownJob?.cancel()
+        bloomCountdownJob = null
+        _uiState.update {
+            it.copy(
+                timerRunning = false,
+                elapsedSeconds = 0,
+                bloomMarkedAtSeconds = null,
+                bloomCountdownSeconds = null,
+                bloomFinished = false,
+            )
+        }
+        timerJob?.cancel()
+        timerJob = null
+        TimerStateHolder.instance.reset()
     }
 
-    /**
-     * Updates session metadata with placement and environment from lab setup dialog.
-     */
-    fun updateSessionSetup(placement: String, environment: String, notes: String) {
+    fun markBloom() {
         val state = _uiState.value
-        _audioManager?.setBrewContext(
-            method = state.method.name,
-            filterType = state.filterType?.name ?: "",
-            doseG = state.coffeeG,
-            waterG = state.waterG,
-            ratio = state.effectiveRatio,
-            grinderId = state.selectedGrinderId,
-            grinderSetting = when (val result = state.grindResult) {
-                is GrindResult.Generic -> result.descriptor.displayName
-                is GrindResult.Specific ->
-                    "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
-            },
-            placement = placement,
-            environment = environment,
-            notes = notes,
-        )
-    }
+        if (state.bloomMarkedAtSeconds != null) return
+        if (!state.timerRunning) return
+        if (state.elapsedSeconds <= 0) return
 
-    // --- Audio Monitoring ---
+        val duration = state.method.bloomDurationSeconds
+        _uiState.update {
+            it.copy(
+                bloomMarkedAtSeconds = it.elapsedSeconds,
+                bloomCountdownSeconds = duration,
+                bloomFinished = false,
+            )
+        }
 
-    /**
-     * Initializes the audio manager with the given output directory for recordings.
-     * Call once from the UI layer when RECORD_AUDIO permission is granted.
-     */
-    fun initAudioManager(outputDirectory: java.io.File) {
-        if (_audioManager != null) return
-        _audioOutputDirectory = outputDirectory
-        _audioManager = BrewAudioManager(
-            outputDirectory = outputDirectory,
-            autoRecord = true, // Always capture WAV + JSONL for debugging
-        )
-        startBrewEventCollection()
-    }
-
-    private fun startBrewEventCollection() {
-        brewEventJob?.cancel()
-        val manager = _audioManager ?: return
-        brewEventJob = viewModelScope.launch {
-            manager.brewEvents.collect { event ->
-                handleBrewAudioEvent(event)
+        bloomCountdownJob?.cancel()
+        bloomCountdownJob = viewModelScope.launch {
+            for (remaining in duration - 1 downTo 0) {
+                delay(1000L)
+                _uiState.update { it.copy(bloomCountdownSeconds = remaining) }
             }
+            _uiState.update { it.copy(bloomFinished = true, bloomCountdownSeconds = 0) }
         }
     }
 
-    /**
-     * Handles brew audio events for auto-advance.
-     * Advances EVENT_GATED phases when matching audio events are detected:
-     * - DRAIN_AND_REFILL: PourStarted → user resumed pouring
-     * - DRAWDOWN: DrawdownComplete → silence after dripping
-     *
-     * BLOOM is excluded — user pours bloom water then waits, so PourStarted
-     * during bloom is expected behavior, not a phase transition signal.
-     *
-     * Guard: ignores events in the first 3 seconds of a phase to prevent
-     * false triggers from detector startup/calibration transients.
-     */
-    private fun handleBrewAudioEvent(event: BrewAudioEvent) {
-        val state = _uiState.value
-        if (!state.audioAutoAdvanceEnabled || !state.timerRunning) return
-        if (state.currentPhaseIndex >= state.timerPhases.lastIndex) return
-
-        val phase = state.timerPhases.getOrNull(state.currentPhaseIndex) ?: return
-
-        // Ignore audio events in the first seconds of a phase — detector needs
-        // time to calibrate its noise floor for the new acoustic environment
-        val phaseElapsedSeconds = phase.durationSeconds - state.phaseSecondsRemaining
-        if (phaseElapsedSeconds < AUDIO_ADVANCE_MIN_PHASE_SECONDS) return
-
-        val shouldAdvance = when (phase.phaseType) {
-            // Bloom should NOT auto-advance — user pours bloom water then waits.
-            // Detecting PourStarted during bloom is expected, not a phase transition.
-            PhaseType.BLOOM -> false
-            // Drawdown complete: silence sustained after dripping
-            PhaseType.DRAWDOWN -> {
-                phase.mode == PhaseMode.EVENT_GATED && event is BrewAudioEvent.DrawdownComplete
-            }
-            // Drain & refill: user started pouring again
-            PhaseType.DRAIN_AND_REFILL -> {
-                phase.mode == PhaseMode.EVENT_GATED && event is BrewAudioEvent.PourStarted
-            }
-            else -> false
-        }
-
-        if (shouldAdvance) {
-            advancePhase()
-        }
-    }
-
-    fun setAudioAutoAdvance(enabled: Boolean) {
-        _uiState.update { it.copy(audioAutoAdvanceEnabled = enabled) }
+    fun toggleMinuteAlert() {
+        _uiState.update { it.copy(minuteAlertEnabled = !it.minuteAlertEnabled) }
     }
 
     companion object {
-        /** Minimum seconds into a phase before audio can trigger auto-advance.
-         *  Prevents false triggers during detector calibration. */
-        private const val AUDIO_ADVANCE_MIN_PHASE_SECONDS = 3
         private const val BAG_PHOTO_TAG = "BagPhotoProcessing"
         private val CANONICAL_METADATA_FIELDS = setOf(
             "origin",
@@ -537,124 +465,12 @@ class BrewViewModel(
         )
     }
 
-    fun startAudioMonitoring() {
-        _audioManager?.startMonitoring()
-    }
-
-    fun stopAudioMonitoring() {
-        _audioManager?.stopMonitoring()
-    }
-
-    fun toggleAudioMonitoring() {
-        val manager = _audioManager ?: return
-        if (manager.isMonitoring) manager.stopMonitoring() else manager.startMonitoring()
-    }
-
-    fun startAudioRecording() {
-        _audioManager?.startRecording()
-    }
-
-    fun stopAudioRecording() {
-        _audioManager?.stopRecording()
-    }
-
-    fun toggleAudioRecording() {
-        val manager = _audioManager ?: return
-        if (manager.isRecording) manager.stopRecording() else manager.startRecording()
-    }
-
-    /**
-     * Records a user-marked brew event for ground truth labeling.
-     * Called from debug overlay event marker buttons.
-     * Labels are approximate (±2-3s) — user taps roughly when events happen.
-     */
-    fun markBrewEvent(label: String) {
-        _audioManager?.markUserLabel(label)
-    }
-
-    /**
-     * Records a problem/feedback marker during a brew experiment.
-     */
-    fun markBrewProblem(description: String) {
-        _audioManager?.markUserProblem(description)
-    }
-
-    /**
-     * Exports the current/latest brew session as a zip file and opens the share sheet.
-     * Bundles all WAV, JSONL, metadata, labels, and shadow logs.
-     */
-    fun exportBrewSession(context: android.content.Context) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val audioDir = _audioOutputDirectory ?: run {
-                Log.w("BrewExport", "No audio output directory set")
-                return@launch
-            }
-
-            Log.d("BrewExport", "Bundling from: $audioDir")
-            val result = com.adsamcik.starlitcoffee.audio.BrewDataBundler.bundleLatest(audioDir)
-            if (!result.success || result.fileCount == 0) {
-                Log.w("BrewExport", "Export failed: ${result.errors}")
-                return@launch
-            }
-            Log.d("BrewExport", "Bundled ${result.fileCount} files → ${result.zipFile.name} (${result.totalSizeBytes / 1024} KB)")
-
-            try {
-                val zipUri = androidx.core.content.FileProvider.getUriForFile(
-                    context,
-                    "${context.packageName}.fileprovider",
-                    result.zipFile,
-                )
-
-                val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
-                    type = "application/zip"
-                    putExtra(android.content.Intent.EXTRA_STREAM, zipUri)
-                    putExtra(
-                        android.content.Intent.EXTRA_SUBJECT,
-                        "Brew Audio Data — ${result.zipFile.nameWithoutExtension}",
-                    )
-                    putExtra(
-                        android.content.Intent.EXTRA_TEXT,
-                        "Brew data bundle: ${result.fileCount} files, ${result.totalSizeBytes / 1024} KB",
-                    )
-                    addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                }
-
-                withContext(Dispatchers.Main) {
-                    val chooser = android.content.Intent.createChooser(shareIntent, "Share Brew Data")
-                    chooser.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
-                    context.startActivity(chooser)
-                }
-            } catch (e: Exception) {
-                Log.e("BrewExport", "Failed to share brew data", e)
-            }
-        }
-    }
-
     fun requestFeedbackSnackbar() {
         _uiState.update { it.copy(showFeedbackSnackbar = true) }
     }
 
     fun clearFeedbackSnackbar() {
         _uiState.update { it.copy(showFeedbackSnackbar = false) }
-    }
-
-    fun advancePhase() {
-        timerController.advancePhase(::rebalancePhases)
-        _uiState.update { it.copy(timerPhases = timerController.phases) }
-
-        // Notify audio manager of phase change
-        val state = _uiState.value
-        val newPhase = state.timerPhases.getOrNull(state.currentPhaseIndex)
-        if (newPhase != null) {
-            _audioManager?.onPhaseChanged(state.currentPhaseIndex, newPhase.name)
-        }
-
-        // Record user phase transition for shadow comparison (A/B testing)
-        val phase = _uiState.value.timerPhases.getOrNull(_uiState.value.currentPhaseIndex)
-        _audioManager?.recordUserTap(
-            _uiState.value.currentPhaseIndex,
-            phase?.name ?: "unknown"
-        )
     }
 
     fun setTasteFeedback(feedback: TasteFeedback) {
@@ -857,6 +673,22 @@ class BrewViewModel(
         recalculate()
     }
 
+    /**
+     * Select a bag for brewing, auto-transitioning SEALED → OPEN with today's opened date.
+     */
+    fun selectBagForBrewing(bagId: Long) {
+        val repository = coffeeBagRepository ?: return
+        val bag = _coffeeBags.value.find { it.id == bagId }
+        if (bag != null && bag.status == "SEALED") {
+            viewModelScope.launch {
+                repository.updateBag(
+                    bag.copy(status = "OPEN", openedDate = System.currentTimeMillis()),
+                )
+            }
+        }
+        selectBag(bagId)
+    }
+
     fun refreshLastUnrated() {
         viewModelScope.launch {
             _lastUnratedBrew.value = brewLogRepository?.getLastUnratedLog()
@@ -870,6 +702,10 @@ class BrewViewModel(
             brewLogs = _brewLogs.value,
             selectedBagId = _selectedBagId.value,
         )
+    }
+
+    fun refreshInventoryAlerts() {
+        _inventoryAlerts.value = InventoryAlertEngine.buildAlerts(_coffeeBags.value)
     }
 
     fun quickRateBrewLog(
@@ -960,6 +796,7 @@ class BrewViewModel(
         photoUris: String? = null,
         traceabilityUrl: String? = null,
         status: String = "SEALED",
+        onBagAdded: ((Long) -> Unit)? = null,
     ) {
         val repository = coffeeBagRepository ?: return
         val normalizedBarcode = BarcodeInsights.normalizeBarcode(barcode)
@@ -999,8 +836,16 @@ class BrewViewModel(
                 tastingNotes = tastingNotes,
                 locale = locale,
             )
-            repository.insertBag(entity)
+            val newId = repository.insertBag(entity)
+
+            // Learn barcode→roaster mapping for future scans
+            val stemDao = userBarcodeStemDao
+            if (stemDao != null && normalizedBarcode != null && roaster != null) {
+                BarcodeInsights.learnStem(normalizedBarcode, roaster, stemDao)
+            }
+
             loadKnownFieldValues()
+            onBagAdded?.invoke(newId)
         }
     }
 
@@ -1110,8 +955,25 @@ class BrewViewModel(
                     if (detectedBarcode == null && combinedOcrText.isNotBlank()) {
                         detectedBarcode = OcrFieldExtractor.extractBarcodeFromText(combinedOcrText)
                     }
+                    val rawDetectedBarcode = detectedBarcode
                     detectedBarcode = BarcodeInsights.normalizeBarcode(detectedBarcode)
                         ?: detectedBarcode?.trim()?.takeIf { it.isNotBlank() }
+
+                    // Partial barcode recovery: if normalize rejected a 5–7 digit fragment,
+                    // try to extract roaster hints from it (but do NOT persist as bag barcode)
+                    if (BarcodeInsights.normalizeBarcode(rawDetectedBarcode) == null &&
+                        rawDetectedBarcode != null
+                    ) {
+                        val partialResult = BarcodeInsights.recoverPartialBarcode(
+                            rawDetectedBarcode,
+                            userBarcodeStemDao,
+                        )
+                        if (partialResult.isPartial && partialResult.candidates.isNotEmpty()) {
+                            allCandidates += partialResult.candidates
+                            detectedBarcode = null
+                        }
+                    }
+
                     val matchedBagByBarcode = findLocalBagByBarcode(detectedBarcode)
 
                     // Infer country dictionary from barcode for locale-aware OCR and display
@@ -1127,6 +989,24 @@ class BrewViewModel(
                     }
                     val observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode)
                     allCandidates += BarcodeInsights.buildObservedStemCandidates(observedStemMatch)
+
+                    // Also add user-taught stem candidates
+                    val stemDao = userBarcodeStemDao
+                    if (stemDao != null && detectedBarcode != null) {
+                        allCandidates += BarcodeInsights.findUserStemMatch(detectedBarcode, stemDao)
+                    }
+
+                    // Boost OCR known values with barcode-resolved roaster for future scans
+                    if (detectedBarcode != null) {
+                        val boostedKnownValues = BarcodeInsights.buildBarcodeOcrBoost(
+                            barcode = detectedBarcode,
+                            currentKnownValues = knownFieldValues,
+                            userStemDao = userBarcodeStemDao,
+                        )
+                        if (boostedKnownValues !== knownFieldValues) {
+                            _knownFieldValues.value = boostedKnownValues
+                        }
+                    }
 
                     var offLookupName: String? = null
                     var offLookupRoaster: String? = null
@@ -1165,6 +1045,29 @@ class BrewViewModel(
                                     rawValue = lookupSupportingText,
                                     supportingText = lookupSupportingText,
                                 )
+
+                                // OFF data — confidence gated because these fields may refer to country of sale, not origin
+                                if (!lookup.origins.isNullOrBlank()) {
+                                    allCandidates += BagFieldCandidate(
+                                        fieldName = "origin",
+                                        value = lookup.origins,
+                                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                                        confidenceHint = BagFieldConfidence.MEDIUM,
+                                        supportingText = "OFF origins field",
+                                    )
+                                }
+                                lookup.countriesTags
+                                    ?.firstNotNullOfOrNull(::coffeeProducingCountryFromTag)
+                                    ?.let { originName ->
+                                        allCandidates += BagFieldCandidate(
+                                            fieldName = "origin",
+                                            value = originName,
+                                            sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                                            confidenceHint = BagFieldConfidence.LOW,
+                                            supportingText = "OFF countries_tags (may be country of sale)",
+                                        )
+                                    }
+                                // lookup.labels — informational only (organic, fair trade, etc.); not mapped to bag fields yet
                             }
                         } catch (e: Exception) {
                             Log.w(BAG_PHOTO_TAG, "Failed to fetch product info from OpenFoodFacts", e)
@@ -1173,6 +1076,14 @@ class BrewViewModel(
 
                     val qrEnrichment= buildQrLinkEnrichment(rawDetectedQrUrl)
                     allCandidates += qrEnrichment.candidates
+
+                    // LLM enrichment — for fields where OCR produced weak/missing results
+                    val llmCandidates = tryLlmEnrichment(
+                        photoUriList = photoUriList,
+                        processedPhotos = processedPhotos,
+                        allCandidates = allCandidates,
+                    )
+                    allCandidates += llmCandidates
 
                     val fieldEvidence = buildMap<String, BagFieldEvidence> {
                         for (fieldName in BAG_PHOTO_FIELD_NAMES) {
@@ -1629,6 +1540,22 @@ class BrewViewModel(
         BagFieldConfidence.NEEDS_REVIEW -> BagFieldConfidence.NEEDS_REVIEW
     }
 
+    /**
+     * Extracts a coffee-producing country name from an OFF `countries_tags` entry.
+     * Tags use the format `en:ethiopia`, `en:costa-rica`, etc.
+     * Returns the canonical display name if the tag matches a known [CoffeeOrigin.Known],
+     * or null if the country is not a coffee producer.
+     */
+    private fun coffeeProducingCountryFromTag(tag: String): String? {
+        val countryPart = tag.substringAfter(":", tag)
+            .replace("-", " ")
+            .trim()
+            .lowercase()
+        return CoffeeOrigin.Known.entries.firstOrNull { origin ->
+            origin.displayName.lowercase() == countryPart
+        }?.displayName
+    }
+
     private fun splitMetadataValues(values: String): List<String> = values
         .split(",")
         .map(String::trim)
@@ -1659,11 +1586,93 @@ class BrewViewModel(
         val rawBarcode = barcode?.trim()?.takeIf { it.isNotBlank() } ?: return null
         val normalizedBarcode = BarcodeInsights.normalizeBarcode(rawBarcode)
 
-        return when {
-            normalizedBarcode != null && normalizedBarcode != rawBarcode ->
-                repository.findByBarcode(normalizedBarcode) ?: repository.findByBarcode(rawBarcode)
+        val matches = when {
+            normalizedBarcode != null && normalizedBarcode != rawBarcode -> {
+                val normalized = repository.findByBarcode(normalizedBarcode)
+                normalized.ifEmpty { repository.findByBarcode(rawBarcode) }
+            }
             normalizedBarcode != null -> repository.findByBarcode(normalizedBarcode)
             else -> repository.findByBarcode(rawBarcode)
+        }
+
+        // TODO: Show disambiguation sheet when multiple bags match barcode
+        return matches.firstOrNull()
+    }
+
+    // --- LLM enrichment for photo pipeline ---
+
+    private suspend fun tryLlmEnrichment(
+        photoUriList: List<String>,
+        processedPhotos: List<ProcessedBagPhoto>,
+        allCandidates: List<BagFieldCandidate>,
+    ): List<BagFieldCandidate> {
+        if (!llmProvider.isAvailable()) return emptyList()
+
+        // Find fields where OCR produced weak or missing results
+        val fieldsNeeded = BAG_PHOTO_FIELD_NAMES.filter { fieldName ->
+            allCandidates.none { candidate ->
+                candidate.fieldName == fieldName &&
+                    (candidate.confidenceHint == BagFieldConfidence.HIGH ||
+                        candidate.confidenceHint == BagFieldConfidence.MEDIUM)
+            }
+        }.toSet()
+        if (fieldsNeeded.isEmpty()) return emptyList()
+
+        // Gather existing OCR fields with decent confidence
+        val ocrFields = allCandidates
+            .filter {
+                it.confidenceHint == BagFieldConfidence.HIGH ||
+                    it.confidenceHint == BagFieldConfidence.MEDIUM
+            }
+            .groupBy { it.fieldName }
+            .mapValues { (_, candidates) -> candidates.first().value }
+
+        // Read the best-quality photo bytes
+        val bestPhotoUri = processedPhotos.maxByOrNull { it.quality.blurScore }?.uri
+            ?: photoUriList.firstOrNull()
+        val photoBytes = bestPhotoUri?.let { uri ->
+            try {
+                java.io.File(Uri.parse(uri).path ?: return@let null).readBytes()
+            } catch (e: Exception) {
+                Log.w(BAG_PHOTO_TAG, "Failed to read photo bytes for LLM enrichment", e)
+                null
+            }
+        } ?: return emptyList()
+
+        return tryLlmEnrichment(
+            photoBytes = photoBytes,
+            ocrFields = ocrFields,
+            fieldsNeeded = fieldsNeeded,
+        )
+    }
+
+    private suspend fun tryLlmEnrichment(
+        photoBytes: ByteArray,
+        ocrFields: Map<String, String>,
+        fieldsNeeded: Set<String>,
+    ): List<BagFieldCandidate> {
+        if (!llmProvider.isAvailable()) return emptyList()
+
+        val imageHash = photoBytes.contentHashCode()
+        llmCache.get(imageHash)?.let { cached ->
+            return cached.fieldCandidates
+        }
+
+        val request = LlmExtractionRequest(
+            imageBytes = photoBytes,
+            existingFields = ocrFields,
+            fieldsNeeded = fieldsNeeded,
+        )
+        return when (val result = llmProvider.extractBagFields(request)) {
+            is LlmExtractionResult.Success -> {
+                llmCache.put(imageHash, result)
+                result.fieldCandidates
+            }
+            is LlmExtractionResult.Unavailable -> emptyList()
+            is LlmExtractionResult.Failed -> {
+                Log.w(BAG_PHOTO_TAG, "LLM enrichment failed: ${result.error}")
+                emptyList()
+            }
         }
     }
 
@@ -1748,7 +1757,7 @@ class BrewViewModel(
     }
 
     fun resetBrew() {
-        timerController.resetForBrew()
+        stopTimer()
         _uiState.value = BrewUiState()
         collectRatioPresets(BrewMethod.PULSAR)
         recalculate()
@@ -1876,16 +1885,6 @@ class BrewViewModel(
                 isDecaf = state.isDecafBrew,
             )
 
-            val timerPhases = buildTimerPhases(
-                method = method,
-                bloomG = bloomG,
-                pulseSizeG = pulseSizeG,
-                effectivePulseCount = effectivePulseCount,
-                waterG = waterG,
-                timeTargetLowS = timeTargetLowS,
-                isDecaf = state.isDecafBrew,
-            )
-
             state.copy(
                 coffeeG = coffeeG,
                 waterG = waterG,
@@ -1900,10 +1899,8 @@ class BrewViewModel(
                 refillCount = refillCount,
                 ratioWarning = ratioWarning,
                 bloomWarning = bloomWarning,
-                timerPhases = timerPhases,
             )
         }
-        timerController.setPhases(_uiState.value.timerPhases)
     }
 
     private fun resolveGrindResult(
@@ -1958,237 +1955,6 @@ class BrewViewModel(
                 rangeEnd = adjustedEnd,
             ),
         )
-    }
-
-    /**
-     * Redistributes time drift across remaining TIMED phases.
-     * Positive [drift] = user finished early (add time), negative = late (subtract).
-     * Guardrail: no phase drops below 50% of its original duration.
-     */
-    private fun rebalancePhases(
-        phases: List<BrewPhase>,
-        fromIndex: Int,
-        drift: Int,
-    ): List<BrewPhase> {
-        val timedIndices = (fromIndex..phases.lastIndex)
-            .filter { phases[it].mode == PhaseMode.TIMED }
-        if (timedIndices.isEmpty()) return phases
-
-        val totalTimedDuration = timedIndices.sumOf { phases[it].durationSeconds }
-        if (totalTimedDuration == 0) return phases
-
-        val mutable = phases.toMutableList()
-        var remainingDrift = drift
-        for (idx in timedIndices) {
-            val phase = mutable[idx]
-            val proportion = phase.durationSeconds.toFloat() / totalTimedDuration
-            val adjustment = (drift * proportion).toInt()
-            val minDuration = (phase.durationSeconds / 2).coerceAtLeast(1)
-            val newDuration = (phase.durationSeconds + adjustment).coerceAtLeast(minDuration)
-            val actualAdjustment = newDuration - phase.durationSeconds
-            remainingDrift -= actualAdjustment
-            mutable[idx] = phase.copy(durationSeconds = newDuration)
-        }
-        return mutable
-    }
-
-    private fun buildTimerPhases(
-        method: BrewMethod,
-        bloomG: Float,
-        pulseSizeG: Float,
-        effectivePulseCount: Int,
-        waterG: Float,
-        timeTargetLowS: Int,
-        isDecaf: Boolean = false,
-    ): List<BrewPhase> {
-        val phases = mutableListOf<BrewPhase>()
-        var cumulative = 0f
-        val isPulsar = method == BrewMethod.PULSAR
-        val capacity = method.capacityMaxG?.toFloat()
-
-        // Tracks water poured since last drain to know when to refill
-        var waterSinceDrain = 0f
-
-        if (method.hasBloom && bloomG > 0f) {
-            cumulative += bloomG
-            waterSinceDrain += bloomG
-            if (isPulsar) {
-                val steepDuration = if (isDecaf) 25 else 30
-
-                phases.add(
-                    BrewPhase(
-                        name = "Bloom",
-                        phaseType = PhaseType.BLOOM,
-                        mode = PhaseMode.EVENT_GATED,
-                        waterG = bloomG,
-                        cumulativeWaterG = cumulative,
-                        durationSeconds = 10,
-                        instruction = "Open valve · Pour to ${"%.0f".format(cumulative)}g",
-                        valveState = "open",
-                    ),
-                )
-                phases.add(
-                    BrewPhase(
-                        name = "Saturate",
-                        phaseType = PhaseType.BLOOM,
-                        mode = PhaseMode.AUTO_TIMED,
-                        waterG = 0f,
-                        cumulativeWaterG = cumulative,
-                        durationSeconds = 10,
-                        instruction = "Let water saturate the grounds",
-                        valveState = "open",
-                    ),
-                )
-                phases.add(
-                    BrewPhase(
-                        name = "Close & Swirl",
-                        phaseType = PhaseType.BLOOM,
-                        mode = PhaseMode.EVENT_GATED,
-                        waterG = 0f,
-                        cumulativeWaterG = cumulative,
-                        durationSeconds = 5,
-                        instruction = "Close valve · Gentle swirl",
-                        valveState = "close",
-                    ),
-                )
-                phases.add(
-                    BrewPhase(
-                        name = "Steep",
-                        phaseType = PhaseType.BLOOM,
-                        mode = PhaseMode.AUTO_TIMED,
-                        waterG = 0f,
-                        cumulativeWaterG = cumulative,
-                        durationSeconds = steepDuration,
-                        instruction = "Steeping · CO₂ escaping",
-                        valveState = "closed",
-                    ),
-                )
-            } else {
-                phases.add(
-                    BrewPhase(
-                        name = "Bloom",
-                        phaseType = PhaseType.BLOOM,
-                        mode = PhaseMode.TIMED,
-                        waterG = bloomG,
-                        cumulativeWaterG = cumulative,
-                        durationSeconds = if (isDecaf) 30 else 45,
-                        instruction = "Pour to ${"%.0f".format(cumulative)}g, let CO₂ escape",
-                        valveState = "",
-                    ),
-                )
-            }
-        }
-
-        if (method.hasPulses && effectivePulseCount > 0 && pulseSizeG > 0f) {
-            val pourDuration = if (effectivePulseCount > 0) {
-                val bloomTime = if (method.hasBloom) { if (isPulsar) 50 else 45 } else 0
-                val totalPourTime = timeTargetLowS - bloomTime - 30
-                (totalPourTime.coerceAtLeast(effectivePulseCount) / effectivePulseCount)
-                    .coerceAtLeast(1)
-            } else {
-                30
-            }
-
-            var drainCount = 0
-            for (i in 1..effectivePulseCount) {
-                // Insert drain phase when next pulse would exceed capacity
-                if (capacity != null && waterSinceDrain + pulseSizeG > capacity) {
-                    drainCount++
-                    phases.add(
-                        BrewPhase(
-                            name = "Drain & Refill" +
-                                if (drainCount > 1) " $drainCount" else "",
-                            phaseType = PhaseType.DRAIN_AND_REFILL,
-                            mode = PhaseMode.EVENT_GATED,
-                            waterG = 0f,
-                            cumulativeWaterG = cumulative,
-                            durationSeconds = 30,
-                            instruction = if (isPulsar) {
-                                "Let it drain until slurry drops · then continue pouring"
-                            } else {
-                                "Let it drain, then continue"
-                            },
-                            valveState = if (isPulsar) "open" else "",
-                        ),
-                    )
-                    waterSinceDrain = 0f
-                }
-
-                cumulative += pulseSizeG
-                waterSinceDrain += pulseSizeG
-                val isFirst = i == 1
-                val isLast = i == effectivePulseCount
-                phases.add(
-                    BrewPhase(
-                        name = "Pour $i/$effectivePulseCount",
-                        phaseType = PhaseType.POUR,
-                        mode = PhaseMode.TIMED,
-                        waterG = pulseSizeG,
-                        cumulativeWaterG = cumulative,
-                        durationSeconds = pourDuration,
-                        instruction = if (isPulsar) {
-                            buildString {
-                                if (isFirst) append("OPEN valve → ")
-                                append("Pour to ${"%.0f".format(cumulative)}g")
-                                append(" · keep slurry ~1cm above bed")
-                                if (isLast) append(" → gentle swirl")
-                            }
-                        } else {
-                            "Pour to ${"%.0f".format(cumulative)}g (+${"%.0f".format(pulseSizeG)}g)"
-                        },
-                        valveState = if (isPulsar) "open" else "",
-                    ),
-                )
-            }
-        } else if (!method.hasPulses && waterG > 0f) {
-            val pourWater = waterG - cumulative
-            if (pourWater > 0f) {
-                cumulative += pourWater
-                val pourDuration = (timeTargetLowS - 30).coerceAtLeast(1)
-                phases.add(
-                    BrewPhase(
-                        name = "Pour",
-                        phaseType = PhaseType.POUR,
-                        mode = PhaseMode.TIMED,
-                        waterG = pourWater,
-                        cumulativeWaterG = cumulative,
-                        durationSeconds = pourDuration,
-                        instruction = "Pour to ${"%.0f".format(cumulative)}g total",
-                    ),
-                )
-            }
-        }
-
-        if (phases.isNotEmpty()) {
-            phases.add(
-                BrewPhase(
-                    name = "Drawdown",
-                    phaseType = PhaseType.DRAWDOWN,
-                    mode = PhaseMode.EVENT_GATED,
-                    waterG = 0f,
-                    cumulativeWaterG = cumulative,
-                    durationSeconds = 30,
-                    instruction = if (isPulsar) {
-                        "Valve open · let it drain completely"
-                    } else {
-                        "Let it drain"
-                    },
-                    valveState = if (isPulsar) "open" else "",
-                ),
-            )
-        }
-
-        return phases
-    }
-
-    private fun computePhaseIndex(phases: List<BrewPhase>, elapsedSeconds: Int): Int {
-        if (phases.isEmpty()) return 0
-        var cumulativeTime = 0
-        for (i in phases.indices) {
-            cumulativeTime += phases[i].durationSeconds
-            if (elapsedSeconds <= cumulativeTime) return i
-        }
-        return phases.lastIndex
     }
 
     @VisibleForTesting

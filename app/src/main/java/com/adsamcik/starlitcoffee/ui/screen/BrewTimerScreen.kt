@@ -1,16 +1,23 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.app.Activity
+import android.content.Context
+import android.media.AudioManager
+import android.media.ToneGenerator
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.animation.togetherWith
+import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,16 +28,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.NotificationsOff
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Check // Check as done
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -38,23 +50,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.adsamcik.starlitcoffee.R
-import com.adsamcik.starlitcoffee.data.model.BrewPhase
-import com.adsamcik.starlitcoffee.data.model.PhaseMode
-import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlin.math.abs
-import kotlin.math.roundToInt
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BrewTimerScreen(
     brewViewModel: BrewViewModel,
@@ -64,359 +75,316 @@ fun BrewTimerScreen(
     val context = LocalContext.current
     val activity = context as? Activity
 
-    // Keep screen on
+    // Keep screen on while brewing
     DisposableEffect(Unit) {
         activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        
-        // Hide system bars for immersive mode
-        // Note: Using deprecated methods for now as this is a quick prototype.
-        // In production, use WindowInsetsController or EdgeToEdge
-        @Suppress("DEPRECATION")
-        activity?.window?.decorView?.systemUiVisibility = (
-            android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            or android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            or android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            or android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
-        )
-        
         onDispose {
             activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            @Suppress("DEPRECATION")
-            activity?.window?.decorView?.systemUiVisibility = (
-                android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            )
         }
     }
 
-    // Start timer on entry if not running
+    // Auto-start on first entry
     LaunchedEffect(Unit) {
         if (!state.timerRunning && state.elapsedSeconds == 0) {
             brewViewModel.startTimer()
         }
     }
-    
-    // Back handler
+
     BackHandler {
         brewViewModel.pauseTimer()
         onBack()
     }
 
-    val phases = state.timerPhases
-    val currentIndex = state.currentPhaseIndex
-    val currentPhase = phases.getOrNull(currentIndex)
-
-    if (currentPhase == null) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("No active brew")
-            Button(onClick = onBack) { Text("Back") }
+    // Minute-boundary haptic + tone
+    val currentMinute = state.elapsedSeconds / 60
+    val vibrator = remember { getVibrator(context) }
+    LaunchedEffect(currentMinute) {
+        if (currentMinute > 0 && state.timerRunning && state.minuteAlertEnabled) {
+            vibrator?.let { v ->
+                v.vibrate(
+                    VibrationEffect.createWaveform(longArrayOf(0, 100, 80, 100), -1),
+                )
+            }
+            try {
+                val tone = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 50)
+                try {
+                    tone.startTone(ToneGenerator.TONE_PROP_BEEP, 150)
+                } finally {
+                    tone.release()
+                }
+            } catch (_: Exception) { }
         }
-        return
     }
 
-    // Determine valve state
-    val isValveOpen = currentPhase.valveState.equals("open", ignoreCase = true) || 
-                      currentPhase.instruction.contains("open", ignoreCase = true)
-    
-    // Determine primary metric
-    val showTimeAsPrimary = currentPhase.phaseType == PhaseType.BLOOM && 
-                           currentPhase.mode == PhaseMode.AUTO_TIMED
-    
+    // Timer color — spring-animated to convey time state at a glance
+    val hasTarget = state.timeTargetLowS > 0 && state.timeTargetHighS > 0
+    val timerColor by animateColorAsState(
+        targetValue = when {
+            !hasTarget -> MaterialTheme.colorScheme.onSurface
+            state.elapsedSeconds > state.timeTargetHighS ->
+                MaterialTheme.colorScheme.error
+            state.elapsedSeconds >= state.timeTargetLowS ->
+                MaterialTheme.colorScheme.tertiary
+            else -> MaterialTheme.colorScheme.onSurface
+        },
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioNoBouncy,
+            stiffness = Spring.StiffnessLow,
+        ),
+        label = "timerColor",
+    )
+
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.surface,
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize()) {
+
+            // ── Top bar ─────────────────────────────────────────────
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.End,
+            ) {
+                IconButton(onClick = { brewViewModel.toggleMinuteAlert() }) {
+                    Icon(
+                        imageVector = if (state.minuteAlertEnabled) {
+                            Icons.Filled.Notifications
+                        } else {
+                            Icons.Filled.NotificationsOff
+                        },
+                        contentDescription = if (state.minuteAlertEnabled) {
+                            "Disable minute alerts"
+                        } else {
+                            "Enable minute alerts"
+                        },
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                            alpha = if (state.minuteAlertEnabled) 0.7f else 0.35f,
+                        ),
+                    )
+                }
+                IconButton(onClick = { brewViewModel.pauseTimer(); onBack() }) {
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = "Close",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                    )
+                }
+            }
+
+            // ── Center — timer + info ───────────────────────────────
             Column(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                // BAND 1: VALVE STATE (Top, fixed height)
-                ValveStateBand(
-                    isOpen = isValveOpen,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(0.8f)
-                )
-
-                // BAND 2: PRIMARY METRIC (Middle, dominant)
-                PrimaryMetricBand(
-                    phase = currentPhase,
-                    remainingSeconds = state.phaseSecondsRemaining,
-                    showTimeAsPrimary = showTimeAsPrimary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(2.2f)
-                )
-
-                // BAND 3: CONTEXT & CONTROLS (Bottom)
-                ContextBand(
-                    phase = currentPhase,
-                    phases = phases,
-                    currentIndex = currentIndex,
-                    elapsedSeconds = state.elapsedSeconds,
-                    timerRunning = state.timerRunning,
-                    onNext = { brewViewModel.advancePhase() },
-                    onToggleTimer = { 
-                        if (state.timerRunning) brewViewModel.pauseTimer() else brewViewModel.startTimer() 
-                    },
-                    showTimeAsPrimary = showTimeAsPrimary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1.2f)
-                )
-            }
-            
-            // Close button overlay
-            IconButton(
-                onClick = {
-                    brewViewModel.pauseTimer()
-                    onBack()
-                },
                 modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(horizontal = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
             ) {
-                Icon(
-                    imageVector = Icons.Default.Close,
-                    contentDescription = "Close",
-                    tint = if (isValveOpen) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun ValveStateBand(
-    isOpen: Boolean,
-    modifier: Modifier = Modifier
-) {
-    val backgroundColor = if (isOpen) 
-        MaterialTheme.colorScheme.primaryContainer 
-    else 
-        MaterialTheme.colorScheme.surfaceVariant
-
-    val contentColor = if (isOpen)
-        MaterialTheme.colorScheme.onPrimaryContainer
-    else
-        MaterialTheme.colorScheme.onSurfaceVariant
-
-    Box(
-        modifier = modifier.background(backgroundColor),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(24.dp)
-                    .border(
-                        width = 3.dp,
-                        color = contentColor,
-                        shape = RoundedCornerShape(4.dp)
-                    )
-                    .background(
-                        color = if (isOpen) Color.Transparent else contentColor,
-                        shape = RoundedCornerShape(4.dp)
-                    )
-            )
-            
-            Spacer(modifier = Modifier.width(16.dp))
-            
-            AnimatedContent(
-                targetState = isOpen,
-                label = "ValveState"
-            ) { open ->
+                // Hero timer
                 Text(
-                    text = if (open) "OPEN" else "CLOSED",
-                    style = MaterialTheme.typography.displaySmall,
-                    color = contentColor,
-                    fontWeight = FontWeight.Bold
+                    text = formatTime(state.elapsedSeconds),
+                    style = MaterialTheme.typography.displayLarge.copy(
+                        fontSize = 96.sp,
+                        letterSpacing = (-3).sp,
+                    ),
+                    fontWeight = FontWeight.Light,
+                    color = timerColor,
+                    modifier = Modifier.semantics { heading() },
                 )
-            }
-        }
-    }
-}
 
-@Composable
-fun PrimaryMetricBand(
-    phase: BrewPhase,
-    remainingSeconds: Int,
-    showTimeAsPrimary: Boolean,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier.background(MaterialTheme.colorScheme.surface),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            AnimatedContent(
-                targetState = showTimeAsPrimary,
-                transitionSpec = {
-                    fadeIn() + slideInVertically { it / 2 } togetherWith fadeOut() + slideOutVertically { -it / 2 }
-                },
-                label = "MetricSwitch"
-            ) { timePrimary ->
-                if (timePrimary) {
-                    val timeText = formatTime(remainingSeconds)
-                    Text(
-                        text = timeText,
-                        style = MaterialTheme.typography.displayLarge.copy(fontSize = 96.sp),
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.Black
-                    )
-                } else {
-                    val weightText = "${phase.cumulativeWaterG.roundToInt()}"
-                    Row(verticalAlignment = Alignment.Bottom) {
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Bloom badge — spring-animated entrance
+                AnimatedVisibility(
+                    visible = state.bloomMarkedAtSeconds != null,
+                    enter = fadeIn(
+                        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+                    ) + expandVertically(
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioLowBouncy,
+                            stiffness = Spring.StiffnessMediumLow,
+                        ),
+                    ) + scaleIn(
+                        initialScale = 0.85f,
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessMediumLow,
+                        ),
+                    ),
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .clip(MaterialTheme.shapes.medium)
+                            .background(MaterialTheme.colorScheme.tertiaryContainer)
+                            .padding(horizontal = 20.dp, vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        Text(text = "🌱", fontSize = 16.sp)
                         Text(
-                            text = weightText,
-                            style = MaterialTheme.typography.displayLarge.copy(fontSize = 110.sp),
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.Black,
-                            lineHeight = 100.sp
+                            text = " Bloom at ${formatTime(state.bloomMarkedAtSeconds ?: 0)}",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
                         )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Target range
+                if (hasTarget) {
+                    Text(
+                        text = "Target ${formatTime(state.timeTargetLowS)} – ${formatTime(state.timeTargetHighS)}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            // ── Bottom controls ─────────────────────────────────────
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 40.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                // Play / Pause — prominent circular button
+                FilledTonalIconButton(
+                    onClick = {
+                        if (state.timerRunning) brewViewModel.pauseTimer()
+                        else brewViewModel.startTimer()
+                    },
+                    modifier = Modifier.size(64.dp),
+                    shape = CircleShape,
+                    colors = IconButtonDefaults.filledTonalIconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    ),
+                ) {
+                    Icon(
+                        imageVector = if (state.timerRunning) Icons.Filled.Pause
+                        else Icons.Filled.PlayArrow,
+                        contentDescription = if (state.timerRunning) "Pause" else "Resume",
+                        modifier = Modifier.size(32.dp),
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Bloom action
+                if (state.bloomMarkedAtSeconds == null) {
+                    // State A: Bloom not started
+                    Button(
+                        onClick = { brewViewModel.markBloom() },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(72.dp),
+                        shape = MaterialTheme.shapes.extraLarge,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary,
+                        ),
+                    ) {
                         Text(
-                            text = "g",
-                            style = MaterialTheme.typography.displayMedium,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                            modifier = Modifier.padding(bottom = 24.dp)
+                            text = "☕ Start Bloom",
+                            style = MaterialTheme.typography.headlineSmall,
+                        )
+                    }
+                } else if (!state.bloomFinished) {
+                    // State B: Bloom counting down
+                    val bloomDuration = state.method.bloomDurationSeconds
+                    val progress = if (bloomDuration > 0) {
+                        (state.bloomCountdownSeconds ?: 0).toFloat() / bloomDuration
+                    } else {
+                        0f
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(72.dp)
+                            .clip(MaterialTheme.shapes.extraLarge)
+                            .background(MaterialTheme.colorScheme.tertiaryContainer),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Text(
+                                text = "🌱 Bloom ${formatTime(state.bloomCountdownSeconds ?: 0)}",
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                                textAlign = TextAlign.Center,
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            LinearProgressIndicator(
+                                progress = { progress },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 24.dp),
+                                color = MaterialTheme.colorScheme.tertiary,
+                                trackColor = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.12f),
+                            )
+                        }
+                    }
+                } else {
+                    // State C: Bloom finished — fire alert once
+                    LaunchedEffect(state.bloomFinished) {
+                        if (state.bloomFinished && state.timerRunning) {
+                            vibrator?.vibrate(
+                                VibrationEffect.createWaveform(
+                                    longArrayOf(0, 200, 100, 200, 100, 300), -1,
+                                ),
+                            )
+                            try {
+                                val tone = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 80)
+                                try {
+                                    tone.startTone(ToneGenerator.TONE_PROP_BEEP2, 500)
+                                } finally {
+                                    tone.release()
+                                }
+                            } catch (_: Exception) { }
+                        }
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(72.dp)
+                            .clip(MaterialTheme.shapes.extraLarge)
+                            .background(MaterialTheme.colorScheme.tertiaryContainer),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = "✅ Bloom done!",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
+                            textAlign = TextAlign.Center,
                         )
                     }
                 }
             }
-            
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            Text(
-                text = phase.name.uppercase(),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                letterSpacing = 2.sp
-            )
         }
     }
 }
 
-@Composable
-fun ContextBand(
-    phase: BrewPhase,
-    phases: List<BrewPhase>,
-    currentIndex: Int,
-    elapsedSeconds: Int,
-    timerRunning: Boolean,
-    onNext: () -> Unit,
-    onToggleTimer: () -> Unit,
-    showTimeAsPrimary: Boolean,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(24.dp),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (showTimeAsPrimary) {
-                Column {
-                    Text(
-                        text = "${phase.cumulativeWaterG.roundToInt()}g",
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                    )
-                    Text(
-                        text = "POURED",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                    )
-                }
-                
-                Column(horizontalAlignment = Alignment.End) {
-                    Text(
-                        text = "${phase.durationSeconds}s",
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Text(
-                        text = "TARGET",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            } else {
-                Column {
-                    Text(
-                        text = "${currentIndex + 1} / ${phases.size}",
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
-                    )
-                    Text(
-                        text = "STEP",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
-                    )
-                }
-                
-                IconButton(
-                    onClick = onToggleTimer,
-                    modifier = Modifier.background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = androidx.compose.foundation.shape.CircleShape
-                    )
-                ) {
-                    Icon(
-                        imageVector = if (timerRunning) Icons.Default.Close else Icons.Default.PlayArrow,
-                        contentDescription = if (timerRunning) "Pause" else "Resume",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-
-                Column(horizontalAlignment = Alignment.End) {
-                    Text(
-                        text = formatTime(elapsedSeconds),
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                    )
-                    Text(
-                        text = "TOTAL",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
-                    )
-                }
-            }
-        }
-        
-        Spacer(modifier = Modifier.height(24.dp))
-        
-        Button(
-            onClick = onNext,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(72.dp),
-            shape = RoundedCornerShape(36.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            )
-        ) {
-            Text(
-                text = if (currentIndex == phases.lastIndex) "Done" else "Next",
-                style = MaterialTheme.typography.displaySmall,
-                fontWeight = FontWeight.Bold
-            )
-        }
+private fun getVibrator(context: Context): Vibrator? {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        (context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager)
+            ?.defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
     }
 }
 
 private fun formatTime(seconds: Int): String {
     val absSeconds = abs(seconds)
-    val m = absSeconds / 60
-    val s = absSeconds % 60
-    return "%d:%02d".format(m, s)
+    val minutes = absSeconds / 60
+    val secs = absSeconds % 60
+    val prefix = if (seconds < 0) "-" else ""
+    return "$prefix$minutes:%02d".format(secs)
 }

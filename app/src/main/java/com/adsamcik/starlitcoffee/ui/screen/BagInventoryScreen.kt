@@ -117,6 +117,7 @@ fun BagInventoryScreen(
         contract = ActivityResultContracts.PickVisualMedia(),
     ) { uri ->
         if (uri != null) {
+            fabExpanded = false
             val photosCsv = uri.toString()
             showAddSheet = true
             isProcessingScan = true
