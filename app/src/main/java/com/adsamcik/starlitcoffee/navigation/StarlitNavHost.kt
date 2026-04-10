@@ -294,9 +294,13 @@ fun StarlitNavHost() {
                 val scanFields by backStackEntry.savedStateHandle
                     .getStateFlow<HashMap<String, String>?>("scan_fields", null)
                     .collectAsStateWithLifecycle()
+                val scannedBarcode by backStackEntry.savedStateHandle
+                    .getStateFlow<String?>("scanned_barcode", null)
+                    .collectAsStateWithLifecycle()
                 BagInventoryScreen(
                     brewViewModel = brewViewModel,
                     onNavigateToCamera = { navController.navigate(LiveScan) },
+                    onNavigateToBarcode = { navController.navigate(BarcodeScanner) },
                     onNavigateToBrewWithBag = { bagId ->
                         brewViewModel.selectBagForBrewing(bagId)
                         navController.navigate(CalculatorBrew) {
@@ -312,6 +316,7 @@ fun StarlitNavHost() {
                     },
                     capturedPhotosResult = capturedPhotos,
                     scanFieldsResult = scanFields,
+                    scannedBarcodeResult = scannedBarcode,
                 )
             }
             composable<BrewLogList> {

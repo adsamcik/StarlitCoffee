@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
@@ -117,6 +118,7 @@ fun AddBagSheet(
         expiryDate: Long?,
     ) -> Unit,
     onEdit: ((CoffeeBagEntity) -> Unit)? = null,
+    onScanBarcode: (() -> Unit)? = null,
 ) {
     val uriHandler = LocalUriHandler.current
     val configuration = LocalConfiguration.current
@@ -254,7 +256,7 @@ fun AddBagSheet(
         if (snapApproveMode) return@LaunchedEffect
         val targetIndex = fullFormIndexForField(
             fieldName = targetField,
-            hasBarcode = initialBarcode != null,
+            hasBarcode = initialBarcode != null || onScanBarcode != null,
             showMoreDetails = showMoreDetails,
         ) ?: return@LaunchedEffect
         listState.animateScrollToItem(targetIndex)
@@ -366,13 +368,42 @@ fun AddBagSheet(
                     if (initialBarcode != null) {
                         item {
                             OutlinedTextField(
-                                value = initialBarcode,
-                                onValueChange = {},
-                                label = { Text("Barcode") },
+                                value = barcode,
+                                onValueChange = { barcode = it },
+                                label = { Text("Barcode / EAN") },
                                 shape = MaterialTheme.shapes.small,
-                                readOnly = true,
-                                enabled = false,
                                 singleLine = true,
+                                trailingIcon = if (onScanBarcode != null) {
+                                    {
+                                        IconButton(onClick = { onScanBarcode() }) {
+                                            Icon(
+                                                Icons.Filled.CameraAlt,
+                                                contentDescription = "Scan barcode",
+                                            )
+                                        }
+                                    }
+                                } else null,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 8.dp),
+                            )
+                        }
+                    } else if (onScanBarcode != null) {
+                        item {
+                            OutlinedTextField(
+                                value = barcode,
+                                onValueChange = { barcode = it },
+                                label = { Text("Barcode / EAN") },
+                                shape = MaterialTheme.shapes.small,
+                                singleLine = true,
+                                trailingIcon = {
+                                    IconButton(onClick = { onScanBarcode() }) {
+                                        Icon(
+                                            Icons.Filled.CameraAlt,
+                                            contentDescription = "Scan barcode",
+                                        )
+                                    }
+                                },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(bottom = 8.dp),

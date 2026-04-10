@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PhotoLibrary
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -71,10 +72,12 @@ private const val TAG = "BagInventoryScreen"
 fun BagInventoryScreen(
     brewViewModel: BrewViewModel,
     onNavigateToCamera: () -> Unit,
+    onNavigateToBarcode: () -> Unit = {},
     onNavigateToBrewWithBag: (Long) -> Unit,
     onNavigateToRescan: (Long) -> Unit = {},
     capturedPhotosResult: String? = null,
     scanFieldsResult: HashMap<String, String>? = null,
+    scannedBarcodeResult: String? = null,
 ){
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
@@ -203,6 +206,30 @@ fun BagInventoryScreen(
         showAddSheet = true
     }
 
+    // Handle barcode scanned from dedicated BarcodeScannerScreen
+    LaunchedEffect(scannedBarcodeResult) {
+        val barcode = scannedBarcodeResult ?: return@LaunchedEffect
+        detectedBarcode = barcode
+        ocrPrefill = null
+        fieldEvidence = emptyMap()
+        reviewHints = emptyList()
+        capturedPhotoUris = null
+        detectedQrUrl = null
+
+        // Look up barcode in local bag database for prefill
+        brewViewModel.findBagByBarcode(barcode) { existingBag ->
+            if (existingBag != null) {
+                offLookupName = existingBag.name
+                offLookupRoaster = existingBag.roaster
+            } else {
+                offLookupName = null
+                offLookupRoaster = null
+            }
+        }
+
+        showAddSheet = true
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
@@ -240,6 +267,16 @@ fun BagInventoryScreen(
                             modifier = Modifier.testTag("fab_scan_label"),
                         ) {
                             Icon(Icons.Filled.CameraAlt, contentDescription = "Scan label")
+                        }
+                        SmallFloatingActionButton(
+                            onClick = {
+                                fabExpanded = false
+                                onNavigateToBarcode()
+                            },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            modifier = Modifier.testTag("fab_scan_barcode"),
+                        ) {
+                            Icon(Icons.Filled.QrCodeScanner, contentDescription = "Scan barcode")
                         }
                     }
                 }
@@ -342,6 +379,10 @@ fun BagInventoryScreen(
             reviewHints = reviewHints,
             isProcessing = isProcessingScan,
             existingBags = bags,
+            onScanBarcode = {
+                showAddSheet = false
+                onNavigateToBarcode()
+            },
             onDismiss = {
                 showAddSheet = false
                 isProcessingScan = false
