@@ -6,7 +6,9 @@ import com.adsamcik.starlitcoffee.scan.model.FieldAccumulation
 import com.adsamcik.starlitcoffee.scan.model.FieldStatus
 import com.adsamcik.starlitcoffee.scan.model.FrameResult
 import com.adsamcik.starlitcoffee.scan.model.GuidanceType
+import com.adsamcik.starlitcoffee.scan.model.LlmEscalationRequest
 import com.adsamcik.starlitcoffee.scan.model.ScanGuidance
+import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import kotlinx.coroutines.CoroutineScope
@@ -16,8 +18,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -49,9 +54,12 @@ import kotlinx.coroutines.launch
  */
 class FrameEvidenceAccumulator(
     private val config: AccumulatorConfig = AccumulatorConfig.DEFAULT,
-    private val knownValues: KnownFieldValues = KnownFieldValues.EMPTY,
+    knownValues: KnownFieldValues = KnownFieldValues.EMPTY,
     private val consensusEngine: ConsensusEngine = ConsensusEngine(config),
 ) {
+    @Volatile
+    private var knownValues: KnownFieldValues = knownValues
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val stateLock = Any()
 
@@ -81,6 +89,9 @@ class FrameEvidenceAccumulator(
     private var scanStartTimeMs: Long = 0L
     private var isQualityRelaxed: Boolean = false
     private var lastAdmittedFrameTimeMs: Long = 0L
+    private var lastFrameQuality: BagCaptureQuality? = null
+    private var consensusCycleCount: Int = 0
+    private var blankFrameCount: Int = 0
 
     // Enrichment dedup
     private val seenBarcodes = mutableSetOf<String>()
@@ -100,6 +111,18 @@ class FrameEvidenceAccumulator(
     private val _evidence = MutableStateFlow(AccumulatedEvidence.EMPTY)
     val evidence: StateFlow<AccumulatedEvidence> = _evidence.asStateFlow()
 
+    // LLM escalation
+    private val _llmEscalation = MutableSharedFlow<LlmEscalationRequest>(
+        replay = 0,
+        extraBufferCapacity = 1,
+    )
+    val llmEscalation: SharedFlow<LlmEscalationRequest> = _llmEscalation.asSharedFlow()
+    private val escalationStaleCycles = mutableMapOf<String, Int>()
+    private val alreadyEscalatedFields = mutableSetOf<String>()
+
+    @Volatile
+    private var lastGoldenFrameBytes: ByteArray? = null
+
     /**
      * Start the accumulator's processing loops.
      * Call once when the camera session begins.
@@ -107,6 +130,8 @@ class FrameEvidenceAccumulator(
     fun start() {
         android.util.Log.d("Accumulator", "start() called — launching processing loops")
         scanStartTimeMs = System.currentTimeMillis()
+        consensusCycleCount = 0
+        blankFrameCount = 0
         startFrameProcessing()
         startGoldenFrameProcessing()
         startEnrichmentProcessing()
@@ -122,6 +147,8 @@ class FrameEvidenceAccumulator(
         frameProcessingJob?.cancel()
         goldenProcessingJob?.cancel()
         enrichmentProcessingJob?.cancel()
+        consensusCycleCount = 0
+        blankFrameCount = 0
         scope.cancel()
     }
 
@@ -166,6 +193,31 @@ class FrameEvidenceAccumulator(
                 sourceType = sourceType,
             ),
         )
+    }
+
+    /**
+     * Signal that the camera analyzer received a blank frame (no text detected).
+     * Accumulates blank-frame count; penalty is applied in the next consensus cycle (Option D).
+     */
+    fun submitBlankFrame() {
+        synchronized(stateLock) {
+            blankFrameCount++
+        }
+    }
+
+    /**
+    fun boostKnownValues(updated: KnownFieldValues) {
+        synchronized(stateLock) {
+            knownValues = updated
+        }
+    }
+
+    /**
+     * Provide raw JPEG bytes of the best golden frame for LLM escalation.
+     * Called by the camera analyzer when a golden frame is captured.
+     */
+    fun setGoldenFrameBytes(bytes: ByteArray) {
+        lastGoldenFrameBytes = bytes
     }
 
     /**
@@ -287,6 +339,7 @@ class FrameEvidenceAccumulator(
     private fun processFrame(frame: FrameResult) {
         synchronized(stateLock) {
             frameIndex++
+            lastFrameQuality = frame.quality
 
             val passesQuality = consensusEngine.framePassesQualityGate(frame, isRelaxed = isQualityRelaxed)
             if (!passesQuality && !frame.isGoldenFrame) {
@@ -338,14 +391,52 @@ class FrameEvidenceAccumulator(
                 return
             }
 
+            consensusCycleCount++
+
             android.util.Log.d("Accumulator", "runConsensus: ${fieldAccumulations.size} fields, " +
+                "cycle=$consensusCycleCount, " +
                 "statuses=${fieldAccumulations.map { "${it.key}=${it.value.status}" }}")
+
+            // Option C: stamp lastReinforcedCycle on candidates that received votes this cycle
+            fieldAccumulations = fieldAccumulations.mapValues { (_, field) ->
+                field.copy(candidates = field.candidates.mapValues { (_, candidate) ->
+                    if (candidate.lastSeenFrameIndex >= frameIndex - 1) {
+                        candidate.copy(lastReinforcedCycle = consensusCycleCount)
+                    } else {
+                        candidate
+                    }
+                })
+            }
 
             fieldAccumulations = consensusEngine.runStateMachine(
                 fields = fieldAccumulations,
                 knownValues = knownValues,
+                currentCycle = consensusCycleCount,
             )
 
+            // Option D: apply blank-frame penalty
+            val blanks = blankFrameCount
+            if (blanks > 0) {
+                blankFrameCount = 0
+                val penalty = config.blankFramePenaltyPerCycle * blanks
+                fieldAccumulations = fieldAccumulations.mapValues { (_, field) ->
+                    if (field.status == FieldStatus.USER_LOCKED ||
+                        field.status == FieldStatus.LOCKED) {
+                        field
+                    } else {
+                        val penalized = field.candidates.mapValues { (_, candidate) ->
+                            val floor = candidate.peakVotes * config.voteFloorFraction
+                            candidate.copy(
+                                qualityWeightedVotes = (candidate.qualityWeightedVotes - penalty)
+                                    .coerceAtLeast(floor),
+                            )
+                        }
+                        field.copy(candidates = penalized)
+                    }
+                }
+            }
+
+            checkLlmEscalationLocked()
             emitEvidenceLocked()
             android.util.Log.d("Accumulator", "runConsensus: emitted evidence, " +
                 "processed=$totalFramesProcessed, rejected=$totalFramesRejected")
@@ -388,7 +479,7 @@ class FrameEvidenceAccumulator(
     }
 
     private fun buildGuidance(fields: Map<String, FieldAccumulation>): ScanGuidance? {
-        // Priority: scan complete > missing core field > flip suggestion > quality
+        // Priority: scan complete > quality issue > missing core field > almost done > flip > missing non-core
         val resolvedCount = fields.values.count { it.isResolved }
         val totalTracked = fields.size.coerceAtLeast(1)
 
@@ -397,6 +488,22 @@ class FrameEvidenceAccumulator(
                 message = "Bag looks complete!",
                 type = GuidanceType.SCAN_COMPLETE,
             )
+        }
+
+        // Quality issues take priority — they prevent effective scanning
+        lastFrameQuality?.let { quality ->
+            if (!quality.sharpEnough) {
+                return ScanGuidance(
+                    message = "Hold phone steadier for clearer text",
+                    type = GuidanceType.QUALITY_ISSUE,
+                )
+            }
+            if (!quality.glareOkay) {
+                return ScanGuidance(
+                    message = "Tilt slightly to reduce glare",
+                    type = GuidanceType.QUALITY_ISSUE,
+                )
+            }
         }
 
         // Find highest-priority missing core field
@@ -418,6 +525,16 @@ class FrameEvidenceAccumulator(
             )
         }
 
+        // Almost done encouragement
+        val allFieldCount = config.allFields.size.coerceAtLeast(1).toFloat()
+        val scanProgress = resolvedCount / allFieldCount
+        if (scanProgress > 0.8f) {
+            return ScanGuidance(
+                message = "Almost done! Checking remaining fields…",
+                type = GuidanceType.ALMOST_DONE,
+            )
+        }
+
         // Suggest flip if we haven't seen the other side
         if (sideCount < 2 && totalFramesProcessed > 15) {
             val hasBackFields = fields.values.any { field ->
@@ -425,7 +542,7 @@ class FrameEvidenceAccumulator(
             }
             if (!hasBackFields) {
                 return ScanGuidance(
-                    message = "Flip bag for more details",
+                    message = "Flip bag to scan the back label",
                     type = GuidanceType.FLIP_SUGGESTION,
                 )
             }
@@ -455,6 +572,63 @@ class FrameEvidenceAccumulator(
         }
 
         return null
+    }
+
+    // --- LLM escalation ---
+
+    /**
+     * Check if any high-value fields have been stuck in SCANNING/CONFLICT
+     * for too many consensus cycles and emit an escalation request.
+     * Must be called under [stateLock].
+     */
+    private fun checkLlmEscalationLocked() {
+        if (config.llmEscalationFields.isEmpty()) return
+
+        val fieldsNeedingEscalation = mutableSetOf<String>()
+
+        for (fieldName in config.llmEscalationFields) {
+            if (fieldName in alreadyEscalatedFields) continue
+
+            val field = fieldAccumulations[fieldName]
+            val isStuck = field == null ||
+                field.status == FieldStatus.SCANNING ||
+                field.status == FieldStatus.CONFLICT
+
+            if (isStuck) {
+                val count = (escalationStaleCycles[fieldName] ?: 0) + 1
+                escalationStaleCycles[fieldName] = count
+                if (count >= config.llmEscalationCycles) {
+                    fieldsNeedingEscalation.add(fieldName)
+                }
+            } else {
+                // Field resolved — reset its stale counter
+                escalationStaleCycles.remove(fieldName)
+            }
+        }
+
+        if (fieldsNeedingEscalation.isNotEmpty()) {
+            alreadyEscalatedFields.addAll(fieldsNeedingEscalation)
+
+            val existingFields = fieldAccumulations
+                .filter { it.value.isResolved }
+                .mapValues { entry ->
+                    entry.value.resolvedValue
+                        ?: entry.value.topCandidate?.normalizedValue
+                        ?: ""
+                }
+                .filter { it.value.isNotBlank() }
+
+            val request = LlmEscalationRequest(
+                goldenFrameBytes = lastGoldenFrameBytes,
+                existingFields = existingFields,
+                fieldsNeeded = fieldsNeedingEscalation,
+            )
+            _llmEscalation.tryEmit(request)
+            android.util.Log.d(
+                "Accumulator",
+                "LLM escalation emitted for fields: $fieldsNeedingEscalation",
+            )
+        }
     }
 
     // --- Side detection ---

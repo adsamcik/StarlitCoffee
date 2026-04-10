@@ -86,10 +86,14 @@ import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.ScanFieldSupport
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
+import com.adsamcik.starlitcoffee.viewmodel.CrossValidationWarning
 import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
+import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicInteger
+import kotlinx.coroutines.delay
 
 private val READY_COLOR = Color(0xFF5ED18D)
 private val CAUTION_COLOR = Color(0xFFFFD166)
@@ -115,6 +119,7 @@ fun LiveScanScreen(
     val evidence by liveScanViewModel.evidence.collectAsStateWithLifecycle()
     val uiState by liveScanViewModel.liveScanUiState.collectAsStateWithLifecycle()
     val knownFieldValues by brewViewModel.knownFieldValues.collectAsStateWithLifecycle()
+    val crossValidationWarning by liveScanViewModel.crossValidationWarning.collectAsStateWithLifecycle()
 
     // --- Camera Permission ---
 
@@ -146,6 +151,7 @@ fun LiveScanScreen(
     }
     val analysisExecutor = remember { Executors.newSingleThreadExecutor() }
     val textRecognizer = remember { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
+    val barcodeScanner = remember { BarcodeScanning.getClient() }
 
     // --- Start accumulator ---
 
@@ -173,6 +179,7 @@ fun LiveScanScreen(
 
         val analyzer = LiveScanAnalyzer(
             recognizer = textRecognizer,
+            barcodeScanner = barcodeScanner,
             knownFieldValues = knownFieldValues,
             onRawFrame = { quality, lumaGrid ->
                 liveScanViewModel.onRawFrame(quality, lumaGrid)
@@ -186,6 +193,12 @@ fun LiveScanScreen(
                     if (quality.textDetected) latestQuality = quality
                 }
             },
+            onBarcodeDetected = { barcode ->
+                liveScanViewModel.onBarcodeDetected(barcode)
+            },
+            onBlankFrame = {
+                liveScanViewModel.onBlankFrame()
+            },
         )
 
         cameraController.setImageAnalysisAnalyzer(analysisExecutor, analyzer)
@@ -194,6 +207,7 @@ fun LiveScanScreen(
             cameraController.clearImageAnalysisAnalyzer()
             analysisExecutor.shutdown()
             textRecognizer.close()
+            barcodeScanner.close()
             liveScanViewModel.stop(sensorManager)
         }
     }
@@ -272,6 +286,51 @@ fun LiveScanScreen(
             sideCount = evidence.sideCount,
             sideFlipDetected = uiState.sideFlipDetected,
             onToggleDebug = { showDebugOverlay = !showDebugOverlay },
+        )
+
+        // Barcode detection chip
+        val barcodeMessage = uiState.barcodeDetectedMessage
+        var showBarcodeChip by remember { mutableStateOf(false) }
+
+        LaunchedEffect(barcodeMessage) {
+            if (barcodeMessage != null) {
+                showBarcodeChip = true
+                delay(3000)
+                showBarcodeChip = false
+            }
+        }
+
+        AnimatedVisibility(
+            visible = showBarcodeChip,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 56.dp),
+        ) {
+            Surface(
+                shape = RoundedCornerShape(20.dp),
+                color = READY_COLOR.copy(alpha = 0.9f),
+                modifier = Modifier.clickable { showBarcodeChip = false },
+            ) {
+                Text(
+                    text = barcodeMessage ?: "",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color.White,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                )
+            }
+        }
+
+        // Cross-validation warning banner
+        CrossValidationBanner(
+            warning = crossValidationWarning,
+            onUseBarcode = liveScanViewModel::resolveCrossValidationWithBarcode,
+            onUseLabel = liveScanViewModel::resolveCrossValidationWithOcr,
+            onDismiss = liveScanViewModel::dismissCrossValidation,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 96.dp, start = 12.dp, end = 12.dp),
         )
 
         // Debug overlay
@@ -493,17 +552,21 @@ private fun BottomOverlay(
             Spacer(modifier = Modifier.height(10.dp))
         }
 
-        // Save buttons (appear when draft is ready)
-        AnimatedVisibility(visible = isDraftReady) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.fillMaxWidth(),
+        // Save buttons
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            // Quick Save — only when enough fields resolved
+            AnimatedVisibility(
+                visible = isDraftReady,
+                modifier = Modifier.weight(1f),
             ) {
                 Surface(
                     onClick = onQuickSave,
                     shape = RoundedCornerShape(12.dp),
                     color = READY_COLOR,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
@@ -520,26 +583,117 @@ private fun BottomOverlay(
                         Text("Quick Save", color = Color.Black, fontWeight = FontWeight.Bold)
                     }
                 }
+            }
 
-                Surface(
-                    onClick = onReviewFirst,
-                    shape = RoundedCornerShape(12.dp),
-                    color = Color.White.copy(alpha = 0.2f),
-                    modifier = Modifier.weight(1f),
+            // Review — always visible so user can continue with partial results
+            Surface(
+                onClick = onReviewFirst,
+                shape = RoundedCornerShape(12.dp),
+                color = Color.White.copy(alpha = 0.2f),
+                modifier = Modifier.weight(1f),
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(vertical = 12.dp),
                 ) {
+                    Icon(
+                        Icons.Default.Edit,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        if (isDraftReady) "Review First" else "Continue manually",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+            }
+        }
+    }
+}
+
+// --- Cross-Validation Warning Banner ---
+
+@Composable
+private fun CrossValidationBanner(
+    warning: CrossValidationWarning?,
+    onUseBarcode: () -> Unit,
+    onUseLabel: () -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    AnimatedVisibility(
+        visible = warning != null,
+        enter = fadeIn(),
+        exit = fadeOut(),
+        modifier = modifier,
+    ) {
+        warning?.let { w ->
+            Surface(
+                shape = RoundedCornerShape(12.dp),
+                color = CAUTION_COLOR,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Column(
+                    modifier = Modifier.padding(12.dp),
+                ) {
+                    Text(
+                        text = "⚠️ Barcode suggests \"${w.barcodeValue}\" but label reads \"${w.ocrValue}\"",
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                    )
+                    Text(
+                        text = "This may be a repackaged or imported product",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.Black.copy(alpha = 0.7f),
+                        modifier = Modifier.padding(top = 2.dp),
+                    )
                     Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(vertical = 12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.padding(top = 8.dp),
                     ) {
-                        Icon(
-                            Icons.Default.Edit,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.size(18.dp),
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text("Review First", color = Color.White, fontWeight = FontWeight.Bold)
+                        Surface(
+                            onClick = onUseBarcode,
+                            shape = RoundedCornerShape(8.dp),
+                            color = Color.Black.copy(alpha = 0.15f),
+                        ) {
+                            Text(
+                                text = "Use barcode",
+                                style = MaterialTheme.typography.labelSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                            )
+                        }
+                        Surface(
+                            onClick = onUseLabel,
+                            shape = RoundedCornerShape(8.dp),
+                            color = Color.Black.copy(alpha = 0.15f),
+                        ) {
+                            Text(
+                                text = "Use label",
+                                style = MaterialTheme.typography.labelSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                            )
+                        }
+                        Surface(
+                            onClick = onDismiss,
+                            shape = RoundedCornerShape(8.dp),
+                            color = Color.Black.copy(alpha = 0.08f),
+                        ) {
+                            Text(
+                                text = "Dismiss",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = Color.Black.copy(alpha = 0.7f),
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                            )
+                        }
                     }
                 }
             }
@@ -696,12 +850,14 @@ private fun GuidanceBar(guidance: ScanGuidance) {
         GuidanceType.MISSING_FIELD -> Color.White.copy(alpha = 0.1f)
         GuidanceType.FLIP_SUGGESTION -> CAUTION_COLOR.copy(alpha = 0.15f)
         GuidanceType.QUALITY_ISSUE -> CAUTION_COLOR.copy(alpha = 0.15f)
+        GuidanceType.ALMOST_DONE -> READY_COLOR.copy(alpha = 0.15f)
     }
     val icon = when (guidance.type) {
         GuidanceType.SCAN_COMPLETE -> "✅"
         GuidanceType.MISSING_FIELD -> "👀"
         GuidanceType.FLIP_SUGGESTION -> "🔄"
         GuidanceType.QUALITY_ISSUE -> "⚠️"
+        GuidanceType.ALMOST_DONE -> "🎯"
     }
 
     Surface(
@@ -837,6 +993,7 @@ private fun fieldEmoji(fieldName: String): String = when (fieldName) {
 
 private class LiveScanAnalyzer(
     private val recognizer: com.google.mlkit.vision.text.TextRecognizer,
+    private val barcodeScanner: com.google.mlkit.vision.barcode.BarcodeScanner,
     private val knownFieldValues: KnownFieldValues,
     private val onRawFrame: (quality: BagCaptureQuality, lumaGrid: ByteArray?) -> Unit,
     private val onOcrResult: (
@@ -844,6 +1001,8 @@ private class LiveScanAnalyzer(
         quality: BagCaptureQuality,
         lumaGrid: ByteArray?,
     ) -> Unit,
+    private val onBarcodeDetected: (String) -> Unit,
+    private val onBlankFrame: () -> Unit,
 ) : androidx.camera.core.ImageAnalysis.Analyzer {
 
     @Volatile
@@ -861,6 +1020,9 @@ private class LiveScanAnalyzer(
     @Volatile
     private var lastOcrResult: OcrFieldExtractor.OcrExtractionResult =
         OcrFieldExtractor.OcrExtractionResult()
+
+    @Volatile
+    private var barcodeDetected = false
 
     private var analyzeCallCount = 0
 
@@ -906,16 +1068,17 @@ private class LiveScanAnalyzer(
             // Never let callback exceptions propagate
         }
 
-        // OCR text recognition (throttled at 700ms)
+        // OCR text recognition (throttled at 700ms) + barcode detection
         val now = android.os.SystemClock.elapsedRealtime()
         val timeSinceLastOcr = now - lastTextCheckAtMs
         val shouldRunOcr = !textDetectionInFlight && timeSinceLastOcr >= 700L
+        val shouldRunBarcode = !barcodeDetected
         val hasMediaImage = image.image != null
 
         if (analyzeCallCount <= 5 || analyzeCallCount % 30 == 0) {
             android.util.Log.d("LiveScanAnalyzer", "OCR gate: shouldRunOcr=$shouldRunOcr, " +
                 "inFlight=$textDetectionInFlight, timeSinceLast=${timeSinceLastOcr}ms, " +
-                "hasMediaImage=$hasMediaImage")
+                "hasMediaImage=$hasMediaImage, shouldRunBarcode=$shouldRunBarcode")
         }
 
         if (shouldRunOcr && hasMediaImage) {
@@ -928,6 +1091,14 @@ private class LiveScanAnalyzer(
                 image.image!!,
                 image.imageInfo.rotationDegrees,
             )
+
+            // Track pending tasks so image is closed only after all complete
+            val pendingTasks = AtomicInteger(if (shouldRunBarcode) 2 else 1)
+            val maybeCloseImage = {
+                if (pendingTasks.decrementAndGet() == 0) {
+                    image.close()
+                }
+            }
 
             recognizer.process(inputImage)
                 .addOnSuccessListener { text ->
@@ -954,17 +1125,37 @@ private class LiveScanAnalyzer(
                             android.util.Log.e("LiveScanAnalyzer", "OCR callback error", e)
                         }
                     } else {
-                        android.util.Log.d("LiveScanAnalyzer", "ML Kit returned blank text — skipping extraction")
+                        android.util.Log.d("LiveScanAnalyzer", "ML Kit returned blank text — submitting absence signal")
+                        onBlankFrame()
                     }
                 }
                 .addOnFailureListener { e ->
                     android.util.Log.e("LiveScanAnalyzer", "ML Kit recognition FAILED", e)
                 }
                 .addOnCompleteListener {
-                    android.util.Log.d("LiveScanAnalyzer", "ML Kit COMPLETE — releasing image, resetting inFlight")
+                    android.util.Log.d("LiveScanAnalyzer", "ML Kit COMPLETE — resetting inFlight")
                     textDetectionInFlight = false
-                    image.close()
+                    maybeCloseImage()
                 }
+
+            // Run barcode detection on the same InputImage (near-zero extra cost)
+            if (shouldRunBarcode) {
+                barcodeScanner.process(inputImage)
+                    .addOnSuccessListener { barcodes ->
+                        barcodes.firstOrNull()?.rawValue?.let { value ->
+                            if (!barcodeDetected) {
+                                barcodeDetected = true
+                                android.util.Log.d("LiveScanAnalyzer", "Barcode detected: $value")
+                                try {
+                                    onBarcodeDetected(value)
+                                } catch (_: Exception) {}
+                            }
+                        }
+                    }
+                    .addOnCompleteListener {
+                        maybeCloseImage()
+                    }
+            }
         } else {
             image.close()
         }

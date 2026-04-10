@@ -35,6 +35,12 @@ data class CandidateState(
     val sourceTypes: Set<BagFieldSourceType>,
     val bestConfidenceHint: BagFieldConfidence,
     val sides: Set<Int>,
+    /** True when this candidate matched a value from the user's bag history and received a prior boost. */
+    val matchedKnownValue: Boolean = false,
+    /** Highest quality-weighted votes ever reached — used as a decay floor (Option B). */
+    val peakVotes: Float = 0f,
+    /** Last consensus cycle this candidate received a reinforcing vote (Option C). */
+    val lastReinforcedCycle: Int = 0,
 )
 
 /**

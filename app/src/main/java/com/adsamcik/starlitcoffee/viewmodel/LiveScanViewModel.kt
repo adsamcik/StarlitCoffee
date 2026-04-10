@@ -3,6 +3,11 @@ package com.adsamcik.starlitcoffee.viewmodel
 import android.hardware.SensorManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
+import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
+import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
+import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
+import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.scan.ConsensusEngine
 import com.adsamcik.starlitcoffee.scan.FrameEvidenceAccumulator
 import com.adsamcik.starlitcoffee.scan.SideDetector
@@ -10,8 +15,11 @@ import com.adsamcik.starlitcoffee.scan.model.AccumulatedEvidence
 import com.adsamcik.starlitcoffee.scan.model.AccumulatorConfig
 import com.adsamcik.starlitcoffee.scan.model.FieldStatus
 import com.adsamcik.starlitcoffee.scan.model.FrameResult
+import com.adsamcik.starlitcoffee.scan.model.LlmEscalationRequest
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
+import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
+import com.adsamcik.starlitcoffee.util.BarcodeInsights
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult
 import kotlinx.coroutines.Job
@@ -36,6 +44,8 @@ import kotlinx.coroutines.launch
  */
 class LiveScanViewModel(
     private val config: AccumulatorConfig = AccumulatorConfig.DEFAULT,
+    private val llmProvider: LlmInferenceProvider = StubLlmInferenceProvider(),
+    private val llmCache: LlmResultCache = LlmResultCache(),
 ) : ViewModel() {
 
     // --- Core accumulator ---
@@ -44,6 +54,7 @@ class LiveScanViewModel(
     private var sideDetector: SideDetector? = null
     private var consensusEngine: ConsensusEngine? = null
     private var accumulatorEvidenceJob: Job? = null
+    private var llmEscalationJob: Job? = null
 
     private val _evidence = MutableStateFlow(AccumulatedEvidence.EMPTY)
     val evidence: StateFlow<AccumulatedEvidence> = _evidence.asStateFlow()
@@ -52,6 +63,14 @@ class LiveScanViewModel(
 
     private val _liveScanUiState = MutableStateFlow(LiveScanUiState())
     val liveScanUiState: StateFlow<LiveScanUiState> = _liveScanUiState.asStateFlow()
+
+    // --- Cross-validation ---
+
+    private val _crossValidationWarning = MutableStateFlow<CrossValidationWarning?>(null)
+    val crossValidationWarning: StateFlow<CrossValidationWarning?> = _crossValidationWarning.asStateFlow()
+
+    private var barcodeRoasterName: String? = null
+    private var crossValidationDismissed: Boolean = false
 
     // --- Frame counter ---
 
@@ -62,6 +81,7 @@ class LiveScanViewModel(
 
     private val processedBarcodes = mutableSetOf<String>()
     private val processedQrUrls = mutableSetOf<String>()
+    private var currentKnownValues: KnownFieldValues = KnownFieldValues.EMPTY
 
     /**
      * Initialize and start the live scan session.
@@ -79,6 +99,7 @@ class LiveScanViewModel(
             return
         }
         isStarted = true
+        currentKnownValues = knownFieldValues
         resetSessionState()
 
         android.util.Log.d("LiveScan", "start() — creating accumulator + consensus engine")
@@ -101,6 +122,7 @@ class LiveScanViewModel(
         accumulatorEvidenceJob = viewModelScope.launch {
             accumulator?.evidence?.collectLatest { evidence ->
                 _evidence.value = evidence
+                checkCrossValidation(evidence)
                 if (evidence.totalFramesProcessed > 0 && evidence.totalFramesProcessed % 5 == 0) {
                     android.util.Log.d("LiveScan", "Evidence update: " +
                         "processed=${evidence.totalFramesProcessed}, " +
@@ -108,6 +130,12 @@ class LiveScanViewModel(
                         "fields=${evidence.fields.size}, " +
                         "progress=${evidence.scanProgress}")
                 }
+            }
+        }
+
+        llmEscalationJob = viewModelScope.launch {
+            accumulator?.llmEscalation?.collect { escalation ->
+                handleLlmEscalation(escalation)
             }
         }
 
@@ -129,6 +157,8 @@ class LiveScanViewModel(
 
         accumulatorEvidenceJob?.cancel()
         accumulatorEvidenceJob = null
+        llmEscalationJob?.cancel()
+        llmEscalationJob = null
         accumulator?.stop()
         accumulator = null
         sideDetector?.reset()
@@ -205,6 +235,15 @@ class LiveScanViewModel(
     }
 
     /**
+     * Called by the camera analyzer when ML Kit returns blank text.
+     * Signals an absence of text evidence to the accumulator (Option D).
+     */
+    fun onBlankFrame() {
+        if (!isStarted) return
+        accumulator?.submitBlankFrame()
+    }
+
+    /**
      * Force-capture the current frame, bypassing IMU gating, throttle, and quality gate.
      * Used by the manual capture fallback button. Submits as a golden frame.
      */
@@ -238,11 +277,35 @@ class LiveScanViewModel(
         if (barcode in processedBarcodes) return
         processedBarcodes.add(barcode)
 
+        _liveScanUiState.value = _liveScanUiState.value.copy(
+            barcodeDetectedMessage = "✓ Barcode detected — prefilling fields",
+        )
+
         accumulator?.submitEnrichment(
             fieldValues = lookupFields,
             sourceType = sourceType,
             barcode = barcode,
         )
+
+        // Boost OCR priors with barcode-resolved roaster name
+        viewModelScope.launch {
+            val boosted = BarcodeInsights.buildBarcodeOcrBoost(
+                barcode = barcode,
+                currentKnownValues = currentKnownValues,
+            )
+            if (boosted !== currentKnownValues) {
+                currentKnownValues = boosted
+                accumulator?.boostKnownValues(boosted)
+            }
+        }
+
+        // Resolve barcode roaster for cross-validation
+        val stemMatch = BarcodeInsights.findObservedStemMatch(barcode)
+        val barcodeRoaster = lookupFields["roaster"] ?: stemMatch?.roasterCandidate
+        if (barcodeRoaster != null) {
+            barcodeRoasterName = barcodeRoaster
+            checkCrossValidation(_evidence.value)
+        }
     }
 
     /**
@@ -321,12 +384,137 @@ class LiveScanViewModel(
             .toMap()
     }
 
+    // --- LLM escalation ---
+
+    private suspend fun handleLlmEscalation(escalation: LlmEscalationRequest) {
+        if (!llmProvider.isAvailable()) return
+        val bytes = escalation.goldenFrameBytes
+        if (bytes == null) {
+            android.util.Log.d("LiveScan", "LLM escalation: no golden frame bytes available")
+            return
+        }
+
+        val imageHash = bytes.contentHashCode()
+        val cached = llmCache.get(imageHash)
+        if (cached != null) {
+            feedLlmResultsToAccumulator(cached.fieldCandidates)
+            return
+        }
+
+        val request = LlmExtractionRequest(
+            imageBytes = bytes,
+            existingFields = escalation.existingFields,
+            fieldsNeeded = escalation.fieldsNeeded,
+        )
+        when (val result = llmProvider.extractBagFields(request)) {
+            is LlmExtractionResult.Success -> {
+                llmCache.put(imageHash, result)
+                feedLlmResultsToAccumulator(result.fieldCandidates)
+            }
+            is LlmExtractionResult.Unavailable -> {
+                android.util.Log.d("LiveScan", "LLM escalation: unavailable — ${result.reason}")
+            }
+            is LlmExtractionResult.Failed -> {
+                android.util.Log.d("LiveScan", "LLM escalation: failed — ${result.error}")
+            }
+        }
+    }
+
+    private fun feedLlmResultsToAccumulator(candidates: List<BagFieldCandidate>) {
+        val fieldValues = candidates.associate { it.fieldName to it.value }
+            .filter { it.value.isNotBlank() }
+        if (fieldValues.isNotEmpty()) {
+            accumulator?.submitEnrichment(
+                fieldValues = fieldValues,
+                sourceType = BagFieldSourceType.LLM,
+            )
+        }
+    }
+
+    // --- Cross-validation logic ---
+
+    /**
+     * Compare barcode-derived roaster name against OCR-derived roaster name.
+     * When both exist and differ significantly, emit a warning about potential
+     * repackaged or imported product.
+     */
+    private fun checkCrossValidation(evidence: AccumulatedEvidence) {
+        if (crossValidationDismissed) return
+
+        val barcodeRoaster = barcodeRoasterName ?: return
+        val roasterField = evidence.fields["roaster"] ?: return
+        val ocrRoaster = roasterField.topCandidate?.normalizedValue ?: return
+
+        // Only compare when OCR has reasonable confidence (multiple observations)
+        if ((roasterField.topCandidate?.observationCount ?: 0) < 2) return
+        // Only compare when OCR source includes actual OCR data (not just barcode enrichment)
+        val hasOcrSource = roasterField.topCandidate?.sourceTypes?.contains(
+            BagFieldSourceType.OCR,
+        ) == true
+        if (!hasOcrSource) return
+
+        val bTrimmed = barcodeRoaster.trim().lowercase()
+        val oTrimmed = ocrRoaster.trim().lowercase()
+
+        // Match: one contains the other (handles "Rebelbean" vs "Rebelbean s.r.o.")
+        if (bTrimmed.contains(oTrimmed) || oTrimmed.contains(bTrimmed)) {
+            _crossValidationWarning.value = null
+            return
+        }
+
+        // Match: Levenshtein distance ≤ 2 (handles minor OCR typos)
+        if (levenshteinDistance(bTrimmed, oTrimmed) <= 2) {
+            _crossValidationWarning.value = null
+            return
+        }
+
+        // Genuine disagreement — surface warning
+        _crossValidationWarning.value = CrossValidationWarning(
+            field = "roaster",
+            barcodeValue = barcodeRoaster.trim(),
+            ocrValue = ocrRoaster.trim(),
+            message = "Barcode suggests '${barcodeRoaster.trim()}' but label reads " +
+                "'${ocrRoaster.trim()}' — this may be repackaged or imported",
+        )
+    }
+
+    /**
+     * User chose to resolve the cross-validation warning using the barcode value.
+     */
+    fun resolveCrossValidationWithBarcode() {
+        val warning = _crossValidationWarning.value ?: return
+        accumulator?.userResolveField(warning.field, warning.barcodeValue)
+        crossValidationDismissed = true
+        _crossValidationWarning.value = null
+    }
+
+    /**
+     * User chose to resolve the cross-validation warning using the OCR/label value.
+     */
+    fun resolveCrossValidationWithOcr() {
+        val warning = _crossValidationWarning.value ?: return
+        accumulator?.userResolveField(warning.field, warning.ocrValue)
+        crossValidationDismissed = true
+        _crossValidationWarning.value = null
+    }
+
+    /**
+     * User dismissed the cross-validation warning without choosing a resolution.
+     */
+    fun dismissCrossValidation() {
+        crossValidationDismissed = true
+        _crossValidationWarning.value = null
+    }
+
     // --- Session state ---
 
     private fun resetSessionState() {
         frameIndex = 0
         processedBarcodes.clear()
         processedQrUrls.clear()
+        barcodeRoasterName = null
+        crossValidationDismissed = false
+        _crossValidationWarning.value = null
         _evidence.value = AccumulatedEvidence.EMPTY
         _liveScanUiState.value = LiveScanUiState()
     }
@@ -347,6 +535,17 @@ class LiveScanViewModel(
 }
 
 /**
+ * Cross-validation warning when barcode-derived and OCR-derived values disagree
+ * for the same field. Surfaces potential repackaged or imported product.
+ */
+data class CrossValidationWarning(
+    val field: String,
+    val barcodeValue: String,
+    val ocrValue: String,
+    val message: String,
+)
+
+/**
  * UI state for the live scan screen (not the accumulated evidence —
  * that comes from [FrameEvidenceAccumulator.evidence]).
  */
@@ -356,4 +555,31 @@ data class LiveScanUiState(
     val sideFlipDetected: Boolean = false,
     val goldenFrameCount: Int = 0,
     val lastRejectionReason: String? = null,
+    val barcodeDetectedMessage: String? = null,
 )
+
+/** Levenshtein edit distance between two strings. */
+internal fun levenshteinDistance(a: String, b: String): Int {
+    if (a == b) return 0
+    if (a.isEmpty()) return b.length
+    if (b.isEmpty()) return a.length
+
+    var prev = IntArray(b.length + 1) { it }
+    var curr = IntArray(b.length + 1)
+
+    for (i in 1..a.length) {
+        curr[0] = i
+        for (j in 1..b.length) {
+            val cost = if (a[i - 1] == b[j - 1]) 0 else 1
+            curr[j] = minOf(
+                prev[j] + 1,
+                curr[j - 1] + 1,
+                prev[j - 1] + cost,
+            )
+        }
+        val tmp = prev
+        prev = curr
+        curr = tmp
+    }
+    return prev[b.length]
+}

@@ -13,6 +13,7 @@ import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult
 import kotlin.math.min
+import kotlin.math.pow
 
 /**
  * Core consensus engine for live scanning. Stateless — takes accumulated candidates
@@ -113,17 +114,7 @@ class ConsensusEngine(
         fieldName: String,
         knownValues: KnownFieldValues,
     ): Map<String, Float> {
-        val values = when (fieldName) {
-            "name" -> knownValues.names
-            "roaster" -> knownValues.roasters
-            "origin" -> knownValues.origins
-            "region" -> knownValues.regions
-            "variety" -> knownValues.varieties
-            "processType" -> knownValues.processTypes
-            "roastLevel" -> knownValues.roastLevels
-            "farm" -> knownValues.farms
-            else -> emptyList()
-        }
+        val values = knownValuesForField(fieldName, knownValues)
         if (values.isEmpty()) return emptyMap()
 
         val totalCount = values.size.toFloat()
@@ -132,23 +123,70 @@ class ConsensusEngine(
     }
 
     /**
+     * Return the set of lowercase known values for [fieldName] that have been
+     * observed at least [minObservations] times in the user's history.
+     * These are eligible for the prior boost in [computePosteriors].
+     */
+    fun getEligibleKnownValues(
+        fieldName: String,
+        knownValues: KnownFieldValues,
+        minObservations: Int,
+    ): Set<String> {
+        val values = knownValuesForField(fieldName, knownValues)
+        if (values.isEmpty()) return emptySet()
+
+        return values
+            .groupBy { it.lowercase() }
+            .filter { (_, occurrences) -> occurrences.size >= minObservations }
+            .keys
+    }
+
+    /** Resolve the raw list of known values for [fieldName] from [knownValues]. */
+    private fun knownValuesForField(
+        fieldName: String,
+        knownValues: KnownFieldValues,
+    ): List<String> = when (fieldName) {
+        "name" -> knownValues.names
+        "roaster" -> knownValues.roasters
+        "origin" -> knownValues.origins
+        "region" -> knownValues.regions
+        "variety" -> knownValues.varieties
+        "processType" -> knownValues.processTypes
+        "roastLevel" -> knownValues.roastLevels
+        "farm" -> knownValues.farms
+        else -> emptyList()
+    }
+
+    /**
      * Compute the Bayesian posterior for all candidates of a single field,
      * given accumulated observations and optional priors from known values.
      *
      * Each observation contributes likelihood = sourceWeight × qualityWeight.
      * The posterior is proportional to prior × cumulative likelihood.
+     *
+     * When [eligibleKnownValues] is provided, candidates whose lowercase key
+     * appears in the set receive a multiplicative [knownValueBoost] to their
+     * raw posterior before normalization — making known values converge faster.
      */
     fun computePosteriors(
         candidates: Map<String, CandidateState>,
         priors: Map<String, Float>,
+        eligibleKnownValues: Set<String> = emptySet(),
+        knownValueBoost: Float = 1f,
     ): Map<String, Float> {
         if (candidates.isEmpty()) return emptyMap()
 
         val uniformPrior = 1f / (candidates.size + 1).toFloat()
         val rawPosteriors = candidates.mapValues { (key, state) ->
             val prior = priors[key.lowercase()] ?: uniformPrior
-            val likelihood = state.qualityWeightedVotes
-            prior * likelihood
+            // Option B: use floored vote count so sharp-frame evidence has stickiness
+            val effectiveVotes = maxOf(
+                state.qualityWeightedVotes,
+                state.peakVotes * config.voteFloorFraction,
+            )
+            val likelihood = effectiveVotes
+            val boost = if (key.lowercase() in eligibleKnownValues) knownValueBoost else 1f
+            prior * likelihood * boost
         }
 
         val total = rawPosteriors.values.sum()
@@ -224,6 +262,7 @@ class ConsensusEngine(
             BagFieldSourceType.LOCAL_BARCODE_MATCH -> config.sourceWeightLocalMatch
             BagFieldSourceType.BARCODE_LOOKUP -> config.sourceWeightBarcodeLookup
             BagFieldSourceType.QR_LINK_LOOKUP -> config.sourceWeightQrLink
+            BagFieldSourceType.LLM -> config.sourceWeightLlm
             else -> config.sourceWeightOcr
         }
 
@@ -249,9 +288,12 @@ class ConsensusEngine(
             if (matchKey != null) {
                 // Update existing candidate
                 val state = currentCandidates.getValue(matchKey)
+                val newVotes = state.qualityWeightedVotes + combinedWeight
+                val newPeak = maxOf(state.peakVotes, newVotes)
                 currentCandidates[matchKey] = state.copy(
                     rawVariants = (state.rawVariants + rawValue).distinct().takeLast(20),
-                    qualityWeightedVotes = state.qualityWeightedVotes + combinedWeight,
+                    qualityWeightedVotes = newVotes,
+                    peakVotes = newPeak,
                     observationCount = state.observationCount + 1,
                     lastSeenFrameIndex = frame.frameIndex,
                     sourceTypes = state.sourceTypes + sourceType,
@@ -265,6 +307,7 @@ class ConsensusEngine(
                     rawVariants = listOf(rawValue),
                     posteriorProbability = 0f,
                     qualityWeightedVotes = combinedWeight,
+                    peakVotes = combinedWeight,
                     observationCount = 1,
                     lastSeenFrameIndex = frame.frameIndex,
                     sourceTypes = setOf(sourceType),
@@ -344,15 +387,47 @@ class ConsensusEngine(
     fun runStateMachine(
         fields: Map<String, FieldAccumulation>,
         knownValues: KnownFieldValues,
+        currentCycle: Int = 0,
     ): Map<String, FieldAccumulation> {
-        return fields.mapValues { (_, field) ->
+        // Option C: apply temporal decay to stale candidates before computing posteriors
+        val decayedFields = fields.mapValues { (_, field) ->
             if (field.status == FieldStatus.USER_LOCKED) return@mapValues field
 
-            // Update posteriors
+            val decayedCandidates = field.candidates.mapValues { (_, candidate) ->
+                val cyclesSinceReinforced = currentCycle - candidate.lastReinforcedCycle
+                if (cyclesSinceReinforced > config.staleGraceCycles) {
+                    val decayFactor = (1f - config.staleDecayRate)
+                        .pow(cyclesSinceReinforced - config.staleGraceCycles)
+                    val flooredVotes = candidate.peakVotes * config.voteFloorFraction
+                    candidate.copy(
+                        qualityWeightedVotes = maxOf(
+                            candidate.qualityWeightedVotes * decayFactor,
+                            flooredVotes,
+                        )
+                    )
+                } else {
+                    candidate
+                }
+            }
+            field.copy(candidates = decayedCandidates)
+        }
+
+        return decayedFields.mapValues { (_, field) ->
+            if (field.status == FieldStatus.USER_LOCKED) return@mapValues field
+
+            // Update posteriors with history prior boost
             val priors = buildPrior(field.fieldName, knownValues)
-            val posteriors = computePosteriors(field.candidates, priors)
+            val eligible = getEligibleKnownValues(
+                field.fieldName, knownValues, config.knownValueMinObservations,
+            )
+            val posteriors = computePosteriors(
+                field.candidates, priors, eligible, config.knownValuePriorBoost,
+            )
             val updatedCandidates = field.candidates.mapValues { (key, state) ->
-                state.copy(posteriorProbability = posteriors[key] ?: 0f)
+                state.copy(
+                    posteriorProbability = posteriors[key] ?: 0f,
+                    matchedKnownValue = key.lowercase() in eligible,
+                )
             }
 
             val updatedField = field.copy(candidates = updatedCandidates)
@@ -424,13 +499,34 @@ class ConsensusEngine(
                         )
                     }
                 } else {
-                    // Lost provisional status — back to scanning
-                    field.copy(
-                        status = FieldStatus.SCANNING,
-                        consecutiveLockCycles = 0,
-                        resolvedValue = null,
-                        resolvedEvidence = null,
-                    )
+                    // Option A: high-water mark — preserve best candidate unless overtaken
+                    val keepResolved = if (field.resolvedValue != null &&
+                        top.normalizedValue == field.resolvedValue) {
+                        // Same candidate still on top — keep it, just reset lock cycles
+                        true
+                    } else if (field.resolvedValue != null &&
+                        top.posteriorProbability > (field.lockScore * 0.7f)) {
+                        // Different candidate overtook with significant confidence — replace
+                        false
+                    } else {
+                        // Different candidate but weak — keep high-water mark
+                        true
+                    }
+
+                    if (keepResolved) {
+                        field.copy(
+                            status = FieldStatus.PROVISIONAL,
+                            consecutiveLockCycles = 0,
+                            // resolvedValue and resolvedEvidence PRESERVED
+                        )
+                    } else {
+                        field.copy(
+                            status = FieldStatus.SCANNING,
+                            consecutiveLockCycles = 0,
+                            resolvedValue = top.normalizedValue,
+                            resolvedEvidence = buildEvidence(field.fieldName, top),
+                        )
+                    }
                 }
             }
 

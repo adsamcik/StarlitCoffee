@@ -97,6 +97,14 @@ data class AccumulatorConfig(
     /** Maximum linear acceleration magnitude (m/s²) for device "stillness". */
     val imuStillnessThreshold: Float = 1.5f,
 
+    // --- History prior boost ---
+
+    /** Multiply a candidate's raw posterior by this factor when it matches a known value from user history. */
+    val knownValuePriorBoost: Float = 1.5f,
+
+    /** Only apply prior boost if the known value appeared at least this many times in user history. */
+    val knownValueMinObservations: Int = 2,
+
     // --- Source weights for Bayesian likelihood ---
 
     /** Weight when evidence comes from OCR text recognition. */
@@ -110,6 +118,35 @@ data class AccumulatorConfig(
 
     /** Weight when evidence comes from QR link metadata extraction. */
     val sourceWeightQrLink: Float = 6f,
+
+    /** Weight when evidence comes from LLM-based field extraction. */
+    val sourceWeightLlm: Float = 7f,
+
+    // --- Vote floor (Option B) ---
+
+    /** Votes can't drop below this fraction of peak — preserves sharp-frame evidence. */
+    val voteFloorFraction: Float = 0.5f,
+
+    // --- Temporal decay (Option C) ---
+
+    /** Per-cycle decay rate for unreinforced candidates (3% per consensus cycle). */
+    val staleDecayRate: Float = 0.03f,
+
+    /** Grace cycles before decay starts (~3 seconds at 500ms/cycle). */
+    val staleGraceCycles: Int = 6,
+
+    // --- Blank-frame penalty (Option D) ---
+
+    /** Small vote penalty per blank frame (camera moved away from text). */
+    val blankFramePenaltyPerCycle: Float = 0.02f,
+
+    // --- LLM escalation ---
+
+    /** Consensus cycles without resolution before escalating to LLM (~5s at 500ms/cycle). */
+    val llmEscalationCycles: Int = 10,
+
+    /** Fields eligible for LLM escalation (high-value fields that OCR struggles with). */
+    val llmEscalationFields: Set<String> = setOf("name", "roaster", "tastingNotes"),
 ) {
     companion object {
         val DEFAULT = AccumulatorConfig()
