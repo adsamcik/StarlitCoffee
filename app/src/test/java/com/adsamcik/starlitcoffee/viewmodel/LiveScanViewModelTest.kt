@@ -108,7 +108,6 @@ class LiveScanViewModelTest {
         return AccumulatorConfig.DEFAULT.copy(
             consensusIntervalMs = 20L,
             throttleFastMs = 50L,
-            throttleHysteresisMs = 0L,
             allFields = setOf("origin"),
             coreFields = setOf("origin"),
             draftTriggerCoreFields = 1,

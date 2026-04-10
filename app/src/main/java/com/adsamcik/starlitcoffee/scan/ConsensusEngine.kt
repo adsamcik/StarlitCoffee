@@ -61,38 +61,6 @@ class ConsensusEngine(
     }
 
     /**
-     * Cluster raw OCR strings by edit distance, returning groups.
-     * Threshold depends on string length (short=2 edits, long=3 edits).
-     */
-    fun clusterByEditDistance(values: List<String>): List<List<String>> {
-        if (values.isEmpty()) return emptyList()
-
-        val assigned = BooleanArray(values.size)
-        val clusters = mutableListOf<List<String>>()
-
-        for (i in values.indices) {
-            if (assigned[i]) continue
-            val cluster = mutableListOf(values[i])
-            assigned[i] = true
-
-            val threshold = editDistanceThreshold(values[i])
-            for (j in i + 1 until values.size) {
-                if (assigned[j]) continue
-                if (levenshteinDistance(
-                        values[i].lowercase(),
-                        values[j].lowercase(),
-                    ) <= threshold
-                ) {
-                    cluster.add(values[j])
-                    assigned[j] = true
-                }
-            }
-            clusters.add(cluster)
-        }
-        return clusters
-    }
-
-    /**
      * Select the medoid of a cluster: the string that minimizes total edit distance
      * to all other members. For single-member clusters, returns that member.
      */

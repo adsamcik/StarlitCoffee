@@ -55,108 +55,6 @@ class FrameEvidenceAccumulatorTest {
         assertFalse(accumulator.evidence.value.isComplete)
     }
 
-    // --- Adaptive Throttle ---
-
-    @Test
-    fun `throttle starts at fast interval`() {
-        val accumulator = FrameEvidenceAccumulator()
-        assertEquals(AccumulatorConfig.DEFAULT.throttleFastMs, accumulator.currentThrottleMs())
-    }
-
-    @Test
-    fun `throttle returns slow interval when more than eighty percent of fields are resolved`() = runTest {
-        val trackedFields = setOf(
-            "name",
-            "roaster",
-            "origin",
-            "region",
-            "farm",
-            "variety",
-        )
-        val config = AccumulatorConfig.DEFAULT.copy(
-            consensusIntervalMs = 5_000L,
-            allFields = trackedFields,
-        )
-        val accumulator = FrameEvidenceAccumulator(config = config)
-        accumulator.start()
-
-        accumulator.submitEnrichment(
-            fieldValues = mapOf(
-                "name" to "Geometry",
-                "roaster" to "Onyx",
-                "origin" to "Ethiopia",
-                "region" to "Yirgacheffe",
-                "farm" to "Chelbesa",
-                "variety" to "Heirloom",
-            ),
-            sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-            barcode = "slow-throttle",
-        )
-        waitForAsync()
-
-        accumulator.userResolveField("name", "Geometry")
-        accumulator.userResolveField("roaster", "Onyx")
-        accumulator.userResolveField("origin", "Ethiopia")
-        accumulator.userResolveField("region", "Yirgacheffe")
-        accumulator.userResolveField("farm", "Chelbesa")
-        waitForAsync()
-
-        assertEquals(config.throttleSlowMs, accumulator.currentThrottleMs())
-
-        accumulator.stop()
-    }
-
-    @Test
-    fun `throttle returns maintenance interval when all fields are locked`() = runTest {
-        val trackedFields = setOf("origin", "roaster")
-        val config = fastConfig().copy(allFields = trackedFields)
-        val accumulator = FrameEvidenceAccumulator(config = config)
-        accumulator.start()
-
-        accumulator.submitEnrichment(
-            fieldValues = mapOf(
-                "origin" to "Ethiopia",
-                "roaster" to "Onyx",
-            ),
-            sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-            barcode = "maintenance-throttle",
-        )
-        waitForAsync()
-
-        accumulator.userResolveField("origin", "Ethiopia")
-        accumulator.userResolveField("roaster", "Onyx")
-        waitForAsync()
-
-        assertEquals(config.throttleMaintenanceMs, accumulator.currentThrottleMs())
-
-        accumulator.stop()
-    }
-
-    @Test
-    fun `throttle stays fast when only a partial bag is locked`() = runTest {
-        val config = fastConfig()
-        val accumulator = FrameEvidenceAccumulator(config = config)
-        accumulator.start()
-
-        accumulator.submitEnrichment(
-            fieldValues = mapOf(
-                "origin" to "Ethiopia",
-                "roaster" to "Onyx",
-            ),
-            sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-            barcode = "partial-bag",
-        )
-        waitForAsync()
-
-        accumulator.userResolveField("origin", "Ethiopia")
-        accumulator.userResolveField("roaster", "Onyx")
-        waitForAsync()
-
-        assertEquals(config.throttleFastMs, accumulator.currentThrottleMs())
-
-        accumulator.stop()
-    }
-
     // --- User Actions ---
 
     @Test
@@ -332,60 +230,7 @@ class FrameEvidenceAccumulatorTest {
         accumulator.stop()
     }
 
-    // --- Quality Admission ---
-
-    @Test
-    fun `should admit sharp frame`() {
-        val accumulator = FrameEvidenceAccumulator()
-        val frame = makeFrame(origin = "test", blurScore = 20f, glarePercent = 0.1f)
-        assertTrue(accumulator.shouldAdmitFrame(frame))
-    }
-
-    @Test
-    fun `should reject blurry frame`() {
-        val accumulator = FrameEvidenceAccumulator()
-        val frame = makeFrame(origin = "test", blurScore = 5f, glarePercent = 0.1f)
-        assertTrue(!accumulator.shouldAdmitFrame(frame))
-    }
-
-    @Test
-    fun `quality relaxation triggers after prolonged lack of admitted frames`() = runTest {
-        val config = fastConfig().copy(qualityRelaxationTimeMs = 50L)
-        val accumulator = FrameEvidenceAccumulator(config = config)
-        accumulator.start()
-
-        accumulator.submitFrame(makeFrame(origin = "Ethiopia", frameIndex = 0))
-        waitForAsync()
-        Thread.sleep(80)
-        accumulator.submitFrame(makeFrame(origin = "Ethiopia", frameIndex = 1, blurScore = 5f))
-        waitForAsync()
-
-        val borderlineFrame = makeFrame(origin = "Ethiopia", frameIndex = 2, blurScore = 9f)
-        assertTrue(accumulator.shouldAdmitFrame(borderlineFrame))
-
-        accumulator.stop()
-    }
-
-    @Test
-    fun `quality relaxation resets after a frame is admitted`() = runTest {
-        val config = fastConfig().copy(qualityRelaxationTimeMs = 50L)
-        val accumulator = FrameEvidenceAccumulator(config = config)
-        accumulator.start()
-
-        accumulator.submitFrame(makeFrame(origin = "Ethiopia", frameIndex = 0))
-        waitForAsync()
-        Thread.sleep(80)
-        accumulator.submitFrame(makeFrame(origin = "Ethiopia", frameIndex = 1, blurScore = 5f))
-        waitForAsync()
-        assertTrue(accumulator.shouldAdmitFrame(makeFrame(origin = "Ethiopia", frameIndex = 2, blurScore = 9f)))
-
-        accumulator.submitFrame(makeFrame(origin = "Ethiopia", frameIndex = 3, blurScore = 20f))
-        waitForAsync()
-
-        assertFalse(accumulator.shouldAdmitFrame(makeFrame(origin = "Ethiopia", frameIndex = 4, blurScore = 9f)))
-
-        accumulator.stop()
-    }
+    // --- Quality Gate (via processFrame) ---
 
     @Test
     fun `rejected blurry frame increments rejection counter`() = runTest {
@@ -721,8 +566,8 @@ class FrameEvidenceAccumulatorTest {
     }
 
     @Test
-    fun `rapid fire identical golden frames keep ring buffer bounded and still converge`() = runTest {
-        val config = fastConfig().copy(ringBufferSize = 5)
+    fun `rapid fire identical golden frames still converge`() = runTest {
+        val config = fastConfig()
         val accumulator = FrameEvidenceAccumulator(config = config)
         accumulator.start()
 
@@ -731,7 +576,6 @@ class FrameEvidenceAccumulatorTest {
         }
         waitForAsync(350)
 
-        assertTrue(ringBufferSize(accumulator) <= config.ringBufferSize)
         assertEquals(FieldStatus.LOCKED, accumulator.evidence.value.fields["origin"]!!.status)
 
         accumulator.stop()
@@ -951,12 +795,6 @@ class FrameEvidenceAccumulatorTest {
 
     private fun fastConfig(): AccumulatorConfig {
         return AccumulatorConfig.DEFAULT.copy(consensusIntervalMs = 50L)
-    }
-
-    private fun ringBufferSize(accumulator: FrameEvidenceAccumulator): Int {
-        val field = FrameEvidenceAccumulator::class.java.getDeclaredField("ringBuffer")
-        field.isAccessible = true
-        return (field.get(accumulator) as ArrayDeque<*>).size
     }
 
     private fun waitForAsync(delayMs: Long = 200L) {
