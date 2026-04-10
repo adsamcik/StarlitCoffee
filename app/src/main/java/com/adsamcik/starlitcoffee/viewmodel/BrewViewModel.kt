@@ -344,6 +344,24 @@ class BrewViewModel(
         _uiState.update { it.copy(timerRunning = true) }
         timerStartMs = System.nanoTime() / 1_000_000L
         launchTimerLoop()
+        resumeBloomCountdownIfNeeded()
+    }
+
+    private fun resumeBloomCountdownIfNeeded() {
+        val state = _uiState.value
+        if (state.bloomMarkedAtSeconds == null) return
+        if (state.bloomFinished) return
+        val remaining = state.bloomCountdownSeconds ?: return
+        if (remaining <= 0) return
+
+        bloomCountdownJob?.cancel()
+        bloomCountdownJob = viewModelScope.launch {
+            for (tick in remaining - 1 downTo 0) {
+                delay(1000L)
+                _uiState.update { it.copy(bloomCountdownSeconds = tick) }
+            }
+            _uiState.update { it.copy(bloomFinished = true, bloomCountdownSeconds = 0) }
+        }
     }
 
     private fun launchTimerLoop() {

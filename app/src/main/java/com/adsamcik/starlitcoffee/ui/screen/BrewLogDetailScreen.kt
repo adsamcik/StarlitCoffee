@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
+import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
 import com.adsamcik.starlitcoffee.ui.component.shareBrewCard
@@ -272,7 +273,10 @@ fun BrewLogDetailScreen(
                     }
 
                     if (entity.filterType != null) {
-                        DetailRow("Filter", entity.filterType)
+                        val filterDisplayName = FilterType.entries
+                            .find { it.name == entity.filterType }?.displayName
+                            ?: entity.filterType
+                        DetailRow("Filter", filterDisplayName)
                     }
 
                     if (entity.tasteFeedback != null) {
