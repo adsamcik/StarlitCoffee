@@ -8,6 +8,7 @@ import com.adsamcik.starlitcoffee.scan.model.FrameResult
 import com.adsamcik.starlitcoffee.scan.model.GuidanceType
 import com.adsamcik.starlitcoffee.scan.model.LlmEscalationRequest
 import com.adsamcik.starlitcoffee.scan.model.ScanGuidance
+import com.adsamcik.starlitcoffee.scan.model.ScanTelemetry
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
@@ -85,10 +86,13 @@ class FrameEvidenceAccumulator(
     private var frameIndex: Int = 0
     private var scanStartTimeMs: Long = 0L
     private var isQualityRelaxed: Boolean = false
+    private var qualityRelaxationEverTriggered: Boolean = false
     private var lastAdmittedFrameTimeMs: Long = 0L
     private var lastFrameQuality: BagCaptureQuality? = null
     private var consensusCycleCount: Int = 0
     private var blankFrameCount: Int = 0
+    private var goldenFrameCount: Int = 0
+    private val fieldLockTimeMs: MutableMap<String, Long> = mutableMapOf()
 
     // Enrichment dedup
     private val seenBarcodes = mutableSetOf<String>()
@@ -158,6 +162,43 @@ class FrameEvidenceAccumulator(
     }
 
     /**
+     * Build a [ScanTelemetry] snapshot from the current accumulator state.
+     * Call before [stop] to capture end-of-session metrics.
+     */
+    fun buildTelemetry(): ScanTelemetry {
+        synchronized(stateLock) {
+            val now = System.currentTimeMillis()
+            val resolvedFields = fieldAccumulations.filter { it.value.isResolved }
+            return ScanTelemetry(
+                sessionDurationMs = now - scanStartTimeMs,
+                framesProcessed = totalFramesProcessed,
+                framesRejected = totalFramesRejected,
+                goldenFrameCount = goldenFrameCount,
+                bestGoldenFrameScore = 0f, // ViewModel overrides this via copy()
+                consensusCycles = consensusCycleCount,
+                fieldsResolved = resolvedFields.size,
+                fieldsTotal = config.allFields.size,
+                fieldSources = resolvedFields.mapValues { (_, field) ->
+                    field.resolvedEvidence?.sourceType?.name ?: "UNKNOWN"
+                },
+                convergenceTimeMs = fieldLockTimeMs.toMap(),
+                llmEscalated = alreadyEscalatedFields.isNotEmpty(),
+                llmFieldsRequested = alreadyEscalatedFields.toSet(),
+                llmLatencyMs = null, // ViewModel overrides via copy()
+                llmSuccess = null,
+                llmTokensUsed = null,
+                sideFlipDetected = sideCount > 1,
+                qualityRelaxationTriggered = qualityRelaxationEverTriggered,
+                scanOutcome = when {
+                    _evidence.value.isComplete -> "complete"
+                    resolvedFields.isNotEmpty() -> "partial"
+                    else -> "cancelled"
+                },
+            )
+        }
+    }
+
+    /**
      * Submit a regular frame for processing. Fire-and-forget.
      * If the channel is full, the oldest unprocessed frame is dropped (CONFLATED).
      */
@@ -169,6 +210,7 @@ class FrameEvidenceAccumulator(
      * Submit a golden (high-quality) frame. Never dropped.
      */
     fun submitGoldenFrame(frame: FrameResult) {
+        synchronized(stateLock) { goldenFrameCount++ }
         goldenFrameChannel.trySend(frame.copy(isGoldenFrame = true))
     }
 
@@ -398,6 +440,14 @@ class FrameEvidenceAccumulator(
                 knownValues = knownValues,
                 currentCycle = consensusCycleCount,
             )
+
+            // Track per-field convergence time when first locked
+            val nowMs = System.currentTimeMillis()
+            for ((fieldName, field) in fieldAccumulations) {
+                if (field.status == FieldStatus.LOCKED && fieldName !in fieldLockTimeMs) {
+                    fieldLockTimeMs[fieldName] = nowMs - scanStartTimeMs
+                }
+            }
 
             // Option D: apply blank-frame penalty
             val blanks = blankFrameCount
@@ -668,6 +718,7 @@ class FrameEvidenceAccumulator(
         val timeSinceReference = now - referenceTime
         if (referenceTime > 0 && timeSinceReference > config.qualityRelaxationTimeMs) {
             isQualityRelaxed = true
+            qualityRelaxationEverTriggered = true
             _lastRejection.value = null
             android.util.Log.d("Accumulator", "Quality RELAXED: " +
                 "timeSinceRef=${timeSinceReference}ms, " +

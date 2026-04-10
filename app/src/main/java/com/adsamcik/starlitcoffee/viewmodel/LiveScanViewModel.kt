@@ -86,6 +86,12 @@ class LiveScanViewModel(
 
     private var bestGoldenFrameScore: Float = 0f
 
+    // --- LLM telemetry tracking ---
+
+    private var lastLlmLatencyMs: Long? = null
+    private var lastLlmSuccess: Boolean? = null
+    private var lastLlmTokensUsed: Int? = null
+
     // Adaptive throttle for OCR frequency
     private val _currentThrottleMs = MutableStateFlow(config.throttleFastMs)
     val currentThrottleMs: StateFlow<Long> = _currentThrottleMs.asStateFlow()
@@ -179,7 +185,23 @@ class LiveScanViewModel(
     fun stop(sensorManager: SensorManager? = null) {
         if (!isStarted) return
         isStarted = false
+
+        // Emit telemetry before cleanup
+        val telemetry = accumulator?.buildTelemetry()?.copy(
+            bestGoldenFrameScore = bestGoldenFrameScore,
+            goldenFrameCount = _liveScanUiState.value.goldenFrameCount,
+            llmLatencyMs = lastLlmLatencyMs,
+            llmSuccess = lastLlmSuccess,
+            llmTokensUsed = lastLlmTokensUsed,
+        )
+        telemetry?.let {
+            android.util.Log.i("ScanTelemetry", it.toJson())
+        }
+
         bestGoldenFrameScore = 0f
+        lastLlmLatencyMs = null
+        lastLlmSuccess = null
+        lastLlmTokensUsed = null
 
         accumulatorEvidenceJob?.cancel()
         accumulatorEvidenceJob = null
@@ -465,15 +487,23 @@ class LiveScanViewModel(
             existingFields = escalation.existingFields,
             fieldsNeeded = escalation.fieldsNeeded,
         )
+        val startMs = System.currentTimeMillis()
         when (val result = llmProvider.extractBagFields(request)) {
             is LlmExtractionResult.Success -> {
+                lastLlmLatencyMs = System.currentTimeMillis() - startMs
+                lastLlmSuccess = true
+                lastLlmTokensUsed = result.tokensUsed
                 llmCache.put(imageHash, result)
                 feedLlmResultsToAccumulator(result.fieldCandidates)
             }
             is LlmExtractionResult.Unavailable -> {
+                lastLlmLatencyMs = System.currentTimeMillis() - startMs
+                lastLlmSuccess = false
                 android.util.Log.d("LiveScan", "LLM escalation: unavailable — ${result.reason}")
             }
             is LlmExtractionResult.Failed -> {
+                lastLlmLatencyMs = System.currentTimeMillis() - startMs
+                lastLlmSuccess = false
                 android.util.Log.d("LiveScan", "LLM escalation: failed — ${result.error}")
             }
         }
