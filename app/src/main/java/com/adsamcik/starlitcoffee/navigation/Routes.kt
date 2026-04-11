@@ -6,13 +6,7 @@ import kotlinx.serialization.Serializable
 object CalculatorBrew
 
 @Serializable
-object Result
-
-@Serializable
 object BrewTimer
-
-@Serializable
-object TasteFeedback
 
 @Serializable
 object SavedRecipes
