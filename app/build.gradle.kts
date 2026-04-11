@@ -169,6 +169,9 @@ dependencies {
     // Serialization
     implementation(libs.kotlinx.serialization.json)
 
+    // Mindlayer on-device LLM SDK
+    implementation("com.mindlayer:sdk:0.1.1")
+
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
