@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.data.network.llm
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import com.adsamcik.starlitcoffee.scan.model.FieldSource
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
@@ -68,17 +69,26 @@ class MindlayerLlmInferenceProvider(
 
         return try {
             val responseText = StringBuilder()
+            var tokenCount = 0
 
             mindlayer.chatWithImage(sessionId!!, prompt, bitmap).collect { event ->
                 when (event) {
-                    is MindlayerEvent.TextDelta -> responseText.append(event.text)
+                    is MindlayerEvent.TextDelta -> {
+                        responseText.append(event.text)
+                        tokenCount++
+                    }
                     is MindlayerEvent.Error -> throw RuntimeException(event.message)
                     else -> { /* Done or other events — no action needed */ }
                 }
             }
 
             bitmap.recycle()
-            parseResponse(responseText.toString(), request.fieldsNeeded)
+            android.util.Log.d("MindlayerLlm", "LLM inference complete: $tokenCount tokens, ${responseText.length} chars")
+            val result = parseResponse(responseText.toString(), request.fieldsNeeded)
+            when (result) {
+                is LlmExtractionResult.Success -> result.copy(tokensUsed = tokenCount)
+                else -> result
+            }
         } catch (e: Exception) {
             bitmap.recycle()
             LlmExtractionResult.Failed("Inference failed: ${e.message}", retryable = true)
@@ -108,11 +118,42 @@ Do NOT include markdown fences or explanation.
         append("Extract coffee bag information from this label image.")
 
         if (request.existingFields.isNotEmpty()) {
-            append("\n\nAlready known: ")
-            request.existingFields.forEach { (key, value) ->
-                append("$key=$value, ")
+            val userFields = request.existingFields.filter { it.value.source == FieldSource.USER }
+            val llmFields = request.existingFields.filter { it.value.source == FieldSource.LLM }
+            val ocrFields = request.existingFields.filter { it.value.source == FieldSource.OCR }
+            val lookupFields = request.existingFields.filter { it.value.source == FieldSource.LOOKUP }
+
+            append("\n\nContext from prior extraction (JSON):")
+            append("\n{")
+
+            if (userFields.isNotEmpty()) {
+                append("\n  \"user_confirmed\": {")
+                userFields.forEach { (k, v) -> append("\n    \"$k\": \"${v.value}\",") }
+                append("\n  },")
             }
-            append("\nFocus on fields not yet identified.")
+            if (lookupFields.isNotEmpty()) {
+                append("\n  \"barcode_lookup\": {")
+                lookupFields.forEach { (k, v) -> append("\n    \"$k\": \"${v.value}\",") }
+                append("\n  },")
+            }
+            if (ocrFields.isNotEmpty()) {
+                append("\n  \"ocr_detected\": {")
+                ocrFields.forEach { (k, v) -> append("\n    \"$k\": \"${v.value}\",") }
+                append("\n  },")
+            }
+            if (llmFields.isNotEmpty()) {
+                append("\n  \"previous_ai_run\": {")
+                llmFields.forEach { (k, v) -> append("\n    \"$k\": \"${v.value}\",") }
+                append("\n  },")
+            }
+            append("\n}")
+
+            append("\n\nRules for existing values:")
+            append("\n- user_confirmed: Treat as ground truth. Do not contradict.")
+            append("\n- barcode_lookup: High confidence database match. Only correct if clearly wrong on the label.")
+            append("\n- ocr_detected: Algorithmic text detection. Verify against what you see and correct if needed.")
+            append("\n- previous_ai_run: From a prior AI pass. Verify independently — do not blindly repeat.")
+            append("\n\nFocus on fields not yet identified.")
         }
 
         if (request.fieldsNeeded.isNotEmpty()) {

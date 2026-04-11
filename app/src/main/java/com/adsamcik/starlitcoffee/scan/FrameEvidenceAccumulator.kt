@@ -3,6 +3,8 @@ package com.adsamcik.starlitcoffee.scan
 import com.adsamcik.starlitcoffee.scan.model.AccumulatedEvidence
 import com.adsamcik.starlitcoffee.scan.model.AccumulatorConfig
 import com.adsamcik.starlitcoffee.scan.model.FieldAccumulation
+import com.adsamcik.starlitcoffee.scan.model.FieldContext
+import com.adsamcik.starlitcoffee.scan.model.FieldSource
 import com.adsamcik.starlitcoffee.scan.model.FieldStatus
 import com.adsamcik.starlitcoffee.scan.model.FrameResult
 import com.adsamcik.starlitcoffee.scan.model.GuidanceType
@@ -652,12 +654,24 @@ class FrameEvidenceAccumulator(
 
             val existingFields = fieldAccumulations
                 .filter { it.value.isResolved }
-                .mapValues { entry ->
-                    entry.value.resolvedValue
-                        ?: entry.value.topCandidate?.normalizedValue
+                .mapValues { (_, field) ->
+                    val value = field.resolvedValue
+                        ?: field.topCandidate?.normalizedValue
                         ?: ""
+                    val source = when {
+                        field.status == FieldStatus.USER_LOCKED -> FieldSource.USER
+                        field.topCandidate?.sourceTypes?.contains(BagFieldSourceType.LLM) == true -> FieldSource.LLM
+                        field.topCandidate?.sourceTypes?.any {
+                            it == BagFieldSourceType.BARCODE_LOOKUP ||
+                            it == BagFieldSourceType.LOCAL_BARCODE_MATCH ||
+                            it == BagFieldSourceType.QR_LINK_LOOKUP
+                        } == true -> FieldSource.LOOKUP
+                        else -> FieldSource.OCR
+                    }
+                    val confidence = field.resolvedEvidence?.confidence?.name
+                    FieldContext(value = value, source = source, confidence = confidence)
                 }
-                .filter { it.value.isNotBlank() }
+                .filter { it.value.value.isNotBlank() }
 
             val request = LlmEscalationRequest(
                 goldenFrameBytes = lastGoldenFrameBytes,

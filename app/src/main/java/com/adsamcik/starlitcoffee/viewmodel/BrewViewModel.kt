@@ -1658,9 +1658,17 @@ class BrewViewModel(
             return cached.fieldCandidates
         }
 
+        // Wrap plain OCR fields with source attribution
+        val attributedFields = ocrFields.mapValues { (_, value) ->
+            com.adsamcik.starlitcoffee.scan.model.FieldContext(
+                value = value,
+                source = com.adsamcik.starlitcoffee.scan.model.FieldSource.OCR,
+            )
+        }
+
         val request = LlmExtractionRequest(
             imageBytes = photoBytes,
-            existingFields = ocrFields,
+            existingFields = attributedFields,
             fieldsNeeded = fieldsNeeded,
         )
         return when (val result = llmProvider.extractBagFields(request)) {

@@ -1,0 +1,475 @@
+package com.adsamcik.starlitcoffee.data.network.llm
+
+import com.adsamcik.starlitcoffee.scan.model.FieldContext
+import com.adsamcik.starlitcoffee.scan.model.FieldSource
+import com.adsamcik.starlitcoffee.util.BagCaptureQuality
+import com.adsamcik.starlitcoffee.util.BagFieldCandidate
+import com.adsamcik.starlitcoffee.util.BagFieldConfidence
+import com.adsamcik.starlitcoffee.util.BagFieldSourceType
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Test
+
+class MindlayerLlmInferenceProviderTest {
+
+    // ==================== parseResponse ====================
+
+    @Test
+    fun `parseResponse validJson extractsAllFields`() {
+        val json = """
+            {
+                "name": "Ethiopia Gedeb",
+                "roaster": "Beansmith's",
+                "origin": "Ethiopia",
+                "variety": "Heirloom",
+                "process": "Washed",
+                "roastLevel": "Light",
+                "tastingNotes": "Strawberry, Plum, Yuzu",
+                "altitude": "1900-2100m",
+                "weight": "250g",
+                "roastDate": "2025-01-15"
+            }
+        """.trimIndent()
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(10, candidates.size)
+        assertEquals("Ethiopia Gedeb", candidates.first { it.fieldName == "name" }.value)
+        assertEquals("Beansmith's", candidates.first { it.fieldName == "roaster" }.value)
+        assertEquals("Ethiopia", candidates.first { it.fieldName == "origin" }.value)
+        assertEquals("Heirloom", candidates.first { it.fieldName == "variety" }.value)
+        assertEquals("Washed", candidates.first { it.fieldName == "processType" }.value)
+        assertEquals("Light", candidates.first { it.fieldName == "roastLevel" }.value)
+        assertEquals("Strawberry, Plum, Yuzu", candidates.first { it.fieldName == "tastingNotes" }.value)
+        assertEquals("1900-2100m", candidates.first { it.fieldName == "altitude" }.value)
+        assertEquals("250g", candidates.first { it.fieldName == "weight" }.value)
+        assertEquals("2025-01-15", candidates.first { it.fieldName == "roastDate" }.value)
+    }
+
+    @Test
+    fun `parseResponse partialJson extractsAvailable`() {
+        val json = """{"name": "Gesha Village", "roaster": "Onyx"}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(2, candidates.size)
+        assertEquals("Gesha Village", candidates.first { it.fieldName == "name" }.value)
+        assertEquals("Onyx", candidates.first { it.fieldName == "roaster" }.value)
+    }
+
+    @Test
+    fun `parseResponse nullFields skipped`() {
+        val json = """{"name": null, "roaster": null, "origin": null}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertTrue("Null fields should be skipped", candidates.isEmpty())
+    }
+
+    @Test
+    fun `parseResponse emptyString skipped`() {
+        val json = """{"name": "", "roaster": "  ", "origin": "Colombia"}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals("Only non-blank fields should be kept", 1, candidates.size)
+        assertEquals("origin", candidates[0].fieldName)
+        assertEquals("Colombia", candidates[0].value)
+    }
+
+    @Test
+    fun `parseResponse markdownFences stripped`() {
+        val json = "```json\n{\"name\": \"Test Coffee\", \"roaster\": \"Test Roaster\"}\n```"
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(2, candidates.size)
+        assertEquals("Test Coffee", candidates.first { it.fieldName == "name" }.value)
+    }
+
+    @Test
+    fun `parseResponse markdownFences without json tag stripped`() {
+        val json = "```\n{\"name\": \"No Tag Coffee\"}\n```"
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(1, candidates.size)
+        assertEquals("No Tag Coffee", candidates[0].value)
+    }
+
+    @Test
+    fun `parseResponse malformedJson returnsFailed`() {
+        val result = MindlayerLlmInferenceProvider.parseResponse(
+            "This is not JSON at all",
+            emptySet(),
+        )
+
+        assertTrue(
+            "Malformed JSON should return Failed",
+            result is LlmExtractionResult.Failed,
+        )
+        assertTrue(
+            (result as LlmExtractionResult.Failed).error.contains("Failed to parse"),
+        )
+    }
+
+    @Test
+    fun `parseResponse processFieldMapped to processType`() {
+        val json = """{"process": "Natural"}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(1, candidates.size)
+        assertEquals(
+            "JSON 'process' should map to 'processType'",
+            "processType",
+            candidates[0].fieldName,
+        )
+        assertEquals("Natural", candidates[0].value)
+    }
+
+    @Test
+    fun `parseResponse fieldsNeeded filtersOutput`() {
+        val json = """
+            {
+                "name": "Ethiopia Gedeb",
+                "roaster": "Beansmith's",
+                "origin": "Ethiopia",
+                "variety": "Heirloom"
+            }
+        """.trimIndent()
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(
+            json,
+            setOf("name", "origin"),
+        )
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(2, candidates.size)
+        val fieldNames = candidates.map { it.fieldName }.toSet()
+        assertEquals(setOf("name", "origin"), fieldNames)
+    }
+
+    @Test
+    fun `parseResponse emptyFieldsNeeded returnsAll`() {
+        val json = """{"name": "A", "roaster": "B", "origin": "C"}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(
+            "Empty fieldsNeeded should return all parsed fields",
+            3,
+            candidates.size,
+        )
+    }
+
+    @Test
+    fun `parseResponse allFields correctSourceType LLM`() {
+        val json = """{"name": "Test", "roaster": "TestRoaster"}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertTrue(candidates.isNotEmpty())
+        candidates.forEach { candidate ->
+            assertEquals(
+                "Source type should be LLM for ${candidate.fieldName}",
+                BagFieldSourceType.LLM,
+                candidate.sourceType,
+            )
+        }
+    }
+
+    @Test
+    fun `parseResponse allFields mediumConfidence`() {
+        val json = """{"name": "Test", "origin": "Kenya", "variety": "SL28"}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertTrue(candidates.isNotEmpty())
+        candidates.forEach { candidate ->
+            assertEquals(
+                "Confidence should be MEDIUM for ${candidate.fieldName}",
+                BagFieldConfidence.MEDIUM,
+                candidate.confidenceHint,
+            )
+        }
+    }
+
+    @Test
+    fun `parseResponse trims whitespace from values`() {
+        val json = """{"name": "  Spaced Coffee  ", "roaster": " Trimmed "}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals("Spaced Coffee", candidates.first { it.fieldName == "name" }.value)
+        assertEquals("Trimmed", candidates.first { it.fieldName == "roaster" }.value)
+    }
+
+    @Test
+    fun `parseResponse unknownFields ignored`() {
+        val json = """{"name": "Test", "batchId": "B-1234", "farmerId": "F-99"}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals("Unknown JSON keys should be ignored", 1, candidates.size)
+        assertEquals("name", candidates[0].fieldName)
+    }
+
+    @Test
+    fun `parseResponse emptyJsonObject returnsEmptySuccess`() {
+        val result = MindlayerLlmInferenceProvider.parseResponse("{}", emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertTrue("Empty JSON should produce empty candidates", candidates.isEmpty())
+    }
+
+    @Test
+    fun `parseResponse fieldsNeeded filters by mapped fieldName not jsonKey`() {
+        // The JSON key is "process" but the mapped field name is "processType"
+        val json = """{"process": "Honey", "name": "Test"}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(
+            json,
+            setOf("processType"),
+        )
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(1, candidates.size)
+        assertEquals("processType", candidates[0].fieldName)
+        assertEquals("Honey", candidates[0].value)
+    }
+
+    // ==================== buildExtractionPrompt ====================
+
+    @Test
+    fun `buildExtractionPrompt includesExistingFields`() {
+        val request = LlmExtractionRequest(
+            imageBytes = ByteArray(0),
+            existingFields = mapOf(
+                "roaster" to FieldContext("Beansmith's", FieldSource.OCR),
+                "origin" to FieldContext("Ethiopia", FieldSource.LOOKUP),
+            ),
+            fieldsNeeded = emptySet(),
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildExtractionPrompt(request)
+
+        assertTrue("Prompt should contain roaster value", prompt.contains("Beansmith's"))
+        assertTrue("Prompt should contain origin value", prompt.contains("Ethiopia"))
+        assertTrue("Prompt should contain source attribution", prompt.contains("ocr_detected") || prompt.contains("barcode_lookup"))
+        assertTrue(
+            "Prompt should ask to focus on unidentified fields",
+            prompt.contains("Focus on fields not yet identified"),
+        )
+    }
+
+    @Test
+    fun `buildExtractionPrompt includesFieldsNeeded`() {
+        val request = LlmExtractionRequest(
+            imageBytes = ByteArray(0),
+            existingFields = emptyMap(),
+            fieldsNeeded = setOf("name", "tastingNotes", "processType"),
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildExtractionPrompt(request)
+
+        assertTrue("Prompt should contain 'Fields needed'", prompt.contains("Fields needed"))
+        assertTrue("Prompt should list name", prompt.contains("name"))
+        assertTrue("Prompt should list tastingNotes", prompt.contains("tastingNotes"))
+        assertTrue("Prompt should list processType", prompt.contains("processType"))
+    }
+
+    @Test
+    fun `buildExtractionPrompt noExistingFields omitsAlreadyKnown`() {
+        val request = LlmExtractionRequest(
+            imageBytes = ByteArray(0),
+            existingFields = emptyMap(),
+            fieldsNeeded = setOf("name"),
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildExtractionPrompt(request)
+
+        assertFalse(
+            "Prompt should NOT contain source sections when no existing fields",
+            prompt.contains("ocr_detected") || prompt.contains("user_confirmed"),
+        )
+    }
+
+    @Test
+    fun `buildExtractionPrompt noFieldsNeeded omitsFieldsSection`() {
+        val request = LlmExtractionRequest(
+            imageBytes = ByteArray(0),
+            existingFields = emptyMap(),
+            fieldsNeeded = emptySet(),
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildExtractionPrompt(request)
+
+        assertFalse(
+            "Prompt should NOT contain 'Fields needed' when set is empty",
+            prompt.contains("Fields needed"),
+        )
+        assertTrue(
+            "Prompt should always contain base instruction",
+            prompt.contains("Extract coffee bag information"),
+        )
+        assertTrue(
+            "Prompt should always end with JSON instruction",
+            prompt.contains("Respond with JSON only"),
+        )
+    }
+
+    // ==================== fieldMapping coverage ====================
+
+    @Test
+    fun `fieldMapping covers all 10 expected fields`() {
+        val mapping = MindlayerLlmInferenceProvider.fieldMapping
+        assertEquals(10, mapping.size)
+
+        val expectedJsonKeys = setOf(
+            "name", "roaster", "origin", "variety", "process",
+            "roastLevel", "tastingNotes", "altitude", "weight", "roastDate",
+        )
+        assertEquals(expectedJsonKeys, mapping.keys)
+
+        val expectedFieldNames = setOf(
+            "name", "roaster", "origin", "variety", "processType",
+            "roastLevel", "tastingNotes", "altitude", "weight", "roastDate",
+        )
+        assertEquals(expectedFieldNames, mapping.values.toSet())
+    }
+
+    // ==================== Quality gate (BagCaptureQuality) ====================
+
+    @Test
+    fun `qualityGate blurBelow12 notSharpEnough`() {
+        val quality = BagCaptureQuality(
+            blurScore = 11.9f,
+            glarePercent = 0f,
+            overexposedPercent = 0f,
+            underexposedPercent = 0f,
+            textBlockCount = 0,
+            textDetected = false,
+        )
+        assertFalse("blur=11.9 should not be sharp enough", quality.sharpEnough)
+    }
+
+    @Test
+    fun `qualityGate blurAtThreshold isSharpEnough`() {
+        val quality = BagCaptureQuality(
+            blurScore = 12f,
+            glarePercent = 0f,
+            overexposedPercent = 0f,
+            underexposedPercent = 0f,
+            textBlockCount = 0,
+            textDetected = false,
+        )
+        assertTrue("blur=12 should be sharp enough", quality.sharpEnough)
+    }
+
+    @Test
+    fun `qualityGate overexposed failsExposure`() {
+        val quality = BagCaptureQuality(
+            blurScore = 20f,
+            glarePercent = 0f,
+            overexposedPercent = 0.26f,
+            underexposedPercent = 0f,
+            textBlockCount = 0,
+            textDetected = false,
+        )
+        assertFalse("overexposed=26% should fail exposure check", quality.exposureOkay)
+    }
+
+    @Test
+    fun `qualityGate underexposed failsExposure`() {
+        val quality = BagCaptureQuality(
+            blurScore = 20f,
+            glarePercent = 0f,
+            overexposedPercent = 0f,
+            underexposedPercent = 0.56f,
+            textBlockCount = 0,
+            textDetected = false,
+        )
+        assertFalse("underexposed=56% should fail exposure check", quality.exposureOkay)
+    }
+
+    @Test
+    fun `qualityGate goodQuality passesAllChecks`() {
+        val quality = BagCaptureQuality(
+            blurScore = 25f,
+            glarePercent = 0.05f,
+            overexposedPercent = 0.1f,
+            underexposedPercent = 0.2f,
+            textBlockCount = 3,
+            textDetected = true,
+        )
+        assertTrue("Good quality should be sharp", quality.sharpEnough)
+        assertTrue("Good quality should pass exposure", quality.exposureOkay)
+        assertTrue("Good quality should pass glare", quality.glareOkay)
+        assertTrue("Good quality should be ready for capture", quality.readyForCapture)
+    }
+
+    @Test
+    fun `qualityGate exposureAtThreshold passes`() {
+        val quality = BagCaptureQuality(
+            blurScore = 15f,
+            glarePercent = 0.18f,
+            overexposedPercent = 0.25f,
+            underexposedPercent = 0.55f,
+            textBlockCount = 1,
+            textDetected = true,
+        )
+        assertTrue("Exposure at exact threshold should pass", quality.exposureOkay)
+        assertTrue("Glare at exact threshold should pass", quality.glareOkay)
+    }
+
+    // ==================== buildSystemPrompt ====================
+
+    @Test
+    fun `buildSystemPrompt containsAllFieldInstructions`() {
+        val prompt = MindlayerLlmInferenceProvider.buildSystemPrompt()
+
+        val expectedFields = listOf(
+            "name", "roaster", "origin", "variety", "process",
+            "roastLevel", "tastingNotes", "altitude", "weight", "roastDate",
+        )
+        expectedFields.forEach { field ->
+            assertTrue(
+                "System prompt should mention '$field'",
+                prompt.contains(field),
+            )
+        }
+        assertTrue(
+            "System prompt should instruct JSON-only response",
+            prompt.contains("ONLY a JSON object"),
+        )
+    }
+}
