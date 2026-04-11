@@ -13,6 +13,9 @@ enum class GuidanceType {
     /** Suggest flipping the bag — e.g. "Show the back for more details". */
     FLIP_SUGGESTION,
 
+    /** Most fields resolved, checking remaining — e.g. "Almost done!". */
+    ALMOST_DONE,
+
     /** All required fields resolved — e.g. "Bag looks complete!". */
     SCAN_COMPLETE,
 }

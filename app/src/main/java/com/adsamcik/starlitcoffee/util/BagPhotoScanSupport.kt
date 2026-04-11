@@ -12,6 +12,7 @@ enum class BagFieldSourceType {
     OBSERVED_BARCODE_STEM,
     LOCAL_BARCODE_MATCH,
     BARCODE_LOOKUP,
+    LLM,
 }
 
 enum class BagFieldConfidence {
@@ -98,6 +99,7 @@ data class BagFieldEvidence(
             BagFieldSourceType.OBSERVED_BARCODE_STEM -> "Observed stem"
             BagFieldSourceType.LOCAL_BARCODE_MATCH -> "Saved bag match"
             BagFieldSourceType.BARCODE_LOOKUP -> "Barcode lookup"
+            BagFieldSourceType.LLM -> "AI analysis"
         }
         val confidenceLabel = when (confidence) {
             BagFieldConfidence.HIGH -> "high confidence"
@@ -275,6 +277,7 @@ object BagPhotoScanSupport {
             BagFieldSourceType.LOCAL_BARCODE_MATCH -> 9
             BagFieldSourceType.CONSENSUS -> 6
             BagFieldSourceType.OCR -> 4
+            BagFieldSourceType.LLM -> 10
         }
         val confidenceWeight = when (it.confidenceHint) {
             BagFieldConfidence.HIGH -> 4
