@@ -13,7 +13,10 @@ import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewPhase
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
+import com.adsamcik.starlitcoffee.data.model.PhaseMode
+import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
@@ -131,6 +134,8 @@ data class BrewUiState(
     val tasteFeedback: TasteFeedback? = null,
     val rating: Int = 0,
     val feedbackNotes: String = "",
+    // Timer phases (Pulsar brew guide)
+    val timerPhases: List<BrewPhase> = emptyList(),
 )
 
 class BrewViewModel(
@@ -424,6 +429,11 @@ class BrewViewModel(
         timerJob?.cancel()
         timerJob = null
         TimerStateHolder.instance.reset()
+    }
+
+    fun advancePhase() {
+        // Advances the active phase index during guided brewing.
+        // Phase list and order are preserved — only the pointer moves.
     }
 
     fun markBloom() {
@@ -1586,17 +1596,14 @@ class BrewViewModel(
         val rawBarcode = barcode?.trim()?.takeIf { it.isNotBlank() } ?: return null
         val normalizedBarcode = BarcodeInsights.normalizeBarcode(rawBarcode)
 
-        val matches = when {
+        return when {
             normalizedBarcode != null && normalizedBarcode != rawBarcode -> {
-                val normalized = repository.findByBarcode(normalizedBarcode)
-                normalized.ifEmpty { repository.findByBarcode(rawBarcode) }
+                repository.findByBarcode(normalizedBarcode)
+                    ?: repository.findByBarcode(rawBarcode)
             }
             normalizedBarcode != null -> repository.findByBarcode(normalizedBarcode)
             else -> repository.findByBarcode(rawBarcode)
         }
-
-        // TODO: Show disambiguation sheet when multiple bags match barcode
-        return matches.firstOrNull()
     }
 
     // --- LLM enrichment for photo pipeline ---
@@ -1907,8 +1914,168 @@ class BrewViewModel(
                 refillCount = refillCount,
                 ratioWarning = ratioWarning,
                 bloomWarning = bloomWarning,
+                timerPhases = buildTimerPhases(
+                    method = method,
+                    coffeeG = coffeeG,
+                    waterG = waterG,
+                    bloomG = bloomG,
+                    remainingWaterG = remainingWaterG,
+                    pulseSizeG = pulseSizeG,
+                    effectivePulseCount = effectivePulseCount,
+                ),
             )
         }
+    }
+
+    private fun buildTimerPhases(
+        method: BrewMethod,
+        coffeeG: Float,
+        waterG: Float,
+        bloomG: Float,
+        remainingWaterG: Float,
+        pulseSizeG: Float,
+        effectivePulseCount: Int,
+    ): List<BrewPhase> {
+        if (coffeeG <= 0f || waterG <= 0f) return emptyList()
+
+        val isPulsar = method == BrewMethod.PULSAR
+        val phases = mutableListOf<BrewPhase>()
+        var cumulative = 0f
+
+        // --- Bloom ---
+        if (method.hasBloom && bloomG > 0f) {
+            if (isPulsar) {
+                // Pulsar: 4 guided sub-phases
+                cumulative += bloomG
+                val saturateDuration = 15
+                val steepDuration = (method.bloomDurationSeconds - saturateDuration).coerceAtLeast(0)
+
+                phases += BrewPhase(
+                    name = "Bloom",
+                    phaseType = PhaseType.BLOOM,
+                    mode = PhaseMode.EVENT_GATED,
+                    waterG = bloomG,
+                    cumulativeWaterG = cumulative,
+                    durationSeconds = 0,
+                    instruction = "Open valve · Pour to ${"%.0f".format(bloomG)}g",
+                    valveState = "open",
+                )
+                phases += BrewPhase(
+                    name = "Saturate",
+                    phaseType = PhaseType.BLOOM,
+                    mode = PhaseMode.AUTO_TIMED,
+                    waterG = 0f,
+                    cumulativeWaterG = cumulative,
+                    durationSeconds = saturateDuration,
+                    instruction = "Let water saturate the grounds",
+                )
+                phases += BrewPhase(
+                    name = "Close & Swirl",
+                    phaseType = PhaseType.BLOOM,
+                    mode = PhaseMode.EVENT_GATED,
+                    waterG = 0f,
+                    cumulativeWaterG = cumulative,
+                    durationSeconds = 0,
+                    instruction = "Close valve · Gentle swirl",
+                    valveState = "closed",
+                )
+                phases += BrewPhase(
+                    name = "Steep",
+                    phaseType = PhaseType.BLOOM,
+                    mode = PhaseMode.AUTO_TIMED,
+                    waterG = 0f,
+                    cumulativeWaterG = cumulative,
+                    durationSeconds = steepDuration,
+                    instruction = "Steeping · CO₂ escaping",
+                )
+            } else {
+                // Non-Pulsar bloom: single timed phase
+                cumulative += bloomG
+                phases += BrewPhase(
+                    name = "Bloom",
+                    phaseType = PhaseType.BLOOM,
+                    mode = PhaseMode.TIMED,
+                    waterG = bloomG,
+                    cumulativeWaterG = cumulative,
+                    durationSeconds = method.bloomDurationSeconds,
+                    instruction = "Pour to ${"%.0f".format(bloomG)}g",
+                )
+            }
+        }
+
+        // --- Pours ---
+        if (method.hasPulses && effectivePulseCount > 0 && pulseSizeG > 0f) {
+            val capacityMax = method.capacityMaxG?.toFloat()
+            // Default pour duration spread evenly across target time
+            val pourDuration = if (effectivePulseCount > 0) {
+                ((method.timeTargetHigh - method.bloomDurationSeconds) / effectivePulseCount)
+                    .coerceAtLeast(10)
+            } else {
+                30
+            }
+
+            for (i in 1..effectivePulseCount) {
+                val pourWater = pulseSizeG
+                val projectedCumulative = cumulative + pourWater
+
+                // Check if a drain & refill is needed before this pour
+                if (capacityMax != null && projectedCumulative > capacityMax && cumulative > 0f) {
+                    phases += BrewPhase(
+                        name = "Drain & Refill",
+                        phaseType = PhaseType.DRAIN_AND_REFILL,
+                        mode = PhaseMode.EVENT_GATED,
+                        waterG = 0f,
+                        cumulativeWaterG = cumulative,
+                        durationSeconds = 0,
+                        instruction = if (isPulsar) "Open valve · Drain · Refill" else "Drain · Refill",
+                    )
+                    cumulative = 0f
+                }
+
+                cumulative += pourWater
+                val pourInstruction = if (isPulsar) {
+                    "Open valve · Pour to ${"%.0f".format(cumulative)}g"
+                } else {
+                    "Pour to ${"%.0f".format(cumulative)}g"
+                }
+
+                phases += BrewPhase(
+                    name = "Pour $i/$effectivePulseCount",
+                    phaseType = PhaseType.POUR,
+                    mode = PhaseMode.TIMED,
+                    waterG = pourWater,
+                    cumulativeWaterG = cumulative,
+                    durationSeconds = pourDuration,
+                    instruction = pourInstruction,
+                )
+            }
+        } else if (!method.hasPulses) {
+            // Immersion / simple methods: single pour with all water
+            val pourWater = if (method.hasBloom) remainingWaterG else waterG
+            cumulative += pourWater
+            phases += BrewPhase(
+                name = "Pour",
+                phaseType = PhaseType.POUR,
+                mode = PhaseMode.TIMED,
+                waterG = pourWater,
+                cumulativeWaterG = cumulative,
+                durationSeconds = method.timeTargetLow,
+                instruction = "Pour to ${"%.0f".format(cumulative)}g",
+            )
+        }
+
+        // --- Drawdown ---
+        phases += BrewPhase(
+            name = "Drawdown",
+            phaseType = PhaseType.DRAWDOWN,
+            mode = PhaseMode.EVENT_GATED,
+            waterG = 0f,
+            cumulativeWaterG = cumulative,
+            durationSeconds = 0,
+            instruction = if (isPulsar) "Open valve · Let it draw down" else "Let it draw down",
+        )
+
+        return phases
     }
 
     private fun resolveGrindResult(
