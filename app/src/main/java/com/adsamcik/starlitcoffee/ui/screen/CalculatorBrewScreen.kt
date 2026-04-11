@@ -44,7 +44,6 @@ import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChip
@@ -92,7 +91,7 @@ private val checkIcon: @Composable () -> Unit = {
     Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize))
 }
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CalculatorBrewScreen(
     calculatorViewModel: CalculatorViewModel,
@@ -141,7 +140,7 @@ fun CalculatorBrewScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // Scrollable content: preview + config + keyboard
+        // Scrollable content: preview + config
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -163,7 +162,7 @@ fun CalculatorBrewScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(MaterialTheme.shapes.largeIncreased)
+                    .clip(MaterialTheme.shapes.large)
                     .background(MaterialTheme.colorScheme.surfaceContainerLow)
                     .padding(horizontal = 16.dp, vertical = 12.dp),
             ) {
@@ -329,29 +328,28 @@ fun CalculatorBrewScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Calculator keyboard
-            CalculatorKeyboard(
-                presets = state.availablePresets,
-                hasValidExpression = state.hasValidExpression,
-                onDigit = { calculatorViewModel.appendDigit(it) },
-                onDecimal = { calculatorViewModel.appendDecimal() },
-                onOperator = { calculatorViewModel.appendOperator(it) },
-                onPreset = { calculatorViewModel.appendPreset(it) },
-                onBackspace = { calculatorViewModel.backspace() },
-                onClear = { calculatorViewModel.clear() },
-                onBrew = {
-                    brewViewModel.setMethod(selectedMethod)
-                    brewViewModel.setFilterType(selectedFilter)
-                    brewViewModel.setGrinder(selectedGrinderId)
-                    brewViewModel.setAmount(state.previewDoseG.toString())
-                    onNavigateToBrew()
-                },
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
         }
+
+        // Calculator keyboard — pinned to bottom, outside scroll
+        Spacer(modifier = Modifier.height(8.dp))
+
+        CalculatorKeyboard(
+            presets = state.availablePresets,
+            hasValidExpression = state.hasValidExpression,
+            onDigit = { calculatorViewModel.appendDigit(it) },
+            onDecimal = { calculatorViewModel.appendDecimal() },
+            onOperator = { calculatorViewModel.appendOperator(it) },
+            onPreset = { calculatorViewModel.appendPreset(it) },
+            onBackspace = { calculatorViewModel.backspace() },
+            onClear = { calculatorViewModel.clear() },
+            onBrew = {
+                brewViewModel.setMethod(selectedMethod)
+                brewViewModel.setFilterType(selectedFilter)
+                brewViewModel.setGrinder(selectedGrinderId)
+                brewViewModel.setAmount(state.previewDoseG.toString())
+                onNavigateToBrew()
+            },
+        )
     }
 }
 
@@ -865,7 +863,6 @@ private fun formatAmount(value: Float): String {
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun SectionBlock(
     title: String,
@@ -875,7 +872,7 @@ private fun SectionBlock(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.largeIncreased)
+            .clip(MaterialTheme.shapes.large)
             .background(MaterialTheme.colorScheme.surfaceContainerLow)
             .padding(20.dp),
     ) {
