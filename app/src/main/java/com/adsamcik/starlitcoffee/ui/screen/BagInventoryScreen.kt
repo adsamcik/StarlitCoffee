@@ -54,6 +54,7 @@ import com.adsamcik.starlitcoffee.ui.component.AddBagSheet
 import com.adsamcik.starlitcoffee.ui.component.BagCard
 import com.adsamcik.starlitcoffee.ui.component.BagDetailSheet
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
+import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
@@ -75,6 +76,7 @@ fun BagInventoryScreen(
     onNavigateToBarcode: () -> Unit = {},
     onNavigateToBrewWithBag: (Long) -> Unit,
     onNavigateToRescan: (Long) -> Unit = {},
+    onBack: () -> Unit = {},
     capturedPhotosResult: String? = null,
     scanFieldsResult: HashMap<String, String>? = null,
     scannedBarcodeResult: String? = null,
@@ -293,21 +295,25 @@ fun BagInventoryScreen(
             }
         },
     ) { innerPadding ->
-        if (bags.isEmpty()) {
-            EmptyStateBox(
-                icon = Icons.Filled.ShoppingBag,
-                message = "No beans yet",
-                subtitle = "Add your coffee to track freshness and get brew suggestions",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-            )
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp),
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+        ) {
+            ScreenTopBar(title = "Your Beans", onBack = onBack)
+
+            if (bags.isEmpty()) {
+                EmptyStateBox(
+                    icon = Icons.Filled.ShoppingBag,
+                    message = "No beans yet",
+                    subtitle = "Add your coffee to track freshness and get brew suggestions",
+                    modifier = Modifier.fillMaxSize(),
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(
                     top = 16.dp,
@@ -361,6 +367,7 @@ fun BagInventoryScreen(
                     )
                 }
             }
+        }
         }
     }
 

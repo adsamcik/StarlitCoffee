@@ -46,6 +46,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
+import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.StarRatingRow
 import com.adsamcik.starlitcoffee.ui.component.SwipeToDismissCard
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -59,6 +60,7 @@ private const val TAG = "BrewLogScreen"
 fun BrewLogScreen(
     brewViewModel: BrewViewModel,
     onNavigateToDetail: (Long) -> Unit,
+    onBack: () -> Unit = {},
 ){
     val logs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
@@ -70,49 +72,45 @@ fun BrewLogScreen(
     }
 
     Scaffold { innerPadding ->
-        if (logs.isEmpty()) {
-            EmptyStateBox(
-                icon = Icons.Filled.History,
-                message = "Start brewing to see your history",
-                subtitle = "Each completed brew with feedback will appear here",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-            )
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp),
-            ) {
-                item {
-                    Text(
-                        text = "Brew Log",
-                        style = MaterialTheme.typography.headlineMedium,
-                        modifier = Modifier
-                            .padding(start = 8.dp, bottom = 8.dp)
-                            .semantics { heading() },
-                    )
-                }
-                items(logs, key = { it.id }) { log ->
-                    val bagName = log.coffeeBagId?.let { bagId ->
-                        bags.find { it.id == bagId }?.let { bag ->
-                            bag.name + (bag.roaster?.let { " · $it" } ?: "")
-                        }
-                    }
-                    val logTags = tagsByLog[log.id]?.take(3) ?: emptyList()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+        ) {
+            ScreenTopBar(title = "Brew Log", onBack = onBack)
 
-                    BrewLogCard(
-                        log = log,
-                        bagName = bagName,
-                        flavorTags = logTags,
-                        dateFormat = dateFormat,
-                        onTap = { onNavigateToDetail(log.id) },
-                        onDelete = { brewViewModel.deleteBrewLog(log) },
-                    )
+            if (logs.isEmpty()) {
+                EmptyStateBox(
+                    icon = Icons.Filled.History,
+                    message = "Start brewing to see your history",
+                    subtitle = "Each completed brew with feedback will appear here",
+                    modifier = Modifier.fillMaxSize(),
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp),
+                ) {
+                    items(logs, key = { it.id }) { log ->
+                        val bagName = log.coffeeBagId?.let { bagId ->
+                            bags.find { it.id == bagId }?.let { bag ->
+                                bag.name + (bag.roaster?.let { " · $it" } ?: "")
+                            }
+                        }
+                        val logTags = tagsByLog[log.id]?.take(3) ?: emptyList()
+
+                        BrewLogCard(
+                            log = log,
+                            bagName = bagName,
+                            flavorTags = logTags,
+                            dateFormat = dateFormat,
+                            onTap = { onNavigateToDetail(log.id) },
+                            onDelete = { brewViewModel.deleteBrewLog(log) },
+                        )
+                    }
                 }
             }
         }

@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
+import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.SwipeToDismissCard
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
@@ -40,51 +41,48 @@ import java.util.Locale
 fun SavedRecipesScreen(
     brewViewModel: BrewViewModel,
     onNavigateToAmount: () -> Unit,
+    onBack: () -> Unit,
 ){
     val recipes by brewViewModel.savedRecipes.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
 
     Scaffold { innerPadding ->
-        if (recipes.isEmpty()) {
-            EmptyStateBox(
-                icon = Icons.Filled.Bookmark,
-                message = "No favorites yet",
-                subtitle = "Save a recipe from the brew screen with the ♡ button",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-            )
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                    top = 16.dp,
-                    bottom = 88.dp,
-                ),
-            ) {
-                item {
-                    Text(
-                        text = "Your Favorites",
-                        style = MaterialTheme.typography.headlineMedium,
-                        modifier = Modifier
-                            .padding(start = 8.dp, bottom = 8.dp)
-                            .semantics { heading() },
-                    )
-                }
-                items(recipes, key = { it.id }) { recipe ->
-                    RecipeCard(
-                        recipe = recipe,
-                        dateFormat = dateFormat,
-                        onTap = {
-                            brewViewModel.loadRecipe(recipe)
-                            onNavigateToAmount()
-                        },
-                        onDelete = { brewViewModel.deleteRecipe(recipe) },
-                    )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+        ) {
+            ScreenTopBar(title = "Your Favorites", onBack = onBack)
+
+            if (recipes.isEmpty()) {
+                EmptyStateBox(
+                    icon = Icons.Filled.Bookmark,
+                    message = "No favorites yet",
+                    subtitle = "Save a recipe from the brew screen with the ♡ button",
+                    modifier = Modifier.fillMaxSize(),
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                        top = 16.dp,
+                        bottom = 88.dp,
+                    ),
+                ) {
+                    items(recipes, key = { it.id }) { recipe ->
+                        RecipeCard(
+                            recipe = recipe,
+                            dateFormat = dateFormat,
+                            onTap = {
+                                brewViewModel.loadRecipe(recipe)
+                                onNavigateToAmount()
+                            },
+                            onDelete = { brewViewModel.deleteRecipe(recipe) },
+                        )
+                    }
                 }
             }
         }

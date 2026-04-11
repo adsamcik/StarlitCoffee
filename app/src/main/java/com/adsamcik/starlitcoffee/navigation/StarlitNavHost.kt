@@ -19,6 +19,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,7 +57,6 @@ import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
 import com.adsamcik.starlitcoffee.ui.screen.SavedRecipesScreen
 import com.adsamcik.starlitcoffee.ui.screen.SettingsScreen
-import com.adsamcik.starlitcoffee.ui.screen.TasteFeedbackScreen
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModelFactory
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
@@ -260,6 +260,7 @@ fun StarlitNavHost() {
                             val result = snackbarHostState.showSnackbar(
                                 message = "Brew saved! Rate it after you taste it.",
                                 actionLabel = "View log",
+                                duration = SnackbarDuration.Long,
                             )
                             if (result == SnackbarResult.ActionPerformed) {
                                 navController.navigate(BrewLogList)
@@ -268,23 +269,11 @@ fun StarlitNavHost() {
                     },
                 )
             }
-            composable<TasteFeedback> {
-                TasteFeedbackScreen(
-                    brewViewModel = brewViewModel,
-                    onSaveAndFinish = {
-                        navController.navigate(CalculatorBrew) {
-                            popUpTo(CalculatorBrew) { inclusive = true }
-                        }
-                    },
-                    onNavigateToResult = {
-                        navController.popBackStack(Result, inclusive = false)
-                    },
-                )
-            }
             composable<SavedRecipes> {
                 SavedRecipesScreen(
                     brewViewModel = brewViewModel,
                     onNavigateToAmount = { navController.navigate(CalculatorBrew) },
+                    onBack = { navController.popBackStack() },
                 )
             }
             composable<BagInventory> { backStackEntry ->
@@ -301,6 +290,7 @@ fun StarlitNavHost() {
                     brewViewModel = brewViewModel,
                     onNavigateToCamera = { navController.navigate(LiveScan) },
                     onNavigateToBarcode = { navController.navigate(BarcodeScanner) },
+                    onBack = { navController.popBackStack() },
                     onNavigateToBrewWithBag = { bagId ->
                         brewViewModel.selectBagForBrewing(bagId)
                         navController.navigate(CalculatorBrew) {
@@ -322,6 +312,7 @@ fun StarlitNavHost() {
             composable<BrewLogList> {
                 BrewLogScreen(
                     brewViewModel = brewViewModel,
+                    onBack = { navController.popBackStack() },
                     onNavigateToDetail = { logId ->
                         navController.navigate(BrewLogDetail(logId = logId))
                     },
