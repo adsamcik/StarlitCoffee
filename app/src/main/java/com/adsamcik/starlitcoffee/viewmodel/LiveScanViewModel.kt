@@ -1,12 +1,14 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
 import android.hardware.SensorManager
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
+import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.scan.ConsensusEngine
 import com.adsamcik.starlitcoffee.scan.FrameEvidenceAccumulator
@@ -18,6 +20,7 @@ import com.adsamcik.starlitcoffee.scan.model.FrameResult
 import com.adsamcik.starlitcoffee.scan.model.LlmEscalationRequest
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
+import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.BarcodeInsights
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
@@ -134,6 +137,20 @@ class LiveScanViewModel(
 
         accumulator?.start()
         android.util.Log.d("LiveScan", "accumulator started — launching evidence collector")
+
+        // Pre-warm LLM: connect to service early so first LLM call doesn't pay full init
+        viewModelScope.launch {
+            try {
+                llmProvider.let { provider ->
+                    if (provider is MindlayerLlmInferenceProvider) {
+                        provider.ensureConnected()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.w("LiveScanVM", "LLM pre-warm failed: ${e.message}")
+            }
+        }
+
         accumulatorEvidenceJob = viewModelScope.launch {
             accumulator?.evidence?.collectLatest { evidence ->
                 _evidence.value = evidence
@@ -272,6 +289,11 @@ class LiveScanViewModel(
             _liveScanUiState.value = _liveScanUiState.value.copy(
                 lastRejectionReason = null,
             )
+        }
+
+        // Pass raw OCR text for LLM context
+        if (ocrResult.rawText.isNotBlank()) {
+            acc.updateRawOcrText(ocrResult.rawText)
         }
     }
 
@@ -486,6 +508,8 @@ class LiveScanViewModel(
             imageBytes = bytes,
             existingFields = escalation.existingFields,
             fieldsNeeded = escalation.fieldsNeeded,
+            rawOcrText = escalation.rawOcrText,
+            knownFieldValues = escalation.knownFieldValues ?: currentKnownValues,
         )
         val startMs = System.currentTimeMillis()
         when (val result = llmProvider.extractBagFields(request)) {
@@ -510,12 +534,34 @@ class LiveScanViewModel(
     }
 
     private fun feedLlmResultsToAccumulator(candidates: List<BagFieldCandidate>) {
-        val fieldValues = candidates.associate { it.fieldName to it.value }
+        // Partition by confidence: HIGH gets full weight, LOW gets reduced weight
+        val highConfidence = candidates.filter {
+            it.confidenceHint == BagFieldConfidence.HIGH ||
+                it.confidenceHint == BagFieldConfidence.MEDIUM
+        }
+        val lowConfidence = candidates.filter {
+            it.confidenceHint == BagFieldConfidence.LOW
+        }
+
+        // Submit high-confidence fields as normal LLM enrichment (full sourceWeightLlm)
+        val highValues = highConfidence.associate { it.fieldName to it.value }
             .filter { it.value.isNotBlank() }
-        if (fieldValues.isNotEmpty()) {
+        if (highValues.isNotEmpty()) {
             accumulator?.submitEnrichment(
-                fieldValues = fieldValues,
+                fieldValues = highValues,
                 sourceType = BagFieldSourceType.LLM,
+            )
+        }
+
+        // Submit low-confidence (uncertain) fields as OCR-weight to reduce their impact.
+        // Using OCR source type gives them sourceWeightOcr (1.0) instead of
+        // sourceWeightLlm (10.0), matching their reduced trustworthiness.
+        val lowValues = lowConfidence.associate { it.fieldName to it.value }
+            .filter { it.value.isNotBlank() }
+        if (lowValues.isNotEmpty()) {
+            accumulator?.submitEnrichment(
+                fieldValues = lowValues,
+                sourceType = BagFieldSourceType.OCR,
             )
         }
     }

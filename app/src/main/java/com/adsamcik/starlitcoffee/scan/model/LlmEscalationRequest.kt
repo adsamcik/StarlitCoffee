@@ -1,5 +1,7 @@
 package com.adsamcik.starlitcoffee.scan.model
 
+import com.adsamcik.starlitcoffee.util.KnownFieldValues
+
 /**
  * Source attribution for a field value passed to the LLM.
  * Tells the LLM how each existing value was determined so it can weigh them appropriately.
@@ -36,6 +38,10 @@ data class LlmEscalationRequest(
     val existingFields: Map<String, FieldContext>,
     /** Fields that are still SCANNING or CONFLICT and need LLM help. */
     val fieldsNeeded: Set<String>,
+    /** Raw OCR text from ML Kit to provide as additional LLM context. */
+    val rawOcrText: String? = null,
+    /** User's known field values for grounding (origins, varieties, roasters, etc.). */
+    val knownFieldValues: KnownFieldValues? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -43,13 +49,17 @@ data class LlmEscalationRequest(
         return (goldenFrameBytes?.contentEquals(other.goldenFrameBytes)
             ?: (other.goldenFrameBytes == null)) &&
             existingFields == other.existingFields &&
-            fieldsNeeded == other.fieldsNeeded
+            fieldsNeeded == other.fieldsNeeded &&
+            rawOcrText == other.rawOcrText &&
+            knownFieldValues == other.knownFieldValues
     }
 
     override fun hashCode(): Int {
         var result = goldenFrameBytes?.contentHashCode() ?: 0
         result = 31 * result + existingFields.hashCode()
         result = 31 * result + fieldsNeeded.hashCode()
+        result = 31 * result + (rawOcrText?.hashCode() ?: 0)
+        result = 31 * result + (knownFieldValues?.hashCode() ?: 0)
         return result
     }
 }

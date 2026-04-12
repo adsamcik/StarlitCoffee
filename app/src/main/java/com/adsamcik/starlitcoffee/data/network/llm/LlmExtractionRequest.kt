@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.data.network.llm
 
 import com.adsamcik.starlitcoffee.scan.model.FieldContext
+import com.adsamcik.starlitcoffee.util.KnownFieldValues
 
 /**
  * Request payload for LLM-based bag field extraction.
@@ -16,19 +17,27 @@ data class LlmExtractionRequest(
     val existingFields: Map<String, FieldContext>,
     /** Which fields we want the LLM to try extracting (e.g., "name", "roaster", "tastingNotes"). */
     val fieldsNeeded: Set<String>,
+    /** Raw OCR text from ML Kit to provide as additional LLM context. */
+    val rawOcrText: String? = null,
+    /** User's known field values for grounding (origins, varieties, roasters, etc.). */
+    val knownFieldValues: KnownFieldValues? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is LlmExtractionRequest) return false
         return imageBytes.contentEquals(other.imageBytes) &&
             existingFields == other.existingFields &&
-            fieldsNeeded == other.fieldsNeeded
+            fieldsNeeded == other.fieldsNeeded &&
+            rawOcrText == other.rawOcrText &&
+            knownFieldValues == other.knownFieldValues
     }
 
     override fun hashCode(): Int {
         var result = imageBytes.contentHashCode()
         result = 31 * result + existingFields.hashCode()
         result = 31 * result + fieldsNeeded.hashCode()
+        result = 31 * result + (rawOcrText?.hashCode() ?: 0)
+        result = 31 * result + (knownFieldValues?.hashCode() ?: 0)
         return result
     }
 }

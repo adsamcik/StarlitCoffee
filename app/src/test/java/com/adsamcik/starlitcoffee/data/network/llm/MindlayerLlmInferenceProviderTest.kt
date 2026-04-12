@@ -200,7 +200,7 @@ class MindlayerLlmInferenceProviderTest {
     }
 
     @Test
-    fun `parseResponse allFields mediumConfidence`() {
+    fun `parseResponse flatFormat highConfidence`() {
         val json = """{"name": "Test", "origin": "Kenya", "variety": "SL28"}"""
 
         val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
@@ -210,8 +210,8 @@ class MindlayerLlmInferenceProviderTest {
         assertTrue(candidates.isNotEmpty())
         candidates.forEach { candidate ->
             assertEquals(
-                "Confidence should be MEDIUM for ${candidate.fieldName}",
-                BagFieldConfidence.MEDIUM,
+                "Legacy flat format should be HIGH confidence for ${candidate.fieldName}",
+                BagFieldConfidence.HIGH,
                 candidate.confidenceHint,
             )
         }
@@ -471,5 +471,173 @@ class MindlayerLlmInferenceProviderTest {
             "System prompt should instruct JSON-only response",
             prompt.contains("ONLY a JSON object"),
         )
+    }
+
+    @Test
+    fun `buildSystemPrompt containsAbstentionSchema`() {
+        val prompt = MindlayerLlmInferenceProvider.buildSystemPrompt()
+
+        assertTrue("Should mention 'found'", prompt.contains("\"found\""))
+        assertTrue("Should mention 'uncertain'", prompt.contains("\"uncertain\""))
+        assertTrue("Should mention 'not_visible'", prompt.contains("\"not_visible\""))
+        assertTrue("Should mention 'status'", prompt.contains("\"status\""))
+        assertTrue("Should describe fields wrapper", prompt.contains("\"fields\""))
+    }
+
+    // ==================== parseResponse nested format ====================
+
+    @Test
+    fun `parseResponse nestedFormat extractsFieldsWithStatus`() {
+        val json = """
+            {
+              "fields": {
+                "name": {"value": "Ethiopia Yirgacheffe", "status": "found"},
+                "roaster": {"value": "Counter Culture", "status": "found"},
+                "origin": {"value": "Ethiopia", "status": "found"},
+                "variety": {"value": null, "status": "not_visible"},
+                "process": {"value": "Washed", "status": "uncertain"},
+                "roastLevel": {"value": null, "status": "not_visible"},
+                "tastingNotes": {"value": "blueberry, jasmine", "status": "found"},
+                "altitude": {"value": "1900m", "status": "found"},
+                "weight": {"value": "340g", "status": "found"},
+                "roastDate": {"value": null, "status": "not_visible"}
+              }
+            }
+        """.trimIndent()
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        // name, roaster, origin, process, tastingNotes, altitude, weight = 7 (not_visible skipped)
+        assertEquals(7, candidates.size)
+
+        val nameCandidate = candidates.first { it.fieldName == "name" }
+        assertEquals("Ethiopia Yirgacheffe", nameCandidate.value)
+        assertEquals(BagFieldConfidence.HIGH, nameCandidate.confidenceHint)
+
+        val processCandidate = candidates.first { it.fieldName == "processType" }
+        assertEquals("Washed", processCandidate.value)
+        assertEquals(BagFieldConfidence.LOW, processCandidate.confidenceHint)
+
+        // Verify not_visible fields are excluded
+        assertTrue(candidates.none { it.fieldName == "variety" })
+        assertTrue(candidates.none { it.fieldName == "roastLevel" })
+        assertTrue(candidates.none { it.fieldName == "roastDate" })
+    }
+
+    @Test
+    fun `parseResponse nestedFormat nullValueNotVisible skipped`() {
+        val json = """
+            {
+              "fields": {
+                "name": {"value": null, "status": "not_visible"},
+                "roaster": {"value": "Test", "status": "found"}
+              }
+            }
+        """.trimIndent()
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(1, candidates.size)
+        assertEquals("roaster", candidates[0].fieldName)
+    }
+
+    @Test
+    fun `parseResponse nestedFormat uncertainWithValue included`() {
+        val json = """
+            {
+              "fields": {
+                "variety": {"value": "Bourbon", "status": "uncertain"}
+              }
+            }
+        """.trimIndent()
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(1, candidates.size)
+        assertEquals("Bourbon", candidates[0].value)
+        assertEquals(BagFieldConfidence.LOW, candidates[0].confidenceHint)
+    }
+
+    @Test
+    fun `parseResponse backwardCompatible flatFormatStillWorks`() {
+        val json = """{"name": "Test Coffee", "roaster": "Test Roaster"}"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(2, candidates.size)
+        // Flat format treats all as "found" → HIGH confidence
+        candidates.forEach {
+            assertEquals(BagFieldConfidence.HIGH, it.confidenceHint)
+        }
+    }
+
+    // ==================== buildExtractionPrompt with knownFieldValues ====================
+
+    @Test
+    fun `buildExtractionPrompt includesKnownFieldValues`() {
+        val request = LlmExtractionRequest(
+            imageBytes = ByteArray(0),
+            existingFields = emptyMap(),
+            fieldsNeeded = emptySet(),
+            knownFieldValues = com.adsamcik.starlitcoffee.util.KnownFieldValues(
+                origins = listOf("Ethiopia", "Colombia", "Kenya"),
+                varieties = listOf("Bourbon", "Typica", "Gesha"),
+                processTypes = listOf("Washed", "Natural"),
+                roasters = listOf("Counter Culture", "Onyx"),
+            ),
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildExtractionPrompt(request)
+
+        assertTrue("Prompt should contain reference vocabulary header",
+            prompt.contains("Reference vocabulary from user's coffee collection"))
+        assertTrue("Prompt should list known origins",
+            prompt.contains("Known origins: Ethiopia, Colombia, Kenya"))
+        assertTrue("Prompt should list known varieties",
+            prompt.contains("Known varieties: Bourbon, Typica, Gesha"))
+        assertTrue("Prompt should list known processes",
+            prompt.contains("Known processes: Washed, Natural"))
+        assertTrue("Prompt should list known roasters",
+            prompt.contains("Known roasters: Counter Culture, Onyx"))
+        assertTrue("Prompt should include preference instruction",
+            prompt.contains("Prefer these values when a match is close"))
+    }
+
+    @Test
+    fun `buildExtractionPrompt omitsKnownFieldValues whenNull`() {
+        val request = LlmExtractionRequest(
+            imageBytes = ByteArray(0),
+            existingFields = emptyMap(),
+            fieldsNeeded = emptySet(),
+            knownFieldValues = null,
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildExtractionPrompt(request)
+
+        assertFalse("Prompt should NOT contain vocabulary section when null",
+            prompt.contains("Reference vocabulary"))
+    }
+
+    @Test
+    fun `buildExtractionPrompt omitsEmptyKnownFieldValues`() {
+        val request = LlmExtractionRequest(
+            imageBytes = ByteArray(0),
+            existingFields = emptyMap(),
+            fieldsNeeded = emptySet(),
+            knownFieldValues = com.adsamcik.starlitcoffee.util.KnownFieldValues.EMPTY,
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildExtractionPrompt(request)
+
+        assertFalse("Prompt should NOT contain vocabulary section when all lists empty",
+            prompt.contains("Reference vocabulary"))
     }
 }

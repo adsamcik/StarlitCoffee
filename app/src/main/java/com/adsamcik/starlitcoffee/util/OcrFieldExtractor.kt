@@ -27,6 +27,8 @@ object OcrFieldExtractor {
         val weight: String? = null,
         val isDecaf: Boolean? = null,
         val fieldConfidence: Map<String, BagFieldConfidence> = emptyMap(),
+        /** Full raw OCR text from ML Kit, preserved for LLM context. */
+        val rawText: String = "",
     )
 
     /**
@@ -296,6 +298,7 @@ object OcrFieldExtractor {
             isDecaf = isDecaf,
             roaster = roaster,
             fieldConfidence = fieldConfidence,
+            rawText = rawText,
         )
     }
 

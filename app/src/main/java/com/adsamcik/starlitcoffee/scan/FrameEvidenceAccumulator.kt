@@ -128,8 +128,10 @@ class FrameEvidenceAccumulator(
         extraBufferCapacity = 1,
     )
     val llmEscalation: SharedFlow<LlmEscalationRequest> = _llmEscalation.asSharedFlow()
-    private val escalationStaleCycles = mutableMapOf<String, Int>()
-    private val alreadyEscalatedFields = mutableSetOf<String>()
+    private var llmCallCount: Int = 0
+    private var lastLlmSideCount: Int = 0
+    private var lastLlmOcrTextHash: Int = 0
+    private var lastRawOcrText: String? = null
 
     @Volatile
     private var lastGoldenFrameBytes: ByteArray? = null
@@ -160,6 +162,11 @@ class FrameEvidenceAccumulator(
         enrichmentProcessingJob?.cancel()
         consensusCycleCount = 0
         blankFrameCount = 0
+        llmCallCount = 0
+        lastLlmSideCount = 0
+        lastLlmOcrTextHash = 0
+        lastRawOcrText = null
+        lastGoldenFrameBytes = null
         scope.cancel()
     }
 
@@ -184,8 +191,8 @@ class FrameEvidenceAccumulator(
                     field.resolvedEvidence?.sourceType?.name ?: "UNKNOWN"
                 },
                 convergenceTimeMs = fieldLockTimeMs.toMap(),
-                llmEscalated = alreadyEscalatedFields.isNotEmpty(),
-                llmFieldsRequested = alreadyEscalatedFields.toSet(),
+                llmEscalated = llmCallCount > 0,
+                llmFieldsRequested = emptySet(),
                 llmLatencyMs = null, // ViewModel overrides via copy()
                 llmSuccess = null,
                 llmTokensUsed = null,
@@ -269,6 +276,16 @@ class FrameEvidenceAccumulator(
      */
     fun setGoldenFrameBytes(bytes: ByteArray) {
         lastGoldenFrameBytes = bytes
+    }
+
+    /**
+     * Store the latest raw OCR text from ML Kit for LLM context.
+     * Called by the ViewModel after each OCR frame.
+     */
+    fun updateRawOcrText(text: String) {
+        synchronized(stateLock) {
+            lastRawOcrText = text
+        }
     }
 
     /**
@@ -620,70 +637,89 @@ class FrameEvidenceAccumulator(
     // --- LLM escalation ---
 
     /**
-     * Check if any high-value fields have been stuck in SCANNING/CONFLICT
-     * for too many consensus cycles and emit an escalation request.
+     * Proactive LLM trigger: fires when enough core fields reach PROVISIONAL
+     * rather than waiting for fields to stall.
      * Must be called under [stateLock].
      */
     private fun checkLlmEscalationLocked() {
         if (config.llmEscalationFields.isEmpty()) return
+        if (llmCallCount >= 2) return  // Hard budget: max 2 calls per session
 
-        val fieldsNeedingEscalation = mutableSetOf<String>()
-
-        for (fieldName in config.llmEscalationFields) {
-            if (fieldName in alreadyEscalatedFields) continue
-
-            val field = fieldAccumulations[fieldName]
-            val isStuck = field == null ||
-                field.status == FieldStatus.SCANNING ||
-                field.status == FieldStatus.CONFLICT
-
-            if (isStuck) {
-                val count = (escalationStaleCycles[fieldName] ?: 0) + 1
-                escalationStaleCycles[fieldName] = count
-                if (count >= config.llmEscalationCycles) {
-                    fieldsNeedingEscalation.add(fieldName)
-                }
-            } else {
-                // Field resolved — reset its stale counter
-                escalationStaleCycles.remove(fieldName)
-            }
+        // Count core fields at PROVISIONAL or better
+        val provisionalCoreCount = config.coreFields.count { field ->
+            val acc = fieldAccumulations[field]
+            acc != null && (acc.status == FieldStatus.PROVISIONAL ||
+                            acc.status == FieldStatus.LOCKED ||
+                            acc.status == FieldStatus.USER_LOCKED)
         }
 
-        if (fieldsNeedingEscalation.isNotEmpty()) {
-            alreadyEscalatedFields.addAll(fieldsNeedingEscalation)
+        // Viability gate: golden frame must exist
+        val hasViableFrame = lastGoldenFrameBytes != null
 
-            val existingFields = fieldAccumulations
-                .filter { it.value.isResolved }
-                .mapValues { (_, field) ->
-                    val value = field.resolvedValue
-                        ?: field.topCandidate?.normalizedValue
-                        ?: ""
-                    val source = when {
-                        field.status == FieldStatus.USER_LOCKED -> FieldSource.USER
-                        field.topCandidate?.sourceTypes?.contains(BagFieldSourceType.LLM) == true -> FieldSource.LLM
-                        field.topCandidate?.sourceTypes?.any {
-                            it == BagFieldSourceType.BARCODE_LOOKUP ||
-                            it == BagFieldSourceType.LOCAL_BARCODE_MATCH ||
-                            it == BagFieldSourceType.QR_LINK_LOOKUP
-                        } == true -> FieldSource.LOOKUP
-                        else -> FieldSource.OCR
-                    }
-                    val confidence = field.resolvedEvidence?.confidence?.name
-                    FieldContext(value = value, source = source, confidence = confidence)
+        // Trigger 1 (first call): ≥2 core fields at PROVISIONAL+ AND viable frame
+        val shouldFireFirst = llmCallCount == 0 && provisionalCoreCount >= 2 && hasViableFrame
+
+        // Trigger 2 (second call): new side observed OR substantially new OCR text
+        val currentOcrHash = lastRawOcrText?.hashCode() ?: 0
+        val shouldFireSecond = llmCallCount == 1 && hasViableFrame && (
+            sideCount > lastLlmSideCount ||
+            (currentOcrHash != lastLlmOcrTextHash && lastRawOcrText != null)
+        )
+
+        if (shouldFireFirst || shouldFireSecond) {
+            // Build fieldsNeeded BEFORE updating state — if empty, don't waste the budget
+            val fieldsNeeded = config.allFields
+                .filter { field ->
+                    val acc = fieldAccumulations[field]
+                    acc == null || acc.status == FieldStatus.SCANNING || acc.status == FieldStatus.CONFLICT
                 }
-                .filter { it.value.value.isNotBlank() }
+                .toSet()
+
+            if (fieldsNeeded.isEmpty()) return  // All fields resolved, nothing to ask
+
+            llmCallCount++
+            lastLlmSideCount = sideCount
+            lastLlmOcrTextHash = currentOcrHash
+
+            val existingFields = buildExistingFieldsMap()
 
             val request = LlmEscalationRequest(
                 goldenFrameBytes = lastGoldenFrameBytes,
                 existingFields = existingFields,
-                fieldsNeeded = fieldsNeedingEscalation,
+                fieldsNeeded = fieldsNeeded,
+                rawOcrText = lastRawOcrText,
+                knownFieldValues = knownValues,
             )
             _llmEscalation.tryEmit(request)
-            android.util.Log.d(
-                "Accumulator",
-                "LLM escalation emitted for fields: $fieldsNeedingEscalation",
-            )
+            android.util.Log.d("Accumulator", "Proactive LLM call #$llmCallCount for fields: $fieldsNeeded")
         }
+    }
+
+    /**
+     * Build a map of already-resolved fields with source attribution for LLM context.
+     * Must be called under [stateLock].
+     */
+    private fun buildExistingFieldsMap(): Map<String, FieldContext> {
+        return fieldAccumulations
+            .filter { it.value.isResolved }
+            .mapValues { (_, field) ->
+                val value = field.resolvedValue
+                    ?: field.topCandidate?.normalizedValue
+                    ?: ""
+                val source = when {
+                    field.status == FieldStatus.USER_LOCKED -> FieldSource.USER
+                    field.topCandidate?.sourceTypes?.contains(BagFieldSourceType.LLM) == true -> FieldSource.LLM
+                    field.topCandidate?.sourceTypes?.any {
+                        it == BagFieldSourceType.BARCODE_LOOKUP ||
+                        it == BagFieldSourceType.LOCAL_BARCODE_MATCH ||
+                        it == BagFieldSourceType.QR_LINK_LOOKUP
+                    } == true -> FieldSource.LOOKUP
+                    else -> FieldSource.OCR
+                }
+                val confidence = field.resolvedEvidence?.confidence?.name
+                FieldContext(value = value, source = source, confidence = confidence)
+            }
+            .filter { it.value.value.isNotBlank() }
     }
 
     // --- Side detection ---
