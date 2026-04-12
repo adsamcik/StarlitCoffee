@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
 import android.hardware.SensorManager
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,9 @@ import com.adsamcik.starlitcoffee.scan.model.AccumulatorConfig
 import com.adsamcik.starlitcoffee.scan.model.FieldStatus
 import com.adsamcik.starlitcoffee.scan.model.FrameResult
 import com.adsamcik.starlitcoffee.scan.model.LlmEscalationRequest
+import com.adsamcik.starlitcoffee.scan.observability.ScanAnalyticsTracker
+import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
+import com.adsamcik.starlitcoffee.scan.observability.ScanSessionSummary
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
@@ -31,6 +35,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 /**
  * Nav-scoped ViewModel for the live scan session. Created fresh for each
@@ -94,6 +99,21 @@ class LiveScanViewModel(
     private var lastLlmLatencyMs: Long? = null
     private var lastLlmSuccess: Boolean? = null
     private var lastLlmTokensUsed: Int? = null
+    private var llmCallCount: Int = 0
+    private var sessionId: String = ""
+    private var sessionStartMs: Long = 0L
+
+    // --- Observability context (set via setAppContext) ---
+
+    private var appContext: android.content.Context? = null
+
+    /**
+     * Provide application context for observability features (ring buffer, bug reports).
+     * Call once from the composable with `context.applicationContext`.
+     */
+    fun setAppContext(context: android.content.Context) {
+        appContext = context.applicationContext
+    }
 
     // Adaptive throttle for OCR frequency
     private val _currentThrottleMs = MutableStateFlow(config.throttleFastMs)
@@ -119,6 +139,10 @@ class LiveScanViewModel(
         isStarted = true
         currentKnownValues = knownFieldValues
         resetSessionState()
+
+        sessionId = UUID.randomUUID().toString()
+        sessionStartMs = System.currentTimeMillis()
+        ScanAnalyticsTracker.trackScanStarted()
 
         android.util.Log.d("LiveScan", "start() — creating accumulator + consensus engine")
 
@@ -213,12 +237,63 @@ class LiveScanViewModel(
         )
         telemetry?.let {
             android.util.Log.i("ScanTelemetry", it.toJson())
+
+            // --- Observability: analytics + ring buffer ---
+            val endMs = System.currentTimeMillis()
+            val outcome = it.scanOutcome
+            if (outcome == "complete" || outcome == "partial") {
+                ScanAnalyticsTracker.trackScanCompleted(
+                    outcome = outcome,
+                    durationMs = it.sessionDurationMs,
+                    fieldsResolved = it.fieldsResolved,
+                    fieldsTotal = it.fieldsTotal,
+                )
+            } else {
+                ScanAnalyticsTracker.trackScanAbandoned(
+                    durationMs = it.sessionDurationMs,
+                    fieldsResolved = it.fieldsResolved,
+                )
+            }
+
+            val ctx = appContext
+            if (ctx != null) {
+                val appVersion = try {
+                    ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName ?: "unknown"
+                } catch (_: Exception) { "unknown" }
+
+                val summary = ScanSessionSummary(
+                    sessionId = sessionId,
+                    startedAt = sessionStartMs,
+                    endedAt = endMs,
+                    durationMs = it.sessionDurationMs,
+                    outcome = outcome,
+                    framesProcessed = it.framesProcessed,
+                    framesRejected = it.framesRejected,
+                    goldenFrameCount = it.goldenFrameCount,
+                    llmFired = it.llmEscalated,
+                    llmCallCount = llmCallCount,
+                    llmLatencyMs = it.llmLatencyMs ?: 0L,
+                    llmTokensUsed = it.llmTokensUsed ?: 0,
+                    fieldsResolved = it.fieldsResolved,
+                    fieldsTotal = it.fieldsTotal,
+                    bestGoldenFrameScore = it.bestGoldenFrameScore,
+                    failureReason = when {
+                        outcome == "cancelled" && it.framesProcessed == 0 -> "no_text"
+                        outcome == "cancelled" -> "low_confidence"
+                        else -> null
+                    },
+                    deviceModel = Build.MODEL,
+                    appVersion = appVersion,
+                )
+                ScanSessionRingBuffer.save(ctx, summary)
+            }
         }
 
         bestGoldenFrameScore = 0f
         lastLlmLatencyMs = null
         lastLlmSuccess = null
         lastLlmTokensUsed = null
+        llmCallCount = 0
 
         accumulatorEvidenceJob?.cancel()
         accumulatorEvidenceJob = null
@@ -496,6 +571,12 @@ class LiveScanViewModel(
             android.util.Log.d("LiveScan", "LLM escalation: no golden frame bytes available")
             return
         }
+
+        llmCallCount++
+        ScanAnalyticsTracker.trackLlmFired(
+            callNumber = llmCallCount,
+            fieldsNeeded = escalation.fieldsNeeded.size,
+        )
 
         val imageHash = bytes.contentHashCode()
         val cached = llmCache.get(imageHash)

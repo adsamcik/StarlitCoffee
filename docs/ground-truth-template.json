@@ -1,0 +1,197 @@
+[
+  {
+    "bagId": "bag-001",
+    "photoPath": "testdata/coffee-bags/bag-001-front.jpg",
+    "scannedAt": "2025-07-10T14:30:00Z",
+    "bagDescription": "White bag with blue text, single-origin Ethiopian coffee, front and back labels",
+    "material": "matte",
+    "language": "en",
+    "fields": {
+      "name": {
+        "groundTruth": "Hologram",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "roaster": {
+        "groundTruth": "Counter Culture Coffee",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "origin": {
+        "groundTruth": "Ethiopia",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "region": {
+        "groundTruth": "Yirgacheffe",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "variety": {
+        "groundTruth": "Heirloom",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "processType": {
+        "groundTruth": "Washed",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "roastLevel": {
+        "groundTruth": "Light",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "tastingNotes": {
+        "groundTruth": "blueberry, dark chocolate, citrus",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "altitude": {
+        "groundTruth": "1800-2100",
+        "isOnLabel": true,
+        "notes": "Printed as '1,800 - 2,100 masl'"
+      },
+      "weight": {
+        "groundTruth": "12 oz",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "roastDate": {
+        "groundTruth": "2025-07-01",
+        "isOnLabel": true,
+        "notes": "Printed as 'Roasted 07/01/2025'"
+      }
+    }
+  },
+  {
+    "bagId": "bag-002",
+    "photoPath": "testdata/coffee-bags/bag-002-front.jpg",
+    "scannedAt": "2025-07-10T15:00:00Z",
+    "bagDescription": "Dark matte bag, Japanese text on front, minimalist design, blend coffee",
+    "material": "matte",
+    "language": "ja",
+    "fields": {
+      "name": {
+        "groundTruth": "Sakura Blend",
+        "isOnLabel": true,
+        "notes": "Original: 桜ブレンド — transliterated"
+      },
+      "roaster": {
+        "groundTruth": "Maruyama Coffee",
+        "isOnLabel": true,
+        "notes": "Original: 丸山珈琲 — transliterated"
+      },
+      "origin": {
+        "groundTruth": "Ethiopia/Colombia",
+        "isOnLabel": true,
+        "notes": "Multi-origin blend, both origins listed on back label"
+      },
+      "region": {
+        "groundTruth": null,
+        "isOnLabel": false,
+        "notes": "No sub-region specified for blend"
+      },
+      "variety": {
+        "groundTruth": null,
+        "isOnLabel": false,
+        "notes": null
+      },
+      "processType": {
+        "groundTruth": null,
+        "isOnLabel": false,
+        "notes": null
+      },
+      "roastLevel": {
+        "groundTruth": "Medium",
+        "isOnLabel": true,
+        "notes": "Printed as '中煎り' (medium roast in Japanese)"
+      },
+      "tastingNotes": {
+        "groundTruth": "cherry, milk chocolate, jasmine",
+        "isOnLabel": true,
+        "notes": "Translated from Japanese"
+      },
+      "altitude": {
+        "groundTruth": null,
+        "isOnLabel": false,
+        "notes": null
+      },
+      "weight": {
+        "groundTruth": "200g",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "roastDate": {
+        "groundTruth": "2025-06-28",
+        "isOnLabel": true,
+        "notes": "Printed as '2025年6月28日'"
+      }
+    }
+  },
+  {
+    "bagId": "bag-003",
+    "photoPath": null,
+    "scannedAt": "2025-07-11T09:15:00Z",
+    "bagDescription": "Kraft paper bag, partially torn label, glossy sticker with roast info",
+    "material": "kraft",
+    "language": "en",
+    "fields": {
+      "name": {
+        "groundTruth": "Las Lajas",
+        "isOnLabel": true,
+        "notes": "Partially occluded by fold — only 'Las La' clearly visible"
+      },
+      "roaster": {
+        "groundTruth": "Onyx Coffee Lab",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "origin": {
+        "groundTruth": "Costa Rica",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "region": {
+        "groundTruth": "Central Valley",
+        "isOnLabel": true,
+        "notes": "Very small text on back label"
+      },
+      "variety": {
+        "groundTruth": "Villa Sarchi",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "processType": {
+        "groundTruth": "Honey",
+        "isOnLabel": true,
+        "notes": "Printed as 'Yellow Honey Process'"
+      },
+      "roastLevel": {
+        "groundTruth": null,
+        "isOnLabel": false,
+        "notes": "No roast level indicated anywhere on bag"
+      },
+      "tastingNotes": {
+        "groundTruth": "peach, brown sugar, tangerine",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "altitude": {
+        "groundTruth": "1500",
+        "isOnLabel": true,
+        "notes": "Printed as '1500 meters'"
+      },
+      "weight": {
+        "groundTruth": "10 oz",
+        "isOnLabel": true,
+        "notes": null
+      },
+      "roastDate": {
+        "groundTruth": null,
+        "isOnLabel": true,
+        "notes": "Date is on the label but ink is smudged and unreadable"
+      }
+    }
+  }
+]
