@@ -642,7 +642,6 @@ class FrameEvidenceAccumulator(
      * Must be called under [stateLock].
      */
     private fun checkLlmEscalationLocked() {
-        if (config.llmEscalationFields.isEmpty()) return
         if (llmCallCount >= 2) return  // Hard budget: max 2 calls per session
 
         // Count core fields at PROVISIONAL or better

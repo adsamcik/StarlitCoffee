@@ -125,14 +125,6 @@ data class AccumulatorConfig(
 
     /** Small vote penalty per blank frame (camera moved away from text). */
     val blankFramePenaltyPerCycle: Float = 0.02f,
-
-    // --- LLM escalation ---
-
-    /** Consensus cycles without resolution before escalating to LLM (~5s at 500ms/cycle). */
-    val llmEscalationCycles: Int = 10,
-
-    /** Fields eligible for LLM escalation (high-value fields that OCR struggles with). */
-    val llmEscalationFields: Set<String> = setOf("name", "roaster", "tastingNotes"),
 ) {
     companion object {
         val DEFAULT = AccumulatorConfig()
