@@ -85,6 +85,8 @@ import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.ScanFieldSupport
+import com.adsamcik.starlitcoffee.BuildConfig
+import com.adsamcik.starlitcoffee.ui.component.ScanDebugOverlay
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CrossValidationWarning
 import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
@@ -118,6 +120,7 @@ fun LiveScanScreen(
 
     val evidence by liveScanViewModel.evidence.collectAsStateWithLifecycle()
     val uiState by liveScanViewModel.liveScanUiState.collectAsStateWithLifecycle()
+    val perfStats by liveScanViewModel.perfStats.collectAsStateWithLifecycle()
     val knownFieldValues by brewViewModel.knownFieldValues.collectAsStateWithLifecycle()
     val crossValidationWarning by liveScanViewModel.crossValidationWarning.collectAsStateWithLifecycle()
 
@@ -340,7 +343,8 @@ fun LiveScanScreen(
 
         // Debug overlay
         if (showDebugOverlay) {
-            DebugOverlay(
+            ScanDebugOverlay(
+                perfStats = perfStats,
                 evidence = evidence,
                 debugInfo = liveScanViewModel.debugInfo(),
                 rejectionReason = uiState.lastRejectionReason,
@@ -429,17 +433,19 @@ private fun TopBar(
                 .semantics { heading() },
         )
 
-        // Debug toggle
-        IconButton(
-            onClick = onToggleDebug,
-            modifier = Modifier.size(36.dp),
-        ) {
-            Icon(
-                Icons.Default.BugReport,
-                contentDescription = "Toggle debug overlay",
-                tint = Color.White.copy(alpha = 0.4f),
-                modifier = Modifier.size(18.dp),
-            )
+        // Debug toggle (debug builds only)
+        if (BuildConfig.DEBUG) {
+            IconButton(
+                onClick = onToggleDebug,
+                modifier = Modifier.size(36.dp),
+            ) {
+                Icon(
+                    Icons.Default.BugReport,
+                    contentDescription = "Toggle debug overlay",
+                    tint = Color.White.copy(alpha = 0.4f),
+                    modifier = Modifier.size(18.dp),
+                )
+            }
         }
 
         AnimatedVisibility(visible = sideFlipDetected) {
@@ -882,68 +888,6 @@ private fun GuidanceBar(guidance: ScanGuidance) {
                 color = Color.White,
             )
         }
-    }
-}
-
-// --- Debug Overlay ---
-
-@Composable
-private fun DebugOverlay(
-    evidence: AccumulatedEvidence,
-    debugInfo: LiveScanViewModel.DebugInfo,
-    rejectionReason: String?,
-    modifier: Modifier = Modifier,
-) {
-    Surface(
-        shape = RoundedCornerShape(8.dp),
-        color = Color.Black.copy(alpha = 0.75f),
-        modifier = modifier.width(200.dp),
-    ) {
-        Column(
-            modifier = Modifier.padding(8.dp),
-        ) {
-            Text("DEBUG", color = CAUTION_COLOR, fontSize = 10.sp, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.height(4.dp))
-            DebugLine("Frames", "${debugInfo.frameIndex} (${debugInfo.goldenFrameCount} golden)")
-            DebugLine("Processed", "${evidence.totalFramesProcessed}")
-            DebugLine("Rejected", "${evidence.totalFramesRejected}")
-            DebugLine("Side", "${evidence.currentSide + 1}/${evidence.sideCount}")
-            DebugLine("Progress", "${String.format("%.0f", evidence.scanProgress * 100)}%")
-            DebugLine("Fields", "${evidence.resolvedFieldCount}/${evidence.fields.size}")
-            DebugLine("Conflicts", "${evidence.conflictFieldCount}")
-            rejectionReason?.let { DebugLine("Rejected", it) }
-
-            if (evidence.fields.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(4.dp))
-                Text("POSTERIORS", color = CAUTION_COLOR, fontSize = 9.sp, fontWeight = FontWeight.Bold)
-                evidence.fields.values.take(5).forEach { field ->
-                    val top = field.topCandidate
-                    val prob = top?.posteriorProbability?.let { String.format("%.2f", it) } ?: "—"
-                    DebugLine(
-                        field.fieldName,
-                        "${field.status.name.take(4)} $prob",
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun DebugLine(label: String, value: String) {
-    Row(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = label,
-            color = Color.White.copy(alpha = 0.6f),
-            fontSize = 9.sp,
-            modifier = Modifier.weight(1f),
-        )
-        Text(
-            text = value,
-            color = Color.White,
-            fontSize = 9.sp,
-            textAlign = TextAlign.End,
-        )
     }
 }
 

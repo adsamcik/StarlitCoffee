@@ -778,12 +778,20 @@ class LiveScanViewModel(
         return DebugInfo(
             frameIndex = frameIndex,
             goldenFrameCount = _liveScanUiState.value.goldenFrameCount,
+            bestGoldenFrameScore = bestGoldenFrameScore,
+            llmCallCount = llmCallCount,
+            lastLlmLatencyMs = lastLlmLatencyMs,
+            llmAvailable = llmProvider.isAvailable(),
         )
     }
 
     data class DebugInfo(
         val frameIndex: Int,
         val goldenFrameCount: Int,
+        val bestGoldenFrameScore: Float,
+        val llmCallCount: Int,
+        val lastLlmLatencyMs: Long?,
+        val llmAvailable: Boolean,
     )
 }
 

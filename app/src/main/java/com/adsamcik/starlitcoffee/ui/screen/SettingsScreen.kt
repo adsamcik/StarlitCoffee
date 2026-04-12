@@ -70,9 +70,12 @@ import com.adsamcik.starlitcoffee.ui.util.availablePresetIcons
 import com.adsamcik.starlitcoffee.ui.util.presetColorPalette
 import com.adsamcik.starlitcoffee.ui.util.presetIcon
 import com.adsamcik.starlitcoffee.BuildConfig
+import android.content.Intent
 import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.ui.component.MindlayerSettingsCard
+import com.adsamcik.starlitcoffee.ui.component.ScanHistoryDialog
+import com.adsamcik.starlitcoffee.ui.component.formatSessionForShare
 import kotlinx.coroutines.launch
 
 private val checkIcon: @Composable () -> Unit = {
@@ -672,8 +675,8 @@ private fun ScanDebugCard() {
             )
             Spacer(modifier = Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilledTonalButton(onClick = { showHistory = !showHistory }) {
-                    Text(if (showHistory) "Hide History" else "View History")
+                FilledTonalButton(onClick = { showHistory = true }) {
+                    Text("View History")
                 }
                 FilledTonalButton(onClick = { ScanBugReporter.shareReport(context) }) {
                     Text("Share Report")
@@ -685,19 +688,26 @@ private fun ScanDebugCard() {
                     Text("Clear")
                 }
             }
-            if (showHistory && sessions.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(8.dp))
-                sessions.forEach { summary ->
-                    Text(
-                        text = "${summary.outcome} | ${summary.durationMs}ms | " +
-                            "${summary.fieldsResolved}/${summary.fieldsTotal} fields | " +
-                            "LLM: ${if (summary.llmFired) "${summary.llmLatencyMs}ms" else "off"}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(vertical = 2.dp),
-                    )
-                }
-            }
         }
+    }
+
+    if (showHistory) {
+        ScanHistoryDialog(
+            sessions = sessions,
+            onDismiss = { showHistory = false },
+            onShareSession = { session ->
+                val text = formatSessionForShare(session)
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_SUBJECT, "Scan Session: ${session.sessionId}")
+                    putExtra(Intent.EXTRA_TEXT, text)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(
+                    Intent.createChooser(intent, "Share Scan Session")
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                )
+            },
+        )
     }
 }
