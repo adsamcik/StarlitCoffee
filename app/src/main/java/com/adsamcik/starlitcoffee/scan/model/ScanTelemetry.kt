@@ -23,6 +23,7 @@ data class ScanTelemetry(
     val sideFlipDetected: Boolean,
     val qualityRelaxationTriggered: Boolean,
     val scanOutcome: String,
+    val perfStats: Map<String, com.adsamcik.starlitcoffee.scan.observability.PerfStatsSnapshot>? = null,
 ) {
     fun toJson(): String = buildString {
         append('{')
@@ -47,6 +48,21 @@ data class ScanTelemetry(
         append(",\"sideFlipDetected\":$sideFlipDetected")
         append(",\"qualityRelaxationTriggered\":$qualityRelaxationTriggered")
         append(",\"scanOutcome\":\"${escapeJson(scanOutcome)}\"")
+        if (perfStats != null) {
+            append(",\"perfStats\":{")
+            perfStats.entries.forEachIndexed { i, (name, snap) ->
+                if (i > 0) append(',')
+                append("\"${escapeJson(name)}\":")
+                append("{\"count\":${snap.count}")
+                append(",\"min\":${snap.min}")
+                append(",\"max\":${snap.max}")
+                append(",\"avg\":${snap.avg}")
+                append(",\"latest\":${snap.latest}")
+                if (snap.p95 != null) append(",\"p95\":${snap.p95}")
+                append('}')
+            }
+            append('}')
+        }
         append('}')
     }
 

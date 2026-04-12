@@ -203,6 +203,7 @@ fun LiveScanScreen(
                 liveScanViewModel.onBlankFrame()
             },
             throttleMsProvider = { liveScanViewModel.currentThrottleMs.value },
+            perfTracer = liveScanViewModel.perfTracer,
         )
 
         cameraController.setImageAnalysisAnalyzer(analysisExecutor, analyzer)
@@ -1013,6 +1014,7 @@ private class LiveScanAnalyzer(
     private val onBarcodeDetected: (String) -> Unit,
     private val onBlankFrame: () -> Unit,
     private val throttleMsProvider: () -> Long = { 700L },
+    private val perfTracer: com.adsamcik.starlitcoffee.scan.observability.ScanPerfTracer? = null,
 ) : androidx.camera.core.ImageAnalysis.Analyzer {
 
     @Volatile
@@ -1038,9 +1040,16 @@ private class LiveScanAnalyzer(
     private var barcodeDetected = false
 
     private var analyzeCallCount = 0
+    private var lastAnalyzeNanos = 0L
 
     override fun analyze(image: ImageProxy) {
         analyzeCallCount++
+        // Frame interval timing
+        val nowNanos = android.os.SystemClock.elapsedRealtimeNanos()
+        if (lastAnalyzeNanos != 0L) {
+            perfTracer?.mark("frame_interval_ms", (nowNanos - lastAnalyzeNanos) / 1_000_000f)
+        }
+        lastAnalyzeNanos = nowNanos
         if (analyzeCallCount <= 5 || analyzeCallCount % 30 == 0) {
             android.util.Log.d("LiveScanAnalyzer", "analyze() call #$analyzeCallCount, " +
                 "size=${image.width}x${image.height}, format=${image.format}, " +
@@ -1054,6 +1063,7 @@ private class LiveScanAnalyzer(
             return
         }
 
+        perfTracer?.startTimer("quality_ms")
         val quality = BagCaptureQualityAnalyzer.analyzeLumaFrame(
             luma = luma,
             width = image.width,
@@ -1062,6 +1072,7 @@ private class LiveScanAnalyzer(
             textDetected = lastTextDetected,
             textRegions = lastTextRegions,
         )
+        perfTracer?.stopTimer("quality_ms")
 
         if (analyzeCallCount <= 5 || analyzeCallCount % 30 == 0) {
             android.util.Log.d("LiveScanAnalyzer", "Quality: blur=${quality.blurScore}, " +
@@ -1075,7 +1086,10 @@ private class LiveScanAnalyzer(
             quality.exposureOkay &&
             quality.textBlockCount >= 2
         ) {
-            encodeToJpeg(image)
+            perfTracer?.startTimer("jpeg_encode_ms")
+            val jpeg = encodeToJpeg(image)
+            perfTracer?.stopTimer("jpeg_encode_ms")
+            jpeg
         } else {
             null
         }
@@ -1126,8 +1140,12 @@ private class LiveScanAnalyzer(
                 }
             }
 
+            val ocrStartNanos = android.os.SystemClock.elapsedRealtimeNanos()
             recognizer.process(inputImage)
                 .addOnSuccessListener { text ->
+                    perfTracer?.mark("ocr_ms",
+                        (android.os.SystemClock.elapsedRealtimeNanos() - ocrStartNanos) / 1_000_000f)
+
                     lastTextBlockCount = text.textBlocks.size
                     lastTextDetected = text.textBlocks.isNotEmpty()
                     lastTextRegions = text.textBlocks.mapNotNull { it.boundingBox }
@@ -1139,10 +1157,12 @@ private class LiveScanAnalyzer(
 
                     if (text.text.isNotBlank()) {
                         try {
+                            perfTracer?.startTimer("field_extract_ms")
                             lastOcrResult = OcrFieldExtractor.extractFields(
                                 rawText = text.text,
                                 knownFields = knownFieldValues,
                             )
+                            perfTracer?.stopTimer("field_extract_ms")
                             android.util.Log.d("LiveScanAnalyzer", "Fields extracted: " +
                                 "name=${lastOcrResult.name}, roaster=${lastOcrResult.roaster}, " +
                                 "origin=${lastOcrResult.origin}, region=${lastOcrResult.region}")
@@ -1174,8 +1194,11 @@ private class LiveScanAnalyzer(
 
             // Run barcode detection on the same InputImage (near-zero extra cost)
             if (shouldRunBarcode) {
+                val barcodeStartNanos = android.os.SystemClock.elapsedRealtimeNanos()
                 barcodeScanner.process(inputImage)
                     .addOnSuccessListener { barcodes ->
+                        perfTracer?.mark("barcode_ms",
+                            (android.os.SystemClock.elapsedRealtimeNanos() - barcodeStartNanos) / 1_000_000f)
                         barcodes.firstOrNull()?.rawValue?.let { value ->
                             if (!barcodeDetected) {
                                 barcodeDetected = true

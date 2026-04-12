@@ -103,6 +103,14 @@ class LiveScanViewModel(
     private var sessionId: String = ""
     private var sessionStartMs: Long = 0L
 
+    // --- Performance tracer ---
+
+    var perfTracer: com.adsamcik.starlitcoffee.scan.observability.ScanPerfTracer? = null
+        private set
+    private val _perfStats = MutableStateFlow<Map<String, com.adsamcik.starlitcoffee.scan.observability.PerfStats>>(emptyMap())
+    val perfStats: StateFlow<Map<String, com.adsamcik.starlitcoffee.scan.observability.PerfStats>> = _perfStats.asStateFlow()
+    private var perfStatsJob: kotlinx.coroutines.Job? = null
+
     // --- Observability context (set via setAppContext) ---
 
     private var appContext: android.content.Context? = null
@@ -147,10 +155,12 @@ class LiveScanViewModel(
         android.util.Log.d("LiveScan", "start() — creating accumulator + consensus engine")
 
         consensusEngine = ConsensusEngine(config)
+        perfTracer = com.adsamcik.starlitcoffee.scan.observability.ScanPerfTracer()
         accumulator = FrameEvidenceAccumulator(
             config = config,
             knownValues = knownFieldValues,
             consensusEngine = consensusEngine!!,
+            perfTracer = perfTracer,
         )
         sideDetector = SideDetector(config) {
             accumulator?.notifyPotentialSideFlip()
@@ -167,11 +177,22 @@ class LiveScanViewModel(
             try {
                 llmProvider.let { provider ->
                     if (provider is MindlayerLlmInferenceProvider) {
+                        perfTracer?.startTimer("service_connect_ms")
                         provider.ensureConnected()
+                        perfTracer?.stopTimer("service_connect_ms")
                     }
                 }
             } catch (e: Exception) {
+                perfTracer?.stopTimer("service_connect_ms")
                 Log.w("LiveScanVM", "LLM pre-warm failed: ${e.message}")
+            }
+        }
+
+        // Periodically push tracer stats to StateFlow for UI overlay
+        perfStatsJob = viewModelScope.launch {
+            while (true) {
+                kotlinx.coroutines.delay(500L)
+                perfTracer?.let { _perfStats.value = it.getStats() }
             }
         }
 
@@ -228,12 +249,17 @@ class LiveScanViewModel(
         isStarted = false
 
         // Emit telemetry before cleanup
+        val perfJson = perfTracer?.toJson()
+        val perfStatsSnapshot = perfTracer?.getStats()?.mapValues { (_, stats) ->
+            com.adsamcik.starlitcoffee.scan.observability.PerfStatsSnapshot.from(stats)
+        }
         val telemetry = accumulator?.buildTelemetry()?.copy(
             bestGoldenFrameScore = bestGoldenFrameScore,
             goldenFrameCount = _liveScanUiState.value.goldenFrameCount,
             llmLatencyMs = lastLlmLatencyMs,
             llmSuccess = lastLlmSuccess,
             llmTokensUsed = lastLlmTokensUsed,
+            perfStats = perfStatsSnapshot,
         )
         telemetry?.let {
             android.util.Log.i("ScanTelemetry", it.toJson())
@@ -284,6 +310,7 @@ class LiveScanViewModel(
                     },
                     deviceModel = Build.MODEL,
                     appVersion = appVersion,
+                    perfJson = perfJson,
                 )
                 ScanSessionRingBuffer.save(ctx, summary)
             }
@@ -294,6 +321,12 @@ class LiveScanViewModel(
         lastLlmSuccess = null
         lastLlmTokensUsed = null
         llmCallCount = 0
+
+        perfStatsJob?.cancel()
+        perfStatsJob = null
+        perfTracer?.reset()
+        perfTracer = null
+        _perfStats.value = emptyMap()
 
         accumulatorEvidenceJob?.cancel()
         accumulatorEvidenceJob = null
@@ -593,9 +626,11 @@ class LiveScanViewModel(
             knownFieldValues = escalation.knownFieldValues ?: currentKnownValues,
         )
         val startMs = System.currentTimeMillis()
+        perfTracer?.startTimer("llm_total_ms")
         when (val result = llmProvider.extractBagFields(request)) {
             is LlmExtractionResult.Success -> {
                 lastLlmLatencyMs = System.currentTimeMillis() - startMs
+                perfTracer?.stopTimer("llm_total_ms")
                 lastLlmSuccess = true
                 lastLlmTokensUsed = result.tokensUsed
                 llmCache.put(imageHash, result)
@@ -603,11 +638,13 @@ class LiveScanViewModel(
             }
             is LlmExtractionResult.Unavailable -> {
                 lastLlmLatencyMs = System.currentTimeMillis() - startMs
+                perfTracer?.stopTimer("llm_total_ms")
                 lastLlmSuccess = false
                 android.util.Log.d("LiveScan", "LLM escalation: unavailable — ${result.reason}")
             }
             is LlmExtractionResult.Failed -> {
                 lastLlmLatencyMs = System.currentTimeMillis() - startMs
+                perfTracer?.stopTimer("llm_total_ms")
                 lastLlmSuccess = false
                 android.util.Log.d("LiveScan", "LLM escalation: failed — ${result.error}")
             }

@@ -59,6 +59,7 @@ class FrameEvidenceAccumulator(
     private val config: AccumulatorConfig = AccumulatorConfig.DEFAULT,
     knownValues: KnownFieldValues = KnownFieldValues.EMPTY,
     private val consensusEngine: ConsensusEngine = ConsensusEngine(config),
+    private val perfTracer: com.adsamcik.starlitcoffee.scan.observability.ScanPerfTracer? = null,
 ) {
     @Volatile
     private var knownValues: KnownFieldValues = knownValues
@@ -420,10 +421,12 @@ class FrameEvidenceAccumulator(
                 "blur=${frame.quality.blurScore}, golden=${frame.isGoldenFrame}, " +
                 "fields=[${fieldNames.joinToString(",")}], total processed=$totalFramesProcessed")
 
+            perfTracer?.startTimer("integrate_ms")
             fieldAccumulations = consensusEngine.integrateFrame(
                 currentFields = fieldAccumulations,
                 frame = frame.copy(side = currentSide),
             )
+            perfTracer?.stopTimer("integrate_ms")
 
             android.util.Log.d("Accumulator", "After integrate: ${fieldAccumulations.size} field accumulations, " +
                 "fields=${fieldAccumulations.keys.joinToString(",")}")
@@ -431,9 +434,11 @@ class FrameEvidenceAccumulator(
     }
 
     private fun runConsensus() {
+        perfTracer?.startTimer("consensus_ms")
         synchronized(stateLock) {
             if (fieldAccumulations.isEmpty()) {
                 android.util.Log.d("Accumulator", "runConsensus: no fields yet — skipping")
+                perfTracer?.stopTimer("consensus_ms")
                 return
             }
 
@@ -507,6 +512,7 @@ class FrameEvidenceAccumulator(
             android.util.Log.d("Accumulator", "runConsensus: emitted evidence, " +
                 "processed=$totalFramesProcessed, rejected=$totalFramesRejected")
         }
+        perfTracer?.stopTimer("consensus_ms")
     }
 
     private fun emitEvidenceLocked() {

@@ -22,4 +22,5 @@ data class ScanSessionSummary(
     val failureReason: String?,
     val deviceModel: String,
     val appVersion: String,
+    val perfJson: String? = null,
 )
