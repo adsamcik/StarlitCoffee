@@ -567,10 +567,10 @@ class ConsensusEngine(
      * Determine if a frame qualifies as a "golden frame" for heavy processing.
      */
     fun isGoldenFrame(frame: FrameResult): Boolean {
-        return frame.quality.blurScore >= config.minBlurScore * 2f &&
+        return frame.quality.blurScore >= config.minBlurScore * 1.2f &&
                 frame.quality.glareOkay &&
                 frame.quality.exposureOkay &&
-                frame.quality.textBlockCount >= 3
+                frame.quality.textBlockCount >= 2
     }
 
     // --- Helpers ---

@@ -1066,10 +1066,10 @@ private class LiveScanAnalyzer(
 
         // Pre-encode JPEG only for golden frame candidates (expensive — skip for regular frames)
         val goldenFrameJpeg: ByteArray? = if (
-            quality.blurScore >= 24f &&
+            quality.blurScore >= 12f &&
             quality.glareOkay &&
             quality.exposureOkay &&
-            quality.textBlockCount >= 3
+            quality.textBlockCount >= 2
         ) {
             encodeToJpeg(image)
         } else {
