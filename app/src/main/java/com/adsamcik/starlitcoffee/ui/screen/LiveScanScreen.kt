@@ -1028,6 +1028,9 @@ private class LiveScanAnalyzer(
     private var lastTextDetected = false
 
     @Volatile
+    private var lastTextRegions: List<android.graphics.Rect> = emptyList()
+
+    @Volatile
     private var lastOcrResult: OcrFieldExtractor.OcrExtractionResult =
         OcrFieldExtractor.OcrExtractionResult()
 
@@ -1057,6 +1060,7 @@ private class LiveScanAnalyzer(
             height = image.height,
             textBlockCount = lastTextBlockCount,
             textDetected = lastTextDetected,
+            textRegions = lastTextRegions,
         )
 
         if (analyzeCallCount <= 5 || analyzeCallCount % 30 == 0) {
@@ -1126,6 +1130,7 @@ private class LiveScanAnalyzer(
                 .addOnSuccessListener { text ->
                     lastTextBlockCount = text.textBlocks.size
                     lastTextDetected = text.textBlocks.isNotEmpty()
+                    lastTextRegions = text.textBlocks.mapNotNull { it.boundingBox }
 
                     android.util.Log.d("LiveScanAnalyzer", "ML Kit SUCCESS: " +
                         "blocks=${text.textBlocks.size}, " +
