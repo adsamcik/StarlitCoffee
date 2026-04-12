@@ -28,6 +28,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
@@ -68,6 +69,10 @@ import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.util.availablePresetIcons
 import com.adsamcik.starlitcoffee.ui.util.presetColorPalette
 import com.adsamcik.starlitcoffee.ui.util.presetIcon
+import com.adsamcik.starlitcoffee.BuildConfig
+import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
+import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
+import com.adsamcik.starlitcoffee.ui.component.MindlayerSettingsCard
 import kotlinx.coroutines.launch
 
 private val checkIcon: @Composable () -> Unit = {
@@ -397,6 +402,12 @@ fun SettingsScreen(
                     }
                 }
             }
+
+            // Debug-only cards
+            if (BuildConfig.DEBUG) {
+                MindlayerSettingsCard()
+                ScanDebugCard()
+            }
         }
     }
 
@@ -634,6 +645,56 @@ private fun ColorPickerRow(
                         contentDescription = "Selected: $label",
                         tint = checkColor,
                         modifier = Modifier.size(16.dp),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ScanDebugCard() {
+    val context = LocalContext.current
+    var sessions by remember { mutableStateOf(ScanSessionRingBuffer.getAll(context)) }
+    var showHistory by remember { mutableStateOf(false) }
+
+    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = "Scan Debug",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.semantics { heading() },
+            )
+            Text(
+                text = "${sessions.size} sessions stored",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilledTonalButton(onClick = { showHistory = !showHistory }) {
+                    Text(if (showHistory) "Hide History" else "View History")
+                }
+                FilledTonalButton(onClick = { ScanBugReporter.shareReport(context) }) {
+                    Text("Share Report")
+                }
+                FilledTonalButton(onClick = {
+                    ScanSessionRingBuffer.clear(context)
+                    sessions = emptyList()
+                }) {
+                    Text("Clear")
+                }
+            }
+            if (showHistory && sessions.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+                sessions.forEach { summary ->
+                    Text(
+                        text = "${summary.outcome} | ${summary.durationMs}ms | " +
+                            "${summary.fieldsResolved}/${summary.fieldsTotal} fields | " +
+                            "LLM: ${if (summary.llmFired) "${summary.llmLatencyMs}ms" else "off"}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(vertical = 2.dp),
                     )
                 }
             }
