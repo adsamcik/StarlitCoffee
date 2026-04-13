@@ -47,6 +47,13 @@ fun MindlayerSettingsCard() {
     var result by remember { mutableStateOf<ConnectionTestResult?>(null) }
     var isLoading by remember { mutableStateOf(false) }
 
+    // Auto-test connection on first composition
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        isLoading = true
+        result = MindlayerConnectionTester.testConnection(context)
+        isLoading = false
+    }
+
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(

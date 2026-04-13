@@ -52,7 +52,6 @@ class MindlayerLlmInferenceProvider(
                 sessionId = mindlayer.createSession {
                     systemPrompt(buildSystemPrompt())
                     maxTokens(2048)
-                    backend("CPU")
                 }
             } catch (e: Exception) {
                 return LlmExtractionResult.Failed(

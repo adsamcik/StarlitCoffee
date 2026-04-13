@@ -115,7 +115,6 @@ object MindlayerConnectionTester {
             sessionId = mindlayer.createSession {
                 systemPrompt("You are a helpful assistant. Be very brief.")
                 maxTokens(256)
-                backend("CPU")
             }
 
             val prompt = "What is the capital of Ethiopia? Reply in one word."
