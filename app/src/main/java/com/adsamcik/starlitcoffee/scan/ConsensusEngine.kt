@@ -467,34 +467,13 @@ class ConsensusEngine(
                         )
                     }
                 } else {
-                    // Option A: high-water mark — preserve best candidate unless overtaken
-                    val keepResolved = if (field.resolvedValue != null &&
-                        top.normalizedValue == field.resolvedValue) {
-                        // Same candidate still on top — keep it, just reset lock cycles
-                        true
-                    } else if (field.resolvedValue != null &&
-                        top.posteriorProbability > (field.lockScore * 0.7f)) {
-                        // Different candidate overtook with significant confidence — replace
-                        false
-                    } else {
-                        // Different candidate but weak — keep high-water mark
-                        true
-                    }
-
-                    if (keepResolved) {
-                        field.copy(
-                            status = FieldStatus.PROVISIONAL,
-                            consecutiveLockCycles = 0,
-                            // resolvedValue and resolvedEvidence PRESERVED
-                        )
-                    } else {
-                        field.copy(
-                            status = FieldStatus.SCANNING,
-                            consecutiveLockCycles = 0,
-                            resolvedValue = top.normalizedValue,
-                            resolvedEvidence = buildEvidence(field.fieldName, top),
-                        )
-                    }
+                    // Below resolve threshold — fall back to scanning
+                    field.copy(
+                        status = FieldStatus.SCANNING,
+                        consecutiveLockCycles = 0,
+                        resolvedValue = null,
+                        resolvedEvidence = null,
+                    )
                 }
             }
 
@@ -567,10 +546,10 @@ class ConsensusEngine(
      * Determine if a frame qualifies as a "golden frame" for heavy processing.
      */
     fun isGoldenFrame(frame: FrameResult): Boolean {
-        return frame.quality.blurScore >= config.minBlurScore * 1.2f &&
+        return frame.quality.blurScore >= config.minBlurScore * 2f &&
                 frame.quality.glareOkay &&
                 frame.quality.exposureOkay &&
-                frame.quality.textBlockCount >= 2
+                frame.quality.textBlockCount >= 3
     }
 
     // --- Helpers ---

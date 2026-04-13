@@ -44,6 +44,8 @@ object OpenFoodFactsClient {
                 categories = product.categories?.takeIf { it.isNotBlank() },
                 imageUrl = product.imageUrl?.takeIf { it.isNotBlank() },
                 quantity = product.quantity?.takeIf { it.isNotBlank() },
+                origins = product.origins?.takeIf { it.isNotBlank() },
+                countriesTags = product.countriesTags?.takeIf { it.isNotEmpty() },
             )
         } catch (e: Exception) {
             Log.w(TAG, "Failed to fetch product info from OpenFoodFacts", e)
@@ -58,6 +60,8 @@ data class ProductResult(
     val categories: String?,
     val imageUrl: String?,
     val quantity: String?,
+    val origins: String?,
+    val countriesTags: List<String>?,
 )
 
 @Serializable
@@ -73,4 +77,6 @@ private data class OffProduct(
     val categories: String? = null,
     @SerialName("image_url") val imageUrl: String? = null,
     val quantity: String? = null,
+    val origins: String? = null,
+    @SerialName("countries_tags") val countriesTags: List<String>? = null,
 )

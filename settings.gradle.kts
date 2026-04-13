@@ -20,6 +20,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
         maven {
             name = "MindlayerGitHubPackages"
             val ghOwner = extra.properties["GITHUB_OWNER"]?.toString() ?: System.getenv("GITHUB_OWNER") ?: "OWNER"

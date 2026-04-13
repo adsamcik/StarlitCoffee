@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -22,6 +23,9 @@ data class UserPreferences(
     val defaultFilterType: FilterType? = null,
     val selectedGrinderId: String? = null,
     val qrLinkExplorerEnabled: Boolean = false,
+    val lastUsedRatio: Float = 17f,
+    val defaultInputDirection: String = "WATER",
+    val skipMethodSelection: Boolean = false,
 )
 
 class UserPreferencesRepository(private val context: Context) {
@@ -33,6 +37,9 @@ class UserPreferencesRepository(private val context: Context) {
         val DEFAULT_FILTER_TYPE = stringPreferencesKey("default_filter_type")
         val SELECTED_GRINDER_ID = stringPreferencesKey("selected_grinder_id")
         val QR_LINK_EXPLORER_ENABLED = booleanPreferencesKey("qr_link_explorer_enabled")
+        val LAST_USED_RATIO = floatPreferencesKey("last_used_ratio")
+        val DEFAULT_INPUT_DIRECTION = stringPreferencesKey("default_input_direction")
+        val SKIP_METHOD_SELECTION = booleanPreferencesKey("skip_method_selection")
     }
 
     val userPreferences: Flow<UserPreferences> = context.dataStore.data.map { prefs ->
@@ -49,6 +56,9 @@ class UserPreferencesRepository(private val context: Context) {
                 ?.let { name -> FilterType.entries.find { it.name == name } },
             selectedGrinderId = prefs[Keys.SELECTED_GRINDER_ID],
             qrLinkExplorerEnabled = prefs[Keys.QR_LINK_EXPLORER_ENABLED] ?: false,
+            lastUsedRatio = prefs[Keys.LAST_USED_RATIO] ?: 17f,
+            defaultInputDirection = prefs[Keys.DEFAULT_INPUT_DIRECTION] ?: "WATER",
+            skipMethodSelection = prefs[Keys.SKIP_METHOD_SELECTION] ?: false,
         )
     }
 
@@ -110,6 +120,24 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun updateQrLinkExplorerEnabled(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.QR_LINK_EXPLORER_ENABLED] = enabled
+        }
+    }
+
+    suspend fun updateLastUsedRatio(ratio: Float) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.LAST_USED_RATIO] = ratio
+        }
+    }
+
+    suspend fun updateDefaultInputDirection(direction: String) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.DEFAULT_INPUT_DIRECTION] = direction
+        }
+    }
+
+    suspend fun updateSkipMethodSelection(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.SKIP_METHOD_SELECTION] = enabled
         }
     }
 

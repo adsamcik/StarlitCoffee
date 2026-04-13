@@ -74,7 +74,7 @@ class MindlayerLlmInferenceProvider(
             val responseText = StringBuilder()
             var tokenCount = 0
 
-            mindlayer.chatWithImage(sessionId!!, prompt, bitmap).collect { event ->
+            mindlayer.chatWithImage(sessionId!!, prompt, bitmap).events.collect { event ->
                 when (event) {
                     is MindlayerEvent.TextDelta -> {
                         responseText.append(event.text)

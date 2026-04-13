@@ -1,6 +1,8 @@
 package com.adsamcik.starlitcoffee.util
 
+import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
 import java.util.Locale
 import kotlin.math.abs
 
@@ -155,6 +157,118 @@ object BarcodeInsights {
                 supportingText = match.note,
             ),
         )
+    }
+
+    fun buildBarcodeOcrBoost(
+        barcode: String,
+        currentKnownValues: KnownFieldValues,
+        userStemDao: UserBarcodeStemDao? = null,
+    ): KnownFieldValues {
+        val roasterCandidates = mutableListOf<String>()
+
+        findObservedStemMatch(barcode)?.roasterCandidate?.let { roasterCandidates += it }
+
+        // Also check user-taught stems if available
+        // (suspend call not possible here — handled by caller via findUserStemMatch)
+
+        val newRoasters = roasterCandidates.filter { it !in currentKnownValues.roasters }
+        if (newRoasters.isEmpty()) return currentKnownValues
+        return currentKnownValues.copy(
+            roasters = currentKnownValues.roasters + newRoasters,
+        )
+    }
+
+    suspend fun learnStem(
+        barcode: String,
+        roasterName: String,
+        stemDao: UserBarcodeStemDao,
+    ) {
+        val normalized = normalizeBarcode(barcode) ?: return
+        // Use first 9 digits as stem (company prefix)
+        val prefix = normalized.take(9.coerceAtMost(normalized.length))
+        if (prefix.length < 5) return
+
+        val existing = stemDao.findStemForBarcode(normalized)
+        if (existing != null && existing.prefix == prefix) {
+            stemDao.incrementObservation(prefix)
+        } else if (existing == null) {
+            stemDao.insert(
+                UserBarcodeStemEntity(
+                    prefix = prefix,
+                    roasterName = roasterName,
+                ),
+            )
+        }
+    }
+
+    suspend fun findUserStemMatch(
+        barcode: String,
+        stemDao: UserBarcodeStemDao,
+    ): List<BagFieldCandidate> {
+        val normalized = normalizeBarcode(barcode) ?: return emptyList()
+        val match = stemDao.findStemForBarcode(normalized) ?: return emptyList()
+
+        val confidence = when {
+            match.confidence == "HIGH" -> BagFieldConfidence.HIGH
+            match.confidence == "MEDIUM" -> BagFieldConfidence.MEDIUM
+            else -> BagFieldConfidence.LOW
+        }
+
+        return listOf(
+            BagFieldCandidate(
+                fieldName = "roaster",
+                value = match.roasterName,
+                sourceType = BagFieldSourceType.OBSERVED_BARCODE_STEM,
+                confidenceHint = confidence,
+                supportingText = "Learned from your previous bags (seen ${match.observationCount}×)",
+            ),
+        )
+    }
+
+    data class PartialBarcodeResult(
+        val isPartial: Boolean,
+        val candidates: List<BagFieldCandidate>,
+    )
+
+    suspend fun recoverPartialBarcode(
+        rawBarcode: String,
+        stemDao: UserBarcodeStemDao?,
+    ): PartialBarcodeResult {
+        val digits = rawBarcode.filter(Char::isDigit)
+        if (digits.length !in 5..7) return PartialBarcodeResult(isPartial = false, candidates = emptyList())
+
+        val candidates = mutableListOf<BagFieldCandidate>()
+
+        // Check hardcoded stems
+        OBSERVED_STEMS
+            .filter { digits.startsWith(it.stem.take(digits.length)) || it.stem.startsWith(digits) }
+            .firstOrNull()
+            ?.roasterCandidate
+            ?.let { roaster ->
+                candidates += BagFieldCandidate(
+                    fieldName = "roaster",
+                    value = roaster,
+                    sourceType = BagFieldSourceType.OBSERVED_BARCODE_STEM,
+                    confidenceHint = BagFieldConfidence.LOW,
+                    supportingText = "Partial barcode match (${digits.length} digits)",
+                )
+            }
+
+        // Check user-taught stems
+        if (stemDao != null) {
+            val userMatches = stemDao.findStemsByPartialBarcode(digits)
+            userMatches.firstOrNull()?.let { match ->
+                candidates += BagFieldCandidate(
+                    fieldName = "roaster",
+                    value = match.roasterName,
+                    sourceType = BagFieldSourceType.OBSERVED_BARCODE_STEM,
+                    confidenceHint = BagFieldConfidence.LOW,
+                    supportingText = "Partial match from your saved stems (${digits.length} digits)",
+                )
+            }
+        }
+
+        return PartialBarcodeResult(isPartial = true, candidates = candidates)
     }
 
     fun buildBarcodeReviewHints(

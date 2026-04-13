@@ -13,12 +13,16 @@ import com.adsamcik.starlitcoffee.data.db.dao.FlavorTagDao
 import com.adsamcik.starlitcoffee.data.db.dao.GrinderDao
 import com.adsamcik.starlitcoffee.data.db.dao.RatioPresetDao
 import com.adsamcik.starlitcoffee.data.db.dao.RecipeDao
+import com.adsamcik.starlitcoffee.data.db.dao.CupPresetDao
+import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CupPresetEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.GrinderEntity
 import com.adsamcik.starlitcoffee.data.db.entity.RatioPresetEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
+import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
 
 @Database(
     entities = [
@@ -28,8 +32,10 @@ import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
         GrinderEntity::class,
         RatioPresetEntity::class,
         FlavorTagEntity::class,
+        UserBarcodeStemEntity::class,
+        CupPresetEntity::class,
     ],
-    version = 12,
+    version = 14,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -40,6 +46,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun grinderDao(): GrinderDao
     abstract fun ratioPresetDao(): RatioPresetDao
     abstract fun flavorTagDao(): FlavorTagDao
+    abstract fun userBarcodeStemDao(): UserBarcodeStemDao
+    abstract fun cupPresetDao(): CupPresetDao
 
     companion object {
         @Volatile
@@ -99,6 +107,40 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_12_13 = object : Migration(12, 13) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """CREATE TABLE IF NOT EXISTS user_barcode_stems (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        prefix TEXT NOT NULL,
+                        roasterName TEXT NOT NULL,
+                        observationCount INTEGER NOT NULL DEFAULT 1,
+                        confidence TEXT NOT NULL DEFAULT 'LOW',
+                        firstSeenAt INTEGER NOT NULL,
+                        lastSeenAt INTEGER NOT NULL
+                    )""",
+                )
+                db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_user_barcode_stems_prefix ON user_barcode_stems(prefix)")
+            }
+        }
+
+        internal val MIGRATION_13_14 = object : Migration(13, 14) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """CREATE TABLE IF NOT EXISTS cup_presets (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        name TEXT NOT NULL,
+                        iconName TEXT NOT NULL,
+                        doseG REAL NOT NULL,
+                        waterMl REAL NOT NULL,
+                        sortOrder INTEGER NOT NULL DEFAULT 0,
+                        isDefault INTEGER NOT NULL DEFAULT 0,
+                        colorHex TEXT
+                    )""",
+                )
+            }
+        }
+
         // TODO: Replace with Hilt @Provides when DI is adopted
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -114,6 +156,8 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_9_10,
                     MIGRATION_10_11,
                     MIGRATION_11_12,
+                    MIGRATION_12_13,
+                    MIGRATION_13_14,
                 )
                     .fallbackToDestructiveMigration(true)
                     .build().also { INSTANCE = it }

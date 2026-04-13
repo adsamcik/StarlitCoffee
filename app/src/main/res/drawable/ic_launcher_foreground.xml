@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Cup rim — caramel gold accent bar -->
+    <path
+        android:fillColor="#E5C56D"
+        android:pathData="M 33,46 L 75,46 L 75,52 L 33,52 Z" />
+
+    <!-- Cup body — warm cream, tapered with rounded bottom -->
+    <path
+        android:fillColor="#FFF8F5"
+        android:pathData="M 35,52 L 73,52 L 69,76 C 66,84 42,84 39,76 Z" />
+
+    <!-- Cup handle — cream stroke arc -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFF8F5"
+        android:strokeWidth="4"
+        android:pathData="M 72,56 C 83,56 83,70 70,70" />
+
+    <!-- Star 1 — large, center, light gold -->
+    <path
+        android:fillColor="#FDECC8"
+        android:pathData="M 54,26 L 56.8,31.2 L 62,34 L 56.8,36.8 L 54,42 L 51.2,36.8 L 46,34 L 51.2,31.2 Z" />
+
+    <!-- Star 2 — medium, upper-left, warm rose -->
+    <path
+        android:fillColor="#EFB8C8"
+        android:pathData="M 39,22.5 L 40.9,26.1 L 44.5,28 L 40.9,29.9 L 39,33.5 L 37.1,29.9 L 33.5,28 L 37.1,26.1 Z" />
+
+    <!-- Star 3 — small, upper-right, white -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 67,22.5 L 68.2,24.8 L 70.5,26 L 68.2,27.2 L 67,29.5 L 65.8,27.2 L 63.5,26 L 65.8,24.8 Z" />
+
+</vector>

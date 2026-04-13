@@ -123,7 +123,7 @@ object MindlayerConnectionTester {
             var tokenCount = 0
             val startMs = System.currentTimeMillis()
 
-            mindlayer.chat(sessionId, prompt).collect { event ->
+            mindlayer.chat(sessionId, prompt).events.collect { event ->
                 when (event) {
                     is MindlayerEvent.TextDelta -> {
                         responseText.append(event.text)

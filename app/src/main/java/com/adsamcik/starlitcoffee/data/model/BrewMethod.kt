@@ -14,6 +14,7 @@ enum class BrewMethod(
     val hasPulses: Boolean,
     val capacityMaxG: Int?,
     val defaultGrindDescriptor: GrindDescriptor,
+    val bloomDurationSeconds: Int = 45,
 ) {
     PULSAR(
         displayName = "Pulsar",
