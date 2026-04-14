@@ -177,14 +177,27 @@ class LiveScanViewModel(
             try {
                 llmProvider.let { provider ->
                     if (provider is MindlayerLlmInferenceProvider) {
+                        _liveScanUiState.value = _liveScanUiState.value.copy(
+                            llmStatus = LlmUiStatus.CONNECTING,
+                        )
                         perfTracer?.startTimer("service_connect_ms")
                         provider.ensureConnected()
                         perfTracer?.stopTimer("service_connect_ms")
+                        _liveScanUiState.value = _liveScanUiState.value.copy(
+                            llmStatus = LlmUiStatus.WAITING,
+                        )
+                    } else if (provider.isAvailable()) {
+                        _liveScanUiState.value = _liveScanUiState.value.copy(
+                            llmStatus = LlmUiStatus.WAITING,
+                        )
                     }
                 }
             } catch (e: Exception) {
                 perfTracer?.stopTimer("service_connect_ms")
                 Log.w("LiveScanVM", "LLM pre-warm failed: ${e.message}")
+                _liveScanUiState.value = _liveScanUiState.value.copy(
+                    llmStatus = LlmUiStatus.UNAVAILABLE,
+                )
             }
         }
 
@@ -522,7 +535,16 @@ class LiveScanViewModel(
         jpegBytes: ByteArray,
         ocrResult: OcrExtractionResult,
     ) {
-        if (!llmProvider.isAvailable()) return
+        if (!llmProvider.isAvailable()) {
+            _liveScanUiState.value = _liveScanUiState.value.copy(
+                llmStatus = LlmUiStatus.UNAVAILABLE,
+            )
+            return
+        }
+
+        _liveScanUiState.value = _liveScanUiState.value.copy(
+            llmStatus = LlmUiStatus.PROCESSING,
+        )
 
         val fieldsNeeded = config.allFields
 
@@ -592,6 +614,21 @@ class LiveScanViewModel(
                     )
                 }
             }
+        }
+
+        // Update LLM UI status based on results
+        val allContributed = (ocrFields.keys + imgFields.keys).toSet()
+        val anySuccess = ocrImageResult is LlmExtractionResult.Success ||
+            imageOnlyResult is LlmExtractionResult.Success
+        if (anySuccess) {
+            _liveScanUiState.value = _liveScanUiState.value.copy(
+                llmStatus = LlmUiStatus.COMPLETED,
+                llmContributedFields = _liveScanUiState.value.llmContributedFields + allContributed,
+            )
+        } else {
+            _liveScanUiState.value = _liveScanUiState.value.copy(
+                llmStatus = LlmUiStatus.FAILED,
+            )
         }
     }
 
@@ -719,7 +756,12 @@ class LiveScanViewModel(
     // --- LLM escalation ---
 
     private suspend fun handleLlmEscalation(escalation: LlmEscalationRequest) {
-        if (!llmProvider.isAvailable()) return
+        if (!llmProvider.isAvailable()) {
+            _liveScanUiState.value = _liveScanUiState.value.copy(
+                llmStatus = LlmUiStatus.UNAVAILABLE,
+            )
+            return
+        }
         val bytes = escalation.goldenFrameBytes
         if (bytes == null) {
             android.util.Log.d("LiveScan", "LLM escalation: no golden frame bytes available")
@@ -735,9 +777,18 @@ class LiveScanViewModel(
         val imageHash = bytes.contentHashCode()
         val cached = llmCache.get(imageHash)
         if (cached != null) {
+            val contributedFields = cached.fieldCandidates.map { it.fieldName }.toSet()
+            _liveScanUiState.value = _liveScanUiState.value.copy(
+                llmStatus = LlmUiStatus.COMPLETED,
+                llmContributedFields = _liveScanUiState.value.llmContributedFields + contributedFields,
+            )
             feedLlmResultsToAccumulator(cached.fieldCandidates)
             return
         }
+
+        _liveScanUiState.value = _liveScanUiState.value.copy(
+            llmStatus = LlmUiStatus.PROCESSING,
+        )
 
         val request = LlmExtractionRequest(
             imageBytes = bytes,
@@ -755,18 +806,29 @@ class LiveScanViewModel(
                 lastLlmSuccess = true
                 lastLlmTokensUsed = result.tokensUsed
                 llmCache.put(imageHash, result)
+                val contributedFields = result.fieldCandidates.map { it.fieldName }.toSet()
+                _liveScanUiState.value = _liveScanUiState.value.copy(
+                    llmStatus = LlmUiStatus.COMPLETED,
+                    llmContributedFields = _liveScanUiState.value.llmContributedFields + contributedFields,
+                )
                 feedLlmResultsToAccumulator(result.fieldCandidates)
             }
             is LlmExtractionResult.Unavailable -> {
                 lastLlmLatencyMs = System.currentTimeMillis() - startMs
                 perfTracer?.stopTimer("llm_total_ms")
                 lastLlmSuccess = false
+                _liveScanUiState.value = _liveScanUiState.value.copy(
+                    llmStatus = LlmUiStatus.UNAVAILABLE,
+                )
                 android.util.Log.d("LiveScan", "LLM escalation: unavailable — ${result.reason}")
             }
             is LlmExtractionResult.Failed -> {
                 lastLlmLatencyMs = System.currentTimeMillis() - startMs
                 perfTracer?.stopTimer("llm_total_ms")
                 lastLlmSuccess = false
+                _liveScanUiState.value = _liveScanUiState.value.copy(
+                    llmStatus = LlmUiStatus.FAILED,
+                )
                 android.util.Log.d("LiveScan", "LLM escalation: failed — ${result.error}")
             }
         }
@@ -928,6 +990,19 @@ data class CrossValidationWarning(
 )
 
 /**
+ * Visible status of the LLM subsystem during a live scan session.
+ */
+enum class LlmUiStatus {
+    IDLE,          // Not yet triggered
+    CONNECTING,    // Pre-warming / connecting to service
+    WAITING,       // Connected, trigger conditions not yet met
+    PROCESSING,    // LLM inference in progress
+    COMPLETED,     // LLM returned results
+    FAILED,        // LLM failed
+    UNAVAILABLE,   // Mindlayer not installed or not connected
+}
+
+/**
  * UI state for the live scan screen (not the accumulated evidence —
  * that comes from [FrameEvidenceAccumulator.evidence]).
  */
@@ -938,6 +1013,8 @@ data class LiveScanUiState(
     val goldenFrameCount: Int = 0,
     val lastRejectionReason: String? = null,
     val barcodeDetectedMessage: String? = null,
+    val llmStatus: LlmUiStatus = LlmUiStatus.IDLE,
+    val llmContributedFields: Set<String> = emptySet(),
 )
 
 /** Levenshtein edit distance between two strings. */

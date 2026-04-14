@@ -39,11 +39,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -90,6 +93,7 @@ import com.adsamcik.starlitcoffee.ui.component.ScanDebugOverlay
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CrossValidationWarning
 import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
+import com.adsamcik.starlitcoffee.viewmodel.LlmUiStatus
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -357,6 +361,15 @@ fun LiveScanScreen(
             )
         }
 
+        // LLM status chip — always visible, compact
+        LlmStatusChip(
+            status = uiState.llmStatus,
+            contributedFields = uiState.llmContributedFields,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(start = 16.dp, top = 56.dp),
+        )
+
         // Manual capture fallback button (center-right)
         ManualCaptureButton(
             onClick = {
@@ -382,6 +395,7 @@ fun LiveScanScreen(
             evidence = evidence,
             guidance = evidence.guidance,
             isDraftReady = liveScanViewModel.isDraftReady(),
+            llmContributedFields = uiState.llmContributedFields,
             onResolveConflict = liveScanViewModel::resolveConflict,
             onResetField = liveScanViewModel::resetField,
             onQuickSave = {
@@ -504,6 +518,7 @@ private fun BottomOverlay(
     evidence: AccumulatedEvidence,
     guidance: ScanGuidance?,
     isDraftReady: Boolean,
+    llmContributedFields: Set<String>,
     onResolveConflict: (String, String) -> Unit,
     onResetField: (String) -> Unit,
     onQuickSave: () -> Unit,
@@ -561,6 +576,7 @@ private fun BottomOverlay(
                 .forEach { field ->
                     FieldChip(
                         field = field,
+                        isLlmContributed = field.fieldName in llmContributedFields,
                         onResolveConflict = onResolveConflict,
                         onReset = onResetField,
                     )
@@ -729,6 +745,7 @@ private fun CrossValidationBanner(
 @Composable
 private fun FieldChip(
     field: FieldAccumulation,
+    isLlmContributed: Boolean,
     onResolveConflict: (String, String) -> Unit,
     onReset: (String) -> Unit,
 ) {
@@ -814,6 +831,17 @@ private fun FieldChip(
                     contentDescription = "Confirmed",
                     tint = READY_COLOR,
                     modifier = Modifier.size(14.dp),
+                )
+            }
+
+            // AI sparkle for LLM-contributed fields
+            if (isLlmContributed) {
+                Spacer(modifier = Modifier.width(2.dp))
+                Icon(
+                    Icons.Default.AutoAwesome,
+                    contentDescription = "AI contributed",
+                    tint = Color(0xFF90CAF9),
+                    modifier = Modifier.size(12.dp),
                 )
             }
         }
@@ -925,6 +953,86 @@ private fun ManualCaptureButton(
                 contentDescription = null,
                 tint = Color.White.copy(alpha = 0.6f),
                 modifier = Modifier.size(22.dp),
+            )
+        }
+    }
+}
+
+// --- LLM Status Chip ---
+
+private val LLM_COLOR_CONNECTING = Color(0xFFFFC107)
+private val LLM_COLOR_WAITING = Color.Gray.copy(alpha = 0.7f)
+private val LLM_COLOR_PROCESSING = Color(0xFF2196F3)
+private val LLM_COLOR_COMPLETED = Color(0xFF4CAF50)
+private val LLM_COLOR_FAILED = Color(0xFFF44336)
+private val LLM_COLOR_UNAVAILABLE = Color.Gray.copy(alpha = 0.4f)
+
+@Composable
+private fun LlmStatusChip(
+    status: LlmUiStatus,
+    contributedFields: Set<String>,
+    modifier: Modifier = Modifier,
+) {
+    if (status == LlmUiStatus.IDLE) return
+
+    val (label, color) = when (status) {
+        LlmUiStatus.IDLE -> "" to Color.Gray
+        LlmUiStatus.CONNECTING -> "AI connecting…" to LLM_COLOR_CONNECTING
+        LlmUiStatus.WAITING -> "AI ready" to LLM_COLOR_WAITING
+        LlmUiStatus.PROCESSING -> "AI analyzing…" to LLM_COLOR_PROCESSING
+        LlmUiStatus.COMPLETED -> "AI: +${contributedFields.size} fields" to LLM_COLOR_COMPLETED
+        LlmUiStatus.FAILED -> "AI failed" to LLM_COLOR_FAILED
+        LlmUiStatus.UNAVAILABLE -> "AI unavailable" to LLM_COLOR_UNAVAILABLE
+    }
+
+    Surface(
+        shape = RoundedCornerShape(16.dp),
+        color = Color.Black.copy(alpha = 0.6f),
+        modifier = modifier,
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+        ) {
+            when (status) {
+                LlmUiStatus.PROCESSING -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(12.dp),
+                        color = color,
+                        strokeWidth = 1.5.dp,
+                    )
+                }
+                LlmUiStatus.COMPLETED -> {
+                    Icon(
+                        Icons.Default.Check,
+                        contentDescription = null,
+                        tint = color,
+                        modifier = Modifier.size(14.dp),
+                    )
+                }
+                LlmUiStatus.FAILED -> {
+                    Icon(
+                        Icons.Default.Close,
+                        contentDescription = null,
+                        tint = color,
+                        modifier = Modifier.size(14.dp),
+                    )
+                }
+                else -> {
+                    Icon(
+                        Icons.Default.AutoAwesome,
+                        contentDescription = null,
+                        tint = color,
+                        modifier = Modifier.size(14.dp),
+                    )
+                }
+            }
+            Spacer(Modifier.width(4.dp))
+            Text(
+                text = label,
+                color = color,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
             )
         }
     }
