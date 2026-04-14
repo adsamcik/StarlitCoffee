@@ -3,17 +3,9 @@ package com.adsamcik.starlitcoffee.ui.util
 import androidx.annotation.StringRes
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.InputMode
-import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 
 // --- TasteFeedback ---
-
-fun PhaseType.emoji(): String = when (this) {
-    PhaseType.BLOOM -> "🌱"
-    PhaseType.POUR -> "💧"
-    PhaseType.DRAIN_AND_REFILL -> "🔄"
-    PhaseType.DRAWDOWN -> "⏬"
-}
 
 @StringRes
 fun TasteFeedback.displayNameRes(): Int = when (this) {

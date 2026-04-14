@@ -11,8 +11,6 @@ import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
 import com.adsamcik.starlitcoffee.data.model.InputMode
-import com.adsamcik.starlitcoffee.data.model.PhaseMode
-import com.adsamcik.starlitcoffee.data.model.PhaseType
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
@@ -257,28 +255,6 @@ class BrewViewModelTest {
         assertEquals(2, state.refillCount)
     }
 
-    @Test
-    fun `timer phases include drain phases for large dose`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.setAmount("40") // 40 * 17 = 680g → needs refill
-
-        val phases = viewModel.uiState.value.timerPhases
-        val drainPhases = phases.filter { it.phaseType == PhaseType.DRAIN_AND_REFILL }
-        assertTrue(drainPhases.isNotEmpty())
-    }
-
-    @Test
-    fun `no drain phases when within capacity`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.setAmount("20") // 20 * 17 = 340g → within 380g
-
-        val phases = viewModel.uiState.value.timerPhases
-        val drainPhases = phases.filter { it.phaseType == PhaseType.DRAIN_AND_REFILL }
-        assertTrue(drainPhases.isEmpty())
-    }
-
     // --- Guardrail Warnings ---
 
     @Test
@@ -375,206 +351,6 @@ class BrewViewModelTest {
         val widenedWidth = widened.recommendation.rangeEnd - widened.recommendation.rangeStart
 
         assertTrue(widenedWidth > baseWidth)
-    }
-
-    // --- Timer Phases ---
-
-    @Test
-    fun `timer phases for bloom and pulse method`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.setAmount("20")
-
-        val phases = viewModel.uiState.value.timerPhases
-        assertTrue(phases.isNotEmpty())
-        assertEquals(PhaseType.BLOOM, phases.first().phaseType)
-        assertEquals(PhaseType.DRAWDOWN, phases.last().phaseType)
-        assertEquals(
-            listOf(PhaseType.BLOOM, PhaseType.BLOOM, PhaseType.BLOOM, PhaseType.BLOOM),
-            phases.take(4).map { it.phaseType },
-        )
-        // 4 bloom sub-phases + 5 pours + drawdown = 10 phases
-        assertEquals(10, phases.size)
-    }
-
-    @Test
-    fun `multi-fill phases when Pulsar exceeds capacity`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.setAmount("25") // 25 * 17 = 425g > 380g capacity
-
-        val phases = viewModel.uiState.value.timerPhases
-        // 4 bloom sub-phases + 4 pours fit + Drain + Pour 5/5 + Drawdown = 11
-        assertEquals(11, phases.size)
-        assertEquals(PhaseType.BLOOM, phases[0].phaseType)
-        assertEquals(PhaseType.POUR, phases[7].phaseType)
-        assertEquals(PhaseType.DRAIN_AND_REFILL, phases[8].phaseType)
-        assertEquals(PhaseType.POUR, phases[9].phaseType)
-        assertEquals(PhaseType.DRAWDOWN, phases.last().phaseType)
-    }
-
-    @Test
-    fun `Pulsar bloom splits into guided sub phases`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.setAmount("20")
-
-        val bloomPhases = viewModel.uiState.value.timerPhases.take(4)
-        assertEquals(
-            listOf(PhaseType.BLOOM, PhaseType.BLOOM, PhaseType.BLOOM, PhaseType.BLOOM),
-            bloomPhases.map { it.phaseType },
-        )
-        assertEquals(listOf(60f, 0f, 0f, 0f), bloomPhases.map { it.waterG })
-        assertEquals(
-            listOf(
-                PhaseMode.EVENT_GATED,
-                PhaseMode.AUTO_TIMED,
-                PhaseMode.EVENT_GATED,
-                PhaseMode.AUTO_TIMED,
-            ),
-            bloomPhases.map { it.mode },
-        )
-    }
-
-    @Test
-    fun `timer phases for immersion method`() {
-        viewModel.setMethod(BrewMethod.FRENCH_PRESS)
-        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
-        viewModel.setAmount("30")
-
-        val phases = viewModel.uiState.value.timerPhases
-        assertTrue(phases.isNotEmpty())
-        assertEquals(PhaseType.POUR, phases.first().phaseType)
-        assertEquals(PhaseType.DRAWDOWN, phases.last().phaseType)
-    }
-
-    // --- Elastic Drift & Phase Modes ---
-
-    @Test
-    fun `buildTimerPhases assigns PhaseType to all phases`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setAmount("20")
-
-        val phases = viewModel.uiState.value.timerPhases
-        for (phase in phases) {
-            assertNotNull(phase.phaseType)
-            assertNotNull(phase.mode)
-        }
-    }
-
-    @Test
-    fun `Pulsar bloom pour is EVENT_GATED`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setAmount("20")
-
-        val bloom = viewModel.uiState.value.timerPhases.first()
-        assertEquals(PhaseType.BLOOM, bloom.phaseType)
-        assertEquals(PhaseMode.EVENT_GATED, bloom.mode)
-    }
-
-    @Test
-    fun `Pulsar bloom wait sub phases are AUTO_TIMED`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setAmount("20")
-
-        val bloomPhases = viewModel.uiState.value.timerPhases.take(4)
-        assertEquals(PhaseMode.AUTO_TIMED, bloomPhases[1].mode) // Saturate
-        assertEquals(PhaseMode.AUTO_TIMED, bloomPhases[3].mode) // Steep
-    }
-
-    @Test
-    fun `V60 bloom is TIMED`() {
-        viewModel.setMethod(BrewMethod.V60)
-        viewModel.setAmount("20")
-
-        val bloom = viewModel.uiState.value.timerPhases.first()
-        assertEquals(PhaseType.BLOOM, bloom.phaseType)
-        assertEquals(PhaseMode.TIMED, bloom.mode)
-    }
-
-    @Test
-    fun `Pulsar drawdown is EVENT_GATED`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setAmount("20")
-
-        val drawdown = viewModel.uiState.value.timerPhases.last()
-        assertEquals(PhaseType.DRAWDOWN, drawdown.phaseType)
-        assertEquals(PhaseMode.EVENT_GATED, drawdown.mode)
-    }
-
-    @Test
-    fun `Pulsar drain phases are EVENT_GATED`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setAmount("25") // Triggers drain
-
-        val drainPhases = viewModel.uiState.value.timerPhases
-            .filter { it.phaseType == PhaseType.DRAIN_AND_REFILL }
-        assertTrue(drainPhases.isNotEmpty())
-        for (drain in drainPhases) {
-            assertEquals(PhaseMode.EVENT_GATED, drain.mode)
-        }
-    }
-
-    @Test
-    fun `pour phases are TIMED`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setAmount("20")
-
-        val pourPhases = viewModel.uiState.value.timerPhases
-            .filter { it.phaseType == PhaseType.POUR }
-        assertTrue(pourPhases.isNotEmpty())
-        for (pour in pourPhases) {
-            assertEquals(PhaseMode.TIMED, pour.mode)
-        }
-    }
-
-    @Test
-    fun `pour phases are never AUTO_TIMED`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setAmount("20")
-
-        val pourPhases = viewModel.uiState.value.timerPhases
-            .filter { it.phaseType == PhaseType.POUR }
-        assertTrue(pourPhases.isNotEmpty())
-        for (pour in pourPhases) {
-            assertTrue(
-                "Pour phase '${pour.name}' must not be AUTO_TIMED (waterG=${pour.waterG})",
-                pour.mode != PhaseMode.AUTO_TIMED,
-            )
-        }
-    }
-
-    @Test
-    fun `rebalancing preserves phase order and count`() {
-        viewModel.setMethod(BrewMethod.PULSAR)
-        viewModel.setAmount("20")
-
-        val originalPhases = viewModel.uiState.value.timerPhases
-        val originalSize = originalPhases.size
-        val originalNames = originalPhases.map { it.name }
-
-        // Simulate advancing from phase 0 with drift
-        viewModel.startTimer()
-        viewModel.advancePhase()
-
-        val updatedPhases = viewModel.uiState.value.timerPhases
-        assertEquals(originalSize, updatedPhases.size)
-        assertEquals(originalNames, updatedPhases.map { it.name })
-        viewModel.stopTimer()
-    }
-
-    @Test
-    fun `rebalancing respects 50 percent minimum guardrail`() {
-        viewModel.setMethod(BrewMethod.V60)
-        viewModel.setAmount("20")
-
-        val phases = viewModel.uiState.value.timerPhases
-        val pourPhases = phases.filter { it.phaseType == PhaseType.POUR }
-        for (pour in pourPhases) {
-            // Even after heavy rebalancing, no phase should ever be less than 50% of original
-            val minDuration = (pour.durationSeconds / 2).coerceAtLeast(1)
-            assertTrue(pour.durationSeconds >= minDuration)
-        }
     }
 
     // --- Method Defaults ---
@@ -1602,6 +1378,90 @@ class BrewViewModelTest {
         val state = viewModel.uiState.value
         assertEquals(0f, state.retainedWaterG, 0.01f)
         assertEquals(0f, state.predictedCupVolumeG, 0.01f)
+    }
+
+    // --- Effective Bloom Duration (roast-date aware) ---
+
+    @Test
+    fun `effectiveBloomDuration defaults to method value without bag`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        assertEquals(45, viewModel.uiState.value.effectiveBloomDurationSeconds)
+    }
+
+    @Test
+    fun `effectiveBloomDuration defaults to method value for non-bloom method`() {
+        viewModel.setMethod(BrewMethod.FRENCH_PRESS)
+        assertEquals(BrewMethod.FRENCH_PRESS.bloomDurationSeconds, viewModel.uiState.value.effectiveBloomDurationSeconds)
+    }
+
+    @Test
+    fun `effectiveBloomDuration increases for very fresh coffee`() {
+        val vm = createPersistenceViewModel()
+        vm.setMethod(BrewMethod.PULSAR)
+        vm.setAmount("20")
+
+        val threeDaysAgo = System.currentTimeMillis() - 3 * 86_400_000L
+        vm.addCoffeeBag(name = "Fresh Bag", roastDate = threeDaysAgo)
+        val bagId = vm.coffeeBags.value.first().id
+        vm.selectBag(bagId)
+
+        assertEquals(55, vm.uiState.value.effectiveBloomDurationSeconds)
+    }
+
+    @Test
+    fun `effectiveBloomDuration stays default for normally rested coffee`() {
+        val vm = createPersistenceViewModel()
+        vm.setMethod(BrewMethod.PULSAR)
+        vm.setAmount("20")
+
+        val fourteenDaysAgo = System.currentTimeMillis() - 14 * 86_400_000L
+        vm.addCoffeeBag(name = "Normal Bag", roastDate = fourteenDaysAgo)
+        val bagId = vm.coffeeBags.value.first().id
+        vm.selectBag(bagId)
+
+        assertEquals(45, vm.uiState.value.effectiveBloomDurationSeconds)
+    }
+
+    @Test
+    fun `effectiveBloomDuration decreases for older coffee`() {
+        val vm = createPersistenceViewModel()
+        vm.setMethod(BrewMethod.PULSAR)
+        vm.setAmount("20")
+
+        val thirtyDaysAgo = System.currentTimeMillis() - 30 * 86_400_000L
+        vm.addCoffeeBag(name = "Old Bag", roastDate = thirtyDaysAgo)
+        val bagId = vm.coffeeBags.value.first().id
+        vm.selectBag(bagId)
+
+        assertEquals(35, vm.uiState.value.effectiveBloomDurationSeconds)
+    }
+
+    @Test
+    fun `effectiveBloomDuration clamped to 60 max`() {
+        val vm = createPersistenceViewModel()
+        vm.setMethod(BrewMethod.V60)
+        vm.setAmount("20")
+
+        val oneDayAgo = System.currentTimeMillis() - 1 * 86_400_000L
+        vm.addCoffeeBag(name = "Super Fresh", roastDate = oneDayAgo)
+        val bagId = vm.coffeeBags.value.first().id
+        vm.selectBag(bagId)
+
+        assertTrue(vm.uiState.value.effectiveBloomDurationSeconds <= 60)
+    }
+
+    @Test
+    fun `effectiveBloomDuration clamped to 30 min`() {
+        val vm = createPersistenceViewModel()
+        vm.setMethod(BrewMethod.PULSAR)
+        vm.setAmount("20")
+
+        val ninetyDaysAgo = System.currentTimeMillis() - 90 * 86_400_000L
+        vm.addCoffeeBag(name = "Very Old Bag", roastDate = ninetyDaysAgo)
+        val bagId = vm.coffeeBags.value.first().id
+        vm.selectBag(bagId)
+
+        assertTrue(vm.uiState.value.effectiveBloomDurationSeconds >= 30)
     }
 }
 
