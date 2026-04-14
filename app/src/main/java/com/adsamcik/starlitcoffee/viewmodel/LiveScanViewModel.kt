@@ -474,6 +474,127 @@ class LiveScanViewModel(
         )
     }
 
+    /**
+     * Handle manual capture with burst-selected best frame.
+     * Fires TWO sequential LLM paths for comparison:
+     *   1. OCR+image (existing enrichment path)
+     *   2. Image-only (no OCR hints, for benchmarking)
+     * Results are logged for benchmarking OCR+LLM vs LLM-only.
+     */
+    fun onManualCapture(
+        jpegBytes: ByteArray,
+        quality: BagCaptureQuality,
+        ocrResult: OcrExtractionResult,
+    ) {
+        if (!isStarted) return
+
+        // Submit as golden frame (existing path — feeds OCR into accumulator)
+        val frame = FrameResult(
+            ocrResult = ocrResult,
+            quality = quality,
+            frameIndex = frameIndex++,
+            timestampMs = System.currentTimeMillis(),
+            isGoldenFrame = true,
+        )
+        accumulator?.submitGoldenFrame(frame)
+        onGoldenFrameCapture(jpegBytes, quality, ocrResult)
+
+        _liveScanUiState.value = _liveScanUiState.value.copy(
+            goldenFrameCount = _liveScanUiState.value.goldenFrameCount + 1,
+            lastRejectionReason = null,
+        )
+
+        // Fire dual LLM paths sequentially (shared session prevents parallelism)
+        viewModelScope.launch {
+            fireDualLlmPaths(jpegBytes, ocrResult)
+        }
+    }
+
+    /**
+     * Run two sequential LLM extraction passes on the same image:
+     * 1. OCR+Image (full context — OCR text, existing fields, known values)
+     * 2. Image-only (no OCR, no grounding — pure vision)
+     *
+     * Sequential because MindlayerLlmInferenceProvider shares a single session.
+     * Results are logged for comparison and fed into the accumulator.
+     */
+    private suspend fun fireDualLlmPaths(
+        jpegBytes: ByteArray,
+        ocrResult: OcrExtractionResult,
+    ) {
+        if (!llmProvider.isAvailable()) return
+
+        val fieldsNeeded = config.allFields
+
+        // PATH 1: OCR+Image (full context)
+        val ocrImageRequest = LlmExtractionRequest(
+            imageBytes = jpegBytes,
+            existingFields = emptyMap(),
+            fieldsNeeded = fieldsNeeded,
+            rawOcrText = ocrResult.rawText.takeIf { it.isNotBlank() },
+            knownFieldValues = currentKnownValues,
+        )
+        val ocrStartMs = System.currentTimeMillis()
+        val ocrImageResult = llmProvider.extractBagFields(ocrImageRequest)
+        val ocrLatencyMs = System.currentTimeMillis() - ocrStartMs
+
+        // PATH 2: Image-only (no OCR hints)
+        val imageOnlyRequest = LlmExtractionRequest(
+            imageBytes = jpegBytes,
+            existingFields = emptyMap(),
+            fieldsNeeded = fieldsNeeded,
+            rawOcrText = null,
+            knownFieldValues = null,
+        )
+        val imgStartMs = System.currentTimeMillis()
+        val imageOnlyResult = llmProvider.extractBagFields(imageOnlyRequest)
+        val imgLatencyMs = System.currentTimeMillis() - imgStartMs
+
+        // Log comparison for benchmarking
+        val ocrFields = (ocrImageResult as? LlmExtractionResult.Success)
+            ?.fieldCandidates?.associate { it.fieldName to it.value } ?: emptyMap()
+        val imgFields = (imageOnlyResult as? LlmExtractionResult.Success)
+            ?.fieldCandidates?.associate { it.fieldName to it.value } ?: emptyMap()
+
+        Log.i("ManualCapture", buildString {
+            append("=== DUAL LLM COMPARISON ===\n")
+            append("OCR+Image (${ocrLatencyMs}ms): $ocrFields\n")
+            append("Image-only (${imgLatencyMs}ms): $imgFields\n")
+            val allFields = (ocrFields.keys + imgFields.keys).distinct()
+            append("Differences:\n")
+            for (field in allFields) {
+                val ocrVal = ocrFields[field]
+                val imgVal = imgFields[field]
+                if (ocrVal != imgVal) {
+                    append("  $field: OCR+IMG='$ocrVal' vs IMG='$imgVal'\n")
+                }
+            }
+        })
+
+        // Feed OCR+Image results into the accumulator (primary path)
+        if (ocrImageResult is LlmExtractionResult.Success) {
+            feedLlmResultsToAccumulator(ocrImageResult.fieldCandidates)
+        }
+
+        // Feed image-only results as low-weight fallback for fields OCR+Image missed
+        if (imageOnlyResult is LlmExtractionResult.Success) {
+            val ocrResolvedFields = ocrFields.keys
+            val imageOnlyNew = imageOnlyResult.fieldCandidates
+                .filter { it.fieldName !in ocrResolvedFields }
+            if (imageOnlyNew.isNotEmpty()) {
+                val fallbackValues = imageOnlyNew
+                    .associate { it.fieldName to it.value }
+                    .filter { it.value.isNotBlank() }
+                if (fallbackValues.isNotEmpty()) {
+                    accumulator?.submitEnrichment(
+                        fieldValues = fallbackValues,
+                        sourceType = BagFieldSourceType.OCR,
+                    )
+                }
+            }
+        }
+    }
+
     // --- Enrichment ---
 
     /**

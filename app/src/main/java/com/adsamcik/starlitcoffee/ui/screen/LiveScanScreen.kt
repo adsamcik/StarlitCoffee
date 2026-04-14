@@ -176,6 +176,7 @@ fun LiveScanScreen(
             BagCaptureQuality(0f, 0f, 0f, 0f, 0, false),
         )
     }
+    var analyzerRef by remember { mutableStateOf<LiveScanAnalyzer?>(null) }
 
     DisposableEffect(cameraController, analysisExecutor) {
         val mainHandler = android.os.Handler(android.os.Looper.getMainLooper())
@@ -208,10 +209,12 @@ fun LiveScanScreen(
             throttleMsProvider = { liveScanViewModel.currentThrottleMs.value },
             perfTracer = liveScanViewModel.perfTracer,
         )
+        analyzerRef = analyzer
 
         cameraController.setImageAnalysisAnalyzer(analysisExecutor, analyzer)
 
         onDispose {
+            analyzerRef = null
             cameraController.clearImageAnalysisAnalyzer()
             analysisExecutor.shutdown()
             textRecognizer.close()
@@ -357,8 +360,17 @@ fun LiveScanScreen(
         // Manual capture fallback button (center-right)
         ManualCaptureButton(
             onClick = {
-                // Force-submit the latest OCR result, bypassing all gating
-                liveScanViewModel.forceCapture(latestOcrResult, latestQuality)
+                // Start a burst capture — collect ~5 frames, pick sharpest
+                analyzerRef?.startBurst { bestJpeg, quality ->
+                    liveScanViewModel.onManualCapture(
+                        jpegBytes = bestJpeg,
+                        quality = quality,
+                        ocrResult = latestOcrResult,
+                    )
+                } ?: run {
+                    // Fallback if analyzer not available yet
+                    liveScanViewModel.forceCapture(latestOcrResult, latestQuality)
+                }
             },
             modifier = Modifier
                 .align(Alignment.CenterEnd)
@@ -983,6 +995,23 @@ private class LiveScanAnalyzer(
     @Volatile
     private var barcodeDetected = false
 
+    // --- Burst capture state ---
+    @Volatile
+    private var burstMode = false
+    @Volatile
+    private var burstFrames = mutableListOf<Pair<ByteArray, BagCaptureQuality>>()
+    @Volatile
+    private var burstCallback: ((bestJpeg: ByteArray, quality: BagCaptureQuality) -> Unit)? = null
+    @Volatile
+    private var burstStartMs = 0L
+
+    fun startBurst(callback: (bestJpeg: ByteArray, quality: BagCaptureQuality) -> Unit) {
+        burstFrames.clear()
+        burstCallback = callback
+        burstStartMs = android.os.SystemClock.elapsedRealtime()
+        burstMode = true
+    }
+
     private var analyzeCallCount = 0
     private var lastAnalyzeNanos = 0L
 
@@ -1021,6 +1050,27 @@ private class LiveScanAnalyzer(
         if (analyzeCallCount <= 5 || analyzeCallCount % 30 == 0) {
             android.util.Log.d("LiveScanAnalyzer", "Quality: blur=${quality.blurScore}, " +
                 "glare=${quality.glarePercent}, overExp=${quality.overexposedPercent}")
+        }
+
+        // Burst mode: encode every frame regardless of quality gate
+        if (burstMode) {
+            val jpeg = encodeToJpeg(image)
+            if (jpeg != null) {
+                burstFrames.add(jpeg to quality)
+            }
+            val elapsed = android.os.SystemClock.elapsedRealtime() - burstStartMs
+            if (burstFrames.size >= 5 || elapsed >= 500) {
+                val best = burstFrames.maxByOrNull { it.second.blurScore }
+                burstMode = false
+                val cb = burstCallback
+                burstCallback = null
+                if (best != null && cb != null) {
+                    cb(best.first, best.second)
+                }
+                burstFrames.clear()
+            }
+            image.close()
+            return
         }
 
         // Pre-encode JPEG only for golden frame candidates (expensive — skip for regular frames)
