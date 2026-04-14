@@ -45,12 +45,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
@@ -70,8 +72,8 @@ import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.util.RankedBagSuggestion
-import com.adsamcik.starlitcoffee.ui.util.shortLabel
-import com.adsamcik.starlitcoffee.ui.util.description
+import com.adsamcik.starlitcoffee.ui.util.shortLabelRes
+import com.adsamcik.starlitcoffee.ui.util.descriptionRes
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -143,23 +145,26 @@ fun MethodPickerScreen(
                     modifier = Modifier.semantics { heading() },
                 )
                 Text(
-                    text = "Configure your brew",
+                    text = stringResource(R.string.screen_method_picker_title),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                val noFilterLabel = stringResource(R.string.label_no_filter)
+                val decafSuffix = stringResource(R.string.label_decaf_suffix)
                 Text(
                     text = buildString {
-                        append(state.filterType?.displayName ?: "No filter")
-                        if (state.isDecafBrew) append(" · Decaf")
+                        append(state.filterType?.displayName ?: noFilterLabel)
+                        if (state.isDecafBrew) append(decafSuffix)
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
+            val settingsLabel = stringResource(R.string.label_settings)
             IconButton(onClick = onNavigateToSettings, modifier = Modifier.testTag("settings_button")) {
                 Icon(
                     imageVector = Icons.Filled.Settings,
-                    contentDescription = "Settings",
+                    contentDescription = settingsLabel,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -219,14 +224,14 @@ fun MethodPickerScreen(
         // Input mode selector
         val inputMode = state.inputMode
         val amountLabel = when (inputMode) {
-            InputMode.COFFEE_TO_WATER -> "Coffee"
-            InputMode.WATER_TO_COFFEE -> "Water"
-            InputMode.BREW_SIZE_TO_BOTH -> "Brew size"
-            InputMode.CUP_SIZE_TO_BOTH -> "Cup size"
+            InputMode.COFFEE_TO_WATER -> stringResource(R.string.label_coffee)
+            InputMode.WATER_TO_COFFEE -> stringResource(R.string.label_water)
+            InputMode.BREW_SIZE_TO_BOTH -> stringResource(R.string.label_brew_size)
+            InputMode.CUP_SIZE_TO_BOTH -> stringResource(R.string.label_cup_size)
         }
         val amountUnit = when (inputMode) {
-            InputMode.COFFEE_TO_WATER, InputMode.WATER_TO_COFFEE -> "g"
-            InputMode.BREW_SIZE_TO_BOTH, InputMode.CUP_SIZE_TO_BOTH -> "ml"
+            InputMode.COFFEE_TO_WATER, InputMode.WATER_TO_COFFEE -> stringResource(R.string.unit_grams)
+            InputMode.BREW_SIZE_TO_BOTH, InputMode.CUP_SIZE_TO_BOTH -> stringResource(R.string.unit_ml)
         }
         val sliderMax = when (inputMode) {
             InputMode.COFFEE_TO_WATER -> maxSlider
@@ -247,12 +252,12 @@ fun MethodPickerScreen(
                         count = InputMode.entries.size,
                     ),
                 ) {
-                    Text(mode.shortLabel(), maxLines = 1)
+                    Text(stringResource(mode.shortLabelRes()), maxLines = 1)
                 }
             }
         }
         Text(
-            text = inputMode.description(),
+            text = stringResource(inputMode.descriptionRes()),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
@@ -273,6 +278,7 @@ fun MethodPickerScreen(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 8.dp),
         )
+        val amountCd = stringResource(R.string.format_amount_cd, amountLabel, amountFloat.toInt(), amountUnit)
         Slider(
             value = amountFloat.coerceIn(0f, sliderMax),
             onValueChange = {
@@ -286,13 +292,15 @@ fun MethodPickerScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .testTag("coffee_slider")
-                .semantics { contentDescription = "$amountLabel: ${amountFloat.toInt()} $amountUnit" },
+                .semantics { contentDescription = amountCd },
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
+            val decreaseCd = stringResource(R.string.label_decrease, amountLabel)
+            val increaseCd = stringResource(R.string.label_increase, amountLabel)
             FilledTonalIconButton(
                 onClick = {
                     val newVal = (amountFloat - stepSize).coerceAtLeast(0f)
@@ -303,7 +311,7 @@ fun MethodPickerScreen(
                 },
                 modifier = Modifier.size(40.dp),
             ) {
-                Icon(Icons.Filled.Remove, contentDescription = "Decrease $amountLabel")
+                Icon(Icons.Filled.Remove, contentDescription = decreaseCd)
             }
             Text(
                 text = displayValue,
@@ -321,7 +329,7 @@ fun MethodPickerScreen(
                 },
                 modifier = Modifier.size(40.dp),
             ) {
-                Icon(Icons.Filled.Add, contentDescription = "Increase $amountLabel")
+                Icon(Icons.Filled.Add, contentDescription = increaseCd)
             }
         }
 
@@ -330,7 +338,7 @@ fun MethodPickerScreen(
         // Strength presets
         if (state.ratioPresets.isNotEmpty()) {
             Text(
-                text = "Strength",
+                text = stringResource(R.string.label_strength),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp, bottom = 4.dp),
@@ -353,6 +361,8 @@ fun MethodPickerScreen(
             bloomG = state.bloomG,
             timeTargetLowS = state.timeTargetLowS,
             timeTargetHighS = state.timeTargetHighS,
+            predictedCupVolumeG = state.predictedCupVolumeG,
+            retainedWaterG = state.retainedWaterG,
             modifier = Modifier.padding(bottom = 12.dp),
         )
 
@@ -378,13 +388,14 @@ fun MethodPickerScreen(
                     }
                 },
                 label = {
+                    val selectCoffeeBagLabel = stringResource(R.string.label_select_coffee_bag)
                     val bagLabel = selectedRankedBag?.let { option ->
-                        val decafLabel = if (option.bag.isDecaf) " · Decaf" else ""
+                        val decafLabel = if (option.bag.isDecaf) stringResource(R.string.label_decaf_suffix) else ""
                         val weightHint = option.bag.weightG?.let { w ->
-                            " · ${"%.0f".format(w)}g left"
+                            stringResource(R.string.format_weight_left, w)
                         } ?: ""
-                        "☕ ${option.bag.name}$decafLabel · ${option.freshness.phase.displayName}$weightHint"
-                    } ?: "Select coffee bag"
+                        stringResource(R.string.format_bag_chip, option.bag.name, decafLabel, option.freshness.phase.displayName, weightHint)
+                    } ?: selectCoffeeBagLabel
                     Text(
                         text = bagLabel,
                         style = MaterialTheme.typography.bodyMedium,
@@ -393,9 +404,10 @@ fun MethodPickerScreen(
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
                 trailingIcon = if (selectedBag != null) {
                     {
+                        val clearBagCd = stringResource(R.string.cd_clear_bag)
                         Icon(
                             Icons.Filled.Close,
-                            contentDescription = "Clear bag",
+                            contentDescription = clearBagCd,
                             modifier = Modifier.size(18.dp),
                         )
                     }
@@ -428,7 +440,7 @@ fun MethodPickerScreen(
                                 .padding(start = 16.dp),
                         ) {
                             Text(
-                                text = "Freshness",
+                                text = stringResource(R.string.label_freshness),
                                 style = MaterialTheme.typography.titleMedium,
                             )
                             Text(
@@ -457,7 +469,7 @@ fun MethodPickerScreen(
                 }
             } else if (topRecommendation != null) {
                 Text(
-                    text = "Recommended now: ${topRecommendation.bag.name}",
+                    text = stringResource(R.string.format_recommended_now, topRecommendation.bag.name),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(start = 12.dp, bottom = 8.dp),
@@ -468,9 +480,9 @@ fun MethodPickerScreen(
         // Grind preview — plain language for casual users, detail for grinder owners
         val grindText = when (val gr = state.grindResult) {
             is GrindResult.Generic ->
-                "Grind: ${gr.descriptor.displayName} – ${gr.descriptor.visualCue}"
+                stringResource(R.string.format_grind_generic, gr.descriptor.displayName, gr.descriptor.visualCue)
             is GrindResult.Specific ->
-                "Grind setting: ${"%.1f".format(gr.recommendation.rangeStart)}–${"%.1f".format(gr.recommendation.rangeEnd)} · Adjust by taste"
+                stringResource(R.string.format_grind_specific_range, "%.1f".format(gr.recommendation.rangeStart), "%.1f".format(gr.recommendation.rangeEnd))
         }
         val bagGrindHint = selectedRankedBag?.grindInsight?.bestGrindSetting ?: selectedBag?.grindSetting
         ElevatedCard(
@@ -487,7 +499,7 @@ fun MethodPickerScreen(
                 )
                 if (bagGrindHint != null) {
                     Text(
-                        text = "Last time: $bagGrindHint",
+                        text = stringResource(R.string.format_last_time, bagGrindHint),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.tertiary,
                         modifier = Modifier.padding(top = 4.dp),
@@ -505,7 +517,7 @@ fun MethodPickerScreen(
                 .height(56.dp)
                 .testTag("start_brewing_button"),
         ) {
-            Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.action_start_brewing), style = MaterialTheme.typography.labelLarge)
         }
 
         // Save as Favorite — separate action to avoid misclicks
@@ -524,7 +536,7 @@ fun MethodPickerScreen(
                     .size(20.dp)
                     .padding(end = 4.dp),
             )
-            Text("Save as Favorite")
+            Text(stringResource(R.string.action_save_as_favorite))
         }
 
         // Post-brew check-in card
@@ -578,13 +590,13 @@ fun MethodPickerScreen(
                     .padding(horizontal = 24.dp, vertical = 16.dp),
             ) {
                 Text(
-                    text = "Select Coffee Bag",
+                    text = stringResource(R.string.label_select_coffee_bag_title),
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(bottom = 16.dp),
                 )
                 if (rankedBags.isEmpty()) {
                     Text(
-                        text = "No active bags. Add one in the Bags tab.",
+                        text = stringResource(R.string.msg_no_active_bags),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(bottom = 16.dp),
@@ -609,7 +621,7 @@ fun MethodPickerScreen(
                     },
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Brew without selecting a bag")
+                    Text(stringResource(R.string.action_brew_without_bag))
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             }
@@ -666,14 +678,14 @@ private fun BagPickerOptionCard(
                     )
                     if (option.bag.isDecaf) {
                         InsightChip(
-                            label = "Decaf",
+                            label = stringResource(R.string.label_decaf),
                             emphasis = ChipEmphasis.NEUTRAL,
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                     }
                     if (isRecommended) {
                         InsightChip(
-                            label = "Best now",
+                            label = stringResource(R.string.label_best_now),
                             emphasis = ChipEmphasis.POSITIVE,
                         )
                     }
@@ -712,10 +724,8 @@ private fun BagPickerOptionCard(
 @Composable
 private fun BrewTipCard(method: BrewMethod) {
     val tip = when (method) {
-        BrewMethod.PULSAR -> "💡 Pulsar tip: Keep slurry ~1cm above the coffee bed during pours. " +
-            "Most users brew 20–25g for a balanced single cup."
-        else -> "💡 Tip: Start with the default ratio and adjust strength to taste. " +
-            "Finer grinds extract more, coarser grinds extract less."
+        BrewMethod.PULSAR -> stringResource(R.string.tip_pulsar)
+        else -> stringResource(R.string.tip_generic)
     }
     ElevatedCard(
         shape = MaterialTheme.shapes.medium,
