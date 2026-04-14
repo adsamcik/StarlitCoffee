@@ -1,6 +1,8 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.ui.res.stringResource
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewPhase
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -415,12 +417,12 @@ private fun BrewInfoSheet(
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            InfoRow("☕", "Coffee", "${"%.1f".format(coffeeG)}g")
-            InfoRow("💧", "Water", "${"%.0f".format(waterG)}g")
-            InfoRow("⚖️", "Strength", "1:${"%.1f".format(if (coffeeG > 0f) waterG / coffeeG else 0f)}")
+            InfoRow("☕", stringResource(R.string.label_coffee), "${"%.1f".format(coffeeG)}g")
+            InfoRow("💧", stringResource(R.string.label_water), "${"%.0f".format(waterG)}g")
+            InfoRow("⚖️", stringResource(R.string.label_strength), "1:${"%.1f".format(if (coffeeG > 0f) waterG / coffeeG else 0f)}")
 
             if (refillCount > 0) {
-                InfoRow("🔄", "Refills", "$refillCount — drains between pours")
+                InfoRow("🔄", stringResource(R.string.phase_drain_refill), "$refillCount — drains between pours")
             }
 
             // Current phase details
@@ -452,12 +454,12 @@ private fun BrewInfoSheet(
             val bedDepthMm = coffeeG * 0.7f
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Coffee Insights",
+                text = stringResource(R.string.label_coffee_insights),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
             )
             Spacer(modifier = Modifier.height(8.dp))
-            InfoRow("📏", "Coffee depth", "~${"%.0f".format(bedDepthMm)}mm in brewer")
+            InfoRow("📏", stringResource(R.string.label_coffee_depth), stringResource(R.string.format_coffee_depth, bedDepthMm))
 
             val bedBarFraction = (bedDepthMm / 25f).coerceIn(0f, 1f)
             val bedBarColor = when {
@@ -483,18 +485,18 @@ private fun BrewInfoSheet(
             }
 
             val grindNote = when {
-                coffeeG <= 20f -> "Medium-fine · like table salt"
-                coffeeG <= 25f -> "Medium · like coarse sand"
-                coffeeG <= 30f -> "Medium-coarse · adjust by taste"
-                else -> "Coarse · longer brew expected"
+                coffeeG <= 20f -> stringResource(R.string.grind_note_medium_fine)
+                coffeeG <= 25f -> stringResource(R.string.grind_note_medium)
+                coffeeG <= 30f -> stringResource(R.string.grind_note_medium_coarse)
+                else -> stringResource(R.string.grind_note_coarse)
             }
-            InfoRow("⚙️", "Grind", grindNote)
+            InfoRow("⚙️", stringResource(R.string.label_grind), grindNote)
 
             val doseNote = when {
-                coffeeG < 20f -> "Below 20g may taste dry or harsh"
-                coffeeG in 20f..25f -> "Sweet spot for clarity & balance"
-                coffeeG in 25f..30f -> "Rich, full-bodied results"
-                else -> "Go coarser, expect longer brew"
+                coffeeG < 20f -> stringResource(R.string.dose_note_below_20)
+                coffeeG in 20f..25f -> stringResource(R.string.dose_note_sweet_spot)
+                coffeeG in 25f..30f -> stringResource(R.string.dose_note_rich)
+                else -> stringResource(R.string.dose_note_above_30)
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -739,7 +741,7 @@ fun BrewGuide(
                 ) {
                     Icon(
                         Icons.Outlined.Info,
-                        contentDescription = "Brew details",
+                        contentDescription = stringResource(R.string.cd_brew_details),
                         tint = contentColor.copy(alpha = 0.5f),
                         modifier = Modifier.size(24.dp),
                     )

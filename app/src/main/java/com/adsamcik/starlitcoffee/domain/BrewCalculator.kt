@@ -22,6 +22,8 @@ object BrewCalculator {
         val refillCount: Int,
         val ratioWarning: String?,
         val bloomWarning: String?,
+        val retainedWaterG: Float,
+        val predictedCupVolumeG: Float,
     )
 
     fun calculate(
@@ -57,6 +59,9 @@ object BrewCalculator {
             0
         }
 
+        val retainedWaterG = coffeeG * method.absorptionRatio
+        val predictedCupVolumeG = (waterG - retainedWaterG).coerceAtLeast(0f)
+
         val ratioWarning = computeRatioWarning(method, effectiveRatio, coffeeG, waterG)
 
         val bloomWarning = if (method.hasBloom && bloomG > waterG && waterG > 0f) {
@@ -78,6 +83,8 @@ object BrewCalculator {
             refillCount = refillCount,
             ratioWarning = ratioWarning,
             bloomWarning = bloomWarning,
+            retainedWaterG = retainedWaterG,
+            predictedCupVolumeG = predictedCupVolumeG,
         )
     }
 

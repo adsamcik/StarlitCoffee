@@ -1,4 +1,336 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Brew</string>
+    <string name="nav_log">Log</string>
+    <string name="nav_more">More</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Back</string>
+    <string name="action_close">Close</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_save">Save Changes</string>
+    <string name="action_saved">✓ Saved</string>
+    <string name="action_skip">Skip</string>
+    <string name="action_finish">Finish</string>
+    <string name="action_next">Next</string>
+    <string name="action_go_back">Go back</string>
+    <string name="action_collapse">Collapse</string>
+    <string name="action_expand">Expand</string>
+
+    <!-- Common labels -->
+    <string name="label_coffee">Coffee</string>
+    <string name="label_water">Water</string>
+    <string name="label_ratio">Ratio</string>
+    <string name="label_strength">Strength</string>
+    <string name="label_grind">Grind</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_method">Method</string>
+    <string name="label_decaf">Decaf</string>
+    <string name="label_decaf_suffix"> · Decaf</string>
+    <string name="label_loading">Loading…</string>
+    <string name="label_none">None</string>
+    <string name="label_taste">Taste</string>
+    <string name="label_rating">Rating</string>
+    <string name="label_notes">Notes</string>
+    <string name="label_no_filter">No filter</string>
+    <string name="label_settings">Settings</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg in cup</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+    <string name="format_brew_time">%1$d:%2$02d</string>
+    <string name="format_selected">%1$d selected</string>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Configure your brew</string>
+    <string name="label_coffee_input">Coffee (g)</string>
+    <string name="label_water_input">Water (g)</string>
+    <string name="label_brew_size_input">Brew size (ml)</string>
+    <string name="label_cup_size_input">Cup size (ml)</string>
+    <string name="label_brew_size">Brew size</string>
+    <string name="label_cup_size">Cup size</string>
+    <string name="format_capacity_note">%1$s holds %2$dg water — refills are automatic for larger brews</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Select coffee bag</string>
+    <string name="cd_clear_bag">Clear bag</string>
+    <string name="label_freshness">Freshness</string>
+    <string name="format_recommended_now">Recommended now: %1$s</string>
+    <string name="format_last_time">Last time: %1$s</string>
+    <string name="action_save_as_favorite">Save as Favorite</string>
+    <string name="label_select_coffee_bag_title">Select Coffee Bag</string>
+    <string name="msg_no_active_bags">No active bags. Add one in the Bags tab.</string>
+    <string name="action_brew_without_bag">Brew without selecting a bag</string>
+    <string name="label_best_now">Best now</string>
+    <string name="format_grind_generic">Grind: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Grind setting: %1$s–%2$s · Adjust by taste</string>
+    <string name="format_weight_left"> · %1$.0fg left</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Pulsar tip: Keep slurry ~1cm above the coffee bed during pours. Most users brew 20–25g for a balanced single cup.</string>
+    <string name="tip_generic">💡 Tip: Start with the default ratio and adjust strength to taste. Finer grinds extract more, coarser grinds extract less.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Brew Setup</string>
+    <string name="format_brew_setup_subtitle">%1$s · 1:%2$.0f</string>
+    <string name="label_custom_ratio">Custom ratio (e.g. 16)</string>
+    <string name="label_temperature">Temperature (°C)</string>
+    <string name="label_bloom_multiplier">Bloom multiplier (e.g. 3.0)</string>
+    <string name="label_pulse_count">Pulse count</string>
+    <string name="format_grind_range"> – %1$s</string>
+    <string name="format_grind_setting">Setting: %1$s (range %2$s–%3$s)</string>
+    <string name="format_grind_adjust"> · Adjust by ±%1$s to taste</string>
+    <string name="format_warning">⚠️ %1$s</string>
+    <string name="action_start_brewing">Start Brewing →</string>
+    <string name="label_advanced_options">Advanced options</string>
+    <string name="cd_collapse_advanced">Collapse advanced options</string>
+    <string name="cd_expand_advanced">Expand advanced options</string>
+    <string name="format_coffee_dose_cd">Coffee dose: %1$d grams</string>
+    <string name="label_decrease">Decrease %1$s</string>
+    <string name="label_increase">Increase %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Prepare Your Brew</string>
+    <string name="format_grind_coffee">Grind %1$.0fg of coffee</string>
+    <string name="format_water_temp">Water: %1$d–%2$d°C</string>
+    <string name="action_ready_to_brew">Ready to Brew →</string>
+    <!-- Pulsar checklist -->
+    <string name="checklist_pulsar_filter">☐ Wet paper filter in base with valve open, drain</string>
+    <string name="checklist_pulsar_barrel">☐ Mount barrel on base</string>
+    <string name="checklist_pulsar_coffee">☐ Add ground coffee, level bed</string>
+    <string name="checklist_pulsar_cap">☐ Place dispersion cap</string>
+    <string name="checklist_tare_scale">☐ Tare scale</string>
+    <!-- V60 checklist -->
+    <string name="checklist_v60_filter">☐ Place filter, rinse with hot water</string>
+    <!-- Generic checklist -->
+    <string name="checklist_prepare_brewer">☐ Prepare brewer</string>
+    <string name="checklist_add_coffee">☐ Add ground coffee</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Pause</string>
+    <string name="action_resume">Resume</string>
+    <string name="cd_disable_minute_alerts">Disable minute alerts</string>
+    <string name="cd_enable_minute_alerts">Enable minute alerts</string>
+    <string name="format_bloom_at">🌱 Bloom at %1$s</string>
+    <string name="format_pour_bloom_water">Pour %1$.0fg bloom water</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Total %2$.0fg</string>
+    <string name="format_total_water">Total %1$.0fg</string>
+    <string name="action_start_bloom">☕ Start Bloom</string>
+    <string name="format_bloom_countdown">🌱 Bloom %1$s</string>
+    <string name="label_bloom_done">✅ Bloom done!</string>
+    <string name="label_bloom_badge">🌱 Bloom</string>
+    <string name="action_finish_brew">Finish Brew</string>
+    <string name="instruction_bloom_steps">Open valve · Pour bloom water · Close valve</string>
+
+    <!-- Calculator Brew Screen -->
+    <string name="dialog_brew_ratio_title">Brew Ratio</string>
+    <string name="cd_switch_direction">Switch direction</string>
+    <string name="label_water_to_dose">Water → Dose</string>
+    <string name="label_dose_to_water">Dose → Water</string>
+    <string name="cd_backspace">Backspace</string>
+    <string name="action_brew">Brew</string>
+    <string name="label_total_water">total water</string>
+    <string name="label_bloom_lowercase">bloom</string>
+    <string name="label_remaining">remaining</string>
+    <string name="label_grinder">Grinder</string>
+
+    <!-- Settings Screen -->
+    <string name="screen_settings_title">Settings</string>
+    <string name="label_cup_presets">Cup presets</string>
+    <string name="action_add_preset">Add preset</string>
+    <string name="action_reset_defaults">Reset to defaults</string>
+    <string name="msg_presets_hint">Presets appear as quick buttons on the calculator</string>
+    <string name="label_brew_methods">Brew methods</string>
+    <string name="msg_methods_hint">Selected methods appear first. Tap to toggle.</string>
+    <string name="label_default_method">Default method</string>
+    <string name="format_edit_preset">Edit %1$s</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Brew Log</string>
+    <string name="msg_log_empty_title">Start brewing to see your history</string>
+    <string name="msg_log_empty_subtitle">Each completed brew with feedback will appear here</string>
+    <string name="msg_tap_to_rate">Tap to rate this brew</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Brew Details</string>
+    <string name="dialog_delete_brew_title">Delete brew log?</string>
+    <string name="dialog_delete_brew_message">This action cannot be undone.</string>
+    <string name="label_coffee_bag">Coffee bag</string>
+    <string name="label_brew_time">Brew time</string>
+    <string name="label_coffee_type">Coffee type</string>
+    <string name="label_flavor_notes">Flavor notes</string>
+    <string name="hint_add_notes">Add notes…</string>
+    <string name="msg_brew_not_found">Brew log not found</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Your Favorites</string>
+    <string name="msg_no_favorites_title">No favorites yet</string>
+    <string name="msg_no_favorites_subtitle">Save a recipe from the brew screen with the ♡ button</string>
+    <string name="label_untitled">Untitled</string>
+    <string name="format_recipe_summary">%1$sg coffee / %2$sg water</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Personalise your brew</string>
+    <string name="label_pulsar_filter_type">Pulsar filter type</string>
+    <string name="msg_filter_hint">Affects cup profile and grind recommendations</string>
+    <string name="label_your_grinder">Your grinder</string>
+    <string name="msg_grinder_hint">Optional — enables specific grind setting recommendations</string>
+    <string name="label_no_grinder">No grinder</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">What do you brew with?</string>
+    <string name="msg_methods_subtitle">Select your brew methods. Tap ★ to set your default.</string>
+    <string name="label_set_as_default">Set as default</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">More</string>
+    <string name="label_your_favorites">Your Favorites</string>
+    <string name="msg_favorites_subtitle">Replay your favourite brews</string>
+    <string name="label_your_beans">Your Beans</string>
+    <string name="msg_beans_subtitle">Freshness, stock, and what to brew next</string>
+    <string name="msg_settings_subtitle">Methods, grinder and preferences</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Camera permission is required to scan barcodes</string>
+    <string name="msg_point_camera">Point camera at barcode</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Brew saved! Rate it after you taste it.</string>
+    <string name="snackbar_action_view_log">View log</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Water Retention</string>
+    <string name="format_retention_explanation">Coffee grounds absorb about 2× their dry weight in water. With %1$.0fg of coffee, the grounds hold ~%2$.0fg, leaving ~%3$.0fg in your cup.\n\nThis is an estimate — dark roasts absorb slightly more, light roasts slightly less.</string>
+    <string name="cd_about_cup_volume">About cup volume</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+    <string name="label_coffee_insights">Coffee Insights</string>
+    <string name="format_coffee_depth">~%1$.0fmm in brewer</string>
+    <string name="label_coffee_depth">Coffee depth</string>
+    <string name="format_grounds_absorb">~%1$.0fg of water</string>
+    <string name="label_grounds_absorb">Grounds absorb</string>
+    <string name="format_cup_volume_expected">~%1$.0fg expected</string>
+    <string name="label_cup_volume">Cup volume</string>
+    <string name="label_target">Target</string>
+    <string name="format_pour_target">Pour to %1$.0fg total</string>
+    <string name="label_valve">Valve</string>
+    <string name="cd_brew_details">Brew details</string>
+    <!-- Grind notes -->
+    <string name="grind_note_fine">Fine · like powdered sugar</string>
+    <string name="grind_note_medium_fine">Medium-fine · like table salt</string>
+    <string name="grind_note_medium">Medium · like coarse sand</string>
+    <string name="grind_note_medium_coarse">Medium-coarse · adjust by taste</string>
+    <string name="grind_note_coarse">Coarse · longer brew expected</string>
+    <!-- Dose notes -->
+    <string name="dose_note_below_20">Below 20g may taste dry or harsh</string>
+    <string name="dose_note_sweet_spot">Sweet spot for clarity &amp; balance</string>
+    <string name="dose_note_rich">Rich, full-bodied results</string>
+    <string name="dose_note_above_30">Above 30g — may need longer draw time</string>
+
+    <!-- Brew Method names -->
+    <string name="method_pulsar">Pulsar</string>
+    <string name="method_v60">V60</string>
+    <string name="method_french_press">French Press</string>
+    <string name="method_aeropress">AeroPress</string>
+    <string name="method_espresso">Espresso</string>
+    <string name="method_moka_pot">Moka Pot</string>
+    <string name="method_cold_brew">Cold Brew</string>
+
+    <!-- Ratio presets -->
+    <string name="format_ratio_bright">Bright · 1:%1$d</string>
+    <string name="format_ratio_balanced">Balanced · 1:%1$d</string>
+    <string name="format_ratio_rich">Rich · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+    <string name="filter_paper">Paper</string>
+    <string name="filter_19k">19K</string>
+    <string name="filter_40k">40K</string>
+    <string name="filter_paper_desc">Cleanest cup, least body and oil</string>
+    <string name="filter_19k_desc">19,000 holes — more body, oils, richness</string>
+    <string name="filter_40k_desc">40,000 holes — cleaner than 19K, more oils than paper</string>
+    <string name="filter_paper_profile">Pure, bright, delicate</string>
+    <string name="filter_19k_profile">Full-bodied, bold, chewy</string>
+    <string name="filter_40k_profile">Balanced clarity with body</string>
+
+    <!-- Input Mode -->
+    <string name="input_coffee_to_water">Coffee → Water</string>
+    <string name="input_water_to_coffee">Water → Coffee</string>
+    <string name="input_brew_to_both">Brew Size → Both</string>
+    <string name="input_cup_to_both">Cup Size → Both</string>
+    <string name="input_coffee_short">Coffee</string>
+    <string name="input_water_short">Water</string>
+    <string name="input_brew_short">Brew</string>
+    <string name="input_cup_short">Cup</string>
+    <string name="input_coffee_desc">Enter coffee dose, calculate water</string>
+    <string name="input_water_desc">Enter water amount, calculate coffee</string>
+    <string name="input_brew_desc">Enter target brew size, calculate coffee and water accounting for absorption</string>
+    <string name="input_cup_desc">Enter cup size, calculate coffee and water</string>
+
+    <!-- Phase names -->
+    <string name="phase_bloom">Bloom</string>
+    <string name="phase_pour">Pour</string>
+    <string name="phase_drain_refill">Drain &amp; Refill</string>
+    <string name="phase_drawdown">Drawdown</string>
+    <string name="phase_saturate">Saturate</string>
+    <string name="phase_close_swirl">Close &amp; Swirl</string>
+    <string name="phase_steep">Steep</string>
+
+    <!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_open_pour">Open valve · Pour to %1$.0fg</string>
+    <string name="instruction_saturate">Let water saturate the grounds</string>
+    <string name="instruction_close_swirl">Close valve · Gentle swirl</string>
+    <string name="instruction_steeping">Steeping · CO₂ escaping</string>
+    <string name="instruction_bloom_pour">Pour to %1$.0fg</string>
+    <string name="instruction_pulsar_pour">Open valve · Pour to %1$.0fg</string>
+    <string name="instruction_pour_to">Pour to %1$.0fg</string>
+    <string name="instruction_drain_refill_pulsar">Open valve · Drain · Refill</string>
+    <string name="instruction_drain_refill">Drain · Refill</string>
+    <string name="instruction_drawdown_pulsar">Open valve · Let it draw down</string>
+    <string name="instruction_drawdown">Let it draw down</string>
+    <string name="format_drawdown_retention"> · grounds hold ~%1$.0fg</string>
+    <string name="instruction_pour_total">Pour to %1$.0fg total</string>
+
+    <!-- Warnings -->
+    <string name="warning_ratio_zero">Ratio must be greater than zero</string>
+    <string name="format_warning_ratio_strong">Ratio 1:%1$.1f is unusually strong</string>
+    <string name="format_warning_ratio_weak">Ratio 1:%1$.1f is unusually weak</string>
+    <string name="format_warning_bloom_exceeds">Bloom (%1$.0fg) exceeds total water (%2$.0fg)</string>
+
+    <!-- Taste Feedback -->
+    <string name="feedback_too_sour">Too Sour / Weak</string>
+    <string name="feedback_balanced">Balanced</string>
+    <string name="feedback_too_bitter">Too Bitter / Harsh</string>
+    <string name="feedback_astringent">Astringent / Dry</string>
+    <string name="feedback_clogged">Clogged / Stalled</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Grind finer by 2–4 clicks</string>
+    <string name="adjust_try_finer">Try a finer grind setting</string>
+    <string name="adjust_no_change">No adjustment needed — save this recipe!</string>
+    <string name="adjust_grind_coarser">Grind coarser by 2–4 clicks</string>
+    <string name="adjust_grind_coarser_valve">Grind coarser by 2–4 clicks\nTry opening the valve sooner</string>
+    <string name="adjust_try_coarser">Try a coarser grind setting</string>
+    <string name="adjust_try_coarser_water">Try a coarser grind setting\nOr try cooler water</string>
+    <string name="adjust_astringent_pulsar">Increase dose to 20g+ for better bed depth\nReduce agitation during bloom\nKeep slurry ~1cm above bed</string>
+    <string name="adjust_astringent_grinder">Grind slightly coarser, reduce agitation</string>
+    <string name="adjust_astringent_no_grinder">Grind slightly coarser, pour more gently</string>
+    <string name="adjust_clogged_pulsar_grinder">Grind much coarser by 3–5 clicks\nReduce agitation (gentle swirl only)\nCheck if coffee is too fresh — rest 7+ days</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Grind much coarser\nReduce agitation\nEnsure gentle pours through dispersion cap</string>
+    <string name="adjust_clogged_grinder">Grind much coarser by 3–5 clicks</string>
+    <string name="adjust_clogged_no_grinder">Try a much coarser grind setting</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Coffee: %1$s grams</string>
+    <string name="cd_water_grams">Water: %1$s grams</string>
+    <string name="cd_ratio">Ratio 1 to %1$s</string>
 </resources>

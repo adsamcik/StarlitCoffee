@@ -66,6 +66,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -74,6 +75,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator.InputDirection
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalcOp
@@ -210,7 +212,7 @@ fun CalculatorBrewScreen(
                     Icon(
                         imageVector = if (configExpanded) Icons.Filled.KeyboardArrowUp
                         else Icons.Filled.KeyboardArrowDown,
-                        contentDescription = if (configExpanded) "Collapse" else "Expand",
+                        contentDescription = if (configExpanded) stringResource(R.string.action_collapse) else stringResource(R.string.action_expand),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp),
                     )
@@ -231,7 +233,7 @@ fun CalculatorBrewScreen(
                         // Method
                         if (prefs.enabledMethods.size > 1) {
                             Text(
-                                text = "Method",
+                                text = stringResource(R.string.label_method),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -259,7 +261,7 @@ fun CalculatorBrewScreen(
                         // Filter — Pulsar only
                         if (selectedMethod == BrewMethod.PULSAR) {
                             Text(
-                                text = "Filter",
+                                text = stringResource(R.string.label_filter),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -284,7 +286,7 @@ fun CalculatorBrewScreen(
                         // Grinder
                         if (grinders.isNotEmpty()) {
                             Text(
-                                text = "Grinder",
+                                text = stringResource(R.string.label_grinder),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -295,7 +297,7 @@ fun CalculatorBrewScreen(
                                 FilterChip(
                                     selected = selectedGrinderId == null,
                                     onClick = { selectedGrinderId = null },
-                                    label = { Text("None") },
+                                    label = { Text(stringResource(R.string.label_none)) },
                                     leadingIcon = if (selectedGrinderId == null) checkIcon else null,
                                     colors = FilterChipDefaults.filterChipColors(
                                         selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -375,14 +377,14 @@ private fun TopControlBar(
         ) {
             Icon(
                 imageVector = Icons.Filled.SwapHoriz,
-                contentDescription = "Switch direction",
+                contentDescription = stringResource(R.string.cd_switch_direction),
                 modifier = Modifier.size(18.dp),
             )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = when (direction) {
-                    InputDirection.WATER -> "Water → Dose"
-                    InputDirection.DOSE -> "Dose → Water"
+                    InputDirection.WATER -> stringResource(R.string.label_water_to_dose)
+                    InputDirection.DOSE -> stringResource(R.string.label_dose_to_water)
                 },
                 style = MaterialTheme.typography.labelLarge,
             )
@@ -423,7 +425,7 @@ private fun RatioPickerDialog(
 
     androidx.compose.material3.AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Brew Ratio") },
+        title = { Text(stringResource(R.string.dialog_brew_ratio_title)) },
         text = {
             Column {
                 ratioOptions.forEach { r ->
@@ -455,7 +457,7 @@ private fun RatioPickerDialog(
         confirmButton = {},
         dismissButton = {
             androidx.compose.material3.TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.action_cancel))
             }
         },
     )
@@ -564,7 +566,7 @@ private fun LivePreviewCard(
                     )
                 }
                 Text(
-                    text = "coffee",
+                    text = stringResource(R.string.label_coffee),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -604,7 +606,7 @@ private fun LivePreviewCard(
                     )
                 }
                 Text(
-                    text = "total water",
+                    text = stringResource(R.string.label_total_water),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -627,7 +629,7 @@ private fun LivePreviewCard(
                         color = MaterialTheme.colorScheme.tertiary,
                     )
                     Text(
-                        text = "bloom",
+                        text = stringResource(R.string.label_bloom_lowercase),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -640,7 +642,7 @@ private fun LivePreviewCard(
                         color = MaterialTheme.colorScheme.secondary,
                     )
                     Text(
-                        text = "remaining",
+                        text = stringResource(R.string.label_remaining),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -709,7 +711,7 @@ private fun CalculatorKeyboard(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Backspace,
-                    contentDescription = "Backspace",
+                    contentDescription = stringResource(R.string.cd_backspace),
                     modifier = Modifier.size(22.dp),
                 )
             }
@@ -826,7 +828,7 @@ private fun BrewKey(
         contentPadding = PaddingValues(0.dp),
     ) {
         Text(
-            text = "Brew",
+            text = stringResource(R.string.action_brew),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
         )

@@ -1,9 +1,11 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
+import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +14,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.BrewPhase
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
@@ -120,6 +123,8 @@ data class BrewUiState(
     val refillCount: Int = 0,
     val ratioWarning: String? = null,
     val bloomWarning: String? = null,
+    val retainedWaterG: Float = 0f,
+    val predictedCupVolumeG: Float = 0f,
     // Timer state
     val timerRunning: Boolean = false,
     val elapsedSeconds: Int = 0,
@@ -139,6 +144,7 @@ data class BrewUiState(
 )
 
 class BrewViewModel(
+    private val application: Application? = null,
     private val recipeRepository: RecipeRepository? = null,
     private val brewLogRepository: BrewLogRepository? = null,
     private val coffeeBagRepository: CoffeeBagRepository? = null,
@@ -153,6 +159,9 @@ class BrewViewModel(
     private val llmCache = LlmResultCache()
 
     private val _uiState = MutableStateFlow(BrewUiState())
+    private fun str(@StringRes resId: Int, vararg args: Any): String {
+        return application?.getString(resId, *args) ?: ""
+    }
     val uiState: StateFlow<BrewUiState> = _uiState.asStateFlow()
     private val _savedRecipes = MutableStateFlow(emptyList<SavedRecipeEntity>())
     val savedRecipes: StateFlow<List<SavedRecipeEntity>> = _savedRecipes.asStateFlow()
@@ -1878,19 +1887,22 @@ class BrewViewModel(
             }
 
             val ratioWarning = when {
-                effectiveRatio <= 0f -> "Ratio must be greater than zero"
+                effectiveRatio <= 0f -> str(R.string.warning_ratio_zero)
                 coffeeG <= 0f || waterG <= 0f -> null
                 method == BrewMethod.ESPRESSO -> null
-                effectiveRatio < 10f -> "Ratio 1:${"%.1f".format(effectiveRatio)} is unusually strong"
-                effectiveRatio > 20f -> "Ratio 1:${"%.1f".format(effectiveRatio)} is unusually weak"
+                effectiveRatio < 10f -> str(R.string.format_warning_ratio_strong, effectiveRatio)
+                effectiveRatio > 20f -> str(R.string.format_warning_ratio_weak, effectiveRatio)
                 else -> null
             }
 
             val bloomWarning = if (method.hasBloom && bloomG > waterG && waterG > 0f) {
-                "Bloom (${"%.0f".format(bloomG)}g) exceeds total water (${"%.0f".format(waterG)}g)"
+                str(R.string.format_warning_bloom_exceeds, bloomG, waterG)
             } else {
                 null
             }
+
+            val retainedWaterG = coffeeG * method.absorptionRatio
+            val predictedCupVolumeG = (waterG - retainedWaterG).coerceAtLeast(0f)
 
             val grindResult = resolveGrindResult(
                 grinderId = state.selectedGrinderId,
@@ -1914,6 +1926,8 @@ class BrewViewModel(
                 refillCount = refillCount,
                 ratioWarning = ratioWarning,
                 bloomWarning = bloomWarning,
+                retainedWaterG = retainedWaterG,
+                predictedCupVolumeG = predictedCupVolumeG,
                 timerPhases = buildTimerPhases(
                     method = method,
                     coffeeG = coffeeG,
@@ -1922,6 +1936,7 @@ class BrewViewModel(
                     remainingWaterG = remainingWaterG,
                     pulseSizeG = pulseSizeG,
                     effectivePulseCount = effectivePulseCount,
+                    retainedWaterG = retainedWaterG,
                 ),
             )
         }
@@ -1935,6 +1950,7 @@ class BrewViewModel(
         remainingWaterG: Float,
         pulseSizeG: Float,
         effectivePulseCount: Int,
+        retainedWaterG: Float = 0f,
     ): List<BrewPhase> {
         if (coffeeG <= 0f || waterG <= 0f) return emptyList()
 
@@ -1951,54 +1967,54 @@ class BrewViewModel(
                 val steepDuration = (method.bloomDurationSeconds - saturateDuration).coerceAtLeast(0)
 
                 phases += BrewPhase(
-                    name = "Bloom",
+                    name = str(R.string.phase_bloom),
                     phaseType = PhaseType.BLOOM,
                     mode = PhaseMode.EVENT_GATED,
                     waterG = bloomG,
                     cumulativeWaterG = cumulative,
                     durationSeconds = 0,
-                    instruction = "Open valve · Pour to ${"%.0f".format(bloomG)}g",
+                    instruction = str(R.string.instruction_bloom_open_pour, bloomG),
                     valveState = "open",
                 )
                 phases += BrewPhase(
-                    name = "Saturate",
+                    name = str(R.string.phase_saturate),
                     phaseType = PhaseType.BLOOM,
                     mode = PhaseMode.AUTO_TIMED,
                     waterG = 0f,
                     cumulativeWaterG = cumulative,
                     durationSeconds = saturateDuration,
-                    instruction = "Let water saturate the grounds",
+                    instruction = str(R.string.instruction_saturate),
                 )
                 phases += BrewPhase(
-                    name = "Close & Swirl",
+                    name = str(R.string.phase_close_swirl),
                     phaseType = PhaseType.BLOOM,
                     mode = PhaseMode.EVENT_GATED,
                     waterG = 0f,
                     cumulativeWaterG = cumulative,
                     durationSeconds = 0,
-                    instruction = "Close valve · Gentle swirl",
+                    instruction = str(R.string.instruction_close_swirl),
                     valveState = "closed",
                 )
                 phases += BrewPhase(
-                    name = "Steep",
+                    name = str(R.string.phase_steep),
                     phaseType = PhaseType.BLOOM,
                     mode = PhaseMode.AUTO_TIMED,
                     waterG = 0f,
                     cumulativeWaterG = cumulative,
                     durationSeconds = steepDuration,
-                    instruction = "Steeping · CO₂ escaping",
+                    instruction = str(R.string.instruction_steeping),
                 )
             } else {
                 // Non-Pulsar bloom: single timed phase
                 cumulative += bloomG
                 phases += BrewPhase(
-                    name = "Bloom",
+                    name = str(R.string.phase_bloom),
                     phaseType = PhaseType.BLOOM,
                     mode = PhaseMode.TIMED,
                     waterG = bloomG,
                     cumulativeWaterG = cumulative,
                     durationSeconds = method.bloomDurationSeconds,
-                    instruction = "Pour to ${"%.0f".format(bloomG)}g",
+                    instruction = str(R.string.instruction_bloom_pour, bloomG),
                 )
             }
         }
@@ -2021,26 +2037,26 @@ class BrewViewModel(
                 // Check if a drain & refill is needed before this pour
                 if (capacityMax != null && projectedCumulative > capacityMax && cumulative > 0f) {
                     phases += BrewPhase(
-                        name = "Drain & Refill",
+                        name = str(R.string.phase_drain_refill),
                         phaseType = PhaseType.DRAIN_AND_REFILL,
                         mode = PhaseMode.EVENT_GATED,
                         waterG = 0f,
                         cumulativeWaterG = cumulative,
                         durationSeconds = 0,
-                        instruction = if (isPulsar) "Open valve · Drain · Refill" else "Drain · Refill",
+                        instruction = if (isPulsar) str(R.string.instruction_drain_refill_pulsar) else str(R.string.instruction_drain_refill),
                     )
                     cumulative = 0f
                 }
 
                 cumulative += pourWater
                 val pourInstruction = if (isPulsar) {
-                    "Open valve · Pour to ${"%.0f".format(cumulative)}g"
+                    str(R.string.instruction_pulsar_pour, cumulative)
                 } else {
-                    "Pour to ${"%.0f".format(cumulative)}g"
+                    str(R.string.instruction_pour_to, cumulative)
                 }
 
                 phases += BrewPhase(
-                    name = "Pour $i/$effectivePulseCount",
+                    name = "${str(R.string.phase_pour)} $i/$effectivePulseCount",
                     phaseType = PhaseType.POUR,
                     mode = PhaseMode.TIMED,
                     waterG = pourWater,
@@ -2054,25 +2070,30 @@ class BrewViewModel(
             val pourWater = if (method.hasBloom) remainingWaterG else waterG
             cumulative += pourWater
             phases += BrewPhase(
-                name = "Pour",
+                name = str(R.string.phase_pour),
                 phaseType = PhaseType.POUR,
                 mode = PhaseMode.TIMED,
                 waterG = pourWater,
                 cumulativeWaterG = cumulative,
                 durationSeconds = method.timeTargetLow,
-                instruction = "Pour to ${"%.0f".format(cumulative)}g",
+                instruction = str(R.string.instruction_pour_total, cumulative),
             )
         }
 
         // --- Drawdown ---
         phases += BrewPhase(
-            name = "Drawdown",
+            name = str(R.string.phase_drawdown),
             phaseType = PhaseType.DRAWDOWN,
             mode = PhaseMode.EVENT_GATED,
             waterG = 0f,
             cumulativeWaterG = cumulative,
             durationSeconds = 0,
-            instruction = if (isPulsar) "Open valve · Let it draw down" else "Let it draw down",
+            instruction = buildString {
+                append(if (isPulsar) str(R.string.instruction_drawdown_pulsar) else str(R.string.instruction_drawdown))
+                if (retainedWaterG > 0f) {
+                    append(str(R.string.format_drawdown_retention, retainedWaterG))
+                }
+            },
         )
 
         return phases

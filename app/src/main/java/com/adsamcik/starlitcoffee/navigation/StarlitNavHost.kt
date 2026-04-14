@@ -51,6 +51,8 @@ import com.adsamcik.starlitcoffee.ui.screen.BrewLogScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewLogDetailScreen
 import com.adsamcik.starlitcoffee.ui.screen.CalculatorBrewScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
+import com.adsamcik.starlitcoffee.ui.screen.BloomTimerScreen
+import com.adsamcik.starlitcoffee.ui.screen.GrindPrepScreen
 import com.adsamcik.starlitcoffee.ui.screen.LiveScanScreen
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
@@ -63,19 +65,22 @@ import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
 import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
 import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModelFactory
 import com.adsamcik.starlitcoffee.ui.component.RescanDeltaDialog
+import androidx.annotation.StringRes
+import androidx.compose.ui.res.stringResource
+import com.adsamcik.starlitcoffee.R
 import java.util.HashMap
 import kotlinx.coroutines.launch
 
 private data class BottomNavItem(
-    val label: String,
+    @StringRes val labelRes: Int,
     val icon: ImageVector,
     val route: Any,
 )
 
 private val bottomNavItems = listOf(
-    BottomNavItem("Brew", Icons.Filled.LocalCafe, CalculatorBrew),
-    BottomNavItem("Log", Icons.Filled.History, BrewLogList),
-    BottomNavItem("More", Icons.Filled.MoreHoriz, More),
+    BottomNavItem(R.string.nav_brew, Icons.Filled.LocalCafe, CalculatorBrew),
+    BottomNavItem(R.string.nav_log, Icons.Filled.History, BrewLogList),
+    BottomNavItem(R.string.nav_more, Icons.Filled.MoreHoriz, More),
 )
 
 private val bottomBarRoutes = setOf(
@@ -160,8 +165,11 @@ fun StarlitNavHost() {
                                     restoreState = true
                                 }
                             },
-                            icon = { Icon(item.icon, contentDescription = item.label) },
-                            label = { Text(item.label) },
+                            icon = {
+                                val label = stringResource(item.labelRes)
+                                Icon(item.icon, contentDescription = label)
+                            },
+                            label = { Text(stringResource(item.labelRes)) },
                         )
                     }
                 }
@@ -240,11 +248,35 @@ fun StarlitNavHost() {
                     brewViewModel = brewViewModel,
                     userPreferencesRepository = userPreferencesRepository,
                     onNavigateToBrew = {
-                        navController.navigate(BrewTimer)
+                        navController.navigate(GrindPrep)
+                    },
+                )
+            }
+            composable<GrindPrep> {
+                GrindPrepScreen(
+                    brewViewModel = brewViewModel,
+                    onNavigateToBloom = { navController.navigate(BloomTimer) },
+                    onNavigateToBrew = { navController.navigate(BrewTimer) },
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable<BloomTimer> {
+                BloomTimerScreen(
+                    brewViewModel = brewViewModel,
+                    onNavigateToBrew = {
+                        navController.navigate(BrewTimer) {
+                            popUpTo(GrindPrep) { inclusive = true }
+                        }
+                    },
+                    onBack = {
+                        brewViewModel.pauseTimer()
+                        navController.popBackStack()
                     },
                 )
             }
             composable<BrewTimer> {
+                val brewSavedMsg = stringResource(R.string.snackbar_brew_saved)
+                val viewLogAction = stringResource(R.string.snackbar_action_view_log)
                 BrewTimerScreen(
                     brewViewModel = brewViewModel,
                     onBack = { navController.popBackStack() },
@@ -258,8 +290,8 @@ fun StarlitNavHost() {
                         // Show snackbar prompting async feedback
                         scope.launch {
                             val result = snackbarHostState.showSnackbar(
-                                message = "Brew saved! Rate it after you taste it.",
-                                actionLabel = "View log",
+                                message = brewSavedMsg,
+                                actionLabel = viewLogAction,
                                 duration = SnackbarDuration.Long,
                             )
                             if (result == SnackbarResult.ActionPerformed) {

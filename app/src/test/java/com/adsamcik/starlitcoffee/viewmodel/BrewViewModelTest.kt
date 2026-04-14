@@ -264,7 +264,7 @@ class BrewViewModelTest {
         viewModel.setAmount("40") // 40 * 17 = 680g → needs refill
 
         val phases = viewModel.uiState.value.timerPhases
-        val drainPhases = phases.filter { it.name.startsWith("Drain") }
+        val drainPhases = phases.filter { it.phaseType == PhaseType.DRAIN_AND_REFILL }
         assertTrue(drainPhases.isNotEmpty())
     }
 
@@ -275,7 +275,7 @@ class BrewViewModelTest {
         viewModel.setAmount("20") // 20 * 17 = 340g → within 380g
 
         val phases = viewModel.uiState.value.timerPhases
-        val drainPhases = phases.filter { it.name.startsWith("Drain") }
+        val drainPhases = phases.filter { it.phaseType == PhaseType.DRAIN_AND_REFILL }
         assertTrue(drainPhases.isEmpty())
     }
 
@@ -288,7 +288,6 @@ class BrewViewModelTest {
         viewModel.setAmount("20")
 
         assertNotNull(viewModel.uiState.value.ratioWarning)
-        assertTrue(viewModel.uiState.value.ratioWarning!!.contains("weak"))
     }
 
     @Test
@@ -298,7 +297,6 @@ class BrewViewModelTest {
         viewModel.setAmount("20")
 
         assertNotNull(viewModel.uiState.value.ratioWarning)
-        assertTrue(viewModel.uiState.value.ratioWarning!!.contains("strong"))
     }
 
     @Test
@@ -389,9 +387,12 @@ class BrewViewModelTest {
 
         val phases = viewModel.uiState.value.timerPhases
         assertTrue(phases.isNotEmpty())
-        assertEquals("Bloom", phases.first().name)
-        assertEquals("Drawdown", phases.last().name)
-        assertEquals(listOf("Bloom", "Saturate", "Close & Swirl", "Steep"), phases.take(4).map { it.name })
+        assertEquals(PhaseType.BLOOM, phases.first().phaseType)
+        assertEquals(PhaseType.DRAWDOWN, phases.last().phaseType)
+        assertEquals(
+            listOf(PhaseType.BLOOM, PhaseType.BLOOM, PhaseType.BLOOM, PhaseType.BLOOM),
+            phases.take(4).map { it.phaseType },
+        )
         // 4 bloom sub-phases + 5 pours + drawdown = 10 phases
         assertEquals(10, phases.size)
     }
@@ -405,11 +406,11 @@ class BrewViewModelTest {
         val phases = viewModel.uiState.value.timerPhases
         // 4 bloom sub-phases + 4 pours fit + Drain + Pour 5/5 + Drawdown = 11
         assertEquals(11, phases.size)
-        assertEquals("Bloom", phases[0].name)
-        assertEquals("Pour 4/5", phases[7].name)
-        assertEquals("Drain & Refill", phases[8].name)
-        assertEquals("Pour 5/5", phases[9].name)
-        assertEquals("Drawdown", phases.last().name)
+        assertEquals(PhaseType.BLOOM, phases[0].phaseType)
+        assertEquals(PhaseType.POUR, phases[7].phaseType)
+        assertEquals(PhaseType.DRAIN_AND_REFILL, phases[8].phaseType)
+        assertEquals(PhaseType.POUR, phases[9].phaseType)
+        assertEquals(PhaseType.DRAWDOWN, phases.last().phaseType)
     }
 
     @Test
@@ -419,7 +420,10 @@ class BrewViewModelTest {
         viewModel.setAmount("20")
 
         val bloomPhases = viewModel.uiState.value.timerPhases.take(4)
-        assertEquals(listOf("Bloom", "Saturate", "Close & Swirl", "Steep"), bloomPhases.map { it.name })
+        assertEquals(
+            listOf(PhaseType.BLOOM, PhaseType.BLOOM, PhaseType.BLOOM, PhaseType.BLOOM),
+            bloomPhases.map { it.phaseType },
+        )
         assertEquals(listOf(60f, 0f, 0f, 0f), bloomPhases.map { it.waterG })
         assertEquals(
             listOf(
@@ -430,10 +434,6 @@ class BrewViewModelTest {
             ),
             bloomPhases.map { it.mode },
         )
-        assertEquals("Open valve · Pour to 60g", bloomPhases[0].instruction)
-        assertEquals("Let water saturate the grounds", bloomPhases[1].instruction)
-        assertEquals("Close valve · Gentle swirl", bloomPhases[2].instruction)
-        assertEquals("Steeping · CO₂ escaping", bloomPhases[3].instruction)
     }
 
     @Test
@@ -444,8 +444,8 @@ class BrewViewModelTest {
 
         val phases = viewModel.uiState.value.timerPhases
         assertTrue(phases.isNotEmpty())
-        assertEquals("Pour", phases.first().name)
-        assertEquals("Drawdown", phases.last().name)
+        assertEquals(PhaseType.POUR, phases.first().phaseType)
+        assertEquals(PhaseType.DRAWDOWN, phases.last().phaseType)
     }
 
     // --- Elastic Drift & Phase Modes ---
@@ -1416,7 +1416,7 @@ class BrewViewModelTest {
     fun `ratio zero shows guardrail warning`() {
         viewModel.setCustomRatio("0")
         val state = viewModel.uiState.value
-        assertEquals("Ratio must be greater than zero", state.ratioWarning)
+        assertNotNull(state.ratioWarning)
     }
 
     // --- setMethod clears recipe overrides ---
@@ -1553,6 +1553,55 @@ class BrewViewModelTest {
     private fun setElapsedSeconds(targetViewModel: BrewViewModel, elapsedSeconds: Int) {
         val currentState = targetViewModel.uiState.value
         targetViewModel.setUiStateForTesting(currentState.copy(elapsedSeconds = elapsedSeconds))
+    }
+
+    // --- Water Retention ---
+
+    @Test
+    fun `retention is calculated as coffeeG times absorptionRatio`() {
+        viewModel.setAmount("20")
+        val state = viewModel.uiState.value
+        assertEquals(40f, state.retainedWaterG, 0.01f)
+    }
+
+    @Test
+    fun `predicted cup volume subtracts retained water from total`() {
+        viewModel.setAmount("20")
+        val state = viewModel.uiState.value
+        assertEquals(300f, state.predictedCupVolumeG, 0.01f)
+    }
+
+    @Test
+    fun `retention scales with coffee dose`() {
+        viewModel.setAmount("25")
+        val state = viewModel.uiState.value
+        assertEquals(50f, state.retainedWaterG, 0.01f)
+        assertEquals(375f, state.predictedCupVolumeG, 0.01f)
+    }
+
+    @Test
+    fun `predicted cup volume never goes below zero`() {
+        viewModel.setMethod(BrewMethod.ESPRESSO)
+        viewModel.setAmount("18")
+        val state = viewModel.uiState.value
+        assertEquals(0f, state.predictedCupVolumeG, 0.01f)
+    }
+
+    @Test
+    fun `non-bloom methods still calculate retention`() {
+        viewModel.setMethod(BrewMethod.FRENCH_PRESS)
+        viewModel.setAmount("20")
+        val state = viewModel.uiState.value
+        assertEquals(40f, state.retainedWaterG, 0.01f)
+        assertEquals(260f, state.predictedCupVolumeG, 0.01f)
+    }
+
+    @Test
+    fun `zero coffee dose gives zero retention`() {
+        viewModel.setAmount("0")
+        val state = viewModel.uiState.value
+        assertEquals(0f, state.retainedWaterG, 0.01f)
+        assertEquals(0f, state.predictedCupVolumeG, 0.01f)
     }
 }
 

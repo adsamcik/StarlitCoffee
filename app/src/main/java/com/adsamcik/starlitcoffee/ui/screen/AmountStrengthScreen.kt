@@ -35,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.platform.LocalFocusManager
@@ -43,10 +44,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.InputMode
-import com.adsamcik.starlitcoffee.ui.util.shortLabel
+import com.adsamcik.starlitcoffee.ui.util.shortLabelRes
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
@@ -77,10 +79,10 @@ fun AmountStrengthScreen(
     var advancedExpanded by remember { mutableStateOf(false) }
 
     val amountLabel = when (inputMode) {
-        InputMode.COFFEE_TO_WATER -> "Coffee (g)"
-        InputMode.WATER_TO_COFFEE -> "Water (g)"
-        InputMode.BREW_SIZE_TO_BOTH -> "Brew size (ml)"
-        InputMode.CUP_SIZE_TO_BOTH -> "Cup size (ml)"
+        InputMode.COFFEE_TO_WATER -> stringResource(R.string.label_coffee_input)
+        InputMode.WATER_TO_COFFEE -> stringResource(R.string.label_water_input)
+        InputMode.BREW_SIZE_TO_BOTH -> stringResource(R.string.label_brew_size_input)
+        InputMode.CUP_SIZE_TO_BOTH -> stringResource(R.string.label_cup_size_input)
     }
 
     val amountFloat = amount.toFloatOrNull() ?: 0f
@@ -104,7 +106,7 @@ fun AmountStrengthScreen(
     }
 
     val capacityHint = method.capacityMaxG?.let {
-        "${method.displayName} holds ${it}g water — refills are automatic for larger brews"
+        stringResource(R.string.format_capacity_note, method.displayName, it)
     }
 
     Column(
@@ -115,7 +117,7 @@ fun AmountStrengthScreen(
     ) {
         // Back button + method context
         ScreenTopBar(
-            title = "Brew Setup",
+            title = stringResource(R.string.screen_brew_setup_title),
             onBack = onBack,
             modifier = Modifier.padding(top = 8.dp),
             actions = {
@@ -145,7 +147,7 @@ fun AmountStrengthScreen(
                         count = InputMode.entries.size,
                     ),
                 ) {
-                    Text(mode.shortLabel(), maxLines = 1)
+                    Text(stringResource(mode.shortLabelRes()), maxLines = 1)
                 }
             }
         }
@@ -164,11 +166,12 @@ fun AmountStrengthScreen(
             onValueChange = { brewViewModel.setAmount(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             shape = MaterialTheme.shapes.small,
-            suffix = { Text(if (inputMode == InputMode.BREW_SIZE_TO_BOTH || inputMode == InputMode.CUP_SIZE_TO_BOTH) "ml" else "g") },
+            suffix = { Text(if (inputMode == InputMode.BREW_SIZE_TO_BOTH || inputMode == InputMode.CUP_SIZE_TO_BOTH) stringResource(R.string.unit_ml) else stringResource(R.string.unit_grams)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth().testTag("amount_input"),
         )
 
+        val doseCd = stringResource(R.string.format_coffee_dose_cd, amountFloat.toInt())
         Slider(
             value = amountFloat.coerceIn(0f, maxSlider),
             onValueChange = {
@@ -180,7 +183,7 @@ fun AmountStrengthScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
                 .testTag("amount_slider")
-                .semantics { contentDescription = "Coffee dose: ${amountFloat.toInt()} grams" },
+                .semantics { contentDescription = doseCd },
         )
 
         if (capacityHint != null) {
@@ -196,7 +199,7 @@ fun AmountStrengthScreen(
 
         // Strength section
         Text(
-            text = "Strength",
+            text = stringResource(R.string.label_strength),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier
                 .padding(start = 8.dp, bottom = 8.dp)
@@ -217,7 +220,7 @@ fun AmountStrengthScreen(
         // Filter type (Pulsar only, requires grinder for meaningful effect)
         if (method == BrewMethod.PULSAR && uiState.selectedGrinderId != null) {
             Text(
-                text = "Filter",
+                text = stringResource(R.string.label_filter),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
             )
@@ -242,14 +245,15 @@ fun AmountStrengthScreen(
         }
 
         // Advanced options
+        val advancedCd = if (advancedExpanded) stringResource(R.string.cd_collapse_advanced) else stringResource(R.string.cd_expand_advanced)
         TextButton(
             onClick = { advancedExpanded = !advancedExpanded },
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text("Advanced options", modifier = Modifier.semantics { heading() })
+            Text(stringResource(R.string.label_advanced_options), modifier = Modifier.semantics { heading() })
             Icon(
                 imageVector = if (advancedExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                contentDescription = if (advancedExpanded) "Collapse advanced options" else "Expand advanced options",
+                contentDescription = advancedCd,
             )
         }
 
@@ -258,7 +262,7 @@ fun AmountStrengthScreen(
                 OutlinedTextField(
                     value = customRatio,
                     onValueChange = { brewViewModel.setCustomRatio(it) },
-                    label = { Text("Custom ratio (e.g. 16)") },
+                    label = { Text(stringResource(R.string.label_custom_ratio)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     shape = MaterialTheme.shapes.small,
                     singleLine = true,
@@ -271,7 +275,7 @@ fun AmountStrengthScreen(
                 OutlinedTextField(
                     value = tempC,
                     onValueChange = { brewViewModel.setTempC(it) },
-                    label = { Text("Temperature (°C)") },
+                    label = { Text(stringResource(R.string.label_temperature)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     shape = MaterialTheme.shapes.small,
                     singleLine = true,
@@ -284,7 +288,7 @@ fun AmountStrengthScreen(
                     OutlinedTextField(
                         value = bloomMultiplier,
                         onValueChange = { brewViewModel.setBloomMultiplier(it) },
-                        label = { Text("Bloom multiplier (e.g. 3.0)") },
+                        label = { Text(stringResource(R.string.label_bloom_multiplier)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                         shape = MaterialTheme.shapes.small,
                         singleLine = true,
@@ -298,7 +302,7 @@ fun AmountStrengthScreen(
                     OutlinedTextField(
                         value = pulseCount,
                         onValueChange = { brewViewModel.setPulseCount(it) },
-                        label = { Text("Pulse count") },
+                        label = { Text(stringResource(R.string.label_pulse_count)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         shape = MaterialTheme.shapes.small,
                         singleLine = true,
@@ -331,7 +335,7 @@ fun AmountStrengthScreen(
         ) {
             Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)) {
                 Text(
-                    text = "Grind",
+                    text = stringResource(R.string.label_grind),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 4.dp),
                 )
@@ -383,7 +387,7 @@ fun AmountStrengthScreen(
                 .height(56.dp)
                 .testTag("start_timer_button"),
         ) {
-            Text("Start Brewing →", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.action_start_brewing), style = MaterialTheme.typography.labelLarge)
         }
 
         Spacer(modifier = Modifier.height(24.dp))

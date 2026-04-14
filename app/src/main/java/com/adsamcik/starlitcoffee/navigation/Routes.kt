@@ -9,6 +9,12 @@ object CalculatorBrew
 object BrewTimer
 
 @Serializable
+object GrindPrep
+
+@Serializable
+object BloomTimer
+
+@Serializable
 object SavedRecipes
 
 @Serializable

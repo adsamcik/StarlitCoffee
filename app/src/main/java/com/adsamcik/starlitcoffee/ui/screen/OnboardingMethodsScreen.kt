@@ -36,10 +36,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
@@ -65,7 +67,7 @@ fun OnboardingMethodsScreen(
             .padding(horizontal = 16.dp, vertical = 24.dp),
     ) {
         Text(
-            text = "What do you brew with?",
+            text = stringResource(R.string.screen_methods_title),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier
@@ -73,7 +75,7 @@ fun OnboardingMethodsScreen(
                 .semantics { heading() },
         )
         Text(
-            text = "Select your brew methods. Tap ★ to set your default.",
+            text = stringResource(R.string.msg_methods_subtitle),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(bottom = 16.dp),
@@ -183,9 +185,9 @@ fun OnboardingMethodsScreen(
                                         Icons.Outlined.StarOutline
                                     },
                                     contentDescription = if (isDefault) {
-                                        "Default method"
+                                        stringResource(R.string.label_default_method)
                                     } else {
-                                        "Set as default"
+                                        stringResource(R.string.label_set_as_default)
                                     },
                                     tint = if (isDefault) {
                                         MaterialTheme.colorScheme.primary
@@ -209,7 +211,7 @@ fun OnboardingMethodsScreen(
         ) {
             if (enabledSet.isNotEmpty()) {
                 Text(
-                    text = "${enabledSet.size} selected",
+                    text = stringResource(R.string.format_selected, enabledSet.size),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -224,7 +226,7 @@ fun OnboardingMethodsScreen(
                 enabled = enabledSet.isNotEmpty(),
                 modifier = Modifier.testTag("onboarding_next_button"),
             ) {
-                Text("Next")
+                Text(stringResource(R.string.action_next))
             }
         }
     }

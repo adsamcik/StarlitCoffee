@@ -48,6 +48,12 @@ data class BrewState(
     val remainingWaterG: Float
         get() = waterG - bloomG
 
+    val retainedWaterG: Float
+        get() = coffeeG * method.absorptionRatio
+
+    val predictedCupVolumeG: Float
+        get() = (waterG - retainedWaterG).coerceAtLeast(0f)
+
     val effectivePulseCount: Int
         get() {
             if (!method.hasPulses) return 0

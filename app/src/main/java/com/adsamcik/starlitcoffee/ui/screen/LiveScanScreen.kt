@@ -1182,11 +1182,12 @@ private class LiveScanAnalyzer(
         }
 
         // Pre-encode JPEG only for golden frame candidates (expensive — skip for regular frames)
+        // Note: textBlockCount uses the previous frame's count, so we don't gate on it here.
+        // Blur + glare + exposure are sufficient quality indicators.
         val goldenFrameJpeg: ByteArray? = if (
             quality.blurScore >= 12f &&
             quality.glareOkay &&
-            quality.exposureOkay &&
-            quality.textBlockCount >= 2
+            quality.exposureOkay
         ) {
             perfTracer?.startTimer("jpeg_encode_ms")
             val jpeg = encodeToJpeg(image)

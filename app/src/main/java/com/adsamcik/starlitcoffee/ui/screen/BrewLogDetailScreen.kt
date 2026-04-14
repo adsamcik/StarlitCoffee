@@ -38,18 +38,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
 import com.adsamcik.starlitcoffee.ui.component.shareBrewCard
-import com.adsamcik.starlitcoffee.ui.util.displayName
+import com.adsamcik.starlitcoffee.ui.util.displayNameRes
 import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.ui.component.FlavorTagPicker
 import com.adsamcik.starlitcoffee.ui.component.HalfStarRatingRow
@@ -121,20 +124,20 @@ fun BrewLogDetailScreen(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Delete brew log?") },
-            text = { Text("This action cannot be undone.") },
+            title = { Text(stringResource(R.string.dialog_delete_brew_title)) },
+            text = { Text(stringResource(R.string.dialog_delete_brew_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     log?.let { brewViewModel.deleteBrewLog(it) }
                     showDeleteDialog = false
                     onBack()
                 }) {
-                    Text("Delete", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.action_cancel))
                 }
             },
         )
@@ -143,12 +146,12 @@ fun BrewLogDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Brew Details") },
+                title = { Text(stringResource(R.string.screen_brew_details_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(R.string.action_back),
                         )
                     }
                 },
@@ -173,7 +176,7 @@ fun BrewLogDetailScreen(
                     IconButton(onClick = { showDeleteDialog = true }, modifier = Modifier.testTag("delete_brew_log_button")) {
                         Icon(
                             Icons.Filled.Delete,
-                            contentDescription = "Delete",
+                            contentDescription = stringResource(R.string.action_delete),
                             tint = MaterialTheme.colorScheme.error,
                         )
                     }
@@ -188,7 +191,7 @@ fun BrewLogDetailScreen(
                     .padding(innerPadding),
                 contentAlignment = Alignment.Center,
             ) {
-                Text("Loading…", style = MaterialTheme.typography.bodyLarge)
+                Text(stringResource(R.string.label_loading), style = MaterialTheme.typography.bodyLarge)
             }
             return@Scaffold
         }
@@ -203,10 +206,10 @@ fun BrewLogDetailScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                Text("Brew log not found", style = MaterialTheme.typography.bodyLarge)
+                Text(stringResource(R.string.msg_brew_not_found), style = MaterialTheme.typography.bodyLarge)
                 Spacer(modifier = Modifier.height(16.dp))
                 TextButton(onClick = onBack) {
-                    Text("Go back")
+                    Text(stringResource(R.string.action_go_back))
                 }
             }
             return@Scaffold
@@ -220,10 +223,12 @@ fun BrewLogDetailScreen(
                 .padding(horizontal = 16.dp),
         ) {
             // --- Brew Info ---
+            val decafSuffix = stringResource(R.string.label_decaf_suffix)
+            val unitGrams = stringResource(R.string.unit_grams)
             Text(
                 text = buildString {
                     append(entity.method.lowercase().replaceFirstChar { it.uppercase() })
-                    if (entity.isDecaf) append(" · Decaf")
+                    if (entity.isDecaf) append(decafSuffix)
                 },
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier
@@ -246,37 +251,37 @@ fun BrewLogDetailScreen(
                         .fillMaxWidth()
                         .padding(20.dp),
                 ) {
-                    DetailRow("Coffee", "${"%.1f".format(entity.doseG)}g")
-                    DetailRow("Water", "${"%.0f".format(entity.waterG)}g")
+                    DetailRow(stringResource(R.string.label_coffee), "${"%.1f".format(entity.doseG)}$unitGrams")
+                    DetailRow(stringResource(R.string.label_water), "${"%.0f".format(entity.waterG)}$unitGrams")
 
                     if (entity.coffeeBagId != null) {
                         val bagName = bags.find { it.id == entity.coffeeBagId }?.let { bag ->
                             bag.name + (bag.roaster?.let { " ($it)" } ?: "")
                         }
                         if (bagName != null) {
-                            DetailRow("Coffee bag", bagName)
+                            DetailRow(stringResource(R.string.label_coffee_bag), bagName)
                         }
                     }
 
                     if (entity.brewTimeSeconds != null && entity.brewTimeSeconds > 0) {
                         val min = entity.brewTimeSeconds / 60
                         val sec = entity.brewTimeSeconds % 60
-                        DetailRow("Brew time", "%d:%02d".format(min, sec))
+                        DetailRow(stringResource(R.string.label_brew_time), "%d:%02d".format(min, sec))
                     }
 
                     if (entity.isDecaf) {
-                        DetailRow("Coffee type", "Decaf")
+                        DetailRow(stringResource(R.string.label_coffee_type), stringResource(R.string.label_decaf))
                     }
 
                     if (entity.grindSetting != null) {
-                        DetailRow("Grind", entity.grindSetting)
+                        DetailRow(stringResource(R.string.label_grind), entity.grindSetting)
                     }
 
                     if (entity.filterType != null) {
                         val filterDisplayName = FilterType.entries
                             .find { it.name == entity.filterType }?.displayName
                             ?: entity.filterType
-                        DetailRow("Filter", filterDisplayName)
+                        DetailRow(stringResource(R.string.label_filter), filterDisplayName)
                     }
 
                     if (entity.tasteFeedback != null) {
@@ -287,7 +292,7 @@ fun BrewLogDetailScreen(
                             null
                         }
                         if (feedback != null) {
-                            DetailRow("Taste", "${feedback.emoji()} ${feedback.displayName()}")
+                            DetailRow(stringResource(R.string.label_taste), "${feedback.emoji()} ${stringResource(feedback.displayNameRes())}")
                         }
                     }
                 }
@@ -297,7 +302,7 @@ fun BrewLogDetailScreen(
 
             // --- Rating ---
             Text(
-                text = "Rating",
+                text = stringResource(R.string.label_rating),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .padding(start = 8.dp, bottom = 8.dp)
@@ -314,7 +319,7 @@ fun BrewLogDetailScreen(
 
             // --- Flavor Tags ---
             Text(
-                text = "Flavor notes",
+                text = stringResource(R.string.label_flavor_notes),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp).semantics { heading() },
             )
@@ -334,14 +339,14 @@ fun BrewLogDetailScreen(
 
             // --- Notes ---
             Text(
-                text = "Notes",
+                text = stringResource(R.string.label_notes),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp).semantics { heading() },
             )
             OutlinedTextField(
                 value = notes,
                 onValueChange = { notes = it },
-                placeholder = { Text("Add notes…") },
+                placeholder = { Text(stringResource(R.string.hint_add_notes)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
@@ -380,7 +385,7 @@ fun BrewLogDetailScreen(
                         .testTag("save_changes_button"),
                     shape = MaterialTheme.shapes.large,
                 ) {
-                    Text("Save Changes")
+                    Text(stringResource(R.string.action_save))
                 }
             }
 
@@ -391,7 +396,7 @@ fun BrewLogDetailScreen(
                     showSavedConfirmation = false
                 }
                 Text(
-                    text = "✓ Saved",
+                    text = stringResource(R.string.action_saved),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),

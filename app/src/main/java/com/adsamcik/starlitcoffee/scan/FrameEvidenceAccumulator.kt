@@ -661,6 +661,13 @@ class FrameEvidenceAccumulator(
         // Viability gate: golden frame must exist
         val hasViableFrame = lastGoldenFrameBytes != null
 
+        // Log trigger state every 10 cycles for diagnostics
+        if (consensusCycleCount % 10 == 0) {
+            android.util.Log.d("Accumulator", "LLM trigger check: " +
+                "calls=$llmCallCount, coreFields=$provisionalCoreCount/2, " +
+                "goldenFrame=$hasViableFrame, fields=${fieldAccumulations.size}")
+        }
+
         // Trigger 1 (first call): ≥2 core fields at PROVISIONAL+ AND viable frame
         val shouldFireFirst = llmCallCount == 0 && provisionalCoreCount >= 2 && hasViableFrame
 

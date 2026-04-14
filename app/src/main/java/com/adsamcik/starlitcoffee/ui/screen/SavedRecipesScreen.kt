@@ -25,9 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
@@ -52,13 +54,13 @@ fun SavedRecipesScreen(
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            ScreenTopBar(title = "Your Favorites", onBack = onBack)
+            ScreenTopBar(title = stringResource(R.string.screen_favorites_title), onBack = onBack)
 
             if (recipes.isEmpty()) {
                 EmptyStateBox(
                     icon = Icons.Filled.Bookmark,
-                    message = "No favorites yet",
-                    subtitle = "Save a recipe from the brew screen with the ♡ button",
+                    message = stringResource(R.string.msg_no_favorites_title),
+                    subtitle = stringResource(R.string.msg_no_favorites_subtitle),
                     modifier = Modifier.fillMaxSize(),
                 )
             } else {
@@ -96,6 +98,8 @@ private fun RecipeCard(
     onTap: () -> Unit,
     onDelete: () -> Unit,
 ) {
+    val decafSuffix = stringResource(R.string.label_decaf_suffix)
+
     SwipeToDismissCard(onDismiss = onDelete) {
         ElevatedCard(
             onClick = onTap,
@@ -110,19 +114,19 @@ private fun RecipeCard(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = recipe.coffeeName ?: "Untitled",
+                        text = recipe.coffeeName ?: stringResource(R.string.label_untitled),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
                         text = buildString {
                             append(recipe.method)
-                            if (recipe.isDecaf) append(" · Decaf")
+                            if (recipe.isDecaf) append(decafSuffix)
                         },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Text(
-                        text = "${"%.0f".format(recipe.doseG)}g coffee / ${"%.0f".format(recipe.waterG)}g water",
+                        text = stringResource(R.string.format_recipe_summary, "%.0f".format(recipe.doseG), "%.0f".format(recipe.waterG)),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

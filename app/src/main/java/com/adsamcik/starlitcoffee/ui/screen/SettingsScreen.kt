@@ -57,8 +57,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CupPreset
 import com.adsamcik.starlitcoffee.data.model.FilterType
@@ -104,7 +106,7 @@ fun SettingsScreen(
             .padding(horizontal = 16.dp, vertical = 24.dp),
     ) {
         ScreenTopBar(
-            title = "Settings",
+            title = stringResource(R.string.screen_settings_title),
             onBack = onBack,
         )
 
@@ -125,23 +127,23 @@ fun SettingsScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = "Cup presets",
+                            text = stringResource(R.string.label_cup_presets),
                             style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier.semantics { heading() },
                         )
                         Row {
                             IconButton(onClick = { showAddPresetDialog = true }) {
-                                Icon(Icons.Filled.Add, contentDescription = "Add preset")
+                                Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.action_add_preset))
                             }
                             IconButton(onClick = {
                                 scope.launch { cupPresetRepository.resetToDefaults() }
                             }) {
-                                Icon(Icons.Filled.Restore, contentDescription = "Reset to defaults")
+                                Icon(Icons.Filled.Restore, contentDescription = stringResource(R.string.action_reset_defaults))
                             }
                         }
                     }
                     Text(
-                        text = "Presets appear as quick buttons on the calculator",
+                        text = stringResource(R.string.msg_presets_hint),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -177,7 +179,7 @@ fun SettingsScreen(
                             }
                             Icon(
                                 Icons.Filled.Edit,
-                                contentDescription = "Edit ${preset.name}",
+                                contentDescription = stringResource(R.string.format_edit_preset, preset.name),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(18.dp),
                             )
@@ -190,12 +192,12 @@ fun SettingsScreen(
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Brew methods",
+                        text = stringResource(R.string.label_brew_methods),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.semantics { heading() },
                     )
                     Text(
-                        text = "Selected methods appear first. Tap to toggle.",
+                        text = stringResource(R.string.msg_methods_hint),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -238,7 +240,7 @@ fun SettingsScreen(
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Default method",
+                        text = stringResource(R.string.label_default_method),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.semantics { heading() },
                     )
@@ -268,7 +270,7 @@ fun SettingsScreen(
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Pulsar filter type",
+                        text = stringResource(R.string.label_pulsar_filter_type),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.semantics { heading() },
                     )
@@ -288,7 +290,7 @@ fun SettingsScreen(
                                     userPreferencesRepository.updateDefaultFilterType(null)
                                 }
                             },
-                            label = { Text("None") },
+                            label = { Text(stringResource(R.string.label_none)) },
                             leadingIcon = if (prefs.defaultFilterType == null) checkIcon else null,
                         )
                         FilterType.entries.forEach { filter ->
@@ -312,7 +314,7 @@ fun SettingsScreen(
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Your grinder",
+                        text = stringResource(R.string.label_your_grinder),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.semantics { heading() },
                     )
@@ -328,7 +330,7 @@ fun SettingsScreen(
                                     userPreferencesRepository.updateSelectedGrinder(null)
                                 }
                             },
-                            label = { Text("No grinder") },
+                            label = { Text(stringResource(R.string.label_no_grinder)) },
                             leadingIcon = if (prefs.selectedGrinderId == null) checkIcon else null,
                         )
                         GrinderDataSource.getInstance(context).grinders.forEach { grinder ->

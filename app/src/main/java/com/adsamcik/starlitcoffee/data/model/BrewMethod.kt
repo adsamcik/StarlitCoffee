@@ -15,7 +15,8 @@ enum class BrewMethod(
     val capacityMaxG: Int?,
     val defaultGrindDescriptor: GrindDescriptor,
     val bloomDurationSeconds: Int = 45,
-) {
+    val absorptionRatio: Float = 2.0f,
+){
     PULSAR(
         displayName = "Pulsar",
         iconName = "coffee",

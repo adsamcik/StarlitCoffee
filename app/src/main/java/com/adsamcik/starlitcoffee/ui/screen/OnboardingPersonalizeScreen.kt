@@ -32,8 +32,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
@@ -65,7 +67,7 @@ fun OnboardingPersonalizeScreen(
             .padding(horizontal = 16.dp, vertical = 24.dp),
     ) {
         ScreenTopBar(
-            title = "Personalise your brew",
+            title = stringResource(R.string.screen_personalize_title),
             onBack = {
                 onSelectionChanged(filterType.value, selectedGrinderId.value)
                 onBack()
@@ -87,11 +89,11 @@ fun OnboardingPersonalizeScreen(
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "Pulsar filter type",
+                            text = stringResource(R.string.label_pulsar_filter_type),
                             style = MaterialTheme.typography.titleMedium,
                         )
                         Text(
-                            text = "Affects cup profile and grind recommendations",
+                            text = stringResource(R.string.msg_filter_hint),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -136,11 +138,11 @@ fun OnboardingPersonalizeScreen(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Your grinder",
+                        text = stringResource(R.string.label_your_grinder),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
-                        text = "Optional — enables specific grind setting recommendations",
+                        text = stringResource(R.string.msg_grinder_hint),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -152,7 +154,7 @@ fun OnboardingPersonalizeScreen(
                         FilterChip(
                             selected = selectedGrinderId.value == null,
                             onClick = { selectedGrinderId.value = null },
-                            label = { Text("No grinder") },
+                            label = { Text(stringResource(R.string.label_no_grinder)) },
                             leadingIcon = if (selectedGrinderId.value == null) {
                                 { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
                             } else {
@@ -200,7 +202,7 @@ fun OnboardingPersonalizeScreen(
             TextButton(onClick = {
                 onFinish(null, null)
             }, modifier = Modifier.testTag("onboarding_skip_button")) {
-                Text("Skip")
+                Text(stringResource(R.string.action_skip))
             }
             Spacer(modifier = Modifier.width(8.dp))
             Button(
@@ -209,7 +211,7 @@ fun OnboardingPersonalizeScreen(
                 },
                 modifier = Modifier.testTag("onboarding_finish_button"),
             ) {
-                Text("Finish")
+                Text(stringResource(R.string.action_finish))
             }
         }
     }

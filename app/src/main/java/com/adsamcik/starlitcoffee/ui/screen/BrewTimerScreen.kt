@@ -60,7 +60,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlin.math.abs
 
@@ -154,9 +156,9 @@ fun BrewTimerScreen(
                             Icons.Filled.NotificationsOff
                         },
                         contentDescription = if (state.minuteAlertEnabled) {
-                            "Disable minute alerts"
+                            stringResource(R.string.cd_disable_minute_alerts)
                         } else {
-                            "Enable minute alerts"
+                            stringResource(R.string.cd_enable_minute_alerts)
                         },
                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(
                             alpha = if (state.minuteAlertEnabled) 0.7f else 0.35f,
@@ -166,7 +168,7 @@ fun BrewTimerScreen(
                 IconButton(onClick = { brewViewModel.pauseTimer(); onBack() }) {
                     Icon(
                         imageVector = Icons.Filled.Close,
-                        contentDescription = "Close",
+                        contentDescription = stringResource(R.string.action_close),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                     )
                 }
@@ -221,9 +223,9 @@ fun BrewTimerScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
                     ) {
-                        Text(text = "🌱", fontSize = 16.sp)
+                        Text(text = "", fontSize = 16.sp)
                         Text(
-                            text = " Bloom at ${formatTime(state.bloomMarkedAtSeconds ?: 0)}",
+                            text = stringResource(R.string.format_bloom_at, formatTime(state.bloomMarkedAtSeconds ?: 0)),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onTertiaryContainer,
                         )
@@ -266,7 +268,7 @@ fun BrewTimerScreen(
                     Icon(
                         imageVector = if (state.timerRunning) Icons.Filled.Pause
                         else Icons.Filled.PlayArrow,
-                        contentDescription = if (state.timerRunning) "Pause" else "Resume",
+                        contentDescription = if (state.timerRunning) stringResource(R.string.action_pause) else stringResource(R.string.action_resume),
                         modifier = Modifier.size(32.dp),
                     )
                 }
@@ -288,7 +290,7 @@ fun BrewTimerScreen(
                         ),
                     ) {
                         Text(
-                            text = "☕ Start Bloom",
+                            text = stringResource(R.string.action_start_bloom),
                             style = MaterialTheme.typography.headlineSmall,
                         )
                     }
@@ -313,7 +315,7 @@ fun BrewTimerScreen(
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Text(
-                                text = "🌱 Bloom ${formatTime(state.bloomCountdownSeconds ?: 0)}",
+                                text = stringResource(R.string.format_bloom_countdown, formatTime(state.bloomCountdownSeconds ?: 0)),
                                 style = MaterialTheme.typography.titleLarge,
                                 color = MaterialTheme.colorScheme.onTertiaryContainer,
                                 textAlign = TextAlign.Center,
@@ -358,7 +360,7 @@ fun BrewTimerScreen(
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            text = "✅ Bloom done!",
+                            text = stringResource(R.string.label_bloom_done),
                             style = MaterialTheme.typography.titleLarge,
                             color = MaterialTheme.colorScheme.onTertiaryContainer,
                             textAlign = TextAlign.Center,

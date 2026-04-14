@@ -37,9 +37,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
@@ -77,13 +79,13 @@ fun BrewLogScreen(
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            ScreenTopBar(title = "Brew Log", onBack = onBack)
+            ScreenTopBar(title = stringResource(R.string.screen_brew_log_title), onBack = onBack)
 
             if (logs.isEmpty()) {
                 EmptyStateBox(
                     icon = Icons.Filled.History,
-                    message = "Start brewing to see your history",
-                    subtitle = "Each completed brew with feedback will appear here",
+                    message = stringResource(R.string.msg_log_empty_title),
+                    subtitle = stringResource(R.string.msg_log_empty_subtitle),
                     modifier = Modifier.fillMaxSize(),
                 )
             } else {
@@ -138,6 +140,7 @@ private fun BrewLogCard(
 
     val isUnrated = log.rating == null
     val accentColor = ratingAccentColor(log.rating)
+    val decafSuffix = stringResource(R.string.label_decaf_suffix)
 
     SwipeToDismissCard(onDismiss = onDelete) {
         ElevatedCard(
@@ -180,7 +183,7 @@ private fun BrewLogCard(
                                         log.method.lowercase()
                                             .replaceFirstChar { it.uppercase() },
                                     )
-                                    if (log.isDecaf) append(" · Decaf")
+                                    if (log.isDecaf) append(decafSuffix)
                                 },
                                 style = MaterialTheme.typography.titleMedium,
                             )
@@ -206,7 +209,7 @@ private fun BrewLogCard(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = "${"%.0f".format(log.doseG)}g · ${"%.0f".format(log.waterG)}g · 1:${"%.0f".format(log.ratio)}",
+                            text = stringResource(R.string.format_dose_water_ratio, log.doseG, log.waterG, log.ratio),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -221,7 +224,7 @@ private fun BrewLogCard(
                         if (log.isDecaf) {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Decaf",
+                                text = stringResource(R.string.label_decaf),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.outline,
                             )
@@ -249,7 +252,7 @@ private fun BrewLogCard(
                         }
                     } else {
                         Text(
-                            text = "Tap to rate this brew",
+                            text = stringResource(R.string.msg_tap_to_rate),
                             style = MaterialTheme.typography.bodySmall,
                             fontStyle = FontStyle.Italic,
                             color = MaterialTheme.colorScheme.outline,

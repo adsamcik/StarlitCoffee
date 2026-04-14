@@ -18,9 +18,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 
 @Composable
 fun MoreScreen(
@@ -36,7 +38,7 @@ fun MoreScreen(
                 .padding(horizontal = 16.dp),
         ) {
             Text(
-                text = "More",
+                text = stringResource(R.string.screen_more_title),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier
                     .padding(start = 8.dp, top = 16.dp, bottom = 8.dp)
@@ -45,22 +47,22 @@ fun MoreScreen(
 
             MoreItem(
                 icon = Icons.Filled.Bookmark,
-                title = "Your Favorites",
-                subtitle = "Replay your favourite brews",
+                title = stringResource(R.string.label_your_favorites),
+                subtitle = stringResource(R.string.msg_favorites_subtitle),
                 onClick = onNavigateToRecipes,
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
             MoreItem(
                 icon = Icons.Filled.ShoppingBag,
-                title = "Your Beans",
-                subtitle = "Freshness, stock, and what to brew next",
+                title = stringResource(R.string.label_your_beans),
+                subtitle = stringResource(R.string.msg_beans_subtitle),
                 onClick = onNavigateToBags,
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
             MoreItem(
                 icon = Icons.Filled.Settings,
-                title = "Settings",
-                subtitle = "Methods, grinder and preferences",
+                title = stringResource(R.string.label_settings),
+                subtitle = stringResource(R.string.msg_settings_subtitle),
                 onClick = onNavigateToSettings,
             )
         }
