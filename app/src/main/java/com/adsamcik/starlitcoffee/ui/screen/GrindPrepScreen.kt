@@ -270,7 +270,9 @@ private fun rangeLine(grinder: Grinder, rec: GrindRecommendation): String {
         GrinderScaleType.NUMBERED_DIAL -> {
             val step = rec.adjustmentStepSize
             val stepLabel = if (step % 1f == 0f) step.toInt().toString() else "%.1f".format(step)
-            "range ${"%.1f".format(rec.rangeStart)}–${"%.1f".format(rec.rangeEnd)} · ±$stepLabel to taste"
+            val loLabel = if (rec.rangeStart % 1f == 0f) rec.rangeStart.toInt().toString() else "%.1f".format(rec.rangeStart)
+            val hiLabel = if (rec.rangeEnd % 1f == 0f) rec.rangeEnd.toInt().toString() else "%.1f".format(rec.rangeEnd)
+            "range $loLabel–$hiLabel · ±$stepLabel to taste"
         }
     }
 }

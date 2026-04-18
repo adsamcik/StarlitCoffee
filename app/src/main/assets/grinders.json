@@ -1,21 +1,48 @@
 {
   "_meta": {
-    "version": 2,
-    "generated": "2025 research pass — grinder × method × filter coverage",
-    "sources": [
-      "1Zpresso ZP6 Special external dial: 10 clicks per number, 90 clicks/rotation total (1zpresso.com.tw user guide)",
-      "Comandante C40 community chart (r/coffee wiki, James Hoffmann Technique videos, European Coffee Trip)",
-      "Fellow Ode Gen 2 official grind chart (fellowproducts.com/ode)",
-      "Baratza Encore ESP setting guide (baratza.com/encore-esp)",
-      "Niche Zero guidance from nichecoffee.com + home-barista.com threads",
-      "DF64 filter-coffee discussion (home-barista.com, coffeeadastra.com, SSP burr reviews)"
-    ],
+    "version": 3,
+    "generated": "2026 web-verified pass — sources fetched/cited per grinder",
+    "sources": {
+      "1zpresso-zp6-special": [
+        "1Zpresso ZP6 dial spec: 9 numbers × 10 micro-clicks = 90 clicks/rotation, ~22 µm/click (cafune.ca, beanmarketshop.com, kofio.co)",
+        "Filter range 4.5–5.5 from zero — community consensus (r/coffee, home-barista.com)",
+        "Pulsar baseline 5.2 calibrated against NextLevel Pulsar paper-filter brew tests"
+      ],
+      "comandante-c40": [
+        "V60 22-click classic from James Hoffmann ‘ultimate V60 technique’ video",
+        "Pulsar/V60 range 20–28 — community consensus (r/coffee wiki)",
+        "Moka Pot 12–16, Cold Brew 28–34 — Comandante community + barista forums"
+      ],
+      "fellow-ode-gen2": [
+        "Fellow official gear guide: fellowproducts.com/pages/gear-guide-ode",
+        "Honest Coffee Guide chart: honestcoffeeguide.com/fellow-ode-brew-grinder-gen-2-grind-settings/",
+        "Gen 2 burrs grind ~25 µm/step finer than Gen 1; Gen 1 charts NOT applicable"
+      ],
+      "baratza-encore-esp": [
+        "Encore ESP dial 1–40 (1–15 espresso band, 10–40 filter): baratza.com/grinder/encore-esp/",
+        "Filter chart: V60 13–18, AeroPress 8–15, French Press 30–35 (community charts)"
+      ],
+      "niche-zero": [
+        "Niche dial 0–50 (max coarse 50): nichecoffee.co.uk + Hoffmann YouTube review",
+        "V60 starting point 28–32 (Hoffmann); Espresso 10–20, French Press 40–50 (Niche community)"
+      ],
+      "df64": [
+        "DF64 dial 0–90 with stock 64 mm flat burrs: honestcoffeeguide.com/turin-df64-gen-2-grind-settings/",
+        "V60 23–53, Espresso 0–20, French Press 53–90, Cold Brew 65–90 (Honest Coffee Guide chart)",
+        "Stock burrs are espresso-tuned; SSP MP / Brew burrs shift filter ranges ~10 finer"
+      ],
+      "decaf": [
+        "Decaffeination weakens cell walls → faster extraction; community rule of thumb 2 steps finer",
+        "Light roast decaf is more brittle (more fines); dark roast caramelization partially offsets",
+        "Sources: Barista Hustle decaf grinding guides, r/coffee decaf threads"
+      ]
+    },
     "notes": [
-      "Ranges are conservative starting points. Real-world calibration required per bean/roast.",
-      "Pulsar filter variants follow: PAPER finest → METAL_19K slightly coarser → METAL_40K coarsest. Metal filters allow more fines through so grind coarser to keep cup clean.",
+      "Ranges are starting points — your bag, roast date, water and machine will shift the dial.",
+      "Pulsar filter convention: PAPER finest → METAL_19K slightly coarser → METAL_40K coarsest.",
       "Filter-agnostic methods (non-Pulsar) use filterType=null.",
-      "Fellow Ode Gen 2 intentionally lacks ESPRESSO and MOKA_POT entries — it cannot grind fine enough.",
-      "DF64 filter-brew ranges assume stock burrs; SSP MP/HU burrs shift finer by ~0.5–1.0 unit."
+      "Fellow Ode Gen 2 has no ESPRESSO or MOKA_POT entry — burrs cannot grind that fine.",
+      "DF64 ranges assume stock burrs; SSP MP / HU shift filter brews ~10 dial-units finer."
     ]
   },
   "grinders": [
@@ -239,11 +266,11 @@
       "grinderId": "comandante-c40",
       "methodId": "COLD_BREW",
       "filterType": null,
-      "rangeStart": 35,
-      "rangeEnd": 45,
-      "suggestedStart": 38,
+      "rangeStart": 28,
+      "rangeEnd": 36,
+      "suggestedStart": 32,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Cold brew extra coarse — long steep"
+      "adjustmentNote": "Cold brew coarse — 12–16 h fridge steep, 1:8 ratio"
     },
 
     {
@@ -503,91 +530,91 @@
       "grinderId": "df64",
       "methodId": "PULSAR",
       "filterType": "PAPER",
-      "rangeStart": 5.5,
-      "rangeEnd": 7.0,
-      "suggestedStart": 6.0,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar paper — DF64 stock burrs"
+      "rangeStart": 30,
+      "rangeEnd": 45,
+      "suggestedStart": 36,
+      "adjustmentStepSize": 2,
+      "adjustmentNote": "Stock burrs · Pulsar paper, target 3:30–4:30 drawdown"
     },
     {
       "grinderId": "df64",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 6.0,
-      "rangeEnd": 7.5,
-      "suggestedStart": 6.5,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar 19K on DF64 — coarser"
+      "rangeStart": 32,
+      "rangeEnd": 48,
+      "suggestedStart": 38,
+      "adjustmentStepSize": 2,
+      "adjustmentNote": "Stock burrs · 19K mesh, slightly coarser to limit fines"
     },
     {
       "grinderId": "df64",
       "methodId": "PULSAR",
       "filterType": "METAL_40K",
-      "rangeStart": 6.5,
-      "rangeEnd": 8.0,
-      "suggestedStart": 7.0,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar 40K — coarsest on DF64"
+      "rangeStart": 35,
+      "rangeEnd": 50,
+      "suggestedStart": 40,
+      "adjustmentStepSize": 2,
+      "adjustmentNote": "Stock burrs · 40K mesh, coarsest of the three"
     },
     {
       "grinderId": "df64",
       "methodId": "V60",
       "filterType": null,
-      "rangeStart": 4.5,
-      "rangeEnd": 6.0,
-      "suggestedStart": 5.0,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "V60 — SSP MP shifts finer"
+      "rangeStart": 30,
+      "rangeEnd": 50,
+      "suggestedStart": 40,
+      "adjustmentStepSize": 2,
+      "adjustmentNote": "Stock burrs · V60 medium · SSP MP shifts ~10 finer"
     },
     {
       "grinderId": "df64",
       "methodId": "FRENCH_PRESS",
       "filterType": null,
-      "rangeStart": 7.5,
-      "rangeEnd": 9.0,
-      "suggestedStart": 8.0,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "French press coarse on DF64"
+      "rangeStart": 55,
+      "rangeEnd": 80,
+      "suggestedStart": 65,
+      "adjustmentStepSize": 3,
+      "adjustmentNote": "Coarse, 4 min steep, plunge slowly"
     },
     {
       "grinderId": "df64",
       "methodId": "AEROPRESS",
       "filterType": null,
-      "rangeStart": 3.5,
-      "rangeEnd": 5.0,
-      "suggestedStart": 4.2,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "AeroPress — medium-fine"
+      "rangeStart": 25,
+      "rangeEnd": 50,
+      "suggestedStart": 35,
+      "adjustmentStepSize": 2,
+      "adjustmentNote": "Standard 1:15, 2 min total · finer for shorter brews"
     },
     {
       "grinderId": "df64",
       "methodId": "ESPRESSO",
       "filterType": null,
-      "rangeStart": 1.0,
-      "rangeEnd": 2.5,
-      "suggestedStart": 1.6,
-      "adjustmentStepSize": 0.1,
-      "adjustmentNote": "Espresso — DF64's primary use"
+      "rangeStart": 5,
+      "rangeEnd": 18,
+      "suggestedStart": 10,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "18g→36g in 28–32s · stock burrs work, SSP HU preferred"
     },
     {
       "grinderId": "df64",
       "methodId": "MOKA_POT",
       "filterType": null,
-      "rangeStart": 2.5,
-      "rangeEnd": 3.8,
-      "suggestedStart": 3.0,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Moka — above espresso band"
+      "rangeStart": 19,
+      "rangeEnd": 35,
+      "suggestedStart": 25,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Just coarser than espresso · don't tamp"
     },
     {
       "grinderId": "df64",
       "methodId": "COLD_BREW",
       "filterType": null,
-      "rangeStart": 8.5,
-      "rangeEnd": 10.0,
-      "suggestedStart": 9.0,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Cold brew — max coarse"
+      "rangeStart": 65,
+      "rangeEnd": 90,
+      "suggestedStart": 75,
+      "adjustmentStepSize": 5,
+      "adjustmentNote": "Very coarse, 1:8 ratio, 12–16 h fridge"
     }
   ]
 }
