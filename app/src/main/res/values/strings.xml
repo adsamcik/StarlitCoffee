@@ -105,17 +105,17 @@
     <string name="format_grind_coffee">Grind %1$.0fg of coffee</string>
     <string name="format_water_temp">Water: %1$d–%2$d°C</string>
     <string name="action_ready_to_brew">Ready to Brew →</string>
-    <!-- Pulsar checklist -->
-    <string name="checklist_pulsar_filter">☐ Wet paper filter in base with valve open, drain</string>
-    <string name="checklist_pulsar_barrel">☐ Mount barrel on base</string>
-    <string name="checklist_pulsar_coffee">☐ Add ground coffee, level bed</string>
-    <string name="checklist_pulsar_cap">☐ Place dispersion cap</string>
-    <string name="checklist_tare_scale">☐ Tare scale</string>
-    <!-- V60 checklist -->
-    <string name="checklist_v60_filter">☐ Place filter, rinse with hot water</string>
-    <!-- Generic checklist -->
-    <string name="checklist_prepare_brewer">☐ Prepare brewer</string>
-    <string name="checklist_add_coffee">☐ Add ground coffee</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Prep</string>
+    <string name="prep_tip_pulsar_paper">Wet the paper filter in the base (valve open) and drain. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>
+    <string name="prep_tip_pulsar_19k">Rinse the 19K metal filter to seat it and preheat the barrel. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>
+    <string name="prep_tip_pulsar_40k">Rinse the 40K metal filter to preheat the barrel. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>
+    <string name="prep_tip_pour_over_paper">Place the paper filter and rinse with hot water to preheat and remove papery taste. Add grounds, tare scale.</string>
+    <string name="prep_tip_french_press">Preheat the press with hot water, then empty. Add grounds and tare scale.</string>
+    <string name="prep_tip_aeropress">Insert a rinsed paper filter in the cap. Add grounds and tare scale.</string>
+    <string name="prep_tip_espresso">Wipe the portafilter dry. Dose, level, and tamp evenly.</string>
+    <string name="prep_tip_moka">Fill the bottom chamber with hot water to the valve. Fill the basket with grounds, level — don\'t tamp.</string>
+    <string name="prep_tip_cold_brew">Add grounds to the vessel and tare scale.</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pause</string>

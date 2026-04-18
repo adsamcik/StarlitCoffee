@@ -85,17 +85,17 @@
     <string name="format_grind_coffee">Namelte %1$.0fg kávy</string>
     <string name="format_water_temp">Voda: %1$d–%2$d°C</string>
     <string name="action_ready_to_brew">Připraveno k přípravě →</string>
-    <!-- Pulsar checklist -->
-    <string name="checklist_pulsar_filter">☐ Namočte papírový filtr v základně s otevřeným ventilem, nechte odkapat</string>
-    <string name="checklist_pulsar_barrel">☐ Nasaďte válec na základnu</string>
-    <string name="checklist_pulsar_coffee">☐ Přidejte namletou kávu, zarovnejte</string>
-    <string name="checklist_pulsar_cap">☐ Nasaďte rozptylovací kryt</string>
-    <string name="checklist_tare_scale">☐ Vytárujte váhu</string>
-    <!-- V60 checklist -->
-    <string name="checklist_v60_filter">☐ Vložte filtr, propláchněte horkou vodou</string>
-    <!-- Generic checklist -->
-    <string name="checklist_prepare_brewer">☐ Připravte přístroj</string>
-    <string name="checklist_add_coffee">☐ Přidejte namletou kávu</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Příprava</string>
+    <string name="prep_tip_pulsar_paper">Namočte papírový filtr v základně (ventil otevřený) a nechte odkapat. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
+    <string name="prep_tip_pulsar_19k">Propláchněte kovový filtr 19K, aby dosedl a předehřál válec. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
+    <string name="prep_tip_pulsar_40k">Propláchněte kovový filtr 40K, aby předehřál válec. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
+    <string name="prep_tip_pour_over_paper">Vložte papírový filtr a propláchněte horkou vodou — předehřeje a odstraní papírovou chuť. Přidejte kávu, vytárujte váhu.</string>
+    <string name="prep_tip_french_press">Předehřejte konvici horkou vodou a vylijte. Přidejte kávu a vytárujte váhu.</string>
+    <string name="prep_tip_aeropress">Vložte propláchnutý papírový filtr do víčka. Přidejte kávu a vytárujte váhu.</string>
+    <string name="prep_tip_espresso">Otřete páku do sucha. Dávkujte, zarovnejte a rovnoměrně utemujte.</string>
+    <string name="prep_tip_moka">Naplňte spodní část horkou vodou po ventil. Do sítka nasypte kávu, zarovnejte — neutemujte.</string>
+    <string name="prep_tip_cold_brew">Nasypte kávu do nádoby a vytárujte váhu.</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pauza</string>

@@ -2,7 +2,6 @@ package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 
@@ -125,45 +126,30 @@ fun GrindPrepScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Brew Prep Checklist
-            Column(
+            // Method + filter specific prep tip — one concise sentence
+            val prepTipRes = prepTipFor(state.method, state.filterType)
+            ElevatedCard(
+                shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                colors = CardDefaults.elevatedCardColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                ),
             ) {
-                val steps = when {
-                    state.method == BrewMethod.PULSAR -> listOf(
-                        stringResource(R.string.checklist_pulsar_filter),
-                        stringResource(R.string.checklist_pulsar_barrel),
-                        stringResource(R.string.checklist_pulsar_coffee),
-                        stringResource(R.string.checklist_pulsar_cap),
-                        stringResource(R.string.checklist_tare_scale),
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.prep_tip_label),
+                        style = MaterialTheme.typography.labelLarge,
                     )
-
-                    state.method.hasBloom -> listOf(
-                        stringResource(R.string.checklist_v60_filter),
-                        stringResource(R.string.checklist_pulsar_coffee),
-                        stringResource(R.string.checklist_tare_scale),
+                    Text(
+                        text = stringResource(prepTipRes),
+                        style = MaterialTheme.typography.bodyMedium,
                     )
-
-                    else -> listOf(
-                        stringResource(R.string.checklist_prepare_brewer),
-                        stringResource(R.string.checklist_add_coffee),
-                        stringResource(R.string.checklist_tare_scale),
-                    )
-                }
-
-                steps.forEach { step ->
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Text(
-                            text = step,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
                 }
             }
-
-            // Water temperature is now shown inline with the dose/water target above
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -184,4 +170,22 @@ fun GrindPrepScreen(
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
+}
+
+/**
+ * Resolve a single concise prep tip string resource ID for the given brew method + filter combo.
+ */
+@androidx.annotation.StringRes
+private fun prepTipFor(method: BrewMethod, filter: FilterType?): Int = when (method) {
+    BrewMethod.PULSAR -> when (filter) {
+        FilterType.METAL_19K -> R.string.prep_tip_pulsar_19k
+        FilterType.METAL_40K -> R.string.prep_tip_pulsar_40k
+        else -> R.string.prep_tip_pulsar_paper
+    }
+    BrewMethod.V60 -> R.string.prep_tip_pour_over_paper
+    BrewMethod.FRENCH_PRESS -> R.string.prep_tip_french_press
+    BrewMethod.AEROPRESS -> R.string.prep_tip_aeropress
+    BrewMethod.ESPRESSO -> R.string.prep_tip_espresso
+    BrewMethod.MOKA_POT -> R.string.prep_tip_moka
+    BrewMethod.COLD_BREW -> R.string.prep_tip_cold_brew
 }
