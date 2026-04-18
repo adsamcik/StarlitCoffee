@@ -5,8 +5,10 @@
     "sources": {
       "1zpresso-zp6-special": [
         "1Zpresso ZP6 dial spec: 9 numbers × 10 micro-clicks = 90 clicks/rotation, ~22 µm/click (cafune.ca, beanmarketshop.com, kofio.co)",
-        "Filter range 4.5–5.5 from zero — community consensus (r/coffee, home-barista.com)",
-        "Pulsar baseline 5.2 calibrated against NextLevel Pulsar paper-filter brew tests"
+        "Paper Pulsar median 5.5, range 4.3–6.5 from 6 exact community dial reports (r/pourover users gunga_galungaa, Pizzacooby2007, albertclee, Cathfaern, MC-M; 2024–2025)",
+        "Paper distribution is bimodal: Rao/Gagné cluster ~4.3–5.5; PocketScience-style ~6.5 — suggested 5.2 stays as Rao-style default",
+        "Metal 19K / 40K dial values: NO exact ZP6 Special reports found in community search; current values are inferred from official NextLevel guidance (40K finer mesh / cleaner; 19K 150 µm holes / body) and PAPER→40K→19K finest→coarsest ordering — treat as starting points, tune by taste",
+        "Calibration noise: some users zero at burr lock, others at slight burr touch (r/pourover); shifts cross-user comparability"
       ],
       "comandante-c40": [
         "V60 22-click classic from James Hoffmann ‘ultimate V60 technique’ video",
@@ -101,11 +103,11 @@
       "grinderId": "1zpresso-zp6-special",
       "methodId": "PULSAR",
       "filterType": "PAPER",
-      "rangeStart": 5.0,
-      "rangeEnd": 5.4,
+      "rangeStart": 4.3,
+      "rangeEnd": 6.5,
       "suggestedStart": 5.2,
       "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar with paper — clean cup, medium-coarse"
+      "adjustmentNote": "Pulsar + paper — Rao-style default 5.2; community range 4.3–6.5 (coarser ~6.5 for low-agitation / PocketScience-style)"
     },
     {
       "grinderId": "1zpresso-zp6-special",

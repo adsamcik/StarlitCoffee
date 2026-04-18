@@ -466,7 +466,7 @@ class BrewViewModelTest {
 
         persistenceViewModel.saveRecipe("Specific Grind")
 
-        assertEquals("5.0-5.4", persistenceViewModel.savedRecipes.value.first().grindSetting)
+        assertEquals("4.3-6.5", persistenceViewModel.savedRecipes.value.first().grindSetting)
     }
 
     @Test
