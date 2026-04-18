@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Czech (cs) localization.
+
+  Translation philosophy:
+  - Natural, idiomatic Czech — NOT literal 1:1 from English.
+  - Formal register ("vy" form) throughout.
+  - Match affordance: buttons = infinitive verb ("Uložit"), headers = noun phrase,
+    dialogs with a question = question form, microcopy = full sentence with period.
+  - Use the Czech speciality-coffee community's actual vocabulary, not dictionary
+    calques. See .github/instructions/translations.instructions.md for the canonical
+    glossary and conventions.
+
+  Key loanwords (kept in English because Czech baristas actually use them):
+    bloom        — not "předsmáčení" (too clinical; roasters write "bloom")
+    decaf        — acceptable alongside "bezkofeinová" in consumer copy
+    drawdown, preinfusion, bypass — technical loanwords
+
+  Bag terminology unified on "balení" (neuter) — consistent across the app.
+  Agreeing adjectives are neuter: Zapečetěné, Otevřené, etc.
+-->
 <resources>
     <string name="app_name">Starlit Coffee</string>
 
