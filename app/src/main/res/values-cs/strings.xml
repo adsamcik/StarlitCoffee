@@ -271,6 +271,9 @@
     <string name="instruction_drawdown">Nechte odkapat</string>
     <string name="format_drawdown_retention"> · zrna zadrží ~%1$.0fg</string>
     <string name="instruction_pour_total">Nalijte celkem na %1$.0fg</string>
+    <string name="instruction_open_valve_short">Otevřete ventil</string>
+    <string name="instruction_close_valve_short">Zavřete ventil</string>
+    <string name="instruction_bloom_wait">Protočte a vyčkejte</string>
 
     <!-- Warnings -->
     <string name="warning_ratio_zero">Poměr musí být větší než nula</string>

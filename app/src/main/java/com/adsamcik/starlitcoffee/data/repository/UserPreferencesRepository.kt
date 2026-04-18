@@ -24,7 +24,7 @@ data class UserPreferences(
     val selectedGrinderId: String? = null,
     val qrLinkExplorerEnabled: Boolean = false,
     val lastUsedRatio: Float = 17f,
-    val defaultInputDirection: String = "WATER",
+    val defaultInputDirection: String = "DOSE",
     val skipMethodSelection: Boolean = false,
 )
 
@@ -57,7 +57,7 @@ class UserPreferencesRepository(private val context: Context) {
             selectedGrinderId = prefs[Keys.SELECTED_GRINDER_ID],
             qrLinkExplorerEnabled = prefs[Keys.QR_LINK_EXPLORER_ENABLED] ?: false,
             lastUsedRatio = prefs[Keys.LAST_USED_RATIO] ?: 17f,
-            defaultInputDirection = prefs[Keys.DEFAULT_INPUT_DIRECTION] ?: "WATER",
+            defaultInputDirection = prefs[Keys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",
             skipMethodSelection = prefs[Keys.SKIP_METHOD_SELECTION] ?: false,
         )
     }

@@ -25,8 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -67,14 +65,7 @@ fun GrindPrepScreen(
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // Header
-            Text(
-                text = stringResource(R.string.screen_grind_prep_title),
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.semantics { heading() },
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             // Grind Recommendation Card
             ElevatedCard(
@@ -114,11 +105,23 @@ fun GrindPrepScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Dose Info
+            // Dose + water targets together — tells the user what to prepare
             Text(
                 text = stringResource(R.string.format_grind_coffee, state.coffeeG),
                 style = MaterialTheme.typography.titleLarge,
             )
+            if (state.waterG > 0f) {
+                Spacer(modifier = Modifier.height(4.dp))
+                val method = state.method
+                val tempSuffix = if (method.tempRangeLow > 0 && method.tempRangeHigh > 0) {
+                    " · ${method.tempRangeLow}–${method.tempRangeHigh}°C"
+                } else ""
+                Text(
+                    text = "Heat ${"%.0f".format(state.waterG)}g water$tempSuffix",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -160,16 +163,7 @@ fun GrindPrepScreen(
                 }
             }
 
-            // Water Temperature hint
-            val method = state.method
-            if (method.tempRangeLow > 0 && method.tempRangeHigh > 0) {
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = stringResource(R.string.format_water_temp, method.tempRangeLow, method.tempRangeHigh),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+            // Water temperature is now shown inline with the dose/water target above
 
             Spacer(modifier = Modifier.height(24.dp))
 

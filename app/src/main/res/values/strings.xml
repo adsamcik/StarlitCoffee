@@ -300,6 +300,9 @@
     <string name="instruction_drawdown">Let it draw down</string>
     <string name="format_drawdown_retention"> · grounds hold ~%1$.0fg</string>
     <string name="instruction_pour_total">Pour to %1$.0fg total</string>
+    <string name="instruction_open_valve_short">Open valve</string>
+    <string name="instruction_close_valve_short">Close valve</string>
+    <string name="instruction_bloom_wait">Swirl &amp; wait for bloom</string>
 
     <!-- Warnings -->
     <string name="warning_ratio_zero">Ratio must be greater than zero</string>

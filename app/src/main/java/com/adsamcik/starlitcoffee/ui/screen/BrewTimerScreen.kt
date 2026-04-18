@@ -49,7 +49,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -86,9 +88,11 @@ fun BrewTimerScreen(
         }
     }
 
-    // Auto-start the total timer on entry
+    // Auto-start the timer only when the brew begins immediately.
+    // For bloom methods, the timer starts when the user taps Start Bloom —
+    // pre-bloom setup (tare, kettle, etc.) shouldn't pollute elapsed time.
     LaunchedEffect(Unit) {
-        if (!state.timerRunning && state.elapsedSeconds == 0) {
+        if (!state.timerRunning && state.elapsedSeconds == 0 && !state.method.hasBloom) {
             brewViewModel.startTimer()
         }
     }
@@ -136,12 +140,26 @@ fun BrewTimerScreen(
         }
     }
 
+    // Track when bloom just ended so the "done!" visual flash is brief, not persistent.
+    var bloomEndedAtMs by remember { mutableStateOf<Long?>(null) }
+    var bloomJustEndedFlash by remember { mutableStateOf(false) }
+    LaunchedEffect(state.bloomFinished) {
+        if (state.bloomFinished && state.bloomMarkedAtSeconds != null) {
+            bloomEndedAtMs = System.currentTimeMillis()
+            bloomJustEndedFlash = true
+            delay(5000L)
+            bloomJustEndedFlash = false
+        } else if (!state.bloomFinished) {
+            bloomEndedAtMs = null
+            bloomJustEndedFlash = false
+        }
+    }
+
     // Timer color — animate based on bloom state and target window
     val hasTarget = state.timeTargetLowS > 0 && state.timeTargetHighS > 0
     val heroColor by animateColorAsState(
         targetValue = when {
-            state.bloomFinished && state.bloomMarkedAtSeconds != null ->
-                MaterialTheme.colorScheme.error
+            bloomJustEndedFlash -> MaterialTheme.colorScheme.error
             bloomActive -> MaterialTheme.colorScheme.tertiary
             !hasTarget -> MaterialTheme.colorScheme.onSurface
             state.elapsedSeconds > state.timeTargetHighS ->
@@ -257,7 +275,7 @@ fun BrewTimerScreen(
                         )
                     }
 
-                    state.bloomFinished && state.bloomMarkedAtSeconds != null -> {
+                    bloomJustEndedFlash -> {
                         Text(
                             text = stringResource(R.string.label_bloom_done),
                             style = MaterialTheme.typography.titleMedium,
@@ -294,8 +312,14 @@ fun BrewTimerScreen(
                     state.bloomG > 0f
                 if (showStartBloom) {
                     ElevatedButton(
-                        onClick = { brewViewModel.markBloom() },
-                        enabled = state.timerRunning,
+                        onClick = {
+                            // Start Bloom is the real "begin brew" moment for bloom methods —
+                            // start the timer first if it hasn't started yet.
+                            if (!state.timerRunning && state.elapsedSeconds == 0) {
+                                brewViewModel.startTimer()
+                            }
+                            brewViewModel.markBloom()
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(72.dp),
@@ -381,23 +405,32 @@ private fun BrewGuidanceCard(
     data class Guidance(val primary: String, val secondary: String?)
 
     val guidance = when {
-        bloomActive -> Guidance(
-            primary = stringResource(R.string.instruction_bloom_pour, state.bloomG),
-            secondary = if (isPulsar) {
-                stringResource(R.string.instruction_close_swirl)
-            } else null,
-        )
+        bloomActive -> {
+            val bloomDuration = state.effectiveBloomDurationSeconds
+            val bloomElapsed = bloomDuration - (state.bloomCountdownSeconds ?: bloomDuration)
+            // Give the user a short pour window at the start of bloom before
+            // switching the instruction to "swirl & wait". Cap at duration/2.
+            val pourWindow = minOf(10, bloomDuration / 2).coerceAtLeast(3)
+            val inPourPhase = bloomElapsed < pourWindow
+            if (inPourPhase) {
+                Guidance(
+                    primary = stringResource(R.string.instruction_bloom_pour, state.bloomG),
+                    secondary = if (isPulsar) stringResource(R.string.instruction_open_valve_short) else null,
+                )
+            } else {
+                Guidance(
+                    primary = stringResource(R.string.instruction_bloom_wait),
+                    secondary = if (isPulsar) stringResource(R.string.instruction_close_valve_short) else null,
+                )
+            }
+        }
         state.bloomFinished && state.bloomMarkedAtSeconds != null -> Guidance(
             primary = stringResource(R.string.instruction_pour_total, state.waterG),
-            secondary = if (isPulsar) {
-                stringResource(R.string.instruction_pulsar_pour, state.waterG)
-            } else null,
+            secondary = if (isPulsar) stringResource(R.string.instruction_open_valve_short) else null,
         )
         hasBloom -> Guidance(
             primary = stringResource(R.string.format_pour_bloom_water, state.bloomG),
-            secondary = if (isPulsar) {
-                stringResource(R.string.instruction_bloom_open_pour, state.bloomG)
-            } else null,
+            secondary = if (isPulsar) stringResource(R.string.instruction_open_valve_short) else null,
         )
         state.waterG > 0f -> Guidance(
             primary = stringResource(R.string.instruction_pour_total, state.waterG),

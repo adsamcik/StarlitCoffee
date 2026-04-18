@@ -20,7 +20,7 @@ data class CalcUiState(
     val previewDoseG: Float = 0f,
     val previewWaterMl: Float = 0f,
     val ratio: Float = 17f,
-    val inputDirection: InputDirection = InputDirection.WATER,
+    val inputDirection: InputDirection = InputDirection.DOSE,
     val availablePresets: List<CupPreset> = emptyList(),
     val hasValidExpression: Boolean = false,
 )
@@ -52,8 +52,8 @@ class CalculatorViewModel(
                             it.copy(
                                 ratio = prefs.lastUsedRatio,
                                 inputDirection = when (prefs.defaultInputDirection) {
-                                    "DOSE" -> InputDirection.DOSE
-                                    else -> InputDirection.WATER
+                                    "WATER" -> InputDirection.WATER
+                                    else -> InputDirection.DOSE
                                 },
                             )
                         }
