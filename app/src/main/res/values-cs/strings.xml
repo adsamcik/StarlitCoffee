@@ -48,7 +48,7 @@
     <string name="format_coffee_grams">☕ %1$sg</string>
     <string name="format_water_grams">💧 %1$sg</string>
     <string name="format_ratio">1:%1$s</string>
-    <string name="format_bloom_grams">Předsmáčení %1$.0fg</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg v šálku</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
@@ -70,7 +70,7 @@
     <string name="format_brew_setup_subtitle">%1$s · 1:%2$.0f</string>
     <string name="label_custom_ratio">Vlastní poměr (např. 16)</string>
     <string name="label_temperature">Teplota (°C)</string>
-    <string name="label_bloom_multiplier">Násobitel předsmáčení (např. 3.0)</string>
+    <string name="label_bloom_multiplier">Násobitel bloomu (např. 3.0)</string>
     <string name="label_pulse_count">Počet nalití</string>
     <string name="format_grind_range"> – %1$s</string>
     <string name="format_grind_setting">Nastavení: %1$s (rozsah %2$s–%3$s)</string>
@@ -103,14 +103,14 @@
     <string name="action_resume">Pokračovat</string>
     <string name="cd_disable_minute_alerts">Vypnout minutová upozornění</string>
     <string name="cd_enable_minute_alerts">Zapnout minutová upozornění</string>
-    <string name="format_bloom_at">🌱 Předsmáčení v %1$s</string>
-    <string name="format_pour_bloom_water">Nalijte %1$.0fg vody pro předsmáčení</string>
-    <string name="format_bloom_total">Předsmáčení %1$.0fg · Celkem %2$.0fg</string>
+    <string name="format_bloom_at">🌱 Bloom v %1$s</string>
+    <string name="format_pour_bloom_water">Nalijte %1$.0fg vody pro bloom</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Celkem %2$.0fg</string>
     <string name="format_total_water">Celkem %1$.0fg</string>
-    <string name="action_start_bloom">☕ Začít předsmáčení</string>
-    <string name="format_bloom_countdown">🌱 Předsmáčení %1$s</string>
-    <string name="label_bloom_done">✅ Předsmáčení hotovo!</string>
-    <string name="label_bloom_badge">🌱 Předsmáčení</string>
+    <string name="action_start_bloom">☕ Začít Bloom</string>
+    <string name="format_bloom_countdown">🌱 Bloom %1$s</string>
+    <string name="label_bloom_done">✅ Bloom hotovo!</string>
+    <string name="label_bloom_badge">🌱 Bloom</string>
     <string name="action_finish_brew">Dokončit přípravu</string>
     <string name="instruction_bloom_steps">Otevřete ventil · Nalijte vodu · Zavřete ventil</string>
 
@@ -250,7 +250,7 @@
     <string name="input_cup_desc">Zadejte objem šálku, káva a voda se dopočítají</string>
 
     <!-- Phase names -->
-    <string name="phase_bloom">Předsmáčení</string>
+    <string name="phase_bloom">Bloom</string>
     <string name="phase_pour">Nalévání</string>
     <string name="phase_drain_refill">Odtok a doplnění</string>
     <string name="phase_drawdown">Odtok</string>
@@ -280,7 +280,7 @@
     <string name="warning_ratio_zero">Poměr musí být větší než nula</string>
     <string name="format_warning_ratio_strong">Poměr 1:%1$.1f je neobvykle silný</string>
     <string name="format_warning_ratio_weak">Poměr 1:%1$.1f je neobvykle slabý</string>
-    <string name="format_warning_bloom_exceeds">Předsmáčení (%1$.0fg) přesahuje celkovou vodu (%2$.0fg)</string>
+    <string name="format_warning_bloom_exceeds">Bloom (%1$.0fg) přesahuje celkovou vodu (%2$.0fg)</string>
 
     <!-- Taste Feedback -->
     <string name="feedback_too_sour">Příliš kyselá / Slabá</string>
@@ -296,7 +296,7 @@
     <string name="adjust_grind_coarser_valve">Namelte hruběji o 2–4 kliknutí\nZkuste otevřít ventil dříve</string>
     <string name="adjust_try_coarser">Zkuste hrubší nastavení mletí</string>
     <string name="adjust_try_coarser_water">Zkuste hrubší nastavení mletí\nNebo zkuste chladnější vodu</string>
-    <string name="adjust_astringent_pulsar">Zvyšte dávku na 20g+ pro lepší hloubku\nSnižte míchání při předsmáčení\nUdržujte hladinu ~1cm nad kávou</string>
+    <string name="adjust_astringent_pulsar">Zvyšte dávku na 20g+ pro lepší hloubku\nSnižte míchání při bloomu\nUdržujte hladinu ~1cm nad kávou</string>
     <string name="adjust_astringent_grinder">Namelte o něco hruběji, snižte míchání</string>
     <string name="adjust_astringent_no_grinder">Namelte o něco hruběji, nalijte jemněji</string>
     <string name="adjust_clogged_pulsar_grinder">Namelte výrazně hruběji o 3–5 kliknutí\nSnižte míchání (jen jemné protočení)\nZkontrolujte, zda není káva příliš čerstvá — nechte odpočívat 7+ dní</string>
@@ -320,7 +320,7 @@
     <string name="label_water_to_dose">Voda → Dávka</string>
     <string name="label_dose_to_water">Dávka → Voda</string>
     <string name="label_total_water">celkem vody</string>
-    <string name="label_bloom_lowercase">předsmáčení</string>
+    <string name="label_bloom_lowercase">bloom</string>
     <string name="label_remaining">zbývá</string>
     <string name="label_advanced_options">Pokročilé možnosti</string>
     <string name="label_grinder">Mlýnek</string>
