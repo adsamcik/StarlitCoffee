@@ -30,7 +30,10 @@
       ],
       "niche-zero": [
         "Niche dial 0–50 (max coarse 50): nichecoffee.co.uk + Hoffmann YouTube review",
-        "V60 starting point 28–32 (Hoffmann); Espresso 10–20, French Press 40–50 (Niche community)"
+        "V60 starting point 28–32 (Hoffmann); Espresso 10–20, French Press 40–50 (Niche community)",
+        "Pulsar paper: 1 exact community dial (Instagram reel @ 40, 18g/300g) + 1 normalized anchor (~600–700 µm Reddit recipe ≈ Niche 35–50) — both point to ~40",
+        "Pulsar metal 19K / 40K: NO direct Niche Zero numeric reports; values extrapolated from paper anchor + finest→coarsest ordering",
+        "Agitation matters more than dial on Pulsar: gentle WWDT alone cut one Niche user's brew time from 8:00 to 5:00 with better taste (r/pourover Rabbit-at-Reddit)"
       ],
       "df64": [
         "DF64 dial 0–90 with stock 64 mm flat burrs: honestcoffeeguide.com/turin-df64-gen-2-grind-settings/",
@@ -453,31 +456,31 @@
       "grinderId": "niche-zero",
       "methodId": "PULSAR",
       "filterType": "PAPER",
-      "rangeStart": 32,
-      "rangeEnd": 40,
-      "suggestedStart": 35,
+      "rangeStart": 38,
+      "rangeEnd": 42,
+      "suggestedStart": 40,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar paper — clean, med-coarse"
+      "adjustmentNote": "Pulsar paper · only direct community dial point — gentle WWDT matters more than dial nudges"
     },
     {
       "grinderId": "niche-zero",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 37,
-      "rangeEnd": 44,
-      "suggestedStart": 39,
+      "rangeStart": 42,
+      "rangeEnd": 46,
+      "suggestedStart": 44,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, body-forward"
+      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, body-forward · extrapolated from paper +4"
     },
     {
       "grinderId": "niche-zero",
       "methodId": "PULSAR",
       "filterType": "METAL_40K",
-      "rangeStart": 35,
-      "rangeEnd": 42,
-      "suggestedStart": 37,
+      "rangeStart": 40,
+      "rangeEnd": 44,
+      "suggestedStart": 42,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 40K — finer mesh, slight coarsen vs paper to limit clogging"
+      "adjustmentNote": "Pulsar 40K — finer mesh, slight coarsen vs paper to limit clogging · extrapolated"
     },
     {
       "grinderId": "niche-zero",
