@@ -2037,18 +2037,29 @@ class BrewViewModel(
                 rec.filterType == null
         } ?: return GrindResult.Generic(method.defaultGrindDescriptor)
 
-        // Decaf offset: grind finer because decaf beans have compromised cell walls
-        // from the decaffeination process and extract faster. Light roasts amplify this
-        // (more brittle, more fines); dark roasts partially offset via caramelization.
+        // Decaf offset: start COARSER, not finer. Decaf beans shatter into more
+        // fines at the same grinder gap, which reduces bed permeability and slows
+        // flow — so going finer often makes things worse, especially for
+        // percolation and espresso. Magnitude depends on brew family (immersion is
+        // less fines-sensitive) plus a roast brittleness modifier.
+        // Refs: Coffee ad Astra (kettle-flow / V60 brewing), Scientific Reports
+        // 2024 on espresso fines & permeability, Sweet Maria's on decaf
+        // structural changes, Al-Shemmeri grinding study.
         if (isDecaf) {
-            val decafSteps = decafStepsForRoast(roastLevel)
-            val offset = recommendation.adjustmentStepSize * decafSteps
-            val stepLabel = if (decafSteps == 1) "1 step finer" else "$decafSteps steps finer"
-            recommendation = recommendation.copy(
-                suggestedStart = (recommendation.suggestedStart - offset)
-                    .coerceAtLeast(recommendation.rangeStart),
-                adjustmentNote = recommendation.adjustmentNote + " · Decaf: $stepLabel",
-            )
+            val decafSteps = decafCoarserStepsFor(method, roastLevel)
+            if (decafSteps > 0) {
+                val offset = recommendation.adjustmentStepSize * decafSteps
+                val stepLabel = if (decafSteps == 1) "1 step coarser" else "$decafSteps steps coarser"
+                recommendation = recommendation.copy(
+                    suggestedStart = (recommendation.suggestedStart + offset)
+                        .coerceAtMost(recommendation.rangeEnd),
+                    adjustmentNote = recommendation.adjustmentNote + " · Decaf: $stepLabel (more fines → coarsen for permeability)",
+                )
+            } else {
+                recommendation = recommendation.copy(
+                    adjustmentNote = recommendation.adjustmentNote + " · Decaf: same start (immersion — fines impact small); dial by taste",
+                )
+            }
         }
 
         if (calibrationStyle == null) {
@@ -2071,28 +2082,48 @@ class BrewViewModel(
     }
 
     /**
-     * Decaf extraction-offset steps, calibrated by roast level.
+     * How many steps **coarser** to start when brewing decaf, vs the caffeinated
+     * baseline. Returns 0 (same start) for fines-insensitive immersion methods.
      *
-     * Lighter roasts: brittle beans + porous cell structure from decaffeination →
-     * more fines, faster extraction → need finer grind (+3 steps).
-     * Dark roasts: already weakened by roasting but caramelization reduces some
-     * solubility → less adjustment needed (+1 step).
-     * Unknown/medium: community-consensus default of +2 steps.
+     * Evidence-based default (2026 research pass):
+     *   - Decaf grinds to a smaller median particle size + ~4 % more fines at the
+     *     same gap (Al-Shemmeri grinding study).
+     *   - Fines reduce bed permeability and slow flow more than they boost
+     *     extraction (Sci. Rep. 2024 on espresso, Coffee ad Astra on V60).
+     *   - Therefore "auto-finer" is wrong-direction. Default is **same to 1 step
+     *     coarser**.
+     *
+     * Rule:
+     *   - Percolation (Pulsar, V60, Moka): +1 step coarser.
+     *   - Espresso: +1 step coarser; tune dose/yield rather than auto-fine.
+     *   - Immersion (French press, AeroPress, cold brew): no change — fines
+     *     barely affect flow when there's no pressurised bed.
+     *   - Roast modifier: dark / espresso / medium-dark roasts are even more
+     *     brittle → add +1 extra coarser.
+     *
+     * Per-bag overrides (Swiss Water tasting hollow → -1, very fresh decaf → 0)
+     * are NOT auto-applied; user can adjust by taste.
      */
-    private fun decafStepsForRoast(roastLevel: String?): Int {
+    private fun decafCoarserStepsFor(method: BrewMethod, roastLevel: String?): Int {
+        val baseSteps = when (method) {
+            BrewMethod.PULSAR,
+            BrewMethod.V60,
+            BrewMethod.MOKA_POT,
+            BrewMethod.ESPRESSO -> 1
+            BrewMethod.FRENCH_PRESS,
+            BrewMethod.AEROPRESS,
+            BrewMethod.COLD_BREW -> 0
+        }
         val known = roastLevel?.let {
             runCatching { CoffeeRoastLevel.Known.valueOf(it) }.getOrNull()
         }
-        return when (known) {
-            CoffeeRoastLevel.Known.LIGHT,
-            CoffeeRoastLevel.Known.CINNAMON,
-            CoffeeRoastLevel.Known.MEDIUM_LIGHT,
-            CoffeeRoastLevel.Known.FILTER -> 3
+        val roastModifier = when (known) {
             CoffeeRoastLevel.Known.MEDIUM_DARK,
             CoffeeRoastLevel.Known.DARK,
             CoffeeRoastLevel.Known.ESPRESSO -> 1
-            else -> 2
+            else -> 0
         }
+        return baseSteps + roastModifier
     }
 
     @VisibleForTesting
