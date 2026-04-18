@@ -33,7 +33,9 @@
       "df64": [
         "DF64 dial 0–90 with stock 64 mm flat burrs: honestcoffeeguide.com/turin-df64-gen-2-grind-settings/",
         "V60 23–53, Espresso 0–20, French Press 53–90, Cold Brew 65–90 (Honest Coffee Guide chart)",
-        "Stock burrs are espresso-tuned; SSP MP / Brew burrs shift filter ranges ~10 finer"
+        "Stock burrs are espresso-tuned; SSP MP / Brew burrs shift filter ranges ~10 finer",
+        "Pulsar paper: 7 stock-burr DF64 community anchors (r/DF64, r/pourover, r/Coffee 2024–2025) — median ~55, range 50–70; one user moved 70 → 50 with better cup; 50 also reported on Hario Switch as Pulsar-adjacent steep-and-release",
+        "Pulsar metal 19K / 40K: ~0–1 direct DF64 dial reports — values are extrapolated coarser from the paper cluster (Pulsar wants coarser-than-V60; 40K clogs more under agitation; 19K body-forward)"
       ],
       "decaf": [
         "Decaffeination weakens cell walls → faster extraction; community rule of thumb 2 steps finer",
@@ -540,31 +542,31 @@
       "grinderId": "df64",
       "methodId": "PULSAR",
       "filterType": "PAPER",
-      "rangeStart": 30,
-      "rangeEnd": 45,
-      "suggestedStart": 36,
+      "rangeStart": 45,
+      "rangeEnd": 60,
+      "suggestedStart": 50,
       "adjustmentStepSize": 2,
-      "adjustmentNote": "Stock burrs · Pulsar paper, target 3:30–4:30 drawdown"
+      "adjustmentNote": "Stock burrs · Pulsar paper · community median ~55, target 3:30–4:30 drawdown"
     },
     {
       "grinderId": "df64",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 35,
-      "rangeEnd": 50,
-      "suggestedStart": 40,
+      "rangeStart": 54,
+      "rangeEnd": 64,
+      "suggestedStart": 58,
       "adjustmentStepSize": 2,
-      "adjustmentNote": "Stock burrs · 19K mesh, coarsest of the three (150 µm holes)"
+      "adjustmentNote": "Stock burrs · 19K mesh, coarsest of the three (150 µm holes) · extrapolated"
     },
     {
       "grinderId": "df64",
       "methodId": "PULSAR",
       "filterType": "METAL_40K",
-      "rangeStart": 32,
-      "rangeEnd": 48,
-      "suggestedStart": 38,
+      "rangeStart": 50,
+      "rangeEnd": 60,
+      "suggestedStart": 54,
       "adjustmentStepSize": 2,
-      "adjustmentNote": "Stock burrs · 40K mesh, finer than 19K; slight coarsen vs paper"
+      "adjustmentNote": "Stock burrs · 40K mesh, finer than 19K · slight coarsen vs paper to limit clogging · extrapolated"
     },
     {
       "grinderId": "df64",
