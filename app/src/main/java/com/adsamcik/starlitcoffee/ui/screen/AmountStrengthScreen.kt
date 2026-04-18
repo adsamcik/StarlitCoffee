@@ -139,7 +139,7 @@ fun AmountStrengthScreen(
             modifier = Modifier.padding(top = 8.dp),
             actions = {
                 Text(
-                    text = "${method.displayName} · ${ratioPresets.getOrNull(selectedPresetIndex)?.label ?: "1:${method.defaultRatio.toInt()}"}",
+                    text = "${method.displayName} · ${ratioPresets.getOrNull(selectedPresetIndex)?.let { stringResource(it.labelResId, it.labelArg) } ?: "1:${method.defaultRatio.toInt()}"}",
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(end = 8.dp),

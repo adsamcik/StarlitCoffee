@@ -1,6 +1,8 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.ui.res.stringResource
+import com.adsamcik.starlitcoffee.R
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -116,7 +118,7 @@ fun AudioDebugOverlay(
                     )
                 } else {
                     Text(
-                        text = "Audio monitoring off",
+                        text = stringResource(R.string.label_audio_monitoring_off),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.weight(1f),
@@ -148,7 +150,7 @@ fun AudioDebugOverlay(
                 if (isRecording) {
                     Icon(
                         imageVector = Icons.Filled.FiberManualRecord,
-                        contentDescription = "Recording",
+                        contentDescription = stringResource(R.string.label_recording),
                         tint = MaterialTheme.colorScheme.error,
                         modifier = Modifier
                             .size(16.dp)
@@ -236,12 +238,12 @@ fun AudioDebugOverlay(
                             ) {
                                 Icon(
                                     imageVector = Icons.Filled.Share,
-                                    contentDescription = "Export brew data",
+                                    contentDescription = stringResource(R.string.action_export_brew_data),
                                     tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(24.dp),
                                 )
                                 Text(
-                                    text = "Export",
+                                    text = stringResource(R.string.action_export),
                                     style = MaterialTheme.typography.bodySmall,
                                 )
                             }
@@ -345,7 +347,7 @@ fun AudioDebugOverlay(
                         // Level history waveform
                         if (audioState.levelHistory.isNotEmpty()) {
                             Text(
-                                text = "Level history",
+                                text = stringResource(R.string.label_level_history),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )

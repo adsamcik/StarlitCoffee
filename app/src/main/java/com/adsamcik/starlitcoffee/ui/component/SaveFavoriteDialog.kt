@@ -18,7 +18,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 
 @Composable
 fun SaveFavoriteDialog(
@@ -32,12 +34,12 @@ fun SaveFavoriteDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text("Save as favorite")
+            Text(stringResource(R.string.dialog_save_favorite_title))
         },
         text = {
             Column {
                 Text(
-                    text = "Give this recipe a name you'll remember",
+                    text = stringResource(R.string.msg_save_favorite_hint),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -45,7 +47,7 @@ fun SaveFavoriteDialog(
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    placeholder = { Text("e.g. Monday Morning, Weekend Slow") },
+                    placeholder = { Text(stringResource(R.string.hint_save_favorite_example)) },
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -62,12 +64,12 @@ fun SaveFavoriteDialog(
             TextButton(
                 onClick = { onSave(name.ifBlank { "My Brew" }) },
             ) {
-                Text("Save")
+                Text(stringResource(R.string.action_save_simple))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.action_cancel))
             }
         },
     )

@@ -428,7 +428,7 @@ fun MethodPickerScreen(
                         onClick = { brewViewModel.syncDecafToBag() },
                         modifier = Modifier.testTag("sync_decaf_button"),
                     ) {
-                        Text("Sync to bag", style = MaterialTheme.typography.labelMedium)
+                        Text(stringResource(R.string.action_sync_to_bag), style = MaterialTheme.typography.labelMedium)
                     }
                 }
             }

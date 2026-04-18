@@ -6,7 +6,9 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 import com.adsamcik.starlitcoffee.data.model.RatioPreset
 
@@ -27,7 +29,7 @@ fun RatioPresetRow(
                     count = presets.size,
                 ),
             ) {
-                Text(preset.label)
+                Text(stringResource(preset.labelResId, preset.labelArg))
             }
         }
     }
@@ -39,9 +41,9 @@ private fun RatioPresetRowPreview() {
     StarlitCoffeeTheme {
         RatioPresetRow(
             presets = listOf(
-                RatioPreset(ratio = 16f, label = "Bright · 1:16"),
-                RatioPreset(ratio = 17f, label = "Balanced · 1:17", isDefault = true),
-                RatioPreset(ratio = 18f, label = "Rich · 1:18"),
+                RatioPreset(ratio = 16f, labelResId = R.string.format_ratio_bright, labelArg = 16),
+                RatioPreset(ratio = 17f, labelResId = R.string.format_ratio_balanced, labelArg = 17, isDefault = true),
+                RatioPreset(ratio = 18f, labelResId = R.string.format_ratio_rich, labelArg = 18),
             ),
             selectedIndex = 1,
             onSelectPreset = {},

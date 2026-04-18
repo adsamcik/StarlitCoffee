@@ -4,6 +4,15 @@ import androidx.annotation.StringRes
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
+import com.adsamcik.starlitcoffee.data.model.StrengthPreset
+import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
+import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
+import com.adsamcik.starlitcoffee.data.model.QuickRating
+import com.adsamcik.starlitcoffee.data.model.TasteIssue
+import com.adsamcik.starlitcoffee.data.model.CoffeeBagStatus
+import com.adsamcik.starlitcoffee.data.model.DecafProcess
+import com.adsamcik.starlitcoffee.data.model.CoffeeRoastLevel
+import com.adsamcik.starlitcoffee.data.model.CoffeeProcessType
 
 // --- TasteFeedback ---
 
@@ -132,4 +141,138 @@ fun InputMode.description(): String = when (this) {
     InputMode.WATER_TO_COFFEE -> "Enter water amount, calculate coffee"
     InputMode.BREW_SIZE_TO_BOTH -> "Enter target brew size, calculate coffee and water accounting for absorption"
     InputMode.CUP_SIZE_TO_BOTH -> "Enter cup size, calculate coffee and water"
+}
+
+// --- StrengthPreset ---
+
+@StringRes
+fun StrengthPreset.displayNameRes(): Int = when (this) {
+    StrengthPreset.LIGHT -> R.string.strength_light
+    StrengthPreset.BALANCED -> R.string.strength_balanced
+    StrengthPreset.STRONG -> R.string.strength_strong
+}
+
+// --- FlavorDescriptor ---
+
+@StringRes
+fun FlavorDescriptor.displayNameRes(): Int = when (this) {
+    FlavorDescriptor.FRUITY -> R.string.flavor_fruity
+    FlavorDescriptor.CHOCOLATE -> R.string.flavor_chocolate
+    FlavorDescriptor.NUTTY -> R.string.flavor_nutty
+    FlavorDescriptor.FLORAL -> R.string.flavor_floral
+    FlavorDescriptor.BRIGHT -> R.string.flavor_bright
+    FlavorDescriptor.SMOOTH -> R.string.flavor_smooth
+    FlavorDescriptor.BITTER -> R.string.flavor_bitter
+    FlavorDescriptor.SWEET -> R.string.flavor_sweet
+    FlavorDescriptor.EARTHY -> R.string.flavor_earthy
+    FlavorDescriptor.SPICY -> R.string.flavor_spicy
+    FlavorDescriptor.CITRUS -> R.string.flavor_citrus
+    FlavorDescriptor.BERRY -> R.string.flavor_berry
+    FlavorDescriptor.CARAMEL -> R.string.flavor_caramel
+    FlavorDescriptor.WINE -> R.string.flavor_wine
+    FlavorDescriptor.CLEAN -> R.string.flavor_clean
+}
+
+// --- GrindDescriptor ---
+
+@StringRes
+fun GrindDescriptor.displayNameRes(): Int = when (this) {
+    GrindDescriptor.VERY_FINE -> R.string.grind_very_fine
+    GrindDescriptor.FINE -> R.string.grind_fine
+    GrindDescriptor.MEDIUM_FINE -> R.string.grind_medium_fine
+    GrindDescriptor.MEDIUM -> R.string.grind_medium
+    GrindDescriptor.MEDIUM_COARSE -> R.string.grind_medium_coarse
+    GrindDescriptor.COARSE -> R.string.grind_coarse
+}
+
+// --- QuickRating ---
+
+@StringRes
+fun QuickRating.labelRes(): Int = when (this) {
+    QuickRating.GREAT -> R.string.rating_great
+    QuickRating.GOOD -> R.string.rating_good
+    QuickRating.NOT_GREAT -> R.string.rating_not_great
+}
+
+// --- TasteIssue ---
+
+@StringRes
+fun TasteIssue.labelRes(): Int = when (this) {
+    TasteIssue.TOO_BITTER -> R.string.taste_issue_too_bitter
+    TasteIssue.TOO_SOUR -> R.string.taste_issue_too_sour
+    TasteIssue.TOO_WEAK -> R.string.taste_issue_too_weak
+    TasteIssue.TOO_STRONG -> R.string.taste_issue_too_strong
+}
+
+@StringRes
+fun TasteIssue.suggestionRes(): Int = when (this) {
+    TasteIssue.TOO_BITTER -> R.string.taste_issue_bitter_suggestion
+    TasteIssue.TOO_SOUR -> R.string.taste_issue_sour_suggestion
+    TasteIssue.TOO_WEAK -> R.string.taste_issue_weak_suggestion
+    TasteIssue.TOO_STRONG -> R.string.taste_issue_strong_suggestion
+}
+
+// --- CoffeeBagStatus ---
+
+@StringRes
+fun CoffeeBagStatus.displayNameRes(): Int = when (this) {
+    CoffeeBagStatus.SEALED -> R.string.bag_status_sealed
+    CoffeeBagStatus.OPEN -> R.string.bag_status_open
+    CoffeeBagStatus.FROZEN -> R.string.bag_status_frozen
+    CoffeeBagStatus.FINISHED -> R.string.bag_status_finished
+}
+
+// --- DecafProcess ---
+
+@StringRes
+fun DecafProcess.displayNameRes(): Int = when (this) {
+    DecafProcess.UNKNOWN -> R.string.decaf_unknown
+    DecafProcess.SWISS_WATER -> R.string.decaf_swiss_water
+    DecafProcess.MOUNTAIN_WATER -> R.string.decaf_mountain_water
+    DecafProcess.CO2_SUPERCRITICAL -> R.string.decaf_co2
+    DecafProcess.EA_SUGARCANE -> R.string.decaf_ea_sugarcane
+    DecafProcess.MC_DIRECT -> R.string.decaf_mc_direct
+    DecafProcess.EA_DIRECT -> R.string.decaf_ea_direct
+}
+
+@StringRes
+fun DecafProcess.shortLabelRes(): Int = when (this) {
+    DecafProcess.UNKNOWN -> R.string.decaf_short_unknown
+    DecafProcess.SWISS_WATER -> R.string.decaf_short_swiss_water
+    DecafProcess.MOUNTAIN_WATER -> R.string.decaf_short_mountain_water
+    DecafProcess.CO2_SUPERCRITICAL -> R.string.decaf_short_co2
+    DecafProcess.EA_SUGARCANE -> R.string.decaf_short_ea_sugarcane
+    DecafProcess.MC_DIRECT -> R.string.decaf_short_mc_direct
+    DecafProcess.EA_DIRECT -> R.string.decaf_short_ea_direct
+}
+
+// --- CoffeeRoastLevel.Known ---
+
+@StringRes
+fun CoffeeRoastLevel.Known.displayNameRes(): Int = when (this) {
+    CoffeeRoastLevel.Known.LIGHT -> R.string.roast_light
+    CoffeeRoastLevel.Known.MEDIUM_LIGHT -> R.string.roast_medium_light
+    CoffeeRoastLevel.Known.MEDIUM -> R.string.roast_medium
+    CoffeeRoastLevel.Known.MEDIUM_DARK -> R.string.roast_medium_dark
+    CoffeeRoastLevel.Known.DARK -> R.string.roast_dark
+    CoffeeRoastLevel.Known.FILTER -> R.string.roast_filter
+    CoffeeRoastLevel.Known.ESPRESSO -> R.string.roast_espresso
+    CoffeeRoastLevel.Known.OMNIROAST -> R.string.roast_omniroast
+    CoffeeRoastLevel.Known.CINNAMON -> R.string.roast_cinnamon
+}
+
+// --- CoffeeProcessType.Known ---
+
+@StringRes
+fun CoffeeProcessType.Known.displayNameRes(): Int = when (this) {
+    CoffeeProcessType.Known.WASHED -> R.string.process_washed
+    CoffeeProcessType.Known.NATURAL -> R.string.process_natural
+    CoffeeProcessType.Known.HONEY -> R.string.process_honey
+    CoffeeProcessType.Known.ANAEROBIC -> R.string.process_anaerobic
+    CoffeeProcessType.Known.CARBONIC_MACERATION -> R.string.process_carbonic_maceration
+    CoffeeProcessType.Known.SEMI_WASHED -> R.string.process_semi_washed
+    CoffeeProcessType.Known.WET_HULLED -> R.string.process_wet_hulled
+    CoffeeProcessType.Known.PULPED_NATURAL -> R.string.process_pulped_natural
+    CoffeeProcessType.Known.DOUBLE_FERMENTED -> R.string.process_double_fermented
+    CoffeeProcessType.Known.THERMAL_SHOCK -> R.string.process_thermal_shock
 }

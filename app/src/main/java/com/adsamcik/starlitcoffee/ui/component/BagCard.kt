@@ -28,6 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import com.adsamcik.starlitcoffee.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
@@ -107,7 +109,7 @@ fun BagCard(
                     if (bitmap != null) {
                         Image(
                             bitmap = bitmap.asImageBitmap(),
-                            contentDescription = "Bag photo",
+                            contentDescription = stringResource(R.string.cd_bag_photo),
                             modifier = Modifier
                                 .size(68.dp)
                                 .clip(MaterialTheme.shapes.medium),
@@ -147,7 +149,7 @@ fun BagCard(
                         )
                         if (bag.isDecaf) {
                             InsightChip(
-                                label = "Decaf",
+                                label = stringResource(R.string.label_decaf),
                                 emphasis = ChipEmphasis.NEUTRAL,
                             )
                         }

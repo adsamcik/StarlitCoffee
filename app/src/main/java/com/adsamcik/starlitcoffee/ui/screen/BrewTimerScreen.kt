@@ -351,7 +351,7 @@ fun BrewTimerScreen(
                         },
                     ) {
                         Text(
-                            text = "Finish brew",
+                            text = stringResource(R.string.action_finish_brew),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )

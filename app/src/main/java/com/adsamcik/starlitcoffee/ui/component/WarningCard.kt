@@ -15,8 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 
 @Composable
@@ -41,7 +43,7 @@ fun WarningCard(
             if (showIcon) {
                 Icon(
                     imageVector = Icons.Filled.Warning,
-                    contentDescription = "Warning",
+                    contentDescription = stringResource(R.string.label_warning),
                     tint = MaterialTheme.colorScheme.error,
                 )
             }

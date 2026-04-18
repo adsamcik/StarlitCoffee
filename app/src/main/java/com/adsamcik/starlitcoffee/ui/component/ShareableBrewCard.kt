@@ -20,8 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -73,8 +75,9 @@ fun ShareableBrewCard(
             }
 
             // Method + bean name
+            val decafLabel = stringResource(R.string.label_decaf)
             Text(
-                text = if (brew.isDecaf) "$methodName · Decaf" else methodName,
+                text = if (brew.isDecaf) "$methodName · $decafLabel" else methodName,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -88,7 +91,7 @@ fun ShareableBrewCard(
             }
             if (brew.isDecaf) {
                 Text(
-                    text = "Decaf",
+                    text = stringResource(R.string.label_decaf),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                 )
@@ -101,11 +104,11 @@ fun ShareableBrewCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
-                RecipeDetail(label = "Coffee", value = "${"%.0f".format(brew.doseG)}g")
-                RecipeDetail(label = "Water", value = "${"%.0f".format(brew.waterG)}g")
-                RecipeDetail(label = "Ratio", value = "1:${"%.0f".format(brew.ratio)}")
+                RecipeDetail(label = stringResource(R.string.label_coffee), value = "${"%.0f".format(brew.doseG)}g")
+                RecipeDetail(label = stringResource(R.string.label_water), value = "${"%.0f".format(brew.waterG)}g")
+                RecipeDetail(label = stringResource(R.string.label_ratio), value = "1:${"%.0f".format(brew.ratio)}")
                 if (filterLabel != null) {
-                    RecipeDetail(label = "Filter", value = filterLabel)
+                    RecipeDetail(label = stringResource(R.string.label_filter), value = filterLabel)
                 }
             }
 
@@ -145,7 +148,7 @@ fun ShareableBrewCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
-                    text = "Starlit Coffee ☕",
+                    text = stringResource(R.string.label_starlit_coffee_brand),
                     style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,

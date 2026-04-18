@@ -26,8 +26,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 
 /**
  * Debug-only dialog for configuring brew experiment metadata.
@@ -135,8 +137,8 @@ fun BrewLabSetupDialog(
                 OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
-                    label = { Text("Notes (optional)") },
-                    placeholder = { Text("e.g., fridge compressor on, using V60 instead") },
+                    label = { Text(stringResource(R.string.label_notes_optional)) },
+                    placeholder = { Text(stringResource(R.string.hint_notes_optional)) },
                     modifier = Modifier.fillMaxWidth(),
                     minLines = 2,
                     maxLines = 3,
@@ -145,12 +147,12 @@ fun BrewLabSetupDialog(
         },
         confirmButton = {
             Button(onClick = { onConfirm(selectedPlacement, selectedEnvironment, notes) }) {
-                Text("Start Recording")
+                Text(stringResource(R.string.action_start_recording))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Skip")
+                Text(stringResource(R.string.action_skip))
             }
         },
     )

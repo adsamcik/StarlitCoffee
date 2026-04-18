@@ -275,7 +275,7 @@ fun SettingsScreen(
                         modifier = Modifier.semantics { heading() },
                     )
                     Text(
-                        text = "Applied when brewing with Pulsar",
+                        text = stringResource(R.string.msg_pulsar_settings_applied),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -360,12 +360,12 @@ fun SettingsScreen(
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "QR link explorer",
+                        text = stringResource(R.string.label_qr_link_explorer),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.semantics { heading() },
                     )
                     Text(
-                        text = "QR links in bag photos require approval before exploration.",
+                        text = stringResource(R.string.msg_qr_approval_hint),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -386,12 +386,12 @@ fun SettingsScreen(
                                 .padding(end = 16.dp),
                         ) {
                             Text(
-                                text = "Quick brew",
+                                text = stringResource(R.string.label_quick_brew),
                                 style = MaterialTheme.typography.titleMedium,
                                 modifier = Modifier.semantics { heading() },
                             )
                             Text(
-                                text = "Skip method selection and go straight to timer using your default method",
+                                text = stringResource(R.string.msg_quick_brew_hint),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -469,28 +469,28 @@ private fun AddPresetDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add cup preset") },
+        title = { Text(stringResource(R.string.action_add_cup_preset)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.label_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
                     value = waterMl,
                     onValueChange = { waterMl = it },
-                    label = { Text("Volume (ml)") },
-                    supportingText = { Text("Coffee dose is calculated from your ratio") },
+                    label = { Text(stringResource(R.string.label_volume_ml)) },
+                    supportingText = { Text(stringResource(R.string.msg_dose_from_ratio)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
                 )
-                Text("Icon", style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.label_icon), style = MaterialTheme.typography.labelMedium)
                 IconPickerRow(selectedIcon = selectedIcon, onSelect = { selectedIcon = it })
-                Text("Color", style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.label_color), style = MaterialTheme.typography.labelMedium)
                 ColorPickerRow(selectedColor = selectedColor, onSelect = { selectedColor = it })
             }
         },
@@ -503,11 +503,11 @@ private fun AddPresetDialog(
                     }
                 },
             ) {
-                Text("Add")
+                Text(stringResource(R.string.action_add))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
         },
     )
 }
@@ -526,28 +526,28 @@ private fun EditPresetDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Edit cup preset") },
+        title = { Text(stringResource(R.string.dialog_edit_cup_preset_title)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.label_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
                     value = waterMl,
                     onValueChange = { waterMl = it },
-                    label = { Text("Volume (ml)") },
-                    supportingText = { Text("Coffee dose is calculated from your ratio") },
+                    label = { Text(stringResource(R.string.label_volume_ml)) },
+                    supportingText = { Text(stringResource(R.string.msg_dose_from_ratio)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
                 )
-                Text("Icon", style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.label_icon), style = MaterialTheme.typography.labelMedium)
                 IconPickerRow(selectedIcon = selectedIcon, onSelect = { selectedIcon = it })
-                Text("Color", style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.label_color), style = MaterialTheme.typography.labelMedium)
                 ColorPickerRow(selectedColor = selectedColor, onSelect = { selectedColor = it })
             }
         },
@@ -566,16 +566,16 @@ private fun EditPresetDialog(
                         )
                     }
                 },
-            ) { Text("Save") }
+            ) { Text(stringResource(R.string.action_save_simple)) }
         },
         dismissButton = {
             Row {
                 if (onDelete != null) {
                     TextButton(onClick = onDelete) {
-                        Text("Delete", color = MaterialTheme.colorScheme.error)
+                        Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error)
                     }
                 }
-                TextButton(onClick = onDismiss) { Text("Cancel") }
+                TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
             }
         },
     )
@@ -666,7 +666,7 @@ private fun ScanDebugCard() {
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "Scan Debug",
+                text = stringResource(R.string.label_scan_debug),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.semantics { heading() },
             )
@@ -678,16 +678,16 @@ private fun ScanDebugCard() {
             Spacer(modifier = Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilledTonalButton(onClick = { showHistory = true }) {
-                    Text("View History")
+                    Text(stringResource(R.string.action_view_history))
                 }
                 FilledTonalButton(onClick = { ScanBugReporter.shareReport(context) }) {
-                    Text("Share Report")
+                    Text(stringResource(R.string.action_share_report))
                 }
                 FilledTonalButton(onClick = {
                     ScanSessionRingBuffer.clear(context)
                     sessions = emptyList()
                 }) {
-                    Text("Clear")
+                    Text(stringResource(R.string.action_clear))
                 }
             }
         }

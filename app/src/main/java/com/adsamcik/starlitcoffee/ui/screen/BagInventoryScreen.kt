@@ -45,10 +45,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.ui.component.AddBagSheet
 import com.adsamcik.starlitcoffee.ui.component.BagCard
@@ -270,7 +272,7 @@ fun BagInventoryScreen(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             modifier = Modifier.testTag("fab_from_photo"),
                         ) {
-                            Icon(Icons.Filled.PhotoLibrary, contentDescription = "From photo")
+                            Icon(Icons.Filled.PhotoLibrary, contentDescription = stringResource(R.string.action_from_photo))
                         }
                         SmallFloatingActionButton(
                             onClick = {
@@ -280,7 +282,7 @@ fun BagInventoryScreen(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             modifier = Modifier.testTag("fab_scan_label"),
                         ) {
-                            Icon(Icons.Filled.CameraAlt, contentDescription = "Scan label")
+                            Icon(Icons.Filled.CameraAlt, contentDescription = stringResource(R.string.action_scan_label))
                         }
                         SmallFloatingActionButton(
                             onClick = {
@@ -290,7 +292,7 @@ fun BagInventoryScreen(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             modifier = Modifier.testTag("fab_scan_barcode"),
                         ) {
-                            Icon(Icons.Filled.QrCodeScanner, contentDescription = "Scan barcode")
+                            Icon(Icons.Filled.QrCodeScanner, contentDescription = stringResource(R.string.action_scan_barcode))
                         }
                     }
                 }
@@ -312,13 +314,13 @@ fun BagInventoryScreen(
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            ScreenTopBar(title = "Your Beans", onBack = onBack)
+            ScreenTopBar(title = stringResource(R.string.label_your_beans), onBack = onBack)
 
             if (bags.isEmpty()) {
                 EmptyStateBox(
                     icon = Icons.Filled.ShoppingBag,
                     message = "No beans yet",
-                    subtitle = "Add your coffee to track freshness and get brew suggestions",
+                    subtitle = stringResource(R.string.msg_add_coffee_hint),
                     modifier = Modifier.fillMaxSize(),
                 )
             } else {
@@ -338,7 +340,7 @@ fun BagInventoryScreen(
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         Text(
-                            text = "Your Beans",
+                            text = stringResource(R.string.label_your_beans),
                             style = MaterialTheme.typography.headlineMedium,
                             modifier = Modifier.semantics { heading() },
                         )
@@ -397,6 +399,7 @@ fun BagInventoryScreen(
     val coroutineScope = androidx.compose.runtime.rememberCoroutineScope()
 
     // Add bag bottom sheet
+    val brewNowLabel = stringResource(R.string.action_brew_now)
     if (showAddSheet) {
         AddBagSheet(
             initialBarcode = detectedBarcode,
@@ -488,7 +491,7 @@ fun BagInventoryScreen(
                             coroutineScope.launch {
                                 val result = snackbarHostState.showSnackbar(
                                     message = "Bag saved — brew with it now?",
-                                    actionLabel = "Brew now",
+                                    actionLabel = brewNowLabel,
                                     duration = SnackbarDuration.Short,
                                 )
                                 if (result == SnackbarResult.ActionPerformed) {
@@ -505,7 +508,7 @@ fun BagInventoryScreen(
     if (showRetakeDialog) {
         AlertDialog(
             onDismissRequest = { showRetakeDialog = false },
-            title = { Text("Could not read label") },
+            title = { Text(stringResource(R.string.msg_could_not_read_label)) },
             text = {
                 Text(
                     reviewHints.joinToString("\n") { hint -> "• ${hint.message}" }
@@ -529,12 +532,12 @@ fun BagInventoryScreen(
                         onNavigateToCamera()
                     },
                 ) {
-                    Text("Retake photo")
+                    Text(stringResource(R.string.action_retake_photo))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showRetakeDialog = false }) {
-                    Text("Add details manually")
+                    Text(stringResource(R.string.action_add_details_manually))
                 }
             },
         )

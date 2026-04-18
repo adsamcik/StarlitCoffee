@@ -57,6 +57,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
+import com.adsamcik.starlitcoffee.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -304,7 +306,7 @@ fun AddBagSheet(
                         .semantics { heading() },
                 )
                 IconButton(onClick = onDismiss) {
-                    Icon(Icons.Default.Close, contentDescription = "Close")
+                    Icon(Icons.Default.Close, contentDescription = stringResource(R.string.action_close))
                 }
             }
 
@@ -366,10 +368,10 @@ fun AddBagSheet(
 
                 if (isProcessing && !isEditMode) {
                     item {
-                        ProcessingTextFieldSkeleton(label = "Name")
+                        ProcessingTextFieldSkeleton(label = stringResource(R.string.label_name))
                     }
-                    item { ProcessingTextFieldSkeleton(label = "Roaster") }
-                    item { ProcessingTextFieldSkeleton(label = "Origin") }
+                    item { ProcessingTextFieldSkeleton(label = stringResource(R.string.label_roaster)) }
+                    item { ProcessingTextFieldSkeleton(label = stringResource(R.string.label_origin)) }
                     item { ProcessingTextFieldSkeleton(label = "Weight") }
                 } else if (snapApproveMode) {
                     item {
@@ -407,7 +409,7 @@ fun AddBagSheet(
                             OutlinedTextField(
                                 value = barcode,
                                 onValueChange = { barcode = it },
-                                label = { Text("Barcode / EAN") },
+                                label = { Text(stringResource(R.string.label_barcode_ean)) },
                                 shape = MaterialTheme.shapes.small,
                                 singleLine = true,
                                 trailingIcon = if (onScanBarcode != null) {
@@ -415,7 +417,7 @@ fun AddBagSheet(
                                         IconButton(onClick = { onScanBarcode() }) {
                                             Icon(
                                                 Icons.Filled.CameraAlt,
-                                                contentDescription = "Scan barcode",
+                                                contentDescription = stringResource(R.string.action_scan_barcode),
                                             )
                                         }
                                     }
@@ -430,14 +432,14 @@ fun AddBagSheet(
                             OutlinedTextField(
                                 value = barcode,
                                 onValueChange = { barcode = it },
-                                label = { Text("Barcode / EAN") },
+                                label = { Text(stringResource(R.string.label_barcode_ean)) },
                                 shape = MaterialTheme.shapes.small,
                                 singleLine = true,
                                 trailingIcon = {
                                     IconButton(onClick = { onScanBarcode() }) {
                                         Icon(
                                             Icons.Filled.CameraAlt,
-                                            contentDescription = "Scan barcode",
+                                            contentDescription = stringResource(R.string.action_scan_barcode),
                                         )
                                     }
                                 },
@@ -451,7 +453,7 @@ fun AddBagSheet(
                         SuggestingTextField(
                             value = name,
                             onValueChange = { name = it },
-                            label = "Name *",
+                            label = stringResource(R.string.label_name_required),
                             suggestions = recentNames,
                             modifier = Modifier.padding(bottom = 4.dp),
                             onFocusChanged = { focused ->
@@ -467,7 +469,7 @@ fun AddBagSheet(
                         SuggestingTextField(
                             value = roaster,
                             onValueChange = { roaster = it },
-                            label = "Roaster",
+                            label = stringResource(R.string.label_roaster),
                             suggestions = recentRoasters,
                             modifier = Modifier.padding(bottom = 4.dp),
                             onFocusChanged = { focused ->
@@ -481,7 +483,7 @@ fun AddBagSheet(
                     }
                     item {
                         FieldChipPicker(
-                            label = "Origin",
+                            label = stringResource(R.string.label_origin),
                             knownValues = CoffeeOrigin.known,
                             selectedValue = originCountry,
                             onValueChange = { originCountry = it },
@@ -530,7 +532,7 @@ fun AddBagSheet(
                         OutlinedTextField(
                             value = weight,
                             onValueChange = { weight = it },
-                            label = { Text("Weight (g)") },
+                            label = { Text(stringResource(R.string.label_weight_grams)) },
                             shape = MaterialTheme.shapes.small,
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -568,7 +570,7 @@ fun AddBagSheet(
                         OutlinedTextField(
                             value = roastDateMillis?.let { DateParser.format(it) } ?: "",
                             onValueChange = {},
-                            label = { Text("Roast date") },
+                            label = { Text(stringResource(R.string.label_roast_date)) },
                             shape = RoundedCornerShape(16.dp),
                             readOnly = true,
                             modifier = Modifier
@@ -615,7 +617,7 @@ fun AddBagSheet(
                                     }) { Text("OK") }
                                 },
                                 dismissButton = {
-                                    TextButton(onClick = { showRoastDatePicker = false }) { Text("Cancel") }
+                                    TextButton(onClick = { showRoastDatePicker = false }) { Text(stringResource(R.string.action_cancel)) }
                                 },
                             ) {
                                 DatePicker(state = datePickerState)
@@ -636,7 +638,7 @@ fun AddBagSheet(
                     if (showMoreDetails) {
                         item {
                             FieldChipPicker(
-                                label = "Roast level",
+                                label = stringResource(R.string.label_roast_level),
                                 knownValues = CoffeeRoastLevel.known,
                                 selectedValue = roastLevel,
                                 onValueChange = { roastLevel = it },
@@ -660,7 +662,7 @@ fun AddBagSheet(
                         }
                         item {
                             FieldChipPicker(
-                                label = "Variety",
+                                label = stringResource(R.string.label_variety),
                                 knownValues = CoffeeVariety.known,
                                 selectedValue = variety,
                                 onValueChange = { variety = it },
@@ -684,7 +686,7 @@ fun AddBagSheet(
                         }
                         item {
                             FieldChipPicker(
-                                label = "Process",
+                                label = stringResource(R.string.label_process),
                                 knownValues = CoffeeProcessType.known,
                                 selectedValue = processType,
                                 onValueChange = { processType = it },
@@ -709,7 +711,7 @@ fun AddBagSheet(
                             OutlinedTextField(
                                 value = tastingNotes,
                                 onValueChange = { tastingNotes = it },
-                                label = { Text("Tasting notes") },
+                                label = { Text(stringResource(R.string.label_tasting_notes)) },
                                 shape = MaterialTheme.shapes.small,
                                 singleLine = true,
                                 modifier = Modifier
@@ -730,7 +732,7 @@ fun AddBagSheet(
                             OutlinedTextField(
                                 value = expiryDateMillis?.let { DateParser.format(it) } ?: "",
                                 onValueChange = {},
-                                label = { Text("Best before") },
+                                label = { Text(stringResource(R.string.label_best_before)) },
                                 shape = RoundedCornerShape(16.dp),
                                 readOnly = true,
                                 modifier = Modifier
@@ -777,7 +779,7 @@ fun AddBagSheet(
                                         }) { Text("OK") }
                                     },
                                     dismissButton = {
-                                        TextButton(onClick = { showExpiryDatePicker = false }) { Text("Cancel") }
+                                        TextButton(onClick = { showExpiryDatePicker = false }) { Text(stringResource(R.string.action_cancel)) }
                                     },
                                 ) {
                                     DatePicker(state = datePickerState)
@@ -811,11 +813,11 @@ fun AddBagSheet(
                                         verticalArrangement = Arrangement.spacedBy(2.dp),
                                     ) {
                                         Text(
-                                            text = "Decaf coffee",
+                                            text = stringResource(R.string.label_decaf_coffee),
                                             style = MaterialTheme.typography.titleSmall,
                                         )
                                         Text(
-                                            text = "Keeps brew guidance in sync with decaf beans and shorter steep targets.",
+                                            text = stringResource(R.string.msg_decaf_guidance),
                                             style = MaterialTheme.typography.bodySmall,
                                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
@@ -829,12 +831,12 @@ fun AddBagSheet(
                                         verticalArrangement = Arrangement.spacedBy(6.dp),
                                     ) {
                                         Text(
-                                            text = "Decaf process (optional)",
+                                            text = stringResource(R.string.label_decaf_process_optional),
                                             style = MaterialTheme.typography.labelMedium,
                                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
                                         Text(
-                                            text = "Lets the brew rule soft-bias the grind: water-process and CO₂ decafs typically need less coarsening than solvent-process ones.",
+                                            text = stringResource(R.string.msg_decaf_process_hint),
                                             style = MaterialTheme.typography.bodySmall,
                                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
@@ -863,7 +865,7 @@ fun AddBagSheet(
                             OutlinedTextField(
                                 value = notes,
                                 onValueChange = { notes = it },
-                                label = { Text("Notes") },
+                                label = { Text(stringResource(R.string.label_notes)) },
                                 shape = MaterialTheme.shapes.small,
                                 minLines = 2,
                                 modifier = Modifier
@@ -1096,7 +1098,7 @@ private fun SnapApproveSection(
         thumbnailBitmap?.let { bitmap ->
             Image(
                 bitmap = bitmap.asImageBitmap(),
-                contentDescription = "Captured bag photo",
+                contentDescription = stringResource(R.string.cd_captured_bag_photo),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(168.dp)
@@ -1138,7 +1140,7 @@ private fun SnapApproveSection(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     Text(
-                        text = "Detected Details",
+                        text = stringResource(R.string.label_detected_details),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     FlowRow(
@@ -1154,7 +1156,7 @@ private fun SnapApproveSection(
                         }
                     }
                     Text(
-                        text = "Tap any chip to edit",
+                        text = stringResource(R.string.msg_tap_chip_to_edit),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -1169,7 +1171,7 @@ private fun SnapApproveSection(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     Text(
-                        text = "Needs Review",
+                        text = stringResource(R.string.label_needs_review),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     FlowRow(
@@ -1197,11 +1199,11 @@ private fun SnapApproveSection(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             TextButton(onClick = onEditAllFields) {
-                Text("Edit all fields")
+                Text(stringResource(R.string.action_edit_all_fields))
             }
             if (hasMissingDetails) {
                 TextButton(onClick = onAddMoreDetails) {
-                    Text("Add more details")
+                    Text(stringResource(R.string.action_add_more_details))
                 }
             }
         }
@@ -1272,13 +1274,13 @@ private fun ProcessingStatusCard() {
             ) {
                 CircularProgressIndicator(modifier = Modifier.size(20.dp))
                 Text(
-                    text = "Analyzing label photos",
+                    text = stringResource(R.string.msg_analyzing_label),
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
             Text(
-                text = "We are checking blur, merging front/back text, and preparing the most reliable fields.",
+                text = stringResource(R.string.msg_analyzing_label_detail),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -1311,7 +1313,7 @@ private fun ReviewHintsCard(reviewHints: List<BagPhotoReviewHint>) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                text = "Review these fields",
+                text = stringResource(R.string.label_review_fields),
                 style = MaterialTheme.typography.titleMedium,
             )
             reviewHints.forEachIndexed { index, hint ->
@@ -1348,7 +1350,7 @@ private fun QrLinkCard(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                text = "QR website",
+                text = stringResource(R.string.label_qr_website),
                 style = MaterialTheme.typography.titleMedium,
             )
             if (exploredLabel != null) {
@@ -1364,7 +1366,7 @@ private fun QrLinkCard(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             TextButton(onClick = onOpen) {
-                Text("Open website")
+                Text(stringResource(R.string.action_open_website))
             }
         }
     }
@@ -1386,7 +1388,7 @@ private fun QrApprovalCard(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text("QR link found", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.label_qr_link_found), style = MaterialTheme.typography.titleMedium)
             Text(
                 text = url,
                 style = MaterialTheme.typography.bodySmall,
@@ -1406,7 +1408,7 @@ private fun QrApprovalCard(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Button(onClick = onExplore) {
-                        Text("Explore & extract")
+                        Text(stringResource(R.string.action_explore_extract))
                     }
                     TextButton(onClick = onSkip) {
                         Text("Skip")
@@ -1456,7 +1458,7 @@ private fun FieldEvidencePreviewCard(
                 ) {
                     Image(
                         bitmap = bitmap.asImageBitmap(),
-                        contentDescription = "Detected field evidence",
+                        contentDescription = stringResource(R.string.label_detected_field_evidence),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(120.dp)

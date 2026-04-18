@@ -27,9 +27,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.background
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.scan.observability.ConnectionStatus
 import com.adsamcik.starlitcoffee.scan.observability.ConnectionTestResult
 import com.adsamcik.starlitcoffee.scan.observability.MindlayerConnectionTester
@@ -57,7 +59,7 @@ fun MindlayerSettingsCard() {
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "AI Service (Mindlayer)",
+                text = stringResource(R.string.label_ai_service),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.semantics { heading() },
             )
@@ -120,7 +122,7 @@ fun MindlayerSettingsCard() {
                     },
                     enabled = !isLoading,
                 ) {
-                    Text("Test Connection")
+                    Text(stringResource(R.string.action_test_connection))
                 }
                 FilledTonalButton(
                     onClick = {
@@ -132,7 +134,7 @@ fun MindlayerSettingsCard() {
                     },
                     enabled = !isLoading,
                 ) {
-                    Text("Run Test Prompt")
+                    Text(stringResource(R.string.action_run_test_prompt))
                 }
             }
 
@@ -145,7 +147,7 @@ fun MindlayerSettingsCard() {
                 ) {
                     CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                     Text(
-                        text = "Testing…",
+                        text = stringResource(R.string.label_testing),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

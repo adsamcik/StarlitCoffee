@@ -9,6 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
+import com.adsamcik.starlitcoffee.R
 
 @Composable
 fun WeightAdjustDialog(
@@ -19,22 +21,22 @@ fun WeightAdjustDialog(
     var text by remember { mutableStateOf(currentWeight.toString()) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Adjust weight") },
+        title = { Text(stringResource(R.string.dialog_adjust_weight_title)) },
         text = {
             OutlinedTextField(
                 value = text,
                 onValueChange = { text = it },
-                label = { Text("Remaining weight (g)") },
+                label = { Text(stringResource(R.string.label_remaining_weight_grams)) },
                 singleLine = true,
             )
         },
         confirmButton = {
             TextButton(onClick = { text.toFloatOrNull()?.let(onConfirm) }) {
-                Text("Save")
+                Text(stringResource(R.string.action_save_simple))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
         },
     )
 }

@@ -33,6 +33,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.adsamcik.starlitcoffee.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -126,13 +128,13 @@ fun BagDetailSheet(
                 IconButton(onClick = onRescan) {
                     Icon(
                         Icons.Filled.CameraAlt,
-                        contentDescription = "Rescan label",
+                        contentDescription = stringResource(R.string.action_rescan_label),
                     )
                 }
                 IconButton(onClick = onEdit) {
                     Icon(
                         Icons.Filled.Edit,
-                        contentDescription = "Edit bag",
+                        contentDescription = stringResource(R.string.action_edit_bag),
                     )
                 }
             }
@@ -160,7 +162,7 @@ fun BagDetailSheet(
                             bitmap?.let {
                                 Image(
                                     bitmap = it.asImageBitmap(),
-                                    contentDescription = "Bag photo",
+                                    contentDescription = stringResource(R.string.cd_bag_photo),
                                     modifier = Modifier
                                         .size(80.dp)
                                         .clip(MaterialTheme.shapes.small),
@@ -248,7 +250,7 @@ fun BagDetailSheet(
                                     .padding(16.dp),
                             ) {
                                 Text(
-                                    text = "Sensory snapshot",
+                                    text = stringResource(R.string.label_sensory_snapshot),
                                     style = MaterialTheme.typography.titleMedium,
                                 )
                                 Text(
@@ -291,7 +293,7 @@ fun BagDetailSheet(
                                     .padding(16.dp),
                             ) {
                                 Text(
-                                    text = "Grind intelligence",
+                                    text = stringResource(R.string.label_grind_intelligence),
                                     style = MaterialTheme.typography.titleMedium,
                                 )
                                 Text(
@@ -351,7 +353,7 @@ fun BagDetailSheet(
 
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Remaining Coffee",
+                            text = stringResource(R.string.label_remaining_coffee),
                             style = MaterialTheme.typography.titleSmall,
                             modifier = Modifier.padding(bottom = 4.dp),
                         )
@@ -414,7 +416,7 @@ fun BagDetailSheet(
                             onClick = { showWeightDialog = true },
                             modifier = Modifier.padding(top = 8.dp),
                         ) {
-                            Text("Adjust weight")
+                            Text(stringResource(R.string.action_adjust_weight))
                         }
                         if (showWeightDialog) {
                             WeightAdjustDialog(
@@ -434,7 +436,7 @@ fun BagDetailSheet(
                             onClick = { showWeightDialog = true },
                             modifier = Modifier.padding(vertical = 8.dp),
                         ) {
-                            Text("Add weight tracking")
+                            Text(stringResource(R.string.action_add_weight_tracking))
                         }
                         if (showWeightDialog) {
                             WeightAdjustDialog(
@@ -465,7 +467,7 @@ fun BagDetailSheet(
                     item {
                         HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
                         Text(
-                            text = "Brew History",
+                            text = stringResource(R.string.label_brew_history),
                             style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier.padding(bottom = 8.dp),
                         )

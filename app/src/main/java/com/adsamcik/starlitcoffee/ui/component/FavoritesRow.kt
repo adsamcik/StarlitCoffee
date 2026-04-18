@@ -12,7 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 
 @Composable
@@ -35,9 +37,10 @@ fun FavoritesRow(
         regular + decaf
     }
 
+    val decafLabel = stringResource(R.string.label_decaf)
     Column(modifier = modifier) {
         Text(
-            text = "Your favorites",
+            text = stringResource(R.string.label_your_favorites_section),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -56,7 +59,7 @@ fun FavoritesRow(
                         Text(
                             text = buildString {
                                 append(recipe.coffeeName ?: "Untitled")
-                                if (recipe.isDecaf) append(" · Decaf")
+                                if (recipe.isDecaf) append(" · $decafLabel")
                                 if (suffix != null) append(" · $suffix")
                             },
                             style = MaterialTheme.typography.labelLarge,

@@ -27,7 +27,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionSummary
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -49,11 +51,11 @@ fun ScanHistoryDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Scan History") },
+        title = { Text(stringResource(R.string.dialog_scan_history_title)) },
         text = {
             if (sessions.isEmpty()) {
                 Text(
-                    text = "No scan sessions recorded yet.",
+                    text = stringResource(R.string.msg_no_scan_sessions),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -72,7 +74,7 @@ fun ScanHistoryDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Close") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_close)) }
         },
     )
 }
@@ -167,7 +169,7 @@ private fun SessionCard(
                 onClick = onShare,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("Share This Session")
+                Text(stringResource(R.string.action_share_session))
             }
         }
     }
@@ -184,14 +186,14 @@ private fun PerfSection(perfJson: String) {
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             Text(
-                text = "Component Timings",
+                text = stringResource(R.string.label_component_timings),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(modifier = Modifier.height(4.dp))
             if (perfMap.isEmpty()) {
                 Text(
-                    text = "No timing data available",
+                    text = stringResource(R.string.msg_no_timing_data),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

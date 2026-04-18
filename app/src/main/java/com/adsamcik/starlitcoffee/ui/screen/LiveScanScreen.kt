@@ -67,6 +67,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -89,6 +90,7 @@ import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.ScanFieldSupport
 import com.adsamcik.starlitcoffee.BuildConfig
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.component.ScanDebugOverlay
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CrossValidationWarning
@@ -250,19 +252,19 @@ fun LiveScanScreen(
     if (showDiscardDialog) {
         AlertDialog(
             onDismissRequest = { showDiscardDialog = false },
-            title = { Text("Discard scan?") },
-            text = { Text("You have detected fields that haven't been saved.") },
+            title = { Text(stringResource(R.string.dialog_discard_scan_title)) },
+            text = { Text(stringResource(R.string.msg_discard_scan_body)) },
             confirmButton = {
                 TextButton(onClick = {
                     showDiscardDialog = false
                     onBack()
                 }) {
-                    Text("Discard")
+                    Text(stringResource(R.string.action_discard))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDiscardDialog = false }) {
-                    Text("Keep Scanning")
+                    Text(stringResource(R.string.action_keep_scanning))
                 }
             },
         )
@@ -276,7 +278,7 @@ fun LiveScanScreen(
 
     if (!hasCameraPermission) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("Camera permission required", style = MaterialTheme.typography.bodyLarge)
+            Text(stringResource(R.string.msg_camera_permission_required), style = MaterialTheme.typography.bodyLarge)
         }
         return
     }
@@ -445,19 +447,22 @@ private fun TopBar(
         IconButton(onClick = onBack) {
             Icon(
                 Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = stringResource(R.string.action_back),
                 tint = Color.White,
             )
         }
 
         Text(
-            text = "Scan Coffee Bag",
+            text = stringResource(R.string.screen_scan_bag_title),
             style = MaterialTheme.typography.titleMedium,
             color = Color.White,
             modifier = Modifier
                 .weight(1f)
                 .semantics { heading() },
         )
+
+        val bothSidesScannedDesc = stringResource(R.string.msg_both_sides_scanned)
+        val scanningFrontSideDesc = stringResource(R.string.msg_scanning_front_side)
 
         // Debug toggle (debug builds only)
         if (BuildConfig.DEBUG) {
@@ -467,7 +472,7 @@ private fun TopBar(
             ) {
                 Icon(
                     Icons.Default.BugReport,
-                    contentDescription = "Toggle debug overlay",
+                    contentDescription = stringResource(R.string.cd_toggle_debug_overlay),
                     tint = Color.White.copy(alpha = 0.4f),
                     modifier = Modifier.size(18.dp),
                 )
@@ -479,7 +484,7 @@ private fun TopBar(
                 shape = RoundedCornerShape(12.dp),
                 color = READY_COLOR.copy(alpha = 0.9f),
                 modifier = Modifier.semantics {
-                    contentDescription = "Both sides of the bag have been scanned"
+                    contentDescription = bothSidesScannedDesc
                 },
             ) {
                 Text(
@@ -496,7 +501,7 @@ private fun TopBar(
                 shape = RoundedCornerShape(12.dp),
                 color = Color.Black.copy(alpha = 0.5f),
                 modifier = Modifier.semantics {
-                    contentDescription = "Scanning front side of bag"
+                    contentDescription = scanningFrontSideDesc
                 },
             ) {
                 Text(
@@ -619,7 +624,7 @@ private fun BottomOverlay(
                             modifier = Modifier.size(18.dp),
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Quick Save", color = Color.Black, fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.action_quick_save), color = Color.Black, fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -686,7 +691,7 @@ private fun CrossValidationBanner(
                         color = Color.Black,
                     )
                     Text(
-                        text = "This may be a repackaged or imported product",
+                        text = stringResource(R.string.msg_repackaged_product),
                         style = MaterialTheme.typography.labelSmall,
                         color = Color.Black.copy(alpha = 0.7f),
                         modifier = Modifier.padding(top = 2.dp),
@@ -701,7 +706,7 @@ private fun CrossValidationBanner(
                             color = Color.Black.copy(alpha = 0.15f),
                         ) {
                             Text(
-                                text = "Use barcode",
+                                text = stringResource(R.string.action_use_barcode),
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black,
@@ -714,7 +719,7 @@ private fun CrossValidationBanner(
                             color = Color.Black.copy(alpha = 0.15f),
                         ) {
                             Text(
-                                text = "Use label",
+                                text = stringResource(R.string.action_use_label),
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black,
@@ -828,7 +833,7 @@ private fun FieldChip(
                 Spacer(modifier = Modifier.width(2.dp))
                 Icon(
                     Icons.Default.Check,
-                    contentDescription = "Confirmed",
+                    contentDescription = stringResource(R.string.label_confirmed),
                     tint = READY_COLOR,
                     modifier = Modifier.size(14.dp),
                 )
@@ -839,7 +844,7 @@ private fun FieldChip(
                 Spacer(modifier = Modifier.width(2.dp))
                 Icon(
                     Icons.Default.AutoAwesome,
-                    contentDescription = "AI contributed",
+                    contentDescription = stringResource(R.string.label_ai_contributed),
                     tint = Color(0xFF90CAF9),
                     modifier = Modifier.size(12.dp),
                 )
@@ -938,6 +943,7 @@ private fun ManualCaptureButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val manualCaptureDesc = stringResource(R.string.cd_manual_capture)
     Surface(
         onClick = onClick,
         shape = CircleShape,
@@ -945,7 +951,7 @@ private fun ManualCaptureButton(
         modifier = modifier
             .size(48.dp)
             .border(1.dp, Color.White.copy(alpha = 0.3f), CircleShape)
-            .semantics { contentDescription = "Manual capture — force process current frame" },
+            .semantics { contentDescription = manualCaptureDesc },
     ) {
         Box(contentAlignment = Alignment.Center) {
             Icon(

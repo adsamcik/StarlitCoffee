@@ -22,10 +22,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
+import com.adsamcik.starlitcoffee.ui.util.displayNameRes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,13 +56,13 @@ fun BrewRatingSheet(
         ) {
             // Title
             Text(
-                text = "How was it?",
+                text = stringResource(R.string.label_how_was_it),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.semantics { heading() },
             )
             Text(
-                text = "Rate this brew while the taste is still fresh.",
+                text = stringResource(R.string.msg_rate_brew_fresh),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp),
@@ -77,7 +80,7 @@ fun BrewRatingSheet(
 
             // Flavor tags
             Text(
-                text = "Flavor notes",
+                text = stringResource(R.string.label_flavor_notes_section),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -94,7 +97,7 @@ fun BrewRatingSheet(
             )
             if (selectedDescriptors.isNotEmpty()) {
                 InsightChipRow(
-                    chips = selectedDescriptors.map { it.displayName },
+                    chips = selectedDescriptors.map { stringResource(it.displayNameRes()) },
                     modifier = Modifier.padding(top = 12.dp),
                     maxVisible = 4,
                 )
@@ -107,7 +110,7 @@ fun BrewRatingSheet(
                 value = notes,
                 onValueChange = { notes = it },
                 placeholder = {
-                    Text("Optional note - what stood out?")
+                    Text(stringResource(R.string.hint_what_stood_out))
                 },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 2,
@@ -134,7 +137,7 @@ fun BrewRatingSheet(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.large,
             ) {
-                Text("Save rating")
+                Text(stringResource(R.string.action_save_rating))
             }
         }
     }
