@@ -35,11 +35,17 @@
         "Decaffeination weakens cell walls → faster extraction; community rule of thumb 2 steps finer",
         "Light roast decaf is more brittle (more fines); dark roast caramelization partially offsets",
         "Sources: Barista Hustle decaf grinding guides, r/coffee decaf threads"
+      ],
+      "pulsar-filter-ordering": [
+        "NextLevel Pulsar Filters product page: paper chosen for consistent flow",
+        "NextLevel Pulsar Stainless Steel Filter Discs: 19K = body/booster, 40K = cleaner cup but more clog-prone than paper",
+        "Coffee ad Astra 'The Pulsar Dripper' — clogging slows extraction so metal discs need slight grind adjustment",
+        "Verified ordering: PAPER (finest) → METAL_40K (mid) → METAL_19K (coarsest, 150 µm holes)"
       ]
     },
     "notes": [
       "Ranges are starting points — your bag, roast date, water and machine will shift the dial.",
-      "Pulsar filter convention: PAPER finest → METAL_19K slightly coarser → METAL_40K coarsest.",
+      "Pulsar filter convention (verified 2026): PAPER finest → METAL_40K (finer mesh, mid-grind) → METAL_19K (larger 150 µm holes, coarsest, body-forward).",
       "Filter-agnostic methods (non-Pulsar) use filterType=null.",
       "Fellow Ode Gen 2 has no ESPRESSO or MOKA_POT entry — burrs cannot grind that fine.",
       "DF64 ranges assume stock burrs; SSP MP / HU shift filter brews ~10 dial-units finer."
@@ -105,21 +111,21 @@
       "grinderId": "1zpresso-zp6-special",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 5.3,
-      "rangeEnd": 5.7,
-      "suggestedStart": 5.5,
+      "rangeStart": 5.5,
+      "rangeEnd": 5.9,
+      "suggestedStart": 5.7,
       "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar 19K — coarser to limit fines bleed"
+      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes for body & boost"
     },
     {
       "grinderId": "1zpresso-zp6-special",
       "methodId": "PULSAR",
       "filterType": "METAL_40K",
-      "rangeStart": 5.5,
-      "rangeEnd": 5.9,
-      "suggestedStart": 5.7,
+      "rangeStart": 5.3,
+      "rangeEnd": 5.7,
+      "suggestedStart": 5.5,
       "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar 40K — coarsest; big holes, bold body"
+      "adjustmentNote": "Pulsar 40K — finer mesh; clean cup, slight coarsen vs paper to limit clogging"
     },
     {
       "grinderId": "1zpresso-zp6-special",
@@ -196,21 +202,21 @@
       "grinderId": "comandante-c40",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 26,
-      "rangeEnd": 30,
-      "suggestedStart": 27,
+      "rangeStart": 28,
+      "rangeEnd": 32,
+      "suggestedStart": 29,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 19K — coarser to avoid sludge"
+      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, body-forward"
     },
     {
       "grinderId": "comandante-c40",
       "methodId": "PULSAR",
       "filterType": "METAL_40K",
-      "rangeStart": 28,
-      "rangeEnd": 32,
-      "suggestedStart": 29,
+      "rangeStart": 26,
+      "rangeEnd": 30,
+      "suggestedStart": 27,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 40K — coarsest; bold mouthfeel"
+      "adjustmentNote": "Pulsar 40K — finer mesh, clean cup, slight coarsen vs paper to limit clogging"
     },
     {
       "grinderId": "comandante-c40",
@@ -287,21 +293,21 @@
       "grinderId": "fellow-ode-gen2",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 4,
-      "rangeEnd": 6,
-      "suggestedStart": 5,
+      "rangeStart": 5,
+      "rangeEnd": 7,
+      "suggestedStart": 6,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 19K — coarser to limit fines"
+      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, more body"
     },
     {
       "grinderId": "fellow-ode-gen2",
       "methodId": "PULSAR",
       "filterType": "METAL_40K",
-      "rangeStart": 5,
-      "rangeEnd": 7,
-      "suggestedStart": 6,
+      "rangeStart": 4,
+      "rangeEnd": 6,
+      "suggestedStart": 5,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 40K — coarsest, more body"
+      "adjustmentNote": "Pulsar 40K — finer mesh, slight coarsen vs paper to limit clogging"
     },
     {
       "grinderId": "fellow-ode-gen2",
@@ -358,21 +364,21 @@
       "grinderId": "baratza-encore-esp",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 20,
-      "rangeEnd": 26,
-      "suggestedStart": 22,
+      "rangeStart": 22,
+      "rangeEnd": 28,
+      "suggestedStart": 24,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 19K — coarser for clean cup"
+      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, full body"
     },
     {
       "grinderId": "baratza-encore-esp",
       "methodId": "PULSAR",
       "filterType": "METAL_40K",
-      "rangeStart": 22,
-      "rangeEnd": 28,
-      "suggestedStart": 24,
+      "rangeStart": 20,
+      "rangeEnd": 26,
+      "suggestedStart": 22,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 40K — coarsest, full body"
+      "adjustmentNote": "Pulsar 40K — finer mesh, slight coarsen vs paper to limit clogging"
     },
     {
       "grinderId": "baratza-encore-esp",
@@ -449,21 +455,21 @@
       "grinderId": "niche-zero",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 35,
-      "rangeEnd": 42,
-      "suggestedStart": 37,
+      "rangeStart": 37,
+      "rangeEnd": 44,
+      "suggestedStart": 39,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 19K — coarser, less sludge"
+      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, body-forward"
     },
     {
       "grinderId": "niche-zero",
       "methodId": "PULSAR",
       "filterType": "METAL_40K",
-      "rangeStart": 37,
-      "rangeEnd": 44,
-      "suggestedStart": 39,
+      "rangeStart": 35,
+      "rangeEnd": 42,
+      "suggestedStart": 37,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 40K — coarsest for body"
+      "adjustmentNote": "Pulsar 40K — finer mesh, slight coarsen vs paper to limit clogging"
     },
     {
       "grinderId": "niche-zero",
@@ -540,21 +546,21 @@
       "grinderId": "df64",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 32,
-      "rangeEnd": 48,
-      "suggestedStart": 38,
+      "rangeStart": 35,
+      "rangeEnd": 50,
+      "suggestedStart": 40,
       "adjustmentStepSize": 2,
-      "adjustmentNote": "Stock burrs · 19K mesh, slightly coarser to limit fines"
+      "adjustmentNote": "Stock burrs · 19K mesh, coarsest of the three (150 µm holes)"
     },
     {
       "grinderId": "df64",
       "methodId": "PULSAR",
       "filterType": "METAL_40K",
-      "rangeStart": 35,
-      "rangeEnd": 50,
-      "suggestedStart": 40,
+      "rangeStart": 32,
+      "rangeEnd": 48,
+      "suggestedStart": 38,
       "adjustmentStepSize": 2,
-      "adjustmentNote": "Stock burrs · 40K mesh, coarsest of the three"
+      "adjustmentNote": "Stock burrs · 40K mesh, finer than 19K; slight coarsen vs paper"
     },
     {
       "grinderId": "df64",
