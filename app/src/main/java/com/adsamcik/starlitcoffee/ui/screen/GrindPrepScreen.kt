@@ -1,32 +1,45 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Coffee
+import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material3.Button
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
@@ -57,117 +70,233 @@ fun GrindPrepScreen(
                 },
             )
         },
+        bottomBar = {
+            // Sticky primary CTA — always visible, regardless of scroll position.
+            Surface(color = MaterialTheme.colorScheme.surface) {
+                Button(
+                    onClick = onNavigateToBrew,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 16.dp)
+                        .height(64.dp),
+                    shape = RoundedCornerShape(32.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.action_ready_to_brew_short),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    Spacer(Modifier.size(12.dp))
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp),
+                    )
+                }
+            }
+        },
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
+            GrindHeroCard(state.grindResult)
 
-            // Grind Recommendation Card
-            ElevatedCard(
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)) {
+            MetricsRow(
+                coffeeG = state.coffeeG,
+                waterG = state.waterG,
+                tempLow = state.method.tempRangeLow,
+                tempHigh = state.method.tempRangeHigh,
+            )
+
+            PrepTipCard(
+                tipRes = prepTipFor(state.method, state.filterType),
+            )
+        }
+    }
+}
+
+@Composable
+private fun GrindHeroCard(grindResult: GrindResult) {
+    Surface(
+        shape = RoundedCornerShape(32.dp),
+        color = MaterialTheme.colorScheme.primaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.label_grind).uppercase(),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
+                letterSpacing = 1.5.sp,
+            )
+            when (grindResult) {
+                is GrindResult.Generic -> {
                     Text(
-                        text = stringResource(R.string.label_grind),
-                        style = MaterialTheme.typography.labelLarge,
+                        text = grindResult.descriptor.displayName,
+                        style = MaterialTheme.typography.displaySmall,
+                        fontWeight = FontWeight.SemiBold,
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    when (val gr = state.grindResult) {
-                        is GrindResult.Generic -> {
-                            Text(
-                                text = "${gr.descriptor.displayName} – ${gr.descriptor.visualCue}",
-                                style = MaterialTheme.typography.bodyLarge,
-                            )
-                        }
-
-                        is GrindResult.Specific -> {
-                            val rec = gr.recommendation
-                            Text(
-                                text = "Setting: ${rec.suggestedStart} (range ${rec.rangeStart}–${rec.rangeEnd})",
-                                style = MaterialTheme.typography.bodyLarge,
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = "${rec.adjustmentNote} · Adjust by ±${rec.adjustmentStepSize} to taste",
-                                style = MaterialTheme.typography.bodySmall,
-                            )
-                        }
+                    Text(
+                        text = grindResult.descriptor.visualCue,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f),
+                    )
+                }
+                is GrindResult.Specific -> {
+                    val rec = grindResult.recommendation
+                    Text(
+                        text = rec.suggestedStart.toString(),
+                        style = MaterialTheme.typography.displayMedium,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    Text(
+                        text = "range ${rec.rangeStart}–${rec.rangeEnd} · ±${rec.adjustmentStepSize} to taste",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f),
+                    )
+                    if (rec.adjustmentNote.isNotBlank()) {
+                        Spacer(Modifier.size(2.dp))
+                        Text(
+                            text = rec.adjustmentNote,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.75f),
+                        )
                     }
                 }
             }
+        }
+    }
+}
 
-            Spacer(modifier = Modifier.height(20.dp))
+@Composable
+private fun MetricsRow(
+    coffeeG: Float,
+    waterG: Float,
+    tempLow: Int,
+    tempHigh: Int,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Max),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        MetricTile(
+            icon = Icons.Filled.Coffee,
+            label = stringResource(R.string.label_coffee),
+            value = "${"%.0f".format(coffeeG)}g",
+            subtitle = null,
+            modifier = Modifier.weight(1f).fillMaxHeight(),
+        )
+        MetricTile(
+            icon = Icons.Filled.LocalFireDepartment,
+            label = stringResource(R.string.label_water),
+            value = if (waterG > 0f) "${"%.0f".format(waterG)}g" else "–",
+            subtitle = if (tempLow > 0 && tempHigh > 0) "$tempLow–$tempHigh°C" else null,
+            modifier = Modifier.weight(1f).fillMaxHeight(),
+        )
+    }
+}
 
-            // Dose + water targets together — tells the user what to prepare
-            Text(
-                text = stringResource(R.string.format_grind_coffee, state.coffeeG),
-                style = MaterialTheme.typography.titleLarge,
-            )
-            if (state.waterG > 0f) {
-                Spacer(modifier = Modifier.height(4.dp))
-                val method = state.method
-                val tempSuffix = if (method.tempRangeLow > 0 && method.tempRangeHigh > 0) {
-                    " · ${method.tempRangeLow}–${method.tempRangeHigh}°C"
-                } else ""
+@Composable
+private fun MetricTile(
+    icon: ImageVector,
+    label: String,
+    value: String,
+    subtitle: String?,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        shape = RoundedCornerShape(24.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        modifier = modifier,
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(18.dp),
+                )
                 Text(
-                    text = "Heat ${"%.0f".format(state.waterG)}g water$tempSuffix",
-                    style = MaterialTheme.typography.bodyLarge,
+                    text = label,
+                    style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
+            Text(
+                text = value,
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.SemiBold,
+            )
+            if (subtitle != null) {
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+    }
+}
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Method + filter specific prep tip — one concise sentence
-            val prepTipRes = prepTipFor(state.method, state.filterType)
-            ElevatedCard(
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.elevatedCardColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                ),
+@Composable
+private fun PrepTipCard(@androidx.annotation.StringRes tipRes: Int) {
+    Surface(
+        shape = RoundedCornerShape(28.dp),
+        color = MaterialTheme.colorScheme.tertiaryContainer,
+        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 18.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Surface(
+                shape = RoundedCornerShape(20.dp),
+                color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.12f),
+                modifier = Modifier.size(40.dp),
             ) {
-                Column(
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.prep_tip_label),
-                        style = MaterialTheme.typography.labelLarge,
-                    )
-                    Text(
-                        text = stringResource(prepTipRes),
-                        style = MaterialTheme.typography.bodyMedium,
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        imageVector = Icons.Outlined.Lightbulb,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onTertiaryContainer,
+                        modifier = Modifier.size(22.dp),
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Ready to Brew Button
-            Button(
-                onClick = { onNavigateToBrew() },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(72.dp),
-                shape = MaterialTheme.shapes.extraLarge,
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 Text(
-                    text = stringResource(R.string.action_ready_to_brew),
-                    style = MaterialTheme.typography.titleMedium,
+                    text = stringResource(R.string.prep_tip_label),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.8f),
+                )
+                Text(
+                    text = stringResource(tipRes),
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Start,
                 )
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

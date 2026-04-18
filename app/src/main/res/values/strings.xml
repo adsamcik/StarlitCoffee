@@ -105,6 +105,7 @@
     <string name="format_grind_coffee">Grind %1$.0fg of coffee</string>
     <string name="format_water_temp">Water: %1$d–%2$d°C</string>
     <string name="action_ready_to_brew">Ready to Brew →</string>
+    <string name="action_ready_to_brew_short">Ready to Brew</string>
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Prep</string>
     <string name="prep_tip_pulsar_paper">Wet the paper filter in the base (valve open) and drain. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>

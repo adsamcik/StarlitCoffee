@@ -85,6 +85,7 @@
     <string name="format_grind_coffee">Namelte %1$.0fg kávy</string>
     <string name="format_water_temp">Voda: %1$d–%2$d°C</string>
     <string name="action_ready_to_brew">Připraveno k přípravě →</string>
+    <string name="action_ready_to_brew_short">Připraveno k přípravě</string>
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Příprava</string>
     <string name="prep_tip_pulsar_paper">Namočte papírový filtr v základně (ventil otevřený) a nechte odkapat. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
