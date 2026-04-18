@@ -353,6 +353,208 @@ class BrewViewModelTest {
         assertTrue(widenedWidth > baseWidth)
     }
 
+    // --- Decaf Grind Adjustment ---
+    //
+    // Direction is COARSER (not finer). Mechanism: decaf is more brittle →
+    // grinding produces more fines → fines reduce bed permeability → coarsen
+    // to restore flow. See grinders.json `_meta.sources.decaf` for citations
+    // (Coffee ad Astra / Gagné, Sci. Rep. 2024 fines paper, Al-Shemmeri).
+    //
+    // Base step per brew family (from BrewViewModel.decafCoarserStepsFor):
+    //   PULSAR / V60 / MOKA_POT / ESPRESSO  → +1 (percolation: fines hurt)
+    //   FRENCH_PRESS / AEROPRESS / COLD_BREW → 0 (immersion: fines OK)
+    // Roast modifier: DARK / MEDIUM_DARK / ESPRESSO roast +1 (already brittle)
+    // Process relief: SWISS_WATER / MOUNTAIN_WATER / CO2_SUPERCRITICAL -1
+    //   (gentler on bean structure → fewer extra fines)
+    // Final clamped to ≥ 0; suggested moves toward rangeEnd (coerceAtMost).
+
+    private fun setupZp6Pulsar(vm: BrewViewModel) {
+        vm.setMethod(BrewMethod.PULSAR)
+        vm.setFilterType(FilterType.PAPER)
+        vm.setGrinder("1zpresso-zp6-special")
+    }
+
+    private fun selectFirstBag(vm: BrewViewModel) {
+        vm.selectBag(vm.coffeeBags.value.first().id)
+    }
+
+    @Test
+    fun `decaf bag with no roast or process coarsens Pulsar paper by 1 step`() {
+        val vm = createPersistenceViewModel()
+        setupZp6Pulsar(vm)
+        vm.addCoffeeBag(name = "Plain Decaf", isDecaf = true)
+        selectFirstBag(vm)
+
+        val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
+        // suggested 5.2 + 1 step (0.2) = 5.4
+        assertEquals(5.4f, rec.suggestedStart, 0.01f)
+        assertTrue(
+            "note should mention 'coarser': ${rec.adjustmentNote}",
+            rec.adjustmentNote.contains("coarser"),
+        )
+    }
+
+    @Test
+    fun `decaf with dark roast coarsens Pulsar paper by 2 steps`() {
+        val vm = createPersistenceViewModel()
+        setupZp6Pulsar(vm)
+        vm.addCoffeeBag(name = "Dark Decaf", isDecaf = true, roastLevel = "DARK")
+        selectFirstBag(vm)
+
+        val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
+        // suggested 5.2 + (1 base + 1 roast) * 0.2 = 5.6
+        assertEquals(5.6f, rec.suggestedStart, 0.01f)
+        assertTrue(
+            "note should say '2 steps coarser': ${rec.adjustmentNote}",
+            rec.adjustmentNote.contains("2 steps coarser"),
+        )
+    }
+
+    @Test
+    fun `decaf Swiss Water process gives full relief on Pulsar paper`() {
+        val vm = createPersistenceViewModel()
+        setupZp6Pulsar(vm)
+        vm.addCoffeeBag(
+            name = "Swiss Decaf",
+            isDecaf = true,
+            decafProcess = "SWISS_WATER",
+        )
+        selectFirstBag(vm)
+
+        val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
+        // 1 base - 1 relief = 0 → suggested unchanged
+        assertEquals(5.2f, rec.suggestedStart, 0.01f)
+        assertTrue(
+            "note should mention 'same start' for relief case: ${rec.adjustmentNote}",
+            rec.adjustmentNote.contains("same start"),
+        )
+        assertTrue(
+            "note should mention Swiss Water shortLabel: ${rec.adjustmentNote}",
+            rec.adjustmentNote.contains("Swiss Water"),
+        )
+    }
+
+    @Test
+    fun `decaf CO2 supercritical process gives full relief`() {
+        val vm = createPersistenceViewModel()
+        setupZp6Pulsar(vm)
+        vm.addCoffeeBag(
+            name = "CO2 Decaf",
+            isDecaf = true,
+            decafProcess = "CO2_SUPERCRITICAL",
+        )
+        selectFirstBag(vm)
+
+        val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
+        assertEquals(5.2f, rec.suggestedStart, 0.01f)
+    }
+
+    @Test
+    fun `decaf solvent process EA Sugarcane gets no relief`() {
+        val vm = createPersistenceViewModel()
+        setupZp6Pulsar(vm)
+        vm.addCoffeeBag(
+            name = "EA Decaf",
+            isDecaf = true,
+            decafProcess = "EA_SUGARCANE",
+        )
+        selectFirstBag(vm)
+
+        val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
+        // 1 base + 0 relief = 1 → +0.2
+        assertEquals(5.4f, rec.suggestedStart, 0.01f)
+    }
+
+    @Test
+    fun `decaf with dark roast plus Swiss Water relief nets 1 step coarser`() {
+        val vm = createPersistenceViewModel()
+        setupZp6Pulsar(vm)
+        vm.addCoffeeBag(
+            name = "Dark Swiss Decaf",
+            isDecaf = true,
+            roastLevel = "DARK",
+            decafProcess = "SWISS_WATER",
+        )
+        selectFirstBag(vm)
+
+        val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
+        // 1 base + 1 roast - 1 relief = 1 step → +0.2
+        assertEquals(5.4f, rec.suggestedStart, 0.01f)
+    }
+
+    @Test
+    fun `decaf on French Press immersion does not coarsen`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Decaf", isDecaf = true)
+        selectFirstBag(vm)
+        vm.setMethod(BrewMethod.FRENCH_PRESS)
+        vm.setGrinder("1zpresso-zp6-special")
+
+        // FRENCH_PRESS has no entry in DefaultGrinders.kt → falls back to
+        // GrindResult.Generic before reaching the decaf coarsening path. We
+        // can still assert the user-visible outcome: no Specific recommendation,
+        // no decaf adjustment to apply.
+        assertTrue(
+            "expected Generic for FRENCH_PRESS (no recommendation in DefaultGrinders)",
+            vm.uiState.value.grindResult is GrindResult.Generic,
+        )
+    }
+
+    @Test
+    fun `decaf on AeroPress immersion does not coarsen`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Decaf", isDecaf = true)
+        selectFirstBag(vm)
+        vm.setMethod(BrewMethod.AEROPRESS)
+        vm.setGrinder("1zpresso-zp6-special")
+
+        // Same DefaultGrinders limitation as French Press — see note above.
+        assertTrue(
+            "expected Generic for AEROPRESS (no recommendation in DefaultGrinders)",
+            vm.uiState.value.grindResult is GrindResult.Generic,
+        )
+    }
+
+    @Test
+    fun `non-decaf bag does not adjust grind`() {
+        val vm = createPersistenceViewModel()
+        setupZp6Pulsar(vm)
+        vm.addCoffeeBag(name = "Regular", isDecaf = false, roastLevel = "DARK")
+        selectFirstBag(vm)
+
+        val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
+        assertEquals(5.2f, rec.suggestedStart, 0.01f)
+        assertFalse(
+            "note must NOT contain decaf wording: ${rec.adjustmentNote}",
+            rec.adjustmentNote.contains("Decaf"),
+        )
+    }
+
+    @Test
+    fun `decaf coarsening clamps to rangeEnd on tight METAL_19K`() {
+        val vm = createPersistenceViewModel()
+        vm.setMethod(BrewMethod.PULSAR)
+        vm.setFilterType(FilterType.METAL_19K)
+        vm.setGrinder("1zpresso-zp6-special")
+        // Dark roast → 2 steps coarser → 5.7 + 0.4 = 6.1, but range is 5.5–5.9
+        vm.addCoffeeBag(name = "Dark Decaf", isDecaf = true, roastLevel = "DARK")
+        selectFirstBag(vm)
+
+        val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
+        // Clamped to rangeEnd 5.9, not 6.1
+        assertEquals(5.9f, rec.suggestedStart, 0.01f)
+    }
+
+    // NOTE: Immersion (FRENCH_PRESS / AEROPRESS / COLD_BREW) and ESPRESSO
+    // branches of decafCoarserStepsFor are not directly asserted here because
+    // DefaultGrinders.kt (used by the in-test BrewViewModel) only ships PULSAR
+    // recommendations — non-PULSAR lookups fall back to GrindResult.Generic
+    // and never reach the decaf coarsening path. The branch logic itself is
+    // small and exercised in production via grinders.json. If we expand
+    // DefaultGrinders coverage, add tests here for:
+    //   - immersion methods → 0 base steps → suggested unchanged + "same start" note
+    //   - ESPRESSO → 1 base step → suggested += stepSize
+
     // --- Method Defaults ---
 
     @Test

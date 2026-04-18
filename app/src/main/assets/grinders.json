@@ -49,9 +49,13 @@
         "Pulsar metal 19K / 40K: ~0–1 direct DF64 dial reports — values are extrapolated coarser from the paper cluster (Pulsar wants coarser-than-V60; 40K clogs more under agitation; 19K body-forward)"
       ],
       "decaf": [
-        "Decaffeination weakens cell walls → faster extraction; community rule of thumb 2 steps finer",
-        "Light roast decaf is more brittle (more fines); dark roast caramelization partially offsets",
-        "Sources: Barista Hustle decaf grinding guides, r/coffee decaf threads"
+        "Direction: COARSER (not finer). Older 'finer for decaf' folk-wisdom assumed weakened cell walls → faster extraction, but post-2019 research points the other way.",
+        "Mechanism: decaffeination embrittles the bean → grinding produces more fines → fines accumulate as a low-permeability layer in the bed → percolation slows and channels → coarsen to restore flow.",
+        "Sources: Jonathan Gagné, 'Grind Size, Fines, and Permeability' (Coffee ad Astra, 2020); Mark Al-Shemmeri Medium articles on decaf brittleness; Scientific Reports 2024 paper on fines distribution and extraction; Food Chemistry 2024 study on decaf compound retention.",
+        "Magnitude: 0–1 step coarser, brew-family dependent. Percolation (PULSAR / V60 / MOKA / ESPRESSO) +1; immersion (FRENCH_PRESS / AEROPRESS / COLD_BREW) +0 (fines impact minimal when whole bed steeps).",
+        "Roast modifier: dark / espresso / medium-dark roasts +1 more step coarser (already brittle from caramelization, decaf compounds the effect).",
+        "Process relief: Swiss Water, Mountain Water, and CO₂ supercritical processes preserve bean structure better → -1 step relief (less coarsening needed). Solvent processes (EA Sugarcane, EA Direct, MC Direct) get no relief — more fines expected.",
+        "Final steps clamped to ≥ 0; recommendation moves toward rangeEnd, never beyond."
       ],
       "pulsar-filter-ordering": [
         "NextLevel Pulsar Filters product page: paper chosen for consistent flow",
