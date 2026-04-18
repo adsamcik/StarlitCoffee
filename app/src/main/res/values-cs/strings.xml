@@ -56,7 +56,7 @@
     <string name="format_selected">%1$d vybráno</string>
 
     <!-- Method Picker Screen -->
-    <string name="screen_method_picker_title">Nastavení přípravy</string>
+    <string name="screen_method_picker_title">Nastavte si přípravu</string>
     <string name="label_coffee_input">Káva (g)</string>
     <string name="label_water_input">Voda (g)</string>
     <string name="label_brew_size_input">Objem nápoje (ml)</string>
@@ -84,8 +84,8 @@
     <string name="screen_grind_prep_title">Připravte si vše</string>
     <string name="format_grind_coffee">Namelte %1$.0fg kávy</string>
     <string name="format_water_temp">Voda: %1$d–%2$d°C</string>
-    <string name="action_ready_to_brew">Připraveno k přípravě →</string>
-    <string name="action_ready_to_brew_short">Připraveno k přípravě</string>
+    <string name="action_ready_to_brew">Vše připraveno →</string>
+    <string name="action_ready_to_brew_short">Vše připraveno</string>
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Příprava</string>
     <string name="prep_tip_pulsar_paper">Namočte papírový filtr v základně (ventil otevřený) a nechte odkapat. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
@@ -112,7 +112,7 @@
     <string name="label_bloom_done">✅ Předsmáčení hotovo!</string>
     <string name="label_bloom_badge">🌱 Předsmáčení</string>
     <string name="action_finish_brew">Dokončit přípravu</string>
-    <string name="instruction_bloom_steps">Otevřít ventil · Nalít vodu · Zavřít ventil</string>
+    <string name="instruction_bloom_steps">Otevřete ventil · Nalijte vodu · Zavřete ventil</string>
 
     <!-- Calculator Brew Screen -->
     <string name="dialog_brew_ratio_title">Poměr přípravy</string>
@@ -131,7 +131,7 @@
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Záznamy příprav</string>
     <string name="msg_log_empty_title">Začněte připravovat kávu</string>
-    <string name="msg_log_empty_subtitle">Každá dokončená příprava se hodnocením se zde zobrazí</string>
+    <string name="msg_log_empty_subtitle">Dokončené přípravy s hodnocením se zobrazí zde</string>
     <string name="msg_tap_to_rate">Klepněte pro ohodnocení</string>
 
     <!-- Brew Log Detail Screen -->
@@ -191,8 +191,8 @@
     <string name="format_coffee_depth">~%1$.0fmm v přístroji</string>
     <string name="label_coffee_depth">Hloubka kávy</string>
     <string name="format_grounds_absorb">~%1$.0fg vody</string>
-    <string name="label_grounds_absorb">Absorpce zrn</string>
-    <string name="format_cup_volume_expected">~%1$.0fg očekávaný</string>
+    <string name="label_grounds_absorb">Pohlceno kávou</string>
+    <string name="format_cup_volume_expected">~%1$.0fg očekáváno</string>
     <string name="label_cup_volume">Objem šálku</string>
     <string name="label_target">Cíl</string>
     <string name="format_pour_target">Nalijte celkem na %1$.0fg</string>
@@ -205,10 +205,10 @@
     <string name="grind_note_medium_coarse">Středně hrubé · upravte dle chuti</string>
     <string name="grind_note_coarse">Hrubé · delší příprava</string>
     <!-- Dose notes -->
-    <string name="dose_note_below_20">Pod 20g může chuť být suchá nebo drsná</string>
+    <string name="dose_note_below_20">Pod 20g může být chuť suchá nebo drsná</string>
     <string name="dose_note_sweet_spot">Ideální dávka pro čistotu a vyváženost</string>
     <string name="dose_note_rich">Plné, silné výsledky</string>
-    <string name="dose_note_above_30">Nad 30g — může vyžadovat delší odtok</string>
+    <string name="dose_note_above_30">Nad 30g — může vyžadovat delší dobu odtékání</string>
 
     <!-- Brew Method names -->
     <string name="method_pulsar">Pulsar</string>
@@ -309,7 +309,7 @@
     <string name="cd_water_grams">Voda: %1$s gramů</string>
     <string name="cd_ratio">Poměr 1 ku %1$s</string>
     <string name="cd_backspace">Smazat</string>
-    <string name="cd_clear_bag">Zrušit výběr balíčku</string>
+    <string name="cd_clear_bag">Zrušit výběr balení</string>
     <string name="cd_switch_direction">Přepnout směr</string>
     <string name="cd_expand_advanced">Rozbalit pokročilé možnosti</string>
     <string name="cd_collapse_advanced">Sbalit pokročilé možnosti</string>
@@ -320,18 +320,18 @@
     <string name="label_water_to_dose">Voda → Dávka</string>
     <string name="label_dose_to_water">Dávka → Voda</string>
     <string name="label_total_water">celkem vody</string>
-    <string name="label_bloom_lowercase">bloom</string>
+    <string name="label_bloom_lowercase">předsmáčení</string>
     <string name="label_remaining">zbývá</string>
     <string name="label_advanced_options">Pokročilé možnosti</string>
     <string name="label_grinder">Mlýnek</string>
 
     <!-- Bag selection -->
-    <string name="label_select_coffee_bag">Vyberte balíček kávy</string>
-    <string name="label_select_coffee_bag_title">Vyberte balíček kávy</string>
+    <string name="label_select_coffee_bag">Vyberte balení kávy</string>
+    <string name="label_select_coffee_bag_title">Vyberte balení kávy</string>
     <string name="label_freshness">Čerstvost</string>
     <string name="label_best_now">Nejlepší teď</string>
-    <string name="msg_no_active_bags">Žádné aktivní balíčky. Přidejte jeden v záložce Balíčky.</string>
-    <string name="action_brew_without_bag">Spustit bez výběru balíčku</string>
+    <string name="msg_no_active_bags">Žádná aktivní balení. Přidejte jedno v sekci Vaše zrnka.</string>
+    <string name="action_brew_without_bag">Spustit bez výběru balení</string>
     <string name="action_save_as_favorite">Uložit jako oblíbené</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="format_weight_left"> · zbývá %1$.0f g</string>
@@ -364,16 +364,16 @@
     <string name="label_decaf_coffee">Bezkofeinová káva</string>
     <string name="msg_decaf_guidance">Synchronizuje doporučení přípravy s bezkofeinovými zrny a kratšími dobami louhování.</string>
     <string name="label_decaf_process_optional">Způsob dekofeinizace (volitelné)</string>
-    <string name="msg_decaf_process_hint">Umožňuje pravidlu přípravy mírně upravit mletí: vodní procesy a CO₂ dekafeinizace obvykle nevyžadují tak hrubé mletí jako solventní procesy.</string>
-    <string name="cd_captured_bag_photo">Vyfocený sáček</string>
-    <string name="label_bag_name">Název sáčku</string>
+    <string name="msg_decaf_process_hint">Umožňuje pravidlu přípravy mírně upravit mletí: vodní procesy a CO₂ dekofeinizace obvykle nevyžadují tak hrubé mletí jako solventní procesy.</string>
+    <string name="cd_captured_bag_photo">Foto balení</string>
+    <string name="label_bag_name">Název balení</string>
     <string name="label_detected_details">Zjištěné údaje</string>
     <string name="msg_tap_chip_to_edit">Klepnutím na štítek ho upravíte</string>
     <string name="label_needs_review">Vyžaduje kontrolu</string>
     <string name="msg_tap_confirm_or_change">Klepnutím potvrďte nebo změňte tyto údaje</string>
     <string name="action_edit_all_fields">Upravit všechna pole</string>
     <string name="action_add_more_details">Přidat další podrobnosti</string>
-    <string name="msg_analyzing_label">Analyzuji fotografie štítku</string>
+    <string name="msg_analyzing_label">Analyzujeme fotografie štítku</string>
     <string name="msg_analyzing_label_detail">Kontrolujeme rozmazání, slučujeme text přední a zadní strany a připravujeme nejspolehlivější pole.</string>
     <string name="label_review_fields">Zkontrolujte tato pole</string>
     <string name="label_qr_website">QR web</string>
@@ -391,9 +391,9 @@
     <string name="label_level_history">Historie úrovní</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
-    <string name="cd_bag_photo">Foto sáčku</string>
+    <string name="cd_bag_photo">Foto balení</string>
     <string name="action_rescan_label">Znovu naskenovat štítek</string>
-    <string name="action_edit_bag">Upravit sáček</string>
+    <string name="action_edit_bag">Upravit balení</string>
     <string name="label_sensory_snapshot">Smyslový profil</string>
     <string name="label_grind_intelligence">Doporučení mletí</string>
     <string name="label_remaining_coffee">Zbývající káva</string>
@@ -433,9 +433,9 @@
     <string name="label_what_was_off">Co nehraje?</string>
 
     <!-- RescanDeltaDialog -->
-    <string name="msg_rescan_no_changes">Naskenovaný štítek odpovídá uloženému sáčku — není co aktualizovat.</string>
-    <string name="action_update_bag">Aktualizovat sáček</string>
-    <string name="action_new_bag">Nový sáček</string>
+    <string name="msg_rescan_no_changes">Naskenovaný štítek odpovídá uloženému balení — není co aktualizovat.</string>
+    <string name="action_update_bag">Aktualizovat balení</string>
+    <string name="action_new_bag">Nové balení</string>
 
     <!-- SaveFavoriteDialog -->
     <string name="dialog_save_favorite_title">Uložit jako oblíbené</string>
@@ -445,8 +445,8 @@
 
     <!-- ScanHistoryDialog -->
     <string name="dialog_scan_history_title">Historie skenování</string>
-    <string name="msg_no_scan_sessions">Zatím žádné skenovací relace.</string>
-    <string name="action_share_session">Sdílet tuto relaci</string>
+    <string name="msg_no_scan_sessions">Zatím nebyly zaznamenány žádné skeny.</string>
+    <string name="action_share_session">Sdílet tento sken</string>
     <string name="label_component_timings">Časování komponent</string>
     <string name="msg_no_timing_data">Žádná data o časování</string>
 
@@ -478,10 +478,10 @@
     <string name="action_discard">Zahodit</string>
     <string name="action_keep_scanning">Pokračovat ve skenování</string>
     <string name="msg_camera_permission_required">Vyžadováno oprávnění kamery</string>
-    <string name="screen_scan_bag_title">Skenovat sáček kávy</string>
-    <string name="cd_toggle_debug_overlay">Přepnout ladící overlay</string>
-    <string name="msg_both_sides_scanned">Obě strany sáčku byly naskenovány</string>
-    <string name="msg_scanning_front_side">Skenování přední strany sáčku</string>
+    <string name="screen_scan_bag_title">Skenovat balení kávy</string>
+    <string name="cd_toggle_debug_overlay">Přepnout ladicí překryv</string>
+    <string name="msg_both_sides_scanned">Obě strany balení byly naskenovány</string>
+    <string name="msg_scanning_front_side">Skenování přední strany balení</string>
     <string name="label_front_side">Přední strana</string>
     <string name="action_quick_save">Rychle uložit</string>
     <string name="msg_repackaged_product">Může se jednat o přebalený nebo dovážený produkt</string>
@@ -493,12 +493,12 @@
     <string name="cd_manual_capture">Ruční zachycení — vynutit zpracování aktuálního snímku</string>
 
     <!-- MethodPickerScreen -->
-    <string name="action_sync_to_bag">Synchronizovat se sáčkem</string>
+    <string name="action_sync_to_bag">Synchronizovat s balením</string>
 
     <!-- SettingsScreen -->
     <string name="msg_pulsar_settings_applied">Platí při přípravě s Pulsarem</string>
     <string name="label_qr_link_explorer">Průzkumník QR odkazů</string>
-    <string name="msg_qr_approval_hint">QR kódy ve fotkách sáčků vyžadují schválení před průzkumem.</string>
+    <string name="msg_qr_approval_hint">QR odkazy ve fotografiích balení vyžadují schválení před průzkumem.</string>
     <string name="label_quick_brew">Rychlá příprava</string>
     <string name="msg_quick_brew_hint">Přeskočit výběr metody a přejít přímo na časovač s výchozí metodou</string>
     <string name="action_add_cup_preset">Přidat předvolbu šálku</string>
@@ -558,11 +558,11 @@
     <string name="taste_issue_weak_suggestion">Zkuste silnější poměr nebo více kávy</string>
     <string name="taste_issue_strong_suggestion">Zkuste slabší poměr nebo méně kávy</string>
 
-    <!-- Enum: CoffeeBagStatus -->
-    <string name="bag_status_sealed">Zapečetěný</string>
-    <string name="bag_status_open">Otevřený</string>
-    <string name="bag_status_frozen">Zmrazený</string>
-    <string name="bag_status_finished">Spotřebovaný</string>
+    <!-- Enum: CoffeeBagStatus (neuter forms agree with implicit "balení") -->
+    <string name="bag_status_sealed">Zapečetěné</string>
+    <string name="bag_status_open">Otevřené</string>
+    <string name="bag_status_frozen">Zmrazené</string>
+    <string name="bag_status_finished">Spotřebované</string>
 
     <!-- Enum: DecafProcess -->
     <string name="decaf_unknown">Neznámý / neupřesněný</string>
@@ -586,7 +586,7 @@
     <string name="roast_medium">Střední</string>
     <string name="roast_medium_dark">Středně tmavé</string>
     <string name="roast_dark">Tmavé</string>
-    <string name="roast_filter">Filtr</string>
+    <string name="roast_filter">Filtrové</string>
     <string name="roast_espresso">Espresso</string>
     <string name="roast_omniroast">Omniroast</string>
     <string name="roast_cinnamon">Skořicové</string>

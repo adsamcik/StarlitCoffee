@@ -71,7 +71,7 @@
     <string name="format_last_time">Last time: %1$s</string>
     <string name="action_save_as_favorite">Save as Favorite</string>
     <string name="label_select_coffee_bag_title">Select Coffee Bag</string>
-    <string name="msg_no_active_bags">No active bags. Add one in the Bags tab.</string>
+    <string name="msg_no_active_bags">No active bags. Add one in the Your Beans section.</string>
     <string name="action_brew_without_bag">Brew without selecting a bag</string>
     <string name="label_best_now">Best now</string>
     <string name="format_grind_generic">Grind: %1$s – %2$s</string>
