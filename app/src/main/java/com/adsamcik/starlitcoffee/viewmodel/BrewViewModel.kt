@@ -132,7 +132,13 @@ data class BrewUiState(
     val minuteAlertEnabled: Boolean = true,
     val showFeedbackSnackbar: Boolean = false,
     // Decaf
+    // Derived from manualDecafOverride (user intent) or selected bag. Always kept in sync by recalculate().
     val isDecafBrew: Boolean = false,
+    // User override for decaf. null = inherit from selected bag (or false if no bag).
+    // Non-null = user explicitly set decaf state; sticks across bag changes until cleared.
+    val manualDecafOverride: Boolean? = null,
+    // True when a bag is selected AND user override disagrees with bag.isDecaf.
+    val decafMismatchWithBag: Boolean = false,
     // Feedback state
     val tasteFeedback: TasteFeedback? = null,
     val rating: Int = 0,
@@ -198,6 +204,7 @@ class BrewViewModel(
             brewLogRepository?.getAllLogs()?.collect { logs ->
                 _brewLogs.value = logs
                 refreshHomeContextCard()
+                refreshInventoryAlerts()
             }
         }
         viewModelScope.launch {
@@ -445,7 +452,6 @@ class BrewViewModel(
         val state = _uiState.value
         if (state.bloomMarkedAtSeconds != null) return
         if (!state.timerRunning) return
-        if (state.elapsedSeconds <= 0) return
 
         val duration = state.effectiveBloomDurationSeconds
         _uiState.update {
@@ -568,7 +574,8 @@ class BrewViewModel(
                 customRatio = if (matchedIndex >= 0) "" else entity.ratio.toString(),
                 filterType = filterType,
                 selectedGrinderId = entity.grinderId,
-                isDecafBrew = entity.isDecaf,
+                // Recipe is an explicit user intent for decaf → set override.
+                manualDecafOverride = entity.isDecaf,
                 bloomMultiplier = "",
                 pulseCount = "",
                 tempC = "",
@@ -700,9 +707,25 @@ class BrewViewModel(
 
     fun selectBag(bagId: Long?) {
         _selectedBagId.value = bagId
-        // Auto-set decaf from bag
-        val bag = _coffeeBags.value.find { it.id == bagId }
-        _uiState.update { it.copy(isDecafBrew = bag?.isDecaf ?: false) }
+        // Decaf derivation now happens in recalculate() from manualDecafOverride + bag.isDecaf.
+        // We no longer silently clobber user intent here.
+
+        // Auto-switch brew method to the one most recently used with this bag, if any.
+        // Derives from in-memory brew logs (already collected into _brewLogs); no DB round-trip.
+        if (bagId != null) {
+            val lastMethod = _brewLogs.value
+                .asSequence()
+                .filter { it.coffeeBagId == bagId }
+                .mapNotNull { log ->
+                    runCatching { BrewMethod.valueOf(log.method) }.getOrNull()
+                }
+                .firstOrNull()
+            if (lastMethod != null && lastMethod != _uiState.value.method) {
+                // setMethod() also refreshes presets/ratios and calls recalculate().
+                setMethod(lastMethod)
+                return
+            }
+        }
         recalculate()
     }
 
@@ -738,7 +761,10 @@ class BrewViewModel(
     }
 
     fun refreshInventoryAlerts() {
-        _inventoryAlerts.value = InventoryAlertEngine.buildAlerts(_coffeeBags.value)
+        _inventoryAlerts.value = InventoryAlertEngine.buildAlerts(
+            bags = _coffeeBags.value,
+            brewLogs = _brewLogs.value,
+        )
     }
 
     fun quickRateBrewLog(
@@ -760,8 +786,23 @@ class BrewViewModel(
     }
 
     fun setDecafBrew(isDecaf: Boolean) {
-        _uiState.update { it.copy(isDecafBrew = isDecaf) }
+        // Writes into manualDecafOverride (user intent); recalculate() derives isDecafBrew.
+        _uiState.update { it.copy(manualDecafOverride = isDecaf) }
         recalculate()
+    }
+
+    /** Clear the manual decaf override so decaf once again follows the selected bag. */
+    fun clearDecafOverride() {
+        _uiState.update { it.copy(manualDecafOverride = null) }
+        recalculate()
+    }
+
+    /**
+     * Resolve any bag/brew decaf mismatch by adopting the bag's decaf status.
+     * Equivalent to clearDecafOverride() semantically but named for the user-facing action.
+     */
+    fun syncDecafToBag() {
+        clearDecafOverride()
     }
 
     fun deleteBrewLog(entity: BrewLogEntity) {
@@ -1809,6 +1850,20 @@ class BrewViewModel(
             val amount = state.amount.toFloatOrNull() ?: 0f
             val method = state.method
 
+            // --- Decaf derivation (single source of truth) ---
+            // Manual override wins; else follow selected bag; else false.
+            val selectedBag = _selectedBagId.value?.let { id ->
+                _coffeeBags.value.find { it.id == id }
+            }
+            val effectiveIsDecaf = state.manualDecafOverride
+                ?: selectedBag?.isDecaf
+                ?: false
+            // Mismatch only exists when user has explicitly overridden AND a bag is selected
+            // AND they disagree. No bag → no mismatch.
+            val decafMismatchWithBag = state.manualDecafOverride != null &&
+                selectedBag != null &&
+                selectedBag.isDecaf != state.manualDecafOverride
+
             val selectedPreset = state.ratioPresets.getOrNull(state.selectedPresetIndex)
             val presetRatio = selectedPreset?.ratio ?: method.defaultRatio
 
@@ -1870,10 +1925,10 @@ class BrewViewModel(
             }
 
             val timeTargetLowS = method.timeTargetLow.let {
-                if (state.isDecafBrew) (it - 30).coerceAtLeast(120) else it
+                if (effectiveIsDecaf) (it - 30).coerceAtLeast(120) else it
             }
             val timeTargetHighS = method.timeTargetHigh.let {
-                if (state.isDecafBrew) (it - 30).coerceAtLeast(150) else it
+                if (effectiveIsDecaf) (it - 30).coerceAtLeast(150) else it
             }
 
             val refillCount = if (method.capacityMaxG != null && waterG > method.capacityMaxG) {
@@ -1924,7 +1979,7 @@ class BrewViewModel(
                 method = method,
                 filterType = state.filterType,
                 calibrationStyle = state.calibrationStyle,
-                isDecaf = state.isDecafBrew,
+                isDecaf = effectiveIsDecaf,
             )
 
             state.copy(
@@ -1942,6 +1997,8 @@ class BrewViewModel(
                 ratioWarning = ratioWarning,
                 bloomWarning = bloomWarning,
                 effectiveBloomDurationSeconds = effectiveBloomDurationSeconds,
+                isDecafBrew = effectiveIsDecaf,
+                decafMismatchWithBag = decafMismatchWithBag,
                 retainedWaterG = retainedWaterG,
                 predictedCupVolumeG = predictedCupVolumeG,
             )

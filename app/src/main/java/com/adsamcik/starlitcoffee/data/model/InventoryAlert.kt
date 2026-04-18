@@ -4,7 +4,8 @@ data class InventoryAlert(
     val type: InventoryAlertType,
     val bagName: String,
     val message: String,
-    val bagId: Long,
+    /** Null for alerts that don't reference a specific bag (e.g. DECAF_COVERAGE). */
+    val bagId: Long?,
 )
 
 enum class InventoryAlertType {
@@ -13,4 +14,6 @@ enum class InventoryAlertType {
     STALENESS,
     AGING_SEALED,
     FOCUS,
+    /** User has been brewing decaf recently but has no available decaf bags on hand. */
+    DECAF_COVERAGE,
 }

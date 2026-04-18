@@ -13,6 +13,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,13 +33,18 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -46,14 +52,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
+import kotlinx.coroutines.delay
 import kotlin.math.abs
 
 @Composable
@@ -65,6 +76,7 @@ fun BrewTimerScreen(
     val state by brewViewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val activity = context as? Activity
+    val vibrator = remember { getVibrator(context) }
 
     // Keep screen on while brewing
     DisposableEffect(Unit) {
@@ -74,7 +86,7 @@ fun BrewTimerScreen(
         }
     }
 
-    // Auto-start if arriving without bloom (non-bloom methods)
+    // Auto-start the total timer on entry
     LaunchedEffect(Unit) {
         if (!state.timerRunning && state.elapsedSeconds == 0) {
             brewViewModel.startTimer()
@@ -86,31 +98,51 @@ fun BrewTimerScreen(
         onBack()
     }
 
-    // Minute-boundary haptic + tone
+    // Minute-boundary haptic + tone (only fires when NOT in bloom countdown — bloom has its own alerts)
     val currentMinute = state.elapsedSeconds / 60
-    val vibrator = remember { getVibrator(context) }
+    val bloomActive = state.bloomMarkedAtSeconds != null && !state.bloomFinished
     LaunchedEffect(currentMinute) {
-        if (currentMinute > 0 && state.timerRunning && state.minuteAlertEnabled) {
-            vibrator?.let { v ->
-                v.vibrate(
-                    VibrationEffect.createWaveform(longArrayOf(0, 100, 80, 100), -1),
-                )
-            }
-            try {
-                val tone = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 50)
-                try {
-                    tone.startTone(ToneGenerator.TONE_PROP_BEEP, 150)
-                } finally {
-                    tone.release()
-                }
-            } catch (_: Exception) { }
+        if (currentMinute > 0 && state.timerRunning && state.minuteAlertEnabled && !bloomActive) {
+            vibrator?.vibrate(
+                VibrationEffect.createWaveform(longArrayOf(0, 100, 80, 100), -1),
+            )
+            playTone(ToneGenerator.TONE_PROP_BEEP, 150)
         }
     }
 
-    // Timer color — spring-animated to convey time state at a glance
+    // Strong alert when bloom ends — triple buzz + triple beep + short flash
+    LaunchedEffect(state.bloomFinished) {
+        if (state.bloomFinished && state.timerRunning && state.bloomMarkedAtSeconds != null) {
+            vibrator?.vibrate(
+                VibrationEffect.createWaveform(
+                    longArrayOf(0, 300, 120, 300, 120, 500), -1,
+                ),
+            )
+            repeat(3) {
+                playTone(ToneGenerator.TONE_PROP_BEEP2, 250)
+                delay(300L)
+            }
+        }
+    }
+
+    // Pre-bloom-end warning at T-3s: single haptic
+    val bloomCountdown = state.bloomCountdownSeconds
+    LaunchedEffect(bloomCountdown) {
+        if (bloomActive && bloomCountdown != null && bloomCountdown in 1..3) {
+            vibrator?.vibrate(
+                VibrationEffect.createOneShot(60L, VibrationEffect.DEFAULT_AMPLITUDE),
+            )
+            playTone(ToneGenerator.TONE_PROP_BEEP, 80)
+        }
+    }
+
+    // Timer color — animate based on bloom state and target window
     val hasTarget = state.timeTargetLowS > 0 && state.timeTargetHighS > 0
-    val timerColor by animateColorAsState(
+    val heroColor by animateColorAsState(
         targetValue = when {
+            state.bloomFinished && state.bloomMarkedAtSeconds != null ->
+                MaterialTheme.colorScheme.error
+            bloomActive -> MaterialTheme.colorScheme.tertiary
             !hasTarget -> MaterialTheme.colorScheme.onSurface
             state.elapsedSeconds > state.timeTargetHighS ->
                 MaterialTheme.colorScheme.error
@@ -122,7 +154,7 @@ fun BrewTimerScreen(
             dampingRatio = Spring.DampingRatioNoBouncy,
             stiffness = Spring.StiffnessLow,
         ),
-        label = "timerColor",
+        label = "heroColor",
     )
 
     Surface(
@@ -164,37 +196,88 @@ fun BrewTimerScreen(
                 }
             }
 
-            // ── Center — timer + water info ─────────────────────────
+            // ── Center — hero timer + secondary info ────────────────
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .padding(horizontal = 32.dp),
+                    .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
             ) {
-                // Hero timer
+                // Hero number: bloom countdown if active, otherwise elapsed total
+                val heroSeconds = if (bloomActive) {
+                    state.bloomCountdownSeconds ?: 0
+                } else {
+                    state.elapsedSeconds
+                }
                 Text(
-                    text = formatTime(state.elapsedSeconds),
+                    text = formatBrewTime(heroSeconds),
                     style = MaterialTheme.typography.displayLarge.copy(
-                        fontSize = 96.sp,
+                        fontSize = 84.sp,
                         letterSpacing = (-3).sp,
                     ),
                     fontWeight = FontWeight.Light,
-                    color = timerColor,
+                    color = heroColor,
                     modifier = Modifier.semantics { heading() },
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                when {
+                    bloomActive -> {
+                        // Bloom badge
+                        Text(
+                            text = stringResource(R.string.label_bloom_badge),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
+                            modifier = Modifier
+                                .clip(MaterialTheme.shapes.medium)
+                                .background(MaterialTheme.colorScheme.tertiaryContainer)
+                                .padding(horizontal = 16.dp, vertical = 4.dp),
+                        )
 
-                // Total water target
-                if (state.waterG > 0f) {
-                    Text(
-                        text = "Total ${"%.0f".format(state.waterG)}g",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+                        val bloomDuration = state.effectiveBloomDurationSeconds
+                        val progress = if (bloomDuration > 0) {
+                            1f - (state.bloomCountdownSeconds ?: 0).toFloat() / bloomDuration
+                        } else {
+                            0f
+                        }
+                        LinearProgressIndicator(
+                            progress = { progress.coerceIn(0f, 1f) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 8.dp),
+                            color = MaterialTheme.colorScheme.tertiary,
+                            trackColor = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.12f),
+                        )
+
+                        Text(
+                            text = "Total ${formatBrewTime(state.elapsedSeconds)}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+
+                    state.bloomFinished && state.bloomMarkedAtSeconds != null -> {
+                        Text(
+                            text = stringResource(R.string.label_bloom_done),
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
                 }
+
+                // ── Primary guidance card — the most important info right now
+                BrewGuidanceCard(
+                    state = state,
+                    bloomActive = bloomActive,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+
+                // ── Metadata row: target time · temp · total water
+                BrewMetadataRow(
+                    state = state,
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
 
             // ── Bottom controls ─────────────────────────────────────
@@ -202,61 +285,216 @@ fun BrewTimerScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
-                    .padding(bottom = 40.dp),
+                    .padding(bottom = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                // Play / Pause
-                FilledTonalIconButton(
-                    onClick = {
-                        if (state.timerRunning) brewViewModel.pauseTimer()
-                        else brewViewModel.startTimer()
-                    },
-                    modifier = Modifier.size(64.dp),
-                    shape = CircleShape,
-                    colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                    ),
-                ) {
-                    Icon(
-                        imageVector = if (state.timerRunning) Icons.Filled.Pause
-                        else Icons.Filled.PlayArrow,
-                        contentDescription = if (state.timerRunning) "Pause" else "Resume",
-                        modifier = Modifier.size(32.dp),
-                    )
+                // Start Bloom — primary CTA before bloom is marked
+                val showStartBloom = state.method.hasBloom &&
+                    state.bloomMarkedAtSeconds == null &&
+                    state.bloomG > 0f
+                if (showStartBloom) {
+                    ElevatedButton(
+                        onClick = { brewViewModel.markBloom() },
+                        enabled = state.timerRunning,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(72.dp),
+                        shape = MaterialTheme.shapes.extraLarge,
+                        colors = ButtonDefaults.elevatedButtonColors(
+                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                        ),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.action_start_bloom),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
                 }
 
-                Spacer(modifier = Modifier.height(24.dp))
-
-                // Finish brew
-                Button(
-                    onClick = {
-                        brewViewModel.stopTimer()
-                        onComplete()
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(72.dp),
-                    shape = MaterialTheme.shapes.extraLarge,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary,
-                    ),
+                // Play/Pause + Finish row (Finish is now a subdued text button)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.Stop,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp),
-                    )
-                    Spacer(modifier = Modifier.size(8.dp))
-                    Text(
-                        text = "Finish Brew",
-                        style = MaterialTheme.typography.headlineSmall,
-                    )
+                    TextButton(
+                        onClick = {
+                            brewViewModel.stopTimer()
+                            onComplete()
+                        },
+                    ) {
+                        Text(
+                            text = "Finish brew",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+
+                    FilledTonalIconButton(
+                        onClick = {
+                            if (state.timerRunning) brewViewModel.pauseTimer()
+                            else brewViewModel.startTimer()
+                        },
+                        modifier = Modifier.size(72.dp),
+                        shape = CircleShape,
+                        colors = IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                        ),
+                    ) {
+                        Icon(
+                            imageVector = if (state.timerRunning) Icons.Filled.Pause
+                            else Icons.Filled.PlayArrow,
+                            contentDescription = if (state.timerRunning) "Pause" else "Resume",
+                            modifier = Modifier.size(36.dp),
+                        )
+                    }
+
+                    // Spacer to balance the row
+                    Spacer(modifier = Modifier.size(72.dp))
                 }
             }
         }
     }
+}
+
+/**
+ * Primary guidance card surfaces the single most important instruction right now:
+ * - Pre-bloom: how much bloom water to pour + Pulsar valve hint
+ * - During bloom: pour target + valve hint
+ * - After bloom: pour to total + valve hint
+ */
+@Composable
+private fun BrewGuidanceCard(
+    state: com.adsamcik.starlitcoffee.viewmodel.BrewUiState,
+    bloomActive: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    if (state.waterG <= 0f && state.bloomG <= 0f) return
+
+    val isPulsar = state.method == BrewMethod.PULSAR
+    val hasBloom = state.method.hasBloom && state.bloomG > 0f
+
+    data class Guidance(val primary: String, val secondary: String?)
+
+    val guidance = when {
+        bloomActive -> Guidance(
+            primary = stringResource(R.string.instruction_bloom_pour, state.bloomG),
+            secondary = if (isPulsar) {
+                stringResource(R.string.instruction_close_swirl)
+            } else null,
+        )
+        state.bloomFinished && state.bloomMarkedAtSeconds != null -> Guidance(
+            primary = stringResource(R.string.instruction_pour_total, state.waterG),
+            secondary = if (isPulsar) {
+                stringResource(R.string.instruction_pulsar_pour, state.waterG)
+            } else null,
+        )
+        hasBloom -> Guidance(
+            primary = stringResource(R.string.format_pour_bloom_water, state.bloomG),
+            secondary = if (isPulsar) {
+                stringResource(R.string.instruction_bloom_open_pour, state.bloomG)
+            } else null,
+        )
+        state.waterG > 0f -> Guidance(
+            primary = stringResource(R.string.instruction_pour_total, state.waterG),
+            secondary = null,
+        )
+        else -> return
+    }
+
+    ElevatedCard(
+        modifier = modifier,
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        ),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = guidance.primary,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+            if (guidance.secondary != null) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = guidance.secondary,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.75f),
+                )
+            }
+        }
+    }
+}
+
+/**
+ * Compact row of supporting info — target brew time, water temp, total water.
+ * These help the user gauge progress without competing with the primary guidance.
+ */
+@Composable
+private fun BrewMetadataRow(
+    state: com.adsamcik.starlitcoffee.viewmodel.BrewUiState,
+    modifier: Modifier = Modifier,
+) {
+    val items = buildList {
+        if (state.timeTargetLowS > 0 && state.timeTargetHighS > 0) {
+            add(
+                "Target " +
+                    formatBrewTime(state.timeTargetLowS) +
+                    "–" +
+                    formatBrewTime(state.timeTargetHighS),
+            )
+        }
+        if (state.method.tempRangeLow > 0 && state.method.tempRangeHigh > 0) {
+            add("${state.method.tempRangeLow}–${state.method.tempRangeHigh}°C")
+        }
+        if (state.waterG > 0f) {
+            add("Total ${"%.0f".format(state.waterG)}g")
+        }
+    }
+    if (items.isEmpty()) return
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        items.forEachIndexed { idx, text ->
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (idx < items.lastIndex) {
+                Text(
+                    text = "·",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                )
+            }
+        }
+    }
+}
+
+private fun playTone(toneType: Int, durationMs: Int) {
+    try {
+        val tone = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 80)
+        try {
+            tone.startTone(toneType, durationMs)
+        } finally {
+            tone.release()
+        }
+    } catch (_: Exception) { }
 }
 
 private fun getVibrator(context: Context): Vibrator? {
@@ -269,7 +507,7 @@ private fun getVibrator(context: Context): Vibrator? {
     }
 }
 
-private fun formatTime(seconds: Int): String {
+private fun formatBrewTime(seconds: Int): String {
     val absSeconds = abs(seconds)
     val minutes = absSeconds / 60
     val secs = absSeconds % 60

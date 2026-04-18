@@ -901,9 +901,99 @@ class BrewViewModelTest {
 
         persistenceViewModel.selectBag(decafBagId)
         assertTrue(persistenceViewModel.uiState.value.isDecafBrew)
+        assertFalse(
+            "no override set → no mismatch",
+            persistenceViewModel.uiState.value.decafMismatchWithBag,
+        )
 
         persistenceViewModel.selectBag(regularBagId)
         assertFalse(persistenceViewModel.uiState.value.isDecafBrew)
+        assertFalse(persistenceViewModel.uiState.value.decafMismatchWithBag)
+    }
+
+    @Test
+    fun `manual setDecafBrew overrides bag and flags mismatch`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Regular Bag", isDecaf = false)
+        val regularBagId = vm.coffeeBags.value.first().id
+
+        vm.selectBag(regularBagId)
+        assertFalse(vm.uiState.value.isDecafBrew)
+        assertFalse(vm.uiState.value.decafMismatchWithBag)
+
+        // User manually toggles decaf on → override disagrees with bag.
+        vm.setDecafBrew(true)
+        assertTrue(vm.uiState.value.isDecafBrew)
+        assertTrue(vm.uiState.value.decafMismatchWithBag)
+
+        // syncDecafToBag clears override and returns to bag's state.
+        vm.syncDecafToBag()
+        assertFalse(vm.uiState.value.isDecafBrew)
+        assertFalse(vm.uiState.value.decafMismatchWithBag)
+    }
+
+    @Test
+    fun `manual decaf override persists across bag changes`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Regular A", isDecaf = false)
+        vm.addCoffeeBag(name = "Regular B", isDecaf = false)
+        val bagA = vm.coffeeBags.value[0].id
+        val bagB = vm.coffeeBags.value[1].id
+
+        vm.selectBag(bagA)
+        vm.setDecafBrew(true)  // override
+        assertTrue(vm.uiState.value.isDecafBrew)
+        assertTrue(vm.uiState.value.decafMismatchWithBag)
+
+        // Switching bags keeps the override (no silent clobber).
+        vm.selectBag(bagB)
+        assertTrue(vm.uiState.value.isDecafBrew)
+        assertTrue(vm.uiState.value.decafMismatchWithBag)
+    }
+
+    @Test
+    fun `no mismatch when no bag is selected even with override`() {
+        val vm = createPersistenceViewModel()
+        vm.setDecafBrew(true)
+        assertTrue(vm.uiState.value.isDecafBrew)
+        assertFalse(
+            "no bag → no mismatch",
+            vm.uiState.value.decafMismatchWithBag,
+        )
+    }
+
+    @Test
+    fun `selectBag auto-switches method to last used with that bag`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "Kenya AA")
+        val bagId = vm.coffeeBags.value.first().id
+
+        // Start with default method, pick bag, log a brew with AEROPRESS.
+        vm.selectBag(bagId)
+        vm.setMethod(BrewMethod.AEROPRESS)
+        vm.setAmount("15")
+        vm.logBrew()
+
+        // Switch method away, deselect bag.
+        vm.setMethod(BrewMethod.V60)
+        vm.selectBag(null)
+        assertEquals(BrewMethod.V60, vm.uiState.value.method)
+
+        // Re-selecting the bag should restore the last-used method for it.
+        vm.selectBag(bagId)
+        assertEquals(BrewMethod.AEROPRESS, vm.uiState.value.method)
+    }
+
+    @Test
+    fun `selectBag keeps current method when bag has no brew history`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(name = "New Bag")
+        val bagId = vm.coffeeBags.value.first().id
+
+        vm.setMethod(BrewMethod.V60)
+        vm.selectBag(bagId)
+
+        assertEquals(BrewMethod.V60, vm.uiState.value.method)
     }
 
     @Test

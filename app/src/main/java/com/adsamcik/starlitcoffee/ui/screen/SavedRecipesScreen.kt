@@ -20,7 +20,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -48,6 +50,20 @@ fun SavedRecipesScreen(
     val recipes by brewViewModel.savedRecipes.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
 
+    var decafFilter by remember { mutableStateOf(com.adsamcik.starlitcoffee.ui.component.DecafFilter.ALL) }
+    val decafCounts = remember(recipes) {
+        mapOf(
+            com.adsamcik.starlitcoffee.ui.component.DecafFilter.ALL to recipes.size,
+            com.adsamcik.starlitcoffee.ui.component.DecafFilter.REGULAR to recipes.count { !it.isDecaf },
+            com.adsamcik.starlitcoffee.ui.component.DecafFilter.DECAF to recipes.count { it.isDecaf },
+        )
+    }
+    val showDecafFilter = (decafCounts[com.adsamcik.starlitcoffee.ui.component.DecafFilter.DECAF] ?: 0) > 0 &&
+        (decafCounts[com.adsamcik.starlitcoffee.ui.component.DecafFilter.REGULAR] ?: 0) > 0
+    val filteredRecipes = remember(recipes, decafFilter) {
+        recipes.filter { decafFilter.matches(it.isDecaf) }
+    }
+
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -74,7 +90,17 @@ fun SavedRecipesScreen(
                         bottom = 88.dp,
                     ),
                 ) {
-                    items(recipes, key = { it.id }) { recipe ->
+                    if (showDecafFilter) {
+                        item {
+                            com.adsamcik.starlitcoffee.ui.component.DecafFilterChipRow(
+                                selected = decafFilter,
+                                counts = decafCounts,
+                                onSelected = { decafFilter = it },
+                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+                            )
+                        }
+                    }
+                    items(filteredRecipes, key = { it.id }) { recipe ->
                         RecipeCard(
                             recipe = recipe,
                             dateFormat = dateFormat,

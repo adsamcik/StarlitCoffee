@@ -20,7 +20,7 @@ junitExt = "1.2.1"
 espresso = "3.6.1"
 serializationJson = "1.8.0"
 detekt = "1.23.7"
-mindlayer = "0.3.0"
+mindlayer = "0.2.0"
 
 [libraries]
 # Compose BOM

@@ -255,7 +255,6 @@ fun StarlitNavHost() {
             composable<GrindPrep> {
                 GrindPrepScreen(
                     brewViewModel = brewViewModel,
-                    onNavigateToBloom = { navController.navigate(BloomTimer) },
                     onNavigateToBrew = { navController.navigate(BrewTimer) },
                     onBack = { navController.popBackStack() },
                 )

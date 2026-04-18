@@ -20,6 +20,12 @@ class BrewViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BrewViewModel::class.java)) {
             val database = AppDatabase.getInstance(application)
+            val llm = try {
+                MindlayerLlmInferenceProvider(application)
+            } catch (t: Throwable) {
+                android.util.Log.e("BrewViewModelFactory", "Mindlayer init failed — falling back to stub", t)
+                com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider()
+            }
             return BrewViewModel(
                 recipeRepository = RecipeRepository(database.recipeDao()),
                 brewLogRepository = BrewLogRepository(database, database.brewLogDao(), database.flavorTagDao()),
@@ -27,7 +33,7 @@ class BrewViewModelFactory(
                 ratioPresetRepository = RatioPresetRepository(database.ratioPresetDao()),
                 userPreferencesRepository = UserPreferencesRepository(application),
                 grinderData = GrinderDataSource.getInstance(application),
-                llmProvider = MindlayerLlmInferenceProvider(application),
+                llmProvider = llm,
                 userBarcodeStemDao = database.userBarcodeStemDao(),
             ) as T
         }

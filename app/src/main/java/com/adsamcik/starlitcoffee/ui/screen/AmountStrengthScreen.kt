@@ -13,14 +13,22 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
@@ -28,6 +36,7 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,6 +65,7 @@ import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AmountStrengthScreen(
     brewViewModel: BrewViewModel,
@@ -63,6 +73,13 @@ fun AmountStrengthScreen(
     onNavigateToTimer: () -> Unit,
 ){
     val uiState by brewViewModel.uiState.collectAsStateWithLifecycle()
+    val coffeeBags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+    val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
+    val activeBags = remember(coffeeBags) { coffeeBags.filter { it.status != "FINISHED" } }
+    val selectedBag = remember(coffeeBags, selectedBagId) {
+        coffeeBags.find { it.id == selectedBagId }
+    }
+    var showBagPicker by remember { mutableStateOf(false) }
 
     val method = uiState.method
     val inputMode = uiState.inputMode
@@ -131,6 +148,39 @@ fun AmountStrengthScreen(
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        // Coffee bag picker chip
+        FilterChip(
+            selected = selectedBag != null,
+            onClick = {
+                if (selectedBag != null) {
+                    brewViewModel.selectBag(null)
+                } else {
+                    showBagPicker = true
+                }
+            },
+            label = {
+                val bagLabel = selectedBag?.let { bag ->
+                    val decafLabel = if (bag.isDecaf) stringResource(R.string.label_decaf_suffix) else ""
+                    val weightHint = bag.weightG?.let { w ->
+                        stringResource(R.string.format_weight_left, w)
+                    } ?: ""
+                    "☕ ${bag.name}$decafLabel$weightHint"
+                } ?: stringResource(R.string.label_select_coffee_bag)
+                Text(text = bagLabel, maxLines = 1)
+            },
+            trailingIcon = if (selectedBag != null) {
+                {
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = stringResource(R.string.cd_clear_bag),
+                    )
+                }
+            } else null,
+            modifier = Modifier
+                .padding(start = 8.dp, bottom = 8.dp)
+                .testTag("bag_picker_chip"),
+        )
 
         // Input mode selector (merged from InputModeScreen)
         SingleChoiceSegmentedButtonRow(
@@ -391,6 +441,82 @@ fun AmountStrengthScreen(
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+    }
+
+    // Bag picker bottom sheet
+    if (showBagPicker) {
+        ModalBottomSheet(
+            onDismissRequest = { showBagPicker = false },
+            shape = RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp),
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 16.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.label_select_coffee_bag_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp),
+                )
+                if (activeBags.isEmpty()) {
+                    Text(
+                        text = stringResource(R.string.msg_no_active_bags),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(vertical = 24.dp),
+                    )
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        items(activeBags, key = { it.id }) { bag ->
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        brewViewModel.selectBagForBrewing(bag.id)
+                                        showBagPicker = false
+                                    }
+                                    .padding(vertical = 12.dp, horizontal = 4.dp),
+                            ) {
+                                Column {
+                                    val decafLabel = if (bag.isDecaf) stringResource(R.string.label_decaf_suffix) else ""
+                                    Text(
+                                        text = "${bag.name}$decafLabel",
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = if (bag.id == selectedBagId) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                                    )
+                                    val subtitleParts = buildList {
+                                        bag.roaster?.takeIf { it.isNotBlank() }?.let { add(it) }
+                                        bag.weightG?.let { w -> add("${w.toInt()}g left") }
+                                    }
+                                    if (subtitleParts.isNotEmpty()) {
+                                        Text(
+                                            text = subtitleParts.joinToString(" · "),
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                TextButton(
+                    onClick = {
+                        brewViewModel.selectBag(null)
+                        showBagPicker = false
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(stringResource(R.string.action_brew_without_bag))
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
     }
 }
 

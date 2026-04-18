@@ -29,7 +29,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -73,6 +75,20 @@ fun BrewLogScreen(
         flavorTags.groupBy { it.brewLogId }
     }
 
+    var decafFilter by remember { mutableStateOf(com.adsamcik.starlitcoffee.ui.component.DecafFilter.ALL) }
+    val decafCounts = remember(logs) {
+        mapOf(
+            com.adsamcik.starlitcoffee.ui.component.DecafFilter.ALL to logs.size,
+            com.adsamcik.starlitcoffee.ui.component.DecafFilter.REGULAR to logs.count { !it.isDecaf },
+            com.adsamcik.starlitcoffee.ui.component.DecafFilter.DECAF to logs.count { it.isDecaf },
+        )
+    }
+    val showDecafFilter = (decafCounts[com.adsamcik.starlitcoffee.ui.component.DecafFilter.DECAF] ?: 0) > 0 &&
+        (decafCounts[com.adsamcik.starlitcoffee.ui.component.DecafFilter.REGULAR] ?: 0) > 0
+    val filteredLogs = remember(logs, decafFilter) {
+        logs.filter { decafFilter.matches(it.isDecaf) }
+    }
+
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -96,7 +112,17 @@ fun BrewLogScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp),
                 ) {
-                    items(logs, key = { it.id }) { log ->
+                    if (showDecafFilter) {
+                        item {
+                            com.adsamcik.starlitcoffee.ui.component.DecafFilterChipRow(
+                                selected = decafFilter,
+                                counts = decafCounts,
+                                onSelected = { decafFilter = it },
+                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+                            )
+                        }
+                    }
+                    items(filteredLogs, key = { it.id }) { log ->
                         val bagName = log.coffeeBagId?.let { bagId ->
                             bags.find { it.id == bagId }?.let { bag ->
                                 bag.name + (bag.roaster?.let { " · $it" } ?: "")

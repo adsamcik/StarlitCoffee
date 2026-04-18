@@ -274,6 +274,7 @@ object CoffeeBagInsights {
             val reasons = buildList {
                 add("${freshness.phase.displayName} freshness")
                 bag.weightG?.let { add("${"%.0f".format(Locale.US, it)}g left") }
+                if (bag.isDecaf) add("Decaf")
                 when (grindInsight.recentOutcomes.firstOrNull()?.outcome) {
                     GrindOutcomeTag.WORKED -> add("Last cup worked at ${grindInsight.recentOutcomes.first().grindSetting}")
                     GrindOutcomeTag.TOO_COARSE -> add("Last cup wanted a finer grind")

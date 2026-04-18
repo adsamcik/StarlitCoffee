@@ -13,11 +13,15 @@ private const val STALE_OPEN_DAYS = 30
 private const val AGING_SEALED_DAYS = 60
 private const val INFERRED_SHELF_LIFE_DAYS = 365
 private const val FOCUS_THRESHOLD = 2
+private const val DECAF_COVERAGE_WINDOW_DAYS = 30
+private const val DECAF_COVERAGE_THRESHOLD = 3
+private val AVAILABLE_BAG_STATUSES = setOf("SEALED", "OPEN", "FROZEN")
 
 object InventoryAlertEngine {
 
     fun buildAlerts(
         bags: List<CoffeeBagEntity>,
+        brewLogs: List<com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity> = emptyList(),
         nowMillis: Long = System.currentTimeMillis(),
     ): List<InventoryAlert> = buildList {
         addAll(freshnessCountdownAlerts(bags, nowMillis))
@@ -25,6 +29,7 @@ object InventoryAlertEngine {
         addAll(stalenessAlerts(bags, nowMillis))
         addAll(agingSealedAlerts(bags, nowMillis))
         addAll(focusAlerts(bags, nowMillis))
+        addAll(decafCoverageAlerts(bags, brewLogs, nowMillis))
     }
 
     // --- 4a: Freshness countdown ---
@@ -196,6 +201,40 @@ object InventoryAlertEngine {
                 bagName = name,
                 message = detail,
                 bagId = topBag.id,
+            ),
+        )
+    }
+
+    // --- Decaf coverage ---
+
+    /**
+     * Fires when the user has been brewing decaf recently but has no decaf bags available
+     * (SEALED, OPEN, or FROZEN — FROZEN counts because the user can defrost). This signals
+     * they're about to run out of decaf options and should stock up.
+     *
+     * Requires ≥3 decaf brew logs within the coverage window to avoid false positives from
+     * a single one-off decaf brew.
+     */
+    internal fun decafCoverageAlerts(
+        bags: List<CoffeeBagEntity>,
+        brewLogs: List<com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity>,
+        nowMillis: Long,
+    ): List<InventoryAlert> {
+        val windowStart = nowMillis - DECAF_COVERAGE_WINDOW_DAYS * MILLIS_PER_DAY
+        val recentDecafBrews = brewLogs.count { it.isDecaf && it.createdAt >= windowStart }
+        if (recentDecafBrews < DECAF_COVERAGE_THRESHOLD) return emptyList()
+
+        val availableDecaf = bags.count { bag ->
+            bag.isDecaf && bag.status in AVAILABLE_BAG_STATUSES
+        }
+        if (availableDecaf > 0) return emptyList()
+
+        return listOf(
+            InventoryAlert(
+                type = InventoryAlertType.DECAF_COVERAGE,
+                bagName = "",
+                message = "You've brewed decaf $recentDecafBrews times recently — no decaf bags on hand",
+                bagId = null,
             ),
         )
     }

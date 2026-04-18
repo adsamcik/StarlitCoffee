@@ -97,7 +97,7 @@ sealed class HomeContextCard {
             val days = insight.daysSinceRoast ?: return null
             val bagName = bag.name + (bag.roaster?.let { " · $it" } ?: "")
 
-            val (headline, grindAdvice, brewTip) = when (insight.phase) {
+            val (headline, grindAdvice, baseBrewTip) = when (insight.phase) {
                 FreshnessPhase.DEGASSING -> Triple(
                     "Day $days — beans are still degassing",
                     "Expect an active bloom with lots of CO₂",
@@ -118,6 +118,13 @@ sealed class HomeContextCard {
                     "Use this bag up soon — freeze any extras",
                 )
                 else -> return null
+            }
+
+            // Decaf bags extract differently — surface that alongside age-based tips.
+            val brewTip = if (bag.isDecaf) {
+                "$baseBrewTip · Decaf bag — taste early, flavors develop faster"
+            } else {
+                baseBrewTip
             }
 
             return BagAgeWisdom(

@@ -139,7 +139,7 @@
     <string name="label_water_to_dose">Water → Dose</string>
     <string name="label_dose_to_water">Dose → Water</string>
     <string name="cd_backspace">Backspace</string>
-    <string name="action_brew">Brew</string>
+    <string name="action_brew">Start</string>
     <string name="label_total_water">total water</string>
     <string name="label_bloom_lowercase">bloom</string>
     <string name="label_remaining">remaining</string>

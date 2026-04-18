@@ -107,6 +107,17 @@ fun MethodPickerScreen(
             targetDoseG = state.coffeeG.takeIf { it > 0f } ?: 20f,
         )
     }
+    // Stable partition: when brewing decaf, matching bags float up, but score order is
+    // preserved within each section. Ranking logic stays honest (no hidden score bumps).
+    val rankedBagsForPicker = remember(rankedBags, state.isDecafBrew) {
+        if (state.isDecafBrew) {
+            val (match, rest) = rankedBags.partition { it.bag.isDecaf }
+            match + rest
+        } else {
+            val (match, rest) = rankedBags.partition { !it.bag.isDecaf }
+            match + rest
+        }
+    }
     val selectedRankedBag = remember(rankedBags, selectedBagId) {
         rankedBags.find { it.bag.id == selectedBagId }
     }
@@ -176,6 +187,15 @@ fun MethodPickerScreen(
                 recipes = savedRecipes,
                 onTap = { recipe ->
                     brewViewModel.loadRecipe(recipe)
+                },
+                preferDecaf = state.isDecafBrew,
+                matchLabel = { recipe ->
+                    val bag = selectedBag
+                    if (bag != null && recipe.isDecaf == bag.isDecaf && recipe.isDecaf == state.isDecafBrew) {
+                        "matches bag"
+                    } else {
+                        null
+                    }
                 },
                 modifier = Modifier.padding(bottom = 12.dp),
             )
@@ -374,6 +394,44 @@ fun MethodPickerScreen(
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
             )
+        }
+
+        // Decaf mismatch warning: user has explicitly toggled decaf to a state that
+        // doesn't match the selected bag. Offer one-tap resolution.
+        if (state.decafMismatchWithBag) {
+            ElevatedCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .testTag("decaf_mismatch_warning"),
+                shape = MaterialTheme.shapes.medium,
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    val bagIsDecaf = selectedBag?.isDecaf == true
+                    val msg = if (state.isDecafBrew && !bagIsDecaf) {
+                        "Brewing as decaf but selected bag is regular"
+                    } else {
+                        "Brewing as regular but selected bag is decaf"
+                    }
+                    Text(
+                        text = "⚠️ $msg",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.weight(1f),
+                    )
+                    TextButton(
+                        onClick = { brewViewModel.syncDecafToBag() },
+                        modifier = Modifier.testTag("sync_decaf_button"),
+                    ) {
+                        Text("Sync to bag", style = MaterialTheme.typography.labelMedium)
+                    }
+                }
+            }
         }
 
         // Bag picker chip
@@ -602,10 +660,12 @@ fun MethodPickerScreen(
                         modifier = Modifier.padding(bottom = 16.dp),
                     )
                 } else {
-                    rankedBags.forEachIndexed { index, option ->
+                    rankedBagsForPicker.forEachIndexed { index, option ->
                         BagPickerOptionCard(
                             option = option,
-                            isRecommended = index == 0,
+                            // "Best now" label reflects the overall top pick, not section order,
+                            // so mark it only for whichever bag is actually rank-0 in rankedBags.
+                            isRecommended = option.bag.id == rankedBags.firstOrNull()?.bag?.id,
                             onSelect = {
                                 brewViewModel.selectBag(option.bag.id)
                                 showBagPicker = false

@@ -39,7 +39,6 @@ import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 @Composable
 fun GrindPrepScreen(
     brewViewModel: BrewViewModel,
-    onNavigateToBloom: () -> Unit,
     onNavigateToBrew: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -176,13 +175,7 @@ fun GrindPrepScreen(
 
             // Ready to Brew Button
             Button(
-                onClick = {
-                    if (state.method.hasBloom && state.bloomG > 0f) {
-                        onNavigateToBloom()
-                    } else {
-                        onNavigateToBrew()
-                    }
-                },
+                onClick = { onNavigateToBrew() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(72.dp),

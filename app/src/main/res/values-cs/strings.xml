@@ -8,6 +8,7 @@
     <string name="nav_more">Více</string>
 
     <!-- Common actions -->
+    <string name="action_brew">Spustit</string>
     <string name="action_back">Zpět</string>
     <string name="action_close">Zavřít</string>
     <string name="action_cancel">Zrušit</string>
@@ -303,4 +304,41 @@
     <string name="cd_coffee_grams">Káva: %1$s gramů</string>
     <string name="cd_water_grams">Voda: %1$s gramů</string>
     <string name="cd_ratio">Poměr 1 ku %1$s</string>
+    <string name="cd_backspace">Smazat</string>
+    <string name="cd_clear_bag">Zrušit výběr balíčku</string>
+    <string name="cd_switch_direction">Přepnout směr</string>
+    <string name="cd_expand_advanced">Rozbalit pokročilé možnosti</string>
+    <string name="cd_collapse_advanced">Sbalit pokročilé možnosti</string>
+    <string name="format_coffee_dose_cd">Dávka kávy: %1$d gramů</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+
+    <!-- Calculator -->
+    <string name="label_water_to_dose">Voda → Dávka</string>
+    <string name="label_dose_to_water">Dávka → Voda</string>
+    <string name="label_total_water">celkem vody</string>
+    <string name="label_bloom_lowercase">bloom</string>
+    <string name="label_remaining">zbývá</string>
+    <string name="label_advanced_options">Pokročilé možnosti</string>
+    <string name="label_grinder">Mlýnek</string>
+
+    <!-- Bag selection -->
+    <string name="label_select_coffee_bag">Vyberte balíček kávy</string>
+    <string name="label_select_coffee_bag_title">Vyberte balíček kávy</string>
+    <string name="label_freshness">Čerstvost</string>
+    <string name="label_best_now">Nejlepší teď</string>
+    <string name="msg_no_active_bags">Žádné aktivní balíčky. Přidejte jeden v záložce Balíčky.</string>
+    <string name="action_brew_without_bag">Spustit bez výběru balíčku</string>
+    <string name="action_save_as_favorite">Uložit jako oblíbené</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="format_weight_left"> · zbývá %1$.0f g</string>
+    <string name="format_recommended_now">Doporučeno nyní: %1$s</string>
+    <string name="format_last_time">Minule: %1$s</string>
+
+    <!-- Grind formatting -->
+    <string name="format_grind_generic">Mletí: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Nastavení mletí: %1$s–%2$s · Upravte podle chuti</string>
+
+    <!-- Tips -->
+    <string name="tip_pulsar">💡 Tip pro Pulsar: Během nalévání udržujte hladinu ~1 cm nad kávovým ložem. Většina uživatelů připravuje 20–25 g pro vyvážený šálek.</string>
+    <string name="tip_generic">💡 Tip: Začněte s výchozím poměrem a sílu upravte podle chuti. Jemnější mletí extrahuje více, hrubší méně.</string>
 </resources>

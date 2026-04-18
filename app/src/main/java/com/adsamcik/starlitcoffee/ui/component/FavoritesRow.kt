@@ -20,8 +20,20 @@ fun FavoritesRow(
     recipes: List<SavedRecipeEntity>,
     onTap: (SavedRecipeEntity) -> Unit,
     modifier: Modifier = Modifier,
+    preferDecaf: Boolean = false,
+    matchLabel: ((SavedRecipeEntity) -> String?)? = null,
 ) {
     if (recipes.isEmpty()) return
+
+    // Stable partition: when brewing decaf, float decaf recipes to the front. Never hide
+    // non-matching recipes — users can still tap them; this is deprioritization only.
+    val ordered = if (preferDecaf) {
+        val (decaf, regular) = recipes.partition { it.isDecaf }
+        decaf + regular
+    } else {
+        val (regular, decaf) = recipes.partition { !it.isDecaf }
+        regular + decaf
+    }
 
     Column(modifier = modifier) {
         Text(
@@ -35,7 +47,8 @@ fun FavoritesRow(
                 .padding(top = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            recipes.forEach { recipe ->
+            ordered.forEach { recipe ->
+                val suffix = matchLabel?.invoke(recipe)
                 FilterChip(
                     selected = false,
                     onClick = { onTap(recipe) },
@@ -44,6 +57,7 @@ fun FavoritesRow(
                             text = buildString {
                                 append(recipe.coffeeName ?: "Untitled")
                                 if (recipe.isDecaf) append(" · Decaf")
+                                if (suffix != null) append(" · $suffix")
                             },
                             style = MaterialTheme.typography.labelLarge,
                             maxLines = 1,

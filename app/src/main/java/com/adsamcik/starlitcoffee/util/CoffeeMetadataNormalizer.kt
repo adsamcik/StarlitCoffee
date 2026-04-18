@@ -80,29 +80,62 @@ object CoffeeMetadataNormalizer {
         Locale("da"),
     )
 
-    private val decafMarkers = listOf(
-        "decaf",
-        "decaffeinated",
-        "caffeine free",
-        "caffeine-free",
-        "without caffeine",
-        "swiss water decaf",
-        "sugarcane decaf",
-        "ethyl acetate decaf",
-        "descafeinado",
-        "descafeinada",
-        "sin cafeina",
-        "sans caffeine",
-        "entkoffeiniert",
-        "koffeinfrei",
-        "bez kofeinu",
-        "bezkofeinova",
-        "bezkofeinovy",
-        "dekofeinizovana",
-        "senza caffeina",
-        "koffeinfri",
-        "uden koffein",
-    ).map(::normalizeSearch)
+    // Token-boundary patterns compiled against normalized text (lowercased, diacritics stripped,
+    // non-alphanumerics collapsed to single spaces). `\b` reliably delimits tokens in this form.
+    // Patterns use prefix stems (e.g. decaf\\w*) so variants like "decaffeinated" or "descafeinada"
+    // match without being listed individually.
+    private val decafMarkerPatterns: List<Regex> = listOf(
+        // English
+        "\\bdecaf\\w*\\b",                   // decaf, decaffeinated, decafs
+        "\\bcaffeine\\s+free\\b",
+        "\\bwithout\\s+caffeine\\b",
+        "\\bno\\s+caffeine\\b",
+        // Spanish / Portuguese / Catalan
+        "\\bdescaf\\w*\\b",                  // descafeinado/a, descafeinat
+        "\\bsin\\s+cafeina\\b",
+        "\\bsem\\s+cafeina\\b",
+        // French
+        "\\bdecafein\\w*\\b",                // décaféiné(e), décaféination
+        "\\bsans\\s+cafeine\\b",
+        // Italian
+        "\\bdecaffeinat\\w*\\b",
+        "\\bsenza\\s+caffeina\\b",
+        // German
+        "\\bentkoffein\\w*\\b",              // entkoffeiniert, entkoffeinierter
+        "\\bkoffeinfrei\\w*\\b",
+        "\\bohne\\s+koffein\\b",
+        // Dutch
+        "\\bcafeinevrij\\w*\\b",
+        "\\bzonder\\s+cafeine\\b",
+        // Czech / Slovak
+        "\\bbez\\s+kofeinu\\b",
+        "\\bbezkofein\\w*\\b",               // bezkofeinová/-ový/-ové
+        "\\bdekofein\\w*\\b",                // dekofeinizovaná
+        // Polish
+        "\\bbezkofeinow\\w*\\b",
+        "\\bbez\\s+kofeiny\\b",
+        // Hungarian
+        "\\bkoffeinmentes\\w*\\b",
+        // Romanian
+        "\\bdecofein\\w*\\b",                // decofeinizat(ă)
+        "\\bfara\\s+cofeina\\b",
+        // Nordic (Danish/Norwegian/Swedish)
+        "\\bkoffeinfri\\w*\\b",
+        "\\buden\\s+koffein\\b",
+        "\\butan\\s+koffein\\b",
+        // Finnish
+        "\\bkofeiiniton\\w*\\b",
+        // Turkish
+        "\\bkafeinsiz\\w*\\b",
+        // Russian (transliterated)
+        "\\bbez\\s+kofeina\\b",
+    ).map { it.toRegex(RegexOption.IGNORE_CASE) }
+
+    // Tokens that, when appearing immediately before a decaf marker, indicate negation
+    // (e.g. "not decaf", "non-decaf", "no decaf"). Keep this list conservative — only English
+    // negations, since ambiguous tokens in other languages ("sem", "bez") are themselves
+    // part of legitimate decaf phrases.
+    private val decafNegationTokens = setOf("not", "non", "no", "never")
 
     private val originCountryCodes = mapOf(
         CoffeeOrigin.Known.ETHIOPIA.name to "ET",
@@ -504,7 +537,21 @@ object CoffeeMetadataNormalizer {
             ?.takeIf { it.isNotBlank() }
             ?.let(::normalizeSearch)
             ?: return false
-        return decafMarkers.any { marker -> normalized.contains(marker) }
+        for (pattern in decafMarkerPatterns) {
+            val match = pattern.find(normalized) ?: continue
+            if (!isNegatedDecafMatch(normalized, match.range.first)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun isNegatedDecafMatch(normalized: String, matchStart: Int): Boolean {
+        if (matchStart <= 0) return false
+        val precedingText = normalized.substring(0, matchStart).trimEnd()
+        if (precedingText.isEmpty()) return false
+        val precedingToken = precedingText.substringAfterLast(' ')
+        return precedingToken in decafNegationTokens
     }
 
     fun inferenceAliases(fieldName: String, value: String): Set<String> {

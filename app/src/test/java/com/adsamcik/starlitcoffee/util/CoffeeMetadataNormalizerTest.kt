@@ -216,4 +216,59 @@ class CoffeeMetadataNormalizerTest {
         assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("Entkoffeiniert"))
         assertFalse(CoffeeMetadataNormalizer.containsDecafMarker("Caffeinated espresso roast"))
     }
+
+    @Test
+    fun `containsDecafMarker handles expanded language coverage`() {
+        // French
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("Café décaféiné du Pérou"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("sans caféine"))
+        // Portuguese / Spanish
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("Descafeinado natural"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("sem cafeína"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("sin cafeína"))
+        // Italian
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("caffè decaffeinato"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("senza caffeina"))
+        // German / Dutch
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("Koffeinfreier Kaffee"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("ohne Koffein"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("cafeïnevrij"))
+        // Nordic / Hungarian / Turkish / Romanian
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("koffeinfri kaffe"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("uden koffein"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("kofeiiniton kahvi"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("koffeinmentes kávé"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("kafeinsiz kahve"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("cafea decofeinizată"))
+    }
+
+    @Test
+    fun `containsDecafMarker uses token-boundary matching to avoid false positives`() {
+        // "decaffeine" substring lives inside "decafeinating-something" patterns but the
+        // existing list historically only matched "decaf" as a loose substring. Ensure
+        // tokens that merely contain "caf" aren't flagged.
+        assertFalse(CoffeeMetadataNormalizer.containsDecafMarker("Decadent roast"))
+        assertFalse(CoffeeMetadataNormalizer.containsDecafMarker("Full caffeine blend"))
+        assertFalse(CoffeeMetadataNormalizer.containsDecafMarker("Highly caffeinated"))
+    }
+
+    @Test
+    fun `containsDecafMarker respects negation prefixes`() {
+        assertFalse(CoffeeMetadataNormalizer.containsDecafMarker("not decaf"))
+        assertFalse(CoffeeMetadataNormalizer.containsDecafMarker("This is a non-decaf blend"))
+        assertFalse(CoffeeMetadataNormalizer.containsDecafMarker("no decaf available"))
+        // Only the immediately preceding token negates — a negation earlier in a sentence
+        // followed by a separate decaf clause still counts as decaf.
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("not your usual roast, decaf edition"))
+    }
+
+    @Test
+    fun `containsDecafMarker handles Swiss Water and ethyl acetate phrasing via decaf token`() {
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("Swiss Water Decaf"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("Ethyl Acetate decaffeinated"))
+        assertTrue(CoffeeMetadataNormalizer.containsDecafMarker("CO2 Process Decaf Colombia"))
+        // Plain "Swiss Water" or "Ethyl Acetate" without the decaf word is intentionally
+        // not flagged — these processes aren't exclusively decaf.
+        assertFalse(CoffeeMetadataNormalizer.containsDecafMarker("Ethyl Acetate natural"))
+    }
 }

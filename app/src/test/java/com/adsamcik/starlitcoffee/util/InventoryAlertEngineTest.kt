@@ -266,7 +266,7 @@ class InventoryAlertEngineTest {
             ),
         )
 
-        val alerts = InventoryAlertEngine.buildAlerts(bags, now)
+        val alerts = InventoryAlertEngine.buildAlerts(bags, nowMillis = now)
 
         val types = alerts.map { it.type }.toSet()
         assertTrue(InventoryAlertType.FRESHNESS in types)

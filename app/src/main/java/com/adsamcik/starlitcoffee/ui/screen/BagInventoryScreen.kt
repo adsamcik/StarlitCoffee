@@ -99,6 +99,18 @@ fun BagInventoryScreen(
         .firstOrNull { it.bag.status == "OPEN" }
         ?.bag?.id
 
+    var decafFilter by remember { mutableStateOf(com.adsamcik.starlitcoffee.ui.component.DecafFilter.ALL) }
+    val decafCounts = remember(bags) {
+        mapOf(
+            com.adsamcik.starlitcoffee.ui.component.DecafFilter.ALL to bags.size,
+            com.adsamcik.starlitcoffee.ui.component.DecafFilter.REGULAR to bags.count { !it.isDecaf },
+            com.adsamcik.starlitcoffee.ui.component.DecafFilter.DECAF to bags.count { it.isDecaf },
+        )
+    }
+    val filteredRankedBags = remember(rankedBags, decafFilter) {
+        rankedBags.filter { decafFilter.matches(it.bag.isDecaf) }
+    }
+
     var showAddSheet by remember { mutableStateOf(false) }
     var selectedBag by remember { mutableStateOf<CoffeeBagEntity?>(null) }
     var editBag by remember { mutableStateOf<CoffeeBagEntity?>(null) }
@@ -343,8 +355,19 @@ fun BagInventoryScreen(
                         )
                     }
                 }
+                if (decafCounts[com.adsamcik.starlitcoffee.ui.component.DecafFilter.DECAF]!! > 0 &&
+                    decafCounts[com.adsamcik.starlitcoffee.ui.component.DecafFilter.REGULAR]!! > 0) {
+                    item {
+                        com.adsamcik.starlitcoffee.ui.component.DecafFilterChipRow(
+                            selected = decafFilter,
+                            counts = decafCounts,
+                            onSelected = { decafFilter = it },
+                            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+                        )
+                    }
+                }
                 items(
-                    items = rankedBags.map { it.bag },
+                    items = filteredRankedBags.map { it.bag },
                     key = { it.id },
                 ) { bag ->
                     val brewsRemaining = if (bag.weightG != null && bag.weightG > 0f) {
