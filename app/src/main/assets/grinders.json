@@ -18,7 +18,9 @@
       "fellow-ode-gen2": [
         "Fellow official gear guide: fellowproducts.com/pages/gear-guide-ode",
         "Honest Coffee Guide chart: honestcoffeeguide.com/fellow-ode-brew-grinder-gen-2-grind-settings/",
-        "Gen 2 burrs grind ~25 µm/step finer than Gen 1; Gen 1 charts NOT applicable"
+        "Gen 2 burrs grind ~25 µm/step finer than Gen 1; Gen 1 charts NOT applicable",
+        "Pulsar paper: 11 direct community dial reports (r/pourover, r/FellowProducts, home-barista, visualizer.coffee, 2024–2025) — pooled range 5.2–8.0; bimodal cluster: lower 5.2–6.2 for cleaner percolation, upper 7.0–8.0 for pulse-heavy / immersion / Wendelboe-style; Fellow's official Ode pour-over starting point is 5",
+        "Pulsar metal 19K / 40K: NO direct Gen 2 numeric reports found; values extrapolated from paper centroid + finest→coarsest ordering (40K cleaner / clogs more; 19K body-forward 150 µm holes)"
       ],
       "baratza-encore-esp": [
         "Encore ESP dial 1–40 (1–15 espresso band, 10–40 filter): baratza.com/grinder/encore-esp/",
@@ -289,31 +291,31 @@
       "grinderId": "fellow-ode-gen2",
       "methodId": "PULSAR",
       "filterType": "PAPER",
-      "rangeStart": 3,
-      "rangeEnd": 5,
-      "suggestedStart": 4,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar paper — Gen 2 grinds finer than Gen 1"
+      "rangeStart": 5.2,
+      "rangeEnd": 7.2,
+      "suggestedStart": 6.1,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Pulsar paper · community range 5.2–7.2 · go finer (~5.5) for clean percolation, coarser (~7.0) for pulse-heavy / immersion"
     },
     {
       "grinderId": "fellow-ode-gen2",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 5,
-      "rangeEnd": 7,
-      "suggestedStart": 6,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, more body"
+      "rangeStart": 6.0,
+      "rangeEnd": 8.0,
+      "suggestedStart": 7.0,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, more body · extrapolated from paper centroid"
     },
     {
       "grinderId": "fellow-ode-gen2",
       "methodId": "PULSAR",
       "filterType": "METAL_40K",
-      "rangeStart": 4,
-      "rangeEnd": 6,
-      "suggestedStart": 5,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 40K — finer mesh, slight coarsen vs paper to limit clogging"
+      "rangeStart": 5.5,
+      "rangeEnd": 7.5,
+      "suggestedStart": 6.5,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Pulsar 40K — finer mesh, slight coarsen vs paper to limit clogging · extrapolated"
     },
     {
       "grinderId": "fellow-ode-gen2",
