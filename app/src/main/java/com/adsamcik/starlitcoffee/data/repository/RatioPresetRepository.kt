@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.data.repository
 
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.dao.RatioPresetDao
 import com.adsamcik.starlitcoffee.data.db.entity.RatioPresetEntity
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
@@ -15,9 +16,17 @@ class RatioPresetRepository(private val dao: RatioPresetDao) {
                 method.defaultRatioPresets
             } else {
                 entities.map { entity ->
+                    val base = method.defaultRatio.toInt()
+                    val ratioInt = entity.ratio.toInt()
+                    val (resId, arg) = when (ratioInt) {
+                        base - 1 -> R.string.format_ratio_bright to (base - 1)
+                        base + 1 -> R.string.format_ratio_rich to (base + 1)
+                        else -> R.string.format_ratio_balanced to ratioInt
+                    }
                     RatioPreset(
                         ratio = entity.ratio,
-                        label = entity.label,
+                        labelResId = resId,
+                        labelArg = arg,
                         isDefault = entity.ratio == method.defaultRatio,
                     )
                 }
@@ -32,7 +41,7 @@ class RatioPresetRepository(private val dao: RatioPresetDao) {
                 RatioPresetEntity(
                     methodName = method.name,
                     ratio = preset.ratio,
-                    label = preset.label,
+                    label = "1:${preset.labelArg}",
                     sortOrder = index,
                 )
             },

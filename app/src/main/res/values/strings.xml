@@ -337,4 +337,261 @@
     <string name="cd_coffee_grams">Coffee: %1$s grams</string>
     <string name="cd_water_grams">Water: %1$s grams</string>
     <string name="cd_ratio">Ratio 1 to %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Name</string>
+    <string name="label_roaster">Roaster</string>
+    <string name="label_origin">Origin</string>
+    <string name="label_weight">Weight</string>
+    <string name="label_barcode_ean">Barcode / EAN</string>
+    <string name="action_scan_barcode">Scan barcode</string>
+    <string name="label_name_required">Name *</string>
+    <string name="label_weight_grams">Weight (g)</string>
+    <string name="label_roast_date">Roast date</string>
+    <string name="label_roast_level">Roast level</string>
+    <string name="label_variety">Variety</string>
+    <string name="label_process">Process</string>
+    <string name="label_tasting_notes">Tasting notes</string>
+    <string name="label_best_before">Best before</string>
+    <string name="label_decaf_coffee">Decaf coffee</string>
+    <string name="msg_decaf_guidance">Keeps brew guidance in sync with decaf beans and shorter steep targets.</string>
+    <string name="label_decaf_process_optional">Decaf process (optional)</string>
+    <string name="msg_decaf_process_hint">Lets the brew rule soft-bias the grind: water-process and CO₂ decafs typically need less coarsening than solvent-process ones.</string>
+    <string name="cd_captured_bag_photo">Captured bag photo</string>
+    <string name="label_bag_name">Bag name</string>
+    <string name="label_detected_details">Detected Details</string>
+    <string name="msg_tap_chip_to_edit">Tap any chip to edit</string>
+    <string name="label_needs_review">Needs Review</string>
+    <string name="msg_tap_confirm_or_change">Tap to confirm or change these details</string>
+    <string name="action_edit_all_fields">Edit all fields</string>
+    <string name="action_add_more_details">Add more details</string>
+    <string name="msg_analyzing_label">Analyzing label photos</string>
+    <string name="msg_analyzing_label_detail">We are checking blur, merging front/back text, and preparing the most reliable fields.</string>
+    <string name="label_review_fields">Review these fields</string>
+    <string name="label_qr_website">QR website</string>
+    <string name="action_open_website">Open website</string>
+    <string name="label_qr_link_found">QR link found</string>
+    <string name="msg_qr_link_hint">This website may contain coffee details (roaster, origin, tasting notes).</string>
+    <string name="action_explore_extract">Explore &amp; extract</string>
+    <string name="label_detected_field_evidence">Detected field evidence</string>
+
+    <!-- AudioDebugOverlay -->
+    <string name="label_audio_monitoring_off">Audio monitoring off</string>
+    <string name="label_recording">Recording</string>
+    <string name="action_export_brew_data">Export brew data</string>
+    <string name="action_export">Export</string>
+    <string name="label_level_history">Level history</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Bag photo</string>
+    <string name="action_rescan_label">Rescan label</string>
+    <string name="action_edit_bag">Edit bag</string>
+    <string name="label_sensory_snapshot">Sensory snapshot</string>
+    <string name="label_grind_intelligence">Grind intelligence</string>
+    <string name="label_remaining_coffee">Remaining Coffee</string>
+    <string name="action_adjust_weight">Adjust weight</string>
+    <string name="action_add_weight_tracking">Add weight tracking</string>
+    <string name="label_brew_history">Brew History</string>
+
+    <!-- BrewLabSetupDialog -->
+    <string name="label_notes_optional">Notes (optional)</string>
+    <string name="hint_notes_optional">e.g., fridge compressor on, using V60 instead</string>
+    <string name="action_start_recording">Start Recording</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">How was it?</string>
+    <string name="msg_rate_brew_fresh">Rate this brew while the taste is still fresh.</string>
+    <string name="label_flavor_notes_section">Flavor notes</string>
+    <string name="hint_what_stood_out">Optional note - what stood out?</string>
+    <string name="action_save_rating">Save rating</string>
+
+    <!-- EmptyStateBox -->
+    <string name="msg_empty_state_default">Start adding items to see them here</string>
+
+    <!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Your favorites</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Other</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">AI Service (Mindlayer)</string>
+    <string name="action_test_connection">Test Connection</string>
+    <string name="action_run_test_prompt">Run Test Prompt</string>
+    <string name="label_testing">Testing…</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">How was your last cup?</string>
+    <string name="label_what_was_off">What was off?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">The scanned label matches your stored bag — nothing to update.</string>
+    <string name="action_update_bag">Update bag</string>
+    <string name="action_new_bag">New bag</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Save as favorite</string>
+    <string name="msg_save_favorite_hint">Give this recipe a name you\'ll remember</string>
+    <string name="hint_save_favorite_example">e.g. Monday Morning, Weekend Slow</string>
+    <string name="action_save_simple">Save</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Scan History</string>
+    <string name="msg_no_scan_sessions">No scan sessions recorded yet.</string>
+    <string name="action_share_session">Share This Session</string>
+    <string name="label_component_timings">Component Timings</string>
+    <string name="msg_no_timing_data">No timing data available</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Warning</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Adjust weight</string>
+    <string name="label_remaining_weight_grams">Remaining weight (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">From photo</string>
+    <string name="action_scan_label">Scan label</string>
+    <string name="msg_add_coffee_hint">Add your coffee to track freshness and get brew suggestions</string>
+    <string name="action_brew_now">Brew now</string>
+    <string name="msg_could_not_read_label">Could not read label</string>
+    <string name="action_retake_photo">Retake photo</string>
+    <string name="action_add_details_manually">Add details manually</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Share brew</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Discard scan?</string>
+    <string name="msg_discard_scan_body">You have detected fields that haven\'t been saved.</string>
+    <string name="action_discard">Discard</string>
+    <string name="action_keep_scanning">Keep Scanning</string>
+    <string name="msg_camera_permission_required">Camera permission required</string>
+    <string name="screen_scan_bag_title">Scan Coffee Bag</string>
+    <string name="cd_toggle_debug_overlay">Toggle debug overlay</string>
+    <string name="msg_both_sides_scanned">Both sides of the bag have been scanned</string>
+    <string name="msg_scanning_front_side">Scanning front side of bag</string>
+    <string name="label_front_side">Front</string>
+    <string name="action_quick_save">Quick Save</string>
+    <string name="msg_repackaged_product">This may be a repackaged or imported product</string>
+    <string name="action_use_barcode">Use barcode</string>
+    <string name="action_use_label">Use label</string>
+    <string name="action_dismiss">Dismiss</string>
+    <string name="label_confirmed">Confirmed</string>
+    <string name="label_ai_contributed">AI contributed</string>
+    <string name="cd_manual_capture">Manual capture — force process current frame</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Sync to bag</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Applied when brewing with Pulsar</string>
+    <string name="label_qr_link_explorer">QR link explorer</string>
+    <string name="msg_qr_approval_hint">QR links in bag photos require approval before exploration.</string>
+    <string name="label_quick_brew">Quick brew</string>
+    <string name="msg_quick_brew_hint">Skip method selection and go straight to timer using your default method</string>
+    <string name="action_add_cup_preset">Add cup preset</string>
+    <string name="label_volume_ml">Volume (ml)</string>
+    <string name="msg_dose_from_ratio">Coffee dose is calculated from your ratio</string>
+    <string name="label_icon">Icon</string>
+    <string name="label_color">Color</string>
+    <string name="action_add">Add</string>
+    <string name="dialog_edit_cup_preset_title">Edit cup preset</string>
+    <string name="label_scan_debug">Scan Debug</string>
+    <string name="action_view_history">View History</string>
+    <string name="action_share_report">Share Report</string>
+    <string name="action_clear">Clear</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Light</string>
+    <string name="strength_balanced">Balanced</string>
+    <string name="strength_strong">Strong</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Fruity</string>
+    <string name="flavor_chocolate">Chocolate</string>
+    <string name="flavor_nutty">Nutty</string>
+    <string name="flavor_floral">Floral</string>
+    <string name="flavor_bright">Bright</string>
+    <string name="flavor_smooth">Smooth</string>
+    <string name="flavor_bitter">Bitter</string>
+    <string name="flavor_sweet">Sweet</string>
+    <string name="flavor_earthy">Earthy</string>
+    <string name="flavor_spicy">Spicy</string>
+    <string name="flavor_citrus">Citrus</string>
+    <string name="flavor_berry">Berry</string>
+    <string name="flavor_caramel">Caramel</string>
+    <string name="flavor_wine">Wine-like</string>
+    <string name="flavor_clean">Clean</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Very Fine</string>
+    <string name="grind_fine">Fine</string>
+    <string name="grind_medium_fine">Medium Fine</string>
+    <string name="grind_medium">Medium</string>
+    <string name="grind_medium_coarse">Medium Coarse</string>
+    <string name="grind_coarse">Coarse</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Great</string>
+    <string name="rating_good">Good</string>
+    <string name="rating_not_great">Not great</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Too bitter</string>
+    <string name="taste_issue_too_sour">Too sour</string>
+    <string name="taste_issue_too_weak">Too weak</string>
+    <string name="taste_issue_too_strong">Too strong</string>
+    <string name="taste_issue_bitter_suggestion">Try grinding coarser or shorter brew time</string>
+    <string name="taste_issue_sour_suggestion">Try grinding finer or longer brew time</string>
+    <string name="taste_issue_weak_suggestion">Try a stronger ratio or more coffee</string>
+    <string name="taste_issue_strong_suggestion">Try a lighter ratio or less coffee</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Sealed</string>
+    <string name="bag_status_open">Open</string>
+    <string name="bag_status_frozen">Frozen</string>
+    <string name="bag_status_finished">Finished</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Unknown / not specified</string>
+    <string name="decaf_swiss_water">Swiss Water (water process)</string>
+    <string name="decaf_mountain_water">Mountain Water (water process)</string>
+    <string name="decaf_co2">Supercritical CO₂</string>
+    <string name="decaf_ea_sugarcane">Ethyl Acetate (sugarcane / natural EA)</string>
+    <string name="decaf_mc_direct">Methylene Chloride (direct solvent)</string>
+    <string name="decaf_ea_direct">Ethyl Acetate (direct solvent)</string>
+    <string name="decaf_short_unknown">Unknown</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (sugarcane)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (solvent)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Light</string>
+    <string name="roast_medium_light">Medium-Light</string>
+    <string name="roast_medium">Medium</string>
+    <string name="roast_medium_dark">Medium-Dark</string>
+    <string name="roast_dark">Dark</string>
+    <string name="roast_filter">Filter</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Cinnamon</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Washed</string>
+    <string name="process_natural">Natural</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaerobic</string>
+    <string name="process_carbonic_maceration">Carbonic Maceration</string>
+    <string name="process_semi_washed">Semi-Washed</string>
+    <string name="process_wet_hulled">Wet-Hulled</string>
+    <string name="process_pulped_natural">Pulped Natural</string>
+    <string name="process_double_fermented">Double Fermented</string>
+    <string name="process_thermal_shock">Thermal Shock</string>
 </resources>

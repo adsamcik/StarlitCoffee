@@ -1,5 +1,7 @@
 package com.adsamcik.starlitcoffee.data.model
 
+import com.adsamcik.starlitcoffee.R
+
 enum class BrewMethod(
     val displayName: String,
     val iconName: String,
@@ -128,9 +130,9 @@ enum class BrewMethod(
         get() {
             val base = defaultRatio.toInt()
             return listOf(
-                RatioPreset(base - 1f, "Bright · 1:${base - 1}"),
-                RatioPreset(base.toFloat(), "Balanced · 1:$base", isDefault = true),
-                RatioPreset(base + 1f, "Rich · 1:${base + 1}"),
+                RatioPreset(base - 1f, R.string.format_ratio_bright, base - 1),
+                RatioPreset(base.toFloat(), R.string.format_ratio_balanced, base, isDefault = true),
+                RatioPreset(base + 1f, R.string.format_ratio_rich, base + 1),
             )
         }
 }
