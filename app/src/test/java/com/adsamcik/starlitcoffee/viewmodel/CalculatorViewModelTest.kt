@@ -193,6 +193,9 @@ class CalculatorViewModelTest {
 
     @Test
     fun `live preview updates in water mode`() {
+        viewModel.toggleDirection()
+        assertEquals(InputDirection.WATER, viewModel.uiState.value.inputDirection)
+
         viewModel.appendDigit('3')
         viewModel.appendDigit('4')
         viewModel.appendDigit('0')
@@ -221,14 +224,17 @@ class CalculatorViewModelTest {
         viewModel.appendDigit('2')
         viewModel.appendDigit('0')
 
-        assertEquals(InputDirection.WATER, viewModel.uiState.value.inputDirection)
-        assertEquals(20f, viewModel.uiState.value.previewWaterMl, 0.01f)
-
-        viewModel.toggleDirection()
-
+        // Default direction is DOSE: "20" is 20g of coffee → 340ml water at 1:17.
         assertEquals(InputDirection.DOSE, viewModel.uiState.value.inputDirection)
         assertEquals(20f, viewModel.uiState.value.previewDoseG, 0.01f)
         assertEquals(340f, viewModel.uiState.value.previewWaterMl, 0.01f)
+
+        viewModel.toggleDirection()
+
+        // After toggle: "20" is 20ml water → ~1.18g dose at 1:17.
+        assertEquals(InputDirection.WATER, viewModel.uiState.value.inputDirection)
+        assertEquals(20f, viewModel.uiState.value.previewWaterMl, 0.01f)
+        assertEquals(20f / 17f, viewModel.uiState.value.previewDoseG, 0.01f)
     }
 
     // --- Ratio ---
@@ -239,7 +245,9 @@ class CalculatorViewModelTest {
         viewModel.appendDigit('0')
         viewModel.setRatio(10f)
 
-        assertEquals(2f, viewModel.uiState.value.previewDoseG, 0.01f)
+        // Default direction DOSE: 20g coffee × 1:10 → 200ml water.
+        assertEquals(200f, viewModel.uiState.value.previewWaterMl, 0.01f)
+        assertEquals(20f, viewModel.uiState.value.previewDoseG, 0.01f)
     }
 
     @Test
