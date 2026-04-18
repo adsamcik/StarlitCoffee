@@ -8,7 +8,8 @@
         "Paper Pulsar median 5.5, range 4.3–6.5 from 6 exact community dial reports (r/pourover users gunga_galungaa, Pizzacooby2007, albertclee, Cathfaern, MC-M; 2024–2025)",
         "Paper distribution is bimodal: Rao/Gagné cluster ~4.3–5.5; PocketScience-style ~6.5 — suggested 5.2 stays as Rao-style default",
         "Metal 19K / 40K dial values: NO exact ZP6 Special reports found in community search; current values are inferred from official NextLevel guidance (40K finer mesh / cleaner; 19K 150 µm holes / body) and PAPER→40K→19K finest→coarsest ordering — treat as starting points, tune by taste",
-        "Calibration noise: some users zero at burr lock, others at slight burr touch (r/pourover); shifts cross-user comparability"
+        "Calibration noise: some users zero at burr lock, others at slight burr touch (r/pourover); shifts cross-user comparability",
+        "Published vendor anchor: Kaldi's Coffee Pulsar recipe lists ZP6 5.0–6.0 (20 g / 320 g near-boiling, 3:30–4:00) — sits inside the community range; suggested 5.2 stays at the lower-cluster default"
       ],
       "comandante-c40": [
         "V60 22-click classic from James Hoffmann ‘ultimate V60 technique’ video",
@@ -16,14 +17,16 @@
         "Moka Pot 12–16, Cold Brew 28–34 — Comandante community + barista forums",
         "Pulsar paper: 7 community dial reports — 24 (Gagné IG), 24 (NextLevel recipe card), 25, 26 (×2), 27 (from 53 Red Clix ÷2), 28 (r/pourover, 2024–2025) — tight cluster 24–28, median 26",
         "Red Clix normalization: RX35 doubles click count vs standard (Comandante official); divide RC clicks by 2 for std-click equivalence",
-        "Pulsar metal 19K / 40K: only 1 explicit C40 + 19K report (22 clicks, flash-brew/iced — outlier); current values inferred from finest→coarsest ordering and qualitative disc descriptions"
+        "Pulsar metal 19K / 40K: only 1 explicit C40 + 19K report (22 clicks, flash-brew/iced — outlier); current values inferred from finest→coarsest ordering and qualitative disc descriptions",
+        "Outlier published anchor: Scott Rao's Pulsar recipe page lists C40 at 18 clicks (25 g / 1:17, 3:30–4:30) — much finer than the community 24–28 cluster; flagged as snippet-only weak source, kept as alternative not default"
       ],
       "fellow-ode-gen2": [
         "Fellow official gear guide: fellowproducts.com/pages/gear-guide-ode",
         "Honest Coffee Guide chart: honestcoffeeguide.com/fellow-ode-brew-grinder-gen-2-grind-settings/",
         "Gen 2 burrs grind ~25 µm/step finer than Gen 1; Gen 1 charts NOT applicable",
         "Pulsar paper: 11 direct community dial reports (r/pourover, r/FellowProducts, home-barista, visualizer.coffee, 2024–2025) — pooled range 5.2–8.0; bimodal cluster: lower 5.2–6.2 for cleaner percolation, upper 7.0–8.0 for pulse-heavy / immersion / Wendelboe-style; Fellow's official Ode pour-over starting point is 5",
-        "Pulsar metal 19K / 40K: NO direct Gen 2 numeric reports found; values extrapolated from paper centroid + finest→coarsest ordering (40K cleaner / clogs more; 19K body-forward 150 µm holes)"
+        "Pulsar metal 19K / 40K: NO direct Gen 2 numeric reports found; values extrapolated from paper centroid + finest→coarsest ordering (40K cleaner / clogs more; 19K body-forward 150 µm holes)",
+        "Published vendor anchor: Kaldi's Coffee Pulsar recipe lists Ode Gen 2 5.2 (20 g / 320 g near-boiling, 3:30–4:00) — sits at the lower edge of the community range, matches the cleaner-percolation cluster"
       ],
       "baratza-encore-esp": [
         "Encore ESP dial 1–40 (1–15 espresso band, 10–40 filter): baratza.com/grinder/encore-esp/",
@@ -55,6 +58,12 @@
         "NextLevel Pulsar Stainless Steel Filter Discs: 19K = body/booster, 40K = cleaner cup but more clog-prone than paper",
         "Coffee ad Astra 'The Pulsar Dripper' — clogging slows extraction so metal discs need slight grind adjustment",
         "Verified ordering: PAPER (finest) → METAL_40K (mid) → METAL_19K (coarsest, 150 µm holes)"
+      ],
+      "pulsar-official-anchors": [
+        "NextLevel Pulsar product page: optimal batch is 20 g / 340 g (1:17)",
+        "Official paper recipe card 'Steep and Flush | 20 g | 1:17': target grind 750–850 µm avg, brew time 3:30–4:00",
+        "Official paper recipe card 'Jonathan Gagné | 20 g | 1:17': target grind 650 µm (EG-1/Ultra burrs), brew time 3:30",
+        "NextLevel published guidance is micron-based, not grinder-dial-based; per-grinder dial values come from community + vendor recipes (Kaldi's, Rao) where available"
       ]
     },
     "notes": [
