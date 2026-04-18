@@ -13,7 +13,10 @@
       "comandante-c40": [
         "V60 22-click classic from James Hoffmann ‘ultimate V60 technique’ video",
         "Pulsar/V60 range 20–28 — community consensus (r/coffee wiki)",
-        "Moka Pot 12–16, Cold Brew 28–34 — Comandante community + barista forums"
+        "Moka Pot 12–16, Cold Brew 28–34 — Comandante community + barista forums",
+        "Pulsar paper: 7 community dial reports — 24 (Gagné IG), 24 (NextLevel recipe card), 25, 26 (×2), 27 (from 53 Red Clix ÷2), 28 (r/pourover, 2024–2025) — tight cluster 24–28, median 26",
+        "Red Clix normalization: RX35 doubles click count vs standard (Comandante official); divide RC clicks by 2 for std-click equivalence",
+        "Pulsar metal 19K / 40K: only 1 explicit C40 + 19K report (22 clicks, flash-brew/iced — outlier); current values inferred from finest→coarsest ordering and qualitative disc descriptions"
       ],
       "fellow-ode-gen2": [
         "Fellow official gear guide: fellowproducts.com/pages/gear-guide-ode",
@@ -205,9 +208,9 @@
       "filterType": "PAPER",
       "rangeStart": 24,
       "rangeEnd": 28,
-      "suggestedStart": 25,
+      "suggestedStart": 26,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar paper — clean, medium-coarse"
+      "adjustmentNote": "Pulsar paper · community median 26, range 24–28 (Gagné IG, NextLevel recipe card, r/pourover)"
     },
     {
       "grinderId": "comandante-c40",
