@@ -77,6 +77,7 @@ import com.adsamcik.starlitcoffee.data.model.CoffeeProcessType
 import com.adsamcik.starlitcoffee.data.model.CoffeeRegion
 import com.adsamcik.starlitcoffee.data.model.CoffeeRoastLevel
 import com.adsamcik.starlitcoffee.data.model.CoffeeVariety
+import com.adsamcik.starlitcoffee.data.model.DecafProcess
 import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
@@ -117,6 +118,7 @@ fun AddBagSheet(
         processType: String?,
         tastingNotes: String?,
         isDecaf: Boolean,
+        decafProcess: String?,
         roastDate: Long?,
         expiryDate: Long?,
     ) -> Unit,
@@ -194,6 +196,9 @@ fun AddBagSheet(
     var notes by remember(bagToEdit) { mutableStateOf(bagToEdit?.notes ?: "") }
     var isDecaf by remember(ocrPrefill, bagToEdit) {
         mutableStateOf(bagToEdit?.isDecaf ?: ocrPrefill?.isDecaf ?: false)
+    }
+    var decafProcess by remember(bagToEdit) {
+        mutableStateOf(bagToEdit?.decafProcess)
     }
     var roastDateMillis by remember(ocrPrefill, bagToEdit) {
         mutableStateOf(bagToEdit?.roastDate ?: ocrPrefill?.roastDate?.let { DateParser.parse(it) })
@@ -816,6 +821,42 @@ fun AddBagSheet(
                                         )
                                     }
                                 }
+                                AnimatedVisibility(visible = isDecaf) {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
+                                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                                    ) {
+                                        Text(
+                                            text = "Decaf process (optional)",
+                                            style = MaterialTheme.typography.labelMedium,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                        Text(
+                                            text = "Lets the brew rule soft-bias the grind: water-process and CO₂ decafs typically need less coarsening than solvent-process ones.",
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                        FlowRow(
+                                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                                        ) {
+                                            DecafProcess.entries.forEach { process ->
+                                                val key = process.name
+                                                val selected = decafProcess == key ||
+                                                    (decafProcess == null && process == DecafProcess.UNKNOWN)
+                                                FilterChip(
+                                                    selected = selected,
+                                                    onClick = {
+                                                        decafProcess = if (process == DecafProcess.UNKNOWN) null else key
+                                                    },
+                                                    label = { Text(process.shortLabel) },
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                         item {
@@ -852,6 +893,7 @@ fun AddBagSheet(
                                     processType = processType.takeIf { it.isNotBlank() },
                                     tastingNotes = tastingNotes.takeIf { it.isNotBlank() },
                                     isDecaf = isDecaf,
+                                    decafProcess = decafProcess?.takeIf { isDecaf },
                                     roastDate = roastDateMillis,
                                     expiryDate = expiryDateMillis,
                                 ),
@@ -870,6 +912,7 @@ fun AddBagSheet(
                                 processType.takeIf { it.isNotBlank() },
                                 tastingNotes.takeIf { it.isNotBlank() },
                                 isDecaf,
+                                decafProcess?.takeIf { isDecaf },
                                 roastDateMillis,
                                 expiryDateMillis,
                             )

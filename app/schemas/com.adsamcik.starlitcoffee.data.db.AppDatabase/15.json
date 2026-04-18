@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 15,
-    "identityHash": "e96fcb10a995cfcde3e7fdd0b3c09b8c",
+    "identityHash": "11bac26e14e704069268883c0dd9cc66",
     "entities": [
       {
         "tableName": "saved_recipes",
@@ -100,7 +100,7 @@
       },
       {
         "tableName": "coffee_bags",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `roaster` TEXT, `origin` TEXT, `originId` TEXT, `region` TEXT, `regionId` TEXT, `farm` TEXT, `variety` TEXT, `varietyIds` TEXT, `altitude` TEXT, `roastLevel` TEXT, `roastLevelIds` TEXT, `processType` TEXT, `processTypeId` TEXT, `tastingNotes` TEXT, `tasteNoteIds` TEXT, `roastDate` INTEGER, `openedDate` INTEGER, `barcode` TEXT, `weightG` REAL, `initialWeightG` REAL, `priceAmount` REAL, `priceCurrency` TEXT, `notes` TEXT, `photoUri` TEXT, `photoUris` TEXT, `traceabilityUrl` TEXT, `grindSetting` TEXT, `expiryDate` INTEGER, `isDecaf` INTEGER NOT NULL, `status` TEXT NOT NULL, `createdAt` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `roaster` TEXT, `origin` TEXT, `originId` TEXT, `region` TEXT, `regionId` TEXT, `farm` TEXT, `variety` TEXT, `varietyIds` TEXT, `altitude` TEXT, `roastLevel` TEXT, `roastLevelIds` TEXT, `processType` TEXT, `processTypeId` TEXT, `tastingNotes` TEXT, `tasteNoteIds` TEXT, `roastDate` INTEGER, `openedDate` INTEGER, `barcode` TEXT, `weightG` REAL, `initialWeightG` REAL, `priceAmount` REAL, `priceCurrency` TEXT, `notes` TEXT, `photoUri` TEXT, `photoUris` TEXT, `traceabilityUrl` TEXT, `grindSetting` TEXT, `expiryDate` INTEGER, `isDecaf` INTEGER NOT NULL, `decafProcess` TEXT, `status` TEXT NOT NULL, `createdAt` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -259,6 +259,11 @@
             "columnName": "isDecaf",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "decafProcess",
+            "columnName": "decafProcess",
+            "affinity": "TEXT"
           },
           {
             "fieldPath": "status",
@@ -533,60 +538,6 @@
         }
       },
       {
-        "tableName": "cup_presets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `iconName` TEXT NOT NULL, `doseG` REAL NOT NULL, `waterMl` REAL NOT NULL, `sortOrder` INTEGER NOT NULL, `isDefault` INTEGER NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "iconName",
-            "columnName": "iconName",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "doseG",
-            "columnName": "doseG",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "waterMl",
-            "columnName": "waterMl",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "sortOrder",
-            "columnName": "sortOrder",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isDefault",
-            "columnName": "isDefault",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "id"
-          ]
-        }
-      },
-      {
         "tableName": "flavor_tags",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `brewLogId` INTEGER NOT NULL, `descriptor` TEXT NOT NULL, `intensity` INTEGER, FOREIGN KEY(`brewLogId`) REFERENCES `brew_logs`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
@@ -638,94 +589,6 @@
             "onUpdate": "NO ACTION",
             "columns": [
               "brewLogId"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
-      },
-      {
-        "tableName": "bag_scan_evidence",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bagId` INTEGER NOT NULL, `fieldName` TEXT NOT NULL, `resolvedValue` TEXT NOT NULL, `confidence` TEXT NOT NULL, `sourceType` TEXT NOT NULL, `rawOcrText` TEXT, `supportingText` TEXT, `scanTimestamp` INTEGER NOT NULL, FOREIGN KEY(`bagId`) REFERENCES `coffee_bags`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "bagId",
-            "columnName": "bagId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "fieldName",
-            "columnName": "fieldName",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "resolvedValue",
-            "columnName": "resolvedValue",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "confidence",
-            "columnName": "confidence",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "sourceType",
-            "columnName": "sourceType",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "rawOcrText",
-            "columnName": "rawOcrText",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "supportingText",
-            "columnName": "supportingText",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "scanTimestamp",
-            "columnName": "scanTimestamp",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [
-          {
-            "name": "index_bag_scan_evidence_bagId",
-            "unique": false,
-            "columnNames": [
-              "bagId"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_bag_scan_evidence_bagId` ON `${TABLE_NAME}` (`bagId`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "coffee_bags",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "bagId"
             ],
             "referencedColumns": [
               "id"
@@ -797,11 +660,70 @@
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_user_barcode_stems_prefix` ON `${TABLE_NAME}` (`prefix`)"
           }
         ]
+      },
+      {
+        "tableName": "cup_presets",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `iconName` TEXT NOT NULL, `doseG` REAL NOT NULL, `waterMl` REAL NOT NULL, `sortOrder` INTEGER NOT NULL, `isDefault` INTEGER NOT NULL, `colorHex` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "iconName",
+            "columnName": "iconName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "doseG",
+            "columnName": "doseG",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "waterMl",
+            "columnName": "waterMl",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sortOrder",
+            "columnName": "sortOrder",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isDefault",
+            "columnName": "isDefault",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colorHex",
+            "columnName": "colorHex",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e96fcb10a995cfcde3e7fdd0b3c09b8c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '11bac26e14e704069268883c0dd9cc66')"
     ]
   }
 }

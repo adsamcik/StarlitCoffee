@@ -46,6 +46,7 @@ data class CoffeeBagEntity(
     val grindSetting: String? = null,
     val expiryDate: Long? = null,
     val isDecaf: Boolean = false,
+    val decafProcess: String? = null,
     val status: String = "SEALED",
     val createdAt: Long = System.currentTimeMillis(),
 )

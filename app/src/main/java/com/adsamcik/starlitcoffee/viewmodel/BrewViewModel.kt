@@ -19,6 +19,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
 import com.adsamcik.starlitcoffee.data.model.CoffeeRoastLevel
+import com.adsamcik.starlitcoffee.data.model.DecafProcess
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
@@ -871,6 +872,7 @@ class BrewViewModel(
         priceCurrency: String? = "USD",
         notes: String? = null,
         isDecaf: Boolean = false,
+        decafProcess: String? = null,
         photoUri: String? = null,
         photoUris: String? = null,
         traceabilityUrl: String? = null,
@@ -902,6 +904,7 @@ class BrewViewModel(
                     priceCurrency = priceCurrency,
                     notes = notes,
                     isDecaf = isDecaf,
+                    decafProcess = decafProcess?.takeIf { isDecaf },
                     photoUri = photoUri,
                     photoUris = photoUris,
                     traceabilityUrl = traceabilityUrl,
@@ -1986,6 +1989,7 @@ class BrewViewModel(
                 calibrationStyle = state.calibrationStyle,
                 isDecaf = effectiveIsDecaf,
                 roastLevel = selectedBag?.roastLevel,
+                decafProcess = selectedBag?.decafProcess,
             )
 
             state.copy(
@@ -2018,6 +2022,7 @@ class BrewViewModel(
         calibrationStyle: CalibrationStyle?,
         isDecaf: Boolean = false,
         roastLevel: String? = null,
+        decafProcess: String? = null,
     ): GrindResult {
         if (grinderId == null) {
             return GrindResult.Generic(method.defaultGrindDescriptor)
@@ -2046,18 +2051,23 @@ class BrewViewModel(
         // 2024 on espresso fines & permeability, Sweet Maria's on decaf
         // structural changes, Al-Shemmeri grinding study.
         if (isDecaf) {
-            val decafSteps = decafCoarserStepsFor(method, roastLevel)
+            val decafSteps = decafCoarserStepsFor(method, roastLevel, decafProcess)
+            val processNote = decafProcessNote(decafProcess)
             if (decafSteps > 0) {
                 val offset = recommendation.adjustmentStepSize * decafSteps
                 val stepLabel = if (decafSteps == 1) "1 step coarser" else "$decafSteps steps coarser"
                 recommendation = recommendation.copy(
                     suggestedStart = (recommendation.suggestedStart + offset)
                         .coerceAtMost(recommendation.rangeEnd),
-                    adjustmentNote = recommendation.adjustmentNote + " · Decaf: $stepLabel (more fines → coarsen for permeability)",
+                    adjustmentNote = recommendation.adjustmentNote +
+                        " · Decaf: $stepLabel (more fines → coarsen for permeability)" +
+                        processNote,
                 )
             } else {
                 recommendation = recommendation.copy(
-                    adjustmentNote = recommendation.adjustmentNote + " · Decaf: same start (immersion — fines impact small); dial by taste",
+                    adjustmentNote = recommendation.adjustmentNote +
+                        " · Decaf: same start (immersion or gentle process — fines impact small); dial by taste" +
+                        processNote,
                 )
             }
         }
@@ -2083,7 +2093,8 @@ class BrewViewModel(
 
     /**
      * How many steps **coarser** to start when brewing decaf, vs the caffeinated
-     * baseline. Returns 0 (same start) for fines-insensitive immersion methods.
+     * baseline. Returns 0 (same start) for fines-insensitive immersion methods or
+     * gentle decaf processes.
      *
      * Evidence-based default (2026 research pass):
      *   - Decaf grinds to a smaller median particle size + ~4 % more fines at the
@@ -2094,17 +2105,21 @@ class BrewViewModel(
      *     coarser**.
      *
      * Rule:
-     *   - Percolation (Pulsar, V60, Moka): +1 step coarser.
-     *   - Espresso: +1 step coarser; tune dose/yield rather than auto-fine.
+     *   - Percolation (Pulsar, V60, Moka) + Espresso: +1 step coarser baseline.
      *   - Immersion (French press, AeroPress, cold brew): no change — fines
      *     barely affect flow when there's no pressurised bed.
-     *   - Roast modifier: dark / espresso / medium-dark roasts are even more
-     *     brittle → add +1 extra coarser.
-     *
-     * Per-bag overrides (Swiss Water tasting hollow → -1, very fresh decaf → 0)
-     * are NOT auto-applied; user can adjust by taste.
+     *   - Roast modifier: dark / espresso / medium-dark roasts add +1 (more
+     *     brittle, more fines).
+     *   - Decaf-process modifier: gentle processes (Swiss Water / Mountain Water,
+     *     supercritical CO₂) reduce the offset by 1 (clamped at 0). Solvent and
+     *     unknown processes get no relief. ACS C&EN 2024 + Swiss Water brew guide
+     *     support softer biasing for water/CO₂ processes.
      */
-    private fun decafCoarserStepsFor(method: BrewMethod, roastLevel: String?): Int {
+    private fun decafCoarserStepsFor(
+        method: BrewMethod,
+        roastLevel: String?,
+        decafProcess: String? = null,
+    ): Int {
         val baseSteps = when (method) {
             BrewMethod.PULSAR,
             BrewMethod.V60,
@@ -2123,7 +2138,27 @@ class BrewViewModel(
             CoffeeRoastLevel.Known.ESPRESSO -> 1
             else -> 0
         }
-        return baseSteps + roastModifier
+        val processRelief = when (DecafProcess.fromStorageKey(decafProcess)) {
+            DecafProcess.SWISS_WATER,
+            DecafProcess.MOUNTAIN_WATER,
+            DecafProcess.CO2_SUPERCRITICAL -> 1
+            else -> 0
+        }
+        return (baseSteps + roastModifier - processRelief).coerceAtLeast(0)
+    }
+
+    /** Short suffix appended to the grind adjustment note when a decaf process is known. */
+    private fun decafProcessNote(decafProcess: String?): String {
+        val process = DecafProcess.fromStorageKey(decafProcess) ?: return ""
+        return when (process) {
+            DecafProcess.SWISS_WATER,
+            DecafProcess.MOUNTAIN_WATER -> " · ${process.shortLabel}: gentle, less coarsening needed"
+            DecafProcess.CO2_SUPERCRITICAL -> " · CO₂: selective extraction, structure preserved"
+            DecafProcess.EA_SUGARCANE,
+            DecafProcess.EA_DIRECT,
+            DecafProcess.MC_DIRECT -> " · ${process.shortLabel}: solvent process, expect more fines"
+            DecafProcess.UNKNOWN -> ""
+        }
     }
 
     @VisibleForTesting

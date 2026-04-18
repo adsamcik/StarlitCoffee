@@ -442,6 +442,7 @@ fun BagInventoryScreen(
                 processType,
                 tastingNotes,
                 isDecaf,
+                decafProcess,
                 roastDateMillis,
                 expiryDateMillis,
                 ->
@@ -477,6 +478,7 @@ fun BagInventoryScreen(
                         processType = processType,
                         tastingNotes = tastingNotes,
                         isDecaf = isDecaf,
+                        decafProcess = decafProcess,
                         roastDate = roastDateMillis,
                         expiryDate = expiryDateMillis,
                         photoUri = permanentUris?.split(",")?.firstOrNull(),
@@ -578,7 +580,7 @@ fun BagInventoryScreen(
             bagToEdit = bag,
             existingBags = bags,
             onDismiss = { editBag = null },
-            onSave = { _, _, _, _, _, _, _, _, _, _, _, _, _, _ -> },
+            onSave = { _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ -> },
             onEdit = { updatedBag ->
                 brewViewModel.updateCoffeeBag(updatedBag)
                 editBag = null
