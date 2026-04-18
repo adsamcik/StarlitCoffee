@@ -1,4 +1,23 @@
 {
+  "_meta": {
+    "version": 2,
+    "generated": "2025 research pass — grinder × method × filter coverage",
+    "sources": [
+      "1Zpresso ZP6 Special external dial: 10 clicks per number, 90 clicks/rotation total (1zpresso.com.tw user guide)",
+      "Comandante C40 community chart (r/coffee wiki, James Hoffmann Technique videos, European Coffee Trip)",
+      "Fellow Ode Gen 2 official grind chart (fellowproducts.com/ode)",
+      "Baratza Encore ESP setting guide (baratza.com/encore-esp)",
+      "Niche Zero guidance from nichecoffee.com + home-barista.com threads",
+      "DF64 filter-coffee discussion (home-barista.com, coffeeadastra.com, SSP burr reviews)"
+    ],
+    "notes": [
+      "Ranges are conservative starting points. Real-world calibration required per bean/roast.",
+      "Pulsar filter variants follow: PAPER finest → METAL_19K slightly coarser → METAL_40K coarsest. Metal filters allow more fines through so grind coarser to keep cup clean.",
+      "Filter-agnostic methods (non-Pulsar) use filterType=null.",
+      "Fellow Ode Gen 2 intentionally lacks ESPRESSO and MOKA_POT entries — it cannot grind fine enough.",
+      "DF64 filter-brew ranges assume stock burrs; SSP MP/HU burrs shift finer by ~0.5–1.0 unit."
+    ]
+  },
   "grinders": [
     {
       "id": "1zpresso-zp6-special",
@@ -53,17 +72,17 @@
       "rangeEnd": 5.4,
       "suggestedStart": 5.2,
       "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Paper filter Pulsar on ZP6 Special"
+      "adjustmentNote": "Pulsar with paper — clean cup, medium-coarse"
     },
     {
       "grinderId": "1zpresso-zp6-special",
       "methodId": "PULSAR",
       "filterType": "METAL_19K",
-      "rangeStart": 5.2,
-      "rangeEnd": 5.6,
-      "suggestedStart": 5.4,
+      "rangeStart": 5.3,
+      "rangeEnd": 5.7,
+      "suggestedStart": 5.5,
       "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Metal 19K filter Pulsar on ZP6 Special"
+      "adjustmentNote": "Pulsar 19K — coarser to limit fines bleed"
     },
     {
       "grinderId": "1zpresso-zp6-special",
@@ -73,7 +92,502 @@
       "rangeEnd": 5.9,
       "suggestedStart": 5.7,
       "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Metal 40K filter Pulsar on ZP6 Special"
+      "adjustmentNote": "Pulsar 40K — coarsest; big holes, bold body"
+    },
+    {
+      "grinderId": "1zpresso-zp6-special",
+      "methodId": "V60",
+      "filterType": null,
+      "rangeStart": 3.5,
+      "rangeEnd": 4.5,
+      "suggestedStart": 4.0,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "V60 medium-fine; drawdown 2:30–3:30"
+    },
+    {
+      "grinderId": "1zpresso-zp6-special",
+      "methodId": "FRENCH_PRESS",
+      "filterType": null,
+      "rangeStart": 7.0,
+      "rangeEnd": 8.5,
+      "suggestedStart": 7.5,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "French press coarse — reduce sediment"
+    },
+    {
+      "grinderId": "1zpresso-zp6-special",
+      "methodId": "AEROPRESS",
+      "filterType": null,
+      "rangeStart": 2.5,
+      "rangeEnd": 3.5,
+      "suggestedStart": 3.0,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "AeroPress standard — tune by recipe"
+    },
+    {
+      "grinderId": "1zpresso-zp6-special",
+      "methodId": "ESPRESSO",
+      "filterType": null,
+      "rangeStart": 1.0,
+      "rangeEnd": 2.0,
+      "suggestedStart": 1.4,
+      "adjustmentStepSize": 0.1,
+      "adjustmentNote": "Espresso fine — ZP6 not ideal but workable"
+    },
+    {
+      "grinderId": "1zpresso-zp6-special",
+      "methodId": "MOKA_POT",
+      "filterType": null,
+      "rangeStart": 2.0,
+      "rangeEnd": 2.8,
+      "suggestedStart": 2.4,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Moka — just coarser than espresso"
+    },
+    {
+      "grinderId": "1zpresso-zp6-special",
+      "methodId": "COLD_BREW",
+      "filterType": null,
+      "rangeStart": 8.5,
+      "rangeEnd": 10.0,
+      "suggestedStart": 9.0,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Cold brew extra coarse — 12–18h steep"
+    },
+
+    {
+      "grinderId": "comandante-c40",
+      "methodId": "PULSAR",
+      "filterType": "PAPER",
+      "rangeStart": 24,
+      "rangeEnd": 28,
+      "suggestedStart": 25,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar paper — clean, medium-coarse"
+    },
+    {
+      "grinderId": "comandante-c40",
+      "methodId": "PULSAR",
+      "filterType": "METAL_19K",
+      "rangeStart": 26,
+      "rangeEnd": 30,
+      "suggestedStart": 27,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar 19K — coarser to avoid sludge"
+    },
+    {
+      "grinderId": "comandante-c40",
+      "methodId": "PULSAR",
+      "filterType": "METAL_40K",
+      "rangeStart": 28,
+      "rangeEnd": 32,
+      "suggestedStart": 29,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar 40K — coarsest; bold mouthfeel"
+    },
+    {
+      "grinderId": "comandante-c40",
+      "methodId": "V60",
+      "filterType": null,
+      "rangeStart": 18,
+      "rangeEnd": 25,
+      "suggestedStart": 22,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "V60 — classic Hoffmann 22 clicks"
+    },
+    {
+      "grinderId": "comandante-c40",
+      "methodId": "FRENCH_PRESS",
+      "filterType": null,
+      "rangeStart": 28,
+      "rangeEnd": 35,
+      "suggestedStart": 30,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "French press coarse — lean cleaner"
+    },
+    {
+      "grinderId": "comandante-c40",
+      "methodId": "AEROPRESS",
+      "filterType": null,
+      "rangeStart": 15,
+      "rangeEnd": 22,
+      "suggestedStart": 18,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "AeroPress — finer for inverted/short"
+    },
+    {
+      "grinderId": "comandante-c40",
+      "methodId": "ESPRESSO",
+      "filterType": null,
+      "rangeStart": 5,
+      "rangeEnd": 12,
+      "suggestedStart": 8,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Espresso — C40 marginal; best for lever"
+    },
+    {
+      "grinderId": "comandante-c40",
+      "methodId": "MOKA_POT",
+      "filterType": null,
+      "rangeStart": 10,
+      "rangeEnd": 16,
+      "suggestedStart": 13,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Moka — fine, above espresso range"
+    },
+    {
+      "grinderId": "comandante-c40",
+      "methodId": "COLD_BREW",
+      "filterType": null,
+      "rangeStart": 35,
+      "rangeEnd": 45,
+      "suggestedStart": 38,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Cold brew extra coarse — long steep"
+    },
+
+    {
+      "grinderId": "fellow-ode-gen2",
+      "methodId": "PULSAR",
+      "filterType": "PAPER",
+      "rangeStart": 3,
+      "rangeEnd": 5,
+      "suggestedStart": 4,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar paper — Gen 2 grinds finer than Gen 1"
+    },
+    {
+      "grinderId": "fellow-ode-gen2",
+      "methodId": "PULSAR",
+      "filterType": "METAL_19K",
+      "rangeStart": 4,
+      "rangeEnd": 6,
+      "suggestedStart": 5,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar 19K — coarser to limit fines"
+    },
+    {
+      "grinderId": "fellow-ode-gen2",
+      "methodId": "PULSAR",
+      "filterType": "METAL_40K",
+      "rangeStart": 5,
+      "rangeEnd": 7,
+      "suggestedStart": 6,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar 40K — coarsest, more body"
+    },
+    {
+      "grinderId": "fellow-ode-gen2",
+      "methodId": "V60",
+      "filterType": null,
+      "rangeStart": 3.0,
+      "rangeEnd": 5.0,
+      "suggestedStart": 4.0,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "V60 — Ode's sweet spot"
+    },
+    {
+      "grinderId": "fellow-ode-gen2",
+      "methodId": "FRENCH_PRESS",
+      "filterType": null,
+      "rangeStart": 8.0,
+      "rangeEnd": 10.0,
+      "suggestedStart": 9.0,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "French press coarse on Ode"
+    },
+    {
+      "grinderId": "fellow-ode-gen2",
+      "methodId": "AEROPRESS",
+      "filterType": null,
+      "rangeStart": 3.0,
+      "rangeEnd": 5.0,
+      "suggestedStart": 4.0,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "AeroPress — tune to recipe"
+    },
+    {
+      "grinderId": "fellow-ode-gen2",
+      "methodId": "COLD_BREW",
+      "filterType": null,
+      "rangeStart": 9.0,
+      "rangeEnd": 11.0,
+      "suggestedStart": 10.0,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Cold brew — Ode's max coarse"
+    },
+
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "PULSAR",
+      "filterType": "PAPER",
+      "rangeStart": 18,
+      "rangeEnd": 24,
+      "suggestedStart": 20,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar paper — medium-coarse"
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "PULSAR",
+      "filterType": "METAL_19K",
+      "rangeStart": 20,
+      "rangeEnd": 26,
+      "suggestedStart": 22,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar 19K — coarser for clean cup"
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "PULSAR",
+      "filterType": "METAL_40K",
+      "rangeStart": 22,
+      "rangeEnd": 28,
+      "suggestedStart": 24,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar 40K — coarsest, full body"
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "V60",
+      "filterType": null,
+      "rangeStart": 12,
+      "rangeEnd": 18,
+      "suggestedStart": 15,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "V60 — drawdown 3:00 target"
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "FRENCH_PRESS",
+      "filterType": null,
+      "rangeStart": 28,
+      "rangeEnd": 34,
+      "suggestedStart": 30,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "French press coarse on Encore ESP"
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "AEROPRESS",
+      "filterType": null,
+      "rangeStart": 10,
+      "rangeEnd": 16,
+      "suggestedStart": 12,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "AeroPress — medium-fine"
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "ESPRESSO",
+      "filterType": null,
+      "rangeStart": 1,
+      "rangeEnd": 8,
+      "suggestedStart": 4,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Espresso — Encore ESP low 1–15 range"
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "MOKA_POT",
+      "filterType": null,
+      "rangeStart": 6,
+      "rangeEnd": 11,
+      "suggestedStart": 8,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Moka — just above espresso band"
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "COLD_BREW",
+      "filterType": null,
+      "rangeStart": 34,
+      "rangeEnd": 40,
+      "suggestedStart": 37,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Cold brew — max coarse on Encore"
+    },
+
+    {
+      "grinderId": "niche-zero",
+      "methodId": "PULSAR",
+      "filterType": "PAPER",
+      "rangeStart": 32,
+      "rangeEnd": 40,
+      "suggestedStart": 35,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar paper — clean, med-coarse"
+    },
+    {
+      "grinderId": "niche-zero",
+      "methodId": "PULSAR",
+      "filterType": "METAL_19K",
+      "rangeStart": 35,
+      "rangeEnd": 42,
+      "suggestedStart": 37,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar 19K — coarser, less sludge"
+    },
+    {
+      "grinderId": "niche-zero",
+      "methodId": "PULSAR",
+      "filterType": "METAL_40K",
+      "rangeStart": 37,
+      "rangeEnd": 44,
+      "suggestedStart": 39,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Pulsar 40K — coarsest for body"
+    },
+    {
+      "grinderId": "niche-zero",
+      "methodId": "V60",
+      "filterType": null,
+      "rangeStart": 28,
+      "rangeEnd": 38,
+      "suggestedStart": 32,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "V60 — Niche filter range"
+    },
+    {
+      "grinderId": "niche-zero",
+      "methodId": "FRENCH_PRESS",
+      "filterType": null,
+      "rangeStart": 42,
+      "rangeEnd": 48,
+      "suggestedStart": 45,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "French press — coarse end of dial"
+    },
+    {
+      "grinderId": "niche-zero",
+      "methodId": "AEROPRESS",
+      "filterType": null,
+      "rangeStart": 22,
+      "rangeEnd": 32,
+      "suggestedStart": 27,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "AeroPress — flexible, recipe-driven"
+    },
+    {
+      "grinderId": "niche-zero",
+      "methodId": "ESPRESSO",
+      "filterType": null,
+      "rangeStart": 8,
+      "rangeEnd": 20,
+      "suggestedStart": 14,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Espresso — Niche's core strength"
+    },
+    {
+      "grinderId": "niche-zero",
+      "methodId": "MOKA_POT",
+      "filterType": null,
+      "rangeStart": 18,
+      "rangeEnd": 26,
+      "suggestedStart": 22,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Moka — fine, above espresso"
+    },
+    {
+      "grinderId": "niche-zero",
+      "methodId": "COLD_BREW",
+      "filterType": null,
+      "rangeStart": 45,
+      "rangeEnd": 50,
+      "suggestedStart": 48,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Cold brew — coarsest on Niche"
+    },
+
+    {
+      "grinderId": "df64",
+      "methodId": "PULSAR",
+      "filterType": "PAPER",
+      "rangeStart": 5.5,
+      "rangeEnd": 7.0,
+      "suggestedStart": 6.0,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Pulsar paper — DF64 stock burrs"
+    },
+    {
+      "grinderId": "df64",
+      "methodId": "PULSAR",
+      "filterType": "METAL_19K",
+      "rangeStart": 6.0,
+      "rangeEnd": 7.5,
+      "suggestedStart": 6.5,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Pulsar 19K on DF64 — coarser"
+    },
+    {
+      "grinderId": "df64",
+      "methodId": "PULSAR",
+      "filterType": "METAL_40K",
+      "rangeStart": 6.5,
+      "rangeEnd": 8.0,
+      "suggestedStart": 7.0,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Pulsar 40K — coarsest on DF64"
+    },
+    {
+      "grinderId": "df64",
+      "methodId": "V60",
+      "filterType": null,
+      "rangeStart": 4.5,
+      "rangeEnd": 6.0,
+      "suggestedStart": 5.0,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "V60 — SSP MP shifts finer"
+    },
+    {
+      "grinderId": "df64",
+      "methodId": "FRENCH_PRESS",
+      "filterType": null,
+      "rangeStart": 7.5,
+      "rangeEnd": 9.0,
+      "suggestedStart": 8.0,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "French press coarse on DF64"
+    },
+    {
+      "grinderId": "df64",
+      "methodId": "AEROPRESS",
+      "filterType": null,
+      "rangeStart": 3.5,
+      "rangeEnd": 5.0,
+      "suggestedStart": 4.2,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "AeroPress — medium-fine"
+    },
+    {
+      "grinderId": "df64",
+      "methodId": "ESPRESSO",
+      "filterType": null,
+      "rangeStart": 1.0,
+      "rangeEnd": 2.5,
+      "suggestedStart": 1.6,
+      "adjustmentStepSize": 0.1,
+      "adjustmentNote": "Espresso — DF64's primary use"
+    },
+    {
+      "grinderId": "df64",
+      "methodId": "MOKA_POT",
+      "filterType": null,
+      "rangeStart": 2.5,
+      "rangeEnd": 3.8,
+      "suggestedStart": 3.0,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Moka — above espresso band"
+    },
+    {
+      "grinderId": "df64",
+      "methodId": "COLD_BREW",
+      "filterType": null,
+      "rangeStart": 8.5,
+      "rangeEnd": 10.0,
+      "suggestedStart": 9.0,
+      "adjustmentStepSize": 0.2,
+      "adjustmentNote": "Cold brew — max coarse"
     }
   ]
 }

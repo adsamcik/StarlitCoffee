@@ -18,6 +18,7 @@ import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
+import com.adsamcik.starlitcoffee.data.model.CoffeeRoastLevel
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
@@ -1984,6 +1985,7 @@ class BrewViewModel(
                 filterType = state.filterType,
                 calibrationStyle = state.calibrationStyle,
                 isDecaf = effectiveIsDecaf,
+                roastLevel = selectedBag?.roastLevel,
             )
 
             state.copy(
@@ -2015,6 +2017,7 @@ class BrewViewModel(
         filterType: FilterType?,
         calibrationStyle: CalibrationStyle?,
         isDecaf: Boolean = false,
+        roastLevel: String? = null,
     ): GrindResult {
         if (grinderId == null) {
             return GrindResult.Generic(method.defaultGrindDescriptor)
@@ -2034,14 +2037,17 @@ class BrewViewModel(
                 rec.filterType == null
         } ?: return GrindResult.Generic(method.defaultGrindDescriptor)
 
-        // Decaf offset: grind finer by ~2 steps (decaf beans are more brittle, extract faster)
+        // Decaf offset: grind finer because decaf beans have compromised cell walls
+        // from the decaffeination process and extract faster. Light roasts amplify this
+        // (more brittle, more fines); dark roasts partially offset via caramelization.
         if (isDecaf) {
-            val decafSteps = 2
+            val decafSteps = decafStepsForRoast(roastLevel)
             val offset = recommendation.adjustmentStepSize * decafSteps
+            val stepLabel = if (decafSteps == 1) "1 step finer" else "$decafSteps steps finer"
             recommendation = recommendation.copy(
                 suggestedStart = (recommendation.suggestedStart - offset)
                     .coerceAtLeast(recommendation.rangeStart),
-                adjustmentNote = recommendation.adjustmentNote + " · Decaf: ${decafSteps} steps finer",
+                adjustmentNote = recommendation.adjustmentNote + " · Decaf: $stepLabel",
             )
         }
 
@@ -2062,6 +2068,31 @@ class BrewViewModel(
             ),
             grinder,
         )
+    }
+
+    /**
+     * Decaf extraction-offset steps, calibrated by roast level.
+     *
+     * Lighter roasts: brittle beans + porous cell structure from decaffeination →
+     * more fines, faster extraction → need finer grind (+3 steps).
+     * Dark roasts: already weakened by roasting but caramelization reduces some
+     * solubility → less adjustment needed (+1 step).
+     * Unknown/medium: community-consensus default of +2 steps.
+     */
+    private fun decafStepsForRoast(roastLevel: String?): Int {
+        val known = roastLevel?.let {
+            runCatching { CoffeeRoastLevel.Known.valueOf(it) }.getOrNull()
+        }
+        return when (known) {
+            CoffeeRoastLevel.Known.LIGHT,
+            CoffeeRoastLevel.Known.CINNAMON,
+            CoffeeRoastLevel.Known.MEDIUM_LIGHT,
+            CoffeeRoastLevel.Known.FILTER -> 3
+            CoffeeRoastLevel.Known.MEDIUM_DARK,
+            CoffeeRoastLevel.Known.DARK,
+            CoffeeRoastLevel.Known.ESPRESSO -> 1
+            else -> 2
+        }
     }
 
     @VisibleForTesting
