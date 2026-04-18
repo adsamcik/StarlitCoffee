@@ -44,6 +44,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
+import com.adsamcik.starlitcoffee.data.model.Grinder
+import com.adsamcik.starlitcoffee.data.model.GrinderScaleType
+import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 
@@ -132,8 +135,12 @@ private fun GrindHeroCard(grindResult: GrindResult) {
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 20.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
+            val headerLabel = when (grindResult) {
+                is GrindResult.Generic -> stringResource(R.string.label_grind).uppercase()
+                is GrindResult.Specific -> "${grindResult.grinder.brand} ${grindResult.grinder.model}".uppercase()
+            }
             Text(
-                text = stringResource(R.string.label_grind).uppercase(),
+                text = headerLabel,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
                 letterSpacing = 1.5.sp,
@@ -152,27 +159,118 @@ private fun GrindHeroCard(grindResult: GrindResult) {
                     )
                 }
                 is GrindResult.Specific -> {
-                    val rec = grindResult.recommendation
-                    Text(
-                        text = rec.suggestedStart.toString(),
-                        style = MaterialTheme.typography.displayMedium,
-                        fontWeight = FontWeight.SemiBold,
+                    val formatted = formatGrindSetting(
+                        grinder = grindResult.grinder,
+                        value = grindResult.recommendation.suggestedStart,
                     )
+                    Row(
+                        verticalAlignment = Alignment.Bottom,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        Text(
+                            text = formatted.primary,
+                            style = MaterialTheme.typography.displayMedium,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                        if (formatted.unit != null) {
+                            Text(
+                                text = formatted.unit,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
+                                modifier = Modifier.padding(bottom = 10.dp),
+                            )
+                        }
+                    }
+                    if (formatted.breakdown != null) {
+                        Text(
+                            text = formatted.breakdown,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f),
+                        )
+                    }
+                    Spacer(Modifier.size(4.dp))
                     Text(
-                        text = "range ${rec.rangeStart}–${rec.rangeEnd} · ±${rec.adjustmentStepSize} to taste",
+                        text = rangeLine(
+                            grinder = grindResult.grinder,
+                            rec = grindResult.recommendation,
+                        ),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f),
                     )
-                    if (rec.adjustmentNote.isNotBlank()) {
+                    if (grindResult.recommendation.adjustmentNote.isNotBlank()) {
                         Spacer(Modifier.size(2.dp))
                         Text(
-                            text = rec.adjustmentNote,
+                            text = grindResult.recommendation.adjustmentNote,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.75f),
                         )
                     }
                 }
             }
+        }
+    }
+}
+
+private data class FormattedGrindSetting(
+    val primary: String,
+    val unit: String?,
+    val breakdown: String?,
+)
+
+/**
+ * Format a grind setting value for display based on the grinder's scale type.
+ *
+ * - DIAL_CLICKS (e.g. 1Zpresso): "5.2" shown as "5.2" with breakdown "5 · 2 clicks"
+ * - PURE_CLICKS (e.g. Comandante C40): shown as integer clicks count
+ * - NUMBERED_DIAL (e.g. Fellow Ode): shown as printed dial setting
+ */
+private fun formatGrindSetting(grinder: Grinder, value: Float): FormattedGrindSetting {
+    return when (grinder.scaleType) {
+        GrinderScaleType.DIAL_CLICKS -> {
+            val whole = value.toInt()
+            val clicks = Math.round((value - whole) * 10f).coerceAtLeast(0)
+            val clicksLabel = if (clicks == 1) "click" else "clicks"
+            FormattedGrindSetting(
+                primary = "%.1f".format(value),
+                unit = null,
+                breakdown = if (clicks > 0) "$whole + $clicks $clicksLabel" else "$whole (no extra clicks)",
+            )
+        }
+        GrinderScaleType.PURE_CLICKS -> {
+            val rounded = Math.round(value)
+            FormattedGrindSetting(
+                primary = rounded.toString(),
+                unit = if (rounded == 1) "click" else "clicks",
+                breakdown = "from zero",
+            )
+        }
+        GrinderScaleType.NUMBERED_DIAL -> {
+            FormattedGrindSetting(
+                primary = if (value % 1f == 0f) value.toInt().toString() else "%.1f".format(value),
+                unit = null,
+                breakdown = "on dial",
+            )
+        }
+    }
+}
+
+private fun rangeLine(grinder: Grinder, rec: GrindRecommendation): String {
+    return when (grinder.scaleType) {
+        GrinderScaleType.PURE_CLICKS -> {
+            val lo = Math.round(rec.rangeStart)
+            val hi = Math.round(rec.rangeEnd)
+            val step = Math.round(rec.adjustmentStepSize).coerceAtLeast(1)
+            "range $lo–$hi clicks · ±$step to taste"
+        }
+        GrinderScaleType.DIAL_CLICKS -> {
+            val stepClicks = Math.round(rec.adjustmentStepSize * 10f).coerceAtLeast(1)
+            val clicksLabel = if (stepClicks == 1) "click" else "clicks"
+            "range ${"%.1f".format(rec.rangeStart)}–${"%.1f".format(rec.rangeEnd)} · ±$stepClicks $clicksLabel to taste"
+        }
+        GrinderScaleType.NUMBERED_DIAL -> {
+            val step = rec.adjustmentStepSize
+            val stepLabel = if (step % 1f == 0f) step.toInt().toString() else "%.1f".format(step)
+            "range ${"%.1f".format(rec.rangeStart)}–${"%.1f".format(rec.rangeEnd)} · ±$stepLabel to taste"
         }
     }
 }

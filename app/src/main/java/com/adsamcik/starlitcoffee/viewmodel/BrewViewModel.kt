@@ -21,6 +21,7 @@ import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
+import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.HomeContextCard
 import com.adsamcik.starlitcoffee.data.model.InventoryAlert
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
@@ -89,7 +90,10 @@ import java.util.Locale
 
 sealed class GrindResult {
     data class Generic(val descriptor: GrindDescriptor) : GrindResult()
-    data class Specific(val recommendation: GrindRecommendation) : GrindResult()
+    data class Specific(
+        val recommendation: GrindRecommendation,
+        val grinder: Grinder,
+    ) : GrindResult()
 }
 
 data class BrewUiState(
@@ -2042,7 +2046,7 @@ class BrewViewModel(
         }
 
         if (calibrationStyle == null) {
-            return GrindResult.Specific(recommendation)
+            return GrindResult.Specific(recommendation, grinder)
         }
 
         val multiplier = calibrationStyle.rangeWidthMultiplier
@@ -2056,6 +2060,7 @@ class BrewViewModel(
                 rangeStart = adjustedStart,
                 rangeEnd = adjustedEnd,
             ),
+            grinder,
         )
     }
 
