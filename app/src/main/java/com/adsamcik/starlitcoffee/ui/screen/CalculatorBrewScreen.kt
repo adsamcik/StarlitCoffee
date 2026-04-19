@@ -672,7 +672,12 @@ private fun CalculatorKeyboard(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            presets.take(5).forEach { preset ->
+            val schemeContainers = listOf(
+                MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer,
+                MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer,
+                MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer,
+            )
+            presets.take(5).forEachIndexed { index, preset ->
                 val customColor = preset.colorHex?.let {
                     try { Color(android.graphics.Color.parseColor(it)) } catch (_: IllegalArgumentException) { null }
                 }
@@ -688,7 +693,11 @@ private fun CalculatorKeyboard(
                             contentColor = contentColor,
                         )
                     } else {
-                        IconButtonDefaults.filledTonalIconButtonColors()
+                        val (container, content) = schemeContainers[index % schemeContainers.size]
+                        IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = container,
+                            contentColor = content,
+                        )
                     },
                 ) {
                     Icon(
