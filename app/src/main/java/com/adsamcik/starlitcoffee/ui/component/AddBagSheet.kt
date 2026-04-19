@@ -30,7 +30,7 @@ import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ElevatedCard
@@ -39,7 +39,6 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
@@ -1272,13 +1271,13 @@ private fun ProcessingStatusCard() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+                LoadingIndicator(modifier = Modifier.size(20.dp))
                 Text(
                     text = stringResource(R.string.msg_analyzing_label),
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
-            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+            LoadingIndicator(modifier = Modifier.fillMaxWidth())
             Text(
                 text = stringResource(R.string.msg_analyzing_label_detail),
                 style = MaterialTheme.typography.bodyMedium,
@@ -1402,7 +1401,7 @@ private fun QrApprovalCard(
                 style = MaterialTheme.typography.bodyMedium,
             )
             if (isExploring) {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                LoadingIndicator(modifier = Modifier.fillMaxWidth())
             } else {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),

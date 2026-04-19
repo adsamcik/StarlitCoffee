@@ -46,7 +46,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -1002,10 +1002,9 @@ private fun LlmStatusChip(
         ) {
             when (status) {
                 LlmUiStatus.PROCESSING -> {
-                    CircularProgressIndicator(
+                    LoadingIndicator(
                         modifier = Modifier.size(12.dp),
                         color = color,
-                        strokeWidth = 1.5.dp,
                     )
                 }
                 LlmUiStatus.COMPLETED -> {
