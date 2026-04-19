@@ -16,20 +16,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Coffee
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -39,7 +35,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
@@ -47,10 +42,10 @@ import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderScaleType
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
+import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GrindPrepScreen(
     brewViewModel: BrewViewModel,
@@ -60,19 +55,6 @@ fun GrindPrepScreen(
     val state by brewViewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.screen_grind_prep_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.action_back),
-                        )
-                    }
-                },
-            )
-        },
         bottomBar = {
             // Sticky primary CTA — always visible, regardless of scroll position.
             Surface(color = MaterialTheme.colorScheme.surface) {
@@ -107,6 +89,10 @@ fun GrindPrepScreen(
                 .padding(horizontal = 20.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
+            ScreenTopBar(
+                title = stringResource(R.string.screen_grind_prep_title),
+                onBack = onBack,
+            )
             GrindHeroCard(state.grindResult)
 
             MetricsRow(
@@ -136,14 +122,13 @@ private fun GrindHeroCard(grindResult: GrindResult) {
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             val headerLabel = when (grindResult) {
-                is GrindResult.Generic -> stringResource(R.string.label_grind).uppercase()
-                is GrindResult.Specific -> "${grindResult.grinder.brand} ${grindResult.grinder.model}".uppercase()
+                is GrindResult.Generic -> stringResource(R.string.label_grind)
+                is GrindResult.Specific -> "${grindResult.grinder.brand} ${grindResult.grinder.model}"
             }
             Text(
                 text = headerLabel,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
-                letterSpacing = 1.5.sp,
             )
             when (grindResult) {
                 is GrindResult.Generic -> {
