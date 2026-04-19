@@ -16,7 +16,8 @@ data class ConnectionTestResult(
 enum class ConnectionStatus { DISCONNECTED, CONNECTING, CONNECTED, ERROR }
 
 data class EngineInfoSnapshot(
-    val modelPath: String,
+    val modelId: String,
+    val modelSizeBytes: Long,
     val backend: String,
     val maxTokens: Int,
     val initTimeSeconds: Float,
@@ -52,7 +53,8 @@ object MindlayerConnectionTester {
             val engineInfo = try {
                 val info = mindlayer.getEngineInfo()
                 EngineInfoSnapshot(
-                    modelPath = info.modelPath,
+                    modelId = info.modelId,
+                    modelSizeBytes = info.modelSizeBytes,
                     backend = info.backend,
                     maxTokens = info.maxTokens,
                     initTimeSeconds = info.initTimeSeconds,
@@ -101,7 +103,8 @@ object MindlayerConnectionTester {
             val engineInfo = try {
                 val info = mindlayer.getEngineInfo()
                 EngineInfoSnapshot(
-                    modelPath = info.modelPath,
+                    modelId = info.modelId,
+                    modelSizeBytes = info.modelSizeBytes,
                     backend = info.backend,
                     maxTokens = info.maxTokens,
                     initTimeSeconds = info.initTimeSeconds,
