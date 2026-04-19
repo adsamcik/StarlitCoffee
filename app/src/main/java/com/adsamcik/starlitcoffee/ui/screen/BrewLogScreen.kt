@@ -16,14 +16,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -40,7 +45,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
@@ -64,7 +68,7 @@ private const val TAG = "BrewLogScreen"
 fun BrewLogScreen(
     brewViewModel: BrewViewModel,
     onNavigateToDetail: (Long) -> Unit,
-    onBack: () -> Unit = {},
+    onBack: (() -> Unit)? = null,
 ){
     val logs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
@@ -277,11 +281,16 @@ private fun BrewLogCard(
                             }
                         }
                     } else {
-                        Text(
-                            text = stringResource(R.string.msg_tap_to_rate),
-                            style = MaterialTheme.typography.bodySmall,
-                            fontStyle = FontStyle.Italic,
-                            color = MaterialTheme.colorScheme.outline,
+                        AssistChip(
+                            onClick = onTap,
+                            label = { Text(stringResource(R.string.action_rate_brew)) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Filled.Star,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(AssistChipDefaults.IconSize),
+                                )
+                            },
                             modifier = Modifier.padding(top = 6.dp),
                         )
                     }

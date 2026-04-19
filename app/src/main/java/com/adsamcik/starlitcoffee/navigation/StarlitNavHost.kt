@@ -343,7 +343,7 @@ fun StarlitNavHost() {
             composable<BrewLogList> {
                 BrewLogScreen(
                     brewViewModel = brewViewModel,
-                    onBack = { navController.popBackStack() },
+                    onBack = null,
                     onNavigateToDetail = { logId ->
                         navController.navigate(BrewLogDetail(logId = logId))
                     },
