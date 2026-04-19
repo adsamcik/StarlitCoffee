@@ -46,11 +46,11 @@ class CupPresetRepository(private val dao: CupPresetDao) {
 
     companion object {
         val defaultPresets = listOf(
-            CupPreset(name = "Espresso", iconName = "espresso", doseG = 18f, waterMl = 36f, colorHex = "#8B4513"),
-            CupPreset(name = "Cortado", iconName = "cortado", doseG = 18f, waterMl = 130f, colorHex = "#D2691E"),
-            CupPreset(name = "Cappuccino", iconName = "cappuccino", doseG = 18f, waterMl = 180f, colorHex = "#CD853F"),
-            CupPreset(name = "Mug", iconName = "mug", doseG = 22f, waterMl = 374f, colorHex = "#4682B4"),
-            CupPreset(name = "Travel", iconName = "travel", doseG = 25f, waterMl = 425f, colorHex = "#2E8B57"),
+            CupPreset(name = "Espresso", iconName = "espresso", doseG = 18f, waterMl = 36f, colorHex = null),
+            CupPreset(name = "Cortado", iconName = "cortado", doseG = 18f, waterMl = 130f, colorHex = null),
+            CupPreset(name = "Cappuccino", iconName = "cappuccino", doseG = 18f, waterMl = 180f, colorHex = null),
+            CupPreset(name = "Mug", iconName = "mug", doseG = 22f, waterMl = 374f, colorHex = null),
+            CupPreset(name = "Travel", iconName = "travel", doseG = 25f, waterMl = 425f, colorHex = null),
         )
     }
 }
