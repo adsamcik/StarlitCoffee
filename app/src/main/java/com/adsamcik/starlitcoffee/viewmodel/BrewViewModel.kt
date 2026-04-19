@@ -36,6 +36,7 @@ import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.data.network.QrLinkExploreResult
 import com.adsamcik.starlitcoffee.data.network.QrLinkMetadataExplorer
 import com.adsamcik.starlitcoffee.data.network.SafeQrLinkMetadataExplorer
+import com.adsamcik.starlitcoffee.data.network.llm.LlmCacheKey
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
@@ -1779,7 +1780,12 @@ class BrewViewModel(
     ): List<BagFieldCandidate> {
         if (!llmProvider.isAvailable()) return emptyList()
 
-        val imageHash = photoBytes.contentHashCode()
+        val imageHash = LlmCacheKey.compute(
+            imageBytes = photoBytes,
+            fieldsNeeded = fieldsNeeded,
+            rawOcrText = rawOcrText,
+            existingFields = existingFields,
+        )
         llmCache.get(imageHash)?.let { cached ->
             return cached.fieldCandidates
         }

@@ -5,6 +5,7 @@ import android.os.Build
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.adsamcik.starlitcoffee.data.network.llm.LlmCacheKey
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
@@ -784,7 +785,12 @@ class LiveScanViewModel(
             fieldsNeeded = escalation.fieldsNeeded.size,
         )
 
-        val imageHash = bytes.contentHashCode()
+        val imageHash = LlmCacheKey.compute(
+            imageBytes = bytes,
+            fieldsNeeded = escalation.fieldsNeeded,
+            rawOcrText = escalation.rawOcrText,
+            existingFields = escalation.existingFields,
+        )
         val cached = llmCache.get(imageHash)
         if (cached != null) {
             val contributedFields = cached.fieldCandidates.map { it.fieldName }.toSet()
