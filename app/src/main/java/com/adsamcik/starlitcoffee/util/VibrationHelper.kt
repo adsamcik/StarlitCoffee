@@ -16,6 +16,8 @@ object VibrationHelper {
     enum class BrewHaptic {
         /** Bloom start — gentle double-pulse (heartbeat). */
         BLOOM,
+        /** Bloom finished — playful "ta-da!" flourish (two quick taps + emphatic release). */
+        BLOOM_FINISHED,
         /** Pour start — quick burst. */
         POUR,
         /** Drain/refill start — long sustained pulse. */
@@ -49,6 +51,11 @@ object VibrationHelper {
         val (timings, amplitudes) = when (haptic) {
             BrewHaptic.BLOOM -> longArrayOf(0, 80, 120, 80) to
                 intArrayOf(0, 180, 0, 140)
+
+            // Grand "ding-ding-DONG!" — three rising pulses culminating in a
+            // sustained flourish. Used at bloom-end after the 5-second crescendo.
+            BrewHaptic.BLOOM_FINISHED -> longArrayOf(0, 80, 90, 110, 110, 320) to
+                intArrayOf(0, 150, 0, 200, 0, 255)
 
             BrewHaptic.POUR -> longArrayOf(0, 50) to
                 intArrayOf(0, 160)

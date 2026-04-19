@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlinx.coroutines.delay
 import kotlin.math.abs
@@ -90,23 +91,50 @@ fun BloomTimerScreen(
         }
     }
 
-    // Auto-advance to brew timer when bloom finishes
+    // 5-second countdown crescendo — ticks at T-5, -4, -3, -2, -1 with rising
+    // haptic intensity and tone volume, building anticipation for the finale.
+    val bloomCountdown = state.bloomCountdownSeconds
+    LaunchedEffect(bloomCountdown, state.timerRunning, state.minuteAlertEnabled) {
+        if (!state.timerRunning || !state.minuteAlertEnabled) return@LaunchedEffect
+        if (bloomCountdown == null || bloomCountdown !in 1..5) return@LaunchedEffect
+        // Step 0 at T-5 → step 4 at T-1
+        val step = 5 - bloomCountdown
+        val amplitude = 80 + step * 30 // 80, 110, 140, 170, 200
+        val tickDuration = 40L + step * 10L // 40..80 ms
+        vibrator?.vibrate(
+            VibrationEffect.createOneShot(tickDuration, amplitude),
+        )
+        val volume = 40 + step * 12 // 40..88
+        try {
+            val tone = ToneGenerator(AudioManager.STREAM_NOTIFICATION, volume)
+            try {
+                tone.startTone(ToneGenerator.TONE_PROP_BEEP, 90)
+                delay(120L)
+            } finally {
+                tone.release()
+            }
+        } catch (_: Exception) { }
+    }
+
+    // Auto-advance to brew timer when bloom finishes — grand 3-note finale
     LaunchedEffect(state.bloomFinished) {
         if (state.bloomFinished && state.timerRunning) {
-            vibrator?.vibrate(
-                VibrationEffect.createWaveform(
-                    longArrayOf(0, 200, 100, 200, 100, 300), -1,
-                ),
-            )
+            VibrationHelper.vibrate(context, VibrationHelper.BrewHaptic.BLOOM_FINISHED)
+            // Ding-ding-DONG: two rising high beeps, landing on a lower bell tone.
             try {
-                val tone = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 80)
+                val tone = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
                 try {
-                    tone.startTone(ToneGenerator.TONE_PROP_BEEP2, 500)
+                    tone.startTone(ToneGenerator.TONE_PROP_BEEP, 130)
+                    delay(170L)
+                    tone.startTone(ToneGenerator.TONE_PROP_BEEP, 160)
+                    delay(210L)
+                    tone.startTone(ToneGenerator.TONE_PROP_BEEP2, 420)
+                    delay(450L)
                 } finally {
                     tone.release()
                 }
             } catch (_: Exception) { }
-            delay(1500L)
+            delay(500L)
             onNavigateToBrew()
         }
     }

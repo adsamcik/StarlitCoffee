@@ -49,3 +49,8 @@ gemini_brief.md
 # Misc artifacts
 classes.jar
 *.litertlm
+
+# LLM evaluation harness — images, ground truth, and run logs stay local
+eval/
+tools/mindlayer_test_output.txt
+tools/adversarial_out.txt
