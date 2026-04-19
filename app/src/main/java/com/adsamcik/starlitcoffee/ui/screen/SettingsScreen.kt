@@ -131,13 +131,25 @@ fun SettingsScreen(
                             modifier = Modifier.semantics { heading() },
                         )
                         Row {
-                            IconButton(onClick = { showAddPresetDialog = true }) {
-                                Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.action_add_preset))
+                            IconButton(
+                                onClick = { showAddPresetDialog = true },
+                                modifier = Modifier.size(48.dp),
+                            ) {
+                                Icon(
+                                    Icons.Filled.Add,
+                                    contentDescription = stringResource(R.string.action_add_preset),
+                                    modifier = Modifier.size(24.dp),
+                                )
                             }
-                            IconButton(onClick = {
-                                scope.launch { cupPresetRepository.resetToDefaults() }
-                            }) {
-                                Icon(Icons.Filled.Restore, contentDescription = stringResource(R.string.action_reset_defaults))
+                            IconButton(
+                                onClick = { scope.launch { cupPresetRepository.resetToDefaults() } },
+                                modifier = Modifier.size(48.dp),
+                            ) {
+                                Icon(
+                                    Icons.Filled.Restore,
+                                    contentDescription = stringResource(R.string.action_reset_defaults),
+                                    modifier = Modifier.size(24.dp),
+                                )
                             }
                         }
                     }
@@ -176,12 +188,17 @@ fun SettingsScreen(
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
-                            Icon(
-                                Icons.Filled.Edit,
-                                contentDescription = stringResource(R.string.format_edit_preset, preset.name),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.size(18.dp),
-                            )
+                            IconButton(
+                                onClick = { editingPreset = preset },
+                                modifier = Modifier.size(48.dp),
+                            ) {
+                                Icon(
+                                    Icons.Filled.Edit,
+                                    contentDescription = stringResource(R.string.format_edit_preset, preset.name),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.size(24.dp),
+                                )
+                            }
                         }
                     }
                 }

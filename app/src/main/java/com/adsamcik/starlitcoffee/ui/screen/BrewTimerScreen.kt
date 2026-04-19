@@ -188,7 +188,10 @@ fun BrewTimerScreen(
                     .padding(horizontal = 8.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
-                IconButton(onClick = { brewViewModel.toggleMinuteAlert() }) {
+                IconButton(
+                    onClick = { brewViewModel.toggleMinuteAlert() },
+                    modifier = Modifier.size(48.dp),
+                ) {
                     Icon(
                         imageVector = if (state.minuteAlertEnabled) {
                             Icons.Filled.Notifications
@@ -200,15 +203,20 @@ fun BrewTimerScreen(
                         } else {
                             "Enable minute alerts"
                         },
+                        modifier = Modifier.size(24.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(
                             alpha = if (state.minuteAlertEnabled) 0.7f else 0.35f,
                         ),
                     )
                 }
-                IconButton(onClick = { brewViewModel.pauseTimer(); onBack() }) {
+                IconButton(
+                    onClick = { brewViewModel.pauseTimer(); onBack() },
+                    modifier = Modifier.size(48.dp),
+                ) {
                     Icon(
                         imageVector = Icons.Filled.Close,
                         contentDescription = "Close",
+                        modifier = Modifier.size(24.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                     )
                 }
