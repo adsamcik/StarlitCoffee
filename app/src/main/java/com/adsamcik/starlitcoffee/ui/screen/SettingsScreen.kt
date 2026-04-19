@@ -693,16 +693,19 @@ private fun ScanDebugCard() {
             )
             Spacer(modifier = Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilledTonalButton(onClick = { showHistory = true }) {
+                FilledTonalButton(onClick = { showHistory = true }, modifier = Modifier.weight(1f)) {
                     Text(stringResource(R.string.action_view_history))
                 }
-                FilledTonalButton(onClick = { ScanBugReporter.shareReport(context) }) {
+                FilledTonalButton(onClick = { ScanBugReporter.shareReport(context) }, modifier = Modifier.weight(1f)) {
                     Text(stringResource(R.string.action_share_report))
                 }
-                FilledTonalButton(onClick = {
-                    ScanSessionRingBuffer.clear(context)
-                    sessions = emptyList()
-                }) {
+                FilledTonalButton(
+                    onClick = {
+                        ScanSessionRingBuffer.clear(context)
+                        sessions = emptyList()
+                    },
+                    modifier = Modifier.weight(1f),
+                ) {
                     Text(stringResource(R.string.action_clear))
                 }
             }
