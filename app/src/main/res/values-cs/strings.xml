@@ -153,6 +153,7 @@
     <string name="msg_log_empty_title">Začněte připravovat kávu</string>
     <string name="msg_log_empty_subtitle">Dokončené přípravy s hodnocením se zobrazí zde</string>
     <string name="msg_tap_to_rate">Klepněte pro ohodnocení</string>
+    <string name="action_rate_brew">Ohodnotit přípravu</string>
 
     <!-- Brew Log Detail Screen -->
     <string name="screen_brew_details_title">Detail přípravy</string>
@@ -483,6 +484,9 @@
     <!-- BagInventoryScreen -->
     <string name="action_from_photo">Z fotografie</string>
     <string name="action_scan_label">Naskenovat štítek</string>
+    <string name="action_add_bag_gallery">Z galerie</string>
+    <string name="action_add_bag_camera">Naskenovat fotoaparátem</string>
+    <string name="action_add_bag_barcode">Naskenovat čárový kód</string>
     <string name="msg_add_coffee_hint">Přidejte kávu pro sledování čerstvosti a doporučení přípravy</string>
     <string name="action_brew_now">Připravit nyní</string>
     <string name="msg_could_not_read_label">Štítek se nepodařilo přečíst</string>
