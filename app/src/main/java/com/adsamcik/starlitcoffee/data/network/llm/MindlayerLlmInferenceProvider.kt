@@ -1,14 +1,16 @@
 package com.adsamcik.starlitcoffee.data.network.llm
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.adsamcik.starlitcoffee.scan.model.FieldSource
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.mindlayer.sdk.ConnectionState
+import com.mindlayer.sdk.InferenceBackend
 import com.mindlayer.sdk.Mindlayer
-import com.mindlayer.sdk.MindlayerEvent
+import com.mindlayer.sdk.MindlayerException
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
@@ -24,6 +26,15 @@ import kotlinx.serialization.json.jsonPrimitive
  * via the Mindlayer SDK. The LLM extracts structured coffee bag metadata
  * (name, roaster, origin, tasting notes, etc.) from the label image.
  *
+ * Each extraction runs as a stateless one-shot via [Mindlayer.generateWithImage]:
+ * no conversation history is carried over between bags, so the model never sees
+ * a previous scan's image or response. This is essential for field-extraction
+ * correctness — the SDK would otherwise accumulate turns in its HistoryStore
+ * and replay them as context.
+ *
+ * Sampling is tuned for deterministic JSON (low temperature, narrow topK/topP)
+ * rather than chat defaults (0.7 / 40 / 0.95).
+ *
  * No cloud, no API keys, fully private, works offline.
  */
 class MindlayerLlmInferenceProvider(
@@ -31,8 +42,6 @@ class MindlayerLlmInferenceProvider(
 ) : LlmInferenceProvider {
 
     private val mindlayer: Mindlayer = Mindlayer.connect(context.applicationContext)
-    private var sessionId: String? = null
-    private val json = Json { ignoreUnknownKeys = true }
 
     override fun isAvailable(): Boolean {
         return mindlayer.connectionState.value == ConnectionState.CONNECTED
@@ -47,21 +56,7 @@ class MindlayerLlmInferenceProvider(
             )
         }
 
-        if (sessionId == null) {
-            try {
-                sessionId = mindlayer.createSession {
-                    systemPrompt(buildSystemPrompt())
-                    maxTokens(2048)
-                }
-            } catch (e: Exception) {
-                return LlmExtractionResult.Failed(
-                    "Failed to create session: ${e.message}",
-                    retryable = true,
-                )
-            }
-        }
-
-        val bitmap = BitmapFactory.decodeByteArray(
+        val bitmap: Bitmap = BitmapFactory.decodeByteArray(
             request.imageBytes,
             0,
             request.imageBytes.size,
@@ -70,27 +65,28 @@ class MindlayerLlmInferenceProvider(
         val prompt = buildExtractionPrompt(request)
 
         return try {
-            val responseText = StringBuilder()
-            var tokenCount = 0
-
-            mindlayer.chatWithImage(sessionId!!, prompt, bitmap).events.collect { event ->
-                when (event) {
-                    is MindlayerEvent.TextDelta -> {
-                        responseText.append(event.text)
-                        tokenCount++
-                    }
-                    is MindlayerEvent.Error -> throw RuntimeException(event.message)
-                    else -> { /* Done or other events — no action needed */ }
-                }
+            // Stateless one-shot — SDK creates a fresh session, runs inference,
+            // then destroys it. No history is carried over to the next extraction.
+            val responseText = mindlayer.generateWithImage(prompt, bitmap) {
+                systemPrompt(buildSystemPrompt())
+                maxTokens(MAX_TOKENS)
+                temperature(EXTRACTION_TEMPERATURE)
+                topK(EXTRACTION_TOP_K)
+                topP(EXTRACTION_TOP_P)
             }
 
             bitmap.recycle()
-            android.util.Log.d("MindlayerLlm", "LLM inference complete: $tokenCount tokens, ${responseText.length} chars")
-            val result = parseResponse(responseText.toString(), request.fieldsNeeded)
-            when (result) {
-                is LlmExtractionResult.Success -> result.copy(tokensUsed = tokenCount)
-                else -> result
-            }
+            android.util.Log.d(
+                "MindlayerLlm",
+                "LLM inference complete: ${responseText.length} chars",
+            )
+            parseResponse(responseText, request.fieldsNeeded)
+        } catch (e: MindlayerException) {
+            bitmap.recycle()
+            LlmExtractionResult.Failed(
+                "Inference failed: ${e.message}",
+                retryable = e.code != "UNSUPPORTED_TOOL_CALL",
+            )
         } catch (e: Exception) {
             bitmap.recycle()
             LlmExtractionResult.Failed("Inference failed: ${e.message}", retryable = true)
@@ -99,16 +95,40 @@ class MindlayerLlmInferenceProvider(
 
     /** Release resources. Call when the provider is no longer needed. */
     fun close() {
-        sessionId = null
         mindlayer.disconnect()
     }
 
-    /** Pre-warm: connect to the Mindlayer service early so the first LLM call doesn't pay full init. */
+    /**
+     * Pre-warm: connect to the Mindlayer service AND load the inference engine
+     * so the first extraction doesn't pay the 5–10 s engine init cost.
+     */
     suspend fun ensureConnected() {
         mindlayer.awaitConnected()
+        try {
+            mindlayer.prewarm(PREWARM_BACKEND)
+        } catch (e: Exception) {
+            // Prewarm is an optimisation — missing it just means the first
+            // call pays full cost. Don't fail ensureConnected over it.
+            android.util.Log.w("MindlayerLlm", "prewarm failed: ${e.message}")
+        }
     }
 
     companion object {
+        /** Max tokens per extraction. Enough for full 10-field JSON with tasting notes. */
+        private const val MAX_TOKENS = 2048
+
+        /** Low temperature for deterministic structured JSON output. */
+        private const val EXTRACTION_TEMPERATURE = 0.1f
+
+        /** Narrow topK — JSON schema is rigid; we don't want creative tokens. */
+        private const val EXTRACTION_TOP_K = 20
+
+        /** Tight topP for structured output. */
+        private const val EXTRACTION_TOP_P = 0.9f
+
+        /** Preferred backend for prewarm. GPU is the standard fast path. */
+        private val PREWARM_BACKEND = InferenceBackend.GPU
+
         internal fun buildSystemPrompt(): String = """
 You are a coffee bag label analyzer. Extract structured information from coffee bag label images.
 

@@ -16,6 +16,8 @@ import com.adsamcik.starlitcoffee.scan.FrameEvidenceAccumulator
 import com.adsamcik.starlitcoffee.scan.SideDetector
 import com.adsamcik.starlitcoffee.scan.model.AccumulatedEvidence
 import com.adsamcik.starlitcoffee.scan.model.AccumulatorConfig
+import com.adsamcik.starlitcoffee.scan.model.FieldContext
+import com.adsamcik.starlitcoffee.scan.model.FieldSource
 import com.adsamcik.starlitcoffee.scan.model.FieldStatus
 import com.adsamcik.starlitcoffee.scan.model.FrameResult
 import com.adsamcik.starlitcoffee.scan.model.LlmEscalationRequest
@@ -24,7 +26,6 @@ import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionSummary
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
-import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.BarcodeInsights
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
@@ -548,10 +549,16 @@ class LiveScanViewModel(
 
         val fieldsNeeded = config.allFields
 
+        // Build existing-fields context so the LLM can cross-reference what other
+        // sources (user-confirmed, barcode/QR lookup, earlier OCR consensus) have
+        // already concluded. The prompt treats these with source-specific trust
+        // levels — this is what makes the LLM the *primary* reasoning layer.
+        val existingFields = buildExistingFieldsMap(_evidence.value)
+
         // PATH 1: OCR+Image (full context)
         val ocrImageRequest = LlmExtractionRequest(
             imageBytes = jpegBytes,
-            existingFields = emptyMap(),
+            existingFields = existingFields,
             fieldsNeeded = fieldsNeeded,
             rawOcrText = ocrResult.rawText.takeIf { it.isNotBlank() },
             knownFieldValues = currentKnownValues,
@@ -560,7 +567,8 @@ class LiveScanViewModel(
         val ocrImageResult = llmProvider.extractBagFields(ocrImageRequest)
         val ocrLatencyMs = System.currentTimeMillis() - ocrStartMs
 
-        // PATH 2: Image-only (no OCR hints)
+        // PATH 2: Image-only (no OCR hints, no grounding) — pure vision control,
+        // used as a benchmark signal and as a low-priority fallback.
         val imageOnlyRequest = LlmExtractionRequest(
             imageBytes = jpegBytes,
             existingFields = emptyMap(),
@@ -598,7 +606,9 @@ class LiveScanViewModel(
             feedLlmResultsToAccumulator(ocrImageResult.fieldCandidates)
         }
 
-        // Feed image-only results as low-weight fallback for fields OCR+Image missed
+        // Feed image-only results as LLM-source fallback for fields OCR+Image missed.
+        // IMPORTANT: submit as LLM (not OCR) so the source attribution and weight
+        // stay honest — these are LLM-derived values, just with less context.
         if (imageOnlyResult is LlmExtractionResult.Success) {
             val ocrResolvedFields = ocrFields.keys
             val imageOnlyNew = imageOnlyResult.fieldCandidates
@@ -610,7 +620,7 @@ class LiveScanViewModel(
                 if (fallbackValues.isNotEmpty()) {
                     accumulator?.submitEnrichment(
                         fieldValues = fallbackValues,
-                        sourceType = BagFieldSourceType.OCR,
+                        sourceType = BagFieldSourceType.LLM,
                     )
                 }
             }
@@ -835,36 +845,51 @@ class LiveScanViewModel(
     }
 
     private fun feedLlmResultsToAccumulator(candidates: List<BagFieldCandidate>) {
-        // Partition by confidence: HIGH gets full weight, LOW gets reduced weight
-        val highConfidence = candidates.filter {
-            it.confidenceHint == BagFieldConfidence.HIGH ||
-                it.confidenceHint == BagFieldConfidence.MEDIUM
-        }
-        val lowConfidence = candidates.filter {
-            it.confidenceHint == BagFieldConfidence.LOW
-        }
-
-        // Submit high-confidence fields as normal LLM enrichment (full sourceWeightLlm)
-        val highValues = highConfidence.associate { it.fieldName to it.value }
+        // All LLM-derived candidates are submitted as LLM source. Confidence is
+        // already encoded on the candidate itself and is honoured by the
+        // ConsensusEngine — we must NOT re-label low-confidence LLM output as OCR,
+        // because that corrupts source attribution for cross-validation, for the
+        // next LLM escalation's prompt, and for UI treatment.
+        val values = candidates
+            .associate { it.fieldName to it.value }
             .filter { it.value.isNotBlank() }
-        if (highValues.isNotEmpty()) {
+        if (values.isNotEmpty()) {
             accumulator?.submitEnrichment(
-                fieldValues = highValues,
+                fieldValues = values,
                 sourceType = BagFieldSourceType.LLM,
             )
         }
+    }
 
-        // Submit low-confidence (uncertain) fields as OCR-weight to reduce their impact.
-        // Using OCR source type gives them sourceWeightOcr (1.0) instead of
-        // sourceWeightLlm (10.0), matching their reduced trustworthiness.
-        val lowValues = lowConfidence.associate { it.fieldName to it.value }
-            .filter { it.value.isNotBlank() }
-        if (lowValues.isNotEmpty()) {
-            accumulator?.submitEnrichment(
-                fieldValues = lowValues,
-                sourceType = BagFieldSourceType.OCR,
-            )
-        }
+    /**
+     * Build a `FieldContext` map from the current accumulated evidence, matching
+     * the attribution rules used in [FrameEvidenceAccumulator.buildExistingFieldsMap].
+     *
+     * This is passed to the LLM so the primary-reasoning prompt can trust or
+     * challenge each prior value based on *how* it was obtained.
+     */
+    private fun buildExistingFieldsMap(evidence: AccumulatedEvidence): Map<String, FieldContext> {
+        return evidence.fields
+            .filter { it.value.isResolved }
+            .mapValues { (_, field) ->
+                val value = field.resolvedValue
+                    ?: field.topCandidate?.normalizedValue
+                    ?: ""
+                val source = when {
+                    field.status == FieldStatus.USER_LOCKED -> FieldSource.USER
+                    field.topCandidate?.sourceTypes?.contains(BagFieldSourceType.LLM) == true ->
+                        FieldSource.LLM
+                    field.topCandidate?.sourceTypes?.any {
+                        it == BagFieldSourceType.BARCODE_LOOKUP ||
+                            it == BagFieldSourceType.LOCAL_BARCODE_MATCH ||
+                            it == BagFieldSourceType.QR_LINK_LOOKUP
+                    } == true -> FieldSource.LOOKUP
+                    else -> FieldSource.OCR
+                }
+                val confidence = field.resolvedEvidence?.confidence?.name
+                FieldContext(value = value, source = source, confidence = confidence)
+            }
+            .filter { it.value.value.isNotBlank() }
     }
 
     // --- Cross-validation logic ---

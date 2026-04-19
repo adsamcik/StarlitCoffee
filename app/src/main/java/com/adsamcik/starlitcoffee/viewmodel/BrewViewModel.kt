@@ -1159,11 +1159,16 @@ class BrewViewModel(
                     val qrEnrichment= buildQrLinkEnrichment(rawDetectedQrUrl)
                     allCandidates += qrEnrichment.candidates
 
-                    // LLM enrichment — for fields where OCR produced weak/missing results
+                    // LLM enrichment — primary-source reasoning over all core fields.
+                    // Receives prior candidates (OCR+lookup) for cross-reference,
+                    // raw OCR text for character-level verification, and the user's
+                    // known-values vocabulary for grounding.
                     val llmCandidates = tryLlmEnrichment(
                         photoUriList = photoUriList,
                         processedPhotos = processedPhotos,
                         allCandidates = allCandidates,
+                        combinedOcrText = combinedOcrText,
+                        knownFieldValues = _knownFieldValues.value,
                     )
                     allCandidates += llmCandidates
 
@@ -1666,27 +1671,21 @@ class BrewViewModel(
         photoUriList: List<String>,
         processedPhotos: List<ProcessedBagPhoto>,
         allCandidates: List<BagFieldCandidate>,
+        combinedOcrText: String,
+        knownFieldValues: KnownFieldValues,
     ): List<BagFieldCandidate> {
         if (!llmProvider.isAvailable()) return emptyList()
 
-        // Find fields where OCR produced weak or missing results
-        val fieldsNeeded = BAG_PHOTO_FIELD_NAMES.filter { fieldName ->
-            allCandidates.none { candidate ->
-                candidate.fieldName == fieldName &&
-                    (candidate.confidenceHint == BagFieldConfidence.HIGH ||
-                        candidate.confidenceHint == BagFieldConfidence.MEDIUM)
-            }
-        }.toSet()
-        if (fieldsNeeded.isEmpty()) return emptyList()
+        // Primary-source mode: ask the LLM about every field, not just the
+        // ones OCR couldn't resolve. The LLM should be able to verify and,
+        // where appropriate, correct OCR/lookup values by re-reading the label.
+        val fieldsNeeded = BAG_PHOTO_FIELD_NAMES.toSet()
 
-        // Gather existing OCR fields with decent confidence
-        val ocrFields = allCandidates
-            .filter {
-                it.confidenceHint == BagFieldConfidence.HIGH ||
-                    it.confidenceHint == BagFieldConfidence.MEDIUM
-            }
-            .groupBy { it.fieldName }
-            .mapValues { (_, candidates) -> candidates.first().value }
+        // Assemble all HIGH/MEDIUM-confidence candidates already gathered, not
+        // just OCR. The LLM prompt treats each source (USER / LOOKUP / OCR / LLM)
+        // with different trust rules, so barcode/QR lookup results MUST reach
+        // the LLM too — otherwise it will hallucinate over known product data.
+        val existingFields = buildExistingFieldsContext(allCandidates)
 
         // Read the best-quality photo bytes
         val bestPhotoUri = processedPhotos.maxByOrNull { it.quality.blurScore }?.uri
@@ -1702,15 +1701,81 @@ class BrewViewModel(
 
         return tryLlmEnrichment(
             photoBytes = photoBytes,
-            ocrFields = ocrFields,
+            existingFields = existingFields,
             fieldsNeeded = fieldsNeeded,
+            rawOcrText = combinedOcrText.takeIf { it.isNotBlank() },
+            knownFieldValues = knownFieldValues,
         )
+    }
+
+    /**
+     * Collapse the candidate list to a single best value per field, mapped to
+     * the [FieldSource] taxonomy the LLM prompt understands.
+     *
+     * Priority order: USER (if any exist in candidates — rare in photo path),
+     * LOOKUP (barcode/QR), LLM (from prior runs, if any), OCR. Only
+     * HIGH/MEDIUM-confidence candidates are forwarded to avoid feeding the LLM
+     * low-confidence OCR noise.
+     */
+    private fun buildExistingFieldsContext(
+        candidates: List<BagFieldCandidate>,
+    ): Map<String, com.adsamcik.starlitcoffee.scan.model.FieldContext> {
+        val strong = candidates.filter {
+            it.confidenceHint == BagFieldConfidence.HIGH ||
+                it.confidenceHint == BagFieldConfidence.MEDIUM
+        }
+        fun sourceOf(c: BagFieldCandidate): com.adsamcik.starlitcoffee.scan.model.FieldSource =
+            when (c.sourceType) {
+                BagFieldSourceType.LLM ->
+                    com.adsamcik.starlitcoffee.scan.model.FieldSource.LLM
+                BagFieldSourceType.BARCODE_LOOKUP,
+                BagFieldSourceType.LOCAL_BARCODE_MATCH,
+                BagFieldSourceType.QR_LINK_LOOKUP,
+                BagFieldSourceType.OBSERVED_BARCODE_STEM ->
+                    com.adsamcik.starlitcoffee.scan.model.FieldSource.LOOKUP
+                BagFieldSourceType.OCR,
+                BagFieldSourceType.CONSENSUS ->
+                    com.adsamcik.starlitcoffee.scan.model.FieldSource.OCR
+            }
+        // Per-source priority for picking the representative value per field.
+        val sourceRank = mapOf(
+            com.adsamcik.starlitcoffee.scan.model.FieldSource.USER to 0,
+            com.adsamcik.starlitcoffee.scan.model.FieldSource.LOOKUP to 1,
+            com.adsamcik.starlitcoffee.scan.model.FieldSource.LLM to 2,
+            com.adsamcik.starlitcoffee.scan.model.FieldSource.OCR to 3,
+        )
+        val confidenceRank = mapOf(
+            BagFieldConfidence.HIGH to 0,
+            BagFieldConfidence.MEDIUM to 1,
+            BagFieldConfidence.LOW to 2,
+            BagFieldConfidence.NEEDS_REVIEW to 3,
+        )
+        return strong
+            .groupBy { it.fieldName }
+            .mapNotNull { (fieldName, group) ->
+                val winner = group.minWithOrNull(
+                    compareBy(
+                        { sourceRank[sourceOf(it)] ?: Int.MAX_VALUE },
+                        { confidenceRank[it.confidenceHint] ?: Int.MAX_VALUE },
+                    ),
+                ) ?: return@mapNotNull null
+                val value = winner.value.trim()
+                if (value.isEmpty()) null
+                else fieldName to com.adsamcik.starlitcoffee.scan.model.FieldContext(
+                    value = value,
+                    source = sourceOf(winner),
+                    confidence = winner.confidenceHint.name,
+                )
+            }
+            .toMap()
     }
 
     private suspend fun tryLlmEnrichment(
         photoBytes: ByteArray,
-        ocrFields: Map<String, String>,
+        existingFields: Map<String, com.adsamcik.starlitcoffee.scan.model.FieldContext>,
         fieldsNeeded: Set<String>,
+        rawOcrText: String?,
+        knownFieldValues: KnownFieldValues?,
     ): List<BagFieldCandidate> {
         if (!llmProvider.isAvailable()) return emptyList()
 
@@ -1719,18 +1784,12 @@ class BrewViewModel(
             return cached.fieldCandidates
         }
 
-        // Wrap plain OCR fields with source attribution
-        val attributedFields = ocrFields.mapValues { (_, value) ->
-            com.adsamcik.starlitcoffee.scan.model.FieldContext(
-                value = value,
-                source = com.adsamcik.starlitcoffee.scan.model.FieldSource.OCR,
-            )
-        }
-
         val request = LlmExtractionRequest(
             imageBytes = photoBytes,
-            existingFields = attributedFields,
+            existingFields = existingFields,
             fieldsNeeded = fieldsNeeded,
+            rawOcrText = rawOcrText,
+            knownFieldValues = knownFieldValues,
         )
         return when (val result = llmProvider.extractBagFields(request)) {
             is LlmExtractionResult.Success -> {
