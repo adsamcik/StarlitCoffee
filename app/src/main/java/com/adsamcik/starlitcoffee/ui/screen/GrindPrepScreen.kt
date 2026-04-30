@@ -43,6 +43,7 @@ import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderScaleType
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
+import com.adsamcik.starlitcoffee.ui.component.WarningCard
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
@@ -97,6 +98,17 @@ fun GrindPrepScreen(
                 title = stringResource(R.string.screen_grind_prep_title),
                 onBack = onBack,
             )
+
+            // Surface guardrail warnings so the user notices issues with the
+            // current setup (e.g. bloom > water, ratio outside sane range)
+            // before committing to a brew.
+            state.ratioWarning?.let { warning ->
+                WarningCard(message = warning)
+            }
+            state.bloomWarning?.let { warning ->
+                WarningCard(message = warning)
+            }
+
             GrindHeroCard(state.grindResult)
 
             MetricsRow(

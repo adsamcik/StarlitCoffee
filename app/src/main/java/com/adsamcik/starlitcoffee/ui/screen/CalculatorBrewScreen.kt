@@ -124,13 +124,15 @@ fun CalculatorBrewScreen(
 
     var showSaveFavoriteDialog by remember { mutableStateOf(false) }
 
-    // Sync calculator-local selections (method, filter, grinder, dose) into the
-    // shared BrewViewModel so that downstream actions (start brewing, save
-    // recipe) operate on a consistent BrewUiState snapshot.
+    // Sync calculator-local selections (method, filter, grinder, ratio, dose)
+    // into the shared BrewViewModel so that downstream actions (start brewing,
+    // save recipe) operate on a consistent BrewUiState snapshot. setMethod
+    // clears customRatio, so apply the user-selected ratio after.
     val syncBrewState: () -> Unit = {
         brewViewModel.setMethod(selectedMethod)
         brewViewModel.setFilterType(selectedFilter)
         brewViewModel.setGrinder(selectedGrinderId)
+        brewViewModel.setCustomRatio(state.ratio.toString())
         brewViewModel.setAmount(state.previewDoseG.toString())
     }
 
