@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlinx.coroutines.delay
@@ -211,6 +212,14 @@ fun BloomTimerScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
+                BloomSpritesheetAnimation(
+                    bloomCountdownSeconds = state.bloomCountdownSeconds,
+                    bloomDurationSeconds = state.effectiveBloomDurationSeconds,
+                    modifier = Modifier.size(172.dp),
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
                 // Hero timer
                 Text(
                     text = formatBloomTime(state.elapsedSeconds),
@@ -247,7 +256,7 @@ fun BloomTimerScreen(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    val bloomDuration = state.method.bloomDurationSeconds
+                    val bloomDuration = state.effectiveBloomDurationSeconds
                     val progress = if (bloomDuration > 0) {
                         (state.bloomCountdownSeconds ?: 0).toFloat() / bloomDuration
                     } else {

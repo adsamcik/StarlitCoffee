@@ -123,6 +123,7 @@
     <string name="action_resume">Pokračovat</string>
     <string name="cd_disable_minute_alerts">Vypnout minutová upozornění</string>
     <string name="cd_enable_minute_alerts">Zapnout minutová upozornění</string>
+    <string name="cd_bloom_animation">Kávové zrno rozkvétá do květu</string>
     <string name="format_bloom_at">🌱 Bloom v %1$s</string>
     <string name="format_pour_bloom_water">Nalijte %1$.0fg vody pro bloom</string>
     <string name="format_bloom_total">Bloom %1$.0fg · Celkem %2$.0fg</string>

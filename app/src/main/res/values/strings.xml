@@ -123,6 +123,7 @@
     <string name="action_resume">Resume</string>
     <string name="cd_disable_minute_alerts">Disable minute alerts</string>
     <string name="cd_enable_minute_alerts">Enable minute alerts</string>
+    <string name="cd_bloom_animation">Coffee bean blooming into a flower</string>
     <string name="format_bloom_at">🌱 Bloom at %1$s</string>
     <string name="format_pour_bloom_water">Pour %1$.0fg bloom water</string>
     <string name="format_bloom_total">Bloom %1$.0fg · Total %2$.0fg</string>
