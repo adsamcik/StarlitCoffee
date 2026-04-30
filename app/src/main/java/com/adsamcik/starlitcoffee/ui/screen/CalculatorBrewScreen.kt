@@ -395,7 +395,7 @@ fun CalculatorBrewScreen(
         }
 
         // Calculator keyboard — pinned to bottom, outside scroll
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         CalculatorKeyboard(
             presets = state.availablePresets,
@@ -411,6 +411,8 @@ fun CalculatorBrewScreen(
                 onNavigateToBrew()
             },
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
     }
 
     if (showSaveFavoriteDialog) {
@@ -759,12 +761,12 @@ private fun CalculatorKeyboard(
     onBrew: () -> Unit,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         // Row 1: Preset buttons + backspace
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             val schemeContainers = listOf(
                 MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer,
@@ -820,6 +822,9 @@ private fun CalculatorKeyboard(
             }
         }
 
+        // Visual breath between the preset/utility row and the calculation rows.
+        Spacer(modifier = Modifier.height(2.dp))
+
         // Rows 2-5: Number pad + operators + brew button
         // Layout: 3 number columns + 1 action column
         val keyHeight = 56.dp
@@ -827,7 +832,7 @@ private fun CalculatorKeyboard(
         // Row 2: 7 8 9 ×
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             CalcKey("7", Modifier.weight(1f).height(keyHeight)) { onDigit('7') }
             CalcKey("8", Modifier.weight(1f).height(keyHeight)) { onDigit('8') }
@@ -838,7 +843,7 @@ private fun CalculatorKeyboard(
         // Row 3: 4 5 6 +
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             CalcKey("4", Modifier.weight(1f).height(keyHeight)) { onDigit('4') }
             CalcKey("5", Modifier.weight(1f).height(keyHeight)) { onDigit('5') }
@@ -849,7 +854,7 @@ private fun CalculatorKeyboard(
         // Row 4: 1 2 3 [Brew top half]
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             CalcKey("1", Modifier.weight(1f).height(keyHeight)) { onDigit('1') }
             CalcKey("2", Modifier.weight(1f).height(keyHeight)) { onDigit('2') }
@@ -864,7 +869,7 @@ private fun CalculatorKeyboard(
         // Row 5: 0 (wide) . C
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             CalcKey("0", Modifier.weight(2f).height(keyHeight)) { onDigit('0') }
             CalcKey(".", Modifier.weight(1f).height(keyHeight)) { onDecimal() }
