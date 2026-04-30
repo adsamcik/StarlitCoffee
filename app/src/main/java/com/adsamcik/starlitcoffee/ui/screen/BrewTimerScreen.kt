@@ -1,6 +1,5 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import android.app.Activity
 import android.content.Context
 import android.media.AudioManager
 import android.media.ToneGenerator
@@ -8,7 +7,6 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -47,7 +45,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -66,6 +63,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
+import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlinx.coroutines.delay
 import kotlin.math.abs
@@ -78,16 +77,9 @@ fun BrewTimerScreen(
 ) {
     val state by brewViewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val activity = context as? Activity
     val vibrator = remember { getVibrator(context) }
 
-    // Keep screen on while brewing
-    DisposableEffect(Unit) {
-        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        onDispose {
-            activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        }
-    }
+    KeepScreenOn()
 
     // Auto-start the timer only when the brew begins immediately.
     // For bloom methods, the timer starts when the user taps Start Bloom —
@@ -232,6 +224,17 @@ fun BrewTimerScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
             ) {
+                val showBloomAnimation = state.method.hasBloom &&
+                    state.bloomG > 0f &&
+                    (!state.bloomFinished || bloomJustEndedFlash)
+                if (showBloomAnimation) {
+                    BloomSpritesheetAnimation(
+                        bloomCountdownSeconds = state.bloomCountdownSeconds,
+                        bloomDurationSeconds = state.effectiveBloomDurationSeconds,
+                        modifier = Modifier.size(if (bloomActive || bloomJustEndedFlash) 148.dp else 132.dp),
+                    )
+                }
+
                 // Hero number: bloom countdown if active, otherwise elapsed total
                 val heroSeconds = if (bloomActive) {
                     state.bloomCountdownSeconds ?: 0

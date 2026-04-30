@@ -1755,5 +1755,94 @@ class BrewViewModelTest {
 
         assertTrue(vm.uiState.value.effectiveBloomDurationSeconds >= 30)
     }
+
+    // --- New Brew Session Reset ---
+
+    @Test
+    fun `startNewBrewSession clears timer progress`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setAmount("20")
+        viewModel.setUiStateForTesting(
+            viewModel.uiState.value.copy(
+                timerRunning = true,
+                elapsedSeconds = 180,
+                bloomMarkedAtSeconds = 5,
+                bloomCountdownSeconds = 10,
+                bloomFinished = true,
+            ),
+        )
+
+        viewModel.startNewBrewSession()
+
+        val state = viewModel.uiState.value
+        assertFalse(state.timerRunning)
+        assertEquals(0, state.elapsedSeconds)
+        assertNull(state.bloomMarkedAtSeconds)
+        assertNull(state.bloomCountdownSeconds)
+        assertFalse(state.bloomFinished)
+    }
+
+    @Test
+    fun `startNewBrewSession clears feedback state`() {
+        viewModel.setTasteFeedback(TasteFeedback.TOO_BITTER)
+        viewModel.setRating(4)
+        viewModel.setFeedbackNotes("Pretty good")
+        viewModel.requestFeedbackSnackbar()
+
+        viewModel.startNewBrewSession()
+
+        val state = viewModel.uiState.value
+        assertNull(state.tasteFeedback)
+        assertEquals(0, state.rating)
+        assertEquals("", state.feedbackNotes)
+        assertFalse(state.showFeedbackSnackbar)
+    }
+
+    @Test
+    fun `startNewBrewSession resets minute-alert toggle to default-on`() {
+        viewModel.toggleMinuteAlert() // disables it
+        assertFalse(viewModel.uiState.value.minuteAlertEnabled)
+
+        viewModel.startNewBrewSession()
+
+        assertTrue(viewModel.uiState.value.minuteAlertEnabled)
+    }
+
+    @Test
+    fun `startNewBrewSession preserves recipe configuration`() {
+        viewModel.setMethod(BrewMethod.V60)
+        viewModel.setAmount("25")
+        viewModel.setFilterType(FilterType.PAPER)
+        viewModel.setCustomRatio("18")
+        val before = viewModel.uiState.value
+
+        viewModel.setUiStateForTesting(before.copy(elapsedSeconds = 120))
+        viewModel.startNewBrewSession()
+
+        val after = viewModel.uiState.value
+        assertEquals(before.method, after.method)
+        assertEquals(before.amount, after.amount)
+        assertEquals(before.filterType, after.filterType)
+        assertEquals(before.customRatio, after.customRatio)
+        assertEquals(before.coffeeG, after.coffeeG, 0.01f)
+        assertEquals(before.waterG, after.waterG, 0.01f)
+    }
+
+    @Test
+    fun `startNewBrewSession satisfies auto-start condition for non-bloom methods`() {
+        // Reproduces the bug: leaving BrewTimer mid-brew left elapsedSeconds non-zero,
+        // which prevented the auto-start LaunchedEffect from firing on re-entry.
+        viewModel.setMethod(BrewMethod.FRENCH_PRESS) // non-bloom
+        viewModel.setUiStateForTesting(
+            viewModel.uiState.value.copy(elapsedSeconds = 240, timerRunning = false),
+        )
+
+        viewModel.startNewBrewSession()
+
+        val state = viewModel.uiState.value
+        assertFalse(state.timerRunning)
+        assertEquals(0, state.elapsedSeconds)
+        assertFalse(state.method.hasBloom)
+    }
 }
 

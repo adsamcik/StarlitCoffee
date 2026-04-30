@@ -43,6 +43,7 @@ import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderScaleType
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
+import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 
@@ -53,6 +54,9 @@ fun GrindPrepScreen(
     onBack: () -> Unit,
 ) {
     val state by brewViewModel.uiState.collectAsStateWithLifecycle()
+
+    // Hands are busy with grinder/scale/kettle here — don't let the screen sleep.
+    KeepScreenOn()
 
     Scaffold(
         bottomBar = {

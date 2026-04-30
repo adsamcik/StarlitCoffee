@@ -1898,6 +1898,27 @@ class BrewViewModel(
         applyUserDefaults()
     }
 
+    /**
+     * Resets per-brew-session state when starting a fresh brew flow (e.g. tapping
+     * "Brew" on the calculator screen). Preserves recipe configuration the user
+     * just dialled in (method, amount, ratio, filter, grinder, selected bag,
+     * decaf override) so they don't have to redo it. Clears timer progress,
+     * bloom progress, taste feedback, and resets the minute-alert toggle to its
+     * default-on state for the new session.
+     */
+    fun startNewBrewSession() {
+        stopTimer()
+        _uiState.update {
+            it.copy(
+                tasteFeedback = null,
+                rating = 0,
+                feedbackNotes = "",
+                showFeedbackSnackbar = false,
+                minuteAlertEnabled = true,
+            )
+        }
+    }
+
     private fun collectRatioPresets(method: BrewMethod) {
         ratioPresetJob?.cancel()
         val repository = ratioPresetRepository ?: return

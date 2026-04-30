@@ -248,6 +248,7 @@ fun StarlitNavHost() {
                     brewViewModel = brewViewModel,
                     userPreferencesRepository = userPreferencesRepository,
                     onNavigateToBrew = {
+                        brewViewModel.startNewBrewSession()
                         navController.navigate(GrindPrep)
                     },
                 )
