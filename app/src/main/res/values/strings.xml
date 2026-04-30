@@ -199,7 +199,7 @@
     <!-- More Screen -->
     <string name="screen_more_title">More</string>
     <string name="label_your_favorites">Your Favorites</string>
-    <string name="msg_favorites_subtitle">Replay your favourite brews</string>
+    <string name="msg_favorites_subtitle">Replay your favorite brews</string>
     <string name="label_your_beans">Your Beans</string>
     <string name="msg_beans_subtitle">Freshness, stock, and what to brew next</string>
     <string name="msg_settings_subtitle">Methods, grinder and preferences</string>

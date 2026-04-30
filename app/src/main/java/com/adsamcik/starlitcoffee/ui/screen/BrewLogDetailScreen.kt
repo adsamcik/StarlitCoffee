@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -91,6 +92,24 @@ fun BrewLogDetailScreen(
         selectedDescriptors != initialDescriptors ||
         notes != initialNotes
 
+    // Persist any unsaved feedback before leaving the screen so users don't
+    // lose ratings/notes when they navigate back without tapping Save.
+    val saveAndExit: () -> Unit = saveAndExit@{
+        val entity = log
+        if (hasChanges && entity != null) {
+            brewViewModel.updateBrewLogFeedback(
+                logId = logId,
+                rating = rating.takeIf { it > 0f },
+                notes = notes,
+                tasteFeedback = entity.tasteFeedback,
+                descriptors = selectedDescriptors.map { it.displayName },
+            )
+        }
+        onBack()
+    }
+
+    BackHandler(enabled = !isLoading) { saveAndExit() }
+
     // Load log entity
     LaunchedEffect(logId) {
         val entity = brewViewModel.getBrewLogById(logId)
@@ -147,7 +166,7 @@ fun BrewLogDetailScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.screen_brew_details_title)) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = saveAndExit) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.action_back),
