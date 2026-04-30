@@ -249,7 +249,11 @@ fun StarlitNavHost() {
                     userPreferencesRepository = userPreferencesRepository,
                     onNavigateToBrew = {
                         brewViewModel.startNewBrewSession()
-                        navController.navigate(GrindPrep)
+                        // Quick Brew preference jumps past the grind/prep
+                        // checkpoint and lands directly in the timer. Default
+                        // flow keeps GrindPrep as the pre-flight checkpoint.
+                        val target: Any = if (prefs.skipMethodSelection) BrewTimer else GrindPrep
+                        navController.navigate(target)
                     },
                 )
             }
