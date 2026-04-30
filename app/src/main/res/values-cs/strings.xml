@@ -488,6 +488,8 @@
     <string name="action_add_bag_gallery">Z galerie</string>
     <string name="action_add_bag_camera">Naskenovat fotoaparátem</string>
     <string name="action_add_bag_barcode">Naskenovat čárový kód</string>
+    <string name="action_add_bag_manual">Přidat ručně</string>
+    <string name="msg_no_beans_yet">Zatím žádná zrna</string>
     <string name="msg_add_coffee_hint">Přidejte kávu pro sledování čerstvosti a doporučení přípravy</string>
     <string name="action_brew_now">Připravit nyní</string>
     <string name="msg_could_not_read_label">Štítek se nepodařilo přečíst</string>

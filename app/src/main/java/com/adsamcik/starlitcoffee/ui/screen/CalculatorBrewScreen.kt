@@ -35,6 +35,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Backspace
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CoffeeMaker
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.LocalCafe
@@ -66,6 +67,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -85,6 +87,7 @@ import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.util.presetIcon
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
@@ -119,17 +122,34 @@ fun CalculatorBrewScreen(
     val context = LocalContext.current
     val grinders = remember { GrinderDataSource.getInstance(context).grinders }
 
+    var showSaveFavoriteDialog by remember { mutableStateOf(false) }
+
+    // Sync calculator-local selections (method, filter, grinder, dose) into the
+    // shared BrewViewModel so that downstream actions (start brewing, save
+    // recipe) operate on a consistent BrewUiState snapshot.
+    val syncBrewState: () -> Unit = {
+        brewViewModel.setMethod(selectedMethod)
+        brewViewModel.setFilterType(selectedFilter)
+        brewViewModel.setGrinder(selectedGrinderId)
+        brewViewModel.setAmount(state.previewDoseG.toString())
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp),
     ) {
-        // Top section: direction toggle + ratio chip
+        // Top section: direction toggle + save favorite + ratio chip
         TopControlBar(
             direction = state.inputDirection,
             ratio = state.ratio,
+            canSaveFavorite = state.hasValidExpression && state.previewDoseG > 0f,
             onToggleDirection = { calculatorViewModel.toggleDirection() },
             onRatioChange = { calculatorViewModel.setRatio(it) },
+            onSaveFavorite = {
+                syncBrewState()
+                showSaveFavoriteDialog = true
+            },
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -345,12 +365,20 @@ fun CalculatorBrewScreen(
             onBackspace = { calculatorViewModel.backspace() },
             onClear = { calculatorViewModel.clear() },
             onBrew = {
-                brewViewModel.setMethod(selectedMethod)
-                brewViewModel.setFilterType(selectedFilter)
-                brewViewModel.setGrinder(selectedGrinderId)
-                brewViewModel.setAmount(state.previewDoseG.toString())
+                syncBrewState()
                 onNavigateToBrew()
             },
+        )
+    }
+
+    if (showSaveFavoriteDialog) {
+        SaveFavoriteDialog(
+            suggestedName = "",
+            onSave = { name ->
+                brewViewModel.saveRecipe(name)
+                showSaveFavoriteDialog = false
+            },
+            onDismiss = { showSaveFavoriteDialog = false },
         )
     }
 }
@@ -359,8 +387,10 @@ fun CalculatorBrewScreen(
 private fun TopControlBar(
     direction: InputDirection,
     ratio: Float,
+    canSaveFavorite: Boolean,
     onToggleDirection: () -> Unit,
     onRatioChange: (Float) -> Unit,
+    onSaveFavorite: () -> Unit,
 ) {
     var showRatioDialog by remember { mutableStateOf(false) }
 
@@ -390,17 +420,39 @@ private fun TopControlBar(
             )
         }
 
-        // Ratio chip
-        AssistChip(
-            onClick = { showRatioDialog = true },
-            label = {
-                Text(
-                    text = "1:${ratio.toInt()}",
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.SemiBold,
+        // Right cluster: save-as-favorite + ratio chip
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            IconButton(
+                onClick = onSaveFavorite,
+                enabled = canSaveFavorite,
+                modifier = Modifier.testTag("save_favorite_button"),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.FavoriteBorder,
+                    contentDescription = stringResource(R.string.action_save_as_favorite),
+                    tint = if (canSaveFavorite) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
                 )
-            },
-        )
+            }
+
+            // Ratio chip
+            AssistChip(
+                onClick = { showRatioDialog = true },
+                label = {
+                    Text(
+                        text = "1:${ratio.toInt()}",
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                },
+            )
+        }
     }
 
     if (showRatioDialog) {

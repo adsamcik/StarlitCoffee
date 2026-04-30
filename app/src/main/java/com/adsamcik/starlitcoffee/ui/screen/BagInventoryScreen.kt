@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.ShoppingBag
@@ -48,8 +49,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
@@ -344,6 +343,45 @@ fun BagInventoryScreen(
                                 Icon(Icons.Filled.QrCodeScanner, contentDescription = stringResource(R.string.action_scan_barcode))
                             }
                         }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            Surface(
+                                color = MaterialTheme.colorScheme.secondaryContainer,
+                                shape = MaterialTheme.shapes.small,
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.action_add_bag_manual),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                )
+                            }
+                            SmallFloatingActionButton(
+                                onClick = {
+                                    fabExpanded = false
+                                    // Reset any preflight scan state so the sheet opens blank
+                                    detectedBarcode = null
+                                    detectedQrUrl = null
+                                    ocrPrefill = null
+                                    capturedPhotoUris = null
+                                    offLookupName = null
+                                    offLookupRoaster = null
+                                    fieldEvidence = emptyMap()
+                                    reviewHints = emptyList()
+                                    isProcessingScan = false
+                                    showAddSheet = true
+                                },
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                modifier = Modifier.testTag("fab_add_manual"),
+                            ) {
+                                Icon(
+                                    Icons.Filled.Edit,
+                                    contentDescription = stringResource(R.string.action_add_bag_manual),
+                                )
+                            }
+                        }
                     }
                 }
                 FloatingActionButton(
@@ -369,7 +407,7 @@ fun BagInventoryScreen(
             if (bags.isEmpty()) {
                 EmptyStateBox(
                     icon = Icons.Filled.ShoppingBag,
-                    message = "No beans yet",
+                    message = stringResource(R.string.msg_no_beans_yet),
                     subtitle = stringResource(R.string.msg_add_coffee_hint),
                     modifier = Modifier.fillMaxSize(),
                 )
@@ -389,11 +427,6 @@ fun BagInventoryScreen(
                         modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        Text(
-                            text = stringResource(R.string.label_your_beans),
-                            style = MaterialTheme.typography.headlineMedium,
-                            modifier = Modifier.semantics { heading() },
-                        )
                         val openCount = bags.count { it.status == "OPEN" }
                         val subtitle = when {
                             openCount > 1 -> "$openCount bags open — freshest first"

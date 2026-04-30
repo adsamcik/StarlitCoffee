@@ -460,6 +460,8 @@
     <string name="action_add_bag_gallery">From gallery</string>
     <string name="action_add_bag_camera">Scan with camera</string>
     <string name="action_add_bag_barcode">Scan barcode</string>
+    <string name="action_add_bag_manual">Add manually</string>
+    <string name="msg_no_beans_yet">No beans yet</string>
     <string name="msg_add_coffee_hint">Add your coffee to track freshness and get brew suggestions</string>
     <string name="action_brew_now">Brew now</string>
     <string name="msg_could_not_read_label">Could not read label</string>
