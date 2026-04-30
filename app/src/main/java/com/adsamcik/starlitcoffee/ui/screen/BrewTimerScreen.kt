@@ -64,6 +64,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
+import com.adsamcik.starlitcoffee.ui.component.WarningCard
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlinx.coroutines.delay
@@ -211,6 +212,25 @@ fun BrewTimerScreen(
                         contentDescription = "Close",
                         modifier = Modifier.size(24.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                    )
+                }
+            }
+
+            // Surface guardrail warnings — visible before the user starts the
+            // timer. Once the bloom is running, the user has committed to the
+            // current setup so we hide the noise.
+            val showWarnings = !state.timerRunning && state.elapsedSeconds == 0
+            if (showWarnings) {
+                state.ratioWarning?.let { warning ->
+                    WarningCard(
+                        message = warning,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                    )
+                }
+                state.bloomWarning?.let { warning ->
+                    WarningCard(
+                        message = warning,
+                        modifier = Modifier.padding(horizontal = 16.dp),
                     )
                 }
             }

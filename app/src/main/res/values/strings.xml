@@ -66,6 +66,7 @@
     <string name="format_amount_cd">%1$s: %2$d %3$s</string>
     <string name="label_select_coffee_bag">Select coffee bag</string>
     <string name="cd_clear_bag">Clear bag</string>
+    <string name="format_brewing_with">Brewing with %1$s</string>
     <string name="label_freshness">Freshness</string>
     <string name="format_recommended_now">Recommended now: %1$s</string>
     <string name="format_last_time">Last time: %1$s</string>

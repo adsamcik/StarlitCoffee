@@ -19,6 +19,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.LocalCafe
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
@@ -73,6 +75,7 @@ fun BagDetailSheet(
     onEdit: () -> Unit,
     onRescan: () -> Unit = {},
     onWeightAdjust: (Long, Float) -> Unit = { _, _ -> },
+    onSelectForBrewing: (() -> Unit)? = null,
 ){
     var statusMenuExpanded by remember { mutableStateOf(false) }
     val localizedMetadata = CoffeeMetadataNormalizer.resolveBagMetadata(bag)
@@ -551,6 +554,22 @@ fun BagDetailSheet(
                             }
                         }
                     }
+                }
+            }
+
+            // Brew with this bag — primary action when bag isn't finished
+            if (onSelectForBrewing != null && bag.status != CoffeeBagStatus.FINISHED.name) {
+                Button(
+                    onClick = onSelectForBrewing,
+                    shape = MaterialTheme.shapes.large,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                        .height(52.dp),
+                ) {
+                    Icon(Icons.Filled.LocalCafe, contentDescription = null)
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Text(stringResource(R.string.action_brew_now))
                 }
             }
 

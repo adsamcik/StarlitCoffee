@@ -34,6 +34,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Backspace
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.CoffeeMaker
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -52,6 +53,8 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.InputChip
+import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -122,6 +125,12 @@ fun CalculatorBrewScreen(
     val context = LocalContext.current
     val grinders = remember { GrinderDataSource.getInstance(context).grinders }
 
+    val coffeeBags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+    val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
+    val selectedBag = remember(coffeeBags, selectedBagId) {
+        coffeeBags.find { it.id == selectedBagId }
+    }
+
     var showSaveFavoriteDialog by remember { mutableStateOf(false) }
 
     // Sync calculator-local selections (method, filter, grinder, ratio, dose)
@@ -177,6 +186,37 @@ fun CalculatorBrewScreen(
                 direction = state.inputDirection,
                 method = selectedMethod,
             )
+
+            // Selected bag indicator — visible reminder that a bag is in play,
+            // with one-tap clear so the user can switch to brewing without one.
+            selectedBag?.let { bag ->
+                Spacer(modifier = Modifier.height(12.dp))
+                InputChip(
+                    selected = true,
+                    onClick = { brewViewModel.selectBag(null) },
+                    label = {
+                        Text(
+                            text = stringResource(R.string.format_brewing_with, bag.name),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.LocalCafe,
+                            contentDescription = null,
+                            modifier = Modifier.size(InputChipDefaults.IconSize),
+                        )
+                    },
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = stringResource(R.string.cd_clear_bag),
+                            modifier = Modifier.size(InputChipDefaults.IconSize),
+                        )
+                    },
+                )
+            }
 
             Spacer(modifier = Modifier.height(12.dp))
 

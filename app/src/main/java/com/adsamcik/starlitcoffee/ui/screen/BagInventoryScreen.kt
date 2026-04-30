@@ -657,6 +657,10 @@ fun BagInventoryScreen(
             onWeightAdjust = { bagId, weight ->
                 brewViewModel.adjustBagWeight(bagId, weight)
             },
+            onSelectForBrewing = {
+                selectedBag = null
+                onNavigateToBrewWithBag(bag.id)
+            },
         )
     }
 
