@@ -58,10 +58,13 @@ import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -93,6 +96,7 @@ import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.util.presetIcon
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
+import kotlinx.coroutines.delay
 
 private val checkIcon: @Composable () -> Unit = {
     Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize))
@@ -105,6 +109,7 @@ fun CalculatorBrewScreen(
     brewViewModel: BrewViewModel,
     userPreferencesRepository: UserPreferencesRepository,
     onNavigateToBrew: () -> Unit,
+    onNavigateToSettings: () -> Unit,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
     val brewState by brewViewModel.uiState.collectAsStateWithLifecycle()
@@ -130,6 +135,29 @@ fun CalculatorBrewScreen(
     }
 
     var showSaveFavoriteDialog by remember { mutableStateOf(false) }
+
+    // Hoisted so we can drive the scroll position when the brew config card
+    // expands — otherwise the newly-revealed chips push past the visible
+    // viewport (the calc keyboard takes ~320dp at the bottom) and feel
+    // "hidden behind the keyboard".
+    val scrollState = rememberScrollState()
+    var configExpanded by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(configExpanded) {
+        if (configExpanded) {
+            // AnimatedVisibility's bouncy spring expand grows the content
+            // over ~400ms; if we read scrollState.maxValue too early it
+            // reflects only the partially-expanded height and we under-
+            // scroll. Wait for maxValue to stabilize across two ticks
+            // before animating to the final position.
+            var previousMax = -1
+            while (previousMax != scrollState.maxValue) {
+                previousMax = scrollState.maxValue
+                delay(80)
+            }
+            scrollState.animateScrollTo(scrollState.maxValue)
+        }
+    }
 
     // Calc-side derived values (ratio, dose) need to land on BrewViewModel
     // before downstream actions that snapshot the brew state (save recipe,
@@ -172,7 +200,7 @@ fun CalculatorBrewScreen(
         Column(
             modifier = Modifier
                 .weight(1f)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(scrollState),
         ) {
             // Live preview card
             LivePreviewCard(
@@ -215,9 +243,10 @@ fun CalculatorBrewScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Brew config — compact summary, expandable to full config
-            var configExpanded by remember { mutableStateOf(false) }
-
+            // Brew config — compact summary, expandable to full config.
+            // configExpanded + scrollState are hoisted to the function scope
+            // so the screen-level LaunchedEffect can scroll the expand into
+            // view when it opens.
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -275,7 +304,40 @@ fun CalculatorBrewScreen(
                     )
                 }
 
-                // Expanded config sections
+                // Filter row — surfaced as the daily-relevant Pulsar control
+                // so the user doesn't need to expand the card to switch
+                // between paper / 19K / 40K. Hidden when method is not Pulsar
+                // (FilterType is a Pulsar-specific concept).
+                if (selectedMethod == BrewMethod.PULSAR) {
+                    Column(modifier = Modifier.padding(top = 12.dp)) {
+                        Text(
+                            text = stringResource(R.string.label_filter),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            FilterType.entries.forEach { filter ->
+                                val isSelected = selectedFilter == filter
+                                FilterChip(
+                                    selected = isSelected,
+                                    onClick = { brewViewModel.setFilterType(if (isSelected) null else filter) },
+                                    label = { Text(filter.displayName) },
+                                    leadingIcon = if (isSelected) checkIcon else null,
+                                    colors = FilterChipDefaults.filterChipColors(
+                                        selectedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                        selectedLabelColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                                        selectedLeadingIconColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                                    ),
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Expanded config sections — method (if multiple enabled) and
+                // grinder. Filter is surfaced above; method/grinder are
+                // set-once equipment settings hidden behind the chevron.
                 AnimatedVisibility(
                     visible = configExpanded,
                     enter = fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) +
@@ -315,30 +377,8 @@ fun CalculatorBrewScreen(
                             }
                         }
 
-                        // Filter — Pulsar only
-                        if (selectedMethod == BrewMethod.PULSAR) {
-                            Text(
-                                text = stringResource(R.string.label_filter),
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                FilterType.entries.forEach { filter ->
-                                    val isSelected = selectedFilter == filter
-                                    FilterChip(
-                                        selected = isSelected,
-                                        onClick = { brewViewModel.setFilterType(if (isSelected) null else filter) },
-                                        label = { Text(filter.displayName) },
-                                        leadingIcon = if (isSelected) checkIcon else null,
-                                        colors = FilterChipDefaults.filterChipColors(
-                                            selectedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                            selectedLabelColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                                            selectedLeadingIconColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                                        ),
-                                    )
-                                }
-                            }
-                        }
+                        // Filter — surfaced above this expand block; see the
+                        // always-visible filter row attached to the summary.
 
                         // Grinder
                         if (grinders.isNotEmpty()) {
@@ -381,6 +421,16 @@ fun CalculatorBrewScreen(
                                         ),
                                     )
                                 }
+                            }
+                            // Grinders are equipment-level config that mostly
+                            // belongs in Settings; this link keeps the brew
+                            // screen tidy while still letting the user reach
+                            // the full management UI in one tap.
+                            TextButton(
+                                onClick = onNavigateToSettings,
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+                            ) {
+                                Text(stringResource(R.string.action_manage_grinders_in_settings))
                             }
                         }
                     }

@@ -347,6 +347,7 @@
     <string name="label_remaining">zbývá</string>
     <string name="label_advanced_options">Pokročilé možnosti</string>
     <string name="label_grinder">Mlýnek</string>
+    <string name="action_manage_grinders_in_settings">Spravovat mlýnky v Nastavení</string>
 
     <!-- Bag selection -->
     <string name="label_select_coffee_bag">Vyberte balení kávy</string>

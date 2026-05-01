@@ -147,6 +147,7 @@
     <string name="label_bloom_lowercase">bloom</string>
     <string name="label_remaining">remaining</string>
     <string name="label_grinder">Grinder</string>
+    <string name="action_manage_grinders_in_settings">Manage grinders in Settings</string>
 
     <!-- Settings Screen -->
     <string name="screen_settings_title">Settings</string>
