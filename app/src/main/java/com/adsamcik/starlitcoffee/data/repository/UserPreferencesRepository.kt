@@ -12,6 +12,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
@@ -42,25 +43,27 @@ class UserPreferencesRepository(private val context: Context) {
         val SKIP_METHOD_SELECTION = booleanPreferencesKey("skip_method_selection")
     }
 
-    val userPreferences: Flow<UserPreferences> = context.dataStore.data.map { prefs ->
-        UserPreferences(
-            onboardingCompleted = prefs[Keys.ONBOARDING_COMPLETED] ?: false,
-            enabledMethods = prefs[Keys.ENABLED_METHODS]
-                ?.mapNotNull { name -> BrewMethod.entries.find { it.name == name } }
-                ?.toSet()
-                ?: BrewMethod.entries.toSet(),
-            defaultMethod = prefs[Keys.DEFAULT_METHOD]
-                ?.let { name -> BrewMethod.entries.find { it.name == name } }
-                ?: BrewMethod.PULSAR,
-            defaultFilterType = prefs[Keys.DEFAULT_FILTER_TYPE]
-                ?.let { name -> FilterType.entries.find { it.name == name } },
-            selectedGrinderId = prefs[Keys.SELECTED_GRINDER_ID],
-            qrLinkExplorerEnabled = prefs[Keys.QR_LINK_EXPLORER_ENABLED] ?: false,
-            lastUsedRatio = prefs[Keys.LAST_USED_RATIO] ?: 17f,
-            defaultInputDirection = prefs[Keys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",
-            skipMethodSelection = prefs[Keys.SKIP_METHOD_SELECTION] ?: false,
-        )
-    }
+    val userPreferences: Flow<UserPreferences> = context.dataStore.data
+        .map { prefs ->
+            UserPreferences(
+                onboardingCompleted = prefs[Keys.ONBOARDING_COMPLETED] ?: false,
+                enabledMethods = prefs[Keys.ENABLED_METHODS]
+                    ?.mapNotNull { name -> BrewMethod.entries.find { it.name == name } }
+                    ?.toSet()
+                    ?: BrewMethod.entries.toSet(),
+                defaultMethod = prefs[Keys.DEFAULT_METHOD]
+                    ?.let { name -> BrewMethod.entries.find { it.name == name } }
+                    ?: BrewMethod.PULSAR,
+                defaultFilterType = prefs[Keys.DEFAULT_FILTER_TYPE]
+                    ?.let { name -> FilterType.entries.find { it.name == name } },
+                selectedGrinderId = prefs[Keys.SELECTED_GRINDER_ID],
+                qrLinkExplorerEnabled = prefs[Keys.QR_LINK_EXPLORER_ENABLED] ?: false,
+                lastUsedRatio = prefs[Keys.LAST_USED_RATIO] ?: 17f,
+                defaultInputDirection = prefs[Keys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",
+                skipMethodSelection = prefs[Keys.SKIP_METHOD_SELECTION] ?: false,
+            )
+        }
+        .distinctUntilChanged()
 
     suspend fun completeOnboarding(
         enabledMethods: Set<BrewMethod>,

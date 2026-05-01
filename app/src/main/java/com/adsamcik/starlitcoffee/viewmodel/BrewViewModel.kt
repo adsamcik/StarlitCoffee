@@ -111,6 +111,11 @@ data class BrewUiState(
     val pulseCount: String = "",
     val filterType: FilterType? = null,
     val selectedGrinderId: String? = null,
+    // Remembers the user's filter selection per method, so round-tripping
+    // (e.g. PULSAR -> V60 -> PULSAR) restores the prior filter rather than
+    // dropping it. FilterType is only meaningful for Pulsar; entries for
+    // other methods are stored but never restored as filterType.
+    val lastFilterByMethod: Map<BrewMethod, FilterType?> = emptyMap(),
     val calibrationStyle: CalibrationStyle? = null,
     val showAdvanced: Boolean = false,
     // Computed results
@@ -252,11 +257,19 @@ class BrewViewModel(
     fun setMethod(method: BrewMethod) {
         val defaultPresets = method.defaultRatioPresets
         val defaultIndex = defaultPresets.indexOfFirst { it.isDefault }.coerceAtLeast(0)
-        _uiState.update {
-            it.copy(
+        _uiState.update { state ->
+            // Snapshot the outgoing method's filter selection so we can restore
+            // it later if the user switches back. Always store, even nulls, so
+            // an explicit "no filter" choice is preserved.
+            val updatedMap = state.lastFilterByMethod + (state.method to state.filterType)
+            // FilterType is a Pulsar-specific concept (paper / 19K / 40K mesh).
+            // Clear it for any other method; restore the last-known filter
+            // when returning to PULSAR.
+            val newFilter = if (method == BrewMethod.PULSAR) updatedMap[method] else null
+            state.copy(
                 method = method,
-                // Preserve filterType when switching back to a filter-capable method
-                filterType = if (method.capacityMaxG != null) it.filterType else null,
+                filterType = newFilter,
+                lastFilterByMethod = updatedMap,
                 customRatio = "",
                 bloomMultiplier = "",
                 pulseCount = "",
@@ -345,7 +358,12 @@ class BrewViewModel(
     }
 
     fun setFilterType(type: FilterType?) {
-        _uiState.update { it.copy(filterType = type) }
+        _uiState.update { state ->
+            state.copy(
+                filterType = type,
+                lastFilterByMethod = state.lastFilterByMethod + (state.method to type),
+            )
+        }
         recalculate()
     }
 

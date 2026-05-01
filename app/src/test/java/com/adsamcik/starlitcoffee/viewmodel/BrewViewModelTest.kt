@@ -555,6 +555,88 @@ class BrewViewModelTest {
     //   - immersion methods → 0 base steps → suggested unchanged + "same start" note
     //   - ESPRESSO → 1 base step → suggested += stepSize
 
+    // --- Filter Normalization on Method Change ---
+    //
+    // FilterType is a Pulsar-specific concept (paper / 19K / 40K mesh). The
+    // brew screen only exposes the filter row when the active method is
+    // PULSAR, so any non-Pulsar method that retains a FilterType is invisible
+    // stale state that can leak into saved recipes. setMethod() is the single
+    // chokepoint that enforces this invariant.
+
+    @Test
+    fun `setMethod PULSAR to V60 clears filter`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setFilterType(FilterType.PAPER)
+        assertEquals(FilterType.PAPER, viewModel.uiState.value.filterType)
+
+        viewModel.setMethod(BrewMethod.V60)
+
+        assertNull(viewModel.uiState.value.filterType)
+    }
+
+    @Test
+    fun `setMethod PULSAR to AEROPRESS clears filter`() {
+        // Regression test: prior implementation used `capacityMaxG != null` as
+        // the "filter-capable" predicate. Both PULSAR (380g) and AEROPRESS
+        // (250g) have non-null capacityMaxG, so switching to AeroPress would
+        // silently retain a FilterType.METAL_19K — invisible because the UI
+        // hides the filter row, but persisted into saved recipes.
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setFilterType(FilterType.METAL_19K)
+        assertEquals(FilterType.METAL_19K, viewModel.uiState.value.filterType)
+
+        viewModel.setMethod(BrewMethod.AEROPRESS)
+
+        assertNull(viewModel.uiState.value.filterType)
+    }
+
+    @Test
+    fun `setMethod round trip PULSAR V60 PULSAR restores filter`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setFilterType(FilterType.METAL_19K)
+
+        // Switch away — filter cleared.
+        viewModel.setMethod(BrewMethod.V60)
+        assertNull(viewModel.uiState.value.filterType)
+
+        // Switch back — filter restored from per-method memory.
+        viewModel.setMethod(BrewMethod.PULSAR)
+        assertEquals(FilterType.METAL_19K, viewModel.uiState.value.filterType)
+    }
+
+    @Test
+    fun `setFilterType remembered per method`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setFilterType(FilterType.PAPER)
+
+        // Round-trip via a non-Pulsar method then back — original filter
+        // restored, last-by-method map retains the choice.
+        viewModel.setMethod(BrewMethod.V60)
+        viewModel.setMethod(BrewMethod.PULSAR)
+        assertEquals(FilterType.PAPER, viewModel.uiState.value.filterType)
+
+        // Update filter on PULSAR, round-trip again — newest choice survives.
+        viewModel.setFilterType(FilterType.METAL_40K)
+        viewModel.setMethod(BrewMethod.V60)
+        viewModel.setMethod(BrewMethod.PULSAR)
+        assertEquals(FilterType.METAL_40K, viewModel.uiState.value.filterType)
+    }
+
+    @Test
+    fun `setMethod explicit no-filter choice is remembered`() {
+        // User explicitly clears filter on Pulsar; round-trip must not silently
+        // resurrect a prior filter when returning to Pulsar.
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setFilterType(FilterType.PAPER)
+        viewModel.setFilterType(null)
+        assertNull(viewModel.uiState.value.filterType)
+
+        viewModel.setMethod(BrewMethod.V60)
+        viewModel.setMethod(BrewMethod.PULSAR)
+
+        assertNull(viewModel.uiState.value.filterType)
+    }
+
     // --- Method Defaults ---
 
     @Test

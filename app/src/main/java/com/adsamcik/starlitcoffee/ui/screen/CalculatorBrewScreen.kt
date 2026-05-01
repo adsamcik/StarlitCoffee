@@ -59,7 +59,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -108,19 +107,18 @@ fun CalculatorBrewScreen(
     onNavigateToBrew: () -> Unit,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
+    val brewState by brewViewModel.uiState.collectAsStateWithLifecycle()
 
     val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = UserPreferences(),
     )
-    var selectedMethod by remember { mutableStateOf(prefs.defaultMethod) }
-    var selectedFilter by remember { mutableStateOf(prefs.defaultFilterType) }
-    var selectedGrinderId by remember { mutableStateOf(prefs.selectedGrinderId) }
 
-    LaunchedEffect(prefs) {
-        selectedMethod = prefs.defaultMethod
-        selectedFilter = prefs.defaultFilterType
-        selectedGrinderId = prefs.selectedGrinderId
-    }
+    // Brew config (method/filter/grinder) is owned by BrewViewModel — its
+    // `applyUserDefaults()` already seeds these from prefs at VM init. Keep
+    // local read-only aliases for ergonomics; mutations go directly to the VM.
+    val selectedMethod = brewState.method
+    val selectedFilter = brewState.filterType
+    val selectedGrinderId = brewState.selectedGrinderId
 
     val context = LocalContext.current
     val grinders = remember { GrinderDataSource.getInstance(context).grinders }
@@ -133,14 +131,11 @@ fun CalculatorBrewScreen(
 
     var showSaveFavoriteDialog by remember { mutableStateOf(false) }
 
-    // Sync calculator-local selections (method, filter, grinder, ratio, dose)
-    // into the shared BrewViewModel so that downstream actions (start brewing,
-    // save recipe) operate on a consistent BrewUiState snapshot. setMethod
-    // clears customRatio, so apply the user-selected ratio after.
-    val syncBrewState: () -> Unit = {
-        brewViewModel.setMethod(selectedMethod)
-        brewViewModel.setFilterType(selectedFilter)
-        brewViewModel.setGrinder(selectedGrinderId)
+    // Calc-side derived values (ratio, dose) need to land on BrewViewModel
+    // before downstream actions that snapshot the brew state (save recipe,
+    // start brew). Method/filter/grinder are already in the VM via direct
+    // chip handlers, so only the calc-derived fields need explicit syncing.
+    val syncCalcDerivedState: () -> Unit = {
         brewViewModel.setCustomRatio(state.ratio.toString())
         brewViewModel.setAmount(state.previewDoseG.toString())
     }
@@ -158,7 +153,7 @@ fun CalculatorBrewScreen(
             onToggleDirection = { calculatorViewModel.toggleDirection() },
             onRatioChange = { calculatorViewModel.setRatio(it) },
             onSaveFavorite = {
-                syncBrewState()
+                syncCalcDerivedState()
                 showSaveFavoriteDialog = true
             },
         )
@@ -307,7 +302,7 @@ fun CalculatorBrewScreen(
                                     val isSelected = selectedMethod == method
                                     FilterChip(
                                         selected = isSelected,
-                                        onClick = { selectedMethod = method },
+                                        onClick = { brewViewModel.setMethod(method) },
                                         label = { Text(method.displayName) },
                                         leadingIcon = if (isSelected) checkIcon else null,
                                         colors = FilterChipDefaults.filterChipColors(
@@ -332,7 +327,7 @@ fun CalculatorBrewScreen(
                                     val isSelected = selectedFilter == filter
                                     FilterChip(
                                         selected = isSelected,
-                                        onClick = { selectedFilter = if (isSelected) null else filter },
+                                        onClick = { brewViewModel.setFilterType(if (isSelected) null else filter) },
                                         label = { Text(filter.displayName) },
                                         leadingIcon = if (isSelected) checkIcon else null,
                                         colors = FilterChipDefaults.filterChipColors(
@@ -358,7 +353,7 @@ fun CalculatorBrewScreen(
                             ) {
                                 FilterChip(
                                     selected = selectedGrinderId == null,
-                                    onClick = { selectedGrinderId = null },
+                                    onClick = { brewViewModel.setGrinder(null) },
                                     label = { Text(stringResource(R.string.label_none)) },
                                     leadingIcon = if (selectedGrinderId == null) checkIcon else null,
                                     colors = FilterChipDefaults.filterChipColors(
@@ -371,7 +366,7 @@ fun CalculatorBrewScreen(
                                     val isSelected = selectedGrinderId == grinder.id
                                     FilterChip(
                                         selected = isSelected,
-                                        onClick = { selectedGrinderId = grinder.id },
+                                        onClick = { brewViewModel.setGrinder(grinder.id) },
                                         label = {
                                             Text(
                                                 if (grinder.brand == grinder.model) grinder.model
@@ -407,7 +402,7 @@ fun CalculatorBrewScreen(
             onBackspace = { calculatorViewModel.backspace() },
             onClear = { calculatorViewModel.clear() },
             onBrew = {
-                syncBrewState()
+                syncCalcDerivedState()
                 onNavigateToBrew()
             },
         )
