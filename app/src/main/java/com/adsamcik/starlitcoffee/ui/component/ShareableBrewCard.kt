@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -54,7 +54,7 @@ fun ShareableBrewCard(
 
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surfaceContainerHighest,
         tonalElevation = 2.dp,
     ) {
@@ -127,7 +127,7 @@ fun ShareableBrewCard(
                             modifier = Modifier
                                 .background(
                                     MaterialTheme.colorScheme.tertiaryContainer,
-                                    RoundedCornerShape(999.dp),
+                                    CircleShape,
                                 )
                                 .padding(horizontal = 12.dp, vertical = 5.dp),
                         )

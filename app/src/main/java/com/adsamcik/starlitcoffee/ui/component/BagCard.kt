@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.ElevatedCard
@@ -223,7 +223,7 @@ fun BagCard(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(8.dp)
-                            .clip(RoundedCornerShape(999.dp)),
+                            .clip(CircleShape),
                         color = when (summary.stockEmphasis) {
                             ChipEmphasis.CRITICAL -> MaterialTheme.colorScheme.error
                             ChipEmphasis.WARNING -> MaterialTheme.colorScheme.tertiary

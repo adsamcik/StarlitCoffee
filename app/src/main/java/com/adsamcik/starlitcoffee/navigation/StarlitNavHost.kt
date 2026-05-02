@@ -255,7 +255,6 @@ fun StarlitNavHost() {
                         val target: Any = if (prefs.skipMethodSelection) BrewTimer else GrindPrep
                         navController.navigate(target)
                     },
-                    onNavigateToSettings = { navController.navigate(Settings) },
                 )
             }
             composable<GrindPrep> {

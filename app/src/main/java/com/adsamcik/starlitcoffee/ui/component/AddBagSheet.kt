@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
@@ -569,7 +568,7 @@ fun AddBagSheet(
                             value = roastDateMillis?.let { DateParser.format(it) } ?: "",
                             onValueChange = {},
                             label = { Text(stringResource(R.string.label_roast_date)) },
-                            shape = RoundedCornerShape(16.dp),
+                            shape = MaterialTheme.shapes.small,
                             readOnly = true,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -731,7 +730,7 @@ fun AddBagSheet(
                                 value = expiryDateMillis?.let { DateParser.format(it) } ?: "",
                                 onValueChange = {},
                                 label = { Text(stringResource(R.string.label_best_before)) },
-                                shape = RoundedCornerShape(16.dp),
+                                shape = MaterialTheme.shapes.small,
                                 readOnly = true,
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -1100,7 +1099,7 @@ private fun SnapApproveSection(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(168.dp)
-                    .clip(RoundedCornerShape(20.dp)),
+                    .clip(MaterialTheme.shapes.medium),
                 contentScale = ContentScale.Crop,
             )
         }
@@ -1215,7 +1214,7 @@ private fun SnapApproveChip(
     onClick: () -> Unit,
 ) {
     Surface(
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.small,
         color = if (review) {
             MaterialTheme.colorScheme.surface
         } else {
@@ -1460,7 +1459,7 @@ private fun FieldEvidencePreviewCard(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(120.dp)
-                            .clip(RoundedCornerShape(16.dp)),
+                            .clip(MaterialTheme.shapes.medium),
                         contentScale = ContentScale.Crop,
                     )
                 }

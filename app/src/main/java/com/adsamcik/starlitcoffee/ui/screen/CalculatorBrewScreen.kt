@@ -2,15 +2,11 @@ package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.expandVertically
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,7 +15,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,9 +22,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Backspace
@@ -38,18 +33,18 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.CoffeeMaker
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -58,17 +53,15 @@ import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
@@ -89,6 +82,7 @@ import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
 import com.adsamcik.starlitcoffee.data.model.CupPreset
 import com.adsamcik.starlitcoffee.data.model.FilterType
+import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
@@ -96,11 +90,6 @@ import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.util.presetIcon
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
-import kotlinx.coroutines.delay
-
-private val checkIcon: @Composable () -> Unit = {
-    Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize))
-}
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -109,7 +98,6 @@ fun CalculatorBrewScreen(
     brewViewModel: BrewViewModel,
     userPreferencesRepository: UserPreferencesRepository,
     onNavigateToBrew: () -> Unit,
-    onNavigateToSettings: () -> Unit,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
     val brewState by brewViewModel.uiState.collectAsStateWithLifecycle()
@@ -136,39 +124,7 @@ fun CalculatorBrewScreen(
 
     var showSaveFavoriteDialog by remember { mutableStateOf(false) }
 
-    // Hoisted so we can drive the scroll position when the brew config card
-    // expands — otherwise the newly-revealed chips push past the visible
-    // viewport (the calc keyboard takes ~320dp at the bottom) and feel
-    // "hidden behind the keyboard".
     val scrollState = rememberScrollState()
-    var configExpanded by rememberSaveable { mutableStateOf(false) }
-    // Tracks the previous expand state in the current composition scope (NOT
-    // saveable). When the screen is restored from back-navigation with
-    // configExpanded=true, this initializes to true on the same recomposition,
-    // so `justExpanded` is false and we skip the auto-scroll. Only a real
-    // user-driven false→true transition triggers the animation.
-    var lastConfigExpanded by remember { mutableStateOf(configExpanded) }
-
-    LaunchedEffect(configExpanded) {
-        val justExpanded = configExpanded && !lastConfigExpanded
-        lastConfigExpanded = configExpanded
-        if (justExpanded) {
-            // AnimatedVisibility's bouncy spring expand grows the content
-            // over ~400ms; if we read scrollState.maxValue too early it
-            // reflects only the partially-expanded height and we under-
-            // scroll. Wait for maxValue to stabilize across two ticks
-            // before animating to the final position. Bounded so we don't
-            // hang if the layout never settles (e.g. ambient animations).
-            var previousMax = -1
-            var attempts = 0
-            while (previousMax != scrollState.maxValue && attempts < 10) {
-                previousMax = scrollState.maxValue
-                delay(80)
-                attempts++
-            }
-            scrollState.animateScrollTo(scrollState.maxValue)
-        }
-    }
 
     // Calc-side derived values (ratio, dose) need to land on BrewViewModel
     // before downstream actions that snapshot the brew state (save recipe,
@@ -184,13 +140,11 @@ fun CalculatorBrewScreen(
             .fillMaxSize()
             .padding(horizontal = 16.dp),
     ) {
-        // Top section: direction toggle + save favorite + ratio chip
+        // Top section: direction toggle + save favorite
         TopControlBar(
             direction = state.inputDirection,
-            ratio = state.ratio,
             canSaveFavorite = state.hasValidExpression && state.previewDoseG > 0f,
             onToggleDirection = { calculatorViewModel.toggleDirection() },
-            onRatioChange = { calculatorViewModel.setRatio(it) },
             onSaveFavorite = {
                 syncCalcDerivedState()
                 showSaveFavoriteDialog = true
@@ -252,206 +206,28 @@ fun CalculatorBrewScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Brew config — compact summary, expandable to full config.
-            // configExpanded + scrollState are hoisted to the function scope
-            // so the screen-level LaunchedEffect can scroll the expand into
-            // view when it opens.
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(MaterialTheme.shapes.large)
-                    .background(MaterialTheme.colorScheme.surfaceContainerLow)
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-            ) {
-                // Summary row — always visible, tappable to toggle
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { configExpanded = !configExpanded },
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            text = selectedMethod.displayName,
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
-                        if (selectedFilter != null) {
-                            Text(
-                                text = "·",
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            Text(
-                                text = selectedFilter!!.displayName,
-                                style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        val selectedGrinder = grinders.find { it.id == selectedGrinderId }
-                        if (selectedGrinder != null) {
-                            Text(
-                                text = "·",
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            Text(
-                                text = selectedGrinder.model,
-                                style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                    }
-                    Icon(
-                        imageVector = if (configExpanded) Icons.Filled.KeyboardArrowUp
-                        else Icons.Filled.KeyboardArrowDown,
-                        contentDescription = if (configExpanded) stringResource(R.string.action_collapse) else stringResource(R.string.action_expand),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(20.dp),
-                    )
-                }
-
-                // Filter row — surfaced as the daily-relevant Pulsar control
-                // so the user doesn't need to expand the card to switch
-                // between paper / 19K / 40K. Hidden when method is not Pulsar
-                // (FilterType is a Pulsar-specific concept).
-                if (selectedMethod == BrewMethod.PULSAR) {
-                    Column(modifier = Modifier.padding(top = 12.dp)) {
-                        Text(
-                            text = stringResource(R.string.label_filter),
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            FilterType.entries.forEach { filter ->
-                                val isSelected = selectedFilter == filter
-                                FilterChip(
-                                    selected = isSelected,
-                                    onClick = { brewViewModel.setFilterType(if (isSelected) null else filter) },
-                                    label = { Text(filter.displayName) },
-                                    leadingIcon = if (isSelected) checkIcon else null,
-                                    colors = FilterChipDefaults.filterChipColors(
-                                        selectedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                        selectedLabelColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                                        selectedLeadingIconColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                                    ),
-                                )
-                            }
-                        }
-                    }
-                }
-
-                // Expanded config sections — method (if multiple enabled) and
-                // grinder. Filter is surfaced above; method/grinder are
-                // set-once equipment settings hidden behind the chevron.
-                AnimatedVisibility(
-                    visible = configExpanded,
-                    enter = fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) +
-                        expandVertically(spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessMediumLow)),
-                    exit = fadeOut(spring(stiffness = Spring.StiffnessMedium)) +
-                        shrinkVertically(spring(stiffness = Spring.StiffnessMedium)),
-                ) {
-                    Column(
-                        modifier = Modifier.padding(top = 12.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
-                    ) {
-                        // Method
-                        if (prefs.enabledMethods.size > 1) {
-                            Text(
-                                text = stringResource(R.string.label_method),
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            FlowRow(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                verticalArrangement = Arrangement.spacedBy(4.dp),
-                            ) {
-                                prefs.enabledMethods.forEach { method ->
-                                    val isSelected = selectedMethod == method
-                                    FilterChip(
-                                        selected = isSelected,
-                                        onClick = { brewViewModel.setMethod(method) },
-                                        label = { Text(method.displayName) },
-                                        leadingIcon = if (isSelected) checkIcon else null,
-                                        colors = FilterChipDefaults.filterChipColors(
-                                            selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                            selectedLabelColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                            selectedLeadingIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                        ),
-                                    )
-                                }
-                            }
-                        }
-
-                        // Filter — surfaced above this expand block; see the
-                        // always-visible filter row attached to the summary.
-
-                        // Grinder
-                        if (grinders.isNotEmpty()) {
-                            Text(
-                                text = stringResource(R.string.label_grinder),
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            FlowRow(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                verticalArrangement = Arrangement.spacedBy(4.dp),
-                            ) {
-                                FilterChip(
-                                    selected = selectedGrinderId == null,
-                                    onClick = { brewViewModel.setGrinder(null) },
-                                    label = { Text(stringResource(R.string.label_none)) },
-                                    leadingIcon = if (selectedGrinderId == null) checkIcon else null,
-                                    colors = FilterChipDefaults.filterChipColors(
-                                        selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                        selectedLabelColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                        selectedLeadingIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    ),
-                                )
-                                grinders.forEach { grinder ->
-                                    val isSelected = selectedGrinderId == grinder.id
-                                    FilterChip(
-                                        selected = isSelected,
-                                        onClick = { brewViewModel.setGrinder(grinder.id) },
-                                        label = {
-                                            Text(
-                                                if (grinder.brand == grinder.model) grinder.model
-                                                else "${grinder.brand} ${grinder.model}",
-                                            )
-                                        },
-                                        leadingIcon = if (isSelected) checkIcon else null,
-                                        colors = FilterChipDefaults.filterChipColors(
-                                            selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                            selectedLabelColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                            selectedLeadingIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                        ),
-                                    )
-                                }
-                            }
-                            // Grinders are equipment-level config that mostly
-                            // belongs in Settings; this link keeps the brew
-                            // screen tidy while still letting the user reach
-                            // the full management UI in one tap.
-                            TextButton(
-                                onClick = onNavigateToSettings,
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
-                            ) {
-                                Text(stringResource(R.string.action_manage_grinders_in_settings))
-                            }
-                        }
-                    }
-                }
-            }
-
         }
 
-        // Calculator keyboard — pinned to bottom, outside scroll
+        // Pills bar — quick-access brew settings above the keyboard, within
+        // thumb reach while the user is entering numbers. Replaces the older
+        // expandable config card.
         Spacer(modifier = Modifier.height(12.dp))
+
+        BrewSettingsPillBar(
+            enabledMethods = prefs.enabledMethods.toList(),
+            selectedMethod = selectedMethod,
+            selectedFilter = selectedFilter,
+            selectedGrinderId = selectedGrinderId,
+            grinders = grinders,
+            ratio = state.ratio,
+            onMethodChange = { brewViewModel.setMethod(it) },
+            onFilterChange = { brewViewModel.setFilterType(it) },
+            onGrinderChange = { brewViewModel.setGrinder(it) },
+            onRatioChange = { calculatorViewModel.setRatio(it) },
+        )
+
+        // Calculator keyboard — pinned to bottom, outside scroll
+        Spacer(modifier = Modifier.height(8.dp))
 
         CalculatorKeyboard(
             presets = state.availablePresets,
@@ -486,14 +262,10 @@ fun CalculatorBrewScreen(
 @Composable
 private fun TopControlBar(
     direction: InputDirection,
-    ratio: Float,
     canSaveFavorite: Boolean,
     onToggleDirection: () -> Unit,
-    onRatioChange: (Float) -> Unit,
     onSaveFavorite: () -> Unit,
 ) {
-    var showRatioDialog by remember { mutableStateOf(false) }
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -520,99 +292,23 @@ private fun TopControlBar(
             )
         }
 
-        // Right cluster: save-as-favorite + ratio chip
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        // Save-as-favorite — ratio moved to the pill bar above the keyboard
+        IconButton(
+            onClick = onSaveFavorite,
+            enabled = canSaveFavorite,
+            modifier = Modifier.testTag("save_favorite_button"),
         ) {
-            IconButton(
-                onClick = onSaveFavorite,
-                enabled = canSaveFavorite,
-                modifier = Modifier.testTag("save_favorite_button"),
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.FavoriteBorder,
-                    contentDescription = stringResource(R.string.action_save_as_favorite),
-                    tint = if (canSaveFavorite) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant
-                    },
-                )
-            }
-
-            // Ratio chip
-            AssistChip(
-                onClick = { showRatioDialog = true },
-                label = {
-                    Text(
-                        text = "1:${ratio.toInt()}",
-                        style = MaterialTheme.typography.labelLarge,
-                        fontWeight = FontWeight.SemiBold,
-                    )
+            Icon(
+                imageVector = Icons.Filled.FavoriteBorder,
+                contentDescription = stringResource(R.string.action_save_as_favorite),
+                tint = if (canSaveFavorite) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
                 },
             )
         }
     }
-
-    if (showRatioDialog) {
-        RatioPickerDialog(
-            currentRatio = ratio,
-            onRatioSelected = {
-                onRatioChange(it)
-                showRatioDialog = false
-            },
-            onDismiss = { showRatioDialog = false },
-        )
-    }
-}
-
-@Composable
-private fun RatioPickerDialog(
-    currentRatio: Float,
-    onRatioSelected: (Float) -> Unit,
-    onDismiss: () -> Unit,
-) {
-    val ratioOptions = listOf(2f, 8f, 10f, 15f, 16f, 17f, 18f)
-
-    androidx.compose.material3.AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.dialog_brew_ratio_title)) },
-        text = {
-            Column {
-                ratioOptions.forEach { r ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
-                    ) {
-                        val isSelected = r == currentRatio
-                        if (isSelected) {
-                            Button(
-                                onClick = { onRatioSelected(r) },
-                                modifier = Modifier.fillMaxWidth(),
-                            ) {
-                                Text("1:${r.toInt()}")
-                            }
-                        } else {
-                            OutlinedButton(
-                                onClick = { onRatioSelected(r) },
-                                modifier = Modifier.fillMaxWidth(),
-                            ) {
-                                Text("1:${r.toInt()}")
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        confirmButton = {},
-        dismissButton = {
-            androidx.compose.material3.TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.action_cancel))
-            }
-        },
-    )
 }
 
 @Composable
@@ -683,7 +379,7 @@ private fun LivePreviewCard(
 
     ElevatedCard(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
+        shape = MaterialTheme.shapes.large,
     ) {
         Row(
             modifier = Modifier
@@ -799,6 +495,228 @@ private fun LivePreviewCard(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun BrewSettingsPillBar(
+    enabledMethods: List<BrewMethod>,
+    selectedMethod: BrewMethod,
+    selectedFilter: FilterType?,
+    selectedGrinderId: String?,
+    grinders: List<Grinder>,
+    ratio: Float,
+    onMethodChange: (BrewMethod) -> Unit,
+    onFilterChange: (FilterType?) -> Unit,
+    onGrinderChange: (String?) -> Unit,
+    onRatioChange: (Float) -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        // Method pill — only when more than one method is enabled in Settings.
+        if (enabledMethods.size > 1) {
+            PillDropdown(
+                label = selectedMethod.displayName,
+                options = enabledMethods.map { method ->
+                    PillOption(
+                        label = method.displayName,
+                        selected = method == selectedMethod,
+                        onClick = { onMethodChange(method) },
+                    )
+                },
+            )
+        }
+
+        // Ratio pill — always visible. Options match the legacy ratio dialog.
+        val ratioOptions = listOf(2f, 8f, 10f, 15f, 16f, 17f, 18f)
+        PillDropdown(
+            label = "1:${ratio.toInt()}",
+            options = ratioOptions.map { value ->
+                PillOption(
+                    label = "1:${value.toInt()}",
+                    selected = value == ratio,
+                    onClick = { onRatioChange(value) },
+                )
+            },
+        )
+
+        // Filter pill — Pulsar only (FilterType is a Pulsar-specific concept).
+        if (selectedMethod == BrewMethod.PULSAR) {
+            val noFilterLabel = stringResource(R.string.label_no_filter)
+            val pillLabel = selectedFilter?.displayName ?: noFilterLabel
+            PillDropdown(
+                label = pillLabel,
+                options = buildList {
+                    add(
+                        PillOption(
+                            label = noFilterLabel,
+                            selected = selectedFilter == null,
+                            onClick = { onFilterChange(null) },
+                        ),
+                    )
+                    FilterType.entries.forEach { filter ->
+                        add(
+                            PillOption(
+                                label = filter.displayName,
+                                selected = filter == selectedFilter,
+                                onClick = { onFilterChange(filter) },
+                            ),
+                        )
+                    }
+                },
+            )
+        }
+
+        // Grinder pill — only when grinder data is available.
+        if (grinders.isNotEmpty()) {
+            val noGrinderLabel = stringResource(R.string.label_none)
+            val selectedGrinder = grinders.find { it.id == selectedGrinderId }
+            val pillLabel = selectedGrinder?.let { g ->
+                if (g.brand == g.model) g.model else "${g.brand} ${g.model}"
+            } ?: noGrinderLabel
+            PillDropdown(
+                label = pillLabel,
+                options = buildList {
+                    add(
+                        PillOption(
+                            label = noGrinderLabel,
+                            selected = selectedGrinderId == null,
+                            onClick = { onGrinderChange(null) },
+                        ),
+                    )
+                    grinders.forEach { g ->
+                        val gLabel = if (g.brand == g.model) g.model else "${g.brand} ${g.model}"
+                        add(
+                            PillOption(
+                                label = gLabel,
+                                selected = g.id == selectedGrinderId,
+                                onClick = { onGrinderChange(g.id) },
+                            ),
+                        )
+                    }
+                },
+            )
+        }
+    }
+}
+
+private data class PillOption(
+    val label: String,
+    val selected: Boolean,
+    val onClick: () -> Unit,
+)
+
+@Composable
+private fun PillDropdown(
+    label: String,
+    options: List<PillOption>,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val arrowRotation by animateFloatAsState(
+        targetValue = if (expanded) 180f else 0f,
+        label = "PillDropdownArrow",
+    )
+    Box {
+        AssistChip(
+            onClick = { expanded = true },
+            label = {
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowDown,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(AssistChipDefaults.IconSize)
+                        .rotate(arrowRotation),
+                )
+            },
+            colors = AssistChipDefaults.assistChipColors(
+                containerColor = if (expanded) {
+                    MaterialTheme.colorScheme.secondaryContainer
+                } else {
+                    Color.Transparent
+                },
+                labelColor = if (expanded) {
+                    MaterialTheme.colorScheme.onSecondaryContainer
+                } else {
+                    MaterialTheme.colorScheme.onSurface
+                },
+                trailingIconContentColor = if (expanded) {
+                    MaterialTheme.colorScheme.onSecondaryContainer
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+            ),
+            border = if (expanded) {
+                null
+            } else {
+                AssistChipDefaults.assistChipBorder(enabled = true)
+            },
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            shape = MaterialTheme.shapes.large,
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            tonalElevation = 3.dp,
+            shadowElevation = 6.dp,
+            modifier = Modifier
+                .padding(vertical = 4.dp)
+                .widthIn(min = 160.dp),
+        ) {
+            options.forEach { opt ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = opt.label,
+                            fontWeight = if (opt.selected) FontWeight.SemiBold else FontWeight.Normal,
+                            color = if (opt.selected) {
+                                MaterialTheme.colorScheme.onSecondaryContainer
+                            } else {
+                                MaterialTheme.colorScheme.onSurface
+                            },
+                        )
+                    },
+                    onClick = {
+                        opt.onClick()
+                        expanded = false
+                    },
+                    leadingIcon = if (opt.selected) {
+                        {
+                            Icon(
+                                imageVector = Icons.Filled.Check,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                            )
+                        }
+                    } else {
+                        null
+                    },
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp, vertical = 2.dp)
+                        .clip(MaterialTheme.shapes.medium)
+                        .background(
+                            if (opt.selected) {
+                                MaterialTheme.colorScheme.secondaryContainer
+                            } else {
+                                Color.Transparent
+                            },
+                        ),
+                )
             }
         }
     }
@@ -943,7 +861,7 @@ private fun CalcKey(
     FilledTonalButton(
         onClick = onClick,
         modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.small,
         contentPadding = PaddingValues(0.dp),
     ) {
         Text(
@@ -963,7 +881,7 @@ private fun OperatorKey(
     Button(
         onClick = onClick,
         modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.small,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -988,7 +906,7 @@ private fun BrewKey(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.small,
         contentPadding = PaddingValues(0.dp),
     ) {
         Text(
@@ -1007,7 +925,7 @@ private fun ClearKey(
     OutlinedButton(
         onClick = onClick,
         modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.small,
         contentPadding = PaddingValues(0.dp),
     ) {
         Text(

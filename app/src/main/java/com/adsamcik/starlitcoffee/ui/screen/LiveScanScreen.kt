@@ -326,7 +326,7 @@ fun LiveScanScreen(
                 .padding(top = 56.dp),
         ) {
             Surface(
-                shape = RoundedCornerShape(20.dp),
+                shape = MaterialTheme.shapes.medium,
                 color = READY_COLOR.copy(alpha = 0.9f),
                 modifier = Modifier.clickable { showBarcodeChip = false },
             ) {
@@ -481,7 +481,7 @@ private fun TopBar(
 
         AnimatedVisibility(visible = sideFlipDetected) {
             Surface(
-                shape = RoundedCornerShape(12.dp),
+                shape = MaterialTheme.shapes.small,
                 color = READY_COLOR.copy(alpha = 0.9f),
                 modifier = Modifier.semantics {
                     contentDescription = bothSidesScannedDesc
@@ -498,7 +498,7 @@ private fun TopBar(
 
         if (!sideFlipDetected && sideCount == 1) {
             Surface(
-                shape = RoundedCornerShape(12.dp),
+                shape = MaterialTheme.shapes.small,
                 color = Color.Black.copy(alpha = 0.5f),
                 modifier = Modifier.semantics {
                     contentDescription = scanningFrontSideDesc
@@ -608,7 +608,7 @@ private fun BottomOverlay(
             ) {
                 Surface(
                     onClick = onQuickSave,
-                    shape = RoundedCornerShape(12.dp),
+                    shape = MaterialTheme.shapes.small,
                     color = READY_COLOR,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
@@ -632,7 +632,7 @@ private fun BottomOverlay(
             // Review — always visible so user can continue with partial results
             Surface(
                 onClick = onReviewFirst,
-                shape = RoundedCornerShape(12.dp),
+                shape = MaterialTheme.shapes.small,
                 color = Color.White.copy(alpha = 0.2f),
                 modifier = Modifier.weight(1f),
             ) {
@@ -677,7 +677,7 @@ private fun CrossValidationBanner(
     ) {
         warning?.let { w ->
             Surface(
-                shape = RoundedCornerShape(12.dp),
+                shape = MaterialTheme.shapes.small,
                 color = CAUTION_COLOR,
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -702,7 +702,7 @@ private fun CrossValidationBanner(
                     ) {
                         Surface(
                             onClick = onUseBarcode,
-                            shape = RoundedCornerShape(8.dp),
+                            shape = MaterialTheme.shapes.extraSmall,
                             color = Color.Black.copy(alpha = 0.15f),
                         ) {
                             Text(
@@ -715,7 +715,7 @@ private fun CrossValidationBanner(
                         }
                         Surface(
                             onClick = onUseLabel,
-                            shape = RoundedCornerShape(8.dp),
+                            shape = MaterialTheme.shapes.extraSmall,
                             color = Color.Black.copy(alpha = 0.15f),
                         ) {
                             Text(
@@ -728,7 +728,7 @@ private fun CrossValidationBanner(
                         }
                         Surface(
                             onClick = onDismiss,
-                            shape = RoundedCornerShape(8.dp),
+                            shape = MaterialTheme.shapes.extraSmall,
                             color = Color.Black.copy(alpha = 0.08f),
                         ) {
                             Text(
@@ -793,7 +793,7 @@ private fun FieldChip(
     }
 
     Surface(
-        shape = RoundedCornerShape(10.dp),
+        shape = MaterialTheme.shapes.small,
         color = bgColor,
         modifier = Modifier
             .alpha(chipAlpha)
@@ -871,7 +871,7 @@ private fun ConflictChips(
             val displayValue = candidate.rawVariants.firstOrNull() ?: candidate.normalizedValue
             Surface(
                 onClick = { onResolve(field.fieldName, candidate.normalizedValue) },
-                shape = RoundedCornerShape(10.dp),
+                shape = MaterialTheme.shapes.small,
                 color = CAUTION_COLOR.copy(alpha = 0.3f),
             ) {
                 Row(
@@ -917,7 +917,7 @@ private fun GuidanceBar(guidance: ScanGuidance) {
     }
 
     Surface(
-        shape = RoundedCornerShape(10.dp),
+        shape = MaterialTheme.shapes.small,
         color = bgColor,
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -992,7 +992,7 @@ private fun LlmStatusChip(
     }
 
     Surface(
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.small,
         color = Color.Black.copy(alpha = 0.6f),
         modifier = modifier,
     ) {
