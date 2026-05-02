@@ -4,13 +4,13 @@ description: "Compose screen conventions for Starlit Coffee"
 ---
 
 <!-- context-init:managed -->
-- Screens receive navigation callbacks as lambda parameters instead of `NavController`
-  - `onBack: () -> Unit` for back navigation
-  - `onNavigateToX: () -> Unit` (or `(arg) -> Unit`) for forward navigation to specific destinations
-- Lambda implementations are wired in `StarlitNavHost.kt` where `navController` is available
-- Observe state with `val state by brewViewModel.uiState.collectAsStateWithLifecycle()`
-- Use `MaterialTheme.colorScheme` for colors, `MaterialTheme.typography` for text styles
-- Add `Modifier.semantics { heading() }` on screen title Text composables
-- Use `ElevatedCard` for result/info sections
-- For Pulsar-specific UI, check `state.method == BrewMethod.PULSAR`
-- Never hold brew state in `remember {}` — use BrewViewModel methods
+- Screens receive explicit navigation callbacks (`onBack`, `onNavigateTo...`, `onComplete`) instead of a `NavController`.
+- Wire route objects and `savedStateHandle` result passing in `StarlitNavHost.kt`, not inside screen files.
+- Observe ViewModel flows with `collectAsStateWithLifecycle()`.
+- Local `remember { mutableStateOf(...) }` is for ephemeral UI only: dialogs, sheets, permission flags, selected form rows, and one-shot processing guards.
+- Brew method/filter/grinder/bag state belongs to `BrewViewModel`; calculator token/preview state belongs to `CalculatorViewModel`.
+- Use `MaterialTheme.colorScheme`, `MaterialTheme.typography`, and Material 3 components for visual styling.
+- Mark screen titles/top bars as headings with `Modifier.semantics { heading() }`.
+- Use string resources for user-facing copy and content descriptions; keep EN/CS resources aligned.
+- For long-running side effects, use `LaunchedEffect`/`DisposableEffect` with stable keys and clean up analyzers/executors/listeners in `onDispose`.
+- Keep timer-specific behavior (`KeepScreenOn`, haptics, tones, bloom alerts) localized to timer screens/components.

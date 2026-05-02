@@ -4,12 +4,13 @@ description: "Testing conventions for Starlit Coffee"
 ---
 
 <!-- context-init:managed -->
-- Use JUnit 4 with `@Test`, `@Before`, `@After` annotations
-- Set `Dispatchers.setMain(UnconfinedTestDispatcher())` in `@Before`
-- Call `Dispatchers.resetMain()` in `@After`
-- Assert on `viewModel.uiState.value` directly (synchronous with UnconfinedTestDispatcher)
-- Test names use backtick format: `` `description of expected behavior` ``
-- Group tests with `// --- Section ---` comments
-- Use `assertEquals(expected, actual, delta)` for Float comparisons (delta = 0.01f)
-- Pulsar default ratio is 17f — expected water for 20g coffee = 340g
-- Grinder IDs must match `DefaultGrinders`: e.g. "1zpresso-zp6-special" not "zp6-special"
+- Use JUnit 4 with `@Test`, `@Before`, and `@After`.
+- Test names use backtick behavior descriptions: `` `coffee to water with Pulsar default ratio` ``.
+- Group related tests with `// --- Section ---` comments.
+- For coroutine/ViewModel tests, set `Dispatchers.setMain(UnconfinedTestDispatcher())` in `@Before` and call `Dispatchers.resetMain()` in `@After`.
+- Use `runTest` and `testScheduler.advanceUntilIdle()` when testing async accumulator/repository behavior.
+- Assert `StateFlow` state directly when using `UnconfinedTestDispatcher`.
+- Use fake DAOs/test utilities from `app/src/test/java/.../testutil` instead of real Room when unit testing ViewModels/repositories.
+- Use `assertEquals(expected, actual, 0.01f)` for Float comparisons.
+- Pulsar default ratio is 17f; 20g coffee should produce 340g water unless a preset/custom ratio overrides it.
+- Include regression tests for parser/normalizer/scanner edge cases when adding coffee metadata fields.

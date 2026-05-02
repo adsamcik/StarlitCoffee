@@ -1,146 +1,135 @@
-<!-- context-init:version:3.0.0 -->
-<!-- context-init:generated:2026-02-25T05:48:00Z -->
+<!-- context-init:version:3.1.0 -->
+<!-- context-init:generated:2026-05-02T09:24:05+02:00 -->
 
-# Starlit Coffee — Development Guide
+# Starlit Coffee - Development Guide
 
 <!-- context-init:managed -->
 
 ## Prerequisites
 
-| Tool | Version | Notes |
-|------|---------|-------|
-| JDK | 17 (Temurin recommended) | Set `JAVA_HOME` |
-| Android SDK | API 35 (compileSdk) | Install via Android Studio |
-| Android SDK | API 26+ (minSdk) | Emulator or device |
-| Kotlin | 2.1.0 | Managed by Gradle |
-| Gradle | 8.13 | Wrapper included (`gradlew.bat`) |
+| Tool | Version / source | Notes |
+|------|------------------|-------|
+| JDK | 17 | `app/build.gradle.kts` compiles Java/Kotlin to JVM 17. |
+| Android SDK | compileSdk 36, targetSdk 36, minSdk 26 | Install with Android Studio SDK Manager. |
+| Gradle | Wrapper 9.3.1 | Use `.\gradlew.bat`, not a system Gradle. |
+| Kotlin | 2.3.10 | Managed through `gradle/libs.versions.toml`. |
+| GitHub CLI | optional | `settings.gradle.kts` can call `gh auth token` for Mindlayer GitHub Packages. |
 
-## Environment Setup
+## Environment
 
-```bash
-# 1. Clone the repository
-git clone <repo-url>
-cd StarlitCoffee
+| Name | Required | Purpose |
+|------|----------|---------|
+| `JAVA_HOME` | Usually | Points Gradle to JDK 17. |
+| `ANDROID_HOME` | Usually | Android SDK location if Android Studio has not configured it. |
+| `GITHUB_TOKEN` | Optional | Explicit token for private Mindlayer GitHub Packages. |
+| `GITHUB_OWNER` | Optional | Owner for Mindlayer package repo; defaults to `adsamcik`. |
 
-# 2. Ensure JAVA_HOME points to JDK 17
-# Windows: set JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-17.0.18.8-hotspot
-# Verify:
-java -version
+Credential lookup for Mindlayer is defined in `settings.gradle.kts`: `local.properties` -> Gradle property -> environment variable -> `gh auth token`.
 
-# 3. Ensure Android SDK is available
-# Default location: %LOCALAPPDATA%\Android\Sdk
-# Set ANDROID_HOME if different
+## Setup
 
-# 4. Build
+```powershell
+git clone https://github.com/adsamcik/StarlitCoffee
+Set-Location StarlitCoffee
 .\gradlew.bat assembleDebug
 ```
 
+For private Mindlayer dependency access, authenticate with `gh auth login` or provide `GITHUB_TOKEN`.
+
 ## Common Commands
 
-| Command | Purpose |
-|---------|---------|
-| `.\gradlew.bat assembleDebug` | Build debug APK |
-| `.\gradlew.bat testDebugUnitTest` | Run unit tests (32 tests) |
-| `.\gradlew.bat installDebug` | Install on connected device/emulator |
-| `.\gradlew.bat assembleRelease` | Build release APK (needs signing) |
-| `.\gradlew.bat clean` | Clean build artifacts |
-| `.\gradlew.bat dependencies` | Show dependency tree |
+| Task | Command |
+|------|---------|
+| Build debug APK | `.\gradlew.bat assembleDebug` |
+| Run unit tests | `.\gradlew.bat testDebugUnitTest` |
+| Run a test class | `.\gradlew.bat testDebugUnitTest --tests "com.adsamcik.starlitcoffee.viewmodel.BrewViewModelTest"` |
+| Run Detekt | `.\gradlew.bat detekt` |
+| Install debug app | `.\gradlew.bat installDebug` |
+| Build release APK | `.\gradlew.bat assembleRelease` |
+| Run instrumented tests | `.\gradlew.bat connectedDebugAndroidTest` |
+| Push scan test images | `.\gradlew.bat pushTestImages` |
+| Show dependency tree | `.\gradlew.bat dependencies` |
+| Clean outputs | `.\gradlew.bat clean` |
 
-## APK Output Location
+## Outputs and Reports
 
+| Artifact | Location |
+|----------|----------|
+| Debug APK | `app\build\outputs\apk\debug\app-debug.apk` |
+| Unit test report | `app\build\reports\tests\testDebugUnitTest\index.html` |
+| Room schemas | `app\schemas\com.adsamcik.starlitcoffee.data.db.AppDatabase\*.json` |
+| Detekt config | `config\detekt\detekt.yml` |
+
+## Test Data
+
+Scan/instrumented image assets are intentionally not committed. Create `testdata\coffee-bags` as a symlink to local images, following `testdata\README.md`.
+
+```powershell
+.\gradlew.bat pushTestImages
+.\gradlew.bat connectedDebugAndroidTest
 ```
-app/build/outputs/apk/debug/app-debug.apk
-```
+
+Image names should follow `roaster_coffee_name_{front|back}.jpg`.
 
 ## Project Structure
 
-```
+```text
 StarlitCoffee/
-├── app/
-│   ├── build.gradle.kts          # App module build config
-│   ├── proguard-rules.pro        # ProGuard/R8 rules
-│   └── src/
-│       ├── main/
-│       │   ├── AndroidManifest.xml
-│       │   └── java/com/adsamcik/starlitcoffee/
-│       │       ├── MainActivity.kt
-│       │       ├── StarlitCoffeeApp.kt
-│       │       ├── data/model/     # 12 domain models
-│       │       ├── data/db/        # Room database
-│       │       ├── data/repository/ # (planned)
-│       │       ├── navigation/     # Routes + NavHost
-│       │       ├── ui/screen/      # 9 screens
-│       │       ├── ui/component/   # (planned)
-│       │       ├── ui/theme/       # Material 3 theme
-│       │       └── viewmodel/      # BrewViewModel
-│       └── test/
-│           └── java/.../viewmodel/BrewViewModelTest.kt
-├── build.gradle.kts              # Root build config
-├── settings.gradle.kts           # Module includes
-├── gradle/
-│   └── libs.versions.toml        # Version catalog
-└── gradle.properties             # Gradle config
+|-- app/
+|   |-- build.gradle.kts
+|   |-- schemas/
+|   |-- src/main/
+|   |   |-- AndroidManifest.xml
+|   |   |-- assets/
+|   |   |-- java/com/adsamcik/starlitcoffee/
+|   |   |   |-- audio/
+|   |   |   |-- calculator/
+|   |   |   |-- data/
+|   |   |   |-- domain/
+|   |   |   |-- navigation/
+|   |   |   |-- scan/
+|   |   |   |-- service/
+|   |   |   |-- ui/
+|   |   |   |-- util/
+|   |   |   `-- viewmodel/
+|   |   `-- res/values and values-cs
+|   `-- src/test/java/com/adsamcik/starlitcoffee/
+|-- config/detekt/detekt.yml
+|-- gradle/libs.versions.toml
+|-- gradle/wrapper/gradle-wrapper.properties
+|-- settings.gradle.kts
+`-- testdata/README.md
 ```
 
-## Key Dependencies (from libs.versions.toml)
+## Version Reference
 
-| Dependency | Version | Purpose |
-|-----------|---------|---------|
-| Compose BOM | 2024.12.01 | UI framework version alignment |
-| Material 3 | 1.3.1 | Design system |
-| Navigation Compose | 2.8.5 | Type-safe navigation |
-| Room | 2.6.1 | SQLite persistence |
-| Lifecycle/ViewModel | 2.8.7 | Lifecycle-aware state |
-| KSP | 2.1.0-1.0.29 | Room annotation processor |
-| ML Kit Barcode | 17.3.0 | Barcode scanning (deps only) |
-| CameraX | 1.4.1 | Camera API (deps only) |
-| Coroutines | 1.9.0 | Async operations |
-| kotlinx-serialization-json | 1.7.3 | Navigation route serialization |
+Versions are centralized in `gradle/libs.versions.toml`.
 
-## Testing
-
-```bash
-# Run all unit tests
-.\gradlew.bat testDebugUnitTest
-
-# Run specific test class
-.\gradlew.bat testDebugUnitTest --tests "com.adsamcik.starlitcoffee.viewmodel.BrewViewModelTest"
-
-# Test report location
-app/build/reports/tests/testDebugUnitTest/index.html
-```
-
-### Test Setup
-- Uses `UnconfinedTestDispatcher` — all StateFlow updates are synchronous
-- Tests assert directly on `viewModel.uiState.value` without `advanceUntilIdle()`
-- 32 tests covering: calculations, presets, custom ratio, grinder, timer, guardrails, feedback
-
-## Emulator
-
-| Property | Value |
-|----------|-------|
-| Device | emulator-5554 "Medium Phone" |
-| API Level | Android 16 (API 36) |
-| Install | `adb install app/build/outputs/apk/debug/app-debug.apk` |
-| Launch | `adb shell am start -n com.adsamcik.starlitcoffee/.MainActivity` |
+| Dependency | Version |
+|------------|---------|
+| AGP | 9.1.0 |
+| Kotlin | 2.3.10 |
+| Compose BOM | 2025.12.00 |
+| Material 3 | 1.5.0-alpha17 |
+| Navigation Compose | 2.9.7 |
+| Room | 2.8.4 |
+| Lifecycle | 2.10.0 |
+| CameraX | 1.5.3 |
+| Coroutines | 1.10.2 |
+| WorkManager | 2.10.1 |
+| Detekt | 1.23.7 |
+| Mindlayer SDK | 0.3.0 |
 
 ## Troubleshooting
 
-| Problem | Cause | Solution |
-|---------|-------|---------|
-| Build fails with "Could not determine java version" | Wrong JDK | Set `JAVA_HOME` to JDK 17 |
-| KSP errors on Room entities | Missing `@Entity` or `@PrimaryKey` | Check entity annotations |
-| "Skipped N frames" on first launch | Compose compilation on device | Normal on first run, subsequent launches are fast |
-| Navigation crash "No destination found" | String route instead of object | Use `@Serializable` objects from `Routes.kt` |
-| `settings.gradle.kts` resolution error | Wrong API name | Use `dependencyResolutionManagement` (not `dependencyResolution`) |
-| Test fails with ratio mismatch | Pulsar default is 1:17 | Verify `BrewMethod.PULSAR.defaultRatio = 17f` |
-| StrengthPreset math wrong | `ratioOffset` is Int, not Float | LIGHT=+1, BALANCED=0, STRONG=-1 |
-
-## Permissions
-
-| Permission | Required | Purpose |
-|-----------|----------|---------|
-| `CAMERA` | Optional (`required="false"`) | Barcode scanning (planned) |
-| `VIBRATE` | Optional | Haptic feedback on brew timer |
+| Problem | Likely cause | Fix |
+|---------|--------------|-----|
+| Mindlayer dependency cannot resolve | Missing GitHub Packages credential | Run `gh auth login` or set `GITHUB_TOKEN`. |
+| Gradle uses wrong Java | `JAVA_HOME` points to a non-17 JDK | Set `JAVA_HOME` to JDK 17 and retry. |
+| Room build/KSP error after entity change | Migration/schema not updated | Update `AppDatabase` migration and exported schema. |
+| Test images missing | `testdata\coffee-bags` symlink absent | Create the symlink described in `testdata\README.md`. |
+| Localization compile failure | EN/CS string keys or placeholders diverged | Keep `values` and `values-cs` keys/placeholders aligned. |
+| Navigation crash | Raw string route or missing typed route arg | Use `@Serializable` routes and `toRoute<T>()`. |
+| Brew ratio mismatch in tests | Pulsar default assumed as 1:16 | Use `BrewMethod.PULSAR.defaultRatio == 17f`. |
 
 <!-- context-init:user-content-below -->

@@ -1,130 +1,87 @@
-<!-- context-init:version:3.0.0 -->
-<!-- context-init:generated:2026-02-25T05:48:00Z -->
+<!-- context-init:version:3.1.0 -->
+<!-- context-init:generated:2026-05-02T09:24:05+02:00 -->
 
 # Starlit Coffee
 
 <!-- context-init:managed -->
-Android guided brew assistant focused on NextLevel Pulsar. Material 3 Expressive design, Jetpack Compose UI, single-activity architecture with shared ViewModel.
+Android coffee companion for planning, timing, logging, and improving brews. The app is Pulsar-first, but supports multiple brew methods, calculator-driven dose/water setup, bag inventory scanning, brew logs, rating reminders, and experimental audio/LLM-assisted scan analysis.
+
+For detailed reference, see `.github/context/ARCHITECTURE.md`, `.github/context/PATTERNS.md`, and `.github/context/DEVELOPMENT.md`.
 
 ## Tech Stack
 
 <!-- context-init:managed -->
 | Tech | Version | Purpose |
 |------|---------|---------|
-| Kotlin | 2.1.0 | Language |
-| AGP | 8.7.3 | Build system |
-| Jetpack Compose | BOM 2024.12.01 | UI framework |
-| Material 3 | 1.3.1 | Design system |
-| Navigation Compose | 2.8.5 | Type-safe routing |
-| Room | 2.6.1 | Local database |
-| Lifecycle/ViewModel | 2.8.7 | State management |
-| KSP | 2.1.0-1.0.29 | Annotation processing |
-| ML Kit Barcode | 17.3.0 | Barcode scanning (planned) |
-| CameraX | 1.4.1 | Camera (planned) |
-| Coroutines | 1.9.0 | Async |
-| Kotlinx Serialization | 1.7.3 | Type-safe nav routes |
-| JUnit 4 | 4.13.2 | Unit tests |
-| minSdk 26 / targetSdk 35 | | API range |
+| Kotlin | 2.3.10 | Android language |
+| AGP | 9.1.0 | Android build plugin |
+| Gradle wrapper | 9.3.1 | Build runner |
+| Jetpack Compose | BOM 2025.12.00 | UI |
+| Material 3 | 1.5.0-alpha17 | Design system |
+| Navigation Compose | 2.9.7 | Type-safe routes |
+| Room | 2.8.4 | Local database |
+| Lifecycle/ViewModel | 2.10.0 | State management |
+| KSP | 2.3.6 | Room annotation processing |
+| ML Kit | Barcode 17.3.0, Text 16.0.1 | Bag scanning |
+| CameraX | 1.5.3 | Live scan camera |
+| DataStore | 1.1.4 | User preferences |
+| OpenCV | 4.13.0 | Image preprocessing |
+| WorkManager | 2.10.1 | Rating reminder |
+| minSdk / targetSdk | 26 / 36 | Android API range |
 
-## Code Style
-
-<!-- context-init:managed -->
-| Type | Convention | Example |
-|------|-----------|---------|
-| Package | lowercase dot-separated | `com.adsamcik.starlitcoffee.data.model` |
-| Classes/Objects | PascalCase | `BrewViewModel`, `DefaultGrinders` |
-| Functions | camelCase | `setMethod()`, `recalculate()` |
-| Composables | PascalCase | `MethodPickerScreen()`, `StarlitNavHost()` |
-| Enums | SCREAMING_SNAKE_CASE values | `BrewMethod.PULSAR`, `FilterType.METAL_19K` |
-| Constants | SCREAMING_SNAKE_CASE | `TRANSITION_DURATION` |
-| State flows | `_uiState` / `uiState` pattern | Private MutableStateFlow, public StateFlow |
-
-## Architecture
+## Architecture Rules
 
 <!-- context-init:managed -->
-- **Single Activity**: `MainActivity` → `StarlitCoffeeTheme` → `StarlitNavHost`
-- **Shared ViewModel**: `BrewViewModel` created at `NavHost` level, passed to all screens
-- **Navigation**: Type-safe routes via `@Serializable` objects in `Routes.kt`
-- **State**: `BrewUiState` data class in `BrewViewModel` — all brew calculations are reactive
-- **Data layer**: Room DB (entities + DAOs defined, not yet wired to screens)
-- **No DI framework** — manual singleton for `AppDatabase`
+| Area | Rule |
+|------|------|
+| Entry point | `MainActivity` calls `enableEdgeToEdge()` and hosts `StarlitNavHost()` inside `StarlitCoffeeTheme`. |
+| Navigation | Use `@Serializable` route objects from `Routes.kt`; never navigate with raw strings. |
+| ViewModels | Keep app/brew state in `BrewViewModel`, calculator state in `CalculatorViewModel`, and live scan session state in nav-scoped `LiveScanViewModel`. |
+| Persistence | Use repositories over Room DAOs; update migrations and exported schemas when changing DB entities. |
+| DI | No DI framework yet; factories/manual wiring are intentional. Do not add ad-hoc service locators. |
+| UI state | Composables may use `remember` for ephemeral UI only; brew data belongs in ViewModels. |
 
 ## Patterns to Follow
 
 <!-- context-init:managed -->
-### State Management
-All UI state lives in `BrewViewModel._uiState: MutableStateFlow<BrewUiState>`. Screens observe via `collectAsStateWithLifecycle()`. Never hold state in Composables for brew data.
-
-```kotlin
-// Good — update via ViewModel
-viewModel.setMethod(BrewMethod.PULSAR)
-
-// Bad — local state for brew data
-var method by remember { mutableStateOf(BrewMethod.PULSAR) }
-```
-
-### Navigation
-Use type-safe `@Serializable` route objects. Navigate with `navController.navigate(RouteObject)`.
-
-```kotlin
-// Good
-navController.navigate(Result)
-
-// Bad
-navController.navigate("result")
-```
-
-### Compose Screens
-All screens take `navController` and `brewViewModel` as parameters. Bottom bar shows on tab roots only (MethodPicker, SavedRecipes, BagInventory, BrewLogList).
-
-### Enum-Driven Configuration
-Brew methods, filters, grinders, and presets are all enum/data class driven. Add new brew methods by adding enum entries with defaults — no screen changes needed.
+- **StateFlow:** private mutable flow + public read-only flow (`_uiState` -> `uiState`); use `.update { it.copy(...) }` for derived mutations.
+- **Compose screens:** collect state with `collectAsStateWithLifecycle()`, receive navigation callbacks, and use `MaterialTheme` colors/typography.
+- **Calculator:** `CalculatorViewModel` owns token input; sync derived ratio/dose into `BrewViewModel` immediately before save/start actions.
+- **Brew math:** keep deterministic brew calculations in `domain/BrewCalculator.kt`; `BrewViewModel.recalculate()` wires app-specific state around it.
+- **Scanning:** `LiveScanViewModel` orchestrates `FrameEvidenceAccumulator`, `ConsensusEngine`, side detection, LLM escalation, and perf stats; users confirm/edit before saving.
+- **Audio:** audio analysis code is pure/testable where possible; Android microphone orchestration stays in `BrewAudioManager`.
+- **Localization:** add every user-facing string to both `values/strings.xml` and `values-cs/strings.xml` with identical keys.
 
 ## Domain Knowledge
 
 <!-- context-init:managed -->
-### NextLevel Pulsar (Primary Brewer)
-- Default ratio: **1:17** (not 1:16)
-- Valve is the core mechanic — controls flow rate continuously
-- Bloom: valve OPEN → pour → CLOSE → steep 45–60s → swirl → OPEN
-- Filters: Paper (cleanest), 19K (bold/body), 40K (balanced)
-- Dose range: 15–30g, optimal 20–25g. Below 20g risks astringency
-- Slurry height ~1cm above bed during pours
-- Target brew time: 3:30–4:30
+- Pulsar default ratio is **1:17**, not 1:16.
+- Pulsar filters are paper, 19K metal, and 40K metal; `FilterType` is meaningful only for Pulsar UI state.
+- Grind recommendations are optional and must be presented as ranges plus adjustment notes.
+- `StrengthPreset.ratioOffset` is `Int`: LIGHT=+1, BALANCED=0, STRONG=-1.
+- `BrewMethod` enum entries own method defaults: ratio, bloom, pulses, temp, time, capacity, absorption, and grind descriptor.
+- Decaf brews adjust target time and may inherit decaf state from the selected coffee bag unless manually overridden.
 
-### Strength Presets
-`StrengthPreset.ratioOffset` is **Int** (not Float): LIGHT=+1, BALANCED=0, STRONG=-1. Applied to `BrewMethod.defaultRatio`.
-
-### Grinder Support
-Optional layer — app works without grinder selection. `DefaultGrinders.kt` has static grinder list + recommendation rules matched by grinderId + methodId + filterType.
-
-## Testing
+## Build & Test
 
 <!-- context-init:managed -->
-- Framework: JUnit 4 + `kotlinx-coroutines-test`
-- Location: `app/src/test/java/.../viewmodel/BrewViewModelTest.kt`
-- 32 unit tests covering calculations, presets, guardrails, timer phases, feedback
-- Run: `.\gradlew.bat testDebugUnitTest`
-- Uses `UnconfinedTestDispatcher` for coroutine testing
-
-## Build Commands
-
-<!-- context-init:managed -->
-```
-.\gradlew.bat assembleDebug          # Build debug APK
-.\gradlew.bat testDebugUnitTest      # Run unit tests
-.\gradlew.bat installDebug           # Install on connected device
-.\gradlew.bat assembleRelease        # Release build (needs signing)
-```
+| Task | Command |
+|------|---------|
+| Debug build | `.\gradlew.bat assembleDebug` |
+| Unit tests | `.\gradlew.bat testDebugUnitTest` |
+| Detekt | `.\gradlew.bat detekt` |
+| Install debug | `.\gradlew.bat installDebug` |
+| Push scan test images | `.\gradlew.bat pushTestImages` |
+| Instrumented tests | `.\gradlew.bat connectedDebugAndroidTest` |
 
 ## Do NOT
 
 <!-- context-init:managed -->
-- Do not present Pulsar grinder numbers as universal truth — always show ranges + "adjust by taste"
-- Do not use string-based navigation routes — use `@Serializable` objects
-- Do not hold brew state in Composable `remember` — use `BrewViewModel`
-- Do not force grinder selection — it's an optional enhancement layer
-- Do not hardcode ratio 1:16 for Pulsar — it's 1:17 based on research
-- Do not present single exact grind numbers — always give range + adjustment note
+- Do not overwrite unrelated dirty worktree changes; this repo often has parallel edits.
+- Do not hardcode string routes, Pulsar ratio 1:16, or exact grinder settings.
+- Do not bypass repositories for Room access from UI or ViewModels.
+- Do not add broad silent fallbacks; log/surface failures consistently.
+- Do not auto-save live scan results without user review.
+- Do not put source-only strings directly in UI; use resources.
 
 <!-- context-init:user-content-below -->

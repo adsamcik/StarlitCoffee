@@ -1,178 +1,185 @@
-<!-- context-init:version:3.0.0 -->
-<!-- context-init:generated:2026-02-25T05:48:00Z -->
+<!-- context-init:version:3.1.0 -->
+<!-- context-init:generated:2026-05-02T09:24:05+02:00 -->
 
-# Starlit Coffee — Architecture
+# Starlit Coffee - Architecture
 
 <!-- context-init:managed -->
 
 ## System Overview
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    MainActivity                          │
-│  enableEdgeToEdge() → StarlitCoffeeTheme                │
-│                    ↓                                     │
-│              StarlitNavHost                              │
-│    ┌─────────────────────────────┐                      │
-│    │  BrewViewModel (shared)     │← Single instance     │
-│    │  MutableStateFlow<UiState>  │  for all screens     │
-│    └─────────────┬───────────────┘                      │
-│                  ↓                                       │
-│    ┌─────────────────────────────┐                      │
-│    │      NavHost (Compose)      │                      │
-│    │                             │                      │
-│    │  Brew Flow:                 │  Tab Roots:          │
-│    │  MethodPicker → InputMode  │  MethodPicker        │
-│    │  → AmountStrength → Result │  SavedRecipes        │
-│    │  → BrewTimer → Feedback    │  BagInventory        │
-│    │                             │  BrewLogList         │
-│    └─────────────────────────────┘                      │
-│                  ↓                                       │
-│    ┌─────────────────────────────┐                      │
-│    │  Room Database (AppDatabase)│← Not yet wired       │
-│    │  ├── RecipeDao              │  to screens          │
-│    │  ├── CoffeeBagDao           │                      │
-│    │  ├── BrewLogDao             │                      │
-│    │  └── GrinderDao             │                      │
-│    └─────────────────────────────┘                      │
-└─────────────────────────────────────────────────────────┘
+```text
+MainActivity
+  -> StarlitCoffeeTheme
+  -> StarlitNavHost
+       -> AppDatabase singleton + repositories + manual ViewModel factories
+       -> NavHost with @Serializable routes
+       -> Shared BrewViewModel
+       -> CalculatorViewModel for expression/preset input
+       -> LiveScanViewModel scoped to each LiveScan destination
+
+Core feature layers:
+  UI screens/components
+    -> ViewModels
+      -> domain/BrewCalculator, calculator/CalcEvaluator
+      -> repositories
+        -> Room DAOs/entities
+      -> scan/audio/network/util pipelines
 ```
 
-## Package Structure
+## Entry Points
 
-```
-com.adsamcik.starlitcoffee/
-├── MainActivity.kt              # Single activity entry point
-├── StarlitCoffeeApp.kt          # Application class
-├── data/
-│   ├── model/                   # Domain models (enums, data classes)
-│   │   ├── BrewMethod.kt        # 7 brew methods with defaults
-│   │   ├── BrewState.kt         # Brew state enum
-│   │   ├── CalibrationStyle.kt  # Grinder calibration options
-│   │   ├── CoffeeBagStatus.kt   # Bag lifecycle states
-│   │   ├── DefaultGrinders.kt   # Static grinder data + recommendations
-│   │   ├── FilterType.kt        # Paper/19K/40K with descriptions
-│   │   ├── GrindDescriptor.kt   # Generic grind descriptors
-│   │   ├── Grinder.kt           # Grinder data model
-│   │   ├── GrindRecommendation.kt # Grinder-specific recommendations
-│   │   ├── InputMode.kt         # Coffee→Water, Water→Coffee, CupSize
-│   │   ├── StrengthPreset.kt    # Light/Balanced/Strong with offsets
-│   │   └── TasteFeedback.kt     # Taste feedback + adjustment logic
-│   ├── db/                      # Room database layer
-│   │   ├── AppDatabase.kt       # Room DB singleton
-│   │   ├── entity/              # 4 Room entities
-│   │   │   ├── SavedRecipeEntity.kt
-│   │   │   ├── CoffeeBagEntity.kt
-│   │   │   ├── BrewLogEntity.kt
-│   │   │   └── GrinderEntity.kt
-│   │   └── dao/                 # 4 Room DAOs
-│   │       ├── RecipeDao.kt
-│   │       ├── CoffeeBagDao.kt
-│   │       ├── BrewLogDao.kt
-│   │       └── GrinderDao.kt
-│   └── repository/              # (Empty — repository layer planned)
-├── navigation/
-│   ├── Routes.kt                # 9 @Serializable route objects
-│   └── StarlitNavHost.kt        # NavHost + bottom bar + transitions
-├── ui/
-│   ├── screen/                  # 9 full Compose screens
-│   │   ├── MethodPickerScreen.kt
-│   │   ├── InputModeScreen.kt
-│   │   ├── AmountStrengthScreen.kt
-│   │   ├── ResultScreen.kt
-│   │   ├── BrewTimerScreen.kt
-│   │   ├── TasteFeedbackScreen.kt
-│   │   ├── SavedRecipesScreen.kt
-│   │   ├── BagInventoryScreen.kt
-│   │   └── BrewLogScreen.kt
-│   ├── component/               # (Empty — shared components planned)
-│   └── theme/
-│       ├── Color.kt             # Coffee-themed palette (light + dark)
-│       ├── Type.kt              # Material 3 typography
-│       ├── Shape.kt             # Material 3 shapes
-│       └── Theme.kt             # Dynamic color with fallback scheme
-└── viewmodel/
-    └── BrewViewModel.kt         # All state + calculations + timer
-```
+| Path | Purpose |
+|------|---------|
+| `app/src/main/java/com/adsamcik/starlitcoffee/MainActivity.kt` | Single `ComponentActivity`; handles rating reminder intents and hosts Compose. |
+| `app/src/main/java/com/adsamcik/starlitcoffee/StarlitCoffeeApp.kt` | `Application` class referenced from the manifest. |
+| `app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt` | Builds the navigation graph, bottom bar, repositories, and app-scoped ViewModels. |
+| `app/src/main/java/com/adsamcik/starlitcoffee/navigation/Routes.kt` | Type-safe Navigation Compose route objects and route data classes. |
+| `app/src/main/AndroidManifest.xml` | Permissions, `MainActivity`, `BrewTimerService`, FileProvider, and optional camera/microphone features. |
+
+## Package Map
+
+| Package | Role | Key files |
+|---------|------|-----------|
+| `audio` | Experimental brew audio capture, spectral analysis, event detection, recording, and trajectory matching. | `BrewAudioManager.kt`, `BrewEventDetector.kt`, `SpectralAnalyzer.kt` |
+| `calculator` | Pure calculator expression evaluation for dose/water preview. | `CalcEvaluator.kt` |
+| `data/db` | Room database, converters, DAOs, entities, migrations. | `AppDatabase.kt`, `dao/*Dao.kt`, `entity/*Entity.kt` |
+| `data/model` | Brew methods, grinder data, coffee metadata, scan/audio models, UI domain models. | `BrewMethod.kt`, `FilterType.kt`, `DefaultGrinders.kt`, `SpectralModels.kt` |
+| `data/network` | Coffee metadata lookups and on-device LLM abstraction. | `OpenFoodFactsClient.kt`, `QrLinkMetadataExplorer.kt`, `llm/*` |
+| `data/repository` | Thin wrappers over DAOs/DataStore with domain mapping where needed. | `BrewLogRepository.kt`, `CoffeeBagRepository.kt`, `UserPreferencesRepository.kt` |
+| `domain` | Pure brew calculation engine. | `BrewCalculator.kt` |
+| `navigation` | Type-safe routes and single NavHost. | `Routes.kt`, `StarlitNavHost.kt` |
+| `scan` | Live scan consensus, side detection, telemetry, benchmarking, observability. | `FrameEvidenceAccumulator.kt`, `ConsensusEngine.kt`, `SideDetector.kt` |
+| `service` | Foreground timer notification and post-brew rating reminder. | `BrewTimerService.kt`, `RatingReminderWorker.kt`, `TimerStateHolder.kt` |
+| `ui/component` | Shared Compose components, cards, sheets, dialogs, indicators. | `BagCard.kt`, `BrewRatingSheet.kt`, `ScreenTopBar.kt` |
+| `ui/screen` | Full-screen Compose destinations. | `CalculatorBrewScreen.kt`, `BrewTimerScreen.kt`, `LiveScanScreen.kt` |
+| `ui/theme` | Material theme, colors, typography, shapes. | `Theme.kt`, `Color.kt`, `Type.kt`, `Shape.kt` |
+| `util` | OCR, parsing, normalization, inventory insights, image preprocessing, vibration. | `OcrFieldExtractor.kt`, `CoffeeMetadataNormalizer.kt`, `InventoryAlertEngine.kt` |
+| `viewmodel` | App-facing orchestration and screen state. | `BrewViewModel.kt`, `CalculatorViewModel.kt`, `LiveScanViewModel.kt` |
 
 ## Component Map
 
+### Navigation and app shell
+
+- `StarlitNavHost.kt` creates `AppDatabase`, `UserPreferencesRepository`, `CupPresetRepository`, `BrewViewModel`, and `CalculatorViewModel`.
+- Bottom navigation roots are `CalculatorBrew`, `BrewLogList`, and `More`.
+- Nested routes include `GrindPrep`, `BloomTimer`, `BrewTimer`, `BagInventory`, `BarcodeScanner`, `LiveScan`, `BrewLogDetail`, `Settings`, onboarding, and `RescanBag`.
+- Results between scan screens and inventory move through `savedStateHandle` keys such as `scan_fields`, `scanned_barcode`, and `rescan_fields`.
+
+### BrewViewModel
+
+- Location: `app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt`
+- Owns brew setup, selected bag, recipes, logs, flavor tags, bag photo processing, known scan values, rating state, timer state, and derived brew output.
+- Depends on repositories, `GrinderDataProvider`, QR metadata explorer, LLM provider, ML Kit helpers, and `TimerStateHolder`.
+- Uses `BrewCalculator.calculate(...)` for deterministic coffee/water/bloom/time math, then layers on grind, decaf, warnings, bag selection, and UI state.
+
+### CalculatorViewModel
+
+- Location: `app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/CalculatorViewModel.kt`
+- Owns calculator tokens, preset rows, ratio, input direction, and live preview.
+- Seeds default cup presets and persists last ratio/default direction through `UserPreferencesRepository` when available.
+- UI syncs preview dose and ratio into `BrewViewModel` before save/start actions.
+
+### Live scan pipeline
+
+```text
+LiveScanScreen
+  -> CameraX LifecycleCameraController + ML Kit text/barcode analyzers
+  -> LiveScanViewModel
+      -> FrameEvidenceAccumulator
+          -> ConsensusEngine
+          -> SideDetector
+          -> enrichment channels for barcode/QR/API/LLM data
+      -> LlmInferenceProvider + LlmResultCache
+      -> ScanAnalyticsTracker / ScanPerfTracer / ring buffer
+  -> user confirms or edits resolved fields
+  -> BagInventoryScreen / BrewViewModel saves bag
+```
+
+Key properties:
+- Regular frames use a conflated channel; golden frames and enrichments use unlimited channels.
+- Consensus uses OCR medoid clustering, Bayesian priors from known coffee fields, and quality-weighted voting.
+- The user must review/save; live scan results are not auto-saved.
+
+### Audio analysis pipeline
+
+```text
+BrewAudioManager
+  -> AudioCaptureSession
+  -> AudioPreProcessor
+  -> SpectralAnalyzer
+  -> BrewEventDetector
+  -> StateFlow<AudioAnalysisState> + SharedFlow<BrewAudioEvent>
+```
+
+`BrewEventDetector` is pure Kotlin with injected time provider. It detects pour start/stop, dripping, and drawdown completion using adaptive noise floors, spectral features, and a state machine.
+
+### Persistence
+
+- `AppDatabase.kt` is Room with `exportSchema = true`; current code declares version 15 and exports schemas under `app/schemas/`.
+- DAOs return `Flow` for observable collections and `suspend` functions for inserts/updates/deletes.
+- Repositories wrap DAOs and keep ViewModels away from direct database details.
+- `UserPreferencesRepository` uses DataStore for onboarding, enabled methods, default method/filter/grinder, ratio, input direction, and quick-brew preference.
+
+## Primary Flows
+
+### Onboarding flow
+
+```text
+OnboardingMethods -> OnboardingPersonalize
+  -> UserPreferencesRepository.completeOnboarding(...)
+  -> BrewViewModel.setMethod/filter/grinder(...)
+  -> CalculatorBrew
+```
+
+Onboarding selections are held in `remember { mutableStateOf(...) }` inside `StarlitNavHost` until the user finishes.
+
+### Brew planning and timer flow
+
+```text
+CalculatorBrewScreen
+  -> CalculatorViewModel previews dose/water from tokens and ratio
+  -> BrewViewModel owns method/filter/grinder/bag and receives synced ratio/dose
+  -> startNewBrewSession()
+  -> GrindPrep or BrewTimer depending on quick-brew preference
+  -> BrewTimerScreen
+  -> BrewViewModel.logBrew()
+  -> snackbar can navigate to BrewLogList
+  -> RatingReminderWorker may prompt for later rating
+```
+
+### Bag inventory flow
+
+```text
+BagInventoryScreen
+  -> manual add, photo picker, barcode scanner, or LiveScan
+  -> BrewViewModel.processNewBagPhotos(...) for still images
+  -> LiveScanScreen for continuous camera consensus
+  -> AddBagSheet / RescanDeltaDialog
+  -> CoffeeBagRepository persists bags
+  -> selectBagForBrewing(...) returns to CalculatorBrew
+```
+
+### Brew calculation flow
+
+```text
+effectiveRatio = customRatio or selected RatioPreset
+amount + InputMode -> BrewCalculator.computeCoffeeAndWater(...)
+method defaults -> bloom, pulses, time, capacity, absorption
+selected bag + manual override -> decaf state and time adjustment
+grinder/filter/calibration -> GrindResult.Generic or GrindResult.Specific
+warnings -> ratio, bloom, capacity, decaf mismatch
+```
+
+## Known Gotchas
+
 <!-- context-init:managed -->
+- Pulsar default ratio is 17f in `BrewMethod.PULSAR`; do not assume 16f.
+- `FilterType` is only meaningful for Pulsar, but state remembers prior Pulsar filter while switching methods.
+- `StrengthPreset.ratioOffset` is `Int`, not `Float`.
+- `DefaultGrinders` is a static fallback; production grinder data can come from `GrinderDataSource.getInstance(...)` and `assets/grinders.json`.
+- Manual DI is intentional for now; do not partly introduce a second injection style.
+- Live scan is session-scoped and should be recreated for each camera destination.
+- Room migrations and `app/schemas/` exports must be updated together for entity changes.
+- Audio analysis is heavily tested but experimental; keep pure computation testable and Android capture isolated.
 
-### BrewViewModel (Core Engine)
-- **Location**: `viewmodel/BrewViewModel.kt`
-- **Purpose**: Holds all brew state, calculations, timer, feedback
-- **Key types**: `BrewUiState`, `BrewPhase`, `GrindResult`
-- **State**: Single `StateFlow<BrewUiState>` drives all screens
-- **Methods**: `setMethod()`, `setAmount()`, `recalculate()`, `startTimer()`, `setTasteFeedback()`
-- **Dependencies**: `DefaultGrinders` (static data)
-
-### Data Models
-- **Location**: `data/model/`
-- **Purpose**: Domain enums and data classes
-- **Key pattern**: `BrewMethod` enum encodes all defaults per method (ratio, bloom, pulses, grind, capacity)
-- **Exports**: Used by ViewModel and Screens
-
-### Navigation
-- **Location**: `navigation/`
-- **Purpose**: Type-safe Compose Navigation with bottom bar
-- **Key file**: `StarlitNavHost.kt` — creates shared ViewModel, manages transitions
-- **Routes**: 9 serializable objects (brew flow + tab roots)
-
-### Room Database
-- **Location**: `data/db/`
-- **Purpose**: Persistence for recipes, bags, brew logs, grinders
-- **Status**: Entities and DAOs defined, not yet wired to UI screens
-- **Singleton**: `AppDatabase.getInstance(context)`
-
-### Theme
-- **Location**: `ui/theme/`
-- **Purpose**: Material 3 Expressive coffee-themed design
-- **Dynamic color**: Uses system dynamic colors (Android 12+) with fallback
-
-## Data Flows
-
-<!-- context-init:managed -->
-
-### Primary Brew Flow
-```
-MethodPicker → user taps method → viewModel.setMethod()
-  ↓
-InputMode → user picks direction → viewModel.setInputMode()
-  ↓
-AmountStrength → user enters dose/ratio → viewModel.setAmount(), setStrengthPreset()
-  ↓ (recalculate() fires on every change)
-Result → displays computed coffeeG, waterG, bloom, pulses, grind
-  ↓
-BrewTimer → guided phases with valve instructions (Pulsar)
-  ↓
-TasteFeedback → user rates taste → viewModel.setTasteFeedback()
-  → getAdjustmentText() returns next-brew advice
-```
-
-### Calculation Flow (inside BrewViewModel.recalculate())
-```
-effectiveRatio = customRatio ?: (method.defaultRatio + preset.ratioOffset)
-  ↓
-InputMode determines direction:
-  COFFEE_TO_WATER: waterG = coffeeG × ratio
-  WATER_TO_COFFEE: coffeeG = waterG ÷ ratio
-  CUP_SIZE_TO_BOTH: same as WATER_TO_COFFEE
-  ↓
-bloomG = coffeeG × bloomMultiplier
-remainingWaterG = waterG − bloomG
-pulseSizeG = remainingWaterG ÷ pulseCount
-  ↓
-grindResult = resolveGrindResult(grinderId, method, filter, calibration)
-timerPhases = buildTimerPhases(method, bloom, pulses, water, time)
-warnings = {capacity, ratio, bloom} guardrails
-```
-
-## Known Gaps
-
-<!-- context-init:managed -->
-- Room DB not wired to SavedRecipesScreen, BagInventoryScreen, BrewLogScreen (use local placeholder state)
-- No repository layer between ViewModel and Room
-- Barcode scanning UI not implemented (ML Kit + CameraX deps present)
-- No DI framework (manual singleton only)
-- `ui/component/` directory empty — no shared composables extracted yet
+<!-- context-init:user-content-below -->

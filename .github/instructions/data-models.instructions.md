@@ -4,11 +4,13 @@ description: "Domain model conventions for Starlit Coffee"
 ---
 
 <!-- context-init:managed -->
-- Enums include all relevant properties in constructor (displayName, defaults, etc.)
-- Adding a new brew method = adding enum entry to `BrewMethod` with full defaults — no screen changes needed
-- `StrengthPreset.ratioOffset` is Int: LIGHT=+1, BALANCED=0, STRONG=-1
-- `FilterType` must include `description` and `cupProfile` properties
-- `TasteFeedback.getAdjustmentText()` takes `hasGrinder: Boolean` and `isPulsar: Boolean`
-- Pulsar default ratio is 1:17 (not 1:16)
-- Grinder recommendations are matched by `grinderId + methodId + filterType` triple
-- Always present grind settings as ranges, never single exact values
+- `BrewMethod` enum entries own method defaults: display name, icon, ratio, bloom, pulses, temperature, time target, capacity, grind descriptor, bloom duration, and absorption ratio.
+- Pulsar default ratio is 17f. Do not encode 1:16 as the Pulsar default.
+- `BrewMethod.defaultRatioPresets` derives bright/balanced/rich ratio presets from each method's default ratio.
+- `FilterType` is Pulsar-specific and must include `displayName`, `description`, and `cupProfile`.
+- `StrengthPreset.ratioOffset` is `Int`: LIGHT=+1, BALANCED=0, STRONG=-1.
+- `DefaultGrinders` is static fallback/test data; production code should prefer `GrinderDataSource.getInstance(context)`.
+- Grinder recommendations match by `grinderId`, `methodId`, and `filterType`; IDs must match canonical strings such as `1zpresso-zp6-special`.
+- Present grind guidance as ranges plus adjustment notes, never as universal exact settings.
+- Keep data models Android-free unless they intentionally reference resources such as `@StringRes` IDs.
+- When adding coffee metadata enums/models, keep normalizers, scan field support, and tests aligned.
