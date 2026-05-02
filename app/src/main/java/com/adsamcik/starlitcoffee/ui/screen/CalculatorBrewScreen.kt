@@ -142,18 +142,29 @@ fun CalculatorBrewScreen(
     // "hidden behind the keyboard".
     val scrollState = rememberScrollState()
     var configExpanded by rememberSaveable { mutableStateOf(false) }
+    // Tracks the previous expand state in the current composition scope (NOT
+    // saveable). When the screen is restored from back-navigation with
+    // configExpanded=true, this initializes to true on the same recomposition,
+    // so `justExpanded` is false and we skip the auto-scroll. Only a real
+    // user-driven false→true transition triggers the animation.
+    var lastConfigExpanded by remember { mutableStateOf(configExpanded) }
 
     LaunchedEffect(configExpanded) {
-        if (configExpanded) {
+        val justExpanded = configExpanded && !lastConfigExpanded
+        lastConfigExpanded = configExpanded
+        if (justExpanded) {
             // AnimatedVisibility's bouncy spring expand grows the content
             // over ~400ms; if we read scrollState.maxValue too early it
             // reflects only the partially-expanded height and we under-
             // scroll. Wait for maxValue to stabilize across two ticks
-            // before animating to the final position.
+            // before animating to the final position. Bounded so we don't
+            // hang if the layout never settles (e.g. ambient animations).
             var previousMax = -1
-            while (previousMax != scrollState.maxValue) {
+            var attempts = 0
+            while (previousMax != scrollState.maxValue && attempts < 10) {
                 previousMax = scrollState.maxValue
                 delay(80)
+                attempts++
             }
             scrollState.animateScrollTo(scrollState.maxValue)
         }
