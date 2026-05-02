@@ -277,7 +277,6 @@ fun AddBagSheet(
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        shape = RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp),
         sheetState = rememberModalBottomSheetState(
             skipPartiallyExpanded = true,
         ),

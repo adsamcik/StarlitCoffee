@@ -98,7 +98,6 @@ fun BagDetailSheet(
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        shape = RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp),
         sheetState = rememberModalBottomSheetState(
             skipPartiallyExpanded = true,
         ),
@@ -365,7 +364,7 @@ fun BagDetailSheet(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(8.dp)
-                                .clip(RoundedCornerShape(4.dp)),
+                                .clip(MaterialTheme.shapes.extraSmall),
                             color = when {
                                 isLow -> MaterialTheme.colorScheme.error
                                 progress < 0.3f -> MaterialTheme.colorScheme.tertiary

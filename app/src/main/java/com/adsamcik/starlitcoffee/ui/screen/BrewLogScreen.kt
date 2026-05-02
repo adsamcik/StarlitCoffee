@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Star
@@ -191,7 +191,7 @@ private fun BrewLogCard(
                     modifier = Modifier
                         .width(5.dp)
                         .fillMaxHeight()
-                        .clip(RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp))
+                        .clip(MaterialTheme.shapes.large)
                         .background(accentColor),
                 )
 
@@ -310,7 +310,7 @@ private fun BrewLogCard(
                                     modifier = Modifier
                                         .background(
                                             MaterialTheme.colorScheme.tertiaryContainer,
-                                            RoundedCornerShape(999.dp),
+                                            CircleShape,
                                         )
                                         .padding(horizontal = 10.dp, vertical = 3.dp),
                                 )

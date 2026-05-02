@@ -69,7 +69,7 @@ fun GrindPrepScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp, vertical = 16.dp)
                         .height(64.dp),
-                    shape = RoundedCornerShape(32.dp),
+                    shape = MaterialTheme.shapes.extraLarge,
                 ) {
                     Text(
                         text = stringResource(R.string.action_ready_to_brew_short),
@@ -128,7 +128,7 @@ fun GrindPrepScreen(
 @Composable
 private fun GrindHeroCard(grindResult: GrindResult) {
     Surface(
-        shape = RoundedCornerShape(32.dp),
+        shape = MaterialTheme.shapes.extraLarge,
         color = MaterialTheme.colorScheme.primaryContainer,
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         modifier = Modifier.fillMaxWidth(),
@@ -317,7 +317,7 @@ private fun MetricTile(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        shape = RoundedCornerShape(24.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
         contentColor = MaterialTheme.colorScheme.onSurface,
         modifier = modifier,
@@ -361,7 +361,7 @@ private fun MetricTile(
 @Composable
 private fun PrepTipCard(@androidx.annotation.StringRes tipRes: Int) {
     Surface(
-        shape = RoundedCornerShape(28.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.tertiaryContainer,
         contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
         modifier = Modifier.fillMaxWidth(),
@@ -371,7 +371,7 @@ private fun PrepTipCard(@androidx.annotation.StringRes tipRes: Int) {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Surface(
-                shape = RoundedCornerShape(20.dp),
+                shape = MaterialTheme.shapes.medium,
                 color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.12f),
                 modifier = Modifier.size(40.dp),
             ) {

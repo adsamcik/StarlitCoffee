@@ -1,6 +1,11 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -46,6 +51,7 @@ fun BagCard(
     bag: CoffeeBagEntity,
     dateFormat: SimpleDateFormat,
     onTap: () -> Unit,
+    modifier: Modifier = Modifier,
     isRecommended: Boolean = false,
     brewsRemaining: Int? = null,
 ) {
@@ -66,6 +72,7 @@ fun BagCard(
     ElevatedCard(
         onClick = onTap,
         shape = MaterialTheme.shapes.large,
+        modifier = modifier.fillMaxWidth(),
         colors = if (isRecommended) {
             CardDefaults.elevatedCardColors(
                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -73,7 +80,6 @@ fun BagCard(
         } else {
             CardDefaults.elevatedCardColors()
         },
-        modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier
@@ -81,8 +87,12 @@ fun BagCard(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            // "Brew next" badge for recommended bag
-            if (isRecommended) {
+            // "Brew next" badge for recommended bag — animated entry per M3 Expressive
+            AnimatedVisibility(
+                visible = isRecommended,
+                enter = fadeIn() + scaleIn(initialScale = 0.85f),
+                exit = fadeOut() + scaleOut(targetScale = 0.85f),
+            ) {
                 Text(
                     text = "☕ Brew this next",
                     style = MaterialTheme.typography.labelMedium,

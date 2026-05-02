@@ -470,6 +470,7 @@ fun BagInventoryScreen(
                         bag = bag,
                         dateFormat = dateFormat,
                         onTap = { selectedBag = bag },
+                        modifier = Modifier.animateItem(),
                         isRecommended = bag.id == topRecommendedId,
                         brewsRemaining = brewsRemaining,
                     )
