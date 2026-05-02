@@ -214,10 +214,7 @@ fun BloomTimerScreen(
                 // Hero timer
                 Text(
                     text = formatBloomTime(state.elapsedSeconds),
-                    style = MaterialTheme.typography.displayLarge.copy(
-                        fontSize = 96.sp,
-                        letterSpacing = (-3).sp,
-                    ),
+                    style = MaterialTheme.typography.displayLarge,
                     fontWeight = FontWeight.Light,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.semantics { heading() },

@@ -263,10 +263,7 @@ fun BrewTimerScreen(
                 }
                 Text(
                     text = formatBrewTime(heroSeconds),
-                    style = MaterialTheme.typography.displayLarge.copy(
-                        fontSize = 84.sp,
-                        letterSpacing = (-3).sp,
-                    ),
+                    style = MaterialTheme.typography.displayLarge,
                     fontWeight = FontWeight.Light,
                     color = heroColor,
                     modifier = Modifier.semantics { heading() },
