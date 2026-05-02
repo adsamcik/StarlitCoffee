@@ -1,7 +1,8 @@
 package com.adsamcik.starlitcoffee.navigation
 
 import android.app.Application
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -88,9 +89,6 @@ private val bottomBarRoutes = setOf(
     BrewLogList::class,
     More::class,
 )
-
-private const val TRANSITION_DURATION = 300
-private const val FADE_DURATION = 200
 
 @Composable
 fun StarlitNavHost() {
@@ -181,19 +179,19 @@ fun StarlitNavHost() {
             startDestination = startDestination,
             modifier = Modifier.padding(innerPadding),
             enterTransition = {
-                fadeIn(tween(TRANSITION_DURATION)) +
-                    slideInHorizontally(tween(TRANSITION_DURATION)) { it / 4 }
+                fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) +
+                    slideInHorizontally(spring(stiffness = Spring.StiffnessMediumLow)) { it / 4 }
             },
             exitTransition = {
-                fadeOut(tween(FADE_DURATION))
+                fadeOut(spring(stiffness = Spring.StiffnessMediumLow))
             },
             popEnterTransition = {
-                fadeIn(tween(TRANSITION_DURATION)) +
-                    slideInHorizontally(tween(TRANSITION_DURATION)) { -it / 4 }
+                fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) +
+                    slideInHorizontally(spring(stiffness = Spring.StiffnessMediumLow)) { -it / 4 }
             },
             popExitTransition = {
-                fadeOut(tween(FADE_DURATION)) +
-                    slideOutHorizontally(tween(FADE_DURATION)) { it / 4 }
+                fadeOut(spring(stiffness = Spring.StiffnessMediumLow)) +
+                    slideOutHorizontally(spring(stiffness = Spring.StiffnessMediumLow)) { it / 4 }
             },
         ) {
             // Onboarding flow
