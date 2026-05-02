@@ -1,26 +1,69 @@
 #!/usr/bin/env python3
-"""Normalize image-generator bloom sheets into app-ready spritesheets.
+"""Normalize image-generator bloom atlases into app-ready spritesheets.
 
-The image generator is used for the artwork. This script only removes the
-chroma-key background and normalizes the generated 9x5 grid into app cells.
+The image generator creates the art. This script makes the slicing
+deterministic:
+
+1. Recover a 5x5 atlas grid, preferably from bright guide lines in the source.
+2. Remove the flat chroma-key background.
+3. Copy every source cell into an exact 256x256 output frame.
+
+That grid-first flow is deliberately different from blob detection. Bloom
+frames often contain separate pieces: split beans, steam curls, bubbles,
+sparkles, petals, and leaves. Those separate pieces still belong to one frame.
 """
 
 from __future__ import annotations
 
 import argparse
 import math
+import statistics
 import struct
 import zlib
-from collections import deque
+from dataclasses import dataclass
 from pathlib import Path
 
 
-FRAME_COUNT = 45
-FRAME_COLUMNS = 9
+FRAME_COLUMNS = 5
 FRAME_ROWS = 5
 FRAME_SIZE = 256
-FRAME_OVERLAP_FRACTION = 0.20
-SUBJECT_MAX_SIZE = 224
+DEFAULT_GUIDE_COLOR = (255, 0, 255)
+DEFAULT_FRAME_COUNT = FRAME_COLUMNS * FRAME_ROWS
+
+Rgb = tuple[int, int, int]
+CellBox = tuple[int, int, int, int]
+
+
+@dataclass(frozen=True)
+class LineCluster:
+    start: int
+    end: int
+    score: float
+
+    @property
+    def center(self) -> float:
+        return (self.start + self.end) / 2
+
+
+@dataclass(frozen=True)
+class AxisLayout:
+    cells: list[tuple[int, int]]
+    clusters: list[LineCluster]
+    source: str
+
+
+@dataclass(frozen=True)
+class GridLayout:
+    columns: int
+    rows: int
+    x_axis: AxisLayout
+    y_axis: AxisLayout
+
+    @property
+    def source(self) -> str:
+        if self.x_axis.source == self.y_axis.source:
+            return self.x_axis.source
+        return f"x:{self.x_axis.source}, y:{self.y_axis.source}"
 
 
 def png_chunk(kind: bytes, data: bytes) -> bytes:
@@ -122,312 +165,778 @@ def write_png(path: Path, width: int, height: int, pixels: bytearray) -> None:
     path.write_bytes(bytes(data))
 
 
-def distance_sq(
-    color: tuple[int, int, int],
-    key: tuple[int, int, int],
+def parse_color(text: str) -> Rgb:
+    value = text.strip().lower()
+    if value.startswith("#"):
+        value = value[1:]
+    if len(value) != 6:
+        raise argparse.ArgumentTypeError(f"Expected a #rrggbb color, got {text!r}")
+    try:
+        return (int(value[0:2], 16), int(value[2:4], 16), int(value[4:6], 16))
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(f"Expected a #rrggbb color, got {text!r}") from exc
+
+
+def color_distance_sq(color: Rgb, target: Rgb) -> int:
+    return sum((color[i] - target[i]) ** 2 for i in range(3))
+
+
+def close_to_any_color(color: Rgb, targets: list[Rgb], tolerance: int) -> bool:
+    tolerance_sq = tolerance * tolerance
+    return any(color_distance_sq(color, target) <= tolerance_sq for target in targets)
+
+
+def pixel_rgb(pixels: bytearray, index: int) -> Rgb:
+    offset = index * 4
+    return (pixels[offset], pixels[offset + 1], pixels[offset + 2])
+
+
+def has_source_alpha(pixels: bytearray) -> bool:
+    transparent = 0
+    total = len(pixels) // 4
+    for offset in range(3, len(pixels), 4):
+        if pixels[offset] < 250:
+            transparent += 1
+    return transparent / max(1, total) > 0.005
+
+
+def background_key(
+    width: int,
+    height: int,
+    pixels: bytearray,
+    guide_colors: list[Rgb],
+    guide_tolerance: int,
+) -> Rgb:
+    samples: list[Rgb] = []
+    x_step = max(1, width // 128)
+    y_step = max(1, height // 128)
+
+    def add_sample(x: int, y: int) -> None:
+        offset = (y * width + x) * 4
+        color = (pixels[offset], pixels[offset + 1], pixels[offset + 2])
+        if pixels[offset + 3] > 16 and not close_to_any_color(color, guide_colors, guide_tolerance):
+            samples.append(color)
+
+    for inset in (0, 4, 8, 16, 32):
+        if inset * 2 >= width or inset * 2 >= height:
+            continue
+        for y in (inset, height - 1 - inset):
+            for x in range(inset, width - inset, x_step):
+                add_sample(x, y)
+        for x in (inset, width - 1 - inset):
+            for y in range(inset, height - inset, y_step):
+                add_sample(x, y)
+        if len(samples) >= 16:
+            break
+
+    if len(samples) < 16:
+        sample_step = max(1, min(width, height) // 80)
+        for y in range(0, height, sample_step):
+            for x in range(0, width, sample_step):
+                add_sample(x, y)
+
+    if not samples:
+        return (0, 0, 0)
+    return tuple(int(statistics.median(channel)) for channel in zip(*samples))
+
+
+def alpha_for_key_distance(
+    color: Rgb,
+    key: Rgb,
+    transparent_threshold: int,
+    opaque_threshold: int,
 ) -> int:
-    return sum((color[i] - key[i]) ** 2 for i in range(3))
-
-
-def background_key(width: int, height: int, pixels: bytearray) -> tuple[int, int, int]:
-    samples: list[tuple[int, int, int]] = []
-    for y in (0, height - 1):
-        for x in range(0, width, max(1, width // 64)):
-            offset = (y * width + x) * 4
-            samples.append(tuple(pixels[offset:offset + 3]))
-    for x in (0, width - 1):
-        for y in range(0, height, max(1, height // 64)):
-            offset = (y * width + x) * 4
-            samples.append(tuple(pixels[offset:offset + 3]))
-    return tuple(sorted(channel)[len(channel) // 2] for channel in zip(*samples))
-
-
-def alpha_for_pixel(
-    color: tuple[int, int, int],
-    key: tuple[int, int, int],
-) -> int:
-    distance = math.sqrt(distance_sq(color, key))
-    if distance <= 48:
+    distance = math.sqrt(color_distance_sq(color, key))
+    if distance <= transparent_threshold:
         return 0
-    if distance >= 118:
+    if distance >= opaque_threshold:
         return 255
-    return int(round((distance - 48) / 70 * 255))
+    return int(round((distance - transparent_threshold) / (opaque_threshold - transparent_threshold) * 255))
 
 
-def build_alpha(width: int, height: int, pixels: bytearray, key: tuple[int, int, int]) -> bytearray:
+def build_alpha(
+    width: int,
+    height: int,
+    pixels: bytearray,
+    key: Rgb,
+    guide_colors: list[Rgb],
+    guide_tolerance: int,
+    transparent_threshold: int,
+    opaque_threshold: int,
+) -> tuple[bytearray, bool]:
+    source_alpha = has_source_alpha(pixels)
     alpha = bytearray(width * height)
+
     for index in range(width * height):
         offset = index * 4
-        alpha[index] = min(
-            pixels[offset + 3],
-            alpha_for_pixel(tuple(pixels[offset:offset + 3]), key),
-        )
-    return alpha
-
-
-def components(width: int, height: int, alpha: bytearray) -> list[tuple[int, int, int, int, int]]:
-    visited = bytearray(width * height)
-    found: list[tuple[int, int, int, int, int]] = []
-    neighbors = ((1, 0), (-1, 0), (0, 1), (0, -1))
-
-    for start in range(width * height):
-        if visited[start] or alpha[start] <= 96:
-            continue
-        visited[start] = 1
-        queue: deque[int] = deque([start])
-        min_x = max_x = start % width
-        min_y = max_y = start // width
-        area = 0
-
-        while queue:
-            current = queue.popleft()
-            area += 1
-            x = current % width
-            y = current // width
-            min_x = min(min_x, x)
-            max_x = max(max_x, x)
-            min_y = min(min_y, y)
-            max_y = max(max_y, y)
-
-            for dx, dy in neighbors:
-                nx = x + dx
-                ny = y + dy
-                if nx < 0 or ny < 0 or nx >= width or ny >= height:
-                    continue
-                neighbor = ny * width + nx
-                if visited[neighbor] or alpha[neighbor] <= 96:
-                    continue
-                visited[neighbor] = 1
-                queue.append(neighbor)
-
-        box_width = max_x - min_x + 1
-        box_height = max_y - min_y + 1
-        if area >= 450 and box_width >= 18 and box_height >= 18:
-            found.append((min_x, min_y, max_x, max_y, area))
-
-    return found
-
-
-def reading_order(items: list[tuple[int, int, int, int, int]]) -> list[tuple[int, int, int, int, int]]:
-    items = sorted(items, key=lambda box: ((box[1] + box[3]) / 2, (box[0] + box[2]) / 2))
-    rows: list[list[tuple[int, int, int, int, int]]] = []
-    row_threshold = 90
-    for item in items:
-        center_y = (item[1] + item[3]) / 2
-        for row in rows:
-            row_center = sum((box[1] + box[3]) / 2 for box in row) / len(row)
-            if abs(center_y - row_center) < row_threshold:
-                row.append(item)
-                break
+        color = (pixels[offset], pixels[offset + 1], pixels[offset + 2])
+        if close_to_any_color(color, guide_colors, guide_tolerance):
+            alpha[index] = 0
+        elif source_alpha:
+            alpha[index] = pixels[offset + 3]
         else:
-            rows.append([item])
+            alpha[index] = alpha_for_key_distance(color, key, transparent_threshold, opaque_threshold)
 
-    ordered: list[tuple[int, int, int, int, int]] = []
-    for row in sorted(rows, key=lambda group: sum((box[1] + box[3]) / 2 for box in group) / len(group)):
-        ordered.extend(sorted(row, key=lambda box: (box[0] + box[2]) / 2))
-    return ordered
+    return alpha, source_alpha
 
 
-def select_twenty(items: list[tuple[int, int, int, int, int]]) -> list[tuple[int, int, int, int, int]]:
-    if not items:
-        raise ValueError("No frames detected in generated image")
-    if len(items) == FRAME_COUNT:
-        return items
-    if len(items) > FRAME_COUNT:
-        return [items[round(i * (len(items) - 1) / (FRAME_COUNT - 1))] for i in range(FRAME_COUNT)]
-    return [items[round(i * (len(items) - 1) / (FRAME_COUNT - 1))] for i in range(FRAME_COUNT)]
+def guide_axis_scores(
+    width: int,
+    height: int,
+    pixels: bytearray,
+    guide_colors: list[Rgb],
+    guide_tolerance: int,
+) -> tuple[list[float], list[float]]:
+    x_counts = [0] * width
+    y_counts = [0] * height
+    tolerance_sq = guide_tolerance * guide_tolerance
+
+    for y in range(height):
+        row_matches = 0
+        row_offset = y * width
+        for x in range(width):
+            index = row_offset + x
+            color = pixel_rgb(pixels, index)
+            if any(color_distance_sq(color, guide_color) <= tolerance_sq for guide_color in guide_colors):
+                x_counts[x] += 1
+                row_matches += 1
+        y_counts[y] = row_matches
+
+    x_scores = [count / height for count in x_counts]
+    y_scores = [count / width for count in y_counts]
+    return x_scores, y_scores
 
 
-def composite_frame(
+def line_clusters(scores: list[float], minimum_score: float) -> list[LineCluster]:
+    clusters: list[LineCluster] = []
+    start: int | None = None
+    total = 0.0
+    count = 0
+
+    for position, score in enumerate(scores):
+        if score >= minimum_score:
+            if start is None:
+                start = position
+                total = 0.0
+                count = 0
+            total += score
+            count += 1
+        elif start is not None:
+            clusters.append(LineCluster(start, position - 1, total / max(1, count)))
+            start = None
+
+    if start is not None:
+        clusters.append(LineCluster(start, len(scores) - 1, total / max(1, count)))
+
+    return clusters
+
+
+def select_even_clusters(
+    clusters: list[LineCluster],
+    expected_count: int,
+    axis_length: int,
+) -> list[LineCluster] | None:
+    if len(clusters) < expected_count:
+        return None
+
+    expected_spacing = axis_length / max(1, expected_count - 1)
+    max_distance = max(8.0, expected_spacing * 0.42)
+    selected: list[LineCluster] = []
+    used: set[int] = set()
+
+    for index in range(expected_count):
+        target = index * (axis_length - 1) / max(1, expected_count - 1)
+        ranked = sorted(
+            (
+                (abs(cluster.center - target), -cluster.score, cluster_index, cluster)
+                for cluster_index, cluster in enumerate(clusters)
+                if cluster_index not in used
+            ),
+            key=lambda item: item[:3],
+        )
+        if not ranked or ranked[0][0] > max_distance:
+            return None
+        _, _, cluster_index, cluster = ranked[0]
+        selected.append(cluster)
+        used.add(cluster_index)
+
+    selected = sorted(selected, key=lambda cluster: cluster.center)
+    if any(selected[i].center >= selected[i + 1].center for i in range(len(selected) - 1)):
+        return None
+    return selected
+
+
+def equal_axis_layout(axis_length: int, cell_count: int) -> AxisLayout:
+    cells = [
+        (
+            round(index * axis_length / cell_count),
+            round((index + 1) * axis_length / cell_count),
+        )
+        for index in range(cell_count)
+    ]
+    return AxisLayout(cells=cells, clusters=[], source="equal")
+
+
+def guided_cells_from_clusters(
+    clusters: list[LineCluster],
+    axis_length: int,
+    cell_count: int,
+) -> list[tuple[int, int]] | None:
+    cells: list[tuple[int, int]] = []
+    minimum_cell_size = max(8, axis_length // (cell_count * 3))
+
+    for index in range(cell_count):
+        left = max(0, clusters[index].end + 1)
+        right = min(axis_length, clusters[index + 1].start)
+        if right - left < minimum_cell_size:
+            return None
+        cells.append((left, right))
+
+    return cells
+
+
+def guided_axis_layout_from_scores(
+    scores: list[float],
+    axis_length: int,
+    cell_count: int,
+) -> AxisLayout | None:
+    peak = max(scores) if scores else 0.0
+    if peak < 0.08:
+        return None
+
+    minimum_score = max(0.06, peak * 0.45)
+    clusters = line_clusters(scores, minimum_score)
+    selected = select_even_clusters(clusters, cell_count + 1, axis_length)
+    if selected is None:
+        return None
+
+    cells = guided_cells_from_clusters(selected, axis_length, cell_count)
+    if cells is None:
+        return None
+
+    return AxisLayout(cells=cells, clusters=selected, source="guide")
+
+
+def recover_grid(
+    width: int,
+    height: int,
+    pixels: bytearray,
+    columns: int,
+    rows: int,
+    guide_colors: list[Rgb],
+    guide_tolerance: int,
+    force_equal_grid: bool,
+) -> GridLayout:
+    if force_equal_grid:
+        x_axis = equal_axis_layout(width, columns)
+        y_axis = equal_axis_layout(height, rows)
+    else:
+        x_scores, y_scores = guide_axis_scores(width, height, pixels, guide_colors, guide_tolerance)
+        x_axis = guided_axis_layout_from_scores(x_scores, width, columns)
+        y_axis = guided_axis_layout_from_scores(y_scores, height, rows)
+        if x_axis is None:
+            x_axis = equal_axis_layout(width, columns)
+        if y_axis is None:
+            y_axis = equal_axis_layout(height, rows)
+
+    return GridLayout(columns=columns, rows=rows, x_axis=x_axis, y_axis=y_axis)
+
+
+def estimate_source_grid_from_guides(
+    width: int,
+    height: int,
+    pixels: bytearray,
+    guide_colors: list[Rgb],
+    guide_tolerance: int,
+) -> tuple[int, int] | None:
+    x_scores, y_scores = guide_axis_scores(width, height, pixels, guide_colors, guide_tolerance)
+
+    def axis_cell_count(scores: list[float]) -> int | None:
+        peak = max(scores) if scores else 0.0
+        if peak < 0.08:
+            return None
+        clusters = line_clusters(scores, max(0.12, peak * 0.42))
+        if len(clusters) < 2:
+            return None
+        return len(clusters) - 1
+
+    columns = axis_cell_count(x_scores)
+    rows = axis_cell_count(y_scores)
+    if columns is None or rows is None:
+        return None
+    return columns, rows
+
+
+def clamp_byte(value: float) -> int:
+    return max(0, min(255, int(round(value))))
+
+
+def despill_color(color: Rgb, key: Rgb, alpha: int) -> Rgb:
+    if alpha <= 0 or alpha >= 250:
+        return color
+    coverage = max(0.01, alpha / 255)
+    return tuple(clamp_byte((color[index] - key[index] * (1 - coverage)) / coverage) for index in range(3))
+
+
+def scale_cell_into_frame(
     source_width: int,
     source_height: int,
-    source_pixels: bytearray,
-    source_alpha: bytearray,
-    box: tuple[int, int, int, int, int],
+    pixels: bytearray,
+    alpha: bytearray,
+    key: Rgb,
+    source_uses_alpha: bool,
+    cell: CellBox,
+    frame_size: int,
     out_pixels: bytearray,
+    out_width: int,
     frame_index: int,
-) -> None:
-    padding = 24
-    min_x, min_y, max_x, max_y, _ = box
-    min_x = max(0, min_x - padding)
-    min_y = max(0, min_y - padding)
-    max_x = min(source_width - 1, max_x + padding)
-    max_y = min(source_height - 1, max_y + padding)
-    crop_width = max_x - min_x + 1
-    crop_height = max_y - min_y + 1
-    scale = min(SUBJECT_MAX_SIZE / crop_width, SUBJECT_MAX_SIZE / crop_height)
-    draw_width = max(1, round(crop_width * scale))
-    draw_height = max(1, round(crop_height * scale))
-    frame_col = frame_index % FRAME_COLUMNS
-    frame_row = frame_index // FRAME_COLUMNS
-    x_offset = frame_col * FRAME_SIZE + (FRAME_SIZE - draw_width) // 2
-    y_offset = frame_row * FRAME_SIZE + (FRAME_SIZE - draw_height) // 2
+    columns: int,
+    alpha_threshold: int,
+    despill: bool,
+    clear_label_corner_fraction: float,
+    output_padding: int,
+) -> int:
+    left, top, right, bottom = cell
+    source_cell_width = max(1, right - left)
+    source_cell_height = max(1, bottom - top)
+    label_clear_width = int(source_cell_width * clear_label_corner_fraction)
+    label_clear_height = int(source_cell_height * clear_label_corner_fraction)
+    frame_col = frame_index % columns
+    frame_row = frame_index // columns
+    draw_left = max(0, min(frame_size // 3, output_padding))
+    draw_top = draw_left
+    draw_size = max(1, frame_size - draw_left * 2)
+    written = 0
 
-    for y in range(draw_height):
-        source_y = min_y + min(crop_height - 1, int(y / scale))
-        for x in range(draw_width):
-            source_x = min_x + min(crop_width - 1, int(x / scale))
-            source_index = source_y * source_width + source_x
-            alpha = source_alpha[source_index]
-            if alpha == 0:
+    for y in range(draw_size):
+        source_y = top + min(
+            source_cell_height - 1,
+            int((y + 0.5) * source_cell_height / draw_size),
+        )
+        if source_y < 0 or source_y >= source_height:
+            continue
+
+        for x in range(draw_size):
+            source_x = left + min(
+                source_cell_width - 1,
+                int((x + 0.5) * source_cell_width / draw_size),
+            )
+            if source_x < 0 or source_x >= source_width:
                 continue
+
+            if (
+                clear_label_corner_fraction > 0
+                and source_x - left < label_clear_width
+                and source_y - top < label_clear_height
+            ):
+                continue
+
+            source_index = source_y * source_width + source_x
+            pixel_alpha = alpha[source_index]
+            if pixel_alpha <= alpha_threshold:
+                continue
+
             source_offset = source_index * 4
-            dest_x = x_offset + x
-            dest_y = y_offset + y
-            dest_offset = (dest_y * FRAME_SIZE * FRAME_COLUMNS + dest_x) * 4
-            out_pixels[dest_offset:dest_offset + 3] = source_pixels[source_offset:source_offset + 3]
-            out_pixels[dest_offset + 3] = alpha
+            color = (
+                pixels[source_offset],
+                pixels[source_offset + 1],
+                pixels[source_offset + 2],
+            )
+            if despill and not source_uses_alpha:
+                color = despill_color(color, key, pixel_alpha)
+
+            dest_x = frame_col * frame_size + draw_left + x
+            dest_y = frame_row * frame_size + draw_top + y
+            dest_offset = (dest_y * out_width + dest_x) * 4
+            out_pixels[dest_offset:dest_offset + 3] = bytes(color)
+            out_pixels[dest_offset + 3] = pixel_alpha
+            written += 1
+
+    return written
 
 
-def selected_frame_pixels(
-    source_width: int,
-    source_height: int,
-    source_alpha: bytearray,
-    cell_left: float,
-    cell_top: float,
-    cell_width: float,
-    cell_height: float,
-    overlap_x: float,
-    overlap_y: float,
-) -> set[int]:
-    crop_left = max(0, int(math.floor(cell_left - overlap_x)))
-    crop_top = max(0, int(math.floor(cell_top - overlap_y)))
-    crop_right = min(source_width - 1, int(math.ceil(cell_left + cell_width + overlap_x)))
-    crop_bottom = min(source_height - 1, int(math.ceil(cell_top + cell_height + overlap_y)))
-    crop_width = crop_right - crop_left + 1
-    crop_height = crop_bottom - crop_top + 1
-    visited = bytearray(crop_width * crop_height)
-    selected: set[int] = set()
-    center_x = cell_left + cell_width / 2
-    center_y = cell_top + cell_height / 2
-    max_center_distance = max(cell_width, cell_height) * 0.72
+def clear_output_frame_border(
+    out_pixels: bytearray,
+    out_width: int,
+    frame_size: int,
+    frame_index: int,
+    columns: int,
+    border_width: int,
+) -> None:
+    if border_width <= 0:
+        return
+
+    frame_col = frame_index % columns
+    frame_row = frame_index // columns
+    left = frame_col * frame_size
+    top = frame_row * frame_size
+    right = left + frame_size
+    bottom = top + frame_size
+
+    for y in range(top, min(bottom, top + border_width)):
+        row_offset = y * out_width
+        for x in range(left, right):
+            offset = (row_offset + x) * 4
+            out_pixels[offset:offset + 4] = b"\x00\x00\x00\x00"
+
+    for y in range(max(top, bottom - border_width), bottom):
+        row_offset = y * out_width
+        for x in range(left, right):
+            offset = (row_offset + x) * 4
+            out_pixels[offset:offset + 4] = b"\x00\x00\x00\x00"
+
+    for y in range(top, bottom):
+        row_offset = y * out_width
+        for x in range(left, min(right, left + border_width)):
+            offset = (row_offset + x) * 4
+            out_pixels[offset:offset + 4] = b"\x00\x00\x00\x00"
+        for x in range(max(left, right - border_width), right):
+            offset = (row_offset + x) * 4
+            out_pixels[offset:offset + 4] = b"\x00\x00\x00\x00"
+
+
+def expanded_box(
+    box: tuple[int, int, int, int],
+    padding: int,
+    frame_size: int,
+) -> tuple[int, int, int, int]:
+    left, top, right, bottom = box
+    return (
+        max(0, left - padding),
+        max(0, top - padding),
+        min(frame_size - 1, right + padding),
+        min(frame_size - 1, bottom + padding),
+    )
+
+
+def boxes_overlap(
+    first: tuple[int, int, int, int],
+    second: tuple[int, int, int, int],
+) -> bool:
+    return not (
+        first[2] < second[0]
+        or second[2] < first[0]
+        or first[3] < second[1]
+        or second[3] < first[1]
+    )
+
+
+def remove_stray_frame_components(
+    out_pixels: bytearray,
+    out_width: int,
+    frame_size: int,
+    frame_index: int,
+    columns: int,
+    alpha_threshold: int,
+    max_area: int,
+    keep_padding: int,
+) -> None:
+    if max_area <= 0:
+        return
+
+    frame_col = frame_index % columns
+    frame_row = frame_index // columns
+    left = frame_col * frame_size
+    top = frame_row * frame_size
+    visited = bytearray(frame_size * frame_size)
+    components: list[tuple[int, tuple[int, int, int, int], list[int]]] = []
     neighbors = ((1, 0), (-1, 0), (0, 1), (0, -1))
 
-    for local_start in range(crop_width * crop_height):
+    for local_start in range(frame_size * frame_size):
         if visited[local_start]:
             continue
-        x = local_start % crop_width
-        y = local_start // crop_width
-        source_index = (crop_top + y) * source_width + crop_left + x
-        if source_alpha[source_index] <= 72:
+        sx = local_start % frame_size
+        sy = local_start // frame_size
+        source_offset = ((top + sy) * out_width + left + sx) * 4
+        if out_pixels[source_offset + 3] <= alpha_threshold:
             visited[local_start] = 1
             continue
 
         visited[local_start] = 1
-        queue: deque[int] = deque([local_start])
+        stack = [local_start]
         pixels: list[int] = []
-        min_x = max_x = crop_left + x
-        min_y = max_y = crop_top + y
-        sum_x = 0
-        sum_y = 0
+        min_x = max_x = sx
+        min_y = max_y = sy
 
-        while queue:
-            current = queue.popleft()
-            current_x = current % crop_width
-            current_y = current // crop_width
-            absolute_x = crop_left + current_x
-            absolute_y = crop_top + current_y
-            absolute_index = absolute_y * source_width + absolute_x
-            pixels.append(absolute_index)
-            sum_x += absolute_x
-            sum_y += absolute_y
-            min_x = min(min_x, absolute_x)
-            max_x = max(max_x, absolute_x)
-            min_y = min(min_y, absolute_y)
-            max_y = max(max_y, absolute_y)
+        while stack:
+            current = stack.pop()
+            cx = current % frame_size
+            cy = current // frame_size
+            pixels.append(current)
+            min_x = min(min_x, cx)
+            max_x = max(max_x, cx)
+            min_y = min(min_y, cy)
+            max_y = max(max_y, cy)
 
             for dx, dy in neighbors:
-                next_x = current_x + dx
-                next_y = current_y + dy
-                if next_x < 0 or next_y < 0 or next_x >= crop_width or next_y >= crop_height:
+                nx = cx + dx
+                ny = cy + dy
+                if nx < 0 or ny < 0 or nx >= frame_size or ny >= frame_size:
                     continue
-                next_local = next_y * crop_width + next_x
-                if visited[next_local]:
+                neighbor = ny * frame_size + nx
+                if visited[neighbor]:
                     continue
-                next_index = (crop_top + next_y) * source_width + crop_left + next_x
-                if source_alpha[next_index] <= 72:
-                    visited[next_local] = 1
+                offset = ((top + ny) * out_width + left + nx) * 4
+                if out_pixels[offset + 3] <= alpha_threshold:
+                    visited[neighbor] = 1
                     continue
-                visited[next_local] = 1
-                queue.append(next_local)
+                visited[neighbor] = 1
+                stack.append(neighbor)
 
-        area = len(pixels)
-        if area < 16:
+        components.append((len(pixels), (min_x, min_y, max_x, max_y), pixels))
+
+    if len(components) <= 1:
+        return
+
+    largest = max(components, key=lambda item: item[0])
+    keep_box = expanded_box(largest[1], keep_padding, frame_size)
+    for area, box, pixels in components:
+        if area > max_area or boxes_overlap(box, keep_box):
             continue
-
-        overlap_left = max(min_x, int(math.floor(cell_left)))
-        overlap_top = max(min_y, int(math.floor(cell_top)))
-        overlap_right = min(max_x, int(math.ceil(cell_left + cell_width)))
-        overlap_bottom = min(max_y, int(math.ceil(cell_top + cell_height)))
-        overlap_area = max(0, overlap_right - overlap_left + 1) * max(0, overlap_bottom - overlap_top + 1)
-        centroid_x = sum_x / area
-        centroid_y = sum_y / area
-        distance = math.hypot(centroid_x - center_x, centroid_y - center_y)
-
-        if overlap_area > 0 and distance <= max_center_distance:
-            selected.update(pixels)
-
-    return selected
+        for local in pixels:
+            x = local % frame_size
+            y = local // frame_size
+            offset = ((top + y) * out_width + left + x) * 4
+            out_pixels[offset:offset + 4] = b"\x00\x00\x00\x00"
 
 
-def process(source: Path, output: Path) -> None:
+def draw_overlay_pixel(pixels: bytearray, width: int, x: int, y: int, color: Rgb) -> None:
+    if x < 0 or y < 0 or x >= width:
+        return
+    index = (y * width + x) * 4
+    if index + 3 >= len(pixels):
+        return
+    pixels[index:index + 3] = bytes(color)
+    pixels[index + 3] = 255
+
+
+def write_debug_overlay(
+    path: Path,
+    width: int,
+    height: int,
+    pixels: bytearray,
+    grid: GridLayout,
+) -> None:
+    overlay = bytearray(pixels)
+
+    x_lines: list[tuple[int, int]]
+    if grid.x_axis.clusters:
+        x_lines = [(cluster.start, cluster.end) for cluster in grid.x_axis.clusters]
+    else:
+        edges = sorted({edge for cell in grid.x_axis.cells for edge in cell})
+        x_lines = [(edge, edge) for edge in edges]
+
+    y_lines: list[tuple[int, int]]
+    if grid.y_axis.clusters:
+        y_lines = [(cluster.start, cluster.end) for cluster in grid.y_axis.clusters]
+    else:
+        edges = sorted({edge for cell in grid.y_axis.cells for edge in cell})
+        y_lines = [(edge, edge) for edge in edges]
+
+    for start, end in x_lines:
+        for x in range(max(0, start), min(width, end + 1)):
+            for y in range(height):
+                draw_overlay_pixel(overlay, width, x, y, (0, 180, 255))
+
+    for start, end in y_lines:
+        for y in range(max(0, start), min(height, end + 1)):
+            for x in range(width):
+                draw_overlay_pixel(overlay, width, x, y, (255, 120, 0))
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    write_png(path, width, height, overlay)
+
+
+def parse_pair(pair: str) -> tuple[Path, Path]:
+    if "=>" in pair:
+        source_text, output_text = pair.split("=>", maxsplit=1)
+    elif ":" in pair:
+        source_text, output_text = pair.split(":", maxsplit=1)
+    else:
+        raise ValueError(f"Pair must be source.png:output.png or source.png=>output.png, got {pair!r}")
+    return Path(source_text), Path(output_text)
+
+
+def process(
+    source: Path,
+    output: Path,
+    columns: int,
+    rows: int,
+    source_columns: int | None,
+    source_rows: int | None,
+    auto_source_grid: bool,
+    frame_size: int,
+    guide_colors: list[Rgb],
+    guide_tolerance: int,
+    key_color: Rgb | None,
+    transparent_threshold: int,
+    opaque_threshold: int,
+    alpha_threshold: int,
+    force_equal_grid: bool,
+    despill: bool,
+    debug_dir: Path | None,
+    clear_label_corner_fraction: float,
+    clear_output_border: int,
+    output_padding: int,
+    remove_stray_components: int,
+    stray_keep_padding: int,
+) -> None:
     width, height, pixels = read_png(source)
-    key = background_key(width, height, pixels)
-    alpha = build_alpha(width, height, pixels, key)
-    out_width = FRAME_SIZE * FRAME_COLUMNS
-    out_height = FRAME_SIZE * FRAME_ROWS
-    out_pixels = bytearray(out_width * out_height * 4)
-    source_cell_width = width / FRAME_COLUMNS
-    source_cell_height = height / FRAME_ROWS
-    overlap_x = source_cell_width * FRAME_OVERLAP_FRACTION
-    overlap_y = source_cell_height * FRAME_OVERLAP_FRACTION
+    if auto_source_grid:
+        detected_grid = estimate_source_grid_from_guides(
+            width=width,
+            height=height,
+            pixels=pixels,
+            guide_colors=guide_colors,
+            guide_tolerance=guide_tolerance,
+        )
+        if detected_grid is not None:
+            source_columns = source_columns or detected_grid[0]
+            source_rows = source_rows or detected_grid[1]
+    source_columns = source_columns or columns
+    source_rows = source_rows or rows
+    output_columns = columns
+    output_rows = rows
+    source_frame_count = source_columns * source_rows
+    output_frame_count = output_columns * output_rows
+    key = key_color if key_color is not None else background_key(
+        width,
+        height,
+        pixels,
+        guide_colors,
+        guide_tolerance,
+    )
+    grid = recover_grid(
+        width=width,
+        height=height,
+        pixels=pixels,
+        columns=source_columns,
+        rows=source_rows,
+        guide_colors=guide_colors,
+        guide_tolerance=guide_tolerance,
+        force_equal_grid=force_equal_grid,
+    )
+    alpha, source_uses_alpha = build_alpha(
+        width=width,
+        height=height,
+        pixels=pixels,
+        key=key,
+        guide_colors=guide_colors,
+        guide_tolerance=guide_tolerance,
+        transparent_threshold=transparent_threshold,
+        opaque_threshold=opaque_threshold,
+    )
 
-    for frame_index in range(FRAME_COUNT):
-        frame_col = frame_index % FRAME_COLUMNS
-        frame_row = frame_index // FRAME_COLUMNS
-        source_left = frame_col * source_cell_width
-        source_top = frame_row * source_cell_height
-        virtual_left = source_left - overlap_x
-        virtual_top = source_top - overlap_y
-        virtual_width = source_cell_width + overlap_x * 2
-        virtual_height = source_cell_height + overlap_y * 2
-        selected = selected_frame_pixels(
+    out_width = frame_size * output_columns
+    out_height = frame_size * output_rows
+    out_pixels = bytearray(out_width * out_height * 4)
+    frame_coverage: list[int] = []
+    frame_map: list[int] = []
+
+    for frame_index in range(output_frame_count):
+        if output_frame_count <= 1:
+            source_frame_index = 0
+        elif source_frame_count == output_frame_count:
+            source_frame_index = frame_index
+        else:
+            source_frame_index = round(frame_index * (source_frame_count - 1) / (output_frame_count - 1))
+        frame_map.append(source_frame_index)
+        frame_col = source_frame_index % source_columns
+        frame_row = source_frame_index // source_columns
+        left, right = grid.x_axis.cells[frame_col]
+        top, bottom = grid.y_axis.cells[frame_row]
+        coverage = scale_cell_into_frame(
             source_width=width,
             source_height=height,
-            source_alpha=alpha,
-            cell_left=source_left,
-            cell_top=source_top,
-            cell_width=source_cell_width,
-            cell_height=source_cell_height,
-            overlap_x=overlap_x,
-            overlap_y=overlap_y,
+            pixels=pixels,
+            alpha=alpha,
+            key=key,
+            source_uses_alpha=source_uses_alpha,
+            cell=(left, top, right, bottom),
+            frame_size=frame_size,
+            out_pixels=out_pixels,
+            out_width=out_width,
+            frame_index=frame_index,
+            columns=output_columns,
+            alpha_threshold=alpha_threshold,
+            despill=despill,
+            clear_label_corner_fraction=clear_label_corner_fraction,
+            output_padding=output_padding,
         )
-
-        for y in range(FRAME_SIZE):
-            source_y = min(
-                height - 1,
-                max(0, int(virtual_top + (y + 0.5) / FRAME_SIZE * virtual_height)),
-            )
-            for x in range(FRAME_SIZE):
-                source_x = min(
-                    width - 1,
-                    max(0, int(virtual_left + (x + 0.5) / FRAME_SIZE * virtual_width)),
-                )
-                source_index = source_y * width + source_x
-                if source_index not in selected:
-                    continue
-                source_offset = source_index * 4
-                pixel_alpha = alpha[source_index]
-
-                dest_x = frame_col * FRAME_SIZE + x
-                dest_y = frame_row * FRAME_SIZE + y
-                dest_offset = (dest_y * out_width + dest_x) * 4
-                out_pixels[dest_offset:dest_offset + 3] = pixels[source_offset:source_offset + 3]
-                out_pixels[dest_offset + 3] = pixel_alpha
+        clear_output_frame_border(
+            out_pixels=out_pixels,
+            out_width=out_width,
+            frame_size=frame_size,
+            frame_index=frame_index,
+            columns=output_columns,
+            border_width=clear_output_border,
+        )
+        remove_stray_frame_components(
+            out_pixels=out_pixels,
+            out_width=out_width,
+            frame_size=frame_size,
+            frame_index=frame_index,
+            columns=output_columns,
+            alpha_threshold=alpha_threshold,
+            max_area=remove_stray_components,
+            keep_padding=stray_keep_padding,
+        )
+        frame_coverage.append(coverage)
 
     output.parent.mkdir(parents=True, exist_ok=True)
     write_png(output, out_width, out_height, out_pixels)
-    print(f"{source.name}: normalized {FRAME_COLUMNS}x{FRAME_ROWS} generated grid -> {output}")
+
+    empty_frames = [index + 1 for index, coverage in enumerate(frame_coverage) if coverage < 32]
+    source_grid_text = f"{source_columns}x{source_rows}"
+    output_grid_text = f"{output_columns}x{output_rows}"
+    print(
+        f"{source.name}: {width}x{height} {grid.source} grid -> "
+        f"{output} ({out_width}x{out_height}, {output_frame_count} frames, {frame_size}px cells)"
+    )
+    print(f"  source grid={source_grid_text}; output grid={output_grid_text}; sampled source frames={len(set(frame_map))}")
+    print(
+        f"  key=#{key[0]:02x}{key[1]:02x}{key[2]:02x}; "
+        f"alpha={'source' if source_uses_alpha else 'chroma'}; "
+        f"coverage min/median/max={min(frame_coverage)}/"
+        f"{int(statistics.median(frame_coverage))}/{max(frame_coverage)}"
+    )
+    if empty_frames:
+        print(f"  warning: frames with very low coverage: {empty_frames}")
+
+    if debug_dir is not None:
+        debug_dir.mkdir(parents=True, exist_ok=True)
+        debug_image = debug_dir / f"{source.stem}_grid_debug.png"
+        debug_report = debug_dir / f"{source.stem}_grid_report.txt"
+        write_debug_overlay(debug_image, width, height, pixels, grid)
+        debug_report.write_text(
+            "\n".join(
+                [
+                    f"source={source}",
+                    f"output={output}",
+                    f"source_size={width}x{height}",
+                    f"output_size={out_width}x{out_height}",
+                    f"frame_size={frame_size}",
+                    f"source_grid={source_grid_text}",
+                    f"output_grid={output_grid_text}",
+                    f"grid={grid.source}",
+                    f"key=#{key[0]:02x}{key[1]:02x}{key[2]:02x}",
+                    f"alpha={'source' if source_uses_alpha else 'chroma'}",
+                    f"x_cells={grid.x_axis.cells}",
+                    f"y_cells={grid.y_axis.cells}",
+                    f"frame_map={[index + 1 for index in frame_map]}",
+                    f"coverage={frame_coverage}",
+                    f"low_coverage_frames={empty_frames}",
+                    f"clear_label_corner_fraction={clear_label_corner_fraction}",
+                    f"clear_output_border={clear_output_border}",
+                    f"output_padding={output_padding}",
+                    f"remove_stray_components={remove_stray_components}",
+                    f"stray_keep_padding={stray_keep_padding}",
+                    "",
+                ]
+            ),
+            encoding="utf-8",
+        )
+        print(f"  debug: {debug_image}")
 
 
 def main() -> None:
@@ -435,13 +944,103 @@ def main() -> None:
     parser.add_argument(
         "pairs",
         nargs="+",
-        help="Pairs in the form source.png:output.png",
+        help="Pairs in the form source.png:output.png. Use source.png=>output.png for absolute Windows paths.",
     )
+    parser.add_argument("--columns", type=int, default=FRAME_COLUMNS)
+    parser.add_argument("--rows", type=int, default=FRAME_ROWS)
+    parser.add_argument(
+        "--source-columns",
+        type=int,
+        help="Column count in the generated source atlas. Defaults to --columns.",
+    )
+    parser.add_argument(
+        "--source-rows",
+        type=int,
+        help="Row count in the generated source atlas. Defaults to --rows.",
+    )
+    parser.add_argument(
+        "--auto-source-grid",
+        action="store_true",
+        help="Detect the generated source atlas grid from guide lines before writing the fixed output grid.",
+    )
+    parser.add_argument("--frame-size", type=int, default=FRAME_SIZE)
+    parser.add_argument("--guide-color", action="append", type=parse_color, default=None)
+    parser.add_argument("--guide-tolerance", type=int, default=44)
+    parser.add_argument("--key-color", type=parse_color)
+    parser.add_argument("--transparent-threshold", type=int, default=48)
+    parser.add_argument("--opaque-threshold", type=int, default=118)
+    parser.add_argument("--alpha-threshold", type=int, default=2)
+    parser.add_argument("--force-equal-grid", action="store_true")
+    parser.add_argument("--no-despill", action="store_true")
+    parser.add_argument(
+        "--clear-label-corner",
+        type=float,
+        default=0.0,
+        metavar="FRACTION",
+        help="Clear the top-left FRACTION of each source cell to remove unwanted frame numbers.",
+    )
+    parser.add_argument(
+        "--clear-output-border",
+        type=int,
+        default=0,
+        metavar="PX",
+        help="Clear PX pixels around each output frame to remove guide remnants.",
+    )
+    parser.add_argument(
+        "--output-padding",
+        type=int,
+        default=0,
+        metavar="PX",
+        help="Scale each source cell into an inset output rectangle with PX transparent padding.",
+    )
+    parser.add_argument(
+        "--remove-stray-components",
+        type=int,
+        default=0,
+        metavar="AREA",
+        help="Remove disconnected components up to AREA pixels when they are away from the largest frame component.",
+    )
+    parser.add_argument(
+        "--stray-keep-padding",
+        type=int,
+        default=16,
+        metavar="PX",
+        help="Keep small components that overlap the largest component expanded by PX.",
+    )
+    parser.add_argument("--debug-dir", type=Path)
     args = parser.parse_args()
 
+    guide_colors = args.guide_color if args.guide_color else [DEFAULT_GUIDE_COLOR]
+    expected_frames = args.columns * args.rows
+    if expected_frames != DEFAULT_FRAME_COUNT:
+        print(f"warning: configured grid contains {expected_frames} frames, not {DEFAULT_FRAME_COUNT}")
+
     for pair in args.pairs:
-        source_text, output_text = pair.split(":", maxsplit=1)
-        process(Path(source_text), Path(output_text))
+        source, output = parse_pair(pair)
+        process(
+            source=source,
+            output=output,
+            columns=args.columns,
+            rows=args.rows,
+            source_columns=args.source_columns,
+            source_rows=args.source_rows,
+            auto_source_grid=args.auto_source_grid,
+            frame_size=args.frame_size,
+            guide_colors=guide_colors,
+            guide_tolerance=args.guide_tolerance,
+            key_color=args.key_color,
+            transparent_threshold=args.transparent_threshold,
+            opaque_threshold=args.opaque_threshold,
+            alpha_threshold=args.alpha_threshold,
+            force_equal_grid=args.force_equal_grid,
+            despill=not args.no_despill,
+            debug_dir=args.debug_dir,
+            clear_label_corner_fraction=args.clear_label_corner,
+            clear_output_border=args.clear_output_border,
+            output_padding=args.output_padding,
+            remove_stray_components=args.remove_stray_components,
+            stray_keep_padding=args.stray_keep_padding,
+        )
 
 
 if __name__ == "__main__":

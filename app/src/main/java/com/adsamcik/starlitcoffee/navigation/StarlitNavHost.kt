@@ -48,6 +48,7 @@ import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.screen.BagInventoryScreen
 import com.adsamcik.starlitcoffee.ui.screen.BarcodeScannerScreen
+import com.adsamcik.starlitcoffee.ui.screen.BloomAnimationSettingsScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewLogScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewLogDetailScreen
 import com.adsamcik.starlitcoffee.ui.screen.CalculatorBrewScreen
@@ -265,6 +266,7 @@ fun StarlitNavHost() {
             composable<BloomTimer> {
                 BloomTimerScreen(
                     brewViewModel = brewViewModel,
+                    bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
                     onNavigateToBrew = {
                         navController.navigate(BrewTimer) {
                             popUpTo(GrindPrep) { inclusive = true }
@@ -281,6 +283,7 @@ fun StarlitNavHost() {
                 val viewLogAction = stringResource(R.string.snackbar_action_view_log)
                 BrewTimerScreen(
                     brewViewModel = brewViewModel,
+                    bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
                     onBack = { navController.popBackStack() },
                     onComplete = {
                         // Save the brew log immediately (without feedback — user rates later)
@@ -357,6 +360,22 @@ fun StarlitNavHost() {
                     onNavigateToRecipes = { navController.navigate(SavedRecipes) },
                     onNavigateToBags = { navController.navigate(BagInventory) },
                     onNavigateToSettings = { navController.navigate(Settings) },
+                )
+            }
+            composable<Settings> {
+                SettingsScreen(
+                    userPreferencesRepository = userPreferencesRepository,
+                    cupPresetRepository = cupPresetRepository,
+                    onNavigateToBloomAnimationSettings = {
+                        navController.navigate(BloomAnimationSettings)
+                    },
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable<BloomAnimationSettings> {
+                BloomAnimationSettingsScreen(
+                    userPreferencesRepository = userPreferencesRepository,
+                    onBack = { navController.popBackStack() },
                 )
             }
             composable<BrewLogDetail> { backStackEntry ->
@@ -457,13 +476,6 @@ fun StarlitNavHost() {
                         },
                     )
                 }
-            }
-            composable<Settings> {
-                SettingsScreen(
-                    userPreferencesRepository = userPreferencesRepository,
-                    cupPresetRepository = cupPresetRepository,
-                    onBack = { navController.popBackStack() },
-                )
             }
         }
     }

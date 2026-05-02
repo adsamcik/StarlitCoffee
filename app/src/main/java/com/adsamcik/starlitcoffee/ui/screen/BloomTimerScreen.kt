@@ -60,6 +60,7 @@ import kotlin.math.abs
 @Composable
 fun BloomTimerScreen(
     brewViewModel: BrewViewModel,
+    bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
     onNavigateToBrew: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -206,6 +207,8 @@ fun BloomTimerScreen(
                 BloomSpritesheetAnimation(
                     bloomCountdownSeconds = state.bloomCountdownSeconds,
                     bloomDurationSeconds = state.effectiveBloomDurationSeconds,
+                    isRunning = state.timerRunning,
+                    spritesheetWeights = bloomSpritesheetWeights,
                     modifier = Modifier.size(172.dp),
                 )
 

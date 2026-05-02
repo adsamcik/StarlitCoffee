@@ -148,6 +148,35 @@
     <string name="msg_methods_hint">Vybrané metody se zobrazí jako první. Klepněte pro přepnutí.</string>
     <string name="label_default_method">Výchozí metoda</string>
     <string name="format_edit_preset">Upravit %1$s</string>
+    <string name="label_bloom_animation_settings">Animace bloomu</string>
+    <string name="msg_bloom_animation_settings_subtitle">Zvolte, jak často se má každá animace bloomu objevit.</string>
+    <string name="cd_open_bloom_animation_settings">Otevřít nastavení animací bloomu</string>
+    <string name="screen_bloom_animation_settings_title">Animace bloomu</string>
+    <string name="msg_bloom_animation_settings_hint">Klepnutím na každý ovladač přepnete běžnou šanci, dvojnásobnou šanci a vyřazení. Pokud vyřadíte všechny animace, časovače bloomu animaci skryjí.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s má nastavení %2$s. Klepněte pro změnu.</string>
+    <string name="label_bloom_sprite_coffee_flower">Kávový květ</string>
+    <string name="desc_bloom_sprite_coffee_flower">Klasický bílý květ kávovníku vyrůstající ze zrna.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Starlit coffee</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Krémově zlaté parní okvětní lístky s drobnými hvězdami.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Jemná latte art rozeta v teplých tónech mléčné pěny.</string>
+    <string name="label_bloom_sprite_coffee_plant">Kávovník</string>
+    <string name="desc_bloom_sprite_coffee_plant">Svěží zelená sazenice kávovníku s párovými listy.</string>
+    <string name="label_bloom_sprite_coffee_brew">Kávová příprava</string>
+    <string name="desc_bloom_sprite_coffee_brew">Jantarová kávová záře s krémovými kadeřemi páry.</string>
+    <string name="label_bloom_sprite_rose">Růže</string>
+    <string name="desc_bloom_sprite_rose">Kompaktní červená růže rozvíjející se nad zrnem.</string>
+    <string name="label_bloom_sprite_lotus">Lotos</string>
+    <string name="desc_bloom_sprite_lotus">Krémový lotos s vrstvenými miskovitými okvětními lístky.</string>
+    <string name="label_bloom_sprite_sunflower">Slunečnice</string>
+    <string name="desc_bloom_sprite_sunflower">Jasná slunečnice se zlatými lístky a tmavým středem.</string>
+    <string name="label_bloom_sprite_orchid">Orchidej</string>
+    <string name="desc_bloom_sprite_orchid">Jemná bílá orchidej se zaoblenými laloky.</string>
+    <string name="label_bloom_sprite_jasmine">Jasmín</string>
+    <string name="desc_bloom_sprite_jasmine">Něžný bílý jasmín s lehkým větrníkovým tvarem.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Záznamy příprav</string>

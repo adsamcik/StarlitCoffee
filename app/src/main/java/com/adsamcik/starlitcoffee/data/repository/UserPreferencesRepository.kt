@@ -27,6 +27,7 @@ data class UserPreferences(
     val lastUsedRatio: Float = 17f,
     val defaultInputDirection: String = "DOSE",
     val skipMethodSelection: Boolean = false,
+    val bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
 )
 
 class UserPreferencesRepository(private val context: Context) {
@@ -41,6 +42,7 @@ class UserPreferencesRepository(private val context: Context) {
         val LAST_USED_RATIO = floatPreferencesKey("last_used_ratio")
         val DEFAULT_INPUT_DIRECTION = stringPreferencesKey("default_input_direction")
         val SKIP_METHOD_SELECTION = booleanPreferencesKey("skip_method_selection")
+        val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
     }
 
     val userPreferences: Flow<UserPreferences> = context.dataStore.data
@@ -61,6 +63,9 @@ class UserPreferencesRepository(private val context: Context) {
                 lastUsedRatio = prefs[Keys.LAST_USED_RATIO] ?: 17f,
                 defaultInputDirection = prefs[Keys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",
                 skipMethodSelection = prefs[Keys.SKIP_METHOD_SELECTION] ?: false,
+                bloomSpritesheetWeights = parseBloomSpritesheetWeights(
+                    prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS].orEmpty(),
+                ),
             )
         }
         .distinctUntilChanged()
@@ -144,9 +149,36 @@ class UserPreferencesRepository(private val context: Context) {
         }
     }
 
+    suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) {
+        context.dataStore.edit { prefs ->
+            val persistedWeights = weights
+                .mapValues { (_, weight) -> weight.coerceIn(0, 2) }
+                .filterValues { weight -> weight != 1 }
+                .map { (id, weight) -> "$id=$weight" }
+                .toSet()
+
+            if (persistedWeights.isEmpty()) {
+                prefs.remove(Keys.BLOOM_SPRITESHEET_WEIGHTS)
+            } else {
+                prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS] = persistedWeights
+            }
+        }
+    }
+
     suspend fun resetOnboarding() {
         context.dataStore.edit { prefs ->
             prefs[Keys.ONBOARDING_COMPLETED] = false
         }
+    }
+
+    private fun parseBloomSpritesheetWeights(entries: Set<String>): Map<String, Int> {
+        return entries.mapNotNull { entry ->
+            val separatorIndex = entry.indexOf('=')
+            if (separatorIndex <= 0 || separatorIndex == entry.lastIndex) return@mapNotNull null
+
+            val id = entry.substring(0, separatorIndex)
+            val weight = entry.substring(separatorIndex + 1).toIntOrNull() ?: return@mapNotNull null
+            id to weight.coerceIn(0, 2)
+        }.toMap()
     }
 }

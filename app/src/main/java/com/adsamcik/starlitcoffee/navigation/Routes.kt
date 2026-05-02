@@ -42,6 +42,9 @@ object OnboardingPersonalize
 object Settings
 
 @Serializable
+object BloomAnimationSettings
+
+@Serializable
 object More
 
 @Serializable

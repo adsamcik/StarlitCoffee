@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -88,6 +89,7 @@ private val checkIcon: @Composable () -> Unit = {
 fun SettingsScreen(
     userPreferencesRepository: UserPreferencesRepository,
     cupPresetRepository: CupPresetRepository,
+    onNavigateToBloomAnimationSettings: () -> Unit,
     onBack: () -> Unit,
 ){
     val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
@@ -384,6 +386,42 @@ fun SettingsScreen(
                         text = stringResource(R.string.msg_qr_approval_hint),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            ElevatedCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onNavigateToBloomAnimationSettings),
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 16.dp),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.label_bloom_animation_settings),
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.semantics { heading() },
+                        )
+                        Text(
+                            text = stringResource(R.string.msg_bloom_animation_settings_subtitle),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowRight,
+                        contentDescription = stringResource(R.string.cd_open_bloom_animation_settings),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }

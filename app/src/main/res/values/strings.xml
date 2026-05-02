@@ -159,6 +159,35 @@
     <string name="msg_methods_hint">Selected methods appear first. Tap to toggle.</string>
     <string name="label_default_method">Default method</string>
     <string name="format_edit_preset">Edit %1$s</string>
+    <string name="label_bloom_animation_settings">Bloom animations</string>
+    <string name="msg_bloom_animation_settings_subtitle">Choose how often each bloom sprite appears</string>
+    <string name="cd_open_bloom_animation_settings">Open bloom animation settings</string>
+    <string name="screen_bloom_animation_settings_title">Bloom animations</string>
+    <string name="msg_bloom_animation_settings_hint">Tap each control to cycle between normal chance, double chance, and excluded. If every sprite is excluded, bloom timers hide the animation.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s is set to %2$s. Tap to change.</string>
+    <string name="label_bloom_sprite_coffee_flower">Coffee flower</string>
+    <string name="desc_bloom_sprite_coffee_flower">Classic white coffee blossom opening from the bean.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Starlit coffee</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Cream-gold steam petals with tiny starlit highlights.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Soft latte-art rosetta in warm milk-foam tones.</string>
+    <string name="label_bloom_sprite_coffee_plant">Coffee plant</string>
+    <string name="desc_bloom_sprite_coffee_plant">Fresh green coffee seedling with paired leaves.</string>
+    <string name="label_bloom_sprite_coffee_brew">Coffee brew</string>
+    <string name="desc_bloom_sprite_coffee_brew">Amber coffee glow with cream steam curls.</string>
+    <string name="label_bloom_sprite_rose">Rose</string>
+    <string name="desc_bloom_sprite_rose">Compact red rose unfolding above the bean.</string>
+    <string name="label_bloom_sprite_lotus">Lotus</string>
+    <string name="desc_bloom_sprite_lotus">Cream lotus blossom with layered cupped petals.</string>
+    <string name="label_bloom_sprite_sunflower">Sunflower</string>
+    <string name="desc_bloom_sprite_sunflower">Bright sunflower with golden petals and a dark center.</string>
+    <string name="label_bloom_sprite_orchid">Orchid</string>
+    <string name="desc_bloom_sprite_orchid">Delicate white orchid with rounded lobes.</string>
+    <string name="label_bloom_sprite_jasmine">Jasmine</string>
+    <string name="desc_bloom_sprite_jasmine">Soft white jasmine bloom with a gentle pinwheel shape.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Brew Log</string>
