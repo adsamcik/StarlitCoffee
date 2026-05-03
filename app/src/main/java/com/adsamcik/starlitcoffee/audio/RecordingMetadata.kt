@@ -67,6 +67,7 @@ data class RecordingMetadata(
          * Creates metadata from the current device and brew state.
          * Call at recording start, after ambient calibration.
          */
+        @Suppress("LongParameterList")
         fun fromCurrentSession(
             brewTimestamp: Long,
             method: String,

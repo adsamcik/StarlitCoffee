@@ -1,3 +1,11 @@
+@file:Suppress(
+    // The matching declaration `RescanDeltaDialog` exists in this file, but
+    // is preceded by the `FieldDelta` data class + helper functions that
+    // power it. Reordering would split tightly-coupled types from their
+    // dialog without improving readability.
+    "MatchingDeclarationName",
+)
+
 package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +43,10 @@ data class FieldDelta(
 /**
  * Compare resolved scan fields against an existing bag and return changed fields.
  */
+@Suppress(
+    // 14 fields × per-field guards. Branch count = field count.
+    "CyclomaticComplexMethod",
+)
 fun buildFieldDeltas(
     bag: CoffeeBagEntity,
     resolvedFields: Map<String, String>,

@@ -1,8 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.component
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,8 +41,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
@@ -53,12 +49,10 @@ import com.adsamcik.starlitcoffee.data.model.CoffeeBagStatus
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.FreshnessPhase
-import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-private const val TAG = "BagDetailSheet"
 private const val LOW_COFFEE_THRESHOLD_G = 30f
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -149,27 +143,11 @@ fun BagDetailSheet(
                         modifier = Modifier.padding(top = 12.dp),
                     ) {
                         uriList.forEach { uriStr ->
-                            val bitmap = remember(uriStr) {
-                                try {
-                                    val file = java.io.File(android.net.Uri.parse(uriStr).path ?: return@remember null)
-                                    val raw = android.graphics.BitmapFactory.decodeFile(file.absolutePath)
-                                        ?: return@remember null
-                                    ImagePreprocessor.applyExifRotation(raw, file.absolutePath)
-                                } catch (e: Exception) {
-                                    Log.w(TAG, "Failed to load bag detail photo", e)
-                                    null
-                                }
-                            }
-                            bitmap?.let {
-                                Image(
-                                    bitmap = it.asImageBitmap(),
-                                    contentDescription = stringResource(R.string.cd_bag_photo),
-                                    modifier = Modifier
-                                        .size(80.dp)
-                                        .clip(MaterialTheme.shapes.small),
-                                    contentScale = ContentScale.Crop,
-                                )
-                            }
+                            BagThumbnail(
+                                uri = uriStr,
+                                size = 80.dp,
+                                shape = MaterialTheme.shapes.small,
+                            )
                         }
                     }
                 }

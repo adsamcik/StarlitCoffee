@@ -1,3 +1,16 @@
+@file:Suppress(
+    // This file contains coffee region / variety / process reference data —
+    // long lines are alias tables and prompt strings whose readability is
+    // hurt, not helped, by wrapping. Detekt rule applied per-line is wrong
+    // for data tables; suppress at file scope.
+    "MaxLineLength",
+    // The reference data is naturally a single object with many tables.
+    // Splitting into multiple objects/files would scatter the canonical
+    // dictionary across the codebase.
+    "LargeClass",
+    "TooManyFunctions",
+)
+
 package com.adsamcik.starlitcoffee.util
 
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
@@ -375,6 +388,7 @@ object CoffeeMetadataNormalizer {
         )
     }
 
+    @Suppress("LongParameterList")
     fun applyToBagEntity(
         bag: CoffeeBagEntity,
         origin: String?,
@@ -612,6 +626,12 @@ object CoffeeMetadataNormalizer {
         )
     }
 
+    @Suppress(
+        // Token loop → match → strategy upgrade is naturally three deep.
+        // Splitting per-token would lose the strategy promotion ordering
+        // that the whole function exists to enforce.
+        "NestedBlockDepth",
+    )
     private fun matchMultiValue(
         fieldType: MetadataFieldType,
         rawValue: String,
@@ -729,6 +749,7 @@ object CoffeeMetadataNormalizer {
         return countryName ?: CoffeeOrigin.Known.valueOf(originId).displayName
     }
 
+    @Suppress("LongParameterList")
     private fun note(
         id: String,
         defaultLabel: String,

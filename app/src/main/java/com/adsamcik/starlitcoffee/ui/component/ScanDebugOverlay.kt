@@ -62,7 +62,10 @@ fun ScanDebugOverlay(
             PerfRow("FPS", fps?.fmt(1) ?: "—", "Frame", perfStats["frame_interval_ms"]?.avg?.fmt(1)?.plus("ms") ?: "—")
             PerfRow("OCR", perfStats["ocr_ms"]?.avg?.fmt(0)?.plus("ms") ?: "—", "Extract", perfStats["extract_ms"]?.avg?.fmt(1)?.plus("ms") ?: "—")
             PerfRow("Quality", perfStats["quality_ms"]?.avg?.fmt(1)?.plus("ms") ?: "—", "JPEG", perfStats["jpeg_ms"]?.avg?.fmt(1)?.plus("ms") ?: "—")
-            PerfRow("Consensus", perfStats["consensus_ms"]?.avg?.fmt(1)?.plus("ms") ?: "—", "Integ", perfStats["integration_ms"]?.avg?.fmt(1)?.plus("ms") ?: "—")
+            PerfRow(
+                "Consensus", perfStats["consensus_ms"]?.avg?.fmt(1)?.plus("ms") ?: "—",
+                "Integ", perfStats["integration_ms"]?.avg?.fmt(1)?.plus("ms") ?: "—",
+            )
 
             // Blur & score from latest values
             val blur = perfStats["blur_score"]?.latest

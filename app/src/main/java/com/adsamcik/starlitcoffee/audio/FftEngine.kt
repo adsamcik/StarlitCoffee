@@ -44,7 +44,7 @@ class FftEngine(val size: Int = DEFAULT_FFT_SIZE) {
         bitReversalTable = IntArray(size) { i ->
             var reversed = 0
             var value = i
-            for (bit in 0 until logN) {
+            repeat(logN) {
                 reversed = (reversed shl 1) or (value and 1)
                 value = value shr 1
             }

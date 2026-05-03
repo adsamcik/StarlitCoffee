@@ -5,7 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
 
-// TODO: Replace with Hilt @Provides when DI is adopted
+/**
+ * Manual factory for [LiveScanViewModel]. The repo intentionally avoids a DI
+ * framework today (see project conventions: "No DI framework yet; factories /
+ * manual wiring are intentional"); when DI lands this can be replaced with a
+ * Hilt `@Provides` / `@AssistedInject` binding.
+ */
 class LiveScanViewModelFactory(
     private val application: Application,
 ) : ViewModelProvider.Factory {

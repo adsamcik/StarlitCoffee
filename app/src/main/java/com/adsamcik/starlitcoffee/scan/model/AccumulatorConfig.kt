@@ -105,7 +105,11 @@ data class AccumulatorConfig(
     /** Weight when evidence comes from QR link metadata extraction. */
     val sourceWeightQrLink: Float = 6f,
 
-    /** Weight when evidence comes from LLM-based field extraction. Highest non-user source — LLM does holistic visual analysis, more reliable than character-by-character OCR. */
+    /**
+     * Weight when evidence comes from LLM-based field extraction.
+     * Highest non-user source — LLM does holistic visual analysis, more
+     * reliable than character-by-character OCR.
+     */
     val sourceWeightLlm: Float = 10f,
 
     // --- Vote floor (Option B) ---

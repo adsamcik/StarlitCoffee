@@ -1,3 +1,10 @@
+@file:Suppress(
+    // OCR extraction tables: regex patterns + label keyword lists. Wrapping
+    // these data rows hurts the grep-ability that scan QA actually needs.
+    "MaxLineLength",
+    "TooManyFunctions",
+)
+
 package com.adsamcik.starlitcoffee.util
 
 import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
@@ -45,6 +52,12 @@ object OcrFieldExtractor {
         val imageWidthPx: Int = 0,
         val imageHeightPx: Int = 0,
     ) {
+        @Suppress(
+            // The early return guards four mandatory dimensions; combining
+            // them into one expression would not improve readability and
+            // would lose the per-condition implied error semantics.
+            "ComplexCondition",
+        )
         fun normalizedBounds(paddingFraction: Float = 0.04f): BagPhotoRect? {
             if (widthPx <= 0 || heightPx <= 0 || imageWidthPx <= 0 || imageHeightPx <= 0) return null
             val left = ((leftPx.toFloat() / imageWidthPx) - paddingFraction).coerceIn(0f, 1f)
@@ -110,9 +123,6 @@ object OcrFieldExtractor {
         return Regex("""(?:$pattern)\s*:\s*(.+)""", RegexOption.IGNORE_CASE)
     }
 
-    private val roasteryKeywords = CoffeeCountryDictionaries.allSectionLabels(CountrySectionLabels::roaster)
-        .sortedByDescending { it.length }
-
     private fun buildRoasteryLabelRegex(countryHint: CoffeeCountryDictionary? = null): Regex {
         val keywords = CoffeeCountryDictionaries.allSectionLabels(CountrySectionLabels::roaster, countryHint)
             .sortedByDescending { it.length }
@@ -169,6 +179,16 @@ object OcrFieldExtractor {
         Regex("""\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}\b""", RegexOption.IGNORE_CASE),
     )
 
+    @Suppress(
+        // OCR field extraction owns the full label-parsing pipeline:
+        // origin/region/process/variety/roastLevel/tastingNotes/altitude/
+        // weight/dates/barcodes. The cyclomatic count reflects field count,
+        // not branch sprawl — splitting per-field would scatter the shared
+        // `lines` / `fullText` state across many helpers.
+        "LongMethod",
+        "CyclomaticComplexMethod",
+        "ComplexCondition",
+    )
     fun extractFields(
         rawText: String,
         knownFields: KnownFieldValues = KnownFieldValues.EMPTY,
@@ -546,6 +566,13 @@ object OcrFieldExtractor {
      * (origin, variety, process, etc.) and noise words — meaning it's NOT a
      * candidate for name or roaster.
      */
+    @Suppress(
+        // 7+ regex predicates, each genuinely independent, returning true
+        // as soon as one matches. Collapsing into a single `||` chain
+        // would lose the early-exit ordering and the per-rule comments
+        // that document each match's intent.
+        "ReturnCount",
+    )
     internal fun isBlockConsumedByKnownFields(blockText: String): Boolean {
         val text = blockText.trim()
         if (text.isEmpty()) return true
@@ -588,6 +615,12 @@ object OcrFieldExtractor {
         val isKnownName: Boolean = false,
     )
 
+    @Suppress(
+        // Scores 12 independent signals (font / position / known-name match
+        // / brand-suffix / etc.) for each candidate. The branches mirror
+        // signal count, not poor decomposition.
+        "CyclomaticComplexMethod",
+    )
     internal fun scoreCandidateBlocks(
         candidates: List<OcrTextBlock>,
         maxHeight: Int,

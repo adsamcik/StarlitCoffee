@@ -9,6 +9,12 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
 
+/** Bands that overlap water's spectral profile and need noise-floor freezing while pouring. */
+private val FrequencyBand.isWaterContaminated: Boolean
+    get() = this == FrequencyBand.POUR ||
+        this == FrequencyBand.DRIP_LOW ||
+        this == FrequencyBand.DRIP_HIGH
+
 /**
  * Brew event state machine with continuous adaptive calibration.
  *
@@ -82,11 +88,9 @@ class BrewEventDetector(
     // Running CPP baseline for relative thresholds (research: clinical CPP values aren't portable)
     private var cppBaseline = 0f
     private var cppBaselineCount = 0
-    private val CPP_BASELINE_ALPHA = 0.02f // slow EMA update rate
 
     // Smoothed energy tracking for end-of-flow detection
     private var smoothedPourEnergy = INITIAL_NOISE_FLOOR
-    private val ENERGY_SMOOTHING_ALPHA = 0.05f  // ~1s time constant at 86fps
     private var peakPourEnergy = INITIAL_NOISE_FLOOR
 
     /**
@@ -95,6 +99,18 @@ class BrewEventDetector(
      * @param features spectral features from [SpectralAnalyzer]
      * @return list of brew events detected this frame (usually 0 or 1)
      */
+    @Suppress(
+        // This is a per-frame state machine. Splitting it mechanically would
+        // scatter the IDLE/POURING/DRIPPING/COMPLETE transitions across
+        // helper methods and obscure the timing relationships between
+        // baseline updates, ODF computation, and state guards.
+        "LongMethod",
+        "CyclomaticComplexMethod",
+        // The drip-counting loop legitimately uses both `break` (when a
+        // guard fails) and `continue` (when a frame is rejected); that's
+        // the per-frame admission policy, not branch sprawl.
+        "LoopWithTooManyJumpStatements",
+    )
     fun processFrame(features: SpectralFeatures): List<BrewAudioEvent> {
         val events = mutableListOf<BrewAudioEvent>()
         val now = timeProvider()
@@ -290,32 +306,33 @@ class BrewEventDetector(
 
     private fun updateNoiseFloors(features: SpectralFeatures) {
         for (band in FrequencyBand.entries) {
-            val currentEnergy = features.bandEnergyDb[band] ?: continue
-
-            // Water signature: freeze bands contaminated by pour noise
-            // POUR and both DRIP bands overlap with water's spectral profile
-            if (waterSignatureDetected && (band == FrequencyBand.POUR || band == FrequencyBand.DRIP_LOW || band == FrequencyBand.DRIP_HIGH)) {
-                continue // Skip noise floor update for water-contaminated bands
-            }
-
-            // Add to history for percentile estimation
-            noiseHistories[band]?.add(currentEnergy)
-
-            // Compute 20th percentile from sorted ring buffer
-            val history = noiseHistories[band] ?: continue
-            val targetFloor = history.percentile(0.2f)
-
-            // Rate-limit the change
-            val currentFloor = _noiseFloorDb[band] ?: INITIAL_NOISE_FLOOR
-            val maxChange = config.maxNoiseFloorChangePerFrame
-            val newFloor = when {
-                targetFloor > currentFloor + maxChange -> currentFloor + maxChange
-                targetFloor < currentFloor - maxChange -> currentFloor - maxChange
-                else -> targetFloor
-            }
-
-            _noiseFloorDb[band] = newFloor
+            updateNoiseFloorForBand(band, features.bandEnergyDb[band])
         }
+    }
+
+    private fun updateNoiseFloorForBand(band: FrequencyBand, currentEnergy: Float?) {
+        if (currentEnergy == null) return
+        // Water signature: freeze bands contaminated by pour noise
+        // (POUR and both DRIP bands overlap with water's spectral profile).
+        if (waterSignatureDetected && band.isWaterContaminated) return
+
+        // Add to history for percentile estimation
+        val history = noiseHistories[band] ?: return
+        history.add(currentEnergy)
+
+        // Compute 20th percentile from sorted ring buffer
+        val targetFloor = history.percentile(0.2f)
+
+        // Rate-limit the change
+        val currentFloor = _noiseFloorDb[band] ?: INITIAL_NOISE_FLOOR
+        val maxChange = config.maxNoiseFloorChangePerFrame
+        val newFloor = when {
+            targetFloor > currentFloor + maxChange -> currentFloor + maxChange
+            targetFloor < currentFloor - maxChange -> currentFloor - maxChange
+            else -> targetFloor
+        }
+
+        _noiseFloorDb[band] = newFloor
     }
 
     // --- Onset Detection Functions ---
@@ -490,6 +507,13 @@ class BrewEventDetector(
         private const val INITIAL_NOISE_FLOOR = -40f
         private const val INITIAL_THRESHOLD = 5f
         private const val MIN_THRESHOLD = 1f
+
+        // Slow EMA update rate for the running CPP baseline. Lower = more
+        // stable baseline but slower adaptation when ambient noise changes.
+        private const val CPP_BASELINE_ALPHA = 0.02f
+
+        // Smoothing factor for `smoothedPourEnergy` (~1 s time constant at 86 fps).
+        private const val ENERGY_SMOOTHING_ALPHA = 0.05f
 
         // Noise history: ~5 seconds at 86fps
         private const val NOISE_HISTORY_SIZE = 430

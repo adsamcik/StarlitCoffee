@@ -4,7 +4,11 @@ import kotlin.math.abs
 
 /**
  * Scores pipeline-extracted values against human-annotated ground truth.
+ *
+ * Many small per-field comparison helpers — splitting across multiple
+ * objects would scatter the scoring rubric.
  */
+@Suppress("TooManyFunctions")
 object BenchmarkScorer {
 
     private const val SHORT_STRING_THRESHOLD = 8

@@ -1,12 +1,10 @@
 package com.adsamcik.starlitcoffee.ui.component
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -16,7 +14,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CardDefaults
@@ -31,19 +28,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
-import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import java.text.SimpleDateFormat
 import java.util.Date
-
-private const val TAG = "BagCard"
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -105,28 +97,12 @@ fun BagCard(
                 verticalAlignment = Alignment.Top,
             ) {
                 bag.photoUri?.let { uri ->
-                    val bitmap = remember(uri) {
-                        try {
-                            val file = java.io.File(android.net.Uri.parse(uri).path ?: return@remember null)
-                            val raw = android.graphics.BitmapFactory.decodeFile(file.absolutePath)
-                                ?: return@remember null
-                            ImagePreprocessor.applyExifRotation(raw, file.absolutePath)
-                        } catch (e: Exception) {
-                            Log.w(TAG, "Failed to load bag thumbnail", e)
-                            null
-                        }
-                    }
-                    if (bitmap != null) {
-                        Image(
-                            bitmap = bitmap.asImageBitmap(),
-                            contentDescription = stringResource(R.string.cd_bag_photo),
-                            modifier = Modifier
-                                .size(68.dp)
-                                .clip(MaterialTheme.shapes.medium),
-                            contentScale = ContentScale.Crop,
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                    }
+                    BagThumbnail(
+                        uri = uri,
+                        size = 68.dp,
+                        shape = MaterialTheme.shapes.medium,
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
                 }
 
                 Column(

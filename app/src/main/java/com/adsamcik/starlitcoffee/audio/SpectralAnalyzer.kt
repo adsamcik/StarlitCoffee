@@ -81,7 +81,7 @@ class SpectralAnalyzer(
         val cepstralPeakProminence = computeCepstralPeakProminence()
 
         // Band coincidence — how many octave sub-bands have energy above a reference
-        val bandCoincidenceCount = computeBandCoincidence(bandEnergyDb)
+        val bandCoincidenceCount = computeBandCoincidence()
 
         // Save current frame as previous
         logMagnitude.copyInto(prevLogMagnitude)
@@ -239,7 +239,7 @@ class SpectralAnalyzer(
      *
      * Sub-bands: 200-400, 400-800, 800-1600, 1600-3200, 3200-6400, 6400-11000 Hz
      */
-    private fun computeBandCoincidence(bandEnergyDb: Map<FrequencyBand, Float>): Int {
+    private fun computeBandCoincidence(): Int {
         // Use the overall POUR band energy as a reference; each sub-band must
         // be within COINCIDENCE_MARGIN_DB of the strongest sub-band
         var maxSubBandDb = -96f

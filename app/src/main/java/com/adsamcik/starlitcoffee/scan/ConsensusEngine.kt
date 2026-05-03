@@ -169,6 +169,12 @@ class ConsensusEngine(
      * Extract field-value pairs from an [OcrExtractionResult], returning a map
      * of fieldName → (value, confidenceHint).
      */
+    @Suppress(
+        // 14 fields, each with a `result.field?.let` line — the cyclomatic
+        // count reflects field count, not branch sprawl. Splitting per-field
+        // would scatter the OCR-result projection across 14 helpers.
+        "CyclomaticComplexMethod",
+    )
     fun extractFieldValues(
         result: OcrExtractionResult,
     ): Map<String, Pair<String, BagFieldConfidence>> {
@@ -240,11 +246,9 @@ class ConsensusEngine(
             val (rawValue, confidenceHint) = pair
             val existing = result[fieldName]
 
-            // Skip fields the user has locked
-            if (existing?.status == FieldStatus.USER_LOCKED) continue
-
+            // Skip fields the user has locked, and skip blank/whitespace-only values.
             val normalizedValue = rawValue.trim().lowercase()
-            if (normalizedValue.isBlank()) continue
+            if (existing?.status == FieldStatus.USER_LOCKED || normalizedValue.isBlank()) continue
 
             val currentCandidates = existing?.candidates?.toMutableMap() ?: mutableMapOf()
 
@@ -406,6 +410,14 @@ class ConsensusEngine(
     /**
      * Transition a single field through the state machine based on current posteriors.
      */
+    @Suppress(
+        // The transition function is the field-level state machine
+        // (PROVISIONAL/LOCKED/CONFLICT/USER_LOCKED/SCANNING) and its branches
+        // mirror the state diagram. Splitting per-state would obscure the
+        // global guard ordering that makes the machine deterministic.
+        "LongMethod",
+        "CyclomaticComplexMethod",
+    )
     internal fun transitionField(field: FieldAccumulation): FieldAccumulation {
         val top = field.topCandidate ?: return field.copy(
             status = FieldStatus.SCANNING,

@@ -12,6 +12,8 @@ import com.mindlayer.sdk.InferenceBackend
 import com.mindlayer.sdk.Mindlayer
 import com.mindlayer.sdk.MindlayerException
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
@@ -52,11 +54,29 @@ class MindlayerLlmInferenceProvider(
         return mindlayer.connectionState.value == ConnectionState.CONNECTED
     }
 
-    override suspend fun extractBagFields(request: LlmExtractionRequest): LlmExtractionResult {
+    override suspend fun extractBagFields(
+        request: LlmExtractionRequest,
+    ): LlmExtractionResult = withContext(Dispatchers.IO) {
+        // Run the entire extraction off the main thread:
+        //  * BitmapFactory.decodeByteArray and Mindlayer's MediaTransfer.fromBitmap
+        //    are documented as blocking ("should be called from a background thread").
+        //  * The Mindlayer SDK does not switch dispatchers internally — every binder
+        //    call and per-token flow resumption runs on the caller's dispatcher.
+        // When called from viewModelScope.launch (Main), this would otherwise
+        // back up ML Kit completion callbacks and delay ImageProxy.close() on
+        // the analyzer thread, visibly freezing the camera preview while the
+        // model is generating tokens.
+        // Boundary catch: Mindlayer's binder service can fail with various
+        // service-disconnection or remote exceptions; the SDK surfaces them
+        // via `awaitConnected`. Treat any non-cancellation throwable as
+        // service-unavailable so the consensus engine falls back gracefully.
+        @Suppress("TooGenericExceptionCaught")
         try {
             mindlayer.awaitConnected()
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
         } catch (e: Exception) {
-            return LlmExtractionResult.Unavailable(
+            return@withContext LlmExtractionResult.Unavailable(
                 "Mindlayer service not available: ${e.message}",
             )
         }
@@ -65,13 +85,28 @@ class MindlayerLlmInferenceProvider(
             request.imageBytes,
             0,
             request.imageBytes.size,
-        ) ?: return LlmExtractionResult.Failed("Failed to decode image", retryable = false)
+        ) ?: return@withContext LlmExtractionResult.Failed(
+            "Failed to decode image",
+            retryable = false,
+        )
 
         val prompt = buildExtractionPrompt(request)
         val extended = useExtendedSchema(request)
         val structuredContext = buildStructuredOutputExtraContext(extended)
 
-        return try {
+        // try/finally guarantees the bitmap is recycled exactly once across
+        // every exit path — success, MindlayerException, generic Exception,
+        // or CancellationException propagation. The previous structure
+        // duplicated `bitmap.recycle()` in four places, which is safe today
+        // (Bitmap.recycle is idempotent on AOSP) but easy to break later
+        // by adding a new return without remembering to recycle.
+        //
+        // Boundary catch on the generic `Exception` branch: model inference
+        // can throw anything from JSON parsing failures to native crashes;
+        // mapping all of them to a retryable Failed lets the consensus
+        // engine try again on the next golden frame.
+        @Suppress("TooGenericExceptionCaught")
+        try {
             // Stateless one-shot — SDK creates a fresh session, runs inference,
             // then destroys it. No history is carried over to the next extraction.
             val responseText = mindlayer.generateWithImage(prompt, bitmap) {
@@ -84,22 +119,25 @@ class MindlayerLlmInferenceProvider(
                 // ignore the extraContext JSON and degrade to plain generation.
                 extraContext(structuredContext)
             }
-
-            bitmap.recycle()
             android.util.Log.d(
                 "MindlayerLlm",
                 "LLM inference complete: ${responseText.length} chars",
             )
             parseResponse(responseText, request.fieldsNeeded)
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            // Cancellation must propagate so callers (e.g. LlmEscalationCoordinator)
+            // know the work was abandoned and don't apply stale results to a
+            // session that has already been torn down.
+            throw e
         } catch (e: MindlayerException) {
-            bitmap.recycle()
             LlmExtractionResult.Failed(
                 "Inference failed: ${e.message}",
                 retryable = e.code != "UNSUPPORTED_TOOL_CALL",
             )
         } catch (e: Exception) {
-            bitmap.recycle()
             LlmExtractionResult.Failed("Inference failed: ${e.message}", retryable = true)
+        } finally {
+            bitmap.recycle()
         }
     }
 
@@ -111,17 +149,35 @@ class MindlayerLlmInferenceProvider(
     /**
      * Pre-warm: connect to the Mindlayer service AND load the inference engine
      * so the first extraction doesn't pay the 5–10 s engine init cost.
+     *
+     * Runs on [Dispatchers.IO] — `awaitConnected` performs a binder transaction
+     * and `prewarm` blocks until the engine is loaded; both must stay off the
+     * main thread to avoid freezing the camera preview during the first scan.
      */
-    suspend fun ensureConnected() {
-        mindlayer.awaitConnected()
-        try {
-            mindlayer.prewarm(PREWARM_BACKEND)
-        } catch (e: Exception) {
-            // Prewarm is an optimisation — missing it just means the first
-            // call pays full cost. Don't fail ensureConnected over it.
-            android.util.Log.w("MindlayerLlm", "prewarm failed: ${e.message}")
+    override suspend fun prewarm() {
+        withContext(Dispatchers.IO) {
+            mindlayer.awaitConnected()
+            // Boundary catch: prewarm is purely an optimisation. Any
+            // non-cancellation throwable just means the first inference pays
+            // full SDK init cost — not worth raising to the user.
+            @Suppress("TooGenericExceptionCaught")
+            try {
+                mindlayer.prewarm(PREWARM_BACKEND)
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                android.util.Log.w("MindlayerLlm", "prewarm failed: ${e.message}")
+            }
         }
     }
+
+    /**
+     * Backwards-compatible alias for [prewarm]. Older call sites used this
+     * name before the interface gained a [prewarm] hook; kept for any
+     * external test that still references it directly.
+     */
+    @Deprecated("Use prewarm() instead", ReplaceWith("prewarm()"))
+    suspend fun ensureConnected() = prewarm()
 
     companion object {
         /** Max tokens per extraction. Enough for full 10-field JSON with tasting notes. */
@@ -398,7 +454,10 @@ Rules:
                 if (parts.isNotEmpty()) {
                     append("\n\nReference vocabulary from user's coffee collection:")
                     parts.forEach { append("\n- $it") }
-                    append("\nPrefer these values when a match is close. Do not force a match if the label clearly says something different.")
+                    append(
+                        "\nPrefer these values when a match is close. " +
+                            "Do not force a match if the label clearly says something different.",
+                    )
                 }
             }
 
@@ -451,6 +510,12 @@ Rules:
                 .trim()
 
             val json = Json { ignoreUnknownKeys = true }
+            // Boundary catch: a malformed LLM response can throw
+            // SerializationException, IllegalArgumentException, or anything
+            // else from the parser; the only useful product behaviour is to
+            // surface a single Failed result and let the consensus engine
+            // try the next golden frame.
+            @Suppress("TooGenericExceptionCaught")
             val jsonObj = try {
                 json.parseToJsonElement(cleaned).jsonObject
             } catch (e: Exception) {
@@ -462,46 +527,54 @@ Rules:
             // Support both nested {"fields": {...}} and flat {"name": "value"} formats
             val fieldsObj = jsonObj["fields"]?.jsonObject ?: jsonObj
 
-            val candidates = mutableListOf<BagFieldCandidate>()
-            for ((jsonKey, fieldName) in fieldMapping) {
-                if (fieldsNeeded.isNotEmpty() && fieldName !in fieldsNeeded) continue
-
-                val fieldEntry = fieldsObj[jsonKey]
-                val value: String?
-                val status: String
-
-                if (fieldEntry is JsonObject) {
-                    // New nested format: {"value": "...", "status": "found"}
-                    value = fieldEntry["value"]?.let {
-                        if (it is JsonNull) null else it.jsonPrimitive.contentOrNull
-                    }
-                    status = fieldEntry["status"]?.jsonPrimitive?.contentOrNull ?: "found"
-                } else if (fieldEntry != null && fieldEntry !is JsonNull) {
-                    // Legacy flat format: "name": "value"
-                    value = fieldEntry.jsonPrimitive.contentOrNull
-                    status = "found"
+            val candidates = fieldMapping.mapNotNull { (jsonKey, fieldName) ->
+                if (fieldsNeeded.isNotEmpty() && fieldName !in fieldsNeeded) {
+                    null
                 } else {
-                    value = null
-                    status = "not_visible"
-                }
-
-                if (!value.isNullOrBlank() && status != "not_visible") {
-                    candidates.add(
-                        BagFieldCandidate(
-                            fieldName = fieldName,
-                            value = value.trim(),
-                            sourceType = BagFieldSourceType.LLM,
-                            confidenceHint = when (status) {
-                                "found" -> BagFieldConfidence.HIGH
-                                "uncertain" -> BagFieldConfidence.LOW
-                                else -> BagFieldConfidence.MEDIUM
-                            },
-                        ),
-                    )
+                    extractFieldCandidate(fieldName, fieldsObj[jsonKey])
                 }
             }
-
             return LlmExtractionResult.Success(fieldCandidates = candidates)
+        }
+
+        /**
+         * Map one entry from the parsed JSON to a [BagFieldCandidate].
+         *
+         * Supports two response shapes:
+         *  * Nested `{"value": "...", "status": "found"}` (current schema).
+         *  * Legacy flat `"name": "value"` (older deployments).
+         *
+         * Returns `null` when the field is missing, marked `not_visible`,
+         * or has an empty value.
+         */
+        private fun extractFieldCandidate(
+            fieldName: String,
+            fieldEntry: kotlinx.serialization.json.JsonElement?,
+        ): BagFieldCandidate? {
+            val (value, status) = when {
+                fieldEntry is JsonObject -> {
+                    val v = fieldEntry["value"]?.let { e ->
+                        if (e is JsonNull) null else e.jsonPrimitive.contentOrNull
+                    }
+                    val s = fieldEntry["status"]?.jsonPrimitive?.contentOrNull ?: "found"
+                    v to s
+                }
+                fieldEntry != null && fieldEntry !is JsonNull -> {
+                    fieldEntry.jsonPrimitive.contentOrNull to "found"
+                }
+                else -> null to "not_visible"
+            }
+            if (value.isNullOrBlank() || status == "not_visible") return null
+            return BagFieldCandidate(
+                fieldName = fieldName,
+                value = value.trim(),
+                sourceType = BagFieldSourceType.LLM,
+                confidenceHint = when (status) {
+                    "found" -> BagFieldConfidence.HIGH
+                    "uncertain" -> BagFieldConfidence.LOW
+                    else -> BagFieldConfidence.MEDIUM
+                },
+            )
         }
     }
 }

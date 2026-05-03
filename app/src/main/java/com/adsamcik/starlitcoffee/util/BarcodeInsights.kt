@@ -1,3 +1,13 @@
+@file:Suppress(
+    // BarcodeInsights ships GS1 country-code prefix tables and regex
+    // patterns; wrapping the rows hurts grep-ability of the raw data.
+    "MaxLineLength",
+    // The file owns one Gs1IssuerRegionInsight registry plus accessor
+    // helpers. Splitting helpers across files would separate them from
+    // the data they describe.
+    "TooManyFunctions",
+)
+
 package com.adsamcik.starlitcoffee.util
 
 import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
@@ -30,6 +40,12 @@ object BarcodeInsights {
         return normalized.takeIf { it.length in 8..14 }
     }
 
+    @Suppress(
+        // GS1 prefix → country mapping is naturally a 15-branch when. Each
+        // branch is a single-line lookup; collapsing to a data table would
+        // duplicate the "exact prefix vs range" semantics.
+        "CyclomaticComplexMethod",
+    )
     fun gs1IssuerRegion(barcode: String?): Gs1IssuerRegionInsight? {
         val normalized = normalizeBarcode(barcode) ?: return null
         if (normalized.length != 13) return null
@@ -162,14 +178,16 @@ object BarcodeInsights {
     fun buildBarcodeOcrBoost(
         barcode: String,
         currentKnownValues: KnownFieldValues,
-        userStemDao: UserBarcodeStemDao? = null,
+        @Suppress("UnusedParameter") userStemDao: UserBarcodeStemDao? = null,
     ): KnownFieldValues {
         val roasterCandidates = mutableListOf<String>()
 
         findObservedStemMatch(barcode)?.roasterCandidate?.let { roasterCandidates += it }
 
-        // Also check user-taught stems if available
-        // (suspend call not possible here — handled by caller via findUserStemMatch)
+        // User-taught stems are checked separately by [findUserStemMatch]
+        // because they require a suspending DAO call. The `userStemDao`
+        // parameter is kept on the signature for API symmetry with the
+        // suspending variant — call sites pass it for clarity.
 
         val newRoasters = roasterCandidates.filter { it !in currentKnownValues.roasters }
         if (newRoasters.isEmpty()) return currentKnownValues

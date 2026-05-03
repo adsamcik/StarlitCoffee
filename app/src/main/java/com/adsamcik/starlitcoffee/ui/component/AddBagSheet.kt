@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -14,6 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -52,9 +52,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
 import androidx.compose.ui.Alignment
@@ -84,9 +86,11 @@ import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.BagReviewSeverity
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.DateParser
-import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
+import com.adsamcik.starlitcoffee.util.ThumbnailLoader
 import com.adsamcik.starlitcoffee.util.WeightParser
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.net.URL
 import java.util.Locale
 
@@ -1080,29 +1084,26 @@ private fun SnapApproveSection(
     onEditAllFields: () -> Unit,
     onAddMoreDetails: () -> Unit,
 ) {
-    val thumbnailBitmap = remember(capturedPhotoUris) {
-        loadEvidenceBitmap(
-            previewUri = capturedPhotoUris?.split(",")?.firstOrNull()?.trim(),
-            previewRect = null,
-            capturedPhotoUris = null,
-        )
-    }
-
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier.padding(bottom = 12.dp),
     ) {
-        thumbnailBitmap?.let { bitmap ->
-            Image(
-                bitmap = bitmap.asImageBitmap(),
-                contentDescription = stringResource(R.string.cd_captured_bag_photo),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(168.dp)
-                    .clip(MaterialTheme.shapes.medium),
-                contentScale = ContentScale.Crop,
-            )
-        }
+        capturedPhotoUris
+            ?.split(",")
+            ?.firstOrNull()
+            ?.trim()
+            ?.takeIf { it.isNotBlank() }
+            ?.let { uri ->
+                BagThumbnail(
+                    uri = uri,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(168.dp),
+                    downsampleTarget = 168.dp,
+                    shape = MaterialTheme.shapes.medium,
+                    contentDescription = stringResource(R.string.cd_captured_bag_photo),
+                )
+            }
 
         ElevatedCard(modifier = Modifier.fillMaxWidth()) {
             Column(
@@ -1421,12 +1422,24 @@ private fun FieldEvidencePreviewCard(
     evidence: BagFieldEvidence,
     capturedPhotoUris: String?,
 ) {
-    val evidenceBitmap = remember(evidence.previewUri, evidence.previewRect, capturedPhotoUris) {
-        loadEvidenceBitmap(
-            previewUri = evidence.previewUri,
-            previewRect = evidence.previewRect,
-            capturedPhotoUris = capturedPhotoUris,
-        )
+    // Decode + (optionally) crop off the main thread. The card reserves a
+    // 120dp-tall slot up front so the surrounding layout doesn't reflow when
+    // the bitmap arrives.
+    val evidenceTargetPx = with(LocalDensity.current) { 120.dp.roundToPx() }
+    val evidenceBitmap by produceState<Bitmap?>(
+        initialValue = null,
+        key1 = evidence.previewUri,
+        key2 = evidence.previewRect,
+        key3 = capturedPhotoUris,
+    ) {
+        value = withContext(Dispatchers.IO) {
+            loadEvidenceBitmap(
+                previewUri = evidence.previewUri,
+                previewRect = evidence.previewRect,
+                capturedPhotoUris = capturedPhotoUris,
+                targetSizePx = evidenceTargetPx,
+            )
+        }
     }
 
     ElevatedCard(
@@ -1447,22 +1460,23 @@ private fun FieldEvidencePreviewCard(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            evidenceBitmap?.let { bitmap ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(120.dp),
-                ) {
+            // Reserve 120dp height while the bitmap decodes asynchronously so
+            // the card doesn't pop into a different size when it arrives.
+            val previewModifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp)
+                .clip(MaterialTheme.shapes.medium)
+            val hasPreviewSource = evidence.previewUri != null ||
+                !capturedPhotoUris.isNullOrBlank()
+            if (hasPreviewSource) {
+                evidenceBitmap?.let { bitmap ->
                     Image(
                         bitmap = bitmap.asImageBitmap(),
                         contentDescription = stringResource(R.string.label_detected_field_evidence),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(120.dp)
-                            .clip(MaterialTheme.shapes.medium),
+                        modifier = previewModifier,
                         contentScale = ContentScale.Crop,
                     )
-                }
+                } ?: Spacer(modifier = previewModifier)
             }
             evidence.supportingText?.let { text ->
                 Text(
@@ -1478,11 +1492,24 @@ private fun loadEvidenceBitmap(
     previewUri: String?,
     previewRect: com.adsamcik.starlitcoffee.util.BagPhotoRect?,
     capturedPhotoUris: String?,
+    targetSizePx: Int,
 ): Bitmap? {
     val candidateUri = previewUri ?: capturedPhotoUris?.split(",")?.firstOrNull()?.trim()
     val path = candidateUri?.let { Uri.parse(it).path } ?: return null
-    val rawBitmap = BitmapFactory.decodeFile(path) ?: return null
-    val rotated = ImagePreprocessor.applyExifRotation(rawBitmap, path)
+
+    // Estimate the source resolution we need to decode so the cropped result
+    // still has at least targetSizePx on its longest side. If we always picked
+    // targetSizePx for downsampling, a 25%-area crop would render at quarter
+    // resolution. ThumbnailLoader's inSampleSize is a power of two, so a 2x
+    // safety factor is plenty for typical bag-label crops.
+    val cropScale = previewRect?.let {
+        val w = (it.rightFraction - it.leftFraction).coerceAtLeast(0.05f)
+        val h = (it.bottomFraction - it.topFraction).coerceAtLeast(0.05f)
+        1f / maxOf(w, h)
+    } ?: 1f
+    val decodeTargetPx = (targetSizePx * cropScale).toInt().coerceAtLeast(1)
+
+    val rotated = ThumbnailLoader.loadThumbnail(path, decodeTargetPx) ?: return null
     if (previewRect == null) return rotated
 
     val left = (rotated.width * previewRect.leftFraction).toInt().coerceIn(0, rotated.width - 1)

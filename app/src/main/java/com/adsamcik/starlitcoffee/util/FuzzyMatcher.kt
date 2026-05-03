@@ -83,6 +83,13 @@ object FuzzyMatcher {
         return best?.candidate
     }
 
+    @Suppress(
+        // Each loop iteration has two short-circuit guards: minimum length
+        // and maximum edit distance. Both are proper preconditions before
+        // the expensive `levenshteinDistance` call; combining them would
+        // duplicate the distance computation.
+        "LoopWithTooManyJumpStatements",
+    )
     private fun bestMatch(
         input: String,
         candidates: List<String>,

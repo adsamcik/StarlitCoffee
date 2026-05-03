@@ -22,6 +22,13 @@ data class BagCardSummary(
     val primaryActionLabel: String,
 )
 
+@Suppress(
+    // Builds the summary tuple from ~10 independent freshness / stock /
+    // missing-data signals. Branches mirror signal count, not poor
+    // decomposition; splitting per-signal would scatter the chip-priority
+    // ordering rules.
+    "CyclomaticComplexMethod",
+)
 fun buildBagCardSummary(
     bag: CoffeeBagEntity,
     freshness: FreshnessInsight,

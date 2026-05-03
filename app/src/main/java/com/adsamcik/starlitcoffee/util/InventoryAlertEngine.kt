@@ -17,6 +17,11 @@ private const val DECAF_COVERAGE_WINDOW_DAYS = 30
 private const val DECAF_COVERAGE_THRESHOLD = 3
 private val AVAILABLE_BAG_STATUSES = setOf("SEALED", "OPEN", "FROZEN")
 
+/**
+ * Inventory-level brew alerts (peak window, expiry, decaf coverage, etc.).
+ * The fan-out of small helpers reflects the rule set, not poor decomposition.
+ */
+@Suppress("TooManyFunctions")
 object InventoryAlertEngine {
 
     fun buildAlerts(

@@ -126,8 +126,22 @@ class ShadowComparisonLog {
 
         val summary = computeSummary()
 
-        // Write summary as final line
-        writeLine("""{"type":"summary","taps":${summary.userTapCount},"events":${summary.detectorEventCount},"matched":${summary.matchedCount},"unmatched":${summary.unmatchedTaps},"fp":${summary.falsePositives},"meanDeltaMs":${summary.meanDeltaMs ?: "null"},"medianDeltaMs":${summary.medianDeltaMs ?: "null"}}""")
+        // Write summary as final line. The wire format is one JSON object
+        // per line (newline-delimited JSON); we build it via interpolation
+        // because the call site has the full set of fields and adding a
+        // serializer for a single line would obscure the format.
+        val summaryJson = buildString {
+            append("""{"type":"summary"""")
+            append(""","taps":${summary.userTapCount}""")
+            append(""","events":${summary.detectorEventCount}""")
+            append(""","matched":${summary.matchedCount}""")
+            append(""","unmatched":${summary.unmatchedTaps}""")
+            append(""","fp":${summary.falsePositives}""")
+            append(""","meanDeltaMs":${summary.meanDeltaMs ?: "null"}""")
+            append(""","medianDeltaMs":${summary.medianDeltaMs ?: "null"}""")
+            append("}")
+        }
+        writeLine(summaryJson)
 
         try {
             writer?.flush()

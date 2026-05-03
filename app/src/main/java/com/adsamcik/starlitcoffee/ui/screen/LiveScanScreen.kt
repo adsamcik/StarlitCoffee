@@ -3,7 +3,6 @@ package com.adsamcik.starlitcoffee.ui.screen
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.hardware.SensorManager
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -79,6 +78,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.adsamcik.starlitcoffee.scan.LiveScanAnalyzer
+import com.adsamcik.starlitcoffee.scan.LiveScanAnalyzerCallbacks
 import com.adsamcik.starlitcoffee.scan.model.AccumulatedEvidence
 import com.adsamcik.starlitcoffee.scan.model.FieldAccumulation
 import com.adsamcik.starlitcoffee.scan.model.FieldStatus
@@ -164,12 +165,8 @@ fun LiveScanScreen(
 
     // --- Start accumulator ---
 
-    val sensorManager = remember {
-        context.getSystemService(Context.SENSOR_SERVICE) as? SensorManager
-    }
-
     LaunchedEffect(Unit) {
-        liveScanViewModel.start(knownFieldValues, sensorManager)
+        liveScanViewModel.start(knownFieldValues)
     }
 
     // --- Wire analyzer to accumulator ---
@@ -187,10 +184,7 @@ fun LiveScanScreen(
     DisposableEffect(cameraController, analysisExecutor) {
         val mainHandler = android.os.Handler(android.os.Looper.getMainLooper())
 
-        val analyzer = LiveScanAnalyzer(
-            recognizer = textRecognizer,
-            barcodeScanner = barcodeScanner,
-            knownFieldValues = knownFieldValues,
+        val callbacks = LiveScanAnalyzerCallbacks(
             onRawFrame = { quality, lumaGrid ->
                 liveScanViewModel.onRawFrame(quality, lumaGrid)
             },
@@ -212,6 +206,14 @@ fun LiveScanScreen(
             onBlankFrame = {
                 liveScanViewModel.onBlankFrame()
             },
+        )
+
+        val analyzer = LiveScanAnalyzer(
+            recognizer = textRecognizer,
+            barcodeScanner = barcodeScanner,
+            knownFieldValues = knownFieldValues,
+            callbacks = callbacks,
+            mlKitExecutor = analysisExecutor,
             throttleMsProvider = { liveScanViewModel.currentThrottleMs.value },
             perfTracer = liveScanViewModel.perfTracer,
         )
@@ -225,7 +227,7 @@ fun LiveScanScreen(
             analysisExecutor.shutdown()
             textRecognizer.close()
             barcodeScanner.close()
-            liveScanViewModel.stop(sensorManager)
+            liveScanViewModel.stop()
         }
     }
 
@@ -342,8 +344,8 @@ fun LiveScanScreen(
         // Cross-validation warning banner
         CrossValidationBanner(
             warning = crossValidationWarning,
-            onUseBarcode = liveScanViewModel::resolveCrossValidationWithBarcode,
-            onUseLabel = liveScanViewModel::resolveCrossValidationWithOcr,
+            onUseBarcode = { liveScanViewModel.resolveCrossValidation(useBarcode = true) },
+            onUseLabel = { liveScanViewModel.resolveCrossValidation(useBarcode = false) },
             onDismiss = liveScanViewModel::dismissCrossValidation,
             modifier = Modifier
                 .align(Alignment.TopCenter)
@@ -1061,316 +1063,4 @@ private fun fieldEmoji(fieldName: String): String = when (fieldName) {
     "weight" -> "⚖️"
     "isDecaf" -> "🌙"
     else -> "📋"
-}
-
-// --- Image Analyzer bridging CameraX → LiveScanViewModel ---
-
-private class LiveScanAnalyzer(
-    private val recognizer: com.google.mlkit.vision.text.TextRecognizer,
-    private val barcodeScanner: com.google.mlkit.vision.barcode.BarcodeScanner,
-    private val knownFieldValues: KnownFieldValues,
-    private val onRawFrame: (quality: BagCaptureQuality, lumaGrid: ByteArray?) -> Unit,
-    private val onOcrResult: (
-        ocrResult: OcrFieldExtractor.OcrExtractionResult,
-        quality: BagCaptureQuality,
-        lumaGrid: ByteArray?,
-    ) -> Unit,
-    private val onGoldenFrameCapture: (
-        jpegBytes: ByteArray,
-        quality: BagCaptureQuality,
-        ocrResult: OcrFieldExtractor.OcrExtractionResult,
-    ) -> Unit,
-    private val onBarcodeDetected: (String) -> Unit,
-    private val onBlankFrame: () -> Unit,
-    private val throttleMsProvider: () -> Long = { 700L },
-    private val perfTracer: com.adsamcik.starlitcoffee.scan.observability.ScanPerfTracer? = null,
-) : androidx.camera.core.ImageAnalysis.Analyzer {
-
-    @Volatile
-    private var textDetectionInFlight = false
-
-    @Volatile
-    private var lastTextCheckAtMs = 0L
-
-    @Volatile
-    private var lastTextBlockCount = 0
-
-    @Volatile
-    private var lastTextDetected = false
-
-    @Volatile
-    private var lastTextRegions: List<android.graphics.Rect> = emptyList()
-
-    @Volatile
-    private var lastOcrResult: OcrFieldExtractor.OcrExtractionResult =
-        OcrFieldExtractor.OcrExtractionResult()
-
-    @Volatile
-    private var barcodeDetected = false
-
-    // --- Burst capture state ---
-    @Volatile
-    private var burstMode = false
-    @Volatile
-    private var burstFrames = mutableListOf<Pair<ByteArray, BagCaptureQuality>>()
-    @Volatile
-    private var burstCallback: ((bestJpeg: ByteArray, quality: BagCaptureQuality) -> Unit)? = null
-    @Volatile
-    private var burstStartMs = 0L
-
-    fun startBurst(callback: (bestJpeg: ByteArray, quality: BagCaptureQuality) -> Unit) {
-        burstFrames.clear()
-        burstCallback = callback
-        burstStartMs = android.os.SystemClock.elapsedRealtime()
-        burstMode = true
-    }
-
-    private var analyzeCallCount = 0
-    private var lastAnalyzeNanos = 0L
-
-    override fun analyze(image: ImageProxy) {
-        analyzeCallCount++
-        // Frame interval timing
-        val nowNanos = android.os.SystemClock.elapsedRealtimeNanos()
-        if (lastAnalyzeNanos != 0L) {
-            perfTracer?.mark("frame_interval_ms", (nowNanos - lastAnalyzeNanos) / 1_000_000f)
-        }
-        lastAnalyzeNanos = nowNanos
-        if (analyzeCallCount <= 5 || analyzeCallCount % 30 == 0) {
-            android.util.Log.d("LiveScanAnalyzer", "analyze() call #$analyzeCallCount, " +
-                "size=${image.width}x${image.height}, format=${image.format}, " +
-                "planes=${image.planes.size}, image.image=${image.image != null}")
-        }
-
-        val luma = extractLumaBytes(image)
-        if (luma == null) {
-            android.util.Log.w("LiveScanAnalyzer", "Luma extraction returned null — closing image")
-            image.close()
-            return
-        }
-
-        perfTracer?.startTimer("quality_ms")
-        val quality = BagCaptureQualityAnalyzer.analyzeLumaFrame(
-            luma = luma,
-            width = image.width,
-            height = image.height,
-            textBlockCount = lastTextBlockCount,
-            textDetected = lastTextDetected,
-            textRegions = lastTextRegions,
-        )
-        perfTracer?.stopTimer("quality_ms")
-
-        if (analyzeCallCount <= 5 || analyzeCallCount % 30 == 0) {
-            android.util.Log.d("LiveScanAnalyzer", "Quality: blur=${quality.blurScore}, " +
-                "glare=${quality.glarePercent}, overExp=${quality.overexposedPercent}")
-        }
-
-        // Burst mode: encode every frame regardless of quality gate
-        if (burstMode) {
-            val jpeg = encodeToJpeg(image)
-            if (jpeg != null) {
-                burstFrames.add(jpeg to quality)
-            }
-            val elapsed = android.os.SystemClock.elapsedRealtime() - burstStartMs
-            if (burstFrames.size >= 5 || elapsed >= 500) {
-                val best = burstFrames.maxByOrNull { it.second.blurScore }
-                burstMode = false
-                val cb = burstCallback
-                burstCallback = null
-                if (best != null && cb != null) {
-                    cb(best.first, best.second)
-                }
-                burstFrames.clear()
-            }
-            image.close()
-            return
-        }
-
-        // Pre-encode JPEG only for golden frame candidates (expensive — skip for regular frames)
-        // Note: textBlockCount uses the previous frame's count, so we don't gate on it here.
-        // Blur + glare + exposure are sufficient quality indicators.
-        val goldenFrameJpeg: ByteArray? = if (
-            quality.blurScore >= 12f &&
-            quality.glareOkay &&
-            quality.exposureOkay
-        ) {
-            perfTracer?.startTimer("jpeg_encode_ms")
-            val jpeg = encodeToJpeg(image)
-            perfTracer?.stopTimer("jpeg_encode_ms")
-            jpeg
-        } else {
-            null
-        }
-
-        // Build 8×8 luma grid for side detection
-        val lumaGrid = try {
-            build8x8Grid(luma, image.width, image.height)
-        } catch (_: Exception) {
-            null
-        }
-
-        // Report raw frame for side detection
-        try {
-            onRawFrame(quality, lumaGrid)
-        } catch (_: Exception) {
-            // Never let callback exceptions propagate
-        }
-
-        // OCR text recognition (adaptive throttle) + barcode detection
-        val now = android.os.SystemClock.elapsedRealtime()
-        val timeSinceLastOcr = now - lastTextCheckAtMs
-        val shouldRunOcr = !textDetectionInFlight && timeSinceLastOcr >= throttleMsProvider()
-        val shouldRunBarcode = !barcodeDetected
-        val hasMediaImage = image.image != null
-
-        if (analyzeCallCount <= 5 || analyzeCallCount % 30 == 0) {
-            android.util.Log.d("LiveScanAnalyzer", "OCR gate: shouldRunOcr=$shouldRunOcr, " +
-                "inFlight=$textDetectionInFlight, timeSinceLast=${timeSinceLastOcr}ms, " +
-                "hasMediaImage=$hasMediaImage, shouldRunBarcode=$shouldRunBarcode")
-        }
-
-        if (shouldRunOcr && hasMediaImage) {
-            textDetectionInFlight = true
-            lastTextCheckAtMs = now
-            android.util.Log.d("LiveScanAnalyzer", ">>> Starting ML Kit recognition (call #$analyzeCallCount)")
-
-            @Suppress("UnsafeOptInUsageError")
-            val inputImage = com.google.mlkit.vision.common.InputImage.fromMediaImage(
-                image.image!!,
-                image.imageInfo.rotationDegrees,
-            )
-
-            // Track pending tasks so image is closed only after all complete
-            val pendingTasks = AtomicInteger(if (shouldRunBarcode) 2 else 1)
-            val maybeCloseImage = {
-                if (pendingTasks.decrementAndGet() == 0) {
-                    image.close()
-                }
-            }
-
-            val ocrStartNanos = android.os.SystemClock.elapsedRealtimeNanos()
-            recognizer.process(inputImage)
-                .addOnSuccessListener { text ->
-                    perfTracer?.mark("ocr_ms",
-                        (android.os.SystemClock.elapsedRealtimeNanos() - ocrStartNanos) / 1_000_000f)
-
-                    lastTextBlockCount = text.textBlocks.size
-                    lastTextDetected = text.textBlocks.isNotEmpty()
-                    lastTextRegions = text.textBlocks.mapNotNull { it.boundingBox }
-
-                    android.util.Log.d("LiveScanAnalyzer", "ML Kit SUCCESS: " +
-                        "blocks=${text.textBlocks.size}, " +
-                        "textLen=${text.text.length}, " +
-                        "preview='${text.text.take(120).replace('\n', ' ')}'")
-
-                    if (text.text.isNotBlank()) {
-                        try {
-                            perfTracer?.startTimer("field_extract_ms")
-                            lastOcrResult = OcrFieldExtractor.extractFields(
-                                rawText = text.text,
-                                knownFields = knownFieldValues,
-                            )
-                            perfTracer?.stopTimer("field_extract_ms")
-                            android.util.Log.d("LiveScanAnalyzer", "Fields extracted: " +
-                                "name=${lastOcrResult.name}, roaster=${lastOcrResult.roaster}, " +
-                                "origin=${lastOcrResult.origin}, region=${lastOcrResult.region}")
-                            onOcrResult(lastOcrResult, quality, lumaGrid)
-                            android.util.Log.d("LiveScanAnalyzer", "onOcrResult callback completed OK")
-                            goldenFrameJpeg?.let { jpeg ->
-                                try {
-                                    onGoldenFrameCapture(jpeg, quality, lastOcrResult)
-                                } catch (e: Exception) {
-                                    android.util.Log.e("LiveScanAnalyzer", "Golden frame capture error", e)
-                                }
-                            }
-                        } catch (e: Exception) {
-                            android.util.Log.e("LiveScanAnalyzer", "OCR callback error", e)
-                        }
-                    } else {
-                        android.util.Log.d("LiveScanAnalyzer", "ML Kit returned blank text — submitting absence signal")
-                        onBlankFrame()
-                    }
-                }
-                .addOnFailureListener { e ->
-                    android.util.Log.e("LiveScanAnalyzer", "ML Kit recognition FAILED", e)
-                }
-                .addOnCompleteListener {
-                    android.util.Log.d("LiveScanAnalyzer", "ML Kit COMPLETE — resetting inFlight")
-                    textDetectionInFlight = false
-                    maybeCloseImage()
-                }
-
-            // Run barcode detection on the same InputImage (near-zero extra cost)
-            if (shouldRunBarcode) {
-                val barcodeStartNanos = android.os.SystemClock.elapsedRealtimeNanos()
-                barcodeScanner.process(inputImage)
-                    .addOnSuccessListener { barcodes ->
-                        perfTracer?.mark("barcode_ms",
-                            (android.os.SystemClock.elapsedRealtimeNanos() - barcodeStartNanos) / 1_000_000f)
-                        barcodes.firstOrNull()?.rawValue?.let { value ->
-                            if (!barcodeDetected) {
-                                barcodeDetected = true
-                                android.util.Log.d("LiveScanAnalyzer", "Barcode detected: $value")
-                                try {
-                                    onBarcodeDetected(value)
-                                } catch (_: Exception) {}
-                            }
-                        }
-                    }
-                    .addOnCompleteListener {
-                        maybeCloseImage()
-                    }
-            }
-        } else {
-            image.close()
-        }
-    }
-
-    private fun encodeToJpeg(image: ImageProxy, quality: Int = 85): ByteArray? {
-        return try {
-            val bitmap = image.toBitmap()
-            val stream = java.io.ByteArrayOutputStream()
-            bitmap.compress(android.graphics.Bitmap.CompressFormat.JPEG, quality, stream)
-            bitmap.recycle()
-            stream.toByteArray()
-        } catch (e: Exception) {
-            android.util.Log.e("LiveScanAnalyzer", "JPEG encoding failed", e)
-            null
-        }
-    }
-
-    private fun extractLumaBytes(image: ImageProxy): ByteArray? {
-        val plane = image.planes.firstOrNull() ?: return null
-        val buffer = plane.buffer
-        val bytes = ByteArray(buffer.remaining())
-        buffer.get(bytes)
-        return bytes
-    }
-
-    private fun build8x8Grid(luma: ByteArray, width: Int, height: Int): ByteArray {
-        val grid = ByteArray(64)
-        val cellW = width / 8
-        val cellH = height / 8
-        for (row in 0 until 8) {
-            for (col in 0 until 8) {
-                var sum = 0L
-                var count = 0
-                val startY = row * cellH
-                val startX = col * cellW
-                // Sample every 4th pixel for speed
-                var y = startY
-                while (y < (startY + cellH).coerceAtMost(height)) {
-                    var x = startX
-                    while (x < (startX + cellW).coerceAtMost(width)) {
-                        sum += (luma[y * width + x].toInt() and 0xFF)
-                        count++
-                        x += 4
-                    }
-                    y += 4
-                }
-                grid[row * 8 + col] = if (count > 0) (sum / count).toByte() else 0
-            }
-        }
-        return grid
-    }
 }

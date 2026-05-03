@@ -147,7 +147,12 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        // TODO: Replace with Hilt @Provides when DI is adopted
+        /**
+         * Manual singleton accessor. The repo intentionally avoids a DI
+         * framework today (see project conventions: "No DI framework yet;
+         * factories / manual wiring are intentional"); when DI lands this
+         * can be replaced with a Hilt `@Provides` binding.
+         */
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(

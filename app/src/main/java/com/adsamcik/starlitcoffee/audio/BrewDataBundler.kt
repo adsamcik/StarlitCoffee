@@ -56,6 +56,11 @@ object BrewDataBundler {
      * @param outputDirectory where to write the zip (defaults to sessionDirectory)
      * @return BundleResult with zip path, file count, and any errors
      */
+    @Suppress(
+        // Streams files into a zip via nested resource try blocks; the
+        // depth follows the file→entry→stream→buffer ownership chain.
+        "NestedBlockDepth",
+    )
     fun bundle(
         sessionDirectory: File,
         brewTimestamp: String,

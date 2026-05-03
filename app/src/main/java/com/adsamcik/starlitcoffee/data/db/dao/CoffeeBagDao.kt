@@ -9,6 +9,12 @@ import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
+@Suppress(
+    // Room DAOs are inherently fan-out: one method per CRUD/query pattern
+    // against the same table. Splitting them across multiple DAOs would
+    // scatter the bag-table API and forces the repository to hold N daos.
+    "TooManyFunctions",
+)
 interface CoffeeBagDao {
     @Insert
     suspend fun insert(bag: CoffeeBagEntity): Long

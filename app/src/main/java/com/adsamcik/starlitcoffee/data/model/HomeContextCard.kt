@@ -79,6 +79,13 @@ sealed class HomeContextCard {
             return resolveLastBrewSummary(brewLogs, bags)
         }
 
+        @Suppress(
+            // Five guards-then-return for null preconditions plus one final
+            // return for the constructed wisdom. Combining the guards
+            // would require nested `?.let { ... } ?: return` chains that
+            // don't read better than the linear early-returns.
+            "ReturnCount",
+        )
         private fun resolveBagAgeWisdom(
             bags: List<com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity>,
             selectedBagId: Long?,
@@ -255,8 +262,9 @@ sealed class HomeContextCard {
         private fun pickExplorationTwist(
             recentBrews: List<BrewLogEntity>,
         ): OneTwist? {
-            // Suggest something they haven't tried varying recently
-            val methods = recentBrews.map { it.method }.distinct()
+            // Suggest something they haven't tried varying recently. We only
+            // currently surface filter and ratio twists — method-cycling
+            // would belong here too but isn't ready yet.
             val filters = recentBrews.mapNotNull { it.filterType }.distinct()
             val ratios = recentBrews.map { it.ratio }.distinct()
 

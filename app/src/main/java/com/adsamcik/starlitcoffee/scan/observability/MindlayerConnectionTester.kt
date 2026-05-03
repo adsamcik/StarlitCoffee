@@ -131,7 +131,14 @@ object MindlayerConnectionTester {
                         responseText.append(event.text)
                         tokenCount++
                     }
-                    is MindlayerEvent.Error -> throw RuntimeException(event.message)
+                    // Surface the SDK error message via a generic
+                    // RuntimeException; the diagnostic harness then catches
+                    // it and reports the failure to the user. Wrapping in
+                    // a domain-specific exception type would just be ceremony.
+                    is MindlayerEvent.Error -> {
+                        @Suppress("TooGenericExceptionThrown")
+                        throw RuntimeException(event.message)
+                    }
                     else -> { /* Started, Done, Metrics — no action needed */ }
                 }
             }

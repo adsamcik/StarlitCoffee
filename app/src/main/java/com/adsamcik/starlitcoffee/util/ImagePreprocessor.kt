@@ -83,6 +83,12 @@ object ImagePreprocessor {
      * Computes alignment from ML Kit text detection results.
      * Median text line angle → skew, union of text blocks → crop bounds.
      */
+    @Suppress(
+        // Iterates blocks → lines → corner points to compute skew + crop
+        // union. Three real nested levels (block, line, point) plus a let
+        // for nullability — natural for the data shape.
+        "NestedBlockDepth",
+    )
     fun computeAlignment(textBlocks: List<Text.TextBlock>): AlignmentInfo {
         val angles = mutableListOf<Float>()
         var minX = Int.MAX_VALUE
@@ -193,10 +199,12 @@ object ImagePreprocessor {
         val cropW = right - left
         val cropH = bottom - top
 
-        // Only crop if it meaningfully reduces the image
-        if (cropW > 100 && cropH > 100 &&
+        // Only crop if it meaningfully reduces the image: minimum size +
+        // measurable shrink in at least one dimension.
+        @Suppress("ComplexCondition")
+        val shouldCrop = cropW > 100 && cropH > 100 &&
             (cropW < bitmap.width * 0.9f || cropH < bitmap.height * 0.9f)
-        ) {
+        if (shouldCrop) {
             return Bitmap.createBitmap(bitmap, left, top, cropW, cropH)
         }
         return bitmap

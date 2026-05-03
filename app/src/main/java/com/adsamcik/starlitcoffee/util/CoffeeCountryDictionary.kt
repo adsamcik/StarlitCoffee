@@ -1,3 +1,9 @@
+@file:Suppress(
+    // Country / language vocabulary dictionaries; long lines are alias rows
+    // and OCR keyword lists where wrapping hurts readability.
+    "MaxLineLength",
+)
+
 package com.adsamcik.starlitcoffee.util
 
 import java.util.Locale

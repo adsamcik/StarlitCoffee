@@ -179,6 +179,12 @@ private fun RecipeDetail(label: String, value: String) {
  * Shares brew details as a nicely formatted text message via the system share sheet.
  * Uses text sharing (universal, no bitmap issues) with a rich format.
  */
+@Suppress(
+    // Composes the share text by walking ~10 optional brew fields with a
+    // conditional `if (...) appendLine(...)` per field. Branches mirror
+    // field count.
+    "CyclomaticComplexMethod",
+)
 fun shareBrewCard(
     context: Context,
     brew: BrewLogEntity,

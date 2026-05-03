@@ -2,6 +2,13 @@ package com.adsamcik.starlitcoffee.data.model
 
 import com.adsamcik.starlitcoffee.R
 
+/**
+ * Canonical brew method registry. Each enum constant captures the full
+ * method profile (ratio, temp/time/bloom). The constructor parameter list
+ * is naturally large because it IS the schema; bundling into a data class
+ * would scatter related values across two declarations per constant.
+ */
+@Suppress("LongParameterList")
 enum class BrewMethod(
     val displayName: String,
     val iconName: String,
@@ -18,7 +25,7 @@ enum class BrewMethod(
     val defaultGrindDescriptor: GrindDescriptor,
     val bloomDurationSeconds: Int = 45,
     val absorptionRatio: Float = 2.0f,
-){
+) {
     PULSAR(
         displayName = "Pulsar",
         iconName = "coffee",

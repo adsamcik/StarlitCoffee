@@ -81,11 +81,13 @@ object AudioAnalyzer {
 
         var crossings = 0
         for (i in 1 until count) {
-            if ((samples[i] >= 0 && samples[i - 1] < 0) ||
+            // Sign-change detection: previous sample on one side of zero,
+            // current on the other. The two clauses are clearer than a
+            // single XOR-of-sign-bits expression.
+            @Suppress("ComplexCondition")
+            val crossed = (samples[i] >= 0 && samples[i - 1] < 0) ||
                 (samples[i] < 0 && samples[i - 1] >= 0)
-            ) {
-                crossings++
-            }
+            if (crossed) crossings++
         }
         return crossings.toFloat() / (count - 1)
     }

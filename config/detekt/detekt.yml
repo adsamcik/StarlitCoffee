@@ -9,23 +9,60 @@ complexity:
   active: true
   LongMethod:
     threshold: 80
+    excludes: ['**/test/**', '**/androidTest/**']
+    # @Composable functions describe entire screens; their length reflects
+    # the UI tree, not poor decomposition. Compose's recommended pattern is
+    # one composable per screen + nested helpers — not "extract everything
+    # into 80-line chunks".
+    ignoreAnnotated:
+      - "Composable"
+      - "androidx.compose.runtime.Composable"
   LongParameterList:
     functionThreshold: 8
     constructorThreshold: 10
+    excludes: ['**/test/**', '**/androidTest/**']
+    # Compose stateless composables surface state + multiple callbacks per
+    # call site by convention; bundling into data classes hurts type-safe
+    # readability at the call site.
+    ignoreAnnotated:
+      - "Composable"
+      - "androidx.compose.runtime.Composable"
   CyclomaticComplexMethod:
     threshold: 20
+    excludes: ['**/test/**', '**/androidTest/**']
+    ignoreAnnotated:
+      - "Composable"
+      - "androidx.compose.runtime.Composable"
   TooManyFunctions:
     thresholdInFiles: 30
     thresholdInClasses: 25
+    excludes: ['**/test/**', '**/androidTest/**']
+  LargeClass:
+    excludes: ['**/test/**', '**/androidTest/**']
+  NestedBlockDepth:
+    excludes: ['**/test/**', '**/androidTest/**']
 
 coroutines:
   active: true
 
 empty-blocks:
   active: true
+  EmptyFunctionBlock:
+    excludes: ['**/test/**', '**/androidTest/**']
 
 exceptions:
   active: true
+  # The codebase uses generic `catch (e: Exception)` extensively as a
+  # *boundary* pattern: log + degrade gracefully when crossing into native
+  # JPEG decoders, ML Kit, Mindlayer SDK, OkHttp, ExifInterface, etc., each
+  # of which raises a different exception hierarchy. Narrowing case-by-case
+  # would either let new exception types crash silently or require exhaustive
+  # multi-catch chains that obscure the boundary intent. Per-call-site
+  # @Suppress was applied across the scan/LLM hot path and shipped first;
+  # the rest of the codebase uses the same idiom and the rule's signal-to-
+  # noise was poor. Re-enable if a specific package starts being a hotspot.
+  TooGenericExceptionCaught:
+    active: false
 
 naming:
   active: true
@@ -49,6 +86,27 @@ style:
   WildcardImport:
     active: false
   MaxLineLength:
-    maxLineLength: 140
+    # 160 chars — slightly more than Kotlin style guide's 100/120 to
+    # accommodate Compose modifier chains, multi-line string interpolation,
+    # and Czech translation strings without harming readability.
+    maxLineLength: 160
+    excludes: ['**/test/**', '**/androidTest/**']
   ReturnCount:
     max: 5
+    excludes: ['**/test/**', '**/androidTest/**']
+  # @Preview functions are intentionally private and unused — Android Studio
+  # discovers them by annotation. Same for parameters of @Preview functions
+  # which are typically supplied by PreviewParameterProvider. Don't flag.
+  UnusedPrivateMember:
+    ignoreAnnotated:
+      - "Preview"
+      - "androidx.compose.ui.tooling.preview.Preview"
+    excludes: ['**/test/**', '**/androidTest/**']
+  UnusedPrivateProperty:
+    excludes: ['**/test/**', '**/androidTest/**']
+  UnusedParameter:
+    ignoreAnnotated:
+      - "Preview"
+      - "androidx.compose.ui.tooling.preview.Preview"
+
+

@@ -137,8 +137,11 @@ fun AmountStrengthScreen(
             onBack = onBack,
             modifier = Modifier.padding(top = 8.dp),
             actions = {
+                val ratioLabel = ratioPresets.getOrNull(selectedPresetIndex)
+                    ?.let { stringResource(it.labelResId, it.labelArg) }
+                    ?: "1:${method.defaultRatio.toInt()}"
                 Text(
-                    text = "${method.displayName} · ${ratioPresets.getOrNull(selectedPresetIndex)?.let { stringResource(it.labelResId, it.labelArg) } ?: "1:${method.defaultRatio.toInt()}"}",
+                    text = "${method.displayName} · $ratioLabel",
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(end = 8.dp),
@@ -215,7 +218,11 @@ fun AmountStrengthScreen(
             onValueChange = { brewViewModel.setAmount(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             shape = MaterialTheme.shapes.small,
-            suffix = { Text(if (inputMode == InputMode.BREW_SIZE_TO_BOTH || inputMode == InputMode.CUP_SIZE_TO_BOTH) stringResource(R.string.unit_ml) else stringResource(R.string.unit_grams)) },
+            suffix = {
+                val isMlMode = inputMode == InputMode.BREW_SIZE_TO_BOTH ||
+                    inputMode == InputMode.CUP_SIZE_TO_BOTH
+                Text(stringResource(if (isMlMode) R.string.unit_ml else R.string.unit_grams))
+            },
             singleLine = true,
             modifier = Modifier.fillMaxWidth().testTag("amount_input"),
         )
@@ -398,8 +405,10 @@ fun AmountStrengthScreen(
                     }
                     is GrindResult.Specific -> {
                         val fmt = { v: Float -> if (v % 1f == 0f) "%.0f".format(v) else "%.1f".format(v) }
+                        val rec = gr.recommendation
                         Text(
-                            text = "Setting: ${fmt(gr.recommendation.suggestedStart)} (range ${fmt(gr.recommendation.rangeStart)}–${fmt(gr.recommendation.rangeEnd)})",
+                            text = "Setting: ${fmt(rec.suggestedStart)} " +
+                                "(range ${fmt(rec.rangeStart)}–${fmt(rec.rangeEnd)})",
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
                         )

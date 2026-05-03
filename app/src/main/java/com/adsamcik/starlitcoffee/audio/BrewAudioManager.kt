@@ -102,6 +102,7 @@ class BrewAudioManager(
      * Sets the brew context for metadata export. Call before startRecording()
      * with the current BrewUiState values.
      */
+    @Suppress("LongParameterList")
     fun setBrewContext(
         method: String,
         filterType: String,
@@ -284,6 +285,15 @@ class BrewAudioManager(
         userLabelsRecorder.markProblem(description)
     }
 
+    @Suppress(
+        // The audio buffer processor sequences calibration, baseline,
+        // spectral analysis, event detection, and recording in one place
+        // because the stages share intermediate state. Splitting them
+        // mechanically would force shuttling that state through helpers.
+        "LongMethod",
+        "CyclomaticComplexMethod",
+        "NestedBlockDepth",
+    )
     private fun processBuffer(samples: ShortArray) {
         val timeFeatures = AudioAnalyzer.analyze(samples, samples.size, config.sampleRate)
 
@@ -328,7 +338,11 @@ class BrewAudioManager(
                     }
                 }
             }
-            val residualPower = ambientBaseline.subtract(rawPower)
+            // Compute residual (rawPower - ambientBaseline) as a side effect
+            // — `subtract` updates internal baseline state used by downstream
+            // detection. The returned value isn't used yet but the call must
+            // run for its bookkeeping; underscore makes the intent explicit.
+            ambientBaseline.subtract(rawPower)
 
             // Enrich spectral features with subtraction results
             val enrichedSpectral = spectral.copy(

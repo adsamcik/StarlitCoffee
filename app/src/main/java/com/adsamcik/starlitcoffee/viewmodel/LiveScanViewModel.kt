@@ -1,19 +1,18 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
-import android.hardware.SensorManager
 import android.os.Build
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.adsamcik.starlitcoffee.data.network.llm.LlmCacheKey
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
-import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.scan.ConsensusEngine
 import com.adsamcik.starlitcoffee.scan.FrameEvidenceAccumulator
+import com.adsamcik.starlitcoffee.scan.LlmEscalationCoordinator
+import com.adsamcik.starlitcoffee.scan.LlmTelemetrySnapshot
 import com.adsamcik.starlitcoffee.scan.SideDetector
 import com.adsamcik.starlitcoffee.scan.model.AccumulatedEvidence
 import com.adsamcik.starlitcoffee.scan.model.AccumulatorConfig
@@ -21,12 +20,10 @@ import com.adsamcik.starlitcoffee.scan.model.FieldContext
 import com.adsamcik.starlitcoffee.scan.model.FieldSource
 import com.adsamcik.starlitcoffee.scan.model.FieldStatus
 import com.adsamcik.starlitcoffee.scan.model.FrameResult
-import com.adsamcik.starlitcoffee.scan.model.LlmEscalationRequest
 import com.adsamcik.starlitcoffee.scan.observability.ScanAnalyticsTracker
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionSummary
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
-import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.BarcodeInsights
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
@@ -52,11 +49,22 @@ import java.util.UUID
  * - Golden frame detection and heavy-pass triggering
  * - Live enrichment (barcode/QR/API) integration
  */
+private const val PERF_STATS_POLL_INTERVAL_MS = 500L
+
 class LiveScanViewModel(
     private val config: AccumulatorConfig = AccumulatorConfig.DEFAULT,
     private val llmProvider: LlmInferenceProvider = StubLlmInferenceProvider(),
-    private val llmCache: LlmResultCache = LlmResultCache(),
+    llmCache: LlmResultCache = LlmResultCache(),
 ) : ViewModel() {
+
+    /**
+     * Owns the LLM lifecycle (pre-warm, escalation flow subscription,
+     * provider serialization, status flow, telemetry). Pulled out of the
+     * ViewModel so the VM only mediates between the accumulator, LLM, and
+     * UI state — see [LlmEscalationCoordinator]'s class KDoc for the
+     * design rationale.
+     */
+    private val llmCoordinator = LlmEscalationCoordinator(llmProvider, llmCache)
 
     // --- Core accumulator ---
 
@@ -64,8 +72,8 @@ class LiveScanViewModel(
     private var sideDetector: SideDetector? = null
     private var consensusEngine: ConsensusEngine? = null
     private var accumulatorEvidenceJob: Job? = null
-    private var llmEscalationJob: Job? = null
     private var rejectionJob: Job? = null
+    private var llmStateJob: Job? = null
 
     private val _evidence = MutableStateFlow(AccumulatedEvidence.EMPTY)
     val evidence: StateFlow<AccumulatedEvidence> = _evidence.asStateFlow()
@@ -96,14 +104,16 @@ class LiveScanViewModel(
 
     private var bestGoldenFrameScore: Float = 0f
 
-    // --- LLM telemetry tracking ---
+    // --- Session metadata ---
 
-    private var lastLlmLatencyMs: Long? = null
-    private var lastLlmSuccess: Boolean? = null
-    private var lastLlmTokensUsed: Int? = null
-    private var llmCallCount: Int = 0
     private var sessionId: String = ""
     private var sessionStartMs: Long = 0L
+    private var lastLlmTelemetry: LlmTelemetrySnapshot = LlmTelemetrySnapshot(
+        callCount = 0,
+        lastLatencyMs = null,
+        lastSuccess = null,
+        lastTokensUsed = null,
+    )
 
     // --- Performance tracer ---
 
@@ -136,11 +146,9 @@ class LiveScanViewModel(
      * Call from the composable once camera permissions are granted.
      *
      * @param knownFieldValues Historical field values from existing bags (for Bayesian priors)
-     * @param sensorManager Android SensorManager for IMU gating (nullable for testing)
      */
     fun start(
         knownFieldValues: KnownFieldValues,
-        sensorManager: SensorManager? = null,
     ) {
         if (isStarted) {
             android.util.Log.w("LiveScan", "start() called but already started — ignoring")
@@ -158,81 +166,72 @@ class LiveScanViewModel(
 
         consensusEngine = ConsensusEngine(config)
         perfTracer = com.adsamcik.starlitcoffee.scan.observability.ScanPerfTracer()
-        accumulator = FrameEvidenceAccumulator(
+        val newAccumulator = FrameEvidenceAccumulator(
             config = config,
             knownValues = knownFieldValues,
             consensusEngine = consensusEngine!!,
             perfTracer = perfTracer,
         )
+        accumulator = newAccumulator
         sideDetector = SideDetector(config) {
-            accumulator?.notifyPotentialSideFlip()
+            newAccumulator.notifyPotentialSideFlip()
             _liveScanUiState.value = _liveScanUiState.value.copy(
                 sideFlipDetected = true,
             )
         }
 
-        accumulator?.start()
-        android.util.Log.d("LiveScan", "accumulator started — launching evidence collector")
-
-        // Pre-warm LLM: connect to service early so first LLM call doesn't pay full init
-        viewModelScope.launch {
-            try {
-                llmProvider.let { provider ->
-                    if (provider is MindlayerLlmInferenceProvider) {
-                        _liveScanUiState.value = _liveScanUiState.value.copy(
-                            llmStatus = LlmUiStatus.CONNECTING,
-                        )
-                        perfTracer?.startTimer("service_connect_ms")
-                        provider.ensureConnected()
-                        perfTracer?.stopTimer("service_connect_ms")
-                        _liveScanUiState.value = _liveScanUiState.value.copy(
-                            llmStatus = LlmUiStatus.WAITING,
-                        )
-                    } else if (provider.isAvailable()) {
-                        _liveScanUiState.value = _liveScanUiState.value.copy(
-                            llmStatus = LlmUiStatus.WAITING,
-                        )
-                    }
-                }
-            } catch (e: Exception) {
-                perfTracer?.stopTimer("service_connect_ms")
-                Log.w("LiveScanVM", "LLM pre-warm failed: ${e.message}")
+        // Order matters: subscribe to llmEscalation BEFORE accumulator.start()
+        // (SharedFlow has replay=0 + buffer=1, so a quickly-emitted first
+        // request would otherwise be lost), and subscribe to coordinator.state
+        // AFTER coordinator.start() (start() resets state to IDLE; an earlier
+        // subscriber on Main.immediate would receive the previous session's
+        // stale value first).
+        llmCoordinator.start(
+            parentScope = viewModelScope,
+            accumulator = newAccumulator,
+            knownValuesProvider = { currentKnownValues },
+            perfTracer = perfTracer,
+        )
+        // Single flow → atomic (status, contributedFields) transitions.
+        llmStateJob = viewModelScope.launch {
+            llmCoordinator.state.collect { llmState ->
                 _liveScanUiState.value = _liveScanUiState.value.copy(
-                    llmStatus = LlmUiStatus.UNAVAILABLE,
+                    llmStatus = llmState.status,
+                    llmContributedFields = llmState.contributedFields,
                 )
             }
         }
 
-        // Periodically push tracer stats to StateFlow for UI overlay
+        newAccumulator.start()
+        launchAccumulatorObservers(newAccumulator)
+
+        _liveScanUiState.value = _liveScanUiState.value.copy(
+            isScanning = true,
+            scanStartTimeMs = System.currentTimeMillis(),
+        )
+    }
+
+    /**
+     * Wire up the four `viewModelScope.launch { accumulator.X.collect { … } }`
+     * blocks plus the perf-stats poller. Extracted from [start] to keep that
+     * function under detekt's LongMethod threshold without giving up on the
+     * one-place-where-jobs-are-kicked-off invariant.
+     */
+    private fun launchAccumulatorObservers(accumulator: FrameEvidenceAccumulator) {
         perfStatsJob = viewModelScope.launch {
             while (true) {
-                kotlinx.coroutines.delay(500L)
+                kotlinx.coroutines.delay(PERF_STATS_POLL_INTERVAL_MS)
                 perfTracer?.let { _perfStats.value = it.getStats() }
             }
         }
-
         accumulatorEvidenceJob = viewModelScope.launch {
-            accumulator?.evidence?.collectLatest { evidence ->
+            accumulator.evidence.collectLatest { evidence ->
                 _evidence.value = evidence
                 checkCrossValidation(evidence)
-                if (evidence.totalFramesProcessed > 0 && evidence.totalFramesProcessed % 5 == 0) {
-                    android.util.Log.d("LiveScan", "Evidence update: " +
-                        "processed=${evidence.totalFramesProcessed}, " +
-                        "rejected=${evidence.totalFramesRejected}, " +
-                        "fields=${evidence.fields.size}, " +
-                        "progress=${evidence.scanProgress}")
-                }
             }
         }
-
-        llmEscalationJob = viewModelScope.launch {
-            accumulator?.llmEscalation?.collect { escalation ->
-                handleLlmEscalation(escalation)
-            }
-        }
-
         rejectionJob = viewModelScope.launch {
-            accumulator?.lastRejection?.collect { rejection ->
+            accumulator.lastRejection.collect { rejection ->
                 if (rejection != null) {
                     _liveScanUiState.value = _liveScanUiState.value.copy(
                         lastRejectionReason = rejection.reason,
@@ -240,102 +239,41 @@ class LiveScanViewModel(
                 }
             }
         }
-
         viewModelScope.launch {
-            accumulator?.currentThrottleMs?.collect { throttle ->
+            accumulator.currentThrottleMs.collect { throttle ->
                 _currentThrottleMs.value = throttle
             }
         }
-
-        _liveScanUiState.value = _liveScanUiState.value.copy(
-            isScanning = true,
-            scanStartTimeMs = System.currentTimeMillis(),
-        )
-
-        android.util.Log.d("LiveScan", "start() complete — ready to receive frames")
     }
 
     /**
      * Stop the scan session and clean up resources.
      * Called automatically on ViewModel clear, or explicitly on navigation.
      */
-    fun stop(sensorManager: SensorManager? = null) {
+    fun stop() {
         if (!isStarted) return
         isStarted = false
 
-        // Emit telemetry before cleanup
-        val perfJson = perfTracer?.toJson()
-        val perfStatsSnapshot = perfTracer?.getStats()?.mapValues { (_, stats) ->
-            com.adsamcik.starlitcoffee.scan.observability.PerfStatsSnapshot.from(stats)
-        }
-        val telemetry = accumulator?.buildTelemetry()?.copy(
+        // Snapshot LLM telemetry before tearing the coordinator down. The
+        // call cancels the coordinator's child scope; any in-flight provider
+        // work raises CancellationException — providers must let that
+        // propagate (see LlmInferenceProvider's KDoc) so cancelled work
+        // doesn't try to mutate state in the *next* session.
+        val llmSnapshot = llmCoordinator.stopAndSnapshot()
+        lastLlmTelemetry = llmSnapshot
+
+        recordScanSessionTelemetry(
+            accumulator = accumulator,
+            perfTracer = perfTracer,
+            llmSnapshot = llmSnapshot,
+            uiState = _liveScanUiState.value,
             bestGoldenFrameScore = bestGoldenFrameScore,
-            goldenFrameCount = _liveScanUiState.value.goldenFrameCount,
-            llmLatencyMs = lastLlmLatencyMs,
-            llmSuccess = lastLlmSuccess,
-            llmTokensUsed = lastLlmTokensUsed,
-            perfStats = perfStatsSnapshot,
+            sessionId = sessionId,
+            sessionStartMs = sessionStartMs,
+            appContext = appContext,
         )
-        telemetry?.let {
-            android.util.Log.i("ScanTelemetry", it.toJson())
-
-            // --- Observability: analytics + ring buffer ---
-            val endMs = System.currentTimeMillis()
-            val outcome = it.scanOutcome
-            if (outcome == "complete" || outcome == "partial") {
-                ScanAnalyticsTracker.trackScanCompleted(
-                    outcome = outcome,
-                    durationMs = it.sessionDurationMs,
-                    fieldsResolved = it.fieldsResolved,
-                    fieldsTotal = it.fieldsTotal,
-                )
-            } else {
-                ScanAnalyticsTracker.trackScanAbandoned(
-                    durationMs = it.sessionDurationMs,
-                    fieldsResolved = it.fieldsResolved,
-                )
-            }
-
-            val ctx = appContext
-            if (ctx != null) {
-                val appVersion = try {
-                    ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName ?: "unknown"
-                } catch (_: Exception) { "unknown" }
-
-                val summary = ScanSessionSummary(
-                    sessionId = sessionId,
-                    startedAt = sessionStartMs,
-                    endedAt = endMs,
-                    durationMs = it.sessionDurationMs,
-                    outcome = outcome,
-                    framesProcessed = it.framesProcessed,
-                    framesRejected = it.framesRejected,
-                    goldenFrameCount = it.goldenFrameCount,
-                    llmFired = it.llmEscalated,
-                    llmCallCount = llmCallCount,
-                    llmLatencyMs = it.llmLatencyMs ?: 0L,
-                    llmTokensUsed = it.llmTokensUsed ?: 0,
-                    fieldsResolved = it.fieldsResolved,
-                    fieldsTotal = it.fieldsTotal,
-                    bestGoldenFrameScore = it.bestGoldenFrameScore,
-                    failureReason = when {
-                        outcome == "cancelled" && it.framesProcessed == 0 -> "no_text"
-                        outcome == "cancelled" -> "low_confidence"
-                        else -> null
-                    },
-                    deviceModel = Build.MODEL,
-                    appVersion = appVersion,
-                    perfJson = perfJson,
-                )
-                ScanSessionRingBuffer.save(ctx, summary)
-            }
-        }
 
         bestGoldenFrameScore = 0f
-        lastLlmLatencyMs = null
-        lastLlmSuccess = null
-        lastLlmTokensUsed = null
-        llmCallCount = 0
 
         perfStatsJob?.cancel()
         perfStatsJob = null
@@ -345,8 +283,8 @@ class LiveScanViewModel(
 
         accumulatorEvidenceJob?.cancel()
         accumulatorEvidenceJob = null
-        llmEscalationJob?.cancel()
-        llmEscalationJob = null
+        llmStateJob?.cancel()
+        llmStateJob = null
         rejectionJob?.cancel()
         rejectionJob = null
         accumulator?.stop()
@@ -423,7 +361,12 @@ class LiveScanViewModel(
     /**
      * Called by the camera analyzer on every raw frame (no OCR).
      * Used only for side detection via luma grid — no data goes to accumulator.
+     *
+     * `quality` is currently unused but kept on the signature so future
+     * heuristics can gate side detection on quality without re-plumbing the
+     * call sites.
      */
+    @Suppress("UnusedParameter")
     fun onRawFrame(quality: BagCaptureQuality, lumaGrid: ByteArray?) {
         if (!isStarted) return
         lumaGrid?.let { sideDetector?.onFrame(it) }
@@ -537,16 +480,12 @@ class LiveScanViewModel(
         jpegBytes: ByteArray,
         ocrResult: OcrExtractionResult,
     ) {
-        if (!llmProvider.isAvailable()) {
-            _liveScanUiState.value = _liveScanUiState.value.copy(
-                llmStatus = LlmUiStatus.UNAVAILABLE,
-            )
+        val accumulator = accumulator ?: return
+        if (!llmCoordinator.isAvailable()) {
+            // Coordinator state already reflects UNAVAILABLE via its own flow;
+            // bail out without doing redundant status writes.
             return
         }
-
-        _liveScanUiState.value = _liveScanUiState.value.copy(
-            llmStatus = LlmUiStatus.PROCESSING,
-        )
 
         val fieldsNeeded = config.allFields
 
@@ -556,7 +495,9 @@ class LiveScanViewModel(
         // levels — this is what makes the LLM the *primary* reasoning layer.
         val existingFields = buildExistingFieldsMap(_evidence.value)
 
-        // PATH 1: OCR+Image (full context)
+        // PATH 1: OCR+Image (full context). Runs through the coordinator so
+        // its mutex serializes vs. any in-flight auto-escalation, satisfying
+        // the Mindlayer SDK's "no parallel sessions" invariant.
         val ocrImageRequest = LlmExtractionRequest(
             imageBytes = jpegBytes,
             existingFields = existingFields,
@@ -565,7 +506,7 @@ class LiveScanViewModel(
             knownFieldValues = currentKnownValues,
         )
         val ocrStartMs = System.currentTimeMillis()
-        val ocrImageResult = llmProvider.extractBagFields(ocrImageRequest)
+        val ocrImageResult = llmCoordinator.extract(ocrImageRequest, perfTracer)
         val ocrLatencyMs = System.currentTimeMillis() - ocrStartMs
 
         // PATH 2: Image-only (no OCR hints, no grounding) — pure vision control,
@@ -578,7 +519,7 @@ class LiveScanViewModel(
             knownFieldValues = null,
         )
         val imgStartMs = System.currentTimeMillis()
-        val imageOnlyResult = llmProvider.extractBagFields(imageOnlyRequest)
+        val imageOnlyResult = llmCoordinator.extract(imageOnlyRequest, perfTracer)
         val imgLatencyMs = System.currentTimeMillis() - imgStartMs
 
         // Log comparison for benchmarking
@@ -602,9 +543,11 @@ class LiveScanViewModel(
             }
         })
 
-        // Feed OCR+Image results into the accumulator (primary path)
+        // Feed OCR+Image results into the accumulator (primary path).
+        // The coordinator's `extract` already updated state.contributedFields
+        // for both paths, so we only need to forward to the accumulator.
         if (ocrImageResult is LlmExtractionResult.Success) {
-            feedLlmResultsToAccumulator(ocrImageResult.fieldCandidates)
+            submitLlmCandidates(accumulator, ocrImageResult.fieldCandidates)
         }
 
         // Feed image-only results as LLM-source fallback for fields OCR+Image missed.
@@ -614,32 +557,7 @@ class LiveScanViewModel(
             val ocrResolvedFields = ocrFields.keys
             val imageOnlyNew = imageOnlyResult.fieldCandidates
                 .filter { it.fieldName !in ocrResolvedFields }
-            if (imageOnlyNew.isNotEmpty()) {
-                val fallbackValues = imageOnlyNew
-                    .associate { it.fieldName to it.value }
-                    .filter { it.value.isNotBlank() }
-                if (fallbackValues.isNotEmpty()) {
-                    accumulator?.submitEnrichment(
-                        fieldValues = fallbackValues,
-                        sourceType = BagFieldSourceType.LLM,
-                    )
-                }
-            }
-        }
-
-        // Update LLM UI status based on results
-        val allContributed = (ocrFields.keys + imgFields.keys).toSet()
-        val anySuccess = ocrImageResult is LlmExtractionResult.Success ||
-            imageOnlyResult is LlmExtractionResult.Success
-        if (anySuccess) {
-            _liveScanUiState.value = _liveScanUiState.value.copy(
-                llmStatus = LlmUiStatus.COMPLETED,
-                llmContributedFields = _liveScanUiState.value.llmContributedFields + allContributed,
-            )
-        } else {
-            _liveScanUiState.value = _liveScanUiState.value.copy(
-                llmStatus = LlmUiStatus.FAILED,
-            )
+            submitLlmCandidates(accumulator, imageOnlyNew)
         }
     }
 
@@ -764,140 +682,6 @@ class LiveScanViewModel(
             .toMap()
     }
 
-    // --- LLM escalation ---
-
-    private suspend fun handleLlmEscalation(escalation: LlmEscalationRequest) {
-        if (!llmProvider.isAvailable()) {
-            _liveScanUiState.value = _liveScanUiState.value.copy(
-                llmStatus = LlmUiStatus.UNAVAILABLE,
-            )
-            return
-        }
-        val bytes = escalation.goldenFrameBytes
-        if (bytes == null) {
-            android.util.Log.d("LiveScan", "LLM escalation: no golden frame bytes available")
-            return
-        }
-
-        llmCallCount++
-        ScanAnalyticsTracker.trackLlmFired(
-            callNumber = llmCallCount,
-            fieldsNeeded = escalation.fieldsNeeded.size,
-        )
-
-        val imageHash = LlmCacheKey.compute(
-            imageBytes = bytes,
-            fieldsNeeded = escalation.fieldsNeeded,
-            rawOcrText = escalation.rawOcrText,
-            existingFields = escalation.existingFields,
-        )
-        val cached = llmCache.get(imageHash)
-        if (cached != null) {
-            val contributedFields = cached.fieldCandidates.map { it.fieldName }.toSet()
-            _liveScanUiState.value = _liveScanUiState.value.copy(
-                llmStatus = LlmUiStatus.COMPLETED,
-                llmContributedFields = _liveScanUiState.value.llmContributedFields + contributedFields,
-            )
-            feedLlmResultsToAccumulator(cached.fieldCandidates)
-            return
-        }
-
-        _liveScanUiState.value = _liveScanUiState.value.copy(
-            llmStatus = LlmUiStatus.PROCESSING,
-        )
-
-        val request = LlmExtractionRequest(
-            imageBytes = bytes,
-            existingFields = escalation.existingFields,
-            fieldsNeeded = escalation.fieldsNeeded,
-            rawOcrText = escalation.rawOcrText,
-            knownFieldValues = escalation.knownFieldValues ?: currentKnownValues,
-        )
-        val startMs = System.currentTimeMillis()
-        perfTracer?.startTimer("llm_total_ms")
-        when (val result = llmProvider.extractBagFields(request)) {
-            is LlmExtractionResult.Success -> {
-                lastLlmLatencyMs = System.currentTimeMillis() - startMs
-                perfTracer?.stopTimer("llm_total_ms")
-                lastLlmSuccess = true
-                lastLlmTokensUsed = result.tokensUsed
-                llmCache.put(imageHash, result)
-                val contributedFields = result.fieldCandidates.map { it.fieldName }.toSet()
-                _liveScanUiState.value = _liveScanUiState.value.copy(
-                    llmStatus = LlmUiStatus.COMPLETED,
-                    llmContributedFields = _liveScanUiState.value.llmContributedFields + contributedFields,
-                )
-                feedLlmResultsToAccumulator(result.fieldCandidates)
-            }
-            is LlmExtractionResult.Unavailable -> {
-                lastLlmLatencyMs = System.currentTimeMillis() - startMs
-                perfTracer?.stopTimer("llm_total_ms")
-                lastLlmSuccess = false
-                _liveScanUiState.value = _liveScanUiState.value.copy(
-                    llmStatus = LlmUiStatus.UNAVAILABLE,
-                )
-                android.util.Log.d("LiveScan", "LLM escalation: unavailable — ${result.reason}")
-            }
-            is LlmExtractionResult.Failed -> {
-                lastLlmLatencyMs = System.currentTimeMillis() - startMs
-                perfTracer?.stopTimer("llm_total_ms")
-                lastLlmSuccess = false
-                _liveScanUiState.value = _liveScanUiState.value.copy(
-                    llmStatus = LlmUiStatus.FAILED,
-                )
-                android.util.Log.d("LiveScan", "LLM escalation: failed — ${result.error}")
-            }
-        }
-    }
-
-    private fun feedLlmResultsToAccumulator(candidates: List<BagFieldCandidate>) {
-        // All LLM-derived candidates are submitted as LLM source. Confidence is
-        // already encoded on the candidate itself and is honoured by the
-        // ConsensusEngine — we must NOT re-label low-confidence LLM output as OCR,
-        // because that corrupts source attribution for cross-validation, for the
-        // next LLM escalation's prompt, and for UI treatment.
-        val values = candidates
-            .associate { it.fieldName to it.value }
-            .filter { it.value.isNotBlank() }
-        if (values.isNotEmpty()) {
-            accumulator?.submitEnrichment(
-                fieldValues = values,
-                sourceType = BagFieldSourceType.LLM,
-            )
-        }
-    }
-
-    /**
-     * Build a `FieldContext` map from the current accumulated evidence, matching
-     * the attribution rules used in [FrameEvidenceAccumulator.buildExistingFieldsMap].
-     *
-     * This is passed to the LLM so the primary-reasoning prompt can trust or
-     * challenge each prior value based on *how* it was obtained.
-     */
-    private fun buildExistingFieldsMap(evidence: AccumulatedEvidence): Map<String, FieldContext> {
-        return evidence.fields
-            .filter { it.value.isResolved }
-            .mapValues { (_, field) ->
-                val value = field.resolvedValue
-                    ?: field.topCandidate?.normalizedValue
-                    ?: ""
-                val source = when {
-                    field.status == FieldStatus.USER_LOCKED -> FieldSource.USER
-                    field.topCandidate?.sourceTypes?.contains(BagFieldSourceType.LLM) == true ->
-                        FieldSource.LLM
-                    field.topCandidate?.sourceTypes?.any {
-                        it == BagFieldSourceType.BARCODE_LOOKUP ||
-                            it == BagFieldSourceType.LOCAL_BARCODE_MATCH ||
-                            it == BagFieldSourceType.QR_LINK_LOOKUP
-                    } == true -> FieldSource.LOOKUP
-                    else -> FieldSource.OCR
-                }
-                val confidence = field.resolvedEvidence?.confidence?.name
-                FieldContext(value = value, source = source, confidence = confidence)
-            }
-            .filter { it.value.value.isNotBlank() }
-    }
-
     // --- Cross-validation logic ---
 
     /**
@@ -907,60 +691,41 @@ class LiveScanViewModel(
      */
     private fun checkCrossValidation(evidence: AccumulatedEvidence) {
         if (crossValidationDismissed) return
+        val (barcode, ocr) = extractRoasterPair(evidence, barcodeRoasterName) ?: return
 
-        val barcodeRoaster = barcodeRoasterName ?: return
-        val roasterField = evidence.fields["roaster"] ?: return
-        val ocrRoaster = roasterField.topCandidate?.normalizedValue ?: return
+        val bTrimmed = barcode.trim().lowercase()
+        val oTrimmed = ocr.trim().lowercase()
+        // Three "matches" rules collapsed into one boolean so the function
+        // has a single decision point and detekt's ReturnCount stays in
+        // bounds. Containment handles "Rebelbean" vs "Rebelbean s.r.o.";
+        // Levenshtein ≤ 2 handles minor OCR typos.
+        val matches = bTrimmed.contains(oTrimmed) ||
+            oTrimmed.contains(bTrimmed) ||
+            levenshteinDistance(bTrimmed, oTrimmed) <= 2
 
-        // Only compare when OCR has reasonable confidence (multiple observations)
-        if ((roasterField.topCandidate?.observationCount ?: 0) < 2) return
-        // Only compare when OCR source includes actual OCR data (not just barcode enrichment)
-        val hasOcrSource = roasterField.topCandidate?.sourceTypes?.contains(
-            BagFieldSourceType.OCR,
-        ) == true
-        if (!hasOcrSource) return
-
-        val bTrimmed = barcodeRoaster.trim().lowercase()
-        val oTrimmed = ocrRoaster.trim().lowercase()
-
-        // Match: one contains the other (handles "Rebelbean" vs "Rebelbean s.r.o.")
-        if (bTrimmed.contains(oTrimmed) || oTrimmed.contains(bTrimmed)) {
-            _crossValidationWarning.value = null
-            return
+        _crossValidationWarning.value = if (matches) {
+            null
+        } else {
+            CrossValidationWarning(
+                field = "roaster",
+                barcodeValue = barcode.trim(),
+                ocrValue = ocr.trim(),
+                message = "Barcode suggests '${barcode.trim()}' but label reads " +
+                    "'${ocr.trim()}' — this may be repackaged or imported",
+            )
         }
-
-        // Match: Levenshtein distance ≤ 2 (handles minor OCR typos)
-        if (levenshteinDistance(bTrimmed, oTrimmed) <= 2) {
-            _crossValidationWarning.value = null
-            return
-        }
-
-        // Genuine disagreement — surface warning
-        _crossValidationWarning.value = CrossValidationWarning(
-            field = "roaster",
-            barcodeValue = barcodeRoaster.trim(),
-            ocrValue = ocrRoaster.trim(),
-            message = "Barcode suggests '${barcodeRoaster.trim()}' but label reads " +
-                "'${ocrRoaster.trim()}' — this may be repackaged or imported",
-        )
     }
 
     /**
-     * User chose to resolve the cross-validation warning using the barcode value.
+     * User chose how to resolve the cross-validation warning. `useBarcode = true`
+     * commits the barcode-derived value; `false` commits the OCR/label value.
+     * Use [dismissCrossValidation] when the user wants to ignore the warning
+     * without locking either side.
      */
-    fun resolveCrossValidationWithBarcode() {
+    fun resolveCrossValidation(useBarcode: Boolean) {
         val warning = _crossValidationWarning.value ?: return
-        accumulator?.userResolveField(warning.field, warning.barcodeValue)
-        crossValidationDismissed = true
-        _crossValidationWarning.value = null
-    }
-
-    /**
-     * User chose to resolve the cross-validation warning using the OCR/label value.
-     */
-    fun resolveCrossValidationWithOcr() {
-        val warning = _crossValidationWarning.value ?: return
-        accumulator?.userResolveField(warning.field, warning.ocrValue)
+        val value = if (useBarcode) warning.barcodeValue else warning.ocrValue
+        accumulator?.userResolveField(warning.field, value)
         crossValidationDismissed = true
         _crossValidationWarning.value = null
     }
@@ -989,13 +754,16 @@ class LiveScanViewModel(
     // --- Debug info ---
 
     fun debugInfo(): DebugInfo {
+        val llmState = llmCoordinator.state.value
         return DebugInfo(
             frameIndex = frameIndex,
             goldenFrameCount = _liveScanUiState.value.goldenFrameCount,
             bestGoldenFrameScore = bestGoldenFrameScore,
-            llmCallCount = llmCallCount,
-            lastLlmLatencyMs = lastLlmLatencyMs,
-            llmAvailable = llmProvider.isAvailable(),
+            llmCallCount = lastLlmTelemetry.callCount,
+            lastLlmLatencyMs = lastLlmTelemetry.lastLatencyMs,
+            llmAvailable = llmCoordinator.isAvailable(),
+            llmStatus = llmState.status,
+            llmContributedFieldCount = llmState.contributedFields.size,
         )
     }
 
@@ -1006,6 +774,8 @@ class LiveScanViewModel(
         val llmCallCount: Int,
         val lastLlmLatencyMs: Long?,
         val llmAvailable: Boolean,
+        val llmStatus: LlmUiStatus = LlmUiStatus.IDLE,
+        val llmContributedFieldCount: Int = 0,
     )
 }
 
@@ -1072,4 +842,165 @@ internal fun levenshteinDistance(a: String, b: String): Int {
         curr = tmp
     }
     return prev[b.length]
+}
+
+/**
+ * Forward LLM-derived field candidates to the accumulator's enrichment
+ * pipeline as `LLM`-source enrichment. Pulled out of [LiveScanViewModel]
+ * because it has no dependency on VM state — keeping it top-level shrinks
+ * the class footprint without obscuring the call site.
+ */
+private fun submitLlmCandidates(
+    accumulator: FrameEvidenceAccumulator,
+    candidates: List<com.adsamcik.starlitcoffee.util.BagFieldCandidate>,
+) {
+    if (candidates.isEmpty()) return
+    val values = candidates
+        .associate { it.fieldName to it.value }
+        .filter { it.value.isNotBlank() }
+    if (values.isNotEmpty()) {
+        accumulator.submitEnrichment(
+            fieldValues = values,
+            sourceType = BagFieldSourceType.LLM,
+        )
+    }
+}
+
+/**
+ * Returns the (barcode, OCR) roaster pair when both are present *and* the
+ * OCR side has enough observations + an actual OCR source to be worth
+ * comparing. Bundling these guards keeps `checkCrossValidation` under
+ * detekt's return-count limit without splitting its core decision logic.
+ */
+private fun extractRoasterPair(
+    evidence: AccumulatedEvidence,
+    barcodeRoasterName: String?,
+): Pair<String, String>? {
+    val candidate = evidence.fields["roaster"]?.topCandidate ?: return null
+    val barcode = barcodeRoasterName ?: return null
+    val ocr = candidate.normalizedValue
+    val trustworthy = candidate.observationCount >= 2 &&
+        BagFieldSourceType.OCR in candidate.sourceTypes
+    return if (trustworthy && ocr.isNotBlank()) barcode to ocr else null
+}
+
+/**
+ * Build a `FieldContext` map from the current accumulated evidence, matching
+ * the attribution rules used in [FrameEvidenceAccumulator.buildExistingFieldsMap].
+ *
+ * This is passed to the LLM so the primary-reasoning prompt can trust or
+ * challenge each prior value based on *how* it was obtained. Pure projection
+ * of the evidence object — no VM state — so it lives at file scope.
+ */
+private fun buildExistingFieldsMap(evidence: AccumulatedEvidence): Map<String, FieldContext> {
+    return evidence.fields
+        .filter { it.value.isResolved }
+        .mapValues { (_, field) ->
+            val value = field.resolvedValue
+                ?: field.topCandidate?.normalizedValue
+                ?: ""
+            val source = when {
+                field.status == FieldStatus.USER_LOCKED -> FieldSource.USER
+                field.topCandidate?.sourceTypes?.contains(BagFieldSourceType.LLM) == true ->
+                    FieldSource.LLM
+                field.topCandidate?.sourceTypes?.any {
+                    it == BagFieldSourceType.BARCODE_LOOKUP ||
+                        it == BagFieldSourceType.LOCAL_BARCODE_MATCH ||
+                        it == BagFieldSourceType.QR_LINK_LOOKUP
+                } == true -> FieldSource.LOOKUP
+                else -> FieldSource.OCR
+            }
+            val confidence = field.resolvedEvidence?.confidence?.name
+            FieldContext(value = value, source = source, confidence = confidence)
+        }
+        .filter { it.value.value.isNotBlank() }
+}
+
+/**
+ * Assemble + emit the per-session telemetry: a structured log line, the
+ * `ScanAnalyticsTracker` event, and the `ScanSessionRingBuffer` summary.
+ * Pulled out of [LiveScanViewModel.stop] as a free function — it has many
+ * inputs but no class state of its own, and inlining the whole block kept
+ * `stop()` over detekt's LongMethod threshold.
+ */
+@Suppress("LongParameterList")
+private fun recordScanSessionTelemetry(
+    accumulator: FrameEvidenceAccumulator?,
+    perfTracer: com.adsamcik.starlitcoffee.scan.observability.ScanPerfTracer?,
+    llmSnapshot: LlmTelemetrySnapshot,
+    uiState: LiveScanUiState,
+    bestGoldenFrameScore: Float,
+    sessionId: String,
+    sessionStartMs: Long,
+    appContext: android.content.Context?,
+) {
+    val perfJson = perfTracer?.toJson()
+    val perfStatsSnapshot = perfTracer?.getStats()?.mapValues { (_, stats) ->
+        com.adsamcik.starlitcoffee.scan.observability.PerfStatsSnapshot.from(stats)
+    }
+    val telemetry = accumulator?.buildTelemetry()?.copy(
+        bestGoldenFrameScore = bestGoldenFrameScore,
+        goldenFrameCount = uiState.goldenFrameCount,
+        llmLatencyMs = llmSnapshot.lastLatencyMs,
+        llmSuccess = llmSnapshot.lastSuccess,
+        llmTokensUsed = llmSnapshot.lastTokensUsed,
+        perfStats = perfStatsSnapshot,
+    ) ?: return
+
+    android.util.Log.i("ScanTelemetry", telemetry.toJson())
+
+    val outcome = telemetry.scanOutcome
+    if (outcome == "complete" || outcome == "partial") {
+        ScanAnalyticsTracker.trackScanCompleted(
+            outcome = outcome,
+            durationMs = telemetry.sessionDurationMs,
+            fieldsResolved = telemetry.fieldsResolved,
+            fieldsTotal = telemetry.fieldsTotal,
+        )
+    } else {
+        ScanAnalyticsTracker.trackScanAbandoned(
+            durationMs = telemetry.sessionDurationMs,
+            fieldsResolved = telemetry.fieldsResolved,
+        )
+    }
+
+    val ctx = appContext ?: return
+    val appVersion = readAppVersion(ctx)
+    val summary = ScanSessionSummary(
+        sessionId = sessionId,
+        startedAt = sessionStartMs,
+        endedAt = System.currentTimeMillis(),
+        durationMs = telemetry.sessionDurationMs,
+        outcome = outcome,
+        framesProcessed = telemetry.framesProcessed,
+        framesRejected = telemetry.framesRejected,
+        goldenFrameCount = telemetry.goldenFrameCount,
+        llmFired = telemetry.llmEscalated,
+        llmCallCount = llmSnapshot.callCount,
+        llmLatencyMs = telemetry.llmLatencyMs ?: 0L,
+        llmTokensUsed = telemetry.llmTokensUsed ?: 0,
+        fieldsResolved = telemetry.fieldsResolved,
+        fieldsTotal = telemetry.fieldsTotal,
+        bestGoldenFrameScore = telemetry.bestGoldenFrameScore,
+        failureReason = when {
+            outcome == "cancelled" && telemetry.framesProcessed == 0 -> "no_text"
+            outcome == "cancelled" -> "low_confidence"
+            else -> null
+        },
+        deviceModel = Build.MODEL,
+        appVersion = appVersion,
+        perfJson = perfJson,
+    )
+    ScanSessionRingBuffer.save(ctx, summary)
+}
+
+private fun readAppVersion(ctx: android.content.Context): String {
+    // Boundary catch: PackageManager can throw NameNotFoundException for
+    // pathological install states; "unknown" is the documented fallback.
+    @Suppress("TooGenericExceptionCaught")
+    return try {
+        ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName ?: "unknown"
+    } catch (_: Exception) {
+        "unknown"
+    }
 }

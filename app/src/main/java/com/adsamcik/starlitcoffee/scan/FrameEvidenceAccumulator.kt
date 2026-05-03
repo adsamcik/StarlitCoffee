@@ -55,6 +55,14 @@ import kotlinx.coroutines.launch
  * accumulator.stop()
  * ```
  */
+@Suppress(
+    // The accumulator owns the multi-stage scan pipeline (frame intake,
+    // golden-frame channel, enrichment channel, consensus loop, side
+    // tracking, telemetry). Splitting these would require either passing
+    // the scope/state across multiple objects or a hub-and-spoke that
+    // hurts the linear data flow this single class makes obvious.
+    "TooManyFunctions",
+)
 class FrameEvidenceAccumulator(
     private val config: AccumulatorConfig = AccumulatorConfig.DEFAULT,
     knownValues: KnownFieldValues = KnownFieldValues.EMPTY,
@@ -80,7 +88,6 @@ class FrameEvidenceAccumulator(
     // Side detection state
     private var currentSide: Int = 0
     private var sideCount: Int = 1
-    private var lastPerceptualHash: LongArray? = null
     private var sideFlipPendingSince: Long = 0L
 
     // Counters
@@ -521,11 +528,6 @@ class FrameEvidenceAccumulator(
         val resolvedCount = fields.values.count { it.isResolved }
         val progress = if (totalFields > 0) resolvedCount / totalFields else 0f
 
-        val coreResolved = config.coreFields.count { fieldName ->
-            fields[fieldName]?.isResolved == true ||
-                    fields[fieldName]?.status == FieldStatus.PROVISIONAL
-        }
-
         val isComplete = progress >= config.autoSaveThreshold
 
         _evidence.value = AccumulatedEvidence(
@@ -544,6 +546,14 @@ class FrameEvidenceAccumulator(
         )
     }
 
+    /**
+     * Decide what hint to surface to the user based on current evidence.
+     * Encodes the priority cascade: complete > quality > missing core >
+     * almost done > flip > missing non-core. Each branch returns its own
+     * [ScanGuidance], which is the natural shape for a priority cascade
+     * even though detekt counts each return.
+     */
+    @Suppress("LongMethod", "CyclomaticComplexMethod", "ReturnCount")
     private fun buildGuidance(fields: Map<String, FieldAccumulation>): ScanGuidance? {
         // Priority: scan complete > quality issue > missing core field > almost done > flip > missing non-core
         val resolvedCount = fields.values.count { it.isResolved }
