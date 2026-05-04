@@ -10,7 +10,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
@@ -21,8 +20,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.domain.BloomSpritesheetIds
 import kotlin.math.roundToInt
-import kotlin.random.Random
 
 private const val BloomFrameSizePx = 256
 private const val BloomProgressTweenMillis = 1_000
@@ -95,19 +94,23 @@ val BloomSpritesheetOptions = listOf(
         labelRes = R.string.label_bloom_sprite_jasmine,
         descriptionRes = R.string.desc_bloom_sprite_jasmine,
     ),
-)
+).also { options ->
+    // Guard against the option metadata drifting from the domain ID list:
+    // both must be in lockstep so the picker can return any visible flower.
+    require(options.map { it.id } == BloomSpritesheetIds) {
+        "BloomSpritesheetOptions IDs must match BloomSpritesheetIds"
+    }
+}
 
 @Composable
 fun BloomSpritesheetAnimation(
     bloomCountdownSeconds: Int?,
     bloomDurationSeconds: Int,
+    selectedSpritesheetId: String?,
     isRunning: Boolean = true,
-    spritesheetWeights: Map<String, Int> = emptyMap(),
     modifier: Modifier = Modifier,
 ) {
-    val selectedSpritesheetId = rememberSaveable(spritesheetWeights) {
-        selectWeightedBloomSpritesheetOption(spritesheetWeights)?.id.orEmpty()
-    }
+    if (selectedSpritesheetId.isNullOrEmpty()) return
     val selectedOption = BloomSpritesheetOptions.firstOrNull { it.id == selectedSpritesheetId } ?: return
     val image = ImageBitmap.imageResource(id = selectedOption.drawableRes)
     val contentDescription = stringResource(R.string.cd_bloom_animation)
@@ -203,22 +206,4 @@ private fun resolveBloomProgress(
 
 private fun resolveBloomFrameIndex(progress: Float, frameCount: Int): Int {
     return (progress * (frameCount - 1)).roundToInt().coerceIn(0, frameCount - 1)
-}
-
-private fun selectWeightedBloomSpritesheetOption(
-    spritesheetWeights: Map<String, Int>,
-): BloomSpritesheetOption? {
-    val weightedOptions = BloomSpritesheetOptions.mapNotNull { option ->
-        val weight = spritesheetWeights[option.id]?.coerceIn(0, 2) ?: 1
-        if (weight <= 0) null else option to weight
-    }
-    val totalWeight = weightedOptions.sumOf { (_, weight) -> weight }
-    if (totalWeight <= 0) return null
-
-    var remaining = Random.nextInt(totalWeight)
-    weightedOptions.forEach { (option, weight) ->
-        if (remaining < weight) return option
-        remaining -= weight
-    }
-    return weightedOptions.last().first
 }

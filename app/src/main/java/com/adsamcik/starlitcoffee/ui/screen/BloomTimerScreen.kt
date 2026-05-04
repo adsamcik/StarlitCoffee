@@ -70,6 +70,14 @@ fun BloomTimerScreen(
 
     KeepScreenOn()
 
+    // Pick the bloom spritesheet eagerly once weights are available so the
+    // bud frame shown before bloom starts and the animation that runs during
+    // bloom both reference the same flower. Idempotent — only sets state on
+    // the first call per brew session.
+    LaunchedEffect(bloomSpritesheetWeights) {
+        brewViewModel.selectBloomSpritesheetIfNeeded(bloomSpritesheetWeights)
+    }
+
     // Auto-start timer on first entry
     LaunchedEffect(Unit) {
         if (!state.timerRunning && state.elapsedSeconds == 0) {
@@ -208,7 +216,7 @@ fun BloomTimerScreen(
                     bloomCountdownSeconds = state.bloomCountdownSeconds,
                     bloomDurationSeconds = state.effectiveBloomDurationSeconds,
                     isRunning = state.timerRunning,
-                    spritesheetWeights = bloomSpritesheetWeights,
+                    selectedSpritesheetId = state.bloomSpritesheetId,
                     modifier = Modifier.size(172.dp),
                 )
 

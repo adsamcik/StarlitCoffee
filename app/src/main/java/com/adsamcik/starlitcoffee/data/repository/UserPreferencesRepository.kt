@@ -28,6 +28,10 @@ data class UserPreferences(
     val defaultInputDirection: String = "DOSE",
     val skipMethodSelection: Boolean = false,
     val bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
+    // How many times each spritesheet has been picked for a brew. Used by the
+    // domain selector to bias future picks toward under-shown flowers, so
+    // every flower in the user's allow-list gets fair rotation over many brews.
+    val bloomSpritesheetDisplayCounts: Map<String, Int> = emptyMap(),
 )
 
 class UserPreferencesRepository(private val context: Context) {
@@ -43,6 +47,7 @@ class UserPreferencesRepository(private val context: Context) {
         val DEFAULT_INPUT_DIRECTION = stringPreferencesKey("default_input_direction")
         val SKIP_METHOD_SELECTION = booleanPreferencesKey("skip_method_selection")
         val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
+        val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
     }
 
     val userPreferences: Flow<UserPreferences> = context.dataStore.data
@@ -65,6 +70,9 @@ class UserPreferencesRepository(private val context: Context) {
                 skipMethodSelection = prefs[Keys.SKIP_METHOD_SELECTION] ?: false,
                 bloomSpritesheetWeights = parseBloomSpritesheetWeights(
                     prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS].orEmpty(),
+                ),
+                bloomSpritesheetDisplayCounts = parseBloomSpritesheetDisplayCounts(
+                    prefs[Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS].orEmpty(),
                 ),
             )
         }
@@ -171,6 +179,36 @@ class UserPreferencesRepository(private val context: Context) {
         }
     }
 
+    /**
+     * Atomically increments the display count for [id] by 1. Used by the
+     * brew flow each time a bloom spritesheet is picked, so the domain
+     * selector can rotate flowers fairly over time.
+     */
+    suspend fun incrementBloomSpritesheetDisplayCount(id: String) {
+        if (id.isEmpty()) return
+        context.dataStore.edit { prefs ->
+            val existing = parseBloomSpritesheetDisplayCounts(
+                prefs[Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS].orEmpty(),
+            ).toMutableMap()
+            val nextCount = (existing[id] ?: 0) + 1
+            existing[id] = nextCount
+            prefs[Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS] = existing
+                .filterValues { it > 0 }
+                .map { (k, v) -> "$k=$v" }
+                .toSet()
+        }
+    }
+
+    /**
+     * Clears all spritesheet display counts. Useful from a "reset rotation"
+     * settings affordance, or for tests.
+     */
+    suspend fun resetBloomSpritesheetDisplayCounts() {
+        context.dataStore.edit { prefs ->
+            prefs.remove(Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS)
+        }
+    }
+
     private fun parseBloomSpritesheetWeights(entries: Set<String>): Map<String, Int> {
         return entries.mapNotNull { entry ->
             val separatorIndex = entry.indexOf('=')
@@ -179,6 +217,18 @@ class UserPreferencesRepository(private val context: Context) {
             val id = entry.substring(0, separatorIndex)
             val weight = entry.substring(separatorIndex + 1).toIntOrNull() ?: return@mapNotNull null
             id to weight.coerceIn(0, 2)
+        }.toMap()
+    }
+
+    private fun parseBloomSpritesheetDisplayCounts(entries: Set<String>): Map<String, Int> {
+        return entries.mapNotNull { entry ->
+            val separatorIndex = entry.indexOf('=')
+            if (separatorIndex <= 0 || separatorIndex == entry.lastIndex) return@mapNotNull null
+
+            val id = entry.substring(0, separatorIndex)
+            val count = entry.substring(separatorIndex + 1).toIntOrNull() ?: return@mapNotNull null
+            if (count <= 0) return@mapNotNull null
+            id to count
         }.toMap()
     }
 }

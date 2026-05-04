@@ -47,6 +47,7 @@ import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.service.TimerStateHolder
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
@@ -87,6 +88,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
@@ -141,6 +143,12 @@ data class BrewUiState(
     val bloomMarkedAtSeconds: Int? = null,
     val bloomCountdownSeconds: Int? = null,
     val bloomFinished: Boolean = false,
+    // ID of the bloom spritesheet picked for this brew session. Selected once
+    // when bloom is marked (or eagerly via selectBloomSpritesheetIfNeeded) so
+    // the same flower is shown during bloom and in the post-bloom flash on
+    // BrewTimerScreen — fixes the "final flower differs from the blooming
+    // flower" regression. Cleared by stopTimer / resetBrew / startNewBrewSession.
+    val bloomSpritesheetId: String? = null,
     val minuteAlertEnabled: Boolean = true,
     val showFeedbackSnackbar: Boolean = false,
     // Decaf
@@ -461,6 +469,7 @@ class BrewViewModel(
                 bloomMarkedAtSeconds = null,
                 bloomCountdownSeconds = null,
                 bloomFinished = false,
+                bloomSpritesheetId = null,
             )
         }
         timerJob?.cancel()
@@ -471,6 +480,43 @@ class BrewViewModel(
     fun advancePhase() {
         // Advances the active phase index during guided brewing.
         // Phase list and order are preserved — only the pointer moves.
+    }
+
+    /**
+     * Picks a bloom spritesheet for the current brew session if one hasn't
+     * been picked yet. Idempotent — repeated calls are no-ops once an ID is
+     * set, so screens can safely call this on every recomposition while
+     * weights are loading. Cleared by [stopTimer] / [resetBrew] / [startNewBrewSession].
+     *
+     * The selection is biased toward less-frequently-shown flowers so every
+     * enabled flower gets fair rotation over many brews — see
+     * [pickWeightedBloomSpritesheetId] for the weighting math.
+     */
+    fun selectBloomSpritesheetIfNeeded(weights: Map<String, Int>) {
+        if (_uiState.value.bloomSpritesheetId != null) return
+        viewModelScope.launch {
+            // Re-check after the suspending preferences read in case another
+            // launch raced ahead of us and already claimed the slot.
+            if (_uiState.value.bloomSpritesheetId != null) return@launch
+            val displayCounts = userPreferencesRepository
+                ?.userPreferences
+                ?.first()
+                ?.bloomSpritesheetDisplayCounts
+                ?: emptyMap()
+            if (_uiState.value.bloomSpritesheetId != null) return@launch
+
+            val pickedId = pickWeightedBloomSpritesheetId(weights, displayCounts) ?: return@launch
+            val resolved = _uiState.updateAndGet { current ->
+                if (current.bloomSpritesheetId == null) current.copy(bloomSpritesheetId = pickedId)
+                else current
+            }
+            // Only record the display if our pick is the one that actually
+            // landed in state — if a parallel call won the race we mustn't
+            // double-count its flower or attribute it to the wrong id.
+            if (resolved.bloomSpritesheetId == pickedId) {
+                userPreferencesRepository?.incrementBloomSpritesheetDisplayCount(pickedId)
+            }
+        }
     }
 
     fun markBloom() {

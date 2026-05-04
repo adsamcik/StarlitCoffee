@@ -1926,5 +1926,79 @@ class BrewViewModelTest {
         assertEquals(0, state.elapsedSeconds)
         assertFalse(state.method.hasBloom)
     }
+
+    // --- Bloom Spritesheet Selection ---
+
+    @Test
+    fun `selectBloomSpritesheetIfNeeded picks an id when none is set`() {
+        assertNull(viewModel.uiState.value.bloomSpritesheetId)
+
+        viewModel.selectBloomSpritesheetIfNeeded(emptyMap())
+
+        val picked = viewModel.uiState.value.bloomSpritesheetId
+        assertNotNull(picked)
+        assertTrue(
+            "Picked id $picked must be one of the known bloom spritesheet ids",
+            picked in com.adsamcik.starlitcoffee.domain.BloomSpritesheetIds,
+        )
+    }
+
+    @Test
+    fun `selectBloomSpritesheetIfNeeded is idempotent`() {
+        // Regression: previously each BloomSpritesheetAnimation made its own
+        // random pick, so the animation that ran during bloom and the
+        // post-bloom flash on BrewTimerScreen could disagree. The selection
+        // must lock in once per brew session.
+        viewModel.selectBloomSpritesheetIfNeeded(emptyMap())
+        val firstPick = viewModel.uiState.value.bloomSpritesheetId
+        assertNotNull(firstPick)
+
+        repeat(20) {
+            viewModel.selectBloomSpritesheetIfNeeded(emptyMap())
+            assertEquals(firstPick, viewModel.uiState.value.bloomSpritesheetId)
+        }
+    }
+
+    @Test
+    fun `selectBloomSpritesheetIfNeeded honors disabled weights`() {
+        // Force only one viable id and verify it gets picked.
+        val onlyId = "rose"
+        val weights = com.adsamcik.starlitcoffee.domain.BloomSpritesheetIds
+            .associateWith { id -> if (id == onlyId) 1 else 0 }
+
+        viewModel.selectBloomSpritesheetIfNeeded(weights)
+
+        assertEquals(onlyId, viewModel.uiState.value.bloomSpritesheetId)
+    }
+
+    @Test
+    fun `selectBloomSpritesheetIfNeeded leaves id null when all weights are zero`() {
+        val weights = com.adsamcik.starlitcoffee.domain.BloomSpritesheetIds
+            .associateWith { 0 }
+
+        viewModel.selectBloomSpritesheetIfNeeded(weights)
+
+        assertNull(viewModel.uiState.value.bloomSpritesheetId)
+    }
+
+    @Test
+    fun `stopTimer clears bloom spritesheet id so next brew gets a fresh pick`() {
+        viewModel.selectBloomSpritesheetIfNeeded(emptyMap())
+        assertNotNull(viewModel.uiState.value.bloomSpritesheetId)
+
+        viewModel.stopTimer()
+
+        assertNull(viewModel.uiState.value.bloomSpritesheetId)
+    }
+
+    @Test
+    fun `startNewBrewSession clears bloom spritesheet id`() {
+        viewModel.selectBloomSpritesheetIfNeeded(emptyMap())
+        assertNotNull(viewModel.uiState.value.bloomSpritesheetId)
+
+        viewModel.startNewBrewSession()
+
+        assertNull(viewModel.uiState.value.bloomSpritesheetId)
+    }
 }
 
