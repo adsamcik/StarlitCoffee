@@ -141,14 +141,11 @@
 
     <!-- Calculator Brew Screen -->
     <string name="dialog_brew_ratio_title">Brew Ratio</string>
-    <string name="cd_switch_direction">Switch direction</string>
     <string name="label_water_to_dose">Water → Dose</string>
     <string name="label_dose_to_water">Dose → Water</string>
     <string name="cd_backspace">Backspace</string>
     <string name="action_brew">Start</string>
     <string name="label_total_water">total water</string>
-    <string name="label_bloom_lowercase">bloom</string>
-    <string name="label_remaining">remaining</string>
     <string name="label_grinder">Grinder</string>
     <string name="action_manage_grinders_in_settings">Manage grinders in Settings</string>
 

@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -21,7 +20,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -64,6 +62,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -116,6 +116,22 @@ fun CalculatorBrewScreen(
     val context = LocalContext.current
     val grinders = remember { GrinderDataSource.getInstance(context).grinders }
 
+    // Compact-height adaptation. Reference values (Android `screenHeightDp`):
+    //   - Small phones (5" / Pixel 4a): ~683 dp
+    //   - Standard phones (6.1" / Pixel 7): ~810 dp
+    //   - Large phones (6.7" / Pixel 7 Pro): ~890 dp
+    // We treat anything below ~700 dp as compact and tighten the layout so the
+    // keyboard, preview, and pills all stay reachable without scrolling.
+    val screenHeightDp = LocalConfiguration.current.screenHeightDp
+    val isCompactHeight = screenHeightDp < 700
+    // Reverse adaptation — tall screens (large phones, foldables open) waste
+    // vertical space on the keyboard. Detect them and grow the keys for
+    // better thumb reach. Tablet bracket (>=900dp) is excluded; that's the
+    // domain of WindowSizeClass-based layouts.
+    val isTallHeight = screenHeightDp in 860..899
+    val sectionSpacer = if (isCompactHeight) 6.dp else 12.dp
+    val barSpacer = if (isCompactHeight) 4.dp else 8.dp
+
     val coffeeBags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
     val selectedBag = remember(coffeeBags, selectedBagId) {
@@ -140,10 +156,17 @@ fun CalculatorBrewScreen(
             .fillMaxSize()
             .padding(horizontal = 16.dp),
     ) {
-        // Top section: direction toggle + save favorite
-        TopControlBar(
+        // Combined header: direction toggle + expression (with optional inline
+        // result on compact heights) + save-favorite. Replaces the older
+        // dedicated TopControlBar row, recovering ~48dp of vertical space.
+        ExpressionHeader(
+            tokens = state.tokens,
             direction = state.inputDirection,
             canSaveFavorite = state.hasValidExpression && state.previewDoseG > 0f,
+            showInlineResult = isCompactHeight && state.hasValidExpression,
+            previewDoseG = state.previewDoseG,
+            previewWaterMl = state.previewWaterMl,
+            isCompactHeight = isCompactHeight,
             onToggleDirection = { calculatorViewModel.toggleDirection() },
             onSaveFavorite = {
                 syncCalcDerivedState()
@@ -151,15 +174,7 @@ fun CalculatorBrewScreen(
             },
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Expression display
-        ExpressionDisplay(
-            tokens = state.tokens,
-            modifier = Modifier.fillMaxWidth(),
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(sectionSpacer))
 
         // Scrollable content: preview + config
         Column(
@@ -167,18 +182,23 @@ fun CalculatorBrewScreen(
                 .weight(1f)
                 .verticalScroll(scrollState),
         ) {
-            // Live preview card
-            LivePreviewCard(
-                doseG = state.previewDoseG,
-                waterMl = state.previewWaterMl,
-                direction = state.inputDirection,
-                method = selectedMethod,
-            )
+            // Live preview card — only visible on regular-height screens with
+            // a meaningful expression. On compact heights the inline result
+            // in the expression header replaces this entirely; before the
+            // expression resolves there's nothing useful to show, so we hide
+            // the empty-state placeholder rather than reserving space for it.
+            if (!isCompactHeight && state.hasValidExpression) {
+                LivePreviewCard(
+                    doseG = state.previewDoseG,
+                    waterMl = state.previewWaterMl,
+                    direction = state.inputDirection,
+                )
+            }
 
             // Selected bag indicator — visible reminder that a bag is in play,
             // with one-tap clear so the user can switch to brewing without one.
             selectedBag?.let { bag ->
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(sectionSpacer))
                 InputChip(
                     selected = true,
                     onClick = { brewViewModel.selectBag(null) },
@@ -211,7 +231,7 @@ fun CalculatorBrewScreen(
         // Pills bar — quick-access brew settings above the keyboard, within
         // thumb reach while the user is entering numbers. Replaces the older
         // expandable config card.
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(sectionSpacer))
 
         BrewSettingsPillBar(
             enabledMethods = prefs.enabledMethods.toList(),
@@ -227,11 +247,13 @@ fun CalculatorBrewScreen(
         )
 
         // Calculator keyboard — pinned to bottom, outside scroll
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(barSpacer))
 
         CalculatorKeyboard(
             presets = state.availablePresets,
             hasValidExpression = state.hasValidExpression,
+            isCompactHeight = isCompactHeight,
+            isTallHeight = isTallHeight,
             onDigit = { calculatorViewModel.appendDigit(it) },
             onDecimal = { calculatorViewModel.appendDecimal() },
             onOperator = { calculatorViewModel.appendOperator(it) },
@@ -244,7 +266,7 @@ fun CalculatorBrewScreen(
             },
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(barSpacer))
     }
 
     if (showSaveFavoriteDialog) {
@@ -260,43 +282,63 @@ fun CalculatorBrewScreen(
 }
 
 @Composable
-private fun TopControlBar(
+private fun ExpressionHeader(
+    tokens: List<CalcToken>,
     direction: InputDirection,
     canSaveFavorite: Boolean,
+    showInlineResult: Boolean,
+    previewDoseG: Float,
+    previewWaterMl: Float,
+    isCompactHeight: Boolean,
     onToggleDirection: () -> Unit,
     onSaveFavorite: () -> Unit,
 ) {
+    val toggleDescription = when (direction) {
+        InputDirection.WATER -> stringResource(R.string.label_water_to_dose)
+        InputDirection.DOSE -> stringResource(R.string.label_dose_to_water)
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+            .padding(top = if (isCompactHeight) 4.dp else 8.dp),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        // Direction toggle
-        FilledTonalButton(
+        // Direction toggle — icon only to free horizontal space; the swap
+        // icon is universally recognised and the contentDescription names
+        // the current direction for accessibility.
+        IconButton(
             onClick = onToggleDirection,
+            modifier = Modifier.size(40.dp),
         ) {
             Icon(
                 imageVector = Icons.Filled.SwapHoriz,
-                contentDescription = stringResource(R.string.cd_switch_direction),
-                modifier = Modifier.size(18.dp),
-            )
-            Spacer(modifier = Modifier.width(6.dp))
-            Text(
-                text = when (direction) {
-                    InputDirection.WATER -> stringResource(R.string.label_water_to_dose)
-                    InputDirection.DOSE -> stringResource(R.string.label_dose_to_water)
-                },
-                style = MaterialTheme.typography.labelLarge,
+                contentDescription = toggleDescription,
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
 
-        // Save-as-favorite — ratio moved to the pill bar above the keyboard
+        ExpressionDisplay(
+            tokens = tokens,
+            isCompactHeight = isCompactHeight,
+            inlineResult = if (showInlineResult) {
+                buildInlineResult(
+                    direction = direction,
+                    doseG = previewDoseG,
+                    waterMl = previewWaterMl,
+                )
+            } else {
+                null
+            },
+            modifier = Modifier.weight(1f),
+        )
+
         IconButton(
             onClick = onSaveFavorite,
             enabled = canSaveFavorite,
-            modifier = Modifier.testTag("save_favorite_button"),
+            modifier = Modifier
+                .size(40.dp)
+                .testTag("save_favorite_button"),
         ) {
             Icon(
                 imageVector = Icons.Filled.FavoriteBorder,
@@ -311,23 +353,69 @@ private fun TopControlBar(
     }
 }
 
+/**
+ * Captures the data shown in the compact-height inline result suffix
+ * ("= 💧 340g") so the icon's tint matches the result side without the
+ * caller needing to thread Material colors through.
+ */
+private data class InlineResult(
+    val icon: ImageVector,
+    val value: String,
+    val side: ResultSide,
+)
+
+private enum class ResultSide { COFFEE, WATER }
+
+/**
+ * Picks the inline result side: the user's input direction names the side
+ * they're typing, so the result is always the *other* side.
+ */
+private fun buildInlineResult(
+    direction: InputDirection,
+    doseG: Float,
+    waterMl: Float,
+): InlineResult = when (direction) {
+    InputDirection.DOSE -> InlineResult(
+        icon = Icons.Filled.WaterDrop,
+        value = formatAmount(waterMl),
+        side = ResultSide.WATER,
+    )
+    InputDirection.WATER -> InlineResult(
+        icon = Icons.Filled.LocalCafe,
+        value = formatAmount(doseG),
+        side = ResultSide.COFFEE,
+    )
+}
+
 @Composable
 private fun ExpressionDisplay(
     tokens: List<CalcToken>,
+    isCompactHeight: Boolean,
+    inlineResult: InlineResult? = null,
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
+    val numberStyle = if (isCompactHeight) {
+        MaterialTheme.typography.headlineLarge
+    } else {
+        MaterialTheme.typography.displayMedium
+    }
+    val operatorStyle = if (isCompactHeight) {
+        MaterialTheme.typography.headlineMedium
+    } else {
+        MaterialTheme.typography.displaySmall
+    }
 
     Box(
         modifier = modifier
-            .height(72.dp)
+            .height(if (isCompactHeight) 56.dp else 72.dp)
             .horizontalScroll(scrollState),
         contentAlignment = Alignment.CenterStart,
     ) {
         if (tokens.isEmpty()) {
             Text(
                 text = "0",
-                style = MaterialTheme.typography.displayMedium,
+                style = numberStyle,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
             )
         } else {
@@ -339,12 +427,12 @@ private fun ExpressionDisplay(
                     when (token) {
                         is CalcToken.Number -> Text(
                             text = token.value,
-                            style = MaterialTheme.typography.displayMedium,
+                            style = numberStyle,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
                         is CalcToken.Operator -> Text(
                             text = token.op.symbol,
-                            style = MaterialTheme.typography.displaySmall,
+                            style = operatorStyle,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold,
                         )
@@ -356,11 +444,35 @@ private fun ExpressionDisplay(
                             Icon(
                                 imageVector = icon,
                                 contentDescription = token.preset.name,
-                                modifier = Modifier.size(36.dp),
+                                modifier = Modifier.size(if (isCompactHeight) 28.dp else 36.dp),
                                 tint = tint,
                             )
                         }
                     }
+                }
+
+                inlineResult?.let { result ->
+                    Text(
+                        text = "=",
+                        style = operatorStyle,
+                        color = MaterialTheme.colorScheme.outline,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Icon(
+                        imageVector = result.icon,
+                        contentDescription = null,
+                        tint = when (result.side) {
+                            ResultSide.COFFEE -> MaterialTheme.colorScheme.primary
+                            ResultSide.WATER -> MaterialTheme.colorScheme.secondary
+                        },
+                        modifier = Modifier.size(if (isCompactHeight) 22.dp else 26.dp),
+                    )
+                    Text(
+                        text = result.value,
+                        style = numberStyle,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        fontWeight = FontWeight.Bold,
+                    )
                 }
             }
         }
@@ -372,11 +484,7 @@ private fun LivePreviewCard(
     doseG: Float,
     waterMl: Float,
     direction: InputDirection,
-    method: BrewMethod = BrewMethod.PULSAR,
 ) {
-    val bloomG = if (method.hasBloom && doseG > 0f) doseG * method.bloomMultiplier else 0f
-    val remainingWaterG = if (bloomG > 0f) (waterMl - bloomG).coerceAtLeast(0f) else 0f
-
     ElevatedCard(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
@@ -384,43 +492,19 @@ private fun LivePreviewCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 16.dp),
+                .padding(horizontal = 20.dp, vertical = 14.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            // Coffee dose
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Icon(
-                    imageVector = Icons.Filled.LocalCafe,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(24.dp),
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                AnimatedContent(
-                    targetState = formatAmount(doseG),
-                    transitionSpec = { fadeIn() togetherWith fadeOut() },
-                    label = "dose",
-                ) { dose ->
-                    Text(
-                        text = dose,
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = if (direction == InputDirection.DOSE) {
-                            MaterialTheme.colorScheme.onSurface
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        },
-                    )
-                }
-                Text(
-                    text = stringResource(R.string.label_coffee),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+            // Coffee dose — single-line: icon + value.
+            PreviewValueInline(
+                icon = Icons.Filled.LocalCafe,
+                value = formatAmount(doseG),
+                tint = MaterialTheme.colorScheme.primary,
+                emphasised = direction == InputDirection.DOSE,
+                contentDescription = stringResource(R.string.label_coffee),
+            )
 
-            // Arrow
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                 contentDescription = null,
@@ -428,74 +512,51 @@ private fun LivePreviewCard(
                 modifier = Modifier.size(20.dp),
             )
 
-            // Water
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Icon(
-                    imageVector = Icons.Filled.WaterDrop,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.size(24.dp),
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                AnimatedContent(
-                    targetState = formatAmount(waterMl),
-                    transitionSpec = { fadeIn() togetherWith fadeOut() },
-                    label = "water",
-                ) { water ->
-                    Text(
-                        text = water,
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = if (direction == InputDirection.WATER) {
-                            MaterialTheme.colorScheme.onSurface
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        },
-                    )
-                }
-                Text(
-                    text = stringResource(R.string.label_total_water),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+            // Total water — single-line: icon + value.
+            PreviewValueInline(
+                icon = Icons.Filled.WaterDrop,
+                value = formatAmount(waterMl),
+                tint = MaterialTheme.colorScheme.secondary,
+                emphasised = direction == InputDirection.WATER,
+                contentDescription = stringResource(R.string.label_total_water),
+            )
         }
+    }
+}
 
-        // Bloom + remaining water breakdown (only for methods with bloom)
-        AnimatedVisibility(visible = bloomG > 0f && waterMl > 0f) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp, bottom = 14.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = formatAmount(bloomG),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.tertiary,
-                    )
-                    Text(
-                        text = stringResource(R.string.label_bloom_lowercase),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = formatAmount(remainingWaterG),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                    Text(
-                        text = stringResource(R.string.label_remaining),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
+@Composable
+private fun PreviewValueInline(
+    icon: ImageVector,
+    value: String,
+    tint: Color,
+    emphasised: Boolean,
+    contentDescription: String,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = contentDescription,
+            tint = tint,
+            modifier = Modifier.size(22.dp),
+        )
+        AnimatedContent(
+            targetState = value,
+            transitionSpec = { fadeIn() togetherWith fadeOut() },
+            label = "preview_$contentDescription",
+        ) { displayed ->
+            Text(
+                text = displayed,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = if (emphasised) {
+                    MaterialTheme.colorScheme.onSurface
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+            )
         }
     }
 }
@@ -726,6 +787,8 @@ private fun PillDropdown(
 private fun CalculatorKeyboard(
     presets: List<CupPreset>,
     hasValidExpression: Boolean,
+    isCompactHeight: Boolean,
+    isTallHeight: Boolean,
     onDigit: (Char) -> Unit,
     onDecimal: () -> Unit,
     onOperator: (CalcOp) -> Unit,
@@ -734,13 +797,24 @@ private fun CalculatorKeyboard(
     onClear: () -> Unit,
     onBrew: () -> Unit,
 ) {
+    val rowSpacing = if (isCompactHeight) 6.dp else 8.dp
+    val presetRowHeight = if (isCompactHeight) 44.dp else 48.dp
+    // Tall phones (e.g. Pixel 7 Pro, Galaxy S24 Ultra in portrait) leave too
+    // much empty space above the keyboard with the standard 56dp keys, so
+    // grow them for easier thumb reach. Compact wins over tall when both
+    // somehow apply.
+    val keyHeight = when {
+        isCompactHeight -> 48.dp
+        isTallHeight -> 64.dp
+        else -> 56.dp
+    }
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(rowSpacing),
     ) {
         // Row 1: Preset buttons + backspace
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(rowSpacing),
         ) {
             val schemeContainers = listOf(
                 MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer,
@@ -755,7 +829,7 @@ private fun CalculatorKeyboard(
                     onClick = { onPreset(preset) },
                     modifier = Modifier
                         .weight(1f)
-                        .height(48.dp),
+                        .height(presetRowHeight),
                     colors = if (customColor != null) {
                         val contentColor = if (customColor.luminance() > 0.5f) Color.Black else Color.White
                         IconButtonDefaults.filledTonalIconButtonColors(
@@ -786,7 +860,7 @@ private fun CalculatorKeyboard(
                 onClick = onBackspace,
                 modifier = Modifier
                     .weight(1f)
-                    .height(48.dp),
+                    .height(presetRowHeight),
             ) {
                 Icon(
                     imageVector = Icons.Filled.Backspace,
@@ -797,16 +871,17 @@ private fun CalculatorKeyboard(
         }
 
         // Visual breath between the preset/utility row and the calculation rows.
-        Spacer(modifier = Modifier.height(2.dp))
+        if (!isCompactHeight) {
+            Spacer(modifier = Modifier.height(2.dp))
+        }
 
-        // Rows 2-5: Number pad + operators + brew button
-        // Layout: 3 number columns + 1 action column
-        val keyHeight = 56.dp
+        // Rows 2-5: Number pad + operators + brew button.
+        // Layout: 3 number columns + 1 action column.
 
         // Row 2: 7 8 9 ×
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(rowSpacing),
         ) {
             CalcKey("7", Modifier.weight(1f).height(keyHeight)) { onDigit('7') }
             CalcKey("8", Modifier.weight(1f).height(keyHeight)) { onDigit('8') }
@@ -817,7 +892,7 @@ private fun CalculatorKeyboard(
         // Row 3: 4 5 6 +
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(rowSpacing),
         ) {
             CalcKey("4", Modifier.weight(1f).height(keyHeight)) { onDigit('4') }
             CalcKey("5", Modifier.weight(1f).height(keyHeight)) { onDigit('5') }
@@ -828,7 +903,7 @@ private fun CalculatorKeyboard(
         // Row 4: 1 2 3 [Brew top half]
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(rowSpacing),
         ) {
             CalcKey("1", Modifier.weight(1f).height(keyHeight)) { onDigit('1') }
             CalcKey("2", Modifier.weight(1f).height(keyHeight)) { onDigit('2') }
@@ -843,7 +918,7 @@ private fun CalculatorKeyboard(
         // Row 5: 0 (wide) . C
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(rowSpacing),
         ) {
             CalcKey("0", Modifier.weight(2f).height(keyHeight)) { onDigit('0') }
             CalcKey(".", Modifier.weight(1f).height(keyHeight)) { onDecimal() }

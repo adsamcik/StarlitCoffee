@@ -364,7 +364,6 @@
     <string name="cd_ratio">Poměr 1 ku %1$s</string>
     <string name="cd_backspace">Smazat</string>
     <string name="cd_clear_bag">Zrušit výběr balení</string>
-    <string name="cd_switch_direction">Přepnout směr</string>
     <string name="cd_expand_advanced">Rozbalit pokročilé možnosti</string>
     <string name="cd_collapse_advanced">Sbalit pokročilé možnosti</string>
     <string name="format_coffee_dose_cd">Dávka kávy: %1$d gramů</string>
@@ -375,8 +374,6 @@
     <string name="label_water_to_dose">Voda → Dávka</string>
     <string name="label_dose_to_water">Dávka → Voda</string>
     <string name="label_total_water">celkem vody</string>
-    <string name="label_bloom_lowercase">bloom</string>
-    <string name="label_remaining">zbývá</string>
     <string name="label_advanced_options">Pokročilé možnosti</string>
     <string name="label_grinder">Mlýnek</string>
     <string name="action_manage_grinders_in_settings">Spravovat mlýnky v Nastavení</string>
