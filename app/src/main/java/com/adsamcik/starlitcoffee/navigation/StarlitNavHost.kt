@@ -272,10 +272,7 @@ fun StarlitNavHost() {
                             popUpTo(GrindPrep) { inclusive = true }
                         }
                     },
-                    onBack = {
-                        brewViewModel.pauseTimer()
-                        navController.popBackStack()
-                    },
+                    onBack = { navController.popBackStack() },
                 )
             }
             composable<BrewTimer> {

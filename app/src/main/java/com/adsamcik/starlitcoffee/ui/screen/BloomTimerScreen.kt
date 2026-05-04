@@ -36,7 +36,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,6 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
+import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -140,10 +143,34 @@ fun BloomTimerScreen(
         }
     }
 
-    BackHandler {
-        brewViewModel.pauseTimer()
+    // Exit confirmation — leaving an active brew throws away progress, so
+    // back/close prompts the user. Confirming resets timer/bloom state via
+    // stopTimer() so re-entering starts from a clean slate.
+    var showExitDialog by remember { mutableStateOf(false) }
+    val hasBrewProgress = state.timerRunning ||
+        state.elapsedSeconds > 0 ||
+        state.bloomMarkedAtSeconds != null
+    val requestExit: () -> Unit = {
+        if (hasBrewProgress) {
+            showExitDialog = true
+        } else {
+            brewViewModel.stopTimer()
+            onBack()
+        }
+    }
+    val confirmExit: () -> Unit = {
+        showExitDialog = false
+        brewViewModel.stopTimer()
         onBack()
     }
+    if (showExitDialog) {
+        ExitBrewConfirmationDialog(
+            onConfirm = confirmExit,
+            onDismiss = { showExitDialog = false },
+        )
+    }
+
+    BackHandler(onBack = requestExit)
 
     // Minute-boundary haptic + tone
     val currentMinute = state.elapsedSeconds / 60
@@ -194,7 +221,7 @@ fun BloomTimerScreen(
                         ),
                     )
                 }
-                IconButton(onClick = { brewViewModel.pauseTimer(); onBack() }) {
+                IconButton(onClick = requestExit) {
                     Icon(
                         imageVector = Icons.Filled.Close,
                         contentDescription = stringResource(R.string.action_close),

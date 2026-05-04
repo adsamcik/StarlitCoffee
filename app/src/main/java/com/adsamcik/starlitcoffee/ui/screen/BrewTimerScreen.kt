@@ -64,6 +64,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
+import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -103,10 +104,37 @@ fun BrewTimerScreen(
         }
     }
 
-    BackHandler {
-        brewViewModel.pauseTimer()
+    // Exit confirmation — leaving an active brew throws away progress, so
+    // back/close prompts the user. If nothing has happened yet (timer not
+    // started, no bloom marked) we exit silently. Confirming the dialog
+    // resets timer/bloom state via stopTimer() so re-entering the brew flow
+    // (e.g. via GrindPrep -> BrewTimer without going through CalculatorBrew)
+    // starts from a clean slate.
+    var showExitDialog by remember { mutableStateOf(false) }
+    val hasBrewProgress = state.timerRunning ||
+        state.elapsedSeconds > 0 ||
+        state.bloomMarkedAtSeconds != null
+    val requestExit: () -> Unit = {
+        if (hasBrewProgress) {
+            showExitDialog = true
+        } else {
+            brewViewModel.stopTimer()
+            onBack()
+        }
+    }
+    val confirmExit: () -> Unit = {
+        showExitDialog = false
+        brewViewModel.stopTimer()
         onBack()
     }
+    if (showExitDialog) {
+        ExitBrewConfirmationDialog(
+            onConfirm = confirmExit,
+            onDismiss = { showExitDialog = false },
+        )
+    }
+
+    BackHandler(onBack = requestExit)
 
     // Minute-boundary haptic + tone (only fires when NOT in bloom countdown — bloom has its own alerts)
     val currentMinute = state.elapsedSeconds / 60
@@ -216,12 +244,12 @@ fun BrewTimerScreen(
                     )
                 }
                 IconButton(
-                    onClick = { brewViewModel.pauseTimer(); onBack() },
+                    onClick = requestExit,
                     modifier = Modifier.size(48.dp),
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Close,
-                        contentDescription = "Close",
+                        contentDescription = stringResource(R.string.action_close),
                         modifier = Modifier.size(24.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                     )

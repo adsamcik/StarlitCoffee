@@ -134,6 +134,9 @@
     <string name="label_bloom_badge">🌱 Bloom</string>
     <string name="action_finish_brew">Dokončit přípravu</string>
     <string name="instruction_bloom_steps">Otevřete ventil · Nalijte vodu · Zavřete ventil</string>
+    <string name="dialog_exit_brew_title">Ukončit přípravu?</string>
+    <string name="dialog_exit_brew_message">Aktuální průběh přípravy bude ztracen.</string>
+    <string name="action_exit_brew">Ukončit</string>
 
     <!-- Calculator Brew Screen -->
     <string name="dialog_brew_ratio_title">Poměr přípravy</string>

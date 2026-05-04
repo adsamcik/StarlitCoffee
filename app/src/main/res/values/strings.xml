@@ -135,6 +135,9 @@
     <string name="label_bloom_badge">🌱 Bloom</string>
     <string name="action_finish_brew">Finish Brew</string>
     <string name="instruction_bloom_steps">Open valve · Pour bloom water · Close valve</string>
+    <string name="dialog_exit_brew_title">Exit brew?</string>
+    <string name="dialog_exit_brew_message">Your current brew progress will be lost.</string>
+    <string name="action_exit_brew">Exit</string>
 
     <!-- Calculator Brew Screen -->
     <string name="dialog_brew_ratio_title">Brew Ratio</string>
