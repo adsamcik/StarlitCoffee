@@ -45,6 +45,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -95,8 +96,11 @@ fun SettingsScreen(
         initialValue = com.adsamcik.starlitcoffee.data.repository.UserPreferences(),
     )
     val cupPresets by cupPresetRepository.presets.collectAsStateWithLifecycle(initialValue = emptyList())
-    var showAddPresetDialog by remember { mutableStateOf(false) }
-    var editingPreset by remember { mutableStateOf<CupPreset?>(null) }
+    var showAddPresetDialog by rememberSaveable { mutableStateOf(false) }
+    // Save only the preset id across config changes; re-derive the full preset from the
+    // current `cupPresets` list. Storing the data class directly would require Parcelable.
+    var editingPresetId by rememberSaveable { mutableStateOf<Long?>(null) }
+    val editingPreset = editingPresetId?.let { id -> cupPresets.find { it.id == id } }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
@@ -164,7 +168,7 @@ fun SettingsScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { editingPreset = preset }
+                                .clickable { editingPresetId = preset.id }
                                 .padding(vertical = 4.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalAlignment = Alignment.CenterVertically,
@@ -202,7 +206,7 @@ fun SettingsScreen(
                                 )
                             }
                             IconButton(
-                                onClick = { editingPreset = preset },
+                                onClick = { editingPresetId = preset.id },
                                 modifier = Modifier.size(48.dp),
                             ) {
                                 Icon(
@@ -525,17 +529,17 @@ fun SettingsScreen(
     editingPreset?.let { preset ->
         EditPresetDialog(
             preset = preset,
-            onDismiss = { editingPreset = null },
+            onDismiss = { editingPresetId = null },
             onSave = { updated ->
                 scope.launch {
                     cupPresetRepository.updatePreset(updated)
-                    editingPreset = null
+                    editingPresetId = null
                 }
             },
             onDelete = {
                 scope.launch {
                     cupPresetRepository.deletePreset(preset)
-                    editingPreset = null
+                    editingPresetId = null
                 }
             },
         )
@@ -547,10 +551,10 @@ private fun AddPresetDialog(
     onDismiss: () -> Unit,
     onAdd: (name: String, waterMl: Float, iconName: String, colorHex: String?) -> Unit,
 ) {
-    var name by remember { mutableStateOf("") }
-    var waterMl by remember { mutableStateOf("") }
-    var selectedIcon by remember { mutableStateOf("mug") }
-    var selectedColor by remember { mutableStateOf<String?>(null) }
+    var name by rememberSaveable { mutableStateOf("") }
+    var waterMl by rememberSaveable { mutableStateOf("") }
+    var selectedIcon by rememberSaveable { mutableStateOf("mug") }
+    var selectedColor by rememberSaveable { mutableStateOf<String?>(null) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -604,10 +608,10 @@ private fun EditPresetDialog(
     onSave: (CupPreset) -> Unit,
     onDelete: (() -> Unit)? = null,
 ) {
-    var name by remember { mutableStateOf(preset.name) }
-    var waterMl by remember { mutableStateOf(preset.waterMl.toInt().toString()) }
-    var selectedIcon by remember { mutableStateOf(preset.iconName) }
-    var selectedColor by remember { mutableStateOf(preset.colorHex) }
+    var name by rememberSaveable(preset.id) { mutableStateOf(preset.name) }
+    var waterMl by rememberSaveable(preset.id) { mutableStateOf(preset.waterMl.toInt().toString()) }
+    var selectedIcon by rememberSaveable(preset.id) { mutableStateOf(preset.iconName) }
+    var selectedColor by rememberSaveable(preset.id) { mutableStateOf(preset.colorHex) }
 
     AlertDialog(
         onDismissRequest = onDismiss,

@@ -24,10 +24,13 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -91,6 +94,34 @@ private val bottomBarRoutes = setOf(
     More::class,
 )
 
+private const val TRANSITION_DURATION = 300
+private const val FADE_DURATION = 200
+
+private val BrewMethodSetStateSaver: Saver<MutableState<Set<BrewMethod>>, ArrayList<String>> = Saver(
+    save = { state -> ArrayList(state.value.map { it.name }) },
+    restore = { list ->
+        mutableStateOf(
+            list.mapNotNull { runCatching { BrewMethod.valueOf(it) }.getOrNull() }.toSet(),
+        )
+    },
+)
+
+private val BrewMethodStateSaver: Saver<MutableState<BrewMethod>, String> = Saver(
+    save = { it.value.name },
+    restore = { name ->
+        runCatching { BrewMethod.valueOf(name) }.getOrNull()?.let { mutableStateOf(it) }
+    },
+)
+
+private val NullableFilterTypeStateSaver: Saver<MutableState<FilterType?>, String> = Saver(
+    save = { it.value?.name ?: "" },
+    restore = { name ->
+        mutableStateOf(
+            if (name.isEmpty()) null else runCatching { FilterType.valueOf(name) }.getOrNull(),
+        )
+    },
+)
+
 @Composable
 fun StarlitNavHost() {
     val navController = rememberNavController()
@@ -112,29 +143,21 @@ fun StarlitNavHost() {
     )
 
     // Track onboarding state for methods screen → personalize screen
-    val onboardingMethods = remember { mutableStateOf(emptySet<BrewMethod>()) }
-    val onboardingDefault = remember { mutableStateOf(BrewMethod.PULSAR) }
-    val onboardingFilter = remember { mutableStateOf<FilterType?>(null) }
-    val onboardingGrinder = remember { mutableStateOf<String?>(null) }
+    val onboardingMethods = rememberSaveable(saver = BrewMethodSetStateSaver) {
+        mutableStateOf(emptySet<BrewMethod>())
+    }
+    val onboardingDefault = rememberSaveable(saver = BrewMethodStateSaver) {
+        mutableStateOf(BrewMethod.PULSAR)
+    }
+    val onboardingFilter = rememberSaveable(saver = NullableFilterTypeStateSaver) {
+        mutableStateOf<FilterType?>(null)
+    }
+    val onboardingGrinder = rememberSaveable { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
 
     val showBottomBar = currentDestination?.let { dest ->
         bottomBarRoutes.any { dest.hasRoute(it) }
     } ?: false
-
-    // Handle rating reminder from notification tap
-    val activity = LocalContext.current as? com.adsamcik.starlitcoffee.MainActivity
-    val pendingRatingId = activity?.pendingRatingBrewId
-    if (pendingRatingId != null) {
-        com.adsamcik.starlitcoffee.ui.component.BrewRatingSheet(
-            onDismiss = { activity.clearPendingRating() },
-            onSave = { rating, descriptors, notes ->
-                brewViewModel.saveRatingForLog(pendingRatingId, rating, descriptors, notes)
-                com.adsamcik.starlitcoffee.service.RatingReminderWorker.cancel(context, pendingRatingId)
-                activity.clearPendingRating()
-            },
-        )
-    }
 
     // Wait for prefs to load before rendering
     val prefs = userPrefs

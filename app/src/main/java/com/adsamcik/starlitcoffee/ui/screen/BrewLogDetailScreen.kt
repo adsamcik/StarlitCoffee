@@ -31,10 +31,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,6 +66,15 @@ import java.util.Locale
 
 private const val TAG = "BrewLogDetailScreen"
 
+private val FlavorDescriptorSetSaver: Saver<MutableState<Set<FlavorDescriptor>>, ArrayList<String>> = Saver(
+    save = { state -> ArrayList(state.value.map { it.name }) },
+    restore = { list ->
+        mutableStateOf(
+            list.mapNotNull { runCatching { FlavorDescriptor.valueOf(it) }.getOrNull() }.toSet(),
+        )
+    },
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BrewLogDetailScreen(
@@ -77,13 +89,21 @@ fun BrewLogDetailScreen(
     var isLoading by remember { mutableStateOf(true) }
     var showSavedConfirmation by remember { mutableStateOf(false) }
 
-    // Editable state
-    var rating by remember { mutableFloatStateOf(0f) }
-    var selectedDescriptors by remember { mutableStateOf(emptySet<FlavorDescriptor>()) }
-    var notes by remember { mutableStateOf("") }
-    var showDeleteDialog by remember { mutableStateOf(false) }
+    // Editable state — survives rotation, dark-mode toggle, multi-window resize, process death.
+    var rating by rememberSaveable { mutableFloatStateOf(0f) }
+    var selectedDescriptors by rememberSaveable(saver = FlavorDescriptorSetSaver) {
+        mutableStateOf(emptySet<FlavorDescriptor>())
+    }
+    var notes by rememberSaveable { mutableStateOf("") }
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
 
-    // Track whether user has made changes
+    // Track whether the editable state has been seeded from the loaded entity / flavor tags.
+    // Saved across config changes so the entity-load LaunchedEffect doesn't overwrite restored
+    // user edits after a rotation.
+    var hasSeededRatingNotes by rememberSaveable { mutableStateOf(false) }
+    var hasSeededDescriptors by rememberSaveable { mutableStateOf(false) }
+
+    // Initial values are derived from the loaded entity (transient — re-derived on each composition).
     var initialRating by remember { mutableFloatStateOf(0f) }
     var initialDescriptors by remember { mutableStateOf(emptySet<FlavorDescriptor>()) }
     var initialNotes by remember { mutableStateOf("") }
@@ -115,10 +135,16 @@ fun BrewLogDetailScreen(
         val entity = brewViewModel.getBrewLogById(logId)
         log = entity
         if (entity != null) {
-            rating = entity.rating ?: 0f
+            // Always sync `initial*` so hasChanges is computed against the persisted state.
             initialRating = entity.rating ?: 0f
-            notes = entity.freeformNotes ?: ""
             initialNotes = entity.freeformNotes ?: ""
+            // Only seed editable state on first load, not after rotation (where user edits
+            // were just restored by rememberSaveable).
+            if (!hasSeededRatingNotes) {
+                rating = entity.rating ?: 0f
+                notes = entity.freeformNotes ?: ""
+                hasSeededRatingNotes = true
+            }
         }
         isLoading = false
     }
@@ -130,14 +156,35 @@ fun BrewLogDetailScreen(
 
     // Sync initial flavor tags once loaded
     LaunchedEffect(flavorTags) {
-        if (flavorTags.isNotEmpty() && initialDescriptors.isEmpty()) {
+        if (flavorTags.isNotEmpty()) {
             val descriptors = flavorTags.mapNotNull { tag ->
                 FlavorDescriptor.entries.find { it.displayName == tag.descriptor }
             }.toSet()
-            selectedDescriptors = descriptors
             initialDescriptors = descriptors
+            if (!hasSeededDescriptors) {
+                selectedDescriptors = descriptors
+                hasSeededDescriptors = true
+            }
         }
     }
+
+    // Persist edits when leaving the screen via system back or toolbar back. This makes the
+    // explicit Save button optional — Back-press can no longer silently discard rating/chip/
+    // notes edits.
+    val saveAndExit = {
+        val entity = log
+        if (hasChanges && entity != null) {
+            brewViewModel.updateBrewLogFeedback(
+                logId = logId,
+                rating = rating.takeIf { it > 0f },
+                notes = notes,
+                tasteFeedback = entity.tasteFeedback,
+                descriptors = selectedDescriptors.map { it.displayName },
+            )
+        }
+        onBack()
+    }
+    BackHandler(onBack = saveAndExit)
 
     if (showDeleteDialog) {
         AlertDialog(

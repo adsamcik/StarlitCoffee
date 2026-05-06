@@ -50,13 +50,17 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
 import androidx.compose.ui.Alignment
@@ -94,7 +98,56 @@ import com.adsamcik.starlitcoffee.util.WeightParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URL
-import java.util.Locale
+
+private const val QR_METADATA_FIELD_COUNT = 13
+
+// QrCoffeeMetadata is a flat data class of primitives. Save it as a list so the QR-explored
+// metadata survives rotation / dark-mode / process death. The data class is not Parcelable
+// and the project does not enable kotlin-parcelize, so a custom Saver is required.
+private val QrCoffeeMetadataSaver: Saver<QrCoffeeMetadata?, ArrayList<Any?>> = Saver(
+    save = { meta ->
+        if (meta == null) {
+            arrayListOf<Any?>()
+        } else {
+            arrayListOf<Any?>(
+                meta.sourceUrl,
+                meta.finalUrl,
+                meta.host,
+                meta.pageTitle,
+                meta.pageDescription,
+                meta.name,
+                meta.roaster,
+                meta.origin,
+                meta.region,
+                meta.processType,
+                meta.tastingNotes,
+                meta.isDecaf,
+                meta.supportingSnippet,
+            )
+        }
+    },
+    restore = { list ->
+        if (list.size < QR_METADATA_FIELD_COUNT) {
+            null
+        } else {
+            QrCoffeeMetadata(
+                sourceUrl = list[0] as String,
+                finalUrl = list[1] as String,
+                host = list[2] as String,
+                pageTitle = list[3] as String?,
+                pageDescription = list[4] as String?,
+                name = list[5] as String?,
+                roaster = list[6] as String?,
+                origin = list[7] as String?,
+                region = list[8] as String?,
+                processType = list[9] as String?,
+                tastingNotes = list[10] as String?,
+                isDecaf = list[11] as Boolean?,
+                supportingSnippet = list[12] as String?,
+            )
+        }
+    },
+)
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -135,8 +188,7 @@ fun AddBagSheet(
     onRetryLlmEnrichment: (() -> Unit)? = null,
 ) {
     val uriHandler = LocalUriHandler.current
-    val configuration = LocalConfiguration.current
-    val locale = configuration.locales[0] ?: Locale.getDefault()
+    val locale = LocalLocale.current.platformLocale
     val localizedExistingMetadata = remember(existingBags, locale) {
         existingBags.associateWith { bag -> CoffeeMetadataNormalizer.resolveBagMetadata(bag, locale) }
     }
@@ -171,57 +223,63 @@ fun AddBagSheet(
     }
 
     val isEditMode = bagToEdit != null
-    var name by remember(ocrPrefill, initialName, bagToEdit) {
+    var name by rememberSaveable(ocrPrefill, initialName, bagToEdit) {
         mutableStateOf(bagToEdit?.name ?: ocrPrefill?.name ?: initialName ?: "")
     }
-    var roaster by remember(ocrPrefill, initialRoaster, bagToEdit) {
+    var roaster by rememberSaveable(ocrPrefill, initialRoaster, bagToEdit) {
         mutableStateOf(bagToEdit?.roaster ?: ocrPrefill?.roaster ?: initialRoaster ?: "")
     }
-    var originCountry by remember(ocrPrefill, editBagMetadata) {
+    var originCountry by rememberSaveable(ocrPrefill, editBagMetadata) {
         mutableStateOf(editBagMetadata?.origin ?: ocrPrefill?.origin ?: "")
     }
-    var originRegion by remember(ocrPrefill, editBagMetadata) {
+    var originRegion by rememberSaveable(ocrPrefill, editBagMetadata) {
         mutableStateOf(editBagMetadata?.region ?: ocrPrefill?.region ?: "")
     }
-    var roastLevel by remember(ocrPrefill, editBagMetadata) {
+    var roastLevel by rememberSaveable(ocrPrefill, editBagMetadata) {
         mutableStateOf(editBagMetadata?.roastLevel ?: ocrPrefill?.roastLevel ?: "")
     }
-    var variety by remember(ocrPrefill, editBagMetadata) {
+    var variety by rememberSaveable(ocrPrefill, editBagMetadata) {
         mutableStateOf(editBagMetadata?.variety ?: ocrPrefill?.variety ?: "")
     }
-    var processType by remember(ocrPrefill, editBagMetadata) {
+    var processType by rememberSaveable(ocrPrefill, editBagMetadata) {
         mutableStateOf(editBagMetadata?.processType ?: ocrPrefill?.processType ?: "")
     }
-    var tastingNotes by remember(ocrPrefill, editBagMetadata) {
+    var tastingNotes by rememberSaveable(ocrPrefill, editBagMetadata) {
         mutableStateOf(editBagMetadata?.tastingNotes ?: ocrPrefill?.tastingNotes ?: "")
     }
-    var barcode by remember(initialBarcode, bagToEdit) {
+    var barcode by rememberSaveable(initialBarcode, bagToEdit) {
         mutableStateOf(bagToEdit?.barcode ?: initialBarcode.orEmpty())
     }
-    var weight by remember(ocrPrefill, bagToEdit) {
+    var weight by rememberSaveable(ocrPrefill, bagToEdit) {
         mutableStateOf(bagToEdit?.weightG?.let { "%.0f".format(it) } ?: ocrPrefill?.weight ?: "")
     }
-    var notes by remember(bagToEdit) { mutableStateOf(bagToEdit?.notes ?: "") }
-    var isDecaf by remember(ocrPrefill, bagToEdit) {
+    var notes by rememberSaveable(bagToEdit) { mutableStateOf(bagToEdit?.notes ?: "") }
+    var isDecaf by rememberSaveable(ocrPrefill, bagToEdit) {
         mutableStateOf(bagToEdit?.isDecaf ?: ocrPrefill?.isDecaf ?: false)
     }
-    var decafProcess by remember(bagToEdit) {
+    var decafProcess by rememberSaveable(bagToEdit) {
         mutableStateOf(bagToEdit?.decafProcess)
     }
-    var roastDateMillis by remember(ocrPrefill, bagToEdit) {
+    var roastDateMillis by rememberSaveable(ocrPrefill, bagToEdit) {
         mutableStateOf(bagToEdit?.roastDate ?: ocrPrefill?.roastDate?.let { DateParser.parse(it) })
     }
-    var expiryDateMillis by remember(ocrPrefill, bagToEdit) {
+    var expiryDateMillis by rememberSaveable(ocrPrefill, bagToEdit) {
         mutableStateOf(bagToEdit?.expiryDate ?: ocrPrefill?.expiryDate?.let { DateParser.parse(it) })
     }
-    var showMoreDetails by remember(isProcessing, bagToEdit) { mutableStateOf(isEditMode || !isProcessing) }
-    var selectedEvidenceField by remember(fieldEvidence) { mutableStateOf(fieldEvidence.keys.firstOrNull()) }
-    var snapApproveMode by remember(ocrPrefill, isProcessing, bagToEdit) {
+    var showMoreDetails by rememberSaveable(isProcessing, bagToEdit) { mutableStateOf(isEditMode || !isProcessing) }
+    var selectedEvidenceField by rememberSaveable(fieldEvidence) { mutableStateOf(fieldEvidence.keys.firstOrNull()) }
+    var snapApproveMode by rememberSaveable(ocrPrefill, isProcessing, bagToEdit) {
         mutableStateOf(ocrPrefill != null && !isProcessing && bagToEdit == null)
     }
-    var pendingScrollField by remember { mutableStateOf<String?>(null) }
+    var pendingScrollField by rememberSaveable { mutableStateOf<String?>(null) }
+    // Transient: tracks an in-flight async QR exploration. Intentionally not saved across
+    // config changes — the explore callback closure would still target the disposed composable's
+    // setters, so persisting `true` could leave the loading indicator stuck. Re-trigger on
+    // rotation if needed.
     var isExploringQr by remember { mutableStateOf(false) }
-    var qrExploredMetadata by remember { mutableStateOf<QrCoffeeMetadata?>(null) }
+    var qrExploredMetadata by rememberSaveable(stateSaver = QrCoffeeMetadataSaver) {
+        mutableStateOf<QrCoffeeMetadata?>(null)
+    }
     val listState = rememberLazyListState()
 
     LaunchedEffect(fieldEvidence) {
@@ -578,7 +636,7 @@ fun AddBagSheet(
                         )
                     }
                     item {
-                        var showRoastDatePicker by remember { mutableStateOf(false) }
+                        var showRoastDatePicker by rememberSaveable { mutableStateOf(false) }
 
                         OutlinedTextField(
                             value = roastDateMillis?.let { DateParser.format(it) } ?: "",
@@ -740,7 +798,7 @@ fun AddBagSheet(
                             )
                         }
                         item {
-                            var showExpiryDatePicker by remember { mutableStateOf(false) }
+                            var showExpiryDatePicker by rememberSaveable { mutableStateOf(false) }
 
                             OutlinedTextField(
                                 value = expiryDateMillis?.let { DateParser.format(it) } ?: "",

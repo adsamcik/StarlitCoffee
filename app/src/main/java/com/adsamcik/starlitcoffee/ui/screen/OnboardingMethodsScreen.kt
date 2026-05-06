@@ -29,9 +29,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -45,20 +46,38 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 
+private val EnabledMethodsSetSaver: Saver<MutableState<Set<BrewMethod>>, ArrayList<String>> = Saver(
+    save = { state -> ArrayList(state.value.map { it.name }) },
+    restore = { list ->
+        mutableStateOf(
+            list.mapNotNull { runCatching { BrewMethod.valueOf(it) }.getOrNull() }.toSet(),
+        )
+    },
+)
+
+private val NullableBrewMethodSaver: Saver<MutableState<BrewMethod?>, String> = Saver(
+    save = { it.value?.name ?: "" },
+    restore = { name ->
+        mutableStateOf(
+            if (name.isEmpty()) null else runCatching { BrewMethod.valueOf(name) }.getOrNull(),
+        )
+    },
+)
+
 @Composable
 fun OnboardingMethodsScreen(
     initialMethods: Set<BrewMethod> = emptySet(),
     initialDefault: BrewMethod? = null,
     onNext: (selectedMethods: Set<BrewMethod>, defaultMethod: BrewMethod) -> Unit,
 ) {
-    val selectedMethods = remember {
-        mutableStateMapOf<BrewMethod, Boolean>().apply {
-            BrewMethod.entries.forEach { put(it, initialMethods.contains(it)) }
-        }
+    val enabledMethods = rememberSaveable(saver = EnabledMethodsSetSaver) {
+        mutableStateOf(initialMethods)
     }
-    val defaultMethod = remember { mutableStateOf(initialDefault) }
+    val defaultMethod = rememberSaveable(saver = NullableBrewMethodSaver) {
+        mutableStateOf(initialDefault)
+    }
 
-    val enabledSet = selectedMethods.filter { it.value }.keys
+    val enabledSet = enabledMethods.value
 
     Column(
         modifier = Modifier
@@ -99,7 +118,7 @@ fun OnboardingMethodsScreen(
                     }
                 },
             ) { _, method ->
-                val isSelected = selectedMethods[method] == true
+                val isSelected = enabledSet.contains(method)
                 val isDefault = defaultMethod.value == method
 
                 val containerColor = animateColorAsState(
@@ -123,13 +142,11 @@ fun OnboardingMethodsScreen(
                 OutlinedCard(
                     onClick = {
                         val newSelected = !isSelected
-                        selectedMethods[method] = newSelected
+                        val current = enabledMethods.value
+                        enabledMethods.value = if (newSelected) current + method else current - method
                         if (!newSelected && defaultMethod.value == method) {
                             // Unselected the default — pick a new one
-                            defaultMethod.value = selectedMethods
-                                .filter { it.value && it.key != method }
-                                .keys
-                                .firstOrNull()
+                            defaultMethod.value = enabledMethods.value.firstOrNull()
                         } else if (newSelected && defaultMethod.value == null) {
                             defaultMethod.value = method
                         }

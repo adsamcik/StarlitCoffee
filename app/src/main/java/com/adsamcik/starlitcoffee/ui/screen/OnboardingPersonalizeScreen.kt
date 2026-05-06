@@ -26,8 +26,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -42,6 +44,15 @@ import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 
+private val NullableFilterTypeSaver: Saver<MutableState<FilterType?>, String> = Saver(
+    save = { it.value?.name ?: "" },
+    restore = { name ->
+        mutableStateOf(
+            if (name.isEmpty()) null else runCatching { FilterType.valueOf(name) }.getOrNull(),
+        )
+    },
+)
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun OnboardingPersonalizeScreen(
@@ -55,8 +66,10 @@ fun OnboardingPersonalizeScreen(
         grinderId: String?,
     ) -> Unit,
 ) {
-    val filterType = remember { mutableStateOf(initialFilter) }
-    val selectedGrinderId = remember { mutableStateOf(initialGrinder) }
+    val filterType = rememberSaveable(saver = NullableFilterTypeSaver) {
+        mutableStateOf(initialFilter)
+    }
+    val selectedGrinderId = rememberSaveable { mutableStateOf(initialGrinder) }
     val context = LocalContext.current
 
     val showFilterSection = selectedMethods.contains(BrewMethod.PULSAR)
