@@ -55,6 +55,15 @@ data class AccumulatorConfig(
     /** Minimum core fields that must reach PROVISIONAL before showing draft bag. */
     val draftTriggerCoreFields: Int = 2,
 
+    /** Maximum LLM escalations allowed per scan session. */
+    val llmMaxCallsPerSession: Int = 2,
+
+    /** Core fields at PROVISIONAL+ required before the first LLM escalation. */
+    val llmFirstTriggerCoreFields: Int = 2,
+
+    /** Maximum age of golden-frame bytes used for LLM escalation. */
+    val llmGoldenFrameMaxAgeMs: Long = 10_000L,
+
     /** Fraction of total fields at HIGH confidence to trigger auto-save prompt. */
     val autoSaveThreshold: Float = 0.80f,
 

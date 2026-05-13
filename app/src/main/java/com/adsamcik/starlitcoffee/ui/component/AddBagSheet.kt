@@ -82,10 +82,12 @@ import com.adsamcik.starlitcoffee.data.model.CoffeeVariety
 import com.adsamcik.starlitcoffee.data.model.DecafProcess
 import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
+import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.BagReviewSeverity
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.DateParser
+import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.ThumbnailLoader
 import com.adsamcik.starlitcoffee.util.WeightParser
@@ -105,6 +107,7 @@ fun AddBagSheet(
     capturedPhotoUris: String? = null,
     fieldEvidence: Map<String, BagFieldEvidence> = emptyMap(),
     reviewHints: List<BagPhotoReviewHint> = emptyList(),
+    llmStatus: LlmEnrichmentStatus = LlmEnrichmentStatus.NOT_RUN,
     isProcessing: Boolean = false,
     existingBags: List<CoffeeBagEntity> = emptyList(),
     bagToEdit: CoffeeBagEntity? = null,
@@ -129,6 +132,7 @@ fun AddBagSheet(
     onEdit: ((CoffeeBagEntity) -> Unit)? = null,
     onScanBarcode: (() -> Unit)? = null,
     onExploreQrUrl: ((String, (QrCoffeeMetadata?) -> Unit) -> Unit)? = null,
+    onRetryLlmEnrichment: (() -> Unit)? = null,
 ) {
     val uriHandler = LocalUriHandler.current
     val configuration = LocalConfiguration.current
@@ -324,6 +328,14 @@ fun AddBagSheet(
                         if (reviewHints.isNotEmpty()) {
                             ReviewHintsCard(reviewHints = reviewHints)
                         }
+                        val hasLlmEvidence = fieldEvidence.values.any {
+                            it.sourceType == BagFieldSourceType.LLM
+                        }
+                        LlmEnrichmentStatusCard(
+                            status = llmStatus,
+                            hasLlmEvidence = hasLlmEvidence,
+                            onRetry = onRetryLlmEnrichment,
+                        )
                         if (!snapApproveMode) {
                             selectedEvidence?.let { evidence ->
                                 FieldEvidencePreviewCard(
@@ -1282,6 +1294,52 @@ private fun ProcessingStatusCard() {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+        }
+    }
+}
+
+@Composable
+private fun LlmEnrichmentStatusCard(
+    status: LlmEnrichmentStatus,
+    hasLlmEvidence: Boolean,
+    onRetry: (() -> Unit)?,
+) {
+    if (status == LlmEnrichmentStatus.NOT_RUN ||
+        status == LlmEnrichmentStatus.SUCCEEDED && !hasLlmEvidence
+    ) {
+        return
+    }
+    val message = when (status) {
+        LlmEnrichmentStatus.SUCCEEDED -> R.string.msg_llm_enrichment_succeeded
+        LlmEnrichmentStatus.FAILED -> R.string.msg_llm_enrichment_failed
+        LlmEnrichmentStatus.UNAVAILABLE -> R.string.msg_llm_enrichment_unavailable
+        LlmEnrichmentStatus.NOT_RUN -> return
+    }
+    val canRetry = status == LlmEnrichmentStatus.FAILED ||
+        status == LlmEnrichmentStatus.UNAVAILABLE
+    ElevatedCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 12.dp),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                text = stringResource(message),
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (canRetry) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+            )
+            if (canRetry && onRetry != null) {
+                TextButton(onClick = onRetry) {
+                    Text(stringResource(R.string.action_retry_llm_enrichment))
+                }
+            }
         }
     }
 }

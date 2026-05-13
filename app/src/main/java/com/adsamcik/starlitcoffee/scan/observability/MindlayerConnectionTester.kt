@@ -32,6 +32,13 @@ data class TestResult(
     val tokenCount: Int,
 )
 
+/**
+ * Debug/settings-screen diagnostic only.
+ *
+ * Production LLM paths must use the app-scoped provider singleton plus
+ * LlmCallGate; this tester intentionally creates a short-lived raw Mindlayer
+ * connection so users can verify the service independently from scan state.
+ */
 object MindlayerConnectionTester {
 
     suspend fun testConnection(context: Context): ConnectionTestResult {

@@ -1,10 +1,12 @@
 package com.adsamcik.starlitcoffee.scan
 
 import com.adsamcik.starlitcoffee.data.network.llm.LlmCacheKey
+import com.adsamcik.starlitcoffee.data.network.llm.LlmCallGate
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
+import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmCallGate
 import com.adsamcik.starlitcoffee.scan.model.LlmEscalationRequest
 import com.adsamcik.starlitcoffee.scan.observability.ScanAnalyticsTracker
 import com.adsamcik.starlitcoffee.scan.observability.ScanPerfTracer
@@ -14,6 +16,7 @@ import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.viewmodel.LlmUiStatus
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -23,8 +26,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 private const val TAG = "LlmCoordinator"
@@ -55,9 +56,10 @@ data class LlmTelemetrySnapshot(
  *  * subscribes to [FrameEvidenceAccumulator.llmEscalation] and feeds
  *    successful extractions back via [FrameEvidenceAccumulator.submitEnrichment];
  *  * pre-warms the provider on session start;
- *  * serializes **all** provider calls through an internal [Mutex] so the
- *    auto-escalation path and external benchmark callers can't violate the
- *    Mindlayer SDK's "no parallel sessions" invariant;
+ *  * serializes **all** provider calls through [LlmCallGate] so the
+ *    auto-escalation path, external benchmark callers, and brew-photo
+ *    enrichment can't violate the Mindlayer SDK's "no parallel sessions"
+ *    invariant;
  *  * exposes a single [state] flow for UI consumption;
  *  * exposes a [LlmTelemetrySnapshot] read on stop so the ViewModel can
  *    assemble per-session telemetry without holding LLM state itself.
@@ -89,18 +91,11 @@ data class LlmTelemetrySnapshot(
 class LlmEscalationCoordinator(
     private val provider: LlmInferenceProvider,
     private val cache: LlmResultCache = LlmResultCache(),
+    private val callGate: LlmCallGate = MindlayerLlmCallGate,
 ) {
 
     private val _state = MutableStateFlow(LlmCoordinatorState())
     val state: StateFlow<LlmCoordinatorState> = _state.asStateFlow()
-
-    /**
-     * Serializes every provider call through this coordinator. The Mindlayer
-     * SDK's session API can't safely run parallel inferences; both the
-     * auto-escalation path and the dual-path benchmark caller must go through
-     * here so they can't accidentally overlap.
-     */
-    private val providerMutex = Mutex()
 
     /**
      * Per-session generation token. Bumped on each [start]; checked before
@@ -110,13 +105,21 @@ class LlmEscalationCoordinator(
     @Volatile
     private var sessionGeneration: Int = 0
 
+    @Volatile
     private var sessionScope: CoroutineScope? = null
     private var escalationJob: Job? = null
     private var prewarmJob: Job? = null
 
+    @Volatile
     private var callCount = 0
+
+    @Volatile
     private var lastLatencyMs: Long? = null
+
+    @Volatile
     private var lastSuccess: Boolean? = null
+
+    @Volatile
     private var lastTokensUsed: Int? = null
 
     /**
@@ -154,7 +157,7 @@ class LlmEscalationCoordinator(
         // is replay=0 with a buffer of 1, so a quick first emission from the
         // accumulator could otherwise be dropped if the launch hadn't reached
         // collect() yet.
-        escalationJob = scope.launch {
+        escalationJob = scope.launch(start = CoroutineStart.UNDISPATCHED) {
             accumulator.llmEscalation.collect { escalation ->
                 handleEscalation(gen, escalation, accumulator, knownValuesProvider, perfTracer)
             }
@@ -197,13 +200,21 @@ class LlmEscalationCoordinator(
     suspend fun extract(
         request: LlmExtractionRequest,
         perfTracer: ScanPerfTracer? = null,
-    ): LlmExtractionResult = providerMutex.withLock {
-        val gen = sessionGeneration
-        if (!provider.isAvailable()) {
-            updateState(gen) { it.copy(status = LlmUiStatus.UNAVAILABLE) }
-            return@withLock LlmExtractionResult.Unavailable("Provider not available")
+    ): LlmExtractionResult {
+        if (sessionScope == null) {
+            return LlmExtractionResult.Unavailable("No active LLM session")
         }
-        runExtractionLocked(gen, request, perfTracer)
+        val gen = sessionGeneration
+        return callGate.withPermit {
+            if (gen != sessionGeneration || sessionScope == null) {
+                return@withPermit LlmExtractionResult.Unavailable("LLM session ended")
+            }
+            if (!provider.isAvailable()) {
+                updateState(gen) { it.copy(status = LlmUiStatus.UNAVAILABLE) }
+                return@withPermit LlmExtractionResult.Unavailable("Provider not available")
+            }
+            runExtractionLocked(gen, request, perfTracer)
+        }
     }
 
     /** Whether the underlying provider is configured. Cheap; safe from Main. */
@@ -220,8 +231,13 @@ class LlmEscalationCoordinator(
         try {
             updateState(gen) { it.copy(status = LlmUiStatus.CONNECTING) }
             perfTracer?.startTimer("service_connect_ms")
-            provider.prewarm()
+            callGate.withPermit {
+                if (gen != sessionGeneration || sessionScope == null) return@withPermit
+                provider.prewarm()
+            }
             perfTracer?.stopTimer("service_connect_ms")
+            // updateState performs the generation check; keeping it centralized
+            // prevents stale prewarm completions from reviving a stopped scan.
             updateState(gen) { it.copy(status = LlmUiStatus.WAITING) }
         } catch (e: CancellationException) {
             perfTracer?.stopTimer("service_connect_ms")
@@ -285,8 +301,10 @@ class LlmEscalationCoordinator(
             rawOcrText = escalation.rawOcrText,
             knownFieldValues = escalation.knownFieldValues ?: knownValuesProvider(),
         )
-        val result = providerMutex.withLock {
-            if (gen != sessionGeneration) return
+        val result = callGate.withPermit {
+            if (gen != sessionGeneration || sessionScope == null) {
+                return@withPermit LlmExtractionResult.Unavailable("LLM session ended")
+            }
             runExtractionLocked(gen, request, perfTracer)
         }
         if (result is LlmExtractionResult.Success) {
@@ -300,7 +318,7 @@ class LlmEscalationCoordinator(
     }
 
     /**
-     * Caller must already hold [providerMutex].
+     * Caller must already hold [callGate].
      *
      * Invokes the provider, applies the result to [state] (gated on the
      * current session generation so cancelled-but-in-flight work can't
@@ -338,7 +356,9 @@ class LlmEscalationCoordinator(
             perfTracer?.stopTimer("llm_total_ms")
         }
         lastLatencyMs = System.currentTimeMillis() - startMs
-        applyResultToState(gen, result)
+        if (gen == sessionGeneration && sessionScope != null) {
+            applyResultToState(gen, result)
+        }
         return result
     }
 

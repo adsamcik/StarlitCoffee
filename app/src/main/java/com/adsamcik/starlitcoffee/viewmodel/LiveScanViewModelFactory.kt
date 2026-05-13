@@ -3,7 +3,8 @@ package com.adsamcik.starlitcoffee.viewmodel
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
+import com.adsamcik.starlitcoffee.StarlitCoffeeApp
+import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 
 /**
  * Manual factory for [LiveScanViewModel]. The repo intentionally avoids a DI
@@ -18,7 +19,8 @@ class LiveScanViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LiveScanViewModel::class.java)) {
             return LiveScanViewModel(
-                llmProvider = MindlayerLlmInferenceProvider(application),
+                llmProvider = (application as? StarlitCoffeeApp)?.llmProvider
+                    ?: StubLlmInferenceProvider(),
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

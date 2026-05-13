@@ -498,6 +498,10 @@
     <string name="msg_could_not_read_label">Could not read label</string>
     <string name="action_retake_photo">Retake photo</string>
     <string name="action_add_details_manually">Add details manually</string>
+    <string name="msg_llm_enrichment_succeeded">AI enrichment improved this label scan.</string>
+    <string name="msg_llm_enrichment_failed">AI enrichment failed. You can retry or continue editing manually.</string>
+    <string name="msg_llm_enrichment_unavailable">AI enrichment is not available right now. You can retry or continue editing manually.</string>
+    <string name="action_retry_llm_enrichment">Retry AI enrichment</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Share brew</string>

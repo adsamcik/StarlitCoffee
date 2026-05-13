@@ -13,7 +13,9 @@ import com.mindlayer.sdk.Mindlayer
 import com.mindlayer.sdk.MindlayerException
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
@@ -25,6 +27,42 @@ import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
+
+private const val MINDLAYER_LLM_TAG = "MindlayerLlm"
+private const val MAX_DECODED_IMAGE_EDGE_PX = 1600
+
+private fun decodeImageCapped(imageBytes: ByteArray): Bitmap? {
+    @Suppress("TooGenericExceptionCaught")
+    return try {
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, bounds)
+        val longestEdge = maxOf(bounds.outWidth, bounds.outHeight)
+        val sampleSize = if (longestEdge > 0) {
+            computeSampleSize(longestEdge, MAX_DECODED_IMAGE_EDGE_PX)
+        } else {
+            1
+        }
+        val options = BitmapFactory.Options().apply {
+            inSampleSize = sampleSize
+            inPreferredConfig = Bitmap.Config.ARGB_8888
+        }
+        BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, options)
+    } catch (error: OutOfMemoryError) {
+        android.util.Log.w(MINDLAYER_LLM_TAG, "Image decode ran out of memory", error)
+        null
+    } catch (e: Exception) {
+        android.util.Log.w(MINDLAYER_LLM_TAG, "Image decode failed", e)
+        null
+    }
+}
+
+private fun computeSampleSize(longestEdge: Int, maxEdge: Int): Int {
+    var sample = 1
+    while (longestEdge / (sample * 2) >= maxEdge) {
+        sample *= 2
+    }
+    return sample
+}
 
 /**
  * LLM inference provider that uses the Mindlayer on-device LLM service.
@@ -49,9 +87,16 @@ class MindlayerLlmInferenceProvider(
 ) : LlmInferenceProvider {
 
     private val mindlayer: Mindlayer = Mindlayer.connect(context.applicationContext)
+    @Volatile
+    private var connectionFailed: Boolean = false
 
     override fun isAvailable(): Boolean {
-        return mindlayer.connectionState.value == ConnectionState.CONNECTED
+        val state = mindlayer.connectionState.value
+        val isConnectingOrConnected = state == ConnectionState.CONNECTED || state == ConnectionState.CONNECTING
+        if (isConnectingOrConnected) {
+            connectionFailed = false
+        }
+        return isConnectingOrConnected || connectionFailed
     }
 
     override suspend fun extractBagFields(
@@ -72,7 +117,7 @@ class MindlayerLlmInferenceProvider(
         // service-unavailable so the consensus engine falls back gracefully.
         @Suppress("TooGenericExceptionCaught")
         try {
-            mindlayer.awaitConnected()
+            awaitMindlayerConnected()
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: Exception) {
@@ -81,14 +126,11 @@ class MindlayerLlmInferenceProvider(
             )
         }
 
-        val bitmap: Bitmap = BitmapFactory.decodeByteArray(
-            request.imageBytes,
-            0,
-            request.imageBytes.size,
-        ) ?: return@withContext LlmExtractionResult.Failed(
-            "Failed to decode image",
-            retryable = false,
-        )
+        val bitmap = decodeImageCapped(request.imageBytes)
+            ?: return@withContext LlmExtractionResult.Failed(
+                "Failed to decode image",
+                retryable = false,
+            )
 
         val prompt = buildExtractionPrompt(request)
         val extended = useExtendedSchema(request)
@@ -109,21 +151,28 @@ class MindlayerLlmInferenceProvider(
         try {
             // Stateless one-shot — SDK creates a fresh session, runs inference,
             // then destroys it. No history is carried over to the next extraction.
-            val responseText = mindlayer.generateWithImage(prompt, bitmap) {
-                systemPrompt(buildSystemPrompt(extended))
-                maxTokens(MAX_TOKENS)
-                temperature(EXTRACTION_TEMPERATURE)
-                topK(EXTRACTION_TOP_K)
-                topP(EXTRACTION_TOP_P)
-                // Opt-in structured output. Services that predate the feature
-                // ignore the extraContext JSON and degrade to plain generation.
-                extraContext(structuredContext)
+            val responseText = withTimeout(EXTRACTION_TIMEOUT_MS) {
+                mindlayer.generateWithImage(prompt, bitmap) {
+                    systemPrompt(buildSystemPrompt(extended))
+                    maxTokens(MAX_TOKENS)
+                    temperature(EXTRACTION_TEMPERATURE)
+                    topK(EXTRACTION_TOP_K)
+                    topP(EXTRACTION_TOP_P)
+                    // Opt-in structured output. Services that predate the feature
+                    // ignore the extraContext JSON and degrade to plain generation.
+                    extraContext(structuredContext)
+                }
             }
             android.util.Log.d(
-                "MindlayerLlm",
+                MINDLAYER_LLM_TAG,
                 "LLM inference complete: ${responseText.length} chars",
             )
             parseResponse(responseText, request.fieldsNeeded)
+        } catch (_: TimeoutCancellationException) {
+            LlmExtractionResult.Failed(
+                "Inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
+                retryable = true,
+            )
         } catch (e: kotlinx.coroutines.CancellationException) {
             // Cancellation must propagate so callers (e.g. LlmEscalationCoordinator)
             // know the work was abandoned and don't apply stale results to a
@@ -156,18 +205,21 @@ class MindlayerLlmInferenceProvider(
      */
     override suspend fun prewarm() {
         withContext(Dispatchers.IO) {
+            awaitMindlayerConnected()
+            mindlayer.prewarm(PREWARM_BACKEND)
+        }
+    }
+
+    @Suppress("TooGenericExceptionCaught")
+    private suspend fun awaitMindlayerConnected() {
+        try {
             mindlayer.awaitConnected()
-            // Boundary catch: prewarm is purely an optimisation. Any
-            // non-cancellation throwable just means the first inference pays
-            // full SDK init cost — not worth raising to the user.
-            @Suppress("TooGenericExceptionCaught")
-            try {
-                mindlayer.prewarm(PREWARM_BACKEND)
-            } catch (e: kotlinx.coroutines.CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                android.util.Log.w("MindlayerLlm", "prewarm failed: ${e.message}")
-            }
+            connectionFailed = false
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            connectionFailed = true
+            throw e
         }
     }
 
@@ -194,6 +246,9 @@ class MindlayerLlmInferenceProvider(
 
         /** Preferred backend for prewarm. GPU is the standard fast path. */
         private val PREWARM_BACKEND = InferenceBackend.GPU
+
+        /** Bounded generation time so a wedged model cannot hang a scan forever. */
+        internal const val EXTRACTION_TIMEOUT_MS = 60_000L
 
         internal fun buildSystemPrompt(extended: Boolean = false): String =
             if (extended) SYSTEM_PROMPT_14 else SYSTEM_PROMPT_10

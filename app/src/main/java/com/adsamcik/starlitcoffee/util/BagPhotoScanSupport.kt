@@ -132,6 +132,13 @@ data class BagPhotoReviewHint(
     val message: String,
 )
 
+enum class LlmEnrichmentStatus {
+    NOT_RUN,
+    SUCCEEDED,
+    FAILED,
+    UNAVAILABLE,
+}
+
 data class BagPhotoProcessingResult(
     val ocrPrefill: OcrFieldExtractor.OcrExtractionResult? = null,
     val capturedPhotoUris: String? = null,
@@ -142,6 +149,7 @@ data class BagPhotoProcessingResult(
     val fieldEvidence: Map<String, BagFieldEvidence> = emptyMap(),
     val photoAnalyses: List<BagPhotoAnalysis> = emptyList(),
     val reviewHints: List<BagPhotoReviewHint> = emptyList(),
+    val llmStatus: LlmEnrichmentStatus = LlmEnrichmentStatus.NOT_RUN,
 ) {
     val shouldSuggestRetake: Boolean
         get() = reviewHints.any { it.severity == BagReviewSeverity.WARNING }

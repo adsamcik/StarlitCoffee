@@ -530,15 +530,15 @@ class LiveScanViewModel(
 
         Log.i("ManualCapture", buildString {
             append("=== DUAL LLM COMPARISON ===\n")
-            append("OCR+Image (${ocrLatencyMs}ms): $ocrFields\n")
-            append("Image-only (${imgLatencyMs}ms): $imgFields\n")
+            append("OCR+Image (${ocrLatencyMs}ms): fields=${ocrFields.keys.sorted()}\n")
+            append("Image-only (${imgLatencyMs}ms): fields=${imgFields.keys.sorted()}\n")
             val allFields = (ocrFields.keys + imgFields.keys).distinct()
-            append("Differences:\n")
+            append("Differing field names:\n")
             for (field in allFields) {
                 val ocrVal = ocrFields[field]
                 val imgVal = imgFields[field]
                 if (ocrVal != imgVal) {
-                    append("  $field: OCR+IMG='$ocrVal' vs IMG='$imgVal'\n")
+                    append("  $field\n")
                 }
             }
         })

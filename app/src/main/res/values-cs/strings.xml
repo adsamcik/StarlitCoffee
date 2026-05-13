@@ -526,6 +526,10 @@
     <string name="msg_could_not_read_label">Štítek se nepodařilo přečíst</string>
     <string name="action_retake_photo">Vyfotit znovu</string>
     <string name="action_add_details_manually">Zadat ručně</string>
+    <string name="msg_llm_enrichment_succeeded">AI obohacení zlepšilo sken štítku.</string>
+    <string name="msg_llm_enrichment_failed">AI obohacení selhalo. Můžete to zkusit znovu nebo pokračovat ručně.</string>
+    <string name="msg_llm_enrichment_unavailable">AI obohacení teď není k dispozici. Můžete to zkusit znovu nebo pokračovat ručně.</string>
+    <string name="action_retry_llm_enrichment">Zkusit AI obohacení znovu</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Sdílet várku</string>

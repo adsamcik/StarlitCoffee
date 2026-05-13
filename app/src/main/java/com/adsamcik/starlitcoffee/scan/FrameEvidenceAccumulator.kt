@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.scan
 
+import androidx.annotation.VisibleForTesting
 import com.adsamcik.starlitcoffee.scan.model.AccumulatedEvidence
 import com.adsamcik.starlitcoffee.scan.model.AccumulatorConfig
 import com.adsamcik.starlitcoffee.scan.model.FieldAccumulation
@@ -28,6 +29,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+
+private const val TAG = "Accumulator"
 
 /**
  * Lifecycle-aware accumulator that processes live OCR frames and builds
@@ -138,18 +141,21 @@ class FrameEvidenceAccumulator(
     val llmEscalation: SharedFlow<LlmEscalationRequest> = _llmEscalation.asSharedFlow()
     private var llmCallCount: Int = 0
     private var lastLlmSideCount: Int = 0
-    private var lastLlmOcrTextHash: Int = 0
+    private var lastLlmOcrText: String? = null
     private var lastRawOcrText: String? = null
 
     @Volatile
     private var lastGoldenFrameBytes: ByteArray? = null
+
+    @Volatile
+    private var lastGoldenFrameTimestampMs: Long = 0L
 
     /**
      * Start the accumulator's processing loops.
      * Call once when the camera session begins.
      */
     fun start() {
-        android.util.Log.d("Accumulator", "start() called — launching processing loops")
+        android.util.Log.d(TAG, "start() called — launching processing loops")
         scanStartTimeMs = System.currentTimeMillis()
         consensusCycleCount = 0
         blankFrameCount = 0
@@ -172,9 +178,10 @@ class FrameEvidenceAccumulator(
         blankFrameCount = 0
         llmCallCount = 0
         lastLlmSideCount = 0
-        lastLlmOcrTextHash = 0
+        lastLlmOcrText = null
         lastRawOcrText = null
         lastGoldenFrameBytes = null
+        lastGoldenFrameTimestampMs = 0L
         scope.cancel()
     }
 
@@ -283,7 +290,27 @@ class FrameEvidenceAccumulator(
      * Called by the camera analyzer when a golden frame is captured.
      */
     fun setGoldenFrameBytes(bytes: ByteArray) {
-        lastGoldenFrameBytes = bytes
+        synchronized(stateLock) {
+            lastGoldenFrameBytes = bytes
+            lastGoldenFrameTimestampMs = System.currentTimeMillis()
+        }
+    }
+
+    @VisibleForTesting
+    internal fun setGoldenFrameTimestampForTest(timestampMs: Long) {
+        synchronized(stateLock) {
+            lastGoldenFrameTimestampMs = timestampMs
+        }
+    }
+
+    @VisibleForTesting
+    internal fun processGoldenFrameForTest(frame: FrameResult) {
+        processFrame(frame.copy(isGoldenFrame = true))
+    }
+
+    @VisibleForTesting
+    internal fun forceConsensusForTest() {
+        runConsensus()
     }
 
     /**
@@ -405,7 +432,7 @@ class FrameEvidenceAccumulator(
                     glarePercent = frame.quality.glarePercent,
                     frameIndex = frameIndex,
                 )
-                android.util.Log.d("Accumulator", "Frame #$frameIndex REJECTED: " +
+                android.util.Log.d(TAG, "Frame #$frameIndex REJECTED: " +
                     "blur=${frame.quality.blurScore}, glare=${frame.quality.glarePercent}, " +
                     "relaxed=$isQualityRelaxed, total rejected=$totalFramesRejected")
                 checkQualityRelaxationLocked()
@@ -424,7 +451,7 @@ class FrameEvidenceAccumulator(
                 ocrResult.origin?.let { "origin" },
                 ocrResult.region?.let { "region" },
             )
-            android.util.Log.d("Accumulator", "Frame #$frameIndex ADMITTED: " +
+            android.util.Log.d(TAG, "Frame #$frameIndex ADMITTED: " +
                 "blur=${frame.quality.blurScore}, golden=${frame.isGoldenFrame}, " +
                 "fields=[${fieldNames.joinToString(",")}], total processed=$totalFramesProcessed")
 
@@ -435,7 +462,7 @@ class FrameEvidenceAccumulator(
             )
             perfTracer?.stopTimer("integrate_ms")
 
-            android.util.Log.d("Accumulator", "After integrate: ${fieldAccumulations.size} field accumulations, " +
+            android.util.Log.d(TAG, "After integrate: ${fieldAccumulations.size} field accumulations, " +
                 "fields=${fieldAccumulations.keys.joinToString(",")}")
         }
     }
@@ -444,14 +471,14 @@ class FrameEvidenceAccumulator(
         perfTracer?.startTimer("consensus_ms")
         synchronized(stateLock) {
             if (fieldAccumulations.isEmpty()) {
-                android.util.Log.d("Accumulator", "runConsensus: no fields yet — skipping")
+                android.util.Log.d(TAG, "runConsensus: no fields yet — skipping")
                 perfTracer?.stopTimer("consensus_ms")
                 return
             }
 
             consensusCycleCount++
 
-            android.util.Log.d("Accumulator", "runConsensus: ${fieldAccumulations.size} fields, " +
+            android.util.Log.d(TAG, "runConsensus: ${fieldAccumulations.size} fields, " +
                 "cycle=$consensusCycleCount, " +
                 "statuses=${fieldAccumulations.map { "${it.key}=${it.value.status}" }}")
 
@@ -516,7 +543,7 @@ class FrameEvidenceAccumulator(
 
             checkLlmEscalationLocked()
             emitEvidenceLocked()
-            android.util.Log.d("Accumulator", "runConsensus: emitted evidence, " +
+            android.util.Log.d(TAG, "runConsensus: emitted evidence, " +
                 "processed=$totalFramesProcessed, rejected=$totalFramesRejected")
         }
         perfTracer?.stopTimer("consensus_ms")
@@ -657,8 +684,9 @@ class FrameEvidenceAccumulator(
      * rather than waiting for fields to stall.
      * Must be called under [stateLock].
      */
+    @Suppress("CyclomaticComplexMethod")
     private fun checkLlmEscalationLocked() {
-        if (llmCallCount >= 2) return  // Hard budget: max 2 calls per session
+        if (llmCallCount >= config.llmMaxCallsPerSession) return
 
         // Count core fields at PROVISIONAL or better
         val provisionalCoreCount = config.coreFields.count { field ->
@@ -668,24 +696,34 @@ class FrameEvidenceAccumulator(
                             acc.status == FieldStatus.USER_LOCKED)
         }
 
-        // Viability gate: golden frame must exist
-        val hasViableFrame = lastGoldenFrameBytes != null
+        // Viability gate: golden frame bytes must be recent, not stale from an
+        // earlier camera pose. The bytes are session-local and never logged.
+        val nowMs = System.currentTimeMillis()
+        val hasViableFrame = lastGoldenFrameBytes != null &&
+            lastGoldenFrameTimestampMs > 0L &&
+            nowMs - lastGoldenFrameTimestampMs <= config.llmGoldenFrameMaxAgeMs
 
         // Log trigger state every 10 cycles for diagnostics
         if (consensusCycleCount % 10 == 0) {
-            android.util.Log.d("Accumulator", "LLM trigger check: " +
-                "calls=$llmCallCount, coreFields=$provisionalCoreCount/2, " +
+            android.util.Log.d(TAG, "LLM trigger check: " +
+                "calls=$llmCallCount/${config.llmMaxCallsPerSession}, " +
+                "coreFields=$provisionalCoreCount/${config.llmFirstTriggerCoreFields}, " +
                 "goldenFrame=$hasViableFrame, fields=${fieldAccumulations.size}")
         }
 
-        // Trigger 1 (first call): ≥2 core fields at PROVISIONAL+ AND viable frame
-        val shouldFireFirst = llmCallCount == 0 && provisionalCoreCount >= 2 && hasViableFrame
+        val shouldFireFirst = llmCallCount == 0 &&
+            provisionalCoreCount >= config.llmFirstTriggerCoreFields &&
+            hasViableFrame
 
-        // Trigger 2 (second call): new side observed OR substantially new OCR text
-        val currentOcrHash = lastRawOcrText?.hashCode() ?: 0
+        // Trigger 2: new side observed OR substantially new OCR text. Full
+        // normalized text comparison avoids 32-bit hash collisions; a scan
+        // session only holds a tiny amount of OCR text in memory.
+        // A side flip with unresolved fields after later consensus cycles is
+        // intentionally covered by the same "new side observed" trigger.
+        val currentOcrText = lastRawOcrText?.normalizeLlmOcrText()
         val shouldFireSecond = llmCallCount == 1 && hasViableFrame && (
             sideCount > lastLlmSideCount ||
-            (currentOcrHash != lastLlmOcrTextHash && lastRawOcrText != null)
+            (currentOcrText != null && currentOcrText != lastLlmOcrText)
         )
 
         if (shouldFireFirst || shouldFireSecond) {
@@ -701,7 +739,7 @@ class FrameEvidenceAccumulator(
 
             llmCallCount++
             lastLlmSideCount = sideCount
-            lastLlmOcrTextHash = currentOcrHash
+            lastLlmOcrText = currentOcrText
 
             val existingFields = buildExistingFieldsMap()
 
@@ -712,10 +750,19 @@ class FrameEvidenceAccumulator(
                 rawOcrText = lastRawOcrText,
                 knownFieldValues = knownValues,
             )
-            _llmEscalation.tryEmit(request)
-            android.util.Log.d("Accumulator", "Proactive LLM call #$llmCallCount for fields: $fieldsNeeded")
+            val emitted = _llmEscalation.tryEmit(request)
+            if (!emitted) {
+                android.util.Log.w(TAG, "Dropped LLM escalation emission; collector or buffer is unavailable")
+            }
+            android.util.Log.d(TAG, "Proactive LLM call #$llmCallCount for ${fieldsNeeded.size} fields")
         }
     }
+
+    private fun String.normalizeLlmOcrText(): String =
+        lineSequence()
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .joinToString("\n")
 
     /**
      * Build a map of already-resolved fields with source attribution for LLM context.
@@ -792,7 +839,7 @@ class FrameEvidenceAccumulator(
             isQualityRelaxed = true
             qualityRelaxationEverTriggered = true
             _lastRejection.value = null
-            android.util.Log.d("Accumulator", "Quality RELAXED: " +
+            android.util.Log.d(TAG, "Quality RELAXED: " +
                 "timeSinceRef=${timeSinceReference}ms, " +
                 "admitted=$totalFramesProcessed, rejected=$totalFramesRejected")
         }

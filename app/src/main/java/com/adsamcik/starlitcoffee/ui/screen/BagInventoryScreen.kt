@@ -61,6 +61,7 @@ import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
+import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.ScanFieldSupport
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
@@ -125,6 +126,7 @@ fun BagInventoryScreen(
     var offLookupRoaster by remember { mutableStateOf<String?>(null) }
     var fieldEvidence by remember { mutableStateOf<Map<String, BagFieldEvidence>>(emptyMap()) }
     var reviewHints by remember { mutableStateOf<List<BagPhotoReviewHint>>(emptyList()) }
+    var llmStatus by remember { mutableStateOf(LlmEnrichmentStatus.NOT_RUN) }
     var isProcessingScan by remember { mutableStateOf(false) }
     var showRetakeDialog by remember { mutableStateOf(false) }
     var lastProcessedPhotos by remember { mutableStateOf<String?>(null) }
@@ -149,6 +151,7 @@ fun BagInventoryScreen(
             offLookupRoaster = null
             fieldEvidence = emptyMap()
             reviewHints = emptyList()
+            llmStatus = LlmEnrichmentStatus.NOT_RUN
             brewViewModel.processNewBagPhotos(photosCsv, knownFieldValues)
         }
     }
@@ -168,6 +171,7 @@ fun BagInventoryScreen(
         offLookupRoaster = result.offLookupRoaster
         fieldEvidence = result.fieldEvidence
         reviewHints = result.reviewHints
+        llmStatus = result.llmStatus
         isProcessingScan = false
         showRetakeDialog = result.shouldSuggestRetake
         brewViewModel.clearBagPhotoResult()
@@ -185,6 +189,7 @@ fun BagInventoryScreen(
             isProcessingScan = false
             fieldEvidence = emptyMap()
             reviewHints = emptyList()
+            llmStatus = LlmEnrichmentStatus.NOT_RUN
             showAddSheet = true
             return@LaunchedEffect
         }
@@ -199,6 +204,7 @@ fun BagInventoryScreen(
         offLookupRoaster = null
         fieldEvidence = emptyMap()
         reviewHints = emptyList()
+        llmStatus = LlmEnrichmentStatus.NOT_RUN
 
         brewViewModel.processNewBagPhotos(photos, knownFieldValues)
     }
@@ -218,6 +224,7 @@ fun BagInventoryScreen(
         offLookupName = null
         offLookupRoaster = null
         reviewHints = emptyList()
+        llmStatus = LlmEnrichmentStatus.NOT_RUN
         isProcessingScan = false
         showRetakeDialog = false
         showAddSheet = true
@@ -230,6 +237,7 @@ fun BagInventoryScreen(
         ocrPrefill = null
         fieldEvidence = emptyMap()
         reviewHints = emptyList()
+        llmStatus = LlmEnrichmentStatus.NOT_RUN
         capturedPhotoUris = null
         detectedQrUrl = null
 
@@ -370,6 +378,7 @@ fun BagInventoryScreen(
                                     offLookupRoaster = null
                                     fieldEvidence = emptyMap()
                                     reviewHints = emptyList()
+                                    llmStatus = LlmEnrichmentStatus.NOT_RUN
                                     isProcessingScan = false
                                     showAddSheet = true
                                 },
@@ -494,6 +503,7 @@ fun BagInventoryScreen(
             capturedPhotoUris = capturedPhotoUris,
             fieldEvidence = fieldEvidence,
             reviewHints = reviewHints,
+            llmStatus = llmStatus,
             isProcessing = isProcessingScan,
             existingBags = bags,
             onScanBarcode = {
@@ -502,6 +512,9 @@ fun BagInventoryScreen(
             },
             onExploreQrUrl = { url, callback ->
                 brewViewModel.exploreApprovedQrLink(url, callback)
+            },
+            onRetryLlmEnrichment = {
+                brewViewModel.retryBagPhotoLlm()
             },
             onDismiss = {
                 showAddSheet = false
@@ -515,6 +528,7 @@ fun BagInventoryScreen(
                 detectedQrUrl = null
                 fieldEvidence = emptyMap()
                 reviewHints = emptyList()
+                llmStatus = LlmEnrichmentStatus.NOT_RUN
             },
             onSave = {
                 name,
@@ -544,6 +558,7 @@ fun BagInventoryScreen(
                 detectedQrUrl = null
                 fieldEvidence = emptyMap()
                 reviewHints = emptyList()
+                llmStatus = LlmEnrichmentStatus.NOT_RUN
 
                 // Copy photos to permanent storage on background thread
                 coroutineScope.launch {
@@ -607,6 +622,7 @@ fun BagInventoryScreen(
                         isProcessingScan = false
                         fieldEvidence = emptyMap()
                         reviewHints = emptyList()
+                        llmStatus = LlmEnrichmentStatus.NOT_RUN
                         ocrPrefill = null
                         capturedPhotoUris = null
                         detectedBarcode = null
