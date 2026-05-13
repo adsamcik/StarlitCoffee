@@ -10,9 +10,12 @@ import android.os.VibratorManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -52,7 +55,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.changedToDown
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -209,8 +216,88 @@ fun BrewTimerScreen(
         label = "heroColor",
     )
 
+    // ── Screensaver mode ─────────────────────────────────────
+    // After a stretch of inactivity while the timer is running we collapse the
+    // UI to a dim, calm display: only the hero number, bloom flower/badge, and
+    // the primary guidance card stay visible. Top bar, metadata, and bottom
+    // controls fade away. Any tap wakes the screen and is consumed so the
+    // wake-tap doesn't accidentally trigger a button underneath.
+    var lastInteractionMs by remember { mutableStateOf(System.currentTimeMillis()) }
+    var screensaverActive by remember { mutableStateOf(false) }
+
+    // Pause/stop or returning to setup leaves the user looking at controls —
+    // never engage the screensaver in those states.
+    LaunchedEffect(state.timerRunning) {
+        if (!state.timerRunning) {
+            screensaverActive = false
+            lastInteractionMs = System.currentTimeMillis()
+        }
+    }
+
+    // Inactivity watcher. Re-arms whenever the timer resumes or the user
+    // touches the screen (lastInteractionMs change cancels the prior delay).
+    LaunchedEffect(state.timerRunning, lastInteractionMs) {
+        if (!state.timerRunning) return@LaunchedEffect
+        val timeoutMs = SCREENSAVER_TIMEOUT_MS
+        val elapsedSinceTouch = System.currentTimeMillis() - lastInteractionMs
+        val remaining = timeoutMs - elapsedSinceTouch
+        if (remaining > 0L) delay(remaining)
+        screensaverActive = true
+    }
+
+    // Auto-wake on transitions the user definitely needs to see.
+    LaunchedEffect(bloomJustEndedFlash) {
+        if (bloomJustEndedFlash && screensaverActive) {
+            screensaverActive = false
+            lastInteractionMs = System.currentTimeMillis()
+        }
+    }
+    LaunchedEffect(state.elapsedSeconds, hasTarget) {
+        if (hasTarget && state.elapsedSeconds == state.timeTargetLowS && screensaverActive) {
+            screensaverActive = false
+            lastInteractionMs = System.currentTimeMillis()
+        }
+    }
+
+    val screensaverAnim = tween<Float>(durationMillis = 600)
+    val controlsAlpha by animateFloatAsState(
+        targetValue = if (screensaverActive) 0f else 1f,
+        animationSpec = screensaverAnim,
+        label = "controlsAlpha",
+    )
+    val heroDimAlpha by animateFloatAsState(
+        targetValue = if (screensaverActive) 0.55f else 1f,
+        animationSpec = screensaverAnim,
+        label = "heroDimAlpha",
+    )
+    val wakeHintAlpha by animateFloatAsState(
+        targetValue = if (screensaverActive) 0.3f else 0f,
+        animationSpec = screensaverAnim,
+        label = "wakeHintAlpha",
+    )
+
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                // Initial pass runs in the parent before children, so when
+                // the screensaver is active we can swallow the down event
+                // before any child clickable handles it. When inactive we
+                // just refresh the inactivity timestamp and let the touch
+                // propagate normally.
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent(PointerEventPass.Initial)
+                        if (event.changes.any { it.changedToDown() }) {
+                            lastInteractionMs = System.currentTimeMillis()
+                            if (screensaverActive) {
+                                screensaverActive = false
+                                event.changes.forEach { it.consume() }
+                            }
+                        }
+                    }
+                }
+            },
         color = MaterialTheme.colorScheme.surface,
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -219,6 +306,7 @@ fun BrewTimerScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .alpha(controlsAlpha)
                     .padding(horizontal = 8.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
@@ -280,13 +368,17 @@ fun BrewTimerScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
+                    .alpha(heroDimAlpha)
                     .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
             ) {
-                val showBloomAnimation = state.method.hasBloom &&
-                    state.bloomG > 0f &&
-                    (!state.bloomFinished || bloomJustEndedFlash)
+                // Keep the flower visible for the full brew session: the bud
+                // is shown pre-bloom, the animation runs during bloom, and the
+                // fully-bloomed final frame stays as decoration through the
+                // remaining pours. BloomSpritesheetAnimation renders the last
+                // frame automatically once bloomCountdownSeconds reaches 0.
+                val showBloomAnimation = state.method.hasBloom && state.bloomG > 0f
                 if (showBloomAnimation) {
                     BloomSpritesheetAnimation(
                         bloomCountdownSeconds = state.bloomCountdownSeconds,
@@ -365,18 +457,24 @@ fun BrewTimerScreen(
                 // ── Metadata row: target time · temp · total water
                 BrewMetadataRow(
                     state = state,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .alpha(controlsAlpha),
                 )
             }
 
             // ── Bottom controls ─────────────────────────────────────
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(bottom = 24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
+            // Wrapped in a Box so the screensaver "tap to wake" hint can
+            // overlay the same slot once controls fade out.
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .alpha(controlsAlpha)
+                        .padding(horizontal = 24.dp)
+                        .padding(bottom = 24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
                 // Start Bloom — primary CTA before bloom is marked
                 val showStartBloom = state.method.hasBloom &&
                     state.bloomMarkedAtSeconds == null &&
@@ -451,10 +549,28 @@ fun BrewTimerScreen(
                     // Spacer to balance the row
                     Spacer(modifier = Modifier.size(72.dp))
                 }
+                }
+
+                // Screensaver "tap to wake" hint — appears centered in the
+                // bottom slot once the controls fade out. Sits in the same
+                // Box, so it can't shift the rest of the layout.
+                if (wakeHintAlpha > 0f) {
+                    Text(
+                        text = stringResource(R.string.hint_tap_to_wake),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 28.dp)
+                            .alpha(wakeHintAlpha),
+                    )
+                }
             }
         }
     }
 }
+
+private const val SCREENSAVER_TIMEOUT_MS: Long = 25_000L
 
 /**
  * Primary guidance card surfaces the single most important instruction right now:
