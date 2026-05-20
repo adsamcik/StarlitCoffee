@@ -27,6 +27,7 @@ data class UserPreferences(
     val lastUsedRatio: Float = 17f,
     val defaultInputDirection: String = "DOSE",
     val skipMethodSelection: Boolean = false,
+    val dimModeEnabled: Boolean = true,
     val bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
     // How many times each spritesheet has been picked for a brew. Used by the
     // domain selector to bias future picks toward under-shown flowers, so
@@ -46,6 +47,7 @@ class UserPreferencesRepository(private val context: Context) {
         val LAST_USED_RATIO = floatPreferencesKey("last_used_ratio")
         val DEFAULT_INPUT_DIRECTION = stringPreferencesKey("default_input_direction")
         val SKIP_METHOD_SELECTION = booleanPreferencesKey("skip_method_selection")
+        val DIM_MODE_ENABLED = booleanPreferencesKey("dim_mode_enabled")
         val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
         val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
     }
@@ -68,6 +70,7 @@ class UserPreferencesRepository(private val context: Context) {
                 lastUsedRatio = prefs[Keys.LAST_USED_RATIO] ?: 17f,
                 defaultInputDirection = prefs[Keys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",
                 skipMethodSelection = prefs[Keys.SKIP_METHOD_SELECTION] ?: false,
+                dimModeEnabled = prefs[Keys.DIM_MODE_ENABLED] ?: true,
                 bloomSpritesheetWeights = parseBloomSpritesheetWeights(
                     prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS].orEmpty(),
                 ),
@@ -154,6 +157,12 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun updateSkipMethodSelection(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.SKIP_METHOD_SELECTION] = enabled
+        }
+    }
+
+    suspend fun updateDimModeEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.DIM_MODE_ENABLED] = enabled
         }
     }
 

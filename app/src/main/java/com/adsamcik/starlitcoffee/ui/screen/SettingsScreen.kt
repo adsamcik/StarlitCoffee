@@ -447,6 +447,41 @@ fun SettingsScreen(
                 }
             }
 
+            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 16.dp),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.label_dim_mode),
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.semantics { heading() },
+                            )
+                            Text(
+                                text = stringResource(R.string.msg_dim_mode_hint),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Switch(
+                            checked = prefs.dimModeEnabled,
+                            onCheckedChange = { enabled ->
+                                scope.launch {
+                                    userPreferencesRepository.updateDimModeEnabled(enabled)
+                                }
+                            },
+                        )
+                    }
+                }
+            }
+
             // Debug-only cards
             if (BuildConfig.DEBUG) {
                 MindlayerSettingsCard()

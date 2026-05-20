@@ -534,6 +534,8 @@
     <string name="msg_pulsar_settings_applied">Applied when brewing with Pulsar</string>
     <string name="label_quick_brew">Quick brew</string>
     <string name="msg_quick_brew_hint">Skip the grind prep step and go straight to the timer when you start a brew</string>
+    <string name="label_dim_mode">Automatic dim mode</string>
+    <string name="msg_dim_mode_hint">After 25 s of inactivity, fade the screen to a calm, colorless view that still responds to taps</string>
     <string name="action_add_cup_preset">Add cup preset</string>
     <string name="label_volume_ml">Volume (ml)</string>
     <string name="msg_dose_from_ratio">Coffee dose is calculated from your ratio</string>

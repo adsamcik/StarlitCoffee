@@ -562,6 +562,8 @@
     <string name="msg_pulsar_settings_applied">Platí při přípravě s Pulsarem</string>
     <string name="label_quick_brew">Rychlá příprava</string>
     <string name="msg_quick_brew_hint">Přeskočit krok přípravy mletí a přejít rovnou na časovač</string>
+    <string name="label_dim_mode">Automatický klidný režim</string>
+    <string name="msg_dim_mode_hint">Po 25 s nečinnosti ztiší obrazovku do klidného, bezbarvého zobrazení, které stále reaguje na dotyk</string>
     <string name="action_add_cup_preset">Přidat předvolbu šálku</string>
     <string name="label_volume_ml">Objem (ml)</string>
     <string name="msg_dose_from_ratio">Dávka kávy se vypočítá z vašeho poměru</string>
