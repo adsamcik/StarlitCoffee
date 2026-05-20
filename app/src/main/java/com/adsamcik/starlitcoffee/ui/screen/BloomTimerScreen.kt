@@ -54,7 +54,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
 import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
+import com.adsamcik.starlitcoffee.ui.util.DimImportant
+import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
+import com.adsamcik.starlitcoffee.ui.util.DimRole
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
+import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlinx.coroutines.delay
@@ -64,6 +68,7 @@ import kotlin.math.abs
 fun BloomTimerScreen(
     brewViewModel: BrewViewModel,
     bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
+    dimModeEnabled: Boolean = true,
     onNavigateToBrew: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -196,6 +201,14 @@ fun BloomTimerScreen(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.surface,
     ) {
+        val dimController = rememberDimModeController(featureEnabled = dimModeEnabled)
+        LaunchedEffect(state.bloomFinished) {
+            if (state.bloomFinished) dimController.wake()
+        }
+        DimModeScaffold(
+            controller = dimController,
+            modifier = Modifier.fillMaxSize(),
+        ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
             // ── Top bar ─────────────────────────────────────────────
@@ -250,23 +263,27 @@ fun BloomTimerScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // Hero timer
-                Text(
-                    text = formatBloomTime(state.elapsedSeconds),
-                    style = MaterialTheme.typography.displayLarge,
-                    fontWeight = FontWeight.Light,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.semantics { heading() },
-                )
+                DimImportant(role = DimRole.Hero) {
+                    Text(
+                        text = formatBloomTime(state.elapsedSeconds),
+                        style = MaterialTheme.typography.displayLarge,
+                        fontWeight = FontWeight.Light,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.semantics { heading() },
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Bloom countdown
                 if (state.bloomCountdownSeconds != null) {
-                    Text(
-                        text = formatBloomTime(state.bloomCountdownSeconds ?: 0),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
-                    )
+                    DimImportant(role = DimRole.Primary) {
+                        Text(
+                            text = formatBloomTime(state.bloomCountdownSeconds ?: 0),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(4.dp))
 
@@ -308,11 +325,13 @@ fun BloomTimerScreen(
                 } else {
                     stringResource(R.string.format_bloom_total, state.bloomG, state.waterG)
                 }
-                Text(
-                    text = waterText,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                DimImportant(role = DimRole.Primary) {
+                    Text(
+                        text = waterText,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
 
             // ── Bottom controls ─────────────────────────────────────
@@ -324,26 +343,28 @@ fun BloomTimerScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 // Play / Pause
-                FilledTonalIconButton(
-                    onClick = {
-                        if (state.timerRunning) brewViewModel.pauseTimer()
-                        else brewViewModel.startTimer()
-                    },
-                    modifier = Modifier.size(64.dp),
-                    shape = CircleShape,
-                    colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                    ),
-                ) {
-                    Icon(
-                        imageVector = if (state.timerRunning) Icons.Filled.Pause
-                        else Icons.Filled.PlayArrow,
-                        contentDescription = stringResource(
-                            if (state.timerRunning) R.string.action_pause else R.string.action_resume,
+                DimImportant(role = DimRole.Action) {
+                    FilledTonalIconButton(
+                        onClick = {
+                            if (state.timerRunning) brewViewModel.pauseTimer()
+                            else brewViewModel.startTimer()
+                        },
+                        modifier = Modifier.size(64.dp),
+                        shape = CircleShape,
+                        colors = IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                         ),
-                        modifier = Modifier.size(32.dp),
-                    )
+                    ) {
+                        Icon(
+                            imageVector = if (state.timerRunning) Icons.Filled.Pause
+                            else Icons.Filled.PlayArrow,
+                            contentDescription = stringResource(
+                                if (state.timerRunning) R.string.action_pause else R.string.action_resume,
+                            ),
+                            modifier = Modifier.size(32.dp),
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -355,6 +376,7 @@ fun BloomTimerScreen(
                     textAlign = TextAlign.Center,
                 )
             }
+        }
         }
     }
 }

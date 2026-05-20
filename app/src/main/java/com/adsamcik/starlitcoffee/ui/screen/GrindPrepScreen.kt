@@ -43,13 +43,18 @@ import com.adsamcik.starlitcoffee.data.model.GrinderScaleType
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
+import com.adsamcik.starlitcoffee.ui.util.DimImportant
+import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
+import com.adsamcik.starlitcoffee.ui.util.DimRole
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
+import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 
 @Composable
 fun GrindPrepScreen(
     brewViewModel: BrewViewModel,
+    dimModeEnabled: Boolean = true,
     onNavigateToBrew: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -58,29 +63,36 @@ fun GrindPrepScreen(
     // Hands are busy with grinder/scale/kettle here — don't let the screen sleep.
     KeepScreenOn()
 
+    val dimController = rememberDimModeController(featureEnabled = dimModeEnabled)
+    DimModeScaffold(
+        controller = dimController,
+        modifier = Modifier.fillMaxSize(),
+    ) {
     Scaffold(
         bottomBar = {
             // Sticky primary CTA — always visible, regardless of scroll position.
             Surface(color = MaterialTheme.colorScheme.surface) {
-                Button(
-                    onClick = onNavigateToBrew,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 16.dp)
-                        .height(64.dp),
-                    shape = MaterialTheme.shapes.extraLarge,
-                ) {
-                    Text(
-                        text = stringResource(R.string.action_ready_to_brew_short),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                    Spacer(Modifier.size(12.dp))
-                    Icon(
-                        Icons.AutoMirrored.Filled.ArrowForward,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                    )
+                DimImportant(role = DimRole.Action) {
+                    Button(
+                        onClick = onNavigateToBrew,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp, vertical = 16.dp)
+                            .height(64.dp),
+                        shape = MaterialTheme.shapes.extraLarge,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.action_ready_to_brew_short),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                        Spacer(Modifier.size(12.dp))
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowForward,
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp),
+                        )
+                    }
                 }
             }
         },
@@ -108,19 +120,24 @@ fun GrindPrepScreen(
                 WarningCard(message = warning)
             }
 
-            GrindHeroCard(state.grindResult)
+            DimImportant(role = DimRole.Hero) {
+                GrindHeroCard(state.grindResult)
+            }
 
-            MetricsRow(
-                coffeeG = state.coffeeG,
-                waterG = state.waterG,
-                tempLow = state.method.tempRangeLow,
-                tempHigh = state.method.tempRangeHigh,
-            )
+            DimImportant(role = DimRole.Primary) {
+                MetricsRow(
+                    coffeeG = state.coffeeG,
+                    waterG = state.waterG,
+                    tempLow = state.method.tempRangeLow,
+                    tempHigh = state.method.tempRangeHigh,
+                )
+            }
 
             PrepTipCard(
                 tipRes = prepTipFor(state.method, state.filterType),
             )
         }
+    }
     }
 }
 

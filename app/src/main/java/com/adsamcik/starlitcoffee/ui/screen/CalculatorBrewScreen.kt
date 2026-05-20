@@ -87,7 +87,11 @@ import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
+import com.adsamcik.starlitcoffee.ui.util.DimImportant
+import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
+import com.adsamcik.starlitcoffee.ui.util.DimRole
 import com.adsamcik.starlitcoffee.ui.util.presetIcon
+import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
 
@@ -97,6 +101,7 @@ fun CalculatorBrewScreen(
     calculatorViewModel: CalculatorViewModel,
     brewViewModel: BrewViewModel,
     userPreferencesRepository: UserPreferencesRepository,
+    dimModeEnabled: Boolean = true,
     onNavigateToBrew: () -> Unit,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
@@ -151,6 +156,11 @@ fun CalculatorBrewScreen(
         brewViewModel.setAmount(state.previewDoseG.toString())
     }
 
+    val dimController = rememberDimModeController(featureEnabled = dimModeEnabled)
+    DimModeScaffold(
+        controller = dimController,
+        modifier = Modifier.fillMaxSize(),
+    ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -159,20 +169,22 @@ fun CalculatorBrewScreen(
         // Combined header: direction toggle + expression (with optional inline
         // result on compact heights) + save-favorite. Replaces the older
         // dedicated TopControlBar row, recovering ~48dp of vertical space.
-        ExpressionHeader(
-            tokens = state.tokens,
-            direction = state.inputDirection,
-            canSaveFavorite = state.hasValidExpression && state.previewDoseG > 0f,
-            showInlineResult = isCompactHeight && state.hasValidExpression,
-            previewDoseG = state.previewDoseG,
-            previewWaterMl = state.previewWaterMl,
-            isCompactHeight = isCompactHeight,
-            onToggleDirection = { calculatorViewModel.toggleDirection() },
-            onSaveFavorite = {
-                syncCalcDerivedState()
-                showSaveFavoriteDialog = true
-            },
-        )
+        DimImportant(role = DimRole.Primary) {
+            ExpressionHeader(
+                tokens = state.tokens,
+                direction = state.inputDirection,
+                canSaveFavorite = state.hasValidExpression && state.previewDoseG > 0f,
+                showInlineResult = isCompactHeight && state.hasValidExpression,
+                previewDoseG = state.previewDoseG,
+                previewWaterMl = state.previewWaterMl,
+                isCompactHeight = isCompactHeight,
+                onToggleDirection = { calculatorViewModel.toggleDirection() },
+                onSaveFavorite = {
+                    syncCalcDerivedState()
+                    showSaveFavoriteDialog = true
+                },
+            )
+        }
 
         Spacer(modifier = Modifier.height(sectionSpacer))
 
@@ -188,11 +200,13 @@ fun CalculatorBrewScreen(
             // expression resolves there's nothing useful to show, so we hide
             // the empty-state placeholder rather than reserving space for it.
             if (!isCompactHeight && state.hasValidExpression) {
-                LivePreviewCard(
-                    doseG = state.previewDoseG,
-                    waterMl = state.previewWaterMl,
-                    direction = state.inputDirection,
-                )
+                DimImportant(role = DimRole.Hero) {
+                    LivePreviewCard(
+                        doseG = state.previewDoseG,
+                        waterMl = state.previewWaterMl,
+                        direction = state.inputDirection,
+                    )
+                }
             }
 
             // Selected bag indicator — visible reminder that a bag is in play,
@@ -267,6 +281,7 @@ fun CalculatorBrewScreen(
         )
 
         Spacer(modifier = Modifier.height(barSpacer))
+    }
     }
 
     if (showSaveFavoriteDialog) {

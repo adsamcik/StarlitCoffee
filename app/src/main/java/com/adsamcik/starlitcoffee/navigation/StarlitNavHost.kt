@@ -246,6 +246,7 @@ fun StarlitNavHost() {
                     calculatorViewModel = calculatorViewModel,
                     brewViewModel = brewViewModel,
                     userPreferencesRepository = userPreferencesRepository,
+                    dimModeEnabled = prefs.dimModeEnabled,
                     onNavigateToBrew = {
                         brewViewModel.startNewBrewSession()
                         // Quick Brew preference jumps past the grind/prep
@@ -259,6 +260,7 @@ fun StarlitNavHost() {
             composable<GrindPrep> {
                 GrindPrepScreen(
                     brewViewModel = brewViewModel,
+                    dimModeEnabled = prefs.dimModeEnabled,
                     onNavigateToBrew = { navController.navigate(BrewTimer) },
                     onBack = { navController.popBackStack() },
                 )
@@ -267,6 +269,7 @@ fun StarlitNavHost() {
                 BloomTimerScreen(
                     brewViewModel = brewViewModel,
                     bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
+                    dimModeEnabled = prefs.dimModeEnabled,
                     onNavigateToBrew = {
                         navController.navigate(BrewTimer) {
                             popUpTo(GrindPrep) { inclusive = true }
@@ -281,6 +284,7 @@ fun StarlitNavHost() {
                 BrewTimerScreen(
                     brewViewModel = brewViewModel,
                     bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
+                    dimModeEnabled = prefs.dimModeEnabled,
                     onBack = { navController.popBackStack() },
                     onComplete = {
                         // Save the brew log immediately (without feedback — user rates later)

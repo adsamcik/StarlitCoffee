@@ -133,7 +133,6 @@
     <string name="label_bloom_done">✅ Bloom hotovo!</string>
     <string name="label_bloom_badge">🌱 Bloom</string>
     <string name="action_finish_brew">Dokončit přípravu</string>
-    <string name="hint_tap_to_wake">Klepnutím probudíte</string>
     <string name="instruction_bloom_steps">Otevřete ventil · Nalijte vodu · Zavřete ventil</string>
     <string name="dialog_exit_brew_title">Ukončit přípravu?</string>
     <string name="dialog_exit_brew_message">Aktuální průběh přípravy bude ztracen.</string>

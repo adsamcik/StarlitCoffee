@@ -10,9 +10,7 @@ import android.os.VibratorManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,11 +53,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.input.pointer.PointerEventPass
-import androidx.compose.ui.input.pointer.changedToDown
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -73,7 +67,11 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
 import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
+import com.adsamcik.starlitcoffee.ui.util.DimImportant
+import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
+import com.adsamcik.starlitcoffee.ui.util.DimRole
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
+import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlinx.coroutines.delay
 import kotlin.math.abs
@@ -82,6 +80,7 @@ import kotlin.math.abs
 fun BrewTimerScreen(
     brewViewModel: BrewViewModel,
     bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
+    dimModeEnabled: Boolean = true,
     onBack: () -> Unit,
     onComplete: () -> Unit = {},
 ) {
@@ -216,97 +215,35 @@ fun BrewTimerScreen(
         label = "heroColor",
     )
 
-    // ── Screensaver mode ─────────────────────────────────────
-    // After a stretch of inactivity while the timer is running we collapse the
-    // UI to a dim, calm display: only the hero number, bloom flower/badge, and
-    // the primary guidance card stay visible. Top bar, metadata, and bottom
-    // controls fade away. Any tap wakes the screen and is consumed so the
-    // wake-tap doesn't accidentally trigger a button underneath.
-    var lastInteractionMs by remember { mutableStateOf(System.currentTimeMillis()) }
-    var screensaverActive by remember { mutableStateOf(false) }
-
-    // Pause/stop or returning to setup leaves the user looking at controls —
-    // never engage the screensaver in those states.
-    LaunchedEffect(state.timerRunning) {
-        if (!state.timerRunning) {
-            screensaverActive = false
-            lastInteractionMs = System.currentTimeMillis()
-        }
-    }
-
-    // Inactivity watcher. Re-arms whenever the timer resumes or the user
-    // touches the screen (lastInteractionMs change cancels the prior delay).
-    LaunchedEffect(state.timerRunning, lastInteractionMs) {
-        if (!state.timerRunning) return@LaunchedEffect
-        val timeoutMs = SCREENSAVER_TIMEOUT_MS
-        val elapsedSinceTouch = System.currentTimeMillis() - lastInteractionMs
-        val remaining = timeoutMs - elapsedSinceTouch
-        if (remaining > 0L) delay(remaining)
-        screensaverActive = true
-    }
-
-    // Auto-wake on transitions the user definitely needs to see.
+    // ── Dim mode ─────────────────────────────────────────────
+    // [DimModeScaffold] handles the touch+inactivity book-keeping and applies
+    // the monochrome color-scheme override once the user goes idle. We only
+    // need to wake it imperatively on brew transitions the user must not miss
+    // (bloom finishing, target window reached).
+    val dimController = rememberDimModeController(featureEnabled = dimModeEnabled)
     LaunchedEffect(bloomJustEndedFlash) {
-        if (bloomJustEndedFlash && screensaverActive) {
-            screensaverActive = false
-            lastInteractionMs = System.currentTimeMillis()
-        }
+        if (bloomJustEndedFlash) dimController.wake()
     }
     LaunchedEffect(state.elapsedSeconds, hasTarget) {
-        if (hasTarget && state.elapsedSeconds == state.timeTargetLowS && screensaverActive) {
-            screensaverActive = false
-            lastInteractionMs = System.currentTimeMillis()
+        if (hasTarget && state.elapsedSeconds == state.timeTargetLowS) {
+            dimController.wake()
         }
     }
 
-    val screensaverAnim = tween<Float>(durationMillis = 600)
-    val controlsAlpha by animateFloatAsState(
-        targetValue = if (screensaverActive) 0f else 1f,
-        animationSpec = screensaverAnim,
-        label = "controlsAlpha",
-    )
-    val heroDimAlpha by animateFloatAsState(
-        targetValue = if (screensaverActive) 0.55f else 1f,
-        animationSpec = screensaverAnim,
-        label = "heroDimAlpha",
-    )
-    val wakeHintAlpha by animateFloatAsState(
-        targetValue = if (screensaverActive) 0.3f else 0f,
-        animationSpec = screensaverAnim,
-        label = "wakeHintAlpha",
-    )
-
     Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .pointerInput(Unit) {
-                // Initial pass runs in the parent before children, so when
-                // the screensaver is active we can swallow the down event
-                // before any child clickable handles it. When inactive we
-                // just refresh the inactivity timestamp and let the touch
-                // propagate normally.
-                awaitPointerEventScope {
-                    while (true) {
-                        val event = awaitPointerEvent(PointerEventPass.Initial)
-                        if (event.changes.any { it.changedToDown() }) {
-                            lastInteractionMs = System.currentTimeMillis()
-                            if (screensaverActive) {
-                                screensaverActive = false
-                                event.changes.forEach { it.consume() }
-                            }
-                        }
-                    }
-                }
-            },
+        modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.surface,
     ) {
+        DimModeScaffold(
+            controller = dimController,
+            modifier = Modifier.fillMaxSize(),
+        ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
             // ── Top bar ─────────────────────────────────────────────
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .alpha(controlsAlpha)
                     .padding(horizontal = 8.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
@@ -368,7 +305,6 @@ fun BrewTimerScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .alpha(heroDimAlpha)
                     .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
@@ -395,26 +331,30 @@ fun BrewTimerScreen(
                 } else {
                     state.elapsedSeconds
                 }
-                Text(
-                    text = formatBrewTime(heroSeconds),
-                    style = MaterialTheme.typography.displayLarge,
-                    fontWeight = FontWeight.Light,
-                    color = heroColor,
-                    modifier = Modifier.semantics { heading() },
-                )
+                DimImportant(role = DimRole.Hero) {
+                    Text(
+                        text = formatBrewTime(heroSeconds),
+                        style = MaterialTheme.typography.displayLarge,
+                        fontWeight = FontWeight.Light,
+                        color = heroColor,
+                        modifier = Modifier.semantics { heading() },
+                    )
+                }
 
                 when {
                     bloomActive -> {
                         // Bloom badge
-                        Text(
-                            text = stringResource(R.string.label_bloom_badge),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onTertiaryContainer,
-                            modifier = Modifier
-                                .clip(MaterialTheme.shapes.medium)
-                                .background(MaterialTheme.colorScheme.tertiaryContainer)
-                                .padding(horizontal = 16.dp, vertical = 4.dp),
-                        )
+                        DimImportant(role = DimRole.Secondary) {
+                            Text(
+                                text = stringResource(R.string.label_bloom_badge),
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                                modifier = Modifier
+                                    .clip(MaterialTheme.shapes.medium)
+                                    .background(MaterialTheme.colorScheme.tertiaryContainer)
+                                    .padding(horizontal = 16.dp, vertical = 4.dp),
+                            )
+                        }
 
                         val bloomDuration = state.effectiveBloomDurationSeconds
                         val progress = if (bloomDuration > 0) {
@@ -448,61 +388,60 @@ fun BrewTimerScreen(
                 }
 
                 // ── Primary guidance card — the most important info right now
-                BrewGuidanceCard(
-                    state = state,
-                    bloomActive = bloomActive,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                DimImportant(role = DimRole.Primary) {
+                    BrewGuidanceCard(
+                        state = state,
+                        bloomActive = bloomActive,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
 
                 // ── Metadata row: target time · temp · total water
                 BrewMetadataRow(
                     state = state,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .alpha(controlsAlpha),
+                        .fillMaxWidth(),
                 )
             }
 
             // ── Bottom controls ─────────────────────────────────────
-            // Wrapped in a Box so the screensaver "tap to wake" hint can
-            // overlay the same slot once controls fade out.
-            Box(modifier = Modifier.fillMaxWidth()) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .alpha(controlsAlpha)
-                        .padding(horizontal = 24.dp)
-                        .padding(bottom = 24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
                 // Start Bloom — primary CTA before bloom is marked
                 val showStartBloom = state.method.hasBloom &&
                     state.bloomMarkedAtSeconds == null &&
                     state.bloomG > 0f
                 if (showStartBloom) {
-                    ElevatedButton(
-                        onClick = {
-                            // Start Bloom is the real "begin brew" moment for bloom methods —
-                            // start the timer first if it hasn't started yet.
-                            if (!state.timerRunning && state.elapsedSeconds == 0) {
-                                brewViewModel.startTimer()
-                            }
-                            brewViewModel.markBloom()
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(72.dp),
-                        shape = MaterialTheme.shapes.extraLarge,
-                        colors = ButtonDefaults.elevatedButtonColors(
-                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                        ),
-                    ) {
-                        Text(
-                            text = stringResource(R.string.action_start_bloom),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.SemiBold,
-                        )
+                    DimImportant(role = DimRole.Action) {
+                        ElevatedButton(
+                            onClick = {
+                                // Start Bloom is the real "begin brew" moment for bloom methods —
+                                // start the timer first if it hasn't started yet.
+                                if (!state.timerRunning && state.elapsedSeconds == 0) {
+                                    brewViewModel.startTimer()
+                                }
+                                brewViewModel.markBloom()
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(72.dp),
+                            shape = MaterialTheme.shapes.extraLarge,
+                            colors = ButtonDefaults.elevatedButtonColors(
+                                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                            ),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.action_start_bloom),
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                        }
                     }
                     Spacer(modifier = Modifier.height(12.dp))
                 }
@@ -526,51 +465,35 @@ fun BrewTimerScreen(
                         )
                     }
 
-                    FilledIconButton(
-                        onClick = {
-                            if (state.timerRunning) brewViewModel.pauseTimer()
-                            else brewViewModel.startTimer()
-                        },
-                        modifier = Modifier.size(72.dp),
-                        shape = CircleShape,
-                        colors = IconButtonDefaults.filledIconButtonColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        ),
-                    ) {
-                        Icon(
-                            imageVector = if (state.timerRunning) Icons.Filled.Pause
-                            else Icons.Filled.PlayArrow,
-                            contentDescription = if (state.timerRunning) "Pause" else "Resume",
-                            modifier = Modifier.size(36.dp),
-                        )
+                    DimImportant(role = DimRole.Action) {
+                        FilledIconButton(
+                            onClick = {
+                                if (state.timerRunning) brewViewModel.pauseTimer()
+                                else brewViewModel.startTimer()
+                            },
+                            modifier = Modifier.size(72.dp),
+                            shape = CircleShape,
+                            colors = IconButtonDefaults.filledIconButtonColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                            ),
+                        ) {
+                            Icon(
+                                imageVector = if (state.timerRunning) Icons.Filled.Pause
+                                else Icons.Filled.PlayArrow,
+                                contentDescription = if (state.timerRunning) "Pause" else "Resume",
+                                modifier = Modifier.size(36.dp),
+                            )
+                        }
                     }
-
                     // Spacer to balance the row
                     Spacer(modifier = Modifier.size(72.dp))
                 }
-                }
-
-                // Screensaver "tap to wake" hint — appears centered in the
-                // bottom slot once the controls fade out. Sits in the same
-                // Box, so it can't shift the rest of the layout.
-                if (wakeHintAlpha > 0f) {
-                    Text(
-                        text = stringResource(R.string.hint_tap_to_wake),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .padding(bottom = 28.dp)
-                            .alpha(wakeHintAlpha),
-                    )
-                }
             }
+        }
         }
     }
 }
-
-private const val SCREENSAVER_TIMEOUT_MS: Long = 25_000L
 
 /**
  * Primary guidance card surfaces the single most important instruction right now:
