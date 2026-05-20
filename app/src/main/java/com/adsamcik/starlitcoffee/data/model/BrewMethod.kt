@@ -2,6 +2,45 @@ package com.adsamcik.starlitcoffee.data.model
 
 import com.adsamcik.starlitcoffee.R
 
+data class DecafTimeAdjustmentPolicy(
+    val secondsToSubtract: Int,
+    val lowMinimumSeconds: Int,
+    val highMinimumSeconds: Int,
+) {
+    fun lowTarget(baseSeconds: Int): Int =
+        (baseSeconds - secondsToSubtract).coerceAtLeast(lowMinimumSeconds)
+
+    fun highTarget(baseSeconds: Int): Int =
+        (baseSeconds - secondsToSubtract).coerceAtLeast(highMinimumSeconds)
+
+    companion object {
+        val STANDARD = DecafTimeAdjustmentPolicy(
+            secondsToSubtract = 30,
+            lowMinimumSeconds = 120,
+            highMinimumSeconds = 150,
+        )
+        val NONE = DecafTimeAdjustmentPolicy(
+            secondsToSubtract = 0,
+            lowMinimumSeconds = 0,
+            highMinimumSeconds = 0,
+        )
+    }
+}
+
+data class RatioWarningRange(
+    val strongBelow: Float,
+    val weakAbove: Float,
+) {
+    companion object {
+        val FILTER_BREW = RatioWarningRange(strongBelow = 10f, weakAbove = 20f)
+    }
+}
+
+enum class BrewOutputSemantics {
+    WATER_IN_MINUS_ABSORPTION,
+    BEVERAGE_YIELD,
+}
+
 /**
  * Canonical brew method registry. Each enum constant captures the full
  * method profile (ratio, temp/time/bloom). The constructor parameter list
@@ -25,6 +64,9 @@ enum class BrewMethod(
     val defaultGrindDescriptor: GrindDescriptor,
     val bloomDurationSeconds: Int = 45,
     val absorptionRatio: Float = 2.0f,
+    val decafTimeAdjustmentPolicy: DecafTimeAdjustmentPolicy = DecafTimeAdjustmentPolicy.STANDARD,
+    val ratioWarningRange: RatioWarningRange? = RatioWarningRange.FILTER_BREW,
+    val outputSemantics: BrewOutputSemantics = BrewOutputSemantics.WATER_IN_MINUS_ABSORPTION,
 ) {
     PULSAR(
         displayName = "Pulsar",
@@ -100,6 +142,10 @@ enum class BrewMethod(
         hasPulses = false,
         capacityMaxG = null,
         defaultGrindDescriptor = GrindDescriptor.VERY_FINE,
+        absorptionRatio = 0f,
+        decafTimeAdjustmentPolicy = DecafTimeAdjustmentPolicy.NONE,
+        ratioWarningRange = null,
+        outputSemantics = BrewOutputSemantics.BEVERAGE_YIELD,
     ),
     MOKA_POT(
         displayName = "Moka Pot",
@@ -115,6 +161,7 @@ enum class BrewMethod(
         hasPulses = false,
         capacityMaxG = null,
         defaultGrindDescriptor = GrindDescriptor.FINE,
+        ratioWarningRange = RatioWarningRange(strongBelow = 8f, weakAbove = 12f),
     ),
     COLD_BREW(
         displayName = "Cold Brew",
@@ -130,6 +177,7 @@ enum class BrewMethod(
         hasPulses = false,
         capacityMaxG = null,
         defaultGrindDescriptor = GrindDescriptor.COARSE,
+        ratioWarningRange = RatioWarningRange(strongBelow = 4f, weakAbove = 12f),
     ),
     ;
 

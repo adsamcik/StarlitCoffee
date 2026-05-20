@@ -285,6 +285,35 @@ class BrewViewModelTest {
     }
 
     @Test
+    fun `cold brew default ratio does not warn as strong`() {
+        viewModel.setMethod(BrewMethod.COLD_BREW)
+        viewModel.setAmount("50")
+
+        assertNull(viewModel.uiState.value.ratioWarning)
+    }
+
+    @Test
+    fun `moka default and strong ratios do not warn as strong`() {
+        viewModel.setMethod(BrewMethod.MOKA_POT)
+        viewModel.setAmount("20")
+        assertNull(viewModel.uiState.value.ratioWarning)
+
+        viewModel.setCustomRatio("8")
+        assertNull(viewModel.uiState.value.ratioWarning)
+    }
+
+    @Test
+    fun `decaf espresso keeps espresso timing range`() {
+        viewModel.setMethod(BrewMethod.ESPRESSO)
+        viewModel.setDecafBrew(true)
+        viewModel.setAmount("18")
+
+        val state = viewModel.uiState.value
+        assertEquals(25, state.timeTargetLowS)
+        assertEquals(35, state.timeTargetHighS)
+    }
+
+    @Test
     fun `no ratio warning for normal range`() {
         viewModel.setMethod(BrewMethod.PULSAR)
         viewModel.setAmount("20")
@@ -1730,11 +1759,13 @@ class BrewViewModelTest {
     }
 
     @Test
-    fun `predicted cup volume never goes below zero`() {
+    fun `espresso predicted cup volume uses beverage yield semantics`() {
         viewModel.setMethod(BrewMethod.ESPRESSO)
         viewModel.setAmount("18")
         val state = viewModel.uiState.value
-        assertEquals(0f, state.predictedCupVolumeG, 0.01f)
+        assertEquals(36f, state.waterG, 0.01f)
+        assertEquals(0f, state.retainedWaterG, 0.01f)
+        assertEquals(36f, state.predictedCupVolumeG, 0.01f)
     }
 
     @Test

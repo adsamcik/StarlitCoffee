@@ -48,6 +48,7 @@ import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.domain.BrewCalculator
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.service.TimerStateHolder
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
@@ -2208,44 +2209,11 @@ class BrewViewModel(
                 presetRatio
             }
 
-            val coffeeG: Float
-            val waterG: Float
-            when (state.inputMode) {
-                InputMode.COFFEE_TO_WATER -> {
-                    coffeeG = amount
-                    waterG = if (effectiveRatio != 0f) coffeeG * effectiveRatio else 0f
-                }
-                InputMode.WATER_TO_COFFEE -> {
-                    waterG = amount
-                    coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
-                }
-                InputMode.BREW_SIZE_TO_BOTH -> {
-                    val brewMl = amount
-                    val absorptionFactor = 2.0f
-                    val divisor = effectiveRatio - absorptionFactor
-                    if (divisor > 0f) {
-                        coffeeG = brewMl / divisor
-                        waterG = coffeeG * effectiveRatio
-                    } else {
-                        // For espresso/moka where ratio ≤ absorption, treat as water input
-                        waterG = brewMl
-                        coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
-                    }
-                }
-                InputMode.CUP_SIZE_TO_BOTH -> {
-                    waterG = amount
-                    coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
-                }
-            }
-
             val effectiveBloomMultiplier = if (state.bloomMultiplier.isNotEmpty()) {
                 state.bloomMultiplier.toFloatOrNull() ?: method.bloomMultiplier
             } else {
                 method.bloomMultiplier
             }
-            val bloomG = if (method.hasBloom) coffeeG * effectiveBloomMultiplier else 0f
-
-            val remainingWaterG = waterG - bloomG
 
             val effectivePulseCount = if (state.pulseCount.isNotEmpty()) {
                 state.pulseCount.toIntOrNull() ?: method.defaultPulses
@@ -2253,40 +2221,15 @@ class BrewViewModel(
                 method.defaultPulses
             }
 
-            val pulseSizeG = if (method.hasPulses && effectivePulseCount > 0) {
-                remainingWaterG / effectivePulseCount
-            } else {
-                0f
-            }
-
-            val timeTargetLowS = method.timeTargetLow.let {
-                if (effectiveIsDecaf) (it - 30).coerceAtLeast(120) else it
-            }
-            val timeTargetHighS = method.timeTargetHigh.let {
-                if (effectiveIsDecaf) (it - 30).coerceAtLeast(150) else it
-            }
-
-            val refillCount = if (method.capacityMaxG != null && waterG > method.capacityMaxG) {
-                kotlin.math.ceil(waterG.toDouble() / method.capacityMaxG).toInt() - 1
-            } else {
-                0
-            }
-
-            val ratioWarning = when {
-                effectiveRatio <= 0f -> "Ratio must be greater than zero"
-                coffeeG <= 0f || waterG <= 0f -> null
-                method == BrewMethod.ESPRESSO -> null
-                effectiveRatio < 10f -> "Ratio 1:${"%.1f".format(effectiveRatio)} is unusually strong"
-                effectiveRatio > 20f -> "Ratio 1:${"%.1f".format(effectiveRatio)} is unusually weak"
-                else -> null
-            }
-
-            val bloomWarning = if (method.hasBloom && bloomG > waterG && waterG > 0f) {
-                "Bloom (${"%.0f".format(bloomG)}g) exceeds total water (${"%.0f".format(waterG)}g)"
-            } else {
-                null
-            }
-
+            val calculation = BrewCalculator.calculate(
+                method = method,
+                inputMode = state.inputMode,
+                amount = amount,
+                effectiveRatio = effectiveRatio,
+                bloomMultiplier = effectiveBloomMultiplier,
+                pulseCount = effectivePulseCount,
+                isDecaf = effectiveIsDecaf,
+            )
             // Bloom duration adjusted by roast freshness (when bag is selected)
             val effectiveBloomDurationSeconds = run {
                 val baseDuration = method.bloomDurationSeconds
@@ -2306,9 +2249,6 @@ class BrewViewModel(
                 }
             }
 
-            val retainedWaterG = coffeeG * method.absorptionRatio
-            val predictedCupVolumeG = (waterG - retainedWaterG).coerceAtLeast(0f)
-
             val grindResult = resolveGrindResult(
                 grinderId = state.selectedGrinderId,
                 method = method,
@@ -2320,24 +2260,24 @@ class BrewViewModel(
             )
 
             state.copy(
-                coffeeG = coffeeG,
-                waterG = waterG,
+                coffeeG = calculation.coffeeG,
+                waterG = calculation.waterG,
                 effectiveRatio = effectiveRatio,
-                bloomG = bloomG,
-                remainingWaterG = remainingWaterG,
-                pulseSizeG = pulseSizeG,
-                effectivePulseCount = effectivePulseCount,
-                timeTargetLowS = timeTargetLowS,
-                timeTargetHighS = timeTargetHighS,
+                bloomG = calculation.bloomG,
+                remainingWaterG = calculation.remainingWaterG,
+                pulseSizeG = calculation.pulseSizeG,
+                effectivePulseCount = calculation.effectivePulseCount,
+                timeTargetLowS = calculation.timeTargetLowS,
+                timeTargetHighS = calculation.timeTargetHighS,
                 grindResult = grindResult,
-                refillCount = refillCount,
-                ratioWarning = ratioWarning,
-                bloomWarning = bloomWarning,
+                refillCount = calculation.refillCount,
+                ratioWarning = calculation.ratioWarning,
+                bloomWarning = calculation.bloomWarning,
                 effectiveBloomDurationSeconds = effectiveBloomDurationSeconds,
                 isDecafBrew = effectiveIsDecaf,
                 decafMismatchWithBag = decafMismatchWithBag,
-                retainedWaterG = retainedWaterG,
-                predictedCupVolumeG = predictedCupVolumeG,
+                retainedWaterG = calculation.retainedWaterG,
+                predictedCupVolumeG = calculation.predictedCupVolumeG,
             )
         }
     }
