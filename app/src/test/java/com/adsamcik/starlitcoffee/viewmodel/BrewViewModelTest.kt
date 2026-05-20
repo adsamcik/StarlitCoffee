@@ -215,6 +215,103 @@ class BrewViewModelTest {
         assertEquals(0f, state.pulseSizeG, 0.01f)
     }
 
+    @Test
+    fun `V60 keeps bloom and pulse behavior without Pulsar capacity refills`() {
+        viewModel.setMethod(BrewMethod.V60)
+        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
+        viewModel.setAmount("20")
+
+        val state = viewModel.uiState.value
+        assertEquals(16f, state.effectiveRatio, 0.01f)
+        assertEquals(320f, state.waterG, 0.01f)
+        assertEquals(50f, state.bloomG, 0.01f)
+        assertEquals(270f, state.remainingWaterG, 0.01f)
+        assertEquals(4, state.effectivePulseCount)
+        assertEquals(67.5f, state.pulseSizeG, 0.01f)
+        assertEquals(0, state.refillCount)
+    }
+
+    @Test
+    fun `French Press has no bloom or pulses and keeps steep target`() {
+        viewModel.setMethod(BrewMethod.FRENCH_PRESS)
+        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
+        viewModel.setAmount("30")
+
+        val state = viewModel.uiState.value
+        assertEquals(15f, state.effectiveRatio, 0.01f)
+        assertEquals(450f, state.waterG, 0.01f)
+        assertEquals(0f, state.bloomG, 0.01f)
+        assertEquals(0, state.effectivePulseCount)
+        assertEquals(240, state.timeTargetLowS)
+        assertEquals(240, state.timeTargetHighS)
+    }
+
+    @Test
+    fun `AeroPress has no bloom or pulses and reports chamber refills over capacity`() {
+        viewModel.setMethod(BrewMethod.AEROPRESS)
+        viewModel.setInputMode(InputMode.WATER_TO_COFFEE)
+        viewModel.setAmount("300")
+
+        val state = viewModel.uiState.value
+        assertEquals(20f, state.coffeeG, 0.01f)
+        assertEquals(300f, state.waterG, 0.01f)
+        assertEquals(0f, state.bloomG, 0.01f)
+        assertEquals(0, state.effectivePulseCount)
+        assertEquals(1, state.refillCount)
+        assertEquals(90, state.timeTargetLowS)
+        assertEquals(150, state.timeTargetHighS)
+    }
+
+    @Test
+    fun `Espresso has beverage yield semantics and no bloom or pulses`() {
+        viewModel.setMethod(BrewMethod.ESPRESSO)
+        viewModel.setInputMode(InputMode.BREW_SIZE_TO_BOTH)
+        viewModel.setAmount("36")
+
+        val state = viewModel.uiState.value
+        assertEquals(18f, state.coffeeG, 0.01f)
+        assertEquals(36f, state.waterG, 0.01f)
+        assertEquals(36f, state.predictedCupVolumeG, 0.01f)
+        assertEquals(0f, state.retainedWaterG, 0.01f)
+        assertEquals(0f, state.bloomG, 0.01f)
+        assertEquals(0, state.effectivePulseCount)
+    }
+
+    @Test
+    fun `Moka Pot has no bloom or pulses and accepts classic ratios`() {
+        viewModel.setMethod(BrewMethod.MOKA_POT)
+        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
+        viewModel.setAmount("20")
+
+        val state = viewModel.uiState.value
+        assertEquals(10f, state.effectiveRatio, 0.01f)
+        assertEquals(200f, state.waterG, 0.01f)
+        assertEquals(0f, state.bloomG, 0.01f)
+        assertEquals(0, state.effectivePulseCount)
+        assertEquals(240, state.timeTargetLowS)
+        assertEquals(300, state.timeTargetHighS)
+        assertNull(state.ratioWarning)
+
+        viewModel.setCustomRatio("8")
+        assertNull(viewModel.uiState.value.ratioWarning)
+    }
+
+    @Test
+    fun `Cold Brew has passive long duration profile without bloom or pulses`() {
+        viewModel.setMethod(BrewMethod.COLD_BREW)
+        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
+        viewModel.setAmount("50")
+
+        val state = viewModel.uiState.value
+        assertEquals(8f, state.effectiveRatio, 0.01f)
+        assertEquals(400f, state.waterG, 0.01f)
+        assertEquals(0f, state.bloomG, 0.01f)
+        assertEquals(0, state.effectivePulseCount)
+        assertEquals(43_200, state.timeTargetLowS)
+        assertEquals(86_400, state.timeTargetHighS)
+        assertNull(state.ratioWarning)
+    }
+
     // --- Refill Count ---
 
     @Test
