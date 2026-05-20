@@ -1869,6 +1869,30 @@ class BrewViewModelTest {
         assertTrue(vm.uiState.value.effectiveBloomDurationSeconds >= 30)
     }
 
+
+    // --- Timer Profile ---
+
+    @Test
+    fun `cold brew does not start an active timer`() {
+        viewModel.setMethod(BrewMethod.COLD_BREW)
+
+        viewModel.startTimer()
+
+        val state = viewModel.uiState.value
+        assertFalse(state.timerRunning)
+        assertEquals(0, state.elapsedSeconds)
+    }
+
+    @Test
+    fun `short methods can start an active timer`() {
+        viewModel.setMethod(BrewMethod.V60)
+
+        viewModel.startTimer()
+
+        assertTrue(viewModel.uiState.value.timerRunning)
+        viewModel.stopTimer()
+    }
+
     // --- New Brew Session Reset ---
 
     @Test
@@ -2032,4 +2056,3 @@ class BrewViewModelTest {
         assertNull(viewModel.uiState.value.bloomSpritesheetId)
     }
 }
-

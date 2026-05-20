@@ -41,4 +41,22 @@ class BrewMethodStageGuidanceTest {
         assertEquals(0, BrewMethod.MOKA_POT.tempRangeHigh)
         assertEquals(R.string.instruction_moka_start, BrewMethod.MOKA_POT.stageGuidance.timerStartRes)
     }
+
+    // --- Timing mode ---
+
+    @Test
+    fun `only cold brew is modeled as passive long duration`() {
+        val passiveMethods = BrewMethod.entries.filter { it.timingMode == BrewTimingMode.PASSIVE_LONG_DURATION }
+
+        assertEquals(listOf(BrewMethod.COLD_BREW), passiveMethods)
+    }
+
+    @Test
+    fun `short brew methods keep active timer behavior`() {
+        val shortMethods = BrewMethod.entries - BrewMethod.COLD_BREW
+
+        shortMethods.forEach { method ->
+            assertEquals("${method.name} timing mode", BrewTimingMode.ACTIVE_TIMER, method.timingMode)
+        }
+    }
 }

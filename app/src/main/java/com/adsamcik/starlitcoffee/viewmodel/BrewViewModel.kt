@@ -16,6 +16,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewTimingMode
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
 import com.adsamcik.starlitcoffee.data.model.CoffeeRoastLevel
@@ -399,6 +400,7 @@ class BrewViewModel(
     }
 
     fun startTimer() {
+        if (_uiState.value.method.timingMode != BrewTimingMode.ACTIVE_TIMER) return
         if (timerJob?.isActive == true) return
         _uiState.update { it.copy(timerRunning = true) }
         timerStartMs = System.nanoTime() / 1_000_000L

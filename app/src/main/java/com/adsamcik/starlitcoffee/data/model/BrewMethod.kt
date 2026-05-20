@@ -42,6 +42,11 @@ enum class BrewOutputSemantics {
     BEVERAGE_YIELD,
 }
 
+enum class BrewTimingMode {
+    ACTIVE_TIMER,
+    PASSIVE_LONG_DURATION,
+}
+
 data class BrewStageGuidance(
     @param:StringRes val prepTipRes: Int,
     @param:StringRes val timerStartRes: Int? = null,
@@ -75,6 +80,7 @@ enum class BrewMethod(
     val decafTimeAdjustmentPolicy: DecafTimeAdjustmentPolicy = DecafTimeAdjustmentPolicy.STANDARD,
     val ratioWarningRange: RatioWarningRange? = RatioWarningRange.FILTER_BREW,
     val outputSemantics: BrewOutputSemantics = BrewOutputSemantics.WATER_IN_MINUS_ABSORPTION,
+    val timingMode: BrewTimingMode = BrewTimingMode.ACTIVE_TIMER,
     val stageGuidance: BrewStageGuidance,
 ) {
     PULSAR(
@@ -217,6 +223,7 @@ enum class BrewMethod(
         capacityMaxG = null,
         defaultGrindDescriptor = GrindDescriptor.COARSE,
         ratioWarningRange = RatioWarningRange(strongBelow = 4f, weakAbove = 12f),
+        timingMode = BrewTimingMode.PASSIVE_LONG_DURATION,
         stageGuidance = BrewStageGuidance(
             prepTipRes = R.string.prep_tip_cold_brew,
             timerStartRes = R.string.instruction_cold_brew_start,

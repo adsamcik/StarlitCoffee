@@ -65,6 +65,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewTimingMode
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
 import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
@@ -87,10 +88,13 @@ fun BrewTimerScreen(
     onComplete: () -> Unit = {},
 ) {
     val state by brewViewModel.uiState.collectAsStateWithLifecycle()
+    val usesActiveTimer = state.method.timingMode == BrewTimingMode.ACTIVE_TIMER
     val context = LocalContext.current
     val vibrator = remember { getVibrator(context) }
 
-    KeepScreenOn()
+    if (usesActiveTimer) {
+        KeepScreenOn()
+    }
 
     // Pick the bloom spritesheet eagerly once weights are available so the
     // bud frame shown before "Start Bloom" is tapped, the animation that runs
@@ -106,8 +110,13 @@ fun BrewTimerScreen(
     // Auto-start the timer only when the brew begins immediately.
     // For bloom methods, the timer starts when the user taps Start Bloom —
     // pre-bloom setup (tare, kettle, etc.) shouldn't pollute elapsed time.
-    LaunchedEffect(Unit) {
-        if (!state.timerRunning && state.elapsedSeconds == 0 && !state.method.hasBloom) {
+    LaunchedEffect(state.method) {
+        if (
+            usesActiveTimer &&
+            !state.timerRunning &&
+            state.elapsedSeconds == 0 &&
+            !state.method.hasBloom
+        ) {
             brewViewModel.startTimer()
         }
     }
@@ -148,7 +157,7 @@ fun BrewTimerScreen(
     val currentMinute = state.elapsedSeconds / 60
     val bloomActive = state.bloomMarkedAtSeconds != null && !state.bloomFinished
     LaunchedEffect(currentMinute) {
-        if (currentMinute > 0 && state.timerRunning && state.minuteAlertEnabled && !bloomActive) {
+        if (usesActiveTimer && currentMinute > 0 && state.timerRunning && state.minuteAlertEnabled && !bloomActive) {
             vibrator?.vibrate(
                 VibrationEffect.createWaveform(longArrayOf(0, 100, 80, 100), -1),
             )
@@ -227,7 +236,7 @@ fun BrewTimerScreen(
         if (bloomJustEndedFlash) dimController.wake()
     }
     LaunchedEffect(state.elapsedSeconds, hasTarget) {
-        if (hasTarget && state.elapsedSeconds == state.timeTargetLowS) {
+        if (usesActiveTimer && hasTarget && state.elapsedSeconds == state.timeTargetLowS) {
             dimController.wake()
         }
     }
@@ -249,26 +258,28 @@ fun BrewTimerScreen(
                     .padding(horizontal = 8.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
-                IconButton(
-                    onClick = { brewViewModel.toggleMinuteAlert() },
-                    modifier = Modifier.size(48.dp),
-                ) {
-                    Icon(
-                        imageVector = if (state.minuteAlertEnabled) {
-                            Icons.Filled.Notifications
-                        } else {
-                            Icons.Filled.NotificationsOff
-                        },
-                        contentDescription = if (state.minuteAlertEnabled) {
-                            "Disable minute alerts"
-                        } else {
-                            "Enable minute alerts"
-                        },
-                        modifier = Modifier.size(24.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(
-                            alpha = if (state.minuteAlertEnabled) 0.7f else 0.35f,
-                        ),
-                    )
+                if (usesActiveTimer) {
+                    IconButton(
+                        onClick = { brewViewModel.toggleMinuteAlert() },
+                        modifier = Modifier.size(48.dp),
+                    ) {
+                        Icon(
+                            imageVector = if (state.minuteAlertEnabled) {
+                                Icons.Filled.Notifications
+                            } else {
+                                Icons.Filled.NotificationsOff
+                            },
+                            contentDescription = if (state.minuteAlertEnabled) {
+                                "Disable minute alerts"
+                            } else {
+                                "Enable minute alerts"
+                            },
+                            modifier = Modifier.size(24.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                                alpha = if (state.minuteAlertEnabled) 0.7f else 0.35f,
+                            ),
+                        )
+                    }
                 }
                 IconButton(
                     onClick = requestExit,
@@ -327,22 +338,32 @@ fun BrewTimerScreen(
                     )
                 }
 
-                // Hero number: bloom countdown if active, otherwise elapsed total
-                val heroSeconds = if (bloomActive) {
-                    state.bloomCountdownSeconds ?: 0
+                // Hero number: bloom countdown if active, otherwise elapsed total.
+                // Passive long-duration methods show the target window instead of
+                // implying an active stopwatch session.
+                val heroText = if (usesActiveTimer) {
+                    val heroSeconds = if (bloomActive) {
+                        state.bloomCountdownSeconds ?: 0
+                    } else {
+                        state.elapsedSeconds
+                    }
+                    formatBrewTime(heroSeconds)
                 } else {
-                    state.elapsedSeconds
+                    formatTargetDurationRange(state.timeTargetLowS, state.timeTargetHighS)
                 }
                 DimImportant(role = DimRole.Hero) {
                     Text(
-                        text = formatBrewTime(heroSeconds),
-                        style = MaterialTheme.typography.displayLarge,
+                        text = heroText,
+                        style = if (usesActiveTimer) {
+                            MaterialTheme.typography.displayLarge
+                        } else {
+                            MaterialTheme.typography.displayMedium
+                        },
                         fontWeight = FontWeight.Light,
                         color = heroColor,
                         modifier = Modifier.semantics { heading() },
                     )
                 }
-
                 when {
                     bloomActive -> {
                         // Bloom badge
@@ -448,48 +469,69 @@ fun BrewTimerScreen(
                     Spacer(modifier = Modifier.height(12.dp))
                 }
 
-                // Play/Pause + Finish row (Finish is now a subdued text button)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    TextButton(
-                        onClick = {
-                            brewViewModel.stopTimer()
-                            onComplete()
-                        },
+                if (usesActiveTimer) {
+                    // Play/Pause + Finish row (Finish is now a subdued text button)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text(
-                            text = stringResource(R.string.action_finish_brew),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-
-                    DimImportant(role = DimRole.Action) {
-                        FilledIconButton(
+                        TextButton(
                             onClick = {
-                                if (state.timerRunning) brewViewModel.pauseTimer()
-                                else brewViewModel.startTimer()
+                                brewViewModel.stopTimer()
+                                onComplete()
                             },
-                            modifier = Modifier.size(72.dp),
-                            shape = CircleShape,
-                            colors = IconButtonDefaults.filledIconButtonColors(
-                                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                            ),
                         ) {
-                            Icon(
-                                imageVector = if (state.timerRunning) Icons.Filled.Pause
-                                else Icons.Filled.PlayArrow,
-                                contentDescription = if (state.timerRunning) "Pause" else "Resume",
-                                modifier = Modifier.size(36.dp),
+                            Text(
+                                text = stringResource(R.string.action_finish_brew),
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+
+                        DimImportant(role = DimRole.Action) {
+                            FilledIconButton(
+                                onClick = {
+                                    if (state.timerRunning) brewViewModel.pauseTimer()
+                                    else brewViewModel.startTimer()
+                                },
+                                modifier = Modifier.size(72.dp),
+                                shape = CircleShape,
+                                colors = IconButtonDefaults.filledIconButtonColors(
+                                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                ),
+                            ) {
+                                Icon(
+                                    imageVector = if (state.timerRunning) Icons.Filled.Pause
+                                    else Icons.Filled.PlayArrow,
+                                    contentDescription = if (state.timerRunning) "Pause" else "Resume",
+                                    modifier = Modifier.size(36.dp),
+                                )
+                            }
+                        }
+                        // Spacer to balance the row
+                        Spacer(modifier = Modifier.size(72.dp))
+                    }
+                } else {
+                    DimImportant(role = DimRole.Action) {
+                        Button(
+                            onClick = {
+                                brewViewModel.stopTimer()
+                                onComplete()
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(64.dp),
+                            shape = MaterialTheme.shapes.extraLarge,
+                        ) {
+                            Text(
+                                text = stringResource(R.string.action_finish_brew),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.SemiBold,
                             )
                         }
                     }
-                    // Spacer to balance the row
-                    Spacer(modifier = Modifier.size(72.dp))
                 }
             }
         }
@@ -619,10 +661,7 @@ private fun BrewMetadataRow(
     val items = buildList {
         if (state.timeTargetLowS > 0 && state.timeTargetHighS > 0) {
             add(
-                "Target " +
-                    formatBrewTime(state.timeTargetLowS) +
-                    "–" +
-                    formatBrewTime(state.timeTargetHighS),
+                "Target " + formatTargetDurationRange(state.timeTargetLowS, state.timeTargetHighS),
             )
         }
         if (state.method.tempRangeLow > 0 && state.method.tempRangeHigh > 0) {
@@ -674,6 +713,21 @@ private fun getVibrator(context: Context): Vibrator? {
     } else {
         @Suppress("DEPRECATION")
         context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+    }
+}
+
+private fun formatTargetDurationRange(lowSeconds: Int, highSeconds: Int): String {
+    if (lowSeconds <= 0 || highSeconds <= 0) return "–"
+    return "${formatLongDuration(lowSeconds)}–${formatLongDuration(highSeconds)}"
+}
+
+private fun formatLongDuration(seconds: Int): String {
+    val hours = seconds / 3600
+    val minutes = (seconds % 3600) / 60
+    return when {
+        hours > 0 && minutes > 0 -> "${hours}h ${minutes}m"
+        hours > 0 -> "${hours}h"
+        else -> formatBrewTime(seconds)
     }
 }
 
