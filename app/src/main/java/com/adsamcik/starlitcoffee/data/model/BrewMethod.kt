@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.data.model
 
+import androidx.annotation.StringRes
 import com.adsamcik.starlitcoffee.R
 
 data class DecafTimeAdjustmentPolicy(
@@ -41,6 +42,13 @@ enum class BrewOutputSemantics {
     BEVERAGE_YIELD,
 }
 
+data class BrewStageGuidance(
+    @param:StringRes val prepTipRes: Int,
+    @param:StringRes val timerStartRes: Int? = null,
+    @param:StringRes val timerActiveRes: Int? = null,
+    @param:StringRes val timerReadyRes: Int? = null,
+)
+
 /**
  * Canonical brew method registry. Each enum constant captures the full
  * method profile (ratio, temp/time/bloom). The constructor parameter list
@@ -67,6 +75,7 @@ enum class BrewMethod(
     val decafTimeAdjustmentPolicy: DecafTimeAdjustmentPolicy = DecafTimeAdjustmentPolicy.STANDARD,
     val ratioWarningRange: RatioWarningRange? = RatioWarningRange.FILTER_BREW,
     val outputSemantics: BrewOutputSemantics = BrewOutputSemantics.WATER_IN_MINUS_ABSORPTION,
+    val stageGuidance: BrewStageGuidance,
 ) {
     PULSAR(
         displayName = "Pulsar",
@@ -82,6 +91,9 @@ enum class BrewMethod(
         hasPulses = true,
         capacityMaxG = 380,
         defaultGrindDescriptor = GrindDescriptor.MEDIUM_COARSE,
+        stageGuidance = BrewStageGuidance(
+            prepTipRes = R.string.prep_tip_pulsar_paper,
+        ),
     ),
     V60(
         displayName = "V60",
@@ -97,6 +109,9 @@ enum class BrewMethod(
         hasPulses = true,
         capacityMaxG = null,
         defaultGrindDescriptor = GrindDescriptor.MEDIUM_FINE,
+        stageGuidance = BrewStageGuidance(
+            prepTipRes = R.string.prep_tip_pour_over_paper,
+        ),
     ),
     FRENCH_PRESS(
         displayName = "French Press",
@@ -112,6 +127,12 @@ enum class BrewMethod(
         hasPulses = false,
         capacityMaxG = null,
         defaultGrindDescriptor = GrindDescriptor.COARSE,
+        stageGuidance = BrewStageGuidance(
+            prepTipRes = R.string.prep_tip_french_press,
+            timerStartRes = R.string.instruction_french_press_start,
+            timerActiveRes = R.string.instruction_french_press_steep,
+            timerReadyRes = R.string.instruction_french_press_plunge,
+        ),
     ),
     AEROPRESS(
         displayName = "AeroPress",
@@ -127,6 +148,12 @@ enum class BrewMethod(
         hasPulses = false,
         capacityMaxG = 250,
         defaultGrindDescriptor = GrindDescriptor.MEDIUM_FINE,
+        stageGuidance = BrewStageGuidance(
+            prepTipRes = R.string.prep_tip_aeropress,
+            timerStartRes = R.string.instruction_aeropress_start,
+            timerActiveRes = R.string.instruction_aeropress_steep,
+            timerReadyRes = R.string.instruction_aeropress_press,
+        ),
     ),
     ESPRESSO(
         displayName = "Espresso",
@@ -146,6 +173,12 @@ enum class BrewMethod(
         decafTimeAdjustmentPolicy = DecafTimeAdjustmentPolicy.NONE,
         ratioWarningRange = null,
         outputSemantics = BrewOutputSemantics.BEVERAGE_YIELD,
+        stageGuidance = BrewStageGuidance(
+            prepTipRes = R.string.prep_tip_espresso,
+            timerStartRes = R.string.instruction_espresso_start,
+            timerActiveRes = R.string.instruction_espresso_pull,
+            timerReadyRes = R.string.instruction_espresso_stop,
+        ),
     ),
     MOKA_POT(
         displayName = "Moka Pot",
@@ -162,6 +195,12 @@ enum class BrewMethod(
         capacityMaxG = null,
         defaultGrindDescriptor = GrindDescriptor.FINE,
         ratioWarningRange = RatioWarningRange(strongBelow = 8f, weakAbove = 12f),
+        stageGuidance = BrewStageGuidance(
+            prepTipRes = R.string.prep_tip_moka,
+            timerStartRes = R.string.instruction_moka_start,
+            timerActiveRes = R.string.instruction_moka_flow,
+            timerReadyRes = R.string.instruction_moka_remove,
+        ),
     ),
     COLD_BREW(
         displayName = "Cold Brew",
@@ -178,6 +217,12 @@ enum class BrewMethod(
         capacityMaxG = null,
         defaultGrindDescriptor = GrindDescriptor.COARSE,
         ratioWarningRange = RatioWarningRange(strongBelow = 4f, weakAbove = 12f),
+        stageGuidance = BrewStageGuidance(
+            prepTipRes = R.string.prep_tip_cold_brew,
+            timerStartRes = R.string.instruction_cold_brew_start,
+            timerActiveRes = R.string.instruction_cold_brew_steep,
+            timerReadyRes = R.string.instruction_cold_brew_filter,
+        ),
     ),
     ;
 

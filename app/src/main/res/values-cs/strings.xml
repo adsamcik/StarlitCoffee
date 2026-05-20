@@ -112,11 +112,11 @@
     <string name="prep_tip_pulsar_19k">Propláchněte kovový filtr 19K, aby dosedl a předehřál válec. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
     <string name="prep_tip_pulsar_40k">Propláchněte kovový filtr 40K, aby předehřál válec. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
     <string name="prep_tip_pour_over_paper">Vložte papírový filtr a propláchněte horkou vodou — předehřeje a odstraní papírovou chuť. Přidejte kávu, vytárujte váhu.</string>
-    <string name="prep_tip_french_press">Předehřejte konvici horkou vodou a vylijte. Přidejte kávu a vytárujte váhu.</string>
-    <string name="prep_tip_aeropress">Vložte propláchnutý papírový filtr do víčka. Přidejte kávu a vytárujte váhu.</string>
-    <string name="prep_tip_espresso">Otřete páku do sucha. Dávkujte, zarovnejte a rovnoměrně utemujte.</string>
-    <string name="prep_tip_moka">Naplňte spodní část horkou vodou po ventil. Do sítka nasypte kávu, zarovnejte — neutemujte.</string>
-    <string name="prep_tip_cold_brew">Nasypte kávu do nádoby a vytárujte váhu.</string>
+    <string name="prep_tip_french_press">Předehřejte French Press a vodu vylijte. Přidejte kávu, položte na váhu a před nalitím vody vytárujte.</string>
+    <string name="prep_tip_aeropress">Vložte propláchnutý filtr do víčka. Přidejte kávu, postavte AeroPress na pevný hrnek nebo server a vytárujte váhu.</string>
+    <string name="prep_tip_espresso">Otřete páku do sucha. Nadávkujte, rovnoměrně rozprostřete a utemujte do roviny před nasazením.</string>
+    <string name="prep_tip_moka">Naplňte spodní část po ventil. Do sítka nasypte kávu, zarovnejte — neutemujte. Opatrně sešroubujte.</string>
+    <string name="prep_tip_cold_brew">Nasypte kávu do nádoby, vytárujte váhu, přidejte studenou vodu nebo vodu pokojové teploty a zakryjte.</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pauza</string>
@@ -329,6 +329,21 @@
     <string name="instruction_open_valve_short">Otevřete ventil</string>
     <string name="instruction_close_valve_short">Zavřete ventil</string>
     <string name="instruction_bloom_wait">Protočte a vyčkejte</string>
+    <string name="instruction_french_press_start">Nalijte všechnu vodu, jemně zamíchejte a nasaďte víčko</string>
+    <string name="instruction_french_press_steep">Nechte nerušeně louhovat do cílového času</string>
+    <string name="instruction_french_press_plunge">Pomalu stlačte píst a kávu slijte</string>
+    <string name="instruction_aeropress_start">Nalijte vodu, zamíchejte a začněte louhování</string>
+    <string name="instruction_aeropress_steep">Louhujte s nasazeným víčkem; připravte se na stlačení</string>
+    <string name="instruction_aeropress_press">Plynule stlačujte až po syčení, pak zastavte</string>
+    <string name="instruction_espresso_start">Nasaďte páku a spusťte extrakci</string>
+    <string name="instruction_espresso_pull">Sledujte průtok a výtěžnost; nechte šálek na váze</string>
+    <string name="instruction_espresso_stop">Zastavte na cílové výtěžnosti nebo při blednutí proudu</string>
+    <string name="instruction_moka_start">Sešroubujte konvičku a zahřívejte mírně s otevřeným víčkem</string>
+    <string name="instruction_moka_flow">Sledujte, kdy káva začne téct do horní části</string>
+    <string name="instruction_moka_remove">Odstavte z ohřevu, když proud zesvětlá nebo začne prskat</string>
+    <string name="instruction_cold_brew_start">Smíchejte kávu s vodou a zamíchejte, aby se všechna káva namočila</string>
+    <string name="instruction_cold_brew_steep">Zakryjte a louhujte; káva má zůstat plně ponořená</string>
+    <string name="instruction_cold_brew_filter">Přefiltrujte koncentrát a podávejte vychlazený nebo naředěný</string>
 
     <!-- Warnings -->
     <string name="warning_ratio_zero">Poměr musí být větší než nula</string>

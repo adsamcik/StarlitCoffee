@@ -113,11 +113,11 @@
     <string name="prep_tip_pulsar_19k">Rinse the 19K metal filter to seat it and preheat the barrel. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>
     <string name="prep_tip_pulsar_40k">Rinse the 40K metal filter to preheat the barrel. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>
     <string name="prep_tip_pour_over_paper">Place the paper filter and rinse with hot water to preheat and remove papery taste. Add grounds, tare scale.</string>
-    <string name="prep_tip_french_press">Preheat the press with hot water, then empty. Add grounds and tare scale.</string>
-    <string name="prep_tip_aeropress">Insert a rinsed paper filter in the cap. Add grounds and tare scale.</string>
-    <string name="prep_tip_espresso">Wipe the portafilter dry. Dose, level, and tamp evenly.</string>
-    <string name="prep_tip_moka">Fill the bottom chamber with hot water to the valve. Fill the basket with grounds, level — don\'t tamp.</string>
-    <string name="prep_tip_cold_brew">Add grounds to the vessel and tare scale.</string>
+    <string name="prep_tip_french_press">Preheat the press, then empty. Add grounds, place on scale, and tare before adding water.</string>
+    <string name="prep_tip_aeropress">Insert a rinsed filter in the cap. Add grounds, set the brewer on a sturdy mug or server, and tare scale.</string>
+    <string name="prep_tip_espresso">Wipe the portafilter dry. Dose, distribute, and tamp level before locking in.</string>
+    <string name="prep_tip_moka">Fill the bottom chamber to the valve. Fill the basket with grounds, level — don\'t tamp. Assemble carefully.</string>
+    <string name="prep_tip_cold_brew">Add grounds to the vessel, tare scale, then add room-temperature or cold water and cover.</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pause</string>
@@ -337,6 +337,21 @@
     <string name="instruction_open_valve_short">Open valve</string>
     <string name="instruction_close_valve_short">Close valve</string>
     <string name="instruction_bloom_wait">Swirl &amp; wait for bloom</string>
+    <string name="instruction_french_press_start">Add all water, stir gently, and place the lid on top</string>
+    <string name="instruction_french_press_steep">Steep undisturbed until the target time</string>
+    <string name="instruction_french_press_plunge">Plunge slowly, then pour off the coffee</string>
+    <string name="instruction_aeropress_start">Add water, stir, and start the steep</string>
+    <string name="instruction_aeropress_steep">Steep with the cap on; get ready to press</string>
+    <string name="instruction_aeropress_press">Press steadily until the hiss, then stop</string>
+    <string name="instruction_espresso_start">Lock in the portafilter and start the shot</string>
+    <string name="instruction_espresso_pull">Watch flow and yield; keep the cup on the scale</string>
+    <string name="instruction_espresso_stop">Stop at target yield or when the shot blondes</string>
+    <string name="instruction_moka_start">Assemble the pot and heat gently with the lid open</string>
+    <string name="instruction_moka_flow">Watch for coffee flowing into the upper chamber</string>
+    <string name="instruction_moka_remove">Remove from heat when flow turns pale or sputters</string>
+    <string name="instruction_cold_brew_start">Combine coffee and water, stir to wet every ground</string>
+    <string name="instruction_cold_brew_steep">Cover and steep; keep the grounds fully saturated</string>
+    <string name="instruction_cold_brew_filter">Filter the concentrate and chill or dilute to serve</string>
 
     <!-- Warnings -->
     <string name="warning_ratio_zero">Ratio must be greater than zero</string>

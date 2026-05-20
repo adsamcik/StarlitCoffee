@@ -8,6 +8,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.activity.compose.BackHandler
+import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -72,6 +73,7 @@ import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
 import com.adsamcik.starlitcoffee.ui.util.DimRole
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
+import com.adsamcik.starlitcoffee.viewmodel.BrewUiState
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlinx.coroutines.delay
 import kotlin.math.abs
@@ -542,10 +544,17 @@ private fun BrewGuidanceCard(
             primary = stringResource(R.string.format_pour_bloom_water, state.bloomG),
             secondary = if (isPulsar) stringResource(R.string.instruction_open_valve_short) else null,
         )
-        state.waterG > 0f -> Guidance(
-            primary = stringResource(R.string.instruction_pour_total, state.waterG),
-            secondary = null,
-        )
+        state.waterG > 0f -> {
+            val methodGuidanceRes = methodTimerGuidanceRes(state)
+            Guidance(
+                primary = if (methodGuidanceRes != null) {
+                    stringResource(methodGuidanceRes)
+                } else {
+                    stringResource(R.string.instruction_pour_total, state.waterG)
+                },
+                secondary = null,
+            )
+        }
         else -> return
     }
 
@@ -580,13 +589,31 @@ private fun BrewGuidanceCard(
     }
 }
 
+@StringRes
+private fun methodTimerGuidanceRes(
+    state: BrewUiState,
+): Int? {
+    if (state.method.hasBloom) return null
+
+    val guidance = state.method.stageGuidance
+    return when {
+        state.timeTargetLowS > 0 && state.elapsedSeconds >= state.timeTargetLowS -> {
+            guidance.timerReadyRes ?: guidance.timerActiveRes ?: guidance.timerStartRes
+        }
+        state.timerRunning || state.elapsedSeconds > 0 -> {
+            guidance.timerActiveRes ?: guidance.timerStartRes
+        }
+        else -> guidance.timerStartRes ?: guidance.timerActiveRes
+    }
+}
+
 /**
  * Compact row of supporting info — target brew time, water temp, total water.
  * These help the user gauge progress without competing with the primary guidance.
  */
 @Composable
 private fun BrewMetadataRow(
-    state: com.adsamcik.starlitcoffee.viewmodel.BrewUiState,
+    state: BrewUiState,
     modifier: Modifier = Modifier,
 ) {
     val items = buildList {

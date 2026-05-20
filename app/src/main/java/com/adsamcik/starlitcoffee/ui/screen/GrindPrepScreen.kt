@@ -428,10 +428,5 @@ private fun prepTipFor(method: BrewMethod, filter: FilterType?): Int = when (met
         FilterType.METAL_40K -> R.string.prep_tip_pulsar_40k
         else -> R.string.prep_tip_pulsar_paper
     }
-    BrewMethod.V60 -> R.string.prep_tip_pour_over_paper
-    BrewMethod.FRENCH_PRESS -> R.string.prep_tip_french_press
-    BrewMethod.AEROPRESS -> R.string.prep_tip_aeropress
-    BrewMethod.ESPRESSO -> R.string.prep_tip_espresso
-    BrewMethod.MOKA_POT -> R.string.prep_tip_moka
-    BrewMethod.COLD_BREW -> R.string.prep_tip_cold_brew
+    else -> method.stageGuidance.prepTipRes
 }
