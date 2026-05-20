@@ -532,8 +532,6 @@
 
     <!-- SettingsScreen -->
     <string name="msg_pulsar_settings_applied">Applied when brewing with Pulsar</string>
-    <string name="label_qr_link_explorer">QR link explorer</string>
-    <string name="msg_qr_approval_hint">QR links in bag photos require approval before exploration.</string>
     <string name="label_quick_brew">Quick brew</string>
     <string name="msg_quick_brew_hint">Skip the grind prep step and go straight to the timer when you start a brew</string>
     <string name="action_add_cup_preset">Add cup preset</string>

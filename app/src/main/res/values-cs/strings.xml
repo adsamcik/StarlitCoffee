@@ -560,8 +560,6 @@
 
     <!-- SettingsScreen -->
     <string name="msg_pulsar_settings_applied">Platí při přípravě s Pulsarem</string>
-    <string name="label_qr_link_explorer">Průzkumník QR odkazů</string>
-    <string name="msg_qr_approval_hint">QR odkazy ve fotografiích balení vyžadují schválení před průzkumem.</string>
     <string name="label_quick_brew">Rychlá příprava</string>
     <string name="msg_quick_brew_hint">Přeskočit krok přípravy mletí a přejít rovnou na časovač</string>
     <string name="action_add_cup_preset">Přidat předvolbu šálku</string>
