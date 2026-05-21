@@ -68,9 +68,9 @@ import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
+import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.ui.util.availablePresetIcons
 import com.adsamcik.starlitcoffee.ui.util.presetColorPalette
-import com.adsamcik.starlitcoffee.ui.util.presetIcon
 import com.adsamcik.starlitcoffee.BuildConfig
 import android.content.Intent
 import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
@@ -173,12 +173,24 @@ fun SettingsScreen(
                             val dotColor = preset.colorHex?.let {
                                 try { Color(android.graphics.Color.parseColor(it)) } catch (_: IllegalArgumentException) { null }
                             } ?: MaterialTheme.colorScheme.secondaryContainer
-                            Icon(
-                                imageVector = presetIcon(preset.iconName),
-                                contentDescription = null,
-                                modifier = Modifier.size(20.dp),
-                                tint = dotColor,
-                            )
+                            Box(
+                                modifier = Modifier.size(28.dp),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                PresetIcon(
+                                    iconName = preset.iconName,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(24.dp),
+                                )
+                                Box(
+                                    modifier = Modifier
+                                        .align(Alignment.BottomEnd)
+                                        .size(8.dp)
+                                        .clip(CircleShape)
+                                        .background(dotColor)
+                                        .border(1.dp, MaterialTheme.colorScheme.surface, CircleShape),
+                                )
+                            }
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     text = preset.name,
@@ -679,10 +691,10 @@ private fun IconPickerRow(
                 },
                 modifier = Modifier.size(40.dp),
             ) {
-                Icon(
-                    imageVector = presetIcon(iconName),
+                PresetIcon(
+                    iconName = iconName,
                     contentDescription = label,
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(22.dp),
                 )
             }
         }

@@ -90,7 +90,7 @@ import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.util.DimImportant
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
 import com.adsamcik.starlitcoffee.ui.util.DimRole
-import com.adsamcik.starlitcoffee.ui.util.presetIcon
+import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
@@ -452,15 +452,10 @@ private fun ExpressionDisplay(
                             fontWeight = FontWeight.Bold,
                         )
                         is CalcToken.PresetRef -> {
-                            val icon = presetIcon(token.preset.iconName)
-                            val tint = token.preset.colorHex?.let {
-                                try { Color(android.graphics.Color.parseColor(it)) } catch (_: IllegalArgumentException) { null }
-                            } ?: MaterialTheme.colorScheme.tertiary
-                            Icon(
-                                imageVector = icon,
+                            PresetIcon(
+                                iconName = token.preset.iconName,
                                 contentDescription = token.preset.name,
                                 modifier = Modifier.size(if (isCompactHeight) 28.dp else 36.dp),
-                                tint = tint,
                             )
                         }
                     }
@@ -859,10 +854,10 @@ private fun CalculatorKeyboard(
                         )
                     },
                 ) {
-                    Icon(
-                        imageVector = presetIcon(preset.iconName),
+                    PresetIcon(
+                        iconName = preset.iconName,
                         contentDescription = preset.name,
-                        modifier = Modifier.size(22.dp),
+                        modifier = Modifier.size(26.dp),
                     )
                 }
             }
