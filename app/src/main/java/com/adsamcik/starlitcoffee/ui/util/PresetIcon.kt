@@ -87,7 +87,6 @@ val availablePresetIcons = listOf(
     "ceramic_latte_bowl" to "Ceramic Latte Bowl",
     "thermal_carafe" to "Thermal Carafe",
     "double_wall_press" to "Double Wall Press",
-    "custom" to "Cup",
 )
 
 val presetColorPalette: List<Pair<String?, String>> = listOf(

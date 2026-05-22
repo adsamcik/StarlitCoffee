@@ -19,7 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -415,7 +415,7 @@ fun SettingsScreen(
                         )
                     }
                     Icon(
-                        imageVector = Icons.Filled.KeyboardArrowRight,
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                         contentDescription = stringResource(R.string.cd_open_bloom_animation_settings),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -549,7 +549,7 @@ private fun AddPresetDialog(
 ) {
     var name by remember { mutableStateOf("") }
     var waterMl by remember { mutableStateOf("") }
-    var selectedIcon by remember { mutableStateOf("custom") }
+    var selectedIcon by remember { mutableStateOf("mug") }
     var selectedColor by remember { mutableStateOf<String?>(null) }
 
     AlertDialog(

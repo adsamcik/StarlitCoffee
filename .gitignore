@@ -54,3 +54,6 @@ classes.jar
 eval/
 tools/mindlayer_test_output.txt
 tools/adversarial_out.txt
+
+# Local-only emulator validation screenshots
+screenshots/

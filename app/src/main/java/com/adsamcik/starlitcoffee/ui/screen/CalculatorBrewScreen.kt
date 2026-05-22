@@ -25,7 +25,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Backspace
+import androidx.compose.material.icons.automirrored.filled.Backspace
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.CoffeeMaker
@@ -873,7 +873,7 @@ private fun CalculatorKeyboard(
                     .height(presetRowHeight),
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Backspace,
+                    imageVector = Icons.AutoMirrored.Filled.Backspace,
                     contentDescription = stringResource(R.string.cd_backspace),
                     modifier = Modifier.size(22.dp),
                 )
