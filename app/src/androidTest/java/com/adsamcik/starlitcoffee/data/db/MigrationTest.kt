@@ -90,6 +90,37 @@ class MigrationTest {
         }
     }
 
+    @Test
+    fun migrate14to15_addsDecafProcessWithoutDroppingBags() {
+        withDatabase(
+            name = "starlit-test-db-v15",
+            version = 14,
+            createSchema = { createVersion14Schema() },
+        ) { db ->
+            db.execSQL(
+                """
+                INSERT INTO coffee_bags (id, name, isDecaf)
+                VALUES (1, 'Night Shift', 1)
+                """.trimIndent(),
+            )
+
+            AppDatabase.MIGRATION_14_15.migrate(db)
+
+            val cursor = db.query(
+                """
+                SELECT name, isDecaf, decafProcess
+                FROM coffee_bags
+                WHERE id = 1
+                """.trimIndent(),
+            )
+            assertTrue(cursor.moveToFirst())
+            assertEquals("Night Shift", cursor.getString(0))
+            assertEquals(1, cursor.getInt(1))
+            assertEquals(null, cursor.getString(2))
+            cursor.close()
+        }
+    }
+
     private fun withDatabase(
         name: String,
         version: Int,
@@ -199,6 +230,18 @@ class MigrationTest {
                 freeformNotes TEXT,
                 brewTimeSeconds INTEGER,
                 createdAt INTEGER NOT NULL
+            )
+            """.trimIndent(),
+        )
+    }
+
+    private fun SupportSQLiteDatabase.createVersion14Schema() {
+        execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS coffee_bags (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                name TEXT NOT NULL,
+                isDecaf INTEGER NOT NULL DEFAULT 0
             )
             """.trimIndent(),
         )
