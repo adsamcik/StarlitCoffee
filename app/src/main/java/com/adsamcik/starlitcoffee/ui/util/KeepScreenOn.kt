@@ -1,10 +1,9 @@
 package com.adsamcik.starlitcoffee.ui.util
 
-import android.app.Activity
 import android.view.WindowManager
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.platform.LocalContext
 
 /**
  * Keeps the device screen awake while the surrounding composable is in the composition.
@@ -15,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
  */
 @Composable
 fun KeepScreenOn() {
-    val activity = LocalContext.current as? Activity
+    val activity = LocalActivity.current
     DisposableEffect(activity) {
         activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         onDispose {

@@ -49,7 +49,6 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
@@ -57,7 +56,6 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.ui.util.shortLabelRes
-import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 import com.adsamcik.starlitcoffee.ui.component.BrewPreviewCard
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
