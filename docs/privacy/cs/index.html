@@ -152,9 +152,17 @@
     <p>
         Stejně jako většina aplikací Androidu se Starlit Coffee účastní funkce
         <strong>Auto Backup</strong>. Pokud máte v systémových nastaveních zapnuté zálohování, může
-        Android pravidelně kopírovat privátní soubory aplikace — včetně databáze příprav a fotek
-        balíčků — do vašeho osobního prostoru Google Drive (až 25 MB na aplikaci, na Androidu 9+
-        end-to-end šifrováno klíčem odvozeným z vašeho zámku obrazovky).
+        Android pravidelně kopírovat část privátních souborů aplikace —
+        <strong>databázi příprav a předvolby</strong> — do vašeho osobního prostoru Google Drive
+        (až 25 MB na aplikaci, na Androidu 9+ end-to-end šifrováno klíčem odvozeným z vašeho zámku
+        obrazovky).
+    </p>
+    <p>
+        <strong>Fotografie balíčků a interní diagnostika skenování jsou ze zálohy záměrně
+        vyloučeny</strong> (a stejně tak z přenosu mezi zařízeními) pomocí konfigurace
+        <code>data_extraction_rules.xml</code>. Fotky tak zůstávají pouze na vašem zařízení; při
+        přeinstalaci nebo přesunu na nový telefon se vám obnoví historie příprav, ale fotky balíčků
+        bude potřeba znovu pořídit nebo importovat.
     </p>
     <p>
         Zálohování spravuje Google a Android, nikoliv já. Starlit Coffee nikdy nepřistupuje k vašemu

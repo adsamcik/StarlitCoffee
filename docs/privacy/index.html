@@ -148,10 +148,17 @@
     <h2 id="backup">7. Android Auto Backup</h2>
     <p>
         Like most Android apps, Starlit Coffee participates in Android's <strong>Auto Backup</strong>
-        feature. If you have backup enabled in your system settings, Android may periodically copy the
-        app's private files — including your brew database and bag photos — to your personal Google
-        Drive backup space (up to 25 MB per app, end-to-end encrypted by your device PIN/pattern/password
-        on Android 9+).
+        feature. If you have backup enabled in your system settings, Android may periodically copy
+        a subset of the app's private files — your <strong>brew database and preferences</strong>
+        — to your personal Google Drive backup space (up to 25 MB per app, end-to-end encrypted by
+        your device PIN/pattern/password on Android 9+).
+    </p>
+    <p>
+        I deliberately <strong>exclude your bag photos and internal scan diagnostics</strong> from
+        cloud backup (and from device-to-device transfer) via the app's
+        <code>data_extraction_rules.xml</code>. Photos stay on your device only; if you reinstall or
+        switch phones, your brew history comes back but you'll need to re-take or re-import bag
+        photos.
     </p>
     <p>
         This backup is managed by Google and Android, not by me. Starlit Coffee never accesses your Google
