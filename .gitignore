@@ -50,6 +50,17 @@ gemini_brief.md
 classes.jar
 *.litertlm
 
+# External tool / agent markers
+.codex
+
+# Local QA + crawler screenshot artifacts
+.crawler-screenshots/
+.qa-screens/
+.qa-screenshots/
+
+# Release build artifacts (signed APK/AAB)
+app/release/
+
 # LLM evaluation harness — images, ground truth, and run logs stay local
 eval/
 tools/mindlayer_test_output.txt
