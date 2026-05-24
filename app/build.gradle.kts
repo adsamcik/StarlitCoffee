@@ -166,9 +166,6 @@ dependencies {
     // Coroutines
     implementation(libs.coroutines.android)
 
-    // WorkManager
-    implementation(libs.work.runtime)
-
     // Serialization
     implementation(libs.kotlinx.serialization.json)
 

@@ -51,7 +51,6 @@ import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.domain.BrewCalculator
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
-import com.adsamcik.starlitcoffee.service.TimerStateHolder
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
@@ -433,12 +432,6 @@ class BrewViewModel(
                 val totalElapsedMs = pausedAccumulatedMs + (nowMs - timerStartMs)
                 val totalElapsedSeconds = (totalElapsedMs / 1000).toInt()
                 _uiState.update { it.copy(elapsedSeconds = totalElapsedSeconds) }
-                TimerStateHolder.instance.update(
-                    phaseName = "",
-                    elapsedSeconds = totalElapsedSeconds,
-                    instruction = "",
-                    isRunning = true,
-                )
             }
         }
     }
@@ -461,12 +454,6 @@ class BrewViewModel(
         timerJob?.cancel()
         timerJob = null
         bloomCountdownJob?.cancel()
-        TimerStateHolder.instance.update(
-            phaseName = "",
-            elapsedSeconds = _uiState.value.elapsedSeconds,
-            instruction = "",
-            isRunning = false,
-        )
     }
 
     fun stopTimer() {
@@ -485,7 +472,6 @@ class BrewViewModel(
         }
         timerJob?.cancel()
         timerJob = null
-        TimerStateHolder.instance.reset()
     }
 
     fun advancePhase() {
