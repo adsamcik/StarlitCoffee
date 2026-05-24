@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zásady ochrany osobních údajů — Starlit Coffee</title>
+    <meta name="description" content="Zásady ochrany osobních údajů aplikace Starlit Coffee pro Android. Která data zůstávají ve vašem zařízení, která ho opouštějí, a vaše práva podle GDPR.">
+    <meta name="theme-color" content="#6F4E37">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="alternate" hreflang="en" href="https://adsamcik.github.io/StarlitCoffee/privacy/">
+    <link rel="alternate" hreflang="cs" href="https://adsamcik.github.io/StarlitCoffee/privacy/cs/">
+</head>
+<body>
+
+<header class="site-bar">
+    <div class="container">
+        <a class="brand" href="../../"><span class="brand-mark">☕</span>Starlit Coffee</a>
+        <nav><a href="../../">← Domů</a></nav>
+    </div>
+</header>
+
+<main class="prose">
+    <h1>Zásady ochrany osobních údajů</h1>
+    <p class="last-updated">
+        <strong>Účinné od:</strong> 24. května 2026 ·
+        <strong>Vztahuje se na:</strong> aplikaci Starlit Coffee pro Android (všechny verze)
+    </p>
+
+    <p class="lang-note">
+        🇬🇧 This policy is also available <a href="../">in English</a>. Autor je rezidentem České
+        republiky; česká verze je <strong>závazná</strong> pro účely Úřadu pro ochranu osobních údajů
+        (ÚOOÚ). Anglická verze slouží jako pracovní překlad.
+    </p>
+
+    <div class="callout">
+        <strong>Krátká verze.</strong> Starlit Coffee je pomocník pro přípravu kávy, který vyvíjí
+        jeden člověk. Vaše balíčky kávy, záznamy z příprav, fotky, hodnocení a poznámky leží v databázi
+        ve vašem telefonu — já je nikdy nevidím. Aplikace nepoužívá analytiku, reklamní SDK ani
+        sledování pádů. Na internet se připojuje pouze kvůli jediné věci: vyhledávání informací o
+        balíčcích kávy podle čárového kódu v databázi Open Food Facts, když balíček naskenujete. Vše
+        ostatní — čtení čárových kódů, OCR etiket, slovníky pro hlasovou diktaci — probíhá výhradně
+        ve vašem zařízení.
+    </div>
+
+    <nav class="toc" aria-label="Obsah">
+        <h2>Obsah</h2>
+        <ol>
+            <li><a href="#kdo">Kdo jsem</a></li>
+            <li><a href="#rozsah">Rozsah těchto zásad</a></li>
+            <li><a href="#zarizeni">Data uložená ve vašem zařízení</a></li>
+            <li><a href="#kamera">Kamera, skenování a AI na zařízení</a></li>
+            <li><a href="#openfoodfacts">Vyhledávání podle čárového kódu (Open Food Facts)</a></li>
+            <li><a href="#qr">QR kódy s odkazy na produkt</a></li>
+            <li><a href="#zaloha">Automatická záloha Android</a></li>
+            <li><a href="#sdileni">Sdílení karet příprav</a></li>
+            <li><a href="#sdk">SDK a třetí strany</a></li>
+            <li><a href="#pravnizaklad">Právní základ (GDPR)</a></li>
+            <li><a href="#uchovavani">Uchovávání a vymazání</a></li>
+            <li><a href="#prava">Vaše práva</a></li>
+            <li><a href="#deti">Děti</a></li>
+            <li><a href="#bezpecnost">Bezpečnost</a></li>
+            <li><a href="#mezinarodni">Mezinárodní předávání</a></li>
+            <li><a href="#kalifornie">Kalifornie a další práva v USA</a></li>
+            <li><a href="#zmeny">Změny těchto zásad</a></li>
+            <li><a href="#kontakt">Kontakt a stížnosti</a></li>
+        </ol>
+    </nav>
+
+    <h2 id="kdo">1. Kdo jsem</h2>
+    <p>
+        Aplikaci Starlit Coffee vyvíjí a provozuje <strong>Adam Samčík</strong> (GitHub:
+        <a href="https://github.com/adsamcik"><code>adsamcik</code></a>), fyzická osoba s bydlištěm
+        v České republice. Jsem <em>správcem osobních údajů</em> pro veškeré osobní údaje
+        zpracovávané v souvislosti s aplikací.
+    </p>
+    <p>
+        Protože jsem fyzická osoba, nevztahuje se na mě povinnost jmenovat pověřence pro ochranu
+        osobních údajů dle čl. 37 GDPR. V jakékoliv otázce týkající se soukromí mě můžete kontaktovat
+        na <a href="mailto:play@adsamcik.com">play@adsamcik.com</a>.
+    </p>
+
+    <h2 id="rozsah">2. Rozsah těchto zásad</h2>
+    <p>
+        Tyto zásady se vztahují na aplikaci Starlit Coffee pro Android a na tuto webovou stránku
+        (<code>adsamcik.github.io/StarlitCoffee</code>). Nevztahují se na služby třetích stran, na
+        které se rozhodnete z aplikace přejít (například otevření cílové URL z QR kódu).
+    </p>
+
+    <h2 id="zarizeni">3. Data uložená ve vašem zařízení</h2>
+    <p>
+        Aplikace ukládá vše, co vytvoříte, do lokální databáze (<code>starlit_coffee.db</code>) a
+        několika souborů s preferencemi v privátním úložišti aplikace ve vašem telefonu. Tato data
+        aplikace nikam neodesílá. Patří mezi ně:
+    </p>
+    <ul>
+        <li><strong>Balíčky kávy</strong>, které jste naskenovali nebo zadali — název, pražírna, datum pražení, původ, chuťové poznámky, odkazy na fotky, čárový kód.</li>
+        <li><strong>Záznamy příprav</strong> — datum, recept, hodnocení, chuťové poznámky, volitelně přepis hlasové diktace.</li>
+        <li><strong>Uložené recepty</strong> — vaše vlastní předvolby příprav.</li>
+        <li><strong>Profily mlýnků, předvolby poměrů a šálků, chuťové štítky</strong> — konfigurace, kterou si nastavíte.</li>
+        <li><strong>Fotky balíčků</strong> — obrazové soubory v privátním adresáři aplikace <code>files/bag_photos/</code>. V databázi jsou uloženy pouze cesty k fotkám.</li>
+        <li><strong>Předvolby</strong> — stav onboardingu, povolené metody přípravy, výchozí metoda/filtr, vybraný mlýnek, naposledy použitý poměr, směr zadávání, opt-in volby jako QR Link Explorer.</li>
+        <li><strong>Metadata posledních skenovacích sezení</strong> — krátká historie posledních 10 skenování čárových kódů (lokálně, nikdy se nenahrávají).</li>
+    </ul>
+    <p>
+        Ostatní aplikace ve vašem telefonu k těmto datům nemají přístup, protože Android je izoluje
+        v privátní sandbox aplikace.
+    </p>
+
+    <h2 id="kamera">4. Kamera, skenování a AI na zařízení</h2>
+    <p>
+        Když klepnete na „Skenovat balíček", aplikace si vyžádá oprávnění <code>CAMERA</code>.
+        Kamera se používá pouze po dobu otevření skenovací obrazovky a pouze pro tyto účely:
+    </p>
+    <ul>
+        <li><strong>Čtení čárových kódů</strong> pomocí Google ML Kit Barcode Scanning — probíhá výhradně ve vašem zařízení.</li>
+        <li><strong>OCR etiket</strong> (čtení tištěného textu na balíčcích) pomocí Google ML Kit Text Recognition — probíhá výhradně ve vašem zařízení.</li>
+        <li><strong>Volitelná chytrá nápověda</strong> pomocí Mindlayer SDK pro strojové učení na zařízení — probíhá výhradně ve vašem zařízení prostřednictvím lokálně připojené služby, bez síťové komunikace.</li>
+    </ul>
+    <p>
+        Snímky z kamery se zpracovávají v paměti a po analýze se zahazují. Aplikace nikdy nestreamuje
+        video a snímky se nikdy nenahrávají. Ze skenování může být uloženo pouze to, co si sami
+        vyberete (fotky balíčků) a strukturovaná pole (text, čárový kód), která vám skener předloží
+        k potvrzení.
+    </p>
+
+    <h2 id="openfoodfacts">5. Vyhledávání podle čárového kódu (Open Food Facts)</h2>
+    <p>
+        Když naskenujete čárový kód, aplikace se dotáže veřejné databáze
+        <a href="https://world.openfoodfacts.org/">Open Food Facts</a> na informace o produktu.
+        Toto je <em>jediný</em> odchozí síťový požadavek, který aplikace ze své iniciativy vytváří.
+    </p>
+    <ul>
+        <li><strong>Co se odesílá:</strong> číslice čárového kódu, User-Agent <code>StarlitCoffee/1.0 (Android)</code> a (nezbytně) vaše IP adresa.</li>
+        <li><strong>Co se <em>neodesílá</em>:</strong> žádný identifikátor účtu, reklamní ID, ID zařízení, vaše ostatní data o balíčcích/přípravách/záznamech ani jakákoli data o poloze.</li>
+        <li><strong>Kam to směřuje:</strong> Open Food Facts provozuje stejnojmenné nezisková sdružení sídlící ve Francii (EU). Jejich zásady ochrany jsou zveřejněny na <a href="https://world.openfoodfacts.org/cgi/privacy.pl">jejich stránce</a>.</li>
+        <li><strong>Jak se to používá:</strong> odpověď (název produktu, značka, URL obrázku) se stáhne jednou na sken a zobrazí se vám k přijetí či úpravě. Nic se neukládá na žádném serveru Starlit Coffee, protože žádný server Starlit Coffee neexistuje.</li>
+    </ul>
+
+    <h2 id="qr">6. QR kódy s odkazy na produkt</h2>
+    <p>
+        Některé balíčky kávy nesou QR kódy odkazující na stránky pražíren. Funkce „QR Link Explorer"
+        je v aplikaci <strong>opt-in</strong> (ve výchozím stavu vypnutá). Pokud ji povolíte a takový
+        kód naskenujete, aplikace stáhne metadata cílové URL, aby vám mohla předvyplnit pole o
+        balíčku. Požadavek směřuje na server, na který QR kód odkazuje; provozovatel cílového
+        serveru vidí vaši IP adresu a požadovanou URL. Aplikace jako bezpečnostní opatření blokuje
+        požadavky do soukromých/vnitřních síťových rozsahů. Funkci lze kdykoliv vypnout v
+        nastavení.
+    </p>
+
+    <h2 id="zaloha">7. Automatická záloha Android</h2>
+    <p>
+        Stejně jako většina aplikací Androidu se Starlit Coffee účastní funkce
+        <strong>Auto Backup</strong>. Pokud máte v systémových nastaveních zapnuté zálohování, může
+        Android pravidelně kopírovat privátní soubory aplikace — včetně databáze příprav a fotek
+        balíčků — do vašeho osobního prostoru Google Drive (až 25 MB na aplikaci, na Androidu 9+
+        end-to-end šifrováno klíčem odvozeným z vašeho zámku obrazovky).
+    </p>
+    <p>
+        Zálohování spravuje Google a Android, nikoliv já. Starlit Coffee nikdy nepřistupuje k vašemu
+        účtu Google. Zálohování této aplikace můžete vypnout v <em>Nastavení Androidu → Google →
+        Záloha → Data aplikací</em> (umístění se liší podle zařízení). Odinstalování aplikace
+        (s předem vypnutou zálohou) smaže lokální data; existující záložní snímky v cloudu si Google
+        ponechává podle svých vlastních pravidel.
+    </p>
+
+    <h2 id="sdileni">8. Sdílení karet příprav</h2>
+    <p>
+        Když u přípravy klepnete na „Sdílet", aplikace vytvoří krátké textové shrnutí přípravy a
+        předá ho standardnímu sdílecímu listu Androidu. Z něj si vyberete cíl (chatovací aplikace,
+        poznámky atd.). Aplikace nemá žádnou vestavěnou sociální síť, server ani feed.
+    </p>
+
+    <h2 id="sdk">9. SDK a třetí strany</h2>
+    <p>Aplikace obsahuje následující knihovny, které se dotýkají uživatelských dat, a to pouze popsaným způsobem:</p>
+    <ul>
+        <li><strong>Google ML Kit (Barcode Scanning, Text Recognition)</strong> — pouze na zařízení; podle <a href="https://developers.google.com/ml-kit/terms">podmínek ML Kit</a> modely přibalené v aplikaci neodesílají obrázky do Googlu.</li>
+        <li><strong>Android CameraX (Jetpack)</strong> — pouze obsluha kamery; žádná síť.</li>
+        <li><strong>OpenCV</strong> — lokální předzpracování obrazu pro OCR; žádná síť.</li>
+        <li><strong>Mindlayer SDK</strong> — připojení k lokální AIDL službě ve vašem zařízení; žádné síťové volání.</li>
+        <li><strong>AndroidX Room, DataStore, Compose, Navigation, Lifecycle</strong> — lokální úložiště a UI; žádná síť.</li>
+        <li><strong>OkHttp / Kotlinx Serialization</strong> — používá se výhradně pro volání Open Food Facts popsané v oddílu 5.</li>
+    </ul>
+    <p>
+        Aplikace <strong>neobsahuje</strong> Firebase Analytics, Crashlytics, Google AdMob, Facebook SDK
+        ani jakékoli jiné SDK pro analytiku, reklamu nebo atribuci. Není v ní žádný reporter pádů
+        od třetí strany.
+    </p>
+
+    <h2 id="pravnizaklad">10. Právní základ (GDPR)</h2>
+    <p>Pokud se nacházíte v Evropském hospodářském prostoru, Spojeném království nebo Švýcarsku, mé právní základy podle Obecného nařízení o ochraně osobních údajů jsou:</p>
+    <ul>
+        <li><strong>Plnění smlouvy — čl. 6 odst. 1 písm. b) GDPR.</strong> Poskytování služby pomocníka přípravy kávy, kterou jste si nainstalovali (ukládání vašich dat ve vašem zařízení, vyhledávání čárových kódů, které naskenujete).</li>
+        <li><strong>Oprávněné zájmy — čl. 6 odst. 1 písm. f) GDPR.</strong> Pro omezená bezpečnostní opatření, jako je blokování útoků typu SSRF v QR Link Exploreru.</li>
+        <li><strong>Souhlas — čl. 6 odst. 1 písm. a) GDPR.</strong> Udělený prostřednictvím systémových výzev Androidu k oprávnění kamery a tam, kde je vyžadováno, dalším systémovým funkcím. Souhlas můžete kdykoli odvolat v nastavení Androidu.</li>
+    </ul>
+    <p>Aplikace nepoužívá souhlasové bannery, protože nezpracovává data pro reklamu, profilování ani analytiku.</p>
+
+    <h2 id="uchovavani">11. Uchovávání a vymazání</h2>
+    <ul>
+        <li><strong>Ve vašem zařízení:</strong> data zůstávají, dokud aplikaci používáte. V aplikaci můžete kdykoli mazat jednotlivé balíčky, přípravy, recepty či fotky.</li>
+        <li><strong>Úplné smazání:</strong> odinstalováním aplikace se odstraní privátní databáze, předvolby i fotky. (Položky již zkopírované do Auto Backup zůstávají ve vašem Google Drive podle pravidel Googlu — viz oddíl 7.)</li>
+        <li><strong>Dotazy do Open Food Facts:</strong> zpracovává Open Food Facts podle vlastních logů a pravidel. Já si žádnou kopii neuchovávám.</li>
+        <li><strong>Tato webová stránka:</strong> hostuje ji GitHub Pages. GitHub si vede standardní logy požadavků pro účely bezpečnosti / prevence zneužití; viz <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">prohlášení o ochraně osobních údajů GitHubu</a>.</li>
+    </ul>
+
+    <h2 id="prava">12. Vaše práva</h2>
+    <p>Podle GDPR máte právo:</p>
+    <ul>
+        <li><strong>na přístup</strong> k osobním údajům, které o vás zpracovávám (v praxi: leží ve vašem zařízení, můžete si je číst přímo).</li>
+        <li><strong>na opravu</strong> nepřesných údajů — upravte balíčky/přípravy/poznámky v aplikaci.</li>
+        <li><strong>na výmaz</strong> — smažte jednotlivé záznamy nebo odinstalujte aplikaci.</li>
+        <li><strong>na omezení zpracování</strong> nebo <strong>vznesení námitky</strong>.</li>
+        <li><strong>na přenositelnost</strong> — můžete si vyžádat export jakýchkoli údajů, které o vás mohu mít (protože vše leží ve vašem zařízení, je výslovná žádost o export málokdy potřeba, ale můžete o ni požádat).</li>
+        <li><strong>odvolat souhlas</strong> — odebrat oprávnění kamery nebo jakékoli jiné v nastavení Androidu.</li>
+        <li><strong>podat stížnost</strong> k dozorovému úřadu (viz oddíl 18).</li>
+    </ul>
+    <p>Kterékoli z těchto práv můžete uplatnit e-mailem na <a href="mailto:play@adsamcik.com">play@adsamcik.com</a>. Odpovím nejpozději do 30 dnů.</p>
+
+    <h2 id="deti">13. Děti</h2>
+    <p>
+        Starlit Coffee je určen dospělým, kteří si připravují kávu. Není zaměřen na děti mladší 13
+        let (případně mladší 16 let podle místních zákonů). Vědomě nesbírám osobní údaje od dětí.
+        Pokud se domníváte, že dítě aplikaci použilo způsobem, který vyžaduje zásah, kontaktujte mě.
+    </p>
+
+    <h2 id="bezpecnost">14. Bezpečnost</h2>
+    <p>Přijímám přiměřená opatření odpovídající rozsahu dat, která aplikace zpracovává:</p>
+    <ul>
+        <li>Dotazování Open Food Facts probíhá přes HTTPS (TLS 1.2+).</li>
+        <li>Data aplikace leží v sandboxu Androidu, izolované od ostatních aplikací.</li>
+        <li>QR Link Explorer povoluje pouze veřejné IP rozsahy, aby snížil riziko útoků typu SSRF do soukromých sítí.</li>
+        <li>Vydané buildy jsou podepsány službou Google Play App Signing.</li>
+    </ul>
+    <p>
+        Žádný systém není zcela bezpečný. Udržujte si telefon aktualizovaný a chráněný zámkem
+        obrazovky; to je nejúčinnější ochrana dat, která Starlit Coffee ukládá.
+    </p>
+
+    <h2 id="mezinarodni">15. Mezinárodní předávání</h2>
+    <p>
+        Open Food Facts je hostován ve Francii (EU), takže dotazy na čárové kódy zůstávají v EHP.
+        Pokud máte zapnutou Auto Backup, může Google ukládat zálohy na servery mimo EHP; Google se
+        při těchto přenosech opírá o Rámec EU-USA pro ochranu osobních údajů (EU–US Data Privacy
+        Framework) a standardní smluvní doložky. Tato webová stránka je servována GitHubem (americkou
+        společností) prostřednictvím globální sítě CDN.
+    </p>
+
+    <h2 id="kalifornie">16. Kalifornie a další práva v USA</h2>
+    <p>
+        Starlit Coffee nesplňuje obchodní kritéria CCPA/CPRA (obrat alespoň 25 M USD, méně než
+        100 000 obyvatel Kalifornie, žádný prodej či sdílení osobních údajů pro reklamní cílení
+        napříč kontexty). Přesto, pokud jste obyvatelem Kalifornie: neprodávám ani nesdílím vaše
+        osobní údaje, nepoužívám citlivé osobní údaje k žádnému účelu a práva uvedená v oddílu 12
+        se v praxi vztahují i na vás. Obdobná práva existují podle zákonů států Colorado, Virginia,
+        Connecticut, Utah, Texas a dalších — uplatňují se stejným způsobem.
+    </p>
+
+    <h2 id="zmeny">17. Změny těchto zásad</h2>
+    <p>
+        Tyto zásady mohu v souvislosti se změnami aplikace aktualizovat. „Účinné od" na začátku
+        bude aktualizováno a podstatné změny budou oznámeny v aplikaci nebo poznámkách k vydání.
+        Úplná historie úprav je veřejně dostupná v repozitáři GitHub pod
+        <a href="https://github.com/adsamcik/StarlitCoffee/commits/main/docs/privacy/cs/index.html"><code>docs/privacy/cs/index.html</code></a>.
+    </p>
+
+    <h2 id="kontakt">18. Kontakt a stížnosti</h2>
+    <p>
+        S jakýmkoli dotazem, žádostí nebo obavou ohledně soukromí mě kontaktujte na
+        <a href="mailto:play@adsamcik.com">play@adsamcik.com</a>. Odpovídám obvykle během několika
+        pracovních dnů, nejpozději do 30 dnů.
+    </p>
+    <p>
+        Pokud se domníváte, že jsem zpracovával vaše osobní údaje protiprávně, máte právo podat
+        stížnost u dozorového úřadu. Pro většinu uživatelů to bude:
+    </p>
+    <ul>
+        <li><strong>Česká republika (vedoucí úřad):</strong> Úřad pro ochranu osobních údajů (ÚOOÚ) — <a href="https://uoou.gov.cz">uoou.gov.cz</a>.</li>
+        <li><strong>Spojené království:</strong> Information Commissioner's Office (ICO) — <a href="https://ico.org.uk">ico.org.uk</a>.</li>
+        <li><strong>Ostatní země EHP:</strong> váš národní úřad pro ochranu osobních údajů. <a href="https://edpb.europa.eu/about-edpb/about-edpb/members_en">Seznam DPA v EU</a>.</li>
+    </ul>
+
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        <nav>
+            <a href="../../">Domů</a>
+            <a href="https://github.com/adsamcik/StarlitCoffee">GitHub</a>
+            <a href="mailto:play@adsamcik.com">Kontakt</a>
+        </nav>
+        <div>© 2026 Adam Samčík</div>
+        <div class="lang-switcher">
+            <a href="../">English</a> · <strong>Česky</strong>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
