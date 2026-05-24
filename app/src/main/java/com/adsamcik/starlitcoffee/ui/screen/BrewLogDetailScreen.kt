@@ -171,20 +171,6 @@ fun BrewLogDetailScreen(
     // Persist edits when leaving the screen via system back or toolbar back. This makes the
     // explicit Save button optional — Back-press can no longer silently discard rating/chip/
     // notes edits.
-    val saveAndExit = {
-        val entity = log
-        if (hasChanges && entity != null) {
-            brewViewModel.updateBrewLogFeedback(
-                logId = logId,
-                rating = rating.takeIf { it > 0f },
-                notes = notes,
-                tasteFeedback = entity.tasteFeedback,
-                descriptors = selectedDescriptors.map { it.displayName },
-            )
-        }
-        onBack()
-    }
-    BackHandler(onBack = saveAndExit)
 
     if (showDeleteDialog) {
         AlertDialog(

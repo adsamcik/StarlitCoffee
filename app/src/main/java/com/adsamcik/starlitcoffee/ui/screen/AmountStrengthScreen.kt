@@ -525,14 +525,3 @@ fun AmountStrengthScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun AmountStrengthScreenPreview() {
-    StarlitCoffeeTheme {
-        AmountStrengthScreen(
-            brewViewModel = BrewViewModel(),
-            onBack = {},
-            onNavigateToTimer = {},
-        )
-    }
-}
