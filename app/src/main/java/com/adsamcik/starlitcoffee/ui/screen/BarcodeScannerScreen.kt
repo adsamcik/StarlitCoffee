@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
@@ -172,6 +173,7 @@ private fun BarcodeCamera(
     }
 }
 
+@androidx.annotation.OptIn(ExperimentalGetImage::class)
 private fun analyzeBarcode(
     imageProxy: ImageProxy,
     hasDetected: Boolean,
