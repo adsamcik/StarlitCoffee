@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -37,7 +38,8 @@ fun ShareableBrewCard(
     flavorTags: List<String>,
     modifier: Modifier = Modifier,
 ) {
-    val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
+    val locale = LocalLocale.current.platformLocale
+    val dateFormat = SimpleDateFormat("MMM d, yyyy", locale)
     val ratingEmoji = when {
         brew.rating == null -> ""
         brew.rating >= 4.5f -> "🔥"

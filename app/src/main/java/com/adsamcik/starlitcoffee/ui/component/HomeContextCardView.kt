@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -234,7 +235,8 @@ private fun LastBrewSummaryCard(
     card: HomeContextCard.LastBrewSummary,
     modifier: Modifier = Modifier,
 ) {
-    val dateFormat = SimpleDateFormat("MMM d · h:mm a", Locale.getDefault())
+    val locale = LocalLocale.current.platformLocale
+    val dateFormat = SimpleDateFormat("MMM d · h:mm a", locale)
     val timeStr = dateFormat.format(Date(card.brew.createdAt))
 
     ElevatedCard(
