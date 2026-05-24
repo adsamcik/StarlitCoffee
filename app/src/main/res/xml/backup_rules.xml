@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Legacy Auto Backup rules for API 26-30 (devices running Android 8.0-11).
+  Mirrors the cloud-backup section of data_extraction_rules.xml.
+
+  See data_extraction_rules.xml for the modern (API 31+) equivalent and the
+  rationale behind each exclusion.
+-->
+<full-backup-content>
+    <exclude domain="file" path="bag_photos/" />
+    <exclude domain="sharedpref" path="scan_session_history.xml" />
+</full-backup-content>
