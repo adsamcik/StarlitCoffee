@@ -211,8 +211,8 @@
     <string name="label_pulsar_filter_type">Typ filtru Pulsar</string>
     <string name="msg_filter_hint">Ovlivňuje profil šálku a doporučení mletí</string>
     <string name="label_your_grinder">Váš mlýnek</string>
-    <string name="msg_grinder_hint">Volitelné — umožní doporučení konkrétního nastavení mletí</string>
-    <string name="label_no_grinder">Bez mlýnku</string>
+    <string name="msg_grinder_hint">Volitelné — umožní doporučení konkrétního nastavení mletí. Pokud váš mlýnek není v seznamu, zvolte Bez mlýnku / Jiný.</string>
+    <string name="label_no_grinder">Bez mlýnku / Jiný</string>
 
     <!-- Onboarding Methods Screen -->
     <string name="screen_methods_title">Čím připravujete kávu?</string>

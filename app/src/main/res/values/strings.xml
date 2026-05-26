@@ -219,8 +219,8 @@
     <string name="label_pulsar_filter_type">Pulsar filter type</string>
     <string name="msg_filter_hint">Affects cup profile and grind recommendations</string>
     <string name="label_your_grinder">Your grinder</string>
-    <string name="msg_grinder_hint">Optional — enables specific grind setting recommendations</string>
-    <string name="label_no_grinder">No grinder</string>
+    <string name="msg_grinder_hint">Optional — enables specific grind recommendations. Choose No grinder / Other if yours isn\'t listed.</string>
+    <string name="label_no_grinder">No grinder / Other</string>
 
     <!-- Onboarding Methods Screen -->
     <string name="screen_methods_title">What do you brew with?</string>
