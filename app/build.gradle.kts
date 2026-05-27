@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ApplicationExtension
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.serialization)
@@ -7,7 +9,7 @@ plugins {
     jacoco
 }
 
-android {
+extensions.configure<ApplicationExtension>("android") {
     namespace = "com.adsamcik.starlitcoffee"
     compileSdk = 37
 
