@@ -120,6 +120,22 @@ Versions are centralized in `gradle/libs.versions.toml`.
 | Detekt | 1.23.8 |
 | Mindlayer SDK | 0.3.0 |
 
+## Targeting Android 17 (SDK 37)
+
+The app targets API level 37. Notable platform behaviors to keep in mind when changing UI or background code:
+
+| Area | Behavior on SDK 37 | What the codebase does |
+|------|--------------------|------------------------|
+| Large-screen orientation (sw>=600dp) | `android:screenOrientation`, `resizeableActivity`, `min/maxAspectRatio` are **ignored** on tablets/foldables. The opt-out from SDK 36 is gone. | `MainActivity` keeps `screenOrientation="portrait"` for phones; tablets will rotate. `configChanges` is declared so the Activity is not recreated on rotation/density/fontScale changes. |
+| Predictive back | Available only when the app opts in. | `<application android:enableOnBackInvokedCallback="true">` in `AndroidManifest.xml`; all in-screen back handling uses Compose `BackHandler`. |
+| Background audio hardening | Background audio playback, focus, and volume APIs require a foreground service. | Not applicable — the app uses `AudioRecord` for capture, never background playback. |
+| `ACCESS_LOCAL_NETWORK` | Required to discover LAN devices (mDNS, casting, smart home). | Not applicable — the app has no LAN discovery. |
+| `MessageQueue` lock-free / static-final reflection | Reflection on framework internals or `static final` fields fails. | Not applicable — the codebase does not reflect on framework internals. |
+| Per-app keystore limit | Non-system apps capped at 50,000 keys. | Not applicable — no Keystore usage. |
+| ECH (Encrypted Client Hello) | Enabled by default for SDK 37 apps. | No code change required; honoured automatically by the platform networking stack. |
+
+When adding new background work, foreground services, or LAN/audio playback features, re-check the [Android 17 behavior changes](https://developer.android.com/about/versions/17/behavior-changes-17) before wiring it in.
+
 ## Troubleshooting
 
 | Problem | Likely cause | Fix |
