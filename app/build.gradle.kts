@@ -1,6 +1,7 @@
+import java.io.File as JavaFile
+
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
@@ -10,14 +11,14 @@ plugins {
 
 android {
     namespace = "com.adsamcik.starlitcoffee"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.adsamcik.starlitcoffee"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0.0"
+        targetSdk = 37
+        versionCode = 2
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -94,8 +95,7 @@ tasks.register("pushTestImages") {
             "testdata/coffee-bags/ not found. See testdata/README.md for setup instructions."
         }
 
-        val adb = (extensions.getByName("android") as com.android.build.gradle.BaseExtension)
-            .adbExecutable.absolutePath
+        val adb = resolveAdbExecutable(rootProject)
 
         val deviceDir = "/data/local/tmp/coffee-bags"
 
@@ -117,6 +117,32 @@ tasks.register("pushTestImages") {
 
         println("Pushed ${images.size} images to $deviceDir")
     }
+}
+
+/**
+ * Resolves the platform-tools adb executable without relying on the deprecated
+ * com.android.build.gradle.BaseExtension. AGP 9.0+ removes SDK path access from
+ * the public DSL, so we read sdk.dir from local.properties and fall back to the
+ * standard ANDROID_HOME / ANDROID_SDK_ROOT environment variables.
+ */
+fun resolveAdbExecutable(rootProject: Project): String {
+    val sdkDir = rootProject.file("local.properties")
+        .takeIf { it.exists() }
+        ?.useLines { lines ->
+            lines.firstOrNull { it.startsWith("sdk.dir=") }?.substringAfter("=")?.trim()
+        }
+        ?.takeIf { it.isNotBlank() }
+        ?: System.getenv("ANDROID_HOME")
+        ?: System.getenv("ANDROID_SDK_ROOT")
+
+    require(!sdkDir.isNullOrBlank()) {
+        "Android SDK not found. Set sdk.dir in local.properties or ANDROID_HOME/ANDROID_SDK_ROOT."
+    }
+
+    val isWindows = System.getProperty("os.name").lowercase().contains("win")
+    val adbFile = JavaFile(sdkDir, "platform-tools/" + if (isWindows) "adb.exe" else "adb")
+    require(adbFile.exists()) { "adb not found at ${adbFile.absolutePath}" }
+    return adbFile.absolutePath
 }
 
 dependencies {

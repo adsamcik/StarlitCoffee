@@ -10,9 +10,9 @@
 | Tool | Version / source | Notes |
 |------|------------------|-------|
 | JDK | 17 | `app/build.gradle.kts` compiles Java/Kotlin to JVM 17. |
-| Android SDK | compileSdk 36, targetSdk 36, minSdk 26 | Install with Android Studio SDK Manager. |
-| Gradle | Wrapper 9.3.1 | Use `.\gradlew.bat`, not a system Gradle. |
-| Kotlin | 2.3.10 | Managed through `gradle/libs.versions.toml`. |
+| Android SDK | compileSdk 37, targetSdk 37, minSdk 26 | Install with Android Studio SDK Manager. |
+| Gradle | Wrapper 9.5.1 | Use `.\gradlew.bat`, not a system Gradle. |
+| Kotlin | 2.3.21 | Managed through `gradle/libs.versions.toml`. |
 | GitHub CLI | optional | `settings.gradle.kts` can call `gh auth token` for Mindlayer GitHub Packages. |
 
 ## Environment
@@ -107,17 +107,17 @@ Versions are centralized in `gradle/libs.versions.toml`.
 
 | Dependency | Version |
 |------------|---------|
-| AGP | 9.1.0 |
-| Kotlin | 2.3.10 |
-| Compose BOM | 2025.12.00 |
-| Material 3 | 1.5.0-alpha17 |
-| Navigation Compose | 2.9.7 |
+| AGP | 9.2.1 |
+| Kotlin | 2.3.21 |
+| Compose BOM | 2026.05.01 |
+| Material 3 | 1.5.0-alpha20 |
+| Navigation Compose | 2.9.8 |
 | Room | 2.8.4 |
 | Lifecycle | 2.10.0 |
-| CameraX | 1.5.3 |
-| Coroutines | 1.10.2 |
+| CameraX | 1.6.1 |
+| Coroutines | 1.11.0 |
 | WorkManager | 2.10.1 |
-| Detekt | 1.23.7 |
+| Detekt | 1.23.8 |
 | Mindlayer SDK | 0.3.0 |
 
 ## Troubleshooting

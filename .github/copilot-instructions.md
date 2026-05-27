@@ -13,21 +13,21 @@ For detailed reference, see `.github/context/ARCHITECTURE.md`, `.github/context/
 <!-- context-init:managed -->
 | Tech | Version | Purpose |
 |------|---------|---------|
-| Kotlin | 2.3.10 | Android language |
-| AGP | 9.1.0 | Android build plugin |
-| Gradle wrapper | 9.3.1 | Build runner |
-| Jetpack Compose | BOM 2025.12.00 | UI |
-| Material 3 | 1.5.0-alpha17 | Design system |
-| Navigation Compose | 2.9.7 | Type-safe routes |
+| Kotlin | 2.3.21 | Android language |
+| AGP | 9.2.1 | Android build plugin |
+| Gradle wrapper | 9.5.1 | Build runner |
+| Jetpack Compose | BOM 2026.05.01 | UI |
+| Material 3 | 1.5.0-alpha20 | Design system |
+| Navigation Compose | 2.9.8 | Type-safe routes |
 | Room | 2.8.4 | Local database |
 | Lifecycle/ViewModel | 2.10.0 | State management |
-| KSP | 2.3.6 | Room annotation processing |
+| KSP | 2.3.8 | Room annotation processing |
 | ML Kit | Barcode 17.3.0, Text 16.0.1 | Bag scanning |
-| CameraX | 1.5.3 | Live scan camera |
-| DataStore | 1.1.4 | User preferences |
+| CameraX | 1.6.1 | Live scan camera |
+| DataStore | 1.2.1 | User preferences |
 | OpenCV | 4.13.0 | Image preprocessing |
 | WorkManager | 2.10.1 | Rating reminder |
-| minSdk / targetSdk | 26 / 36 | Android API range |
+| minSdk / targetSdk | 26 / 37 | Android API range |
 
 ## Architecture Rules
 
