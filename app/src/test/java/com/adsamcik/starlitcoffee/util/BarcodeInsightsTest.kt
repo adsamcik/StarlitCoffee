@@ -109,7 +109,7 @@ class BarcodeInsightsTest {
             tasteNoteIds = "green_tea,wild_strawberry",
         )
 
-        val candidates = BarcodeInsights.buildLocalMatchCandidates(matchedBag, locale = Locale("da"))
+        val candidates = BarcodeInsights.buildLocalMatchCandidates(matchedBag, locale = Locale.forLanguageTag("da"))
 
         assertEquals("ETHIOPIA", candidates.first { it.fieldName == "origin" }.canonicalKey)
         assertEquals("Lys", candidates.first { it.fieldName == "roastLevel" }.value)
@@ -135,7 +135,7 @@ class BarcodeInsightsTest {
             tasteNoteIds = "green_tea,wild_strawberry",
         )
 
-        val candidates = BarcodeInsights.buildLocalMatchCandidates(matchedBag, locale = Locale("fr"))
+        val candidates = BarcodeInsights.buildLocalMatchCandidates(matchedBag, locale = Locale.forLanguageTag("fr"))
 
         assertEquals("Light", candidates.first { it.fieldName == "roastLevel" }.value)
         assertEquals("Washed", candidates.first { it.fieldName == "processType" }.value)

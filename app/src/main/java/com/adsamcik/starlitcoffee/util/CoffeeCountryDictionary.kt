@@ -50,7 +50,7 @@ object CoffeeCountryDictionaries {
     val CZECH = CoffeeCountryDictionary(
         countryCode = "CZ",
         countryName = "Czech Republic",
-        locale = Locale("cs"),
+        locale = Locale.forLanguageTag("cs"),
         gs1PrefixRange = 859..859,
         sectionLabels = CountrySectionLabels(
             origin = listOf("Původ", "Země původu", "Země", "Oblast"),
@@ -107,7 +107,7 @@ object CoffeeCountryDictionaries {
     val POLISH = CoffeeCountryDictionary(
         countryCode = "PL",
         countryName = "Poland",
-        locale = Locale("pl"),
+        locale = Locale.forLanguageTag("pl"),
         gs1PrefixRange = 590..590,
         sectionLabels = CountrySectionLabels(
             origin = listOf("Pochodzenie", "Kraj pochodzenia", "Kraj", "Region"),
@@ -126,7 +126,7 @@ object CoffeeCountryDictionaries {
     val SPANISH = CoffeeCountryDictionary(
         countryCode = "ES",
         countryName = "Spain",
-        locale = Locale("es"),
+        locale = Locale.forLanguageTag("es"),
         gs1PrefixRange = 840..849,
         sectionLabels = CountrySectionLabels(
             origin = listOf("Origen", "País de origen", "Procedencia", "Región"),
@@ -145,7 +145,7 @@ object CoffeeCountryDictionaries {
     val DANISH = CoffeeCountryDictionary(
         countryCode = "DK",
         countryName = "Denmark",
-        locale = Locale("da"),
+        locale = Locale.forLanguageTag("da"),
         gs1PrefixRange = 570..579,
         sectionLabels = CountrySectionLabels(
             origin = listOf("Oprindelse", "Oprindelsesland", "Land", "Region"),
@@ -183,7 +183,7 @@ object CoffeeCountryDictionaries {
     val PORTUGUESE = CoffeeCountryDictionary(
         countryCode = "PT",
         countryName = "Portugal",
-        locale = Locale("pt"),
+        locale = Locale.forLanguageTag("pt"),
         gs1PrefixRange = 560..569,
         sectionLabels = CountrySectionLabels(
             origin = listOf("Origem", "País de origem", "Procedência", "Região"),
@@ -202,7 +202,7 @@ object CoffeeCountryDictionaries {
     val DUTCH = CoffeeCountryDictionary(
         countryCode = "NL",
         countryName = "Netherlands",
-        locale = Locale("nl"),
+        locale = Locale.forLanguageTag("nl"),
         gs1PrefixRange = 870..879,
         sectionLabels = CountrySectionLabels(
             origin = listOf("Herkomst", "Land van herkomst", "Oorsprong"),
@@ -221,7 +221,7 @@ object CoffeeCountryDictionaries {
     val SWEDISH = CoffeeCountryDictionary(
         countryCode = "SE",
         countryName = "Sweden",
-        locale = Locale("sv"),
+        locale = Locale.forLanguageTag("sv"),
         gs1PrefixRange = 730..739,
         sectionLabels = CountrySectionLabels(
             origin = listOf("Ursprung", "Ursprungsland", "Region"),
@@ -240,7 +240,7 @@ object CoffeeCountryDictionaries {
     val NORWEGIAN = CoffeeCountryDictionary(
         countryCode = "NO",
         countryName = "Norway",
-        locale = Locale("no"),
+        locale = Locale.forLanguageTag("no"),
         gs1PrefixRange = 700..709,
         sectionLabels = CountrySectionLabels(
             origin = listOf("Opprinnelse", "Opprinnelsesland", "Region"),
@@ -259,7 +259,7 @@ object CoffeeCountryDictionaries {
     val FINNISH = CoffeeCountryDictionary(
         countryCode = "FI",
         countryName = "Finland",
-        locale = Locale("fi"),
+        locale = Locale.forLanguageTag("fi"),
         gs1PrefixRange = 640..649,
         sectionLabels = CountrySectionLabels(
             origin = listOf("Alkuperä", "Alkuperämaa", "Alue"),
@@ -278,7 +278,7 @@ object CoffeeCountryDictionaries {
     val SLOVAK = CoffeeCountryDictionary(
         countryCode = "SK",
         countryName = "Slovakia",
-        locale = Locale("sk"),
+        locale = Locale.forLanguageTag("sk"),
         gs1PrefixRange = 858..858,
         sectionLabels = CountrySectionLabels(
             origin = listOf("Pôvod", "Krajina pôvodu", "Krajina", "Oblasť"),

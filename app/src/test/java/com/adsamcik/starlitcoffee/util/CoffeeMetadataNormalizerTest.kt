@@ -58,7 +58,7 @@ class CoffeeMetadataNormalizerTest {
         val localized = CoffeeMetadataNormalizer.displayOrigin(
             originId = "ETHIOPIA",
             fallbackRaw = "Ethiopia",
-            locale = Locale("cs"),
+            locale = Locale.forLanguageTag("cs"),
         )
 
         assertEquals("Etiopie", localized)
@@ -69,7 +69,7 @@ class CoffeeMetadataNormalizerTest {
         val localized = CoffeeMetadataNormalizer.displayProcessType(
             processTypeId = "WASHED",
             fallbackRaw = "Washed",
-            locale = Locale("es"),
+            locale = Locale.forLanguageTag("es"),
         )
 
         assertEquals("Lavado", localized)
@@ -82,7 +82,7 @@ class CoffeeMetadataNormalizerTest {
                 name = "Vacation bag",
                 region = "Guji",
             ),
-            locale = Locale("cs"),
+            locale = Locale.forLanguageTag("cs"),
         )
 
         assertEquals("ETHIOPIA", resolved.originId)
@@ -125,7 +125,7 @@ class CoffeeMetadataNormalizerTest {
         val normalized = CoffeeMetadataNormalizer.normalizeField(
             fieldName = "tastingNotes",
             rawValue = "LESNI JAHODA, lesní jahoda, ZELENY CAJ, zelený čaj",
-            locale = Locale("cs"),
+            locale = Locale.forLanguageTag("cs"),
         )
 
         assertNotNull(normalized)
@@ -142,7 +142,7 @@ class CoffeeMetadataNormalizerTest {
             processType = "Praný",
             variety = "Gesha",
             tastingNotes = "Lesní jahoda, Zelený čaj",
-            locale = Locale("es"),
+            locale = Locale.forLanguageTag("es"),
         )
 
         assertEquals("ETHIOPIA", normalized.originId)
@@ -191,7 +191,7 @@ class CoffeeMetadataNormalizerTest {
         val localized = CoffeeMetadataNormalizer.displayProcessType(
             processTypeId = "WASHED",
             fallbackRaw = "Lavado",
-            locale = Locale("fr"),
+            locale = Locale.forLanguageTag("fr"),
         )
 
         assertEquals("Washed", localized)
@@ -201,7 +201,7 @@ class CoffeeMetadataNormalizerTest {
     fun `regionsForOrigin accepts localized aliases when finding canonical regions`() {
         val regions = CoffeeMetadataNormalizer.regionsForOrigin(
             originValue = "Etiopie",
-            locale = Locale("cs"),
+            locale = Locale.forLanguageTag("cs"),
         )
 
         assertTrue(regions.contains(CoffeeRegion.Known.GUJI))

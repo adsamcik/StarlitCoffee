@@ -175,7 +175,7 @@ fun StarlitNavHost() {
             if (showBottomBar) {
                 NavigationBar {
                     bottomNavItems.forEach { item ->
-                        val selected = currentDestination?.hasRoute(item.route::class) == true
+                        val selected = currentDestination.hasRoute(item.route::class)
                         NavigationBarItem(
                             selected = selected,
                             onClick = {
@@ -423,7 +423,7 @@ fun StarlitNavHost() {
             }
             composable<LiveScan> {
                 val liveScanViewModel: LiveScanViewModel = viewModel(
-                    factory = LiveScanViewModelFactory(context as Application),
+                    factory = LiveScanViewModelFactory(context),
                 )
                 LiveScanScreen(
                     liveScanViewModel = liveScanViewModel,
@@ -483,7 +483,7 @@ fun StarlitNavHost() {
                 } else {
                     // Launch LiveScan for rescan
                     val liveScanViewModel: LiveScanViewModel = viewModel(
-                        factory = LiveScanViewModelFactory(context as Application),
+                        factory = LiveScanViewModelFactory(context),
                     )
                     LiveScanScreen(
                         liveScanViewModel = liveScanViewModel,

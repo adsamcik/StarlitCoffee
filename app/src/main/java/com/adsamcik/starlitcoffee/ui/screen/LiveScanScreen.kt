@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -234,7 +233,7 @@ fun LiveScanScreen(
 
     // --- Haptic feedback on field lock ---
 
-    val vibrator = remember { context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator }
+    val vibrator = remember { context.getSystemService(Vibrator::class.java) }
     var previousLockedCount by remember { mutableStateOf(0) }
 
     LaunchedEffect(evidence) {

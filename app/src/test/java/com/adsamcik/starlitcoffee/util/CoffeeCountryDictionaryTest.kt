@@ -16,7 +16,7 @@ class CoffeeCountryDictionaryTest {
         val dict = CoffeeCountryDictionaries.byGs1Prefix(859)
         assertNotNull(dict)
         assertEquals("CZ", dict!!.countryCode)
-        assertEquals(Locale("cs"), dict.locale)
+        assertEquals(Locale.forLanguageTag("cs"), dict.locale)
     }
 
     @Test
@@ -70,7 +70,7 @@ class CoffeeCountryDictionaryTest {
 
     @Test
     fun `localeFromBarcode infers Czech locale from 859 barcode`() {
-        assertEquals(Locale("cs"), CoffeeCountryDictionaries.localeFromBarcode("8594206180014"))
+        assertEquals(Locale.forLanguageTag("cs"), CoffeeCountryDictionaries.localeFromBarcode("8594206180014"))
     }
 
     @Test

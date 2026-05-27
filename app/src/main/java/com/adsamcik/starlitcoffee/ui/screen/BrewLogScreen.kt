@@ -168,8 +168,9 @@ private fun BrewLogCard(
         }
     }
 
-    val isUnrated = log.rating == null
-    val accentColor = ratingAccentColor(log.rating)
+    val rating = log.rating
+    val isUnrated = rating == null
+    val accentColor = ratingAccentColor(rating)
     val decafSuffix = stringResource(R.string.label_decaf_suffix)
 
     SwipeToDismissCard(onDismiss = onDelete) {
@@ -262,16 +263,16 @@ private fun BrewLogCard(
                     }
 
                     // Row 3: Rating + feedback OR "Tap to rate"
-                    if (!isUnrated) {
+                    if (rating != null) {
                         Row(
                             modifier = Modifier.padding(top = 6.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            if (log.rating != null && log.rating > 0) {
-                                StarRatingRow(rating = log.rating, starSize = 16.dp)
+                            if (rating > 0f) {
+                                StarRatingRow(rating = rating, starSize = 16.dp)
                             }
                             if (feedbackEmoji != null) {
-                                if (log.rating != null && log.rating > 0) {
+                                if (rating > 0f) {
                                     Spacer(modifier = Modifier.width(8.dp))
                                 }
                                 Text(

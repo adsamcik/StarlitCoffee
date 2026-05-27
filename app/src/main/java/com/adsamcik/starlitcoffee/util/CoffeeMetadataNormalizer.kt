@@ -86,11 +86,11 @@ object CoffeeMetadataNormalizer {
 
     private val supportedLocales = listOf(
         Locale.ENGLISH,
-        Locale("cs"),
+        Locale.forLanguageTag("cs"),
         Locale.GERMAN,
-        Locale("es"),
+        Locale.forLanguageTag("es"),
         Locale.ITALIAN,
-        Locale("da"),
+        Locale.forLanguageTag("da"),
     )
 
     // Token-boundary patterns compiled against normalized text (lowercased, diacritics stripped,
@@ -744,7 +744,7 @@ object CoffeeMetadataNormalizer {
     private fun displayCountryFor(originId: String, locale: Locale): String {
         val countryCode = originCountryCodes[originId]
         val countryName = countryCode
-            ?.let { code -> Locale("", code).getDisplayCountry(locale) }
+            ?.let { code -> Locale.Builder().setRegion(code).build().getDisplayCountry(locale) }
             ?.takeIf { it.isNotBlank() }
         return countryName ?: CoffeeOrigin.Known.valueOf(originId).displayName
     }

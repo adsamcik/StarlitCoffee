@@ -96,7 +96,6 @@ fun StarlitCoffeeTheme(
         SideEffect {
             val window = (view.context as Activity).window
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
-            window.statusBarColor = android.graphics.Color.TRANSPARENT
         }
     }
 

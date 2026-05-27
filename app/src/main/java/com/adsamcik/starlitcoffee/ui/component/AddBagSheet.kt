@@ -44,10 +44,11 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -342,8 +343,9 @@ fun AddBagSheet(
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState(
-            skipPartiallyExpanded = true,
+        sheetState = rememberBottomSheetState(
+            initialValue = SheetValue.Hidden,
+            enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded),
         ),
     ) {
         BackHandler { onDismiss() }
@@ -951,7 +953,7 @@ fun AddBagSheet(
             Button(
                 onClick = {
                     if (name.isNotBlank()) {
-                        if (isEditMode && bagToEdit != null && onEdit != null) {
+                        if (bagToEdit != null && onEdit != null) {
                             onEdit(
                                 bagToEdit.copy(
                                     name = name,

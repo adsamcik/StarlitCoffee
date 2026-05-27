@@ -81,6 +81,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import kotlin.coroutines.resume
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -728,7 +729,7 @@ class BrewViewModel(
                                 openedDate = System.currentTimeMillis(),
                                 grindSetting = updated.grindSetting,
                             )
-                            coffeeBagRepository?.updateBag(opened)
+                            coffeeBagRepository.updateBag(opened)
                             _selectedBagId.value = opened.id
                         }
                     }
@@ -2059,8 +2060,8 @@ class BrewViewModel(
         bitmap: Bitmap,
     ): Text? = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
         recognizer.process(InputImage.fromBitmap(bitmap, 0))
-            .addOnSuccessListener { result -> cont.resume(result, null) }
-            .addOnFailureListener { cont.resume(null, null) }
+            .addOnSuccessListener { result -> cont.resume(result) }
+            .addOnFailureListener { cont.resume(null) }
     }
 
     private suspend fun scanBarcodes(
@@ -2068,8 +2069,8 @@ class BrewViewModel(
         bitmap: Bitmap,
     ): List<Barcode>? = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
         scanner.process(InputImage.fromBitmap(bitmap, 0))
-            .addOnSuccessListener { codes -> cont.resume(codes, null) }
-            .addOnFailureListener { cont.resume(null, null) }
+            .addOnSuccessListener { codes -> cont.resume(codes) }
+            .addOnFailureListener { cont.resume(null) }
     }
 
     private data class ProcessedBagPhoto(

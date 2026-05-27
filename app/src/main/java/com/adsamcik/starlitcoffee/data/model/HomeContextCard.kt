@@ -124,7 +124,6 @@ sealed class HomeContextCard {
                     "Grind noticeably finer, expect less sweetness",
                     "Use this bag up soon — freeze any extras",
                 )
-                else -> return null
             }
 
             // Decaf bags extract differently — surface that alongside age-based tips.

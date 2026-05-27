@@ -131,7 +131,7 @@ class OcrFieldExtractorTest {
         )
         assertTrue(
             "Name should contain Gedeb",
-            result.name!!.contains("Gedeb", ignoreCase = true),
+            result.name.contains("Gedeb", ignoreCase = true),
         )
     }
 
@@ -176,7 +176,7 @@ class OcrFieldExtractorTest {
         // Name falls back to origin+region
         assertNotNull("Name should fallback to origin+region", result.name)
         assertTrue(result.name!!.contains("Ethiopia", ignoreCase = true))
-        assertTrue(result.name!!.contains("Yirgacheffe", ignoreCase = true))
+        assertTrue(result.name.contains("Yirgacheffe", ignoreCase = true))
     }
 
     @Test
@@ -278,7 +278,7 @@ class OcrFieldExtractorTest {
         )
         assertTrue(
             "Should contain espresso",
-            result.roastLevel!!.contains("espresso", ignoreCase = true),
+            result.roastLevel.contains("espresso", ignoreCase = true),
         )
     }
 
@@ -295,7 +295,7 @@ class OcrFieldExtractorTest {
             result.roastLevel!!.contains("filter roast", ignoreCase = true),
         )
         // Should NOT have a redundant standalone "filter"
-        val parts = result.roastLevel!!.split(",").map { it.trim().lowercase() }
+        val parts = result.roastLevel.split(",").map { it.trim().lowercase() }
         assertFalse(
             "Should not have redundant standalone 'filter'",
             parts.contains("filter"),
@@ -336,7 +336,7 @@ class OcrFieldExtractorTest {
         val result = OcrFieldExtractor.extractFields("Chocolate · Caramel · Hazelnut")
         assertNotNull("Should extract middot-separated notes", result.tastingNotes)
         assertTrue(result.tastingNotes!!.contains("Chocolate", ignoreCase = true))
-        assertTrue(result.tastingNotes!!.contains("Caramel", ignoreCase = true))
+        assertTrue(result.tastingNotes.contains("Caramel", ignoreCase = true))
     }
 
     @Test
@@ -768,7 +768,7 @@ class OcrFieldExtractorTest {
         )
         assertTrue(
             "Should contain JABLKA",
-            result.tastingNotes!!.contains("JABLKA", ignoreCase = true),
+            result.tastingNotes.contains("JABLKA", ignoreCase = true),
         )
     }
 
@@ -856,7 +856,7 @@ class OcrFieldExtractorTest {
         val result = OcrFieldExtractor.extractFields(merrybeansBack)
         assertNotNull("Should extract tasting notes from 'Chuťový profil:'", result.tastingNotes)
         assertTrue(result.tastingNotes!!.contains("smetana", ignoreCase = true))
-        assertTrue(result.tastingNotes!!.contains("vanilka", ignoreCase = true))
+        assertTrue(result.tastingNotes.contains("vanilka", ignoreCase = true))
     }
 
     @Test
@@ -929,8 +929,8 @@ class OcrFieldExtractorTest {
         val result = OcrFieldExtractor.extractFields(text)
         assertNotNull("Should extract dash-separated tasting notes", result.tastingNotes)
         assertTrue(result.tastingNotes!!.contains("Jahoda", ignoreCase = true))
-        assertTrue(result.tastingNotes!!.contains("Čokoláda", ignoreCase = true))
-        assertTrue(result.tastingNotes!!.contains("Ořechy", ignoreCase = true))
+        assertTrue(result.tastingNotes.contains("Čokoláda", ignoreCase = true))
+        assertTrue(result.tastingNotes.contains("Ořechy", ignoreCase = true))
     }
 
     @Test
