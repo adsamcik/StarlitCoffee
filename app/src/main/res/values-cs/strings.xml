@@ -451,13 +451,6 @@
     <string name="action_explore_extract">Prozkoumat &amp; extrahovat</string>
     <string name="label_detected_field_evidence">Důkazy zjištěných polí</string>
 
-    <!-- AudioDebugOverlay -->
-    <string name="label_audio_monitoring_off">Sledování zvuku je vypnuto</string>
-    <string name="label_recording">Nahrávání</string>
-    <string name="action_export_brew_data">Exportovat data přípravy</string>
-    <string name="action_export">Exportovat</string>
-    <string name="label_level_history">Historie úrovní</string>
-
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Foto balení</string>
     <string name="action_rescan_label">Znovu naskenovat štítek</string>
@@ -468,11 +461,6 @@
     <string name="action_adjust_weight">Upravit hmotnost</string>
     <string name="action_add_weight_tracking">Přidat sledování hmotnosti</string>
     <string name="label_brew_history">Historie příprav</string>
-
-    <!-- BrewLabSetupDialog -->
-    <string name="label_notes_optional">Poznámky (volitelné)</string>
-    <string name="hint_notes_optional">např. zapnutá lednička, použitý V60 místo Pulsaru</string>
-    <string name="action_start_recording">Spustit nahrávání</string>
 
     <!-- BrewRatingSheet -->
     <string name="label_how_was_it">Jak to bylo?</string>

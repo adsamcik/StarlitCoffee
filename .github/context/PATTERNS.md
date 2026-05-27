@@ -25,7 +25,7 @@
 | Convention | Status | Evidence |
 |------------|--------|----------|
 | Private `MutableStateFlow`, public read-only `StateFlow` | Follow | `BrewViewModel.kt:175`, `CalculatorViewModel.kt:33`, `LiveScanViewModel.kt:70` |
-| Mutate copied data state with `.update { it.copy(...) }` | Follow | `BrewViewModel.kt:309`, `CalculatorViewModel.kt:68`, `BrewAudioManager.kt:147` |
+| Mutate copied data state with `.update { it.copy(...) }` | Follow | `BrewViewModel.kt:309`, `CalculatorViewModel.kt:68` |
 | Use `viewModelScope.launch` for async ViewModel work | Follow | `BrewViewModel.kt`, `CalculatorViewModel.kt`, `LiveScanViewModel.kt` |
 | Keep brew state in `BrewViewModel`, calculator tokens in `CalculatorViewModel` | Follow | `CalculatorBrewScreen.kt:100-133` |
 | Validate numeric input before mutation | Follow | `BrewViewModel.kt:318`, `BrewViewModel.kt:337`, `CalculatorViewModel.kt:171` |
@@ -86,24 +86,15 @@
 | Users resolve/reset fields explicitly | Follow | `FrameEvidenceAccumulatorTest.kt:60-114` |
 | LLM calls are optional and cached | Follow | `LiveScanViewModel.kt`, `data/network/llm/*` |
 
-## Audio Patterns
-
-| Convention | Status | Evidence |
-|------------|--------|----------|
-| Pure event detector with injected time provider | Follow | `BrewEventDetector.kt:28-36` |
-| Audio manager composes capture -> preprocess -> spectral analysis -> detector | Follow | `BrewAudioManager.kt:23-49` |
-| Audio state/events exposed as flows | Follow | `BrewAudioManager.kt:64-71` |
-| Tests use synthetic features and deterministic time | Follow | `BrewEventDetectorTest.kt` |
-
 ## Testing Patterns
 
 | Convention | Status | Evidence |
 |------------|--------|----------|
 | JUnit 4 annotations | Follow | `BrewViewModelTest.kt`, `CalculatorViewModelTest.kt`, `FrameEvidenceAccumulatorTest.kt` |
-| Backtick test names describe behavior | Follow | `BrewViewModelTest.kt:51`, `CalculatorViewModelTest.kt:54`, `BrewEventDetectorTest.kt:37` |
+| Backtick test names describe behavior | Follow | `BrewViewModelTest.kt:51`, `CalculatorViewModelTest.kt:54` |
 | Coroutine tests set/reset main dispatcher | Follow | `BrewViewModelTest.kt:37-45`, `CalculatorViewModelTest.kt:38-48`, `FrameEvidenceAccumulatorTest.kt:31-38` |
-| Float assertions use deltas | Follow | `BrewViewModelTest.kt:57-59`, `BrewEventDetectorTest.kt:43` |
-| Test sections use `// --- Section ---` comments | Follow | `BrewViewModelTest.kt:48`, `FrameEvidenceAccumulatorTest.kt:41`, `BrewEventDetectorTest.kt:34` |
+| Float assertions use deltas | Follow | `BrewViewModelTest.kt:57-59` |
+| Test sections use `// --- Section ---` comments | Follow | `BrewViewModelTest.kt:48`, `FrameEvidenceAccumulatorTest.kt:41` |
 | Fake DAOs/utilities live under test sources | Follow | `testutil/FakeDaos.kt`, `CalculatorViewModelTest.kt` |
 
 ## Anti-Patterns

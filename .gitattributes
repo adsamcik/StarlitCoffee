@@ -1,2 +1,0 @@
-# Audio regression test recordings (Git LFS)
-app/src/test/resources/recordings/**/*.wav filter=lfs diff=lfs merge=lfs -text

@@ -23,7 +23,7 @@ Core feature layers:
       -> domain/BrewCalculator, calculator/CalcEvaluator
       -> repositories
         -> Room DAOs/entities
-      -> scan/audio/network/util pipelines
+      -> scan/network/util pipelines
 ```
 
 ## Entry Points
@@ -34,16 +34,15 @@ Core feature layers:
 | `app/src/main/java/com/adsamcik/starlitcoffee/StarlitCoffeeApp.kt` | `Application` class referenced from the manifest. |
 | `app/src/main/java/com/adsamcik/starlitcoffee/navigation/StarlitNavHost.kt` | Builds the navigation graph, bottom bar, repositories, and app-scoped ViewModels. |
 | `app/src/main/java/com/adsamcik/starlitcoffee/navigation/Routes.kt` | Type-safe Navigation Compose route objects and route data classes. |
-| `app/src/main/AndroidManifest.xml` | Permissions, `MainActivity`, `BrewTimerService`, FileProvider, and optional camera/microphone features. |
+| `app/src/main/AndroidManifest.xml` | Permissions, `MainActivity`, `BrewTimerService`, FileProvider, and optional camera features. |
 
 ## Package Map
 
 | Package | Role | Key files |
 |---------|------|-----------|
-| `audio` | Experimental brew audio capture, spectral analysis, event detection, recording, and trajectory matching. | `BrewAudioManager.kt`, `BrewEventDetector.kt`, `SpectralAnalyzer.kt` |
 | `calculator` | Pure calculator expression evaluation for dose/water preview. | `CalcEvaluator.kt` |
 | `data/db` | Room database, converters, DAOs, entities, migrations. | `AppDatabase.kt`, `dao/*Dao.kt`, `entity/*Entity.kt` |
-| `data/model` | Brew methods, grinder data, coffee metadata, scan/audio models, UI domain models. | `BrewMethod.kt`, `FilterType.kt`, `DefaultGrinders.kt`, `SpectralModels.kt` |
+| `data/model` | Brew methods, grinder data, coffee metadata, scan models, UI domain models. | `BrewMethod.kt`, `FilterType.kt`, `DefaultGrinders.kt` |
 | `data/network` | Coffee metadata lookups and on-device LLM abstraction. | `OpenFoodFactsClient.kt`, `QrLinkMetadataExplorer.kt`, `llm/*` |
 | `data/repository` | Thin wrappers over DAOs/DataStore with domain mapping where needed. | `BrewLogRepository.kt`, `CoffeeBagRepository.kt`, `UserPreferencesRepository.kt` |
 | `domain` | Pure brew calculation engine. | `BrewCalculator.kt` |
@@ -99,19 +98,6 @@ Key properties:
 - Regular frames use a conflated channel; golden frames and enrichments use unlimited channels.
 - Consensus uses OCR medoid clustering, Bayesian priors from known coffee fields, and quality-weighted voting.
 - The user must review/save; live scan results are not auto-saved.
-
-### Audio analysis pipeline
-
-```text
-BrewAudioManager
-  -> AudioCaptureSession
-  -> AudioPreProcessor
-  -> SpectralAnalyzer
-  -> BrewEventDetector
-  -> StateFlow<AudioAnalysisState> + SharedFlow<BrewAudioEvent>
-```
-
-`BrewEventDetector` is pure Kotlin with injected time provider. It detects pour start/stop, dripping, and drawdown completion using adaptive noise floors, spectral features, and a state machine.
 
 ### Persistence
 
@@ -180,6 +166,5 @@ warnings -> ratio, bloom, capacity, decaf mismatch
 - Manual DI is intentional for now; do not partly introduce a second injection style.
 - Live scan is session-scoped and should be recreated for each camera destination.
 - Room migrations and `app/schemas/` exports must be updated together for entity changes.
-- Audio analysis is heavily tested but experimental; keep pure computation testable and Android capture isolated.
 
 <!-- context-init:user-content-below -->

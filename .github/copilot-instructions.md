@@ -4,7 +4,7 @@
 # Starlit Coffee
 
 <!-- context-init:managed -->
-Android coffee companion for planning, timing, logging, and improving brews. The app is Pulsar-first, but supports multiple brew methods, calculator-driven dose/water setup, bag inventory scanning, brew logs, rating reminders, and experimental audio/LLM-assisted scan analysis.
+Android coffee companion for planning, timing, logging, and improving brews. The app is Pulsar-first, but supports multiple brew methods, calculator-driven dose/water setup, bag inventory scanning, brew logs, rating reminders, and experimental LLM-assisted scan analysis.
 
 For detailed reference, see `.github/context/ARCHITECTURE.md`, `.github/context/PATTERNS.md`, and `.github/context/DEVELOPMENT.md`.
 
@@ -49,7 +49,6 @@ For detailed reference, see `.github/context/ARCHITECTURE.md`, `.github/context/
 - **Calculator:** `CalculatorViewModel` owns token input; sync derived ratio/dose into `BrewViewModel` immediately before save/start actions.
 - **Brew math:** keep deterministic brew calculations in `domain/BrewCalculator.kt`; `BrewViewModel.recalculate()` wires app-specific state around it.
 - **Scanning:** `LiveScanViewModel` orchestrates `FrameEvidenceAccumulator`, `ConsensusEngine`, side detection, LLM escalation, and perf stats; users confirm/edit before saving.
-- **Audio:** audio analysis code is pure/testable where possible; Android microphone orchestration stays in `BrewAudioManager`.
 - **Localization:** add every user-facing string to both `values/strings.xml` and `values-cs/strings.xml` with identical keys.
 
 ## Domain Knowledge
