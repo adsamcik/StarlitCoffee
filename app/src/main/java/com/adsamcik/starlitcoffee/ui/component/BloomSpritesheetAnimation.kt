@@ -10,6 +10,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
@@ -25,13 +26,30 @@ import kotlin.math.roundToInt
 
 private const val BloomFrameSizePx = 256
 private const val BloomProgressTweenMillis = 1_000
+private const val BloomAnchorAlphaThreshold = 24
+private const val BloomAnchorBandHeightPx = 42
+private const val BloomMaxFrameCorrectionPx = 18
 
+/**
+ * UI-side metadata for a bloom spritesheet.
+ *
+ * `frameSizePx`, `frameColumns`, `frameRows` lock the expected atlas geometry
+ * so the renderer can reject silently-resized exports instead of slicing
+ * them into garbage. The defaults match the project's standard 5×5 256 px
+ * layout produced by `tools/align_bloom_spritesheets.py`.
+ */
 data class BloomSpritesheetOption(
     val id: String,
     @DrawableRes val drawableRes: Int,
     @StringRes val labelRes: Int,
     @StringRes val descriptionRes: Int,
+    val frameSizePx: Int = BloomFrameSizePx,
+    val frameColumns: Int = DefaultBloomFrameColumns,
+    val frameRows: Int = DefaultBloomFrameRows,
 )
+
+private const val DefaultBloomFrameColumns = 5
+private const val DefaultBloomFrameRows = 5
 
 val BloomSpritesheetOptions = listOf(
     BloomSpritesheetOption(
@@ -112,6 +130,10 @@ fun BloomSpritesheetAnimation(
 ) {
     if (selectedSpritesheetId.isNullOrEmpty()) return
     val selectedOption = BloomSpritesheetOptions.firstOrNull { it.id == selectedSpritesheetId } ?: return
+    // ImageBitmap.imageResource is itself @Composable and internally remembers
+    // the decoded bitmap per resource id, so calling it directly is both the
+    // cheap path and the only legal one — wrapping it in remember { } would
+    // call a @Composable from a non-@Composable lambda.
     val image = ImageBitmap.imageResource(id = selectedOption.drawableRes)
     val contentDescription = stringResource(R.string.cd_bloom_animation)
     val targetProgress = resolveBloomProgress(
@@ -127,15 +149,30 @@ fun BloomSpritesheetAnimation(
         },
         label = "BloomSpritesheetProgress",
     )
-    val frameColumns = (image.width / BloomFrameSizePx).coerceAtLeast(1)
-    val frameRows = (image.height / BloomFrameSizePx).coerceAtLeast(1)
-    val frameCount = frameColumns * frameRows
-    val frameIndex = resolveBloomFrameIndex(animatedProgress, frameCount)
+    // Strict grid validation — bail (rendering nothing) if the image doesn't
+    // match the option's declared geometry rather than slicing garbage. This
+    // makes mis-imported atlases visible during QA instead of producing a
+    // silently broken animation.
+    val grid = remember(image, selectedOption) {
+        resolveBloomGridOrLog(
+            spritesheetId = selectedOption.id,
+            imageWidth = image.width,
+            imageHeight = image.height,
+            frameSizePx = selectedOption.frameSizePx,
+            expectedColumns = selectedOption.frameColumns,
+            expectedRows = selectedOption.frameRows,
+        )
+    } ?: return
+    val frameCorrections = remember(image, grid) {
+        resolveBloomFrameCorrections(image = image, grid = grid)
+    }
+    val frameIndex = resolveBloomFrameIndex(animatedProgress, grid.frameCount)
 
     BloomSpritesheetFrame(
         image = image,
+        grid = grid,
         frameIndex = frameIndex,
-        frameColumns = frameColumns,
+        frameCorrection = frameCorrections.getOrElse(frameIndex) { IntOffset.Zero },
         contentDescription = contentDescription,
         modifier = modifier,
     )
@@ -147,14 +184,24 @@ fun BloomSpritesheetFinalFramePreview(
     contentDescription: String?,
     modifier: Modifier = Modifier,
 ) {
+    // See BloomSpritesheetAnimation: ImageBitmap.imageResource is @Composable
+    // and self-remembers — calling it directly is required here.
     val image = ImageBitmap.imageResource(id = option.drawableRes)
-    val frameColumns = (image.width / BloomFrameSizePx).coerceAtLeast(1)
-    val frameRows = (image.height / BloomFrameSizePx).coerceAtLeast(1)
-    val frameCount = frameColumns * frameRows
+    val grid = remember(image, option) {
+        resolveBloomGridOrLog(
+            spritesheetId = option.id,
+            imageWidth = image.width,
+            imageHeight = image.height,
+            frameSizePx = option.frameSizePx,
+            expectedColumns = option.frameColumns,
+            expectedRows = option.frameRows,
+        )
+    } ?: return
     BloomSpritesheetFrame(
         image = image,
-        frameIndex = frameCount - 1,
-        frameColumns = frameColumns,
+        grid = grid,
+        frameIndex = grid.frameCount - 1,
+        frameCorrection = IntOffset.Zero,
         contentDescription = contentDescription,
         modifier = modifier,
     )
@@ -163,8 +210,9 @@ fun BloomSpritesheetFinalFramePreview(
 @Composable
 private fun BloomSpritesheetFrame(
     image: ImageBitmap,
+    grid: BloomGrid,
     frameIndex: Int,
-    frameColumns: Int,
+    frameCorrection: IntOffset,
     contentDescription: String?,
     modifier: Modifier = Modifier,
 ) {
@@ -180,15 +228,19 @@ private fun BloomSpritesheetFrame(
             ),
     ) {
         val destination = IntSize(size.width.roundToInt(), size.height.roundToInt())
+        val correction = IntOffset(
+            x = (frameCorrection.x * (size.width / grid.frameSizePx)).roundToInt(),
+            y = (frameCorrection.y * (size.height / grid.frameSizePx)).roundToInt(),
+        )
         val sourceOffset = IntOffset(
-            x = frameIndex % frameColumns * BloomFrameSizePx,
-            y = frameIndex / frameColumns * BloomFrameSizePx,
+            x = grid.sourceLeftOf(frameIndex),
+            y = grid.sourceTopOf(frameIndex),
         )
         drawImage(
             image = image,
             srcOffset = sourceOffset,
-            srcSize = IntSize(BloomFrameSizePx, BloomFrameSizePx),
-            dstOffset = IntOffset.Zero,
+            srcSize = IntSize(grid.frameSizePx, grid.frameSizePx),
+            dstOffset = correction,
             dstSize = destination,
             filterQuality = FilterQuality.Medium,
         )
@@ -206,4 +258,137 @@ private fun resolveBloomProgress(
 
 private fun resolveBloomFrameIndex(progress: Float, frameCount: Int): Int {
     return (progress * (frameCount - 1)).roundToInt().coerceIn(0, frameCount - 1)
+}
+
+private data class BloomFrameAnchor(
+    val hasContent: Boolean,
+    val anchorX: Float,
+    val baselineY: Int,
+)
+
+private fun resolveBloomFrameCorrections(
+    image: ImageBitmap,
+    grid: BloomGrid,
+): List<IntOffset> {
+    val frameSizePx = grid.frameSizePx
+    if (grid.frameCount <= 1) return List(grid.frameCount) { IntOffset.Zero }
+
+    val pixels = IntArray(image.width * image.height)
+    image.readPixels(buffer = pixels)
+
+    val anchors = MutableList(grid.frameCount) {
+        BloomFrameAnchor(
+            hasContent = false,
+            anchorX = frameSizePx / 2f,
+            baselineY = frameSizePx - 1,
+        )
+    }
+    val validAnchorXs = mutableListOf<Float>()
+    val validBaselines = mutableListOf<Int>()
+    repeat(grid.frameCount) { frameIndex ->
+        val frameX = grid.sourceLeftOf(frameIndex)
+        val frameY = grid.sourceTopOf(frameIndex)
+        val anchor = sampleBloomFrameAnchor(
+            pixels = pixels,
+            imageWidth = image.width,
+            frameLeft = frameX,
+            frameTop = frameY,
+            frameSizePx = frameSizePx,
+        )
+        anchors[frameIndex] = anchor
+        if (anchor.hasContent) {
+            validAnchorXs += anchor.anchorX
+            validBaselines += anchor.baselineY
+        }
+    }
+
+    val targetAnchorX = medianFloat(validAnchorXs) ?: (frameSizePx / 2f)
+    val targetBaseline = medianInt(validBaselines) ?: (frameSizePx - 1)
+    return anchors.map { anchor ->
+        if (!anchor.hasContent) {
+            IntOffset.Zero
+        } else {
+            IntOffset(
+                x = (targetAnchorX - anchor.anchorX)
+                    .roundToInt()
+                    .coerceIn(-BloomMaxFrameCorrectionPx, BloomMaxFrameCorrectionPx),
+                y = (targetBaseline - anchor.baselineY)
+                    .coerceIn(-BloomMaxFrameCorrectionPx, BloomMaxFrameCorrectionPx),
+            )
+        }
+    }
+}
+
+private fun sampleBloomFrameAnchor(
+    pixels: IntArray,
+    imageWidth: Int,
+    frameLeft: Int,
+    frameTop: Int,
+    frameSizePx: Int,
+): BloomFrameAnchor {
+    var minX = frameSizePx
+    var minY = frameSizePx
+    var maxX = -1
+    var maxY = -1
+    for (localY in 0 until frameSizePx) {
+        val rowStart = (frameTop + localY) * imageWidth + frameLeft
+        for (localX in 0 until frameSizePx) {
+            val alpha = pixels[rowStart + localX].ushr(24)
+            if (alpha >= BloomAnchorAlphaThreshold) {
+                minX = minOf(minX, localX)
+                minY = minOf(minY, localY)
+                maxX = maxOf(maxX, localX)
+                maxY = maxOf(maxY, localY)
+            }
+        }
+    }
+    if (maxX < 0 || maxY < 0) {
+        return BloomFrameAnchor(
+            hasContent = false,
+            anchorX = frameSizePx / 2f,
+            baselineY = frameSizePx - 1,
+        )
+    }
+
+    val bandTop = maxOf(minY, maxY - BloomAnchorBandHeightPx + 1)
+    var total = 0f
+    var weightedX = 0f
+    for (localY in bandTop..maxY) {
+        val rowStart = (frameTop + localY) * imageWidth + frameLeft
+        for (localX in minX..maxX) {
+            val alpha = pixels[rowStart + localX].ushr(24)
+            if (alpha >= BloomAnchorAlphaThreshold) {
+                total += alpha.toFloat()
+                weightedX += localX * alpha.toFloat()
+            }
+        }
+    }
+    val anchorX = if (total > 0f) weightedX / total else (minX + maxX) / 2f
+    return BloomFrameAnchor(
+        hasContent = true,
+        anchorX = anchorX,
+        baselineY = maxY,
+    )
+}
+
+private fun medianFloat(values: List<Float>): Float? {
+    if (values.isEmpty()) return null
+    val sorted = values.sorted()
+    val mid = sorted.size / 2
+    return if (sorted.size % 2 == 0) {
+        (sorted[mid - 1] + sorted[mid]) / 2f
+    } else {
+        sorted[mid]
+    }
+}
+
+private fun medianInt(values: List<Int>): Int? {
+    if (values.isEmpty()) return null
+    val sorted = values.sorted()
+    val mid = sorted.size / 2
+    return if (sorted.size % 2 == 0) {
+        ((sorted[mid - 1] + sorted[mid]) / 2f).roundToInt()
+    } else {
+        sorted[mid]
+    }
 }
