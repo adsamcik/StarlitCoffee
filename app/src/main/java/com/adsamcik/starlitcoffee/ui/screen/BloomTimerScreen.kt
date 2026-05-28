@@ -54,9 +54,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
 import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
-import com.adsamcik.starlitcoffee.ui.util.DimImportant
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
-import com.adsamcik.starlitcoffee.ui.util.DimRole
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.util.VibrationHelper
@@ -69,6 +67,9 @@ fun BloomTimerScreen(
     brewViewModel: BrewViewModel,
     bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
     dimModeEnabled: Boolean = true,
+    dimModeTrueBlack: Boolean = false,
+    dimModeReduceBrightness: Boolean = false,
+    dimModeFullscreen: Boolean = false,
     onNavigateToBrew: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -208,6 +209,9 @@ fun BloomTimerScreen(
         DimModeScaffold(
             controller = dimController,
             modifier = Modifier.fillMaxSize(),
+            trueBlackBackground = dimModeTrueBlack,
+            reduceBrightness = dimModeReduceBrightness,
+            hideSystemBars = dimModeFullscreen,
         ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -263,27 +267,23 @@ fun BloomTimerScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // Hero timer
-                DimImportant(role = DimRole.Hero) {
-                    Text(
-                        text = formatBloomTime(state.elapsedSeconds),
-                        style = MaterialTheme.typography.displayLarge,
-                        fontWeight = FontWeight.Light,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                }
+                Text(
+                    text = formatBloomTime(state.elapsedSeconds),
+                    style = MaterialTheme.typography.displayLarge,
+                    fontWeight = FontWeight.Light,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.semantics { heading() },
+                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Bloom countdown
                 if (state.bloomCountdownSeconds != null) {
-                    DimImportant(role = DimRole.Primary) {
-                        Text(
-                            text = formatBloomTime(state.bloomCountdownSeconds ?: 0),
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onTertiaryContainer,
-                        )
-                    }
+                    Text(
+                        text = formatBloomTime(state.bloomCountdownSeconds ?: 0),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    )
 
                     Spacer(modifier = Modifier.height(4.dp))
 
@@ -325,13 +325,11 @@ fun BloomTimerScreen(
                 } else {
                     stringResource(R.string.format_bloom_total, state.bloomG, state.waterG)
                 }
-                DimImportant(role = DimRole.Primary) {
-                    Text(
-                        text = waterText,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+                Text(
+                    text = waterText,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
 
             // ── Bottom controls ─────────────────────────────────────
@@ -343,28 +341,26 @@ fun BloomTimerScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 // Play / Pause
-                DimImportant(role = DimRole.Action) {
-                    FilledTonalIconButton(
-                        onClick = {
-                            if (state.timerRunning) brewViewModel.pauseTimer()
-                            else brewViewModel.startTimer()
-                        },
-                        modifier = Modifier.size(64.dp),
-                        shape = CircleShape,
-                        colors = IconButtonDefaults.filledTonalIconButtonColors(
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                FilledTonalIconButton(
+                    onClick = {
+                        if (state.timerRunning) brewViewModel.pauseTimer()
+                        else brewViewModel.startTimer()
+                    },
+                    modifier = Modifier.size(64.dp),
+                    shape = CircleShape,
+                    colors = IconButtonDefaults.filledTonalIconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    ),
+                ) {
+                    Icon(
+                        imageVector = if (state.timerRunning) Icons.Filled.Pause
+                        else Icons.Filled.PlayArrow,
+                        contentDescription = stringResource(
+                            if (state.timerRunning) R.string.action_pause else R.string.action_resume,
                         ),
-                    ) {
-                        Icon(
-                            imageVector = if (state.timerRunning) Icons.Filled.Pause
-                            else Icons.Filled.PlayArrow,
-                            contentDescription = stringResource(
-                                if (state.timerRunning) R.string.action_pause else R.string.action_resume,
-                            ),
-                            modifier = Modifier.size(32.dp),
-                        )
-                    }
+                        modifier = Modifier.size(32.dp),
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))

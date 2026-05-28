@@ -1,25 +1,21 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Coffee
-import androidx.compose.material.icons.filled.LocalFireDepartment
-import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -27,9 +23,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -43,18 +39,21 @@ import com.adsamcik.starlitcoffee.data.model.GrinderScaleType
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
-import com.adsamcik.starlitcoffee.ui.util.DimImportant
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
-import com.adsamcik.starlitcoffee.ui.util.DimRole
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
+import com.adsamcik.starlitcoffee.viewmodel.BrewUiState
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
+import kotlin.math.abs
 
 @Composable
 fun GrindPrepScreen(
     brewViewModel: BrewViewModel,
     dimModeEnabled: Boolean = true,
+    dimModeTrueBlack: Boolean = false,
+    dimModeReduceBrightness: Boolean = false,
+    dimModeFullscreen: Boolean = false,
     onNavigateToBrew: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -67,12 +66,17 @@ fun GrindPrepScreen(
     DimModeScaffold(
         controller = dimController,
         modifier = Modifier.fillMaxSize(),
+        trueBlackBackground = dimModeTrueBlack,
+        reduceBrightness = dimModeReduceBrightness,
+        hideSystemBars = dimModeFullscreen,
     ) {
-    Scaffold(
-        bottomBar = {
-            // Sticky primary CTA — always visible, regardless of scroll position.
-            Surface(color = MaterialTheme.colorScheme.surface) {
-                DimImportant(role = DimRole.Action) {
+        Scaffold(
+            bottomBar = {
+                // Sticky primary CTA — anchored to the bottom regardless of
+                // scroll position. The Surface keeps the action area on the
+                // app canvas so the button doesn't appear to float over a
+                // disconnected void on long screens.
+                Surface(color = MaterialTheme.colorScheme.surface) {
                     Button(
                         onClick = onNavigateToBrew,
                         modifier = Modifier
@@ -94,138 +98,292 @@ fun GrindPrepScreen(
                         )
                     }
                 }
-            }
-        },
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            ScreenTopBar(
-                title = stringResource(R.string.screen_grind_prep_title),
-                onBack = onBack,
-            )
+            },
+        ) { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 20.dp, vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+            ) {
+                ScreenTopBar(
+                    title = stringResource(R.string.screen_grind_prep_title),
+                    onBack = onBack,
+                )
 
-            // Surface guardrail warnings so the user notices issues with the
-            // current setup (e.g. bloom > water, ratio outside sane range)
-            // before committing to a brew.
-            state.ratioWarning?.let { warning ->
-                WarningCard(message = warning)
-            }
-            state.bloomWarning?.let { warning ->
-                WarningCard(message = warning)
-            }
+                MethodBreadcrumb(
+                    method = state.method,
+                    filter = state.filterType,
+                    ratio = state.effectiveRatio,
+                )
 
-            DimImportant(role = DimRole.Hero) {
-                GrindHeroCard(state.grindResult)
-            }
+                // Surface guardrail warnings so the user notices issues with the
+                // current setup (e.g. bloom > water, ratio outside sane range)
+                // before committing to a brew. Errors deliberately keep their
+                // colored container — they're the one signal that should not
+                // blend into the calm canvas.
+                state.ratioWarning?.let { warning ->
+                    WarningCard(message = warning)
+                }
+                state.bloomWarning?.let { warning ->
+                    WarningCard(message = warning)
+                }
 
-            DimImportant(role = DimRole.Primary) {
-                MetricsRow(
-                    coffeeG = state.coffeeG,
-                    waterG = state.waterG,
-                    tempLow = state.method.tempRangeLow,
-                    tempHigh = state.method.tempRangeHigh,
+                GrindSection(grindResult = state.grindResult)
+
+                SectionDivider()
+
+                RecipeSection(state = state)
+
+                SectionDivider()
+
+                PrepSection(
+                    method = state.method,
+                    filter = state.filterType,
                 )
             }
-
-            PrepTipCard(
-                tipRes = prepTipFor(state.method, state.filterType),
-            )
         }
     }
+}
+
+/**
+ * Subtle single-line context strip — "Pulsar · Paper filter · 1:17" — pinned
+ * under the title so the brew identity is always visible without competing
+ * with the grind hero below.
+ */
+@Composable
+private fun MethodBreadcrumb(
+    method: BrewMethod,
+    filter: FilterType?,
+    ratio: Float,
+) {
+    val parts = buildList {
+        add(method.displayName)
+        if (filter != null) add("${filter.displayName} filter")
+        if (ratio > 0f) add("1:${formatRatio(ratio)}")
+    }
+    Text(
+        text = parts.joinToString(separator = " · "),
+        style = MaterialTheme.typography.labelLarge,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+}
+
+/**
+ * Hero number with an imperative verb prefix ("Set grinder to …") so the
+ * value is never ambiguous. Centred so the eye lands on the number directly.
+ */
+@Composable
+private fun GrindSection(grindResult: GrindResult) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        Text(
+            text = stringResource(R.string.label_set_grinder_to),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(Modifier.height(4.dp))
+        when (grindResult) {
+            is GrindResult.Generic -> {
+                Text(
+                    text = grindResult.descriptor.displayName,
+                    style = MaterialTheme.typography.displayMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = grindResult.descriptor.visualCue,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            is GrindResult.Specific -> {
+                val formatted = formatGrindSetting(
+                    grinder = grindResult.grinder,
+                    value = grindResult.recommendation.suggestedStart,
+                )
+                Row(
+                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(
+                        text = formatted.primary,
+                        style = MaterialTheme.typography.displayLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    if (formatted.unit != null) {
+                        Text(
+                            text = formatted.unit,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(bottom = 14.dp),
+                        )
+                    }
+                }
+                Spacer(Modifier.height(2.dp))
+                // Breakdown + range collapsed onto a single subdued line.
+                // Both are useful but secondary to the hero number.
+                val subline = buildList {
+                    formatted.breakdown?.let { add(it) }
+                    add(
+                        rangeLine(
+                            grinder = grindResult.grinder,
+                            rec = grindResult.recommendation,
+                        ),
+                    )
+                }.joinToString(separator = " · ")
+                Text(
+                    text = subline,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+                Text(
+                    text = "${grindResult.grinder.brand} ${grindResult.grinder.model}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+    }
+}
+
+/**
+ * Flat label/value recipe rows. Surfaces every parameter the user is about
+ * to act on — including ratio, bloom amount and target time which were
+ * previously invisible despite already being in [BrewUiState].
+ */
+@Composable
+private fun RecipeSection(state: BrewUiState) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        SectionHeader(text = stringResource(R.string.label_recipe_heading))
+        if (state.coffeeG > 0f) {
+            RecipeRow(
+                label = stringResource(R.string.label_coffee),
+                value = "${"%.0f".format(state.coffeeG)} g",
+            )
+        }
+        if (state.waterG > 0f) {
+            RecipeRow(
+                label = stringResource(R.string.label_water),
+                value = "${"%.0f".format(state.waterG)} g",
+            )
+        }
+        val tempLow = state.method.tempRangeLow
+        val tempHigh = state.method.tempRangeHigh
+        if (tempLow > 0 && tempHigh > 0) {
+            RecipeRow(
+                label = stringResource(R.string.label_temp_short),
+                value = "$tempLow–$tempHigh °C",
+            )
+        }
+        if (state.effectiveRatio > 0f) {
+            RecipeRow(
+                label = stringResource(R.string.label_ratio),
+                value = "1:${formatRatio(state.effectiveRatio)}",
+            )
+        }
+        if (state.method.hasBloom && state.bloomG > 0f) {
+            RecipeRow(
+                label = stringResource(R.string.label_bloom_short),
+                value = "${"%.0f".format(state.bloomG)} g · ${state.effectiveBloomDurationSeconds} s",
+            )
+        }
+        if (state.timeTargetLowS > 0 && state.timeTargetHighS > 0) {
+            RecipeRow(
+                label = stringResource(R.string.label_target),
+                value = formatTargetDurationRange(state.timeTargetLowS, state.timeTargetHighS),
+            )
+        }
     }
 }
 
 @Composable
-private fun GrindHeroCard(grindResult: GrindResult) {
-    Surface(
-        shape = MaterialTheme.shapes.extraLarge,
-        color = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+private fun RecipeRow(label: String, value: String) {
+    Row(
         modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 24.dp, vertical = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            val headerLabel = when (grindResult) {
-                is GrindResult.Generic -> stringResource(R.string.label_grind)
-                is GrindResult.Specific -> "${grindResult.grinder.brand} ${grindResult.grinder.model}"
-            }
-            Text(
-                text = headerLabel,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
-            )
-            when (grindResult) {
-                is GrindResult.Generic -> {
-                    Text(
-                        text = grindResult.descriptor.displayName,
-                        style = MaterialTheme.typography.displaySmall,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                    Text(
-                        text = grindResult.descriptor.visualCue,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f),
-                    )
-                }
-                is GrindResult.Specific -> {
-                    val formatted = formatGrindSetting(
-                        grinder = grindResult.grinder,
-                        value = grindResult.recommendation.suggestedStart,
-                    )
-                    Row(
-                        verticalAlignment = Alignment.Bottom,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        Text(
-                            text = formatted.primary,
-                            style = MaterialTheme.typography.displayMedium,
-                            fontWeight = FontWeight.SemiBold,
-                        )
-                        if (formatted.unit != null) {
-                            Text(
-                                text = formatted.unit,
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
-                                modifier = Modifier.padding(bottom = 10.dp),
-                            )
-                        }
-                    }
-                    if (formatted.breakdown != null) {
-                        Text(
-                            text = formatted.breakdown,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f),
-                        )
-                    }
-                    Spacer(Modifier.size(4.dp))
-                    Text(
-                        text = rangeLine(
-                            grinder = grindResult.grinder,
-                            rec = grindResult.recommendation,
-                        ),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f),
-                    )
-                    if (grindResult.recommendation.adjustmentNote.isNotBlank()) {
-                        Spacer(Modifier.size(2.dp))
-                        Text(
-                            text = grindResult.recommendation.adjustmentNote,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.75f),
-                        )
-                    }
-                }
-            }
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.weight(1f),
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+    }
+}
+
+/**
+ * Splits the localised prep paragraph into one bullet per sentence so the
+ * checklist can be scanned at a glance with busy hands.
+ */
+@Composable
+private fun PrepSection(method: BrewMethod, filter: FilterType?) {
+    val tipString = stringResource(prepTipFor(method, filter))
+    val steps = remember(tipString) { splitIntoSteps(tipString) }
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        SectionHeader(text = stringResource(R.string.prep_tip_label))
+        steps.forEach { step ->
+            PrepStep(text = step)
         }
     }
+}
+
+@Composable
+private fun PrepStep(text: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Top,
+    ) {
+        Text(
+            text = "·",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.width(16.dp),
+        )
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+    }
+}
+
+@Composable
+private fun SectionHeader(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.labelLarge,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+}
+
+@Composable
+private fun SectionDivider() {
+    HorizontalDivider(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.outlineVariant,
+    )
 }
 
 private data class FormattedGrindSetting(
@@ -237,7 +395,7 @@ private data class FormattedGrindSetting(
 /**
  * Format a grind setting value for display based on the grinder's scale type.
  *
- * - DIAL_CLICKS (e.g. 1Zpresso): "5.2" shown as "5.2" with breakdown "5 · 2 clicks"
+ * - DIAL_CLICKS (e.g. 1Zpresso): "5.2" shown as "5.2" with breakdown "5 + 2 clicks"
  * - PURE_CLICKS (e.g. Comandante C40): shown as integer clicks count
  * - NUMBERED_DIAL (e.g. Fellow Ode): shown as printed dial setting
  */
@@ -294,128 +452,47 @@ private fun rangeLine(grinder: Grinder, rec: GrindRecommendation): String {
     }
 }
 
-@Composable
-private fun MetricsRow(
-    coffeeG: Float,
-    waterG: Float,
-    tempLow: Int,
-    tempHigh: Int,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Max),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        MetricTile(
-            icon = Icons.Filled.Coffee,
-            label = stringResource(R.string.label_coffee),
-            value = "${"%.0f".format(coffeeG)}g",
-            subtitle = null,
-            modifier = Modifier.weight(1f).fillMaxHeight(),
-        )
-        MetricTile(
-            icon = Icons.Filled.LocalFireDepartment,
-            label = stringResource(R.string.label_water),
-            value = if (waterG > 0f) "${"%.0f".format(waterG)}g" else "–",
-            subtitle = if (tempLow > 0 && tempHigh > 0) "$tempLow–$tempHigh°C" else null,
-            modifier = Modifier.weight(1f).fillMaxHeight(),
-        )
+private fun formatRatio(ratio: Float): String {
+    return if (ratio % 1f == 0f) {
+        ratio.toInt().toString()
+    } else {
+        "%.1f".format(ratio)
     }
 }
 
-@Composable
-private fun MetricTile(
-    icon: ImageVector,
-    label: String,
-    value: String,
-    subtitle: String?,
-    modifier: Modifier = Modifier,
-) {
-    Surface(
-        shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        contentColor = MaterialTheme.colorScheme.onSurface,
-        modifier = modifier,
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(18.dp),
-                )
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            Text(
-                text = value,
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.SemiBold,
-            )
-            if (subtitle != null) {
-                Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
+/**
+ * Splits a prep paragraph into one entry per sentence so the section can
+ * render as a checklist. Sentences are detected by punctuation+whitespace,
+ * which matches the natural breaks in both EN and CS source strings.
+ * Trailing punctuation is trimmed so bullets read uniformly.
+ */
+private fun splitIntoSteps(text: String): List<String> {
+    return text.split(Regex("(?<=[.!?])\\s+"))
+        .map { it.trim().trimEnd('.', '!', '?') }
+        .filter { it.isNotBlank() }
+}
+
+private fun formatTargetDurationRange(lowSeconds: Int, highSeconds: Int): String {
+    if (lowSeconds <= 0 || highSeconds <= 0) return "–"
+    return "${formatLongDuration(lowSeconds)}–${formatLongDuration(highSeconds)}"
+}
+
+private fun formatLongDuration(seconds: Int): String {
+    val hours = seconds / 3600
+    val minutes = (seconds % 3600) / 60
+    return when {
+        hours > 0 && minutes > 0 -> "${hours}h ${minutes}m"
+        hours > 0 -> "${hours}h"
+        else -> formatBrewTime(seconds)
     }
 }
 
-@Composable
-private fun PrepTipCard(@androidx.annotation.StringRes tipRes: Int) {
-    Surface(
-        shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.tertiaryContainer,
-        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 18.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Surface(
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.12f),
-                modifier = Modifier.size(40.dp),
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        imageVector = Icons.Outlined.Lightbulb,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onTertiaryContainer,
-                        modifier = Modifier.size(22.dp),
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-                Text(
-                    text = stringResource(R.string.prep_tip_label),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.8f),
-                )
-                Text(
-                    text = stringResource(tipRes),
-                    style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.Start,
-                )
-            }
-        }
-    }
+private fun formatBrewTime(seconds: Int): String {
+    val absSeconds = abs(seconds)
+    val minutes = absSeconds / 60
+    val secs = absSeconds % 60
+    val prefix = if (seconds < 0) "-" else ""
+    return "$prefix$minutes:%02d".format(secs)
 }
 
 /**

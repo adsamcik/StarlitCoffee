@@ -32,9 +32,9 @@ import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.Button
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FilledTonalIconButton
@@ -69,9 +69,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewTimingMode
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
 import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
-import com.adsamcik.starlitcoffee.ui.util.DimImportant
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
-import com.adsamcik.starlitcoffee.ui.util.DimRole
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.viewmodel.BrewUiState
@@ -84,6 +82,9 @@ fun BrewTimerScreen(
     brewViewModel: BrewViewModel,
     bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
     dimModeEnabled: Boolean = true,
+    dimModeTrueBlack: Boolean = false,
+    dimModeReduceBrightness: Boolean = false,
+    dimModeFullscreen: Boolean = false,
     onBack: () -> Unit,
     onComplete: () -> Unit = {},
 ) {
@@ -248,6 +249,9 @@ fun BrewTimerScreen(
         DimModeScaffold(
             controller = dimController,
             modifier = Modifier.fillMaxSize(),
+            trueBlackBackground = dimModeTrueBlack,
+            reduceBrightness = dimModeReduceBrightness,
+            hideSystemBars = dimModeFullscreen,
         ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -351,33 +355,29 @@ fun BrewTimerScreen(
                 } else {
                     formatTargetDurationRange(state.timeTargetLowS, state.timeTargetHighS)
                 }
-                DimImportant(role = DimRole.Hero) {
-                    Text(
-                        text = heroText,
-                        style = if (usesActiveTimer) {
-                            MaterialTheme.typography.displayLarge
-                        } else {
-                            MaterialTheme.typography.displayMedium
-                        },
-                        fontWeight = FontWeight.Light,
-                        color = heroColor,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                }
+                Text(
+                    text = heroText,
+                    style = if (usesActiveTimer) {
+                        MaterialTheme.typography.displayLarge
+                    } else {
+                        MaterialTheme.typography.displayMedium
+                    },
+                    fontWeight = FontWeight.Light,
+                    color = heroColor,
+                    modifier = Modifier.semantics { heading() },
+                )
                 when {
                     bloomActive -> {
                         // Bloom badge
-                        DimImportant(role = DimRole.Secondary) {
-                            Text(
-                                text = stringResource(R.string.label_bloom_badge),
-                                style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.onTertiaryContainer,
-                                modifier = Modifier
-                                    .clip(MaterialTheme.shapes.medium)
-                                    .background(MaterialTheme.colorScheme.tertiaryContainer)
-                                    .padding(horizontal = 16.dp, vertical = 4.dp),
-                            )
-                        }
+                        Text(
+                            text = stringResource(R.string.label_bloom_badge),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
+                            modifier = Modifier
+                                .clip(MaterialTheme.shapes.medium)
+                                .background(MaterialTheme.colorScheme.tertiaryContainer)
+                                .padding(horizontal = 16.dp, vertical = 4.dp),
+                        )
 
                         val bloomDuration = state.effectiveBloomDurationSeconds
                         val progress = if (bloomDuration > 0) {
@@ -411,13 +411,11 @@ fun BrewTimerScreen(
                 }
 
                 // ── Primary guidance card — the most important info right now
-                DimImportant(role = DimRole.Primary) {
-                    BrewGuidanceCard(
-                        state = state,
-                        bloomActive = bloomActive,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
+                BrewGuidanceCard(
+                    state = state,
+                    bloomActive = bloomActive,
+                    modifier = Modifier.fillMaxWidth(),
+                )
 
                 // ── Metadata row: target time · temp · total water
                 BrewMetadataRow(
@@ -440,31 +438,29 @@ fun BrewTimerScreen(
                     state.bloomMarkedAtSeconds == null &&
                     state.bloomG > 0f
                 if (showStartBloom) {
-                    DimImportant(role = DimRole.Action) {
-                        ElevatedButton(
-                            onClick = {
-                                // Start Bloom is the real "begin brew" moment for bloom methods —
-                                // start the timer first if it hasn't started yet.
-                                if (!state.timerRunning && state.elapsedSeconds == 0) {
-                                    brewViewModel.startTimer()
-                                }
-                                brewViewModel.markBloom()
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(72.dp),
-                            shape = MaterialTheme.shapes.extraLarge,
-                            colors = ButtonDefaults.elevatedButtonColors(
-                                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                            ),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.action_start_bloom),
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.SemiBold,
-                            )
-                        }
+                    Button(
+                        onClick = {
+                            // Start Bloom is the real "begin brew" moment for bloom methods —
+                            // start the timer first if it hasn't started yet.
+                            if (!state.timerRunning && state.elapsedSeconds == 0) {
+                                brewViewModel.startTimer()
+                            }
+                            brewViewModel.markBloom()
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(72.dp),
+                        shape = MaterialTheme.shapes.extraLarge,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                        ),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.action_start_bloom),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold,
+                        )
                     }
                     Spacer(modifier = Modifier.height(12.dp))
                 }
@@ -489,48 +485,44 @@ fun BrewTimerScreen(
                             )
                         }
 
-                        DimImportant(role = DimRole.Action) {
-                            FilledIconButton(
-                                onClick = {
-                                    if (state.timerRunning) brewViewModel.pauseTimer()
-                                    else brewViewModel.startTimer()
-                                },
-                                modifier = Modifier.size(72.dp),
-                                shape = CircleShape,
-                                colors = IconButtonDefaults.filledIconButtonColors(
-                                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                ),
-                            ) {
-                                Icon(
-                                    imageVector = if (state.timerRunning) Icons.Filled.Pause
-                                    else Icons.Filled.PlayArrow,
-                                    contentDescription = if (state.timerRunning) "Pause" else "Resume",
-                                    modifier = Modifier.size(36.dp),
-                                )
-                            }
+                        FilledIconButton(
+                            onClick = {
+                                if (state.timerRunning) brewViewModel.pauseTimer()
+                                else brewViewModel.startTimer()
+                            },
+                            modifier = Modifier.size(72.dp),
+                            shape = CircleShape,
+                            colors = IconButtonDefaults.filledIconButtonColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                            ),
+                        ) {
+                            Icon(
+                                imageVector = if (state.timerRunning) Icons.Filled.Pause
+                                else Icons.Filled.PlayArrow,
+                                contentDescription = if (state.timerRunning) "Pause" else "Resume",
+                                modifier = Modifier.size(36.dp),
+                            )
                         }
                         // Spacer to balance the row
                         Spacer(modifier = Modifier.size(72.dp))
                     }
                 } else {
-                    DimImportant(role = DimRole.Action) {
-                        Button(
-                            onClick = {
-                                brewViewModel.stopTimer()
-                                onComplete()
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(64.dp),
-                            shape = MaterialTheme.shapes.extraLarge,
-                        ) {
-                            Text(
-                                text = stringResource(R.string.action_finish_brew),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.SemiBold,
-                            )
-                        }
+                    Button(
+                        onClick = {
+                            brewViewModel.stopTimer()
+                            onComplete()
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(64.dp),
+                        shape = MaterialTheme.shapes.extraLarge,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.action_finish_brew),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold,
+                        )
                     }
                 }
             }
@@ -600,9 +592,9 @@ private fun BrewGuidanceCard(
         else -> return
     }
 
-    ElevatedCard(
+    Card(
         modifier = modifier,
-        colors = CardDefaults.elevatedCardColors(
+        colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
