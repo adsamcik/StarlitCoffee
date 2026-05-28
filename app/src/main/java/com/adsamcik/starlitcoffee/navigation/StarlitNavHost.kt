@@ -24,6 +24,7 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,6 +50,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.notification.DeepLinkBus
 import com.adsamcik.starlitcoffee.ui.screen.BagInventoryScreen
 import com.adsamcik.starlitcoffee.ui.screen.BarcodeScannerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BloomAnimationSettingsScreen
@@ -169,6 +171,18 @@ fun StarlitNavHost() {
     val startDestination: Any = if (prefs.onboardingCompleted) CalculatorBrew else OnboardingMethods
     val snackbarHostState = remember { SnackbarHostState() }
 
+    // Notification deep link → BrewLogDetail. The bus is owned by MainActivity;
+    // we pop the pending id here, navigate, and clear it so a recompose doesn't
+    // re-fire the navigation.
+    val pendingBrewLogId by DeepLinkBus.pendingBrewLogId.collectAsStateWithLifecycle()
+    LaunchedEffect(pendingBrewLogId) {
+        val id = pendingBrewLogId
+        if (id != null && prefs.onboardingCompleted) {
+            navController.navigate(BrewLogDetail(logId = id))
+            DeepLinkBus.consumeBrewLogDetail()
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
@@ -270,6 +284,9 @@ fun StarlitNavHost() {
                     brewViewModel = brewViewModel,
                     userPreferencesRepository = userPreferencesRepository,
                     dimModeEnabled = prefs.dimModeEnabled,
+                    dimModeTrueBlack = prefs.dimModeTrueBlack,
+                    dimModeReduceBrightness = prefs.dimModeReduceBrightness,
+                    dimModeFullscreen = prefs.dimModeFullscreen,
                     onNavigateToBrew = {
                         brewViewModel.startNewBrewSession()
                         // Quick Brew preference jumps past the grind/prep
@@ -284,6 +301,9 @@ fun StarlitNavHost() {
                 GrindPrepScreen(
                     brewViewModel = brewViewModel,
                     dimModeEnabled = prefs.dimModeEnabled,
+                    dimModeTrueBlack = prefs.dimModeTrueBlack,
+                    dimModeReduceBrightness = prefs.dimModeReduceBrightness,
+                    dimModeFullscreen = prefs.dimModeFullscreen,
                     onNavigateToBrew = { navController.navigate(BrewTimer) },
                     onBack = { navController.popBackStack() },
                 )
@@ -293,6 +313,9 @@ fun StarlitNavHost() {
                     brewViewModel = brewViewModel,
                     bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
                     dimModeEnabled = prefs.dimModeEnabled,
+                    dimModeTrueBlack = prefs.dimModeTrueBlack,
+                    dimModeReduceBrightness = prefs.dimModeReduceBrightness,
+                    dimModeFullscreen = prefs.dimModeFullscreen,
                     onNavigateToBrew = {
                         navController.navigate(BrewTimer) {
                             popUpTo(GrindPrep) { inclusive = true }
@@ -308,6 +331,9 @@ fun StarlitNavHost() {
                     brewViewModel = brewViewModel,
                     bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
                     dimModeEnabled = prefs.dimModeEnabled,
+                    dimModeTrueBlack = prefs.dimModeTrueBlack,
+                    dimModeReduceBrightness = prefs.dimModeReduceBrightness,
+                    dimModeFullscreen = prefs.dimModeFullscreen,
                     onBack = { navController.popBackStack() },
                     onComplete = {
                         // Save the brew log immediately (without feedback — user rates later)

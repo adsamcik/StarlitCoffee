@@ -108,6 +108,10 @@
     <string name="action_ready_to_brew_short">Vše připraveno</string>
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Příprava</string>
+    <string name="label_recipe_heading">Recept</string>
+    <string name="label_set_grinder_to">Nastavte mlýnek na</string>
+    <string name="label_temp_short">Teplota</string>
+    <string name="label_bloom_short">Předluh</string>
     <string name="prep_tip_pulsar_paper">Namočte papírový filtr v základně (ventil otevřený) a nechte odkapat. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
     <string name="prep_tip_pulsar_19k">Propláchněte kovový filtr 19K, aby dosedl a předehřál válec. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
     <string name="prep_tip_pulsar_40k">Propláchněte kovový filtr 40K, aby předehřál válec. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
@@ -234,6 +238,39 @@
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Příprava uložena! Ohodnoťte ji po ochutnání.</string>
     <string name="snackbar_action_view_log">Zobrazit záznam</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Připomínky hodnocení přípravy</string>
+    <string name="notif_channel_rating_reminder_desc">Jemné připomenutí ~30 minut po přípravě, abyste ji ohodnotili, dokud máte chuť v paměti.</string>
+    <string name="notif_rating_title">Jak vám káva chutnala?</string>
+    <string name="format_notif_rating_title">Jak vám chutnala příprava — %1$s?</string>
+    <string name="notif_rating_body">Klepnutím na emoji ohodnoťte přípravu, nebo otevřete aplikaci pro detail.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Ohodnotit 1 z 5 hvězd</string>
+    <string name="cd_notif_rating_2">Ohodnotit 2 z 5 hvězd</string>
+    <string name="cd_notif_rating_3">Ohodnotit 3 z 5 hvězd</string>
+    <string name="cd_notif_rating_4">Ohodnotit 4 z 5 hvězd</string>
+    <string name="cd_notif_rating_5">Ohodnotit 5 z 5 hvězd</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Připomínka hodnocení</string>
+    <string name="msg_rating_reminder_hint">Odeslat upozornění ~30 minut po přípravě, abyste ji mohli ohodnotit, dokud máte chuť v paměti.</string>
+    <string name="msg_rating_reminder_perm_denied">Upozornění jsou zablokovaná. Povolte je v systémovém nastavení, abyste mohli dostávat připomínky.</string>
+    <string name="action_open_app_settings">Otevřít systémové nastavení</string>
+
+    <!-- Settings: bag selection prompt -->
+    <string name="label_bag_prompt">Připomínka výběru balení</string>
+    <string name="msg_bag_prompt_hint">Když začnete přípravu bez vybraného balení, nabídnout výběr z vašich sledovaných balení.</string>
+
+    <!-- Bag selection prompt dialog -->
+    <string name="dialog_pick_bag_title">Připravujete z balení?</string>
+    <string name="msg_pick_bag_body">Sledujete %1$d balení. Výběrem zachováte přesný záznam, čerstvost a doporučení mletí.</string>
+    <string name="action_pick_bag">Vybrat balení</string>
+    <string name="action_brew_without_bag_short">Pokračovat bez balení</string>
 
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">Absorpce vody</string>
@@ -565,7 +602,13 @@
     <string name="label_quick_brew">Rychlá příprava</string>
     <string name="msg_quick_brew_hint">Přeskočit krok přípravy mletí a přejít rovnou na časovač</string>
     <string name="label_dim_mode">Automatický klidný režim</string>
-    <string name="msg_dim_mode_hint">Po 25 s nečinnosti ztiší obrazovku do klidného, bezbarvého zobrazení, které stále reaguje na dotyk</string>
+    <string name="msg_dim_mode_hint">Po 25 s nečinnosti odstraní barevná pozadí a ztlumí text do šedé. Rozložení zůstává stejné a jediné klepnutí obrazovku probudí a zároveň spustí akci pod prstem.</string>
+    <string name="label_dim_mode_true_black">Skutečně černé pozadí</string>
+    <string name="msg_dim_mode_true_black_hint">Při ztlumení v tmavém motivu sníží pozadí obrazovky na čistě černou. Ideální pro OLED — šetří energii a působí skutečně klidně. V světlých motivech nemá efekt.</string>
+    <string name="label_dim_mode_reduce_brightness">Snížit jas obrazovky</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Při ztlumení také sníží podsvícení displeje. Šetří trochu energie a obrazovku ještě zjemní.</string>
+    <string name="label_dim_mode_fullscreen">Skrýt systémové lišty</string>
+    <string name="msg_dim_mode_fullscreen_hint">Při ztlumení také skryje stavovou a navigační lištu. Přejetím od okraje je dočasně zobrazíte; jakékoli klepnutí obrazovku probudí.</string>
     <string name="action_add_cup_preset">Přidat předvolbu šálku</string>
     <string name="label_volume_ml">Objem (ml)</string>
     <string name="msg_dose_from_ratio">Dávka kávy se vypočítá z vašeho poměru</string>

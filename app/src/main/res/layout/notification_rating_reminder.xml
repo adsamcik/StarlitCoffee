@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Custom RemoteViews content for the rating-reminder notification.
+
+  RemoteViews supports a small subset of layouts and views; this layout sticks
+  to that subset (LinearLayout + TextView/Button) so it renders consistently
+  across Android 8 (minSdk) and up. The five rating buttons are TextViews so
+  the emoji glyph is the only thing the user sees — no system button chrome
+  to fight with the notification's own background.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/notif_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Compat.Notification.Title"
+        android:maxLines="2"
+        android:ellipsize="end" />
+
+    <TextView
+        android:id="@+id/notif_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textAppearance="@style/TextAppearance.Compat.Notification"
+        android:maxLines="2"
+        android:ellipsize="end" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/notif_rate_1"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:contentDescription="@string/cd_notif_rating_1"
+            android:text="@string/notif_rating_emoji_1"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/notif_rate_2"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:contentDescription="@string/cd_notif_rating_2"
+            android:text="@string/notif_rating_emoji_2"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/notif_rate_3"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:contentDescription="@string/cd_notif_rating_3"
+            android:text="@string/notif_rating_emoji_3"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/notif_rate_4"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:contentDescription="@string/cd_notif_rating_4"
+            android:text="@string/notif_rating_emoji_4"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/notif_rate_5"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:contentDescription="@string/cd_notif_rating_5"
+            android:text="@string/notif_rating_emoji_5"
+            android:textSize="26sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

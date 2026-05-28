@@ -31,6 +31,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -41,6 +42,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -72,7 +74,15 @@ import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.ui.util.availablePresetIcons
 import com.adsamcik.starlitcoffee.ui.util.presetColorPalette
 import com.adsamcik.starlitcoffee.BuildConfig
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings as AndroidSettings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.ui.component.MindlayerSettingsCard
@@ -462,6 +472,26 @@ fun SettingsScreen(
                 }
             }
 
+            // Rating reminder + bag prompt — both are opt-in courtesy nudges
+            // grouped together so users find them next to "Quick brew".
+            RatingReminderSettingCard(
+                enabled = prefs.ratingReminderEnabled,
+                onEnabledChange = { enabled ->
+                    scope.launch {
+                        userPreferencesRepository.updateRatingReminderEnabled(enabled)
+                    }
+                },
+            )
+
+            BagSelectionPromptSettingCard(
+                enabled = prefs.bagSelectionPromptEnabled,
+                onEnabledChange = { enabled ->
+                    scope.launch {
+                        userPreferencesRepository.updateBagSelectionPromptEnabled(enabled)
+                    }
+                },
+            )
+
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -490,6 +520,120 @@ fun SettingsScreen(
                             onCheckedChange = { enabled ->
                                 scope.launch {
                                     userPreferencesRepository.updateDimModeEnabled(enabled)
+                                }
+                            },
+                        )
+                    }
+
+                    // Sub-toggles: child preferences that only take effect when
+                    // the parent dim toggle is on. Both render disabled and at
+                    // reduced alpha when the parent is off, so they're
+                    // discoverable but clearly inactive.
+                    val subToggleAlpha = if (prefs.dimModeEnabled) 1f else 0.5f
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 12.dp),
+                        color = MaterialTheme.colorScheme.outlineVariant,
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 16.dp),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.label_dim_mode_true_black),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = subToggleAlpha),
+                            )
+                            Text(
+                                text = stringResource(R.string.msg_dim_mode_true_black_hint),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    .copy(alpha = subToggleAlpha),
+                            )
+                        }
+                        Switch(
+                            checked = prefs.dimModeTrueBlack,
+                            enabled = prefs.dimModeEnabled,
+                            onCheckedChange = { enabled ->
+                                scope.launch {
+                                    userPreferencesRepository.updateDimModeTrueBlack(enabled)
+                                }
+                            },
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 16.dp),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.label_dim_mode_reduce_brightness),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = subToggleAlpha),
+                            )
+                            Text(
+                                text = stringResource(R.string.msg_dim_mode_reduce_brightness_hint),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    .copy(alpha = subToggleAlpha),
+                            )
+                        }
+                        Switch(
+                            checked = prefs.dimModeReduceBrightness,
+                            enabled = prefs.dimModeEnabled,
+                            onCheckedChange = { enabled ->
+                                scope.launch {
+                                    userPreferencesRepository.updateDimModeReduceBrightness(enabled)
+                                }
+                            },
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 16.dp),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.label_dim_mode_fullscreen),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = subToggleAlpha),
+                            )
+                            Text(
+                                text = stringResource(R.string.msg_dim_mode_fullscreen_hint),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    .copy(alpha = subToggleAlpha),
+                            )
+                        }
+                        Switch(
+                            checked = prefs.dimModeFullscreen,
+                            enabled = prefs.dimModeEnabled,
+                            onCheckedChange = { enabled ->
+                                scope.launch {
+                                    userPreferencesRepository.updateDimModeFullscreen(enabled)
                                 }
                             },
                         )
@@ -803,5 +947,154 @@ private fun ScanDebugCard() {
                 )
             },
         )
+    }
+}
+
+/**
+ * Rating reminder toggle card. On Android 13+ enabling the toggle prompts the
+ * runtime POST_NOTIFICATIONS permission inline; if the user denies it the
+ * toggle reverts to off and a hint surfaces a deep-link into system settings.
+ * Below SDK 33 no runtime permission exists, so the toggle is straightforward.
+ */
+@Composable
+private fun RatingReminderSettingCard(
+    enabled: Boolean,
+    onEnabledChange: (Boolean) -> Unit,
+) {
+    val context = LocalContext.current
+    // Use a tick state so we re-read the permission whenever the user comes
+    // back from the system settings screen (foreground state isn't observed
+    // here, so we expose a manual "refresh" via the launcher callback).
+    var permissionTick by remember { mutableStateOf(0) }
+    val hasPostNotifications by remember(permissionTick) {
+        derivedStateOf {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                true
+            } else {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                ) == PackageManager.PERMISSION_GRANTED
+            }
+        }
+    }
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { granted ->
+        permissionTick++
+        if (granted) {
+            onEnabledChange(true)
+        } else {
+            // Roll back; user can re-enable after granting in system settings.
+            onEnabledChange(false)
+        }
+    }
+
+    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 16.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.label_rating_reminder),
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.semantics { heading() },
+                    )
+                    Text(
+                        text = stringResource(R.string.msg_rating_reminder_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Switch(
+                    checked = enabled,
+                    onCheckedChange = { wantEnabled ->
+                        if (wantEnabled && !hasPostNotifications) {
+                            // Defer the persisted toggle to the permission result.
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                            } else {
+                                onEnabledChange(true)
+                            }
+                        } else {
+                            onEnabledChange(wantEnabled)
+                        }
+                    },
+                )
+            }
+            if (enabled && !hasPostNotifications) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = stringResource(R.string.msg_rating_reminder_perm_denied),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+                TextButton(
+                    onClick = {
+                        val intent = Intent(AndroidSettings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                            putExtra(
+                                AndroidSettings.EXTRA_APP_PACKAGE,
+                                context.packageName,
+                            )
+                            // Fallback for older runtime quirks where the action
+                            // intent fails to resolve.
+                            data = Uri.fromParts("package", context.packageName, null)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                        runCatching { context.startActivity(intent) }
+                            .onFailure {
+                                permissionTick++
+                            }
+                        permissionTick++
+                    },
+                ) {
+                    Text(stringResource(R.string.action_open_app_settings))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun BagSelectionPromptSettingCard(
+    enabled: Boolean,
+    onEnabledChange: (Boolean) -> Unit,
+) {
+    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 16.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.label_bag_prompt),
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.semantics { heading() },
+                    )
+                    Text(
+                        text = stringResource(R.string.msg_bag_prompt_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Switch(
+                    checked = enabled,
+                    onCheckedChange = onEnabledChange,
+                )
+            }
+        }
     }
 }

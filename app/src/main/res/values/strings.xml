@@ -109,6 +109,10 @@
     <string name="action_ready_to_brew_short">Ready to Brew</string>
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Prep</string>
+    <string name="label_recipe_heading">Recipe</string>
+    <string name="label_set_grinder_to">Set grinder to</string>
+    <string name="label_temp_short">Temp</string>
+    <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Wet the paper filter in the base (valve open) and drain. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>
     <string name="prep_tip_pulsar_19k">Rinse the 19K metal filter to seat it and preheat the barrel. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>
     <string name="prep_tip_pulsar_40k">Rinse the 40K metal filter to preheat the barrel. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>
@@ -242,6 +246,39 @@
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Brew saved! Rate it after you taste it.</string>
     <string name="snackbar_action_view_log">View log</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Brew rating reminders</string>
+    <string name="notif_channel_rating_reminder_desc">Gentle nudge ~30 minutes after a brew to rate it while the taste is fresh.</string>
+    <string name="notif_rating_title">How was your brew?</string>
+    <string name="format_notif_rating_title">How was your %1$s brew?</string>
+    <string name="notif_rating_body">Tap an emoji to rate it, or open the app for more.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Rate 1 of 5 stars</string>
+    <string name="cd_notif_rating_2">Rate 2 of 5 stars</string>
+    <string name="cd_notif_rating_3">Rate 3 of 5 stars</string>
+    <string name="cd_notif_rating_4">Rate 4 of 5 stars</string>
+    <string name="cd_notif_rating_5">Rate 5 of 5 stars</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Rating reminder</string>
+    <string name="msg_rating_reminder_hint">Send a notification ~30 minutes after a brew so you can rate it while the taste is fresh.</string>
+    <string name="msg_rating_reminder_perm_denied">Notifications are blocked. Enable them in system settings to receive reminders.</string>
+    <string name="action_open_app_settings">Open system settings</string>
+
+    <!-- Settings: bag selection prompt -->
+    <string name="label_bag_prompt">Coffee bag reminder</string>
+    <string name="msg_bag_prompt_hint">When you start a brew without picking a bag, prompt to choose one of your tracked bags.</string>
+
+    <!-- Bag selection prompt dialog -->
+    <string name="dialog_pick_bag_title">Brewing with a bag?</string>
+    <string name="msg_pick_bag_body">You have %1$d tracked bag(s). Picking one keeps your log, freshness, and grind suggestions accurate.</string>
+    <string name="action_pick_bag">Pick a bag</string>
+    <string name="action_brew_without_bag_short">Brew anyway</string>
 
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">Water Retention</string>
@@ -537,7 +574,13 @@
     <string name="label_quick_brew">Quick brew</string>
     <string name="msg_quick_brew_hint">Skip the grind prep step and go straight to the timer when you start a brew</string>
     <string name="label_dim_mode">Automatic dim mode</string>
-    <string name="msg_dim_mode_hint">After 25 s of inactivity, fade the screen to a calm, colorless view that still responds to taps</string>
+    <string name="msg_dim_mode_hint">After 25 s of inactivity, strip colored backgrounds and mute text to gray. Layout stays put and a single tap both wakes the screen and triggers the underlying action.</string>
+    <string name="label_dim_mode_true_black">True black background</string>
+    <string name="msg_dim_mode_true_black_hint">When dimmed in a dark theme, also drop the screen background to pure black. Best on OLED — saves power and feels properly at rest. No effect in light themes.</string>
+    <string name="label_dim_mode_reduce_brightness">Reduce screen brightness</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Also lower the display backlight while dimmed. Saves a little power and softens the screen further.</string>
+    <string name="label_dim_mode_fullscreen">Hide system bars</string>
+    <string name="msg_dim_mode_fullscreen_hint">Also hide the status bar and navigation bar while dimmed. Swipe from an edge to peek; any tap on the screen wakes back to normal.</string>
     <string name="action_add_cup_preset">Add cup preset</string>
     <string name="label_volume_ml">Volume (ml)</string>
     <string name="msg_dose_from_ratio">Coffee dose is calculated from your ratio</string>

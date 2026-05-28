@@ -51,6 +51,7 @@ import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.domain.BrewCalculator
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
+import com.adsamcik.starlitcoffee.notification.RatingReminders
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
@@ -185,6 +186,7 @@ class BrewViewModel(
     private val qrLinkMetadataExplorer: QrLinkMetadataExplorer = SafeQrLinkMetadataExplorer(),
     private val llmProvider: LlmInferenceProvider = StubLlmInferenceProvider(),
     private val userBarcodeStemDao: UserBarcodeStemDao? = null,
+    private val ratingReminderScheduler: RatingReminders? = null,
 ) : ViewModel() {
 
     private val llmCache = LlmResultCache()
@@ -736,7 +738,16 @@ class BrewViewModel(
                 }
             }
             refreshLastUnrated()
+            scheduleRatingReminderIfEnabled(logId, state.method)
         }
+    }
+
+    private suspend fun scheduleRatingReminderIfEnabled(brewLogId: Long, method: BrewMethod) {
+        val scheduler = ratingReminderScheduler ?: return
+        // Pref is opt-in; respect the user's choice even if the scheduler is wired.
+        val prefs = userPreferencesRepository?.userPreferences?.first() ?: return
+        if (!prefs.ratingReminderEnabled) return
+        scheduler.scheduleReminder(brewLogId = brewLogId, methodLabel = method.displayName)
     }
 
     fun saveBrewWithRating(

@@ -4,6 +4,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="com.adsamcik.mindlayer.permission.BIND_ML_SERVICE" />
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
@@ -50,6 +51,21 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <!--
+            Rating reminder pipeline. Both receivers are internal — the alarm
+            receiver is driven by our own AlarmManager schedule and the action
+            receiver only handles taps inside notifications we posted ourselves,
+            so neither needs `exported=true`.
+        -->
+        <receiver
+            android:name=".notification.RatingReminderReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".notification.RatingActionReceiver"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

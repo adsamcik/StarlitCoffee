@@ -38,6 +38,8 @@ import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
@@ -88,9 +90,7 @@ import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
-import com.adsamcik.starlitcoffee.ui.util.DimImportant
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
-import com.adsamcik.starlitcoffee.ui.util.DimRole
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -103,6 +103,9 @@ fun CalculatorBrewScreen(
     brewViewModel: BrewViewModel,
     userPreferencesRepository: UserPreferencesRepository,
     dimModeEnabled: Boolean = true,
+    dimModeTrueBlack: Boolean = false,
+    dimModeReduceBrightness: Boolean = false,
+    dimModeFullscreen: Boolean = false,
     onNavigateToBrew: () -> Unit,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
@@ -145,6 +148,12 @@ fun CalculatorBrewScreen(
     }
 
     var showSaveFavoriteDialog by remember { mutableStateOf(false) }
+    var showBagPromptDialog by remember { mutableStateOf(false) }
+
+    // Tracked bags = anything that isn't FINISHED. Matches CoffeeBagDao.getActive() semantics.
+    val trackedBags = remember(coffeeBags) {
+        coffeeBags.filter { it.status != "FINISHED" }
+    }
 
     val scrollState = rememberScrollState()
 
@@ -161,6 +170,9 @@ fun CalculatorBrewScreen(
     DimModeScaffold(
         controller = dimController,
         modifier = Modifier.fillMaxSize(),
+        trueBlackBackground = dimModeTrueBlack,
+        reduceBrightness = dimModeReduceBrightness,
+        hideSystemBars = dimModeFullscreen,
     ) {
     Column(
         modifier = Modifier
@@ -170,22 +182,20 @@ fun CalculatorBrewScreen(
         // Combined header: direction toggle + expression (with optional inline
         // result on compact heights) + save-favorite. Replaces the older
         // dedicated TopControlBar row, recovering ~48dp of vertical space.
-        DimImportant(role = DimRole.Primary) {
-            ExpressionHeader(
-                tokens = state.tokens,
-                direction = state.inputDirection,
-                canSaveFavorite = state.hasValidExpression && state.previewDoseG > 0f,
-                showInlineResult = isCompactHeight && state.hasValidExpression,
-                previewDoseG = state.previewDoseG,
-                previewWaterMl = state.previewWaterMl,
-                isCompactHeight = isCompactHeight,
-                onToggleDirection = { calculatorViewModel.toggleDirection() },
-                onSaveFavorite = {
-                    syncCalcDerivedState()
-                    showSaveFavoriteDialog = true
-                },
-            )
-        }
+        ExpressionHeader(
+            tokens = state.tokens,
+            direction = state.inputDirection,
+            canSaveFavorite = state.hasValidExpression && state.previewDoseG > 0f,
+            showInlineResult = isCompactHeight && state.hasValidExpression,
+            previewDoseG = state.previewDoseG,
+            previewWaterMl = state.previewWaterMl,
+            isCompactHeight = isCompactHeight,
+            onToggleDirection = { calculatorViewModel.toggleDirection() },
+            onSaveFavorite = {
+                syncCalcDerivedState()
+                showSaveFavoriteDialog = true
+            },
+        )
 
         Spacer(modifier = Modifier.height(sectionSpacer))
 
@@ -201,13 +211,11 @@ fun CalculatorBrewScreen(
             // expression resolves there's nothing useful to show, so we hide
             // the empty-state placeholder rather than reserving space for it.
             if (!isCompactHeight && state.hasValidExpression) {
-                DimImportant(role = DimRole.Hero) {
-                    LivePreviewCard(
-                        doseG = state.previewDoseG,
-                        waterMl = state.previewWaterMl,
-                        direction = state.inputDirection,
-                    )
-                }
+                LivePreviewCard(
+                    doseG = state.previewDoseG,
+                    waterMl = state.previewWaterMl,
+                    direction = state.inputDirection,
+                )
             }
 
             // Selected bag indicator — visible reminder that a bag is in play,
@@ -277,12 +285,41 @@ fun CalculatorBrewScreen(
             onClear = { calculatorViewModel.clear() },
             onBrew = {
                 syncCalcDerivedState()
-                onNavigateToBrew()
+                // Gate: optional reminder to pick one of the tracked bags
+                // when none is currently selected. Pref defaults to ON; user
+                // can disable in Settings or dismiss with "Brew anyway".
+                if (
+                    prefs.bagSelectionPromptEnabled &&
+                    selectedBagId == null &&
+                    trackedBags.isNotEmpty()
+                ) {
+                    showBagPromptDialog = true
+                } else {
+                    onNavigateToBrew()
+                }
             },
         )
 
         Spacer(modifier = Modifier.height(barSpacer))
     }
+    }
+
+    if (showBagPromptDialog) {
+        com.adsamcik.starlitcoffee.ui.component.BagSelectionPromptDialog(
+            trackedBags = trackedBags,
+            onSelectBag = { bagId ->
+                brewViewModel.selectBag(bagId)
+                showBagPromptDialog = false
+                onNavigateToBrew()
+            },
+            onBrewWithoutBag = {
+                showBagPromptDialog = false
+                onNavigateToBrew()
+            },
+            onDismiss = {
+                showBagPromptDialog = false
+            },
+        )
     }
 
     if (showSaveFavoriteDialog) {
@@ -496,9 +533,12 @@ private fun LivePreviewCard(
     waterMl: Float,
     direction: InputDirection,
 ) {
-    ElevatedCard(
+    Card(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+        ),
     ) {
         Row(
             modifier = Modifier

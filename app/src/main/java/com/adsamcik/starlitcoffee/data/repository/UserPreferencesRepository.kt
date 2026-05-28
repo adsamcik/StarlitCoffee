@@ -28,11 +28,22 @@ data class UserPreferences(
     val defaultInputDirection: String = "DOSE",
     val skipMethodSelection: Boolean = false,
     val dimModeEnabled: Boolean = true,
+    val dimModeTrueBlack: Boolean = true,
+    val dimModeReduceBrightness: Boolean = true,
+    val dimModeFullscreen: Boolean = true,
     val bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
     // How many times each spritesheet has been picked for a brew. Used by the
     // domain selector to bias future picks toward under-shown flowers, so
     // every flower in the user's allow-list gets fair rotation over many brews.
     val bloomSpritesheetDisplayCounts: Map<String, Int> = emptyMap(),
+    // When true, schedule a notification ~30 minutes after a brew is logged
+    // asking the user to rate it with 5 emojis. Opt-in because it needs
+    // POST_NOTIFICATIONS permission on Android 13+ and not every user wants it.
+    val ratingReminderEnabled: Boolean = false,
+    // When true, prompt the user to pick one of their tracked (active) coffee
+    // bags if they start a brew without selecting one and at least one bag is
+    // currently tracked. Enabled by default — easy escape hatch to brew anyway.
+    val bagSelectionPromptEnabled: Boolean = true,
 )
 
 class UserPreferencesRepository(private val context: Context) {
@@ -48,8 +59,13 @@ class UserPreferencesRepository(private val context: Context) {
         val DEFAULT_INPUT_DIRECTION = stringPreferencesKey("default_input_direction")
         val SKIP_METHOD_SELECTION = booleanPreferencesKey("skip_method_selection")
         val DIM_MODE_ENABLED = booleanPreferencesKey("dim_mode_enabled")
+        val DIM_MODE_TRUE_BLACK = booleanPreferencesKey("dim_mode_true_black")
+        val DIM_MODE_REDUCE_BRIGHTNESS = booleanPreferencesKey("dim_mode_reduce_brightness")
+        val DIM_MODE_FULLSCREEN = booleanPreferencesKey("dim_mode_fullscreen")
         val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
         val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
+        val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
+        val BAG_SELECTION_PROMPT_ENABLED = booleanPreferencesKey("bag_selection_prompt_enabled")
     }
 
     val userPreferences: Flow<UserPreferences> = context.dataStore.data
@@ -71,12 +87,17 @@ class UserPreferencesRepository(private val context: Context) {
                 defaultInputDirection = prefs[Keys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",
                 skipMethodSelection = prefs[Keys.SKIP_METHOD_SELECTION] ?: false,
                 dimModeEnabled = prefs[Keys.DIM_MODE_ENABLED] ?: true,
+                dimModeTrueBlack = prefs[Keys.DIM_MODE_TRUE_BLACK] ?: true,
+                dimModeReduceBrightness = prefs[Keys.DIM_MODE_REDUCE_BRIGHTNESS] ?: true,
+                dimModeFullscreen = prefs[Keys.DIM_MODE_FULLSCREEN] ?: true,
                 bloomSpritesheetWeights = parseBloomSpritesheetWeights(
                     prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS].orEmpty(),
                 ),
                 bloomSpritesheetDisplayCounts = parseBloomSpritesheetDisplayCounts(
                     prefs[Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS].orEmpty(),
                 ),
+                ratingReminderEnabled = prefs[Keys.RATING_REMINDER_ENABLED] ?: false,
+                bagSelectionPromptEnabled = prefs[Keys.BAG_SELECTION_PROMPT_ENABLED] ?: true,
             )
         }
         .distinctUntilChanged()
@@ -166,6 +187,24 @@ class UserPreferencesRepository(private val context: Context) {
         }
     }
 
+    suspend fun updateDimModeTrueBlack(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.DIM_MODE_TRUE_BLACK] = enabled
+        }
+    }
+
+    suspend fun updateDimModeReduceBrightness(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.DIM_MODE_REDUCE_BRIGHTNESS] = enabled
+        }
+    }
+
+    suspend fun updateDimModeFullscreen(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.DIM_MODE_FULLSCREEN] = enabled
+        }
+    }
+
     suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) {
         context.dataStore.edit { prefs ->
             val persistedWeights = weights
@@ -179,6 +218,18 @@ class UserPreferencesRepository(private val context: Context) {
             } else {
                 prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS] = persistedWeights
             }
+        }
+    }
+
+    suspend fun updateRatingReminderEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.RATING_REMINDER_ENABLED] = enabled
+        }
+    }
+
+    suspend fun updateBagSelectionPromptEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.BAG_SELECTION_PROMPT_ENABLED] = enabled
         }
     }
 

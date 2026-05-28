@@ -12,6 +12,7 @@ import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.notification.RatingReminderScheduler
 
 // TODO: Replace with Hilt @Provides when DI is adopted
 class BrewViewModelFactory(
@@ -31,6 +32,7 @@ class BrewViewModelFactory(
                 grinderData = GrinderDataSource.getInstance(application),
                 llmProvider = llm,
                 userBarcodeStemDao = database.userBarcodeStemDao(),
+                ratingReminderScheduler = RatingReminderScheduler(application),
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
