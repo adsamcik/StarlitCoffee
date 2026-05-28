@@ -85,6 +85,7 @@ fun BrewTimerScreen(
     dimModeTrueBlack: Boolean = false,
     dimModeReduceBrightness: Boolean = false,
     dimModeFullscreen: Boolean = false,
+    dimModeForceDarkInLight: Boolean = false,
     onBack: () -> Unit,
     onComplete: () -> Unit = {},
 ) {
@@ -252,6 +253,7 @@ fun BrewTimerScreen(
             trueBlackBackground = dimModeTrueBlack,
             reduceBrightness = dimModeReduceBrightness,
             hideSystemBars = dimModeFullscreen,
+            forceDarkInLight = dimModeForceDarkInLight,
         ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -561,7 +563,11 @@ private fun BrewGuidanceCard(
             if (inPourPhase) {
                 Guidance(
                     primary = stringResource(R.string.instruction_bloom_pour, state.bloomG),
-                    secondary = if (isPulsar) stringResource(R.string.instruction_open_valve_short) else null,
+                    // Pulsar bloom = valve closed for the entire bloom phase
+                    // so the bloom water saturates the grounds instead of
+                    // draining straight through. Valve opens only for the
+                    // post-bloom main pour below.
+                    secondary = if (isPulsar) stringResource(R.string.instruction_close_valve_short) else null,
                 )
             } else {
                 Guidance(
@@ -576,7 +582,10 @@ private fun BrewGuidanceCard(
         )
         hasBloom -> Guidance(
             primary = stringResource(R.string.format_pour_bloom_water, state.bloomG),
-            secondary = if (isPulsar) stringResource(R.string.instruction_open_valve_short) else null,
+            // Pre-bloom guidance — the user is about to tap "Start Bloom" and
+            // begin pouring. Valve stays closed so the very first drops of
+            // bloom water are captured by the grounds.
+            secondary = if (isPulsar) stringResource(R.string.instruction_close_valve_short) else null,
         )
         state.waterG > 0f -> {
             val methodGuidanceRes = methodTimerGuidanceRes(state)

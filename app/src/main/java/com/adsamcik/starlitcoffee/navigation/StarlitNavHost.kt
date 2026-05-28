@@ -287,6 +287,7 @@ fun StarlitNavHost() {
                     dimModeTrueBlack = prefs.dimModeTrueBlack,
                     dimModeReduceBrightness = prefs.dimModeReduceBrightness,
                     dimModeFullscreen = prefs.dimModeFullscreen,
+                    dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
                     onNavigateToBrew = {
                         brewViewModel.startNewBrewSession()
                         // Quick Brew preference jumps past the grind/prep
@@ -304,6 +305,7 @@ fun StarlitNavHost() {
                     dimModeTrueBlack = prefs.dimModeTrueBlack,
                     dimModeReduceBrightness = prefs.dimModeReduceBrightness,
                     dimModeFullscreen = prefs.dimModeFullscreen,
+                    dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
                     onNavigateToBrew = { navController.navigate(BrewTimer) },
                     onBack = { navController.popBackStack() },
                 )
@@ -316,6 +318,7 @@ fun StarlitNavHost() {
                     dimModeTrueBlack = prefs.dimModeTrueBlack,
                     dimModeReduceBrightness = prefs.dimModeReduceBrightness,
                     dimModeFullscreen = prefs.dimModeFullscreen,
+                    dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
                     onNavigateToBrew = {
                         navController.navigate(BrewTimer) {
                             popUpTo(GrindPrep) { inclusive = true }
@@ -334,6 +337,7 @@ fun StarlitNavHost() {
                     dimModeTrueBlack = prefs.dimModeTrueBlack,
                     dimModeReduceBrightness = prefs.dimModeReduceBrightness,
                     dimModeFullscreen = prefs.dimModeFullscreen,
+                    dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
                     onBack = { navController.popBackStack() },
                     onComplete = {
                         // Save the brew log immediately (without feedback — user rates later)

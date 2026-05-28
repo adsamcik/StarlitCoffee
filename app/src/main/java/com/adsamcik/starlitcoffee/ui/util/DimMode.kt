@@ -4,15 +4,18 @@ import android.app.Activity
 import android.view.WindowManager
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.exclude
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -38,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.adsamcik.starlitcoffee.ui.theme.starlitDarkColorScheme
 import kotlinx.coroutines.delay
 
 /**
@@ -164,6 +168,11 @@ val LocalDimModeActive = compositionLocalOf { false }
  *   navigation bar while dim is active. A swipe from any screen edge will
  *   reveal them transiently without breaking the dim state. Restored on
  *   dispose or when dim disengages.
+ * @param forceDarkInLight when true and the system theme is light, swaps the
+ *   active color scheme to the app's dark scheme while dim is engaged. The
+ *   net effect is a screensaver-style always-dark dim regardless of the
+ *   user's chosen system theme. Pairs naturally with [trueBlackBackground]
+ *   to get OLED-quiet dim on a light-themed device.
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -173,6 +182,7 @@ fun DimModeScaffold(
     trueBlackBackground: Boolean = false,
     reduceBrightness: Boolean = false,
     hideSystemBars: Boolean = false,
+    forceDarkInLight: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val active by controller.active
@@ -211,38 +221,55 @@ fun DimModeScaffold(
         },
     ) {
         CompositionLocalProvider(LocalDimModeActive provides active) {
-            DimAwareTheme(active = active, trueBlackBackground = trueBlackBackground) {
-                // Prevent any layout shift during Android's system bar
-                // hide/show animation. The Android system animates the
-                // bars smoothly (~300 ms); during that animation
-                // `WindowInsets.systemBars` interpolates from real → 0,
-                // and any descendant that pads based on live insets
-                // shrinks in lockstep — visibly sliding the content up.
-                //
-                // We counteract that by padding the *difference* between
-                // what the bars would take if visible
-                // (`statusBarsIgnoringVisibility ∪ navigationBarsIgnoringVisibility`,
-                // a constant) and what they currently take
-                // (`WindowInsets.systemBars`, animating). The two values
-                // are inversely correlated, so descendant_padding +
-                // filler_padding = constant for the entire animation.
-                //
-                // This works the same whether the screen content reads
-                // live insets (e.g. via a Scaffold) or not, and reduces
-                // to zero outer padding when the bars are fully visible
-                // — so vivid mode is byte-identical to the no-fullscreen
-                // baseline.
-                val fillerInsets = WindowInsets.statusBarsIgnoringVisibility
-                    .union(WindowInsets.navigationBarsIgnoringVisibility)
-                    .exclude(WindowInsets.systemBars)
+            DimAwareTheme(
+                active = active,
+                trueBlackBackground = trueBlackBackground,
+                forceDarkInLight = forceDarkInLight,
+            ) {
+                // Paint the dim canvas with the dim-overridden `surface` color
+                // so the dark / true-black / forced-dark presentations are
+                // actually visible. Without this, the underlying screen's
+                // outer Surface (which sits above DimModeScaffold and so reads
+                // the un-overridden system theme) would keep painting the
+                // original light background underneath every transparent
+                // container.
                 Box(
-                    modifier = if (hideSystemBars) {
-                        Modifier.windowInsetsPadding(fillerInsets)
-                    } else {
-                        Modifier
-                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.surface),
                 ) {
-                    content()
+                    // Prevent any layout shift during Android's system bar
+                    // hide/show animation. The Android system animates the
+                    // bars smoothly (~300 ms); during that animation
+                    // `WindowInsets.systemBars` interpolates from real → 0,
+                    // and any descendant that pads based on live insets
+                    // shrinks in lockstep — visibly sliding the content up.
+                    //
+                    // We counteract that by padding the *difference* between
+                    // what the bars would take if visible
+                    // (`statusBarsIgnoringVisibility ∪ navigationBarsIgnoringVisibility`,
+                    // a constant) and what they currently take
+                    // (`WindowInsets.systemBars`, animating). The two values
+                    // are inversely correlated, so descendant_padding +
+                    // filler_padding = constant for the entire animation.
+                    //
+                    // This works the same whether the screen content reads
+                    // live insets (e.g. via a Scaffold) or not, and reduces
+                    // to zero outer padding when the bars are fully visible
+                    // — so vivid mode is byte-identical to the no-fullscreen
+                    // baseline.
+                    val fillerInsets = WindowInsets.statusBarsIgnoringVisibility
+                        .union(WindowInsets.navigationBarsIgnoringVisibility)
+                        .exclude(WindowInsets.systemBars)
+                    Box(
+                        modifier = if (hideSystemBars) {
+                            Modifier.windowInsetsPadding(fillerInsets)
+                        } else {
+                            Modifier
+                        },
+                    ) {
+                        content()
+                    }
                 }
             }
         }
@@ -254,24 +281,45 @@ fun DimModeScaffold(
  * scheme. When [active] is false the inner content is provided the current
  * scheme verbatim, so the transformation is allocation-free in the common
  * (un-dimmed) case.
+ *
+ * When [forceDarkInLight] is true and the system scheme is light, the
+ * **dim source** swaps to the app's dark scheme. The non-dim baseline still
+ * uses the system (light) scheme — only the dim state goes dark, so the
+ * dim-engagement transition fades from the user's familiar light UI into a
+ * calm dark "screensaver".
  */
 @Composable
 private fun DimAwareTheme(
     active: Boolean,
     trueBlackBackground: Boolean,
+    forceDarkInLight: Boolean,
     content: @Composable () -> Unit,
 ) {
-    val source = MaterialTheme.colorScheme
-    val gray = source.onSurfaceVariant
+    val systemScheme = MaterialTheme.colorScheme
+    val systemIsLight = systemScheme.surface.luminance() >= 0.5f
+
+    // Pre-resolve the dark scheme once so we can interpolate INTO it when
+    // dim engages. We always remember it (not behind `if`) so the same
+    // ColorScheme instance is reused across recompositions and animations
+    // don't restart when the user toggles the sub-setting at runtime.
+    val darkSchemeForDim = starlitDarkColorScheme()
+    val shouldUseDarkForDim = forceDarkInLight && systemIsLight
+    val dimSource: ColorScheme = if (shouldUseDarkForDim) darkSchemeForDim else systemScheme
+
+    // The "non-dim" source stays as the system scheme. The animated values
+    // crossfade between system (when active=false) and dim source (when
+    // active=true) — that's what produces the gradual light→dark fade on
+    // forceDarkInLight + light theme.
+    val source = if (active) dimSource else systemScheme
+    val gray = dimSource.onSurfaceVariant
     val transparent = Color.Transparent
     val animation = tween<Color>(durationMillis = DIM_TRANSITION_MS)
 
-    // True-black only kicks in on dark themes — going to Color.Black in a
-    // light theme would just invert the canvas and look broken. We detect
-    // "dark" by the luminance of the active surface colour rather than
-    // isSystemInDarkTheme(), so explicit theme overrides are honoured too.
-    val isDarkTheme = source.surface.luminance() < 0.5f
-    val applyTrueBlack = active && trueBlackBackground && isDarkTheme
+    // True-black only kicks in when the *dim source* is dark. With
+    // forceDarkInLight on, the dim source goes dark regardless of system
+    // theme, so true-black engages on light-theme devices too.
+    val dimSourceIsDark = dimSource.surface.luminance() < 0.5f
+    val applyTrueBlack = active && trueBlackBackground && dimSourceIsDark
 
     // Crossfade each colour individually so the wake transition is a smooth
     // colour return rather than a flash. animateColorAsState handles the
@@ -361,6 +409,32 @@ private fun DimAwareTheme(
         animationSpec = animation,
         label = "dim.background",
     )
+    // These are crossfaded between the system scheme (when vivid) and the
+    // dim source (when active) so that with `forceDarkInLight` enabled, text
+    // / outline colours transition smoothly from "dark on light" to "light
+    // on dark" rather than snapping at the activation moment. When source
+    // and system scheme are the same (the default), the animation
+    // degenerates to a constant value.
+    val onSurface by animateColorAsState(
+        targetValue = if (active) dimSource.onSurface else systemScheme.onSurface,
+        animationSpec = animation,
+        label = "dim.onSurface",
+    )
+    val onSurfaceVariant by animateColorAsState(
+        targetValue = if (active) dimSource.onSurfaceVariant else systemScheme.onSurfaceVariant,
+        animationSpec = animation,
+        label = "dim.onSurfaceVariant",
+    )
+    val outline by animateColorAsState(
+        targetValue = if (active) dimSource.outline else systemScheme.outline,
+        animationSpec = animation,
+        label = "dim.outline",
+    )
+    val outlineVariant by animateColorAsState(
+        targetValue = if (active) dimSource.outlineVariant else systemScheme.outlineVariant,
+        animationSpec = animation,
+        label = "dim.outlineVariant",
+    )
     val contentColor by animateColorAsState(
         targetValue = if (active) gray else LocalContentColor.current,
         animationSpec = animation,
@@ -385,11 +459,14 @@ private fun DimAwareTheme(
         surfaceContainer = surfaceContainer,
         surfaceContainerHigh = surfaceContainerHigh,
         surfaceContainerHighest = surfaceContainerHighest,
-        // error / errorContainer / onError / onErrorContainer kept verbatim —
-        // warnings and crucial state flashes must stay loud.
-        // onSurface / onSurfaceVariant / outline / outlineVariant kept so
-        // neutral text stays readable against whichever surface ends up
-        // underneath (black in true-black mode, otherwise the theme default).
+        onSurface = onSurface,
+        onSurfaceVariant = onSurfaceVariant,
+        outline = outline,
+        outlineVariant = outlineVariant,
+        // error / errorContainer / onError / onErrorContainer kept verbatim
+        // from `source` — warnings and crucial state flashes must stay loud.
+        // With forceDarkInLight on, the error family is taken from the dark
+        // scheme during dim, which is still vivid red — exactly what we want.
     )
 
     MaterialTheme(

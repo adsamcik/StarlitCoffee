@@ -107,3 +107,21 @@ fun StarlitCoffeeTheme(
         content = content,
     )
 }
+
+/**
+ * Returns the dark color scheme the app would use under [StarlitCoffeeTheme]
+ * — honouring the same Material You dynamic-color logic on API 31+, with the
+ * static [DarkColorScheme] fallback below that.
+ *
+ * Used by dim mode to swap descendants to a dark presentation on demand
+ * (e.g. the "use dark style when dimmed" sub-toggle) without coupling the
+ * dim framework to the static palette definitions.
+ */
+@Composable
+internal fun starlitDarkColorScheme(dynamicColor: Boolean = true): androidx.compose.material3.ColorScheme {
+    return when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ->
+            dynamicDarkColorScheme(LocalContext.current)
+        else -> DarkColorScheme
+    }
+}

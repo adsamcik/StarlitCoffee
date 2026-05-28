@@ -638,6 +638,41 @@ fun SettingsScreen(
                             },
                         )
                     }
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 16.dp),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.label_dim_mode_force_dark_in_light),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = subToggleAlpha),
+                            )
+                            Text(
+                                text = stringResource(R.string.msg_dim_mode_force_dark_in_light_hint),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    .copy(alpha = subToggleAlpha),
+                            )
+                        }
+                        Switch(
+                            checked = prefs.dimModeForceDarkInLight,
+                            enabled = prefs.dimModeEnabled,
+                            onCheckedChange = { enabled ->
+                                scope.launch {
+                                    userPreferencesRepository.updateDimModeForceDarkInLight(enabled)
+                                }
+                            },
+                        )
+                    }
                 }
             }
 

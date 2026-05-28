@@ -609,6 +609,8 @@
     <string name="msg_dim_mode_reduce_brightness_hint">Při ztlumení také sníží podsvícení displeje. Šetří trochu energie a obrazovku ještě zjemní.</string>
     <string name="label_dim_mode_fullscreen">Skrýt systémové lišty</string>
     <string name="msg_dim_mode_fullscreen_hint">Při ztlumení také skryje stavovou a navigační lištu. Přejetím od okraje je dočasně zobrazíte; jakékoli klepnutí obrazovku probudí.</string>
+    <string name="label_dim_mode_force_dark_in_light">Tmavý vzhled při ztlumení</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Při ztlumení použít tmavou prezentaci i ve světlém systémovém motivu. Přirozeně se kombinuje s čistě černým pozadím pro vždy-tmavé ztlumení.</string>
     <string name="action_add_cup_preset">Přidat předvolbu šálku</string>
     <string name="label_volume_ml">Objem (ml)</string>
     <string name="msg_dose_from_ratio">Dávka kávy se vypočítá z vašeho poměru</string>

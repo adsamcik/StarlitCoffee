@@ -54,6 +54,7 @@ fun GrindPrepScreen(
     dimModeTrueBlack: Boolean = false,
     dimModeReduceBrightness: Boolean = false,
     dimModeFullscreen: Boolean = false,
+    dimModeForceDarkInLight: Boolean = false,
     onNavigateToBrew: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -69,6 +70,7 @@ fun GrindPrepScreen(
         trueBlackBackground = dimModeTrueBlack,
         reduceBrightness = dimModeReduceBrightness,
         hideSystemBars = dimModeFullscreen,
+        forceDarkInLight = dimModeForceDarkInLight,
     ) {
         Scaffold(
             bottomBar = {

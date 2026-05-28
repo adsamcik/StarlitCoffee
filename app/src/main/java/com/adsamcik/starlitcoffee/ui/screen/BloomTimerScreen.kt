@@ -70,6 +70,7 @@ fun BloomTimerScreen(
     dimModeTrueBlack: Boolean = false,
     dimModeReduceBrightness: Boolean = false,
     dimModeFullscreen: Boolean = false,
+    dimModeForceDarkInLight: Boolean = false,
     onNavigateToBrew: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -212,6 +213,7 @@ fun BloomTimerScreen(
             trueBlackBackground = dimModeTrueBlack,
             reduceBrightness = dimModeReduceBrightness,
             hideSystemBars = dimModeFullscreen,
+            forceDarkInLight = dimModeForceDarkInLight,
         ) {
         Column(modifier = Modifier.fillMaxSize()) {
 

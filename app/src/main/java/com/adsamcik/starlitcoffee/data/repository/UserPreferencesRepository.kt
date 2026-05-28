@@ -31,6 +31,7 @@ data class UserPreferences(
     val dimModeTrueBlack: Boolean = true,
     val dimModeReduceBrightness: Boolean = true,
     val dimModeFullscreen: Boolean = true,
+    val dimModeForceDarkInLight: Boolean = true,
     val bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
     // How many times each spritesheet has been picked for a brew. Used by the
     // domain selector to bias future picks toward under-shown flowers, so
@@ -62,6 +63,7 @@ class UserPreferencesRepository(private val context: Context) {
         val DIM_MODE_TRUE_BLACK = booleanPreferencesKey("dim_mode_true_black")
         val DIM_MODE_REDUCE_BRIGHTNESS = booleanPreferencesKey("dim_mode_reduce_brightness")
         val DIM_MODE_FULLSCREEN = booleanPreferencesKey("dim_mode_fullscreen")
+        val DIM_MODE_FORCE_DARK_IN_LIGHT = booleanPreferencesKey("dim_mode_force_dark_in_light")
         val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
         val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
         val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
@@ -90,6 +92,7 @@ class UserPreferencesRepository(private val context: Context) {
                 dimModeTrueBlack = prefs[Keys.DIM_MODE_TRUE_BLACK] ?: true,
                 dimModeReduceBrightness = prefs[Keys.DIM_MODE_REDUCE_BRIGHTNESS] ?: true,
                 dimModeFullscreen = prefs[Keys.DIM_MODE_FULLSCREEN] ?: true,
+                dimModeForceDarkInLight = prefs[Keys.DIM_MODE_FORCE_DARK_IN_LIGHT] ?: true,
                 bloomSpritesheetWeights = parseBloomSpritesheetWeights(
                     prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS].orEmpty(),
                 ),
@@ -202,6 +205,12 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun updateDimModeFullscreen(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.DIM_MODE_FULLSCREEN] = enabled
+        }
+    }
+
+    suspend fun updateDimModeForceDarkInLight(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.DIM_MODE_FORCE_DARK_IN_LIGHT] = enabled
         }
     }
 

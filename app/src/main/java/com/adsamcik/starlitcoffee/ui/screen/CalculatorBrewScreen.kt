@@ -106,6 +106,7 @@ fun CalculatorBrewScreen(
     dimModeTrueBlack: Boolean = false,
     dimModeReduceBrightness: Boolean = false,
     dimModeFullscreen: Boolean = false,
+    dimModeForceDarkInLight: Boolean = false,
     onNavigateToBrew: () -> Unit,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
@@ -173,6 +174,7 @@ fun CalculatorBrewScreen(
         trueBlackBackground = dimModeTrueBlack,
         reduceBrightness = dimModeReduceBrightness,
         hideSystemBars = dimModeFullscreen,
+        forceDarkInLight = dimModeForceDarkInLight,
     ) {
     Column(
         modifier = Modifier

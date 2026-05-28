@@ -581,6 +581,8 @@
     <string name="msg_dim_mode_reduce_brightness_hint">Also lower the display backlight while dimmed. Saves a little power and softens the screen further.</string>
     <string name="label_dim_mode_fullscreen">Hide system bars</string>
     <string name="msg_dim_mode_fullscreen_hint">Also hide the status bar and navigation bar while dimmed. Swipe from an edge to peek; any tap on the screen wakes back to normal.</string>
+    <string name="label_dim_mode_force_dark_in_light">Use dark style when dimmed</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Switch to the dark-theme dim presentation even when the system is in light mode. Pairs naturally with True black background for an always-dark dim.</string>
     <string name="action_add_cup_preset">Add cup preset</string>
     <string name="label_volume_ml">Volume (ml)</string>
     <string name="msg_dose_from_ratio">Coffee dose is calculated from your ratio</string>
