@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.scan
 
+import android.annotation.SuppressLint
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.adsamcik.starlitcoffee.scan.observability.ScanPerfTracer
@@ -133,6 +134,12 @@ class LiveScanAnalyzer(
     private var analyzeCallCount = 0
     private var lastAnalyzeNanos = 0L
 
+    // ImageProxy.getImage() is gated by @ExperimentalGetImage in CameraX. We use
+    // it deliberately to hand the underlying Image to ML Kit's
+    // InputImage.fromMediaImage, which is the recommended high-throughput path.
+    // The opt-in is a Java-side marker that Kotlin @OptIn doesn't propagate to
+    // Android Lint cleanly, so suppress at the function entry points instead.
+    @SuppressLint("UnsafeOptInUsageError")
     override fun analyze(image: ImageProxy) {
         analyzeCallCount++
         val nowNanos = android.os.SystemClock.elapsedRealtimeNanos()
@@ -239,6 +246,7 @@ class LiveScanAnalyzer(
         return jpeg
     }
 
+    @SuppressLint("UnsafeOptInUsageError")
     private fun runMlKitPipeline(
         image: ImageProxy,
         quality: BagCaptureQuality,
@@ -266,7 +274,6 @@ class LiveScanAnalyzer(
         lastTextCheckAtMs = now
         android.util.Log.d(TAG, ">>> Starting ML Kit recognition (call #$analyzeCallCount)")
 
-        @Suppress("UnsafeOptInUsageError")
         val inputImage = InputImage.fromMediaImage(image.image!!, image.imageInfo.rotationDegrees)
 
         // Track pending tasks so image is closed only after all complete

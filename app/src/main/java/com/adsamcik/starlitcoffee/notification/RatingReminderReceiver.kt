@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.notification
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -40,6 +41,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
         postNotification(context, brewLogId, methodLabel)
     }
 
+    @SuppressLint("MissingPermission")
     private fun postNotification(context: Context, brewLogId: Long, methodLabel: String?) {
         val title = if (!methodLabel.isNullOrBlank()) {
             context.getString(R.string.format_notif_rating_title, methodLabel)
@@ -71,6 +73,12 @@ class RatingReminderReceiver : BroadcastReceiver() {
             .build()
 
         runCatching {
+            // Permission is checked by hasPostNotificationPermission(context) at the
+            // top of onReceive; runCatching also catches the SecurityException that
+            // would be thrown if the user revoked POST_NOTIFICATIONS between the
+            // permission check and this call. The @SuppressLint above silences
+            // lint's MissingPermission false positive (it doesn't reason across
+            // helper boundaries).
             NotificationManagerCompat.from(context).notify(notificationId(brewLogId), notification)
         }.onFailure { error ->
             Log.e(TAG, "Failed to post rating reminder for $brewLogId", error)
