@@ -114,12 +114,11 @@ fun BrewTimerScreen(
     // For bloom methods, the timer starts when the user taps Start Bloom —
     // pre-bloom setup (tare, kettle, etc.) shouldn't pollute elapsed time.
     LaunchedEffect(state.method) {
-        if (
-            usesActiveTimer &&
+        val needsAutoStart = usesActiveTimer &&
             !state.timerRunning &&
             state.elapsedSeconds == 0 &&
             !state.method.hasBloom
-        ) {
+        if (needsAutoStart) {
             brewViewModel.startTimer()
         }
     }
@@ -160,7 +159,12 @@ fun BrewTimerScreen(
     val currentMinute = state.elapsedSeconds / 60
     val bloomActive = state.bloomMarkedAtSeconds != null && !state.bloomFinished
     LaunchedEffect(currentMinute) {
-        if (usesActiveTimer && currentMinute > 0 && state.timerRunning && state.minuteAlertEnabled && !bloomActive) {
+        val isAtMinuteBoundary = usesActiveTimer &&
+            currentMinute > 0 &&
+            state.timerRunning &&
+            state.minuteAlertEnabled &&
+            !bloomActive
+        if (isAtMinuteBoundary) {
             vibrator?.vibrate(
                 VibrationEffect.createWaveform(longArrayOf(0, 100, 80, 100), -1),
             )
@@ -345,30 +349,68 @@ fun BrewTimerScreen(
                     )
                 }
 
-                // Hero number: bloom countdown if active, otherwise elapsed total.
-                // Passive long-duration methods show the target window instead of
-                // implying an active stopwatch session.
-                val heroText = if (usesActiveTimer) {
-                    val heroSeconds = if (bloomActive) {
-                        state.bloomCountdownSeconds ?: 0
-                    } else {
-                        state.elapsedSeconds
+                // Hero: what the user is aiming at *right now*. The intent
+                // shifts across the brew phases:
+                //  - Active-timer pour methods (Pulsar / V60), non-bloom:
+                //    the user is pouring towards a target weight on the
+                //    scale, so the total water target is the hero. Elapsed
+                //    time moves to the metadata row.
+                //  - During bloom: the bloom is a wait phase — the
+                //    countdown is what the user is watching. Time stays
+                //    hero.
+                //  - Non-pour active methods (French Press, AeroPress,
+                //    Espresso, Moka): the user is watching the timer, not
+                //    pouring. Time stays hero.
+                //  - Passive long-duration (Cold Brew): show the target
+                //    window so the user knows the expected steep band.
+                data class HeroDisplay(val primary: String, val unit: String?)
+                val heroIsTotal = usesActiveTimer &&
+                    state.method.hasBloom &&
+                    !bloomActive &&
+                    state.waterG > 0f
+                val heroDisplay: HeroDisplay = when {
+                    heroIsTotal -> HeroDisplay(
+                        primary = "%.0f".format(state.waterG),
+                        unit = "g",
+                    )
+                    usesActiveTimer -> {
+                        val heroSeconds = if (bloomActive) {
+                            state.bloomCountdownSeconds ?: 0
+                        } else {
+                            state.elapsedSeconds
+                        }
+                        HeroDisplay(primary = formatBrewTime(heroSeconds), unit = null)
                     }
-                    formatBrewTime(heroSeconds)
-                } else {
-                    formatTargetDurationRange(state.timeTargetLowS, state.timeTargetHighS)
+                    else -> HeroDisplay(
+                        primary = formatTargetDurationRange(state.timeTargetLowS, state.timeTargetHighS),
+                        unit = null,
+                    )
                 }
-                Text(
-                    text = heroText,
-                    style = if (usesActiveTimer) {
-                        MaterialTheme.typography.displayLarge
-                    } else {
-                        MaterialTheme.typography.displayMedium
-                    },
-                    fontWeight = FontWeight.Light,
-                    color = heroColor,
+                Row(
+                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.semantics { heading() },
-                )
+                ) {
+                    Text(
+                        text = heroDisplay.primary,
+                        style = if (usesActiveTimer) {
+                            MaterialTheme.typography.displayLarge
+                        } else {
+                            MaterialTheme.typography.displayMedium
+                        },
+                        fontWeight = FontWeight.Light,
+                        color = heroColor,
+                    )
+                    if (heroDisplay.unit != null) {
+                        Text(
+                            text = heroDisplay.unit,
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Light,
+                            color = heroColor.copy(alpha = 0.75f),
+                            modifier = Modifier.padding(bottom = 18.dp),
+                        )
+                    }
+                }
                 when {
                     bloomActive -> {
                         // Bloom badge
@@ -423,9 +465,14 @@ fun BrewTimerScreen(
                     )
                 }
 
-                // ── Metadata row: target time · temp · total water
+                // ── Metadata row: elapsed / target time · temp · total water
+                // When the hero shows total water, the metadata leads with
+                // elapsed time and omits the redundant total. Otherwise it
+                // shows the target time + temp + total (so non-pour methods
+                // still see the recipe total at a glance).
                 BrewMetadataRow(
                     state = state,
+                    heroIsTotal = heroIsTotal,
                     modifier = Modifier
                         .fillMaxWidth(),
                 )
@@ -655,15 +702,24 @@ private fun methodTimerGuidanceRes(
 }
 
 /**
- * Compact row of supporting info — target brew time, water temp, total water.
- * These help the user gauge progress without competing with the primary guidance.
+ * Compact row of supporting info that help the user gauge progress without
+ * competing with the hero.
+ *
+ * When [heroIsTotal] is true the hero already shows the target total water,
+ * so the metadata leads with elapsed time and omits the redundant total.
+ * Otherwise (non-pour methods, or during bloom) the metadata shows the
+ * target time + temp + total so the recipe total stays visible.
  */
 @Composable
 private fun BrewMetadataRow(
     state: BrewUiState,
+    heroIsTotal: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val items = buildList {
+        if (heroIsTotal && (state.timerRunning || state.elapsedSeconds > 0)) {
+            add("Now " + formatBrewTime(state.elapsedSeconds))
+        }
         if (state.timeTargetLowS > 0 && state.timeTargetHighS > 0) {
             add(
                 "Target " + formatTargetDurationRange(state.timeTargetLowS, state.timeTargetHighS),
@@ -672,7 +728,7 @@ private fun BrewMetadataRow(
         if (state.method.tempRangeLow > 0 && state.method.tempRangeHigh > 0) {
             add("${state.method.tempRangeLow}–${state.method.tempRangeHigh}°C")
         }
-        if (state.waterG > 0f) {
+        if (!heroIsTotal && state.waterG > 0f) {
             add("Total ${"%.0f".format(state.waterG)}g")
         }
     }
