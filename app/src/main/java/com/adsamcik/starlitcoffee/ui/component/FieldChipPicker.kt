@@ -43,12 +43,12 @@ fun <T> FieldChipPicker(
     selectedValue: String,
     onValueChange: (String) -> Unit,
     displayName: (T) -> String,
+    modifier: Modifier = Modifier,
     isKnownValue: (T, String) -> Boolean = { item, value ->
         displayName(item).equals(value, ignoreCase = true)
     },
     recentValues: List<String> = emptyList(),
     multiSelect: Boolean = false,
-    modifier: Modifier = Modifier,
     onInteraction: () -> Unit = {},
 ) {
     val knownDisplayNames = knownValues.map { displayName(it).lowercase() }.toSet()

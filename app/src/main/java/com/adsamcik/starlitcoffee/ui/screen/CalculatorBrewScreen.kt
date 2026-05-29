@@ -67,8 +67,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -125,19 +126,24 @@ fun CalculatorBrewScreen(
     val context = LocalContext.current
     val grinders = remember { GrinderDataSource.getInstance(context).grinders }
 
-    // Compact-height adaptation. Reference values (Android `screenHeightDp`):
+    // Compact-height adaptation. Reference values (dp):
     //   - Small phones (5" / Pixel 4a): ~683 dp
     //   - Standard phones (6.1" / Pixel 7): ~810 dp
     //   - Large phones (6.7" / Pixel 7 Pro): ~890 dp
     // We treat anything below ~700 dp as compact and tighten the layout so the
     // keyboard, preview, and pills all stay reachable without scrolling.
-    val screenHeightDp = LocalConfiguration.current.screenHeightDp
-    val isCompactHeight = screenHeightDp < 700
+    // Uses LocalWindowInfo.containerSize (the actual window) instead of
+    // Configuration.screenHeightDp, which has inconsistent inset handling
+    // across target SDKs (lint: ConfigurationScreenWidthHeight).
+    val containerSize = LocalWindowInfo.current.containerSize
+    val density = LocalDensity.current
+    val screenHeightDp = with(density) { containerSize.height.toDp().value }
+    val isCompactHeight = screenHeightDp < 700f
     // Reverse adaptation — tall screens (large phones, foldables open) waste
     // vertical space on the keyboard. Detect them and grow the keys for
     // better thumb reach. Tablet bracket (>=900dp) is excluded; that's the
     // domain of WindowSizeClass-based layouts.
-    val isTallHeight = screenHeightDp in 860..899
+    val isTallHeight = screenHeightDp >= 860f && screenHeightDp < 900f
     val sectionSpacer = if (isCompactHeight) 6.dp else 12.dp
     val barSpacer = if (isCompactHeight) 4.dp else 8.dp
 
@@ -445,8 +451,8 @@ private fun buildInlineResult(
 private fun ExpressionDisplay(
     tokens: List<CalcToken>,
     isCompactHeight: Boolean,
-    inlineResult: InlineResult? = null,
     modifier: Modifier = Modifier,
+    inlineResult: InlineResult? = null,
 ) {
     val scrollState = rememberScrollState()
     val numberStyle = if (isCompactHeight) {

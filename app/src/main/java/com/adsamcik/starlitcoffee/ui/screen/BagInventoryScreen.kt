@@ -210,7 +210,7 @@ fun BagInventoryScreen(
     }
 
     // Handle resolved scan fields from LiveScan "Review First"
-    var lastProcessedScanFields by remember { mutableStateOf<HashMap<String, String>?>(null) }
+    var lastProcessedScanFields by remember { mutableStateOf<Map<String, String>?>(null) }
     LaunchedEffect(scanFieldsResult) {
         val fields = scanFieldsResult ?: return@LaunchedEffect
         if (fields == lastProcessedScanFields) return@LaunchedEffect

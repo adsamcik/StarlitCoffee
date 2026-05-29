@@ -152,8 +152,8 @@ fun BloomSpritesheetAnimation(
     bloomCountdownSeconds: Int?,
     bloomDurationSeconds: Int,
     selectedSpritesheetId: String?,
-    isRunning: Boolean = true,
     modifier: Modifier = Modifier,
+    isRunning: Boolean = true,
 ) {
     if (selectedSpritesheetId.isNullOrEmpty()) return
     val selectedOption = BloomSpritesheetOptions.firstOrNull { it.id == selectedSpritesheetId } ?: return

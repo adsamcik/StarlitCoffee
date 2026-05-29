@@ -44,6 +44,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -1040,7 +1041,7 @@ private fun RatingReminderSettingCard(
     // Use a tick state so we re-read the permission whenever the user comes
     // back from the system settings screen (foreground state isn't observed
     // here, so we expose a manual "refresh" via the launcher callback).
-    var permissionTick by remember { mutableStateOf(0) }
+    var permissionTick by remember { mutableIntStateOf(0) }
     val hasPostNotifications by remember(permissionTick) {
         derivedStateOf {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {

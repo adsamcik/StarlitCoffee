@@ -57,6 +57,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -234,7 +235,7 @@ fun LiveScanScreen(
     // --- Haptic feedback on field lock ---
 
     val vibrator = remember { context.getSystemService(Vibrator::class.java) }
-    var previousLockedCount by remember { mutableStateOf(0) }
+    var previousLockedCount by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(evidence) {
         val currentLocked = evidence.fields.values.count {

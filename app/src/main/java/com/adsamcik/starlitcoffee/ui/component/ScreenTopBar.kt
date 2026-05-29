@@ -24,8 +24,8 @@ import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 @Composable
 fun ScreenTopBar(
     title: String,
-    onBack: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
+    onBack: (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     Row(
