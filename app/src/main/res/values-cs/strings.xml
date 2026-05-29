@@ -39,18 +39,14 @@
     <string name="action_finish">Dokončit</string>
     <string name="action_next">Další</string>
     <string name="action_go_back">Zpět</string>
-    <string name="action_collapse">Sbalit</string>
-    <string name="action_expand">Rozbalit</string>
-
-    <!-- Common labels -->
+<!-- Common labels -->
     <string name="label_coffee">Káva</string>
     <string name="label_water">Voda</string>
     <string name="label_ratio">Poměr</string>
     <string name="label_strength">Síla</string>
     <string name="label_grind">Mletí</string>
     <string name="label_filter">Filtr</string>
-    <string name="label_method">Metoda</string>
-    <string name="label_decaf">Bez kofeinu</string>
+<string name="label_decaf">Bez kofeinu</string>
     <string name="label_decaf_suffix"> · Bez kofeinu</string>
     <string name="label_loading">Načítání…</string>
     <string name="label_none">Žádný</string>
@@ -72,8 +68,7 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg v šálku</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-    <string name="format_brew_time">%1$d:%2$02d</string>
-    <plurals name="format_selected">
+<plurals name="format_selected">
         <item quantity="one">%1$d vybráno</item>
         <item quantity="few">%1$d vybráno</item>
         <item quantity="many">%1$d vybráno</item>
@@ -92,25 +87,17 @@
 
     <!-- Amount & Strength Screen -->
     <string name="screen_brew_setup_title">Nastavení přípravy</string>
-    <string name="format_brew_setup_subtitle">%1$s · 1:%2$.0f</string>
-    <string name="label_custom_ratio">Vlastní poměr (např. 16)</string>
+<string name="label_custom_ratio">Vlastní poměr (např. 16)</string>
     <string name="label_temperature">Teplota (°C)</string>
     <string name="label_bloom_multiplier">Násobitel bloomu (např. 3.0)</string>
     <string name="label_pulse_count">Počet nalití</string>
-    <string name="format_grind_range"> – %1$s</string>
-    <string name="format_grind_setting">Nastavení: %1$s (rozsah %2$s–%3$s)</string>
-    <string name="format_grind_adjust"> · Upravte o ±%1$s dle chuti</string>
-    <string name="format_warning">⚠️ %1$s</string>
-    <string name="action_start_brewing">Začít přípravu →</string>
+<string name="action_start_brewing">Začít přípravu →</string>
     <string name="label_decrease">Snížit %1$s</string>
     <string name="label_increase">Zvýšit %1$s</string>
 
     <!-- Grind Prep Screen -->
     <string name="screen_grind_prep_title">Připravte si vše</string>
-    <string name="format_grind_coffee">Namelte %1$.0fg kávy</string>
-    <string name="format_water_temp">Voda: %1$d–%2$d°C</string>
-    <string name="action_ready_to_brew">Vše připraveno →</string>
-    <string name="action_ready_to_brew_short">Vše připraveno</string>
+<string name="action_ready_to_brew_short">Vše připraveno</string>
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Příprava</string>
     <string name="label_recipe_heading">Recept</string>
@@ -133,22 +120,17 @@
     <string name="cd_disable_minute_alerts">Vypnout minutová upozornění</string>
     <string name="cd_enable_minute_alerts">Zapnout minutová upozornění</string>
     <string name="cd_bloom_animation">Kávové zrno rozkvétá do květu</string>
-    <string name="format_bloom_at">🌱 Bloom v %1$s</string>
-    <string name="format_pour_bloom_water">Nalijte %1$.0fg vody pro bloom</string>
+<string name="format_pour_bloom_water">Nalijte %1$.0fg vody pro bloom</string>
     <string name="format_bloom_total">Bloom %1$.0fg · Celkem %2$.0fg</string>
-    <string name="format_total_water">Celkem %1$.0fg</string>
-    <string name="action_start_bloom">☕ Začít Bloom</string>
-    <string name="format_bloom_countdown">🌱 Bloom %1$s</string>
-    <string name="label_bloom_done">✅ Bloom hotovo!</string>
+<string name="action_start_bloom">☕ Začít Bloom</string>
+<string name="label_bloom_done">✅ Bloom hotovo!</string>
     <string name="action_finish_brew">Dokončit přípravu</string>
     <string name="dialog_exit_brew_title">Ukončit přípravu?</string>
     <string name="dialog_exit_brew_message">Aktuální průběh přípravy bude ztracen.</string>
     <string name="action_exit_brew">Ukončit</string>
 
     <!-- Calculator Brew Screen -->
-    <string name="dialog_brew_ratio_title">Poměr přípravy</string>
-
-    <!-- Settings Screen -->
+<!-- Settings Screen -->
     <string name="screen_settings_title">Nastavení</string>
     <string name="label_cup_presets">Předvolby šálků</string>
     <string name="action_add_preset">Přidat předvolbu</string>
@@ -192,8 +174,7 @@
     <string name="screen_brew_log_title">Záznamy příprav</string>
     <string name="msg_log_empty_title">Začněte připravovat kávu</string>
     <string name="msg_log_empty_subtitle">Dokončené přípravy s hodnocením se zobrazí zde</string>
-    <string name="msg_tap_to_rate">Klepněte pro ohodnocení</string>
-    <string name="action_rate_brew">Ohodnotit přípravu</string>
+<string name="action_rate_brew">Ohodnotit přípravu</string>
 
     <!-- Brew Log Detail Screen -->
     <string name="screen_brew_details_title">Detail přípravy</string>
@@ -286,55 +267,17 @@
     <string name="cd_about_cup_volume">O objemu šálku</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-    <string name="label_coffee_insights">Poznatky o kávě</string>
-    <string name="format_coffee_depth">~%1$.0fmm v přístroji</string>
-    <string name="label_coffee_depth">Hloubka kávy</string>
-    <string name="format_grounds_absorb">~%1$.0fg vody</string>
-    <string name="label_grounds_absorb">Pohlceno kávou</string>
-    <string name="format_cup_volume_expected">~%1$.0fg očekáváno</string>
-    <string name="label_cup_volume">Objem šálku</string>
-    <string name="label_target">Cíl</string>
-    <string name="format_pour_target">Nalijte celkem na %1$.0fg</string>
-    <string name="label_valve">Ventil</string>
-    <string name="cd_brew_details">Detail přípravy</string>
-    <!-- Grind notes -->
-    <string name="grind_note_fine">Jemné · jako moučkový cukr</string>
-    <string name="grind_note_medium_fine">Středně jemné · jako stolní sůl</string>
-    <string name="grind_note_medium">Střední · jako hrubý písek</string>
-    <string name="grind_note_medium_coarse">Středně hrubé · upravte dle chuti</string>
-    <string name="grind_note_coarse">Hrubé · delší příprava</string>
-    <!-- Dose notes -->
-    <string name="dose_note_below_20">Pod 20g může být chuť suchá nebo drsná</string>
-    <string name="dose_note_sweet_spot">Ideální dávka pro čistotu a vyváženost</string>
-    <string name="dose_note_rich">Plné, silné výsledky</string>
-    <string name="dose_note_above_30">Nad 30g — může vyžadovat delší dobu odtékání</string>
-
-    <!-- Brew Method names -->
-    <string name="method_pulsar">Pulsar</string>
-    <string name="method_v60">V60</string>
-    <string name="method_french_press">French Press</string>
-    <string name="method_aeropress">AeroPress</string>
-    <string name="method_espresso">Espresso</string>
-    <string name="method_moka_pot">Moka konvička</string>
-    <string name="method_cold_brew">Cold Brew</string>
-
-    <!-- Ratio presets -->
+<string name="label_target">Cíl</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
     <string name="format_ratio_bright">Živá · 1:%1$d</string>
     <string name="format_ratio_balanced">Vyvážená · 1:%1$d</string>
     <string name="format_ratio_rich">Plná · 1:%1$d</string>
 
     <!-- Filter Type names -->
-    <string name="filter_paper">Papír</string>
-    <string name="filter_19k">19K</string>
-    <string name="filter_40k">40K</string>
-    <string name="filter_paper_desc">Nejčistší šálek, nejméně těla a olejů</string>
-    <string name="filter_19k_desc">19 000 otvorů — více těla, olejů, plnosti</string>
-    <string name="filter_40k_desc">40 000 otvorů — čistší než 19K, více olejů než papír</string>
-    <string name="filter_paper_profile">Čistý, živý, delikátní</string>
-    <string name="filter_19k_profile">Plný, výrazný, hutný</string>
-    <string name="filter_40k_profile">Vyvážená čistota s tělem</string>
-
-    <!-- Input Mode -->
+<!-- Input Mode -->
     <string name="input_coffee_to_water">Káva → Voda</string>
     <string name="input_water_to_coffee">Voda → Káva</string>
     <string name="input_brew_to_both">Objem nápoje → Obojí</string>
@@ -349,15 +292,7 @@
     <string name="input_cup_desc">Zadejte objem šálku, káva a voda se dopočítají</string>
 
     <!-- Phase names -->
-    <string name="phase_bloom">Bloom</string>
-    <string name="phase_pour">Nalévání</string>
-    <string name="phase_drain_refill">Odtok a doplnění</string>
-    <string name="phase_drawdown">Odtok</string>
-    <string name="phase_saturate">Nasycení</string>
-    <string name="phase_close_swirl">Zavřít a protočit</string>
-    <string name="phase_steep">Louhování</string>
-
-    <!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
     <string name="instruction_bloom_pour">Nalijte na %1$.0fg</string>
     <string name="instruction_pour_total">Nalijte celkem na %1$.0fg</string>
     <string name="instruction_open_valve_short">Otevřete ventil</string>
@@ -380,12 +315,7 @@
     <string name="instruction_cold_brew_filter">Přefiltrujte koncentrát a podávejte vychlazený nebo naředěný</string>
 
     <!-- Warnings -->
-    <string name="warning_ratio_zero">Poměr musí být větší než nula</string>
-    <string name="format_warning_ratio_strong">Poměr 1:%1$.1f je neobvykle silný</string>
-    <string name="format_warning_ratio_weak">Poměr 1:%1$.1f je neobvykle slabý</string>
-    <string name="format_warning_bloom_exceeds">Bloom (%1$.0fg) přesahuje celkovou vodu (%2$.0fg)</string>
-
-    <!-- Taste Feedback -->
+<!-- Taste Feedback -->
     <string name="feedback_too_sour">Příliš kyselá / Slabá</string>
     <string name="feedback_balanced">Vyvážená</string>
     <string name="feedback_too_bitter">Příliš hořká / Drsná</string>
@@ -429,10 +359,7 @@
     <string name="label_dose_to_water">Dávka → Voda</string>
     <string name="label_total_water">celkem vody</string>
     <string name="label_advanced_options">Pokročilé možnosti</string>
-    <string name="label_grinder">Mlýnek</string>
-    <string name="action_manage_grinders_in_settings">Spravovat mlýnky v Nastavení</string>
-
-    <!-- Bag selection -->
+<!-- Bag selection -->
     <string name="label_select_coffee_bag">Vyberte balení kávy</string>
     <string name="label_select_coffee_bag_title">Vyberte balení kávy</string>
     <string name="label_freshness">Čerstvost</string>
@@ -457,8 +384,7 @@
     <string name="label_name">Název</string>
     <string name="label_roaster">Pražírna</string>
     <string name="label_origin">Původ</string>
-    <string name="label_weight">Hmotnost</string>
-    <string name="label_barcode_ean">Čárový kód / EAN</string>
+<string name="label_barcode_ean">Čárový kód / EAN</string>
     <string name="action_scan_barcode">Naskenovat čárový kód</string>
     <string name="label_name_required">Název *</string>
     <string name="label_weight_grams">Hmotnost (g)</string>
@@ -473,12 +399,10 @@
     <string name="label_decaf_process_optional">Způsob dekofeinizace (volitelné)</string>
     <string name="msg_decaf_process_hint">Umožňuje pravidlu přípravy mírně upravit mletí: vodní procesy a CO₂ dekofeinizace obvykle nevyžadují tak hrubé mletí jako solventní procesy.</string>
     <string name="cd_captured_bag_photo">Foto balení</string>
-    <string name="label_bag_name">Název balení</string>
-    <string name="label_detected_details">Zjištěné údaje</string>
+<string name="label_detected_details">Zjištěné údaje</string>
     <string name="msg_tap_chip_to_edit">Klepnutím na štítek ho upravíte</string>
     <string name="label_needs_review">Vyžaduje kontrolu</string>
-    <string name="msg_tap_confirm_or_change">Klepnutím potvrďte nebo změňte tyto údaje</string>
-    <string name="action_edit_all_fields">Upravit všechna pole</string>
+<string name="action_edit_all_fields">Upravit všechna pole</string>
     <string name="action_add_more_details">Přidat další podrobnosti</string>
     <string name="msg_analyzing_label">Analyzujeme fotografie štítku</string>
     <string name="msg_analyzing_label_detail">Kontrolujeme rozmazání, slučujeme text přední a zadní strany a připravujeme nejspolehlivější pole.</string>
@@ -486,8 +410,7 @@
     <string name="label_qr_website">QR web</string>
     <string name="action_open_website">Otevřít web</string>
     <string name="label_qr_link_found">Nalezen QR odkaz</string>
-    <string name="msg_qr_link_hint">Tento web může obsahovat podrobnosti o kávě (pražírna, původ, chuťové poznámky).</string>
-    <string name="action_explore_extract">Prozkoumat &amp; extrahovat</string>
+<string name="action_explore_extract">Prozkoumat &amp; extrahovat</string>
     <string name="label_detected_field_evidence">Důkazy zjištěných polí</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
@@ -509,9 +432,7 @@
     <string name="action_save_rating">Uložit hodnocení</string>
 
     <!-- EmptyStateBox -->
-    <string name="msg_empty_state_default">Přidejte položky a zobrazí se zde</string>
-
-    <!-- FavoritesRow -->
+<!-- FavoritesRow -->
     <string name="label_your_favorites_section">Vaše oblíbené</string>
 
     <!-- FieldChipPicker -->
@@ -586,13 +507,11 @@
     <string name="cd_toggle_debug_overlay">Přepnout ladicí překryv</string>
     <string name="msg_both_sides_scanned">Obě strany balení byly naskenovány</string>
     <string name="msg_scanning_front_side">Skenování přední strany balení</string>
-    <string name="label_front_side">Přední strana</string>
-    <string name="action_quick_save">Rychle uložit</string>
+<string name="action_quick_save">Rychle uložit</string>
     <string name="msg_repackaged_product">Může se jednat o přebalený nebo dovážený produkt</string>
     <string name="action_use_barcode">Použít čárový kód</string>
     <string name="action_use_label">Použít štítek</string>
-    <string name="action_dismiss">Zavřít</string>
-    <string name="label_confirmed">Potvrzeno</string>
+<string name="label_confirmed">Potvrzeno</string>
     <string name="label_ai_contributed">Přispěla AI</string>
     <string name="cd_manual_capture">Ruční zachycení — vynutit zpracování aktuálního snímku</string>
 
