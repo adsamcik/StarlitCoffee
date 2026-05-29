@@ -135,7 +135,6 @@
     <string name="action_start_bloom">☕ Začít Bloom</string>
     <string name="format_bloom_countdown">🌱 Bloom %1$s</string>
     <string name="label_bloom_done">✅ Bloom hotovo!</string>
-    <string name="label_bloom_badge">🌱 Bloom</string>
     <string name="action_finish_brew">Dokončit přípravu</string>
     <string name="dialog_exit_brew_title">Ukončit přípravu?</string>
     <string name="dialog_exit_brew_message">Aktuální průběh přípravy bude ztracen.</string>

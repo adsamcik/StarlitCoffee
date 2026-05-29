@@ -12,7 +12,6 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -54,7 +53,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -413,17 +411,10 @@ fun BrewTimerScreen(
                 }
                 when {
                     bloomActive -> {
-                        // Bloom badge
-                        Text(
-                            text = stringResource(R.string.label_bloom_badge),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onTertiaryContainer,
-                            modifier = Modifier
-                                .clip(MaterialTheme.shapes.medium)
-                                .background(MaterialTheme.colorScheme.tertiaryContainer)
-                                .padding(horizontal = 16.dp, vertical = 4.dp),
-                        )
-
+                        // The bloom phase is already obvious from the bloom
+                        // flower animation, the hero countdown, the progress
+                        // bar below, and (if enabled) the guidance card —
+                        // a separate "Bloom" pill would be redundant chrome.
                         val bloomDuration = state.effectiveBloomDurationSeconds
                         val progress = if (bloomDuration > 0) {
                             1f - (state.bloomCountdownSeconds ?: 0).toFloat() / bloomDuration

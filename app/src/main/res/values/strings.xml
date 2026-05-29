@@ -136,7 +136,6 @@
     <string name="action_start_bloom">☕ Start Bloom</string>
     <string name="format_bloom_countdown">🌱 Bloom %1$s</string>
     <string name="label_bloom_done">✅ Bloom done!</string>
-    <string name="label_bloom_badge">🌱 Bloom</string>
     <string name="action_finish_brew">Finish Brew</string>
     <string name="dialog_exit_brew_title">Exit brew?</string>
     <string name="dialog_exit_brew_message">Your current brew progress will be lost.</string>
