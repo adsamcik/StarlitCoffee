@@ -53,6 +53,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -211,24 +212,58 @@ fun BrewTimerScreen(
         }
     }
 
-    // Timer color — animate based on bloom state and target window
+    // Timer color — animate based on bloom state and target window.
+    //
+    // Two related signals come out of the brew progress, and they target
+    // *different* places in the layout:
+    //
+    //  * [heroColor] paints the hero number. For pour methods with bloom
+    //    (Pulsar/V60) the hero is the total-water target during the main
+    //    pour, which is a static recipe value with no good/bad semantics
+    //    — so [heroIsTotal] short-circuits the colour to a neutral
+    //    onSurface no matter how the timer is doing. For every other
+    //    hero (elapsed time, bloom countdown) the time-window palette
+    //    still applies.
+    //  * [timePillColor] paints the "Now X:XX" metadata pill that
+    //    appears next to the water-total hero. The pill is where the
+    //    in-window / over-target signal lives in that mode, so we keep
+    //    the original tertiary/error palette here so the user still
+    //    gets the visual nudge — just on the right thing.
     val hasTarget = state.timeTargetLowS > 0 && state.timeTargetHighS > 0
+    val heroIsTotal = usesActiveTimer &&
+        state.method.hasBloom &&
+        !bloomActive &&
+        state.waterG > 0f
+    val timeWindowTarget = when {
+        !hasTarget -> MaterialTheme.colorScheme.onSurface
+        state.elapsedSeconds > state.timeTargetHighS ->
+            MaterialTheme.colorScheme.error
+        state.elapsedSeconds >= state.timeTargetLowS ->
+            MaterialTheme.colorScheme.tertiary
+        else -> MaterialTheme.colorScheme.onSurface
+    }
     val heroColor by animateColorAsState(
         targetValue = when {
+            // Static water-target hero is a recipe number, not a status
+            // readout — keep it readable in every theme and dim state.
+            heroIsTotal -> MaterialTheme.colorScheme.onSurface
             bloomJustEndedFlash -> MaterialTheme.colorScheme.error
             bloomActive -> MaterialTheme.colorScheme.tertiary
-            !hasTarget -> MaterialTheme.colorScheme.onSurface
-            state.elapsedSeconds > state.timeTargetHighS ->
-                MaterialTheme.colorScheme.error
-            state.elapsedSeconds >= state.timeTargetLowS ->
-                MaterialTheme.colorScheme.tertiary
-            else -> MaterialTheme.colorScheme.onSurface
+            else -> timeWindowTarget
         },
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioNoBouncy,
             stiffness = Spring.StiffnessLow,
         ),
         label = "heroColor",
+    )
+    val timePillColor by animateColorAsState(
+        targetValue = timeWindowTarget,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioNoBouncy,
+            stiffness = Spring.StiffnessLow,
+        ),
+        label = "timePillColor",
     )
 
     // ── Dim mode ─────────────────────────────────────────────
@@ -362,10 +397,6 @@ fun BrewTimerScreen(
                 //  - Passive long-duration (Cold Brew): show the target
                 //    window so the user knows the expected steep band.
                 data class HeroDisplay(val primary: String, val unit: String?)
-                val heroIsTotal = usesActiveTimer &&
-                    state.method.hasBloom &&
-                    !bloomActive &&
-                    state.waterG > 0f
                 val heroDisplay: HeroDisplay = when {
                     heroIsTotal -> HeroDisplay(
                         primary = "%.0f".format(state.waterG),
@@ -458,12 +489,14 @@ fun BrewTimerScreen(
 
                 // ── Metadata row: elapsed / target time · temp · total water
                 // When the hero shows total water, the metadata leads with
-                // elapsed time and omits the redundant total. Otherwise it
-                // shows the target time + temp + total (so non-pour methods
-                // still see the recipe total at a glance).
+                // elapsed time and omits the redundant total. The "Now
+                // X:XX" pill colour-codes the time-window state in that
+                // mode so the user still sees the in-window / over-target
+                // signal even though the hero number itself is now static.
                 BrewMetadataRow(
                     state = state,
                     heroIsTotal = heroIsTotal,
+                    nowPillColor = timePillColor,
                     modifier = Modifier
                         .fillMaxWidth(),
                 )
@@ -705,42 +738,50 @@ private fun methodTimerGuidanceRes(
 private fun BrewMetadataRow(
     state: BrewUiState,
     heroIsTotal: Boolean,
+    nowPillColor: Color,
     modifier: Modifier = Modifier,
 ) {
+    data class MetaPill(val text: String, val emphasised: Boolean = false)
     val items = buildList {
         if (heroIsTotal && (state.timerRunning || state.elapsedSeconds > 0)) {
-            add("Now " + formatBrewTime(state.elapsedSeconds))
+            // The "Now" pill carries the time-window status (in-window /
+            // over-target) when the hero is showing static total water.
+            add(MetaPill("Now " + formatBrewTime(state.elapsedSeconds), emphasised = true))
         }
         if (state.timeTargetLowS > 0 && state.timeTargetHighS > 0) {
             add(
-                "Target " + formatTargetDurationRange(state.timeTargetLowS, state.timeTargetHighS),
+                MetaPill(
+                    "Target " +
+                        formatTargetDurationRange(state.timeTargetLowS, state.timeTargetHighS),
+                ),
             )
         }
         if (state.method.tempRangeLow > 0 && state.method.tempRangeHigh > 0) {
-            add("${state.method.tempRangeLow}–${state.method.tempRangeHigh}°C")
+            add(MetaPill("${state.method.tempRangeLow}–${state.method.tempRangeHigh}°C"))
         }
         if (!heroIsTotal && state.waterG > 0f) {
-            add("Total ${"%.0f".format(state.waterG)}g")
+            add(MetaPill("Total ${"%.0f".format(state.waterG)}g"))
         }
     }
     if (items.isEmpty()) return
 
+    val defaultColor = MaterialTheme.colorScheme.onSurfaceVariant
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        items.forEachIndexed { idx, text ->
+        items.forEachIndexed { idx, item ->
             Text(
-                text = text,
+                text = item.text,
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = if (item.emphasised) nowPillColor else defaultColor,
             )
             if (idx < items.lastIndex) {
                 Text(
                     text = "·",
                     style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                    color = defaultColor.copy(alpha = 0.4f),
                 )
             }
         }
