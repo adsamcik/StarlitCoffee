@@ -1209,10 +1209,12 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                                     isDecaf = lookupSupportingText
                                         ?.let(CoffeeMetadataNormalizer::containsDecafMarker)
                                         ?.takeIf { it },
-                                    sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                                    confidenceHint = BagFieldConfidence.HIGH,
+                                    provenance = BagCandidateProvenance(
+                                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                                        confidenceHint = BagFieldConfidence.HIGH,
+                                        supportingText = lookupSupportingText,
+                                    ),
                                     rawValue = lookupSupportingText,
-                                    supportingText = lookupSupportingText,
                                 )
 
                                 // OFF data — confidence gated because these fields may refer to country of sale, not origin
@@ -1561,13 +1563,15 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 }
             addDecafCandidate(
                 isDecaf = pass.result.isDecaf,
-                sourceType = BagFieldSourceType.OCR,
-                confidenceHint = pass.result.fieldConfidence["isDecaf"] ?: confidenceHint,
+                provenance = BagCandidateProvenance(
+                    sourceType = BagFieldSourceType.OCR,
+                    confidenceHint = pass.result.fieldConfidence["isDecaf"] ?: confidenceHint,
+                    supportingText = decafSupportingText,
+                    side = photo.side,
+                    previewUri = photo.uri,
+                    previewRect = decafSupportingBlock?.normalizedBounds(),
+                ),
                 rawValue = decafSupportingText,
-                supportingText = decafSupportingText,
-                side = photo.side,
-                previewUri = photo.uri,
-                previewRect = decafSupportingBlock?.normalizedBounds(),
             )
         }
     }
@@ -1603,15 +1607,17 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         addInferredMetadataCandidates(
             normalized = normalized,
             rawValue = cleanValue,
-            sourceType = BagFieldSourceType.OCR,
-            confidenceHint = confidenceHint,
-            side = photo.side,
-            supportingText = supportingBlock?.text ?: pass.fullText.lineSequence().firstOrNull { line ->
-                line.contains(cleanValue, ignoreCase = true)
-            },
-            previewUri = photo.uri,
-            previewRect = supportingBlock?.normalizedBounds(),
             locale = locale,
+            provenance = BagCandidateProvenance(
+                sourceType = BagFieldSourceType.OCR,
+                confidenceHint = confidenceHint,
+                side = photo.side,
+                supportingText = supportingBlock?.text ?: pass.fullText.lineSequence().firstOrNull { line ->
+                    line.contains(cleanValue, ignoreCase = true)
+                },
+                previewUri = photo.uri,
+                previewRect = supportingBlock?.normalizedBounds(),
+            ),
         )
     }
 
@@ -1658,15 +1664,26 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
+    /**
+     * Common provenance bundle for [BagFieldCandidate]s — groups the source +
+     * confidence + UI traceability fields that travel together from OCR / OFF
+     * lookup / scan capture into the candidate ledger. Bundling avoids tripping
+     * detekt's [LongParameterList] on the candidate-builder extensions and
+     * keeps call sites readable.
+     */
+    private data class BagCandidateProvenance(
+        val sourceType: BagFieldSourceType,
+        val confidenceHint: BagFieldConfidence,
+        val supportingText: String? = null,
+        val side: BagCaptureSide? = null,
+        val previewUri: String? = null,
+        val previewRect: BagPhotoRect? = null,
+    )
+
     private fun MutableList<BagFieldCandidate>.addDecafCandidate(
         isDecaf: Boolean?,
-        sourceType: BagFieldSourceType,
-        confidenceHint: BagFieldConfidence,
+        provenance: BagCandidateProvenance,
         rawValue: String? = null,
-        supportingText: String? = null,
-        side: BagCaptureSide? = null,
-        previewUri: String? = null,
-        previewRect: BagPhotoRect? = null,
     ) {
         if (isDecaf != true) return
         val cleanRawValue = rawValue?.trim()?.takeIf { it.isNotBlank() } ?: "decaf"
@@ -1676,12 +1693,12 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 value = "Decaf",
                 rawValue = cleanRawValue,
                 canonicalKey = "true",
-                sourceType = sourceType,
-                side = side,
-                confidenceHint = confidenceHint,
-                supportingText = supportingText,
-                previewUri = previewUri,
-                previewRect = previewRect,
+                sourceType = provenance.sourceType,
+                side = provenance.side,
+                confidenceHint = provenance.confidenceHint,
+                supportingText = provenance.supportingText,
+                previewUri = provenance.previewUri,
+                previewRect = provenance.previewRect,
             ),
         )
     }
@@ -1697,13 +1714,8 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private fun MutableList<BagFieldCandidate>.addInferredMetadataCandidates(
         normalized: NormalizedCoffeeField?,
         rawValue: String,
-        sourceType: BagFieldSourceType,
-        confidenceHint: BagFieldConfidence,
-        side: BagCaptureSide? = null,
-        supportingText: String? = null,
-        previewUri: String? = null,
-        previewRect: BagPhotoRect? = null,
         locale: Locale,
+        provenance: BagCandidateProvenance,
     ) {
         normalized?.relatedCanonicalKeys
             ?.filterKeys { it in BAG_PHOTO_FIELD_NAMES }
@@ -1720,13 +1732,13 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                         value = localizedValue,
                         rawValue = rawValue,
                         canonicalKey = canonicalKey,
-                        sourceType = sourceType,
-                        side = side,
-                        confidenceHint = inferredConfidence(confidenceHint),
+                        sourceType = provenance.sourceType,
+                        side = provenance.side,
+                        confidenceHint = inferredConfidence(provenance.confidenceHint),
                         matchStrategy = CoffeeMetadataMatchStrategy.RELATION_INFERENCE,
-                        supportingText = supportingText,
-                        previewUri = previewUri,
-                        previewRect = previewRect,
+                        supportingText = provenance.supportingText,
+                        previewUri = provenance.previewUri,
+                        previewRect = provenance.previewRect,
                     ),
                 )
             }
