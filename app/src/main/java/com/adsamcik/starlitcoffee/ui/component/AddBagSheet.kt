@@ -1113,33 +1113,26 @@ private fun fullFormIndexForField(
     hasBarcode: Boolean,
     showMoreDetails: Boolean,
 ): Int? {
-    var index = 1
-    if (hasBarcode) {
-        if (fieldName == "barcode") return index
-        index += 1
+    val orderedFields = buildList {
+        if (hasBarcode) add("barcode")
+        addAll(listOf("name", "roaster", "origin", "region", "weight", "roastDate"))
+        add("toggleOptional")
+        if (showMoreDetails) {
+            addAll(
+                listOf(
+                    "roastLevel",
+                    "variety",
+                    "processType",
+                    "tastingNotes",
+                    "expiryDate",
+                    "isDecaf",
+                    "notes",
+                ),
+            )
+        }
     }
-    val requiredFields = listOf("name", "roaster", "origin", "region", "weight", "roastDate")
-    requiredFields.forEach { key ->
-        if (fieldName == key) return index
-        index += 1
-    }
-    if (fieldName == "toggleOptional") return index
-    index += 1
-    if (!showMoreDetails) return null
-    val optionalFields = listOf(
-        "roastLevel",
-        "variety",
-        "processType",
-        "tastingNotes",
-        "expiryDate",
-        "isDecaf",
-        "notes",
-    )
-    optionalFields.forEach { key ->
-        if (fieldName == key) return index
-        index += 1
-    }
-    return null
+    val position = orderedFields.indexOf(fieldName)
+    return if (position >= 0) position + 1 else null
 }
 
 @Composable

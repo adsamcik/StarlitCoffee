@@ -116,33 +116,37 @@ object BrewCalculator {
                 val coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
                 coffeeG to waterG
             }
-            InputMode.BREW_SIZE_TO_BOTH -> {
-                when (method.outputSemantics) {
-                    BrewOutputSemantics.WATER_IN_MINUS_ABSORPTION -> {
-                        val brewMl = amount
-                        val divisor = effectiveRatio - method.absorptionRatio
-                        if (divisor > 0f) {
-                            val coffeeG = brewMl / divisor
-                            val waterG = coffeeG * effectiveRatio
-                            coffeeG to waterG
-                        } else {
-                            val waterG = brewMl
-                            val coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
-                            coffeeG to waterG
-                        }
-                    }
-                    BrewOutputSemantics.BEVERAGE_YIELD -> {
-                        val beverageYieldG = amount
-                        val coffeeG = if (effectiveRatio != 0f) beverageYieldG / effectiveRatio else 0f
-                        coffeeG to beverageYieldG
-                    }
-                }
-            }
+            InputMode.BREW_SIZE_TO_BOTH -> computeFromBrewSize(method, amount, effectiveRatio)
             InputMode.CUP_SIZE_TO_BOTH -> {
                 val waterG = amount
                 val coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
                 coffeeG to waterG
             }
+        }
+    }
+
+    private fun computeFromBrewSize(
+        method: BrewMethod,
+        amount: Float,
+        effectiveRatio: Float,
+    ): Pair<Float, Float> = when (method.outputSemantics) {
+        BrewOutputSemantics.WATER_IN_MINUS_ABSORPTION -> {
+            val brewMl = amount
+            val divisor = effectiveRatio - method.absorptionRatio
+            if (divisor > 0f) {
+                val coffeeG = brewMl / divisor
+                val waterG = coffeeG * effectiveRatio
+                coffeeG to waterG
+            } else {
+                val waterG = brewMl
+                val coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
+                coffeeG to waterG
+            }
+        }
+        BrewOutputSemantics.BEVERAGE_YIELD -> {
+            val beverageYieldG = amount
+            val coffeeG = if (effectiveRatio != 0f) beverageYieldG / effectiveRatio else 0f
+            coffeeG to beverageYieldG
         }
     }
 
