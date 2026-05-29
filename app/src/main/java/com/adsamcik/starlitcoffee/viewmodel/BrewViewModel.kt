@@ -174,7 +174,19 @@ data class BrewUiState(
     val feedbackNotes: String = "",
 )
 
-class BrewViewModel(
+// BrewViewModel is intentionally the single source of truth for app/brew state
+// (see .github/instructions/viewmodel.instructions.md: "Keep brew configuration
+// and derived brew output in BrewViewModel; composables call setters instead of
+// owning brew data locally"). Splitting it into per-feature delegates would
+// fragment the StateFlow contract that the calculator, timer, log, bag, and
+// scan flows all coordinate through. The constructor surfaces every repository
+// + provider explicitly because the project uses manual factory wiring instead
+// of a DI framework (per the architecture rule "no DI framework; factories /
+// manual wiring are intentional"). Suppress the structural detekt rules at the
+// class boundary with that rationale; per-method complexity / LongMethod /
+// LongParameterList rules still apply.
+@Suppress("LargeClass", "TooManyFunctions")
+class BrewViewModel @Suppress("LongParameterList") constructor(
     private val application: Application? = null,
     private val recipeRepository: RecipeRepository? = null,
     private val brewLogRepository: BrewLogRepository? = null,
