@@ -138,7 +138,6 @@
     <string name="label_bloom_done">✅ Bloom done!</string>
     <string name="label_bloom_badge">🌱 Bloom</string>
     <string name="action_finish_brew">Finish Brew</string>
-    <string name="instruction_bloom_steps">Open valve · Pour bloom water · Close valve</string>
     <string name="dialog_exit_brew_title">Exit brew?</string>
     <string name="dialog_exit_brew_message">Your current brew progress will be lost.</string>
     <string name="action_exit_brew">Exit</string>
@@ -358,18 +357,7 @@
     <string name="phase_steep">Steep</string>
 
     <!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
-    <string name="instruction_bloom_open_pour">Open valve · Pour to %1$.0fg</string>
-    <string name="instruction_saturate">Let water saturate the grounds</string>
-    <string name="instruction_close_swirl">Close valve · Gentle swirl</string>
-    <string name="instruction_steeping">Steeping · CO₂ escaping</string>
     <string name="instruction_bloom_pour">Pour to %1$.0fg</string>
-    <string name="instruction_pulsar_pour">Open valve · Pour to %1$.0fg</string>
-    <string name="instruction_pour_to">Pour to %1$.0fg</string>
-    <string name="instruction_drain_refill_pulsar">Open valve · Drain · Refill</string>
-    <string name="instruction_drain_refill">Drain · Refill</string>
-    <string name="instruction_drawdown_pulsar">Open valve · Let it draw down</string>
-    <string name="instruction_drawdown">Let it draw down</string>
-    <string name="format_drawdown_retention"> · grounds hold ~%1$.0fg</string>
     <string name="instruction_pour_total">Pour to %1$.0fg total</string>
     <string name="instruction_open_valve_short">Open valve</string>
     <string name="instruction_close_valve_short">Close valve</string>
@@ -573,6 +561,8 @@
     <string name="msg_pulsar_settings_applied">Applied when brewing with Pulsar</string>
     <string name="label_quick_brew">Quick brew</string>
     <string name="msg_quick_brew_hint">Skip the grind prep step and go straight to the timer when you start a brew</string>
+    <string name="label_show_brewing_instructions">Show brewing instructions</string>
+    <string name="msg_show_brewing_instructions_hint">Show the step-by-step guidance card during brewing and the prep checklist on the prep screen. Turn off if you know your method by heart.</string>
     <string name="label_dim_mode">Automatic dim mode</string>
     <string name="msg_dim_mode_hint">After 25 s of inactivity, strip colored backgrounds and mute text to gray. Layout stays put and a single tap both wakes the screen and triggers the underlying action.</string>
     <string name="label_dim_mode_true_black">True black background</string>

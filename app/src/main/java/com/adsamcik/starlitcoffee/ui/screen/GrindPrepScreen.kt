@@ -55,6 +55,7 @@ fun GrindPrepScreen(
     dimModeReduceBrightness: Boolean = false,
     dimModeFullscreen: Boolean = false,
     dimModeForceDarkInLight: Boolean = false,
+    showBrewingInstructions: Boolean = true,
     onNavigateToBrew: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -139,12 +140,17 @@ fun GrindPrepScreen(
 
                 RecipeSection(state = state)
 
-                SectionDivider()
+                // Prep section — the pre-brew setup checklist. Hidden when
+                // the user has turned off in-brew instructions in Settings
+                // (they know the method by heart).
+                if (showBrewingInstructions) {
+                    SectionDivider()
 
-                PrepSection(
-                    method = state.method,
-                    filter = state.filterType,
-                )
+                    PrepSection(
+                        method = state.method,
+                        filter = state.filterType,
+                    )
+                }
             }
         }
     }

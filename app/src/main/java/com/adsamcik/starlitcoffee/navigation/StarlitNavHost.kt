@@ -306,6 +306,7 @@ fun StarlitNavHost() {
                     dimModeReduceBrightness = prefs.dimModeReduceBrightness,
                     dimModeFullscreen = prefs.dimModeFullscreen,
                     dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
+                    showBrewingInstructions = prefs.showBrewingInstructions,
                     onNavigateToBrew = { navController.navigate(BrewTimer) },
                     onBack = { navController.popBackStack() },
                 )
@@ -338,6 +339,7 @@ fun StarlitNavHost() {
                     dimModeReduceBrightness = prefs.dimModeReduceBrightness,
                     dimModeFullscreen = prefs.dimModeFullscreen,
                     dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
+                    showBrewingInstructions = prefs.showBrewingInstructions,
                     onBack = { navController.popBackStack() },
                     onComplete = {
                         // Save the brew log immediately (without feedback — user rates later)

@@ -137,7 +137,6 @@
     <string name="label_bloom_done">✅ Bloom hotovo!</string>
     <string name="label_bloom_badge">🌱 Bloom</string>
     <string name="action_finish_brew">Dokončit přípravu</string>
-    <string name="instruction_bloom_steps">Otevřete ventil · Nalijte vodu · Zavřete ventil</string>
     <string name="dialog_exit_brew_title">Ukončit přípravu?</string>
     <string name="dialog_exit_brew_message">Aktuální průběh přípravy bude ztracen.</string>
     <string name="action_exit_brew">Ukončit</string>
@@ -350,18 +349,7 @@
     <string name="phase_steep">Louhování</string>
 
     <!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
-    <string name="instruction_bloom_open_pour">Otevřete ventil · Nalijte na %1$.0fg</string>
-    <string name="instruction_saturate">Nechte vodu nasytit kávu</string>
-    <string name="instruction_close_swirl">Zavřete ventil · Jemně protočte</string>
-    <string name="instruction_steeping">Louhování · CO₂ uniká</string>
     <string name="instruction_bloom_pour">Nalijte na %1$.0fg</string>
-    <string name="instruction_pulsar_pour">Otevřete ventil · Nalijte na %1$.0fg</string>
-    <string name="instruction_pour_to">Nalijte na %1$.0fg</string>
-    <string name="instruction_drain_refill_pulsar">Otevřete ventil · Nechte odkapat · Doplňte</string>
-    <string name="instruction_drain_refill">Nechte odkapat · Doplňte</string>
-    <string name="instruction_drawdown_pulsar">Otevřete ventil · Nechte odkapat</string>
-    <string name="instruction_drawdown">Nechte odkapat</string>
-    <string name="format_drawdown_retention"> · zrna zadrží ~%1$.0fg</string>
     <string name="instruction_pour_total">Nalijte celkem na %1$.0fg</string>
     <string name="instruction_open_valve_short">Otevřete ventil</string>
     <string name="instruction_close_valve_short">Zavřete ventil</string>
@@ -601,6 +589,8 @@
     <string name="msg_pulsar_settings_applied">Platí při přípravě s Pulsarem</string>
     <string name="label_quick_brew">Rychlá příprava</string>
     <string name="msg_quick_brew_hint">Přeskočit krok přípravy mletí a přejít rovnou na časovač</string>
+    <string name="label_show_brewing_instructions">Zobrazovat instrukce</string>
+    <string name="msg_show_brewing_instructions_hint">Zobrazí kartu s instrukcemi krok za krokem během vaření a kontrolní seznam přípravy na obrazovce přípravy. Vypněte, pokud svou metodu znáte zpaměti.</string>
     <string name="label_dim_mode">Automatický klidný režim</string>
     <string name="msg_dim_mode_hint">Po 25 s nečinnosti odstraní barevná pozadí a ztlumí text do šedé. Rozložení zůstává stejné a jediné klepnutí obrazovku probudí a zároveň spustí akci pod prstem.</string>
     <string name="label_dim_mode_true_black">Skutečně černé pozadí</string>

@@ -492,6 +492,45 @@ fun SettingsScreen(
                 },
             )
 
+            // Show brewing instructions — sits alongside the other in-brew
+            // courtesy toggles. Hides the BrewGuidanceCard on BrewTimer and
+            // the Prep section on GrindPrep for users who know their method
+            // by heart and don't want the screen real estate / cognitive load.
+            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 16.dp),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.label_show_brewing_instructions),
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.semantics { heading() },
+                            )
+                            Text(
+                                text = stringResource(R.string.msg_show_brewing_instructions_hint),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Switch(
+                            checked = prefs.showBrewingInstructions,
+                            onCheckedChange = { enabled ->
+                                scope.launch {
+                                    userPreferencesRepository.updateShowBrewingInstructions(enabled)
+                                }
+                            },
+                        )
+                    }
+                }
+            }
+
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(

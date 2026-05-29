@@ -86,6 +86,7 @@ fun BrewTimerScreen(
     dimModeReduceBrightness: Boolean = false,
     dimModeFullscreen: Boolean = false,
     dimModeForceDarkInLight: Boolean = false,
+    showBrewingInstructions: Boolean = true,
     onBack: () -> Unit,
     onComplete: () -> Unit = {},
 ) {
@@ -413,11 +414,14 @@ fun BrewTimerScreen(
                 }
 
                 // ── Primary guidance card — the most important info right now
-                BrewGuidanceCard(
-                    state = state,
-                    bloomActive = bloomActive,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                // Skipped when the user has turned off in-brew instructions.
+                if (showBrewingInstructions) {
+                    BrewGuidanceCard(
+                        state = state,
+                        bloomActive = bloomActive,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
 
                 // ── Metadata row: target time · temp · total water
                 BrewMetadataRow(
