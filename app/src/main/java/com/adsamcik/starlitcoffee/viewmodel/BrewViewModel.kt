@@ -560,6 +560,15 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         private const val BAG_PHOTO_LLM_TIMEOUT_MS = 65_000L
         private const val MAX_LLM_PHOTO_BYTES = 20 * 1024 * 1024
         private const val LLM_READ_BUFFER_SIZE = 8 * 1024
+
+        // Bloom freshness adjustment thresholds (see resolveEffectiveBloomDurationSeconds)
+        private const val MILLIS_PER_DAY = 86_400_000L
+        private const val BLOOM_FRESH_DAYS = 7
+        private const val BLOOM_NORMAL_DAYS = 21
+        private const val BLOOM_FRESH_BONUS_SECONDS = 10
+        private const val BLOOM_OLD_PENALTY_SECONDS = 10
+        private const val BLOOM_MIN_SECONDS = 30
+        private const val BLOOM_MAX_SECONDS = 60
         private val CANONICAL_METADATA_FIELDS = setOf(
             "origin",
             "region",
@@ -2155,40 +2164,13 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             val amount = state.amount.toFloatOrNull() ?: 0f
             val method = state.method
 
-            // --- Decaf derivation (single source of truth) ---
-            // Manual override wins; else follow selected bag; else false.
             val selectedBag = _selectedBagId.value?.let { id ->
                 _coffeeBags.value.find { it.id == id }
             }
-            val effectiveIsDecaf = state.manualDecafOverride
-                ?: selectedBag?.isDecaf
-                ?: false
-            // Mismatch only exists when user has explicitly overridden AND a bag is selected
-            // AND they disagree. No bag → no mismatch.
-            val decafMismatchWithBag = state.manualDecafOverride != null &&
-                selectedBag != null &&
-                selectedBag.isDecaf != state.manualDecafOverride
-
-            val selectedPreset = state.ratioPresets.getOrNull(state.selectedPresetIndex)
-            val presetRatio = selectedPreset?.ratio ?: method.defaultRatio
-
-            val effectiveRatio = if (state.customRatio.isNotEmpty()) {
-                state.customRatio.toFloatOrNull() ?: presetRatio
-            } else {
-                presetRatio
-            }
-
-            val effectiveBloomMultiplier = if (state.bloomMultiplier.isNotEmpty()) {
-                state.bloomMultiplier.toFloatOrNull() ?: method.bloomMultiplier
-            } else {
-                method.bloomMultiplier
-            }
-
-            val effectivePulseCount = if (state.pulseCount.isNotEmpty()) {
-                state.pulseCount.toIntOrNull() ?: method.defaultPulses
-            } else {
-                method.defaultPulses
-            }
+            val decafState = resolveDecafState(state, selectedBag)
+            val effectiveRatio = resolveEffectiveRatio(state, method)
+            val effectiveBloomMultiplier = resolveEffectiveBloomMultiplier(state, method)
+            val effectivePulseCount = resolveEffectivePulseCount(state, method)
 
             val calculation = BrewCalculator.calculate(
                 method = method,
@@ -2197,33 +2179,15 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 effectiveRatio = effectiveRatio,
                 bloomMultiplier = effectiveBloomMultiplier,
                 pulseCount = effectivePulseCount,
-                isDecaf = effectiveIsDecaf,
+                isDecaf = decafState.effectiveIsDecaf,
             )
-            // Bloom duration adjusted by roast freshness (when bag is selected)
-            val effectiveBloomDurationSeconds = run {
-                val baseDuration = method.bloomDurationSeconds
-                val roastDateMillis = _selectedBagId.value?.let { bagId ->
-                    _coffeeBags.value.find { it.id == bagId }?.roastDate
-                }
-                if (roastDateMillis == null || !method.hasBloom) {
-                    baseDuration
-                } else {
-                    val daysOff = ((System.currentTimeMillis() - roastDateMillis) / 86_400_000L)
-                        .toInt().coerceAtLeast(0)
-                    when {
-                        daysOff <= 7 -> (baseDuration + 10).coerceAtMost(60)  // Very fresh
-                        daysOff <= 21 -> baseDuration                          // Normal
-                        else -> (baseDuration - 10).coerceAtLeast(30)          // Older
-                    }
-                }
-            }
-
+            val effectiveBloomDurationSeconds = resolveEffectiveBloomDurationSeconds(method, selectedBag)
             val grindResult = resolveGrindResult(
                 grinderId = state.selectedGrinderId,
                 method = method,
                 filterType = state.filterType,
                 calibrationStyle = state.calibrationStyle,
-                isDecaf = effectiveIsDecaf,
+                isDecaf = decafState.effectiveIsDecaf,
                 roastLevel = selectedBag?.roastLevel,
                 decafProcess = selectedBag?.decafProcess,
             )
@@ -2243,11 +2207,75 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 ratioWarning = calculation.ratioWarning,
                 bloomWarning = calculation.bloomWarning,
                 effectiveBloomDurationSeconds = effectiveBloomDurationSeconds,
-                isDecafBrew = effectiveIsDecaf,
-                decafMismatchWithBag = decafMismatchWithBag,
+                isDecafBrew = decafState.effectiveIsDecaf,
+                decafMismatchWithBag = decafState.decafMismatchWithBag,
                 retainedWaterG = calculation.retainedWaterG,
                 predictedCupVolumeG = calculation.predictedCupVolumeG,
             )
+        }
+    }
+
+    private data class DecafState(val effectiveIsDecaf: Boolean, val decafMismatchWithBag: Boolean)
+
+    /**
+     * Single source of truth for the brew-time decaf flag: manual override
+     * wins; else follow the selected bag; else default to non-decaf. A
+     * mismatch is only reported when the user explicitly overrode AND a bag
+     * is selected AND the two disagree — picking no bag never produces a
+     * mismatch.
+     */
+    private fun resolveDecafState(state: BrewUiState, selectedBag: CoffeeBagEntity?): DecafState {
+        val effectiveIsDecaf = state.manualDecafOverride
+            ?: selectedBag?.isDecaf
+            ?: false
+        val decafMismatchWithBag = state.manualDecafOverride != null &&
+            selectedBag != null &&
+            selectedBag.isDecaf != state.manualDecafOverride
+        return DecafState(effectiveIsDecaf, decafMismatchWithBag)
+    }
+
+    private fun resolveEffectiveRatio(state: BrewUiState, method: BrewMethod): Float {
+        val selectedPreset = state.ratioPresets.getOrNull(state.selectedPresetIndex)
+        val presetRatio = selectedPreset?.ratio ?: method.defaultRatio
+        return if (state.customRatio.isNotEmpty()) {
+            state.customRatio.toFloatOrNull() ?: presetRatio
+        } else {
+            presetRatio
+        }
+    }
+
+    private fun resolveEffectiveBloomMultiplier(state: BrewUiState, method: BrewMethod): Float =
+        if (state.bloomMultiplier.isNotEmpty()) {
+            state.bloomMultiplier.toFloatOrNull() ?: method.bloomMultiplier
+        } else {
+            method.bloomMultiplier
+        }
+
+    private fun resolveEffectivePulseCount(state: BrewUiState, method: BrewMethod): Int =
+        if (state.pulseCount.isNotEmpty()) {
+            state.pulseCount.toIntOrNull() ?: method.defaultPulses
+        } else {
+            method.defaultPulses
+        }
+
+    /**
+     * Bloom duration adjusted by roast freshness when a bag is selected.
+     * Very fresh beans (<= 7 days off-roast) need a longer bloom because
+     * they degas more; older beans (> 21 days) bloom shorter. Methods
+     * without a bloom step always return their static base duration.
+     */
+    private fun resolveEffectiveBloomDurationSeconds(method: BrewMethod, selectedBag: CoffeeBagEntity?): Int {
+        val baseDuration = method.bloomDurationSeconds
+        val roastDateMillis = selectedBag?.roastDate
+        if (roastDateMillis == null || !method.hasBloom) {
+            return baseDuration
+        }
+        val daysOff = ((System.currentTimeMillis() - roastDateMillis) / MILLIS_PER_DAY)
+            .toInt().coerceAtLeast(0)
+        return when {
+            daysOff <= BLOOM_FRESH_DAYS -> (baseDuration + BLOOM_FRESH_BONUS_SECONDS).coerceAtMost(BLOOM_MAX_SECONDS)
+            daysOff <= BLOOM_NORMAL_DAYS -> baseDuration
+            else -> (baseDuration - BLOOM_OLD_PENALTY_SECONDS).coerceAtLeast(BLOOM_MIN_SECONDS)
         }
     }
 
