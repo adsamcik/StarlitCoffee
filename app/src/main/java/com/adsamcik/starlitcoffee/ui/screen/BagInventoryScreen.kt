@@ -709,7 +709,7 @@ private fun copyPhotosToPermanentStorage(
     val bagPhotosDir = java.io.File(context.filesDir, "bag_photos").apply { mkdirs() }
     return cacheUris.split(",").mapNotNull { uriStr ->
         try {
-            val sourceFile = java.io.File(android.net.Uri.parse(uriStr).path ?: return@mapNotNull null)
+            val sourceFile = java.io.File(uriStr.toUri().path ?: return@mapNotNull null)
             if (!sourceFile.exists()) return@mapNotNull null
             val destFile = java.io.File(bagPhotosDir, "bag_${System.currentTimeMillis()}_${sourceFile.name}")
             sourceFile.copyTo(destFile, overwrite = true)

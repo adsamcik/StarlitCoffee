@@ -64,6 +64,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.toColorInt
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
@@ -874,7 +875,7 @@ private fun CalculatorKeyboard(
             )
             presets.take(5).forEachIndexed { index, preset ->
                 val customColor = preset.colorHex?.let {
-                    try { Color(android.graphics.Color.parseColor(it)) } catch (_: IllegalArgumentException) { null }
+                    try { Color(it.toColorInt()) } catch (_: IllegalArgumentException) { null }
                 }
                 FilledTonalIconButton(
                     onClick = { onPreset(preset) },

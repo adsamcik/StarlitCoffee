@@ -3,9 +3,9 @@ package com.adsamcik.starlitcoffee.viewmodel
 import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import androidx.core.net.toUri
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -1516,7 +1516,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     private fun decodeBagPhotoBitmap(uriStr: String): Bitmap? {
-        val uri = Uri.parse(uriStr)
+        val uri = uriStr.toUri()
         return if (uri.scheme == "content") {
             val resolver = application?.contentResolver ?: return null
             val orientation = try {
@@ -1853,7 +1853,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     private suspend fun readPhotoBytesForLlm(uriStr: String): ByteArray? =
         withContext(Dispatchers.IO) {
-            val uri = Uri.parse(uriStr)
+            val uri = uriStr.toUri()
             val input = if (uri.scheme == "content") {
                 application?.contentResolver?.openInputStream(uri)
             } else {

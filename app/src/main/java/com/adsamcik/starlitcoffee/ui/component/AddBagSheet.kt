@@ -1,7 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import android.graphics.Bitmap
-import android.net.Uri
+import androidx.core.net.toUri
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
@@ -1617,7 +1617,7 @@ private fun loadEvidenceBitmap(
     targetSizePx: Int,
 ): Bitmap? {
     val candidateUri = previewUri ?: capturedPhotoUris?.split(",")?.firstOrNull()?.trim()
-    val path = candidateUri?.let { Uri.parse(it).path } ?: return null
+    val path = candidateUri?.let { it.toUri().path } ?: return null
 
     // Estimate the source resolution we need to decode so the cropped result
     // still has at least targetSizePx on its longest side. If we always picked

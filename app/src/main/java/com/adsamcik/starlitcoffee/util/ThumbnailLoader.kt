@@ -2,7 +2,7 @@ package com.adsamcik.starlitcoffee.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
+import androidx.core.net.toUri
 import android.util.Log
 import android.util.LruCache
 import kotlinx.coroutines.Dispatchers
@@ -87,7 +87,7 @@ object ThumbnailLoader {
      */
     suspend fun loadThumbnailFromUri(uri: String, targetSizePx: Int): Bitmap? =
         withContext(decodeDispatcher) {
-            val path = Uri.parse(uri).path ?: return@withContext null
+            val path = uri.toUri().path ?: return@withContext null
             loadThumbnailCached(path, targetSizePx)
         }
 

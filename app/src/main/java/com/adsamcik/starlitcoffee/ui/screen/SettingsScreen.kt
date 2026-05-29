@@ -53,6 +53,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.toColorInt
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -184,7 +185,7 @@ fun SettingsScreen(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             val dotColor = preset.colorHex?.let {
-                                try { Color(android.graphics.Color.parseColor(it)) } catch (_: IllegalArgumentException) { null }
+                                try { Color(it.toColorInt()) } catch (_: IllegalArgumentException) { null }
                             } ?: MaterialTheme.colorScheme.secondaryContainer
                             Box(
                                 modifier = Modifier.size(28.dp),
@@ -936,7 +937,7 @@ private fun ColorPickerRow(
         presetColorPalette.forEach { (hex, label) ->
             val isSelected = hex == selectedColor
             val circleColor = if (hex != null) {
-                try { Color(android.graphics.Color.parseColor(hex)) } catch (_: IllegalArgumentException) { MaterialTheme.colorScheme.secondaryContainer }
+                try { Color(hex.toColorInt()) } catch (_: IllegalArgumentException) { MaterialTheme.colorScheme.secondaryContainer }
             } else {
                 MaterialTheme.colorScheme.secondaryContainer
             }

@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.util.Log
 import android.graphics.Matrix
 import android.graphics.Rect
+import androidx.core.graphics.createBitmap
 import androidx.exifinterface.media.ExifInterface
 import com.google.mlkit.vision.text.Text
 import org.opencv.android.OpenCVLoader
@@ -183,7 +184,7 @@ object ImagePreprocessor {
             Imgproc.INTER_LINEAR, Core.BORDER_REPLICATE, Scalar(0.0),
         )
 
-        val result = Bitmap.createBitmap(dst.cols(), dst.rows(), Bitmap.Config.ARGB_8888)
+        val result = createBitmap(dst.cols(), dst.rows())
         Utils.matToBitmap(dst, result)
 
         src.release()
@@ -238,7 +239,7 @@ object ImagePreprocessor {
             val sharpened = Mat()
             Core.addWeighted(enhanced, 1.5, blurred, -0.5, 0.0, sharpened)
 
-            val result = Bitmap.createBitmap(sharpened.cols(), sharpened.rows(), Bitmap.Config.ARGB_8888)
+            val result = createBitmap(sharpened.cols(), sharpened.rows())
             val rgba = Mat()
             Imgproc.cvtColor(sharpened, rgba, Imgproc.COLOR_GRAY2RGBA)
             Utils.matToBitmap(rgba, result)

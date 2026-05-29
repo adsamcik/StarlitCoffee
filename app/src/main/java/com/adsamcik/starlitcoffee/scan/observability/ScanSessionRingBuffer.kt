@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.scan.observability
 
 import android.content.Context
+import androidx.core.content.edit
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -25,9 +26,9 @@ object ScanSessionRingBuffer {
         val existing = getAll(context).toMutableList()
         existing.add(0, summary)
         val trimmed = existing.take(MAX_SESSIONS)
-        prefs.edit()
-            .putString(KEY_SESSIONS, json.encodeToString(trimmed))
-            .apply()
+        prefs.edit {
+            putString(KEY_SESSIONS, json.encodeToString(trimmed))
+        }
     }
 
     fun getAll(context: Context): List<ScanSessionSummary> {
@@ -42,9 +43,7 @@ object ScanSessionRingBuffer {
 
     fun clear(context: Context) {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit()
-            .remove(KEY_SESSIONS)
-            .apply()
+            .edit { remove(KEY_SESSIONS) }
     }
 
     fun getForReport(context: Context, count: Int = 5): String {
