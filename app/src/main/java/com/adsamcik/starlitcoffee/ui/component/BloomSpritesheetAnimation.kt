@@ -8,10 +8,13 @@ import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
@@ -29,6 +32,30 @@ private const val BloomProgressTweenMillis = 1_000
 private const val BloomAnchorAlphaThreshold = 24
 private const val BloomAnchorBandHeightPx = 42
 private const val BloomMaxFrameCorrectionPx = 18
+
+/**
+ * Soft "ambient-occlusion-style" halo cast around the bloom silhouette to
+ * keep low-contrast pixels (e.g. a white orchid against a cream canvas, a
+ * dark coffee bean against pure black) from blending into the background.
+ *
+ * Implemented as a stack of slightly-enlarged copies of the frame drawn
+ * underneath the normal pass, each tinted with `onSurface` at low alpha.
+ * Two concentric layers give a softer, more rounded halo than a single
+ * harder edge — approximating a blur on all API levels (no RenderEffect
+ * required, so it works on the minSdk 26 floor too).
+ *
+ * Outer layer:  +4 % size, 12 % onSurface
+ * Inner layer:  +2 % size, 22 % onSurface
+ *
+ * `onSurface` inverts naturally with the theme — dark in light themes (rim
+ * reads as a shadow on cream), light in dark themes (rim reads as a soft
+ * glow against black) — so the halo always carries the opposite-contrast
+ * direction the canvas needs.
+ */
+private const val BloomHaloOuterScale = 1.04f
+private const val BloomHaloOuterAlpha = 0.12f
+private const val BloomHaloInnerScale = 1.02f
+private const val BloomHaloInnerAlpha = 0.22f
 
 /**
  * UI-side metadata for a bloom spritesheet.
@@ -216,6 +243,7 @@ private fun BloomSpritesheetFrame(
     contentDescription: String?,
     modifier: Modifier = Modifier,
 ) {
+    val haloColor = MaterialTheme.colorScheme.onSurface
     Canvas(
         modifier = modifier
             .aspectRatio(1f)
@@ -236,15 +264,76 @@ private fun BloomSpritesheetFrame(
             x = grid.sourceLeftOf(frameIndex),
             y = grid.sourceTopOf(frameIndex),
         )
+        val sourceSize = IntSize(grid.frameSizePx, grid.frameSizePx)
+
+        // ── Ambient-occlusion halo passes ──
+        // Drawn before the normal pass so the silhouette sits on top.
+        // Each pass renders the same frame slightly enlarged and tinted
+        // with the theme's onSurface colour, building up a soft rim that
+        // contrasts with whatever background is underneath.
+        drawHaloPass(
+            image = image,
+            sourceOffset = sourceOffset,
+            sourceSize = sourceSize,
+            destinationCenter = correction,
+            destinationSize = destination,
+            scale = BloomHaloOuterScale,
+            tint = haloColor.copy(alpha = BloomHaloOuterAlpha),
+        )
+        drawHaloPass(
+            image = image,
+            sourceOffset = sourceOffset,
+            sourceSize = sourceSize,
+            destinationCenter = correction,
+            destinationSize = destination,
+            scale = BloomHaloInnerScale,
+            tint = haloColor.copy(alpha = BloomHaloInnerAlpha),
+        )
+
+        // ── Normal pass ──
         drawImage(
             image = image,
             srcOffset = sourceOffset,
-            srcSize = IntSize(grid.frameSizePx, grid.frameSizePx),
+            srcSize = sourceSize,
             dstOffset = correction,
             dstSize = destination,
             filterQuality = FilterQuality.Medium,
         )
     }
+}
+
+/**
+ * Render one halo pass — the frame at [scale] times its destination size,
+ * centred on [destinationCenter] (offset so the enlargement extends
+ * uniformly in every direction), tinted with [tint] so only the silhouette
+ * picks up colour (the source's alpha channel is preserved by
+ * [ColorFilter.tint]).
+ */
+private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawHaloPass(
+    image: ImageBitmap,
+    sourceOffset: IntOffset,
+    sourceSize: IntSize,
+    destinationCenter: IntOffset,
+    destinationSize: IntSize,
+    scale: Float,
+    tint: Color,
+) {
+    val scaledWidth = (destinationSize.width * scale).roundToInt()
+    val scaledHeight = (destinationSize.height * scale).roundToInt()
+    val expansionX = (scaledWidth - destinationSize.width) / 2
+    val expansionY = (scaledHeight - destinationSize.height) / 2
+    drawImage(
+        image = image,
+        srcOffset = sourceOffset,
+        srcSize = sourceSize,
+        dstOffset = IntOffset(
+            x = destinationCenter.x - expansionX,
+            y = destinationCenter.y - expansionY,
+        ),
+        dstSize = IntSize(scaledWidth, scaledHeight),
+        colorFilter = ColorFilter.tint(tint),
+        filterQuality = FilterQuality.Medium,
+    )
 }
 
 private fun resolveBloomProgress(
