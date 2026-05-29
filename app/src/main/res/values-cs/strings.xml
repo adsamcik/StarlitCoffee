@@ -73,7 +73,12 @@
     <string name="format_cup_volume">🥤 ~%1$.0fg v šálku</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
     <string name="format_brew_time">%1$d:%2$02d</string>
-    <string name="format_selected">%1$d vybráno</string>
+    <plurals name="format_selected">
+        <item quantity="one">%1$d vybráno</item>
+        <item quantity="few">%1$d vybráno</item>
+        <item quantity="many">%1$d vybráno</item>
+        <item quantity="other">%1$d vybráno</item>
+    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Nastavte si přípravu</string>
@@ -266,7 +271,12 @@
 
     <!-- Bag selection prompt dialog -->
     <string name="dialog_pick_bag_title">Připravujete z balení?</string>
-    <string name="msg_pick_bag_body">Sledujete %1$d balení. Výběrem zachováte přesný záznam, čerstvost a doporučení mletí.</string>
+    <plurals name="msg_pick_bag_body">
+        <item quantity="one">Sledujete %1$d balení. Výběrem zachováte přesný záznam, čerstvost a doporučení mletí.</item>
+        <item quantity="few">Sledujete %1$d balení. Výběrem zachováte přesný záznam, čerstvost a doporučení mletí.</item>
+        <item quantity="many">Sledujete %1$d balení. Výběrem zachováte přesný záznam, čerstvost a doporučení mletí.</item>
+        <item quantity="other">Sledujete %1$d balení. Výběrem zachováte přesný záznam, čerstvost a doporučení mletí.</item>
+    </plurals>
     <string name="action_pick_bag">Vybrat balení</string>
     <string name="action_brew_without_bag_short">Pokračovat bez balení</string>
 
@@ -405,7 +415,12 @@
     <string name="cd_clear_bag">Zrušit výběr balení</string>
     <string name="cd_expand_advanced">Rozbalit pokročilé možnosti</string>
     <string name="cd_collapse_advanced">Sbalit pokročilé možnosti</string>
-    <string name="format_coffee_dose_cd">Dávka kávy: %1$d gramů</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Dávka kávy: %1$d gram</item>
+        <item quantity="few">Dávka kávy: %1$d gramy</item>
+        <item quantity="many">Dávka kávy: %1$d gramu</item>
+        <item quantity="other">Dávka kávy: %1$d gramů</item>
+    </plurals>
     <string name="format_amount_cd">%1$s: %2$d %3$s</string>
     <string name="format_brewing_with">Příprava s balením %1$s</string>
 

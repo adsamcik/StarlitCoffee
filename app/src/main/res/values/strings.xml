@@ -52,7 +52,10 @@
     <string name="format_cup_volume">🥤 ~%1$.0fg in cup</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
     <string name="format_brew_time">%1$d:%2$02d</string>
-    <string name="format_selected">%1$d selected</string>
+    <plurals name="format_selected">
+        <item quantity="one">%1$d selected</item>
+        <item quantity="other">%1$d selected</item>
+    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Configure your brew</string>
@@ -97,7 +100,10 @@
     <string name="label_advanced_options">Advanced options</string>
     <string name="cd_collapse_advanced">Collapse advanced options</string>
     <string name="cd_expand_advanced">Expand advanced options</string>
-    <string name="format_coffee_dose_cd">Coffee dose: %1$d grams</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Coffee dose: %1$d gram</item>
+        <item quantity="other">Coffee dose: %1$d grams</item>
+    </plurals>
     <string name="label_decrease">Decrease %1$s</string>
     <string name="label_increase">Increase %1$s</string>
 
@@ -274,7 +280,10 @@
 
     <!-- Bag selection prompt dialog -->
     <string name="dialog_pick_bag_title">Brewing with a bag?</string>
-    <string name="msg_pick_bag_body">You have %1$d tracked bag(s). Picking one keeps your log, freshness, and grind suggestions accurate.</string>
+    <plurals name="msg_pick_bag_body">
+        <item quantity="one">You have %1$d tracked bag. Picking it keeps your log, freshness, and grind suggestions accurate.</item>
+        <item quantity="other">You have %1$d tracked bags. Picking one keeps your log, freshness, and grind suggestions accurate.</item>
+    </plurals>
     <string name="action_pick_bag">Pick a bag</string>
     <string name="action_brew_without_bag_short">Brew anyway</string>
 

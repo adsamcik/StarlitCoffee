@@ -44,6 +44,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
@@ -226,7 +227,11 @@ fun AmountStrengthScreen(
             modifier = Modifier.fillMaxWidth().testTag("amount_input"),
         )
 
-        val doseCd = stringResource(R.string.format_coffee_dose_cd, amountFloat.toInt())
+        val doseCd = pluralStringResource(
+            R.plurals.format_coffee_dose_cd,
+            amountFloat.toInt(),
+            amountFloat.toInt(),
+        )
         Slider(
             value = amountFloat.coerceIn(0f, maxSlider),
             onValueChange = {

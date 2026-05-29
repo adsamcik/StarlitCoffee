@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
@@ -55,7 +56,11 @@ fun BagSelectionPromptDialog(
         text = {
             Column {
                 Text(
-                    text = stringResource(R.string.msg_pick_bag_body, trackedBags.size),
+                    text = pluralStringResource(
+                        R.plurals.msg_pick_bag_body,
+                        trackedBags.size,
+                        trackedBags.size,
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

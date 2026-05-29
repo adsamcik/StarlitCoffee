@@ -36,6 +36,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -227,7 +228,11 @@ fun OnboardingMethodsScreen(
         ) {
             if (enabledSet.isNotEmpty()) {
                 Text(
-                    text = stringResource(R.string.format_selected, enabledSet.size),
+                    text = pluralStringResource(
+                        R.plurals.format_selected,
+                        enabledSet.size,
+                        enabledSet.size,
+                    ),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
