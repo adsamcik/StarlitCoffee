@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -192,9 +191,6 @@ class BrewViewModel(
     private val llmCache = LlmResultCache()
 
     private val _uiState = MutableStateFlow(BrewUiState())
-    private fun str(@StringRes resId: Int, vararg args: Any): String {
-        return application?.getString(resId, *args) ?: ""
-    }
     val uiState: StateFlow<BrewUiState> = _uiState.asStateFlow()
     private val _savedRecipes = MutableStateFlow(emptyList<SavedRecipeEntity>())
     val savedRecipes: StateFlow<List<SavedRecipeEntity>> = _savedRecipes.asStateFlow()
@@ -1640,54 +1636,6 @@ class BrewViewModel(
         }
     }
 
-    private fun buildQrLinkCandidates(metadata: QrCoffeeMetadata): List<BagFieldCandidate> = buildList {
-        val locale = Locale.getDefault()
-        addQrLinkCandidate("name", metadata.name, BagFieldConfidence.HIGH, metadata, locale)
-        addQrLinkCandidate("roaster", metadata.roaster, BagFieldConfidence.HIGH, metadata, locale)
-        addQrLinkCandidate("origin", metadata.origin, BagFieldConfidence.MEDIUM, metadata, locale)
-        addQrLinkCandidate("region", metadata.region, BagFieldConfidence.MEDIUM, metadata, locale)
-        addQrLinkCandidate("processType", metadata.processType, BagFieldConfidence.MEDIUM, metadata, locale)
-        addQrLinkCandidate("tastingNotes", metadata.tastingNotes, BagFieldConfidence.MEDIUM, metadata, locale)
-        addDecafCandidate(
-            isDecaf = metadata.isDecaf,
-            sourceType = BagFieldSourceType.QR_LINK_LOOKUP,
-            confidenceHint = BagFieldConfidence.MEDIUM,
-            rawValue = metadata.supportingSnippet ?: metadata.pageDescription ?: metadata.pageTitle,
-            supportingText = buildQrSupportingText("isDecaf", metadata),
-        )
-    }
-
-    private fun MutableList<BagFieldCandidate>.addQrLinkCandidate(
-        fieldName: String,
-        value: String?,
-        confidenceHint: BagFieldConfidence,
-        metadata: QrCoffeeMetadata,
-        locale: Locale,
-    ) {
-        val cleanValue = value?.trim()?.takeIf { it.isNotBlank() } ?: return
-        val normalized = normalizeMetadataField(fieldName, cleanValue, locale)
-        add(
-            BagFieldCandidate(
-                fieldName = fieldName,
-                value = normalized?.value ?: cleanValue,
-                rawValue = cleanValue,
-                canonicalKey = normalized?.canonicalKey,
-                sourceType = BagFieldSourceType.QR_LINK_LOOKUP,
-                confidenceHint = confidenceHint,
-                matchStrategy = normalized?.matchStrategy,
-                supportingText = buildQrSupportingText(fieldName, metadata),
-            ),
-        )
-        addInferredMetadataCandidates(
-            normalized = normalized,
-            rawValue = cleanValue,
-            sourceType = BagFieldSourceType.QR_LINK_LOOKUP,
-            confidenceHint = confidenceHint,
-            supportingText = buildQrSupportingText(fieldName, metadata),
-            locale = locale,
-        )
-    }
-
     private fun MutableList<BagFieldCandidate>.addDecafCandidate(
         isDecaf: Boolean?,
         sourceType: BagFieldSourceType,
@@ -1789,26 +1737,6 @@ class BrewViewModel(
         .split(",")
         .map(String::trim)
         .filter(String::isNotBlank)
-
-    private fun buildQrSupportingText(
-        fieldName: String,
-        metadata: QrCoffeeMetadata,
-    ): String {
-        val hostLabel = metadata.host.removePrefix("www.")
-        val detail = when (fieldName) {
-            "name" -> metadata.pageTitle ?: metadata.pageDescription
-            "roaster" -> metadata.pageTitle ?: metadata.pageDescription
-            "origin", "region", "processType", "tastingNotes", "isDecaf" ->
-                metadata.supportingSnippet ?: metadata.pageDescription ?: metadata.pageTitle
-            else -> metadata.pageTitle ?: metadata.pageDescription
-        }?.take(160)
-
-        return if (detail.isNullOrBlank()) {
-            "Parsed from $hostLabel"
-        } else {
-            "Parsed from $hostLabel: $detail"
-        }
-    }
 
     private suspend fun findLocalBagByBarcode(barcode: String?): CoffeeBagEntity? {
         val repository = coffeeBagRepository ?: return null

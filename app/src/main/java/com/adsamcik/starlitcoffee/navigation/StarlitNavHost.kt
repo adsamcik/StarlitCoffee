@@ -96,9 +96,6 @@ private val bottomBarRoutes = setOf(
     More::class,
 )
 
-private const val TRANSITION_DURATION = 300
-private const val FADE_DURATION = 200
-
 private val BrewMethodSetStateSaver: Saver<MutableState<Set<BrewMethod>>, ArrayList<String>> = Saver(
     save = { state -> ArrayList(state.value.map { it.name }) },
     restore = { list ->

@@ -14,7 +14,8 @@ import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.notification.RatingReminderScheduler
 
-// TODO: Replace with Hilt @Provides when DI is adopted
+// Manual wiring: DI is intentional per repo convention; replace with Hilt @Provides
+// if a DI framework is adopted later.
 class BrewViewModelFactory(
     private val application: Application,
 ) : ViewModelProvider.Factory {
