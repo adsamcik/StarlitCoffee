@@ -290,16 +290,18 @@ fun AddBagSheet(
     }
     val selectedEvidence = selectedEvidenceField?.let(fieldEvidence::get)
     val snapDetectedFields = buildSnapApproveFieldItems(
-        origin = originCountry,
-        region = originRegion,
-        roastLevel = roastLevel,
-        variety = variety,
-        processType = processType,
-        tastingNotes = tastingNotes,
-        roastDateMillis = roastDateMillis,
-        expiryDateMillis = expiryDateMillis,
-        isDecaf = isDecaf,
-        weight = weight,
+        form = SnapApproveFormState(
+            origin = originCountry,
+            region = originRegion,
+            roastLevel = roastLevel,
+            variety = variety,
+            processType = processType,
+            tastingNotes = tastingNotes,
+            roastDateMillis = roastDateMillis,
+            expiryDateMillis = expiryDateMillis,
+            isDecaf = isDecaf,
+            weight = weight,
+        ),
         fieldEvidence = fieldEvidence,
         fieldConfidence = ocrPrefill?.fieldConfidence.orEmpty(),
     )
@@ -1032,38 +1034,47 @@ private val SNAP_APPROVE_EMOJI_MAP = mapOf(
     "farm" to "🚜",
 )
 
+/**
+ * Plain bundle of the form field values that drive the snap-approve summary.
+ * Grouping here keeps [buildSnapApproveFieldItems] under detekt's parameter
+ * threshold while still surfacing the inputs explicitly at the call site.
+ */
+private data class SnapApproveFormState(
+    val origin: String,
+    val region: String,
+    val roastLevel: String,
+    val variety: String,
+    val processType: String,
+    val tastingNotes: String,
+    val roastDateMillis: Long?,
+    val expiryDateMillis: Long?,
+    val isDecaf: Boolean,
+    val weight: String,
+)
+
 private fun buildSnapApproveFieldItems(
-    origin: String,
-    region: String,
-    roastLevel: String,
-    variety: String,
-    processType: String,
-    tastingNotes: String,
-    roastDateMillis: Long?,
-    expiryDateMillis: Long?,
-    isDecaf: Boolean,
-    weight: String,
+    form: SnapApproveFormState,
     fieldEvidence: Map<String, BagFieldEvidence>,
     fieldConfidence: Map<String, BagFieldConfidence>,
 ): List<SnapApproveFieldItem> = listOfNotNull(
-    snapApproveFieldItem("origin", origin, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("region", region, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("processType", processType, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("variety", variety, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("roastLevel", roastLevel, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("weight", weight, fieldEvidence, fieldConfidence),
-    roastDateMillis?.let {
+    snapApproveFieldItem("origin", form.origin, fieldEvidence, fieldConfidence),
+    snapApproveFieldItem("region", form.region, fieldEvidence, fieldConfidence),
+    snapApproveFieldItem("processType", form.processType, fieldEvidence, fieldConfidence),
+    snapApproveFieldItem("variety", form.variety, fieldEvidence, fieldConfidence),
+    snapApproveFieldItem("roastLevel", form.roastLevel, fieldEvidence, fieldConfidence),
+    snapApproveFieldItem("weight", form.weight, fieldEvidence, fieldConfidence),
+    form.roastDateMillis?.let {
         snapApproveFieldItem("roastDate", DateParser.format(it), fieldEvidence, fieldConfidence)
     },
-    expiryDateMillis?.let {
+    form.expiryDateMillis?.let {
         snapApproveFieldItem("expiryDate", DateParser.format(it), fieldEvidence, fieldConfidence)
     },
-    if (isDecaf) {
+    if (form.isDecaf) {
         snapApproveFieldItem("isDecaf", "Decaf", fieldEvidence, fieldConfidence)
     } else {
         null
     },
-    snapApproveFieldItem("tastingNotes", tastingNotes, fieldEvidence, fieldConfidence),
+    snapApproveFieldItem("tastingNotes", form.tastingNotes, fieldEvidence, fieldConfidence),
 )
 
 private fun snapApproveFieldItem(

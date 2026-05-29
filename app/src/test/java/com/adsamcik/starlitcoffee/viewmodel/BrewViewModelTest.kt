@@ -508,7 +508,7 @@ class BrewViewModelTest {
     fun `decaf bag with no roast or process coarsens Pulsar paper by 1 step`() {
         val vm = createPersistenceViewModel()
         setupZp6Pulsar(vm)
-        vm.addCoffeeBag(name = "Plain Decaf", isDecaf = true)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Plain Decaf", isDecaf = true))
         selectFirstBag(vm)
 
         val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
@@ -524,7 +524,13 @@ class BrewViewModelTest {
     fun `decaf with dark roast coarsens Pulsar paper by 2 steps`() {
         val vm = createPersistenceViewModel()
         setupZp6Pulsar(vm)
-        vm.addCoffeeBag(name = "Dark Decaf", isDecaf = true, roastLevel = "DARK")
+        vm.addCoffeeBag(
+            BrewViewModel.CoffeeBagInput(
+                name = "Dark Decaf",
+                isDecaf = true,
+                roastLevel = "DARK",
+            ),
+        )
         selectFirstBag(vm)
 
         val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
@@ -541,9 +547,11 @@ class BrewViewModelTest {
         val vm = createPersistenceViewModel()
         setupZp6Pulsar(vm)
         vm.addCoffeeBag(
-            name = "Swiss Decaf",
-            isDecaf = true,
-            decafProcess = "SWISS_WATER",
+            BrewViewModel.CoffeeBagInput(
+                name = "Swiss Decaf",
+                isDecaf = true,
+                decafProcess = "SWISS_WATER",
+            ),
         )
         selectFirstBag(vm)
 
@@ -565,9 +573,11 @@ class BrewViewModelTest {
         val vm = createPersistenceViewModel()
         setupZp6Pulsar(vm)
         vm.addCoffeeBag(
-            name = "CO2 Decaf",
-            isDecaf = true,
-            decafProcess = "CO2_SUPERCRITICAL",
+            BrewViewModel.CoffeeBagInput(
+                name = "CO2 Decaf",
+                isDecaf = true,
+                decafProcess = "CO2_SUPERCRITICAL",
+            ),
         )
         selectFirstBag(vm)
 
@@ -580,9 +590,11 @@ class BrewViewModelTest {
         val vm = createPersistenceViewModel()
         setupZp6Pulsar(vm)
         vm.addCoffeeBag(
-            name = "EA Decaf",
-            isDecaf = true,
-            decafProcess = "EA_SUGARCANE",
+            BrewViewModel.CoffeeBagInput(
+                name = "EA Decaf",
+                isDecaf = true,
+                decafProcess = "EA_SUGARCANE",
+            ),
         )
         selectFirstBag(vm)
 
@@ -596,10 +608,12 @@ class BrewViewModelTest {
         val vm = createPersistenceViewModel()
         setupZp6Pulsar(vm)
         vm.addCoffeeBag(
-            name = "Dark Swiss Decaf",
-            isDecaf = true,
-            roastLevel = "DARK",
-            decafProcess = "SWISS_WATER",
+            BrewViewModel.CoffeeBagInput(
+                name = "Dark Swiss Decaf",
+                isDecaf = true,
+                roastLevel = "DARK",
+                decafProcess = "SWISS_WATER",
+            ),
         )
         selectFirstBag(vm)
 
@@ -611,7 +625,7 @@ class BrewViewModelTest {
     @Test
     fun `decaf on French Press immersion does not coarsen`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Decaf", isDecaf = true)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Decaf", isDecaf = true))
         selectFirstBag(vm)
         vm.setMethod(BrewMethod.FRENCH_PRESS)
         vm.setGrinder("1zpresso-zp6-special")
@@ -629,7 +643,7 @@ class BrewViewModelTest {
     @Test
     fun `decaf on AeroPress immersion does not coarsen`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Decaf", isDecaf = true)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Decaf", isDecaf = true))
         selectFirstBag(vm)
         vm.setMethod(BrewMethod.AEROPRESS)
         vm.setGrinder("1zpresso-zp6-special")
@@ -645,7 +659,13 @@ class BrewViewModelTest {
     fun `non-decaf bag does not adjust grind`() {
         val vm = createPersistenceViewModel()
         setupZp6Pulsar(vm)
-        vm.addCoffeeBag(name = "Regular", isDecaf = false, roastLevel = "DARK")
+        vm.addCoffeeBag(
+            BrewViewModel.CoffeeBagInput(
+                name = "Regular",
+                isDecaf = false,
+                roastLevel = "DARK",
+            ),
+        )
         selectFirstBag(vm)
 
         val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
@@ -663,7 +683,13 @@ class BrewViewModelTest {
         vm.setFilterType(FilterType.METAL_19K)
         vm.setGrinder("1zpresso-zp6-special")
         // Dark roast → 2 steps coarser → 5.7 + 0.4 = 6.1, but range is 5.5–5.9
-        vm.addCoffeeBag(name = "Dark Decaf", isDecaf = true, roastLevel = "DARK")
+        vm.addCoffeeBag(
+            BrewViewModel.CoffeeBagInput(
+                name = "Dark Decaf",
+                isDecaf = true,
+                roastLevel = "DARK",
+            ),
+        )
         selectFirstBag(vm)
 
         val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
@@ -1252,7 +1278,7 @@ class BrewViewModelTest {
     fun `addCoffeeBag stores bag in coffeeBags flow`() {
         val persistenceViewModel = createPersistenceViewModel()
 
-        persistenceViewModel.addCoffeeBag(name = "Kenya AA")
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Kenya AA"))
 
         val bags = persistenceViewModel.coffeeBags.value
         assertEquals(1, bags.size)
@@ -1264,21 +1290,23 @@ class BrewViewModelTest {
         val persistenceViewModel = createPersistenceViewModel()
 
         persistenceViewModel.addCoffeeBag(
-            name = "Guatemala Huehue",
-            roaster = "Local Roaster",
-            origin = "Guatemala",
-            roastLevel = "Medium",
-            processType = "Washed",
-            roastDate = 1_700_000_000_000L,
-            openedDate = 1_700_100_000_000L,
-            barcode = "1234567890",
-            weightG = 340f,
-            priceAmount = 18.5f,
-            priceCurrency = "USD",
-            notes = "Berry and chocolate",
-            isDecaf = true,
-            photoUri = "content://photo",
-            status = "OPEN",
+            BrewViewModel.CoffeeBagInput(
+                name = "Guatemala Huehue",
+                roaster = "Local Roaster",
+                origin = "Guatemala",
+                roastLevel = "Medium",
+                processType = "Washed",
+                roastDate = 1_700_000_000_000L,
+                openedDate = 1_700_100_000_000L,
+                barcode = "1234567890",
+                weightG = 340f,
+                priceAmount = 18.5f,
+                priceCurrency = "USD",
+                notes = "Berry and chocolate",
+                isDecaf = true,
+                photoUri = "content://photo",
+                status = "OPEN",
+            ),
         )
 
         val bag = persistenceViewModel.coffeeBags.value.first()
@@ -1303,8 +1331,8 @@ class BrewViewModelTest {
     fun `selectBag syncs decaf flag into brew ui state`() {
         val persistenceViewModel = createPersistenceViewModel()
 
-        persistenceViewModel.addCoffeeBag(name = "Half Caf", isDecaf = true)
-        persistenceViewModel.addCoffeeBag(name = "Daily Driver", isDecaf = false)
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Half Caf", isDecaf = true))
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Daily Driver", isDecaf = false))
 
         val decafBagId = persistenceViewModel.coffeeBags.value.first { it.isDecaf }.id
         val regularBagId = persistenceViewModel.coffeeBags.value.first { !it.isDecaf }.id
@@ -1324,7 +1352,7 @@ class BrewViewModelTest {
     @Test
     fun `manual setDecafBrew overrides bag and flags mismatch`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Regular Bag", isDecaf = false)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Regular Bag", isDecaf = false))
         val regularBagId = vm.coffeeBags.value.first().id
 
         vm.selectBag(regularBagId)
@@ -1345,8 +1373,8 @@ class BrewViewModelTest {
     @Test
     fun `manual decaf override persists across bag changes`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Regular A", isDecaf = false)
-        vm.addCoffeeBag(name = "Regular B", isDecaf = false)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Regular A", isDecaf = false))
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Regular B", isDecaf = false))
         val bagA = vm.coffeeBags.value[0].id
         val bagB = vm.coffeeBags.value[1].id
 
@@ -1375,7 +1403,7 @@ class BrewViewModelTest {
     @Test
     fun `selectBag auto-switches method to last used with that bag`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Kenya AA")
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Kenya AA"))
         val bagId = vm.coffeeBags.value.first().id
 
         // Start with default method, pick bag, log a brew with AEROPRESS.
@@ -1397,7 +1425,7 @@ class BrewViewModelTest {
     @Test
     fun `selectBag keeps current method when bag has no brew history`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "New Bag")
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "New Bag"))
         val bagId = vm.coffeeBags.value.first().id
 
         vm.setMethod(BrewMethod.V60)
@@ -1410,10 +1438,7 @@ class BrewViewModelTest {
     fun `addCoffeeBag normalizes barcode digits before storing`() {
         val persistenceViewModel = createPersistenceViewModel()
 
-        persistenceViewModel.addCoffeeBag(
-            name = "Beansmith's Gedeb",
-            barcode = "859 4206 183060",
-        )
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Beansmith's Gedeb", barcode = "859 4206 183060"))
 
         assertEquals("8594206183060", persistenceViewModel.coffeeBags.value.first().barcode)
     }
@@ -1423,10 +1448,7 @@ class BrewViewModelTest {
         val persistenceViewModel = createPersistenceViewModel()
         var foundName: String? = null
 
-        persistenceViewModel.addCoffeeBag(
-            name = "Beansmith's Gedeb",
-            barcode = "8594206183060",
-        )
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Beansmith's Gedeb", barcode = "8594206183060"))
         persistenceViewModel.findBagByBarcode("859 4206 183060") { bag ->
             foundName = bag?.name
         }
@@ -1437,8 +1459,8 @@ class BrewViewModelTest {
     @Test
     fun `deleteCoffeeBag removes bag`() {
         val persistenceViewModel = createPersistenceViewModel()
-        persistenceViewModel.addCoffeeBag(name = "Bag 1")
-        persistenceViewModel.addCoffeeBag(name = "Bag 2")
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Bag 1"))
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Bag 2"))
         val toDelete = persistenceViewModel.coffeeBags.value.first()
 
         persistenceViewModel.deleteCoffeeBag(toDelete)
@@ -1450,7 +1472,7 @@ class BrewViewModelTest {
     @Test
     fun `updateBagStatus changes bag status`() {
         val persistenceViewModel = createPersistenceViewModel()
-        persistenceViewModel.addCoffeeBag(name = "Status Bag")
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Status Bag"))
         val bagId = persistenceViewModel.coffeeBags.value.first().id
 
         persistenceViewModel.updateBagStatus(bagId, "OPEN")
@@ -1461,7 +1483,7 @@ class BrewViewModelTest {
     @Test
     fun `updateBagStatus ignores unknown bag ID`() {
         val persistenceViewModel = createPersistenceViewModel()
-        persistenceViewModel.addCoffeeBag(name = "Existing")
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Existing"))
 
         persistenceViewModel.updateBagStatus(9999L, "OPEN")
 
@@ -1471,7 +1493,7 @@ class BrewViewModelTest {
 
     @Test
     fun `addCoffeeBag ignores call when repository is null`() {
-        viewModel.addCoffeeBag(name = "No Repo Bag")
+        viewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "No Repo Bag"))
 
         assertTrue(viewModel.coffeeBags.value.isEmpty())
     }
@@ -1480,9 +1502,9 @@ class BrewViewModelTest {
     fun `multiple bags can be added`() {
         val persistenceViewModel = createPersistenceViewModel()
 
-        persistenceViewModel.addCoffeeBag(name = "Bag A")
-        persistenceViewModel.addCoffeeBag(name = "Bag B")
-        persistenceViewModel.addCoffeeBag(name = "Bag C")
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Bag A"))
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Bag B"))
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Bag C"))
 
         assertEquals(3, persistenceViewModel.coffeeBags.value.size)
     }
@@ -1490,7 +1512,13 @@ class BrewViewModelTest {
     @Test
     fun `addCoffeeBag stores region separately`() {
         val persistenceViewModel = createPersistenceViewModel()
-        persistenceViewModel.addCoffeeBag(name = "Test", origin = "Ethiopia", region = "Guji")
+        persistenceViewModel.addCoffeeBag(
+            BrewViewModel.CoffeeBagInput(
+                name = "Test",
+                origin = "Ethiopia",
+                region = "Guji",
+            ),
+        )
 
         val bag = persistenceViewModel.coffeeBags.value.first()
         assertEquals("Ethiopia", bag.origin)
@@ -1502,13 +1530,15 @@ class BrewViewModelTest {
         val persistenceViewModel = createPersistenceViewModel()
 
         persistenceViewModel.addCoffeeBag(
-            name = "Vacation Bag",
-            origin = "Etiopie",
-            region = "Guji",
-            roastLevel = "Světlé",
-            processType = "Lavado",
-            variety = "Gesha",
-            tastingNotes = "Lesní jahoda, Zelený čaj",
+            BrewViewModel.CoffeeBagInput(
+                name = "Vacation Bag",
+                origin = "Etiopie",
+                region = "Guji",
+                roastLevel = "Světlé",
+                processType = "Lavado",
+                variety = "Gesha",
+                tastingNotes = "Lesní jahoda, Zelený čaj",
+            ),
         )
 
         val bag = persistenceViewModel.coffeeBags.value.first()
@@ -1529,7 +1559,7 @@ class BrewViewModelTest {
     @Test
     fun `updateCoffeeBag refreshes canonical ids from edited multilingual fields`() {
         val persistenceViewModel = createPersistenceViewModel()
-        persistenceViewModel.addCoffeeBag(name = "Editable Bag")
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Editable Bag"))
 
         val original = persistenceViewModel.coffeeBags.value.first()
         persistenceViewModel.updateCoffeeBag(
@@ -1555,7 +1585,7 @@ class BrewViewModelTest {
     @Test
     fun `addCoffeeBag sets initialWeightG equal to weightG`() {
         val persistenceViewModel = createPersistenceViewModel()
-        persistenceViewModel.addCoffeeBag(name = "Test", weightG = 250f)
+        persistenceViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Test", weightG = 250f))
 
         val bag = persistenceViewModel.coffeeBags.value.first()
         assertEquals(250f, bag.weightG!!, 0.01f)
@@ -1567,7 +1597,7 @@ class BrewViewModelTest {
     @Test
     fun `logBrew changes bag status from SEALED to OPEN`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Sealed Bag", weightG = 250f)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Sealed Bag", weightG = 250f))
         val bagId = vm.coffeeBags.value.first().id
 
         vm.selectBag(bagId)
@@ -1582,7 +1612,7 @@ class BrewViewModelTest {
     @Test
     fun `logBrew that depletes weight changes status to FINISHED`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Almost Empty", weightG = 15f)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Almost Empty", weightG = 15f))
         val bagId = vm.coffeeBags.value.first().id
 
         vm.selectBag(bagId)
@@ -1597,7 +1627,7 @@ class BrewViewModelTest {
     @Test
     fun `logBrew on bag without weight does not crash`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "No Weight Bag")
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "No Weight Bag"))
         val bagId = vm.coffeeBags.value.first().id
 
         vm.selectBag(bagId)
@@ -1614,7 +1644,7 @@ class BrewViewModelTest {
     @Test
     fun `adjustBagWeight sets new weight`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Test", weightG = 250f)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Test", weightG = 250f))
         val bagId = vm.coffeeBags.value.first().id
 
         vm.adjustBagWeight(bagId, 180f)
@@ -1625,7 +1655,7 @@ class BrewViewModelTest {
     @Test
     fun `adjustBagWeight sets initialWeightG for legacy bags`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Legacy")
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Legacy"))
         val bagId = vm.coffeeBags.value.first().id
 
         vm.adjustBagWeight(bagId, 200f)
@@ -1638,7 +1668,7 @@ class BrewViewModelTest {
     @Test
     fun `adjustBagWeight to zero marks bag FINISHED`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Deplete", weightG = 50f)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Deplete", weightG = 50f))
         val bagId = vm.coffeeBags.value.first().id
         vm.updateBagStatus(bagId, "OPEN")
 
@@ -1652,7 +1682,7 @@ class BrewViewModelTest {
     @Test
     fun `adjustBagWeight clamps negative to zero`() {
         val vm = createPersistenceViewModel()
-        vm.addCoffeeBag(name = "Negative", weightG = 50f)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Negative", weightG = 50f))
         val bagId = vm.coffeeBags.value.first().id
 
         vm.adjustBagWeight(bagId, -10f)
@@ -1719,7 +1749,7 @@ class BrewViewModelTest {
         noArgViewModel.setAmount("20")
         noArgViewModel.saveRecipe("No Repo Save")
         noArgViewModel.logBrew()
-        noArgViewModel.addCoffeeBag(name = "No Repo Bag")
+        noArgViewModel.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "No Repo Bag"))
 
         assertEquals(BrewMethod.V60, noArgViewModel.uiState.value.method)
         assertEquals(20f, noArgViewModel.uiState.value.coffeeG, 0.01f)
@@ -1903,7 +1933,7 @@ class BrewViewModelTest {
         vm.setAmount("20")
 
         val threeDaysAgo = System.currentTimeMillis() - 3 * 86_400_000L
-        vm.addCoffeeBag(name = "Fresh Bag", roastDate = threeDaysAgo)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Fresh Bag", roastDate = threeDaysAgo))
         val bagId = vm.coffeeBags.value.first().id
         vm.selectBag(bagId)
 
@@ -1917,7 +1947,7 @@ class BrewViewModelTest {
         vm.setAmount("20")
 
         val fourteenDaysAgo = System.currentTimeMillis() - 14 * 86_400_000L
-        vm.addCoffeeBag(name = "Normal Bag", roastDate = fourteenDaysAgo)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Normal Bag", roastDate = fourteenDaysAgo))
         val bagId = vm.coffeeBags.value.first().id
         vm.selectBag(bagId)
 
@@ -1931,7 +1961,7 @@ class BrewViewModelTest {
         vm.setAmount("20")
 
         val thirtyDaysAgo = System.currentTimeMillis() - 30 * 86_400_000L
-        vm.addCoffeeBag(name = "Old Bag", roastDate = thirtyDaysAgo)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Old Bag", roastDate = thirtyDaysAgo))
         val bagId = vm.coffeeBags.value.first().id
         vm.selectBag(bagId)
 
@@ -1945,7 +1975,7 @@ class BrewViewModelTest {
         vm.setAmount("20")
 
         val oneDayAgo = System.currentTimeMillis() - 1 * 86_400_000L
-        vm.addCoffeeBag(name = "Super Fresh", roastDate = oneDayAgo)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Super Fresh", roastDate = oneDayAgo))
         val bagId = vm.coffeeBags.value.first().id
         vm.selectBag(bagId)
 
@@ -1959,7 +1989,7 @@ class BrewViewModelTest {
         vm.setAmount("20")
 
         val ninetyDaysAgo = System.currentTimeMillis() - 90 * 86_400_000L
-        vm.addCoffeeBag(name = "Very Old Bag", roastDate = ninetyDaysAgo)
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Very Old Bag", roastDate = ninetyDaysAgo))
         val bagId = vm.coffeeBags.value.first().id
         vm.selectBag(bagId)
 

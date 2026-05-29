@@ -406,20 +406,22 @@ fun LiveScanScreen(
                 val fields = liveScanViewModel.buildResolvedFields()
                 val draft = ScanFieldSupport.buildDraft(fields) ?: return@BottomOverlay
                 brewViewModel.addCoffeeBag(
-                    name = draft.name,
-                    roaster = draft.roaster,
-                    origin = draft.origin,
-                    region = draft.region,
-                    variety = draft.variety,
-                    processType = draft.processType,
-                    tastingNotes = draft.tastingNotes,
-                    roastLevel = draft.roastLevel,
-                    roastDate = draft.roastDateMillis,
-                    expiryDate = draft.expiryDateMillis,
-                    barcode = evidence.detectedBarcode,
-                    weightG = draft.weightG,
-                    isDecaf = draft.isDecaf,
-                    traceabilityUrl = evidence.detectedQrUrl,
+                    BrewViewModel.CoffeeBagInput(
+                        name = draft.name,
+                        roaster = draft.roaster,
+                        origin = draft.origin,
+                        region = draft.region,
+                        variety = draft.variety,
+                        processType = draft.processType,
+                        tastingNotes = draft.tastingNotes,
+                        roastLevel = draft.roastLevel,
+                        roastDate = draft.roastDateMillis,
+                        expiryDate = draft.expiryDateMillis,
+                        barcode = evidence.detectedBarcode,
+                        weightG = draft.weightG,
+                        isDecaf = draft.isDecaf,
+                        traceabilityUrl = evidence.detectedQrUrl,
+                    ),
                 )
                 onSaveComplete()
             },

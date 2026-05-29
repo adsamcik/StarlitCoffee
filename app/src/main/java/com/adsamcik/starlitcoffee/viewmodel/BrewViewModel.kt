@@ -939,76 +939,83 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
-    fun addCoffeeBag(
-        name: String,
-        roaster: String? = null,
-        origin: String? = null,
-        region: String? = null,
-        roastLevel: String? = null,
-        processType: String? = null,
-        variety: String? = null,
-        tastingNotes: String? = null,
-        roastDate: Long? = null,
-        expiryDate: Long? = null,
-        openedDate: Long? = null,
-        barcode: String? = null,
-        weightG: Float? = null,
-        priceAmount: Float? = null,
-        priceCurrency: String? = "USD",
-        notes: String? = null,
-        isDecaf: Boolean = false,
-        decafProcess: String? = null,
-        photoUri: String? = null,
-        photoUris: String? = null,
-        traceabilityUrl: String? = null,
-        status: String = "SEALED",
-        onBagAdded: ((Long) -> Unit)? = null,
-    ) {
+    /**
+     * Plain bundle of [addCoffeeBag] input fields. Bundling avoids tripping
+     * detekt's [LongParameterList] on the public setter while keeping every
+     * field explicit at call sites. All optional fields default to null so
+     * tests can construct minimal bags with just a name.
+     */
+    data class CoffeeBagInput(
+        val name: String,
+        val roaster: String? = null,
+        val origin: String? = null,
+        val region: String? = null,
+        val roastLevel: String? = null,
+        val processType: String? = null,
+        val variety: String? = null,
+        val tastingNotes: String? = null,
+        val roastDate: Long? = null,
+        val expiryDate: Long? = null,
+        val openedDate: Long? = null,
+        val barcode: String? = null,
+        val weightG: Float? = null,
+        val priceAmount: Float? = null,
+        val priceCurrency: String? = "USD",
+        val notes: String? = null,
+        val isDecaf: Boolean = false,
+        val decafProcess: String? = null,
+        val photoUri: String? = null,
+        val photoUris: String? = null,
+        val traceabilityUrl: String? = null,
+        val status: String = "SEALED",
+    )
+
+    fun addCoffeeBag(input: CoffeeBagInput, onBagAdded: ((Long) -> Unit)? = null) {
         val repository = coffeeBagRepository ?: return
-        val normalizedBarcode = BarcodeInsights.normalizeBarcode(barcode)
-            ?: barcode?.trim()?.takeIf { it.isNotBlank() }
+        val normalizedBarcode = BarcodeInsights.normalizeBarcode(input.barcode)
+            ?: input.barcode?.trim()?.takeIf { it.isNotBlank() }
         val locale = Locale.getDefault()
         viewModelScope.launch {
             val entity = CoffeeMetadataNormalizer.applyToBagEntity(
                 CoffeeBagEntity(
-                    name = name,
-                    roaster = roaster,
-                    origin = origin,
-                    region = region,
-                    roastLevel = roastLevel,
-                    processType = processType,
-                    variety = variety,
-                    tastingNotes = tastingNotes,
-                    roastDate = roastDate,
-                    expiryDate = expiryDate,
-                    openedDate = openedDate,
+                    name = input.name,
+                    roaster = input.roaster,
+                    origin = input.origin,
+                    region = input.region,
+                    roastLevel = input.roastLevel,
+                    processType = input.processType,
+                    variety = input.variety,
+                    tastingNotes = input.tastingNotes,
+                    roastDate = input.roastDate,
+                    expiryDate = input.expiryDate,
+                    openedDate = input.openedDate,
                     barcode = normalizedBarcode,
-                    weightG = weightG,
-                    initialWeightG = weightG,
-                    priceAmount = priceAmount,
-                    priceCurrency = priceCurrency,
-                    notes = notes,
-                    isDecaf = isDecaf,
-                    decafProcess = decafProcess?.takeIf { isDecaf },
-                    photoUri = photoUri,
-                    photoUris = photoUris,
-                    traceabilityUrl = traceabilityUrl,
-                    status = status,
+                    weightG = input.weightG,
+                    initialWeightG = input.weightG,
+                    priceAmount = input.priceAmount,
+                    priceCurrency = input.priceCurrency,
+                    notes = input.notes,
+                    isDecaf = input.isDecaf,
+                    decafProcess = input.decafProcess?.takeIf { input.isDecaf },
+                    photoUri = input.photoUri,
+                    photoUris = input.photoUris,
+                    traceabilityUrl = input.traceabilityUrl,
+                    status = input.status,
                 ),
-                origin = origin,
-                region = region,
-                roastLevel = roastLevel,
-                processType = processType,
-                variety = variety,
-                tastingNotes = tastingNotes,
+                origin = input.origin,
+                region = input.region,
+                roastLevel = input.roastLevel,
+                processType = input.processType,
+                variety = input.variety,
+                tastingNotes = input.tastingNotes,
                 locale = locale,
             )
             val newId = repository.insertBag(entity)
 
             // Learn barcode→roaster mapping for future scans
             val stemDao = userBarcodeStemDao
-            if (stemDao != null && normalizedBarcode != null && roaster != null) {
-                BarcodeInsights.learnStem(normalizedBarcode, roaster, stemDao)
+            if (stemDao != null && normalizedBarcode != null && input.roaster != null) {
+                BarcodeInsights.learnStem(normalizedBarcode, input.roaster, stemDao)
             }
 
             loadKnownFieldValues()
