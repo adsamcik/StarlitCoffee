@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
@@ -1520,15 +1521,15 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             val resolver = application?.contentResolver ?: return null
             val orientation = try {
                 resolver.openInputStream(uri)?.use { input ->
-                    android.media.ExifInterface(input).getAttributeInt(
-                        android.media.ExifInterface.TAG_ORIENTATION,
-                        android.media.ExifInterface.ORIENTATION_NORMAL,
+                    ExifInterface(input).getAttributeInt(
+                        ExifInterface.TAG_ORIENTATION,
+                        ExifInterface.ORIENTATION_NORMAL,
                     )
                 }
             } catch (e: Exception) {
                 Log.w(BAG_PHOTO_TAG, "Failed to read content URI EXIF orientation", e)
                 null
-            } ?: android.media.ExifInterface.ORIENTATION_NORMAL
+            } ?: ExifInterface.ORIENTATION_NORMAL
             resolver.openInputStream(uri)?.use { input ->
                 BitmapFactory.decodeStream(input)
             }?.let { bitmap -> ImagePreprocessor.applyExifOrientation(bitmap, orientation) }

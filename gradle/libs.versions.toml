@@ -13,6 +13,7 @@ mlkitBarcodeScanning = "17.3.0"
 mlkitTextRecognition = "16.0.1"
 cameraX = "1.6.1"
 datastore = "1.2.1"
+exifinterface = "1.4.2"
 opencv = "4.13.0"
 coroutines = "1.11.0"
 junit = "4.13.2"
@@ -63,6 +64,9 @@ camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "
 
 # DataStore
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+
+# EXIF metadata (androidx — the android.media.ExifInterface is deprecated)
+exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
 
 # OpenCV
 opencv = { group = "org.opencv", name = "opencv", version.ref = "opencv" }

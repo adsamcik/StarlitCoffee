@@ -150,6 +150,9 @@ dependencies {
     // DataStore
     implementation(libs.datastore.preferences)
 
+    // EXIF metadata
+    implementation(libs.exifinterface)
+
     // Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)

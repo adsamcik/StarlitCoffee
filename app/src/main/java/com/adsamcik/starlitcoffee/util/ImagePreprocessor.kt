@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.util.Log
 import android.graphics.Matrix
 import android.graphics.Rect
-import android.media.ExifInterface
+import androidx.exifinterface.media.ExifInterface
 import com.google.mlkit.vision.text.Text
 import org.opencv.android.OpenCVLoader
 import org.opencv.android.Utils
