@@ -1111,7 +1111,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
                 val barcodeScanner = BarcodeScanning.getClient()
                 try {
-                    val processedPhotos= photoUriList.mapIndexedNotNull { index, uriStr ->
+                    val processedPhotos = photoUriList.mapIndexedNotNull { index, uriStr ->
                         processBagPhoto(
                             uriStr = uriStr,
                             side = if (index == 0) BagCaptureSide.FRONT else BagCaptureSide.BACK,
@@ -1120,210 +1120,255 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                             barcodeScanner = barcodeScanner,
                         )
                     }
-
-                    val photoAnalyses = processedPhotos.map { photo ->
-                        BagPhotoAnalysis(
-                            uri = photo.uri,
-                            side = photo.side,
-                            quality = photo.quality,
-                            extractedText = photo.fullText,
-                        )
-                    }
-
-                    var detectedBarcode = processedPhotos.firstNotNullOfOrNull { it.detectedBarcode }
-                    val rawDetectedQrUrl = processedPhotos.firstNotNullOfOrNull { it.detectedQrUrl }
-                    val allCandidates = processedPhotos
-                        .flatMap { photo -> buildFieldCandidates(photo) }
-                        .toMutableList()
-                    val combinedOcrText = processedPhotos.joinToString("\n\n") { it.fullText }.trim()
-
-                    if (detectedBarcode == null && combinedOcrText.isNotBlank()) {
-                        detectedBarcode = OcrFieldExtractor.extractBarcodeFromText(combinedOcrText)
-                    }
-                    val rawDetectedBarcode = detectedBarcode
-                    detectedBarcode = BarcodeInsights.normalizeBarcode(detectedBarcode)
-                        ?: detectedBarcode?.trim()?.takeIf { it.isNotBlank() }
-
-                    // Partial barcode recovery: if normalize rejected a 5–7 digit fragment,
-                    // try to extract roaster hints from it (but do NOT persist as bag barcode)
-                    if (BarcodeInsights.normalizeBarcode(rawDetectedBarcode) == null &&
-                        rawDetectedBarcode != null
-                    ) {
-                        val partialResult = BarcodeInsights.recoverPartialBarcode(
-                            rawDetectedBarcode,
-                            userBarcodeStemDao,
-                        )
-                        if (partialResult.isPartial && partialResult.candidates.isNotEmpty()) {
-                            allCandidates += partialResult.candidates
-                            detectedBarcode = null
-                        }
-                    }
-
-                    val matchedBagByBarcode = findLocalBagByBarcode(detectedBarcode)
-
-                    // Infer country dictionary from barcode for locale-aware OCR and display
-                    val barcodeCountry = CoffeeCountryDictionaries.localeFromBarcode(detectedBarcode)
-                        ?.let { locale -> CoffeeCountryDictionaries.ALL.firstOrNull { it.locale == locale } }
-                    val inferredLocale = barcodeCountry?.locale
-
-                    matchedBagByBarcode?.let { matchedBag ->
-                        allCandidates += BarcodeInsights.buildLocalMatchCandidates(
-                            matchedBag,
-                            locale = inferredLocale ?: Locale.getDefault(),
-                        )
-                    }
-                    val observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode)
-                    allCandidates += BarcodeInsights.buildObservedStemCandidates(observedStemMatch)
-
-                    // Also add user-taught stem candidates
-                    val stemDao = userBarcodeStemDao
-                    if (stemDao != null && detectedBarcode != null) {
-                        allCandidates += BarcodeInsights.findUserStemMatch(detectedBarcode, stemDao)
-                    }
-
-                    // Boost OCR known values with barcode-resolved roaster for future scans
-                    if (detectedBarcode != null) {
-                        val boostedKnownValues = BarcodeInsights.buildBarcodeOcrBoost(
-                            barcode = detectedBarcode,
-                            currentKnownValues = knownFieldValues,
-                            userStemDao = userBarcodeStemDao,
-                        )
-                        if (boostedKnownValues !== knownFieldValues) {
-                            _knownFieldValues.value = boostedKnownValues
-                        }
-                    }
-
-                    var offLookupName: String? = null
-                    var offLookupRoaster: String? = null
-                    detectedBarcode?.let { barcode ->
-                        try {
-                            val lookup = OpenFoodFactsClient.lookupBarcode(barcode)
-                            if (lookup != null) {
-                                offLookupName = lookup.name
-                                offLookupRoaster = lookup.brand
-                                val lookupSupportingText = listOfNotNull(
-                                    lookup.name?.takeIf { it.isNotBlank() },
-                                    lookup.brand?.takeIf { it.isNotBlank() },
-                                ).joinToString(" · ").takeIf { it.isNotBlank() }
-                                if (!lookup.name.isNullOrBlank()) {
-                                    allCandidates += BagFieldCandidate(
-                                        fieldName = "name",
-                                        value = lookup.name,
-                                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                                        confidenceHint = BagFieldConfidence.HIGH,
-                                    )
-                                }
-                                if (!lookup.brand.isNullOrBlank()) {
-                                    allCandidates += BagFieldCandidate(
-                                        fieldName = "roaster",
-                                        value = lookup.brand,
-                                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                                        confidenceHint = BagFieldConfidence.HIGH,
-                                    )
-                                }
-                                allCandidates.addDecafCandidate(
-                                    isDecaf = lookupSupportingText
-                                        ?.let(CoffeeMetadataNormalizer::containsDecafMarker)
-                                        ?.takeIf { it },
-                                    provenance = BagCandidateProvenance(
-                                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                                        confidenceHint = BagFieldConfidence.HIGH,
-                                        supportingText = lookupSupportingText,
-                                    ),
-                                    rawValue = lookupSupportingText,
-                                )
-
-                                // OFF data — confidence gated because these fields may refer to country of sale, not origin
-                                if (!lookup.origins.isNullOrBlank()) {
-                                    allCandidates += BagFieldCandidate(
-                                        fieldName = "origin",
-                                        value = lookup.origins,
-                                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                                        confidenceHint = BagFieldConfidence.MEDIUM,
-                                        supportingText = "OFF origins field",
-                                    )
-                                }
-                                lookup.countriesTags
-                                    ?.firstNotNullOfOrNull(::coffeeProducingCountryFromTag)
-                                    ?.let { originName ->
-                                        allCandidates += BagFieldCandidate(
-                                            fieldName = "origin",
-                                            value = originName,
-                                            sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                                            confidenceHint = BagFieldConfidence.LOW,
-                                            supportingText = "OFF countries_tags (may be country of sale)",
-                                        )
-                                    }
-                                // lookup.labels — informational only (organic, fair trade, etc.); not mapped to bag fields yet
-                            }
-                        } catch (e: Exception) {
-                            Log.w(BAG_PHOTO_TAG, "Failed to fetch product info from OpenFoodFacts", e)
-                        }
-                    }
-
-                    val qrEnrichment= buildQrLinkEnrichment(rawDetectedQrUrl)
-                    allCandidates += qrEnrichment.candidates
-
-                    // LLM enrichment — primary-source reasoning over all core fields.
-                    // Receives prior candidates (OCR+lookup) for cross-reference,
-                    // raw OCR text for character-level verification, and the user's
-                    // known-values vocabulary for grounding.
-                    val baseCandidates = allCandidates.toList()
-                    val llmOutcome = tryLlmEnrichment(
-                        photoUriList = photoUriList,
-                        processedPhotos = processedPhotos,
-                        allCandidates = baseCandidates,
-                        combinedOcrText = combinedOcrText,
-                        knownFieldValues = _knownFieldValues.value,
-                    )
-                    allCandidates += llmOutcome.candidates
-
-                    val fieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
-
-                    val reviewHints = BagPhotoScanSupport.buildReviewHints(
-                        photoAnalyses = photoAnalyses,
-                        resolvedFields = fieldEvidence,
-                        additionalHints = BarcodeInsights.buildBarcodeReviewHints(
-                            barcode = detectedBarcode,
-                            matchedBag = matchedBagByBarcode,
-                            observedStemMatch = observedStemMatch,
-                        ) + qrEnrichment.reviewHints,
-                    )
-                    val ocrPrefill = fieldEvidence
-                        .takeIf { it.isNotEmpty() }
-                        ?.let(BagPhotoScanSupport::buildPrefill)
-                    bagPhotoLlmRetryContext = BagPhotoLlmRetryContext(
+                    emitBagPhotoResult(
                         photosCsv = photosCsv,
                         photoUriList = photoUriList,
                         processedPhotos = processedPhotos,
-                        baseCandidates = baseCandidates,
-                        combinedOcrText = combinedOcrText,
-                        knownFieldValues = _knownFieldValues.value,
-                        detectedBarcode = detectedBarcode,
-                        detectedQrUrl = qrEnrichment.safeUrl,
-                        offLookupName = offLookupName,
-                        offLookupRoaster = offLookupRoaster,
-                        photoAnalyses = photoAnalyses,
-                        reviewHints = reviewHints,
-                    )
-
-                    _bagPhotoResult.value = BagPhotoProcessingResult(
-                        ocrPrefill = ocrPrefill,
-                        capturedPhotoUris = photosCsv,
-                        detectedBarcode = detectedBarcode,
-                        detectedQrUrl = qrEnrichment.safeUrl,
-                        offLookupName = offLookupName,
-                        offLookupRoaster = offLookupRoaster,
-                        fieldEvidence = fieldEvidence,
-                        photoAnalyses = photoAnalyses,
-                        reviewHints = reviewHints,
-                        llmStatus = llmOutcome.status,
+                        knownFieldValues = knownFieldValues,
                     )
                 } finally {
                     recognizer.close()
                     barcodeScanner.close()
                 }
             }
+        }
+    }
+
+    private suspend fun emitBagPhotoResult(
+        photosCsv: String,
+        photoUriList: List<String>,
+        processedPhotos: List<ProcessedBagPhoto>,
+        knownFieldValues: KnownFieldValues,
+    ) {
+        val photoAnalyses = processedPhotos.map { photo ->
+            BagPhotoAnalysis(
+                uri = photo.uri,
+                side = photo.side,
+                quality = photo.quality,
+                extractedText = photo.fullText,
+            )
+        }
+        val combinedOcrText = processedPhotos.joinToString("\n\n") { it.fullText }.trim()
+        val allCandidates = processedPhotos
+            .flatMap { photo -> buildFieldCandidates(photo) }
+            .toMutableList()
+        val rawDetectedQrUrl = processedPhotos.firstNotNullOfOrNull { it.detectedQrUrl }
+        val detectedBarcode = resolveDetectedBarcode(processedPhotos, combinedOcrText, allCandidates)
+
+        val matchedBagByBarcode = findLocalBagByBarcode(detectedBarcode)
+        val inferredLocale = inferLocaleFromBarcode(detectedBarcode)
+
+        addBarcodeMatchAndStemCandidates(
+            allCandidates = allCandidates,
+            detectedBarcode = detectedBarcode,
+            matchedBag = matchedBagByBarcode,
+            inferredLocale = inferredLocale,
+        )
+        boostKnownFieldValuesForBarcode(detectedBarcode, knownFieldValues)
+
+        val offSummary = addOpenFoodFactsCandidates(allCandidates, detectedBarcode)
+        val qrEnrichment = buildQrLinkEnrichment(rawDetectedQrUrl)
+        allCandidates += qrEnrichment.candidates
+
+        // LLM enrichment — primary-source reasoning over all core fields.
+        // Receives prior candidates (OCR+lookup) for cross-reference,
+        // raw OCR text for character-level verification, and the user's
+        // known-values vocabulary for grounding.
+        val baseCandidates = allCandidates.toList()
+        val llmOutcome = tryLlmEnrichment(
+            photoUriList = photoUriList,
+            processedPhotos = processedPhotos,
+            allCandidates = baseCandidates,
+            combinedOcrText = combinedOcrText,
+            knownFieldValues = _knownFieldValues.value,
+        )
+        allCandidates += llmOutcome.candidates
+
+        val fieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
+        val reviewHints = BagPhotoScanSupport.buildReviewHints(
+            photoAnalyses = photoAnalyses,
+            resolvedFields = fieldEvidence,
+            additionalHints = BarcodeInsights.buildBarcodeReviewHints(
+                barcode = detectedBarcode,
+                matchedBag = matchedBagByBarcode,
+                observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode),
+            ) + qrEnrichment.reviewHints,
+        )
+        val ocrPrefill = fieldEvidence
+            .takeIf { it.isNotEmpty() }
+            ?.let(BagPhotoScanSupport::buildPrefill)
+
+        bagPhotoLlmRetryContext = BagPhotoLlmRetryContext(
+            photosCsv = photosCsv,
+            photoUriList = photoUriList,
+            processedPhotos = processedPhotos,
+            baseCandidates = baseCandidates,
+            combinedOcrText = combinedOcrText,
+            knownFieldValues = _knownFieldValues.value,
+            detectedBarcode = detectedBarcode,
+            detectedQrUrl = qrEnrichment.safeUrl,
+            offLookupName = offSummary.name,
+            offLookupRoaster = offSummary.brand,
+            photoAnalyses = photoAnalyses,
+            reviewHints = reviewHints,
+        )
+        _bagPhotoResult.value = BagPhotoProcessingResult(
+            ocrPrefill = ocrPrefill,
+            capturedPhotoUris = photosCsv,
+            detectedBarcode = detectedBarcode,
+            detectedQrUrl = qrEnrichment.safeUrl,
+            offLookupName = offSummary.name,
+            offLookupRoaster = offSummary.brand,
+            fieldEvidence = fieldEvidence,
+            photoAnalyses = photoAnalyses,
+            reviewHints = reviewHints,
+            llmStatus = llmOutcome.status,
+        )
+    }
+
+    /**
+     * Resolves the detected barcode from photo scans + OCR fallback, applying
+     * partial-barcode recovery for 5–7 digit fragments. When recovery yields
+     * candidates the barcode is cleared (a partial fragment must not become a
+     * persisted bag barcode) and the recovery candidates are appended to
+     * [allCandidates] for the user to confirm.
+     */
+    private suspend fun resolveDetectedBarcode(
+        processedPhotos: List<ProcessedBagPhoto>,
+        combinedOcrText: String,
+        allCandidates: MutableList<BagFieldCandidate>,
+    ): String? {
+        var detectedBarcode = processedPhotos.firstNotNullOfOrNull { it.detectedBarcode }
+        if (detectedBarcode == null && combinedOcrText.isNotBlank()) {
+            detectedBarcode = OcrFieldExtractor.extractBarcodeFromText(combinedOcrText)
+        }
+        val rawDetectedBarcode = detectedBarcode
+        detectedBarcode = BarcodeInsights.normalizeBarcode(detectedBarcode)
+            ?: detectedBarcode?.trim()?.takeIf { it.isNotBlank() }
+
+        if (BarcodeInsights.normalizeBarcode(rawDetectedBarcode) == null && rawDetectedBarcode != null) {
+            val partialResult = BarcodeInsights.recoverPartialBarcode(rawDetectedBarcode, userBarcodeStemDao)
+            if (partialResult.isPartial && partialResult.candidates.isNotEmpty()) {
+                allCandidates += partialResult.candidates
+                detectedBarcode = null
+            }
+        }
+        return detectedBarcode
+    }
+
+    private fun inferLocaleFromBarcode(detectedBarcode: String?): Locale? =
+        CoffeeCountryDictionaries.localeFromBarcode(detectedBarcode)
+            ?.let { locale -> CoffeeCountryDictionaries.ALL.firstOrNull { it.locale == locale } }
+            ?.locale
+
+    private suspend fun addBarcodeMatchAndStemCandidates(
+        allCandidates: MutableList<BagFieldCandidate>,
+        detectedBarcode: String?,
+        matchedBag: CoffeeBagEntity?,
+        inferredLocale: Locale?,
+    ) {
+        matchedBag?.let {
+            allCandidates += BarcodeInsights.buildLocalMatchCandidates(
+                it,
+                locale = inferredLocale ?: Locale.getDefault(),
+            )
+        }
+        val observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode)
+        allCandidates += BarcodeInsights.buildObservedStemCandidates(observedStemMatch)
+
+        val stemDao = userBarcodeStemDao
+        if (stemDao != null && detectedBarcode != null) {
+            allCandidates += BarcodeInsights.findUserStemMatch(detectedBarcode, stemDao)
+        }
+    }
+
+    private fun boostKnownFieldValuesForBarcode(detectedBarcode: String?, knownFieldValues: KnownFieldValues) {
+        if (detectedBarcode == null) return
+        val boostedKnownValues = BarcodeInsights.buildBarcodeOcrBoost(
+            barcode = detectedBarcode,
+            currentKnownValues = knownFieldValues,
+            userStemDao = userBarcodeStemDao,
+        )
+        if (boostedKnownValues !== knownFieldValues) {
+            _knownFieldValues.value = boostedKnownValues
+        }
+    }
+
+    private data class OffLookupSummary(val name: String?, val brand: String?)
+
+    /**
+     * Looks up the detected barcode against OpenFoodFacts and appends any
+     * resulting candidates to [allCandidates]. Returns the OFF name + brand
+     * for use in the retry context / processing result. OFF data is gated by
+     * confidence — origin from `countries_tags` may refer to country of sale
+     * rather than coffee origin and lands as LOW confidence.
+     */
+    private suspend fun addOpenFoodFactsCandidates(
+        allCandidates: MutableList<BagFieldCandidate>,
+        detectedBarcode: String?,
+    ): OffLookupSummary {
+        if (detectedBarcode == null) return OffLookupSummary(name = null, brand = null)
+        return try {
+            val lookup = OpenFoodFactsClient.lookupBarcode(detectedBarcode)
+                ?: return OffLookupSummary(name = null, brand = null)
+            val lookupSupportingText = listOfNotNull(
+                lookup.name?.takeIf { it.isNotBlank() },
+                lookup.brand?.takeIf { it.isNotBlank() },
+            ).joinToString(" · ").takeIf { it.isNotBlank() }
+
+            if (!lookup.name.isNullOrBlank()) {
+                allCandidates += BagFieldCandidate(
+                    fieldName = "name",
+                    value = lookup.name,
+                    sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                    confidenceHint = BagFieldConfidence.HIGH,
+                )
+            }
+            if (!lookup.brand.isNullOrBlank()) {
+                allCandidates += BagFieldCandidate(
+                    fieldName = "roaster",
+                    value = lookup.brand,
+                    sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                    confidenceHint = BagFieldConfidence.HIGH,
+                )
+            }
+            allCandidates.addDecafCandidate(
+                isDecaf = lookupSupportingText
+                    ?.let(CoffeeMetadataNormalizer::containsDecafMarker)
+                    ?.takeIf { it },
+                provenance = BagCandidateProvenance(
+                    sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                    confidenceHint = BagFieldConfidence.HIGH,
+                    supportingText = lookupSupportingText,
+                ),
+                rawValue = lookupSupportingText,
+            )
+
+            if (!lookup.origins.isNullOrBlank()) {
+                allCandidates += BagFieldCandidate(
+                    fieldName = "origin",
+                    value = lookup.origins,
+                    sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                    confidenceHint = BagFieldConfidence.MEDIUM,
+                    supportingText = "OFF origins field",
+                )
+            }
+            lookup.countriesTags
+                ?.firstNotNullOfOrNull(::coffeeProducingCountryFromTag)
+                ?.let { originName ->
+                    allCandidates += BagFieldCandidate(
+                        fieldName = "origin",
+                        value = originName,
+                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
+                        confidenceHint = BagFieldConfidence.LOW,
+                        supportingText = "OFF countries_tags (may be country of sale)",
+                    )
+                }
+            // lookup.labels — informational only (organic, fair trade, etc.); not mapped to bag fields yet
+            OffLookupSummary(name = lookup.name, brand = lookup.brand)
+        } catch (e: Exception) {
+            Log.w(BAG_PHOTO_TAG, "Failed to fetch product info from OpenFoodFacts", e)
+            OffLookupSummary(name = null, brand = null)
         }
     }
 
