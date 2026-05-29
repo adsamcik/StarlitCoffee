@@ -1410,21 +1410,12 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 textDetected = textBlockCount > 0,
             )
 
-            var detectedBarcode = if (mergedText.isNotBlank()) {
-                OcrFieldExtractor.extractBarcodeFromText(mergedText)
-            } else {
-                null
-            }
-            var detectedQrUrl: String? = null
-
-            scanBarcodes(barcodeScanner, bitmap)?.forEach { code ->
-                val rawValue = code.rawValue ?: return@forEach
-                if (rawValue.startsWith("http://") || rawValue.startsWith("https://")) {
-                    if (detectedQrUrl == null) detectedQrUrl = rawValue
-                } else if (detectedBarcode == null) {
-                    detectedBarcode = rawValue
-                }
-            }
+            val ocrBarcode = mergedText.takeIf { it.isNotBlank() }
+                ?.let { OcrFieldExtractor.extractBarcodeFromText(it) }
+            val detection = detectBarcodeAndQrUrl(
+                scannedCodes = scanBarcodes(barcodeScanner, bitmap),
+                ocrBarcode = ocrBarcode,
+            )
 
             ProcessedBagPhoto(
                 uri = uriStr,
@@ -1432,13 +1423,32 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 quality = quality,
                 passes = passes,
                 fullText = mergedText,
-                detectedBarcode = detectedBarcode,
-                detectedQrUrl = detectedQrUrl,
+                detectedBarcode = detection.barcode,
+                detectedQrUrl = detection.qrUrl,
             )
         } catch (e: Exception) {
             Log.w(BAG_PHOTO_TAG, "Failed to process bag photo for OCR and barcode extraction", e)
             null
         }
+    }
+
+    private data class BagPhotoBarcodeDetection(val barcode: String?, val qrUrl: String?)
+
+    private fun detectBarcodeAndQrUrl(
+        scannedCodes: List<com.google.mlkit.vision.barcode.common.Barcode>?,
+        ocrBarcode: String?,
+    ): BagPhotoBarcodeDetection {
+        var barcode = ocrBarcode
+        var qrUrl: String? = null
+        scannedCodes?.forEach { code ->
+            val rawValue = code.rawValue ?: return@forEach
+            val isHttpUrl = rawValue.startsWith("http://") || rawValue.startsWith("https://")
+            when {
+                isHttpUrl && qrUrl == null -> qrUrl = rawValue
+                !isHttpUrl && barcode == null -> barcode = rawValue
+            }
+        }
+        return BagPhotoBarcodeDetection(barcode = barcode, qrUrl = qrUrl)
     }
 
     private fun decodeBagPhotoBitmap(uriStr: String): Bitmap? {
