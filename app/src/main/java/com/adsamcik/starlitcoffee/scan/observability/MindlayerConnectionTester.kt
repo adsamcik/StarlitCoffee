@@ -1,9 +1,9 @@
 package com.adsamcik.starlitcoffee.scan.observability
 
 import android.content.Context
-import com.mindlayer.sdk.ConnectionState
-import com.mindlayer.sdk.Mindlayer
-import com.mindlayer.sdk.MindlayerEvent
+import com.adsamcik.mindlayer.sdk.ConnectionState
+import com.adsamcik.mindlayer.sdk.InferenceEvent
+import com.adsamcik.mindlayer.sdk.Mindlayer
 import kotlinx.coroutines.withTimeoutOrNull
 
 data class ConnectionTestResult(
@@ -45,7 +45,7 @@ object MindlayerConnectionTester {
         val mindlayer = Mindlayer.connect(context.applicationContext)
         return try {
             val connected = withTimeoutOrNull(10_000L) {
-                mindlayer.awaitConnected()
+                mindlayer.awaitConnected(kotlin.time.Duration.INFINITE)
                 true
             }
             if (connected != true) {
@@ -92,10 +92,9 @@ object MindlayerConnectionTester {
 
     suspend fun runTestPrompt(context: Context): ConnectionTestResult {
         val mindlayer = Mindlayer.connect(context.applicationContext)
-        var sessionId: String? = null
         return try {
             val connected = withTimeoutOrNull(10_000L) {
-                mindlayer.awaitConnected()
+                mindlayer.awaitConnected(kotlin.time.Duration.INFINITE)
                 true
             }
             if (connected != true) {
@@ -122,19 +121,26 @@ object MindlayerConnectionTester {
                 null
             }
 
-            sessionId = mindlayer.createSession {
-                systemPrompt("You are a helpful assistant. Be very brief.")
-                maxTokens(256)
-            }
-
             val prompt = "What is the capital of Ethiopia? Reply in one word."
             val responseText = StringBuilder()
             var tokenCount = 0
             val startMs = System.currentTimeMillis()
 
-            mindlayer.chat(sessionId, prompt).events.collect { event ->
+            // v1 canonical ephemeral one-shot. The infer{} bridge replays a
+            // Started → TextDelta → Done stream (token-level streaming is not
+            // exposed through this path in alpha), so tokenCount reflects the
+            // number of delta frames rather than true decode tokens.
+            val handle = mindlayer.infer {
+                ephemeralSession {
+                    systemPrompt = "You are a helpful assistant. Be very brief."
+                    maxTokens = 256
+                }
+                text(prompt)
+                outputText()
+            }
+            handle.events.collect { event ->
                 when (event) {
-                    is MindlayerEvent.TextDelta -> {
+                    is InferenceEvent.TextDelta -> {
                         responseText.append(event.text)
                         tokenCount++
                     }
@@ -142,7 +148,7 @@ object MindlayerConnectionTester {
                     // RuntimeException; the diagnostic harness then catches
                     // it and reports the failure to the user. Wrapping in
                     // a domain-specific exception type would just be ceremony.
-                    is MindlayerEvent.Error -> {
+                    is InferenceEvent.Error -> {
                         @Suppress("TooGenericExceptionThrown")
                         throw RuntimeException(event.message)
                     }
@@ -171,9 +177,6 @@ object MindlayerConnectionTester {
                 errorMessage = e.message ?: "Unknown error",
             )
         } finally {
-            sessionId?.let {
-                try { mindlayer.destroySession(it) } catch (_: Exception) {}
-            }
             mindlayer.disconnect()
         }
     }

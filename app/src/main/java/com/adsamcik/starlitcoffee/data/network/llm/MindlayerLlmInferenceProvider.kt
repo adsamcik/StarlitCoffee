@@ -7,10 +7,11 @@ import com.adsamcik.starlitcoffee.scan.model.FieldSource
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
-import com.mindlayer.sdk.ConnectionState
-import com.mindlayer.sdk.InferenceBackend
-import com.mindlayer.sdk.Mindlayer
-import com.mindlayer.sdk.MindlayerException
+import com.adsamcik.mindlayer.sdk.ConnectionState
+import com.adsamcik.mindlayer.sdk.InferenceBackend
+import com.adsamcik.mindlayer.sdk.InferenceHandle
+import com.adsamcik.mindlayer.sdk.Mindlayer
+import com.adsamcik.mindlayer.sdk.MindlayerException
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
@@ -134,7 +135,6 @@ class MindlayerLlmInferenceProvider(
 
         val prompt = buildExtractionPrompt(request)
         val extended = useExtendedSchema(request)
-        val structuredContext = buildStructuredOutputExtraContext(extended)
 
         // try/finally guarantees the bitmap is recycled exactly once across
         // every exit path — success, MindlayerException, generic Exception,
@@ -149,19 +149,28 @@ class MindlayerLlmInferenceProvider(
         // engine try again on the next golden frame.
         @Suppress("TooGenericExceptionCaught")
         try {
-            // Stateless one-shot — SDK creates a fresh session, runs inference,
-            // then destroys it. No history is carried over to the next extraction.
+            // Stateless one-shot via the v1 canonical builder — a fresh
+            // ephemeral session runs the inference and is torn down after.
+            // No history carries over to the next extraction. Structured
+            // output is requested through the prompt-embedded schema
+            // (PromptAndValidate); the v1 infer{} builder has no extraContext
+            // envelope, and parseResponse lenient-parses the JSON it returns.
             val responseText = withTimeout(EXTRACTION_TIMEOUT_MS) {
-                mindlayer.generateWithImage(prompt, bitmap) {
-                    systemPrompt(buildSystemPrompt(extended))
-                    maxTokens(MAX_TOKENS)
-                    temperature(EXTRACTION_TEMPERATURE)
-                    topK(EXTRACTION_TOP_K)
-                    topP(EXTRACTION_TOP_P)
-                    // Opt-in structured output. Services that predate the feature
-                    // ignore the extraContext JSON and degrade to plain generation.
-                    extraContext(structuredContext)
+                val handle = mindlayer.infer {
+                    ephemeralSession {
+                        systemPrompt = buildSystemPrompt(extended)
+                        maxTokens = MAX_TOKENS
+                    }
+                    text(prompt)
+                    image(bitmap)
+                    sampling {
+                        temperature = EXTRACTION_TEMPERATURE
+                        topK = EXTRACTION_TOP_K
+                        topP = EXTRACTION_TOP_P
+                    }
+                    outputText()
                 }
+                (handle as InferenceHandle.Text).awaitText()
             }
             android.util.Log.d(
                 MINDLAYER_LLM_TAG,
@@ -181,7 +190,7 @@ class MindlayerLlmInferenceProvider(
         } catch (e: MindlayerException) {
             LlmExtractionResult.Failed(
                 "Inference failed: ${e.message}",
-                retryable = e.code != "UNSUPPORTED_TOOL_CALL",
+                retryable = e.codeName != "UNSUPPORTED_TOOL_CALL",
             )
         } catch (e: Exception) {
             LlmExtractionResult.Failed("Inference failed: ${e.message}", retryable = true)
@@ -213,7 +222,7 @@ class MindlayerLlmInferenceProvider(
     @Suppress("TooGenericExceptionCaught")
     private suspend fun awaitMindlayerConnected() {
         try {
-            mindlayer.awaitConnected()
+            mindlayer.awaitConnected(kotlin.time.Duration.INFINITE)
             connectionFailed = false
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
