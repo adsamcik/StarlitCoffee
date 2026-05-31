@@ -6,7 +6,7 @@ import android.graphics.Matrix
 import android.graphics.Rect
 import androidx.core.graphics.createBitmap
 import androidx.exifinterface.media.ExifInterface
-import com.google.mlkit.vision.text.Text
+import com.adsamcik.starlitcoffee.data.network.ocr.RecognizedTextBlock
 import org.opencv.android.OpenCVLoader
 import org.opencv.android.Utils
 import org.opencv.core.Core
@@ -85,7 +85,7 @@ object ImagePreprocessor {
     }
 
     /**
-     * Computes alignment from ML Kit text detection results.
+     * Computes alignment from neutral OCR text blocks (Mindlayer OCR).
      * Median text line angle → skew, union of text blocks → crop bounds.
      */
     @Suppress(
@@ -94,7 +94,7 @@ object ImagePreprocessor {
         // for nullability — natural for the data shape.
         "NestedBlockDepth",
     )
-    fun computeAlignment(textBlocks: List<Text.TextBlock>): AlignmentInfo {
+    fun computeAlignment(textBlocks: List<RecognizedTextBlock>): AlignmentInfo {
         val angles = mutableListOf<Float>()
         var minX = Int.MAX_VALUE
         var minY = Int.MAX_VALUE

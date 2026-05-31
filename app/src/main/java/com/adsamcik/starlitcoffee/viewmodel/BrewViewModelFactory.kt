@@ -7,6 +7,7 @@ import com.adsamcik.starlitcoffee.StarlitCoffeeApp
 import com.adsamcik.starlitcoffee.data.db.AppDatabase
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
+import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
@@ -24,7 +25,9 @@ class BrewViewModelFactory(
         if (modelClass.isAssignableFrom(BrewViewModel::class.java)) {
             val database = AppDatabase.getInstance(application)
             val llm = (application as? StarlitCoffeeApp)?.llmProvider ?: StubLlmInferenceProvider()
+            val ocr = (application as? StarlitCoffeeApp)?.ocrService
             return BrewViewModel(
+                application = application,
                 recipeRepository = RecipeRepository(database.recipeDao()),
                 brewLogRepository = BrewLogRepository(database, database.brewLogDao(), database.flavorTagDao()),
                 coffeeBagRepository = CoffeeBagRepository(database.coffeeBagDao()),
@@ -32,6 +35,7 @@ class BrewViewModelFactory(
                 userPreferencesRepository = UserPreferencesRepository(application),
                 grinderData = GrinderDataSource.getInstance(application),
                 llmProvider = llm,
+                ocrService = ocr,
                 userBarcodeStemDao = database.userBarcodeStemDao(),
                 ratingReminderScheduler = RatingReminderScheduler(application),
             ) as T

@@ -44,6 +44,8 @@ import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmCallGate
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
+import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
+import com.adsamcik.starlitcoffee.data.network.ocr.RecognizedText
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
@@ -79,9 +81,6 @@ import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.text.Text
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import kotlin.coroutines.resume
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -197,6 +196,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private val grinderData: GrinderDataProvider = DefaultGrinders,
     private val qrLinkMetadataExplorer: QrLinkMetadataExplorer = SafeQrLinkMetadataExplorer(),
     private val llmProvider: LlmInferenceProvider = StubLlmInferenceProvider(),
+    private val ocrService: MindlayerOcrService? = null,
     private val userBarcodeStemDao: UserBarcodeStemDao? = null,
     private val ratingReminderScheduler: RatingReminders? = null,
 ) : ViewModel() {
@@ -1109,7 +1109,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     return@withContext
                 }
 
-                val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
                 val barcodeScanner = BarcodeScanning.getClient()
                 try {
                     val processedPhotos = photoUriList.mapIndexedNotNull { index, uriStr ->
@@ -1117,7 +1116,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                             uriStr = uriStr,
                             side = if (index == 0) BagCaptureSide.FRONT else BagCaptureSide.BACK,
                             knownFieldValues = knownFieldValues,
-                            recognizer = recognizer,
                             barcodeScanner = barcodeScanner,
                         )
                     }
@@ -1128,7 +1126,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                         knownFieldValues = knownFieldValues,
                     )
                 } finally {
-                    recognizer.close()
                     barcodeScanner.close()
                 }
             }
@@ -1443,22 +1440,21 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         uriStr: String,
         side: BagCaptureSide,
         knownFieldValues: KnownFieldValues,
-        recognizer: com.google.mlkit.vision.text.TextRecognizer,
         barcodeScanner: com.google.mlkit.vision.barcode.BarcodeScanner,
     ): ProcessedBagPhoto? {
         return try {
             val bitmap = decodeBagPhotoBitmap(uriStr) ?: return null
 
-            val originalText = recognizeText(recognizer, bitmap)
-            val alignedBitmap = if (originalText != null && originalText.textBlocks.isNotEmpty()) {
-                val alignment = ImagePreprocessor.computeAlignment(originalText.textBlocks)
+            val originalText = recognizeText(bitmap)
+            val alignedBitmap = if (originalText != null && originalText.blocks.isNotEmpty()) {
+                val alignment = ImagePreprocessor.computeAlignment(originalText.blocks)
                 ImagePreprocessor.applyAlignment(bitmap, alignment)
             } else {
                 bitmap
             }
-            val alignedText = recognizeText(recognizer, alignedBitmap)
+            val alignedText = recognizeText(alignedBitmap)
             val enhancedBitmap = ImagePreprocessor.preprocessForOcr(alignedBitmap)
-            val enhancedText = recognizeText(recognizer, enhancedBitmap)
+            val enhancedText = recognizeText(enhancedBitmap)
 
             val passes = listOfNotNull(
                 buildScanPass("original", bitmap, originalText, knownFieldValues),
@@ -1518,7 +1514,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private fun decodeBagPhotoBitmap(uriStr: String): Bitmap? {
         val uri = uriStr.toUri()
         return if (uri.scheme == "content") {
-            val resolver = application?.contentResolver ?: return null
+            val resolver = application?.contentResolver ?: run {
+                Log.w(BAG_PHOTO_TAG, "Cannot decode content URI: application is null in BrewViewModel")
+                return null
+            }
             val orientation = try {
                 resolver.openInputStream(uri)?.use { input ->
                     ExifInterface(input).getAttributeInt(
@@ -1543,12 +1542,12 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private fun buildScanPass(
         label: String,
         bitmap: Bitmap,
-        text: Text?,
+        text: RecognizedText?,
         knownFieldValues: KnownFieldValues,
         countryHint: CoffeeCountryDictionary? = null,
     ): ScanPass? {
         val ocrText = text ?: return null
-        val blocks = ocrText.textBlocks.map { block ->
+        val blocks = ocrText.blocks.map { block ->
             OcrFieldExtractor.OcrTextBlock(
                 text = block.text,
                 heightPx = block.boundingBox?.height() ?: 0,
@@ -1563,7 +1562,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             label = label,
             result = OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownFieldValues, countryHint),
             blocks = blocks,
-            fullText = ocrText.text,
+            fullText = ocrText.fullText,
         )
     }
 
@@ -2090,13 +2089,14 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private fun normalizeMatchText(text: String): String =
         text.lowercase().replace(Regex("[^\\p{L}\\p{N}]+"), " ").trim()
 
-    private suspend fun recognizeText(
-        recognizer: com.google.mlkit.vision.text.TextRecognizer,
-        bitmap: Bitmap,
-    ): Text? = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-        recognizer.process(InputImage.fromBitmap(bitmap, 0))
-            .addOnSuccessListener { result -> cont.resume(result) }
-            .addOnFailureListener { cont.resume(null) }
+    /**
+     * Run Mindlayer OCR on [bitmap]. Returns `null` when no OCR service is
+     * wired (e.g. tests, fallback path) or when the service fails for any
+     * reason — callers degrade by treating the photo as "no text".
+     */
+    private suspend fun recognizeText(bitmap: Bitmap): RecognizedText? {
+        val service = ocrService ?: return null
+        return service.recognize(bitmap)
     }
 
     private suspend fun scanBarcodes(
