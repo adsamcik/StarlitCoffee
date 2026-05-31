@@ -6,6 +6,10 @@ import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class StarlitCoffeeApp : Application() {
     val llmProvider: LlmInferenceProvider by lazy {
@@ -29,6 +33,36 @@ class StarlitCoffeeApp : Application() {
         } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
             Log.e(TAG, "Mindlayer OCR init failed", error)
             null
+        }
+    }
+
+    /**
+     * Application-scoped supervisor for one-shot warmup launches that
+     * outlive any single ViewModel. Cancelled implicitly when the process
+     * dies; nothing here should hold cancellable long-lived resources.
+     */
+    private val warmupScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    override fun onCreate() {
+        super.onCreate()
+        // Eagerly warm the Mindlayer SDK off the main thread. Each
+        // dereference triggers Mindlayer.connect() → HistoryStore →
+        // Room/SQLCipher open. SQLCipher PBKDF2 key derivation is
+        // intentionally slow (~100–500 ms on cold start); doing it
+        // synchronously from BrewViewModelFactory.create() (which runs
+        // on Main when Compose first resolves the BrewViewModel) caused
+        // visible main-thread hitches and Choreographer frame skips on
+        // first navigation to the scan flow. Warming here ensures the
+        // lazy blocks have already initialised by the time the factory
+        // touches the properties.
+        warmupScope.launch {
+            // Touch both lazy properties on a background thread. The
+            // results land in the lazy cache; subsequent main-thread
+            // reads are pure field lookups.
+            @Suppress("UnusedExpression")
+            llmProvider
+            @Suppress("UnusedExpression")
+            ocrService
         }
     }
 
