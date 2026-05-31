@@ -558,7 +558,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     companion object {
         private const val BAG_PHOTO_TAG = "BagPhotoProcessing"
-        private const val BAG_PHOTO_LLM_TIMEOUT_MS = 65_000L
+        private const val BAG_PHOTO_LLM_TIMEOUT_MS = 305_000L
         private const val MAX_LLM_PHOTO_BYTES = 20 * 1024 * 1024
         private const val LLM_READ_BUFFER_SIZE = 8 * 1024
 

@@ -256,8 +256,16 @@ class MindlayerLlmInferenceProvider(
         /** Preferred backend for prewarm. GPU is the standard fast path. */
         private val PREWARM_BACKEND = InferenceBackend.GPU
 
-        /** Bounded generation time so a wedged model cannot hang a scan forever. */
-        internal const val EXTRACTION_TIMEOUT_MS = 60_000L
+        /**
+         * Bounded generation time so a wedged model cannot hang a scan forever.
+         *
+         * Sized for first-cold-pass Gemma 4 vision inference on a CPU-only
+         * emulator (typically 60–180 s for the first multimodal call before
+         * KV-cache + XNNPack weight-cache warm up). On a real device with
+         * NPU/GPU acceleration the call returns in single-digit seconds, so
+         * this budget is dominated by emulator / weak-CPU worst-case.
+         */
+        internal const val EXTRACTION_TIMEOUT_MS = 300_000L
 
         internal fun buildSystemPrompt(extended: Boolean = false): String =
             if (extended) SYSTEM_PROMPT_14 else SYSTEM_PROMPT_10
