@@ -232,6 +232,24 @@ object BagPhotoScanSupport {
     fun buildPrefill(resolvedFields: Map<String, BagFieldEvidence>): OcrFieldExtractor.OcrExtractionResult {
         fun value(fieldName: String): String? = resolvedFields[fieldName]?.value
         val fieldConfidence = resolvedFields.mapValues { (_, evidence) -> evidence.confidence }
+        // isDecaf is Boolean? with three-state semantics:
+        //   true  → definitely decaf  (LLM/OCR confirmed a decaf marker)
+        //   false → definitely regular (LLM explicitly returned `false`)
+        //   null  → unknown / not visible
+        // The candidate value is the string the LLM or OCR emitted — "true",
+        // "false", "yes", "no", or a freeform marker. We only flip to true
+        // when the value parses as an affirmative; "false" must round-trip
+        // as false, not as "field present, therefore decaf". The earlier
+        // bug treated mere presence of the key as truth, which caused every
+        // bag where the LLM responded with `isDecaf: false` to render as
+        // decaf in the review sheet.
+        val isDecaf = value("isDecaf")?.let { raw ->
+            when (raw.trim().lowercase()) {
+                "true", "yes", "1", "y", "decaf", "decaffeinated", "bezkofeinová", "bezkofeinova" -> true
+                "false", "no", "0", "n", "regular", "caffeinated" -> false
+                else -> true
+            }
+        }
         return OcrFieldExtractor.OcrExtractionResult(
             name = value("name"),
             roaster = value("roaster"),
@@ -246,7 +264,7 @@ object BagPhotoScanSupport {
             roastDate = value("roastDate"),
             expiryDate = value("expiryDate"),
             weight = value("weight"),
-            isDecaf = resolvedFields.containsKey("isDecaf").takeIf { it },
+            isDecaf = isDecaf,
             fieldConfidence = fieldConfidence,
         )
     }

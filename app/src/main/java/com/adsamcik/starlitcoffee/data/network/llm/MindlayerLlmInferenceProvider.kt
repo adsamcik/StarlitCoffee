@@ -120,6 +120,28 @@ class MindlayerLlmInferenceProvider(
             )
         }
 
+        // Pre-warm the engine with the safe (CPU) backend BEFORE
+        // `mindlayer.infer { ephemeralSession { ... } }` triggers `createSession`.
+        // `createSession` doesn't take a backend hint, so on a cold service
+        // process the engine init falls back to the service-side default —
+        // historically GPU, which the emulator's software GPU SIGSEGVs on
+        // during LiteRT-LM's `nativeCreateEngine` log-formatting. Calling
+        // `prewarm(CPU)` first locks in the safe backend; if the engine was
+        // already loaded with a different backend, `prewarm` is a no-op.
+        // Errors here are non-fatal — they may mean the service is briefly
+        // unavailable; the actual `infer` call below will surface a clean
+        // `Failed` if connection is genuinely broken.
+        @Suppress("TooGenericExceptionCaught")
+        try {
+            mindlayer.prewarm(PREWARM_BACKEND)
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (_: Exception) {
+            // Best-effort — fall through to inference and let the
+            // streaming infer call surface a meaningful failure if the
+            // service is truly down.
+        }
+
         val prompt = buildExtractionPrompt(request)
         val extended = useExtendedSchema(request)
 
@@ -159,6 +181,10 @@ class MindlayerLlmInferenceProvider(
                 MINDLAYER_LLM_TAG,
                 "LLM inference complete: ${responseText.length} chars",
             )
+            if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
+                logLongDebug("LLM prompt (debug)", prompt)
+                logLongDebug("LLM response (debug)", responseText)
+            }
             parseResponse(responseText, request.fieldsNeeded)
         } catch (_: TimeoutCancellationException) {
             LlmExtractionResult.Failed(
@@ -214,6 +240,23 @@ class MindlayerLlmInferenceProvider(
     }
 
     /**
+     * Log a multi-line / potentially large string in 3-4 KB chunks so logcat's
+     * ~4 KB per-message ceiling doesn't truncate the diagnostic dump. Only
+     * called from the debug-build branch above.
+     */
+    private fun logLongDebug(label: String, payload: String) {
+        val maxChunk = 3500
+        if (payload.length <= maxChunk) {
+            android.util.Log.d(MINDLAYER_LLM_TAG, "$label: $payload")
+            return
+        }
+        val chunks = (payload.length + maxChunk - 1) / maxChunk
+        payload.chunked(maxChunk).forEachIndexed { index, chunk ->
+            android.util.Log.d(MINDLAYER_LLM_TAG, "$label (${index + 1}/$chunks): $chunk")
+        }
+    }
+
+    /**
      * Backwards-compatible alias for [prewarm]. Older call sites used this
      * name before the interface gained a [prewarm] hook; kept for any
      * external test that still references it directly.
@@ -222,8 +265,20 @@ class MindlayerLlmInferenceProvider(
     suspend fun ensureConnected() = prewarm()
 
     companion object {
-        /** Max tokens per extraction. Enough for full 10-field JSON with tasting notes. */
-        private const val MAX_TOKENS = 2048
+        /**
+         * Max tokens per extraction.
+         *
+         * Sized for the 14-field extended schema with verbose tasting notes
+         * and roastery text in any language. The earlier 2048 budget hit
+         * "Failed to parse LLM response as JSON: ... 'EOF' instead at path"
+         * mid-field on real Czech-language Nordbeans bags where the model
+         * generated multi-sentence "uncertain" explanations for
+         * `processType` / `tastingNotes` before circling back to the rest
+         * of the schema. 4096 matches the engine's `maxMaxTokens`
+         * (`MemoryBudget.deviceTier.maxMaxTokens`) so we always have the
+         * full headroom the engine can give us.
+         */
+        private const val MAX_TOKENS = 4096
 
         /** Low temperature for deterministic structured JSON output. */
         private const val EXTRACTION_TEMPERATURE = 0.1f
@@ -234,8 +289,29 @@ class MindlayerLlmInferenceProvider(
         /** Tight topP for structured output. */
         private const val EXTRACTION_TOP_P = 0.9f
 
-        /** Preferred backend for prewarm. GPU is the standard fast path. */
-        private val PREWARM_BACKEND = InferenceBackend.GPU
+        /**
+         * Preferred backend for prewarm.
+         *
+         * **CPU was chosen over GPU intentionally for the bag-scan path.**
+         * The emulator's software GPU is unreliable for Gemma 4 E2B init —
+         * LiteRT-LM's GPU initialiser SIGSEGVs roughly half the time on the
+         * Android x86_64 SDK emulator during `nativeCreateEngine`, taking the
+         * `:ml` service process down with it. That's a fresh-process crash
+         * that the [EngineRestartStore] / process-restart workaround cannot
+         * recover from in the same scan session, because:
+         *   1. The first scan's prewarm hits the SIGSEGV → process dies.
+         *   2. The reconnect lands in the rate-limit window and gets
+         *      `MLERR:5002` for the next ~60 s.
+         *   3. By the time rate-limit clears, the scan has already failed
+         *      and surfaced "Inference failed: null" to the user.
+         *
+         * CPU init takes ~5–10 s longer on the first cold load (~45 s vs
+         * ~35 s on this emulator) but never crashes. Subsequent extractions
+         * stay warm. On real devices the GPU path is healthy; if a future
+         * SDK adds an `AUTO` backend or per-feature health caching, switch
+         * back. Tracked alongside LiteRT-LM #1686 / #2028.
+         */
+        private val PREWARM_BACKEND = InferenceBackend.CPU
 
         /**
          * Bounded generation time so a wedged model cannot hang a scan forever.
@@ -292,6 +368,8 @@ Rules:
 - Use "not_visible" when the OCR text does not contain the information. Never guess.
 - Use "uncertain" when the OCR characters are garbled, partial, or ambiguous.
 - Use "found" only when you can clearly read or determine the value from the OCR text.
+- name vs roaster: `name` is the product / blend (e.g. "Yirgacheffe", "Wildkaffee"); `roaster` is the company brand (e.g. "Counter Culture", "Kaffa"). Do not confuse the two.
+- process: ONLY actual processing methods (Washed, Natural, Honey, Anaerobic, Wet-hulled, Carbonic Maceration). Do NOT use bean-form words like "Beans", "Whole Bean", "Bohnen", "En Grains" — those are not processes.
 - Correct obvious OCR errors only when the intended word is unambiguous from context.
 - Respond with ONLY a JSON object. No markdown fences or explanation.
 """.trimIndent()
@@ -327,6 +405,9 @@ Response format (JSON only, no markdown):
 }
 
 Field notes:
+- name: the product / blend name — usually the most visually-prominent text on the front. Do NOT use the generic origin descriptor (e.g. "Kaffa Forest Ethiopia") if a distinct product name is present (e.g. "Wildkaffee" / "Café Sauvage"). When unsure, prefer the proper-noun brand/blend name over the geographic descriptor.
+- roaster: the company / brand that roasted the bag — usually a logo or top-of-front text (e.g. "Kaffa", "Counter Culture", "Square Mile"). Do NOT use product-line words (e.g. "Wildkaffee", "Espresso Blend") as the roaster. If the OCR mangle is clearly a derivative of the brand (e.g. "ILDKAFFEE" → "Wildkaffee" line, with "Kaffa" elsewhere in the text → roaster is "Kaffa"), prefer the recovered brand.
+- processType: ONLY use this for actual coffee processing methods — Washed, Natural / Dry, Honey (red/yellow/black/white), Anaerobic, Semi-washed, Wet-hulled / Giling Basah, Carbonic Maceration. Do NOT use grind / form descriptors like "Beans", "Whole Bean", "Ground", "Bohnen", "En Grains", "Gemahlen", "Mletá", "Zrnková" — those are bean form, not process. When the OCR text only contains bean-form words, emit `not_visible` for processType.
 - roastLevel: common values are Light, Medium, Dark — but also accept roaster-style labels like "Filter", "Espresso", or "Omni" when that is what the OCR text says.
 - roastDate/expiryDate: normalize to YYYY-MM-DD if possible; otherwise emit the string as found in the OCR text.
 - isDecaf: boolean. Only set true when the OCR text explicitly contains decaf / bezkofeinová / decaffeinated; false when clearly regular / caffeinated; not_visible otherwise.
