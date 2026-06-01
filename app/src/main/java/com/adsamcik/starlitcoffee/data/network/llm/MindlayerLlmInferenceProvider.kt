@@ -583,7 +583,7 @@ Rules:
                 append("\n\"\"\"")
                 append("\n$safe")
                 append("\n\"\"\"")
-                append("\nThe OCR may have errors (mis-recognised glyphs, missing diacritics, run-together words). Correct only when the intended value is unambiguous from context.")
+                append("\nThe OCR may have errors (mis-recognised glyphs, missing diacritics, run-together words) and may be in any language. Apply the system prompt's multilingual rules — translate concept fields (origin / region / process / roastLevel / variety / tastingNotes) to canonical English, keep proper-noun fields (name / roaster / farm) verbatim. Correct OCR glyph errors only when the intended word is unambiguous from context.")
             }
 
             if (request.existingFields.isNotEmpty()) {
