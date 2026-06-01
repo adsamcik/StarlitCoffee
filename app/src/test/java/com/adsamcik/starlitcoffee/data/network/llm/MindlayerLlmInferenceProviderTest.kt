@@ -670,6 +670,110 @@ class MindlayerLlmInferenceProviderTest {
         assertFalse("Default (10-field) prompt should NOT mention 'isDecaf'", default.contains("isDecaf"))
     }
 
+    // ==================== Multilingual rules ====================
+    //
+    // The bag-extraction prompts must stay LANGUAGE-BLIND — they instruct
+    // the model to read OCR in any source language and emit concept fields
+    // in canonical English while keeping proper-noun fields verbatim. We
+    // deliberately do NOT enumerate per-language vocabularies (country
+    // names in Czech, process verbs in German, decaf markers in Japanese,
+    // etc.) because that does not scale — adding the 50th language would
+    // require updating the prompt, regressing the others, and re-running
+    // every eval. These tests pin the principle so a well-meaning future
+    // change does not accidentally reintroduce per-language tables.
+
+    @Test
+    fun `buildSystemPrompt 10 has multilingual rules and no per-language enumeration`() {
+        val prompt = MindlayerLlmInferenceProvider.buildSystemPrompt(extended = false)
+        assertMultilingualPrinciples(prompt, label = "SYSTEM_PROMPT_10")
+    }
+
+    @Test
+    fun `buildSystemPrompt 14 has multilingual rules and no per-language enumeration`() {
+        val prompt = MindlayerLlmInferenceProvider.buildSystemPrompt(extended = true)
+        assertMultilingualPrinciples(prompt, label = "SYSTEM_PROMPT_14")
+    }
+
+    private fun assertMultilingualPrinciples(prompt: String, label: String) {
+        // 1. Explicit multilingual posture.
+        assertTrue(
+            "$label must instruct the model that OCR may be in ANY language",
+            prompt.contains("ANY language"),
+        )
+        assertTrue(
+            "$label must explicitly warn against per-language enumeration",
+            prompt.contains("Do not enumerate languages"),
+        )
+
+        // 2. Canonical English output for concept fields.
+        assertTrue(
+            "$label must instruct canonical English output for concept fields",
+            prompt.contains("canonical English") || prompt.contains("canonical ENGLISH"),
+        )
+        listOf("Colombia", "Ethiopia").forEach { country ->
+            assertTrue(
+                "$label must give an English-country example like '$country' so the model knows " +
+                    "the OUTPUT contract (not the input language)",
+                prompt.contains(country),
+            )
+        }
+        listOf("Washed", "Natural", "Anaerobic").forEach { process ->
+            assertTrue(
+                "$label must give an English process example like '$process'",
+                prompt.contains(process),
+            )
+        }
+
+        // 3. Verbatim preservation of proper-noun fields.
+        assertTrue(
+            "$label must instruct that proper-noun fields stay VERBATIM",
+            prompt.contains("VERBATIM"),
+        )
+
+        // 4. Universal field-type guards that apply regardless of language.
+        assertTrue(
+            "$label must include the universal process-verb rejection guard",
+            prompt.contains("local-language word"),
+        )
+
+        // 5. Regression guard: NO per-language vocabulary enumeration.
+        // If any of these strings ever reappear, the prompt has slipped back
+        // toward hard-coded per-language tables — pick a different mechanism
+        // (knownFieldValues, multilingual model knowledge, etc.) instead.
+        //
+        // Only tokens that are DISTINCTLY non-English are listed here. The
+        // universal field-type guards legitimately use English example words
+        // like "natural", "honey", "roasted", "beans" in their explanation,
+        // so we cannot regress-check on those without false positives.
+        val perLanguageLeakage = listOf(
+            // Czech-specific tokens (diacritics make them unambiguous)
+            "Pražená", "Pražené", "Pražení", "Prazeni",
+            "promytá", "promyte", "promyta", "promyté",
+            "sušená", "sušené", "přirozená", "přirozené",
+            "polosuchá", "medová", "anaerobní",
+            "Kolumbie", "Etiopie", "Keňa", "Brazílie", "Indonésie",
+            "Kostarika", "Mexiko", "Ekvádor", "Tanzanie",
+            "kávová zrna", "bezkofeinová", "dekofeinizovaná",
+            // German-specific tokens (Bohnen / Gemahlen / MHD / umlauts)
+            "Bohnen", "Gemahlen", "entkoffeiniert", "koffeinfrei",
+            "MHD", "Kolumbien", "Äthiopien",
+            // French-specific tokens (accents / distinctive spellings)
+            "En Grains", "lavé", "décaféiné", "torréfié",
+            // Spanish-specific tokens (only distinctly Spanish forms)
+            "descafeinado",
+            // East Asian tokens (distinct scripts)
+            "デカフェ", "焙煎", "水洗", "ナチュラル", "低咖啡因",
+        )
+        perLanguageLeakage.forEach { token ->
+            assertFalse(
+                "$label must NOT enumerate language-specific tokens — found '$token'. " +
+                    "If you need per-language coverage, rely on the multilingual model " +
+                    "knowledge plus the universal field-type guards, not hard-coded tables.",
+                prompt.contains(token),
+            )
+        }
+    }
+
     // ==================== useExtendedSchema OCR-guard ====================
 
     @Test

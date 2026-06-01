@@ -351,7 +351,7 @@ For each field, report your confidence:
 Response format (JSON only, no markdown):
 {
   "fields": {
-    "name": {"value": "Ethiopia Yirgacheffe", "status": "found"},
+    "name": {"value": "Yirgacheffe", "status": "found"},
     "roaster": {"value": "Counter Culture", "status": "found"},
     "origin": {"value": "Ethiopia", "status": "found"},
     "variety": {"value": null, "status": "not_visible"},
@@ -364,12 +364,27 @@ Response format (JSON only, no markdown):
   }
 }
 
+Multilingual rules (apply BEFORE everything else):
+- The OCR text may be in ANY language. Read it in its source language and use your knowledge of coffee terminology in that language to understand what each token means. Do not enumerate languages — handle whatever you receive.
+- Output CONCEPT fields in canonical ENGLISH regardless of the source language:
+  * `origin`: the English country name (e.g. "Colombia", "Ethiopia", "Kenya"). Translate from any source language.
+  * `process`: the English coffee-industry term (e.g. "Washed", "Natural", "Honey", "Anaerobic", "Wet-hulled", "Carbonic Maceration", "Sugarcane EA Decaf", "Swiss Water Decaf", "CO2 Decaf"). Translate from any source language.
+  * `roastLevel`: the English roast term (e.g. "Light", "Medium", "Dark", "Filter", "Espresso", "Omni"). Translate from any source language.
+  * `tastingNotes`: translate flavour descriptors to English, lowercase, comma-separated.
+- Keep PROPER-NOUN fields VERBATIM in their original spelling — brand and identity strings must not be translated:
+  * `name`: blend / product name.
+  * `roaster`: company / brand name.
+- Structural fields use universal formats: `roastDate` as YYYY-MM-DD when possible; `weight` in its native unit (metric preferred); `altitude` as the number range plus unit.
+
 Rules:
 - Use "not_visible" when the OCR text does not contain the information. Never guess.
-- Use "uncertain" when the OCR characters are garbled, partial, or ambiguous.
+- Use "uncertain" when the OCR characters are garbled, partial, or ambiguous, OR when you translated a non-English source.
 - Use "found" only when you can clearly read or determine the value from the OCR text.
-- name vs roaster: `name` is the product / blend (e.g. "Yirgacheffe", "Wildkaffee"); `roaster` is the company brand (e.g. "Counter Culture", "Kaffa"). Do not confuse the two.
-- process: ONLY actual processing methods (Washed, Natural, Honey, Anaerobic, Wet-hulled, Carbonic Maceration). Do NOT use bean-form words like "Beans", "Whole Bean", "Bohnen", "En Grains" — those are not processes.
+- name vs roaster: `name` is the product / blend; `roaster` is the company brand. Do not confuse the two.
+- Universal field-type guards (apply regardless of language):
+  * Words that describe a coffee PROCESS (the local-language word for "washed", "natural", "honey", "anaerobic", "wet-hulled", etc.) or a ROAST ACTION (the local-language word for "roasted", "roast", "roasting", etc.) are NEVER `origin`, `name`, or `roaster`. They describe how the coffee was made or roasted, never where it came from or what it's called.
+  * Words that describe BEAN FORM (the local-language word for "beans", "whole bean", "ground", etc.) are NEVER `process`. Emit `not_visible` for `process` if only bean-form words are present.
+  * Measurement and date strings (numbers + a unit like "m", "g", "kg", "%", or a date in any format) are NEVER `name`, `roaster`, or `origin`. Emit `not_visible` if no real proper-noun value is present.
 - Correct obvious OCR errors only when the intended word is unambiguous from context.
 - Respond with ONLY a JSON object. No markdown fences or explanation.
 """.trimIndent()
@@ -387,7 +402,7 @@ For each field, report your confidence:
 Response format (JSON only, no markdown):
 {
   "fields": {
-    "name":         {"value": "Ethiopia Yirgacheffe",  "status": "found"},
+    "name":         {"value": "Yirgacheffe",           "status": "found"},
     "roaster":      {"value": "Counter Culture",       "status": "found"},
     "origin":       {"value": "Ethiopia",              "status": "found"},
     "region":       {"value": "Yirgacheffe",           "status": "found"},
@@ -404,20 +419,39 @@ Response format (JSON only, no markdown):
   }
 }
 
+Multilingual rules (apply BEFORE field notes):
+- The OCR text may be in ANY language. Read it in its source language and use your knowledge of coffee terminology in that language to understand what each token means. Do not enumerate languages — handle whatever you receive.
+- Output CONCEPT fields in canonical ENGLISH regardless of the source language:
+  * `origin`: the English country name (e.g. "Colombia", "Ethiopia", "Kenya"). Translate the country from any source language to its standard English form.
+  * `region`: the standard English transliteration when one exists (e.g. "Yirgacheffe", "Huila", "Nariño"); otherwise the local spelling.
+  * `process`: the English coffee-industry term — "Washed", "Natural" (or "Dry"), "Honey" (with colour qualifier when present: "Red Honey", "Yellow Honey", "Black Honey", "White Honey"), "Anaerobic", "Semi-washed", "Wet-hulled" (or "Giling Basah"), "Carbonic Maceration", "Sugarcane EA Decaf", "Swiss Water Decaf", "CO2 Decaf". Translate the source-language process word to its English equivalent.
+  * `roastLevel`: the English roast term — "Light", "Medium", "Dark", "Filter", "Espresso", "Omni". Translate from any source language.
+  * `variety`: the standard cultivar name (e.g. "Heirloom", "Bourbon", "Geisha", "Caturra", "Catuai", "SL28", "SL34", "Pacamara", "Maragogype", "Typica"). Cultivar names are essentially language-independent — use the standard form.
+  * `tastingNotes`: translate flavour descriptors to English. Keep them lowercase, comma-separated.
+- Keep PROPER-NOUN fields VERBATIM in their original spelling — these are brand and identity strings that must not be translated:
+  * `name`: blend / product name. If OCR garbled it but the intended local-language spelling is recoverable, output the recovered local-language spelling. Never translate.
+  * `roaster`: company / brand name. Never translate, never substitute the country or product name. Trademarked brand names stay verbatim.
+  * `farm`: estate / cooperative name. Keep the local spelling.
+- Structural fields use universal formats:
+  * `roastDate` / `expiryDate`: emit as YYYY-MM-DD whenever the source format makes a full date recoverable. Common source formats include DD.MM.YYYY, MM/YYYY (no day → YYYY-MM), YYYY/MM/DD, and best-before/use-by phrases (strip the phrase, keep the date). When only a month + year are present, emit YYYY-MM.
+  * `weight`: native unit as written (metric preferred: 250g, 1kg, 340g; ounces when the bag is imperial-only).
+  * `altitude`: the number range plus unit, ASCII when possible (e.g. "1400-2100m", "1900 masl").
+  * `isDecaf`: boolean. true when the OCR text explicitly contains a decaffeination marker in ANY language (the local-language word for "decaf" / "decaffeinated", or a named decaffeination process like "Sugarcane EA Decaf", "Swiss Water Decaf", "CO2 Decaf"). false when clearly regular / caffeinated. not_visible otherwise.
+
 Field notes:
-- name: the product / blend name — usually the most visually-prominent text on the front. Do NOT use the generic origin descriptor (e.g. "Kaffa Forest Ethiopia") if a distinct product name is present (e.g. "Wildkaffee" / "Café Sauvage"). When unsure, prefer the proper-noun brand/blend name over the geographic descriptor.
-- roaster: the company / brand that roasted the bag — usually a logo or top-of-front text (e.g. "Kaffa", "Counter Culture", "Square Mile"). Do NOT use product-line words (e.g. "Wildkaffee", "Espresso Blend") as the roaster. If the OCR mangle is clearly a derivative of the brand (e.g. "ILDKAFFEE" → "Wildkaffee" line, with "Kaffa" elsewhere in the text → roaster is "Kaffa"), prefer the recovered brand.
-- processType: ONLY use this for actual coffee processing methods — Washed, Natural / Dry, Honey (red/yellow/black/white), Anaerobic, Semi-washed, Wet-hulled / Giling Basah, Carbonic Maceration. Do NOT use grind / form descriptors like "Beans", "Whole Bean", "Ground", "Bohnen", "En Grains", "Gemahlen", "Mletá", "Zrnková" — those are bean form, not process. When the OCR text only contains bean-form words, emit `not_visible` for processType.
-- roastLevel: common values are Light, Medium, Dark — but also accept roaster-style labels like "Filter", "Espresso", or "Omni" when that is what the OCR text says.
-- roastDate/expiryDate: normalize to YYYY-MM-DD if possible; otherwise emit the string as found in the OCR text.
-- isDecaf: boolean. Only set true when the OCR text explicitly contains decaf / bezkofeinová / decaffeinated; false when clearly regular / caffeinated; not_visible otherwise.
-- OCR text may be in English or Czech — translate tasting notes to English when confident; keep proper nouns verbatim.
-- Correct obvious OCR errors only when the intended word is unambiguous from context (e.g. "FESAUVAGE" → "CAFÉ SAUVAGE").
+- name: usually the most visually-prominent text on the front. Do NOT use the generic origin descriptor (e.g. "Kaffa Forest Ethiopia") if a distinct product name is present (e.g. "Wildkaffee" / "Café Sauvage"). When unsure, prefer the proper-noun brand/blend name over the geographic descriptor.
+- roaster: usually a logo or top-of-front text. Do NOT use product-line words (e.g. "Wildkaffee", "Espresso Blend") as the roaster. If an OCR mangle is clearly a derivative of the brand (e.g. "ILDKAFFEE" → "Wildkaffee" line, with "Kaffa" elsewhere in the text → roaster is "Kaffa"), prefer the recovered brand.
+- processType: ONLY actual processing methods. Do NOT use grind / form descriptors (the local-language word for "beans", "whole bean", "ground", etc.) — those are bean form, not process. When the OCR text only contains bean-form words, emit `not_visible` for processType.
+
+Universal field-type guards (apply regardless of language — these prevent process / roast verbs and measurements from leaking into proper-noun fields when OCR is noisy):
+- Words that describe a coffee PROCESS (the local-language word for "washed", "natural", "honey", "anaerobic", "wet-hulled", "carbonic maceration", etc.) or a ROAST ACTION (the local-language word for "roasted", "roast", "roasting", etc.) and their OCR-garbled variants are NEVER `origin`, `region`, `farm`, `name`, or `roaster`. If the only candidate for one of those fields is such a verb, emit `not_visible` instead.
+- Measurement and date strings (numbers + a unit like "m", "g", "kg", "%", or a date in any format) are NEVER `name`, `roaster`, `origin`, `region`, or `farm`. Emit `not_visible` for those fields if no real proper-noun value is present.
 
 Rules:
 - Use "not_visible" when the OCR text does not contain the information. Never guess.
-- Use "uncertain" when the OCR characters are garbled, partial, or ambiguous.
+- Use "uncertain" when the OCR characters are garbled, partial, or ambiguous, OR when you translated a non-English source.
 - Use "found" only when you can clearly read or determine the value from the OCR text.
+- Correct obvious OCR errors only when the intended word is unambiguous from context (e.g. "FESAUVAGE" → "CAFÉ SAUVAGE", "TUNBAGA" → "Tumbaga").
 - Respond with ONLY a JSON object. No markdown fences or explanation.
 """.trimIndent()
 
