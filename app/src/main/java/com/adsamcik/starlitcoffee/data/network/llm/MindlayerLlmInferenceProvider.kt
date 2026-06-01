@@ -1,8 +1,6 @@
 package com.adsamcik.starlitcoffee.data.network.llm
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import com.adsamcik.starlitcoffee.scan.model.FieldSource
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
@@ -30,51 +28,37 @@ import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 
 private const val MINDLAYER_LLM_TAG = "MindlayerLlm"
-private const val MAX_DECODED_IMAGE_EDGE_PX = 1600
-
-private fun decodeImageCapped(imageBytes: ByteArray): Bitmap? {
-    @Suppress("TooGenericExceptionCaught")
-    return try {
-        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, bounds)
-        val longestEdge = maxOf(bounds.outWidth, bounds.outHeight)
-        val sampleSize = if (longestEdge > 0) {
-            computeSampleSize(longestEdge, MAX_DECODED_IMAGE_EDGE_PX)
-        } else {
-            1
-        }
-        val options = BitmapFactory.Options().apply {
-            inSampleSize = sampleSize
-            inPreferredConfig = Bitmap.Config.ARGB_8888
-        }
-        BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, options)
-    } catch (error: OutOfMemoryError) {
-        android.util.Log.w(MINDLAYER_LLM_TAG, "Image decode ran out of memory", error)
-        null
-    } catch (e: Exception) {
-        android.util.Log.w(MINDLAYER_LLM_TAG, "Image decode failed", e)
-        null
-    }
-}
-
-private fun computeSampleSize(longestEdge: Int, maxEdge: Int): Int {
-    var sample = 1
-    while (longestEdge / (sample * 2) >= maxEdge) {
-        sample *= 2
-    }
-    return sample
-}
 
 /**
  * LLM inference provider that uses the Mindlayer on-device LLM service.
  *
- * Sends coffee bag label images to a model running locally on the device
- * via the Mindlayer SDK. The LLM extracts structured coffee bag metadata
- * (name, roaster, origin, tasting notes, etc.) from the label image.
+ * # Architecture: OCR-first, text-only LLM
  *
- * Each extraction runs as a stateless one-shot via [Mindlayer.generateWithImage]:
- * no conversation history is carried over between bags, so the model never sees
- * a previous scan's image or response. This is essential for field-extraction
+ * Coffee bag photos are recognised by Mindlayer's PaddleOCR pipeline
+ * (`MindlayerOcrService`) into raw text BEFORE this provider is invoked. This
+ * class then runs Gemma 4 as a **text-only** structured-extraction step over
+ * the merged OCR text — no image is sent to the LLM. The flow is:
+ *
+ *   camera/gallery → crop/deskew/denoise (ImagePreprocessor)
+ *                 → PaddleOCR / PP-OCRv5 (Mindlayer.ocr)
+ *                 → Gemma 4 E2B text-only (this provider, here)
+ *                       └── interpret, correct, classify, structure
+ *
+ * Why text-only:
+ *  - Sidesteps LiteRT-LM #2028 (Gemma 4 + CPU + isolated process →
+ *    SIGSEGV in `liblitertlm_jni.so` on the second multimodal inference).
+ *  - 5–10× faster: Gemma 4 vision tokenises each image to ~256 tokens and
+ *    runs a vision encoder pass that dominates latency on CPU/emulator;
+ *    text-only inference is single-digit seconds in the warm case.
+ *  - Smaller context budget: no vision tokens compete with prompt + schema.
+ *  - Better accuracy on small/known fields PaddleOCR has already nailed
+ *    (origin, roaster, weight) — the LLM gets to verify and structure
+ *    rather than re-recognise pixels.
+ *
+ * Each extraction runs as a stateless one-shot via the v1 canonical
+ * builder `mindlayer.infer { ephemeralSession; text; outputText() }`: no
+ * conversation history is carried over between bags, so the model never sees
+ * a previous scan's text or response. This is essential for field-extraction
  * correctness — the SDK would otherwise accumulate turns in its HistoryStore
  * and replay them as context.
  *
@@ -104,14 +88,12 @@ class MindlayerLlmInferenceProvider(
         request: LlmExtractionRequest,
     ): LlmExtractionResult = withContext(Dispatchers.IO) {
         // Run the entire extraction off the main thread:
-        //  * BitmapFactory.decodeByteArray and Mindlayer's MediaTransfer.fromBitmap
-        //    are documented as blocking ("should be called from a background thread").
-        //  * The Mindlayer SDK does not switch dispatchers internally — every binder
-        //    call and per-token flow resumption runs on the caller's dispatcher.
-        // When called from viewModelScope.launch (Main), this would otherwise
-        // back up ML Kit completion callbacks and delay ImageProxy.close() on
-        // the analyzer thread, visibly freezing the camera preview while the
-        // model is generating tokens.
+        //  * The Mindlayer SDK does not switch dispatchers internally — every
+        //    binder call and per-token flow resumption runs on the caller's
+        //    dispatcher. When called from viewModelScope.launch (Main), this
+        //    would otherwise back up ML Kit completion callbacks and delay
+        //    ImageProxy.close() on the analyzer thread, visibly freezing the
+        //    camera preview while the model is generating tokens.
         // Boundary catch: Mindlayer's binder service can fail with various
         // service-disconnection or remote exceptions; the SDK surfaces them
         // via `awaitConnected`. Treat any non-cancellation throwable as
@@ -127,22 +109,20 @@ class MindlayerLlmInferenceProvider(
             )
         }
 
-        val bitmap = decodeImageCapped(request.imageBytes)
-            ?: return@withContext LlmExtractionResult.Failed(
-                "Failed to decode image",
-                retryable = false,
+        // Text-only architecture: the LLM never sees the image. If the OCR
+        // pipeline produced no text (blank label, dark photo, OCR failure),
+        // there is nothing for the LLM to interpret — degrade to Unavailable
+        // so the consensus engine surfaces a useful retry path rather than
+        // asking the model to hallucinate.
+        if (request.rawOcrText.isNullOrBlank()) {
+            return@withContext LlmExtractionResult.Unavailable(
+                "No OCR text available for LLM extraction (text-only mode)",
             )
+        }
 
         val prompt = buildExtractionPrompt(request)
         val extended = useExtendedSchema(request)
 
-        // try/finally guarantees the bitmap is recycled exactly once across
-        // every exit path — success, MindlayerException, generic Exception,
-        // or CancellationException propagation. The previous structure
-        // duplicated `bitmap.recycle()` in four places, which is safe today
-        // (Bitmap.recycle is idempotent on AOSP) but easy to break later
-        // by adding a new return without remembering to recycle.
-        //
         // Boundary catch on the generic `Exception` branch: model inference
         // can throw anything from JSON parsing failures to native crashes;
         // mapping all of them to a retryable Failed lets the consensus
@@ -155,6 +135,10 @@ class MindlayerLlmInferenceProvider(
             // output is requested through the prompt-embedded schema
             // (PromptAndValidate); the v1 infer{} builder has no extraContext
             // envelope, and parseResponse lenient-parses the JSON it returns.
+            //
+            // Text-only: no `image(...)` input. The OCR text travels in the
+            // prompt itself, escaped via the triple-quote block in
+            // `buildExtractionPrompt`.
             val responseText = withTimeout(EXTRACTION_TIMEOUT_MS) {
                 val handle = mindlayer.infer {
                     ephemeralSession {
@@ -162,7 +146,6 @@ class MindlayerLlmInferenceProvider(
                         maxTokens = MAX_TOKENS
                     }
                     text(prompt)
-                    image(bitmap)
                     sampling {
                         temperature = EXTRACTION_TEMPERATURE
                         topK = EXTRACTION_TOP_K
@@ -194,8 +177,6 @@ class MindlayerLlmInferenceProvider(
             )
         } catch (e: Exception) {
             LlmExtractionResult.Failed("Inference failed: ${e.message}", retryable = true)
-        } finally {
-            bitmap.recycle()
         }
     }
 
@@ -259,13 +240,13 @@ class MindlayerLlmInferenceProvider(
         /**
          * Bounded generation time so a wedged model cannot hang a scan forever.
          *
-         * Sized for first-cold-pass Gemma 4 vision inference on a CPU-only
-         * emulator (typically 60–180 s for the first multimodal call before
-         * KV-cache + XNNPack weight-cache warm up). On a real device with
-         * NPU/GPU acceleration the call returns in single-digit seconds, so
-         * this budget is dominated by emulator / weak-CPU worst-case.
+         * Sized for text-only Gemma 4 E2B inference (no vision encoder pass).
+         * Typical warm-pass latency on CPU emulator: 10–30 s for the schema +
+         * extraction. First-call cold init adds the engine warmup cost
+         * separately (handled by Mindlayer's [Mindlayer.prewarm]), so this
+         * budget covers the inference itself plus a small grace margin.
          */
-        internal const val EXTRACTION_TIMEOUT_MS = 300_000L
+        internal const val EXTRACTION_TIMEOUT_MS = 90_000L
 
         internal fun buildSystemPrompt(extended: Boolean = false): String =
             if (extended) SYSTEM_PROMPT_14 else SYSTEM_PROMPT_10
@@ -282,12 +263,14 @@ class MindlayerLlmInferenceProvider(
             !request.rawOcrText.isNullOrBlank() || request.existingFields.isNotEmpty()
 
         private val SYSTEM_PROMPT_10 = """
-You are a coffee bag label analyzer. Extract structured information from coffee bag label images.
+You are a coffee bag label analyzer. The user has run OCR on a coffee bag
+label photo. You receive the raw OCR text (which may contain recognition
+errors, line breaks, and noise) and you must extract structured fields.
 
 For each field, report your confidence:
-- "found": You can clearly see or read this on the label
-- "uncertain": You think you see something but it is unclear or partially occluded
-- "not_visible": This information is not visible on the label
+- "found": The OCR text clearly contains this value
+- "uncertain": The OCR text hints at this but is garbled, partial, or ambiguous
+- "not_visible": The OCR text does not contain enough information for this field
 
 Response format (JSON only, no markdown):
 {
@@ -306,19 +289,22 @@ Response format (JSON only, no markdown):
 }
 
 Rules:
-- Use "not_visible" when you cannot see the information. Never guess.
-- Use "uncertain" when text is blurry, partially occluded, or ambiguous.
-- Use "found" only when you can clearly read or determine the value.
+- Use "not_visible" when the OCR text does not contain the information. Never guess.
+- Use "uncertain" when the OCR characters are garbled, partial, or ambiguous.
+- Use "found" only when you can clearly read or determine the value from the OCR text.
+- Correct obvious OCR errors only when the intended word is unambiguous from context.
 - Respond with ONLY a JSON object. No markdown fences or explanation.
 """.trimIndent()
 
         private val SYSTEM_PROMPT_14 = """
-You are a coffee bag label analyzer. Extract structured information from coffee bag label images.
+You are a coffee bag label analyzer. The user has run OCR on a coffee bag
+label photo. You receive the raw OCR text (which may contain recognition
+errors, line breaks, and noise) and you must extract structured fields.
 
 For each field, report your confidence:
-- "found": You can clearly see or read this on the label
-- "uncertain": You think you see something but it is unclear or partially occluded
-- "not_visible": This information is not visible on the label
+- "found": The OCR text clearly contains this value
+- "uncertain": The OCR text hints at this but is garbled, partial, or ambiguous
+- "not_visible": The OCR text does not contain enough information for this field
 
 Response format (JSON only, no markdown):
 {
@@ -341,15 +327,16 @@ Response format (JSON only, no markdown):
 }
 
 Field notes:
-- roastLevel: common values are Light, Medium, Dark — but also accept roaster-style labels like "Filter", "Espresso", or "Omni" when that is what the label says.
-- roastDate/expiryDate: normalize to YYYY-MM-DD if possible; otherwise emit the string as printed on the label.
-- isDecaf: boolean. Only set true when the label explicitly says decaf / bezkofeinová / decaffeinated; false when clearly regular / caffeinated; not_visible otherwise.
-- Labels may be in English or Czech — translate tasting notes to English when confident; keep proper nouns verbatim.
+- roastLevel: common values are Light, Medium, Dark — but also accept roaster-style labels like "Filter", "Espresso", or "Omni" when that is what the OCR text says.
+- roastDate/expiryDate: normalize to YYYY-MM-DD if possible; otherwise emit the string as found in the OCR text.
+- isDecaf: boolean. Only set true when the OCR text explicitly contains decaf / bezkofeinová / decaffeinated; false when clearly regular / caffeinated; not_visible otherwise.
+- OCR text may be in English or Czech — translate tasting notes to English when confident; keep proper nouns verbatim.
+- Correct obvious OCR errors only when the intended word is unambiguous from context (e.g. "FESAUVAGE" → "CAFÉ SAUVAGE").
 
 Rules:
-- Use "not_visible" when you cannot see the information. Never guess.
-- Use "uncertain" when text is blurry, partially occluded, or ambiguous.
-- Use "found" only when you can clearly read or determine the value.
+- Use "not_visible" when the OCR text does not contain the information. Never guess.
+- Use "uncertain" when the OCR characters are garbled, partial, or ambiguous.
+- Use "found" only when you can clearly read or determine the value from the OCR text.
 - Respond with ONLY a JSON object. No markdown fences or explanation.
 """.trimIndent()
 
@@ -466,7 +453,23 @@ Rules:
         }
 
         internal fun buildExtractionPrompt(request: LlmExtractionRequest): String = buildString {
-            append("Extract coffee bag information from this label image.")
+            append("Extract coffee bag information from the OCR text below.")
+
+            // OCR text is the primary input in the text-only architecture —
+            // lead with it so the model sees the data before any context
+            // qualifiers. Escape backslash + triple-quote so OCR content
+            // cannot terminate the delimiter block and inject prompt
+            // instructions.
+            if (!request.rawOcrText.isNullOrBlank()) {
+                val safe = request.rawOcrText
+                    .replace("\\", "\\\\")
+                    .replace("\"\"\"", "\\\"\\\"\\\"")
+                append("\n\nRaw OCR text detected on the label:")
+                append("\n\"\"\"")
+                append("\n$safe")
+                append("\n\"\"\"")
+                append("\nThe OCR may have errors (mis-recognised glyphs, missing diacritics, run-together words). Correct only when the intended value is unambiguous from context.")
+            }
 
             if (request.existingFields.isNotEmpty()) {
                 val grouped = request.existingFields.entries.groupBy { it.value.source }
@@ -497,8 +500,8 @@ Rules:
 
                 append("\n\nRules for existing values:")
                 append("\n- user_confirmed: Treat as ground truth. Do not contradict.")
-                append("\n- barcode_lookup: High confidence database match. Only correct if clearly wrong on the label.")
-                append("\n- ocr_detected: Algorithmic text detection. Verify against what you see and correct if needed.")
+                append("\n- barcode_lookup: High confidence database match. Only correct if clearly wrong in the OCR text.")
+                append("\n- ocr_detected: Algorithmic text detection (these fields were extracted from the OCR text above by a rule-based parser). Verify and correct where the LLM has better judgement.")
                 append("\n- previous_ai_run: From a prior AI pass. Verify independently — do not blindly repeat.")
                 append("\n\nFocus on fields not yet identified.")
             }
@@ -528,22 +531,9 @@ Rules:
                     parts.forEach { append("\n- $it") }
                     append(
                         "\nPrefer these values when a match is close. " +
-                            "Do not force a match if the label clearly says something different.",
+                            "Do not force a match if the OCR text clearly says something different.",
                     )
                 }
-            }
-
-            if (!request.rawOcrText.isNullOrBlank()) {
-                // Escape backslash + triple-quote so OCR text cannot terminate
-                // the delimiter block and inject prompt instructions.
-                val safe = request.rawOcrText
-                    .replace("\\", "\\\\")
-                    .replace("\"\"\"", "\\\"\\\"\\\"")
-                append("\n\nRaw OCR text detected on the label:")
-                append("\n\"\"\"")
-                append("\n$safe")
-                append("\n\"\"\"")
-                append("\nUse this text to verify and correct what you see in the image. The OCR may have errors.")
             }
 
             append("\n\nRespond with JSON only.")

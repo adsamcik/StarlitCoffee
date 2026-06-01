@@ -6,18 +6,35 @@ import com.adsamcik.starlitcoffee.util.KnownFieldValues
 /**
  * Request payload for LLM-based bag field extraction.
  *
- * Carries everything the LLM needs: the label image, fields already
+ * # Architecture
+ *
+ * In the text-only architecture, [rawOcrText] is the **primary** input fed
+ * to the LLM. [imageBytes] are retained as the cache key and as a
+ * provenance pointer back to the original capture, but `MindlayerLlmInferenceProvider`
+ * does NOT decode or transmit them to the model. The image-to-text bridge
+ * lives entirely in `MindlayerOcrService` (PaddleOCR / PP-OCRv5).
+ *
+ * Carries everything the LLM needs: the merged OCR text, fields already
  * resolved by other sources (with source attribution so the LLM knows
  * what to trust), and the set of fields we still need.
  */
 data class LlmExtractionRequest(
-    /** JPEG-encoded bag label photo. */
+    /**
+     * JPEG-encoded bag label photo bytes. Retained for cache-key derivation
+     * (`LlmCacheKey`) and as audit metadata pointing back to the captured
+     * frame; NOT sent to the LLM in the text-only architecture.
+     */
     val imageBytes: ByteArray,
     /** Fields already resolved, with source attribution (user / LLM / OCR / lookup). */
     val existingFields: Map<String, FieldContext>,
     /** Which fields we want the LLM to try extracting (e.g., "name", "roaster", "tastingNotes"). */
     val fieldsNeeded: Set<String>,
-    /** Raw OCR text from ML Kit to provide as additional LLM context. */
+    /**
+     * Merged OCR text from PaddleOCR (`MindlayerOcrService`) — the
+     * primary input for text-only LLM extraction. Must be non-blank for
+     * the LLM to produce meaningful output; when null/blank, callers
+     * receive [LlmExtractionResult.Unavailable].
+     */
     val rawOcrText: String? = null,
     /** User's known field values for grounding (origins, varieties, roasters, etc.). */
     val knownFieldValues: KnownFieldValues? = null,

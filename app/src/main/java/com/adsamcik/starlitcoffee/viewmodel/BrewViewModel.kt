@@ -558,7 +558,11 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     companion object {
         private const val BAG_PHOTO_TAG = "BagPhotoProcessing"
-        private const val BAG_PHOTO_LLM_TIMEOUT_MS = 305_000L
+        // Text-only LLM enrichment runs no image inference, so the latency
+        // ceiling drops dramatically. 95 s sits 5 s above the inner provider
+        // timeout (90 s) so the inner one still fires first with a precise
+        // message; the outer is a belt-and-suspenders cap.
+        private const val BAG_PHOTO_LLM_TIMEOUT_MS = 95_000L
         private const val MAX_LLM_PHOTO_BYTES = 20 * 1024 * 1024
         private const val LLM_READ_BUFFER_SIZE = 8 * 1024
 
