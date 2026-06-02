@@ -408,9 +408,35 @@ sections are present:
   "Altitude", "Variety", "Process", "Best before") are NOT proper
   nouns — they MUST NEVER be extracted as `name`, `roaster`, or `farm`,
   even when the FRONT's proper-noun text is OCR-garbled and the BACK's
-  label text looks like a clean string. The bag's actual brand name and
-  product name are almost always on the FRONT; if the FRONT has any
-  plausible candidate at all, prefer it.
+  label text looks like a clean string.
+- **Multi-page cross-reference for proper nouns**: FRONT and BACK
+  are two photos of the same physical bag. When the same brand or
+  product name appears in MULTIPLE OCR variants across the two faces
+  (cursive logo on the front OCR'd differently than the printed
+  sticker on the back, or printed-and-mashed-together with adjacent
+  labels), treat them all as evidence of one intended word. Pick
+  the canonical spelling most likely to be a real brand or product,
+  not the most-frequent OCR variant. This applies to `name` /
+  `roaster` / `farm` only — the structured fields (weight, dates,
+  process, roastLevel, altitude, isDecaf) follow the type-specific
+  rules below.
+- **Decaf is NOT a process value**: `processType` lists what was done
+  to the green coffee (Washed / Natural / Honey / Anaerobic /
+  Sugarcane EA Decaf / Swiss Water Decaf / CO2 Decaf / etc.). The
+  bare word "Decaf" / "Decaffeinated" (in any language) sets
+  `isDecaf: true` but never `processType: "Decaf"`. If the OCR has
+  both a primary process word AND a decaf marker, use the primary
+  process for `processType` and set `isDecaf: true` separately. Only
+  emit a decaf-process string (e.g. "Sugarcane EA Decaf") when the
+  OCR explicitly names the decaffeination method AND no primary
+  process is present.
+- **Roast and expiry dates are different**: `roastDate` is when the
+  beans were roasted; `expiryDate` is best-before / minimum
+  durability. When both are labeled on the BACK (a roast-date label
+  vs a best-before / minimum-durability label, in whatever language
+  the bag uses), read each label's value. Never copy `roastDate`
+  into `expiryDate` — if only the roast date is visible, emit
+  `expiryDate: null, status: "not_visible"`.
 - **CONCEPT fields are still translated regardless of source side**:
   `origin`, `region`, `process`, `roastLevel`, `variety`, `tastingNotes`
   follow the multilingual rules below even when the only candidate
