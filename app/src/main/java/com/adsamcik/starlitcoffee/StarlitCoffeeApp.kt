@@ -5,7 +5,9 @@ import android.util.Log
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
+import com.adsamcik.starlitcoffee.data.network.ocr.HierarchicalOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
+import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -26,10 +28,15 @@ class StarlitCoffeeApp : Application() {
      * connection is only established once a scan actually needs it.
      * Null when the service binding throws at construction — callers
      * degrade by skipping OCR (LLM still runs against the raw image).
+     *
+     * Wrapped in [HierarchicalOcrService] so wide-and-mashed back-of-bag
+     * sticker regions (which the PaddleOCR detector glues into one
+     * unparseable token at low resolution) get re-OCR'd from a cropped +
+     * upscaled bitmap. See `HierarchicalOcrService` for the rationale.
      */
-    val ocrService: MindlayerOcrService? by lazy {
+    val ocrService: OcrService? by lazy {
         try {
-            MindlayerOcrService(this)
+            HierarchicalOcrService(MindlayerOcrService(this))
         } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
             Log.e(TAG, "Mindlayer OCR init failed", error)
             null

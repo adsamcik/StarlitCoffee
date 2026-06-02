@@ -45,6 +45,7 @@ import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmCallGate
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
+import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.RecognizedText
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
@@ -197,7 +198,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private val grinderData: GrinderDataProvider = DefaultGrinders,
     private val qrLinkMetadataExplorer: QrLinkMetadataExplorer = SafeQrLinkMetadataExplorer(),
     private val llmProvider: LlmInferenceProvider = StubLlmInferenceProvider(),
-    private val ocrService: MindlayerOcrService? = null,
+    private val ocrService: OcrService? = null,
     private val userBarcodeStemDao: UserBarcodeStemDao? = null,
     private val ratingReminderScheduler: RatingReminders? = null,
 ) : ViewModel() {

@@ -54,7 +54,7 @@ private const val TAG = "MindlayerOcr"
  * means the photo proceeds with no OCR text, and the LLM enrichment still
  * runs against the raw image.
  */
-class MindlayerOcrService(context: Context) {
+class MindlayerOcrService(context: Context) : OcrService {
 
     private val mindlayer: Mindlayer = Mindlayer.connect(context.applicationContext)
 
@@ -65,19 +65,19 @@ class MindlayerOcrService(context: Context) {
     private var capabilityAvailable: Boolean = false
 
     /** Free the underlying Mindlayer binding. Safe to call multiple times. */
-    fun close() {
+    override fun close() {
         mindlayer.disconnect()
     }
 
     /** Cheap check used by callers that want to short-circuit empty bitmaps. */
-    suspend fun isAvailable(): Boolean = ensureCapability()
+    override suspend fun isAvailable(): Boolean = ensureCapability()
 
     /**
      * Recognise text in [bitmap]. Returns `null` if OCR is unavailable or the
      * call failed before producing a result. Logs detail; never throws unless
      * cancellation propagates.
      */
-    suspend fun recognize(bitmap: Bitmap): RecognizedText? {
+    override suspend fun recognize(bitmap: Bitmap): RecognizedText? {
         if (!ensureCapability()) {
             Log.w(TAG, "OCR capability not advertised by Mindlayer service")
             return null
