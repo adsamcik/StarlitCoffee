@@ -1462,9 +1462,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             val enhancedText = recognizeText(enhancedBitmap)
 
             val passes = listOfNotNull(
-                buildScanPass("original", bitmap, originalText, knownFieldValues),
-                buildScanPass("aligned", alignedBitmap, alignedText, knownFieldValues),
-                buildScanPass("enhanced", enhancedBitmap, enhancedText, knownFieldValues),
+                buildScanPass("original", bitmap, originalText),
+                buildScanPass("aligned", alignedBitmap, alignedText),
+                buildScanPass("enhanced", enhancedBitmap, enhancedText),
             )
 
             val mergedText = passes.joinToString("\n") { it.fullText }.trim()
@@ -1548,8 +1548,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         label: String,
         bitmap: Bitmap,
         text: RecognizedText?,
-        knownFieldValues: KnownFieldValues,
-        countryHint: CoffeeCountryDictionary? = null,
     ): ScanPass? {
         val ocrText = text ?: return null
         val blocks = ocrText.blocks.map { block ->
@@ -1565,7 +1563,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
         return ScanPass(
             label = label,
-            result = OcrFieldExtractor.extractFieldsFromBlocks(blocks, knownFieldValues, countryHint),
+            // Field-level extraction is LLM-only (see OcrFieldExtractor).
+            // ScanPass carries the raw OCR blocks + full text forward to
+            // the LLM; pre-LLM field slots stay null on purpose.
+            result = OcrFieldExtractor.OcrExtractionResult(rawText = ocrText.fullText),
             blocks = blocks,
             fullText = ocrText.fullText,
         )

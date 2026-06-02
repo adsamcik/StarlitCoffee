@@ -212,7 +212,6 @@ fun LiveScanScreen(
         val analyzer = LiveScanAnalyzer(
             recognizer = textRecognizer,
             barcodeScanner = barcodeScanner,
-            knownFieldValues = knownFieldValues,
             callbacks = callbacks,
             mlKitExecutor = analysisExecutor,
             throttleMsProvider = { liveScanViewModel.currentThrottleMs.value },

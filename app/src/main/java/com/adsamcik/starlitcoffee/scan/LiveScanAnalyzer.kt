@@ -75,7 +75,6 @@ data class LiveScanAnalyzerCallbacks(
 class LiveScanAnalyzer(
     private val recognizer: TextRecognizer,
     private val barcodeScanner: BarcodeScanner,
-    private val knownFieldValues: KnownFieldValues,
     private val callbacks: LiveScanAnalyzerCallbacks,
     /**
      * Executor used for ML Kit Tasks listeners. Must be a non-main executor —
@@ -346,14 +345,15 @@ class LiveScanAnalyzer(
         @Suppress("TooGenericExceptionCaught")
         try {
             perfTracer?.startTimer("field_extract_ms")
-            lastOcrResult = OcrFieldExtractor.extractFields(
-                rawText = text,
-                knownFields = knownFieldValues,
-            )
+            // Field-level extraction is now LLM-only — see OcrFieldExtractor
+            // for the architecture note. Live-scan frames carry the raw OCR
+            // text forward without pre-LLM regex extraction. Downstream
+            // accumulation/consensus code reads field properties with
+            // null-tolerant `?.let { }` and gracefully contributes nothing
+            // until the LLM populates them on golden-frame escalation.
+            lastOcrResult = OcrFieldExtractor.OcrExtractionResult(rawText = text)
             perfTracer?.stopTimer("field_extract_ms")
-            android.util.Log.d(TAG, "Fields extracted: " +
-                "name=${lastOcrResult.name}, roaster=${lastOcrResult.roaster}, " +
-                "origin=${lastOcrResult.origin}, region=${lastOcrResult.region}")
+            android.util.Log.d(TAG, "OCR raw text captured (${text.length} chars); no pre-LLM extraction")
             callbacks.onOcrResult(lastOcrResult, quality, lumaGrid)
             android.util.Log.d(TAG, "onOcrResult callback completed OK")
             goldenFrameJpeg?.let { jpeg ->
