@@ -322,7 +322,7 @@ class MindlayerLlmInferenceProvider(
          * separately (handled by Mindlayer's [Mindlayer.prewarm]), so this
          * budget covers the inference itself plus a small grace margin.
          */
-        internal const val EXTRACTION_TIMEOUT_MS = 90_000L
+        internal const val EXTRACTION_TIMEOUT_MS = 300_000L
 
         internal fun buildSystemPrompt(extended: Boolean = false): String =
             if (extended) SYSTEM_PROMPT_14 else SYSTEM_PROMPT_10
