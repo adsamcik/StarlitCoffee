@@ -134,13 +134,25 @@ fun BagInventoryScreen(
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
-    // Photo picker launcher for "From photo" option
+    // Photo picker launcher for "From photo" option. Uses
+    // PickMultipleVisualMedia(maxItems = 2) so the user can pick front + back
+    // in one flow — the bag scan pipeline already merges OCR text across
+    // multiple photos (see BrewViewModel.processNewBagPhotos +
+    // emitBagPhotoResult.combinedOcrText), it just needs the consumer UI to
+    // surface that capability. Index 0 of the returned list is treated as
+    // the FRONT photo, index 1 as the BACK; the pipeline tags them that
+    // way and the LLM prompt knows the OCR text may span both sides.
+    //
+    // maxItems is the documented mechanism (Android 13+). Lower API levels
+    // see the system picker's own default cap; on those devices the user
+    // selects up to the system limit and the pipeline handles any list
+    // length correctly.
     val photoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-    ) { uri ->
-        if (uri != null) {
+        contract = ActivityResultContracts.PickMultipleVisualMedia(maxItems = 2),
+    ) { uris ->
+        if (uris.isNotEmpty()) {
             fabExpanded = false
-            val photosCsv = uri.toString()
+            val photosCsv = uris.joinToString(",") { it.toString() }
             showAddSheet = true
             isProcessingScan = true
             capturedPhotoUris = photosCsv

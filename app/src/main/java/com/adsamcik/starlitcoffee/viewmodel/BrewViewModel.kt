@@ -57,6 +57,7 @@ import com.adsamcik.starlitcoffee.notification.RatingReminders
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
+import com.adsamcik.starlitcoffee.util.BagOcrTextMerger
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
@@ -1150,7 +1151,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 extractedText = photo.fullText,
             )
         }
-        val combinedOcrText = processedPhotos.joinToString("\n\n") { it.fullText }.trim()
+        val combinedOcrText = combineOcrTextBySide(processedPhotos)
         val allCandidates = processedPhotos
             .flatMap { photo -> buildFieldCandidates(photo) }
             .toMutableList()
@@ -2102,6 +2103,27 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val service = ocrService ?: return null
         return service.recognize(bitmap)
     }
+
+    /**
+     * Merge the per-photo OCR text into a single string with side-labeled
+     * sections. Front-of-bag photos typically carry the prominent brand /
+     * name / origin / tasting-note text; back-of-bag photos carry the
+     * structured metadata strip (date, weight, batch, EAN, process method,
+     * altitude). Surfacing both halves in one prompt — with explicit
+     * `--- FRONT ---` / `--- BACK ---` headers — lets the LLM know which
+     * region a given token came from so a back-of-bag "12.12.2025" reads
+     * as a roastDate rather than a stray number, and a front-of-bag word
+     * like "Wildkaffee" reads as a name even when the back also has it.
+     *
+     * Photos whose OCR returned no text are dropped silently rather than
+     * emitting an empty section header — the LLM tolerates a missing side
+     * but a header-with-no-content confuses the section-routing heuristic.
+     *
+     * Section markers use ASCII so the OCR-text triple-quote escaping in
+     * `buildExtractionPrompt` doesn't trip on them.
+     */
+    private fun combineOcrTextBySide(photos: List<ProcessedBagPhoto>): String =
+        BagOcrTextMerger.combineBySide(photos.map { it.side to it.fullText })
 
     private suspend fun scanBarcodes(
         scanner: com.google.mlkit.vision.barcode.BarcodeScanner,
