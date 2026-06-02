@@ -492,8 +492,28 @@ Multilingual rules (apply BEFORE field notes):
   * `isDecaf`: boolean. true when the OCR text explicitly contains a decaffeination marker in ANY language (the local-language word for "decaf" / "decaffeinated", or a named decaffeination process like "Sugarcane EA Decaf", "Swiss Water Decaf", "CO2 Decaf"). false when clearly regular / caffeinated. not_visible otherwise.
 
 Field notes:
-- name: usually the most visually-prominent text on the front. Do NOT use the generic origin descriptor (e.g. "Kaffa Forest Ethiopia") if a distinct product name is present (e.g. "Wildkaffee" / "Café Sauvage"). When unsure, prefer the proper-noun brand/blend name over the geographic descriptor.
-- roaster: usually a logo or top-of-front text. Do NOT use product-line words (e.g. "Wildkaffee", "Espresso Blend") as the roaster. If an OCR mangle is clearly a derivative of the brand (e.g. "ILDKAFFEE" → "Wildkaffee" line, with "Kaffa" elsewhere in the text → roaster is "Kaffa"), prefer the recovered brand.
+- name vs roaster — separating the bag's PRODUCT designation from the COMPANY:
+  * **name** = the BAG-SPECIFIC product designation that distinguishes
+    this bag from other coffees by the same roaster. Often a product
+    descriptor combining origin / variety / process / decaf state (e.g.
+    "Tumbaga Decaf", "Yirgacheffe Natural", "Sidamo G1"), or a named
+    blend ("Wildkaffee", "Espresso Blend"), or just the famous origin
+    region when the roaster sells it under that name ("Yirgacheffe").
+    NOT the roaster's company name.
+  * **roaster** = the COMPANY that roasted the coffee. Usually a brand
+    logo on the front and the legal entity on the back's contact info.
+    A single word or short brand phrase.
+  * **When both a brand logo AND a product descriptor sticker are on
+    the front** (very common pattern): the logo word goes in `roaster`,
+    the descriptor sticker text goes in `name`. Do not put the logo
+    word in `name` just because it's the most prominent visually — the
+    LOGO is the brand. Example: a bag with a large cursive "Acme"
+    logo + a small "Sidamo Natural" sticker on the front has
+    `name = "Sidamo Natural"`, `roaster = "Acme"`. If OCR garbled
+    the cursive logo (e.g. "Acne" instead of "Acme") and a cleaner
+    derivative of the same word appears on the back's contact info,
+    prefer the cleaner spelling for `roaster` per the multi-page
+    cross-reference rule above.
 - processType: ONLY actual processing methods. Do NOT use grind / form descriptors (the local-language word for "beans", "whole bean", "ground", etc.) — those are bean form, not process. When the OCR text only contains bean-form words, emit `not_visible` for processType.
 
 Universal field-type guards (apply regardless of language — these prevent process / roast verbs and measurements from leaking into proper-noun fields when OCR is noisy):
