@@ -274,11 +274,16 @@ class MindlayerLlmInferenceProvider(
          * mid-field on real Czech-language Nordbeans bags where the model
          * generated multi-sentence "uncertain" explanations for
          * `processType` / `tastingNotes` before circling back to the rest
-         * of the schema. 4096 matches the engine's `maxMaxTokens`
-         * (`MemoryBudget.deviceTier.maxMaxTokens`) so we always have the
-         * full headroom the engine can give us.
+         * of the schema. 4096 was the previous ceiling on the 8 GB device
+         * tier; raised to 8192 to match the bumped Mindlayer 8 GB tier cap
+         * (`MemoryBudget.computeDeviceTier` now allows up to 8192 here),
+         * which unblocks bags whose merged 3-pass front+back OCR text
+         * plus SYSTEM_PROMPT_14 (~2.7k tokens) overflows the 4096 cap.
+         * `SessionManager` still clamps to the engine's runtime ceiling
+         * (`coerceIn(1, runtimeCeiling)`), so requesting more than the
+         * device tier exposes is a no-op rather than a failure.
          */
-        private const val MAX_TOKENS = 4096
+        private const val MAX_TOKENS = 8192
 
         /** Low temperature for deterministic structured JSON output. */
         private const val EXTRACTION_TEMPERATURE = 0.1f
