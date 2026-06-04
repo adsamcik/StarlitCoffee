@@ -51,48 +51,6 @@ fun TasteFeedback.getDisplayAdjustmentTextRes(hasGrinder: Boolean, isPulsar: Boo
     else R.string.adjust_clogged_no_grinder
 }
 
-// Legacy - used in non-composable context
-fun TasteFeedback.displayName(): String = when (this) {
-    TasteFeedback.TOO_SOUR -> "Too Sour / Weak"
-    TasteFeedback.BALANCED -> "Balanced"
-    TasteFeedback.TOO_BITTER -> "Too Bitter / Harsh"
-    TasteFeedback.ASTRINGENT -> "Astringent / Dry"
-    TasteFeedback.CLOGGED -> "Clogged / Stalled"
-}
-
-// Legacy - used in non-composable context
-fun TasteFeedback.getDisplayAdjustmentText(hasGrinder: Boolean, isPulsar: Boolean = false): String = when (this) {
-    TasteFeedback.TOO_SOUR -> if (hasGrinder) {
-        "Grind finer by 2–4 clicks"
-    } else {
-        "Try a finer grind setting"
-    }
-    TasteFeedback.BALANCED -> "No adjustment needed — save this recipe!"
-    TasteFeedback.TOO_BITTER -> if (hasGrinder) {
-        "Grind coarser by 2–4 clicks" + if (isPulsar) "\nTry opening the valve sooner" else ""
-    } else {
-        "Try a coarser grind setting" + if (isPulsar) "\nOr try cooler water" else ""
-    }
-    TasteFeedback.ASTRINGENT -> if (isPulsar) {
-        "Increase dose to 20g+ for better bed depth\nReduce agitation during bloom\nKeep slurry ~1cm above bed"
-    } else if (hasGrinder) {
-        "Grind slightly coarser, reduce agitation"
-    } else {
-        "Grind slightly coarser, pour more gently"
-    }
-    TasteFeedback.CLOGGED -> if (isPulsar) {
-        if (hasGrinder) {
-            "Grind much coarser by 3–5 clicks\nReduce agitation (gentle swirl only)\nCheck if coffee is too fresh — rest 7+ days"
-        } else {
-            "Grind much coarser\nReduce agitation\nEnsure gentle pours through dispersion cap"
-        }
-    } else if (hasGrinder) {
-        "Grind much coarser by 3–5 clicks"
-    } else {
-        "Try a much coarser grind setting"
-    }
-}
-
 // --- InputMode ---
 
 @StringRes
@@ -117,30 +75,6 @@ fun InputMode.descriptionRes(): Int = when (this) {
     InputMode.WATER_TO_COFFEE -> R.string.input_water_desc
     InputMode.BREW_SIZE_TO_BOTH -> R.string.input_brew_desc
     InputMode.CUP_SIZE_TO_BOTH -> R.string.input_cup_desc
-}
-
-// Legacy - used in non-composable context
-fun InputMode.displayName(): String = when (this) {
-    InputMode.COFFEE_TO_WATER -> "Coffee → Water"
-    InputMode.WATER_TO_COFFEE -> "Water → Coffee"
-    InputMode.BREW_SIZE_TO_BOTH -> "Brew Size → Both"
-    InputMode.CUP_SIZE_TO_BOTH -> "Cup Size → Both"
-}
-
-// Legacy - used in non-composable context
-fun InputMode.shortLabel(): String = when (this) {
-    InputMode.COFFEE_TO_WATER -> "Coffee"
-    InputMode.WATER_TO_COFFEE -> "Water"
-    InputMode.BREW_SIZE_TO_BOTH -> "Brew"
-    InputMode.CUP_SIZE_TO_BOTH -> "Cup"
-}
-
-// Legacy - used in non-composable context
-fun InputMode.description(): String = when (this) {
-    InputMode.COFFEE_TO_WATER -> "Enter coffee dose, calculate water"
-    InputMode.WATER_TO_COFFEE -> "Enter water amount, calculate coffee"
-    InputMode.BREW_SIZE_TO_BOTH -> "Enter target brew size, calculate coffee and water accounting for absorption"
-    InputMode.CUP_SIZE_TO_BOTH -> "Enter cup size, calculate coffee and water"
 }
 
 // --- StrengthPreset ---

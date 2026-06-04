@@ -811,25 +811,6 @@ class MindlayerLlmInferenceProviderTest {
         assertTrue(MindlayerLlmInferenceProvider.useExtendedSchema(request))
     }
 
-    // ==================== Structured output extraContext ====================
-
-    @Test
-    fun `buildStructuredOutputExtraContext returns valid JSON with prompt_and_validate strategy`() {
-        val ctx10 = MindlayerLlmInferenceProvider.buildStructuredOutputExtraContext(extended = false)
-        val ctx14 = MindlayerLlmInferenceProvider.buildStructuredOutputExtraContext(extended = true)
-
-        assertTrue(ctx10.contains("\"structured_output\""))
-        assertTrue(ctx10.contains("\"strategy\":\"prompt_and_validate\""))
-        assertTrue(ctx10.contains("\"max_retries\":2"))
-
-        // 14-field specifics should appear only in extended payload
-        assertFalse("10-field schema should not mention 'isDecaf'", ctx10.contains("isDecaf"))
-        assertTrue("14-field schema must mention 'isDecaf'", ctx14.contains("isDecaf"))
-        assertTrue("14-field schema must mention 'region'", ctx14.contains("region"))
-        assertTrue("14-field schema must mention 'expiryDate'", ctx14.contains("expiryDate"))
-        assertTrue("Status enum must be declared", ctx14.contains("\"not_visible\""))
-    }
-
     // ==================== isDecaf boolean parsing ====================
 
     @Test

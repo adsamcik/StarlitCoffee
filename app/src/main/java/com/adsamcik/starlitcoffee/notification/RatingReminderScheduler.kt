@@ -85,12 +85,6 @@ class RatingReminderScheduler(private val context: Context) : RatingReminders {
         const val ACTION_RATING_REMINDER = "com.adsamcik.starlitcoffee.action.RATING_REMINDER"
         const val EXTRA_BREW_LOG_ID = "brew_log_id"
         const val EXTRA_METHOD_LABEL = "method_label"
-
-        @Deprecated(
-            "Prefer RatingReminders.DEFAULT_DELAY",
-            ReplaceWith("RatingReminders.DEFAULT_DELAY", "com.adsamcik.starlitcoffee.notification.RatingReminders"),
-        )
-        val DEFAULT_DELAY: Duration get() = RatingReminders.DEFAULT_DELAY
     }
 }
 

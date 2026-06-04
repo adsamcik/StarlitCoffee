@@ -19,8 +19,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.add
-import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
@@ -255,14 +253,6 @@ class MindlayerLlmInferenceProvider(
             android.util.Log.d(MINDLAYER_LLM_TAG, "$label (${index + 1}/$chunks): $chunk")
         }
     }
-
-    /**
-     * Backwards-compatible alias for [prewarm]. Older call sites used this
-     * name before the interface gained a [prewarm] hook; kept for any
-     * external test that still references it directly.
-     */
-    @Deprecated("Use prewarm() instead", ReplaceWith("prewarm()"))
-    suspend fun ensureConnected() = prewarm()
 
     companion object {
         /**
@@ -527,118 +517,6 @@ Rules:
 - Correct obvious OCR errors only when the intended word is unambiguous from context (e.g. "FESAUVAGE" → "CAFÉ SAUVAGE", "TUNBAGA" → "Tumbaga").
 - Respond with ONLY a JSON object. No markdown fences or explanation.
 """.trimIndent()
-
-        /**
-         * Build the `extraContextJson` payload requesting structured output
-         * from the Mindlayer service. Uses the PROMPT_AND_VALIDATE strategy —
-         * safer than TOOL_ROUTING when multimodal (image) inputs are in play.
-         * On services that predate the structured-output engine, this payload
-         * is silently ignored.
-         */
-        internal fun buildStructuredOutputExtraContext(extended: Boolean): String {
-            val schema = if (extended) SCHEMA_14 else SCHEMA_10
-            val envelope = buildJsonObject {
-                put(
-                    "structured_output",
-                    buildJsonObject {
-                        put("schema", schema)
-                        put("strategy", JsonPrimitive("prompt_and_validate"))
-                        put("max_retries", JsonPrimitive(2))
-                    },
-                )
-            }
-            return Json.encodeToString(JsonObject.serializer(), envelope)
-        }
-
-        private val SCHEMA_10: JsonObject = buildFieldsSchema(
-            listOf(
-                "name", "roaster", "origin", "variety", "process", "roastLevel",
-                "tastingNotes", "altitude", "weight", "roastDate",
-            ),
-            booleanField = null,
-        )
-
-        private val SCHEMA_14: JsonObject = buildFieldsSchema(
-            listOf(
-                "name", "roaster", "origin", "region", "farm", "variety",
-                "process", "roastLevel", "tastingNotes", "altitude",
-                "weight", "roastDate", "expiryDate",
-            ),
-            booleanField = "isDecaf",
-        )
-
-        private fun buildFieldsSchema(
-            stringFields: List<String>,
-            booleanField: String?,
-        ): JsonObject = buildJsonObject {
-            put("type", JsonPrimitive("object"))
-            put(
-                "properties",
-                buildJsonObject {
-                    put(
-                        "fields",
-                        buildJsonObject {
-                            put("type", JsonPrimitive("object"))
-                            put(
-                                "properties",
-                                buildJsonObject {
-                                    stringFields.forEach { name ->
-                                        put(name, fieldEntrySchema(valueTypes = listOf("string", "null")))
-                                    }
-                                    if (booleanField != null) {
-                                        put(
-                                            booleanField,
-                                            fieldEntrySchema(valueTypes = listOf("boolean", "null")),
-                                        )
-                                    }
-                                },
-                            )
-                            put("required", buildJsonArray { add("fields") })
-                        },
-                    )
-                },
-            )
-            put("required", buildJsonArray { add("fields") })
-        }
-
-        private fun fieldEntrySchema(valueTypes: List<String>): JsonObject = buildJsonObject {
-            put("type", JsonPrimitive("object"))
-            put(
-                "properties",
-                buildJsonObject {
-                    put(
-                        "value",
-                        buildJsonObject {
-                            put(
-                                "type",
-                                buildJsonArray { valueTypes.forEach { add(JsonPrimitive(it)) } },
-                            )
-                        },
-                    )
-                    put(
-                        "status",
-                        buildJsonObject {
-                            put("type", JsonPrimitive("string"))
-                            put(
-                                "enum",
-                                buildJsonArray {
-                                    add(JsonPrimitive("found"))
-                                    add(JsonPrimitive("uncertain"))
-                                    add(JsonPrimitive("not_visible"))
-                                },
-                            )
-                        },
-                    )
-                },
-            )
-            put(
-                "required",
-                buildJsonArray {
-                    add(JsonPrimitive("value"))
-                    add(JsonPrimitive("status"))
-                },
-            )
-        }
 
         internal fun buildExtractionPrompt(request: LlmExtractionRequest): String = buildString {
             append("Extract coffee bag information from the OCR text below.")
