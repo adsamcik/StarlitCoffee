@@ -7,6 +7,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import kotlin.coroutines.resume
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.junit.Assert.assertNotNull
@@ -84,8 +85,8 @@ class OcrPipelineInstrumentedTest {
 
         val result = suspendCancellableCoroutine<com.google.mlkit.vision.text.Text?> { cont ->
             recognizer.process(image)
-                .addOnSuccessListener { cont.resume(it, null) }
-                .addOnFailureListener { cont.resume(null, null) }
+                .addOnSuccessListener { cont.resume(it) }
+                .addOnFailureListener { cont.resume(null) }
         } ?: return null
 
         return result.text
@@ -98,8 +99,8 @@ class OcrPipelineInstrumentedTest {
 
         val barcodes = suspendCancellableCoroutine { cont ->
             scanner.process(image)
-                .addOnSuccessListener { cont.resume(it, null) }
-                .addOnFailureListener { cont.resume(emptyList(), null) }
+                .addOnSuccessListener { cont.resume(it) }
+                .addOnFailureListener { cont.resume(emptyList()) }
         }
 
         return barcodes?.mapNotNull { it.rawValue } ?: emptyList()
@@ -158,8 +159,8 @@ class OcrPipelineInstrumentedTest {
             val ppImage = InputImage.fromBitmap(preprocessed, 0)
             val ppResult = suspendCancellableCoroutine { cont ->
                 recognizer.process(ppImage)
-                    .addOnSuccessListener { cont.resume(it, null) }
-                    .addOnFailureListener { cont.resume(null, null) }
+                    .addOnSuccessListener { cont.resume(it) }
+                    .addOnFailureListener { cont.resume(null) }
             }
             val ppText = ppResult?.text ?: ""
             Log.d(TAG, "=== $label PREPROCESSED OCR (${ppText.length} chars) ===")

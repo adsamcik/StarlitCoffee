@@ -143,7 +143,6 @@ class LlmCorpusBenchmarkTest {
             val why = when (result) {
                 is LlmExtractionResult.Unavailable -> "UNAVAILABLE: ${result.reason}"
                 is LlmExtractionResult.Failed -> "FAILED: ${result.error}"
-                else -> "UNKNOWN"
             }
             Log.w(CorpusFixture.BENCHMARK_TAG, "  $why")
             return emptyMap()
