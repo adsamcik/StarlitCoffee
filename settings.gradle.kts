@@ -15,8 +15,10 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-// Load credentials for private GitHub Packages (Mindlayer) from local.properties,
-// falling back to -P project properties, environment variables, or `gh auth token`.
+// Resolve credentials for the Mindlayer GitHub Packages Maven repo. The repo is
+// public, but GitHub Packages still requires a token for Maven reads (any GitHub
+// account works), so we look up: local.properties -> -P project property ->
+// environment variable -> `gh auth token`.
 val mindlayerProps = java.util.Properties().apply {
     val localPropsFile = rootDir.resolve("local.properties")
     if (localPropsFile.exists()) {
@@ -63,7 +65,7 @@ dependencyResolutionManagement {
                 password = ghToken
             }
             content {
-                includeGroup("com.mindlayer")
+                includeGroup("com.adsamcik.mindlayer")
             }
         }
     }

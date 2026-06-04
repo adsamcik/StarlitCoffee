@@ -21,7 +21,7 @@
 |------|----------|---------|
 | `JAVA_HOME` | Usually | Points Gradle to JDK 17. |
 | `ANDROID_HOME` | Usually | Android SDK location if Android Studio has not configured it. |
-| `GITHUB_TOKEN` | Optional | Explicit token for private Mindlayer GitHub Packages. |
+| `GITHUB_TOKEN` | Optional | Token for the Mindlayer GitHub Packages registry. The repo is public, but GitHub Packages Maven reads still need a token — any GitHub account works. |
 | `GITHUB_OWNER` | Optional | Owner for Mindlayer package repo; defaults to `adsamcik`. |
 
 Credential lookup for Mindlayer is defined in `settings.gradle.kts`: `local.properties` -> Gradle property -> environment variable -> `gh auth token`.
@@ -34,7 +34,7 @@ Set-Location StarlitCoffee
 .\gradlew.bat assembleDebug
 ```
 
-For private Mindlayer dependency access, authenticate with `gh auth login` or provide `GITHUB_TOKEN`.
+The Mindlayer repo is public, but GitHub Packages Maven reads still require a token (a GitHub limitation, not a private-repo gate). Authenticate with `gh auth login` using any GitHub account, or provide `GITHUB_TOKEN`.
 
 ## Common Commands
 
@@ -117,7 +117,7 @@ Versions are centralized in `gradle/libs.versions.toml`.
 | Coroutines | 1.11.0 |
 | WorkManager | 2.10.1 |
 | Detekt | 1.23.8 |
-| Mindlayer SDK | 0.3.0 |
+| Mindlayer SDK | 1.0.0-alpha01 |
 
 ## Targeting Android 17 (SDK 37)
 
@@ -139,7 +139,7 @@ When adding new background work, foreground services, or LAN features, re-check 
 
 | Problem | Likely cause | Fix |
 |---------|--------------|-----|
-| Mindlayer dependency cannot resolve | Missing GitHub Packages credential | Run `gh auth login` or set `GITHUB_TOKEN`. |
+| Mindlayer dependency cannot resolve | No token (public repo, but GitHub Packages Maven still requires one) | Run `gh auth login` (any GitHub account) or set `GITHUB_TOKEN`. |
 | Gradle uses wrong Java | `JAVA_HOME` points to a non-17 JDK | Set `JAVA_HOME` to JDK 17 and retry. |
 | Room build/KSP error after entity change | Migration/schema not updated | Update `AppDatabase` migration and exported schema. |
 | Test images missing | `testdata\coffee-bags` symlink absent | Create the symlink described in `testdata\README.md`. |
