@@ -32,6 +32,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -175,9 +176,7 @@ class LiveScanViewModel(
         accumulator = newAccumulator
         sideDetector = SideDetector(config) {
             newAccumulator.notifyPotentialSideFlip()
-            _liveScanUiState.value = _liveScanUiState.value.copy(
-                sideFlipDetected = true,
-            )
+            _liveScanUiState.update { it.copy(sideFlipDetected = true) }
         }
 
         // Order matters: subscribe to llmEscalation BEFORE accumulator.start()
@@ -195,20 +194,24 @@ class LiveScanViewModel(
         // Single flow → atomic (status, contributedFields) transitions.
         llmStateJob = viewModelScope.launch {
             llmCoordinator.state.collect { llmState ->
-                _liveScanUiState.value = _liveScanUiState.value.copy(
-                    llmStatus = llmState.status,
-                    llmContributedFields = llmState.contributedFields,
-                )
+                _liveScanUiState.update {
+                    it.copy(
+                        llmStatus = llmState.status,
+                        llmContributedFields = llmState.contributedFields,
+                    )
+                }
             }
         }
 
         newAccumulator.start()
         launchAccumulatorObservers(newAccumulator)
 
-        _liveScanUiState.value = _liveScanUiState.value.copy(
-            isScanning = true,
-            scanStartTimeMs = System.currentTimeMillis(),
-        )
+        _liveScanUiState.update {
+            it.copy(
+                isScanning = true,
+                scanStartTimeMs = System.currentTimeMillis(),
+            )
+        }
     }
 
     /**
@@ -233,9 +236,7 @@ class LiveScanViewModel(
         rejectionJob = viewModelScope.launch {
             accumulator.lastRejection.collect { rejection ->
                 if (rejection != null) {
-                    _liveScanUiState.value = _liveScanUiState.value.copy(
-                        lastRejectionReason = rejection.reason,
-                    )
+                    _liveScanUiState.update { it.copy(lastRejectionReason = rejection.reason) }
                 }
             }
         }
@@ -341,15 +342,15 @@ class LiveScanViewModel(
 
         if (engine.isGoldenFrame(frame)) {
             acc.submitGoldenFrame(frame)
-            _liveScanUiState.value = _liveScanUiState.value.copy(
-                goldenFrameCount = _liveScanUiState.value.goldenFrameCount + 1,
-                lastRejectionReason = null,
-            )
+            _liveScanUiState.update {
+                it.copy(
+                    goldenFrameCount = it.goldenFrameCount + 1,
+                    lastRejectionReason = null,
+                )
+            }
         } else {
             acc.submitFrame(frame)
-            _liveScanUiState.value = _liveScanUiState.value.copy(
-                lastRejectionReason = null,
-            )
+            _liveScanUiState.update { it.copy(lastRejectionReason = null) }
         }
 
         // Pass raw OCR text for LLM context
@@ -426,10 +427,12 @@ class LiveScanViewModel(
         )
         accumulator?.submitGoldenFrame(frame)
         jpegBytes?.let { onGoldenFrameCapture(it, quality, ocrResult) }
-        _liveScanUiState.value = _liveScanUiState.value.copy(
-            goldenFrameCount = _liveScanUiState.value.goldenFrameCount + 1,
-            lastRejectionReason = null,
-        )
+        _liveScanUiState.update {
+            it.copy(
+                goldenFrameCount = it.goldenFrameCount + 1,
+                lastRejectionReason = null,
+            )
+        }
     }
 
     /**
@@ -457,10 +460,12 @@ class LiveScanViewModel(
         accumulator?.submitGoldenFrame(frame)
         onGoldenFrameCapture(jpegBytes, quality, ocrResult)
 
-        _liveScanUiState.value = _liveScanUiState.value.copy(
-            goldenFrameCount = _liveScanUiState.value.goldenFrameCount + 1,
-            lastRejectionReason = null,
-        )
+        _liveScanUiState.update {
+            it.copy(
+                goldenFrameCount = it.goldenFrameCount + 1,
+                lastRejectionReason = null,
+            )
+        }
 
         // Fire dual LLM paths sequentially (shared session prevents parallelism)
         viewModelScope.launch {
@@ -575,9 +580,9 @@ class LiveScanViewModel(
         if (barcode in processedBarcodes) return
         processedBarcodes.add(barcode)
 
-        _liveScanUiState.value = _liveScanUiState.value.copy(
-            barcodeDetectedMessage = "✓ Barcode detected — prefilling fields",
-        )
+        _liveScanUiState.update {
+            it.copy(barcodeDetectedMessage = "✓ Barcode detected — prefilling fields")
+        }
 
         accumulator?.submitEnrichment(
             fieldValues = lookupFields,

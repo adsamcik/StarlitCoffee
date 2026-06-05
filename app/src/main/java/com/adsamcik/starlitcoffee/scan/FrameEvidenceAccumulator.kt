@@ -15,6 +15,7 @@ import com.adsamcik.starlitcoffee.scan.model.ScanTelemetry
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -248,14 +249,19 @@ class FrameEvidenceAccumulator(
         barcode: String? = null,
         qrUrl: String? = null,
     ) {
-        // Dedup
-        barcode?.let {
-            if (!seenBarcodes.add(it)) return
-            detectedBarcode = it
-        }
-        qrUrl?.let {
-            if (!seenQrUrls.add(it)) return
-            detectedQrUrl = it
+        // Dedup. seenBarcodes/seenQrUrls and the detected* fields are also
+        // read/written by the enrichment consumer and consensus loops, so
+        // mutate them under the same stateLock to avoid a data race
+        // (submitEnrichment runs on the analyzer/UI thread).
+        synchronized(stateLock) {
+            barcode?.let {
+                if (!seenBarcodes.add(it)) return
+                detectedBarcode = it
+            }
+            qrUrl?.let {
+                if (!seenQrUrls.add(it)) return
+                detectedQrUrl = it
+            }
         }
 
         enrichmentChannel.trySend(
@@ -368,7 +374,7 @@ class FrameEvidenceAccumulator(
     private fun startFrameProcessing() {
         frameProcessingJob = scope.launch {
             for (frame in frameChannel) {
-                processFrame(frame)
+                processItemSafely("frame") { processFrame(frame) }
             }
         }
     }
@@ -376,7 +382,7 @@ class FrameEvidenceAccumulator(
     private fun startGoldenFrameProcessing() {
         goldenProcessingJob = scope.launch {
             for (frame in goldenFrameChannel) {
-                processFrame(frame)
+                processItemSafely("golden frame") { processFrame(frame) }
             }
         }
     }
@@ -384,15 +390,17 @@ class FrameEvidenceAccumulator(
     private fun startEnrichmentProcessing() {
         enrichmentProcessingJob = scope.launch {
             for (payload in enrichmentChannel) {
-                synchronized(stateLock) {
-                    fieldAccumulations = consensusEngine.integrateEnrichment(
-                        currentFields = fieldAccumulations,
-                        fieldValues = payload.fieldValues,
-                        sourceType = payload.sourceType,
-                        frameIndex = frameIndex,
-                        side = currentSide,
-                    )
-                    emitEvidenceLocked()
+                processItemSafely("enrichment") {
+                    synchronized(stateLock) {
+                        fieldAccumulations = consensusEngine.integrateEnrichment(
+                            currentFields = fieldAccumulations,
+                            fieldValues = payload.fieldValues,
+                            sourceType = payload.sourceType,
+                            frameIndex = frameIndex,
+                            side = currentSide,
+                        )
+                        emitEvidenceLocked()
+                    }
                 }
             }
         }
@@ -402,8 +410,26 @@ class FrameEvidenceAccumulator(
         consensusJob = scope.launch {
             while (true) {
                 delay(config.consensusIntervalMs)
-                runConsensus()
+                processItemSafely("consensus cycle") { runConsensus() }
             }
+        }
+    }
+
+    /**
+     * Run one pipeline step, isolating failures so a single bad frame,
+     * enrichment payload, or consensus cycle cannot kill the whole processing
+     * loop. Without this, one thrown exception silently terminates the
+     * coroutine while [SupervisorJob] keeps siblings alive, leaving the
+     * session half-dead. [CancellationException] is rethrown so structured
+     * cancellation (session stop) still works.
+     */
+    private inline fun processItemSafely(label: String, block: () -> Unit) {
+        try {
+            block()
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            android.util.Log.e(TAG, "$label processing failed; continuing", e)
         }
     }
 
