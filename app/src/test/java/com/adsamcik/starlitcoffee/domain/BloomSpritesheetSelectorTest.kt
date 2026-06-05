@@ -163,7 +163,12 @@ class BloomSpritesheetSelectorTest {
         val weights = BloomSpritesheetIds.associateWith { 1 }
         val counts = BloomSpritesheetIds.associateWith { 0 }.toMutableMap()
         val random = Random(20251102)
-        val brews = 500
+        // Convergence is asymptotic: the rotation bounds the absolute spread
+        // between flowers to a small constant, so the spread relative to the
+        // mean shrinks as the brew count grows. With ~40 flowers, a few
+        // hundred brews leaves normal sampling outliers above the threshold;
+        // "many brews" needs to be comfortably larger than the flower count.
+        val brews = 2000
 
         repeat(brews) {
             val picked = pickWeightedBloomSpritesheetId(weights, counts, random = random)

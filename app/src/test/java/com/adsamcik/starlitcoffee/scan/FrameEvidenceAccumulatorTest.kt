@@ -590,7 +590,7 @@ class FrameEvidenceAccumulatorTest {
             val value = if (i % 2 == 0) "Ethiopia" else "Colombia"
             accumulator.submitGoldenFrame(makeDetailedFrame(origin = value, frameIndex = i))
         }
-        waitForAsync(300)
+        awaitUntil { accumulator.evidence.value.fields["origin"]?.status == FieldStatus.CONFLICT }
 
         assertEquals(FieldStatus.CONFLICT, accumulator.evidence.value.fields["origin"]?.status)
 
@@ -598,7 +598,7 @@ class FrameEvidenceAccumulatorTest {
         repeat(10) { i ->
             accumulator.submitGoldenFrame(makeDetailedFrame(origin = "Colombia", frameIndex = 100 + i))
         }
-        waitForAsync(300)
+        awaitUntil { accumulator.evidence.value.fields["origin"]?.status == FieldStatus.USER_LOCKED }
 
         val originField = accumulator.evidence.value.fields["origin"]!!
         assertEquals(FieldStatus.USER_LOCKED, originField.status)
@@ -799,5 +799,20 @@ class FrameEvidenceAccumulatorTest {
 
     private fun waitForAsync(delayMs: Long = 200L) {
         Thread.sleep(delayMs)
+    }
+
+    /**
+     * Poll until [condition] holds or [timeoutMs] elapses, instead of a blind
+     * sleep. The accumulator processes frames and runs consensus on its own
+     * Dispatchers.Default scope, so a fixed wait races under full-suite thread
+     * contention; waiting for the expected state removes that flakiness while
+     * still failing fast (via the following assertion) if it never arrives.
+     */
+    private fun awaitUntil(timeoutMs: Long = 5000L, condition: () -> Boolean) {
+        val deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            if (condition()) return
+            Thread.sleep(5)
+        }
     }
 }

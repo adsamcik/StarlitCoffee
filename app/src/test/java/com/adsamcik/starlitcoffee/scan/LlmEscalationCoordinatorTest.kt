@@ -80,7 +80,16 @@ class LlmEscalationCoordinatorTest {
 
         val manual = async(start = CoroutineStart.UNDISPATCHED) { coordinator.extract(request()) }
         triggerFirstEscalation(accumulator)
-        advanceUntilIdle()
+        // The auto-escalation flows from the accumulator (Dispatchers.Default)
+        // through the coordinator; keep advancing the coordinator's virtual
+        // time and yielding to the Default threads until both extracts have
+        // run, rather than racing a single advanceUntilIdle under full-suite
+        // thread contention.
+        val deadline = System.currentTimeMillis() + 5000L
+        while (provider.extractCalls < 2 && System.currentTimeMillis() < deadline) {
+            advanceUntilIdle()
+            Thread.sleep(5)
+        }
         manual.await()
         assertEquals(2, provider.extractCalls)
         assertEquals(1, provider.maxActiveExtracts)
