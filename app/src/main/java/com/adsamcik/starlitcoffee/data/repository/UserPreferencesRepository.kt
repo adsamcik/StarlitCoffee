@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
@@ -12,8 +13,10 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import java.io.IOException
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
@@ -73,6 +76,17 @@ class UserPreferencesRepository(private val context: Context) {
     }
 
     val userPreferences: Flow<UserPreferences> = context.dataStore.data
+        .catch { exception ->
+            // DataStore surfaces read failures (e.g. corrupt prefs file) as
+            // IOException. Recover by emitting defaults instead of terminating
+            // the flow, which would otherwise leave the whole app without
+            // preferences. Any other exception is a real bug and is rethrown.
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
         .map { prefs ->
             UserPreferences(
                 onboardingCompleted = prefs[Keys.ONBOARDING_COMPLETED] ?: false,

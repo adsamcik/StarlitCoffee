@@ -70,16 +70,15 @@ class MindlayerLlmInferenceProvider(
 ) : LlmInferenceProvider {
 
     private val mindlayer: Mindlayer = Mindlayer.connect(context.applicationContext)
-    @Volatile
-    private var connectionFailed: Boolean = false
 
     override fun isAvailable(): Boolean {
         val state = mindlayer.connectionState.value
-        val isConnectingOrConnected = state == ConnectionState.CONNECTED || state == ConnectionState.CONNECTING
-        if (isConnectingOrConnected) {
-            connectionFailed = false
-        }
-        return isConnectingOrConnected || connectionFailed
+        // Report actual connectivity. Previously this also returned true after
+        // a connection failure, which made callers launch LLM attempts that
+        // could only time out. If the SDK is reconnecting the state is
+        // CONNECTING and we stay optimistically available; a hard failure
+        // leaves it disconnected and we correctly report unavailable.
+        return state == ConnectionState.CONNECTED || state == ConnectionState.CONNECTING
     }
 
     override suspend fun extractBagFields(
@@ -224,17 +223,8 @@ class MindlayerLlmInferenceProvider(
         }
     }
 
-    @Suppress("TooGenericExceptionCaught")
     private suspend fun awaitMindlayerConnected() {
-        try {
-            mindlayer.awaitConnected(kotlin.time.Duration.INFINITE)
-            connectionFailed = false
-        } catch (e: kotlinx.coroutines.CancellationException) {
-            throw e
-        } catch (e: Exception) {
-            connectionFailed = true
-            throw e
-        }
+        mindlayer.awaitConnected(kotlin.time.Duration.INFINITE)
     }
 
     /**
