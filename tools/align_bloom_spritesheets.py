@@ -10,8 +10,9 @@ from PIL import Image
 
 
 FRAME_SIZE = 256
-FRAME_COLUMNS = 9
-FRAME_ROWS = 5
+DEFAULT_FRAME_COLUMNS = 5
+DEFAULT_FRAME_ROWS = 5
+MODERN_GRID_TEXT = f"{DEFAULT_FRAME_COLUMNS}x{DEFAULT_FRAME_ROWS}"
 
 
 def threshold_alpha(alpha: Image.Image, threshold: int) -> Image.Image:
@@ -36,12 +37,14 @@ def lower_anchor_x(alpha: Image.Image, box: tuple[int, int, int, int], threshold
 
 def frame_infos(
     image: Image.Image,
+    frame_columns: int,
+    frame_rows: int,
     alpha_threshold: int,
 ) -> list[tuple[int, int, tuple[int, int, int, int] | None, float]]:
     infos: list[tuple[int, int, tuple[int, int, int, int] | None, float]] = []
-    for index in range(FRAME_COLUMNS * FRAME_ROWS):
-        x = (index % FRAME_COLUMNS) * FRAME_SIZE
-        y = (index // FRAME_COLUMNS) * FRAME_SIZE
+    for index in range(frame_columns * frame_rows):
+        x = (index % frame_columns) * FRAME_SIZE
+        y = (index // frame_columns) * FRAME_SIZE
         frame = image.crop((x, y, x + FRAME_SIZE, y + FRAME_SIZE))
         alpha = frame.split()[3]
         box = threshold_alpha(alpha, alpha_threshold).getbbox()
@@ -84,25 +87,30 @@ def remove_low_alpha(image: Image.Image, threshold: int) -> Image.Image:
 def align_sheet(
     source: Path,
     output: Path,
+    frame_columns: int,
+    frame_rows: int,
     target_x: int,
     baseline: int,
     padding: int,
     alpha_threshold: int,
 ) -> None:
     image = Image.open(source).convert("RGBA")
-    expected_size = (FRAME_COLUMNS * FRAME_SIZE, FRAME_ROWS * FRAME_SIZE)
+    expected_size = (frame_columns * FRAME_SIZE, frame_rows * FRAME_SIZE)
     if image.size != expected_size:
-        raise ValueError(f"{source} must be {expected_size}, got {image.size}")
+        raise ValueError(
+            f"{source} must be {expected_size} "
+            f"for {frame_columns}x{frame_rows} frames, got {image.size}"
+        )
 
-    infos = frame_infos(image, alpha_threshold)
+    infos = frame_infos(image, frame_columns, frame_rows, alpha_threshold)
     scale = sheet_scale(infos, baseline, padding)
     output_image = Image.new("RGBA", image.size, (0, 0, 0, 0))
 
     for index, _, box, anchor_x in infos:
         if box is None:
             continue
-        source_x = (index % FRAME_COLUMNS) * FRAME_SIZE
-        source_y = (index // FRAME_COLUMNS) * FRAME_SIZE
+        source_x = (index % frame_columns) * FRAME_SIZE
+        source_y = (index // frame_columns) * FRAME_SIZE
         frame = image.crop((source_x, source_y, source_x + FRAME_SIZE, source_y + FRAME_SIZE))
         content = frame.crop(box)
         content = remove_low_alpha(content, alpha_threshold)
@@ -143,17 +151,33 @@ def parse_pair(pair: str) -> tuple[Path, Path]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("pairs", nargs="+", help="Pairs in the form source.png:output.png")
+    parser.add_argument("--columns", type=int, default=DEFAULT_FRAME_COLUMNS)
+    parser.add_argument("--rows", type=int, default=DEFAULT_FRAME_ROWS)
+    parser.add_argument(
+        "--allow-legacy-grid",
+        action="store_true",
+        help="Allow non-5x5 aligned sheets for one-off migration work.",
+    )
     parser.add_argument("--target-x", type=int, default=128)
     parser.add_argument("--baseline", type=int, default=244)
     parser.add_argument("--padding", type=int, default=10)
     parser.add_argument("--alpha-threshold", type=int, default=24)
     args = parser.parse_args()
+    frame_columns = max(1, args.columns)
+    frame_rows = max(1, args.rows)
+    if not args.allow_legacy_grid and (frame_columns, frame_rows) != (DEFAULT_FRAME_COLUMNS, DEFAULT_FRAME_ROWS):
+        raise SystemExit(
+            f"The standard bloom alignment pipeline requires the modern {MODERN_GRID_TEXT} grid. "
+            "Pass --allow-legacy-grid only for one-off migration work."
+        )
 
     for pair in args.pairs:
         source, output = parse_pair(pair)
         align_sheet(
             source=source,
             output=output,
+            frame_columns=frame_columns,
+            frame_rows=frame_rows,
             target_x=args.target_x,
             baseline=args.baseline,
             padding=args.padding,

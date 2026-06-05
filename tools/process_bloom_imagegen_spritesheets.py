@@ -29,6 +29,7 @@ FRAME_ROWS = 5
 FRAME_SIZE = 256
 DEFAULT_GUIDE_COLOR = (255, 0, 255)
 DEFAULT_FRAME_COUNT = FRAME_COLUMNS * FRAME_ROWS
+MODERN_GRID_TEXT = f"{FRAME_COLUMNS}x{FRAME_ROWS}"
 
 Rgb = tuple[int, int, int]
 CellBox = tuple[int, int, int, int]
@@ -175,6 +176,10 @@ def parse_color(text: str) -> Rgb:
         return (int(value[0:2], 16), int(value[2:4], 16), int(value[4:6], 16))
     except ValueError as exc:
         raise argparse.ArgumentTypeError(f"Expected a #rrggbb color, got {text!r}") from exc
+
+
+def is_modern_grid(columns: int, rows: int) -> bool:
+    return columns == FRAME_COLUMNS and rows == FRAME_ROWS
 
 
 def color_distance_sq(color: Rgb, target: Rgb) -> int:
@@ -780,6 +785,7 @@ def process(
     output_padding: int,
     remove_stray_components: int,
     stray_keep_padding: int,
+    allow_legacy_grid: bool,
 ) -> None:
     width, height, pixels = read_png(source)
     if auto_source_grid:
@@ -795,6 +801,12 @@ def process(
             source_rows = source_rows or detected_grid[1]
     source_columns = source_columns or columns
     source_rows = source_rows or rows
+    if not allow_legacy_grid and not is_modern_grid(source_columns, source_rows):
+        raise ValueError(
+            f"{source.name} resolved to a {source_columns}x{source_rows} source grid. "
+            f"The standard bloom generation pipeline requires the modern {MODERN_GRID_TEXT} grid. "
+            "Use a modern source atlas or rerun with --allow-legacy-grid for a one-off migration."
+        )
     output_columns = columns
     output_rows = rows
     source_frame_count = source_columns * source_rows
@@ -1008,11 +1020,30 @@ def main() -> None:
         help="Keep small components that overlap the largest component expanded by PX.",
     )
     parser.add_argument("--debug-dir", type=Path)
+    parser.add_argument(
+        "--allow-legacy-grid",
+        action="store_true",
+        help="Allow non-5x5 source/output grids for one-off migration work.",
+    )
     args = parser.parse_args()
 
     guide_colors = args.guide_color if args.guide_color else [DEFAULT_GUIDE_COLOR]
     expected_frames = args.columns * args.rows
-    if expected_frames != DEFAULT_FRAME_COUNT:
+    if not args.allow_legacy_grid:
+        if not is_modern_grid(args.columns, args.rows):
+            raise SystemExit(
+                f"The standard bloom generation pipeline requires the modern {MODERN_GRID_TEXT} output grid. "
+                "Pass --allow-legacy-grid only for one-off migration work."
+            )
+        if args.source_columns is not None and args.source_columns != FRAME_COLUMNS:
+            raise SystemExit(
+                f"The standard bloom generation pipeline requires a {MODERN_GRID_TEXT} source grid."
+            )
+        if args.source_rows is not None and args.source_rows != FRAME_ROWS:
+            raise SystemExit(
+                f"The standard bloom generation pipeline requires a {MODERN_GRID_TEXT} source grid."
+            )
+    elif expected_frames != DEFAULT_FRAME_COUNT:
         print(f"warning: configured grid contains {expected_frames} frames, not {DEFAULT_FRAME_COUNT}")
 
     for pair in args.pairs:
@@ -1040,6 +1071,7 @@ def main() -> None:
             output_padding=args.output_padding,
             remove_stray_components=args.remove_stray_components,
             stray_keep_padding=args.stray_keep_padding,
+            allow_legacy_grid=args.allow_legacy_grid,
         )
 
 

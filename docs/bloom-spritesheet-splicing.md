@@ -13,7 +13,7 @@ The new app atlas contract is:
 - Final PNG size: `1280 x 1280`.
 - RGBA output with transparent background.
 
-The app renderer can infer atlas dimensions, so old `45` frame, `9 x 5` sheets and `30` frame, `6 x 5` sheets can coexist during migration. New generated sheets should use the `25` frame contract.
+The standard generation pipeline now requires the modern `25` frame contract end to end: source atlas `5 x 5`, processed atlas `5 x 5`, and final still extracted from `R5C5`. Legacy `6 x 5` and `9 x 5` work is migration-only and requires the explicit `--allow-legacy-grid` escape hatch in the tooling.
 
 ## Source Atlas Prompt Contract
 
@@ -24,6 +24,7 @@ Create one 25-frame spritesheet source atlas for a coffee bean blooming animatio
 
 Highest priority: this is a technical slicing atlas first and artwork second. If any style request conflicts with the grid, slicing, alignment, or frame-continuity rules, obey the grid, slicing, alignment, and frame-continuity rules.
 Arrange the sheet as exactly 5 columns left-to-right and exactly 5 rows top-to-bottom, making exactly 25 equal square cells in one square 1:1 atlas.
+Do not generate legacy `6 x 5`, `9 x 5`, `30` frame, or `45` frame sheets.
 The canvas itself is the atlas: no margins, gutters, title strip, caption area, empty band, extra panel, partial cell, merged cell, inset sheet, or decorative border. The outer magenta border touches the canvas edges.
 Reading order is row-major only as a cell address map: row 1 contains frames 1-5, row 2 contains frames 6-10, row 3 contains frames 11-15, row 4 contains frames 16-20, and row 5 contains frames 21-25.
 Rows are layout only. Do not treat rows as story stages, timing bands, or progress groups. Do not infer a new phase from the start of a row.
@@ -102,7 +103,7 @@ The processor will:
 After processing, align the final RGBA sheets to the shared app anchor:
 
 ```powershell
-python tools\align_bloom_spritesheets.py source.png:aligned.png --baseline 244 --padding 10 --alpha-threshold 24
+python tools\align_bloom_spritesheets.py source.png:aligned.png --columns 5 --rows 5 --baseline 244 --padding 10 --alpha-threshold 24
 ```
 
 For the app bloom sheets, the final alignment contract is:
@@ -132,6 +133,16 @@ python -c "from PIL import Image; from pathlib import Path; src=Path(r'app\src\m
 ```
 
 For a generated standalone still, process it through the same transparency and alignment expectations as a single app frame. The resulting still must be visually identical to frame 25; reject it if it changes the silhouette, adds a new part, changes the bean base, changes scale, adds shadow, adds glow spill, or introduces a background scene.
+
+## Verification
+
+Before shipping or replacing bloom assets, verify the app resources still match the modern grid:
+
+```powershell
+python tools\verify_bloom_modern_grid.py
+```
+
+The check passes only when every `bloom_*_spritesheet.png` is `1280 x 1280` (`5 x 5` at `256px` cells) and every existing `bloom_*_final.png` is `256 x 256`.
 
 ## Why 25 Frames
 

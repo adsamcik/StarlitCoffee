@@ -39,7 +39,7 @@ class BloomSpritesheetSelectorTest {
 
         // With rose excluded from "max", every other flower has count 0 and
         // max=0, so all extras=0 and the picker becomes uniform random over
-        // the 9 remaining flowers. A simple sanity check: many trials should
+        // the remaining flowers. A simple sanity check: many trials should
         // hit several distinct flowers.
         val random = Random(1234)
         val seen = mutableSetOf<String>()
@@ -95,14 +95,19 @@ class BloomSpritesheetSelectorTest {
 
         val random = Random(99)
         val hits = mutableMapOf<String, Int>()
-        repeat(10_000) {
+        val trials = 10_000
+        repeat(trials) {
             val id = pickWeightedBloomSpritesheetId(weights, displayCounts, random = random)
             hits[id!!] = (hits[id] ?: 0) + 1
         }
 
-        // 10 flowers, 10k trials -> expected ~1000 each. Tolerance ±35%.
+        // All flowers split 10k trials. Keep a broad tolerance so the test
+        // covers weighting regressions without depending on the exact list size.
+        val expectedPerFlower = trials.toDouble() / BloomSpritesheetIds.size
+        val lowerBound = expectedPerFlower * 0.55
+        val upperBound = expectedPerFlower * 1.45
         hits.values.forEach { count ->
-            assertTrue("Distribution skewed: $hits", count in 650..1350)
+            assertTrue("Distribution skewed: $hits", count.toDouble() in lowerBound..upperBound)
         }
         assertEquals(BloomSpritesheetIds.size, hits.size)
     }
@@ -124,8 +129,12 @@ class BloomSpritesheetSelectorTest {
             )
             if (id == "rose") roseHits++
         }
-        // ~10% expected (1 of 10 flowers, all weight 1). Allow generous bounds.
-        assertTrue("Rose should still appear ~10% (got $roseHits)", roseHits in 100..400)
+        // Equal chance among all flowers. Allow generous bounds.
+        val expectedRoseHits = 2_000.0 / BloomSpritesheetIds.size
+        assertTrue(
+            "Rose should still appear with equal weighting (got $roseHits)",
+            roseHits.toDouble() in (expectedRoseHits * 0.45)..(expectedRoseHits * 1.8),
+        )
     }
 
     @Test

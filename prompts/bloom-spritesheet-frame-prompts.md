@@ -3,8 +3,16 @@
 Use one prompt per generated source atlas. Paste the common prompt first, then paste one variation-specific frame plan. For completed-bloom still images, use the final still prompt contract at the end of this file and lock the still to the matching `R5C5 Frame 25` source line.
 
 These prompts are written for a 25-frame sheet: 5 columns by 5 rows. They deliberately hold the artwork compressed until frame 20, then reserve frames 21-25 for the final visible bloom. Every frame line names a concrete visual difference from the previous frame.
+Do not use legacy 6x5, 9x5, 30-frame, or 45-frame layouts for any newly generated bloom atlas.
 
 Punk theme prompts follow the same 25-frame contract, but their final objects may be mechanical, elemental, textile, symbolic, botanical, or hybrid. They must still remain one centered coffee-bloom object growing from one fixed roasted coffee bean base. Genre cues belong on the object itself, never in scenery.
+
+## Imagegen Generation Checklist
+
+- Always generate from the full common prompt plus one explicit 25-frame plan. Do not use broad row-level stage prompts such as "sprout row, bud row, bloom row"; those caused early blooms, reset frames, and static final rows.
+- Pick chroma colors per subject before generation. The background key and grid key must both be absent from the intended artwork, including petals, fruit, stamens, highlights, shadows, outlines, and antialiasing.
+- Treat frame 20 as the loaded pre-bloom pose. Frames 21-25 must each name one visible change from the previous frame, and frame 25 is the first fully finished sprite.
+- Preserve continuity across row wraps. Frames 06, 11, 16, and 21 continue the previous frame instead of restarting a new row-stage pose.
 
 ## Common Prompt
 
@@ -15,6 +23,7 @@ Highest priority: this is a technical slicing atlas first and artwork second. If
 
 Grid contract:
 Create exactly one atlas that is exactly 5 columns left-to-right by exactly 5 rows top-to-bottom, making exactly 25 equal square cells in one square 1:1 atlas.
+Do not create any legacy 6x5, 9x5, 30-frame, or 45-frame atlas variant.
 The canvas itself is the atlas: no margins, gutters, title strip, caption area, empty band, extra panel, partial cell, merged cell, inset sheet, or decorative border. The outer magenta border touches the canvas edges.
 Draw one axis-aligned slicing grid only: exactly 6 vertical #FF00FF lines and exactly 6 horizontal #FF00FF lines, including the outer border. Lines are straight, continuous, uniform thickness, and shared between adjacent cells. No doubled borders, rounded corners, crop marks, diagonal guides, labels, or extra internal guide lines.
 
