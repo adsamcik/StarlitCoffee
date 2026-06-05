@@ -53,26 +53,26 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        private val MIGRATION_5_6 = object : Migration(5, 6) {
+        internal val MIGRATION_5_6 = object : Migration(5, 6) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE coffee_bags ADD COLUMN initialWeightG REAL")
                 db.execSQL("UPDATE coffee_bags SET initialWeightG = weightG WHERE weightG IS NOT NULL")
             }
         }
 
-        private val MIGRATION_6_7 = object : Migration(6, 7) {
+        internal val MIGRATION_6_7 = object : Migration(6, 7) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE coffee_bags ADD COLUMN grindSetting TEXT")
             }
         }
 
-        private val MIGRATION_7_8 = object : Migration(7, 8) {
+        internal val MIGRATION_7_8 = object : Migration(7, 8) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE coffee_bags ADD COLUMN expiryDate INTEGER")
             }
         }
 
-        private val MIGRATION_8_9 = object : Migration(8, 9) {
+        internal val MIGRATION_8_9 = object : Migration(8, 9) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE coffee_bags ADD COLUMN isDecaf INTEGER NOT NULL DEFAULT 0")
             }
@@ -147,6 +147,21 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // Single source of truth for the migration set, shared by the
+        // production builder and MigrationTest so the two cannot drift.
+        internal val ALL_MIGRATIONS: Array<Migration> = arrayOf(
+            MIGRATION_5_6,
+            MIGRATION_6_7,
+            MIGRATION_7_8,
+            MIGRATION_8_9,
+            MIGRATION_9_10,
+            MIGRATION_10_11,
+            MIGRATION_11_12,
+            MIGRATION_12_13,
+            MIGRATION_13_14,
+            MIGRATION_14_15,
+        )
+
         /**
          * Manual singleton accessor. The repo intentionally avoids a DI
          * framework today (see project conventions: "No DI framework yet;
@@ -159,18 +174,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "starlit_coffee.db",
-                ).addMigrations(
-                    MIGRATION_5_6,
-                    MIGRATION_6_7,
-                    MIGRATION_7_8,
-                    MIGRATION_8_9,
-                    MIGRATION_9_10,
-                    MIGRATION_10_11,
-                    MIGRATION_11_12,
-                    MIGRATION_12_13,
-                    MIGRATION_13_14,
-                    MIGRATION_14_15,
-                )
+                ).addMigrations(*ALL_MIGRATIONS)
                     .build().also { INSTANCE = it }
             }
         }

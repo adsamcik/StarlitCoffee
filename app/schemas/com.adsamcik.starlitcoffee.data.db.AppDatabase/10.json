@@ -94,7 +94,7 @@
       },
       {
         "tableName": "coffee_bags",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `roaster` TEXT, `origin` TEXT, `originId` TEXT, `region` TEXT, `regionId` TEXT, `farm` TEXT, `variety` TEXT, `varietyIds` TEXT, `altitude` TEXT, `roastLevel` TEXT, `roastLevelIds` TEXT, `processType` TEXT, `processTypeId` TEXT, `tastingNotes` TEXT, `tasteNoteIds` TEXT, `roastDate` INTEGER, `openedDate` INTEGER, `barcode` TEXT, `weightG` REAL, `initialWeightG` REAL, `priceAmount` REAL, `priceCurrency` TEXT, `notes` TEXT, `photoUri` TEXT, `photoUris` TEXT, `traceabilityUrl` TEXT, `grindSetting` TEXT, `expiryDate` INTEGER, `isDecaf` INTEGER NOT NULL, `status` TEXT NOT NULL, `createdAt` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `roaster` TEXT, `origin` TEXT, `region` TEXT, `farm` TEXT, `variety` TEXT, `altitude` TEXT, `roastLevel` TEXT, `processType` TEXT, `tastingNotes` TEXT, `roastDate` INTEGER, `openedDate` INTEGER, `barcode` TEXT, `weightG` REAL, `initialWeightG` REAL, `priceAmount` REAL, `priceCurrency` TEXT, `notes` TEXT, `photoUri` TEXT, `photoUris` TEXT, `traceabilityUrl` TEXT, `grindSetting` TEXT, `expiryDate` INTEGER, `isDecaf` INTEGER NOT NULL, `status` TEXT NOT NULL, `createdAt` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -119,18 +119,8 @@
             "affinity": "TEXT"
           },
           {
-            "fieldPath": "originId",
-            "columnName": "originId",
-            "affinity": "TEXT"
-          },
-          {
             "fieldPath": "region",
             "columnName": "region",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "regionId",
-            "columnName": "regionId",
             "affinity": "TEXT"
           },
           {
@@ -144,11 +134,6 @@
             "affinity": "TEXT"
           },
           {
-            "fieldPath": "varietyIds",
-            "columnName": "varietyIds",
-            "affinity": "TEXT"
-          },
-          {
             "fieldPath": "altitude",
             "columnName": "altitude",
             "affinity": "TEXT"
@@ -159,28 +144,13 @@
             "affinity": "TEXT"
           },
           {
-            "fieldPath": "roastLevelIds",
-            "columnName": "roastLevelIds",
-            "affinity": "TEXT"
-          },
-          {
             "fieldPath": "processType",
             "columnName": "processType",
             "affinity": "TEXT"
           },
           {
-            "fieldPath": "processTypeId",
-            "columnName": "processTypeId",
-            "affinity": "TEXT"
-          },
-          {
             "fieldPath": "tastingNotes",
             "columnName": "tastingNotes",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "tasteNoteIds",
-            "columnName": "tasteNoteIds",
             "affinity": "TEXT"
           },
           {
@@ -282,33 +252,6 @@
             ],
             "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_coffee_bags_barcode` ON `${TABLE_NAME}` (`barcode`)"
-          },
-          {
-            "name": "index_coffee_bags_originId",
-            "unique": false,
-            "columnNames": [
-              "originId"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_coffee_bags_originId` ON `${TABLE_NAME}` (`originId`)"
-          },
-          {
-            "name": "index_coffee_bags_regionId",
-            "unique": false,
-            "columnNames": [
-              "regionId"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_coffee_bags_regionId` ON `${TABLE_NAME}` (`regionId`)"
-          },
-          {
-            "name": "index_coffee_bags_processTypeId",
-            "unique": false,
-            "columnNames": [
-              "processTypeId"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_coffee_bags_processTypeId` ON `${TABLE_NAME}` (`processTypeId`)"
           }
         ]
       },

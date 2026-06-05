@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.data.db
 
+import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
@@ -7,11 +8,60 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MigrationTest {
+
+    @get:Rule
+    val helper = MigrationTestHelper(
+        InstrumentationRegistry.getInstrumentation(),
+        AppDatabase::class.java,
+    )
+
+    /**
+     * Canonical safety net: create the database at the earliest exported
+     * schema (v10) from the real schema JSON, then run the production
+     * migration set up to the current version and let Room validate that the
+     * resulting schema exactly matches the `@Entity` definitions. This is what
+     * the hand-written per-migration tests below cannot do — it catches schema
+     * drift (a forgotten column/index) that would crash on app upgrade.
+     */
+    @Test
+    fun migrateAll10To15_matchesExportedSchema() {
+        helper.createDatabase(MIGRATION_TEST_DB, 10).close()
+        helper.runMigrationsAndValidate(
+            MIGRATION_TEST_DB,
+            15,
+            true,
+            *AppDatabase.ALL_MIGRATIONS,
+        ).close()
+    }
+
+    @Test
+    fun migrate5to6_copiesWeightIntoInitialWeight() {
+        withDatabase(
+            name = "starlit-test-db-v6",
+            version = 5,
+            createSchema = { createVersion5CoffeeBagsSchema() },
+        ) { db ->
+            db.execSQL("INSERT INTO coffee_bags (id, name, weightG) VALUES (1, 'Has Weight', 250.0)")
+            db.execSQL("INSERT INTO coffee_bags (id, name, weightG) VALUES (2, 'No Weight', NULL)")
+
+            AppDatabase.MIGRATION_5_6.migrate(db)
+
+            val cursor = db.query("SELECT weightG, initialWeightG FROM coffee_bags ORDER BY id")
+            assertTrue(cursor.moveToNext())
+            assertEquals(250.0, cursor.getDouble(0), 0.001)
+            assertEquals(250.0, cursor.getDouble(1), 0.001) // weightG copied into initialWeightG
+            assertTrue(cursor.moveToNext())
+            assertTrue("weightG should stay NULL", cursor.isNull(0))
+            assertTrue("initialWeightG should stay NULL when weightG is NULL", cursor.isNull(1))
+            cursor.close()
+        }
+    }
 
     @Test
     fun migrate9to10_createsIndices() {
@@ -235,6 +285,18 @@ class MigrationTest {
         )
     }
 
+    private fun SupportSQLiteDatabase.createVersion5CoffeeBagsSchema() {
+        execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS coffee_bags (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                name TEXT NOT NULL,
+                weightG REAL
+            )
+            """.trimIndent(),
+        )
+    }
+
     private fun SupportSQLiteDatabase.createVersion14Schema() {
         execSQL(
             """
@@ -245,5 +307,9 @@ class MigrationTest {
             )
             """.trimIndent(),
         )
+    }
+
+    private companion object {
+        const val MIGRATION_TEST_DB = "migration-helper-test.db"
     }
 }

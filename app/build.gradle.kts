@@ -44,6 +44,13 @@ extensions.configure<ApplicationExtension>("android") {
         buildConfig = true
     }
 
+    sourceSets {
+        // Expose the exported Room schemas to instrumented tests so
+        // MigrationTestHelper can create historical databases and validate
+        // migrations against the real schema history (not hand-written copies).
+        getByName("androidTest").assets.srcDir("$projectDir/schemas")
+    }
+
     testOptions {
         unitTests {
             isReturnDefaultValues = true
