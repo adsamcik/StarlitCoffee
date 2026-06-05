@@ -31,9 +31,15 @@ internal object LlmCacheKey {
         fieldsNeeded: Set<String>,
         rawOcrText: String?,
         existingFields: Map<String, FieldContext>,
+        mode: String = "text",
     ): String {
         val md = MessageDigest.getInstance("SHA-256")
         md.update(SCHEMA_VERSION.toByteArray(Charsets.UTF_8))
+        md.update(0x1F)
+        // Modality/prompt mode (text vs vision) — the same image+fields produce
+        // different model output for a vision pass, so they must not share a
+        // cache entry with the text pass.
+        md.update(mode.toByteArray(Charsets.UTF_8))
         md.update(0x1F)
         md.update(imageBytes)
         md.update(0x1F)

@@ -487,6 +487,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         // timeout (90 s) so the inner one still fires first with a precise
         // message; the outer is a belt-and-suspenders cap.
         private const val BAG_PHOTO_LLM_TIMEOUT_MS = 95_000L
+        // Vision pass runs an image inference, which is far slower than text;
+        // its outer cap sits just above the provider's inner VISION_TIMEOUT_MS.
+        private const val BAG_PHOTO_VISION_TIMEOUT_MS = 305_000L
         private const val MAX_LLM_PHOTO_BYTES = 20 * 1024 * 1024
         private const val LLM_READ_BUFFER_SIZE = 8 * 1024
 
@@ -1101,6 +1104,11 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             knownFieldValues = _knownFieldValues.value,
         )
         allCandidates += llmOutcome.candidates
+
+        // Vision second pass: recover visual-only fields (e.g. a roast-level
+        // dot scale) from the label image when still unsettled — see
+        // runVisionEnrichmentIfNeeded for the gating + override-safety policy.
+        runVisionEnrichmentIfNeeded(photoUriList, processedPhotos, allCandidates)
 
         val fieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
         val reviewHints = BagPhotoScanSupport.buildReviewHints(
@@ -1971,6 +1979,107 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             }
             is LlmExtractionResult.Failed -> {
                 Log.w(BAG_PHOTO_TAG, "LLM enrichment failed: ${result.error}")
+                LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
+            }
+        }
+    }
+
+    /**
+     * If a visual-only field is still unsettled after the text pass, run the
+     * multimodal vision pass and fold its (post-filtered) candidates into
+     * [allCandidates]. No-op when the provider can't do vision, nothing is
+     * missing, or the per-process vision budget is spent.
+     */
+    private suspend fun runVisionEnrichmentIfNeeded(
+        photoUriList: List<String>,
+        processedPhotos: List<ProcessedBagPhoto>,
+        allCandidates: MutableList<BagFieldCandidate>,
+    ) {
+        if (!llmProvider.supportsVision() || !llmProvider.isAvailable()) return
+        val preVisionEvidence = resolveBagPhotoFieldEvidence(allCandidates)
+        val visionFields = BagVisionPlanner.selectVisionFields(preVisionEvidence)
+        if (visionFields.isEmpty()) return
+
+        val visionOutcome = tryVisionLlmEnrichment(
+            photoUriList = photoUriList,
+            processedPhotos = processedPhotos,
+            existingCandidates = allCandidates.toList(),
+            fieldsNeeded = visionFields,
+            knownFieldValues = _knownFieldValues.value,
+        )
+        allCandidates += BagVisionPlanner.filterVisionCandidates(visionOutcome.candidates, preVisionEvidence)
+    }
+
+    private suspend fun tryVisionLlmEnrichment(
+        photoUriList: List<String>,
+        processedPhotos: List<ProcessedBagPhoto>,
+        existingCandidates: List<BagFieldCandidate>,
+        fieldsNeeded: Set<String>,
+        knownFieldValues: KnownFieldValues,
+    ): LlmEnrichmentOutcome {
+        val existingFields = buildExistingFieldsContext(existingCandidates)
+        val bestPhotoUri = processedPhotos.maxByOrNull { it.quality.blurScore }?.uri
+            ?: photoUriList.firstOrNull()
+        val photoBytes = bestPhotoUri?.let { uri ->
+            try {
+                readPhotoBytesForLlm(uri)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+                Log.w(BAG_PHOTO_TAG, "Failed to read photo bytes for vision pass", e)
+                null
+            }
+        } ?: return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
+
+        val cacheKey = LlmCacheKey.compute(
+            imageBytes = photoBytes,
+            fieldsNeeded = fieldsNeeded,
+            rawOcrText = null,
+            existingFields = existingFields,
+            mode = "vision",
+        )
+        llmCache.get(cacheKey)?.let { cached ->
+            return LlmEnrichmentOutcome(
+                candidates = cached.fieldCandidates,
+                status = LlmEnrichmentStatus.SUCCEEDED,
+            )
+        }
+
+        val request = LlmExtractionRequest(
+            imageBytes = photoBytes,
+            existingFields = existingFields,
+            fieldsNeeded = fieldsNeeded,
+            rawOcrText = null,
+            knownFieldValues = knownFieldValues,
+        )
+        val result = try {
+            MindlayerLlmCallGate.withPermit {
+                withTimeout(BAG_PHOTO_VISION_TIMEOUT_MS) {
+                    llmProvider.extractBagFieldsWithVision(request)
+                }
+            }
+        } catch (_: TimeoutCancellationException) {
+            LlmExtractionResult.Failed("Vision enrichment timed out", retryable = false)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            LlmExtractionResult.Failed("Vision enrichment threw: ${e.message}", retryable = false)
+        }
+
+        return when (result) {
+            is LlmExtractionResult.Success -> {
+                llmCache.put(cacheKey, result)
+                LlmEnrichmentOutcome(
+                    candidates = result.fieldCandidates,
+                    status = LlmEnrichmentStatus.SUCCEEDED,
+                )
+            }
+            is LlmExtractionResult.Unavailable -> {
+                Log.w(BAG_PHOTO_TAG, "Vision enrichment unavailable: ${result.reason}")
+                LlmEnrichmentOutcome(status = LlmEnrichmentStatus.UNAVAILABLE)
+            }
+            is LlmExtractionResult.Failed -> {
+                Log.w(BAG_PHOTO_TAG, "Vision enrichment failed: ${result.error}")
                 LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
             }
         }

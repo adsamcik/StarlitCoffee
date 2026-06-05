@@ -43,6 +43,28 @@ interface LlmInferenceProvider {
     suspend fun extractBagFields(request: LlmExtractionRequest): LlmExtractionResult
 
     /**
+     * Whether this provider can run a multimodal (vision) second pass over the
+     * label image via [extractBagFieldsWithVision]. Default `false` so callers
+     * skip vision for text-only providers. Should be cheap/non-blocking.
+     */
+    fun supportsVision(): Boolean = false
+
+    /**
+     * Second-pass extraction that looks at the label **image** (not just OCR
+     * text) to recover visual-only details — e.g. a roast-level dot scale that
+     * has no textual form — and to correct earlier mistakes, given the fields
+     * already known (`request.existingFields`) and the ones still needed
+     * (`request.fieldsNeeded`). Honours the same threading and cancellation
+     * contracts as [extractBagFields].
+     *
+     * Default returns [LlmExtractionResult.Unavailable] for providers without
+     * vision support; the orchestration only calls this when [supportsVision]
+     * is true.
+     */
+    suspend fun extractBagFieldsWithVision(request: LlmExtractionRequest): LlmExtractionResult =
+        LlmExtractionResult.Unavailable("Vision extraction not supported by this provider")
+
+    /**
      * Whether the LLM provider is configured and available.
      * If false, callers should skip LLM enrichment gracefully.
      *
