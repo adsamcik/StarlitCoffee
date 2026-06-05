@@ -97,7 +97,7 @@ import com.adsamcik.starlitcoffee.ui.component.ScanDebugOverlay
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CrossValidationWarning
 import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
-import com.adsamcik.starlitcoffee.viewmodel.LlmUiStatus
+import com.adsamcik.starlitcoffee.scan.model.LlmUiStatus
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions

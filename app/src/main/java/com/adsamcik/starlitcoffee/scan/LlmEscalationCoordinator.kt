@@ -13,7 +13,7 @@ import com.adsamcik.starlitcoffee.scan.observability.ScanPerfTracer
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
-import com.adsamcik.starlitcoffee.viewmodel.LlmUiStatus
+import com.adsamcik.starlitcoffee.scan.model.LlmUiStatus
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart

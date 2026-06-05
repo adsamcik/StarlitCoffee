@@ -13,7 +13,7 @@ import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult
-import com.adsamcik.starlitcoffee.viewmodel.LlmUiStatus
+import com.adsamcik.starlitcoffee.scan.model.LlmUiStatus
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers

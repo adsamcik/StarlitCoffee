@@ -20,6 +20,7 @@ import com.adsamcik.starlitcoffee.scan.model.FieldContext
 import com.adsamcik.starlitcoffee.scan.model.FieldSource
 import com.adsamcik.starlitcoffee.scan.model.FieldStatus
 import com.adsamcik.starlitcoffee.scan.model.FrameResult
+import com.adsamcik.starlitcoffee.scan.model.LlmUiStatus
 import com.adsamcik.starlitcoffee.scan.observability.ScanAnalyticsTracker
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionSummary
@@ -794,19 +795,6 @@ data class CrossValidationWarning(
     val ocrValue: String,
     val message: String,
 )
-
-/**
- * Visible status of the LLM subsystem during a live scan session.
- */
-enum class LlmUiStatus {
-    IDLE,          // Not yet triggered
-    CONNECTING,    // Pre-warming / connecting to service
-    WAITING,       // Connected, trigger conditions not yet met
-    PROCESSING,    // LLM inference in progress
-    COMPLETED,     // LLM returned results
-    FAILED,        // LLM failed
-    UNAVAILABLE,   // Mindlayer not installed or not connected
-}
 
 /**
  * UI state for the live scan screen (not the accumulated evidence —
