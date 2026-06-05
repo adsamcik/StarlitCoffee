@@ -25,8 +25,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
@@ -34,9 +32,7 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -55,26 +51,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.data.model.CupPreset
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
-import com.adsamcik.starlitcoffee.ui.util.availablePresetIcons
-import com.adsamcik.starlitcoffee.ui.util.presetColorPalette
 import com.adsamcik.starlitcoffee.BuildConfig
 import android.Manifest
 import android.content.Intent
@@ -102,17 +93,13 @@ fun SettingsScreen(
     userPreferencesRepository: UserPreferencesRepository,
     cupPresetRepository: CupPresetRepository,
     onNavigateToBloomAnimationSettings: () -> Unit,
+    onNavigateToCupPresetEditor: (presetId: Long?) -> Unit,
     onBack: () -> Unit,
 ){
     val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = com.adsamcik.starlitcoffee.data.repository.UserPreferences(),
     )
     val cupPresets by cupPresetRepository.presets.collectAsStateWithLifecycle(initialValue = emptyList())
-    var showAddPresetDialog by rememberSaveable { mutableStateOf(false) }
-    // Save only the preset id across config changes; re-derive the full preset from the
-    // current `cupPresets` list. Storing the data class directly would require Parcelable.
-    var editingPresetId by rememberSaveable { mutableStateOf<Long?>(null) }
-    val editingPreset = editingPresetId?.let { id -> cupPresets.find { it.id == id } }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
@@ -149,7 +136,7 @@ fun SettingsScreen(
                         )
                         Row {
                             IconButton(
-                                onClick = { showAddPresetDialog = true },
+                                onClick = { onNavigateToCupPresetEditor(null) },
                                 modifier = Modifier.size(48.dp),
                             ) {
                                 Icon(
@@ -180,7 +167,7 @@ fun SettingsScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { editingPresetId = preset.id }
+                                .clickable { onNavigateToCupPresetEditor(preset.id) }
                                 .padding(vertical = 4.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalAlignment = Alignment.CenterVertically,
@@ -218,7 +205,7 @@ fun SettingsScreen(
                                 )
                             }
                             IconButton(
-                                onClick = { editingPresetId = preset.id },
+                                onClick = { onNavigateToCupPresetEditor(preset.id) },
                                 modifier = Modifier.size(48.dp),
                             ) {
                                 Icon(
@@ -721,246 +708,6 @@ fun SettingsScreen(
             if (BuildConfig.DEBUG) {
                 MindlayerSettingsCard()
                 ScanDebugCard()
-            }
-        }
-    }
-
-    if (showAddPresetDialog) {
-        AddPresetDialog(
-            onDismiss = { showAddPresetDialog = false },
-            onAdd = { name, waterMl, iconName, colorHex ->
-                scope.launch {
-                    cupPresetRepository.addPreset(
-                        CupPreset(
-                            name = name,
-                            iconName = iconName,
-                            doseG = 0f,
-                            waterMl = waterMl,
-                            sortOrder = cupPresets.size,
-                            colorHex = colorHex,
-                        )
-                    )
-                    showAddPresetDialog = false
-                }
-            },
-        )
-    }
-
-    editingPreset?.let { preset ->
-        EditPresetDialog(
-            preset = preset,
-            onDismiss = { editingPresetId = null },
-            onSave = { updated ->
-                scope.launch {
-                    cupPresetRepository.updatePreset(updated)
-                    editingPresetId = null
-                }
-            },
-            onDelete = {
-                scope.launch {
-                    cupPresetRepository.deletePreset(preset)
-                    editingPresetId = null
-                }
-            },
-        )
-    }
-}
-
-@Composable
-private fun AddPresetDialog(
-    onDismiss: () -> Unit,
-    onAdd: (name: String, waterMl: Float, iconName: String, colorHex: String?) -> Unit,
-) {
-    var name by rememberSaveable { mutableStateOf("") }
-    var waterMl by rememberSaveable { mutableStateOf("") }
-    var selectedIcon by rememberSaveable { mutableStateOf("mug") }
-    var selectedColor by rememberSaveable { mutableStateOf<String?>(null) }
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.action_add_cup_preset)) },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    label = { Text(stringResource(R.string.label_name)) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                OutlinedTextField(
-                    value = waterMl,
-                    onValueChange = { waterMl = it },
-                    label = { Text(stringResource(R.string.label_volume_ml)) },
-                    supportingText = { Text(stringResource(R.string.msg_dose_from_ratio)) },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(stringResource(R.string.label_icon), style = MaterialTheme.typography.labelMedium)
-                IconPickerRow(selectedIcon = selectedIcon, onSelect = { selectedIcon = it })
-                Text(stringResource(R.string.label_color), style = MaterialTheme.typography.labelMedium)
-                ColorPickerRow(selectedColor = selectedColor, onSelect = { selectedColor = it })
-            }
-        },
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    val water = waterMl.toFloatOrNull() ?: return@TextButton
-                    if (name.isNotBlank() && water > 0f) {
-                        onAdd(name.trim(), water, selectedIcon, selectedColor)
-                    }
-                },
-            ) {
-                Text(stringResource(R.string.action_add))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
-        },
-    )
-}
-
-@Composable
-private fun EditPresetDialog(
-    preset: CupPreset,
-    onDismiss: () -> Unit,
-    onSave: (CupPreset) -> Unit,
-    onDelete: (() -> Unit)? = null,
-) {
-    var name by rememberSaveable(preset.id) { mutableStateOf(preset.name) }
-    var waterMl by rememberSaveable(preset.id) { mutableStateOf(preset.waterMl.toInt().toString()) }
-    var selectedIcon by rememberSaveable(preset.id) { mutableStateOf(preset.iconName) }
-    var selectedColor by rememberSaveable(preset.id) { mutableStateOf(preset.colorHex) }
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.dialog_edit_cup_preset_title)) },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    label = { Text(stringResource(R.string.label_name)) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                OutlinedTextField(
-                    value = waterMl,
-                    onValueChange = { waterMl = it },
-                    label = { Text(stringResource(R.string.label_volume_ml)) },
-                    supportingText = { Text(stringResource(R.string.msg_dose_from_ratio)) },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(stringResource(R.string.label_icon), style = MaterialTheme.typography.labelMedium)
-                IconPickerRow(selectedIcon = selectedIcon, onSelect = { selectedIcon = it })
-                Text(stringResource(R.string.label_color), style = MaterialTheme.typography.labelMedium)
-                ColorPickerRow(selectedColor = selectedColor, onSelect = { selectedColor = it })
-            }
-        },
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    val water = waterMl.toFloatOrNull() ?: return@TextButton
-                    if (name.isNotBlank() && water > 0f) {
-                        onSave(
-                            preset.copy(
-                                name = name.trim(),
-                                waterMl = water,
-                                iconName = selectedIcon,
-                                colorHex = selectedColor,
-                            ),
-                        )
-                    }
-                },
-            ) { Text(stringResource(R.string.action_save_simple)) }
-        },
-        dismissButton = {
-            Row {
-                if (onDelete != null) {
-                    TextButton(onClick = onDelete) {
-                        Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error)
-                    }
-                }
-                TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
-            }
-        },
-    )
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun IconPickerRow(
-    selectedIcon: String,
-    onSelect: (String) -> Unit,
-) {
-    FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        availablePresetIcons.forEach { (iconName, label) ->
-            val isSelected = iconName == selectedIcon
-            IconButton(
-                onClick = { onSelect(iconName) },
-                colors = if (isSelected) {
-                    IconButtonDefaults.filledIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    )
-                } else {
-                    IconButtonDefaults.iconButtonColors()
-                },
-                modifier = Modifier.size(40.dp),
-            ) {
-                PresetIcon(
-                    iconName = iconName,
-                    contentDescription = label,
-                    modifier = Modifier.size(22.dp),
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun ColorPickerRow(
-    selectedColor: String?,
-    onSelect: (String?) -> Unit,
-) {
-    FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        presetColorPalette.forEach { (hex, label) ->
-            val isSelected = hex == selectedColor
-            val circleColor = if (hex != null) {
-                try { Color(hex.toColorInt()) } catch (_: IllegalArgumentException) { MaterialTheme.colorScheme.secondaryContainer }
-            } else {
-                MaterialTheme.colorScheme.secondaryContainer
-            }
-            val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent
-            Box(
-                modifier = Modifier
-                    .size(36.dp)
-                    .clip(CircleShape)
-                    .background(circleColor)
-                    .border(2.dp, borderColor, CircleShape)
-                    .clickable { onSelect(hex) },
-                contentAlignment = Alignment.Center,
-            ) {
-                if (isSelected) {
-                    val checkColor = if (circleColor.luminance() > 0.5f) Color.Black else Color.White
-                    Icon(
-                        Icons.Filled.Check,
-                        contentDescription = "Selected: $label",
-                        tint = checkColor,
-                        modifier = Modifier.size(16.dp),
-                    )
-                }
             }
         }
     }

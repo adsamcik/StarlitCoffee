@@ -1,36 +1,36 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.util.Log
-import androidx.compose.foundation.background
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,24 +39,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
-import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
+import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
-import com.adsamcik.starlitcoffee.ui.util.emoji
+import com.adsamcik.starlitcoffee.ui.component.ChipEmphasis
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
+import com.adsamcik.starlitcoffee.ui.component.InsightChip
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.StarRatingRow
 import com.adsamcik.starlitcoffee.ui.component.SwipeToDismissCard
+import com.adsamcik.starlitcoffee.ui.component.iconForMethod
+import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -170,8 +171,12 @@ private fun BrewLogCard(
 
     val rating = log.rating
     val isUnrated = rating == null
-    val accentColor = ratingAccentColor(rating)
-    val decafSuffix = stringResource(R.string.label_decaf_suffix)
+    val accent = ratingAccent(rating)
+    val brewMethod = remember(log.method) {
+        runCatching { BrewMethod.valueOf(log.method) }.getOrNull()
+    }
+    val methodLabel = brewMethod?.displayName
+        ?: log.method.lowercase().replaceFirstChar { it.uppercase() }
 
     SwipeToDismissCard(onDismiss = onDelete) {
         ElevatedCard(
@@ -184,150 +189,69 @@ private fun BrewLogCard(
                     MaterialTheme.colorScheme.surfaceContainerHigh
                 },
             ),
-            modifier = Modifier.fillMaxWidth().testTag("brew_log_card_${log.id}"),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag("brew_log_card_${log.id}"),
         ) {
-            Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-                // Color accent strip
-                Box(
-                    modifier = Modifier
-                        .width(5.dp)
-                        .fillMaxHeight()
-                        .clip(MaterialTheme.shapes.large)
-                        .background(accentColor),
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                BrewLogCardHeader(
+                    methodLabel = methodLabel,
+                    methodIcon = brewMethod,
+                    accent = accent,
+                    bagName = bagName,
+                    dateText = dateFormat.format(Date(log.createdAt)),
+                    rating = rating,
+                    feedbackEmoji = feedbackEmoji,
                 )
 
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 16.dp, end = 20.dp, top = 16.dp, bottom = 16.dp),
+                BrewLogStatsRow(log = log)
+
+                AnimatedVisibility(
+                    visible = isUnrated,
+                    enter = fadeIn() + scaleIn(initialScale = 0.92f),
+                    exit = fadeOut() + scaleOut(targetScale = 0.92f),
                 ) {
-                    // Row 1: Method + bean name | date
-                    Row(
+                    FilledTonalButton(
+                        onClick = onTap,
+                        shape = MaterialTheme.shapes.medium,
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = buildString {
-                                    append(
-                                        log.method.lowercase()
-                                            .replaceFirstChar { it.uppercase() },
-                                    )
-                                    if (log.isDecaf) append(decafSuffix)
-                                },
-                                style = MaterialTheme.typography.titleMedium,
-                            )
-                            if (bagName != null) {
-                                Text(
-                                    text = bagName,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.primary,
-                                    maxLines = 1,
-                                )
-                            }
-                        }
-                        Text(
-                            text = dateFormat.format(Date(log.createdAt)),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        Icon(
+                            imageVector = Icons.Filled.Star,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp),
                         )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(stringResource(R.string.action_rate_brew))
                     }
+                }
 
-                    // Row 2: Dose/water + filter
-                    Row(
-                        modifier = Modifier.padding(top = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically,
+                if (flavorTags.isNotEmpty()) {
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
                     ) {
-                        Text(
-                            text = stringResource(R.string.format_dose_water_ratio, log.doseG, log.waterG, log.ratio),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        if (log.filterType != null) {
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = formatFilterType(log.filterType),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.outline,
-                            )
-                        }
-                        if (log.isDecaf) {
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = stringResource(R.string.label_decaf),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.outline,
+                        flavorTags.forEach { tag ->
+                            InsightChip(
+                                label = tag.descriptor,
+                                emphasis = ChipEmphasis.WARNING,
                             )
                         }
                     }
+                }
 
-                    // Row 3: Rating + feedback OR "Tap to rate"
-                    if (rating != null) {
-                        Row(
-                            modifier = Modifier.padding(top = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            if (rating > 0f) {
-                                StarRatingRow(rating = rating, starSize = 16.dp)
-                            }
-                            if (feedbackEmoji != null) {
-                                if (rating > 0f) {
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                }
-                                Text(
-                                    text = feedbackEmoji,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                )
-                            }
-                        }
-                    } else {
-                        AssistChip(
-                            onClick = onTap,
-                            label = { Text(stringResource(R.string.action_rate_brew)) },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Star,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(AssistChipDefaults.IconSize),
-                                )
-                            },
-                            modifier = Modifier.padding(top = 6.dp),
-                        )
-                    }
-
-                    // Row 4: Flavor tags
-                    if (flavorTags.isNotEmpty()) {
-                        FlowRow(
-                            modifier = Modifier.padding(top = 6.dp),
-                            horizontalArrangement = Arrangement.spacedBy(6.dp),
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                        ) {
-                            flavorTags.forEach { tag ->
-                                Text(
-                                    text = tag.descriptor,
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onTertiaryContainer,
-                                    modifier = Modifier
-                                        .background(
-                                            MaterialTheme.colorScheme.tertiaryContainer,
-                                            CircleShape,
-                                        )
-                                        .padding(horizontal = 10.dp, vertical = 3.dp),
-                                )
-                            }
-                        }
-                    }
-
-                    // Row 5: Notes preview
-                    if (!log.freeformNotes.isNullOrBlank()) {
-                        Text(
-                            text = log.freeformNotes.take(80) + if (log.freeformNotes.length > 80) "…" else "",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(top = 4.dp),
-                        )
-                    }
+                if (!log.freeformNotes.isNullOrBlank()) {
+                    Text(
+                        text = log.freeformNotes.take(NOTES_PREVIEW_CHARS) +
+                            if (log.freeformNotes.length > NOTES_PREVIEW_CHARS) "…" else "",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
             }
         }
@@ -335,13 +259,140 @@ private fun BrewLogCard(
 }
 
 @Composable
-private fun ratingAccentColor(rating: Float?): Color = when {
-    rating == null -> MaterialTheme.colorScheme.outlineVariant
-    rating >= 4.5f -> MaterialTheme.colorScheme.primary
-    rating >= 3.0f -> MaterialTheme.colorScheme.secondary
-    rating >= 2.0f -> MaterialTheme.colorScheme.tertiary
-    else -> MaterialTheme.colorScheme.error
+private fun BrewLogCardHeader(
+    methodLabel: String,
+    methodIcon: BrewMethod?,
+    accent: RatingAccent,
+    bagName: String?,
+    dateText: String,
+    rating: Float?,
+    feedbackEmoji: String?,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        MethodAvatar(method = methodIcon, accent = accent)
+
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
+            Text(
+                text = methodLabel,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                text = dateText,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (bagName != null) {
+                Text(
+                    text = bagName,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    maxLines = 1,
+                    modifier = Modifier.padding(top = 2.dp),
+                )
+            }
+        }
+
+        if (rating != null && rating > 0f) {
+            Column(
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                StarRatingRow(rating = rating, starSize = 14.dp)
+                if (feedbackEmoji != null) {
+                    Text(
+                        text = feedbackEmoji,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                }
+            }
+        } else if (feedbackEmoji != null) {
+            Text(
+                text = feedbackEmoji,
+                style = MaterialTheme.typography.titleMedium,
+            )
+        }
+    }
 }
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun BrewLogStatsRow(log: BrewLogEntity) {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        InsightChip(
+            label = stringResource(
+                R.string.format_dose_water_ratio,
+                log.doseG,
+                log.waterG,
+                log.ratio,
+            ),
+            emphasis = ChipEmphasis.NEUTRAL,
+        )
+        if (log.filterType != null) {
+            InsightChip(
+                label = formatFilterType(log.filterType),
+                emphasis = ChipEmphasis.NEUTRAL,
+            )
+        }
+        if (log.isDecaf) {
+            InsightChip(
+                label = stringResource(R.string.label_decaf),
+                emphasis = ChipEmphasis.NEUTRAL,
+            )
+        }
+    }
+}
+
+@Composable
+private fun MethodAvatar(method: BrewMethod?, accent: RatingAccent) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = accent.container,
+        contentColor = accent.onContainer,
+        modifier = Modifier.size(48.dp),
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Icon(
+                imageVector = method?.let { iconForMethod(it) } ?: Icons.Filled.History,
+                contentDescription = null,
+                modifier = Modifier.size(24.dp),
+            )
+        }
+    }
+}
+
+private data class RatingAccent(
+    val container: Color,
+    val onContainer: Color,
+)
+
+@Composable
+private fun ratingAccent(rating: Float?): RatingAccent {
+    val scheme = MaterialTheme.colorScheme
+    return when {
+        rating == null -> RatingAccent(scheme.surfaceContainerHighest, scheme.onSurfaceVariant)
+        rating >= RATING_EXCELLENT -> RatingAccent(scheme.primaryContainer, scheme.onPrimaryContainer)
+        rating >= RATING_GOOD -> RatingAccent(scheme.secondaryContainer, scheme.onSecondaryContainer)
+        rating >= RATING_FAIR -> RatingAccent(scheme.tertiaryContainer, scheme.onTertiaryContainer)
+        else -> RatingAccent(scheme.errorContainer, scheme.onErrorContainer)
+    }
+}
+
+private const val RATING_EXCELLENT = 4.5f
+private const val RATING_GOOD = 3.0f
+private const val RATING_FAIR = 2.0f
+private const val NOTES_PREVIEW_CHARS = 80
 
 private fun formatFilterType(filterType: String): String = when (filterType) {
     "PAPER" -> "Paper"

@@ -59,6 +59,7 @@ import com.adsamcik.starlitcoffee.ui.screen.BrewLogDetailScreen
 import com.adsamcik.starlitcoffee.ui.screen.CalculatorBrewScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BloomTimerScreen
+import com.adsamcik.starlitcoffee.ui.screen.CupPresetEditorScreen
 import com.adsamcik.starlitcoffee.ui.screen.GrindPrepScreen
 import com.adsamcik.starlitcoffee.ui.screen.LiveScanScreen
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
@@ -280,11 +281,6 @@ fun StarlitNavHost() {
                     calculatorViewModel = calculatorViewModel,
                     brewViewModel = brewViewModel,
                     userPreferencesRepository = userPreferencesRepository,
-                    dimModeEnabled = prefs.dimModeEnabled,
-                    dimModeTrueBlack = prefs.dimModeTrueBlack,
-                    dimModeReduceBrightness = prefs.dimModeReduceBrightness,
-                    dimModeFullscreen = prefs.dimModeFullscreen,
-                    dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
                     onNavigateToBrew = {
                         brewViewModel.startNewBrewSession()
                         // Quick Brew preference jumps past the grind/prep
@@ -422,12 +418,23 @@ fun StarlitNavHost() {
                     onNavigateToBloomAnimationSettings = {
                         navController.navigate(BloomAnimationSettings)
                     },
+                    onNavigateToCupPresetEditor = { presetId ->
+                        navController.navigate(CupPresetEditor(presetId = presetId))
+                    },
                     onBack = { navController.popBackStack() },
                 )
             }
             composable<BloomAnimationSettings> {
                 BloomAnimationSettingsScreen(
                     userPreferencesRepository = userPreferencesRepository,
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable<CupPresetEditor> { backStackEntry ->
+                val route = backStackEntry.toRoute<CupPresetEditor>()
+                CupPresetEditorScreen(
+                    cupPresetRepository = cupPresetRepository,
+                    presetId = route.presetId,
                     onBack = { navController.popBackStack() },
                 )
             }

@@ -23,7 +23,29 @@ extensions.configure<ApplicationExtension>("android") {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Sign debug builds with the shared Mindlayer "knownCertsOwner" keystore
+    // (`G:/Github/Mindlayer/app/keystores/knowncerts-owner.jks`) when present so
+    // local debug installs satisfy Mindlayer's `signature|knownSigner` BIND_ML_SERVICE
+    // permission gate. Falls back to the default Android Studio debug keystore when
+    // the Mindlayer keystore is unavailable (CI, contributors without that repo).
+    val mindlayerKeystore = rootProject.file("../Mindlayer/app/keystores/knowncerts-owner.jks")
+    signingConfigs {
+        if (mindlayerKeystore.exists()) {
+            create("mindlayerKnownCerts") {
+                storeFile = mindlayerKeystore
+                storePassword = "knowncertstest"
+                keyAlias = "knowncerts-owner"
+                keyPassword = "knowncertstest"
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            if (mindlayerKeystore.exists()) {
+                signingConfig = signingConfigs.getByName("mindlayerKnownCerts")
+            }
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true

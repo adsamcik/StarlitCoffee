@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.Backspace
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
@@ -64,8 +63,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.core.graphics.toColorInt
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -90,9 +87,7 @@ import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
-import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
-import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
 
@@ -102,11 +97,6 @@ fun CalculatorBrewScreen(
     calculatorViewModel: CalculatorViewModel,
     brewViewModel: BrewViewModel,
     userPreferencesRepository: UserPreferencesRepository,
-    dimModeEnabled: Boolean = true,
-    dimModeTrueBlack: Boolean = false,
-    dimModeReduceBrightness: Boolean = false,
-    dimModeFullscreen: Boolean = false,
-    dimModeForceDarkInLight: Boolean = false,
     onNavigateToBrew: () -> Unit,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
@@ -172,15 +162,6 @@ fun CalculatorBrewScreen(
         brewViewModel.setAmount(state.previewDoseG.toString())
     }
 
-    val dimController = rememberDimModeController(featureEnabled = dimModeEnabled)
-    DimModeScaffold(
-        controller = dimController,
-        modifier = Modifier.fillMaxSize(),
-        trueBlackBackground = dimModeTrueBlack,
-        reduceBrightness = dimModeReduceBrightness,
-        hideSystemBars = dimModeFullscreen,
-        forceDarkInLight = dimModeForceDarkInLight,
-    ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -212,16 +193,18 @@ fun CalculatorBrewScreen(
                 .weight(1f)
                 .verticalScroll(scrollState),
         ) {
-            // Live preview card — only visible on regular-height screens with
-            // a meaningful expression. On compact heights the inline result
-            // in the expression header replaces this entirely; before the
-            // expression resolves there's nothing useful to show, so we hide
-            // the empty-state placeholder rather than reserving space for it.
-            if (!isCompactHeight && state.hasValidExpression) {
+            // Live preview card — always visible on regular-height screens so
+            // the direction-swap control between the coffee and water values
+            // is discoverable even before the user has typed a valid
+            // expression. Empty values render as "—" via formatAmount. On
+            // compact heights the inline result in the expression header
+            // replaces this entirely, so the swap stays in the header there.
+            if (!isCompactHeight) {
                 LivePreviewCard(
                     doseG = state.previewDoseG,
                     waterMl = state.previewWaterMl,
                     direction = state.inputDirection,
+                    onToggleDirection = { calculatorViewModel.toggleDirection() },
                 )
             }
 
@@ -309,7 +292,6 @@ fun CalculatorBrewScreen(
 
         Spacer(modifier = Modifier.height(barSpacer))
     }
-    }
 
     if (showBagPromptDialog) {
         com.adsamcik.starlitcoffee.ui.component.BagSelectionPromptDialog(
@@ -364,18 +346,21 @@ private fun ExpressionHeader(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        // Direction toggle — icon only to free horizontal space; the swap
-        // icon is universally recognised and the contentDescription names
-        // the current direction for accessibility.
-        IconButton(
-            onClick = onToggleDirection,
-            modifier = Modifier.size(40.dp),
-        ) {
-            Icon(
-                imageVector = Icons.Filled.SwapHoriz,
-                contentDescription = toggleDescription,
-                tint = MaterialTheme.colorScheme.primary,
-            )
+        // Direction toggle — only shown on compact heights, where the
+        // LivePreviewCard (which normally hosts this control next to the
+        // values it swaps) is hidden to save vertical space and the inline
+        // result lives here in the expression display instead.
+        if (isCompactHeight) {
+            IconButton(
+                onClick = onToggleDirection,
+                modifier = Modifier.size(40.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.SwapHoriz,
+                    contentDescription = toggleDescription,
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
         }
 
         ExpressionDisplay(
@@ -539,7 +524,12 @@ private fun LivePreviewCard(
     doseG: Float,
     waterMl: Float,
     direction: InputDirection,
+    onToggleDirection: () -> Unit,
 ) {
+    val toggleDescription = when (direction) {
+        InputDirection.WATER -> stringResource(R.string.label_water_to_dose)
+        InputDirection.DOSE -> stringResource(R.string.label_dose_to_water)
+    }
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
@@ -550,34 +540,58 @@ private fun LivePreviewCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 14.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
+                .padding(horizontal = 20.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            // Coffee dose — single-line: icon + value.
-            PreviewValueInline(
-                icon = Icons.Filled.LocalCafe,
-                value = formatAmount(doseG),
-                tint = MaterialTheme.colorScheme.primary,
-                emphasised = direction == InputDirection.DOSE,
-                contentDescription = stringResource(R.string.label_coffee),
-            )
+            // Coffee side — icon pinned to the card's left edge, value flows
+            // to its right toward centre. Weight(1f) reserves an equal half
+            // for this side so the swap button below stays mathematically
+            // centred regardless of which value text is shorter or longer.
+            Row(
+                modifier = Modifier.weight(1f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start,
+            ) {
+                PreviewValueInline(
+                    icon = Icons.Filled.LocalCafe,
+                    value = formatAmount(doseG),
+                    tint = MaterialTheme.colorScheme.primary,
+                    emphasised = direction == InputDirection.DOSE,
+                    contentDescription = stringResource(R.string.label_coffee),
+                    iconLeading = true,
+                )
+            }
 
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.outlineVariant,
-                modifier = Modifier.size(20.dp),
-            )
+            // Swap control sits between the two values it swaps so the
+            // affordance is unambiguous: "tap me to switch what these two
+            // numbers mean". Tonal background makes it read as a button
+            // instead of decorative iconography.
+            FilledTonalIconButton(
+                onClick = onToggleDirection,
+                modifier = Modifier.size(36.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.SwapHoriz,
+                    contentDescription = toggleDescription,
+                )
+            }
 
-            // Total water — single-line: icon + value.
-            PreviewValueInline(
-                icon = Icons.Filled.WaterDrop,
-                value = formatAmount(waterMl),
-                tint = MaterialTheme.colorScheme.secondary,
-                emphasised = direction == InputDirection.WATER,
-                contentDescription = stringResource(R.string.label_total_water),
-            )
+            // Water side — mirrors the coffee side: icon pinned to the
+            // card's right edge, value flows to its left toward centre.
+            Row(
+                modifier = Modifier.weight(1f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End,
+            ) {
+                PreviewValueInline(
+                    icon = Icons.Filled.WaterDrop,
+                    value = formatAmount(waterMl),
+                    tint = MaterialTheme.colorScheme.secondary,
+                    emphasised = direction == InputDirection.WATER,
+                    contentDescription = stringResource(R.string.label_total_water),
+                    iconLeading = false,
+                )
+            }
         }
     }
 }
@@ -589,32 +603,44 @@ private fun PreviewValueInline(
     tint: Color,
     emphasised: Boolean,
     contentDescription: String,
+    iconLeading: Boolean = true,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = contentDescription,
-            tint = tint,
-            modifier = Modifier.size(22.dp),
-        )
-        AnimatedContent(
-            targetState = value,
-            transitionSpec = { fadeIn() togetherWith fadeOut() },
-            label = "preview_$contentDescription",
-        ) { displayed ->
-            Text(
-                text = displayed,
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                color = if (emphasised) {
-                    MaterialTheme.colorScheme.onSurface
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                },
+        val iconContent = @Composable {
+            Icon(
+                imageVector = icon,
+                contentDescription = contentDescription,
+                tint = tint,
+                modifier = Modifier.size(22.dp),
             )
+        }
+        val valueContent = @Composable {
+            AnimatedContent(
+                targetState = value,
+                transitionSpec = { fadeIn() togetherWith fadeOut() },
+                label = "preview_$contentDescription",
+            ) { displayed ->
+                Text(
+                    text = displayed,
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = if (emphasised) {
+                        MaterialTheme.colorScheme.onSurface
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
+                )
+            }
+        }
+        if (iconLeading) {
+            iconContent()
+            valueContent()
+        } else {
+            valueContent()
+            iconContent()
         }
     }
 }
@@ -869,43 +895,30 @@ private fun CalculatorKeyboard(
     Column(
         verticalArrangement = Arrangement.spacedBy(rowSpacing),
     ) {
-        // Row 1: Preset buttons + backspace
+        // Row 1: Preset buttons + backspace.
+        // Chips use the default tonal container — a single neutral colour from
+        // the active scheme — so the row reads as one calm strip of icons
+        // rather than five competing colour blocks. Per-preset [CupPreset.colorHex]
+        // is intentionally ignored here: it's still useful for list/settings
+        // contexts, but inside the calculator it was too loud for what is
+        // ultimately a quick-tap utility row. Icons fill ~70% of the chip so
+        // the vessel art is legible at this 44-48dp size.
+        val presetIconSize = if (isCompactHeight) 32.dp else 34.dp
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(rowSpacing),
         ) {
-            val schemeContainers = listOf(
-                MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer,
-                MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer,
-                MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer,
-            )
-            presets.take(5).forEachIndexed { index, preset ->
-                val customColor = preset.colorHex?.let {
-                    try { Color(it.toColorInt()) } catch (_: IllegalArgumentException) { null }
-                }
+            presets.take(5).forEach { preset ->
                 FilledTonalIconButton(
                     onClick = { onPreset(preset) },
                     modifier = Modifier
                         .weight(1f)
                         .height(presetRowHeight),
-                    colors = if (customColor != null) {
-                        val contentColor = if (customColor.luminance() > 0.5f) Color.Black else Color.White
-                        IconButtonDefaults.filledTonalIconButtonColors(
-                            containerColor = customColor,
-                            contentColor = contentColor,
-                        )
-                    } else {
-                        val (container, content) = schemeContainers[index % schemeContainers.size]
-                        IconButtonDefaults.filledTonalIconButtonColors(
-                            containerColor = container,
-                            contentColor = content,
-                        )
-                    },
                 ) {
                     PresetIcon(
                         iconName = preset.iconName,
                         contentDescription = preset.name,
-                        modifier = Modifier.size(26.dp),
+                        modifier = Modifier.size(presetIconSize),
                     )
                 }
             }
