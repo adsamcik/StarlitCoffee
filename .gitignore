@@ -81,3 +81,18 @@ screenshots/
 # tests rather than failing.
 /coffee-bags-corpus/
 /app/coffee-bags-corpus/
+
+# Python bytecode cache
+__pycache__/
+
+# Asset-generation intermediates and local validation artifacts — large
+# binary work products from icon/spritesheet generation that are not app
+# resources and should not bloat git history. The shipped assets live in
+# app/src/main/res/drawable-nodpi.
+/docs/assets/vessel-icons/
+/tools/bloom-validation/
+
+# Synthetic coffee-bag image corpus (large test images, mirrors the
+# coffee-bags-corpus policy above — kept local, not version-controlled).
+/testdata/synthetic-coffee-bag-corpus/
+
