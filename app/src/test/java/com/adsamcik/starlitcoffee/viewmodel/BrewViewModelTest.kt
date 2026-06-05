@@ -145,6 +145,32 @@ class BrewViewModelTest {
         assertEquals(330f, state.waterG, 0.01f) // 20 * 16.5
     }
 
+    @Test
+    fun `switching coffee to water mode converts using custom ratio not preset`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
+        viewModel.setAmount("20")
+        viewModel.setCustomRatio("20") // differs from Pulsar default preset (17)
+
+        viewModel.setInputMode(InputMode.WATER_TO_COFFEE)
+
+        // 20 g coffee * custom ratio 20 = 400 ml (regression: was 20 * 17 = 340)
+        assertEquals("400", viewModel.uiState.value.amount)
+    }
+
+    @Test
+    fun `switching back to coffee mode converts using custom ratio not preset`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setInputMode(InputMode.WATER_TO_COFFEE)
+        viewModel.setAmount("400")
+        viewModel.setCustomRatio("20") // differs from Pulsar default preset (17)
+
+        viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
+
+        // 400 ml / custom ratio 20 = 20 g (regression: was 400 / 17 ≈ 24)
+        assertEquals("20", viewModel.uiState.value.amount)
+    }
+
     // --- Bloom Calculation ---
 
     @Test

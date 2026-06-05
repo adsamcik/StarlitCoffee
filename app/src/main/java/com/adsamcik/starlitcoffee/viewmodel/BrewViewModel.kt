@@ -16,11 +16,8 @@ import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.data.model.BrewTimingMode
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
-import com.adsamcik.starlitcoffee.data.model.CoffeeRoastLevel
-import com.adsamcik.starlitcoffee.data.model.DecafProcess
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
@@ -33,6 +30,7 @@ import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.data.model.RatioPreset
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.network.OpenFoodFactsClient
+import com.adsamcik.starlitcoffee.data.network.ProductResult
 import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.data.network.QrLinkExploreResult
 import com.adsamcik.starlitcoffee.data.network.QrLinkMetadataExplorer
@@ -52,7 +50,6 @@ import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
-import com.adsamcik.starlitcoffee.domain.BrewCalculator
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.notification.RatingReminders
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
@@ -88,7 +85,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -201,6 +197,15 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private val ocrService: OcrService? = null,
     private val userBarcodeStemDao: UserBarcodeStemDao? = null,
     private val ratingReminderScheduler: RatingReminders? = null,
+    // Wall-clock source in milliseconds, injectable for deterministic timer
+    // tests. Defaults to a monotonic clock (nanoTime) so elapsed time survives
+    // wall-clock changes; tests back it with the coroutine test scheduler.
+    private val nowMs: () -> Long = { System.nanoTime() / 1_000_000L },
+    // Open Food Facts barcode lookup, injectable so the candidate-gating logic
+    // in addOpenFoodFactsCandidates can be characterized without real network.
+    private val openFoodFactsLookup: (barcode: String) -> ProductResult? = {
+        OpenFoodFactsClient.lookupBarcode(it)
+    },
 ) : ViewModel() {
 
     private val llmCache = LlmResultCache()
@@ -231,10 +236,12 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private val _inventoryAlerts = MutableStateFlow(emptyList<InventoryAlert>())
     val inventoryAlerts: StateFlow<List<InventoryAlert>> = _inventoryAlerts.asStateFlow()
 
-    private var timerJob: Job? = null
-    private var bloomCountdownJob: Job? = null
-    private var timerStartMs: Long = 0L
-    private var pausedAccumulatedMs: Long = 0L
+    private val timerController = BrewTimerController(
+        scope = viewModelScope,
+        nowMs = nowMs,
+        state = { _uiState.value },
+        update = { transform -> _uiState.update(transform) },
+    )
     private var ratioPresetJob: Job? = null
 
     init {
@@ -318,19 +325,19 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val oldMode = state.inputMode
         val currentAmount = state.amount.toFloatOrNull() ?: 0f
 
-        // Convert amount intelligently when switching modes
+        // Convert amount intelligently when switching modes. Use the effective
+        // ratio (which honours a custom ratio) rather than only the selected
+        // preset, otherwise switching coffee<->water with a custom ratio set
+        // converts using the wrong ratio.
+        val ratio = BrewDerivation.resolveEffectiveRatio(state, state.method)
         val convertedAmount = when {
             oldMode == mode -> currentAmount
             // From coffee grams → water/cup/brew ml: multiply by ratio
             oldMode == InputMode.COFFEE_TO_WATER && mode != InputMode.COFFEE_TO_WATER -> {
-                val ratio = state.ratioPresets.getOrNull(state.selectedPresetIndex)?.ratio
-                    ?: state.method.defaultRatio
                 (currentAmount * ratio).let { kotlin.math.round(it) }
             }
             // From water/cup/brew ml → coffee grams: divide by ratio
             oldMode != InputMode.COFFEE_TO_WATER && mode == InputMode.COFFEE_TO_WATER -> {
-                val ratio = state.ratioPresets.getOrNull(state.selectedPresetIndex)?.ratio
-                    ?: state.method.defaultRatio
                 if (ratio > 0f) (currentAmount / ratio).let { kotlin.math.round(it) } else currentAmount
             }
             // Between non-coffee modes: keep the ml value
@@ -412,81 +419,18 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         _uiState.update { it.copy(showAdvanced = !it.showAdvanced) }
     }
 
-    fun startTimer() {
-        if (_uiState.value.method.timingMode != BrewTimingMode.ACTIVE_TIMER) return
-        if (timerJob?.isActive == true) return
-        _uiState.update { it.copy(timerRunning = true) }
-        timerStartMs = System.nanoTime() / 1_000_000L
-        launchTimerLoop()
-        resumeBloomCountdownIfNeeded()
-    }
-
-    private fun resumeBloomCountdownIfNeeded() {
-        val state = _uiState.value
-        if (state.bloomMarkedAtSeconds == null) return
-        if (state.bloomFinished) return
-        val remaining = state.bloomCountdownSeconds ?: return
-        if (remaining <= 0) return
-
-        bloomCountdownJob?.cancel()
-        bloomCountdownJob = viewModelScope.launch {
-            for (tick in remaining - 1 downTo 0) {
-                delay(1000L)
-                _uiState.update { it.copy(bloomCountdownSeconds = tick) }
-            }
-            _uiState.update { it.copy(bloomFinished = true, bloomCountdownSeconds = 0) }
-        }
-    }
-
-    private fun launchTimerLoop() {
-        timerJob = viewModelScope.launch {
-            while (_uiState.value.timerRunning) {
-                delay(250L)
-                val nowMs = System.nanoTime() / 1_000_000L
-                val totalElapsedMs = pausedAccumulatedMs + (nowMs - timerStartMs)
-                val totalElapsedSeconds = (totalElapsedMs / 1000).toInt()
-                _uiState.update { it.copy(elapsedSeconds = totalElapsedSeconds) }
-            }
-        }
-    }
+    fun startTimer() = timerController.start()
 
     /**
      * Ensures the timer coroutine is running. Call on app resume to recover
      * from Doze or battery optimization pausing the coroutine.
      * Does NOT reset the clock — wall-clock anchoring handles the gap.
      */
-    fun ensureTimerRunning() {
-        if (!_uiState.value.timerRunning) return
-        if (timerJob?.isActive == true) return
-        launchTimerLoop()
-    }
+    fun ensureTimerRunning() = timerController.ensureRunning()
 
-    fun pauseTimer() {
-        val nowMs = System.nanoTime() / 1_000_000L
-        pausedAccumulatedMs += (nowMs - timerStartMs)
-        _uiState.update { it.copy(timerRunning = false) }
-        timerJob?.cancel()
-        timerJob = null
-        bloomCountdownJob?.cancel()
-    }
+    fun pauseTimer() = timerController.pause()
 
-    fun stopTimer() {
-        pausedAccumulatedMs = 0L
-        bloomCountdownJob?.cancel()
-        bloomCountdownJob = null
-        _uiState.update {
-            it.copy(
-                timerRunning = false,
-                elapsedSeconds = 0,
-                bloomMarkedAtSeconds = null,
-                bloomCountdownSeconds = null,
-                bloomFinished = false,
-                bloomSpritesheetId = null,
-            )
-        }
-        timerJob?.cancel()
-        timerJob = null
-    }
+    fun stopTimer() = timerController.stop()
 
     fun advancePhase() {
         // Advances the active phase index during guided brewing.
@@ -530,29 +474,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
-    fun markBloom() {
-        val state = _uiState.value
-        if (state.bloomMarkedAtSeconds != null) return
-        if (!state.timerRunning) return
-
-        val duration = state.effectiveBloomDurationSeconds
-        _uiState.update {
-            it.copy(
-                bloomMarkedAtSeconds = it.elapsedSeconds,
-                bloomCountdownSeconds = duration,
-                bloomFinished = false,
-            )
-        }
-
-        bloomCountdownJob?.cancel()
-        bloomCountdownJob = viewModelScope.launch {
-            for (remaining in duration - 1 downTo 0) {
-                delay(1000L)
-                _uiState.update { it.copy(bloomCountdownSeconds = remaining) }
-            }
-            _uiState.update { it.copy(bloomFinished = true, bloomCountdownSeconds = 0) }
-        }
-    }
+    fun markBloom() = timerController.markBloom()
 
     fun toggleMinuteAlert() {
         _uiState.update { it.copy(minuteAlertEnabled = !it.minuteAlertEnabled) }
@@ -568,14 +490,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         private const val MAX_LLM_PHOTO_BYTES = 20 * 1024 * 1024
         private const val LLM_READ_BUFFER_SIZE = 8 * 1024
 
-        // Bloom freshness adjustment thresholds (see resolveEffectiveBloomDurationSeconds)
-        private const val MILLIS_PER_DAY = 86_400_000L
-        private const val BLOOM_FRESH_DAYS = 7
-        private const val BLOOM_NORMAL_DAYS = 21
-        private const val BLOOM_FRESH_BONUS_SECONDS = 10
-        private const val BLOOM_OLD_PENALTY_SECONDS = 10
-        private const val BLOOM_MIN_SECONDS = 30
-        private const val BLOOM_MAX_SECONDS = 60
         private val CANONICAL_METADATA_FIELDS = setOf(
             "origin",
             "region",
@@ -1298,7 +1212,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
-    private data class OffLookupSummary(val name: String?, val brand: String?)
+    internal data class OffLookupSummary(val name: String?, val brand: String?)
 
     /**
      * Looks up the detected barcode against OpenFoodFacts and appends any
@@ -1307,13 +1221,14 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
      * confidence — origin from `countries_tags` may refer to country of sale
      * rather than coffee origin and lands as LOW confidence.
      */
-    private suspend fun addOpenFoodFactsCandidates(
+    @VisibleForTesting
+    internal suspend fun addOpenFoodFactsCandidates(
         allCandidates: MutableList<BagFieldCandidate>,
         detectedBarcode: String?,
     ): OffLookupSummary {
         if (detectedBarcode == null) return OffLookupSummary(name = null, brand = null)
         return try {
-            val lookup = OpenFoodFactsClient.lookupBarcode(detectedBarcode)
+            val lookup = openFoodFactsLookup(detectedBarcode)
                 ?: return OffLookupSummary(name = null, brand = null)
             val lookupSupportingText = listOfNotNull(
                 lookup.name?.takeIf { it.isNotBlank() },
@@ -2234,268 +2149,36 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     private fun recalculate() {
-        _uiState.update { state ->
-            val amount = state.amount.toFloatOrNull() ?: 0f
-            val method = state.method
-
+        _uiState.update { current ->
             val selectedBag = _selectedBagId.value?.let { id ->
                 _coffeeBags.value.find { it.id == id }
             }
-            val decafState = resolveDecafState(state, selectedBag)
-            val effectiveRatio = resolveEffectiveRatio(state, method)
-            val effectiveBloomMultiplier = resolveEffectiveBloomMultiplier(state, method)
-            val effectivePulseCount = resolveEffectivePulseCount(state, method)
-
-            val calculation = BrewCalculator.calculate(
-                method = method,
-                inputMode = state.inputMode,
-                amount = amount,
-                effectiveRatio = effectiveRatio,
-                bloomMultiplier = effectiveBloomMultiplier,
-                pulseCount = effectivePulseCount,
-                isDecaf = decafState.effectiveIsDecaf,
+            val derived = BrewDerivation.derive(
+                state = current,
+                selectedBag = selectedBag,
+                grinderData = grinderData,
+                nowMs = System.currentTimeMillis(),
             )
-            val effectiveBloomDurationSeconds = resolveEffectiveBloomDurationSeconds(method, selectedBag)
-            val grindResult = resolveGrindResult(
-                grinderId = state.selectedGrinderId,
-                method = method,
-                filterType = state.filterType,
-                calibrationStyle = state.calibrationStyle,
-                isDecaf = decafState.effectiveIsDecaf,
-                roastLevel = selectedBag?.roastLevel,
-                decafProcess = selectedBag?.decafProcess,
+            current.copy(
+                coffeeG = derived.coffeeG,
+                waterG = derived.waterG,
+                effectiveRatio = derived.effectiveRatio,
+                bloomG = derived.bloomG,
+                remainingWaterG = derived.remainingWaterG,
+                pulseSizeG = derived.pulseSizeG,
+                effectivePulseCount = derived.effectivePulseCount,
+                timeTargetLowS = derived.timeTargetLowS,
+                timeTargetHighS = derived.timeTargetHighS,
+                grindResult = derived.grindResult,
+                refillCount = derived.refillCount,
+                ratioWarning = derived.ratioWarning,
+                bloomWarning = derived.bloomWarning,
+                effectiveBloomDurationSeconds = derived.effectiveBloomDurationSeconds,
+                isDecafBrew = derived.isDecafBrew,
+                decafMismatchWithBag = derived.decafMismatchWithBag,
+                retainedWaterG = derived.retainedWaterG,
+                predictedCupVolumeG = derived.predictedCupVolumeG,
             )
-
-            state.copy(
-                coffeeG = calculation.coffeeG,
-                waterG = calculation.waterG,
-                effectiveRatio = effectiveRatio,
-                bloomG = calculation.bloomG,
-                remainingWaterG = calculation.remainingWaterG,
-                pulseSizeG = calculation.pulseSizeG,
-                effectivePulseCount = calculation.effectivePulseCount,
-                timeTargetLowS = calculation.timeTargetLowS,
-                timeTargetHighS = calculation.timeTargetHighS,
-                grindResult = grindResult,
-                refillCount = calculation.refillCount,
-                ratioWarning = calculation.ratioWarning,
-                bloomWarning = calculation.bloomWarning,
-                effectiveBloomDurationSeconds = effectiveBloomDurationSeconds,
-                isDecafBrew = decafState.effectiveIsDecaf,
-                decafMismatchWithBag = decafState.decafMismatchWithBag,
-                retainedWaterG = calculation.retainedWaterG,
-                predictedCupVolumeG = calculation.predictedCupVolumeG,
-            )
-        }
-    }
-
-    private data class DecafState(val effectiveIsDecaf: Boolean, val decafMismatchWithBag: Boolean)
-
-    /**
-     * Single source of truth for the brew-time decaf flag: manual override
-     * wins; else follow the selected bag; else default to non-decaf. A
-     * mismatch is only reported when the user explicitly overrode AND a bag
-     * is selected AND the two disagree — picking no bag never produces a
-     * mismatch.
-     */
-    private fun resolveDecafState(state: BrewUiState, selectedBag: CoffeeBagEntity?): DecafState {
-        val effectiveIsDecaf = state.manualDecafOverride
-            ?: selectedBag?.isDecaf
-            ?: false
-        val decafMismatchWithBag = state.manualDecafOverride != null &&
-            selectedBag != null &&
-            selectedBag.isDecaf != state.manualDecafOverride
-        return DecafState(effectiveIsDecaf, decafMismatchWithBag)
-    }
-
-    private fun resolveEffectiveRatio(state: BrewUiState, method: BrewMethod): Float {
-        val selectedPreset = state.ratioPresets.getOrNull(state.selectedPresetIndex)
-        val presetRatio = selectedPreset?.ratio ?: method.defaultRatio
-        return if (state.customRatio.isNotEmpty()) {
-            state.customRatio.toFloatOrNull() ?: presetRatio
-        } else {
-            presetRatio
-        }
-    }
-
-    private fun resolveEffectiveBloomMultiplier(state: BrewUiState, method: BrewMethod): Float =
-        if (state.bloomMultiplier.isNotEmpty()) {
-            state.bloomMultiplier.toFloatOrNull() ?: method.bloomMultiplier
-        } else {
-            method.bloomMultiplier
-        }
-
-    private fun resolveEffectivePulseCount(state: BrewUiState, method: BrewMethod): Int =
-        if (state.pulseCount.isNotEmpty()) {
-            state.pulseCount.toIntOrNull() ?: method.defaultPulses
-        } else {
-            method.defaultPulses
-        }
-
-    /**
-     * Bloom duration adjusted by roast freshness when a bag is selected.
-     * Very fresh beans (<= 7 days off-roast) need a longer bloom because
-     * they degas more; older beans (> 21 days) bloom shorter. Methods
-     * without a bloom step always return their static base duration.
-     */
-    private fun resolveEffectiveBloomDurationSeconds(method: BrewMethod, selectedBag: CoffeeBagEntity?): Int {
-        val baseDuration = method.bloomDurationSeconds
-        val roastDateMillis = selectedBag?.roastDate
-        if (roastDateMillis == null || !method.hasBloom) {
-            return baseDuration
-        }
-        val daysOff = ((System.currentTimeMillis() - roastDateMillis) / MILLIS_PER_DAY)
-            .toInt().coerceAtLeast(0)
-        return when {
-            daysOff <= BLOOM_FRESH_DAYS -> (baseDuration + BLOOM_FRESH_BONUS_SECONDS).coerceAtMost(BLOOM_MAX_SECONDS)
-            daysOff <= BLOOM_NORMAL_DAYS -> baseDuration
-            else -> (baseDuration - BLOOM_OLD_PENALTY_SECONDS).coerceAtLeast(BLOOM_MIN_SECONDS)
-        }
-    }
-
-    private fun resolveGrindResult(
-        grinderId: String?,
-        method: BrewMethod,
-        filterType: FilterType?,
-        calibrationStyle: CalibrationStyle?,
-        isDecaf: Boolean = false,
-        roastLevel: String? = null,
-        decafProcess: String? = null,
-    ): GrindResult {
-        if (grinderId == null) {
-            return GrindResult.Generic(method.defaultGrindDescriptor)
-        }
-
-        val grinder = grinderData.grinders.find { it.id == grinderId }
-            ?: return GrindResult.Generic(method.defaultGrindDescriptor)
-
-        // Try exact filterType match first, then fall back to filter-agnostic recommendation
-        var recommendation = grinderData.recommendations.find { rec ->
-            rec.grinderId == grinder.id &&
-                rec.methodId == method.name &&
-                rec.filterType == filterType
-        } ?: grinderData.recommendations.find { rec ->
-            rec.grinderId == grinder.id &&
-                rec.methodId == method.name &&
-                rec.filterType == null
-        } ?: return GrindResult.Generic(method.defaultGrindDescriptor)
-
-        // Decaf offset: start COARSER, not finer. Decaf beans shatter into more
-        // fines at the same grinder gap, which reduces bed permeability and slows
-        // flow — so going finer often makes things worse, especially for
-        // percolation and espresso. Magnitude depends on brew family (immersion is
-        // less fines-sensitive) plus a roast brittleness modifier.
-        // Refs: Coffee ad Astra (kettle-flow / V60 brewing), Scientific Reports
-        // 2024 on espresso fines & permeability, Sweet Maria's on decaf
-        // structural changes, Al-Shemmeri grinding study.
-        if (isDecaf) {
-            val decafSteps = decafCoarserStepsFor(method, roastLevel, decafProcess)
-            val processNote = decafProcessNote(decafProcess)
-            if (decafSteps > 0) {
-                val offset = recommendation.adjustmentStepSize * decafSteps
-                val stepLabel = if (decafSteps == 1) "1 step coarser" else "$decafSteps steps coarser"
-                recommendation = recommendation.copy(
-                    suggestedStart = (recommendation.suggestedStart + offset)
-                        .coerceAtMost(recommendation.rangeEnd),
-                    adjustmentNote = recommendation.adjustmentNote +
-                        " · Decaf: $stepLabel (more fines → coarsen for permeability)" +
-                        processNote,
-                )
-            } else {
-                recommendation = recommendation.copy(
-                    adjustmentNote = recommendation.adjustmentNote +
-                        " · Decaf: same start (immersion or gentle process — fines impact small); dial by taste" +
-                        processNote,
-                )
-            }
-        }
-
-        if (calibrationStyle == null) {
-            return GrindResult.Specific(recommendation, grinder)
-        }
-
-        val multiplier = calibrationStyle.rangeWidthMultiplier
-        val midpoint = (recommendation.rangeStart + recommendation.rangeEnd) / 2f
-        val halfWidth = (recommendation.rangeEnd - recommendation.rangeStart) / 2f
-        val adjustedStart = midpoint - halfWidth * multiplier
-        val adjustedEnd = midpoint + halfWidth * multiplier
-
-        return GrindResult.Specific(
-            recommendation.copy(
-                rangeStart = adjustedStart,
-                rangeEnd = adjustedEnd,
-            ),
-            grinder,
-        )
-    }
-
-    /**
-     * How many steps **coarser** to start when brewing decaf, vs the caffeinated
-     * baseline. Returns 0 (same start) for fines-insensitive immersion methods or
-     * gentle decaf processes.
-     *
-     * Evidence-based default (2026 research pass):
-     *   - Decaf grinds to a smaller median particle size + ~4 % more fines at the
-     *     same gap (Al-Shemmeri grinding study).
-     *   - Fines reduce bed permeability and slow flow more than they boost
-     *     extraction (Sci. Rep. 2024 on espresso, Coffee ad Astra on V60).
-     *   - Therefore "auto-finer" is wrong-direction. Default is **same to 1 step
-     *     coarser**.
-     *
-     * Rule:
-     *   - Percolation (Pulsar, V60, Moka) + Espresso: +1 step coarser baseline.
-     *   - Immersion (French press, AeroPress, cold brew): no change — fines
-     *     barely affect flow when there's no pressurised bed.
-     *   - Roast modifier: dark / espresso / medium-dark roasts add +1 (more
-     *     brittle, more fines).
-     *   - Decaf-process modifier: gentle processes (Swiss Water / Mountain Water,
-     *     supercritical CO₂) reduce the offset by 1 (clamped at 0). Solvent and
-     *     unknown processes get no relief. ACS C&EN 2024 + Swiss Water brew guide
-     *     support softer biasing for water/CO₂ processes.
-     */
-    private fun decafCoarserStepsFor(
-        method: BrewMethod,
-        roastLevel: String?,
-        decafProcess: String? = null,
-    ): Int {
-        val baseSteps = when (method) {
-            BrewMethod.PULSAR,
-            BrewMethod.V60,
-            BrewMethod.MOKA_POT,
-            BrewMethod.ESPRESSO -> 1
-            BrewMethod.FRENCH_PRESS,
-            BrewMethod.AEROPRESS,
-            BrewMethod.COLD_BREW -> 0
-        }
-        val known = roastLevel?.let {
-            runCatching { CoffeeRoastLevel.Known.valueOf(it) }.getOrNull()
-        }
-        val roastModifier = when (known) {
-            CoffeeRoastLevel.Known.MEDIUM_DARK,
-            CoffeeRoastLevel.Known.DARK,
-            CoffeeRoastLevel.Known.ESPRESSO -> 1
-            else -> 0
-        }
-        val processRelief = when (DecafProcess.fromStorageKey(decafProcess)) {
-            DecafProcess.SWISS_WATER,
-            DecafProcess.MOUNTAIN_WATER,
-            DecafProcess.CO2_SUPERCRITICAL -> 1
-            else -> 0
-        }
-        return (baseSteps + roastModifier - processRelief).coerceAtLeast(0)
-    }
-
-    /** Short suffix appended to the grind adjustment note when a decaf process is known. */
-    private fun decafProcessNote(decafProcess: String?): String {
-        val process = DecafProcess.fromStorageKey(decafProcess) ?: return ""
-        return when (process) {
-            DecafProcess.SWISS_WATER,
-            DecafProcess.MOUNTAIN_WATER -> " · ${process.shortLabel}: gentle, less coarsening needed"
-            DecafProcess.CO2_SUPERCRITICAL -> " · CO₂: selective extraction, structure preserved"
-            DecafProcess.EA_SUGARCANE,
-            DecafProcess.EA_DIRECT,
-            DecafProcess.MC_DIRECT -> " · ${process.shortLabel}: solvent process, expect more fines"
-            DecafProcess.UNKNOWN -> ""
         }
     }
 
