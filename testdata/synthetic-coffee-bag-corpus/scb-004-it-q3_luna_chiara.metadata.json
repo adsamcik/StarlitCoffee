@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-004-it-q3",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-004-it-q3_luna_chiara.front.webp",
+    "back": "scb-004-it-q3_luna_chiara.back.webp"
+  },
+  "language": [
+    "it"
+  ],
+  "fields": {
+    "name": "Luna Chiara",
+    "roaster": "Officina Alba",
+    "origin": "Ethiopia",
+    "region": "Sidamo",
+    "farm": "Halo Beriti",
+    "variety": "Heirloom",
+    "process": "Natural",
+    "roastLevel": "Filter",
+    "tastingNotes": "blueberry, bergamot, cocoa",
+    "altitude": "1900-2100",
+    "weight": "250 g",
+    "roastDate": "2026-05-14",
+    "expiryDate": "2026-08-14",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q3",
+    "bagMaterial": "olive matte",
+    "riskTags": [
+      "glare",
+      "motion_softness",
+      "strong_perspective",
+      "label_curvature"
+    ],
+    "bagDescription": "Olive Italian bag with more aggressive handheld capture artifacts.",
+    "barcode": "8051234567890"
+  },
+  "notes": "Degraded but still recoverable Italian capture. Producer 'Halo Beriti' is still legible on the back label."
+}

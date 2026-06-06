@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-013-fr-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-013-fr-q1_sillage_nord.front.webp",
+    "back": "scb-013-fr-q1_sillage_nord.back.webp"
+  },
+  "language": [
+    "fr"
+  ],
+  "fields": {
+    "name": "Sillage Nord",
+    "roaster": "Brume Atelier",
+    "origin": "Rwanda",
+    "region": "Nyamasheke",
+    "farm": "Kanzu Cooperative",
+    "variety": "Bourbon",
+    "process": "Washed",
+    "roastLevel": "Filter",
+    "tastingNotes": "plum, honey, blood orange",
+    "altitude": "1700-2100",
+    "weight": "250 g",
+    "roastDate": "2026-05-25",
+    "expiryDate": "2026-08-25",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "aubergine matte",
+    "designStyle": "art deco celestial",
+    "riskTags": [
+      "split_front_back"
+    ],
+    "bagDescription": "Aubergine art-deco bag with gold celestial linework. The French front carries origin, roast, and weight; the back data panel carries the detailed fields.",
+    "barcode": "3770029876543",
+    "requiresSideFusion": true,
+    "labelLayout": "split_front_back",
+    "frontFields": [
+      "roaster",
+      "name",
+      "origin",
+      "roastLevel",
+      "weight"
+    ],
+    "backFields": [
+      "region",
+      "farm",
+      "variety",
+      "process",
+      "tastingNotes",
+      "altitude",
+      "roastDate",
+      "expiryDate"
+    ]
+  },
+  "notes": "French split front/back art-deco design. Back panel is French (Processus: Lavé maps to canonical English 'Washed')."
+}

@@ -1,46 +1,50 @@
 # Test Data
 
-The coffee-bag test dataset is the **committed synthetic corpus** under
+The coffee-bag test dataset is the committed synthetic corpus under
 [`synthetic-coffee-bag-corpus/`](synthetic-coffee-bag-corpus/). It fully
-replaces the old local-only real-photo set — there is **no symlink to set up**
-and no real label photos in the repo.
+replaces the old local-only real-photo set.
 
-## What's here
+## What's Here
 
 | Path | Description |
 |------|-------------|
-| `synthetic-coffee-bag-corpus/corpus_metadata.json` | Ground truth for every bag (schema v1). |
-| `synthetic-coffee-bag-corpus/prototypes/*.webp` | Front/back label images (lossy WebP, ~1024×1536). |
-| `synthetic-coffee-bag-corpus/README.md` | Corpus details, tiers, and how the tests consume it. |
+| `synthetic-coffee-bag-corpus/*.metadata.json` | Per-fixture ground truth sidecars (`schema_version = 2`). |
+| `synthetic-coffee-bag-corpus/*.{webp,png,jpg,jpeg}` | Front/back bag images referenced by the sidecars. |
+| `synthetic-coffee-bag-corpus/README.md` | Corpus details, tiers, file naming, and test usage. |
 
-Image names follow `lang_roaster_coffee_{front|back}_qTier.webp` (e.g.
-`en_north_axis_moonlit_orchard_front_q0.webp`). Quality tiers run `Q0`
-(studio-perfect) through `Q4` (failure-mode).
+Committed fixture names follow:
 
-## Running the tests
+- `<fixture>.front.<ext>`
+- `<fixture>.back.<ext>` when a reverse side exists
+- `<fixture>.metadata.json`
 
-Pure-JVM validation (parser contract, scoring math, corpus structure) runs
-with no device:
+Example:
+
+- `scb-014-en-q1_espresso_no_4.front.png`
+- `scb-014-en-q1_espresso_no_4.back.png`
+- `scb-014-en-q1_espresso_no_4.metadata.json`
+
+## Running The Tests
+
+Pure-JVM validation (parser contract, scoring math, corpus structure):
 
 ```powershell
 .\gradlew.bat testDebugUnitTest
 ```
 
-On-device quality tests push the corpus, then run the LLM quality report and
-the Q0 best-case gate:
+On-device quality tests push the corpus, then run the OCR fixture capture, LLM
+quality report, and the Q0 best-case gate:
 
 ```powershell
 .\gradlew.bat pushTestImages
-# capture OCR fixtures once (only when the OCR pipeline changes)
 .\gradlew.bat connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.OcrFixtureCaptureTest"
-# quality report (numbers, not pass/fail)
 .\gradlew.bat connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.LlmCorpusBenchmarkTest"
-# Q0 best-case gate (must pass 100%)
 .\gradlew.bat connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.BagScanBestCaseGateTest"
 ```
 
-`pushTestImages` copies `corpus_metadata.json` + `prototypes/*.webp` to
-`/data/local/tmp/coffee-bags/` on the connected device or emulator (cleaning
-the directory first). Reports are written to the app's external files dir
+`pushTestImages` copies all root-level `*.metadata.json` sidecars plus the
+sibling bag images to `/data/local/tmp/coffee-bags/` on the connected device
+or emulator. Reports are written to the app's external files dir
 (`/sdcard/Android/data/com.adsamcik.starlitcoffee/files/coffee-bags-fixtures/`)
-as `*.json` + `*.txt` and echoed to logcat under the `StarlitBagBenchmark` tag.
+as `*.json` + `*.txt` and echoed to logcat under the `StarlitBagBenchmark`
+tag.

@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-008-cs-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-008-cs-q1_mechovy_sad.front.webp",
+    "back": "scb-008-cs-q1_mechovy_sad.back.webp"
+  },
+  "language": [
+    "cs"
+  ],
+  "fields": {
+    "name": "Mechovy Sad",
+    "roaster": "List a Kamen",
+    "origin": "Rwanda",
+    "region": "Nyamasheke",
+    "farm": "Kanzu Cooperative",
+    "variety": "Bourbon",
+    "process": "Washed",
+    "roastLevel": "Filter",
+    "tastingNotes": "currant, rosehip, honey",
+    "altitude": "1700-2100",
+    "weight": "250 g",
+    "roastDate": "2026-05-26",
+    "expiryDate": "2026-08-26",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "kraft paper",
+    "designStyle": "botanical block print",
+    "riskTags": [
+      "dense_artwork",
+      "natural_light"
+    ],
+    "bagDescription": "Kraft bag covered in block-printed leaves and coffee cherries with an integrated Czech information frame.",
+    "barcode": "8595173840526"
+  },
+  "notes": "Graphic botanical design that keeps the text readable while surrounding it with dense illustration. Producer 'Kanzu Cooperative' is visible on the back label."
+}

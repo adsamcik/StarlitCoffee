@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-001-en-q0",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-001-en-q0_moonlit_orchard.front.webp",
+    "back": "scb-001-en-q0_moonlit_orchard.back.webp"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Moonlit Orchard",
+    "roaster": "North Axis Roastery",
+    "origin": "Ethiopia",
+    "region": "Yirgacheffe",
+    "farm": "Halo Beriti",
+    "variety": "Heirloom",
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "blueberry, jasmine, citrus",
+    "altitude": "1900-2200",
+    "weight": "250 g",
+    "roastDate": "2026-05-28",
+    "expiryDate": "2026-08-28",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q0",
+    "bagMaterial": "matte white",
+    "riskTags": [],
+    "bagDescription": "Studio-clean white bag with a large front label and an easy-to-read back label.",
+    "barcode": "7350142985671"
+  },
+  "notes": "Near-perfect English baseline. Producer 'Halo Beriti' is printed on the back label."
+}

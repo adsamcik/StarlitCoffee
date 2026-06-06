@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-010-fr-q0",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-010-fr-q0_carte_solaire.front.webp",
+    "back": "scb-010-fr-q0_carte_solaire.back.webp"
+  },
+  "language": [
+    "fr"
+  ],
+  "fields": {
+    "name": "Carte Solaire",
+    "roaster": "Maison Meridian",
+    "origin": "Ethiopia",
+    "region": "Guji",
+    "farm": "Buku Abel",
+    "variety": "Heirloom",
+    "process": "Natural",
+    "roastLevel": "Filter",
+    "tastingNotes": "strawberry, cocoa, orange blossom",
+    "altitude": "1900-2200",
+    "weight": "250 g",
+    "roastDate": "2026-05-20",
+    "expiryDate": "2026-08-20",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q0",
+    "bagMaterial": "sand and indigo matte",
+    "designStyle": "topographic sun map",
+    "riskTags": [],
+    "bagDescription": "Premium French bag with layered contour lines, an abstract sun disc, and an integrated map-style panel.",
+    "barcode": "3770028123456"
+  },
+  "notes": "Topographic artwork adds decorative density while preserving a clean front/back data zone. Producer 'Buku Abel' is on the back."
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-028-und-q1",
+  "automation_ready": false,
+  "photos": {
+    "front": null,
+    "back": "scb-028-und-q1_unlabeled_kraft_reverse.back.png"
+  },
+  "language": [
+    "und"
+  ],
+  "fields": {
+    "name": null,
+    "roaster": null,
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": null,
+    "tastingNotes": null,
+    "altitude": null,
+    "weight": null,
+    "roastDate": null,
+    "expiryDate": null,
+    "isDecaf": null
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "kraft paper pouch",
+    "sourceCollection": "reference_realism",
+    "riskTags": [
+      "back_only",
+      "unlabeled_reverse",
+      "not_visible_fields"
+    ],
+    "bagDescription": "Plain unlabeled kraft reverse-side studio capture kept as a control image for non-informative bag surfaces."
+  },
+  "notes": "Back-only control capture. No identifying front panel or extraction fields are visible, so every field is intentionally not_visible."
+}

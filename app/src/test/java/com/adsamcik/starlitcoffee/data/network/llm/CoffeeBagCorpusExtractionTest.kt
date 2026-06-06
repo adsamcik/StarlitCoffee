@@ -1,11 +1,11 @@
 package com.adsamcik.starlitcoffee.data.network.llm
 
 import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagCorpus
+import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagCorpusLoader
 import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagFixture
 import com.adsamcik.starlitcoffee.test.corpus.CorpusFields
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
 import com.adsamcik.starlitcoffee.util.BagOcrTextMerger
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
@@ -25,9 +25,9 @@ import java.io.File
  * plus structural validation of the committed synthetic corpus metadata.
  *
  * The synthetic corpus now ships in the repo at
- * `testdata/synthetic-coffee-bag-corpus/` (images as WebP + `corpus_metadata.json`),
- * so this test resolves it automatically and no longer depends on a local
- * real-photo directory. An override is still honoured via the
+ * `testdata/synthetic-coffee-bag-corpus/` (sidecar `*.metadata.json` files +
+ * sibling images), so this test resolves it automatically and no longer
+ * depends on a local real-photo directory. An override is still honoured via the
  * `mindlayer.coffee.bag.corpus` system property / `MINDLAYER_COFFEE_BAG_CORPUS`
  * env var for pointing at an alternate corpus.
  *
@@ -43,25 +43,25 @@ class CoffeeBagCorpusExtractionTest {
 
     private lateinit var corpusDir: File
     private lateinit var corpus: CoffeeBagCorpus
+    private lateinit var automationCorpus: CoffeeBagCorpus
 
     @Before
     fun loadCorpus() {
         val dir = resolveCorpusDir()
         assumeTrue(
             "Synthetic coffee-bag corpus not found. Expected testdata/synthetic-coffee-bag-corpus/" +
-                "corpus_metadata.json relative to the repo root, or an override via " +
+                "*.metadata.json relative to the repo root, or an override via " +
                 "MINDLAYER_COFFEE_BAG_CORPUS / mindlayer.coffee.bag.corpus.",
             dir != null,
         )
         corpusDir = dir!!
-        val metadataFile = File(corpusDir, "corpus_metadata.json")
-        corpus = parser.decodeFromString(CoffeeBagCorpus.serializer(), metadataFile.readText())
-        assertEquals(
-            "Test code only knows schema v1 — metadata declares v${corpus.schemaVersion}.",
-            1,
-            corpus.schemaVersion,
+        corpus = CoffeeBagCorpusLoader.loadAll(corpusDir)
+        automationCorpus = CoffeeBagCorpusLoader.loadAutomationReady(corpusDir)
+        assertTrue(
+            "Test code only knows sidecar schema v2 or legacy v1 — metadata declares v${corpus.schemaVersion}.",
+            corpus.schemaVersion in setOf(CoffeeBagCorpusLoader.LEGACY_SCHEMA_VERSION, CoffeeBagCorpusLoader.SIDECAR_SCHEMA_VERSION),
         )
-        assertTrue("Corpus must contain at least 13 bags", corpus.bags.size >= 13)
+        assertTrue("Corpus must contain at least 13 automation-ready bags", automationCorpus.bags.size >= 13)
     }
 
     @Test
@@ -89,31 +89,37 @@ class CoffeeBagCorpusExtractionTest {
                 bag.captureTier in validTiers,
             )
             assertTrue("Bag '${bag.id}' must declare a language", bag.language.isNotEmpty())
-            val front = File(corpusDir, bag.photos.front)
-            assertTrue("Bag '${bag.id}' front image missing: ${front.path}", front.isFile)
+            assertTrue("Bag '${bag.id}' must declare at least one side image", bag.hasAnyPhoto)
+            bag.photos.front?.let { front ->
+                val frontFile = File(corpusDir, front)
+                assertTrue("Bag '${bag.id}' front image missing: ${frontFile.path}", frontFile.isFile)
+            }
             bag.photos.back?.let { back ->
                 val backFile = File(corpusDir, back)
                 assertTrue("Bag '${bag.id}' back image missing: ${backFile.path}", backFile.isFile)
+            }
+            if (bag.automationReady) {
+                assertTrue("Automation-ready bag '${bag.id}' must declare a front image", bag.hasFrontPhoto)
             }
         }
     }
 
     @Test
     fun `corpus covers Q0 best case, multiple languages, two-side fusion and decaf`() {
-        val tiers = corpus.bags.mapNotNull { it.captureTier }.toSet()
+        val tiers = automationCorpus.bags.mapNotNull { it.captureTier }.toSet()
         assertTrue("Corpus must include a Q0 best-case tier (currently $tiers)", "Q0" in tiers)
 
-        val languages = corpus.bags.flatMap { it.language }.toSet()
+        val languages = automationCorpus.bags.flatMap { it.language }.toSet()
         assertTrue("Corpus must cover >= 3 languages (currently $languages)", languages.size >= 3)
 
-        val twoSide = corpus.bags.count { it.isTwoSided }
+        val twoSide = automationCorpus.bags.count { it.isTwoSided }
         assertTrue("Corpus must contain >= 1 two-side bag (currently $twoSide)", twoSide >= 1)
 
-        val decafBags = corpus.bags.count { bag ->
+        val decafBags = automationCorpus.bags.count { bag ->
             val element = bag.fields["isDecaf"]
             element is JsonPrimitive && element.booleanOrNull == true
         }
-        assertTrue("Corpus must contain >= 1 decaf bag (currently $decafBags)", decafBags >= 1)
+        assertTrue("Corpus must contain >= 1 decaf automation-ready bag (currently $decafBags)", decafBags >= 1)
     }
 
     @Test
@@ -214,21 +220,16 @@ class CoffeeBagCorpusExtractionTest {
         ).firstOrNull { !it.isNullOrBlank() }
         if (override != null) {
             val dir = File(override)
-            return dir.takeIf { it.isDirectory && File(it, "corpus_metadata.json").isFile }
+            return dir.takeIf { it.isDirectory && CoffeeBagCorpusLoader.looksLikeCorpusDir(it) }
         }
 
         var current: File? = File(System.getProperty("user.dir") ?: ".").absoluteFile
         repeat(MAX_UPWARD_SEARCH) {
             val candidate = current?.let { File(it, "testdata/synthetic-coffee-bag-corpus") }
-            if (candidate != null && File(candidate, "corpus_metadata.json").isFile) return candidate
+            if (candidate != null && CoffeeBagCorpusLoader.looksLikeCorpusDir(candidate)) return candidate
             current = current?.parentFile
         }
         return null
-    }
-
-    private val parser: Json = Json {
-        ignoreUnknownKeys = true
-        coerceInputValues = false
     }
 
     private companion object {

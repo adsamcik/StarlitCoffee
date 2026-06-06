@@ -53,7 +53,7 @@ class BagScanBestCaseGateTest {
     fun q0BestCaseBagsPassTheGate() = runBlocking {
         val corpus = CorpusFixture.load()
         QualityTestSupport.requireOrAssume(
-            "Corpus metadata not present at ${CorpusFixture.CORPUS_DIR}/corpus_metadata.json — " +
+            "Corpus sidecar metadata not present at ${CorpusFixture.CORPUS_DIR}/*.metadata.json — " +
                 "run ./gradlew pushTestImages.",
             corpus != null,
         )

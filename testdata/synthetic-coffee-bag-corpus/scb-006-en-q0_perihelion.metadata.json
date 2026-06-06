@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-006-en-q0",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-006-en-q0_perihelion.front.webp",
+    "back": "scb-006-en-q0_perihelion.back.webp"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Perihelion",
+    "roaster": "Astral Common Roasters",
+    "origin": "Kenya",
+    "region": "Nyeri",
+    "farm": "Gakuyu-ini Factory",
+    "variety": "SL28 / SL34",
+    "process": "Washed",
+    "roastLevel": "Filter",
+    "tastingNotes": "blackcurrant, grapefruit, molasses",
+    "altitude": "1750-1950",
+    "weight": "250 g",
+    "roastDate": "2026-06-02",
+    "expiryDate": "2026-09-02",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q0",
+    "bagMaterial": "midnight blue matte",
+    "designStyle": "celestial map",
+    "riskTags": [],
+    "bagDescription": "Graphical midnight-blue bag with copper constellation artwork and an integrated arched label.",
+    "barcode": "7350142985694"
+  },
+  "notes": "High-contrast celestial design with dense decorative linework around a benchmark-friendly data panel. Producer 'Gakuyu-ini Factory' is on the back."
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-005-fr-q4",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-005-fr-q4_rive_claire.front.webp",
+    "back": "scb-005-fr-q4_rive_claire.back.webp"
+  },
+  "language": [
+    "fr"
+  ],
+  "fields": {
+    "name": "Rive Claire",
+    "roaster": "Atelier Minuit",
+    "origin": "Guatemala",
+    "region": "Huehuetenango",
+    "farm": "Finca La Esperanza",
+    "variety": "Bourbon",
+    "process": "Washed",
+    "roastLevel": "Filter",
+    "tastingNotes": "plum, chocolate, mandarin",
+    "altitude": "1700-2000",
+    "weight": "250 g",
+    "roastDate": "2025-05-10",
+    "expiryDate": "2026-08-10",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q4",
+    "bagMaterial": "navy matte",
+    "riskTags": [
+      "strong_glare",
+      "motion_blur",
+      "wrinkled_label",
+      "shadow",
+      "partial_crop"
+    ],
+    "bagDescription": "French failure-mode pair with glare and blur strong enough to force abstention on some fields.",
+    "barcode": "3770034983102"
+  },
+  "notes": "Failure-mode pair. Front roast date drifted to 2025-05-10 in the rendered image and metadata follows the raster; producer 'Finca La Esperanza' remains visible on the back."
+}

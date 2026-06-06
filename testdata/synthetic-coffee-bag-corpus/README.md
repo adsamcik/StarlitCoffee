@@ -2,44 +2,60 @@
 
 This folder is the committed, version-controlled coffee-bag test dataset for
 Starlit Coffee scan testing. Every bag is fictional and AI-generated, so the
-images can live in the repo (unlike copyrighted real label photos, which have
-been fully retired).
+images can ship in the repo without bringing back copyrighted real-label
+photos.
 
-The set contains **thirteen** bag identities, each with a front/back pair.
+The corpus now uses **per-fixture sidecars** instead of one monolithic
+manifest. Each fixture lives as:
 
-## Contents
+- `<fixture>.front.<ext>` and optionally `<fixture>.back.<ext>`
+- `<fixture>.metadata.json`
 
-- `corpus_metadata.json` — ground truth for every bag (schema v1)
-- `prototypes/*.webp` — front/back label images
+Example:
 
-Images are lossy **WebP** (~1024×1536, quality 85). Text stays crisp enough for
-OCR while keeping the whole corpus small (~4.5 MB for 26 images vs ~67 MB as
-PNG).
+- `scb-001-en-q0_moonlit_orchard.front.webp`
+- `scb-001-en-q0_moonlit_orchard.back.webp`
+- `scb-001-en-q0_moonlit_orchard.metadata.json`
 
-Every bag has:
+## Current Set
 
-- one front image, one back image
-- one metadata entry with all 14 extraction fields declared (JSON `null` =
-  `not_visible`)
-- a quality tier `Q0`..`Q4` in `extras.captureTier`
-- back-label barcode digits captured in `extras.barcode` for OCR/barcode test
-  wiring
-- for split-layout bags, explicit `extras.requiresSideFusion`,
-  `extras.labelLayout`, `extras.frontFields`, and `extras.backFields`
+- 29 sidecar metadata files
+- 28 automation-ready fixtures used by the JVM/instrumented corpus loaders
+- 13 original audited core bags
+- 15 additional reference-inspired / format-variation fixtures
+- 1 back-only unlabeled reverse-side control image
 
-Three bags are "split front/back" designs: the front carries only
-shopping-level info while the back carries the extraction detail, exercising
-`BagOcrTextMerger` multi-side reasoning.
+The committed set now spans:
 
-There is also one **experimental** grouped-shot pack under
-`supplemental-multi-shot-harbor-bloom/` for night, deformed, no-full-bag
-captures. It is intentionally outside `corpus_metadata.json` until the schema
-can model more than one front/back image per bag.
+- `en`, `de`, `cs`, `it`, `fr`
+- one bilingual `en` + `mr` reference fixture
+- one `und` reverse-side control fixture
 
-An additional **experimental** visual-variation pack lives under
-`supplemental-handheld-varied-bag-types/` for broader bag-format diversity:
-kraft flat-bottom bags, folded-top paper bags, quad-seal espresso bags,
-vacuum bricks, minimal white pouches, and tall foil side-gusset bags.
+Image formats remain mixed by source:
+
+- original audited corpus images: WebP
+- newer realistic/handheld additions: PNG
+
+## Metadata Contract
+
+Every `.metadata.json` file follows `schema_version = 2` and contains:
+
+- `id`
+- `automation_ready`
+- `photos.front` and/or `photos.back`
+- `language`
+- all 14 extraction fields in `fields`
+- `extras.captureTier`
+- optional bag-specific extras such as `barcode`, `riskTags`, and layout hints
+
+Field values use JSON `null` for `not_visible`. That rule applies to both the
+audited core fixtures and the newer messy real-world-inspired additions.
+
+The shared schema definition lives in
+`app/src/sharedTest/kotlin/com/adsamcik/starlitcoffee/test/corpus/CorpusModels.kt`.
+The loader prefers sidecars (`schema_version = 2`) but still accepts the old
+legacy `corpus_metadata.json` format (`schema_version = 1`) for ad hoc local
+overrides. The committed repo corpus no longer uses the legacy format.
 
 ## Intended Use
 
@@ -48,61 +64,40 @@ vacuum bricks, minimal white pouches, and tall foil side-gusset bags.
   `QualityReportTest`, `FieldSpecTest`)
 - On-device OCR + field-extraction quality reporting (`LlmCorpusBenchmarkTest`)
 - The Q0 best-case integration gate (`BagScanBestCaseGateTest`)
-- Multilingual regression checks (en / de / cs / it / fr)
+- Multilingual and messy-capture regression checks
 
-## Schema Compatibility
-
-`corpus_metadata.json` follows `schema_version = 1`. The single definition of
-the model lives in the shared harness
-(`app/src/sharedTest/kotlin/.../test/corpus/CorpusModels.kt`), consumed by both
-the JVM unit tests and the instrumented tests. Field keys use the LLM-side
-names (`process`, `roastLevel`, `isDecaf`); the `process → processType` mapping
-to app-internal names is owned by `FieldSpec`.
+`automation_ready = true` controls which fixtures are loaded by the benchmark
+and gate harnesses. The back-only unlabeled control remains in the folder for
+reference, but is intentionally excluded from automation.
 
 ## Running
 
-Pure JVM (no device):
+Pure JVM:
 
 ```bash
 ./gradlew :app:testDebugUnitTest --tests '*CoffeeBagCorpusExtractionTest*'
 ./gradlew :app:testDebugUnitTest --tests 'com.adsamcik.starlitcoffee.test.corpus.*'
 ```
 
-The unit tests resolve this folder automatically from the repo root; an
-override is still honoured via `MINDLAYER_COFFEE_BAG_CORPUS` /
-`-Dmindlayer.coffee.bag.corpus=<dir>`.
-
 On device:
 
 ```bash
 ./gradlew pushTestImages
-./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.OcrFixtureCaptureTest"   # once
-./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.LlmCorpusBenchmarkTest"     # quality numbers
-./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.BagScanBestCaseGateTest"    # Q0 gate
+./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.OcrFixtureCaptureTest"
+./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.LlmCorpusBenchmarkTest"
+./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.BagScanBestCaseGateTest"
 ```
 
-`pushTestImages` pushes `corpus_metadata.json` + `prototypes/` to
-`/data/local/tmp/coffee-bags/` (relative paths preserved).
+`pushTestImages` now pushes all root-level `*.metadata.json` sidecars plus the
+referenced sibling image files to `/data/local/tmp/coffee-bags/`.
 
-## Quality Lanes
+## Experimental Packs
 
-- **Quality report** (`LlmCorpusBenchmarkTest`) is NOT pass/fail — it writes
-  `llm-fixture-quality-report.{json,txt}` with per-field/per-tier accuracy.
-- **Best-case gate** (`BagScanBestCaseGateTest`) IS pass/fail: every visible
-  gate field (`name, roaster, origin, process, roastLevel, weight`) on every
-  `Q0` bag must extract exactly. Run the required lane with
-  `-Pandroid.testInstrumentationRunnerArguments.starlit.quality.required=true`
-  so a missing Mindlayer/corpus hard-fails instead of skipping.
+Grouped-shot and fragment experiments still live in their own subfolders and
+remain outside the automation-ready corpus loader:
 
-## Audit Note
+- `supplemental-multi-shot-harbor-bloom/`
+- `supplemental-multi-shot-harbor-bloom-handheld/`
 
-The metadata reflects the rendered images, not just the prompts that created
-them. The `Q0` bags were re-audited against the rendered WebP — the visible
-`Producer` on each back label is recorded in `farm`. When degrading a photo,
-degrade the photo, not the metadata: keep ground truth aligned to what is
-actually visible on the raster.
-
-Barcode metadata follows the printed digits visible on the raster. These are
-fictional test digits, not real product identifiers; duplicate rendered
-barcodes are flagged with `extras.barcodeUnique=false` plus a
-`barcodeCollisionGroup` so barcode-based tests do not assume uniqueness.
+Those packs keep their own manifest-style metadata because they model
+multi-photo fragment sets rather than one front/back fixture.

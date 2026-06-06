@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-015-en-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-015-en-q1_nyaru_lot.front.png",
+    "back": "scb-015-en-q1_nyaru_lot.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Nyaru Lot",
+    "roaster": "Lumen Atelier",
+    "origin": "Rwanda",
+    "region": "Nyamasheke",
+    "farm": "Smallholder Producers",
+    "variety": "Red Bourbon",
+    "process": "Natural",
+    "roastLevel": "Filter",
+    "tastingNotes": "guava, dragon fruit, raspberry, dark cherry, cocoa nibs",
+    "altitude": "1800-2000",
+    "weight": null,
+    "roastDate": null,
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "textured white paper box",
+    "sourceCollection": "reference_realism",
+    "riskTags": [
+      "two_sided",
+      "process_drift_between_panels",
+      "premium_box_format"
+    ],
+    "bagDescription": "Premium specialty coffee box with a restrained front sticker, embossed art, and a detailed text back panel."
+  },
+  "notes": "The front sticker drifted to Honey while the back detail panel says Natural. Metadata follows the back detail panel for process and tasting notes."
+}

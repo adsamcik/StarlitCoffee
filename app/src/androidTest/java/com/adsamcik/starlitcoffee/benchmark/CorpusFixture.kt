@@ -2,8 +2,8 @@ package com.adsamcik.starlitcoffee.benchmark
 
 import android.content.Context
 import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagCorpus
+import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagCorpusLoader
 import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagFixture
-import kotlinx.serialization.json.Json
 import java.io.File
 
 /**
@@ -15,9 +15,10 @@ import java.io.File
  * # Paths on device
  *
  *  - **Corpus input** (read-only for the test): `/data/local/tmp/coffee-bags/`.
- *    Push the committed WebP corpus and `corpus_metadata.json` here via
+ *    Push the committed sidecar corpus (`*.metadata.json` + sibling images)
+ *    here via
  *    `./gradlew pushTestImages`. Photo paths in the metadata are relative to
- *    this root (e.g. `prototypes/en_north_axis_moonlit_orchard_front_q0.webp`).
+ *    this root (e.g. `scb-001-en-q0_moonlit_orchard.front.webp`).
  *
  *  - **OCR fixture + report output** (written by the tests):
  *    `targetContext.getExternalFilesDir("coffee-bags-fixtures")` →
@@ -47,26 +48,21 @@ internal object CorpusFixture {
     /** Sub-folder name for OCR fixtures + reports inside the app's external files dir. */
     private const val FIXTURES_SUBDIR: String = "coffee-bags-fixtures"
 
-    private val lenientJson = Json {
-        ignoreUnknownKeys = true
-        isLenient = true
-    }
-
     /**
-     * Returns the corpus loaded from `corpus_metadata.json`, or `null` when
-     * the file is missing (callers should skip cleanly via JUnit
+     * Returns the automation-ready corpus loaded from sidecar metadata, or
+     * `null` when the corpus is missing (callers should skip cleanly via JUnit
      * `Assume.assumeTrue`).
      */
     fun load(): CoffeeBagCorpus? {
-        val metadataFile = File(CORPUS_DIR, "corpus_metadata.json")
-        if (!metadataFile.isFile) return null
+        val corpusDir = File(CORPUS_DIR)
+        if (!CoffeeBagCorpusLoader.looksLikeCorpusDir(corpusDir)) return null
         return runCatching {
-            lenientJson.decodeFromString(CoffeeBagCorpus.serializer(), metadataFile.readText())
+            CoffeeBagCorpusLoader.loadAutomationReady(corpusDir)
         }.getOrNull()
     }
 
     fun frontPhotoFile(fixture: CoffeeBagFixture): File =
-        File(CORPUS_DIR, fixture.photos.front)
+        File(CORPUS_DIR, requireNotNull(fixture.photos.front) { "Fixture '${fixture.id}' has no front photo" })
 
     fun backPhotoFile(fixture: CoffeeBagFixture): File? =
         fixture.photos.back?.let { File(CORPUS_DIR, it) }

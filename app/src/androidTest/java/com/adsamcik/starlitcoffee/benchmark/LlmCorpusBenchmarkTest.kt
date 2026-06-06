@@ -53,7 +53,7 @@ class LlmCorpusBenchmarkTest {
     fun benchmarkLlmAgainstCorpus() = runBlocking {
         val corpus = CorpusFixture.load()
         assumeTrue(
-            "Corpus metadata not present at ${CorpusFixture.CORPUS_DIR}/corpus_metadata.json — " +
+            "Corpus sidecar metadata not present at ${CorpusFixture.CORPUS_DIR}/*.metadata.json — " +
                 "run ./gradlew pushTestImages.",
             corpus != null,
         )

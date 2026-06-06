@@ -59,7 +59,7 @@ class OcrFixtureCaptureTest {
     fun captureOcrForEveryBagInCorpus() = runBlocking {
         val corpus = CorpusFixture.load()
         assumeTrue(
-            "Corpus metadata not present at ${CorpusFixture.CORPUS_DIR}/corpus_metadata.json. " +
+            "Corpus sidecar metadata not present at ${CorpusFixture.CORPUS_DIR}/*.metadata.json. " +
                 "Push the corpus and re-run.",
             corpus != null,
         )

@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-029-en-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-029-en-q1_midnight_horizon.front.png",
+    "back": "scb-029-en-q1_midnight_horizon.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Midnight Horizon",
+    "roaster": "Northstar Coffee Roasters",
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "dark cocoa, toasted walnut, smoke",
+    "altitude": null,
+    "weight": "227 g",
+    "roastDate": "2025-05-20",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "dark patterned matte pouch",
+    "sourceCollection": "reference_realism",
+    "riskTags": [
+      "two_sided",
+      "decorative_pattern",
+      "tabletop_capture"
+    ],
+    "bagDescription": "Pattern-heavy dark retail pouch with a decorative Northstar front and a practical back information panel.",
+    "barcode": "850068712347"
+  },
+  "notes": "Reference-inspired patterned retail bag. The front carries the merchandising copy while the back carries roast date, batch, and barcode details."
+}

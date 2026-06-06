@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-014-en-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-014-en-q1_espresso_no_4.front.png",
+    "back": "scb-014-en-q1_espresso_no_4.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Espresso No. 4",
+    "roaster": "Night Anchor Roasters",
+    "origin": "Brazil, Colombia, India",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium Dark",
+    "tastingNotes": "dark chocolate, toasted almond, caramel",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": "2025-06-19",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "matte black foil",
+    "sourceCollection": "reference_realism",
+    "riskTags": [
+      "commercial_retail_layout",
+      "two_sided",
+      "mild_label_wear"
+    ],
+    "bagDescription": "Commercial black espresso pouch with a dense cream retail label and a detailed back instruction panel.",
+    "barcode": "5060987654321"
+  },
+  "notes": "Reference-inspired commercial espresso pouch. Metadata follows the detailed back panel; process is not explicitly stated on the rendered label."
+}

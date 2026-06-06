@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-023-de-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-023-de-q2_wilde_kirsche.front.png",
+    "back": null
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Wilde Kirsche",
+    "roaster": "Berg & Tal Kaffeerösterei",
+    "origin": "Brazil, India",
+    "region": null,
+    "farm": null,
+    "variety": "Catuaí, Kent",
+    "process": "Natural, Pulped Natural",
+    "roastLevel": "Espresso",
+    "tastingNotes": "dark chocolate, nuts, caramel",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2025-05-23",
+    "expiryDate": "2025-11-23",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "bagMaterial": "folded-top brown paper",
+    "sourceCollection": "format_variation",
+    "riskTags": [
+      "hand_occlusion",
+      "paper_bag_format",
+      "single_side_only"
+    ],
+    "bagDescription": "Handheld folded paper bag with a large white retail sticker and partial thumb occlusion across the center."
+  },
+  "notes": "Single-side capture of a folded paper bag format. The thumb obscures part of the left-hand field labels."
+}

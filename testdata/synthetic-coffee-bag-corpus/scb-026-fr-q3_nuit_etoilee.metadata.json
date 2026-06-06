@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-026-fr-q3",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-026-fr-q3_nuit_etoilee.front.png",
+    "back": null
+  },
+  "language": [
+    "fr"
+  ],
+  "fields": {
+    "name": "Nuit Étoilée",
+    "roaster": "Sommet Noir Torréfacteur",
+    "origin": "Brazil, Colombia, Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "dark chocolate, hazelnut, dark fruits",
+    "altitude": null,
+    "weight": "340 g",
+    "roastDate": "2025-05-27",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q3",
+    "bagMaterial": "black foil side-gusset bag",
+    "sourceCollection": "format_variation",
+    "riskTags": [
+      "night_phone_photo",
+      "hand_occlusion",
+      "side_gusset_format",
+      "single_side_only"
+    ],
+    "bagDescription": "Tall black foil side-gusset bag photographed at night with top-seam grip and localized glare."
+  },
+  "notes": "Single-side night handheld capture. The front label is readable but softened slightly by low-light phone capture conditions."
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-021-en-q3",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-021-en-q3_lot_17.front.png",
+    "back": null
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Lot 17",
+    "roaster": "Iron Slope Roasters",
+    "origin": "Guatemala",
+    "region": "Huehuetenango",
+    "farm": null,
+    "variety": "Caturra, Bourbon",
+    "process": "Washed",
+    "roastLevel": null,
+    "tastingNotes": "dark chocolate, toffee, dried cherry",
+    "altitude": null,
+    "weight": "340 g",
+    "roastDate": "2024-05-14",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q3",
+    "bagMaterial": "black foil pouch",
+    "sourceCollection": "reference_realism",
+    "riskTags": [
+      "night_phone_photo",
+      "hand_occlusion",
+      "glare",
+      "single_side_only"
+    ],
+    "bagDescription": "Night handheld kitchen photo of a black foil coffee bag gripped from the top seam."
+  },
+  "notes": "Single-side night phone capture. The top fingers and specular glare obscure part of the pouch but the main front panel remains readable."
+}

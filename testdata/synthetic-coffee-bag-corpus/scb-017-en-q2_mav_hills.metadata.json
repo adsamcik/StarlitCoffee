@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-017-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-017-en-q2_mav_hills.front.png",
+    "back": "scb-017-en-q2_mav_hills.back.png"
+  },
+  "language": [
+    "en",
+    "mr"
+  ],
+  "fields": {
+    "name": "Mav Hills",
+    "roaster": "Valley Cup Roastery",
+    "origin": "India",
+    "region": "Maval, Western Ghats",
+    "farm": "Smallholder Farmers of Maval",
+    "variety": "S795, SLN9, Caturra",
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "milk chocolate, roasted nuts, citrus zest, caramel, smooth body",
+    "altitude": "950-1350",
+    "weight": "250 g",
+    "roastDate": "2024-05-18",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "bagMaterial": "burgundy matte pouch",
+    "sourceCollection": "reference_realism",
+    "riskTags": [
+      "two_sided",
+      "tabletop_lifestyle",
+      "mixed_language_label",
+      "conflicting_roast_dates"
+    ],
+    "bagDescription": "Cafe-table burgundy pouch with a long dense front label, bilingual copy, and a handwritten-style roast sticker."
+  },
+  "notes": "The front roast-date sticker shows 18/05/24 while the back panel drifts to 12/05/24. Metadata follows the front sticker as the primary consumer-facing date."
+}

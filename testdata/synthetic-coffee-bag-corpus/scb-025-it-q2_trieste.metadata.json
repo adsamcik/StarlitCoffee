@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-025-it-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-025-it-q2_trieste.front.png",
+    "back": null
+  },
+  "language": [
+    "it"
+  ],
+  "fields": {
+    "name": "Trieste",
+    "roaster": "Werkform Kaffee Roesterei",
+    "origin": "Brazil, Colombia, Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural, Washed",
+    "roastLevel": "Medium Dark",
+    "tastingNotes": "dark cocoa, dried fruit, caramel",
+    "altitude": null,
+    "weight": "1000 g",
+    "roastDate": "2025-05-22",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "bagMaterial": "large matte laminate bag",
+    "sourceCollection": "format_variation",
+    "riskTags": [
+      "large_format",
+      "hand_occlusion",
+      "single_side_only",
+      "angled_countertop"
+    ],
+    "bagDescription": "Large 1 kg industrial-style espresso bag captured at an angle on a countertop with visible handling wrinkles."
+  },
+  "notes": "Single-side large-format bag. The roaster branding and product family occupy separate front zones, so metadata uses Trieste as the product name."
+}

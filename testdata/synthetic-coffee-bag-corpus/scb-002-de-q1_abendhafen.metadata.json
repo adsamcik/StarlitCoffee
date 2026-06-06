@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-002-de-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-002-de-q1_abendhafen.front.webp",
+    "back": "scb-002-de-q1_abendhafen.back.webp"
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Abendhafen",
+    "roaster": "Morgenstern Kaffeeroesterei",
+    "origin": "Colombia",
+    "region": "Huila",
+    "farm": "Finca El Cedro",
+    "variety": "Caturra",
+    "process": "Sugarcane EA Decaf",
+    "roastLevel": "Filter",
+    "tastingNotes": "caramel, orange, cocoa",
+    "altitude": "1600-1850",
+    "weight": "250 g",
+    "roastDate": "2026-05-22",
+    "expiryDate": "2026-08-22",
+    "isDecaf": true
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "dark matte",
+    "riskTags": [
+      "mild_glare",
+      "mild_perspective",
+      "wrinkles"
+    ],
+    "bagDescription": "Dark German bag with a cream label and explicit sugarcane decaf wording.",
+    "barcode": "4260713680522",
+    "barcodeUnique": false,
+    "barcodeCollisionGroup": "ean13-4260713680522"
+  },
+  "notes": "Good real-world capture with an explicit decaf example. Producer 'Finca El Cedro' is visible on the back label."
+}

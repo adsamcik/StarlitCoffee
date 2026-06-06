@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-020-en-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-020-en-q1_kieni.front.png",
+    "back": "scb-020-en-q1_kieni.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Kieni",
+    "roaster": "North Ledger Coffee",
+    "origin": "Kenya",
+    "region": "Nyeri",
+    "farm": "Kieni Farmers Cooperative Society",
+    "variety": "SL28, SL34, Ruiru 11",
+    "process": "Washed",
+    "roastLevel": null,
+    "tastingNotes": "blackberry, blackcurrant, rhubarb, red apple, cane sugar",
+    "altitude": "1700-1900",
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "patterned matte pouch",
+    "sourceCollection": "reference_realism",
+    "riskTags": [
+      "two_sided",
+      "blank_reverse",
+      "data_heavy_front"
+    ],
+    "bagDescription": "Scandinavian-style patterned pouch with a dense information front panel and a blank patterned reverse."
+  },
+  "notes": "Back side is intentionally blank. All structured extraction fields come from the front information panel."
+}

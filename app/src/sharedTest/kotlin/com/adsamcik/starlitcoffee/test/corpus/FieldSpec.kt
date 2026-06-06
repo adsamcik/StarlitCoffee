@@ -15,7 +15,7 @@ fun interface FieldComparator {
 
 /**
  * Single source of truth tying together, per field:
- *  - [metadataKey]   the LLM-side key used in `corpus_metadata.json` (`process`)
+ *  - [metadataKey]   the LLM-side key used in corpus sidecars (`process`)
  *  - [appFieldName]  the app-internal candidate field name (`processType`)
  *  - [gatePolicy]    whether it is part of the Q0 must-pass gate
  *  - [comparator]    how an extracted value is matched to ground truth

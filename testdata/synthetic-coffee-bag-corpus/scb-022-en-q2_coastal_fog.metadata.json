@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-022-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-022-en-q2_coastal_fog.front.png",
+    "back": "scb-022-en-q2_coastal_fog.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Coastal Fog",
+    "roaster": "Saltcliff Roasters",
+    "origin": "Indonesia",
+    "region": "Sumatra",
+    "farm": null,
+    "variety": null,
+    "process": "Wet Hulled",
+    "roastLevel": "Dark",
+    "tastingNotes": "dark chocolate, smoky, sea salt",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2025-05-22",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "bagMaterial": "vacuum-packed plastic brick",
+    "sourceCollection": "format_variation",
+    "riskTags": [
+      "vacuum_brick",
+      "hand_occlusion",
+      "single_detailed_side"
+    ],
+    "bagDescription": "Handheld grocery-style vacuum coffee brick with a clean cream front label and a plain black reverse."
+  },
+  "notes": "The reverse capture is intentionally unlabeled. Extraction fields come from the printed front face only."
+}

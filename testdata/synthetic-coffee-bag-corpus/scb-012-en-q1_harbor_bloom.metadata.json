@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-012-en-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-012-en-q1_harbor_bloom.front.webp",
+    "back": "scb-012-en-q1_harbor_bloom.back.webp"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Harbor Bloom",
+    "roaster": "Tide Lantern Coffee",
+    "origin": "Colombia",
+    "region": "Huila",
+    "farm": "Finca Las Brisas",
+    "variety": "Caturra",
+    "process": "Washed",
+    "roastLevel": "Filter",
+    "tastingNotes": "red apple, caramel, cocoa nib",
+    "altitude": "1650-1850",
+    "weight": "250 g",
+    "roastDate": "2026-05-29",
+    "expiryDate": "2026-08-29",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "sea-green matte",
+    "designStyle": "vintage nautical engraving",
+    "riskTags": [
+      "split_front_back"
+    ],
+    "bagDescription": "Sea-green nautical bag with engraved waves and postal stamps. The front shows name/origin/roast/weight; the back holds region, variety, process, notes, altitude, producer, and dates.",
+    "barcode": "7350142985701",
+    "requiresSideFusion": true,
+    "labelLayout": "split_front_back",
+    "frontFields": [
+      "roaster",
+      "name",
+      "origin",
+      "roastLevel",
+      "weight"
+    ],
+    "backFields": [
+      "region",
+      "farm",
+      "variety",
+      "process",
+      "tastingNotes",
+      "altitude",
+      "roastDate",
+      "expiryDate"
+    ]
+  },
+  "notes": "English split front/back nautical design: shopping info on the front, extraction detail on the back."
+}

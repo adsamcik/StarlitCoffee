@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-011-de-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-011-de-q2_funklinie.front.webp",
+    "back": "scb-011-de-q2_funklinie.back.webp"
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Funklinie",
+    "roaster": "Werkform Kaffee",
+    "origin": "Ethiopia",
+    "region": "Guji",
+    "farm": "Suke Quto",
+    "variety": "Heirloom",
+    "process": "Natural",
+    "roastLevel": "Filter",
+    "tastingNotes": "blueberry, nougat, lime",
+    "altitude": "1900-2200",
+    "weight": "250 g",
+    "roastDate": "2026-05-27",
+    "expiryDate": "2026-08-27",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "bagMaterial": "dark matte",
+    "designStyle": "technical schematic",
+    "riskTags": [
+      "split_front_back",
+      "home_lighting"
+    ],
+    "bagDescription": "Dark German bag with a translucent schematic side panel. The front carries only shopping-level info (name, origin, roast, weight) while the back data panel carries the full extraction detail.",
+    "barcode": "4260713680553",
+    "requiresSideFusion": true,
+    "labelLayout": "split_front_back",
+    "frontFields": [
+      "roaster",
+      "name",
+      "origin",
+      "roastLevel",
+      "weight"
+    ],
+    "backFields": [
+      "region",
+      "farm",
+      "variety",
+      "process",
+      "tastingNotes",
+      "altitude",
+      "roastDate",
+      "expiryDate"
+    ]
+  },
+  "notes": "German split front/back: the front is intentionally sparse and the extraction detail lives on the back data panel. Exercises BagOcrTextMerger multi-side reasoning."
+}

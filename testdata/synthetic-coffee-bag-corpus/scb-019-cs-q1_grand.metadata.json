@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-019-cs-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-019-cs-q1_grand.front.png",
+    "back": "scb-019-cs-q1_grand.back.png"
+  },
+  "language": [
+    "cs"
+  ],
+  "fields": {
+    "name": "Grand",
+    "roaster": "Pražírna Moravská Stezka",
+    "origin": "Brazil, Honduras, India",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium Dark",
+    "tastingNotes": "dark chocolate, nuts, caramel",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": null,
+    "expiryDate": "2025-06-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "kraft paper pouch",
+    "sourceCollection": "reference_realism",
+    "riskTags": [
+      "two_sided",
+      "local_roastery_layout",
+      "front_back_origin_drift"
+    ],
+    "bagDescription": "Czech kraft pouch with a busy cream sticker front and a dense practical back panel on a white webshop backdrop."
+  },
+  "notes": "The front origin line and back origin paragraph disagree; metadata follows the front consumer-facing origin line while keeping the back expiry date."
+}

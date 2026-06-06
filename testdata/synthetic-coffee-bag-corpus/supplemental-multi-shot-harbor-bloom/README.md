@@ -3,11 +3,11 @@
 This folder contains an **experimental multi-photo stress pack** for a single
 fictional bag identity: `Harbor Bloom` / `Tide Lantern Coffee`.
 
-It is intentionally **not** wired into `corpus_metadata.json` yet, because the
-current committed corpus schema is still `one front + one back` per bag. The
-app scan pipeline can already merge OCR across multiple photos, but the
-version-controlled corpus model has not been expanded to represent grouped
-fragment shots as first-class fixtures.
+It is intentionally **not** wired into the automation-ready sidecar corpus
+loader yet, because the committed root fixture schema is still `one front +
+one back` per metadata file. The app scan pipeline can already merge OCR
+across multiple photos, but the version-controlled root corpus model has not
+been expanded to represent grouped fragment shots as first-class fixtures.
 
 ## What this pack tests
 

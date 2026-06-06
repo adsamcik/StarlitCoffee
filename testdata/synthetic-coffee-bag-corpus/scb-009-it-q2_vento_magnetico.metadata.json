@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-009-it-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-009-it-q2_vento_magnetico.front.webp",
+    "back": "scb-009-it-q2_vento_magnetico.back.webp"
+  },
+  "language": [
+    "it"
+  ],
+  "fields": {
+    "name": "Vento Magnetico",
+    "roaster": "Carta Rossa",
+    "origin": "Peru",
+    "region": "Cusco",
+    "farm": "Finca Nueva Aurora",
+    "variety": "Caturra",
+    "process": "Honey",
+    "roastLevel": "Omni",
+    "tastingNotes": "peach, panela, lime",
+    "altitude": "1850-2050",
+    "weight": "250 g",
+    "roastDate": "2026-05-24",
+    "expiryDate": "2026-08-24",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "bagMaterial": "pale blush matte",
+    "designStyle": "risograph sticker collage",
+    "riskTags": [
+      "home_lighting",
+      "collage_layout",
+      "overlapping_graphics"
+    ],
+    "bagDescription": "Playful risograph-collage bag with layered sticker motifs and offset-print textures.",
+    "barcode": "8052345678912"
+  },
+  "notes": "The integrated panel is still readable, but the surrounding collage creates a more realistic distraction field. Producer 'Finca Nueva Aurora' is visible on the back label."
+}

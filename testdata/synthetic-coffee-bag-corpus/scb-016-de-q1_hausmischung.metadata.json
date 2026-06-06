@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-016-de-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-016-de-q1_hausmischung.front.png",
+    "back": "scb-016-de-q1_hausmischung.back.png"
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Hausmischung",
+    "roaster": "Bergwerk Rösterei",
+    "origin": "Brazil, Colombia, India",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium Dark",
+    "tastingNotes": "chocolate, nutty, low acidity",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": "2026-02-27",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "folded-top brown paper",
+    "sourceCollection": "reference_realism",
+    "riskTags": [
+      "two_sided",
+      "hand_occlusion",
+      "paper_creases",
+      "tabletop_daylight"
+    ],
+    "bagDescription": "Traditional folded-top paper roastery bag held by hand on a wooden table with a practical German label."
+  },
+  "notes": "Reference-inspired small-roastery folded paper bag. Front label has partial finger occlusion over the center stripe."
+}

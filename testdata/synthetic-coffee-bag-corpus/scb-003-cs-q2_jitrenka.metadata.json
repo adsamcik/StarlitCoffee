@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-003-cs-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-003-cs-q2_jitrenka.front.webp",
+    "back": "scb-003-cs-q2_jitrenka.back.webp"
+  },
+  "language": [
+    "cs"
+  ],
+  "fields": {
+    "name": "Jitřenka",
+    "roaster": "Polarni Pražírna",
+    "origin": "Colombia",
+    "region": "Huila",
+    "farm": "Finca San Rafael",
+    "variety": "Castillo",
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "apricot, caramel, blood orange",
+    "altitude": "1700-1950",
+    "weight": "250 g",
+    "roastDate": "2026-05-18",
+    "expiryDate": "2026-08-18",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "bagMaterial": "kraft paper",
+    "riskTags": [
+      "home_lighting",
+      "moderate_perspective",
+      "label_curvature"
+    ],
+    "bagDescription": "Kraft Czech bag on a kitchen counter with ordinary consumer framing.",
+    "barcode": "8594197360518"
+  },
+  "notes": "Ordinary consumer-quality capture with visible Czech diacritics. Producer 'Finca San Rafael' is visible on the back label."
+}

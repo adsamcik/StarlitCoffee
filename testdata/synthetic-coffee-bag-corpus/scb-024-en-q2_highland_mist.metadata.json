@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-024-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-024-en-q2_highland_mist.front.png",
+    "back": null
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Highland Mist",
+    "roaster": "North Hollow Coffee Roasters",
+    "origin": "Guatemala",
+    "region": "Antigua",
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": null,
+    "tastingNotes": "milk chocolate, honey, citrus",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "bagMaterial": "matte white film",
+    "sourceCollection": "format_variation",
+    "riskTags": [
+      "round_label",
+      "hand_occlusion",
+      "single_side_only",
+      "warm_indoor_light"
+    ],
+    "bagDescription": "Minimal white pouch with a round blue label, held close to the camera under warm indoor light."
+  },
+  "notes": "Single-side minimalist label capture. The upper-left thumb partially obscures the round front sticker."
+}

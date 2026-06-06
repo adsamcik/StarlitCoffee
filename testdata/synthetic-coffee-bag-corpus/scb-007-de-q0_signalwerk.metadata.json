@@ -1,0 +1,40 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-007-de-q0",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-007-de-q0_signalwerk.front.webp",
+    "back": "scb-007-de-q0_signalwerk.back.webp"
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Signalwerk",
+    "roaster": "Studio Bohne",
+    "origin": "Brazil",
+    "region": "Cerrado Mineiro",
+    "farm": "Fazenda Santa Lucia",
+    "variety": "Yellow Bourbon",
+    "process": "Natural",
+    "roastLevel": "Espresso",
+    "tastingNotes": "hazelnut, cherry, dark chocolate",
+    "altitude": "1000-1200",
+    "weight": "250 g",
+    "roastDate": "2026-05-30",
+    "expiryDate": "2026-08-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q0",
+    "bagMaterial": "matte graphic wrap",
+    "designStyle": "bauhaus geometry",
+    "riskTags": [],
+    "bagDescription": "Bold Bauhaus-inspired red, mustard, black, and cream package with integrated typographic panels.",
+    "barcode": "4260713680522",
+    "barcodeUnique": false,
+    "barcodeCollisionGroup": "ean13-4260713680522"
+  },
+  "notes": "Graphic-heavy German design with clean block shapes and strong typographic hierarchy. Producer 'Fazenda Santa Lucia' is on the back."
+}

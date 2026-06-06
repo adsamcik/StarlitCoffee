@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-018-en-q1",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-018-en-q1_morning_drift.front.png",
+    "back": "scb-018-en-q1_morning_drift.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Morning Drift",
+    "roaster": "Bean Weather",
+    "origin": "Brazil, Colombia, Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural, Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "citrus, dark chocolate, caramel, toasted almond",
+    "altitude": null,
+    "weight": "340 g",
+    "roastDate": "2024-05-20",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q1",
+    "bagMaterial": "matte white film",
+    "sourceCollection": "reference_realism",
+    "riskTags": [
+      "two_sided",
+      "playful_graphics",
+      "front_back_detail_drift"
+    ],
+    "bagDescription": "Playful white pouch with doodle branding, tasting-note props, and a denser technical back card.",
+    "barcode": "860011247925"
+  },
+  "notes": "The front simplifies the blend to Colombia/Ethiopia and shows a 15 May 2024 roast date; metadata follows the more detailed back panel blend composition and 20 May 2024 roast date."
+}

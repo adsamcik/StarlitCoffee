@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-027-cs-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-027-cs-q2_mechovy_sad_handheld.front.png",
+    "back": null
+  },
+  "language": [
+    "cs"
+  ],
+  "fields": {
+    "name": "Mechovy Sad",
+    "roaster": "List a Kamen Pražírna Kávy",
+    "origin": null,
+    "region": null,
+    "farm": "Kanzu Cooperative",
+    "variety": null,
+    "process": null,
+    "roastLevel": "Light",
+    "tastingNotes": null,
+    "altitude": null,
+    "weight": null,
+    "roastDate": null,
+    "expiryDate": "2026-08-26",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "bagMaterial": "printed kraft pouch",
+    "sourceCollection": "format_variation",
+    "riskTags": [
+      "botanical_print",
+      "hand_occlusion",
+      "single_side_only",
+      "barcode_visible"
+    ],
+    "bagDescription": "Handheld botanical kraft bag with a producer-forward sticker, visible barcode, and close framing.",
+    "barcode": "8595173840526"
+  },
+  "notes": "Single-side close handheld capture. Origin and many detailed fields are not visible, but the producer, roast profile, expiry date, and barcode are."
+}
