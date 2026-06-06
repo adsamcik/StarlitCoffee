@@ -69,6 +69,7 @@ import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
 import com.adsamcik.starlitcoffee.util.BagPhotoRect
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.BagPhotoScanSupport
+import com.adsamcik.starlitcoffee.util.BagThumbnailFocus
 import com.adsamcik.starlitcoffee.util.BarcodeInsights
 import com.adsamcik.starlitcoffee.util.CoffeeCountryDictionaries
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataMatchStrategy
@@ -1186,9 +1187,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             // contradict the "AI enrichment is not available" status card.
             scanServiceUnavailable = llmOutcome.status == LlmEnrichmentStatus.UNAVAILABLE,
         )
-        val ocrPrefill = fieldEvidence
-            .takeIf { it.isNotEmpty() }
-            ?.let(BagPhotoScanSupport::buildPrefill)
+        val ocrPrefill = fieldEvidence.takeIf { it.isNotEmpty() }?.let(BagPhotoScanSupport::buildPrefill)
 
         bagPhotoLlmRetryContext = BagPhotoLlmRetryContext(
             photosCsv = photosCsv,
@@ -1216,8 +1215,24 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 photoAnalyses = photoAnalyses,
                 reviewHints = reviewHints,
                 llmStatus = llmOutcome.status,
+                thumbnailFocus = computeThumbnailFocus(processedPhotos),
             ),
         )
+    }
+
+    /**
+     * Picks the thumbnail crop region for the saved bag: the union of the FRONT
+     * photo's original-pass OCR text blocks (the label the scan read). Returns
+     * null when there's no usable text, so the caller keeps the full photo.
+     */
+    private fun computeThumbnailFocus(processedPhotos: List<ProcessedBagPhoto>): BagPhotoRect? {
+        val frontPhoto = processedPhotos.firstOrNull { it.side == BagCaptureSide.FRONT }
+            ?: processedPhotos.firstOrNull()
+            ?: return null
+        val originalBlocks = frontPhoto.passes.firstOrNull { it.label == "original" }?.blocks
+            ?: frontPhoto.passes.firstOrNull()?.blocks
+            ?: return null
+        return BagThumbnailFocus.labelRegion(originalBlocks.mapNotNull { it.normalizedBounds() })
     }
 
     /**
@@ -1458,6 +1473,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 photoAnalyses = context.photoAnalyses,
                 reviewHints = context.reviewHints,
                 llmStatus = llmOutcome.status,
+                thumbnailFocus = computeThumbnailFocus(context.processedPhotos),
             )
         }
     }

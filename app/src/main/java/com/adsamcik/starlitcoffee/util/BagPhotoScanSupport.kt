@@ -150,6 +150,10 @@ data class BagPhotoProcessingResult(
     val photoAnalyses: List<BagPhotoAnalysis> = emptyList(),
     val reviewHints: List<BagPhotoReviewHint> = emptyList(),
     val llmStatus: LlmEnrichmentStatus = LlmEnrichmentStatus.NOT_RUN,
+    // Normalized label region the scan detected on the FRONT photo, used to
+    // crop a focused square thumbnail at save time. Null when no usable text
+    // region was found (falls back to the full photo).
+    val thumbnailFocus: BagPhotoRect? = null,
 ) {
     val shouldSuggestRetake: Boolean
         get() = reviewHints.any { it.severity == BagReviewSeverity.WARNING }

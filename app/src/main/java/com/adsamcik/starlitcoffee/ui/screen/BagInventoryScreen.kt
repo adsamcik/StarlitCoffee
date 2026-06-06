@@ -78,6 +78,10 @@ import androidx.core.net.toUri
 
 private const val TAG = "BagInventoryScreen"
 
+// Longest-side pixel target for the focused square thumbnail baked at save time.
+// Comfortably covers the 68.dp list-card slot on high-density screens.
+private const val THUMBNAIL_TARGET_PX = 512
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BagInventoryScreen(
@@ -133,6 +137,9 @@ fun BagInventoryScreen(
     var fieldEvidence by remember { mutableStateOf<Map<String, BagFieldEvidence>>(emptyMap()) }
     var reviewHints by remember { mutableStateOf<List<BagPhotoReviewHint>>(emptyList()) }
     var llmStatus by remember { mutableStateOf(LlmEnrichmentStatus.NOT_RUN) }
+    var thumbnailFocus by remember {
+        mutableStateOf<com.adsamcik.starlitcoffee.util.BagPhotoRect?>(null)
+    }
     var isProcessingScan by remember { mutableStateOf(false) }
     var showRetakeDialog by remember { mutableStateOf(false) }
     var lastProcessedPhotos by remember { mutableStateOf<String?>(null) }
@@ -170,6 +177,7 @@ fun BagInventoryScreen(
             fieldEvidence = emptyMap()
             reviewHints = emptyList()
             llmStatus = LlmEnrichmentStatus.NOT_RUN
+            thumbnailFocus = null
             brewViewModel.processNewBagPhotos(photosCsv, knownFieldValues)
         }
     }
@@ -190,6 +198,7 @@ fun BagInventoryScreen(
         fieldEvidence = result.fieldEvidence
         reviewHints = result.reviewHints
         llmStatus = result.llmStatus
+        thumbnailFocus = result.thumbnailFocus
         isProcessingScan = false
         showRetakeDialog = result.shouldSuggestRetake
         // Ensure the form is visible. In the normal flow the sheet is already
@@ -226,6 +235,7 @@ fun BagInventoryScreen(
         fieldEvidence = emptyMap()
         reviewHints = emptyList()
         llmStatus = LlmEnrichmentStatus.NOT_RUN
+        thumbnailFocus = null
 
         brewViewModel.processNewBagPhotos(photos, knownFieldValues)
     }
@@ -603,6 +613,7 @@ fun BagInventoryScreen(
                 ->
                 val rawPhotoUris = capturedPhotoUris
                 val qrUrl = detectedQrUrl
+                val scanFocus = thumbnailFocus
                 showAddSheet = false
                 isProcessingScan = false
                 showRetakeDialog = false
@@ -613,6 +624,7 @@ fun BagInventoryScreen(
                 fieldEvidence = emptyMap()
                 reviewHints = emptyList()
                 llmStatus = LlmEnrichmentStatus.NOT_RUN
+                thumbnailFocus = null
 
                 // Copy photos to permanent storage on background thread
                 coroutineScope.launch {
@@ -620,6 +632,21 @@ fun BagInventoryScreen(
                         kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                             copyPhotosToPermanentStorage(context, uris)
                         }
+                    }
+                    val frontPhotoUri = permanentUris?.split(",")?.firstOrNull()
+                    // Crop a focused square thumbnail around the label region the
+                    // scan detected; fall back to the full front photo otherwise.
+                    val thumbnailUri = if (frontPhotoUri != null && scanFocus != null) {
+                        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            com.adsamcik.starlitcoffee.util.BagThumbnailWriter.createFocusedThumbnail(
+                                context = context,
+                                sourceUri = frontPhotoUri,
+                                focus = scanFocus,
+                                targetSizePx = THUMBNAIL_TARGET_PX,
+                            )
+                        }
+                    } else {
+                        null
                     }
                     brewViewModel.addCoffeeBag(
                         input = BrewViewModel.CoffeeBagInput(
@@ -638,7 +665,7 @@ fun BagInventoryScreen(
                             decafProcess = decafProcess,
                             roastDate = roastDateMillis,
                             expiryDate = expiryDateMillis,
-                            photoUri = permanentUris?.split(",")?.firstOrNull(),
+                            photoUri = thumbnailUri ?: frontPhotoUri,
                             photoUris = permanentUris,
                             traceabilityUrl = qrUrl,
                         ),
@@ -761,16 +788,32 @@ private fun copyPhotosToPermanentStorage(
     cacheUris: String,
 ): String {
     val bagPhotosDir = java.io.File(context.filesDir, "bag_photos").apply { mkdirs() }
-    return cacheUris.split(",").mapNotNull { uriStr ->
-        try {
-            val sourceFile = java.io.File(uriStr.toUri().path ?: return@mapNotNull null)
-            if (!sourceFile.exists()) return@mapNotNull null
-            val destFile = java.io.File(bagPhotosDir, "bag_${System.currentTimeMillis()}_${sourceFile.name}")
-            sourceFile.copyTo(destFile, overwrite = true)
-            destFile.toUri().toString()
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to copy photo to permanent storage", e)
-            null
+    return cacheUris.split(",")
+        .map { it.trim() }
+        .filter { it.isNotBlank() }
+        .mapIndexedNotNull { index, uriStr ->
+            try {
+                val uri = uriStr.toUri()
+                val destFile = java.io.File(
+                    bagPhotosDir,
+                    "bag_${System.currentTimeMillis()}_$index.jpg",
+                )
+                // openInputStream resolves BOTH file:// (camera capture) and
+                // content:// (gallery picker / SAF) URIs. The previous
+                // File(uri.path).copyTo() silently dropped every gallery photo
+                // because a content URI has no real filesystem path — that is
+                // why picked photos were never attached to the saved bag.
+                context.contentResolver.openInputStream(uri)?.use { input ->
+                    destFile.outputStream().use { output -> input.copyTo(output) }
+                } ?: run {
+                    Log.w(TAG, "Could not open photo stream for $uriStr")
+                    return@mapIndexedNotNull null
+                }
+                destFile.toUri().toString()
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to copy photo to permanent storage", e)
+                null
+            }
         }
-    }.joinToString(",")
+        .joinToString(",")
 }
