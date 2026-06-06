@@ -71,6 +71,13 @@ extensions.configure<ApplicationExtension>("android") {
         // MigrationTestHelper can create historical databases and validate
         // migrations against the real schema history (not hand-written copies).
         getByName("androidTest").assets.srcDir("$projectDir/schemas")
+
+        // Pure-JVM corpus/scoring harness shared by both unit tests
+        // (src/test) and instrumented tests (src/androidTest). Keep it
+        // Android-free so the JVM unit tests can exercise the scoring math
+        // deterministically while the on-device tests reuse the same logic.
+        getByName("test").kotlin.srcDir("src/sharedTest/kotlin")
+        getByName("androidTest").kotlin.srcDir("src/sharedTest/kotlin")
     }
 
     testOptions {
@@ -114,23 +121,26 @@ tasks.withType<Test> {
     }
 }
 
-// Push coffee bag test images to connected device/emulator
+// Push the committed synthetic coffee-bag corpus (WebP images + metadata) to a
+// connected device/emulator for the instrumented OCR/LLM benchmark + Q0 gate.
 tasks.register("pushTestImages") {
     group = "verification"
-    description = "Push test coffee bag images to connected device/emulator"
+    description = "Push the synthetic coffee-bag corpus to a connected device/emulator"
 
     // Capture providers at configuration time so doLast doesn't reach into
     // configuration-only extensions during the execution phase.
     val adbProvider = androidComponents.sdkComponents.adb
-    val testDataDir = rootProject.file("testdata/coffee-bags")
+    val corpusDir = rootProject.file("testdata/synthetic-coffee-bag-corpus")
 
     doLast {
-        require(testDataDir.exists() && testDataDir.isDirectory) {
-            "testdata/coffee-bags/ not found. See testdata/README.md for setup instructions."
+        val metadataFile = corpusDir.resolve("corpus_metadata.json")
+        val prototypesDir = corpusDir.resolve("prototypes")
+        require(metadataFile.isFile && prototypesDir.isDirectory) {
+            "Synthetic corpus not found at testdata/synthetic-coffee-bag-corpus/ " +
+                "(expected corpus_metadata.json + prototypes/). See testdata/README.md."
         }
 
         val adb = adbProvider.get().asFile.absolutePath
-
         val deviceDir = "/data/local/tmp/coffee-bags"
 
         fun adb(vararg args: String) {
@@ -139,17 +149,20 @@ tasks.register("pushTestImages") {
             require(proc.waitFor() == 0) { "adb command failed: ${cmd.joinToString(" ")}" }
         }
 
-        adb("shell", "mkdir", "-p", deviceDir)
+        // Clean first so a stale flat-JPEG layout can never mask a broken push.
+        adb("shell", "rm", "-rf", deviceDir)
+        adb("shell", "mkdir", "-p", "$deviceDir/prototypes")
 
-        val images = testDataDir.listFiles()
-            ?.filter { it.extension.lowercase() in listOf("jpg", "jpeg", "png") }
+        adb("push", metadataFile.absolutePath, "$deviceDir/corpus_metadata.json")
+
+        val images = prototypesDir.listFiles()
+            ?.filter { it.extension.lowercase() in listOf("webp", "png", "jpg", "jpeg") }
             ?: emptyList()
-
         images.forEach { file ->
-            adb("push", file.absolutePath, "$deviceDir/${file.name}")
+            adb("push", file.absolutePath, "$deviceDir/prototypes/${file.name}")
         }
 
-        println("Pushed ${images.size} images to $deviceDir")
+        println("Pushed corpus_metadata.json + ${images.size} images to $deviceDir")
     }
 }
 

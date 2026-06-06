@@ -1,0 +1,549 @@
+{
+  "schema_version": 1,
+  "bags": [
+    {
+      "id": "scb-001-en-q0",
+      "photos": {
+        "front": "prototypes/en_north_axis_moonlit_orchard_front_q0.webp",
+        "back": "prototypes/en_north_axis_moonlit_orchard_back_q0.webp"
+      },
+      "language": [
+        "en"
+      ],
+      "fields": {
+        "name": "Moonlit Orchard",
+        "roaster": "North Axis Roastery",
+        "origin": "Ethiopia",
+        "region": "Yirgacheffe",
+        "farm": "Halo Beriti",
+        "variety": "Heirloom",
+        "process": "Washed",
+        "roastLevel": "Light",
+        "tastingNotes": "blueberry, jasmine, citrus",
+        "altitude": "1900-2200",
+        "weight": "250 g",
+        "roastDate": "2026-05-28",
+        "expiryDate": "2026-08-28",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q0",
+        "bagMaterial": "matte white",
+        "riskTags": [],
+        "bagDescription": "Studio-clean white bag with a large front label and an easy-to-read back label.",
+        "barcode": "7350142985671"
+      },
+      "notes": "Near-perfect English baseline. Producer 'Halo Beriti' is printed on the back label."
+    },
+    {
+      "id": "scb-002-de-q1",
+      "photos": {
+        "front": "prototypes/de_morgenstern_abendhafen_front_q1.webp",
+        "back": "prototypes/de_morgenstern_abendhafen_back_q1.webp"
+      },
+      "language": [
+        "de"
+      ],
+      "fields": {
+        "name": "Abendhafen",
+        "roaster": "Morgenstern Kaffeeroesterei",
+        "origin": "Colombia",
+        "region": "Huila",
+        "farm": "Finca El Cedro",
+        "variety": "Caturra",
+        "process": "Sugarcane EA Decaf",
+        "roastLevel": "Filter",
+        "tastingNotes": "caramel, orange, cocoa",
+        "altitude": "1600-1850",
+        "weight": "250 g",
+        "roastDate": "2026-05-22",
+        "expiryDate": "2026-08-22",
+        "isDecaf": true
+      },
+      "extras": {
+        "captureTier": "Q1",
+        "bagMaterial": "dark matte",
+        "riskTags": [
+          "mild_glare",
+          "mild_perspective",
+          "wrinkles"
+        ],
+        "bagDescription": "Dark German bag with a cream label and explicit sugarcane decaf wording.",
+        "barcode": "4260713680522",
+        "barcodeUnique": false,
+        "barcodeCollisionGroup": "ean13-4260713680522"
+      },
+      "notes": "Good real-world capture with an explicit decaf example. Producer 'Finca El Cedro' is visible on the back label."
+    },
+    {
+      "id": "scb-003-cs-q2",
+      "photos": {
+        "front": "prototypes/cs_polarni_jitrenka_front_q2.webp",
+        "back": "prototypes/cs_polarni_jitrenka_back_q2.webp"
+      },
+      "language": [
+        "cs"
+      ],
+      "fields": {
+        "name": "Jitřenka",
+        "roaster": "Polarni Pražírna",
+        "origin": "Colombia",
+        "region": "Huila",
+        "farm": "Finca San Rafael",
+        "variety": "Castillo",
+        "process": "Washed",
+        "roastLevel": "Light",
+        "tastingNotes": "apricot, caramel, blood orange",
+        "altitude": "1700-1950",
+        "weight": "250 g",
+        "roastDate": "2026-05-18",
+        "expiryDate": "2026-08-18",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q2",
+        "bagMaterial": "kraft paper",
+        "riskTags": [
+          "home_lighting",
+          "moderate_perspective",
+          "label_curvature"
+        ],
+        "bagDescription": "Kraft Czech bag on a kitchen counter with ordinary consumer framing.",
+        "barcode": "8594197360518"
+      },
+      "notes": "Ordinary consumer-quality capture with visible Czech diacritics. Producer 'Finca San Rafael' is visible on the back label."
+    },
+    {
+      "id": "scb-004-it-q3",
+      "photos": {
+        "front": "prototypes/it_officina_luna_chiara_front_q3.webp",
+        "back": "prototypes/it_officina_luna_chiara_back_q3.webp"
+      },
+      "language": [
+        "it"
+      ],
+      "fields": {
+        "name": "Luna Chiara",
+        "roaster": "Officina Alba",
+        "origin": "Ethiopia",
+        "region": "Sidamo",
+        "farm": "Halo Beriti",
+        "variety": "Heirloom",
+        "process": "Natural",
+        "roastLevel": "Filter",
+        "tastingNotes": "blueberry, bergamot, cocoa",
+        "altitude": "1900-2100",
+        "weight": "250 g",
+        "roastDate": "2026-05-14",
+        "expiryDate": "2026-08-14",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q3",
+        "bagMaterial": "olive matte",
+        "riskTags": [
+          "glare",
+          "motion_softness",
+          "strong_perspective",
+          "label_curvature"
+        ],
+        "bagDescription": "Olive Italian bag with more aggressive handheld capture artifacts.",
+        "barcode": "8051234567890"
+      },
+      "notes": "Degraded but still recoverable Italian capture. Producer 'Halo Beriti' is still legible on the back label."
+    },
+    {
+      "id": "scb-005-fr-q4",
+      "photos": {
+        "front": "prototypes/fr_atelier_rive_claire_front_q4.webp",
+        "back": "prototypes/fr_atelier_rive_claire_back_q4.webp"
+      },
+      "language": [
+        "fr"
+      ],
+      "fields": {
+        "name": "Rive Claire",
+        "roaster": "Atelier Minuit",
+        "origin": "Guatemala",
+        "region": "Huehuetenango",
+        "farm": "Finca La Esperanza",
+        "variety": "Bourbon",
+        "process": "Washed",
+        "roastLevel": "Filter",
+        "tastingNotes": "plum, chocolate, mandarin",
+        "altitude": "1700-2000",
+        "weight": "250 g",
+        "roastDate": "2025-05-10",
+        "expiryDate": "2026-08-10",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q4",
+        "bagMaterial": "navy matte",
+        "riskTags": [
+          "strong_glare",
+          "motion_blur",
+          "wrinkled_label",
+          "shadow",
+          "partial_crop"
+        ],
+        "bagDescription": "French failure-mode pair with glare and blur strong enough to force abstention on some fields.",
+        "barcode": "3770034983102"
+      },
+      "notes": "Failure-mode pair. Front roast date drifted to 2025-05-10 in the rendered image and metadata follows the raster; producer 'Finca La Esperanza' remains visible on the back."
+    },
+    {
+      "id": "scb-006-en-q0",
+      "photos": {
+        "front": "prototypes/en_astral_perihelion_front_q0.webp",
+        "back": "prototypes/en_astral_perihelion_back_q0.webp"
+      },
+      "language": [
+        "en"
+      ],
+      "fields": {
+        "name": "Perihelion",
+        "roaster": "Astral Common Roasters",
+        "origin": "Kenya",
+        "region": "Nyeri",
+        "farm": "Gakuyu-ini Factory",
+        "variety": "SL28 / SL34",
+        "process": "Washed",
+        "roastLevel": "Filter",
+        "tastingNotes": "blackcurrant, grapefruit, molasses",
+        "altitude": "1750-1950",
+        "weight": "250 g",
+        "roastDate": "2026-06-02",
+        "expiryDate": "2026-09-02",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q0",
+        "bagMaterial": "midnight blue matte",
+        "designStyle": "celestial map",
+        "riskTags": [],
+        "bagDescription": "Graphical midnight-blue bag with copper constellation artwork and an integrated arched label.",
+        "barcode": "7350142985694"
+      },
+      "notes": "High-contrast celestial design with dense decorative linework around a benchmark-friendly data panel. Producer 'Gakuyu-ini Factory' is on the back."
+    },
+    {
+      "id": "scb-007-de-q0",
+      "photos": {
+        "front": "prototypes/de_studio_signalwerk_front_q0.webp",
+        "back": "prototypes/de_studio_signalwerk_back_q0.webp"
+      },
+      "language": [
+        "de"
+      ],
+      "fields": {
+        "name": "Signalwerk",
+        "roaster": "Studio Bohne",
+        "origin": "Brazil",
+        "region": "Cerrado Mineiro",
+        "farm": "Fazenda Santa Lucia",
+        "variety": "Yellow Bourbon",
+        "process": "Natural",
+        "roastLevel": "Espresso",
+        "tastingNotes": "hazelnut, cherry, dark chocolate",
+        "altitude": "1000-1200",
+        "weight": "250 g",
+        "roastDate": "2026-05-30",
+        "expiryDate": "2026-08-30",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q0",
+        "bagMaterial": "matte graphic wrap",
+        "designStyle": "bauhaus geometry",
+        "riskTags": [],
+        "bagDescription": "Bold Bauhaus-inspired red, mustard, black, and cream package with integrated typographic panels.",
+        "barcode": "4260713680522",
+        "barcodeUnique": false,
+        "barcodeCollisionGroup": "ean13-4260713680522"
+      },
+      "notes": "Graphic-heavy German design with clean block shapes and strong typographic hierarchy. Producer 'Fazenda Santa Lucia' is on the back."
+    },
+    {
+      "id": "scb-008-cs-q1",
+      "photos": {
+        "front": "prototypes/cs_list_mechovy_sad_front_q1.webp",
+        "back": "prototypes/cs_list_mechovy_sad_back_q1.webp"
+      },
+      "language": [
+        "cs"
+      ],
+      "fields": {
+        "name": "Mechovy Sad",
+        "roaster": "List a Kamen",
+        "origin": "Rwanda",
+        "region": "Nyamasheke",
+        "farm": "Kanzu Cooperative",
+        "variety": "Bourbon",
+        "process": "Washed",
+        "roastLevel": "Filter",
+        "tastingNotes": "currant, rosehip, honey",
+        "altitude": "1700-2100",
+        "weight": "250 g",
+        "roastDate": "2026-05-26",
+        "expiryDate": "2026-08-26",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q1",
+        "bagMaterial": "kraft paper",
+        "designStyle": "botanical block print",
+        "riskTags": [
+          "dense_artwork",
+          "natural_light"
+        ],
+        "bagDescription": "Kraft bag covered in block-printed leaves and coffee cherries with an integrated Czech information frame.",
+        "barcode": "8595173840526"
+      },
+      "notes": "Graphic botanical design that keeps the text readable while surrounding it with dense illustration. Producer 'Kanzu Cooperative' is visible on the back label."
+    },
+    {
+      "id": "scb-009-it-q2",
+      "photos": {
+        "front": "prototypes/it_carta_vento_magnetico_front_q2.webp",
+        "back": "prototypes/it_carta_vento_magnetico_back_q2.webp"
+      },
+      "language": [
+        "it"
+      ],
+      "fields": {
+        "name": "Vento Magnetico",
+        "roaster": "Carta Rossa",
+        "origin": "Peru",
+        "region": "Cusco",
+        "farm": "Finca Nueva Aurora",
+        "variety": "Caturra",
+        "process": "Honey",
+        "roastLevel": "Omni",
+        "tastingNotes": "peach, panela, lime",
+        "altitude": "1850-2050",
+        "weight": "250 g",
+        "roastDate": "2026-05-24",
+        "expiryDate": "2026-08-24",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q2",
+        "bagMaterial": "pale blush matte",
+        "designStyle": "risograph sticker collage",
+        "riskTags": [
+          "home_lighting",
+          "collage_layout",
+          "overlapping_graphics"
+        ],
+        "bagDescription": "Playful risograph-collage bag with layered sticker motifs and offset-print textures.",
+        "barcode": "8052345678912"
+      },
+      "notes": "The integrated panel is still readable, but the surrounding collage creates a more realistic distraction field. Producer 'Finca Nueva Aurora' is visible on the back label."
+    },
+    {
+      "id": "scb-010-fr-q0",
+      "photos": {
+        "front": "prototypes/fr_maison_carte_solaire_front_q0.webp",
+        "back": "prototypes/fr_maison_carte_solaire_back_q0.webp"
+      },
+      "language": [
+        "fr"
+      ],
+      "fields": {
+        "name": "Carte Solaire",
+        "roaster": "Maison Meridian",
+        "origin": "Ethiopia",
+        "region": "Guji",
+        "farm": "Buku Abel",
+        "variety": "Heirloom",
+        "process": "Natural",
+        "roastLevel": "Filter",
+        "tastingNotes": "strawberry, cocoa, orange blossom",
+        "altitude": "1900-2200",
+        "weight": "250 g",
+        "roastDate": "2026-05-20",
+        "expiryDate": "2026-08-20",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q0",
+        "bagMaterial": "sand and indigo matte",
+        "designStyle": "topographic sun map",
+        "riskTags": [],
+        "bagDescription": "Premium French bag with layered contour lines, an abstract sun disc, and an integrated map-style panel.",
+        "barcode": "3770028123456"
+      },
+      "notes": "Topographic artwork adds decorative density while preserving a clean front/back data zone. Producer 'Buku Abel' is on the back."
+    },
+    {
+      "id": "scb-011-de-q2",
+      "photos": {
+        "front": "prototypes/de_werkform_funklinie_front_q2.webp",
+        "back": "prototypes/de_werkform_funklinie_back_q2.webp"
+      },
+      "language": [
+        "de"
+      ],
+      "fields": {
+        "name": "Funklinie",
+        "roaster": "Werkform Kaffee",
+        "origin": "Ethiopia",
+        "region": "Guji",
+        "farm": "Suke Quto",
+        "variety": "Heirloom",
+        "process": "Natural",
+        "roastLevel": "Filter",
+        "tastingNotes": "blueberry, nougat, lime",
+        "altitude": "1900-2200",
+        "weight": "250 g",
+        "roastDate": "2026-05-27",
+        "expiryDate": "2026-08-27",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q2",
+        "bagMaterial": "dark matte",
+        "designStyle": "technical schematic",
+        "riskTags": [
+          "split_front_back",
+          "home_lighting"
+        ],
+        "bagDescription": "Dark German bag with a translucent schematic side panel. The front carries only shopping-level info (name, origin, roast, weight) while the back data panel carries the full extraction detail.",
+        "barcode": "4260713680553",
+        "requiresSideFusion": true,
+        "labelLayout": "split_front_back",
+        "frontFields": [
+          "roaster",
+          "name",
+          "origin",
+          "roastLevel",
+          "weight"
+        ],
+        "backFields": [
+          "region",
+          "farm",
+          "variety",
+          "process",
+          "tastingNotes",
+          "altitude",
+          "roastDate",
+          "expiryDate"
+        ]
+      },
+      "notes": "German split front/back: the front is intentionally sparse and the extraction detail lives on the back data panel. Exercises BagOcrTextMerger multi-side reasoning."
+    },
+    {
+      "id": "scb-012-en-q1",
+      "photos": {
+        "front": "prototypes/en_tide_harbor_bloom_front_q1.webp",
+        "back": "prototypes/en_tide_harbor_bloom_back_q1.webp"
+      },
+      "language": [
+        "en"
+      ],
+      "fields": {
+        "name": "Harbor Bloom",
+        "roaster": "Tide Lantern Coffee",
+        "origin": "Colombia",
+        "region": "Huila",
+        "farm": "Finca Las Brisas",
+        "variety": "Caturra",
+        "process": "Washed",
+        "roastLevel": "Filter",
+        "tastingNotes": "red apple, caramel, cocoa nib",
+        "altitude": "1650-1850",
+        "weight": "250 g",
+        "roastDate": "2026-05-29",
+        "expiryDate": "2026-08-29",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q1",
+        "bagMaterial": "sea-green matte",
+        "designStyle": "vintage nautical engraving",
+        "riskTags": [
+          "split_front_back"
+        ],
+        "bagDescription": "Sea-green nautical bag with engraved waves and postal stamps. The front shows name/origin/roast/weight; the back holds region, variety, process, notes, altitude, producer, and dates.",
+        "barcode": "7350142985701",
+        "requiresSideFusion": true,
+        "labelLayout": "split_front_back",
+        "frontFields": [
+          "roaster",
+          "name",
+          "origin",
+          "roastLevel",
+          "weight"
+        ],
+        "backFields": [
+          "region",
+          "farm",
+          "variety",
+          "process",
+          "tastingNotes",
+          "altitude",
+          "roastDate",
+          "expiryDate"
+        ]
+      },
+      "notes": "English split front/back nautical design: shopping info on the front, extraction detail on the back."
+    },
+    {
+      "id": "scb-013-fr-q1",
+      "photos": {
+        "front": "prototypes/fr_brume_sillage_nord_front_q1.webp",
+        "back": "prototypes/fr_brume_sillage_nord_back_q1.webp"
+      },
+      "language": [
+        "fr"
+      ],
+      "fields": {
+        "name": "Sillage Nord",
+        "roaster": "Brume Atelier",
+        "origin": "Rwanda",
+        "region": "Nyamasheke",
+        "farm": "Kanzu Cooperative",
+        "variety": "Bourbon",
+        "process": "Washed",
+        "roastLevel": "Filter",
+        "tastingNotes": "plum, honey, blood orange",
+        "altitude": "1700-2100",
+        "weight": "250 g",
+        "roastDate": "2026-05-25",
+        "expiryDate": "2026-08-25",
+        "isDecaf": false
+      },
+      "extras": {
+        "captureTier": "Q1",
+        "bagMaterial": "aubergine matte",
+        "designStyle": "art deco celestial",
+        "riskTags": [
+          "split_front_back"
+        ],
+        "bagDescription": "Aubergine art-deco bag with gold celestial linework. The French front carries origin, roast, and weight; the back data panel carries the detailed fields.",
+        "barcode": "3770029876543",
+        "requiresSideFusion": true,
+        "labelLayout": "split_front_back",
+        "frontFields": [
+          "roaster",
+          "name",
+          "origin",
+          "roastLevel",
+          "weight"
+        ],
+        "backFields": [
+          "region",
+          "farm",
+          "variety",
+          "process",
+          "tastingNotes",
+          "altitude",
+          "roastDate",
+          "expiryDate"
+        ]
+      },
+      "notes": "French split front/back art-deco design. Back panel is French (Processus: Lavé maps to canonical English 'Washed')."
+    }
+  ]
+}

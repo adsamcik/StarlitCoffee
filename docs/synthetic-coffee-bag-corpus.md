@@ -12,19 +12,35 @@ capture-quality variation.
 - Include progressively degraded captures that still look like real coffee bag
   photos from consumer devices.
 - Keep one explicit decaf example in the set.
+- Capture visible back-label barcode digits in metadata so OCR/barcode tests
+  can reuse the same corpus.
 
 ## Current Starter Set
 
 The committed prototype corpus lives in
-`testdata/synthetic-coffee-bag-corpus/`.
+`testdata/synthetic-coffee-bag-corpus/`. Images are lossy WebP (~1024×1536,
+quality 85) and are version-controlled — the whole 26-image set is ~4.5 MB.
+Because every bag is fictional and AI-generated, the images can ship in the
+repo; the old copyrighted real-photo set has been fully retired.
 
-It currently contains five fictional bags:
+It currently contains thirteen fictional bags:
 
 - `Q0` English studio-clean baseline
 - `Q1` German good real-world capture
 - `Q2` Czech ordinary consumer capture
 - `Q3` Italian degraded-but-recoverable capture
 - `Q4` French failure-mode capture
+- `Q0` English celestial-map graphic design
+- `Q0` German Bauhaus geometric design
+- `Q1` Czech botanical block-print design
+- `Q2` Italian risograph collage design
+- `Q0` French topographic sun-map design
+- `Q1` English split-front/back nautical design
+- `Q2` German split-front/back technical design
+- `Q1` French split-front/back art-deco design
+
+The split-front/back bags carry structured extras metadata for automation:
+`requiresSideFusion`, `labelLayout`, `frontFields`, and `backFields`.
 
 ## Quality Tiers
 
@@ -85,6 +101,14 @@ Expected use:
 - Treat front/back as separate photos, not mirrored duplicates.
 - Keep the bag identity stable across the pair: same roaster, same coffee name,
   same material, same overall packaging design.
+- Include some bags where the front intentionally carries only shopping-level
+  information and the back carries the extraction detail. This exercises
+  `BagOcrTextMerger` and multi-side reasoning more realistically.
+- If the rendered back label shows barcode digits, store them in
+  `extras.barcode`. Treat these as fictional fixture digits, not product
+  identity. If two rendered bags collide on the same barcode, keep the raster
+  truth and mark the collision with `extras.barcodeUnique=false` plus a
+  `barcodeCollisionGroup`.
 - Degrade the photo, not the metadata. When a field becomes unreadable because
   of capture quality, keep the ground truth aligned to what is actually visible
   on the rendered image.
@@ -119,8 +143,26 @@ Recommended distribution for a larger synthetic corpus:
 - `Q3`: 20%
 - `Q4`: 5%
 
-## Important Limitation
+## How the Tests Use It
 
-This starter corpus is image-generator-native. It is good for visual pipeline
-testing, regression coverage, and multilingual prompt work. For any serious
-benchmarking milestone, keep a small real-photo holdout set alongside it.
+- `CoffeeBagCorpusExtractionTest` (JVM) validates the metadata structure +
+  parser contract; it resolves this folder automatically.
+- `BagFieldScorerTest` / `QualityReportTest` / `FieldSpecTest` (JVM) pin the
+  scoring + metric math deterministically (no model).
+- `LlmCorpusBenchmarkTest` (instrumented) runs the real OCR fixtures + LLM and
+  writes a per-field/per-tier quality report — numbers, never pass/fail.
+- `BagScanBestCaseGateTest` (instrumented) runs the full pipeline on the `Q0`
+  bags and must pass 100% on the gate fields
+  (`name, roaster, origin, process, roastLevel, weight`).
+
+Field-specific scoring (multilingual origin/process aliases, order-insensitive
+tasting notes, gram-normalized weight, format-agnostic dates) lives in
+`FieldSpec`, so the gate stays meaningful without being brittle.
+
+## Limitation
+
+This corpus is image-generator-native: excellent for visual pipeline testing,
+regression coverage, multilingual prompt work, and a reproducible best-case
+gate. It is not a substitute for occasional manual validation against genuinely
+novel real-world labels — but per project policy, no real label photos are
+committed to this repo.

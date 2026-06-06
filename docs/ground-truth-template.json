@@ -1,7 +1,7 @@
 [
   {
     "bagId": "bag-001",
-    "photoPath": "testdata/coffee-bags/bag-001-front.jpg",
+    "photoPath": "testdata/synthetic-coffee-bag-corpus/prototypes/en_north_axis_moonlit_orchard_front_q0.webp",
     "scannedAt": "2025-07-10T14:30:00Z",
     "bagDescription": "White bag with blue text, single-origin Ethiopian coffee, front and back labels",
     "material": "matte",
@@ -66,7 +66,7 @@
   },
   {
     "bagId": "bag-002",
-    "photoPath": "testdata/coffee-bags/bag-002-front.jpg",
+    "photoPath": "testdata/synthetic-coffee-bag-corpus/prototypes/de_studio_signalwerk_front_q0.webp",
     "scannedAt": "2025-07-10T15:00:00Z",
     "bagDescription": "Dark matte bag, Japanese text on front, minimalist design, blend coffee",
     "material": "matte",

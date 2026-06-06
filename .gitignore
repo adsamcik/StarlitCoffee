@@ -61,26 +61,13 @@ classes.jar
 # Release build artifacts (signed APK/AAB)
 app/release/
 
-# LLM evaluation harness — images, ground truth, and run logs stay local
+# Local scratch eval output (never committed)
 eval/
 tools/mindlayer_test_output.txt
 tools/adversarial_out.txt
 
 # Local-only emulator validation screenshots
 screenshots/
-
-# Coffee bag corpus — JPEG label photos and the metadata index live
-# next to each other at D:\Cloud\Proton\My files\Coffee bags on the
-# author's workstation (and the equivalent on CI runners that have the
-# corpus mounted). They are NEVER committed to git — the photos contain
-# label artwork that may be copyrighted, and the corpus changes
-# independently of the app's release cadence. The test harness reads
-# them through the MINDLAYER_COFFEE_BAG_CORPUS environment variable
-# (CoffeeBagCorpusExtractionTest.kt) and skips cleanly when that env
-# var is unset, so CI without the corpus mounted just doesn't run those
-# tests rather than failing.
-/coffee-bags-corpus/
-/app/coffee-bags-corpus/
 
 # Python bytecode cache
 __pycache__/
@@ -91,8 +78,4 @@ __pycache__/
 # app/src/main/res/drawable-nodpi.
 /docs/assets/vessel-icons/
 /tools/bloom-validation/
-
-# Synthetic coffee-bag image corpus (large test images, mirrors the
-# coffee-bags-corpus policy above — kept local, not version-controlled).
-/testdata/synthetic-coffee-bag-corpus/
 

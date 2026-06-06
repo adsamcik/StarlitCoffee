@@ -62,14 +62,17 @@ The Mindlayer repo is public, but GitHub Packages Maven reads still require a to
 
 ## Test Data
 
-Scan/instrumented image assets are intentionally not committed. Create `testdata\coffee-bags` as a symlink to local images, following `testdata\README.md`.
+The synthetic coffee-bag corpus is committed at `testdata\synthetic-coffee-bag-corpus\`
+(WebP images under `prototypes\` + `corpus_metadata.json`). No symlink or local
+real-photo setup is required.
 
 ```powershell
 .\gradlew.bat pushTestImages
 .\gradlew.bat connectedDebugAndroidTest
 ```
 
-Image names should follow `roaster_coffee_name_{front|back}.jpg`.
+Corpus image names follow `lang_roaster_coffee_{front|back}_qTier.webp`; ground
+truth lives in `corpus_metadata.json`. See `testdata\README.md`.
 
 ## Project Structure
 
@@ -142,7 +145,7 @@ When adding new background work, foreground services, or LAN features, re-check 
 | Mindlayer dependency cannot resolve | No token (public repo, but GitHub Packages Maven still requires one) | Run `gh auth login` (any GitHub account) or set `GITHUB_TOKEN`. |
 | Gradle uses wrong Java | `JAVA_HOME` points to a non-17 JDK | Set `JAVA_HOME` to JDK 17 and retry. |
 | Room build/KSP error after entity change | Migration/schema not updated | Update `AppDatabase` migration and exported schema. |
-| Test images missing | `testdata\coffee-bags` symlink absent | Create the symlink described in `testdata\README.md`. |
+| Test images missing | Synthetic corpus not pushed to device | Run `.\gradlew.bat pushTestImages`; corpus lives in `testdata\synthetic-coffee-bag-corpus\`. |
 | Localization compile failure | EN/CS string keys or placeholders diverged | Keep `values` and `values-cs` keys/placeholders aligned. |
 | Navigation crash | Raw string route or missing typed route arg | Use `@Serializable` routes and `toRoute<T>()`. |
 | Brew ratio mismatch in tests | Pulsar default assumed as 1:16 | Use `BrewMethod.PULSAR.defaultRatio == 17f`. |

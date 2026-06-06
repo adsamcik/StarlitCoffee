@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "kind": "experimental_multi_shot_pack",
+  "pack_id": "scb-ms-001-en-q4",
+  "reference_bag_id": "scb-012-en-q1",
+  "title": "Harbor Bloom Multi-Shot Night Deformation Pack",
+  "language": [
+    "en"
+  ],
+  "bag_identity": {
+    "name": "Harbor Bloom",
+    "roaster": "Tide Lantern Coffee",
+    "origin": "Colombia",
+    "region": "Huila",
+    "farm": "Finca Las Brisas",
+    "variety": "Caturra",
+    "process": "Washed",
+    "roastLevel": "Filter",
+    "tastingNotes": "red apple, caramel, cocoa nib",
+    "altitude": "1650-1850",
+    "weight": "250 g",
+    "roastDate": "2026-05-29",
+    "expiryDate": "2026-08-29",
+    "isDecaf": false,
+    "barcode": "7350142985701"
+  },
+  "pack_properties": {
+    "captureTier": "Q4",
+    "experimental": true,
+    "fullBagVisibleInAnyShot": false,
+    "requiresShotAggregation": true,
+    "lighting": "night phone capture",
+    "riskTags": [
+      "partial_view_only",
+      "multi_shot_single_bag",
+      "deformed_bag",
+      "night_phone",
+      "glare",
+      "shadow",
+      "wrinkles"
+    ]
+  },
+  "shots": [
+    {
+      "id": "shot-01-front-upper-center",
+      "file": "harbor_bloom_front_upper_center_night_fragment.png",
+      "side": "front",
+      "captureOrder": 1,
+      "fullBagVisible": false,
+      "visibleCorpusFields": [
+        "roaster",
+        "name"
+      ],
+      "nonCorpusVisibleText": [],
+      "captureTags": [
+        "night_phone",
+        "partial_front",
+        "upper_center",
+        "folded_top_seam",
+        "soft_noise"
+      ],
+      "notes": "Front identity fragment. Name and roaster are visible, but the front label is creased and cropped."
+    },
+    {
+      "id": "shot-02-front-lower-right",
+      "file": "harbor_bloom_front_lower_right_glare_fragment.png",
+      "side": "front",
+      "captureOrder": 2,
+      "fullBagVisible": false,
+      "visibleCorpusFields": [
+        "name",
+        "origin",
+        "roastLevel",
+        "weight"
+      ],
+      "nonCorpusVisibleText": [],
+      "captureTags": [
+        "night_phone",
+        "partial_front",
+        "lower_right",
+        "glare",
+        "perspective_distortion"
+      ],
+      "notes": "Lower-right front fragment with stronger glare and deformation. The full front never appears."
+    },
+    {
+      "id": "shot-03-back-upper-left",
+      "file": "harbor_bloom_back_upper_left_night_fragment.png",
+      "side": "back",
+      "captureOrder": 3,
+      "fullBagVisible": false,
+      "visibleCorpusFields": [
+        "roaster",
+        "name",
+        "region",
+        "variety",
+        "process",
+        "tastingNotes"
+      ],
+      "nonCorpusVisibleText": [],
+      "captureTags": [
+        "night_phone",
+        "partial_back",
+        "upper_left",
+        "deformation",
+        "warm_dim_light"
+      ],
+      "notes": "Back label upper-left fragment. The information panel is visible only in part because the bag is crumpled and cropped."
+    },
+    {
+      "id": "shot-04-back-upper-center",
+      "file": "harbor_bloom_back_upper_center_shadow_fragment.png",
+      "side": "back",
+      "captureOrder": 4,
+      "fullBagVisible": false,
+      "visibleCorpusFields": [
+        "roaster",
+        "name",
+        "region",
+        "variety",
+        "process",
+        "tastingNotes",
+        "altitude"
+      ],
+      "nonCorpusVisibleText": [],
+      "captureTags": [
+        "night_phone",
+        "partial_back",
+        "upper_center",
+        "shadow",
+        "close_crop"
+      ],
+      "notes": "Back label upper-center fragment with shadow across the panel and a close handheld crop."
+    },
+    {
+      "id": "shot-05-back-lower-right",
+      "file": "harbor_bloom_back_lower_right_barcode_fragment.png",
+      "side": "back",
+      "captureOrder": 5,
+      "fullBagVisible": false,
+      "visibleCorpusFields": [
+        "farm",
+        "roastDate",
+        "expiryDate",
+        "roastLevel"
+      ],
+      "nonCorpusVisibleText": [
+        "Harvest: 2025/26",
+        "Lot: HB-CO-0529",
+        "Barcode: 7350142985701"
+      ],
+      "captureTags": [
+        "night_phone",
+        "partial_back",
+        "lower_right",
+        "barcode_visible",
+        "crease_near_edge"
+      ],
+      "notes": "Lower-right back fragment with the producer line, dates, roast profile scale, lot number, and barcode area."
+    }
+  ]
+}

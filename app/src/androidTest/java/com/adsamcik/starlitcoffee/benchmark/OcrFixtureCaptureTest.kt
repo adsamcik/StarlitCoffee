@@ -7,6 +7,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.adsamcik.starlitcoffee.data.network.ocr.HierarchicalOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
+import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagFixture
 import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
@@ -21,8 +22,9 @@ import java.io.File
  * For every bag in the corpus this test runs the full OCR pipeline
  * (same code path the production bag scan uses — [HierarchicalOcrService]
  * over [MindlayerOcrService], with the [ImagePreprocessor] alignment +
- * enhancement passes) and writes the resulting `fullText` to
- * `/sdcard/Download/coffee-bags-fixtures/{bagId}.{side}.ocr.txt`.
+ * enhancement passes) and writes the resulting `fullText` to the app's
+ * external files dir (`CorpusFixture.fixturesDir`), one file per
+ * `{bagId}.{side}.ocr.txt`.
  *
  * The fixtures are then consumed by [LlmCorpusBenchmarkTest] — that test
  * is the daily-driver iteration loop and only needs OCR text, not bitmaps,
@@ -44,11 +46,11 @@ import java.io.File
  * # Running
  *
  * ```
- * ./gradlew connectedDebugAndroidTest --tests '*OcrFixtureCaptureTest*'
+ * ./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.OcrFixtureCaptureTest"
  * ```
  *
- * Requires the bag photos pushed to `/sdcard/Download/coffee-bags/` and
- * Mindlayer's OCR service installed + ready.
+ * Requires the corpus pushed via `./gradlew pushTestImages` (to
+ * `/data/local/tmp/coffee-bags/`) and Mindlayer's OCR service installed + ready.
  */
 @RunWith(AndroidJUnit4::class)
 class OcrFixtureCaptureTest {
@@ -69,8 +71,9 @@ class OcrFixtureCaptureTest {
         val ocr: OcrService = HierarchicalOcrService(MindlayerOcrService(context))
 
         assumeTrue(
-            "Mindlayer OCR not available — install/start the service and retry.",
-            ocr.isAvailable(),
+            "Mindlayer OCR not available — start the service and approve com.adsamcik.starlitcoffee " +
+                "in the Mindlayer dashboard, then retry.",
+            QualityTestSupport.awaitTrueSuspending { ocr.isAvailable() },
         )
 
         try {

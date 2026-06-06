@@ -1,8 +1,10 @@
 package com.adsamcik.starlitcoffee.data.network.llm
 
+import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagCorpus
+import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagFixture
+import com.adsamcik.starlitcoffee.test.corpus.CorpusFields
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
 import com.adsamcik.starlitcoffee.util.BagOcrTextMerger
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -19,144 +21,125 @@ import org.junit.Test
 import java.io.File
 
 /**
- * Corpus-driven validation of the bag-extraction parser + prompt contract.
+ * Corpus-driven validation of the bag-extraction parser + prompt contract,
+ * plus structural validation of the committed synthetic corpus metadata.
  *
- * Reads ground-truth metadata for every coffee bag in the test corpus
- * (`corpus_metadata.json` in the directory pointed to by the
- * `MINDLAYER_COFFEE_BAG_CORPUS` env var or `mindlayer.coffee.bag.corpus`
- * Gradle property) and verifies that:
+ * The synthetic corpus now ships in the repo at
+ * `testdata/synthetic-coffee-bag-corpus/` (images as WebP + `corpus_metadata.json`),
+ * so this test resolves it automatically and no longer depends on a local
+ * real-photo directory. An override is still honoured via the
+ * `mindlayer.coffee.bag.corpus` system property / `MINDLAYER_COFFEE_BAG_CORPUS`
+ * env var for pointing at an alternate corpus.
  *
- *  1. Synthesised LLM JSON that mirrors the ground truth round-trips
- *     through [MindlayerLlmInferenceProvider.parseResponse] and lands
- *     in the right field-mapping slots (`process` → `processType`,
- *     `isDecaf` → boolean, etc.).
- *  2. The metadata file declares fields the parser can actually handle —
- *     a regression to the JSON schema (e.g. someone adds a `country`
- *     field without wiring it through `fieldMapping`) trips here.
- *  3. The [BagOcrTextMerger] front+back fusion contract holds for the
- *     two-photo entries in the corpus (the metadata declares which
- *     photos exist; the merger should produce a labeled string only
- *     when both sides are present).
- *
- * The bag PHOTOS themselves are NOT consumed by this test — running
- * OCR against the real JPEGs requires the Mindlayer service on a
- * connected device, so that work lives in the manual on-device
- * validation. This test pins the parser/prompt contract end-to-end in
- * pure JVM so a regression to the LLM JSON shape, the field mapping,
- * or the merger is caught by `:app:testDebugUnitTest` before anyone
- * notices on-device.
- *
- * # Skip behavior
- * If the corpus env var is unset or the metadata file is missing, the
- * test class skips with a clear message instead of failing. This keeps
- * CI happy when the corpus isn't mounted while still surfacing
- * regressions for any developer who has the corpus present (the common
- * dev setup on the original author's machine).
- *
- * # Running locally
- * ```powershell
- * $env:MINDLAYER_COFFEE_BAG_CORPUS = "D:\Cloud\Proton\My files\Coffee bags"
- * ./gradlew :app:testDebugUnitTest --tests '*CoffeeBagCorpusExtractionTest*'
- * ```
- *
- * Or via Gradle property:
- * ```powershell
- * ./gradlew :app:testDebugUnitTest --tests '*CoffeeBagCorpusExtractionTest*' `
- *     "-Pmindlayer.coffee.bag.corpus=D:\Cloud\Proton\My files\Coffee bags"
- * ```
+ * This is a pure-JVM test: the bag PHOTOS are not consumed and the on-device
+ * model never runs. It pins, before anything reaches an emulator:
+ *  1. The metadata is structurally valid (schema, all 14 fields per bag,
+ *     valid tiers, referenced image files exist, multilingual + decaf coverage).
+ *  2. Synthesised LLM JSON mirroring the ground truth round-trips through
+ *     [MindlayerLlmInferenceProvider.parseResponse] into the right slots.
+ *  3. The [BagOcrTextMerger] front+back fusion contract holds.
  */
 class CoffeeBagCorpusExtractionTest {
 
+    private lateinit var corpusDir: File
     private lateinit var corpus: CoffeeBagCorpus
 
     @Before
     fun loadCorpus() {
         val dir = resolveCorpusDir()
         assumeTrue(
-            "Coffee bag corpus not configured — set MINDLAYER_COFFEE_BAG_CORPUS env var or " +
-                "mindlayer.coffee.bag.corpus system property to the directory containing " +
-                "corpus_metadata.json. Skipping corpus-driven extraction tests.",
+            "Synthetic coffee-bag corpus not found. Expected testdata/synthetic-coffee-bag-corpus/" +
+                "corpus_metadata.json relative to the repo root, or an override via " +
+                "MINDLAYER_COFFEE_BAG_CORPUS / mindlayer.coffee.bag.corpus.",
             dir != null,
         )
-        val metadataFile = File(dir!!, "corpus_metadata.json")
-        assumeTrue(
-            "corpus_metadata.json not found in $dir — corpus directory is configured " +
-                "but the metadata file is missing.",
-            metadataFile.isFile,
-        )
-        corpus = parser.decodeFromString(
-            CoffeeBagCorpus.serializer(),
-            metadataFile.readText(),
-        )
+        corpusDir = dir!!
+        val metadataFile = File(corpusDir, "corpus_metadata.json")
+        corpus = parser.decodeFromString(CoffeeBagCorpus.serializer(), metadataFile.readText())
         assertEquals(
-            "Test code only knows schema v1 — metadata file declares v${corpus.schemaVersion}. " +
-                "Update CoffeeBagCorpusExtractionTest if the corpus schema has evolved.",
+            "Test code only knows schema v1 — metadata declares v${corpus.schemaVersion}.",
             1,
             corpus.schemaVersion,
         )
-        assertTrue("Corpus must contain at least one bag", corpus.bags.isNotEmpty())
+        assertTrue("Corpus must contain at least 13 bags", corpus.bags.size >= 13)
     }
 
     @Test
-    fun `every bag's fields keys are recognised by the LLM parser`() {
-        // Regression guard against silently dropping a field. If the
-        // metadata file declares a field key that fieldMapping doesn't
-        // know about, the corpus will still "pass" extraction tests
-        // (because parseResponse just skips unknown keys) but the
-        // ground truth would be unverifiable. Fail loudly instead.
-        val parserKeys = MindlayerLlmInferenceProvider.fieldMapping.keys
+    fun `every bag declares all 14 fields with keys the parser recognises`() {
+        val parserKeys = CorpusFields.metadataKeys.toSet()
         for (bag in corpus.bags) {
-            val unknownFields = bag.fields.keys - parserKeys
+            val unknown = bag.fields.keys - parserKeys
+            assertTrue("Bag '${bag.id}' declares unknown field keys: $unknown", unknown.isEmpty())
+            val missing = parserKeys - bag.fields.keys
             assertTrue(
-                "Bag '${bag.id}' declares unknown field keys: $unknownFields. " +
-                    "Either add them to MindlayerLlmInferenceProvider.fieldMapping or " +
-                    "remove them from the metadata file.",
-                unknownFields.isEmpty(),
+                "Bag '${bag.id}' is missing required field keys: $missing. Every bag must " +
+                    "declare all 14 fields explicitly (use JSON null for not_visible) so " +
+                    "absence is never confused with abstention.",
+                missing.isEmpty(),
             )
         }
     }
 
     @Test
+    fun `every bag has a valid tier and existing image files`() {
+        val validTiers = setOf("Q0", "Q1", "Q2", "Q3", "Q4")
+        for (bag in corpus.bags) {
+            assertTrue(
+                "Bag '${bag.id}' has invalid/absent captureTier '${bag.captureTier}'",
+                bag.captureTier in validTiers,
+            )
+            assertTrue("Bag '${bag.id}' must declare a language", bag.language.isNotEmpty())
+            val front = File(corpusDir, bag.photos.front)
+            assertTrue("Bag '${bag.id}' front image missing: ${front.path}", front.isFile)
+            bag.photos.back?.let { back ->
+                val backFile = File(corpusDir, back)
+                assertTrue("Bag '${bag.id}' back image missing: ${backFile.path}", backFile.isFile)
+            }
+        }
+    }
+
+    @Test
+    fun `corpus covers Q0 best case, multiple languages, two-side fusion and decaf`() {
+        val tiers = corpus.bags.mapNotNull { it.captureTier }.toSet()
+        assertTrue("Corpus must include a Q0 best-case tier (currently $tiers)", "Q0" in tiers)
+
+        val languages = corpus.bags.flatMap { it.language }.toSet()
+        assertTrue("Corpus must cover >= 3 languages (currently $languages)", languages.size >= 3)
+
+        val twoSide = corpus.bags.count { it.isTwoSided }
+        assertTrue("Corpus must contain >= 1 two-side bag (currently $twoSide)", twoSide >= 1)
+
+        val decafBags = corpus.bags.count { bag ->
+            val element = bag.fields["isDecaf"]
+            element is JsonPrimitive && element.booleanOrNull == true
+        }
+        assertTrue("Corpus must contain >= 1 decaf bag (currently $decafBags)", decafBags >= 1)
+    }
+
+    @Test
     fun `synthesised LLM JSON for every bag round-trips through parseResponse`() {
-        // Build an LLM response JSON for each bag that mirrors the
-        // ground truth, parse it, and verify each non-null field lands
-        // in the correct candidate slot with the right value. Null
-        // ground-truth fields must drop out (not_visible → skipped).
-        // This pins three contracts at once:
-        //   1. The LLM JSON shape the parser expects.
-        //   2. The fieldMapping (LLM key -> StarlitCoffee field name).
-        //   3. The non-null-only candidate emission rule.
         for (bag in corpus.bags) {
             val response = synthesiseLlmResponse(bag)
-            val result = MindlayerLlmInferenceProvider.parseResponse(
-                response = response,
-                fieldsNeeded = emptySet(),
-            )
+            val result = MindlayerLlmInferenceProvider.parseResponse(response, emptySet())
             assertTrue(
                 "parseResponse must return Success for bag '${bag.id}'; got $result",
                 result is LlmExtractionResult.Success,
             )
-            val candidates = (result as LlmExtractionResult.Success).fieldCandidates
-            val candidateByField = candidates.associateBy { it.fieldName }
+            val candidateByField = (result as LlmExtractionResult.Success)
+                .fieldCandidates.associateBy { it.fieldName }
 
             for ((llmKey, element) in bag.fields) {
-                val starlitFieldName =
-                    MindlayerLlmInferenceProvider.fieldMapping.getValue(llmKey)
+                val starlitFieldName = MindlayerLlmInferenceProvider.fieldMapping.getValue(llmKey)
                 val candidate = candidateByField[starlitFieldName]
-                val isGroundTruthNull = element is JsonNull
-                if (isGroundTruthNull) {
+                if (element is JsonNull) {
                     assertNull(
-                        "Bag '${bag.id}' field '$starlitFieldName' is null in ground " +
-                            "truth (LLM emitted not_visible) — candidate must be absent " +
-                            "from the parsed result, but found: $candidate",
+                        "Bag '${bag.id}' field '$starlitFieldName' is not_visible — candidate must be absent",
                         candidate,
                     )
                 } else {
                     val expectedValue = jsonElementToString(element)
                     assertNotNull(
-                        "Bag '${bag.id}' field '$starlitFieldName' (expected '$expectedValue') " +
-                            "was dropped by parseResponse. fieldMapping or extraction " +
-                            "logic may be broken.",
+                        "Bag '${bag.id}' field '$starlitFieldName' (expected '$expectedValue') was dropped",
                         candidate,
                     )
                     assertEquals(
@@ -171,20 +154,8 @@ class CoffeeBagCorpusExtractionTest {
 
     @Test
     fun `two-side bags produce labeled merger output`() {
-        // Pin the merger contract for the corpus subset that has both
-        // photos. Single-photo bags get covered by BagOcrTextMergerTest;
-        // here we just verify the corpus declares ≥1 two-side bag so
-        // the test corpus actually exercises the fusion path.
-        val twoSideBags = corpus.bags.filter { it.photos.back != null }
-        assertTrue(
-            "Corpus must contain at least one two-side bag to exercise the " +
-                "front+back fusion path. Add a {front, back} pair to corpus_metadata.json.",
-            twoSideBags.isNotEmpty(),
-        )
-
-        // Verify the merger labels them with both --- FRONT --- and
-        // --- BACK --- sections. Tokens fed in are placeholders — the
-        // contract under test is the section layout, not the OCR text.
+        val twoSideBags = corpus.bags.filter { it.isTwoSided }
+        assertTrue("Corpus must contain at least one two-side bag", twoSideBags.isNotEmpty())
         for (bag in twoSideBags) {
             val merged = BagOcrTextMerger.combineBySide(
                 listOf(
@@ -192,55 +163,11 @@ class CoffeeBagCorpusExtractionTest {
                     BagCaptureSide.BACK to "back-of-${bag.id}",
                 ),
             )
-            assertTrue(
-                "Bag '${bag.id}' merged output missing --- FRONT --- section: $merged",
-                merged.contains("--- FRONT ---"),
-            )
-            assertTrue(
-                "Bag '${bag.id}' merged output missing --- BACK --- section: $merged",
-                merged.contains("--- BACK ---"),
-            )
+            assertTrue("Bag '${bag.id}' merged output missing --- FRONT ---", merged.contains("--- FRONT ---"))
+            assertTrue("Bag '${bag.id}' merged output missing --- BACK ---", merged.contains("--- BACK ---"))
         }
     }
 
-    @Test
-    fun `corpus covers a representative mix of language and side counts`() {
-        // Coverage smoke test — if someone trims the corpus down to one
-        // English single-side bag, that's a real loss in test value the
-        // CI signal should surface. Numbers are deliberately loose so
-        // the corpus can grow without rewriting this test every time.
-        val languages = corpus.bags.flatMap { it.language }.toSet()
-        assertTrue(
-            "Corpus must cover at least 2 distinct languages to exercise the " +
-                "multilingual translation contract (currently: $languages).",
-            languages.size >= 2,
-        )
-        val twoSide = corpus.bags.count { it.photos.back != null }
-        val frontOnly = corpus.bags.count { it.photos.back == null }
-        assertTrue(
-            "Corpus must contain at least one two-side bag (currently $twoSide) " +
-                "and at least one front-only bag (currently $frontOnly) to " +
-                "exercise both the fusion and fallback paths.",
-            twoSide >= 1 && frontOnly >= 1,
-        )
-        val decafBags = corpus.bags.count { bag ->
-            val element = bag.fields["isDecaf"]
-            element is JsonPrimitive && element.booleanOrNull == true
-        }
-        assertTrue(
-            "Corpus must contain at least one decaf bag to exercise the isDecaf " +
-                "extraction contract (currently $decafBags).",
-            decafBags >= 1,
-        )
-    }
-
-    /**
-     * Build an LLM response JSON string for [bag] that mirrors its
-     * ground truth, in the same shape the real `MindlayerLlmInferenceProvider`
-     * expects (nested `{ "fields": { ... } }` with `{ "value": ..., "status": ... }`
-     * entries). Null ground-truth values get `value: null, status: "not_visible"`
-     * which `parseResponse` should drop.
-     */
     private fun synthesiseLlmResponse(bag: CoffeeBagFixture): String {
         val fieldsObj = buildString {
             append("{\n")
@@ -249,9 +176,8 @@ class CoffeeBagCorpusExtractionTest {
                 val element = bag.fields[key]
                 val (jsonValue, status) = when {
                     element == null || element is JsonNull -> "null" to "not_visible"
-                    element is JsonPrimitive && element.booleanOrNull != null -> {
+                    element is JsonPrimitive && element.booleanOrNull != null ->
                         element.booleanOrNull.toString() to "found"
-                    }
                     else -> "\"${jsonEscape(jsonElementToString(element))}\"" to "found"
                 }
                 append("    \"$key\": {\"value\": $jsonValue, \"status\": \"$status\"}")
@@ -263,16 +189,9 @@ class CoffeeBagCorpusExtractionTest {
         return "{\n  \"fields\": $fieldsObj\n}"
     }
 
-    /**
-     * Render a JsonElement as the plain Kotlin string the candidate value
-     * would hold after parsing. Booleans use Kotlin's true/false (matching
-     * what `JsonPrimitive(true).toString()` would yield via the LLM
-     * response — kept lowercased for the wire contract).
-     */
     private fun jsonElementToString(element: JsonElement): String = when {
         element is JsonNull -> ""
-        element is JsonPrimitive && element.booleanOrNull != null ->
-            element.booleanOrNull.toString()
+        element is JsonPrimitive && element.booleanOrNull != null -> element.booleanOrNull.toString()
         element is JsonPrimitive -> element.contentOrNull ?: ""
         else -> element.toString()
     }
@@ -285,44 +204,34 @@ class CoffeeBagCorpusExtractionTest {
         .replace("\t", "\\t")
 
     /**
-     * Resolve the corpus directory from env var or system property.
-     * Returns null if neither is set, which triggers Assume.assumeTrue
-     * to skip the test class.
+     * Resolve the corpus dir: explicit override first, else search upward from
+     * the working directory for the committed `testdata/synthetic-coffee-bag-corpus`.
      */
     private fun resolveCorpusDir(): File? {
-        val envDir = System.getenv("MINDLAYER_COFFEE_BAG_CORPUS")
-        val propDir = System.getProperty("mindlayer.coffee.bag.corpus")
-        val raw = listOf(envDir, propDir).firstOrNull { !it.isNullOrBlank() } ?: return null
-        val dir = File(raw)
-        return if (dir.isDirectory) dir else null
+        val override = listOf(
+            System.getenv("MINDLAYER_COFFEE_BAG_CORPUS"),
+            System.getProperty("mindlayer.coffee.bag.corpus"),
+        ).firstOrNull { !it.isNullOrBlank() }
+        if (override != null) {
+            val dir = File(override)
+            return dir.takeIf { it.isDirectory && File(it, "corpus_metadata.json").isFile }
+        }
+
+        var current: File? = File(System.getProperty("user.dir") ?: ".").absoluteFile
+        repeat(MAX_UPWARD_SEARCH) {
+            val candidate = current?.let { File(it, "testdata/synthetic-coffee-bag-corpus") }
+            if (candidate != null && File(candidate, "corpus_metadata.json").isFile) return candidate
+            current = current?.parentFile
+        }
+        return null
     }
 
     private val parser: Json = Json {
         ignoreUnknownKeys = true
         coerceInputValues = false
     }
+
+    private companion object {
+        const val MAX_UPWARD_SEARCH = 6
+    }
 }
-
-@Serializable
-internal data class CoffeeBagCorpus(
-    @kotlinx.serialization.SerialName("schema_version")
-    val schemaVersion: Int,
-    val bags: List<CoffeeBagFixture>,
-)
-
-@Serializable
-internal data class CoffeeBagFixture(
-    val id: String,
-    val photos: CoffeeBagPhotos,
-    val language: List<String>,
-    val fields: Map<String, JsonElement>,
-    val extras: Map<String, JsonElement> = emptyMap(),
-    val notes: String? = null,
-)
-
-@Serializable
-internal data class CoffeeBagPhotos(
-    val front: String,
-    val back: String? = null,
-)
-

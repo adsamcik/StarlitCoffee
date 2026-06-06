@@ -1,60 +1,50 @@
 package com.adsamcik.starlitcoffee.benchmark
 
+import android.content.Context
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
+import com.adsamcik.starlitcoffee.test.corpus.BagFieldScorer
+import com.adsamcik.starlitcoffee.test.corpus.BagScore
+import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagFixture
+import com.adsamcik.starlitcoffee.test.corpus.QualityReport
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
 import com.adsamcik.starlitcoffee.util.BagOcrTextMerger
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.booleanOrNull
-import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * LLM benchmark — feeds captured OCR fixtures to the real Mindlayer LLM and
- * compares per-field extraction against the ground truth in
- * `corpus_metadata.json`.
+ * LLM quality REPORT — feeds captured OCR fixtures to the real Mindlayer LLM
+ * and scores per-field extraction against the corpus ground truth.
  *
- * This is the **daily-driver iteration loop** for prompt + extraction
- * changes. It skips the OCR pipeline entirely (using fixtures captured
- * once by [OcrFixtureCaptureTest]) so each bag costs only one LLM call
- * (~30-60s) instead of full OCR + 3 preprocessing passes + LLM
- * (~90s+). Eight bags in ~5 minutes vs. ~20 minutes of manual scanning.
+ * This is the **daily-driver iteration loop** for prompt + extraction changes.
+ * It skips the OCR pipeline (using fixtures captured once by
+ * [OcrFixtureCaptureTest]) so each bag costs only one LLM call instead of full
+ * OCR + 3 preprocessing passes + LLM.
  *
- * # Reading the output
+ * # Not pass/fail on accuracy
  *
- * Logcat tag: [CorpusFixture.BENCHMARK_TAG] = "StarlitBagBenchmark".
- * Per-bag per-field hit/miss lines, plus a summary table at the end.
- *
- * # What this test asserts
- *
- * Only that the pipeline doesn't crash and at least one bag produces
- * parseable LLM output. **Field accuracy is logged, not asserted** —
- * single-run LLM output has variance, and pinning expectations would
- * turn this into a brittle pass/fail rather than a calibration tool.
- * Read the logcat to see how a prompt change moved the needle.
+ * This test produces NUMBERS, not a verdict. It writes a structured
+ * [QualityReport] (`llm-fixture-quality-report.json` + `.txt`) under the app's
+ * external fixtures dir and logs the table to logcat (tag
+ * [CorpusFixture.BENCHMARK_TAG]). It asserts only that the run was VALID —
+ * fixtures existed and the LLM actually produced output — never a minimum
+ * accuracy. Accuracy gating lives in [BagScanBestCaseGateTest] (Q0 only).
  *
  * # Running
  *
  * ```
- * ./gradlew connectedDebugAndroidTest --tests '*LlmCorpusBenchmarkTest*'
+ * ./gradlew pushTestImages   # corpus + metadata to the device
+ * ./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.OcrFixtureCaptureTest"   # once
+ * ./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.LlmCorpusBenchmarkTest"
+ * adb pull /sdcard/Android/data/com.adsamcik.starlitcoffee/files/coffee-bags-fixtures/
  * ```
- *
- * Requires:
- *  - bag photos pushed to `/sdcard/Download/coffee-bags/`
- *  - `corpus_metadata.json` pushed alongside
- *  - OCR fixtures pre-captured by [OcrFixtureCaptureTest] in
- *    `/sdcard/Download/coffee-bags-fixtures/`
- *  - Mindlayer service installed + ready
  */
 @RunWith(AndroidJUnit4::class)
 class LlmCorpusBenchmarkTest {
@@ -63,181 +53,84 @@ class LlmCorpusBenchmarkTest {
     fun benchmarkLlmAgainstCorpus() = runBlocking {
         val corpus = CorpusFixture.load()
         assumeTrue(
-            "Corpus metadata not present at ${CorpusFixture.CORPUS_DIR}/corpus_metadata.json",
+            "Corpus metadata not present at ${CorpusFixture.CORPUS_DIR}/corpus_metadata.json — " +
+                "run ./gradlew pushTestImages.",
             corpus != null,
         )
 
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val llm = MindlayerLlmInferenceProvider(context)
         assumeTrue(
-            "Mindlayer LLM not available — install/start the service and retry.",
-            llm.isAvailable(),
+            "Mindlayer LLM not available — start the service and approve com.adsamcik.starlitcoffee " +
+                "in the Mindlayer dashboard, then retry.",
+            QualityTestSupport.awaitTrue { llm.isAvailable() },
         )
 
-        val perBagResults = mutableListOf<BagBenchmarkResult>()
+        val scores = mutableListOf<BagScore>()
+        var bagsWithFixtures = 0
         var bagsWithLlmSuccess = 0
 
         for (bag in corpus!!.bags) {
             Log.i(CorpusFixture.BENCHMARK_TAG, "----- ${bag.id} -----")
             val ocrText = loadCombinedOcrFor(context, bag)
             if (ocrText == null) {
-                Log.w(
-                    CorpusFixture.BENCHMARK_TAG,
-                    "  Skipped — no OCR fixtures. Run OcrFixtureCaptureTest first.",
-                )
-                perBagResults.add(BagBenchmarkResult(bag.id, "no-ocr-fixture", emptyMap()))
+                Log.w(CorpusFixture.BENCHMARK_TAG, "  Skipped — no OCR fixtures. Run OcrFixtureCaptureTest first.")
                 continue
             }
+            bagsWithFixtures++
 
             val request = LlmExtractionRequest(
                 imageBytes = ByteArray(0),
                 existingFields = emptyMap(),
-                fieldsNeeded = BAG_FIELD_NAMES.toSet(),
+                fieldsNeeded = BagPipelineRunner.APP_FIELD_NAMES.toSet(),
                 rawOcrText = ocrText,
                 knownFieldValues = null,
             )
-
             val result = llm.extractBagFields(request)
-            val perField = scoreResult(result, bag)
-            perBagResults.add(
-                BagBenchmarkResult(
-                    bagId = bag.id,
-                    status = result::class.java.simpleName,
-                    perField = perField,
-                ),
-            )
             if (result is LlmExtractionResult.Success) {
                 bagsWithLlmSuccess++
+            } else {
+                Log.w(CorpusFixture.BENCHMARK_TAG, "  Non-success LLM result: $result")
             }
+
+            val score = BagFieldScorer.scoreBag(bag, BagPipelineRunner.extractedByField(result))
+            scores.add(score)
+            logBagScore(score)
         }
 
-        logSummary(perBagResults)
+        val report = QualityReport.from("llm-fixture-quality-report", scores)
+        QualityTestSupport.writeReport(context, report, "llm-fixture-quality-report")
 
+        // Infra assertions only (never accuracy): the run must have been valid.
         assertTrue(
-            "Zero bags produced any LLM output. Verify Mindlayer is up and OCR fixtures exist.",
-            bagsWithLlmSuccess > 0 || perBagResults.all { it.status == "no-ocr-fixture" },
+            "No OCR fixtures found for any bag. Run OcrFixtureCaptureTest first, then re-run.",
+            bagsWithFixtures > 0,
+        )
+        assertTrue(
+            "OCR fixtures existed but the LLM produced zero successful extractions — " +
+                "verify Mindlayer is healthy.",
+            bagsWithLlmSuccess > 0,
         )
     }
 
-    // --- Comparison utilities ---
-
-    private fun loadCombinedOcrFor(context: android.content.Context, bag: CoffeeBagFixture): String? {
-        val frontFile = CorpusFixture.frontOcrFixtureFile(context, bag)
-        val backFile = CorpusFixture.backOcrFixtureFile(context, bag)
-        val front = frontFile.takeIf { it.isFile }?.readText()
-        val back = backFile.takeIf { it.isFile }?.readText()
+    private fun loadCombinedOcrFor(context: Context, bag: CoffeeBagFixture): String? {
+        val front = CorpusFixture.frontOcrFixtureFile(context, bag).takeIf { it.isFile }?.readText()
+        val back = CorpusFixture.backOcrFixtureFile(context, bag).takeIf { it.isFile }?.readText()
         if (front.isNullOrBlank() && back.isNullOrBlank()) return null
-
-        val pairs = buildList<Pair<BagCaptureSide, String>> {
+        val pairs = buildList {
             if (!front.isNullOrBlank()) add(BagCaptureSide.FRONT to front)
             if (!back.isNullOrBlank()) add(BagCaptureSide.BACK to back)
         }
         return BagOcrTextMerger.combineBySide(pairs)
     }
 
-    private fun scoreResult(
-        result: LlmExtractionResult,
-        bag: CoffeeBagFixture,
-    ): Map<String, FieldOutcome> {
-        if (result !is LlmExtractionResult.Success) {
-            val why = when (result) {
-                is LlmExtractionResult.Unavailable -> "UNAVAILABLE: ${result.reason}"
-                is LlmExtractionResult.Failed -> "FAILED: ${result.error}"
-            }
-            Log.w(CorpusFixture.BENCHMARK_TAG, "  $why")
-            return emptyMap()
-        }
-        val extractedByField = result.fieldCandidates.groupBy { it.fieldName }
-        val out = mutableMapOf<String, FieldOutcome>()
-        for (fieldName in BAG_FIELD_NAMES) {
-            val gtValue = bag.fields[fieldName]?.toComparableValue()
-            val gotValue = extractedByField[fieldName]?.firstOrNull()?.value
-            val outcome = when {
-                gtValue == null && gotValue.isNullOrBlank() -> FieldOutcome.BOTH_BLANK
-                gtValue == null -> FieldOutcome.EXTRACTED_EXTRA
-                gotValue.isNullOrBlank() -> FieldOutcome.MISSING
-                normalizeForCompare(gotValue) == normalizeForCompare(gtValue) -> FieldOutcome.EXACT
-                normalizeForCompare(gotValue).contains(normalizeForCompare(gtValue)) ||
-                    normalizeForCompare(gtValue).contains(normalizeForCompare(gotValue)) ->
-                    FieldOutcome.PARTIAL
-                else -> FieldOutcome.WRONG
-            }
-            out[fieldName] = outcome
+    private fun logBagScore(score: BagScore) {
+        for (field in score.fields) {
             Log.i(
                 CorpusFixture.BENCHMARK_TAG,
-                "  ${outcome.symbol} ${fieldName.padEnd(14)} got=${gotValue?.format()} " +
-                    "expected=${gtValue?.format()}",
+                "  ${field.outcome.symbol} ${field.metadataKey.padEnd(13)} " +
+                    "got=${field.actual?.take(48)} expected=${field.expected?.take(48)}",
             )
         }
-        return out
-    }
-
-    private fun logSummary(results: List<BagBenchmarkResult>) {
-        Log.i(CorpusFixture.BENCHMARK_TAG, "")
-        Log.i(CorpusFixture.BENCHMARK_TAG, "=========== BENCHMARK SUMMARY ===========")
-        val perFieldTotals = mutableMapOf<String, MutableMap<FieldOutcome, Int>>()
-        for (r in results) {
-            for ((field, outcome) in r.perField) {
-                perFieldTotals.getOrPut(field) { mutableMapOf() }
-                    .merge(outcome, 1) { a, b -> a + b }
-            }
-        }
-        Log.i(
-            CorpusFixture.BENCHMARK_TAG,
-            "Bags evaluated: ${results.size} " +
-                "(${results.count { it.status == "Success" }} LLM successes, " +
-                "${results.count { it.status == "no-ocr-fixture" }} skipped no-OCR)",
-        )
-        Log.i(CorpusFixture.BENCHMARK_TAG, "")
-        Log.i(
-            CorpusFixture.BENCHMARK_TAG,
-            "Per-field breakdown (✓ exact, ≈ partial, ✗ wrong, ? missing, · both-blank):",
-        )
-        for (field in BAG_FIELD_NAMES) {
-            val totals = perFieldTotals[field] ?: continue
-            val parts = listOf(
-                FieldOutcome.EXACT, FieldOutcome.PARTIAL, FieldOutcome.WRONG,
-                FieldOutcome.MISSING, FieldOutcome.BOTH_BLANK,
-            ).joinToString("  ") { o -> "${o.symbol}${totals[o] ?: 0}" }
-            Log.i(CorpusFixture.BENCHMARK_TAG, "  ${field.padEnd(14)} $parts")
-        }
-    }
-
-    private fun String.format(): String = if (length > 60) substring(0, 57) + "..." else this
-
-    private fun normalizeForCompare(s: String): String =
-        s.trim().lowercase().replace(Regex("\\s+"), " ")
-
-    private fun kotlinx.serialization.json.JsonElement.toComparableValue(): String? {
-        if (this is JsonNull) return null
-        return runCatching {
-            val prim = jsonPrimitive
-            // Booleans surface as "true" / "false" — that matches what
-            // the LLM emits for `isDecaf` and round-trips correctly.
-            prim.booleanOrNull?.toString() ?: prim.contentOrNull
-        }.getOrNull()
-    }
-
-    private data class BagBenchmarkResult(
-        val bagId: String,
-        val status: String,
-        val perField: Map<String, FieldOutcome>,
-    )
-
-    private enum class FieldOutcome(val symbol: String) {
-        EXACT("✓"),
-        PARTIAL("≈"),
-        WRONG("✗"),
-        MISSING("?"),
-        EXTRACTED_EXTRA("+"),
-        BOTH_BLANK("·"),
-    }
-
-    companion object {
-        private val BAG_FIELD_NAMES = listOf(
-            "name", "roaster", "origin", "region", "farm",
-            "variety", "processType", "altitude", "tastingNotes",
-            "roastLevel", "roastDate", "expiryDate", "weight", "isDecaf",
-        )
     }
 }
