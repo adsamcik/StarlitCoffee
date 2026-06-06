@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -137,6 +138,7 @@ fun BagDetailSheet(
             }
 
             // Photo gallery
+            var fullScreenPhotoUri by remember { mutableStateOf<String?>(null) }
             bag.photoUris?.let { urisStr ->
                 val uriList = urisStr.split(",").filter { it.isNotBlank() }
                 if (uriList.isNotEmpty()) {
@@ -149,10 +151,14 @@ fun BagDetailSheet(
                                 uri = uriStr,
                                 size = 80.dp,
                                 shape = MaterialTheme.shapes.small,
+                                modifier = Modifier.clickable { fullScreenPhotoUri = uriStr },
                             )
                         }
                     }
                 }
+            }
+            fullScreenPhotoUri?.let { uri ->
+                FullScreenImageViewer(uri = uri) { fullScreenPhotoUri = null }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
