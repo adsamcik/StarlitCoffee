@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ExperimentalGetImage
@@ -45,6 +46,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -60,6 +62,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -93,6 +96,10 @@ import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.ScanFieldSupport
 import com.adsamcik.starlitcoffee.BuildConfig
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.StarlitCoffeeApp
+import com.adsamcik.starlitcoffee.ui.component.ConsentOutcome
+import com.adsamcik.starlitcoffee.ui.component.messageRes
+import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerConsentFlow
 import com.adsamcik.starlitcoffee.ui.component.ScanDebugOverlay
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CrossValidationWarning
@@ -104,6 +111,7 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 private val READY_COLOR = Color(0xFF5ED18D)
 private val CAUTION_COLOR = Color(0xFFFFD166)
@@ -125,6 +133,20 @@ fun LiveScanScreen(
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val consentScope = rememberCoroutineScope()
+    val consentFlow = rememberMindlayerConsentFlow { outcome ->
+        when (outcome) {
+            ConsentOutcome.GRANTED, ConsentOutcome.ALREADY_APPROVED -> consentScope.launch {
+                val ok = (context.applicationContext as? StarlitCoffeeApp)?.reconnectMindlayer() ?: false
+                Toast.makeText(
+                    context,
+                    context.getString(if (ok) R.string.consent_granted else R.string.consent_still_unavailable),
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+            else -> Toast.makeText(context, context.getString(outcome.messageRes()), Toast.LENGTH_LONG).show()
+        }
+    }
 
     val evidence by liveScanViewModel.evidence.collectAsStateWithLifecycle()
     val uiState by liveScanViewModel.liveScanUiState.collectAsStateWithLifecycle()
@@ -365,14 +387,33 @@ fun LiveScanScreen(
             )
         }
 
-        // LLM status chip — always visible, compact
-        LlmStatusChip(
-            status = uiState.llmStatus,
-            contributedFields = uiState.llmContributedFields,
+        // LLM status chip — always visible, compact. When the AI is
+        // unavailable (typically because the user hasn't granted Mindlayer
+        // consent), offer an explicit "Enable AI" action right below it.
+        Column(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(start = 16.dp, top = 56.dp),
-        )
+        ) {
+            LlmStatusChip(
+                status = uiState.llmStatus,
+                contributedFields = uiState.llmContributedFields,
+            )
+            if (uiState.llmStatus == LlmUiStatus.UNAVAILABLE) {
+                Spacer(modifier = Modifier.height(8.dp))
+                FilledTonalButton(
+                    onClick = consentFlow.request,
+                    enabled = !consentFlow.inProgress,
+                ) {
+                    Text(
+                        stringResource(
+                            if (consentFlow.inProgress) R.string.consent_requesting
+                            else R.string.action_enable_ai,
+                        ),
+                    )
+                }
+            }
+        }
 
         // Manual capture fallback button (center-right)
         ManualCaptureButton(

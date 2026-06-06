@@ -31,7 +31,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import android.widget.Toast
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.StarlitCoffeeApp
 import com.adsamcik.starlitcoffee.scan.observability.ConnectionStatus
 import com.adsamcik.starlitcoffee.scan.observability.ConnectionTestResult
 import com.adsamcik.starlitcoffee.scan.observability.MindlayerConnectionTester
@@ -48,6 +50,26 @@ fun MindlayerSettingsCard() {
     val scope = rememberCoroutineScope()
     var result by remember { mutableStateOf<ConnectionTestResult?>(null) }
     var isLoading by remember { mutableStateOf(false) }
+
+    val consent = rememberMindlayerConsentFlow { outcome ->
+        when (outcome) {
+            ConsentOutcome.GRANTED, ConsentOutcome.ALREADY_APPROVED -> scope.launch {
+                val app = context.applicationContext as? StarlitCoffeeApp
+                val ok = app?.reconnectMindlayer() ?: false
+                Toast.makeText(
+                    context,
+                    context.getString(
+                        if (ok) R.string.consent_granted else R.string.consent_still_unavailable,
+                    ),
+                    Toast.LENGTH_SHORT,
+                ).show()
+                isLoading = true
+                result = MindlayerConnectionTester.testConnection(context)
+                isLoading = false
+            }
+            else -> Toast.makeText(context, context.getString(outcome.messageRes()), Toast.LENGTH_LONG).show()
+        }
+    }
 
     // Auto-test connection on first composition
     androidx.compose.runtime.LaunchedEffect(Unit) {
@@ -109,6 +131,21 @@ fun MindlayerSettingsCard() {
             }
 
             Spacer(modifier = Modifier.height(12.dp))
+
+            // Consent — grant Mindlayer access so the AI service can be used.
+            FilledTonalButton(
+                onClick = consent.request,
+                enabled = !consent.inProgress && !isLoading,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    stringResource(
+                        if (consent.inProgress) R.string.consent_requesting else R.string.action_enable_ai,
+                    ),
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             // Buttons
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

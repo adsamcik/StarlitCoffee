@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee
 
 import android.app.Application
 import android.util.Log
+import com.adsamcik.mindlayer.sdk.Mindlayer
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
@@ -12,11 +13,23 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.seconds
 
 class StarlitCoffeeApp : Application() {
+
+    /**
+     * The process-shared Mindlayer client (PR #172). One binding + one
+     * consent/resume flow shared by the LLM provider, OCR service, and any
+     * future feature — instead of a separate `connect()` per provider.
+     */
+    val mindlayer: Mindlayer by lazy { Mindlayer.shared(this) }
+
     val llmProvider: LlmInferenceProvider by lazy {
         try {
-            MindlayerLlmInferenceProvider(this)
+            MindlayerLlmInferenceProvider(mindlayer)
         } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
             Log.e(TAG, "Mindlayer init failed — falling back to stub", error)
             StubLlmInferenceProvider()
@@ -36,7 +49,7 @@ class StarlitCoffeeApp : Application() {
      */
     val ocrService: OcrService? by lazy {
         try {
-            HierarchicalOcrService(MindlayerOcrService(this))
+            HierarchicalOcrService(MindlayerOcrService(mindlayer))
         } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
             Log.e(TAG, "Mindlayer OCR init failed", error)
             null
@@ -49,6 +62,26 @@ class StarlitCoffeeApp : Application() {
      * dies; nothing here should hold cancellable long-lived resources.
      */
     private val warmupScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    /** Single-flights consent-triggered reconnects from multiple UI entry points. */
+    private val reconnectMutex = Mutex()
+
+    /**
+     * Resume the Mindlayer connection after the user grants consent.
+     *
+     * With the process-shared client (PR #172) there is a single binding for
+     * LLM + OCR, so resume is just one `awaitConnected()` — it rebinds the
+     * terminal `REJECTED_NOT_APPROVED` state once consent lands and recovers
+     * every feature together. Returns whether the client is available
+     * afterwards (the gate the live scan checks). Single-flighted so a double
+     * tap, or scan + settings both triggering it, can't race two re-binds.
+     */
+    suspend fun reconnectMindlayer(): Boolean = reconnectMutex.withLock {
+        withContext(Dispatchers.IO) {
+            runCatching { mindlayer.awaitConnected(RECONNECT_TIMEOUT) }
+            llmProvider.isAvailable()
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -79,12 +112,13 @@ class StarlitCoffeeApp : Application() {
      * are released by process death in that path.
      */
     override fun onTerminate() {
-        (llmProvider as? MindlayerLlmInferenceProvider)?.close()
-        ocrService?.close()
+        // One process-shared client — tear it down once here.
+        Mindlayer.disconnectShared()
         super.onTerminate()
     }
 
     private companion object {
         private const val TAG = "StarlitCoffeeApp"
+        private val RECONNECT_TIMEOUT = 10.seconds
     }
 }

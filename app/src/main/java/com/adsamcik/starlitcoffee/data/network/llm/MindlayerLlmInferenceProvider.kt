@@ -72,10 +72,16 @@ private const val MINDLAYER_LLM_TAG = "MindlayerLlm"
  * No cloud, no API keys, fully private, works offline.
  */
 class MindlayerLlmInferenceProvider(
-    context: Context,
+    private val mindlayer: Mindlayer,
 ) : LlmInferenceProvider {
 
-    private val mindlayer: Mindlayer = Mindlayer.connect(context.applicationContext)
+    /**
+     * Convenience for tests and manual wiring: resolves the process-shared
+     * Mindlayer client ([Mindlayer.shared]) so LLM + OCR + any other feature
+     * share one binding and a single consent/resume flow (PR #172). Production
+     * injects the app-owned shared client via the primary constructor.
+     */
+    constructor(context: Context) : this(Mindlayer.shared(context.applicationContext))
 
     override fun isAvailable(): Boolean {
         val state = mindlayer.connectionState.value
@@ -217,9 +223,13 @@ class MindlayerLlmInferenceProvider(
         }
     }
 
-    /** Release resources. Call when the provider is no longer needed. */
+    /**
+     * No-op: the Mindlayer client is process-shared ([Mindlayer.shared]); tear
+     * it down once at app shutdown via [Mindlayer.disconnectShared], never
+     * `disconnect()` it out from under other features sharing the binding.
+     */
     fun close() {
-        mindlayer.disconnect()
+        // Intentionally empty; shared client lifecycle is owned by the app.
     }
 
     /**

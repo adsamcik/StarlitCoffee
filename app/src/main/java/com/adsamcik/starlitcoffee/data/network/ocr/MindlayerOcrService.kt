@@ -54,9 +54,16 @@ private const val TAG = "MindlayerOcr"
  * means the photo proceeds with no OCR text, and the LLM enrichment still
  * runs against the raw image.
  */
-class MindlayerOcrService(context: Context) : OcrService {
+class MindlayerOcrService(
+    private val mindlayer: Mindlayer,
+) : OcrService {
 
-    private val mindlayer: Mindlayer = Mindlayer.connect(context.applicationContext)
+    /**
+     * Convenience for tests / manual wiring — resolves the process-shared
+     * Mindlayer client ([Mindlayer.shared]) so OCR shares one binding and a
+     * single consent/resume flow with the LLM provider (PR #172).
+     */
+    constructor(context: Context) : this(Mindlayer.shared(context.applicationContext))
 
     @Volatile
     private var capabilityChecked: Boolean = false
@@ -64,9 +71,12 @@ class MindlayerOcrService(context: Context) : OcrService {
     @Volatile
     private var capabilityAvailable: Boolean = false
 
-    /** Free the underlying Mindlayer binding. Safe to call multiple times. */
+    /**
+     * No-op: the Mindlayer client is process-shared ([Mindlayer.shared]); it is
+     * torn down once at app shutdown via [Mindlayer.disconnectShared].
+     */
     override fun close() {
-        mindlayer.disconnect()
+        // Intentionally empty; shared client lifecycle is owned by the app.
     }
 
     /** Cheap check used by callers that want to short-circuit empty bitmaps. */
