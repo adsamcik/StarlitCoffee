@@ -323,6 +323,7 @@
     <string name="action_run_in_background">Pokračovať na pozadí</string>
     <string name="notif_channel_bag_analysis">Analýza balenia</string>
     <string name="notif_channel_bag_analysis_desc">Upozorní vás, keď AI dočíta etiketu balenia kávy.</string>
+    <string name="notif_scan_progress_title">Čítam etiketu balenia…</string>
     <string name="notif_bag_analysis_title">Analýza balenia dokončená</string>
     <string name="notif_bag_analysis_body">Klepnutím skontrolujete zistené údaje.</string>
     <string name="format_notif_bag_analysis_body">Klepnutím skontrolujete %1$s.</string>
@@ -493,6 +494,18 @@
     <string name="action_run_test_prompt">Spustiť testovací prompt</string>
     <string name="label_testing">Testuje sa…</string>
 
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Povoliť AI</string>
+    <string name="consent_requesting">Žiadosť o prístup k AI…</string>
+    <string name="consent_granted">AI povolená</string>
+    <string name="consent_already_approved">AI je už povolená</string>
+    <string name="consent_still_unavailable">AI je schválená, ale služba ešte nie je pripravená</string>
+    <string name="consent_declined">Prístup k AI nebol udelený</string>
+    <string name="consent_denied_temporary">Prístup k AI bol odopretý — skúste to znova neskôr</string>
+    <string name="consent_denied_permanent">Prístup k AI je zablokovaný — odblokujte ho v aplikácii Mindlayer</string>
+    <string name="consent_service_unavailable">Služba Mindlayer AI nie je dostupná</string>
+    <string name="consent_failed">Nepodarilo sa požiadať o prístup k AI</string>
+
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">Aká bola vaša posledná šálka?</string>
     <string name="label_what_was_off">Čo nesedelo?</string>
@@ -539,7 +552,7 @@
     <string name="action_retake_photo">Odfotiť znova</string>
     <string name="action_add_details_manually">Pridať údaje ručne</string>
     <string name="msg_llm_enrichment_succeeded">AI obohatenie zlepšilo tento sken etikety.</string>
-    <string name="msg_llm_enrichment_failed">AI obohatenie zlyhalo. Môžete to skúsiť znova alebo pokračovať v ručnej úprave.</string>
+    <string name="msg_llm_enrichment_failed">Umelá inteligencia tentoraz nedokázala etiketu dočítať — vypršal časový limit alebo nastala dočasná chyba (automatické opakovanie nepomohlo). Ťuknutím na Skúsiť znova to zopakujte, alebo polia nižšie vyplňte ručne.</string>
     <string name="msg_llm_enrichment_unavailable">AI obohatenie teraz nie je k dispozícii. Môžete to skúsiť znova alebo pokračovať v ručnej úprave.</string>
     <string name="action_retry_llm_enrichment">Skúsiť AI obohatenie znova</string>
 
@@ -689,4 +702,19 @@
     <string name="process_pulped_natural">Pulped natural</string>
     <string name="process_double_fermented">Dvojitá fermentácia</string>
     <string name="process_thermal_shock">Tepelný šok</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Vycentrujte prednú stranu balenia do rámika</string>
+    <string name="guided_scan_aim_back">Teraz naskenujte zadnú stranu balenia</string>
+    <string name="guided_scan_aim_more">Pridať ďalšiu fotku (voliteľné)</string>
+    <string name="guided_scan_hold_steady">Držte v pokoji…</string>
+    <string name="guided_scan_skip_photos">Preskočiť fotky</string>
+    <string name="guided_scan_finished">Hotovo</string>
+    <string name="guided_scan_auto_on">Auto zapnuté</string>
+    <string name="guided_scan_auto_off">Auto vypnuté</string>
+    <string name="guided_scan_capture">Odfotiť</string>
+    <string name="guided_scan_scan_more">Naskenovať ďalšie fotky</string>
+    <string name="scan_warn_glare">Obmedzte odlesky</string>
+    <string name="scan_warn_lighting">Zlepšite osvetlenie</string>
+    <string name="cd_remove_photo">Odstrániť fotku</string>
+    <string name="msg_bag_saved">Balenie uložené</string>
 </resources>

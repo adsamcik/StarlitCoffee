@@ -316,6 +316,7 @@
     <string name="action_run_in_background">在后台继续</string>
     <string name="notif_channel_bag_analysis">咖啡袋分析</string>
     <string name="notif_channel_bag_analysis_desc">当 AI 读取完咖啡袋标签时通知你。</string>
+    <string name="notif_scan_progress_title">正在读取咖啡袋标签…</string>
     <string name="notif_bag_analysis_title">咖啡袋分析完成</string>
     <string name="notif_bag_analysis_body">点按以查看识别到的详情。</string>
     <string name="format_notif_bag_analysis_body">点按以查看 %1$s。</string>
@@ -483,6 +484,18 @@
     <string name="action_run_test_prompt">运行测试提示词</string>
     <string name="label_testing">测试中…</string>
 
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">启用 AI</string>
+    <string name="consent_requesting">正在请求 AI 访问权限…</string>
+    <string name="consent_granted">AI 已启用</string>
+    <string name="consent_already_approved">AI 已经启用</string>
+    <string name="consent_still_unavailable">AI 已获批准，但服务尚未就绪</string>
+    <string name="consent_declined">未授予 AI 访问权限</string>
+    <string name="consent_denied_temporary">AI 访问被拒绝 — 请稍后再试</string>
+    <string name="consent_denied_permanent">AI 访问已被阻止 — 请在 Mindlayer 应用中解除阻止</string>
+    <string name="consent_service_unavailable">Mindlayer AI 服务不可用</string>
+    <string name="consent_failed">无法请求 AI 访问权限</string>
+
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">上一杯怎么样？</string>
     <string name="label_what_was_off">哪里不对？</string>
@@ -529,7 +542,7 @@
     <string name="action_retake_photo">重新拍照</string>
     <string name="action_add_details_manually">手动添加详情</string>
     <string name="msg_llm_enrichment_succeeded">AI增强改进了这次标签扫描。</string>
-    <string name="msg_llm_enrichment_failed">AI增强失败。你可以重试，或继续手动编辑。</string>
+    <string name="msg_llm_enrichment_failed">AI 这次没能读完这张标签——超时或出现临时错误（已自动重试但仍未成功）。点按重试再试一次，或直接在下方填写各项。</string>
     <string name="msg_llm_enrichment_unavailable">AI增强暂时不可用。你可以重试，或继续手动编辑。</string>
     <string name="action_retry_llm_enrichment">重试AI增强</string>
 
@@ -679,5 +692,19 @@
     <string name="process_pulped_natural">去果皮日晒</string>
     <string name="process_double_fermented">双重发酵</string>
     <string name="process_thermal_shock">热冲击</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">将咖啡袋正面对准取景框中央</string>
+    <string name="guided_scan_aim_back">现在扫描咖啡袋背面</string>
+    <string name="guided_scan_aim_more">再拍一张（可选）</string>
+    <string name="guided_scan_hold_steady">保持稳定…</string>
+    <string name="guided_scan_skip_photos">跳过拍照</string>
+    <string name="guided_scan_finished">完成</string>
+    <string name="guided_scan_auto_on">自动开</string>
+    <string name="guided_scan_auto_off">自动关</string>
+    <string name="guided_scan_capture">拍照</string>
+    <string name="guided_scan_scan_more">扫描更多照片</string>
+    <string name="scan_warn_glare">减少反光</string>
+    <string name="scan_warn_lighting">改善光线</string>
+    <string name="cd_remove_photo">移除照片</string>
+    <string name="msg_bag_saved">已保存咖啡袋</string>
 </resources>
-

@@ -61,18 +61,18 @@ import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BloomTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.CupPresetEditorScreen
 import com.adsamcik.starlitcoffee.ui.screen.GrindPrepScreen
-import com.adsamcik.starlitcoffee.ui.screen.LiveScanScreen
+import com.adsamcik.starlitcoffee.ui.screen.GuidedScanFlow
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
 import com.adsamcik.starlitcoffee.ui.screen.SavedRecipesScreen
+import com.adsamcik.starlitcoffee.ui.screen.ScanAddBagReview
+import com.adsamcik.starlitcoffee.ui.screen.ScanRescanReview
 import com.adsamcik.starlitcoffee.ui.screen.SettingsScreen
+import com.adsamcik.starlitcoffee.viewmodel.BagScanCaptureViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModelFactory
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
-import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModel
-import com.adsamcik.starlitcoffee.viewmodel.LiveScanViewModelFactory
-import com.adsamcik.starlitcoffee.ui.component.RescanDeltaDialog
 import androidx.annotation.StringRes
 import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
@@ -187,8 +187,11 @@ fun StarlitNavHost() {
     val pendingBagAnalysis by DeepLinkBus.pendingBagAnalysis.collectAsStateWithLifecycle()
     LaunchedEffect(pendingBagAnalysis) {
         if (pendingBagAnalysis && prefs.onboardingCompleted) {
-            navController.navigate(BagInventory)
-            brewViewModel.promoteBackgroundResultToForeground()
+            // Recover the completed result from WorkManager's persisted output
+            // (durable across the CLEAR_TOP Activity recreation), then show the
+            // inventory so its dedicated review channel opens the form.
+            brewViewModel.openLastBagExtractionResult()
+            navController.navigate(BagInventory) { launchSingleTop = true }
             DeepLinkBus.consumeBagAnalysisReady()
         }
     }
@@ -386,7 +389,7 @@ fun StarlitNavHost() {
                     .collectAsStateWithLifecycle()
                 BagInventoryScreen(
                     brewViewModel = brewViewModel,
-                    onNavigateToCamera = { navController.navigate(LiveScan) },
+                    onNavigateToCamera = { navController.navigate(GuidedScan) },
                     onNavigateToBarcode = { navController.navigate(BarcodeScanner) },
                     onBack = { navController.popBackStack() },
                     onNavigateToBrewWithBag = { bagId ->
@@ -469,27 +472,21 @@ fun StarlitNavHost() {
                     },
                 )
             }
-            composable<LiveScan> {
-                val liveScanViewModel: LiveScanViewModel = viewModel(
-                    factory = LiveScanViewModelFactory(context),
-                )
-                LiveScanScreen(
-                    liveScanViewModel = liveScanViewModel,
+            composable<GuidedScan> {
+                val captureViewModel: BagScanCaptureViewModel = viewModel()
+                val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+                GuidedScanFlow(
+                    captureViewModel = captureViewModel,
                     brewViewModel = brewViewModel,
-                    onBack = {
-                        navController.popBackStack()
-                    },
-                    onSaveComplete = {
-                        navController.popBackStack()
-                    },
-                    onNavigateToReview = { resolvedFields ->
-                        // Pass resolved fields to BagInventory via savedStateHandle
-                        navController.previousBackStackEntry
-                            ?.savedStateHandle
-                            ?.set("scan_fields", HashMap(resolvedFields))
-                        navController.popBackStack()
-                    },
-                )
+                    onExit = { navController.popBackStack() },
+                ) { data, callbacks ->
+                    ScanAddBagReview(
+                        brewViewModel = brewViewModel,
+                        data = data,
+                        callbacks = callbacks,
+                        existingBags = bags,
+                    )
+                }
             }
             composable<RescanBag> { backStackEntry ->
                 val route = backStackEntry.toRoute<RescanBag>()
@@ -497,9 +494,6 @@ fun StarlitNavHost() {
                 val originalBag = remember(bags, route.bagId) {
                     bags.find { it.id == route.bagId }
                 }
-                val rescanFields by backStackEntry.savedStateHandle
-                    .getStateFlow<HashMap<String, String>?>("rescan_fields", null)
-                    .collectAsStateWithLifecycle()
 
                 if (originalBag == null) {
                     // Bag was deleted while navigating — go back
@@ -507,44 +501,22 @@ fun StarlitNavHost() {
                     return@composable
                 }
 
-                val pendingRescan = rescanFields
-                if (pendingRescan != null) {
-                    // Scan complete — show delta dialog
-                    RescanDeltaDialog(
+                val captureViewModel: BagScanCaptureViewModel = viewModel()
+                GuidedScanFlow(
+                    captureViewModel = captureViewModel,
+                    brewViewModel = brewViewModel,
+                    onExit = { navController.popBackStack() },
+                ) { data, callbacks ->
+                    ScanRescanReview(
+                        brewViewModel = brewViewModel,
                         bag = originalBag,
-                        resolvedFields = pendingRescan,
-                        onUpdateBag = { updatedBag ->
-                            brewViewModel.updateCoffeeBag(updatedBag)
-                            navController.popBackStack()
-                        },
+                        data = data,
+                        callbacks = callbacks,
                         onNewBag = { fields ->
-                            // Pass fields to BagInventory for AddBagSheet
+                            // Fork into a new bag — hand fields to BagInventory's AddBagSheet.
                             navController.getBackStackEntry(BagInventory)
                                 .savedStateHandle
                                 .set("scan_fields", HashMap(fields))
-                            navController.popBackStack()
-                        },
-                        onDismiss = {
-                            navController.popBackStack()
-                        },
-                    )
-                } else {
-                    // Launch LiveScan for rescan
-                    val liveScanViewModel: LiveScanViewModel = viewModel(
-                        factory = LiveScanViewModelFactory(context),
-                    )
-                    LiveScanScreen(
-                        liveScanViewModel = liveScanViewModel,
-                        brewViewModel = brewViewModel,
-                        onBack = {
-                            navController.popBackStack()
-                        },
-                        onSaveComplete = {
-                            navController.popBackStack()
-                        },
-                        onNavigateToReview = { resolvedFields ->
-                            backStackEntry.savedStateHandle
-                                .set("rescan_fields", HashMap(resolvedFields))
                         },
                     )
                 }

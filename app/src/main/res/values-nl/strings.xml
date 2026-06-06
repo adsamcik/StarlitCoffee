@@ -319,6 +319,7 @@
     <string name="action_run_in_background">Doorgaan op de achtergrond</string>
     <string name="notif_channel_bag_analysis">Zakanalyse</string>
     <string name="notif_channel_bag_analysis_desc">Laat je weten wanneer AI klaar is met het lezen van een koffiezak-etiket.</string>
+    <string name="notif_scan_progress_title">Etiket van de zak lezen…</string>
     <string name="notif_bag_analysis_title">Zakanalyse voltooid</string>
     <string name="notif_bag_analysis_body">Tik om de gevonden details te bekijken.</string>
     <string name="format_notif_bag_analysis_body">Tik om %1$s te bekijken.</string>
@@ -487,6 +488,18 @@
     <string name="action_run_test_prompt">Testprompt uitvoeren</string>
     <string name="label_testing">Testen…</string>
 
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">AI inschakelen</string>
+    <string name="consent_requesting">AI-toegang aanvragen…</string>
+    <string name="consent_granted">AI ingeschakeld</string>
+    <string name="consent_already_approved">AI is al ingeschakeld</string>
+    <string name="consent_still_unavailable">AI is goedgekeurd, maar de service is nog niet klaar</string>
+    <string name="consent_declined">AI-toegang is niet verleend</string>
+    <string name="consent_denied_temporary">AI-toegang is geweigerd — probeer het later opnieuw</string>
+    <string name="consent_denied_permanent">AI-toegang is geblokkeerd — deblokkeer dit in de Mindlayer-app</string>
+    <string name="consent_service_unavailable">Mindlayer AI-service is niet beschikbaar</string>
+    <string name="consent_failed">Kan AI-toegang niet aanvragen</string>
+
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">Hoe was je laatste kop?</string>
     <string name="label_what_was_off">Wat klopte er niet?</string>
@@ -533,7 +546,7 @@
     <string name="action_retake_photo">Foto opnieuw maken</string>
     <string name="action_add_details_manually">Details handmatig toevoegen</string>
     <string name="msg_llm_enrichment_succeeded">AI-verrijking heeft deze labelscan verbeterd.</string>
-    <string name="msg_llm_enrichment_failed">AI-verrijking is mislukt. Je kunt opnieuw proberen of handmatig verder bewerken.</string>
+    <string name="msg_llm_enrichment_failed">De AI kon dit etiket deze keer niet helemaal uitlezen — een time-out of tijdelijke fout (automatisch opnieuw proberen hielp niet). Tik op Opnieuw proberen, of vul de velden hieronder gewoon zelf in.</string>
     <string name="msg_llm_enrichment_unavailable">AI-verrijking is nu niet beschikbaar. Je kunt opnieuw proberen of handmatig verder bewerken.</string>
     <string name="action_retry_llm_enrichment">AI-verrijking opnieuw proberen</string>
 
@@ -683,4 +696,19 @@
     <string name="process_pulped_natural">Pulped natural</string>
     <string name="process_double_fermented">Dubbel gefermenteerd</string>
     <string name="process_thermal_shock">Thermal shock</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Centreer de voorkant van de zak in het kader</string>
+    <string name="guided_scan_aim_back">Scan nu de achterkant van de zak</string>
+    <string name="guided_scan_aim_more">Nog een foto toevoegen (optioneel)</string>
+    <string name="guided_scan_hold_steady">Stilhouden…</string>
+    <string name="guided_scan_skip_photos">Foto\'s overslaan</string>
+    <string name="guided_scan_finished">Klaar</string>
+    <string name="guided_scan_auto_on">Auto aan</string>
+    <string name="guided_scan_auto_off">Auto uit</string>
+    <string name="guided_scan_capture">Foto maken</string>
+    <string name="guided_scan_scan_more">Meer foto\'s scannen</string>
+    <string name="scan_warn_glare">Verminder schittering</string>
+    <string name="scan_warn_lighting">Verbeter de belichting</string>
+    <string name="cd_remove_photo">Foto verwijderen</string>
+    <string name="msg_bag_saved">Zak opgeslagen</string>
 </resources>

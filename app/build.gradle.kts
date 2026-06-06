@@ -228,6 +228,9 @@ dependencies {
     // Coroutines
     implementation(libs.coroutines.android)
 
+    // WorkManager (durable background extraction)
+    implementation(libs.work.runtime.ktx)
+
     // Serialization
     implementation(libs.kotlinx.serialization.json)
 

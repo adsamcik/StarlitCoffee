@@ -192,6 +192,7 @@ fun AddBagSheet(
     onExploreQrUrl: ((String, (QrCoffeeMetadata?) -> Unit) -> Unit)? = null,
     onRetryLlmEnrichment: (() -> Unit)? = null,
     onEnableAi: (() -> Unit)? = null,
+    onScanMorePhotos: (() -> Unit)? = null,
 ) {
     val uriHandler = LocalUriHandler.current
     val locale = LocalLocale.current.platformLocale
@@ -385,6 +386,16 @@ fun AddBagSheet(
                             Icons.Default.Close,
                             contentDescription = stringResource(R.string.action_close),
                         )
+                    }
+                },
+                actions = {
+                    if (onScanMorePhotos != null) {
+                        IconButton(onClick = onScanMorePhotos) {
+                            Icon(
+                                Icons.Filled.CameraAlt,
+                                contentDescription = stringResource(R.string.guided_scan_scan_more),
+                            )
+                        }
                     }
                 },
             )
@@ -1384,9 +1395,14 @@ private fun LlmEnrichmentStatusCard(
     onRetry: (() -> Unit)?,
     onEnableAi: (() -> Unit)? = null,
 ) {
-    if (status == LlmEnrichmentStatus.NOT_RUN ||
-        status == LlmEnrichmentStatus.SUCCEEDED && !hasLlmEvidence
-    ) {
+    // NOT_RUN has nothing to say, and a SUCCEEDED pass with no actual LLM evidence is
+    // indistinguishable from "didn't run" — both stay silent. FAILED IS surfaced, but
+    // because the pipeline already auto-retried before delivering it, we present it as a
+    // calm, informative note (not an alarming error): it explains the likely cause and
+    // lets the user retry once more or just keep the fields the photo text produced.
+    val staySilent = status == LlmEnrichmentStatus.NOT_RUN ||
+        (status == LlmEnrichmentStatus.SUCCEEDED && !hasLlmEvidence)
+    if (staySilent) {
         return
     }
     val message = when (status) {
@@ -1395,8 +1411,11 @@ private fun LlmEnrichmentStatusCard(
         LlmEnrichmentStatus.UNAVAILABLE -> R.string.msg_llm_enrichment_unavailable
         LlmEnrichmentStatus.NOT_RUN -> return
     }
+    // Both FAILED and UNAVAILABLE offer a retry, but only UNAVAILABLE ("AI not set up
+    // yet") gets attention colour; FAILED stays calm because it self-heals on retry.
     val canRetry = status == LlmEnrichmentStatus.FAILED ||
         status == LlmEnrichmentStatus.UNAVAILABLE
+    val emphasize = status == LlmEnrichmentStatus.UNAVAILABLE
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -1409,7 +1428,7 @@ private fun LlmEnrichmentStatusCard(
             Text(
                 text = stringResource(message),
                 style = MaterialTheme.typography.bodyMedium,
-                color = if (canRetry) {
+                color = if (emphasize) {
                     MaterialTheme.colorScheme.error
                 } else {
                     MaterialTheme.colorScheme.onSurfaceVariant

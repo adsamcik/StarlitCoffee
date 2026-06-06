@@ -6,6 +6,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!--
+        Expedited WorkManager runs the on-device AI bag-label extraction so it
+        survives app backgrounding and process death. On API 26-30 an expedited
+        WorkRequest falls back to a short foreground service, which requires this
+        permission. On API 31+ it uses the expedited job quota (no service).
+    -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 

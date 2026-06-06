@@ -323,6 +323,7 @@
     <string name="action_run_in_background">Kontynuuj w tle</string>
     <string name="notif_channel_bag_analysis">Analiza opakowania</string>
     <string name="notif_channel_bag_analysis_desc">Powiadamia, gdy AI skończy czytać etykietę opakowania kawy.</string>
+    <string name="notif_scan_progress_title">Odczytywanie etykiety opakowania…</string>
     <string name="notif_bag_analysis_title">Analiza opakowania zakończona</string>
     <string name="notif_bag_analysis_body">Dotknij, aby przejrzeć znalezione szczegóły.</string>
     <string name="format_notif_bag_analysis_body">Dotknij, aby przejrzeć %1$s.</string>
@@ -493,6 +494,18 @@
     <string name="action_run_test_prompt">Uruchom prompt testowy</string>
     <string name="label_testing">Testowanie…</string>
 
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Włącz AI</string>
+    <string name="consent_requesting">Prośba o dostęp do AI…</string>
+    <string name="consent_granted">AI włączona</string>
+    <string name="consent_already_approved">AI jest już włączona</string>
+    <string name="consent_still_unavailable">AI jest zatwierdzona, ale usługa nie jest jeszcze gotowa</string>
+    <string name="consent_declined">Nie przyznano dostępu do AI</string>
+    <string name="consent_denied_temporary">Dostęp do AI został odrzucony — spróbuj ponownie później</string>
+    <string name="consent_denied_permanent">Dostęp do AI jest zablokowany — odblokuj go w aplikacji Mindlayer</string>
+    <string name="consent_service_unavailable">Usługa Mindlayer AI jest niedostępna</string>
+    <string name="consent_failed">Nie udało się poprosić o dostęp do AI</string>
+
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">Jak smakowała ostatnia filiżanka?</string>
     <string name="label_what_was_off">Co było nie tak?</string>
@@ -539,7 +552,7 @@
     <string name="action_retake_photo">Zrób zdjęcie ponownie</string>
     <string name="action_add_details_manually">Dodaj szczegóły ręcznie</string>
     <string name="msg_llm_enrichment_succeeded">Wzbogacenie AI poprawiło ten skan etykiety.</string>
-    <string name="msg_llm_enrichment_failed">Wzbogacenie AI nie powiodło się. Możesz spróbować ponownie albo kontynuować ręczną edycję.</string>
+    <string name="msg_llm_enrichment_failed">Sztuczna inteligencja nie zdołała tym razem odczytać etykiety do końca — przekroczono limit czasu lub wystąpił chwilowy błąd (automatyczna ponowna próba nie pomogła). Dotknij Ponów, aby spróbować jeszcze raz, albo uzupełnij pola poniżej.</string>
     <string name="msg_llm_enrichment_unavailable">Wzbogacenie AI jest teraz niedostępne. Możesz spróbować ponownie albo kontynuować ręczną edycję.</string>
     <string name="action_retry_llm_enrichment">Ponów wzbogacenie AI</string>
 
@@ -689,4 +702,19 @@
     <string name="process_pulped_natural">Pulped Natural</string>
     <string name="process_double_fermented">Podwójna fermentacja</string>
     <string name="process_thermal_shock">Szok termiczny</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Wyśrodkuj przód opakowania w ramce</string>
+    <string name="guided_scan_aim_back">Teraz zeskanuj tył opakowania</string>
+    <string name="guided_scan_aim_more">Dodaj kolejne zdjęcie (opcjonalnie)</string>
+    <string name="guided_scan_hold_steady">Trzymaj stabilnie…</string>
+    <string name="guided_scan_skip_photos">Pomiń zdjęcia</string>
+    <string name="guided_scan_finished">Gotowe</string>
+    <string name="guided_scan_auto_on">Auto wł.</string>
+    <string name="guided_scan_auto_off">Auto wył.</string>
+    <string name="guided_scan_capture">Zrób zdjęcie</string>
+    <string name="guided_scan_scan_more">Zeskanuj więcej zdjęć</string>
+    <string name="scan_warn_glare">Ogranicz odblaski</string>
+    <string name="scan_warn_lighting">Popraw oświetlenie</string>
+    <string name="cd_remove_photo">Usuń zdjęcie</string>
+    <string name="msg_bag_saved">Opakowanie zapisane</string>
 </resources>

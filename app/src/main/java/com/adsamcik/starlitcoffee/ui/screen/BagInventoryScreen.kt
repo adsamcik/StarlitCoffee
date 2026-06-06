@@ -201,12 +201,35 @@ fun BagInventoryScreen(
         thumbnailFocus = result.thumbnailFocus
         isProcessingScan = false
         showRetakeDialog = result.shouldSuggestRetake
-        // Ensure the form is visible. In the normal flow the sheet is already
-        // open; this also covers the deep-link path where a background analysis
-        // result was promoted into the foreground after the user closed the
-        // analyzing screen (see BrewViewModel.promoteBackgroundResultToForeground).
+        // Ensure the form is visible. In the gallery/barcode flow the sheet is
+        // already open; this also force-opens it if a (foreground) result arrives
+        // while the inventory is showing — e.g. process-death recovery delivers a
+        // completed scan to bagPhotoResult on relaunch.
         showAddSheet = true
         brewViewModel.clearBagPhotoResult()
+    }
+
+    // Notification deep-link recovery: the "bag analysis complete" notification
+    // promotes the background result into this dedicated channel. Open the
+    // prefilled review form regardless of navigation timing (a freshly shown
+    // BagInventory still sees the replayed value), then consume it.
+    val pendingScanReview by brewViewModel.pendingScanReview.collectAsStateWithLifecycle()
+    LaunchedEffect(pendingScanReview) {
+        val result = pendingScanReview ?: return@LaunchedEffect
+        ocrPrefill = result.ocrPrefill
+        capturedPhotoUris = result.capturedPhotoUris
+        detectedBarcode = result.detectedBarcode
+        detectedQrUrl = result.detectedQrUrl
+        offLookupName = result.offLookupName
+        offLookupRoaster = result.offLookupRoaster
+        fieldEvidence = result.fieldEvidence
+        reviewHints = result.reviewHints
+        llmStatus = result.llmStatus
+        thumbnailFocus = result.thumbnailFocus
+        isProcessingScan = false
+        showRetakeDialog = false
+        showAddSheet = true
+        brewViewModel.consumePendingScanReview()
     }
 
     LaunchedEffect(capturedPhotos) {

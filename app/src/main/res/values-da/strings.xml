@@ -319,6 +319,7 @@
     <string name="action_run_in_background">Fortsæt i baggrunden</string>
     <string name="notif_channel_bag_analysis">Poseanalyse</string>
     <string name="notif_channel_bag_analysis_desc">Fortæller dig, når AI er færdig med at læse en kaffeposes etikette.</string>
+    <string name="notif_scan_progress_title">Læser posens etiket…</string>
     <string name="notif_bag_analysis_title">Poseanalyse fuldført</string>
     <string name="notif_bag_analysis_body">Tryk for at gennemse de fundne detaljer.</string>
     <string name="format_notif_bag_analysis_body">Tryk for at gennemse %1$s.</string>
@@ -487,6 +488,18 @@
     <string name="action_run_test_prompt">Kør testprompt</string>
     <string name="label_testing">Tester…</string>
 
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Aktivér AI</string>
+    <string name="consent_requesting">Anmoder om AI-adgang…</string>
+    <string name="consent_granted">AI aktiveret</string>
+    <string name="consent_already_approved">AI er allerede aktiveret</string>
+    <string name="consent_still_unavailable">AI er godkendt, men tjenesten er ikke klar endnu</string>
+    <string name="consent_declined">AI-adgang blev ikke givet</string>
+    <string name="consent_denied_temporary">AI-adgang blev afvist — prøv igen senere</string>
+    <string name="consent_denied_permanent">AI-adgang er blokeret — fjern blokeringen i Mindlayer-appen</string>
+    <string name="consent_service_unavailable">Mindlayer AI-tjenesten er ikke tilgængelig</string>
+    <string name="consent_failed">Kunne ikke anmode om AI-adgang</string>
+
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">Hvordan var din sidste kop?</string>
     <string name="label_what_was_off">Hvad var forkert?</string>
@@ -533,7 +546,7 @@
     <string name="action_retake_photo">Tag foto igen</string>
     <string name="action_add_details_manually">Tilføj detaljer manuelt</string>
     <string name="msg_llm_enrichment_succeeded">AI-berigelse forbedrede denne labelscanning.</string>
-    <string name="msg_llm_enrichment_failed">AI-berigelse mislykkedes. Du kan prøve igen eller fortsætte med manuel redigering.</string>
+    <string name="msg_llm_enrichment_failed">AI\'en kunne ikke læse denne etiket færdig denne gang — den fik timeout eller en midlertidig fejl (den prøvede automatisk igen). Tryk på Prøv igen, eller udfyld blot felterne nedenfor.</string>
     <string name="msg_llm_enrichment_unavailable">AI-berigelse er ikke tilgængelig lige nu. Du kan prøve igen eller fortsætte med manuel redigering.</string>
     <string name="action_retry_llm_enrichment">Prøv AI-berigelse igen</string>
 
@@ -683,4 +696,19 @@
     <string name="process_pulped_natural">Pulped natural</string>
     <string name="process_double_fermented">Dobbeltfermenteret</string>
     <string name="process_thermal_shock">Thermal shock</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Centrer posens forside i rammen</string>
+    <string name="guided_scan_aim_back">Scan nu posens bagside</string>
+    <string name="guided_scan_aim_more">Tilføj endnu et foto (valgfrit)</string>
+    <string name="guided_scan_hold_steady">Hold stille…</string>
+    <string name="guided_scan_skip_photos">Spring fotos over</string>
+    <string name="guided_scan_finished">Færdig</string>
+    <string name="guided_scan_auto_on">Auto til</string>
+    <string name="guided_scan_auto_off">Auto fra</string>
+    <string name="guided_scan_capture">Tag foto</string>
+    <string name="guided_scan_scan_more">Scan flere fotos</string>
+    <string name="scan_warn_glare">Reducer genskin</string>
+    <string name="scan_warn_lighting">Forbedr belysningen</string>
+    <string name="cd_remove_photo">Fjern foto</string>
+    <string name="msg_bag_saved">Pose gemt</string>
 </resources>

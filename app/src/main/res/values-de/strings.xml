@@ -319,6 +319,7 @@
     <string name="action_run_in_background">Im Hintergrund fortsetzen</string>
     <string name="notif_channel_bag_analysis">Tütenanalyse</string>
     <string name="notif_channel_bag_analysis_desc">Informiert Sie, wenn die KI ein Kaffeetüten-Etikett fertig gelesen hat.</string>
+    <string name="notif_scan_progress_title">Etikett der Tüte wird gelesen…</string>
     <string name="notif_bag_analysis_title">Tütenanalyse abgeschlossen</string>
     <string name="notif_bag_analysis_body">Tippen Sie, um die gefundenen Details zu prüfen.</string>
     <string name="format_notif_bag_analysis_body">Tippen Sie, um %1$s zu prüfen.</string>
@@ -487,6 +488,18 @@
     <string name="action_run_test_prompt">Test-Prompt ausführen</string>
     <string name="label_testing">Wird getestet…</string>
 
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">KI aktivieren</string>
+    <string name="consent_requesting">KI-Zugriff wird angefordert…</string>
+    <string name="consent_granted">KI aktiviert</string>
+    <string name="consent_already_approved">KI ist bereits aktiviert</string>
+    <string name="consent_still_unavailable">KI ist genehmigt, aber der Dienst ist noch nicht bereit</string>
+    <string name="consent_declined">KI-Zugriff wurde nicht gewährt</string>
+    <string name="consent_denied_temporary">KI-Zugriff wurde verweigert — versuchen Sie es später erneut</string>
+    <string name="consent_denied_permanent">KI-Zugriff ist blockiert — entsperren Sie ihn in der Mindlayer-App</string>
+    <string name="consent_service_unavailable">Mindlayer-KI-Dienst ist nicht verfügbar</string>
+    <string name="consent_failed">KI-Zugriff konnte nicht angefordert werden</string>
+
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">Wie war Ihre letzte Tasse?</string>
     <string name="label_what_was_off">Was hat nicht gepasst?</string>
@@ -533,7 +546,7 @@
     <string name="action_retake_photo">Foto erneut aufnehmen</string>
     <string name="action_add_details_manually">Details manuell hinzufügen</string>
     <string name="msg_llm_enrichment_succeeded">KI-Anreicherung hat diesen Etikettscan verbessert.</string>
-    <string name="msg_llm_enrichment_failed">KI-Anreicherung fehlgeschlagen. Sie können es erneut versuchen oder manuell weiterbearbeiten.</string>
+    <string name="msg_llm_enrichment_failed">Die KI konnte dieses Etikett diesmal nicht fertig lesen — Zeitüberschreitung oder vorübergehender Fehler (automatischer erneuter Versuch hat nicht geholfen). Tippe auf Wiederholen, oder fülle einfach die Felder unten aus.</string>
     <string name="msg_llm_enrichment_unavailable">KI-Anreicherung ist derzeit nicht verfügbar. Sie können es erneut versuchen oder manuell weiterbearbeiten.</string>
     <string name="action_retry_llm_enrichment">KI-Anreicherung erneut versuchen</string>
 
@@ -683,4 +696,19 @@
     <string name="process_pulped_natural">Pulped Natural</string>
     <string name="process_double_fermented">Doppelt fermentiert</string>
     <string name="process_thermal_shock">Thermoschock</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Vorderseite der Packung im Rahmen zentrieren</string>
+    <string name="guided_scan_aim_back">Jetzt die Rückseite scannen</string>
+    <string name="guided_scan_aim_more">Weiteres Foto hinzufügen (optional)</string>
+    <string name="guided_scan_hold_steady">Ruhig halten…</string>
+    <string name="guided_scan_skip_photos">Fotos überspringen</string>
+    <string name="guided_scan_finished">Fertig</string>
+    <string name="guided_scan_auto_on">Auto an</string>
+    <string name="guided_scan_auto_off">Auto aus</string>
+    <string name="guided_scan_capture">Foto aufnehmen</string>
+    <string name="guided_scan_scan_more">Weitere Fotos scannen</string>
+    <string name="scan_warn_glare">Reflexionen reduzieren</string>
+    <string name="scan_warn_lighting">Beleuchtung verbessern</string>
+    <string name="cd_remove_photo">Foto entfernen</string>
+    <string name="msg_bag_saved">Packung gespeichert</string>
 </resources>

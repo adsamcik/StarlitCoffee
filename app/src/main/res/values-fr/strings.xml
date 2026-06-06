@@ -319,6 +319,7 @@
     <string name="action_run_in_background">Continuer en arrière-plan</string>
     <string name="notif_channel_bag_analysis">Analyse de paquet</string>
     <string name="notif_channel_bag_analysis_desc">Vous prévient quand l\'IA a fini de lire l\'étiquette d\'un paquet de café.</string>
+    <string name="notif_scan_progress_title">Lecture de l’étiquette du paquet…</string>
     <string name="notif_bag_analysis_title">Analyse du paquet terminée</string>
     <string name="notif_bag_analysis_body">Touchez pour vérifier les détails trouvés.</string>
     <string name="format_notif_bag_analysis_body">Touchez pour vérifier %1$s.</string>
@@ -487,6 +488,18 @@
     <string name="action_run_test_prompt">Lancer le prompt de test</string>
     <string name="label_testing">Test…</string>
 
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Activer l’IA</string>
+    <string name="consent_requesting">Demande d’accès à l’IA…</string>
+    <string name="consent_granted">IA activée</string>
+    <string name="consent_already_approved">L’IA est déjà activée</string>
+    <string name="consent_still_unavailable">L’IA est approuvée, mais le service n’est pas encore prêt</string>
+    <string name="consent_declined">L’accès à l’IA n’a pas été accordé</string>
+    <string name="consent_denied_temporary">L’accès à l’IA a été refusé — réessayez plus tard</string>
+    <string name="consent_denied_permanent">L’accès à l’IA est bloqué — débloquez-le dans l’app Mindlayer</string>
+    <string name="consent_service_unavailable">Le service IA Mindlayer est indisponible</string>
+    <string name="consent_failed">Impossible de demander l’accès à l’IA</string>
+
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">Comment était votre dernière tasse ?</string>
     <string name="label_what_was_off">Qu\'est-ce qui clochait ?</string>
@@ -533,7 +546,7 @@
     <string name="action_retake_photo">Reprendre la photo</string>
     <string name="action_add_details_manually">Ajouter les détails manuellement</string>
     <string name="msg_llm_enrichment_succeeded">L\'enrichissement IA a amélioré ce scan d\'étiquette.</string>
-    <string name="msg_llm_enrichment_failed">L\'enrichissement IA a échoué. Vous pouvez réessayer ou continuer la modification manuelle.</string>
+    <string name="msg_llm_enrichment_failed">L\'IA n\'a pas pu terminer la lecture de cette étiquette cette fois — délai dépassé ou erreur temporaire (une nouvelle tentative automatique n\'a pas aidé). Touchez Réessayer pour relancer, ou remplissez simplement les champs ci-dessous.</string>
     <string name="msg_llm_enrichment_unavailable">L\'enrichissement IA n\'est pas disponible pour le moment. Vous pouvez réessayer ou continuer la modification manuelle.</string>
     <string name="action_retry_llm_enrichment">Réessayer l\'enrichissement IA</string>
 
@@ -683,4 +696,19 @@
     <string name="process_pulped_natural">Nature dépulpé</string>
     <string name="process_double_fermented">Double fermentation</string>
     <string name="process_thermal_shock">Choc thermique</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Centrez l\'avant du sachet dans le cadre</string>
+    <string name="guided_scan_aim_back">Scannez maintenant l\'arrière du sachet</string>
+    <string name="guided_scan_aim_more">Ajouter une autre photo (facultatif)</string>
+    <string name="guided_scan_hold_steady">Restez stable…</string>
+    <string name="guided_scan_skip_photos">Ignorer les photos</string>
+    <string name="guided_scan_finished">Terminé</string>
+    <string name="guided_scan_auto_on">Auto activé</string>
+    <string name="guided_scan_auto_off">Auto désactivé</string>
+    <string name="guided_scan_capture">Prendre une photo</string>
+    <string name="guided_scan_scan_more">Scanner d\'autres photos</string>
+    <string name="scan_warn_glare">Réduisez les reflets</string>
+    <string name="scan_warn_lighting">Améliorez l\'éclairage</string>
+    <string name="cd_remove_photo">Retirer la photo</string>
+    <string name="msg_bag_saved">Sachet enregistré</string>
 </resources>

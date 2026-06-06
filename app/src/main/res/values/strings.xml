@@ -319,6 +319,7 @@
     <string name="action_run_in_background">Continue in background</string>
     <string name="notif_channel_bag_analysis">Bag analysis</string>
     <string name="notif_channel_bag_analysis_desc">Tells you when AI has finished reading a coffee bag label.</string>
+    <string name="notif_scan_progress_title">Reading bag label…</string>
     <string name="notif_bag_analysis_title">Bag analysis complete</string>
     <string name="notif_bag_analysis_body">Tap to review the details we found.</string>
     <string name="format_notif_bag_analysis_body">Tap to review %1$s.</string>
@@ -545,7 +546,7 @@
     <string name="action_retake_photo">Retake photo</string>
     <string name="action_add_details_manually">Add details manually</string>
     <string name="msg_llm_enrichment_succeeded">AI enrichment improved this label scan.</string>
-    <string name="msg_llm_enrichment_failed">AI enrichment failed. You can retry or continue editing manually.</string>
+    <string name="msg_llm_enrichment_failed">The AI couldn\'t finish reading this label this time — it timed out or hit a temporary error (it already retried automatically). Tap retry to try once more, or just fill in the fields below.</string>
     <string name="msg_llm_enrichment_unavailable">AI enrichment is not available right now. You can retry or continue editing manually.</string>
     <string name="action_retry_llm_enrichment">Retry AI enrichment</string>
 
@@ -695,4 +696,19 @@
     <string name="process_pulped_natural">Pulped Natural</string>
     <string name="process_double_fermented">Double Fermented</string>
     <string name="process_thermal_shock">Thermal Shock</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Center the front of the bag in the frame</string>
+    <string name="guided_scan_aim_back">Now scan the back of the bag</string>
+    <string name="guided_scan_aim_more">Add another photo (optional)</string>
+    <string name="guided_scan_hold_steady">Hold steady…</string>
+    <string name="guided_scan_skip_photos">Skip photos</string>
+    <string name="guided_scan_finished">Finished</string>
+    <string name="guided_scan_auto_on">Auto on</string>
+    <string name="guided_scan_auto_off">Auto off</string>
+    <string name="guided_scan_capture">Capture photo</string>
+    <string name="guided_scan_scan_more">Scan more photos</string>
+    <string name="scan_warn_glare">Reduce glare</string>
+    <string name="scan_warn_lighting">Improve lighting</string>
+    <string name="cd_remove_photo">Remove photo</string>
+    <string name="msg_bag_saved">Bag saved</string>
 </resources>

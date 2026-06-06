@@ -312,6 +312,7 @@
     <string name="action_run_in_background">Pokračovat na pozadí</string>
     <string name="notif_channel_bag_analysis">Analýza balení</string>
     <string name="notif_channel_bag_analysis_desc">Upozorní vás, když AI dočte etiketu balení kávy.</string>
+    <string name="notif_scan_progress_title">Čtu etiketu balení…</string>
     <string name="notif_bag_analysis_title">Analýza balení dokončena</string>
     <string name="notif_bag_analysis_body">Klepnutím zkontrolujete zjištěné údaje.</string>
     <string name="format_notif_bag_analysis_body">Klepnutím zkontrolujete %1$s.</string>
@@ -578,7 +579,7 @@
     <string name="action_retake_photo">Vyfotit znovu</string>
     <string name="action_add_details_manually">Zadat ručně</string>
     <string name="msg_llm_enrichment_succeeded">AI obohacení zlepšilo sken štítku.</string>
-    <string name="msg_llm_enrichment_failed">AI obohacení selhalo. Můžete to zkusit znovu nebo pokračovat ručně.</string>
+    <string name="msg_llm_enrichment_failed">Umělá inteligence tentokrát nedokázala štítek dočíst — vypršel časový limit nebo nastala dočasná chyba (automatické opakování nepomohlo). Klepnutím na Zkusit znovu to zopakujte, nebo pole níže vyplňte ručně.</string>
     <string name="msg_llm_enrichment_unavailable">AI obohacení teď není k dispozici. Můžete to zkusit znovu nebo pokračovat ručně.</string>
     <string name="action_retry_llm_enrichment">Zkusit AI obohacení znovu</string>
 
@@ -728,4 +729,19 @@
     <string name="process_pulped_natural">Pulped Natural</string>
     <string name="process_double_fermented">Dvojitá fermentace</string>
     <string name="process_thermal_shock">Teplotní šok</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Vycentrujte přední stranu balení do rámečku</string>
+    <string name="guided_scan_aim_back">Nyní naskenujte zadní stranu balení</string>
+    <string name="guided_scan_aim_more">Přidat další fotku (volitelné)</string>
+    <string name="guided_scan_hold_steady">Držte v klidu…</string>
+    <string name="guided_scan_skip_photos">Přeskočit fotky</string>
+    <string name="guided_scan_finished">Hotovo</string>
+    <string name="guided_scan_auto_on">Auto zapnuto</string>
+    <string name="guided_scan_auto_off">Auto vypnuto</string>
+    <string name="guided_scan_capture">Vyfotit</string>
+    <string name="guided_scan_scan_more">Naskenovat další fotky</string>
+    <string name="scan_warn_glare">Omezte odlesky</string>
+    <string name="scan_warn_lighting">Zlepšete osvětlení</string>
+    <string name="cd_remove_photo">Odebrat fotku</string>
+    <string name="msg_bag_saved">Balení uloženo</string>
 </resources>

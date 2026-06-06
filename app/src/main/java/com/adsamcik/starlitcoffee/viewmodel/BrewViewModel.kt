@@ -1,14 +1,12 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
 import android.app.Application
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.content.Context
 import android.util.Log
 import androidx.annotation.VisibleForTesting
-import androidx.core.net.toUri
-import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.WorkInfo
 import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
@@ -17,7 +15,6 @@ import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
-import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
@@ -35,65 +32,42 @@ import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.data.network.QrLinkExploreResult
 import com.adsamcik.starlitcoffee.data.network.QrLinkMetadataExplorer
 import com.adsamcik.starlitcoffee.data.network.SafeQrLinkMetadataExplorer
-import com.adsamcik.starlitcoffee.data.network.llm.LlmCacheKey
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmCallGate
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
-import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
-import com.adsamcik.starlitcoffee.data.network.ocr.RecognizedText
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.data.work.BagExtractionScheduler
+import com.adsamcik.starlitcoffee.data.work.BagExtractionWorker
+import com.adsamcik.starlitcoffee.data.work.decodeBagExtractionResult
+import com.adsamcik.starlitcoffee.data.work.encodeToJson
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.notification.BagAnalysisNotifier
 import com.adsamcik.starlitcoffee.notification.NoOpBagAnalysisNotifier
 import com.adsamcik.starlitcoffee.notification.RatingReminders
-import com.adsamcik.starlitcoffee.scan.BagFieldContextMapper
-import com.adsamcik.starlitcoffee.util.BagCaptureQuality
-import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
-import com.adsamcik.starlitcoffee.util.BagCaptureSide
-import com.adsamcik.starlitcoffee.util.BagOcrTextMerger
+import com.adsamcik.starlitcoffee.scan.BagPhotoExtractor
+import com.adsamcik.starlitcoffee.scan.OffLookupSummary
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
-import com.adsamcik.starlitcoffee.util.BagFieldConfidence
-import com.adsamcik.starlitcoffee.util.BagFieldEvidence
-import com.adsamcik.starlitcoffee.util.BagFieldSourceType
-import com.adsamcik.starlitcoffee.util.BagPhotoAnalysis
 import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
-import com.adsamcik.starlitcoffee.util.BagPhotoRect
-import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
-import com.adsamcik.starlitcoffee.util.BagPhotoScanSupport
-import com.adsamcik.starlitcoffee.util.BagThumbnailFocus
 import com.adsamcik.starlitcoffee.util.BarcodeInsights
-import com.adsamcik.starlitcoffee.util.CoffeeCountryDictionaries
-import com.adsamcik.starlitcoffee.util.CoffeeMetadataMatchStrategy
-import com.adsamcik.starlitcoffee.util.CoffeeCountryDictionary
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
-import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
-import com.adsamcik.starlitcoffee.util.NormalizedCoffeeField
-import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
-import com.adsamcik.starlitcoffee.util.BagReviewSeverity
 import com.adsamcik.starlitcoffee.util.InventoryAlertEngine
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
-import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.common.InputImage
-import kotlin.coroutines.resume
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.async
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -105,8 +79,6 @@ import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
 import java.util.Locale
 
 sealed class GrindResult {
@@ -226,6 +198,19 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 ) : ViewModel() {
 
     private val llmCache = LlmResultCache()
+    private val bagPhotoExtractor = BagPhotoExtractor(
+        appContext = application,
+        coffeeBagRepository = coffeeBagRepository,
+        qrLinkMetadataExplorer = qrLinkMetadataExplorer,
+        llmProvider = llmProvider,
+        ocrService = ocrService,
+        userBarcodeStemDao = userBarcodeStemDao,
+        openFoodFactsLookup = openFoodFactsLookup,
+        llmCache = llmCache,
+    )
+
+    private val useWorkManager: Boolean
+        get() = application != null
 
     private val _uiState = MutableStateFlow(BrewUiState())
     val uiState: StateFlow<BrewUiState> = _uiState.asStateFlow()
@@ -260,6 +245,14 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     val completedBackgroundResult: StateFlow<BagPhotoProcessingResult?> =
         _completedBackgroundResult.asStateFlow()
 
+    // Dedicated one-shot channel for the "open the analyzed bag form" intent fired
+    // by the bag-analysis-complete notification deep link. Kept separate from
+    // [bagPhotoResult] so the notification's navigate→promote timing (and a stale
+    // BagInventory instance) can't race/consume the result before the freshly
+    // shown screen collects it. Consumed by BagInventory via consumePendingScanReview.
+    private val _pendingScanReview = MutableStateFlow<BagPhotoProcessingResult?>(null)
+    val pendingScanReview: StateFlow<BagPhotoProcessingResult?> = _pendingScanReview.asStateFlow()
+
     // Set when the user taps "Skip AI" on the analyzing screen. Checked before
     // the LLM phase starts and used to cancel an in-flight enrichment so the
     // pipeline finishes immediately with the OCR/barcode candidates.
@@ -274,7 +267,13 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     // The in-flight LLM enrichment, exposed so "Skip AI" can cancel just this
     // phase without tearing down the surrounding OCR pipeline.
-    private var bagPhotoLlmDeferred: Deferred<LlmEnrichmentOutcome>? = null
+    private var bagPhotoLlmDeferred: Deferred<BagPhotoProcessingResult>? = null
+
+    // The in-flight whole-pipeline run for the current photo set. The guided
+    // scan flow re-runs extraction over the accumulated photos each time a new
+    // one is captured (debounced by the capture flow); cancelling the prior run
+    // here keeps only the latest, most-complete pass alive.
+    private var bagPhotoProcessJob: Job? = null
     private val _inventoryAlerts = MutableStateFlow(emptyList<InventoryAlert>())
     val inventoryAlerts: StateFlow<List<InventoryAlert>> = _inventoryAlerts.asStateFlow()
 
@@ -316,6 +315,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         recalculate()
         applyUserDefaults()
         refreshLastUnrated()
+        if (useWorkManager) observeBagExtractionWork()
     }
 
     private fun applyUserDefaults() {
@@ -522,43 +522,12 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         _uiState.update { it.copy(minuteAlertEnabled = !it.minuteAlertEnabled) }
     }
 
-    companion object {
-        private const val BAG_PHOTO_TAG = "BagPhotoProcessing"
-        // Text-only LLM enrichment runs no image inference, so the latency
-        // ceiling drops dramatically. 95 s sits 5 s above the inner provider
-        // timeout (90 s) so the inner one still fires first with a precise
-        // message; the outer is a belt-and-suspenders cap.
+    private companion object {
         private const val BAG_PHOTO_LLM_TIMEOUT_MS = 95_000L
-        // Vision pass runs an image inference, which is far slower than text;
-        // its outer cap sits just above the provider's inner VISION_TIMEOUT_MS.
-        private const val BAG_PHOTO_VISION_TIMEOUT_MS = 305_000L
-        private const val MAX_LLM_PHOTO_BYTES = 20 * 1024 * 1024
-        private const val LLM_READ_BUFFER_SIZE = 8 * 1024
-
-        private val CANONICAL_METADATA_FIELDS = setOf(
-            "origin",
-            "region",
-            "variety",
-            "processType",
-            "tastingNotes",
-            "roastLevel",
-        )
-        private val BAG_PHOTO_FIELD_NAMES = listOf(
-            "name",
-            "roaster",
-            "origin",
-            "region",
-            "farm",
-            "variety",
-            "processType",
-            "altitude",
-            "tastingNotes",
-            "roastLevel",
-            "roastDate",
-            "expiryDate",
-            "isDecaf",
-            "weight",
-        )
+        private const val LLM_MAX_ATTEMPTS = 3
+        private const val LLM_RETRY_BACKOFF_MS = 600L
+        private const val BAG_SCAN_PREFS = "bag_scan"
+        private const val KEY_LAST_CONSUMED_WORK_ID = "lastConsumedWorkId"
     }
 
     fun requestFeedbackSnackbar() {
@@ -1070,208 +1039,81 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     fun findBagByBarcode(barcode: String, onResult: (CoffeeBagEntity?) -> Unit) {
-        if (coffeeBagRepository == null) {
+        val repository = coffeeBagRepository ?: run {
             onResult(null)
             return
         }
         viewModelScope.launch {
-            onResult(findLocalBagByBarcode(barcode))
+            val rawBarcode = barcode.trim().takeIf { it.isNotBlank() }
+            val normalizedBarcode = BarcodeInsights.normalizeBarcode(rawBarcode)
+            val result = when {
+                rawBarcode == null -> null
+                normalizedBarcode != null && normalizedBarcode != rawBarcode -> {
+                    repository.findByBarcode(normalizedBarcode)
+                        ?: repository.findByBarcode(rawBarcode)
+                }
+                normalizedBarcode != null -> repository.findByBarcode(normalizedBarcode)
+                else -> repository.findByBarcode(rawBarcode)
+            }
+            onResult(result)
         }
     }
+
     fun processNewBagPhotos(
         photosCsv: String,
         knownFieldValues: KnownFieldValues = _knownFieldValues.value,
     ) {
-        // Fresh scan: clear any "skip"/"background" intent carried over from a
-        // previous photo so this run starts in the normal foreground mode.
         bagPhotoSkipRequested = false
         bagAnalysisBackgrounded = false
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val photoUriList = photosCsv.split(",").map(String::trim).filter(String::isNotBlank)
-                if (photoUriList.isEmpty()) {
-                    bagPhotoLlmRetryContext = null
-                    _bagPhotoResult.value = BagPhotoProcessingResult(capturedPhotoUris = photosCsv)
-                    return@withContext
-                }
 
-                val barcodeScanner = BarcodeScanning.getClient()
-                try {
-                    val processedPhotos = photoUriList.mapIndexedNotNull { index, uriStr ->
-                        processBagPhoto(
-                            uriStr = uriStr,
-                            side = if (index == 0) BagCaptureSide.FRONT else BagCaptureSide.BACK,
-                            knownFieldValues = knownFieldValues,
-                            barcodeScanner = barcodeScanner,
-                        )
-                    }
-                    emitBagPhotoResult(
-                        photosCsv = photosCsv,
-                        photoUriList = photoUriList,
-                        processedPhotos = processedPhotos,
-                        knownFieldValues = knownFieldValues,
-                    )
-                } finally {
-                    barcodeScanner.close()
-                }
-            }
+        val photoUriList = photosCsv.split(",").map(String::trim).filter(String::isNotBlank)
+        bagPhotoProcessJob?.cancel()
+        bagPhotoLlmDeferred?.cancel()
+        bagPhotoLlmDeferred = null
+        if (photoUriList.isEmpty()) {
+            bagPhotoLlmRetryContext = null
+            if (useWorkManager) BagExtractionScheduler.cancel(requireNotNull(application))
+            _bagPhotoResult.value = BagPhotoProcessingResult(capturedPhotoUris = photosCsv)
+            return
         }
-    }
 
-    private suspend fun emitBagPhotoResult(
-        photosCsv: String,
-        photoUriList: List<String>,
-        processedPhotos: List<ProcessedBagPhoto>,
-        knownFieldValues: KnownFieldValues,
-    ) {
-        val photoAnalyses = processedPhotos.map { photo ->
-            BagPhotoAnalysis(
-                uri = photo.uri,
-                side = photo.side,
-                quality = photo.quality,
-                extractedText = photo.fullText,
-            )
-        }
-        val combinedOcrText = combineOcrTextBySide(processedPhotos)
-        val allCandidates = processedPhotos
-            .flatMap { photo -> buildFieldCandidates(photo) }
-            .toMutableList()
-        val rawDetectedQrUrl = processedPhotos.firstNotNullOfOrNull { it.detectedQrUrl }
-        val detectedBarcode = resolveDetectedBarcode(processedPhotos, combinedOcrText, allCandidates)
-
-        val matchedBagByBarcode = findLocalBagByBarcode(detectedBarcode)
-        val inferredLocale = inferLocaleFromBarcode(detectedBarcode)
-
-        addBarcodeMatchAndStemCandidates(
-            allCandidates = allCandidates,
-            detectedBarcode = detectedBarcode,
-            matchedBag = matchedBagByBarcode,
-            inferredLocale = inferredLocale,
-        )
-        boostKnownFieldValuesForBarcode(detectedBarcode, knownFieldValues)
-
-        val offSummary = addOpenFoodFactsCandidates(allCandidates, detectedBarcode)
-        val qrEnrichment = buildQrLinkEnrichment(rawDetectedQrUrl)
-        allCandidates += qrEnrichment.candidates
-
-        // LLM enrichment — primary-source reasoning over all core fields.
-        // Receives prior candidates (OCR+lookup) for cross-reference,
-        // raw OCR text for character-level verification, and the user's
-        // known-values vocabulary for grounding. Runs as a cancellable child so
-        // "Skip AI" can abandon just this (slow) phase and settle with OCR.
-        val baseCandidates = allCandidates.toList()
-        val llmOutcome = runCancellableLlmEnrichment(
-            photoUriList = photoUriList,
-            processedPhotos = processedPhotos,
-            baseCandidates = baseCandidates,
-            combinedOcrText = combinedOcrText,
-        )
-        allCandidates += llmOutcome.candidates
-
-        // Vision second pass: recover visual-only fields (e.g. a roast-level dot
-        // scale) from the label image when still unsettled. Self-gates on the
-        // "Skip AI" request (see runVisionEnrichmentIfNeeded).
-        runVisionEnrichmentIfNeeded(photoUriList, processedPhotos, allCandidates)
-
-        val fieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
-        val reviewHints = BagPhotoScanSupport.buildReviewHints(
-            photoAnalyses = photoAnalyses,
-            resolvedFields = fieldEvidence,
-            additionalHints = BarcodeInsights.buildBarcodeReviewHints(
-                barcode = detectedBarcode,
-                matchedBag = matchedBagByBarcode,
-                observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode),
-            ) + qrEnrichment.reviewHints,
-            // When the on-device AI was unavailable, an empty result isn't a bad
-            // photo — suppress the "retake the photo" warning so it doesn't
-            // contradict the "AI enrichment is not available" status card.
-            scanServiceUnavailable = llmOutcome.status == LlmEnrichmentStatus.UNAVAILABLE,
-        )
-        val ocrPrefill = fieldEvidence.takeIf { it.isNotEmpty() }?.let(BagPhotoScanSupport::buildPrefill)
-
-        bagPhotoLlmRetryContext = BagPhotoLlmRetryContext(
+        val retryContext = BagPhotoLlmRetryContext(
             photosCsv = photosCsv,
             photoUriList = photoUriList,
-            processedPhotos = processedPhotos,
-            baseCandidates = baseCandidates,
-            combinedOcrText = combinedOcrText,
-            knownFieldValues = _knownFieldValues.value,
-            detectedBarcode = detectedBarcode,
-            detectedQrUrl = qrEnrichment.safeUrl,
-            offLookupName = offSummary.name,
-            offLookupRoaster = offSummary.brand,
-            photoAnalyses = photoAnalyses,
-            reviewHints = reviewHints,
+            knownFieldValues = knownFieldValues,
         )
-        deliverBagPhotoResult(
-            BagPhotoProcessingResult(
-                ocrPrefill = ocrPrefill,
-                capturedPhotoUris = photosCsv,
-                detectedBarcode = detectedBarcode,
-                detectedQrUrl = qrEnrichment.safeUrl,
-                offLookupName = offSummary.name,
-                offLookupRoaster = offSummary.brand,
-                fieldEvidence = fieldEvidence,
-                photoAnalyses = photoAnalyses,
-                reviewHints = reviewHints,
-                llmStatus = llmOutcome.status,
-                thumbnailFocus = computeThumbnailFocus(processedPhotos),
-            ),
+        bagPhotoLlmRetryContext = retryContext
+        if (useWorkManager) {
+            enqueueBagExtraction(retryContext, runLlm = true)
+            return
+        }
+        runBagPhotoProcessingInViewModel(retryContext, runLlm = !bagPhotoSkipRequested)
+    }
+
+    private fun enqueueBagExtraction(context: BagPhotoLlmRetryContext, runLlm: Boolean) {
+        BagExtractionScheduler.enqueue(
+            context = requireNotNull(application),
+            photoUrisCsv = context.photosCsv,
+            knownValuesJson = context.knownFieldValues.encodeToJson(),
+            runLlm = runLlm,
         )
     }
 
-    /**
-     * Picks the thumbnail crop region for the saved bag: the union of the FRONT
-     * photo's original-pass OCR text blocks (the label the scan read). Returns
-     * null when there's no usable text, so the caller keeps the full photo.
-     */
-    private fun computeThumbnailFocus(processedPhotos: List<ProcessedBagPhoto>): BagPhotoRect? {
-        val frontPhoto = processedPhotos.firstOrNull { it.side == BagCaptureSide.FRONT }
-            ?: processedPhotos.firstOrNull()
-            ?: return null
-        val originalBlocks = frontPhoto.passes.firstOrNull { it.label == "original" }?.blocks
-            ?: frontPhoto.passes.firstOrNull()?.blocks
-            ?: return null
-        return BagThumbnailFocus.labelRegion(originalBlocks.mapNotNull { it.normalizedBounds() })
-    }
-
-    /**
-     * Runs the LLM bag-label enrichment as a cancellable sibling coroutine so
-     * "Skip AI" ([skipBagPhotoLlm]) can abandon just this phase. Returns a
-     * NOT_RUN outcome when skipped (pre-flight or mid-flight); the OCR/barcode
-     * candidates already gathered carry the result.
-     */
-    private suspend fun runCancellableLlmEnrichment(
-        photoUriList: List<String>,
-        processedPhotos: List<ProcessedBagPhoto>,
-        baseCandidates: List<BagFieldCandidate>,
-        combinedOcrText: String,
-    ): LlmEnrichmentOutcome {
-        if (bagPhotoSkipRequested) {
-            return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.NOT_RUN)
-        }
-        val deferred = viewModelScope.async(Dispatchers.IO) {
-            tryLlmEnrichment(
-                photoUriList = photoUriList,
-                processedPhotos = processedPhotos,
-                allCandidates = baseCandidates,
-                combinedOcrText = combinedOcrText,
-                knownFieldValues = _knownFieldValues.value,
-            )
-        }
-        bagPhotoLlmDeferred = deferred
-        return try {
-            deferred.await()
-        } catch (@Suppress("SwallowedException") cancellation: CancellationException) {
-            // Cancelling the child Deferred (user tapped "Skip AI") surfaces here
-            // as a CancellationException. ensureActive() rethrows it only if THIS
-            // coroutine (the whole pipeline) was cancelled — e.g. the ViewModel
-            // was cleared; otherwise the skip is deliberately converted to a
-            // NOT_RUN outcome so the OCR candidates carry the result.
-            currentCoroutineContext().ensureActive()
-            LlmEnrichmentOutcome(status = LlmEnrichmentStatus.NOT_RUN)
-        } finally {
-            bagPhotoLlmDeferred = null
+    private fun runBagPhotoProcessingInViewModel(
+        context: BagPhotoLlmRetryContext,
+        runLlm: Boolean,
+    ) {
+        bagPhotoProcessJob?.cancel()
+        bagPhotoProcessJob = viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                runCancellableLlmEnrichment(
+                    photoUris = context.photoUriList,
+                    knownFieldValues = context.knownFieldValues,
+                    runLlm = runLlm,
+                )
+            }
+            bagPhotoLlmRetryContext = context
+            deliverBagPhotoResult(result.copy(capturedPhotoUris = context.photosCsv))
         }
     }
 
@@ -1292,203 +1134,68 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
-    /**
-     * Resolves the detected barcode from photo scans + OCR fallback, applying
-     * partial-barcode recovery for 5–7 digit fragments. When recovery yields
-     * candidates the barcode is cleared (a partial fragment must not become a
-     * persisted bag barcode) and the recovery candidates are appended to
-     * [allCandidates] for the user to confirm.
-     */
-    private suspend fun resolveDetectedBarcode(
-        processedPhotos: List<ProcessedBagPhoto>,
-        combinedOcrText: String,
-        allCandidates: MutableList<BagFieldCandidate>,
-    ): String? {
-        var detectedBarcode = processedPhotos.firstNotNullOfOrNull { it.detectedBarcode }
-        if (detectedBarcode == null && combinedOcrText.isNotBlank()) {
-            detectedBarcode = OcrFieldExtractor.extractBarcodeFromText(combinedOcrText)
-        }
-        val rawDetectedBarcode = detectedBarcode
-        detectedBarcode = BarcodeInsights.normalizeBarcode(detectedBarcode)
-            ?: detectedBarcode?.trim()?.takeIf { it.isNotBlank() }
-
-        if (BarcodeInsights.normalizeBarcode(rawDetectedBarcode) == null && rawDetectedBarcode != null) {
-            val partialResult = BarcodeInsights.recoverPartialBarcode(rawDetectedBarcode, userBarcodeStemDao)
-            if (partialResult.isPartial && partialResult.candidates.isNotEmpty()) {
-                allCandidates += partialResult.candidates
-                detectedBarcode = null
-            }
-        }
-        return detectedBarcode
-    }
-
-    private fun inferLocaleFromBarcode(detectedBarcode: String?): Locale? =
-        CoffeeCountryDictionaries.localeFromBarcode(detectedBarcode)
-            ?.let { locale -> CoffeeCountryDictionaries.ALL.firstOrNull { it.locale == locale } }
-            ?.locale
-
-    private suspend fun addBarcodeMatchAndStemCandidates(
-        allCandidates: MutableList<BagFieldCandidate>,
-        detectedBarcode: String?,
-        matchedBag: CoffeeBagEntity?,
-        inferredLocale: Locale?,
-    ) {
-        matchedBag?.let {
-            allCandidates += BarcodeInsights.buildLocalMatchCandidates(
-                it,
-                locale = inferredLocale ?: Locale.getDefault(),
-            )
-        }
-        val observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode)
-        allCandidates += BarcodeInsights.buildObservedStemCandidates(observedStemMatch)
-
-        val stemDao = userBarcodeStemDao
-        if (stemDao != null && detectedBarcode != null) {
-            allCandidates += BarcodeInsights.findUserStemMatch(detectedBarcode, stemDao)
-        }
-    }
-
-    private fun boostKnownFieldValuesForBarcode(detectedBarcode: String?, knownFieldValues: KnownFieldValues) {
-        if (detectedBarcode == null) return
-        val boostedKnownValues = BarcodeInsights.buildBarcodeOcrBoost(
-            barcode = detectedBarcode,
-            currentKnownValues = knownFieldValues,
-            userStemDao = userBarcodeStemDao,
-        )
-        if (boostedKnownValues !== knownFieldValues) {
-            _knownFieldValues.value = boostedKnownValues
-        }
-    }
-
-    internal data class OffLookupSummary(val name: String?, val brand: String?)
-
-    /**
-     * Looks up the detected barcode against OpenFoodFacts and appends any
-     * resulting candidates to [allCandidates]. Returns the OFF name + brand
-     * for use in the retry context / processing result. OFF data is gated by
-     * confidence — origin from `countries_tags` may refer to country of sale
-     * rather than coffee origin and lands as LOW confidence.
-     */
-    @VisibleForTesting
     internal suspend fun addOpenFoodFactsCandidates(
-        allCandidates: MutableList<BagFieldCandidate>,
-        detectedBarcode: String?,
-    ): OffLookupSummary {
-        if (detectedBarcode == null) return OffLookupSummary(name = null, brand = null)
-        return try {
-            val lookup = openFoodFactsLookup(detectedBarcode)
-                ?: return OffLookupSummary(name = null, brand = null)
-            val lookupSupportingText = listOfNotNull(
-                lookup.name?.takeIf { it.isNotBlank() },
-                lookup.brand?.takeIf { it.isNotBlank() },
-            ).joinToString(" · ").takeIf { it.isNotBlank() }
+        candidates: MutableList<BagFieldCandidate>,
+        barcode: String?,
+    ): OffLookupSummary = bagPhotoExtractor.addOpenFoodFactsCandidates(candidates, barcode)
 
-            if (!lookup.name.isNullOrBlank()) {
-                allCandidates += BagFieldCandidate(
-                    fieldName = "name",
-                    value = lookup.name,
-                    sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                    confidenceHint = BagFieldConfidence.HIGH,
-                )
-            }
-            if (!lookup.brand.isNullOrBlank()) {
-                allCandidates += BagFieldCandidate(
-                    fieldName = "roaster",
-                    value = lookup.brand,
-                    sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                    confidenceHint = BagFieldConfidence.HIGH,
-                )
-            }
-            allCandidates.addDecafCandidate(
-                isDecaf = lookupSupportingText
-                    ?.let(CoffeeMetadataNormalizer::containsDecafMarker)
-                    ?.takeIf { it },
-                provenance = BagCandidateProvenance(
-                    sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                    confidenceHint = BagFieldConfidence.HIGH,
-                    supportingText = lookupSupportingText,
-                ),
-                rawValue = lookupSupportingText,
-            )
+    private suspend fun runCancellableLlmEnrichment(
+        photoUris: List<String>,
+        knownFieldValues: KnownFieldValues,
+        runLlm: Boolean,
+    ): BagPhotoProcessingResult = bagPhotoExtractor.extract(
+        photoUris = photoUris,
+        knownFieldValues = knownFieldValues,
+        runLlm = runLlm,
+    )
 
-            if (!lookup.origins.isNullOrBlank()) {
-                allCandidates += BagFieldCandidate(
-                    fieldName = "origin",
-                    value = lookup.origins,
-                    sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                    confidenceHint = BagFieldConfidence.MEDIUM,
-                    supportingText = "OFF origins field",
-                )
-            }
-            lookup.countriesTags
-                ?.firstNotNullOfOrNull(::coffeeProducingCountryFromTag)
-                ?.let { originName ->
-                    allCandidates += BagFieldCandidate(
-                        fieldName = "origin",
-                        value = originName,
-                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                        confidenceHint = BagFieldConfidence.LOW,
-                        supportingText = "OFF countries_tags (may be country of sale)",
-                    )
+    @VisibleForTesting
+    internal suspend fun runLlmExtractionWithRetry(
+        request: LlmExtractionRequest,
+    ): LlmExtractionResult {
+        var attempt = 1
+        while (true) {
+            val result = try {
+                MindlayerLlmCallGate.withPermit {
+                    withTimeout(BAG_PHOTO_LLM_TIMEOUT_MS) {
+                        llmProvider.extractBagFields(request)
+                    }
                 }
-            // lookup.labels — informational only (organic, fair trade, etc.); not mapped to bag fields yet
-            OffLookupSummary(name = lookup.name, brand = lookup.brand)
-        } catch (e: Exception) {
-            Log.w(BAG_PHOTO_TAG, "Failed to fetch product info from OpenFoodFacts", e)
-            OffLookupSummary(name = null, brand = null)
+            } catch (_: TimeoutCancellationException) {
+                LlmExtractionResult.Failed(
+                    "Brew photo LLM enrichment timed out after ${BAG_PHOTO_LLM_TIMEOUT_MS / 1000}s",
+                    retryable = true,
+                )
+            } catch (e: CancellationException) {
+                throw e
+            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+                LlmExtractionResult.Failed("Brew photo LLM enrichment threw: ${e.message}", retryable = true)
+            }
+
+            if (result !is LlmExtractionResult.Failed || !result.retryable || attempt >= LLM_MAX_ATTEMPTS) {
+                return result
+            }
+            delay(LLM_RETRY_BACKOFF_MS * attempt)
+            attempt++
         }
     }
 
     fun retryBagPhotoLlm() {
         val context = bagPhotoLlmRetryContext ?: return
+        bagPhotoSkipRequested = false
         _bagPhotoResult.update { current ->
             current?.copy(llmStatus = LlmEnrichmentStatus.NOT_RUN) ?: BagPhotoProcessingResult(
                 capturedPhotoUris = context.photosCsv,
                 llmStatus = LlmEnrichmentStatus.NOT_RUN,
             )
         }
-        viewModelScope.launch {
-            val llmOutcome = withContext(Dispatchers.IO) {
-                tryLlmEnrichment(
-                    photoUriList = context.photoUriList,
-                    processedPhotos = context.processedPhotos,
-                    allCandidates = context.baseCandidates,
-                    combinedOcrText = context.combinedOcrText,
-                    knownFieldValues = context.knownFieldValues,
-                )
-            }
-            val mergedCandidates = context.baseCandidates + llmOutcome.candidates
-            val fieldEvidence = resolveBagPhotoFieldEvidence(mergedCandidates)
-            val ocrPrefill = fieldEvidence
-                .takeIf { it.isNotEmpty() }
-                ?.let(BagPhotoScanSupport::buildPrefill)
-            _bagPhotoResult.value = BagPhotoProcessingResult(
-                ocrPrefill = ocrPrefill,
-                capturedPhotoUris = context.photosCsv,
-                detectedBarcode = context.detectedBarcode,
-                detectedQrUrl = context.detectedQrUrl,
-                offLookupName = context.offLookupName,
-                offLookupRoaster = context.offLookupRoaster,
-                fieldEvidence = fieldEvidence,
-                photoAnalyses = context.photoAnalyses,
-                reviewHints = context.reviewHints,
-                llmStatus = llmOutcome.status,
-                thumbnailFocus = computeThumbnailFocus(context.processedPhotos),
-            )
-        }
-    }
-
-    private fun resolveBagPhotoFieldEvidence(
-        candidates: List<BagFieldCandidate>,
-    ): Map<String, BagFieldEvidence> = buildMap {
-        for (fieldName in BAG_PHOTO_FIELD_NAMES) {
-            val resolved = BagPhotoScanSupport.resolveField(
-                fieldName = fieldName,
-                candidates = candidates.filter { it.fieldName == fieldName },
-            )
-            if (resolved != null) {
-                put(fieldName, resolved)
-            }
+        bagPhotoProcessJob?.cancel()
+        bagPhotoLlmDeferred?.cancel()
+        bagPhotoLlmDeferred = null
+        if (useWorkManager) {
+            enqueueBagExtraction(context, runLlm = true)
+        } else {
+            runBagPhotoProcessingInViewModel(context, runLlm = true)
         }
     }
 
@@ -1503,137 +1210,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 roasters = knownRoasters,
                 names = knownNames,
             ),
-        )
-    }
-
-    private suspend fun processBagPhoto(
-        uriStr: String,
-        side: BagCaptureSide,
-        knownFieldValues: KnownFieldValues,
-        barcodeScanner: com.google.mlkit.vision.barcode.BarcodeScanner,
-    ): ProcessedBagPhoto? {
-        return try {
-            val bitmap = decodeBagPhotoBitmap(uriStr) ?: return null
-
-            val originalText = recognizeText(bitmap)
-            val alignedBitmap = if (originalText != null && originalText.blocks.isNotEmpty()) {
-                val alignment = ImagePreprocessor.computeAlignment(originalText.blocks)
-                ImagePreprocessor.applyAlignment(bitmap, alignment)
-            } else {
-                bitmap
-            }
-            val alignedText = recognizeText(alignedBitmap)
-            val enhancedBitmap = ImagePreprocessor.preprocessForOcr(alignedBitmap)
-            val enhancedText = recognizeText(enhancedBitmap)
-
-            val passes = listOfNotNull(
-                buildScanPass("original", bitmap, originalText),
-                buildScanPass("aligned", alignedBitmap, alignedText),
-                buildScanPass("enhanced", enhancedBitmap, enhancedText),
-            )
-
-            val mergedText = passes.joinToString("\n") { it.fullText }.trim()
-            val textBlockCount = passes.maxOfOrNull { it.blocks.size } ?: 0
-            val quality = BagCaptureQualityAnalyzer.analyzeBitmap(
-                bitmap = bitmap,
-                textBlockCount = textBlockCount,
-                textDetected = textBlockCount > 0,
-            )
-
-            val ocrBarcode = mergedText.takeIf { it.isNotBlank() }
-                ?.let { OcrFieldExtractor.extractBarcodeFromText(it) }
-            val detection = detectBarcodeAndQrUrl(
-                scannedCodes = scanBarcodes(barcodeScanner, bitmap),
-                ocrBarcode = ocrBarcode,
-            )
-
-            ProcessedBagPhoto(
-                uri = uriStr,
-                side = side,
-                quality = quality,
-                passes = passes,
-                fullText = mergedText,
-                detectedBarcode = detection.barcode,
-                detectedQrUrl = detection.qrUrl,
-            )
-        } catch (e: Exception) {
-            Log.w(BAG_PHOTO_TAG, "Failed to process bag photo for OCR and barcode extraction", e)
-            null
-        }
-    }
-
-    private data class BagPhotoBarcodeDetection(val barcode: String?, val qrUrl: String?)
-
-    private fun detectBarcodeAndQrUrl(
-        scannedCodes: List<com.google.mlkit.vision.barcode.common.Barcode>?,
-        ocrBarcode: String?,
-    ): BagPhotoBarcodeDetection {
-        var barcode = ocrBarcode
-        var qrUrl: String? = null
-        scannedCodes?.forEach { code ->
-            val rawValue = code.rawValue ?: return@forEach
-            val isHttpUrl = rawValue.startsWith("http://") || rawValue.startsWith("https://")
-            when {
-                isHttpUrl && qrUrl == null -> qrUrl = rawValue
-                !isHttpUrl && barcode == null -> barcode = rawValue
-            }
-        }
-        return BagPhotoBarcodeDetection(barcode = barcode, qrUrl = qrUrl)
-    }
-
-    private fun decodeBagPhotoBitmap(uriStr: String): Bitmap? {
-        val uri = uriStr.toUri()
-        return if (uri.scheme == "content") {
-            val resolver = application?.contentResolver ?: run {
-                Log.w(BAG_PHOTO_TAG, "Cannot decode content URI: application is null in BrewViewModel")
-                return null
-            }
-            val orientation = try {
-                resolver.openInputStream(uri)?.use { input ->
-                    ExifInterface(input).getAttributeInt(
-                        ExifInterface.TAG_ORIENTATION,
-                        ExifInterface.ORIENTATION_NORMAL,
-                    )
-                }
-            } catch (e: Exception) {
-                Log.w(BAG_PHOTO_TAG, "Failed to read content URI EXIF orientation", e)
-                null
-            } ?: ExifInterface.ORIENTATION_NORMAL
-            resolver.openInputStream(uri)?.use { input ->
-                BitmapFactory.decodeStream(input)
-            }?.let { bitmap -> ImagePreprocessor.applyExifOrientation(bitmap, orientation) }
-        } else {
-            val file = java.io.File(uri.path ?: uriStr)
-            val rawBitmap = BitmapFactory.decodeFile(file.absolutePath) ?: return null
-            ImagePreprocessor.applyExifRotation(rawBitmap, file.absolutePath)
-        }
-    }
-
-    private fun buildScanPass(
-        label: String,
-        bitmap: Bitmap,
-        text: RecognizedText?,
-    ): ScanPass? {
-        val ocrText = text ?: return null
-        val blocks = ocrText.blocks.map { block ->
-            OcrFieldExtractor.OcrTextBlock(
-                text = block.text,
-                heightPx = block.boundingBox?.height() ?: 0,
-                topPx = block.boundingBox?.top ?: 0,
-                leftPx = block.boundingBox?.left ?: 0,
-                widthPx = block.boundingBox?.width() ?: 0,
-                imageWidthPx = bitmap.width,
-                imageHeightPx = bitmap.height,
-            )
-        }
-        return ScanPass(
-            label = label,
-            // Field-level extraction is LLM-only (see OcrFieldExtractor).
-            // ScanPass carries the raw OCR blocks + full text forward to
-            // the LLM; pre-LLM field slots stay null on purpose.
-            result = OcrFieldExtractor.OcrExtractionResult(rawText = ocrText.fullText),
-            blocks = blocks,
-            fullText = ocrText.fullText,
         )
     }
 
@@ -1666,119 +1242,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
-    private fun buildFieldCandidates(
-        photo: ProcessedBagPhoto,
-        inferredLocale: Locale? = null,
-    ): List<BagFieldCandidate> = buildList {
-        val locale = inferredLocale ?: Locale.getDefault()
-        photo.passes.forEach { pass ->
-            val confidenceHint = confidenceHintForPass(photo.quality, pass.blocks.size)
-            addFieldCandidate("name", pass.result.name, photo, pass, confidenceHint, locale)
-            addFieldCandidate("roaster", pass.result.roaster, photo, pass, confidenceHint, locale)
-            addFieldCandidate("origin", pass.result.origin, photo, pass, confidenceHint, locale)
-            addFieldCandidate("region", pass.result.region, photo, pass, confidenceHint, locale)
-            addFieldCandidate("farm", pass.result.farm, photo, pass, confidenceHint, locale)
-            addFieldCandidate("variety", pass.result.variety, photo, pass, confidenceHint, locale)
-            addFieldCandidate("processType", pass.result.processType, photo, pass, confidenceHint, locale)
-            addFieldCandidate("altitude", pass.result.altitude, photo, pass, confidenceHint, locale)
-            addFieldCandidate("tastingNotes", pass.result.tastingNotes, photo, pass, confidenceHint, locale)
-            addFieldCandidate("roastLevel", pass.result.roastLevel, photo, pass, confidenceHint, locale)
-            addFieldCandidate("roastDate", pass.result.roastDate, photo, pass, confidenceHint, locale)
-            addFieldCandidate("expiryDate", pass.result.expiryDate, photo, pass, confidenceHint, locale)
-            addFieldCandidate("weight", pass.result.weight, photo, pass, confidenceHint, locale)
-            val decafSupportingBlock = pass.blocks.firstOrNull { block ->
-                CoffeeMetadataNormalizer.containsDecafMarker(block.text)
-            }
-            val decafSupportingText = decafSupportingBlock?.text
-                ?: pass.fullText.lineSequence().map(String::trim).firstOrNull { line ->
-                    CoffeeMetadataNormalizer.containsDecafMarker(line)
-                }
-            addDecafCandidate(
-                isDecaf = pass.result.isDecaf,
-                provenance = BagCandidateProvenance(
-                    sourceType = BagFieldSourceType.OCR,
-                    confidenceHint = pass.result.fieldConfidence["isDecaf"] ?: confidenceHint,
-                    supportingText = decafSupportingText,
-                    side = photo.side,
-                    previewUri = photo.uri,
-                    previewRect = decafSupportingBlock?.normalizedBounds(),
-                ),
-                rawValue = decafSupportingText,
-            )
-        }
-    }
-
-    private fun MutableList<BagFieldCandidate>.addFieldCandidate(
-        fieldName: String,
-        value: String?,
-        photo: ProcessedBagPhoto,
-        pass: ScanPass,
-        confidenceHint: BagFieldConfidence,
-        locale: Locale,
-    ) {
-        val cleanValue = value?.trim()?.takeIf { it.isNotBlank() } ?: return
-        val supportingBlock = findSupportingBlock(pass.blocks, cleanValue)
-        val normalized = normalizeMetadataField(fieldName, cleanValue, locale)
-        add(
-            BagFieldCandidate(
-                fieldName = fieldName,
-                value = normalized?.value ?: cleanValue,
-                rawValue = cleanValue,
-                canonicalKey = normalized?.canonicalKey,
-                sourceType = BagFieldSourceType.OCR,
-                side = photo.side,
-                confidenceHint = confidenceHint,
-                matchStrategy = normalized?.matchStrategy,
-                supportingText = supportingBlock?.text ?: pass.fullText.lineSequence().firstOrNull { line ->
-                    line.contains(cleanValue, ignoreCase = true)
-                },
-                previewUri = photo.uri,
-                previewRect = supportingBlock?.normalizedBounds(),
-            ),
-        )
-        addInferredMetadataCandidates(
-            normalized = normalized,
-            rawValue = cleanValue,
-            locale = locale,
-            provenance = BagCandidateProvenance(
-                sourceType = BagFieldSourceType.OCR,
-                confidenceHint = confidenceHint,
-                side = photo.side,
-                supportingText = supportingBlock?.text ?: pass.fullText.lineSequence().firstOrNull { line ->
-                    line.contains(cleanValue, ignoreCase = true)
-                },
-                previewUri = photo.uri,
-                previewRect = supportingBlock?.normalizedBounds(),
-            ),
-        )
-    }
-
-    private suspend fun buildQrLinkEnrichment(rawUrl: String?): QrLinkEnrichment {
-        val safeUrl = SafeQrLinkMetadataExplorer.sanitizePublicWebUrl(rawUrl)
-        if (rawUrl != null && safeUrl == null) {
-            return QrLinkEnrichment(
-                reviewHints = listOf(
-                    BagPhotoReviewHint(
-                        severity = BagReviewSeverity.INFO,
-                        message = "Ignored an unsafe QR link. Only public HTTPS pages are supported.",
-                    ),
-                ),
-            )
-        }
-        if (safeUrl == null) return QrLinkEnrichment()
-
-        // Never auto-explore — require user approval
-        return QrLinkEnrichment(
-            safeUrl = safeUrl,
-            reviewHints = listOf(
-                BagPhotoReviewHint(
-                    severity = BagReviewSeverity.INFO,
-                    message = "QR link found. Approve exploration to extract coffee details from the website.",
-                ),
-            ),
-        )
-    }
-
     fun exploreApprovedQrLink(url: String, onResult: (QrCoffeeMetadata?) -> Unit) {
         viewModelScope.launch {
             try {
@@ -1796,496 +1259,33 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
-    /**
-     * Common provenance bundle for [BagFieldCandidate]s — groups the source +
-     * confidence + UI traceability fields that travel together from OCR / OFF
-     * lookup / scan capture into the candidate ledger. Bundling avoids tripping
-     * detekt's [LongParameterList] on the candidate-builder extensions and
-     * keeps call sites readable.
-     */
-    private data class BagCandidateProvenance(
-        val sourceType: BagFieldSourceType,
-        val confidenceHint: BagFieldConfidence,
-        val supportingText: String? = null,
-        val side: BagCaptureSide? = null,
-        val previewUri: String? = null,
-        val previewRect: BagPhotoRect? = null,
-    )
-
-    private fun MutableList<BagFieldCandidate>.addDecafCandidate(
-        isDecaf: Boolean?,
-        provenance: BagCandidateProvenance,
-        rawValue: String? = null,
-    ) {
-        if (isDecaf != true) return
-        val cleanRawValue = rawValue?.trim()?.takeIf { it.isNotBlank() } ?: "decaf"
-        add(
-            BagFieldCandidate(
-                fieldName = "isDecaf",
-                value = "Decaf",
-                rawValue = cleanRawValue,
-                canonicalKey = "true",
-                sourceType = provenance.sourceType,
-                side = provenance.side,
-                confidenceHint = provenance.confidenceHint,
-                supportingText = provenance.supportingText,
-                previewUri = provenance.previewUri,
-                previewRect = provenance.previewRect,
-            ),
-        )
-    }
-
-    private fun normalizeMetadataField(
-        fieldName: String,
-        rawValue: String,
-        locale: Locale,
-    ): NormalizedCoffeeField? =
-        rawValue.takeIf { fieldName in CANONICAL_METADATA_FIELDS }
-            ?.let { CoffeeMetadataNormalizer.normalizeField(fieldName, it, locale) }
-
-    private fun MutableList<BagFieldCandidate>.addInferredMetadataCandidates(
-        normalized: NormalizedCoffeeField?,
-        rawValue: String,
-        locale: Locale,
-        provenance: BagCandidateProvenance,
-    ) {
-        normalized?.relatedCanonicalKeys
-            ?.filterKeys { it in BAG_PHOTO_FIELD_NAMES }
-            ?.forEach { (fieldName, canonicalKey) ->
-                val localizedValue = CoffeeMetadataNormalizer.displayField(
-                    fieldName = fieldName,
-                    canonicalKey = canonicalKey,
-                    fallbackRaw = rawValue,
-                    locale = locale,
-                ) ?: return@forEach
-                add(
-                    BagFieldCandidate(
-                        fieldName = fieldName,
-                        value = localizedValue,
-                        rawValue = rawValue,
-                        canonicalKey = canonicalKey,
-                        sourceType = provenance.sourceType,
-                        side = provenance.side,
-                        confidenceHint = inferredConfidence(provenance.confidenceHint),
-                        matchStrategy = CoffeeMetadataMatchStrategy.RELATION_INFERENCE,
-                        supportingText = provenance.supportingText,
-                        previewUri = provenance.previewUri,
-                        previewRect = provenance.previewRect,
-                    ),
-                )
-            }
-    }
-
-    private fun inferredConfidence(confidence: BagFieldConfidence): BagFieldConfidence = when (confidence) {
-        BagFieldConfidence.HIGH -> BagFieldConfidence.MEDIUM
-        BagFieldConfidence.MEDIUM -> BagFieldConfidence.LOW
-        BagFieldConfidence.LOW -> BagFieldConfidence.LOW
-        BagFieldConfidence.NEEDS_REVIEW -> BagFieldConfidence.NEEDS_REVIEW
-    }
-
-    /**
-     * Extracts a coffee-producing country name from an OFF `countries_tags` entry.
-     * Tags use the format `en:ethiopia`, `en:costa-rica`, etc.
-     * Returns the canonical display name if the tag matches a known [CoffeeOrigin.Known],
-     * or null if the country is not a coffee producer.
-     */
-    private fun coffeeProducingCountryFromTag(tag: String): String? {
-        val countryPart = tag.substringAfter(":", tag)
-            .replace("-", " ")
-            .trim()
-            .lowercase()
-        return CoffeeOrigin.Known.entries.firstOrNull { origin ->
-            origin.displayName.lowercase() == countryPart
-        }?.displayName
-    }
-
     private fun splitMetadataValues(values: String): List<String> = values
         .split(",")
         .map(String::trim)
         .filter(String::isNotBlank)
 
-    private suspend fun findLocalBagByBarcode(barcode: String?): CoffeeBagEntity? {
-        val repository = coffeeBagRepository ?: return null
-        val rawBarcode = barcode?.trim()?.takeIf { it.isNotBlank() } ?: return null
-        val normalizedBarcode = BarcodeInsights.normalizeBarcode(rawBarcode)
-
-        return when {
-            normalizedBarcode != null && normalizedBarcode != rawBarcode -> {
-                repository.findByBarcode(normalizedBarcode)
-                    ?: repository.findByBarcode(rawBarcode)
-            }
-            normalizedBarcode != null -> repository.findByBarcode(normalizedBarcode)
-            else -> repository.findByBarcode(rawBarcode)
-        }
-    }
-
-    // --- LLM enrichment for photo pipeline ---
-
-    private suspend fun readPhotoBytesForLlm(uriStr: String): ByteArray? =
-        withContext(Dispatchers.IO) {
-            val uri = uriStr.toUri()
-            val input = if (uri.scheme == "content") {
-                application?.contentResolver?.openInputStream(uri)
-            } else {
-                val file = java.io.File(uri.path ?: uriStr)
-                file.inputStream()
-            } ?: return@withContext null
-
-            input.use { stream -> readBytesCapped(stream, MAX_LLM_PHOTO_BYTES) }
-        }
-
-    private fun readBytesCapped(input: InputStream, maxBytes: Int): ByteArray? {
-        val output = ByteArrayOutputStream()
-        val buffer = ByteArray(LLM_READ_BUFFER_SIZE)
-        var total = 0
-        while (true) {
-            val read = input.read(buffer)
-            if (read < 0) break
-            total += read
-            if (total > maxBytes) {
-                Log.w(BAG_PHOTO_TAG, "Skipping LLM enrichment: photo exceeds ${maxBytes / (1024 * 1024)}MB")
-                return null
-            }
-            output.write(buffer, 0, read)
-        }
-        return output.toByteArray()
-    }
-
-    private suspend fun tryLlmEnrichment(
-        photoUriList: List<String>,
-        processedPhotos: List<ProcessedBagPhoto>,
-        allCandidates: List<BagFieldCandidate>,
-        combinedOcrText: String,
-        knownFieldValues: KnownFieldValues,
-    ): LlmEnrichmentOutcome {
-        if (!llmProvider.isAvailable()) {
-            return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.UNAVAILABLE)
-        }
-
-        // Primary-source mode: ask the LLM about every field, not just the
-        // ones OCR couldn't resolve. The LLM should be able to verify and,
-        // where appropriate, correct OCR/lookup values by re-reading the label.
-        val fieldsNeeded = BAG_PHOTO_FIELD_NAMES.toSet()
-
-        // Assemble all HIGH/MEDIUM-confidence candidates already gathered, not
-        // just OCR. The LLM prompt treats each source (USER / LOOKUP / OCR / LLM)
-        // with different trust rules, so barcode/QR lookup results MUST reach
-        // the LLM too — otherwise it will hallucinate over known product data.
-        val existingFields = BagFieldContextMapper.buildExistingFieldsContext(allCandidates)
-
-        // Read the best-quality photo bytes
-        val bestPhotoUri = processedPhotos.maxByOrNull { it.quality.blurScore }?.uri
-            ?: photoUriList.firstOrNull()
-        val photoBytes = bestPhotoUri?.let { uri ->
-            try {
-                readPhotoBytesForLlm(uri)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Log.w(BAG_PHOTO_TAG, "Failed to read photo bytes for LLM enrichment", e)
-                null
-            }
-        } ?: return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
-
-        return tryLlmEnrichment(
-            photoBytes = photoBytes,
-            existingFields = existingFields,
-            fieldsNeeded = fieldsNeeded,
-            rawOcrText = combinedOcrText.takeIf { it.isNotBlank() },
-            knownFieldValues = knownFieldValues,
-        )
-    }
-
-    private suspend fun tryLlmEnrichment(
-        photoBytes: ByteArray,
-        existingFields: Map<String, com.adsamcik.starlitcoffee.domain.scanfield.FieldContext>,
-        fieldsNeeded: Set<String>,
-        rawOcrText: String?,
-        knownFieldValues: KnownFieldValues?,
-    ): LlmEnrichmentOutcome {
-        if (!llmProvider.isAvailable()) {
-            return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.UNAVAILABLE)
-        }
-
-        val imageHash = LlmCacheKey.compute(
-            imageBytes = photoBytes,
-            fieldsNeeded = fieldsNeeded,
-            rawOcrText = rawOcrText,
-            existingFields = existingFields,
-        )
-        llmCache.get(imageHash)?.let { cached ->
-            return LlmEnrichmentOutcome(
-                candidates = cached.fieldCandidates,
-                status = LlmEnrichmentStatus.SUCCEEDED,
-            )
-        }
-
-        val request = LlmExtractionRequest(
-            imageBytes = photoBytes,
-            existingFields = existingFields,
-            fieldsNeeded = fieldsNeeded,
-            rawOcrText = rawOcrText,
-            knownFieldValues = knownFieldValues,
-        )
-        val result = try {
-            MindlayerLlmCallGate.withPermit {
-                withTimeout(BAG_PHOTO_LLM_TIMEOUT_MS) {
-                    llmProvider.extractBagFields(request)
-                }
-            }
-        } catch (_: TimeoutCancellationException) {
-            LlmExtractionResult.Failed(
-                "Brew photo LLM enrichment timed out after ${BAG_PHOTO_LLM_TIMEOUT_MS / 1000}s",
-                retryable = true,
-            )
-        } catch (e: CancellationException) {
-            throw e
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-            LlmExtractionResult.Failed("Brew photo LLM enrichment threw: ${e.message}", retryable = true)
-        }
-
-        return when (result) {
-            is LlmExtractionResult.Success -> {
-                llmCache.put(imageHash, result)
-                LlmEnrichmentOutcome(
-                    candidates = result.fieldCandidates,
-                    status = LlmEnrichmentStatus.SUCCEEDED,
-                )
-            }
-            is LlmExtractionResult.Unavailable -> {
-                Log.w(BAG_PHOTO_TAG, "LLM enrichment unavailable: ${result.reason}")
-                LlmEnrichmentOutcome(status = LlmEnrichmentStatus.UNAVAILABLE)
-            }
-            is LlmExtractionResult.Failed -> {
-                Log.w(BAG_PHOTO_TAG, "LLM enrichment failed: ${result.error}")
-                LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
-            }
-        }
-    }
-
-    /**
-     * If a visual-only field is still unsettled after the text pass, run the
-     * multimodal vision pass and fold its (post-filtered) candidates into
-     * [allCandidates]. No-op when the provider can't do vision, nothing is
-     * missing, or the per-process vision budget is spent.
-     */
-    private suspend fun runVisionEnrichmentIfNeeded(
-        photoUriList: List<String>,
-        processedPhotos: List<ProcessedBagPhoto>,
-        allCandidates: MutableList<BagFieldCandidate>,
-    ) {
-        // Honour an in-flight "Skip AI" (and never run on a process whose chat
-        // engine isn't available) before the (slow) vision pass.
-        if (bagPhotoSkipRequested) return
-        if (!llmProvider.supportsVision() || !llmProvider.isAvailable()) return
-        val preVisionEvidence = resolveBagPhotoFieldEvidence(allCandidates)
-        val visionFields = BagVisionPlanner.selectVisionFields(preVisionEvidence)
-        if (visionFields.isEmpty()) return
-
-        val visionOutcome = tryVisionLlmEnrichment(
-            photoUriList = photoUriList,
-            processedPhotos = processedPhotos,
-            existingCandidates = allCandidates.toList(),
-            fieldsNeeded = visionFields,
-            knownFieldValues = _knownFieldValues.value,
-        )
-        allCandidates += BagVisionPlanner.filterVisionCandidates(visionOutcome.candidates, preVisionEvidence)
-    }
-
-    private suspend fun tryVisionLlmEnrichment(
-        photoUriList: List<String>,
-        processedPhotos: List<ProcessedBagPhoto>,
-        existingCandidates: List<BagFieldCandidate>,
-        fieldsNeeded: Set<String>,
-        knownFieldValues: KnownFieldValues,
-    ): LlmEnrichmentOutcome {
-        val existingFields = BagFieldContextMapper.buildExistingFieldsContext(existingCandidates)
-        val bestPhotoUri = processedPhotos.maxByOrNull { it.quality.blurScore }?.uri
-            ?: photoUriList.firstOrNull()
-        val photoBytes = bestPhotoUri?.let { uri ->
-            try {
-                readPhotoBytesForLlm(uri)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-                Log.w(BAG_PHOTO_TAG, "Failed to read photo bytes for vision pass", e)
-                null
-            }
-        } ?: return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
-
-        val cacheKey = LlmCacheKey.compute(
-            imageBytes = photoBytes,
-            fieldsNeeded = fieldsNeeded,
-            rawOcrText = null,
-            existingFields = existingFields,
-            mode = "vision",
-        )
-        llmCache.get(cacheKey)?.let { cached ->
-            return LlmEnrichmentOutcome(
-                candidates = cached.fieldCandidates,
-                status = LlmEnrichmentStatus.SUCCEEDED,
-            )
-        }
-
-        val request = LlmExtractionRequest(
-            imageBytes = photoBytes,
-            existingFields = existingFields,
-            fieldsNeeded = fieldsNeeded,
-            rawOcrText = null,
-            knownFieldValues = knownFieldValues,
-        )
-        val result = try {
-            MindlayerLlmCallGate.withPermit {
-                withTimeout(BAG_PHOTO_VISION_TIMEOUT_MS) {
-                    llmProvider.extractBagFieldsWithVision(request)
-                }
-            }
-        } catch (_: TimeoutCancellationException) {
-            LlmExtractionResult.Failed("Vision enrichment timed out", retryable = false)
-        } catch (e: CancellationException) {
-            throw e
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-            LlmExtractionResult.Failed("Vision enrichment threw: ${e.message}", retryable = false)
-        }
-
-        return when (result) {
-            is LlmExtractionResult.Success -> {
-                llmCache.put(cacheKey, result)
-                LlmEnrichmentOutcome(
-                    candidates = result.fieldCandidates,
-                    status = LlmEnrichmentStatus.SUCCEEDED,
-                )
-            }
-            is LlmExtractionResult.Unavailable -> {
-                Log.w(BAG_PHOTO_TAG, "Vision enrichment unavailable: ${result.reason}")
-                LlmEnrichmentOutcome(status = LlmEnrichmentStatus.UNAVAILABLE)
-            }
-            is LlmExtractionResult.Failed -> {
-                Log.w(BAG_PHOTO_TAG, "Vision enrichment failed: ${result.error}")
-                LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
-            }
-        }
-    }
-
-    private fun confidenceHintForPass(
-        quality: BagCaptureQuality,
-        blockCount: Int,
-    ): BagFieldConfidence = when {
-        quality.readyForCapture && blockCount >= 2 -> BagFieldConfidence.MEDIUM
-        quality.textDetected -> BagFieldConfidence.LOW
-        else -> BagFieldConfidence.NEEDS_REVIEW
-    }
-
-    private fun findSupportingBlock(
-        blocks: List<OcrFieldExtractor.OcrTextBlock>,
-        value: String,
-    ): OcrFieldExtractor.OcrTextBlock? {
-        val normalizedValue = normalizeMatchText(value)
-        if (normalizedValue.isBlank()) return null
-
-        blocks.firstOrNull { block ->
-            normalizeMatchText(block.text).contains(normalizedValue)
-        }?.let { return it }
-
-        val targetTokens = normalizedValue.split(" ").filter { it.length >= 3 }
-        if (targetTokens.isEmpty()) return null
-
-        return blocks.maxByOrNull { block ->
-            val normalizedBlock = normalizeMatchText(block.text)
-            targetTokens.count { token -> normalizedBlock.contains(token) }
-        }?.takeIf { block ->
-            val normalizedBlock = normalizeMatchText(block.text)
-            targetTokens.any { token -> normalizedBlock.contains(token) }
-        }
-    }
-
-    private fun normalizeMatchText(text: String): String =
-        text.lowercase().replace(Regex("[^\\p{L}\\p{N}]+"), " ").trim()
-
-    /**
-     * Run Mindlayer OCR on [bitmap]. Returns `null` when no OCR service is
-     * wired (e.g. tests, fallback path) or when the service fails for any
-     * reason — callers degrade by treating the photo as "no text".
-     */
-    private suspend fun recognizeText(bitmap: Bitmap): RecognizedText? {
-        val service = ocrService ?: return null
-        return service.recognize(bitmap)
-    }
-
-    /**
-     * Merge the per-photo OCR text into a single string with side-labeled
-     * sections. Front-of-bag photos typically carry the prominent brand /
-     * name / origin / tasting-note text; back-of-bag photos carry the
-     * structured metadata strip (date, weight, batch, EAN, process method,
-     * altitude). Surfacing both halves in one prompt — with explicit
-     * `--- FRONT ---` / `--- BACK ---` headers — lets the LLM know which
-     * region a given token came from so a back-of-bag "12.12.2025" reads
-     * as a roastDate rather than a stray number, and a front-of-bag word
-     * like "Wildkaffee" reads as a name even when the back also has it.
-     *
-     * Photos whose OCR returned no text are dropped silently rather than
-     * emitting an empty section header — the LLM tolerates a missing side
-     * but a header-with-no-content confuses the section-routing heuristic.
-     *
-     * Section markers use ASCII so the OCR-text triple-quote escaping in
-     * `buildExtractionPrompt` doesn't trip on them.
-     */
-    private fun combineOcrTextBySide(photos: List<ProcessedBagPhoto>): String =
-        BagOcrTextMerger.combineBySide(photos.map { it.side to it.fullText })
-
-    private suspend fun scanBarcodes(
-        scanner: com.google.mlkit.vision.barcode.BarcodeScanner,
-        bitmap: Bitmap,
-    ): List<Barcode>? = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
-        scanner.process(InputImage.fromBitmap(bitmap, 0))
-            .addOnSuccessListener { codes -> cont.resume(codes) }
-            .addOnFailureListener { cont.resume(null) }
-    }
-
-    private data class ProcessedBagPhoto(
-        val uri: String,
-        val side: BagCaptureSide,
-        val quality: BagCaptureQuality,
-        val passes: List<ScanPass>,
-        val fullText: String,
-        val detectedBarcode: String?,
-        val detectedQrUrl: String?,
-    )
-
-    private data class QrLinkEnrichment(
-        val safeUrl: String? = null,
-        val candidates: List<BagFieldCandidate> = emptyList(),
-        val reviewHints: List<BagPhotoReviewHint> = emptyList(),
-    )
-
-    private data class LlmEnrichmentOutcome(
-        val candidates: List<BagFieldCandidate> = emptyList(),
-        val status: LlmEnrichmentStatus = LlmEnrichmentStatus.NOT_RUN,
-    )
-
     private data class BagPhotoLlmRetryContext(
         val photosCsv: String,
         val photoUriList: List<String>,
-        val processedPhotos: List<ProcessedBagPhoto>,
-        val baseCandidates: List<BagFieldCandidate>,
-        val combinedOcrText: String,
         val knownFieldValues: KnownFieldValues,
-        val detectedBarcode: String?,
-        val detectedQrUrl: String?,
-        val offLookupName: String?,
-        val offLookupRoaster: String?,
-        val photoAnalyses: List<BagPhotoAnalysis>,
-        val reviewHints: List<BagPhotoReviewHint>,
-    )
-
-    private data class ScanPass(
-        val label: String,
-        val result: OcrFieldExtractor.OcrExtractionResult,
-        val blocks: List<OcrFieldExtractor.OcrTextBlock>,
-        val fullText: String,
     )
 
     fun clearBagPhotoResult() {
+        bagPhotoLlmRetryContext = null
+        _bagPhotoResult.value = null
+    }
+
+    /**
+     * Cancels any in-flight bag-photo extraction and clears the result. Used by
+     * the guided scan flow when the user discards the session so a stale pass
+     * can't land in [bagPhotoResult] after the user has left.
+     */
+    fun cancelBagPhotoProcessing() {
+        bagPhotoProcessJob?.cancel()
+        bagPhotoProcessJob = null
+        bagPhotoLlmDeferred?.cancel()
+        bagPhotoLlmDeferred = null
+        if (useWorkManager) BagExtractionScheduler.cancel(requireNotNull(application))
         bagPhotoLlmRetryContext = null
         _bagPhotoResult.value = null
     }
@@ -2299,6 +1299,61 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     fun skipBagPhotoLlm() {
         bagPhotoSkipRequested = true
         bagPhotoLlmDeferred?.cancel()
+        val context = bagPhotoLlmRetryContext ?: return
+        bagPhotoProcessJob?.cancel()
+        bagPhotoLlmDeferred = null
+        if (useWorkManager) {
+            enqueueBagExtraction(context, runLlm = false)
+        } else {
+            runBagPhotoProcessingInViewModel(context, runLlm = false)
+        }
+    }
+
+    private fun observeBagExtractionWork() {
+        val app = application ?: return
+        viewModelScope.launch {
+            BagExtractionScheduler.workInfoFlow(app).collect { workInfo ->
+                when (workInfo?.state) {
+                    WorkInfo.State.SUCCEEDED -> handleSucceededBagExtraction(workInfo)
+                    WorkInfo.State.FAILED -> handleFailedBagExtraction(workInfo)
+                    else -> Unit
+                }
+            }
+        }
+    }
+
+    private fun handleSucceededBagExtraction(workInfo: WorkInfo) {
+        val workId = workInfo.id.toString()
+        if (isBagExtractionWorkConsumed(workId)) return
+        val json = workInfo.outputData.getString(BagExtractionWorker.KEY_RESULT_JSON)
+        if (json.isNullOrBlank()) return
+        try {
+            deliverBagPhotoResult(decodeBagExtractionResult(json))
+        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            Log.e("BrewViewModel", "Failed to decode bag extraction result", error)
+            deliverBagPhotoResult(BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE))
+        }
+        markBagExtractionWorkConsumed(workId)
+    }
+
+    private fun handleFailedBagExtraction(workInfo: WorkInfo) {
+        val workId = workInfo.id.toString()
+        if (isBagExtractionWorkConsumed(workId)) return
+        deliverBagPhotoResult(BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE))
+        markBagExtractionWorkConsumed(workId)
+    }
+
+    private fun isBagExtractionWorkConsumed(workId: String): Boolean =
+        application
+            ?.getSharedPreferences(BAG_SCAN_PREFS, Context.MODE_PRIVATE)
+            ?.getString(KEY_LAST_CONSUMED_WORK_ID, null) == workId
+
+    private fun markBagExtractionWorkConsumed(workId: String) {
+        application
+            ?.getSharedPreferences(BAG_SCAN_PREFS, Context.MODE_PRIVATE)
+            ?.edit()
+            ?.putString(KEY_LAST_CONSUMED_WORK_ID, workId)
+            ?.apply()
     }
 
     /**
@@ -2311,15 +1366,56 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     /**
-     * Promotes a background-completed result into the foreground so the existing
-     * [bagPhotoResult] observer opens the form. Invoked from the nav host when
-     * the user taps the "bag analysis complete" notification. No-op when nothing
-     * is pending (e.g. the process was restarted and the result was lost).
+     * Promotes a background-completed result into a dedicated review-open channel
+     * so the bag inventory opens the analyzed form. Invoked from the nav host when
+     * the user taps the "bag analysis complete" notification. No-op when nothing is
+     * pending (e.g. the process was restarted and the in-memory result was lost).
      */
     fun promoteBackgroundResultToForeground() {
         val pending = _completedBackgroundResult.value ?: return
         _completedBackgroundResult.value = null
-        _bagPhotoResult.value = pending
+        _pendingScanReview.value = pending
+    }
+
+    /** Clears the review-open intent once BagInventory has shown the form. */
+    fun consumePendingScanReview() {
+        _pendingScanReview.value = null
+    }
+
+    /**
+     * Recovers the analyzed-bag result for the notification deep link by reading
+     * WorkManager's PERSISTED output, then routes it to the dedicated review-open
+     * channel. This is durable across Activity/ViewModel recreation (the
+     * notification intent uses FLAG_ACTIVITY_CLEAR_TOP, which can recreate the
+     * Activity and clear the in-memory [_completedBackgroundResult]) and across
+     * process death. Falls back to the in-memory promote when WorkManager isn't
+     * in use (e.g. unit tests with no Application).
+     */
+    fun openLastBagExtractionResult() {
+        val app = application
+        if (app == null || !useWorkManager) {
+            promoteBackgroundResultToForeground()
+            return
+        }
+        viewModelScope.launch {
+            val workInfo = withContext(Dispatchers.IO) { BagExtractionScheduler.currentWorkInfo(app) }
+            if (workInfo?.state != WorkInfo.State.SUCCEEDED) {
+                promoteBackgroundResultToForeground()
+                return@launch
+            }
+            val json = workInfo.outputData.getString(BagExtractionWorker.KEY_RESULT_JSON)
+            if (json.isNullOrBlank()) {
+                promoteBackgroundResultToForeground()
+                return@launch
+            }
+            _completedBackgroundResult.value = null
+            _pendingScanReview.value = try {
+                decodeBagExtractionResult(json)
+            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                Log.e("BrewViewModel", "Failed to decode deep-link bag result", error)
+                BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE)
+            }
+        }
     }
 
     fun resetBrew() {

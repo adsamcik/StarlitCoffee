@@ -319,6 +319,7 @@
     <string name="action_run_in_background">Continuar en segundo plano</string>
     <string name="notif_channel_bag_analysis">Análisis de bolsa</string>
     <string name="notif_channel_bag_analysis_desc">Te avisa cuando la IA termina de leer la etiqueta de una bolsa de café.</string>
+    <string name="notif_scan_progress_title">Leyendo la etiqueta de la bolsa…</string>
     <string name="notif_bag_analysis_title">Análisis de bolsa completado</string>
     <string name="notif_bag_analysis_body">Toca para revisar los detalles encontrados.</string>
     <string name="format_notif_bag_analysis_body">Toca para revisar %1$s.</string>
@@ -487,6 +488,18 @@
     <string name="action_run_test_prompt">Ejecutar prompt de prueba</string>
     <string name="label_testing">Probando…</string>
 
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Activar IA</string>
+    <string name="consent_requesting">Solicitando acceso a la IA…</string>
+    <string name="consent_granted">IA activada</string>
+    <string name="consent_already_approved">La IA ya está activada</string>
+    <string name="consent_still_unavailable">La IA está aprobada, pero el servicio aún no está listo</string>
+    <string name="consent_declined">No se concedió acceso a la IA</string>
+    <string name="consent_denied_temporary">Acceso a la IA denegado — inténtalo de nuevo más tarde</string>
+    <string name="consent_denied_permanent">El acceso a la IA está bloqueado — desbloquéalo en la app Mindlayer</string>
+    <string name="consent_service_unavailable">El servicio de IA de Mindlayer no está disponible</string>
+    <string name="consent_failed">No se pudo solicitar acceso a la IA</string>
+
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">¿Qué tal la última taza?</string>
     <string name="label_what_was_off">¿Qué falló?</string>
@@ -533,7 +546,7 @@
     <string name="action_retake_photo">Repetir foto</string>
     <string name="action_add_details_manually">Añadir detalles manualmente</string>
     <string name="msg_llm_enrichment_succeeded">El enriquecimiento con IA mejoró este escaneo de etiqueta.</string>
-    <string name="msg_llm_enrichment_failed">El enriquecimiento con IA falló. Puedes reintentarlo o seguir editando manualmente.</string>
+    <string name="msg_llm_enrichment_failed">La IA no pudo terminar de leer esta etiqueta esta vez: se agotó el tiempo o hubo un error temporal (ya lo reintentó automáticamente). Toca Reintentar para probar otra vez, o rellena los campos de abajo.</string>
     <string name="msg_llm_enrichment_unavailable">El enriquecimiento con IA no está disponible ahora. Puedes reintentarlo o seguir editando manualmente.</string>
     <string name="action_retry_llm_enrichment">Reintentar enriquecimiento con IA</string>
 
@@ -683,4 +696,19 @@
     <string name="process_pulped_natural">Despulpado natural</string>
     <string name="process_double_fermented">Doble fermentación</string>
     <string name="process_thermal_shock">Choque térmico</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Centra el frente de la bolsa en el marco</string>
+    <string name="guided_scan_aim_back">Ahora escanea el reverso de la bolsa</string>
+    <string name="guided_scan_aim_more">Añadir otra foto (opcional)</string>
+    <string name="guided_scan_hold_steady">Mantén firme…</string>
+    <string name="guided_scan_skip_photos">Omitir fotos</string>
+    <string name="guided_scan_finished">Listo</string>
+    <string name="guided_scan_auto_on">Auto activado</string>
+    <string name="guided_scan_auto_off">Auto desactivado</string>
+    <string name="guided_scan_capture">Tomar foto</string>
+    <string name="guided_scan_scan_more">Escanear más fotos</string>
+    <string name="scan_warn_glare">Reduce el reflejo</string>
+    <string name="scan_warn_lighting">Mejora la iluminación</string>
+    <string name="cd_remove_photo">Quitar foto</string>
+    <string name="msg_bag_saved">Bolsa guardada</string>
 </resources>
