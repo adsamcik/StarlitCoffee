@@ -9,6 +9,22 @@
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
+    <!--
+        Package visibility (Android 11+) for the Mindlayer on-device AI service.
+        The SDK binds to this service across processes; without an explicit
+        <queries> entry, bindService() silently returns false ("service not
+        found") because the target package is filtered out. Visibility used to
+        come implicitly from the com.adsamcik.mindlayer.permission.BIND_ML_SERVICE
+        uses-permission, but Mindlayer no longer defines that permission, so the
+        app must declare the service packages directly. Both the release and
+        debug service variants are listed because the SDK binds the variant that
+        matches the build type.
+    -->
+    <queries>
+        <package android:name="com.adsamcik.mindlayer.service" />
+        <package android:name="com.adsamcik.mindlayer.service.debug" />
+    </queries>
+
     <application
         android:name=".StarlitCoffeeApp"
         android:allowBackup="true"
