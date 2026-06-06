@@ -191,6 +191,7 @@ fun AddBagSheet(
     onScanBarcode: (() -> Unit)? = null,
     onExploreQrUrl: ((String, (QrCoffeeMetadata?) -> Unit) -> Unit)? = null,
     onRetryLlmEnrichment: (() -> Unit)? = null,
+    onEnableAi: (() -> Unit)? = null,
 ) {
     val uriHandler = LocalUriHandler.current
     val locale = LocalLocale.current.platformLocale
@@ -409,6 +410,7 @@ fun AddBagSheet(
                             status = llmStatus,
                             hasLlmEvidence = hasLlmEvidence,
                             onRetry = onRetryLlmEnrichment,
+                            onEnableAi = onEnableAi,
                         )
                         if (!snapApproveMode) {
                             selectedEvidence?.let { evidence ->
@@ -1380,6 +1382,7 @@ private fun LlmEnrichmentStatusCard(
     status: LlmEnrichmentStatus,
     hasLlmEvidence: Boolean,
     onRetry: (() -> Unit)?,
+    onEnableAi: (() -> Unit)? = null,
 ) {
     if (status == LlmEnrichmentStatus.NOT_RUN ||
         status == LlmEnrichmentStatus.SUCCEEDED && !hasLlmEvidence
@@ -1412,9 +1415,21 @@ private fun LlmEnrichmentStatusCard(
                     MaterialTheme.colorScheme.onSurfaceVariant
                 },
             )
-            if (canRetry && onRetry != null) {
-                TextButton(onClick = onRetry) {
-                    Text(stringResource(R.string.action_retry_llm_enrichment))
+            when {
+                // "Unavailable" is usually "Mindlayer is installed but this app
+                // was never authorised". Offer an explicit authorization prompt
+                // instead of a retry that can't succeed without consent;
+                // requestConsent also covers the already-approved + service-down
+                // cases (it just rebinds and re-runs).
+                status == LlmEnrichmentStatus.UNAVAILABLE && onEnableAi != null -> {
+                    TextButton(onClick = onEnableAi) {
+                        Text(stringResource(R.string.action_enable_ai))
+                    }
+                }
+                canRetry && onRetry != null -> {
+                    TextButton(onClick = onRetry) {
+                        Text(stringResource(R.string.action_retry_llm_enrichment))
+                    }
                 }
             }
         }

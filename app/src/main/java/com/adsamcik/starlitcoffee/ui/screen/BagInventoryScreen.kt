@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -53,7 +54,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.StarlitCoffeeApp
 import com.adsamcik.starlitcoffee.ui.component.AddBagSheet
+import com.adsamcik.starlitcoffee.ui.component.ConsentOutcome
+import com.adsamcik.starlitcoffee.ui.component.messageRes
+import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerConsentFlow
 import com.adsamcik.starlitcoffee.ui.component.BagCard
 import com.adsamcik.starlitcoffee.ui.component.BagDetailSheet
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
@@ -503,7 +508,27 @@ fun BagInventoryScreen(
 
     val coroutineScope = androidx.compose.runtime.rememberCoroutineScope()
 
-    // Add bag bottom sheet
+    // First-run AI authorization. When the bag-photo LLM enrichment comes back
+    // UNAVAILABLE — typically because Mindlayer is installed but the user has
+    // never granted this app consent — the Add-bag screen offers an explicit
+    // "Enable AI" action wired here. On grant we rebind Mindlayer and re-run the
+    // enrichment so the user doesn't have to retry by hand. requestConsent
+    // also resolves the already-approved / not-installed cases gracefully.
+    val aiConsentFlow = rememberMindlayerConsentFlow { outcome ->
+        when (outcome) {
+            ConsentOutcome.GRANTED, ConsentOutcome.ALREADY_APPROVED -> coroutineScope.launch {
+                (context.applicationContext as? StarlitCoffeeApp)?.reconnectMindlayer()
+                brewViewModel.retryBagPhotoLlm()
+            }
+            else -> Toast.makeText(
+                context,
+                context.getString(outcome.messageRes()),
+                Toast.LENGTH_LONG,
+            ).show()
+        }
+    }
+
+    // Add bag sheet
     val brewNowLabel = stringResource(R.string.action_brew_now)
     if (showAddSheet) {
         AddBagSheet(
@@ -528,6 +553,7 @@ fun BagInventoryScreen(
             onRetryLlmEnrichment = {
                 brewViewModel.retryBagPhotoLlm()
             },
+            onEnableAi = aiConsentFlow.request,
             onDismiss = {
                 showAddSheet = false
                 isProcessingScan = false
