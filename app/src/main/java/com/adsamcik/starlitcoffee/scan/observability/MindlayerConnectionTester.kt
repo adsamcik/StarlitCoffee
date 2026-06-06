@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.scan.observability
 
 import android.content.Context
 import com.adsamcik.mindlayer.sdk.ConnectionState
+import com.adsamcik.mindlayer.sdk.InferenceBackend
 import com.adsamcik.mindlayer.sdk.InferenceEvent
 import com.adsamcik.mindlayer.sdk.Mindlayer
 import kotlinx.coroutines.withTimeoutOrNull
@@ -126,6 +127,10 @@ object MindlayerConnectionTester {
             var tokenCount = 0
             val startMs = System.currentTimeMillis()
 
+            // Pin the safe CPU backend before infer{} triggers engine creation
+            // (see [prewarmCpuBestEffort]).
+            mindlayer.prewarmCpuBestEffort()
+
             // v1 canonical ephemeral one-shot. The infer{} bridge replays a
             // Started → TextDelta → Done stream (token-level streaming is not
             // exposed through this path in alpha), so tokenCount reflects the
@@ -178,6 +183,30 @@ object MindlayerConnectionTester {
             )
         } finally {
             mindlayer.disconnect()
+        }
+    }
+
+    /**
+     * Pin the safe CPU backend before an `infer{}` call triggers engine
+     * creation. Without this, a cold service process initialises the engine
+     * with its default backend (GPU), and LiteRT-LM's `nativeCreateEngine`
+     * SIGSEGVs while log-formatting the engine config on the emulator's
+     * software GPU (tombstone: `strlen` <- `vsnprintf` <- `__android_log_print`
+     * in `liblitertlm_jni.so`; tracked as LiteRT-LM #1686 / #2028). The
+     * production extraction path does the same prewarm; this diagnostic must
+     * mirror it or it reintroduces the very crash that guard avoids.
+     *
+     * Best-effort: a prewarm failure is non-fatal — the subsequent infer call
+     * surfaces a clean error if the service is genuinely down.
+     */
+    private suspend fun Mindlayer.prewarmCpuBestEffort() {
+        @Suppress("TooGenericExceptionCaught")
+        try {
+            prewarm(InferenceBackend.CPU)
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (_: Exception) {
+            // Fall through to infer; it reports a meaningful failure.
         }
     }
 }
