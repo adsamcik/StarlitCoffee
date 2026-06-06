@@ -304,6 +304,18 @@
     <string name="cd_notif_rating_4">Ohodnotit 4 z 5 hvězd</string>
     <string name="cd_notif_rating_5">Ohodnotit 5 z 5 hvězd</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analýza balení</string>
+    <string name="msg_analyzing_bag_subtitle">AI čte etiketu a doplňuje údaje. Může to chvíli trvat.</string>
+    <string name="msg_analyzing_bag_background_hint">Aplikaci můžete dál používat — až bude hotovo, dáme vám vědět.</string>
+    <string name="action_skip_ai">Přeskočit AI</string>
+    <string name="action_run_in_background">Pokračovat na pozadí</string>
+    <string name="notif_channel_bag_analysis">Analýza balení</string>
+    <string name="notif_channel_bag_analysis_desc">Upozorní vás, když AI dočte etiketu balení kávy.</string>
+    <string name="notif_bag_analysis_title">Analýza balení dokončena</string>
+    <string name="notif_bag_analysis_body">Klepnutím zkontrolujete zjištěné údaje.</string>
+    <string name="format_notif_bag_analysis_body">Klepnutím zkontrolujete %1$s.</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Připomínka hodnocení</string>
     <string name="msg_rating_reminder_hint">Odeslat upozornění ~30 minut po přípravě, abyste ji mohli ohodnotit, dokud máte chuť v paměti.</string>

@@ -311,6 +311,18 @@
     <string name="cd_notif_rating_4">Mit 4 von 5 Sternen bewerten</string>
     <string name="cd_notif_rating_5">Mit 5 von 5 Sternen bewerten</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Tüte wird analysiert</string>
+    <string name="msg_analyzing_bag_subtitle">Die KI liest das Etikett, um die Details auszufüllen. Das kann einen Moment dauern.</string>
+    <string name="msg_analyzing_bag_background_hint">Sie können die App weiter nutzen — wir benachrichtigen Sie, sobald es fertig ist.</string>
+    <string name="action_skip_ai">KI überspringen</string>
+    <string name="action_run_in_background">Im Hintergrund fortsetzen</string>
+    <string name="notif_channel_bag_analysis">Tütenanalyse</string>
+    <string name="notif_channel_bag_analysis_desc">Informiert Sie, wenn die KI ein Kaffeetüten-Etikett fertig gelesen hat.</string>
+    <string name="notif_bag_analysis_title">Tütenanalyse abgeschlossen</string>
+    <string name="notif_bag_analysis_body">Tippen Sie, um die gefundenen Details zu prüfen.</string>
+    <string name="format_notif_bag_analysis_body">Tippen Sie, um %1$s zu prüfen.</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Bewertungserinnerung</string>
     <string name="msg_rating_reminder_hint">Sendet ~30 Minuten nach einer Zubereitung eine Benachrichtigung, damit Sie sie bewerten können, solange der Geschmack frisch ist.</string>

@@ -315,6 +315,18 @@
     <string name="cd_notif_rating_4">Ohodnotiť 4 z 5 hviezdičiek</string>
     <string name="cd_notif_rating_5">Ohodnotiť 5 z 5 hviezdičiek</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analýza balenia</string>
+    <string name="msg_analyzing_bag_subtitle">AI číta etiketu a dopĺňa údaje. Môže to chvíľu trvať.</string>
+    <string name="msg_analyzing_bag_background_hint">Aplikáciu môžete ďalej používať — keď bude hotovo, dáme vám vedieť.</string>
+    <string name="action_skip_ai">Preskočiť AI</string>
+    <string name="action_run_in_background">Pokračovať na pozadí</string>
+    <string name="notif_channel_bag_analysis">Analýza balenia</string>
+    <string name="notif_channel_bag_analysis_desc">Upozorní vás, keď AI dočíta etiketu balenia kávy.</string>
+    <string name="notif_bag_analysis_title">Analýza balenia dokončená</string>
+    <string name="notif_bag_analysis_body">Klepnutím skontrolujete zistené údaje.</string>
+    <string name="format_notif_bag_analysis_body">Klepnutím skontrolujete %1$s.</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Pripomienka hodnotenia</string>
     <string name="msg_rating_reminder_hint">Pošle upozornenie ~30 minút po príprave, aby ste ju mohli ohodnotiť, kým je chuť čerstvá.</string>

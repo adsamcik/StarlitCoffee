@@ -311,6 +311,18 @@
     <string name="cd_notif_rating_4">Bedøm med 4 ud af 5 stjerner</string>
     <string name="cd_notif_rating_5">Bedøm med 5 ud af 5 stjerner</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analyserer din pose</string>
+    <string name="msg_analyzing_bag_subtitle">AI læser etiketten for at udfylde detaljerne. Det kan tage et øjeblik.</string>
+    <string name="msg_analyzing_bag_background_hint">Du kan fortsætte med at bruge appen — vi giver besked, når den er færdig.</string>
+    <string name="action_skip_ai">Spring AI over</string>
+    <string name="action_run_in_background">Fortsæt i baggrunden</string>
+    <string name="notif_channel_bag_analysis">Poseanalyse</string>
+    <string name="notif_channel_bag_analysis_desc">Fortæller dig, når AI er færdig med at læse en kaffeposes etikette.</string>
+    <string name="notif_bag_analysis_title">Poseanalyse fuldført</string>
+    <string name="notif_bag_analysis_body">Tryk for at gennemse de fundne detaljer.</string>
+    <string name="format_notif_bag_analysis_body">Tryk for at gennemse %1$s.</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Bedømmelsespåmindelse</string>
     <string name="msg_rating_reminder_hint">Send en notifikation ~30 minutter efter et bryg, så du kan bedømme det, mens smagen er frisk i hukommelsen.</string>

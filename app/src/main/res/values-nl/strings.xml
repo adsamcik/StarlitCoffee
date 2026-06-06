@@ -311,6 +311,18 @@
     <string name="cd_notif_rating_4">Beoordeel met 4 van 5 sterren</string>
     <string name="cd_notif_rating_5">Beoordeel met 5 van 5 sterren</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Je zak analyseren</string>
+    <string name="msg_analyzing_bag_subtitle">AI leest het etiket om de details in te vullen. Dit kan even duren.</string>
+    <string name="msg_analyzing_bag_background_hint">Je kunt de app blijven gebruiken — we laten het weten zodra het klaar is.</string>
+    <string name="action_skip_ai">AI overslaan</string>
+    <string name="action_run_in_background">Doorgaan op de achtergrond</string>
+    <string name="notif_channel_bag_analysis">Zakanalyse</string>
+    <string name="notif_channel_bag_analysis_desc">Laat je weten wanneer AI klaar is met het lezen van een koffiezak-etiket.</string>
+    <string name="notif_bag_analysis_title">Zakanalyse voltooid</string>
+    <string name="notif_bag_analysis_body">Tik om de gevonden details te bekijken.</string>
+    <string name="format_notif_bag_analysis_body">Tik om %1$s te bekijken.</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Beoordelingsherinnering</string>
     <string name="msg_rating_reminder_hint">Stuur ~30 minuten na een bereiding een melding zodat je kunt beoordelen terwijl de smaak nog vers is.</string>

@@ -181,6 +181,18 @@ fun StarlitNavHost() {
         }
     }
 
+    // Notification deep link → analyzed coffee-bag form. The BrewViewModel holds
+    // the result that finished in the background; navigate to the bag inventory
+    // and promote it so the screen's bagPhotoResult observer opens the form.
+    val pendingBagAnalysis by DeepLinkBus.pendingBagAnalysis.collectAsStateWithLifecycle()
+    LaunchedEffect(pendingBagAnalysis) {
+        if (pendingBagAnalysis && prefs.onboardingCompleted) {
+            navController.navigate(BagInventory)
+            brewViewModel.promoteBackgroundResultToForeground()
+            DeepLinkBus.consumeBagAnalysisReady()
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {

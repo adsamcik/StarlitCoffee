@@ -311,6 +311,18 @@
     <string name="cd_notif_rating_4">Rate 4 of 5 stars</string>
     <string name="cd_notif_rating_5">Rate 5 of 5 stars</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analyzing your bag</string>
+    <string name="msg_analyzing_bag_subtitle">AI is reading the label to fill in the details. This can take a moment.</string>
+    <string name="msg_analyzing_bag_background_hint">You can keep using the app — we\'ll notify you when it\'s done.</string>
+    <string name="action_skip_ai">Skip AI</string>
+    <string name="action_run_in_background">Continue in background</string>
+    <string name="notif_channel_bag_analysis">Bag analysis</string>
+    <string name="notif_channel_bag_analysis_desc">Tells you when AI has finished reading a coffee bag label.</string>
+    <string name="notif_bag_analysis_title">Bag analysis complete</string>
+    <string name="notif_bag_analysis_body">Tap to review the details we found.</string>
+    <string name="format_notif_bag_analysis_body">Tap to review %1$s.</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Rating reminder</string>
     <string name="msg_rating_reminder_hint">Send a notification ~30 minutes after a brew so you can rate it while the taste is fresh.</string>

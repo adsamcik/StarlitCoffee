@@ -19,6 +19,14 @@ object DeepLinkBus {
     private val _pendingBrewLogId = MutableStateFlow<Long?>(null)
     val pendingBrewLogId: StateFlow<Long?> = _pendingBrewLogId.asStateFlow()
 
+    // Set when the user taps a "bag analysis complete" notification. The nav
+    // host pops it, navigates to the bag inventory, promotes the background
+    // result the BrewViewModel is holding into the foreground form, and clears
+    // this flag so a recompose doesn't re-trigger navigation. No payload is
+    // needed: the analyzed result lives in the (process-scoped) BrewViewModel.
+    private val _pendingBagAnalysis = MutableStateFlow(false)
+    val pendingBagAnalysis: StateFlow<Boolean> = _pendingBagAnalysis.asStateFlow()
+
     fun postBrewLogDetail(brewLogId: Long) {
         if (brewLogId <= 0L) return
         _pendingBrewLogId.value = brewLogId
@@ -26,5 +34,13 @@ object DeepLinkBus {
 
     fun consumeBrewLogDetail() {
         _pendingBrewLogId.value = null
+    }
+
+    fun postBagAnalysisReady() {
+        _pendingBagAnalysis.value = true
+    }
+
+    fun consumeBagAnalysisReady() {
+        _pendingBagAnalysis.value = false
     }
 }

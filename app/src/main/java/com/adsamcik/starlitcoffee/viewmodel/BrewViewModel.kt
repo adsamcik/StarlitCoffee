@@ -52,6 +52,8 @@ import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
+import com.adsamcik.starlitcoffee.notification.BagAnalysisNotifier
+import com.adsamcik.starlitcoffee.notification.NoOpBagAnalysisNotifier
 import com.adsamcik.starlitcoffee.notification.RatingReminders
 import com.adsamcik.starlitcoffee.scan.BagFieldContextMapper
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
@@ -84,9 +86,13 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import kotlin.coroutines.resume
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.async
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -212,6 +218,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private val openFoodFactsLookup: (barcode: String) -> ProductResult? = {
         OpenFoodFactsClient.lookupBarcode(it)
     },
+    // Posts the "bag analysis complete" notification when the user sends the AI
+    // bag-label extraction to the background. Defaults to a no-op for unit
+    // tests; the factory wires the Android-backed notifier in production.
+    private val bagAnalysisNotifier: BagAnalysisNotifier = NoOpBagAnalysisNotifier,
 ) : ViewModel() {
 
     private val llmCache = LlmResultCache()
@@ -239,6 +249,31 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private val _bagPhotoResult = MutableStateFlow<BagPhotoProcessingResult?>(null)
     val bagPhotoResult: StateFlow<BagPhotoProcessingResult?> = _bagPhotoResult.asStateFlow()
     private var bagPhotoLlmRetryContext: BagPhotoLlmRetryContext? = null
+
+    // Holds a bag-photo result that finished while the user had sent the AI
+    // extraction to the background. It is NOT pushed into [bagPhotoResult] (which
+    // would auto-open the form); instead a notification is posted and the nav
+    // host promotes this into the foreground when the user taps it. Process-
+    // scoped: a result has no value once the app process dies.
+    private val _completedBackgroundResult = MutableStateFlow<BagPhotoProcessingResult?>(null)
+    val completedBackgroundResult: StateFlow<BagPhotoProcessingResult?> =
+        _completedBackgroundResult.asStateFlow()
+
+    // Set when the user taps "Skip AI" on the analyzing screen. Checked before
+    // the LLM phase starts and used to cancel an in-flight enrichment so the
+    // pipeline finishes immediately with the OCR/barcode candidates.
+    @Volatile
+    private var bagPhotoSkipRequested = false
+
+    // Set when the user taps "Continue in background". When the enrichment then
+    // completes, the result is delivered via the notification path instead of
+    // auto-opening the form.
+    @Volatile
+    private var bagAnalysisBackgrounded = false
+
+    // The in-flight LLM enrichment, exposed so "Skip AI" can cancel just this
+    // phase without tearing down the surrounding OCR pipeline.
+    private var bagPhotoLlmDeferred: Deferred<LlmEnrichmentOutcome>? = null
     private val _inventoryAlerts = MutableStateFlow(emptyList<InventoryAlert>())
     val inventoryAlerts: StateFlow<List<InventoryAlert>> = _inventoryAlerts.asStateFlow()
 
@@ -1046,6 +1081,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         photosCsv: String,
         knownFieldValues: KnownFieldValues = _knownFieldValues.value,
     ) {
+        // Fresh scan: clear any "skip"/"background" intent carried over from a
+        // previous photo so this run starts in the normal foreground mode.
+        bagPhotoSkipRequested = false
+        bagAnalysisBackgrounded = false
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val photoUriList = photosCsv.split(",").map(String::trim).filter(String::isNotBlank)
@@ -1117,20 +1156,20 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         // LLM enrichment — primary-source reasoning over all core fields.
         // Receives prior candidates (OCR+lookup) for cross-reference,
         // raw OCR text for character-level verification, and the user's
-        // known-values vocabulary for grounding.
+        // known-values vocabulary for grounding. Runs as a cancellable child so
+        // "Skip AI" can abandon just this (slow) phase and settle with OCR.
         val baseCandidates = allCandidates.toList()
-        val llmOutcome = tryLlmEnrichment(
+        val llmOutcome = runCancellableLlmEnrichment(
             photoUriList = photoUriList,
             processedPhotos = processedPhotos,
-            allCandidates = baseCandidates,
+            baseCandidates = baseCandidates,
             combinedOcrText = combinedOcrText,
-            knownFieldValues = _knownFieldValues.value,
         )
         allCandidates += llmOutcome.candidates
 
-        // Vision second pass: recover visual-only fields (e.g. a roast-level
-        // dot scale) from the label image when still unsettled — see
-        // runVisionEnrichmentIfNeeded for the gating + override-safety policy.
+        // Vision second pass: recover visual-only fields (e.g. a roast-level dot
+        // scale) from the label image when still unsettled. Self-gates on the
+        // "Skip AI" request (see runVisionEnrichmentIfNeeded).
         runVisionEnrichmentIfNeeded(photoUriList, processedPhotos, allCandidates)
 
         val fieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
@@ -1165,18 +1204,77 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             photoAnalyses = photoAnalyses,
             reviewHints = reviewHints,
         )
-        _bagPhotoResult.value = BagPhotoProcessingResult(
-            ocrPrefill = ocrPrefill,
-            capturedPhotoUris = photosCsv,
-            detectedBarcode = detectedBarcode,
-            detectedQrUrl = qrEnrichment.safeUrl,
-            offLookupName = offSummary.name,
-            offLookupRoaster = offSummary.brand,
-            fieldEvidence = fieldEvidence,
-            photoAnalyses = photoAnalyses,
-            reviewHints = reviewHints,
-            llmStatus = llmOutcome.status,
+        deliverBagPhotoResult(
+            BagPhotoProcessingResult(
+                ocrPrefill = ocrPrefill,
+                capturedPhotoUris = photosCsv,
+                detectedBarcode = detectedBarcode,
+                detectedQrUrl = qrEnrichment.safeUrl,
+                offLookupName = offSummary.name,
+                offLookupRoaster = offSummary.brand,
+                fieldEvidence = fieldEvidence,
+                photoAnalyses = photoAnalyses,
+                reviewHints = reviewHints,
+                llmStatus = llmOutcome.status,
+            ),
         )
+    }
+
+    /**
+     * Runs the LLM bag-label enrichment as a cancellable sibling coroutine so
+     * "Skip AI" ([skipBagPhotoLlm]) can abandon just this phase. Returns a
+     * NOT_RUN outcome when skipped (pre-flight or mid-flight); the OCR/barcode
+     * candidates already gathered carry the result.
+     */
+    private suspend fun runCancellableLlmEnrichment(
+        photoUriList: List<String>,
+        processedPhotos: List<ProcessedBagPhoto>,
+        baseCandidates: List<BagFieldCandidate>,
+        combinedOcrText: String,
+    ): LlmEnrichmentOutcome {
+        if (bagPhotoSkipRequested) {
+            return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.NOT_RUN)
+        }
+        val deferred = viewModelScope.async(Dispatchers.IO) {
+            tryLlmEnrichment(
+                photoUriList = photoUriList,
+                processedPhotos = processedPhotos,
+                allCandidates = baseCandidates,
+                combinedOcrText = combinedOcrText,
+                knownFieldValues = _knownFieldValues.value,
+            )
+        }
+        bagPhotoLlmDeferred = deferred
+        return try {
+            deferred.await()
+        } catch (@Suppress("SwallowedException") cancellation: CancellationException) {
+            // Cancelling the child Deferred (user tapped "Skip AI") surfaces here
+            // as a CancellationException. ensureActive() rethrows it only if THIS
+            // coroutine (the whole pipeline) was cancelled — e.g. the ViewModel
+            // was cleared; otherwise the skip is deliberately converted to a
+            // NOT_RUN outcome so the OCR candidates carry the result.
+            currentCoroutineContext().ensureActive()
+            LlmEnrichmentOutcome(status = LlmEnrichmentStatus.NOT_RUN)
+        } finally {
+            bagPhotoLlmDeferred = null
+        }
+    }
+
+    /**
+     * Delivers a finished bag-photo result. In the normal foreground flow it is
+     * pushed into [bagPhotoResult] (which the bag screen observes to open the
+     * form). When the user sent the analysis to the background it is stashed in
+     * [completedBackgroundResult] and a notification is posted instead, so the
+     * form opens only when the user taps it.
+     */
+    private fun deliverBagPhotoResult(result: BagPhotoProcessingResult) {
+        if (bagAnalysisBackgrounded) {
+            bagAnalysisBackgrounded = false
+            _completedBackgroundResult.value = result
+            bagAnalysisNotifier.notifyComplete(result.fieldEvidence["name"]?.value)
+        } else {
+            _bagPhotoResult.value = result
+        }
     }
 
     /**
@@ -1960,6 +2058,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         processedPhotos: List<ProcessedBagPhoto>,
         allCandidates: MutableList<BagFieldCandidate>,
     ) {
+        // Honour an in-flight "Skip AI" (and never run on a process whose chat
+        // engine isn't available) before the (slow) vision pass.
+        if (bagPhotoSkipRequested) return
         if (!llmProvider.supportsVision() || !llmProvider.isAvailable()) return
         val preVisionEvidence = resolveBagPhotoFieldEvidence(allCandidates)
         val visionFields = BagVisionPlanner.selectVisionFields(preVisionEvidence)
@@ -2171,6 +2272,38 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     fun clearBagPhotoResult() {
         bagPhotoLlmRetryContext = null
         _bagPhotoResult.value = null
+    }
+
+    /**
+     * "Skip AI" on the analyzing screen: cancels the in-flight LLM enrichment so
+     * the bag-photo pipeline settles immediately with the OCR/barcode
+     * candidates. Safe to call before the LLM phase starts (sets a flag the
+     * phase checks) or while it runs (cancels the child coroutine).
+     */
+    fun skipBagPhotoLlm() {
+        bagPhotoSkipRequested = true
+        bagPhotoLlmDeferred?.cancel()
+    }
+
+    /**
+     * "Continue in background" on the analyzing screen: the in-flight enrichment
+     * keeps running; when it completes the result is delivered through a
+     * notification ([deliverBagPhotoResult]) instead of auto-opening the form.
+     */
+    fun continueBagAnalysisInBackground() {
+        bagAnalysisBackgrounded = true
+    }
+
+    /**
+     * Promotes a background-completed result into the foreground so the existing
+     * [bagPhotoResult] observer opens the form. Invoked from the nav host when
+     * the user taps the "bag analysis complete" notification. No-op when nothing
+     * is pending (e.g. the process was restarted and the result was lost).
+     */
+    fun promoteBackgroundResultToForeground() {
+        val pending = _completedBackgroundResult.value ?: return
+        _completedBackgroundResult.value = null
+        _bagPhotoResult.value = pending
     }
 
     fun resetBrew() {

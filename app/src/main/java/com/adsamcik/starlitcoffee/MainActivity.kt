@@ -40,10 +40,15 @@ class MainActivity : ComponentActivity() {
             // original intent) doesn't re-trigger navigation.
             intent.removeExtra(EXTRA_BREW_LOG_ID)
         }
+        if (intent.getBooleanExtra(EXTRA_OPEN_BAG_ANALYSIS, false)) {
+            DeepLinkBus.postBagAnalysisReady()
+            intent.removeExtra(EXTRA_OPEN_BAG_ANALYSIS)
+        }
     }
 
     companion object {
         const val EXTRA_BREW_LOG_ID = "starlit.extra.BREW_LOG_ID"
+        const val EXTRA_OPEN_BAG_ANALYSIS = "starlit.extra.OPEN_BAG_ANALYSIS"
 
         /**
          * Builds an [Intent] that launches the app and deep-links to the brew
@@ -52,6 +57,17 @@ class MainActivity : ComponentActivity() {
         fun buildBrewLogDetailIntent(context: Context, brewLogId: Long): Intent =
             Intent(context, MainActivity::class.java).apply {
                 putExtra(EXTRA_BREW_LOG_ID, brewLogId)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
+
+        /**
+         * Builds an [Intent] that launches the app and opens the analyzed
+         * coffee-bag form. Used by the "bag analysis complete" notification
+         * posted when the user sent the AI extraction to the background.
+         */
+        fun buildBagAnalysisIntent(context: Context): Intent =
+            Intent(context, MainActivity::class.java).apply {
+                putExtra(EXTRA_OPEN_BAG_ANALYSIS, true)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             }
     }

@@ -315,6 +315,18 @@
     <string name="cd_notif_rating_4">Oceń 4 z 5 gwiazdek</string>
     <string name="cd_notif_rating_5">Oceń 5 z 5 gwiazdek</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analiza opakowania</string>
+    <string name="msg_analyzing_bag_subtitle">AI czyta etykietę, aby uzupełnić szczegóły. To może chwilę potrwać.</string>
+    <string name="msg_analyzing_bag_background_hint">Możesz dalej korzystać z aplikacji — powiadomimy Cię, gdy skończy.</string>
+    <string name="action_skip_ai">Pomiń AI</string>
+    <string name="action_run_in_background">Kontynuuj w tle</string>
+    <string name="notif_channel_bag_analysis">Analiza opakowania</string>
+    <string name="notif_channel_bag_analysis_desc">Powiadamia, gdy AI skończy czytać etykietę opakowania kawy.</string>
+    <string name="notif_bag_analysis_title">Analiza opakowania zakończona</string>
+    <string name="notif_bag_analysis_body">Dotknij, aby przejrzeć znalezione szczegóły.</string>
+    <string name="format_notif_bag_analysis_body">Dotknij, aby przejrzeć %1$s.</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Przypomnienie o ocenie</string>
     <string name="msg_rating_reminder_hint">Wyślij powiadomienie ~30 minut po parzeniu, aby można je ocenić, póki smak jest świeży.</string>

@@ -311,6 +311,18 @@
     <string name="cd_notif_rating_4">Valorar con 4 de 5 estrellas</string>
     <string name="cd_notif_rating_5">Valorar con 5 de 5 estrellas</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analizando tu bolsa</string>
+    <string name="msg_analyzing_bag_subtitle">La IA está leyendo la etiqueta para completar los detalles. Puede tardar un momento.</string>
+    <string name="msg_analyzing_bag_background_hint">Puedes seguir usando la app — te avisaremos cuando termine.</string>
+    <string name="action_skip_ai">Omitir IA</string>
+    <string name="action_run_in_background">Continuar en segundo plano</string>
+    <string name="notif_channel_bag_analysis">Análisis de bolsa</string>
+    <string name="notif_channel_bag_analysis_desc">Te avisa cuando la IA termina de leer la etiqueta de una bolsa de café.</string>
+    <string name="notif_bag_analysis_title">Análisis de bolsa completado</string>
+    <string name="notif_bag_analysis_body">Toca para revisar los detalles encontrados.</string>
+    <string name="format_notif_bag_analysis_body">Toca para revisar %1$s.</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Recordatorio de valoración</string>
     <string name="msg_rating_reminder_hint">Envía una notificación ~30 minutos después de preparar café para que puedas valorarlo mientras el sabor sigue fresco.</string>

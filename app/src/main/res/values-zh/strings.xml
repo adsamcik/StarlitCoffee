@@ -308,6 +308,18 @@
     <string name="cd_notif_rating_4">评为5星中的4星</string>
     <string name="cd_notif_rating_5">评为5星中的5星</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">正在分析咖啡袋</string>
+    <string name="msg_analyzing_bag_subtitle">AI 正在读取标签以填写详情。这可能需要一些时间。</string>
+    <string name="msg_analyzing_bag_background_hint">你可以继续使用应用——完成后我们会通知你。</string>
+    <string name="action_skip_ai">跳过 AI</string>
+    <string name="action_run_in_background">在后台继续</string>
+    <string name="notif_channel_bag_analysis">咖啡袋分析</string>
+    <string name="notif_channel_bag_analysis_desc">当 AI 读取完咖啡袋标签时通知你。</string>
+    <string name="notif_bag_analysis_title">咖啡袋分析完成</string>
+    <string name="notif_bag_analysis_body">点按以查看识别到的详情。</string>
+    <string name="format_notif_bag_analysis_body">点按以查看 %1$s。</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">评分提醒</string>
     <string name="msg_rating_reminder_hint">冲煮约30分钟后发送通知，方便你在味道还新鲜时评分。</string>

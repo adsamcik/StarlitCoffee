@@ -14,6 +14,7 @@ import com.adsamcik.starlitcoffee.R
  */
 internal object NotificationChannels {
     const val RATING_REMINDER_ID = "rating_reminder"
+    const val BAG_ANALYSIS_ID = "bag_analysis"
 
     fun ensureRatingReminderChannel(context: Context) {
         val manager = context.getSystemService<NotificationManager>() ?: return
@@ -25,6 +26,19 @@ internal object NotificationChannels {
         ).apply {
             description = context.getString(R.string.notif_channel_rating_reminder_desc)
             setShowBadge(false)
+        }
+        manager.createNotificationChannel(channel)
+    }
+
+    fun ensureBagAnalysisChannel(context: Context) {
+        val manager = context.getSystemService<NotificationManager>() ?: return
+        if (manager.getNotificationChannel(BAG_ANALYSIS_ID) != null) return
+        val channel = NotificationChannel(
+            BAG_ANALYSIS_ID,
+            context.getString(R.string.notif_channel_bag_analysis),
+            NotificationManager.IMPORTANCE_DEFAULT,
+        ).apply {
+            description = context.getString(R.string.notif_channel_bag_analysis_desc)
         }
         manager.createNotificationChannel(channel)
     }

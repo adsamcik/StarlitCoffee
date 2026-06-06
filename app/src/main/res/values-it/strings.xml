@@ -311,6 +311,18 @@
     <string name="cd_notif_rating_4">Valuta 4 stelle su 5</string>
     <string name="cd_notif_rating_5">Valuta 5 stelle su 5</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analisi della confezione</string>
+    <string name="msg_analyzing_bag_subtitle">L\'IA sta leggendo l\'etichetta per compilare i dettagli. Può richiedere un momento.</string>
+    <string name="msg_analyzing_bag_background_hint">Puoi continuare a usare l\'app — ti avviseremo quando avrà finito.</string>
+    <string name="action_skip_ai">Salta l\'IA</string>
+    <string name="action_run_in_background">Continua in background</string>
+    <string name="notif_channel_bag_analysis">Analisi confezione</string>
+    <string name="notif_channel_bag_analysis_desc">Ti avvisa quando l\'IA ha finito di leggere l\'etichetta di una confezione di caffè.</string>
+    <string name="notif_bag_analysis_title">Analisi della confezione completata</string>
+    <string name="notif_bag_analysis_body">Tocca per rivedere i dettagli trovati.</string>
+    <string name="format_notif_bag_analysis_body">Tocca per rivedere %1$s.</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Promemoria valutazione</string>
     <string name="msg_rating_reminder_hint">Invia una notifica ~30 minuti dopo una preparazione, così puoi valutarla mentre il gusto è ancora fresco.</string>

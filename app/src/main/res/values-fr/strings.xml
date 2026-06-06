@@ -311,6 +311,18 @@
     <string name="cd_notif_rating_4">Noter 4 étoiles sur 5</string>
     <string name="cd_notif_rating_5">Noter 5 étoiles sur 5</string>
 
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analyse de votre paquet</string>
+    <string name="msg_analyzing_bag_subtitle">L\'IA lit l\'étiquette pour remplir les détails. Cela peut prendre un instant.</string>
+    <string name="msg_analyzing_bag_background_hint">Vous pouvez continuer à utiliser l\'app — nous vous préviendrons une fois terminé.</string>
+    <string name="action_skip_ai">Ignorer l\'IA</string>
+    <string name="action_run_in_background">Continuer en arrière-plan</string>
+    <string name="notif_channel_bag_analysis">Analyse de paquet</string>
+    <string name="notif_channel_bag_analysis_desc">Vous prévient quand l\'IA a fini de lire l\'étiquette d\'un paquet de café.</string>
+    <string name="notif_bag_analysis_title">Analyse du paquet terminée</string>
+    <string name="notif_bag_analysis_body">Touchez pour vérifier les détails trouvés.</string>
+    <string name="format_notif_bag_analysis_body">Touchez pour vérifier %1$s.</string>
+
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Rappel de notation</string>
     <string name="msg_rating_reminder_hint">Envoyer une notification ~30 minutes après une préparation pour que vous puissiez la noter quand le goût est encore frais en mémoire.</string>

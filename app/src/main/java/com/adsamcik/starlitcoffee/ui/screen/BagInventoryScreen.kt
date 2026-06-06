@@ -56,6 +56,7 @@ import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.StarlitCoffeeApp
 import com.adsamcik.starlitcoffee.ui.component.AddBagSheet
+import com.adsamcik.starlitcoffee.ui.component.BagAnalysisProgressScreen
 import com.adsamcik.starlitcoffee.ui.component.ConsentOutcome
 import com.adsamcik.starlitcoffee.ui.component.messageRes
 import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerConsentFlow
@@ -191,9 +192,12 @@ fun BagInventoryScreen(
         llmStatus = result.llmStatus
         isProcessingScan = false
         showRetakeDialog = result.shouldSuggestRetake
+        // Ensure the form is visible. In the normal flow the sheet is already
+        // open; this also covers the deep-link path where a background analysis
+        // result was promoted into the foreground after the user closed the
+        // analyzing screen (see BrewViewModel.promoteBackgroundResultToForeground).
+        showAddSheet = true
         brewViewModel.clearBagPhotoResult()
-        // Sheet is already open from LaunchedEffect(capturedPhotos) — don't force-reopen
-        // if the user dismissed it during processing
     }
 
     LaunchedEffect(capturedPhotos) {
@@ -530,7 +534,19 @@ fun BagInventoryScreen(
 
     // Add bag sheet
     val brewNowLabel = stringResource(R.string.action_brew_now)
-    if (showAddSheet) {
+    if (showAddSheet && isProcessingScan) {
+        // Dedicated analyzing screen shown while the AI extraction runs on a
+        // freshly captured photo. The user can skip the AI (settle with the
+        // OCR/barcode results) or send it to the background and be notified.
+        BagAnalysisProgressScreen(
+            onSkip = { brewViewModel.skipBagPhotoLlm() },
+            onRunInBackground = {
+                brewViewModel.continueBagAnalysisInBackground()
+                showAddSheet = false
+                isProcessingScan = false
+            },
+        )
+    } else if (showAddSheet) {
         AddBagSheet(
             initialBarcode = detectedBarcode,
             ocrPrefill = ocrPrefill,

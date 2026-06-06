@@ -14,6 +14,7 @@ import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.notification.AndroidBagAnalysisNotifier
 import com.adsamcik.starlitcoffee.notification.RatingReminderScheduler
 
 // Manual wiring: DI is intentional per repo convention; replace with Hilt @Provides
@@ -40,6 +41,7 @@ class BrewViewModelFactory(
                 userBarcodeStemDao = database.userBarcodeStemDao(),
                 ratingReminderScheduler = RatingReminderScheduler(application),
                 transactionRunner = TransactionRunner.room(database),
+                bagAnalysisNotifier = AndroidBagAnalysisNotifier(application),
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
