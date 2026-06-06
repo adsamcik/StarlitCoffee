@@ -32,6 +32,7 @@ import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetFinalFramePreview
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetOption
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetOptions
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
+import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import kotlinx.coroutines.launch
 
 private val SettingsScreenHorizontalPadding = 16.dp
@@ -150,6 +151,7 @@ private fun BloomSpritesheetRow(
             }
             Button(
                 onClick = onCycleWeight,
+                colors = primaryActionButtonColors(),
                 modifier = Modifier.semantics {
                     this.contentDescription = contentDescription
                 },

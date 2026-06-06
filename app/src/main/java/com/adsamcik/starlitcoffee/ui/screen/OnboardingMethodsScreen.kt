@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
+import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 
 private val EnabledMethodsSetSaver: Saver<MutableState<Set<BrewMethod>>, ArrayList<String>> = Saver(
@@ -245,6 +246,7 @@ fun OnboardingMethodsScreen(
                     onNext(methods, default)
                 },
                 enabled = enabledSet.isNotEmpty(),
+                colors = primaryActionButtonColors(),
                 modifier = Modifier.testTag("onboarding_next_button"),
             ) {
                 Text(stringResource(R.string.action_next))

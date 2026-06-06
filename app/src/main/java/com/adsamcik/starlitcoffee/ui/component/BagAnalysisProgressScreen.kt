@@ -88,6 +88,7 @@ fun BagAnalysisProgressScreen(
                 Spacer(modifier = Modifier.height(36.dp))
                 Button(
                     onClick = onRunInBackground,
+                    colors = primaryActionButtonColors(),
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(stringResource(R.string.action_run_in_background))

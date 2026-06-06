@@ -540,6 +540,7 @@ fun BagDetailSheet(
                 Button(
                     onClick = onSelectForBrewing,
                     shape = MaterialTheme.shapes.large,
+                    colors = primaryActionButtonColors(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 8.dp)

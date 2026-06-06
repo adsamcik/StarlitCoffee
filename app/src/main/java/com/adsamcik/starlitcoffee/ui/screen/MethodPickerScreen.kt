@@ -66,6 +66,7 @@ import com.adsamcik.starlitcoffee.ui.component.FavoritesRow
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
+import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.data.model.QuickRating
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
@@ -570,6 +571,7 @@ fun MethodPickerScreen(
         Button(
             onClick = onNavigateToTimer,
             shape = MaterialTheme.shapes.large,
+            colors = primaryActionButtonColors(),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)

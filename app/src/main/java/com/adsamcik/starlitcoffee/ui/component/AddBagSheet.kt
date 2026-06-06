@@ -333,7 +333,7 @@ fun AddBagSheet(
             contentColor = MaterialTheme.colorScheme.onTertiary,
         )
     } else {
-        ButtonDefaults.buttonColors()
+        primaryActionButtonColors()
     }
 
     LaunchedEffect(snapApproveMode, pendingScrollField, showMoreDetails, initialBarcode) {
@@ -1555,7 +1555,7 @@ private fun QrApprovalCard(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Button(onClick = onExplore) {
+                    Button(onClick = onExplore, colors = primaryActionButtonColors()) {
                         Text(stringResource(R.string.action_explore_extract))
                     }
                     TextButton(onClick = onSkip) {

@@ -87,6 +87,7 @@ import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
+import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
@@ -1053,6 +1054,7 @@ private fun BrewKey(
         modifier = modifier,
         enabled = enabled,
         shape = MaterialTheme.shapes.small,
+        colors = primaryActionButtonColors(),
         contentPadding = PaddingValues(0.dp),
     ) {
         Text(

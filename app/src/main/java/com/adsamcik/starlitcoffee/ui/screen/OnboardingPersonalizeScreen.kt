@@ -42,6 +42,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
+import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 
 private val NullableFilterTypeSaver: Saver<MutableState<FilterType?>, String> = Saver(
@@ -222,6 +223,7 @@ fun OnboardingPersonalizeScreen(
                 onClick = {
                     onFinish(filterType.value, selectedGrinderId.value)
                 },
+                colors = primaryActionButtonColors(),
                 modifier = Modifier.testTag("onboarding_finish_button"),
             ) {
                 Text(stringResource(R.string.action_finish))

@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -92,7 +93,7 @@ fun BarcodeScannerScreen(
                     style = MaterialTheme.typography.bodyLarge,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = onBack) {
+                Button(onClick = onBack, colors = primaryActionButtonColors()) {
                     Text(stringResource(R.string.action_go_back))
                 }
             }

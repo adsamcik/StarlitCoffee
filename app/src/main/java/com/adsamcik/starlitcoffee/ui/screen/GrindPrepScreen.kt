@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
+import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -87,6 +88,7 @@ fun GrindPrepScreen(
                             .padding(horizontal = 20.dp, vertical = 16.dp)
                             .height(64.dp),
                         shape = MaterialTheme.shapes.extraLarge,
+                        colors = primaryActionButtonColors(),
                     ) {
                         Text(
                             text = stringResource(R.string.action_ready_to_brew_short),
