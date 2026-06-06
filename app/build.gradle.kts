@@ -21,6 +21,11 @@ extensions.configure<ApplicationExtension>("android") {
         versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Launcher label, overridden per build type. Release resolves the
+        // localized app name; debug uses a literal "(Debug)" marker so the
+        // suffixed debug app is distinguishable in the launcher.
+        manifestPlaceholders["appLabel"] = "@string/app_name"
     }
 
     // Sign debug builds with the shared Mindlayer "knownCertsOwner" keystore
@@ -42,6 +47,10 @@ extensions.configure<ApplicationExtension>("android") {
 
     buildTypes {
         debug {
+            // Distinct package + launcher label so a debug build installs
+            // alongside a release build instead of replacing it.
+            applicationIdSuffix = ".debug"
+            manifestPlaceholders["appLabel"] = "Starlit Coffee (Debug)"
             if (mindlayerKeystore.exists()) {
                 signingConfig = signingConfigs.getByName("mindlayerKnownCerts")
             }
@@ -121,7 +130,7 @@ tasks.withType<Test> {
     }
 }
 
-// Push the committed synthetic coffee-bag corpus (WebP images + metadata) to a
+// Push the committed synthetic coffee-bag corpus (sidecar metadata + images) to a
 // connected device/emulator for the instrumented OCR/LLM benchmark + Q0 gate.
 tasks.register("pushTestImages") {
     group = "verification"
@@ -133,11 +142,17 @@ tasks.register("pushTestImages") {
     val corpusDir = rootProject.file("testdata/synthetic-coffee-bag-corpus")
 
     doLast {
-        val metadataFile = corpusDir.resolve("corpus_metadata.json")
-        val prototypesDir = corpusDir.resolve("prototypes")
-        require(metadataFile.isFile && prototypesDir.isDirectory) {
+        val metadataFiles = corpusDir.listFiles()
+            ?.filter { it.isFile && it.name.endsWith(".metadata.json") }
+            ?.sortedBy { it.name }
+            .orEmpty()
+        val images = corpusDir.listFiles()
+            ?.filter { it.isFile && it.extension.lowercase() in listOf("webp", "png", "jpg", "jpeg") }
+            ?.sortedBy { it.name }
+            .orEmpty()
+        require(metadataFiles.isNotEmpty() && images.isNotEmpty()) {
             "Synthetic corpus not found at testdata/synthetic-coffee-bag-corpus/ " +
-                "(expected corpus_metadata.json + prototypes/). See testdata/README.md."
+                "(expected *.metadata.json + sibling image files). See testdata/README.md."
         }
 
         val adb = adbProvider.get().asFile.absolutePath
@@ -151,18 +166,15 @@ tasks.register("pushTestImages") {
 
         // Clean first so a stale flat-JPEG layout can never mask a broken push.
         adb("shell", "rm", "-rf", deviceDir)
-        adb("shell", "mkdir", "-p", "$deviceDir/prototypes")
-
-        adb("push", metadataFile.absolutePath, "$deviceDir/corpus_metadata.json")
-
-        val images = prototypesDir.listFiles()
-            ?.filter { it.extension.lowercase() in listOf("webp", "png", "jpg", "jpeg") }
-            ?: emptyList()
+        adb("shell", "mkdir", "-p", deviceDir)
+        metadataFiles.forEach { file ->
+            adb("push", file.absolutePath, "$deviceDir/${file.name}")
+        }
         images.forEach { file ->
-            adb("push", file.absolutePath, "$deviceDir/prototypes/${file.name}")
+            adb("push", file.absolutePath, "$deviceDir/${file.name}")
         }
 
-        println("Pushed corpus_metadata.json + ${images.size} images to $deviceDir")
+        println("Pushed ${metadataFiles.size} sidecars + ${images.size} images to $deviceDir")
     }
 }
 
