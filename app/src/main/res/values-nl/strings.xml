@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Zetten</string>
+    <string name="nav_log">Logboek</string>
+    <string name="nav_more">Meer</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Terug</string>
+    <string name="action_close">Sluiten</string>
+    <string name="action_cancel">Annuleren</string>
+    <string name="action_delete">Verwijderen</string>
+    <string name="action_save">Wijzigingen opslaan</string>
+    <string name="action_saved">✓ Opgeslagen</string>
+    <string name="action_skip">Overslaan</string>
+    <string name="action_finish">Afronden</string>
+    <string name="action_next">Volgende</string>
+    <string name="action_go_back">Terug</string>
+<!-- Common labels -->
+    <string name="label_coffee">Koffie</string>
+    <string name="label_water">Water</string>
+    <string name="label_ratio">Verhouding</string>
+    <string name="label_strength">Sterkte</string>
+    <string name="label_grind">Maling</string>
+    <string name="label_filter">Filter</string>
+<string name="label_decaf">Cafeïnevrij</string>
+    <string name="label_decaf_suffix"> · Cafeïnevrij</string>
+    <string name="label_loading">Laden…</string>
+    <string name="label_none">Geen</string>
+    <string name="label_taste">Smaak</string>
+    <string name="label_rating">Beoordeling</string>
+    <string name="label_notes">Notities</string>
+    <string name="label_no_filter">Geen filter</string>
+    <string name="label_settings">Instellingen</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg in het kopje</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+<plurals name="format_selected">
+        <item quantity="one">%1$d geselecteerd</item>
+        <item quantity="other">%1$d geselecteerd</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Stel je bereiding in</string>
+    <string name="label_coffee_input">Koffie (g)</string>
+    <string name="label_water_input">Water (g)</string>
+    <string name="label_brew_size_input">Bereidingsvolume (ml)</string>
+    <string name="label_cup_size_input">Kopgrootte (ml)</string>
+    <string name="label_brew_size">Bereidingsvolume</string>
+    <string name="label_cup_size">Kopgrootte</string>
+    <string name="format_capacity_note">%1$s heeft ruimte voor %2$dg water — bij grotere bereidingen wordt automatisch bijgevuld</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Koffiezak selecteren</string>
+    <string name="cd_clear_bag">Zakselectie wissen</string>
+    <string name="format_brewing_with">Zetten met %1$s</string>
+    <string name="label_freshness">Versheid</string>
+    <string name="format_recommended_now">Nu aanbevolen: %1$s</string>
+    <string name="format_last_time">Vorige keer: %1$s</string>
+    <string name="action_save_as_favorite">Opslaan als favoriet</string>
+    <string name="label_select_coffee_bag_title">Koffiezak selecteren</string>
+    <string name="msg_no_active_bags">Geen actieve zakken. Voeg er een toe bij Je bonen.</string>
+    <string name="action_brew_without_bag">Zetten zonder zak te selecteren</string>
+    <string name="label_best_now">Nu het best</string>
+    <string name="format_grind_generic">Maling: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Maalgraad: %1$s–%2$s · Pas aan op smaak</string>
+    <string name="format_weight_left"> · %1$.0fg over</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Pulsar-tip: Houd de slurry tijdens het schenken ~1cm boven het koffiebed. De meeste gebruikers zetten 20–25g voor een gebalanceerde enkele kop.</string>
+    <string name="tip_generic">💡 Tip: Begin met de standaardverhouding en pas de sterkte aan op smaak. Fijnere maling extraheert meer, grovere maling minder.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Bereiding instellen</string>
+<string name="label_custom_ratio">Aangepaste verhouding (bijv. 16)</string>
+    <string name="label_temperature">Temperatuur (°C)</string>
+    <string name="label_bloom_multiplier">Bloom-vermenigvuldiger (bijv. 3.0)</string>
+    <string name="label_pulse_count">Aantal pulsen</string>
+<string name="action_start_brewing">Zetten starten →</string>
+    <string name="label_advanced_options">Geavanceerde opties</string>
+    <string name="cd_collapse_advanced">Geavanceerde opties inklappen</string>
+    <string name="cd_expand_advanced">Geavanceerde opties uitklappen</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Koffiedosis: %1$d gram</item>
+        <item quantity="other">Koffiedosis: %1$d gram</item>
+    </plurals>
+    <string name="label_decrease">Verlaag %1$s</string>
+    <string name="label_increase">Verhoog %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Bereiding voorbereiden</string>
+<string name="action_ready_to_brew_short">Klaar om te zetten</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Voorbereiding</string>
+    <string name="label_recipe_heading">Recept</string>
+    <string name="label_set_grinder_to">Stel molen in op</string>
+    <string name="label_temp_short">Temp</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Maak het papieren filter nat in de basis (ventiel open) en laat uitlekken. Plaats de cilinder, voeg de maling toe, egaliseer het bed en plaats de dispersiedop. Tarreer de weegschaal.</string>
+    <string name="prep_tip_pulsar_19k">Spoel het 19K metalen filter zodat het goed zit en de cilinder voorverwarmt. Plaats de cilinder, voeg de maling toe, egaliseer het bed en plaats de dispersiedop. Tarreer de weegschaal.</string>
+    <string name="prep_tip_pulsar_40k">Spoel het 40K metalen filter om de cilinder voor te verwarmen. Plaats de cilinder, voeg de maling toe, egaliseer het bed en plaats de dispersiedop. Tarreer de weegschaal.</string>
+    <string name="prep_tip_pour_over_paper">Plaats het papieren filter en spoel met heet water om voor te verwarmen en papiersmaak te verwijderen. Voeg gemalen koffie toe en tarreer de weegschaal.</string>
+    <string name="prep_tip_french_press">Verwarm de pers voor en leeg hem. Voeg gemalen koffie toe, zet op de weegschaal en tarreer voordat je water toevoegt.</string>
+    <string name="prep_tip_aeropress">Plaats een gespoeld filter in de dop. Voeg gemalen koffie toe, zet de brewer op een stevige mok of server en tarreer de weegschaal.</string>
+    <string name="prep_tip_espresso">Veeg de portafilter droog. Doseer, verdeel en tamp vlak voordat je hem vastzet.</string>
+    <string name="prep_tip_moka">Vul de onderste kamer tot het ventiel. Vul het mandje met gemalen koffie, strijk vlak — niet tampen. Zet voorzichtig in elkaar.</string>
+    <string name="prep_tip_cold_brew">Doe gemalen koffie in het vat, tarreer de weegschaal, voeg water op kamertemperatuur of koud water toe en dek af.</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Pauzeren</string>
+    <string name="action_resume">Hervatten</string>
+    <string name="cd_disable_minute_alerts">Minuutmeldingen uitzetten</string>
+    <string name="cd_enable_minute_alerts">Minuutmeldingen aanzetten</string>
+    <string name="cd_bloom_animation">Bloomanimatie van koffieboon</string>
+<string name="format_pour_bloom_water">Schenk %1$.0fg bloomwater</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Totaal %2$.0fg</string>
+<string name="action_start_bloom">☕ Bloom starten</string>
+<string name="label_bloom_done">✅ Bloom klaar!</string>
+    <string name="action_finish_brew">Bereiding afronden</string>
+    <string name="dialog_exit_brew_title">Bereiding verlaten?</string>
+    <string name="dialog_exit_brew_message">Je huidige voortgang gaat verloren.</string>
+    <string name="action_exit_brew">Verlaten</string>
+
+    <!-- Calculator Brew Screen -->
+<string name="label_water_to_dose">Water → Dosis</string>
+    <string name="label_dose_to_water">Dosis → Water</string>
+    <string name="cd_backspace">Backspace</string>
+    <string name="action_brew">Starten</string>
+    <string name="label_total_water">totaal water</string>
+<!-- Settings Screen -->
+    <string name="screen_settings_title">Instellingen</string>
+    <string name="label_cup_presets">Kop-presets</string>
+    <string name="action_add_preset">Preset toevoegen</string>
+    <string name="action_reset_defaults">Standaardwaarden herstellen</string>
+    <string name="msg_presets_hint">Presets verschijnen als snelle knoppen in de calculator</string>
+    <string name="label_brew_methods">Zetmethoden</string>
+    <string name="msg_methods_hint">Geselecteerde methoden verschijnen eerst. Tik om te schakelen.</string>
+    <string name="label_default_method">Standaardmethode</string>
+    <string name="format_edit_preset">%1$s bewerken</string>
+    <string name="label_bloom_animation_settings">Bloomanimaties</string>
+    <string name="msg_bloom_animation_settings_subtitle">Kies hoe vaak elke bloom-sprite verschijnt</string>
+    <string name="cd_open_bloom_animation_settings">Instellingen voor bloomanimaties openen</string>
+    <string name="screen_bloom_animation_settings_title">Bloomanimaties</string>
+    <string name="msg_bloom_animation_settings_hint">Tik op elke bediening om te wisselen tussen normale kans, dubbele kans en uitgesloten. Als elke sprite is uitgesloten, verbergen bloomtimers de animatie.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s is ingesteld op %2$s. Tik om te wijzigen.</string>
+    <string name="label_bloom_sprite_coffee_flower">Koffiebloesem</string>
+    <string name="desc_bloom_sprite_coffee_flower">Klassieke witte koffiebloesem die uit de boon opent.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Sterrenkoffie</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Crème-gouden stoomblaadjes met kleine sterrenlichtaccenten.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte-bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Zachte latte-artrosetta in warme melkschuimtinten.</string>
+    <string name="label_bloom_sprite_coffee_plant">Koffieplant</string>
+    <string name="desc_bloom_sprite_coffee_plant">Frisgroene koffiezaailing met gepaarde bladeren.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Cherrytomaat</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Een koffieboon loopt uit tot een tomatenrank terwijl rode vruchten rijpen.</string>
+    <string name="label_bloom_sprite_strawberry">Aardbei</string>
+    <string name="desc_bloom_sprite_strawberry">Een koffieboon loopt uit tot een aardbeiplant met bloesem en rode bessen.</string>
+    <string name="label_bloom_sprite_raspberry">Framboos</string>
+    <string name="desc_bloom_sprite_raspberry">Een koffieboon groeit uit tot ranken met bleke bloesems en rode frambozentrossen.</string>
+    <string name="label_bloom_sprite_blueberry">Blauwe bes</string>
+    <string name="desc_bloom_sprite_blueberry">Een koffieboon groeit uit tot een blauwebessentakje met klokbloesems en blauwe vruchten.</string>
+    <string name="label_bloom_sprite_blackberry">Braam</string>
+    <string name="desc_bloom_sprite_blackberry">Een koffieboon groeit uit tot doornige braamranken met donkere bramentrossen.</string>
+    <string name="label_bloom_sprite_coffee_brew">Koffiebereiding</string>
+    <string name="desc_bloom_sprite_coffee_brew">Amberkleurige koffiegloed met roomkleurige stoomkrullen.</string>
+    <string name="label_bloom_sprite_cursed_relic">Vervloekte relikwie</string>
+    <string name="desc_bloom_sprite_cursed_relic">Een gebarsten boon laat gouden magie en zwarte damp los in een wolfachtig medaillon.</string>
+    <string name="label_bloom_sprite_rose">Roos</string>
+    <string name="desc_bloom_sprite_rose">Compacte rode roos die boven de boon openvouwt.</string>
+    <string name="label_bloom_sprite_lotus">Lotus</string>
+    <string name="desc_bloom_sprite_lotus">Crèmekleurige lotusbloem met gelaagde, komvormige bloemblaadjes.</string>
+    <string name="label_bloom_sprite_sunflower">Zonnebloem</string>
+    <string name="desc_bloom_sprite_sunflower">Heldere zonnebloem met gouden bloemblaadjes en een donker hart.</string>
+    <string name="label_bloom_sprite_orchid">Orchidee</string>
+    <string name="desc_bloom_sprite_orchid">Fijne witte orchidee met afgeronde lobben.</string>
+    <string name="label_bloom_sprite_jasmine">Jasmijn</string>
+    <string name="desc_bloom_sprite_jasmine">Zachte witte jasmijnbloem met een subtiele pinwheel-vorm.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Gebroken hartje</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Gebogen stengels met roze hartvormige bloemen en witte druppelpunten rijzen uit de boon.</string>
+    <string name="label_bloom_sprite_passionflower">Passiebloem</string>
+    <string name="desc_bloom_sprite_passionflower">Krullende ranken openen boven de boon tot een sierlijke paars-witte passiebloem.</string>
+    <string name="label_bloom_sprite_bee_orchid">Bijenorchis</string>
+    <string name="desc_bloom_sprite_bee_orchid">Roze orchideeblaadjes onthullen donkere, bijvormige lippen op slanke stelen.</string>
+    <string name="label_bloom_sprite_jade_vine">Jadeliaan</string>
+    <string name="desc_bloom_sprite_jade_vine">Een klimmende liaan hangt turquoise jadebloemtrossen uit de boon.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Paradijsvogelbloem</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Oranje en diepblauwe Strelitzia-bloemblaadjes vouwen open uit rechtopstaande groene bladeren.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Blauwe Himalayapapaver</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Een hangende knop opent tot een hemelsblauwe papaver met gouden meeldraden.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">Een rood gespikkelde parasitaire bloom zwelt uit tot een enorme vijflobbige bloem.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Chocoladecosmos</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Vederlichte bladeren tillen fluweelzachte donker-bordeaux cosmosbloemen uit de boon.</string>
+    <string name="label_bloom_sprite_flame_lily">Vlamlelie</string>
+    <string name="desc_bloom_sprite_flame_lily">Krullende vlamkleurige lelieblaadjes rijzen op aan groene stengels met ranken.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Koningin van de nacht</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Een cactusstengel opent tot een dramatische gelaagde witte nachtbloem.</string>
+    <string name="label_bloom_sprite_snowdrop">Sneeuwklokje</string>
+    <string name="desc_bloom_sprite_snowdrop">Fijne witte sneeuwklokjes rijzen uit de gebarsten boon.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Kleine blauwe vergeet-mij-nietbloesems met gele harten vouwen open uit de boon.</string>
+    <string name="label_bloom_sprite_fantasy_citadel">Fantasycitadel</string>
+    <string name="desc_bloom_sprite_fantasy_citadel">Een gebarsten boon opent tot een kleine stenen citadel met warme ramen.</string>
+    <string name="label_bloom_sprite_cyber_city_vines">Cyberstad-ranken</string>
+    <string name="desc_bloom_sprite_cyber_city_vines">Neon-circuitranken groeien uit tot een compacte miniatuur-cyberstad.</string>
+    <string name="label_bloom_sprite_pixel_micro_world">Pixel-microwereld</string>
+    <string name="desc_bloom_sprite_pixel_micro_world">De boon verpixelt tot een kleine retro-microwereld van blokken en terrein.</string>
+    <string name="label_bloom_sprite_tabletop_adventure_map">Tabletop-avonturenkaart</string>
+    <string name="desc_bloom_sprite_tabletop_adventure_map">Een rollende boon vouwt open tot een kleine perkamenten avonturenkaart en blanco edelsteendobbelsteen.</string>
+    <string name="label_bloom_sprite_alchemy_astrolabe">Alchemistisch astrolabium</string>
+    <string name="desc_bloom_sprite_alchemy_astrolabe">Messing ringen en ronddraaiende glazen flesjes vouwen open uit de koffieboon.</string>
+    <string name="label_bloom_sprite_espresso_robot">Espressorobot</string>
+    <string name="desc_bloom_sprite_espresso_robot">De boon vouwt open tot een kleine, door espresso aangedreven messing robot.</string>
+    <string name="label_bloom_sprite_space_habitat_ring">Ruimtehabitat-ring</string>
+    <string name="desc_bloom_sprite_space_habitat_ring">Gebogen schilfragmenten splitsen tot een miniatuur roterende habitat-ring.</string>
+    <string name="label_bloom_sprite_nerd_library_nook">Nerdy bibliotheekhoekje</string>
+    <string name="desc_bloom_sprite_nerd_library_nook">Een pop-upbibliotheekhoekje opent uit de boon met planken, lamp en mok.</string>
+    <string name="label_bloom_sprite_arcade_platformer_level">Arcade-platformlevel</string>
+    <string name="desc_bloom_sprite_arcade_platformer_level">De boon laat een klein origineel platformlevel groeien met blokken, edelstenen en een vlag.</string>
+    <string name="label_bloom_sprite_clockwork_dragonfly">Uurwerklibel</string>
+    <string name="desc_bloom_sprite_clockwork_dragonfly">Een koffieschil komt uit als een messing uurwerklibel.</string>
+    <string name="label_bloom_sprite_observatory_dome">Observatoriumkoepel</string>
+    <string name="desc_bloom_sprite_observatory_dome">De boon opent als een kleine observatoriumkoepel met een messing telescoop.</string>
+    <string name="label_bloom_sprite_cyber_alchemy_engine">Cyberalchemie-engine</string>
+    <string name="desc_bloom_sprite_cyber_alchemy_engine">Messing ringen, circuits en een amberkleurige kern vormen een compacte cyberalchemie-engine.</string>
+    <string name="label_bloom_sprite_tabletop_space_colony">Tabletop-ruimtekolonie</string>
+    <string name="desc_bloom_sprite_tabletop_space_colony">Een kleine bordspel-ruimtekolonie rijst op met koepels en blanco dobbelsteenmanen.</string>
+    <string name="label_bloom_sprite_observatory_library">Observatoriumbibliotheek</string>
+    <string name="desc_bloom_sprite_observatory_library">Een knusse observatoriumbibliotheek opent met planken, telescoop en stoomsterrenbeelden.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Zetlogboek</string>
+    <string name="msg_log_empty_title">Start met zetten om je geschiedenis te zien</string>
+    <string name="msg_log_empty_subtitle">Elke afgeronde bereiding met feedback verschijnt hier</string>
+<string name="action_rate_brew">Bereiding beoordelen</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Bereidingsdetails</string>
+    <string name="dialog_delete_brew_title">Bereidingslog verwijderen?</string>
+    <string name="dialog_delete_brew_message">Deze actie kan niet ongedaan worden gemaakt.</string>
+    <string name="label_coffee_bag">Koffiezak</string>
+    <string name="label_brew_time">Zettijd</string>
+    <string name="label_coffee_type">Koffietype</string>
+    <string name="label_flavor_notes">Smaaknotities</string>
+    <string name="hint_add_notes">Notities toevoegen…</string>
+    <string name="msg_brew_not_found">Bereidingslog niet gevonden</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Je favorieten</string>
+    <string name="msg_no_favorites_title">Nog geen favorieten</string>
+    <string name="msg_no_favorites_subtitle">Sla een recept op vanaf het bereidingsscherm met de ♡-knop</string>
+    <string name="label_untitled">Naamloos</string>
+    <string name="format_recipe_summary">%1$sg koffie / %2$sg water</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Personaliseer je bereiding</string>
+    <string name="label_pulsar_filter_type">Pulsar-filtertype</string>
+    <string name="msg_filter_hint">Beïnvloedt kopprofiel en maalaanbevelingen</string>
+    <string name="label_your_grinder">Je molen</string>
+    <string name="msg_grinder_hint">Optioneel — maakt specifieke maalaanbevelingen mogelijk. Kies Geen molen / Overig als die van jou niet in de lijst staat.</string>
+    <string name="label_no_grinder">Geen molen / Overig</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Waar zet je mee?</string>
+    <string name="msg_methods_subtitle">Selecteer je zetmethoden. Tik op ★ om je standaard in te stellen.</string>
+    <string name="label_set_as_default">Als standaard instellen</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Meer</string>
+    <string name="label_your_favorites">Je favorieten</string>
+    <string name="msg_favorites_subtitle">Zet je favoriete bereidingen opnieuw</string>
+    <string name="label_your_beans">Je bonen</string>
+    <string name="msg_beans_subtitle">Versheid, voorraad en wat je hierna zet</string>
+    <string name="msg_settings_subtitle">Methoden, molen en voorkeuren</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Cameratoestemming is vereist om barcodes te scannen</string>
+    <string name="msg_point_camera">Richt de camera op de barcode</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Bereiding opgeslagen! Beoordeel hem nadat je hebt geproefd.</string>
+    <string name="snackbar_action_view_log">Logboek bekijken</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Herinneringen voor bereiding beoordelen</string>
+    <string name="notif_channel_rating_reminder_desc">Vriendelijke herinnering ~30 minuten na een bereiding om te beoordelen terwijl de smaak nog vers is.</string>
+    <string name="notif_rating_title">Hoe was je bereiding?</string>
+    <string name="format_notif_rating_title">Hoe was je %1$s-bereiding?</string>
+    <string name="notif_rating_body">Tik op een emoji om te beoordelen, of open de app voor meer.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Beoordeel met 1 van 5 sterren</string>
+    <string name="cd_notif_rating_2">Beoordeel met 2 van 5 sterren</string>
+    <string name="cd_notif_rating_3">Beoordeel met 3 van 5 sterren</string>
+    <string name="cd_notif_rating_4">Beoordeel met 4 van 5 sterren</string>
+    <string name="cd_notif_rating_5">Beoordeel met 5 van 5 sterren</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Beoordelingsherinnering</string>
+    <string name="msg_rating_reminder_hint">Stuur ~30 minuten na een bereiding een melding zodat je kunt beoordelen terwijl de smaak nog vers is.</string>
+    <string name="msg_rating_reminder_perm_denied">Meldingen zijn geblokkeerd. Zet ze aan in de systeeminstellingen om herinneringen te ontvangen.</string>
+    <string name="action_open_app_settings">Systeeminstellingen openen</string>
+
+    <!-- Settings: bag selection prompt -->
+    <string name="label_bag_prompt">Koffiezak-herinnering</string>
+    <string name="msg_bag_prompt_hint">Toon een vraag wanneer je een bereiding start zonder zak te kiezen, zodat je een van je bijgehouden zakken kunt selecteren.</string>
+
+    <!-- Bag selection prompt dialog -->
+    <string name="dialog_pick_bag_title">Zet je met een koffiezak?</string>
+    <plurals name="msg_pick_bag_body">
+        <item quantity="one">Je hebt %1$d bijgehouden koffiezak. Door die te kiezen blijven je logboek, versheid en maalsuggesties nauwkeurig.</item>
+        <item quantity="other">Je hebt %1$d bijgehouden koffiezakken. Door er een te kiezen blijven je logboek, versheid en maalsuggesties nauwkeurig.</item>
+    </plurals>
+    <string name="action_pick_bag">Zak kiezen</string>
+    <string name="action_brew_without_bag_short">Toch zetten</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Waterretentie</string>
+    <string name="format_retention_explanation">Koffiedik absorbeert ongeveer 2× zijn droge gewicht aan water. Met %1$.0fg koffie houdt de maling ~%2$.0fg vast, waardoor ~%3$.0fg in je kopje overblijft.\n\nDit is een schatting — donkere brandingen absorberen iets meer, lichte brandingen iets minder.</string>
+    <string name="cd_about_cup_volume">Over kopvolume</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+<string name="label_target">Doel</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
+    <string name="format_ratio_bright">Helder · 1:%1$d</string>
+    <string name="format_ratio_balanced">Gebalanceerd · 1:%1$d</string>
+    <string name="format_ratio_rich">Rijk · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+<!-- Input Mode -->
+    <string name="input_coffee_to_water">Koffie → Water</string>
+    <string name="input_water_to_coffee">Water → Koffie</string>
+    <string name="input_brew_to_both">Bereidingsvolume → Beide</string>
+    <string name="input_cup_to_both">Kopgrootte → Beide</string>
+    <string name="input_coffee_short">Koffie</string>
+    <string name="input_water_short">Water</string>
+    <string name="input_brew_short">Bereiding</string>
+    <string name="input_cup_short">Kop</string>
+    <string name="input_coffee_desc">Voer koffiedosis in, bereken water</string>
+    <string name="input_water_desc">Voer waterhoeveelheid in, bereken koffie</string>
+    <string name="input_brew_desc">Voer doelvolume voor bereiding in, bereken koffie en water met absorptie meegerekend</string>
+    <string name="input_cup_desc">Voer kopgrootte in, bereken koffie en water</string>
+
+    <!-- Phase names -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Schenk tot %1$.0fg</string>
+    <string name="instruction_pour_total">Schenk tot %1$.0fg totaal</string>
+    <string name="instruction_open_valve_short">Ventiel openen</string>
+    <string name="instruction_close_valve_short">Ventiel sluiten</string>
+    <string name="instruction_bloom_wait">Zwenk &amp; wacht op bloom</string>
+    <string name="instruction_french_press_start">Voeg al het water toe, roer zacht en plaats het deksel erop</string>
+    <string name="instruction_french_press_steep">Laat ongestoord trekken tot de doeltijd</string>
+    <string name="instruction_french_press_plunge">Druk langzaam omlaag en schenk de koffie daarna uit</string>
+    <string name="instruction_aeropress_start">Voeg water toe, roer en start het trekken</string>
+    <string name="instruction_aeropress_steep">Laat trekken met de dop erop; maak je klaar om te persen</string>
+    <string name="instruction_aeropress_press">Druk gelijkmatig tot het sissen en stop dan</string>
+    <string name="instruction_espresso_start">Klik de portafilter vast en start de shot</string>
+    <string name="instruction_espresso_pull">Let op flow en opbrengst; laat het kopje op de weegschaal</string>
+    <string name="instruction_espresso_stop">Stop bij doelopbrengst of wanneer de shot blond wordt</string>
+    <string name="instruction_moka_start">Zet de pot in elkaar en verwarm rustig met het deksel open</string>
+    <string name="instruction_moka_flow">Let op koffie die in de bovenste kamer stroomt</string>
+    <string name="instruction_moka_remove">Haal van het vuur wanneer de flow bleek wordt of begint te sputteren</string>
+    <string name="instruction_cold_brew_start">Meng koffie en water, roer zodat alle maling nat wordt</string>
+    <string name="instruction_cold_brew_steep">Dek af en laat trekken; houd de maling volledig verzadigd</string>
+    <string name="instruction_cold_brew_filter">Filter het concentraat en koel of verdun om te serveren</string>
+
+    <!-- Warnings -->
+<!-- Taste Feedback -->
+    <string name="feedback_too_sour">Te zuur / zwak</string>
+    <string name="feedback_balanced">Gebalanceerd</string>
+    <string name="feedback_too_bitter">Te bitter / hard</string>
+    <string name="feedback_astringent">Samentrekkend / droog</string>
+    <string name="feedback_clogged">Verstopt / stilgevallen</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Maal 2–4 klikken fijner</string>
+    <string name="adjust_try_finer">Probeer een fijnere maalgraad</string>
+    <string name="adjust_no_change">Geen aanpassing nodig — sla dit recept op!</string>
+    <string name="adjust_grind_coarser">Maal 2–4 klikken grover</string>
+    <string name="adjust_grind_coarser_valve">Maal 2–4 klikken grover\nProbeer het ventiel eerder te openen</string>
+    <string name="adjust_try_coarser">Probeer een grovere maalgraad</string>
+    <string name="adjust_try_coarser_water">Probeer een grovere maalgraad\nOf probeer koeler water</string>
+    <string name="adjust_astringent_pulsar">Verhoog dosis naar 20g+ voor betere beddiepte\nVerminder agitatie tijdens bloom\nHoud de slurry ~1cm boven het bed</string>
+    <string name="adjust_astringent_grinder">Maal iets grover, verminder agitatie</string>
+    <string name="adjust_astringent_no_grinder">Maal iets grover, schenk rustiger</string>
+    <string name="adjust_clogged_pulsar_grinder">Maal veel grover met 3–5 klikken\nVerminder agitatie (alleen zacht zwenken)\nControleer of de koffie te vers is — laat 7+ dagen rusten</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Maal veel grover\nVerminder agitatie\nZorg voor rustige schenkingen via de dispersiedop</string>
+    <string name="adjust_clogged_grinder">Maal veel grover met 3–5 klikken</string>
+    <string name="adjust_clogged_no_grinder">Probeer een veel grovere maalgraad</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Koffie: %1$s gram</string>
+    <string name="cd_water_grams">Water: %1$s gram</string>
+    <string name="cd_ratio">Verhouding 1 op %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Naam</string>
+    <string name="label_roaster">Branderij</string>
+    <string name="label_origin">Herkomst</string>
+<string name="label_barcode_ean">Barcode / EAN</string>
+    <string name="action_scan_barcode">Barcode scannen</string>
+    <string name="label_name_required">Naam *</string>
+    <string name="label_weight_grams">Gewicht (g)</string>
+    <string name="label_roast_date">Branddatum</string>
+    <string name="label_roast_level">Branding</string>
+    <string name="label_variety">Variëteit</string>
+    <string name="label_process">Verwerking</string>
+    <string name="label_tasting_notes">Smaaknotities</string>
+    <string name="label_best_before">Ten minste houdbaar tot</string>
+    <string name="label_decaf_coffee">Cafeïnevrije koffie</string>
+    <string name="msg_decaf_guidance">Zetadvies blijft afgestemd op cafeïnevrije bonen en kortere trektijden.</string>
+    <string name="label_decaf_process_optional">Decaf-proces (optioneel)</string>
+    <string name="msg_decaf_process_hint">Laat de zetregels de maling subtiel bijsturen: decafs met waterproces en CO₂ hoeven meestal minder grof gemalen te worden dan decafs met oplosmiddel.</string>
+    <string name="cd_captured_bag_photo">Vastgelegde zakfoto</string>
+<string name="label_detected_details">Gedetecteerde details</string>
+    <string name="msg_tap_chip_to_edit">Tik op een chip om te bewerken</string>
+    <string name="label_needs_review">Moet worden gecontroleerd</string>
+<string name="action_edit_all_fields">Alle velden bewerken</string>
+    <string name="action_add_more_details">Meer details toevoegen</string>
+    <string name="msg_analyzing_label">Labelfoto\'s analyseren</string>
+    <string name="msg_analyzing_label_detail">We controleren onscherpte, voegen tekst van voor-/achterkant samen en bereiden de betrouwbaarste velden voor.</string>
+    <string name="label_review_fields">Controleer deze velden</string>
+    <string name="label_qr_website">QR-website</string>
+    <string name="action_open_website">Website openen</string>
+    <string name="label_qr_link_found">QR-link gevonden</string>
+<string name="action_explore_extract">Verkennen &amp; extraheren</string>
+    <string name="label_detected_field_evidence">Bewijs voor gedetecteerde velden</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Zakfoto</string>
+    <string name="action_rescan_label">Label opnieuw scannen</string>
+    <string name="action_edit_bag">Zak bewerken</string>
+    <string name="label_sensory_snapshot">Sensorische samenvatting</string>
+    <string name="label_grind_intelligence">Maalintelligentie</string>
+    <string name="label_remaining_coffee">Resterende koffie</string>
+    <string name="action_adjust_weight">Gewicht aanpassen</string>
+    <string name="action_add_weight_tracking">Gewichtstracking toevoegen</string>
+    <string name="label_brew_history">Bereidingsgeschiedenis</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Hoe was het?</string>
+    <string name="msg_rate_brew_fresh">Beoordeel deze bereiding terwijl de smaak nog vers is.</string>
+    <string name="label_flavor_notes_section">Smaaknotities</string>
+    <string name="hint_what_stood_out">Optionele notitie - wat viel op?</string>
+    <string name="action_save_rating">Beoordeling opslaan</string>
+
+    <!-- EmptyStateBox -->
+<!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Je favorieten</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Overig</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">AI-service (Mindlayer)</string>
+    <string name="action_test_connection">Verbinding testen</string>
+    <string name="action_run_test_prompt">Testprompt uitvoeren</string>
+    <string name="label_testing">Testen…</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Hoe was je laatste kop?</string>
+    <string name="label_what_was_off">Wat klopte er niet?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Het gescande label komt overeen met je opgeslagen zak — niets om bij te werken.</string>
+    <string name="action_update_bag">Zak bijwerken</string>
+    <string name="action_new_bag">Nieuwe zak</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Opslaan als favoriet</string>
+    <string name="msg_save_favorite_hint">Geef dit recept een naam die je onthoudt</string>
+    <string name="hint_save_favorite_example">bijv. Maandagochtend, Rustig weekend</string>
+    <string name="action_save_simple">Opslaan</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Scangeschiedenis</string>
+    <string name="msg_no_scan_sessions">Nog geen scansessies vastgelegd.</string>
+    <string name="action_share_session">Deze sessie delen</string>
+    <string name="label_component_timings">Componenttijden</string>
+    <string name="msg_no_timing_data">Geen timinggegevens beschikbaar</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Waarschuwing</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Gewicht aanpassen</string>
+    <string name="label_remaining_weight_grams">Resterend gewicht (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Van foto</string>
+    <string name="action_scan_label">Label scannen</string>
+    <string name="action_add_bag_gallery">Uit galerij</string>
+    <string name="action_add_bag_camera">Scannen met camera</string>
+    <string name="action_add_bag_barcode">Barcode scannen</string>
+    <string name="action_add_bag_manual">Handmatig toevoegen</string>
+    <string name="msg_no_beans_yet">Nog geen bonen</string>
+    <string name="msg_add_coffee_hint">Voeg je koffie toe om versheid bij te houden en zetvoorstellen te krijgen</string>
+    <string name="action_brew_now">Nu zetten</string>
+    <string name="msg_could_not_read_label">Kon label niet lezen</string>
+    <string name="action_retake_photo">Foto opnieuw maken</string>
+    <string name="action_add_details_manually">Details handmatig toevoegen</string>
+    <string name="msg_llm_enrichment_succeeded">AI-verrijking heeft deze labelscan verbeterd.</string>
+    <string name="msg_llm_enrichment_failed">AI-verrijking is mislukt. Je kunt opnieuw proberen of handmatig verder bewerken.</string>
+    <string name="msg_llm_enrichment_unavailable">AI-verrijking is nu niet beschikbaar. Je kunt opnieuw proberen of handmatig verder bewerken.</string>
+    <string name="action_retry_llm_enrichment">AI-verrijking opnieuw proberen</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Bereiding delen</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Scan weggooien?</string>
+    <string name="msg_discard_scan_body">Je hebt gedetecteerde velden die nog niet zijn opgeslagen.</string>
+    <string name="action_discard">Weggooien</string>
+    <string name="action_keep_scanning">Doorgaan met scannen</string>
+    <string name="msg_camera_permission_required">Cameratoestemming vereist</string>
+    <string name="screen_scan_bag_title">Koffiezak scannen</string>
+    <string name="cd_toggle_debug_overlay">Debug-overlay aan/uit</string>
+    <string name="msg_both_sides_scanned">Beide kanten van de zak zijn gescand</string>
+    <string name="msg_scanning_front_side">Voorkant van de zak scannen</string>
+<string name="action_quick_save">Snel opslaan</string>
+    <string name="msg_repackaged_product">Dit kan een herverpakt of geïmporteerd product zijn</string>
+    <string name="action_use_barcode">Barcode gebruiken</string>
+    <string name="action_use_label">Label gebruiken</string>
+<string name="label_confirmed">Bevestigd</string>
+    <string name="label_ai_contributed">AI heeft bijgedragen</string>
+    <string name="cd_manual_capture">Handmatige opname — huidig frame geforceerd verwerken</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Synchroniseren met zak</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Toegepast bij zetten met Pulsar</string>
+    <string name="label_quick_brew">Snel zetten</string>
+    <string name="msg_quick_brew_hint">Sla de maalvoorbereiding over en ga direct naar de timer wanneer je een bereiding start</string>
+    <string name="label_show_brewing_instructions">Zetinstructies tonen</string>
+    <string name="msg_show_brewing_instructions_hint">Toon de stapsgewijze begeleidingskaart tijdens het zetten en de voorbereidingschecklist op het voorbereidingsscherm. Zet uit als je je methode uit je hoofd kent.</string>
+    <string name="label_dim_mode">Automatische dimmodus</string>
+    <string name="msg_dim_mode_hint">Na 25 s inactiviteit worden gekleurde achtergronden verwijderd en tekst gedempt naar grijs. De layout blijft op zijn plek en één tik wekt het scherm én activeert de onderliggende actie.</string>
+    <string name="label_dim_mode_true_black">Echt zwarte achtergrond</string>
+    <string name="msg_dim_mode_true_black_hint">Wanneer gedimd in een donker thema, wordt ook de schermachtergrond puur zwart. Ideaal op OLED — bespaart stroom en voelt echt in rust. Geen effect in lichte thema\'s.</string>
+    <string name="label_dim_mode_reduce_brightness">Schermhelderheid verlagen</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Verlaag ook de schermverlichting tijdens het dimmen. Bespaart wat stroom en maakt het scherm nog zachter.</string>
+    <string name="label_dim_mode_fullscreen">Systeembalken verbergen</string>
+    <string name="msg_dim_mode_fullscreen_hint">Verberg ook de statusbalk en navigatiebalk tijdens het dimmen. Veeg vanaf een rand om even te kijken; elke tik op het scherm wekt terug naar normaal.</string>
+    <string name="label_dim_mode_force_dark_in_light">Donkere stijl gebruiken bij dimmen</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Schakel over naar de dimweergave van het donkere thema, zelfs wanneer het systeem in lichte modus staat. Past natuurlijk bij een echt zwarte achtergrond voor altijd donker dimmen.</string>
+    <string name="action_add_cup_preset">Kop-preset toevoegen</string>
+    <string name="label_volume_ml">Volume (ml)</string>
+    <string name="msg_dose_from_ratio">Koffiedosis wordt berekend uit je verhouding</string>
+    <string name="label_icon">Pictogram</string>
+    <string name="label_color">Kleur</string>
+    <string name="action_add">Toevoegen</string>
+    <string name="dialog_edit_cup_preset_title">Kop-preset bewerken</string>
+    <string name="screen_add_cup_preset_title">Kop-preset toevoegen</string>
+    <string name="screen_edit_cup_preset_title">Kop-preset bewerken</string>
+    <string name="msg_cup_preset_name_required">Voeg een naam toe om door te gaan</string>
+    <string name="msg_cup_preset_volume_required">Voeg een volume groter dan 0 toe</string>
+    <string name="cd_cup_preset_preview">Voorbeeld van %1$s</string>
+    <string name="label_scan_debug">Scandebug</string>
+    <string name="action_view_history">Geschiedenis bekijken</string>
+    <string name="action_share_report">Rapport delen</string>
+    <string name="action_clear">Wissen</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Licht</string>
+    <string name="strength_balanced">Gebalanceerd</string>
+    <string name="strength_strong">Sterk</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Fruitig</string>
+    <string name="flavor_chocolate">Chocolade</string>
+    <string name="flavor_nutty">Notig</string>
+    <string name="flavor_floral">Bloemig</string>
+    <string name="flavor_bright">Helder</string>
+    <string name="flavor_smooth">Rond</string>
+    <string name="flavor_bitter">Bitter</string>
+    <string name="flavor_sweet">Zoet</string>
+    <string name="flavor_earthy">Aards</string>
+    <string name="flavor_spicy">Kruidig</string>
+    <string name="flavor_citrus">Citrus</string>
+    <string name="flavor_berry">Bessen</string>
+    <string name="flavor_caramel">Karamel</string>
+    <string name="flavor_wine">Wijnachtig</string>
+    <string name="flavor_clean">Zuiver</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Zeer fijn</string>
+    <string name="grind_fine">Fijn</string>
+    <string name="grind_medium_fine">Middelfijn</string>
+    <string name="grind_medium">Medium</string>
+    <string name="grind_medium_coarse">Middelgrof</string>
+    <string name="grind_coarse">Grof</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Geweldig</string>
+    <string name="rating_good">Goed</string>
+    <string name="rating_not_great">Niet geweldig</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Te bitter</string>
+    <string name="taste_issue_too_sour">Te zuur</string>
+    <string name="taste_issue_too_weak">Te zwak</string>
+    <string name="taste_issue_too_strong">Te sterk</string>
+    <string name="taste_issue_bitter_suggestion">Probeer grover te malen of korter te zetten</string>
+    <string name="taste_issue_sour_suggestion">Probeer fijner te malen of langer te zetten</string>
+    <string name="taste_issue_weak_suggestion">Probeer een sterkere verhouding of meer koffie</string>
+    <string name="taste_issue_strong_suggestion">Probeer een lichtere verhouding of minder koffie</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Verzegeld</string>
+    <string name="bag_status_open">Open</string>
+    <string name="bag_status_frozen">Bevroren</string>
+    <string name="bag_status_finished">Opgebruikt</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Onbekend / niet gespecificeerd</string>
+    <string name="decaf_swiss_water">Swiss Water (waterproces)</string>
+    <string name="decaf_mountain_water">Mountain Water (waterproces)</string>
+    <string name="decaf_co2">Superkritische CO₂</string>
+    <string name="decaf_ea_sugarcane">Ethylacetaat (suikerriet / natuurlijke EA)</string>
+    <string name="decaf_mc_direct">Methyleenchloride (direct oplosmiddel)</string>
+    <string name="decaf_ea_direct">Ethylacetaat (direct oplosmiddel)</string>
+    <string name="decaf_short_unknown">Onbekend</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (suikerriet)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (oplosmiddel)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Licht</string>
+    <string name="roast_medium_light">Medium-licht</string>
+    <string name="roast_medium">Medium</string>
+    <string name="roast_medium_dark">Medium-donker</string>
+    <string name="roast_dark">Donker</string>
+    <string name="roast_filter">Filter</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Cinnamon</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Gewassen</string>
+    <string name="process_natural">Natural</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaeroob</string>
+    <string name="process_carbonic_maceration">Carbonic maceration</string>
+    <string name="process_semi_washed">Semi-washed</string>
+    <string name="process_wet_hulled">Wet-hulled</string>
+    <string name="process_pulped_natural">Pulped natural</string>
+    <string name="process_double_fermented">Dubbel gefermenteerd</string>
+    <string name="process_thermal_shock">Thermal shock</string>
+</resources>

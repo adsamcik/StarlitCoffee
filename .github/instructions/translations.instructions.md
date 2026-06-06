@@ -1,11 +1,29 @@
 ---
 applyTo: "app/src/main/res/values*/strings.xml"
-description: "How to translate user-facing strings for Starlit Coffee (EN + CS)"
+description: "How to translate user-facing strings for Starlit Coffee (multi-language)"
 ---
 
 # Translation Guide
 
-Starlit Coffee ships in **English (`values/strings.xml`)** and **Czech (`values-cs/strings.xml`)**. Both files MUST have identical key sets at all times.
+Starlit Coffee ships in **11 languages**. English (`values/strings.xml`) is the source of truth; every other locale MUST have an identical `<string>` key set at all times.
+
+| Language | Locale | Directory |
+|---|---|---|
+| English (source) | en | `values/` |
+| Czech | cs | `values-cs/` |
+| Danish | da | `values-da/` |
+| German | de | `values-de/` |
+| Spanish | es | `values-es/` |
+| French | fr | `values-fr/` |
+| Italian | it | `values-it/` |
+| Dutch | nl | `values-nl/` |
+| Polish | pl | `values-pl/` |
+| Slovak | sk | `values-sk/` |
+| Chinese (Simplified) | zh | `values-zh/` |
+
+The supported locales are also declared in `res/xml/locales_config.xml` (referenced by `android:localeConfig` in the manifest), which drives the Android 13+ per-app language picker. **When adding or removing a locale, update both that file and this table.**
+
+The Czech-specific glossary and conventions below remain the canonical worked example; apply the same affordance-aware philosophy (and each language's own coffee-community vocabulary and CLDR plural rules) to every locale.
 
 ## Core Principle
 
@@ -17,14 +35,18 @@ Starlit Coffee ships in **English (`values/strings.xml`)** and **Czech (`values-
 
 ## Adding a New String
 
-1. Add the key to **both** `values/strings.xml` and `values-cs/strings.xml` in the same logical section (use the `<!-- Section -->` comments).
-2. Verify keys stay aligned:
+1. Add the key to `values/strings.xml` (English source) **and to every other `values-<locale>/strings.xml`** in the same logical section (use the `<!-- Section -->` comments). Never leave a locale missing a key.
+2. Verify keys stay aligned across **all** locales (each `Compare-Object` must return nothing):
    ```powershell
    $en = (Select-Xml -Path app\src\main\res\values\strings.xml -XPath "//string").Node.name | Sort-Object
-   $cs = (Select-Xml -Path app\src\main\res\values-cs\strings.xml -XPath "//string").Node.name | Sort-Object
-   Compare-Object $en $cs   # must return nothing
+   foreach ($loc in 'cs','da','de','es','fr','it','nl','pl','sk','zh') {
+       $tgt = (Select-Xml -Path "app\src\main\res\values-$loc\strings.xml" -XPath "//string").Node.name | Sort-Object
+       $diff = Compare-Object $en $tgt
+       if ($diff) { Write-Host "$loc MISMATCH"; $diff } else { Write-Host "$loc OK" }
+   }
    ```
-3. Use `snake_case` keys with an affordance prefix:
+3. For `<plurals>`, use the correct CLDR categories per language: `one`/`other` for da, de, es, fr, it, nl; `one`/`few`/`many`/`other` for cs, pl, sk; `other` only for zh.
+4. Use `snake_case` keys with an affordance prefix:
    - `action_*` — button labels, menu actions
    - `label_*` — field labels, section titles
    - `msg_*` — full-sentence microcopy / body text
@@ -121,7 +143,7 @@ If you hit a collision that actually confuses users (two different screens rende
 
 Before committing translation changes:
 
-- [ ] Both `values/strings.xml` and `values-cs/strings.xml` have the same keys (`Compare-Object` returns nothing).
+- [ ] Every `values-<locale>/strings.xml` has the same `<string>` keys as `values/strings.xml` (`Compare-Object` returns nothing for all locales).
 - [ ] `.\gradlew.bat assembleDebug` passes (no XML syntax errors, no missing references).
 - [ ] New loanwords in Czech are declined properly in mid-sentence contexts.
 - [ ] Button labels are infinitive verbs in CS.

@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Príprava</string>
+    <string name="nav_log">Záznamy</string>
+    <string name="nav_more">Viac</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Späť</string>
+    <string name="action_close">Zavrieť</string>
+    <string name="action_cancel">Zrušiť</string>
+    <string name="action_delete">Odstrániť</string>
+    <string name="action_save">Uložiť zmeny</string>
+    <string name="action_saved">✓ Uložené</string>
+    <string name="action_skip">Preskočiť</string>
+    <string name="action_finish">Dokončiť</string>
+    <string name="action_next">Ďalej</string>
+    <string name="action_go_back">Späť</string>
+<!-- Common labels -->
+    <string name="label_coffee">Káva</string>
+    <string name="label_water">Voda</string>
+    <string name="label_ratio">Pomer</string>
+    <string name="label_strength">Sila</string>
+    <string name="label_grind">Mletie</string>
+    <string name="label_filter">Filter</string>
+<string name="label_decaf">Bez kofeínu</string>
+    <string name="label_decaf_suffix"> · Bez kofeínu</string>
+    <string name="label_loading">Načítava sa…</string>
+    <string name="label_none">Žiadne</string>
+    <string name="label_taste">Chuť</string>
+    <string name="label_rating">Hodnotenie</string>
+    <string name="label_notes">Poznámky</string>
+    <string name="label_no_filter">Bez filtra</string>
+    <string name="label_settings">Nastavenia</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg v šálke</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+<plurals name="format_selected">
+        <item quantity="one">%1$d vybrané</item>
+        <item quantity="few">%1$d vybrané</item>
+        <item quantity="many">%1$d vybrané</item>
+        <item quantity="other">%1$d vybrané</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Nastavte si prípravu</string>
+    <string name="label_coffee_input">Káva (g)</string>
+    <string name="label_water_input">Voda (g)</string>
+    <string name="label_brew_size_input">Objem nápoja (ml)</string>
+    <string name="label_cup_size_input">Objem šálky (ml)</string>
+    <string name="label_brew_size">Objem nápoja</string>
+    <string name="label_cup_size">Objem šálky</string>
+    <string name="format_capacity_note">%1$s pojme %2$dg vody — pri väčších prípravách sa dopĺňa automaticky</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Vybrať balenie kávy</string>
+    <string name="cd_clear_bag">Vymazať výber balenia</string>
+    <string name="format_brewing_with">Príprava s %1$s</string>
+    <string name="label_freshness">Čerstvosť</string>
+    <string name="format_recommended_now">Odporúčané teraz: %1$s</string>
+    <string name="format_last_time">Naposledy: %1$s</string>
+    <string name="action_save_as_favorite">Uložiť ako obľúbené</string>
+    <string name="label_select_coffee_bag_title">Vybrať balenie kávy</string>
+    <string name="msg_no_active_bags">Žiadne aktívne balenia. Pridajte jedno v sekcii Vaše zrná.</string>
+    <string name="action_brew_without_bag">Pripraviť bez výberu balenia</string>
+    <string name="label_best_now">Najlepšie teraz</string>
+    <string name="format_grind_generic">Mletie: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Nastavenie mletia: %1$s–%2$s · Upravte podľa chuti</string>
+    <string name="format_weight_left"> · zostáva %1$.0fg</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Tip pre Pulsar: Počas nalievania udržiavajte hladinu ~1cm nad kávovým lôžkom. Väčšina používateľov pripravuje 20–25g pre vyváženú šálku.</string>
+    <string name="tip_generic">💡 Tip: Začnite s predvoleným pomerom a silu upravte podľa chuti. Jemnejšie mletie extrahuje viac, hrubšie mletie menej.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Nastavenie prípravy</string>
+<string name="label_custom_ratio">Vlastný pomer (napr. 16)</string>
+    <string name="label_temperature">Teplota (°C)</string>
+    <string name="label_bloom_multiplier">Násobiteľ bloomu (napr. 3.0)</string>
+    <string name="label_pulse_count">Počet nálevov</string>
+<string name="action_start_brewing">Spustiť prípravu →</string>
+    <string name="label_advanced_options">Pokročilé možnosti</string>
+    <string name="cd_collapse_advanced">Zbaliť pokročilé možnosti</string>
+    <string name="cd_expand_advanced">Rozbaliť pokročilé možnosti</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Dávka kávy: %1$d gram</item>
+        <item quantity="few">Dávka kávy: %1$d gramy</item>
+        <item quantity="many">Dávka kávy: %1$d gramu</item>
+        <item quantity="other">Dávka kávy: %1$d gramov</item>
+    </plurals>
+    <string name="label_decrease">Znížiť %1$s</string>
+    <string name="label_increase">Zvýšiť %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Pripravte si všetko</string>
+<string name="action_ready_to_brew_short">Pripravené na prípravu</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Príprava</string>
+    <string name="label_recipe_heading">Recept</string>
+    <string name="label_set_grinder_to">Nastavte mlynček na</string>
+    <string name="label_temp_short">Teplota</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Navlhčite papierový filter v základni (ventil otvorený) a nechajte odtiecť. Nasaďte valec, pridajte kávu, zarovnajte lôžko a položte disperzný kryt. Vytárujte váhu.</string>
+    <string name="prep_tip_pulsar_19k">Prepláchnite kovový filter 19K, aby dobre dosadol, a predhrejte valec. Nasaďte valec, pridajte kávu, zarovnajte lôžko a položte disperzný kryt. Vytárujte váhu.</string>
+    <string name="prep_tip_pulsar_40k">Prepláchnite kovový filter 40K, aby sa predhrial valec. Nasaďte valec, pridajte kávu, zarovnajte lôžko a položte disperzný kryt. Vytárujte váhu.</string>
+    <string name="prep_tip_pour_over_paper">Vložte papierový filter a prepláchnite horúcou vodou, aby sa predhrial a odstránila sa papierová chuť. Pridajte kávu a vytárujte váhu.</string>
+    <string name="prep_tip_french_press">Predhrejte French Press a potom ho vyprázdnite. Pridajte kávu, položte na váhu a pred pridaním vody vytárujte.</string>
+    <string name="prep_tip_aeropress">Vložte prepláchnutý filter do viečka. Pridajte kávu, postavte AeroPress na pevnú šálku alebo server a vytárujte váhu.</string>
+    <string name="prep_tip_espresso">Utrite páku dosucha. Nadávkujte, rovnomerne rozprestrite a utlačte do roviny pred nasadením.</string>
+    <string name="prep_tip_moka">Naplňte spodnú komoru po ventil. Naplňte košík kávou, zarovnajte — neutláčajte. Opatrne zložte.</string>
+    <string name="prep_tip_cold_brew">Nasypte kávu do nádoby, vytárujte váhu, potom pridajte vodu izbovej teploty alebo studenú vodu a zakryte.</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Pozastaviť</string>
+    <string name="action_resume">Pokračovať</string>
+    <string name="cd_disable_minute_alerts">Vypnúť minútové upozornenia</string>
+    <string name="cd_enable_minute_alerts">Zapnúť minútové upozornenia</string>
+    <string name="cd_bloom_animation">Animácia bloomu z kávového zrna</string>
+<string name="format_pour_bloom_water">Nalejte %1$.0fg vody na bloom</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Celkom %2$.0fg</string>
+<string name="action_start_bloom">☕ Začať bloom</string>
+<string name="label_bloom_done">✅ Bloom hotový!</string>
+    <string name="action_finish_brew">Dokončiť prípravu</string>
+    <string name="dialog_exit_brew_title">Ukončiť prípravu?</string>
+    <string name="dialog_exit_brew_message">Aktuálny postup prípravy sa stratí.</string>
+    <string name="action_exit_brew">Ukončiť</string>
+
+    <!-- Calculator Brew Screen -->
+<string name="label_water_to_dose">Voda → Dávka</string>
+    <string name="label_dose_to_water">Dávka → Voda</string>
+    <string name="cd_backspace">Vymazať znak</string>
+    <string name="action_brew">Spustiť</string>
+    <string name="label_total_water">celkom vody</string>
+<!-- Settings Screen -->
+    <string name="screen_settings_title">Nastavenia</string>
+    <string name="label_cup_presets">Predvoľby šálok</string>
+    <string name="action_add_preset">Pridať predvoľbu</string>
+    <string name="action_reset_defaults">Obnoviť predvolené</string>
+    <string name="msg_presets_hint">Predvoľby sa zobrazia ako rýchle tlačidlá v kalkulačke</string>
+    <string name="label_brew_methods">Metódy prípravy</string>
+    <string name="msg_methods_hint">Vybrané metódy sa zobrazia ako prvé. Klepnutím prepnete.</string>
+    <string name="label_default_method">Predvolená metóda</string>
+    <string name="format_edit_preset">Upraviť %1$s</string>
+    <string name="label_bloom_animation_settings">Bloom animácie</string>
+    <string name="msg_bloom_animation_settings_subtitle">Zvoľte, ako často sa má zobraziť každá bloom animácia</string>
+    <string name="cd_open_bloom_animation_settings">Otvoriť nastavenia bloom animácií</string>
+    <string name="screen_bloom_animation_settings_title">Bloom animácie</string>
+    <string name="msg_bloom_animation_settings_hint">Klepnutím na každý ovládací prvok prepnete medzi bežnou šancou, dvojnásobnou šancou a vylúčením. Ak vylúčite všetky animácie, časovače bloomu animáciu skryjú.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s má nastavenie %2$s. Klepnutím zmeníte.</string>
+    <string name="label_bloom_sprite_coffee_flower">Kvet kávovníka</string>
+    <string name="desc_bloom_sprite_coffee_flower">Klasický biely kvet kávovníka otvárajúci sa zo zrna.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Hviezdna káva</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Krémovo-zlaté parné lupienky s drobnými hviezdnymi odleskami.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Jemná latte-art rozeta v teplých tónoch mliečnej peny.</string>
+    <string name="label_bloom_sprite_coffee_plant">Kávovník</string>
+    <string name="desc_bloom_sprite_coffee_plant">Svieža zelená sadenica kávovníka s párovými listami.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Čerešňová paradajka</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Z kávového zrna vyrastie paradajková liana a dozrejú na nej červené plody.</string>
+    <string name="label_bloom_sprite_strawberry">Jahoda</string>
+    <string name="desc_bloom_sprite_strawberry">Z kávového zrna vyrastie jahodník s kvetmi a červenými bobuľami.</string>
+    <string name="label_bloom_sprite_raspberry">Malina</string>
+    <string name="desc_bloom_sprite_raspberry">Z kávového zrna vyrastú šľahúne so svetlými kvetmi a červenými malinami.</string>
+    <string name="label_bloom_sprite_blueberry">Čučoriedka</string>
+    <string name="desc_bloom_sprite_blueberry">Z kávového zrna vyrastie vetvička čučoriedky so zvončekovými kvetmi a modrými plodmi.</string>
+    <string name="label_bloom_sprite_blackberry">Černica</string>
+    <string name="desc_bloom_sprite_blackberry">Z kávového zrna vyrastú tŕnisté šľahúne s tmavými černicami.</string>
+    <string name="label_bloom_sprite_coffee_brew">Kávová príprava</string>
+    <string name="desc_bloom_sprite_coffee_brew">Jantárová kávová žiara s krémovými kučerami pary.</string>
+    <string name="label_bloom_sprite_cursed_relic">Prekliata relikvia</string>
+    <string name="desc_bloom_sprite_cursed_relic">Prasknuté zrno vypustí zlatú mágiu a čiernu paru do vlčieho medailónu.</string>
+    <string name="label_bloom_sprite_rose">Ruža</string>
+    <string name="desc_bloom_sprite_rose">Kompaktná červená ruža rozvíjajúca sa nad zrnom.</string>
+    <string name="label_bloom_sprite_lotus">Lotos</string>
+    <string name="desc_bloom_sprite_lotus">Krémový lotosový kvet s vrstvenými miskovitými lupienkami.</string>
+    <string name="label_bloom_sprite_sunflower">Slnečnica</string>
+    <string name="desc_bloom_sprite_sunflower">Žiarivá slnečnica so zlatými lupienkami a tmavým stredom.</string>
+    <string name="label_bloom_sprite_orchid">Orchidea</string>
+    <string name="desc_bloom_sprite_orchid">Jemná biela orchidea so zaoblenými lalokmi.</string>
+    <string name="label_bloom_sprite_jasmine">Jazmín</string>
+    <string name="desc_bloom_sprite_jasmine">Nežný biely jazmín s jemným veterníkovým tvarom.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Srdcovka</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Zo zrna vyrastajú oblúkové stonky s ružovými srdcovitými kvetmi a bielymi kvapkovými špičkami.</string>
+    <string name="label_bloom_sprite_passionflower">Mučenka</string>
+    <string name="desc_bloom_sprite_passionflower">Nad zrnom sa stáčajú liany a otvárajú zdobný fialovo-biely kvet mučenky.</string>
+    <string name="label_bloom_sprite_bee_orchid">Včelia orchidea</string>
+    <string name="desc_bloom_sprite_bee_orchid">Ružové lupienky orchidey odhalia tmavé pysky v tvare včely na štíhlych stonkách.</string>
+    <string name="label_bloom_sprite_jade_vine">Nefritová liana</string>
+    <string name="desc_bloom_sprite_jade_vine">Zo zrna vyrastie popínavá liana so zvesenými tyrkysovými strapcami nefritových kvetov.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Strelícia</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Z priamych zelených listov sa rozvíjajú oranžové a sýtomodré lupienky strelície.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Modrý himalájsky mak</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Ovisnutý púčik sa otvorí do nebesky modrého maku so zlatými tyčinkami.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">Červený škvrnitý parazitický kvet napučí do obrovského päťlaločného kvetu.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Čokoládová krásenka</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Páperisté listy zdvíhajú zo zrna zamatovo tmavobordové kvety krásenky.</string>
+    <string name="label_bloom_sprite_flame_lily">Glorióza</string>
+    <string name="desc_bloom_sprite_flame_lily">Na úponkovitých zelených stonkách stúpajú stočené plamenné lupienky ľalie.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Kráľovná noci</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Kaktusová stonka sa otvorí do dramatického vrstveného bieleho nočného kvetu.</string>
+    <string name="label_bloom_sprite_snowdrop">Snežienka</string>
+    <string name="desc_bloom_sprite_snowdrop">Z prasknutého zrna vyrastajú jemné biele zvončeky snežienky.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Zo zrna sa rozvíjajú drobné modré kvety nezábudky so žltými stredmi.</string>
+    <string name="label_bloom_sprite_fantasy_citadel">Fantasy citadela</string>
+    <string name="desc_bloom_sprite_fantasy_citadel">Prasknuté zrno sa otvorí do drobnej kamennej citadely s teplými oknami.</string>
+    <string name="label_bloom_sprite_cyber_city_vines">Kybermestské liany</string>
+    <string name="desc_bloom_sprite_cyber_city_vines">Neónové obvodové liany vyrastú do kompaktnej miniatúrnej kybermetropoly.</string>
+    <string name="label_bloom_sprite_pixel_micro_world">Pixelový mikrosvet</string>
+    <string name="desc_bloom_sprite_pixel_micro_world">Zrno sa rozpixeluje do drobného retro mikrosveta z blokov a terénu.</string>
+    <string name="label_bloom_sprite_tabletop_adventure_map">Stolová dobrodružná mapa</string>
+    <string name="desc_bloom_sprite_tabletop_adventure_map">Kotúľajúce sa zrno rozvinie drobnú pergamenovú dobrodružnú mapu a prázdnu drahokamovú kocku.</string>
+    <string name="label_bloom_sprite_alchemy_astrolabe">Alchymistický astroláb</string>
+    <string name="desc_bloom_sprite_alchemy_astrolabe">Zo zrna sa rozvíjajú mosadzné kruhy a obiehajúce sklenené ampulky.</string>
+    <string name="label_bloom_sprite_espresso_robot">Espresso robot</string>
+    <string name="desc_bloom_sprite_espresso_robot">Zrno sa rozvinie do drobného mosadzného robota poháňaného espressom.</string>
+    <string name="label_bloom_sprite_space_habitat_ring">Prstenec vesmírneho habitatu</string>
+    <string name="desc_bloom_sprite_space_habitat_ring">Zakrivené časti škrupiny sa rozdelia do miniatúrneho rotujúceho prstenca habitatu.</string>
+    <string name="label_bloom_sprite_nerd_library_nook">Nerdovský knižničný kútik</string>
+    <string name="desc_bloom_sprite_nerd_library_nook">Zo zrna vyskočí knižničný kútik s policami, lampou a hrnčekom.</string>
+    <string name="label_bloom_sprite_arcade_platformer_level">Arkádová plošinovka</string>
+    <string name="desc_bloom_sprite_arcade_platformer_level">Zo zrna vyrastie drobná originálna úroveň plošinovky z blokov, drahokamov a vlajky.</string>
+    <string name="label_bloom_sprite_clockwork_dragonfly">Hodinárska vážka</string>
+    <string name="desc_bloom_sprite_clockwork_dragonfly">Kávová škrupina sa vyliahne do mosadznej hodinárskej vážky.</string>
+    <string name="label_bloom_sprite_observatory_dome">Kupola observatória</string>
+    <string name="desc_bloom_sprite_observatory_dome">Zrno sa otvorí ako drobná kupola observatória s mosadzným ďalekohľadom.</string>
+    <string name="label_bloom_sprite_cyber_alchemy_engine">Kyberalchymistický stroj</string>
+    <string name="desc_bloom_sprite_cyber_alchemy_engine">Mosadzné kruhy, obvody a jantárové jadro vytvoria kompaktný kyberalchymistický stroj.</string>
+    <string name="label_bloom_sprite_tabletop_space_colony">Stolová vesmírna kolónia</string>
+    <string name="desc_bloom_sprite_tabletop_space_colony">Drobná dosková vesmírna kolónia vyrastie s kupolami a prázdnymi kockovými mesiacmi.</string>
+    <string name="label_bloom_sprite_observatory_library">Observatórna knižnica</string>
+    <string name="desc_bloom_sprite_observatory_library">Útulná observatórna knižnica sa otvorí s policami, ďalekohľadom a parnými súhvezdiami.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Záznam príprav</string>
+    <string name="msg_log_empty_title">Začnite pripravovať kávu a uvidíte svoju históriu</string>
+    <string name="msg_log_empty_subtitle">Každá dokončená príprava so spätnou väzbou sa zobrazí tu</string>
+<string name="action_rate_brew">Ohodnotiť prípravu</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Detail prípravy</string>
+    <string name="dialog_delete_brew_title">Odstrániť záznam prípravy?</string>
+    <string name="dialog_delete_brew_message">Táto akcia sa nedá vrátiť späť.</string>
+    <string name="label_coffee_bag">Balenie kávy</string>
+    <string name="label_brew_time">Čas prípravy</string>
+    <string name="label_coffee_type">Typ kávy</string>
+    <string name="label_flavor_notes">Chuťové poznámky</string>
+    <string name="hint_add_notes">Pridať poznámky…</string>
+    <string name="msg_brew_not_found">Záznam prípravy sa nenašiel</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Vaše obľúbené</string>
+    <string name="msg_no_favorites_title">Zatiaľ žiadne obľúbené</string>
+    <string name="msg_no_favorites_subtitle">Uložte recept z obrazovky prípravy tlačidlom ♡</string>
+    <string name="label_untitled">Bez názvu</string>
+    <string name="format_recipe_summary">%1$sg kávy / %2$sg vody</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Prispôsobte si prípravu</string>
+    <string name="label_pulsar_filter_type">Typ filtra Pulsar</string>
+    <string name="msg_filter_hint">Ovplyvňuje profil šálky a odporúčania mletia</string>
+    <string name="label_your_grinder">Váš mlynček</string>
+    <string name="msg_grinder_hint">Voliteľné — umožní konkrétne odporúčania mletia. Ak váš mlynček nie je v zozname, vyberte Bez mlynčeka / Iný.</string>
+    <string name="label_no_grinder">Bez mlynčeka / Iný</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Čím pripravujete kávu?</string>
+    <string name="msg_methods_subtitle">Vyberte svoje metódy prípravy. Klepnutím na ★ nastavíte predvolenú.</string>
+    <string name="label_set_as_default">Nastaviť ako predvolenú</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Viac</string>
+    <string name="label_your_favorites">Vaše obľúbené</string>
+    <string name="msg_favorites_subtitle">Zopakujte si svoje obľúbené prípravy</string>
+    <string name="label_your_beans">Vaše zrná</string>
+    <string name="msg_beans_subtitle">Čerstvosť, zásoba a čo pripraviť nabudúce</string>
+    <string name="msg_settings_subtitle">Metódy, mlynček a predvoľby</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Na skenovanie čiarových kódov je potrebné povolenie fotoaparátu</string>
+    <string name="msg_point_camera">Namierte fotoaparát na čiarový kód</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Príprava uložená! Ohodnoťte ju po ochutnaní.</string>
+    <string name="snackbar_action_view_log">Zobraziť záznam</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Pripomienky hodnotenia prípravy</string>
+    <string name="notif_channel_rating_reminder_desc">Jemné pripomenutie ~30 minút po príprave, aby ste ju ohodnotili, kým je chuť čerstvá.</string>
+    <string name="notif_rating_title">Aká bola vaša príprava?</string>
+    <string name="format_notif_rating_title">Aká bola vaša príprava %1$s?</string>
+    <string name="notif_rating_body">Klepnutím na emoji ju ohodnotíte alebo otvorte aplikáciu pre viac možností.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Ohodnotiť 1 z 5 hviezdičiek</string>
+    <string name="cd_notif_rating_2">Ohodnotiť 2 z 5 hviezdičiek</string>
+    <string name="cd_notif_rating_3">Ohodnotiť 3 z 5 hviezdičiek</string>
+    <string name="cd_notif_rating_4">Ohodnotiť 4 z 5 hviezdičiek</string>
+    <string name="cd_notif_rating_5">Ohodnotiť 5 z 5 hviezdičiek</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Pripomienka hodnotenia</string>
+    <string name="msg_rating_reminder_hint">Pošle upozornenie ~30 minút po príprave, aby ste ju mohli ohodnotiť, kým je chuť čerstvá.</string>
+    <string name="msg_rating_reminder_perm_denied">Upozornenia sú zablokované. Povoľte ich v systémových nastaveniach, aby ste dostávali pripomienky.</string>
+    <string name="action_open_app_settings">Otvoriť systémové nastavenia</string>
+
+    <!-- Settings: bag selection prompt -->
+    <string name="label_bag_prompt">Pripomienka výberu balenia</string>
+    <string name="msg_bag_prompt_hint">Keď začnete prípravu bez výberu balenia, zobrazí výzvu na výber jedného zo sledovaných balení.</string>
+
+    <!-- Bag selection prompt dialog -->
+    <string name="dialog_pick_bag_title">Pripravujete s balením?</string>
+    <plurals name="msg_pick_bag_body">
+        <item quantity="one">Máte %1$d sledované balenie. Výberom zostane presný záznam, čerstvosť aj odporúčania mletia.</item>
+        <item quantity="few">Máte %1$d sledované balenia. Výberom jedného zostane presný záznam, čerstvosť aj odporúčania mletia.</item>
+        <item quantity="many">Máte %1$d sledovaného balenia. Výberom jedného zostane presný záznam, čerstvosť aj odporúčania mletia.</item>
+        <item quantity="other">Máte %1$d sledovaných balení. Výberom jedného zostane presný záznam, čerstvosť aj odporúčania mletia.</item>
+    </plurals>
+    <string name="action_pick_bag">Vybrať balenie</string>
+    <string name="action_brew_without_bag_short">Aj tak pripraviť</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Zadržiavanie vody</string>
+    <string name="format_retention_explanation">Kávová usadenina absorbuje približne 2× svoju suchú hmotnosť vo vode. Pri %1$.0fg kávy zadrží ~%2$.0fg a v šálke zostane ~%3$.0fg.\n\nJe to odhad — tmavé praženia absorbujú o niečo viac, svetlé o niečo menej.</string>
+    <string name="cd_about_cup_volume">O objeme šálky</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+<string name="label_target">Cieľ</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
+    <string name="format_ratio_bright">Svieža · 1:%1$d</string>
+    <string name="format_ratio_balanced">Vyvážená · 1:%1$d</string>
+    <string name="format_ratio_rich">Plná · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+<!-- Input Mode -->
+    <string name="input_coffee_to_water">Káva → Voda</string>
+    <string name="input_water_to_coffee">Voda → Káva</string>
+    <string name="input_brew_to_both">Objem nápoja → Oboje</string>
+    <string name="input_cup_to_both">Objem šálky → Oboje</string>
+    <string name="input_coffee_short">Káva</string>
+    <string name="input_water_short">Voda</string>
+    <string name="input_brew_short">Nápoj</string>
+    <string name="input_cup_short">Šálka</string>
+    <string name="input_coffee_desc">Zadajte dávku kávy, vypočíta sa voda</string>
+    <string name="input_water_desc">Zadajte množstvo vody, vypočíta sa káva</string>
+    <string name="input_brew_desc">Zadajte cieľový objem nápoja, vypočíta sa káva a voda so započítaním absorpcie</string>
+    <string name="input_cup_desc">Zadajte objem šálky, vypočíta sa káva a voda</string>
+
+    <!-- Phase names -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Nalejte na %1$.0fg</string>
+    <string name="instruction_pour_total">Nalejte celkom na %1$.0fg</string>
+    <string name="instruction_open_valve_short">Otvorte ventil</string>
+    <string name="instruction_close_valve_short">Zatvorte ventil</string>
+    <string name="instruction_bloom_wait">Zatočte &amp; čakajte na bloom</string>
+    <string name="instruction_french_press_start">Pridajte všetku vodu, jemne premiešajte a položte viečko navrch</string>
+    <string name="instruction_french_press_steep">Nechajte nerušene lúhovať do cieľového času</string>
+    <string name="instruction_french_press_plunge">Pomaly stlačte piest a potom kávu zlejte</string>
+    <string name="instruction_aeropress_start">Pridajte vodu, premiešajte a začnite lúhovanie</string>
+    <string name="instruction_aeropress_steep">Lúhujte s nasadeným viečkom; pripravte sa na stláčanie</string>
+    <string name="instruction_aeropress_press">Plynulo stláčajte až po zasyčanie, potom zastavte</string>
+    <string name="instruction_espresso_start">Nasaďte páku a spustite shot</string>
+    <string name="instruction_espresso_pull">Sledujte prietok a výťažok; nechajte šálku na váhe</string>
+    <string name="instruction_espresso_stop">Zastavte pri cieľovom výťažku alebo keď shot začne blednúť</string>
+    <string name="instruction_moka_start">Zostavte kanvičku a jemne zahrievajte s otvoreným viečkom</string>
+    <string name="instruction_moka_flow">Sledujte, kedy káva začne tiecť do hornej komory</string>
+    <string name="instruction_moka_remove">Odstavte z tepla, keď prúd zbledne alebo začne prskať</string>
+    <string name="instruction_cold_brew_start">Skombinujte kávu a vodu, premiešajte, aby sa navlhčila všetka káva</string>
+    <string name="instruction_cold_brew_steep">Zakryte a lúhujte; udržiavajte kávu úplne nasýtenú</string>
+    <string name="instruction_cold_brew_filter">Prefiltrujte koncentrát a podávajte vychladený alebo zriedený</string>
+
+    <!-- Warnings -->
+<!-- Taste Feedback -->
+    <string name="feedback_too_sour">Príliš kyslá / Slabá</string>
+    <string name="feedback_balanced">Vyvážená</string>
+    <string name="feedback_too_bitter">Príliš horká / Drsná</string>
+    <string name="feedback_astringent">Trpká / Suchá</string>
+    <string name="feedback_clogged">Upchatá / Zastavená</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Nameľte jemnejšie o 2–4 kliky</string>
+    <string name="adjust_try_finer">Skúste jemnejšie nastavenie mletia</string>
+    <string name="adjust_no_change">Nie je potrebná úprava — uložte si tento recept!</string>
+    <string name="adjust_grind_coarser">Nameľte hrubšie o 2–4 kliky</string>
+    <string name="adjust_grind_coarser_valve">Nameľte hrubšie o 2–4 kliky\nSkúste otvoriť ventil skôr</string>
+    <string name="adjust_try_coarser">Skúste hrubšie nastavenie mletia</string>
+    <string name="adjust_try_coarser_water">Skúste hrubšie nastavenie mletia\nAlebo skúste chladnejšiu vodu</string>
+    <string name="adjust_astringent_pulsar">Zvýšte dávku na 20g+ pre lepšiu hĺbku lôžka\nZnížte miešanie počas bloomu\nUdržiavajte hladinu ~1cm nad lôžkom</string>
+    <string name="adjust_astringent_grinder">Nameľte o niečo hrubšie a znížte miešanie</string>
+    <string name="adjust_astringent_no_grinder">Nameľte o niečo hrubšie a nalievajte jemnejšie</string>
+    <string name="adjust_clogged_pulsar_grinder">Nameľte výrazne hrubšie o 3–5 klikov\nZnížte miešanie (iba jemné zatočenie)\nSkontrolujte, či káva nie je príliš čerstvá — nechajte ju odpočívať 7+ dní</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Nameľte výrazne hrubšie\nZnížte miešanie\nZaistite jemné nalievanie cez disperzný kryt</string>
+    <string name="adjust_clogged_grinder">Nameľte výrazne hrubšie o 3–5 klikov</string>
+    <string name="adjust_clogged_no_grinder">Skúste výrazne hrubšie nastavenie mletia</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Káva: %1$s gramov</string>
+    <string name="cd_water_grams">Voda: %1$s gramov</string>
+    <string name="cd_ratio">Pomer 1 ku %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Názov</string>
+    <string name="label_roaster">Pražiareň</string>
+    <string name="label_origin">Pôvod</string>
+<string name="label_barcode_ean">Čiarový kód / EAN</string>
+    <string name="action_scan_barcode">Naskenovať čiarový kód</string>
+    <string name="label_name_required">Názov *</string>
+    <string name="label_weight_grams">Hmotnosť (g)</string>
+    <string name="label_roast_date">Dátum praženia</string>
+    <string name="label_roast_level">Úroveň praženia</string>
+    <string name="label_variety">Odroda</string>
+    <string name="label_process">Spracovanie</string>
+    <string name="label_tasting_notes">Chuťové poznámky</string>
+    <string name="label_best_before">Minimálna trvanlivosť</string>
+    <string name="label_decaf_coffee">Bezkofeínová káva</string>
+    <string name="msg_decaf_guidance">Udržiava odporúčania prípravy zosúladené s bezkofeínovými zrnami a kratšími cieľmi lúhovania.</string>
+    <string name="label_decaf_process_optional">Proces dekofeinizácie (voliteľné)</string>
+    <string name="msg_decaf_process_hint">Umožní odporúčaniam prípravy jemne posunúť mletie: decafy spracované vodou a CO₂ zvyčajne netreba mlieť až tak hrubo ako tie z rozpúšťadlových procesov.</string>
+    <string name="cd_captured_bag_photo">Zachytená fotografia balenia</string>
+<string name="label_detected_details">Zistené údaje</string>
+    <string name="msg_tap_chip_to_edit">Klepnutím na ľubovoľný štítok ho upravíte</string>
+    <string name="label_needs_review">Vyžaduje kontrolu</string>
+<string name="action_edit_all_fields">Upraviť všetky polia</string>
+    <string name="action_add_more_details">Pridať ďalšie údaje</string>
+    <string name="msg_analyzing_label">Analyzujú sa fotografie etikety</string>
+    <string name="msg_analyzing_label_detail">Kontrolujeme rozmazanie, spájame text z prednej a zadnej strany a pripravujeme najspoľahlivejšie polia.</string>
+    <string name="label_review_fields">Skontrolujte tieto polia</string>
+    <string name="label_qr_website">QR web</string>
+    <string name="action_open_website">Otvoriť web</string>
+    <string name="label_qr_link_found">Nájdený QR odkaz</string>
+<string name="action_explore_extract">Preskúmať &amp; extrahovať</string>
+    <string name="label_detected_field_evidence">Dôkazy zistených polí</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Fotografia balenia</string>
+    <string name="action_rescan_label">Znovu naskenovať etiketu</string>
+    <string name="action_edit_bag">Upraviť balenie</string>
+    <string name="label_sensory_snapshot">Senzorický profil</string>
+    <string name="label_grind_intelligence">Chytré mletie</string>
+    <string name="label_remaining_coffee">Zostávajúca káva</string>
+    <string name="action_adjust_weight">Upraviť hmotnosť</string>
+    <string name="action_add_weight_tracking">Pridať sledovanie hmotnosti</string>
+    <string name="label_brew_history">História príprav</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Aké to bolo?</string>
+    <string name="msg_rate_brew_fresh">Ohodnoťte túto prípravu, kým je chuť ešte čerstvá.</string>
+    <string name="label_flavor_notes_section">Chuťové poznámky</string>
+    <string name="hint_what_stood_out">Voliteľná poznámka – čo vyniklo?</string>
+    <string name="action_save_rating">Uložiť hodnotenie</string>
+
+    <!-- EmptyStateBox -->
+<!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Vaše obľúbené</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Iné</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">Služba AI (Mindlayer)</string>
+    <string name="action_test_connection">Otestovať pripojenie</string>
+    <string name="action_run_test_prompt">Spustiť testovací prompt</string>
+    <string name="label_testing">Testuje sa…</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Aká bola vaša posledná šálka?</string>
+    <string name="label_what_was_off">Čo nesedelo?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Naskenovaná etiketa zodpovedá uloženému baleniu — nie je čo aktualizovať.</string>
+    <string name="action_update_bag">Aktualizovať balenie</string>
+    <string name="action_new_bag">Nové balenie</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Uložiť ako obľúbené</string>
+    <string name="msg_save_favorite_hint">Dajte tomuto receptu názov, ktorý si zapamätáte</string>
+    <string name="hint_save_favorite_example">napr. Pondelkové ráno, Pomalý víkend</string>
+    <string name="action_save_simple">Uložiť</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">História skenovania</string>
+    <string name="msg_no_scan_sessions">Zatiaľ neboli zaznamenané žiadne skenovania.</string>
+    <string name="action_share_session">Zdieľať toto skenovanie</string>
+    <string name="label_component_timings">Časy komponentov</string>
+    <string name="msg_no_timing_data">Žiadne údaje o časovaní</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Upozornenie</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Upraviť hmotnosť</string>
+    <string name="label_remaining_weight_grams">Zostávajúca hmotnosť (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Z fotografie</string>
+    <string name="action_scan_label">Naskenovať etiketu</string>
+    <string name="action_add_bag_gallery">Z galérie</string>
+    <string name="action_add_bag_camera">Naskenovať fotoaparátom</string>
+    <string name="action_add_bag_barcode">Naskenovať čiarový kód</string>
+    <string name="action_add_bag_manual">Pridať ručne</string>
+    <string name="msg_no_beans_yet">Zatiaľ žiadne zrná</string>
+    <string name="msg_add_coffee_hint">Pridajte svoju kávu, aby ste sledovali čerstvosť a dostali odporúčania prípravy</string>
+    <string name="action_brew_now">Pripraviť teraz</string>
+    <string name="msg_could_not_read_label">Etiketu sa nepodarilo prečítať</string>
+    <string name="action_retake_photo">Odfotiť znova</string>
+    <string name="action_add_details_manually">Pridať údaje ručne</string>
+    <string name="msg_llm_enrichment_succeeded">AI obohatenie zlepšilo tento sken etikety.</string>
+    <string name="msg_llm_enrichment_failed">AI obohatenie zlyhalo. Môžete to skúsiť znova alebo pokračovať v ručnej úprave.</string>
+    <string name="msg_llm_enrichment_unavailable">AI obohatenie teraz nie je k dispozícii. Môžete to skúsiť znova alebo pokračovať v ručnej úprave.</string>
+    <string name="action_retry_llm_enrichment">Skúsiť AI obohatenie znova</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Zdieľať prípravu</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Zahodiť sken?</string>
+    <string name="msg_discard_scan_body">Máte zistené polia, ktoré ešte neboli uložené.</string>
+    <string name="action_discard">Zahodiť</string>
+    <string name="action_keep_scanning">Pokračovať v skenovaní</string>
+    <string name="msg_camera_permission_required">Vyžaduje sa povolenie fotoaparátu</string>
+    <string name="screen_scan_bag_title">Skenovať balenie kávy</string>
+    <string name="cd_toggle_debug_overlay">Prepnúť ladiace prekrytie</string>
+    <string name="msg_both_sides_scanned">Obe strany balenia boli naskenované</string>
+    <string name="msg_scanning_front_side">Skenuje sa predná strana balenia</string>
+<string name="action_quick_save">Rýchlo uložiť</string>
+    <string name="msg_repackaged_product">Môže ísť o prebalený alebo dovezený produkt</string>
+    <string name="action_use_barcode">Použiť čiarový kód</string>
+    <string name="action_use_label">Použiť etiketu</string>
+<string name="label_confirmed">Potvrdené</string>
+    <string name="label_ai_contributed">Prispela AI</string>
+    <string name="cd_manual_capture">Ručné zachytenie — vynútiť spracovanie aktuálnej snímky</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Synchronizovať s balením</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Platí pri príprave metódou Pulsar</string>
+    <string name="label_quick_brew">Rýchla príprava</string>
+    <string name="msg_quick_brew_hint">Preskočiť krok prípravy mletia a po spustení prípravy prejsť rovno na časovač</string>
+    <string name="label_show_brewing_instructions">Zobrazovať pokyny prípravy</string>
+    <string name="msg_show_brewing_instructions_hint">Zobrazí kartu s krokovým vedením počas prípravy a kontrolný zoznam na obrazovke prípravy. Vypnite, ak svoju metódu poznáte naspamäť.</string>
+    <string name="label_dim_mode">Automatický tlmený režim</string>
+    <string name="msg_dim_mode_hint">Po 25 s nečinnosti odstráni farebné pozadia a stlmí text na sivú. Rozloženie zostane rovnaké a jediné klepnutie obrazovku prebudí aj spustí akciu pod prstom.</string>
+    <string name="label_dim_mode_true_black">Skutočne čierne pozadie</string>
+    <string name="msg_dim_mode_true_black_hint">Pri stlmení v tmavom motíve zmení pozadie obrazovky aj na čistú čiernu. Najlepšie pre OLED — šetrí energiu a pôsobí skutočne pokojne. Vo svetlých motívoch nemá efekt.</string>
+    <string name="label_dim_mode_reduce_brightness">Znížiť jas obrazovky</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Pri stlmení tiež zníži podsvietenie displeja. Šetrí trochu energie a ešte viac zjemní obrazovku.</string>
+    <string name="label_dim_mode_fullscreen">Skryť systémové lišty</string>
+    <string name="msg_dim_mode_fullscreen_hint">Pri stlmení tiež skryje stavovú a navigačnú lištu. Potiahnutím od okraja ich dočasne zobrazíte; každé klepnutie na obrazovku ju prebudí späť do normálu.</string>
+    <string name="label_dim_mode_force_dark_in_light">Použiť tmavý štýl pri stlmení</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Prepne na tmavé stlmené zobrazenie aj vtedy, keď je systém vo svetlom režime. Prirodzene sa kombinuje so skutočne čiernym pozadím pre vždy tmavé stlmenie.</string>
+    <string name="action_add_cup_preset">Pridať predvoľbu šálky</string>
+    <string name="label_volume_ml">Objem (ml)</string>
+    <string name="msg_dose_from_ratio">Dávka kávy sa vypočíta z vášho pomeru</string>
+    <string name="label_icon">Ikona</string>
+    <string name="label_color">Farba</string>
+    <string name="action_add">Pridať</string>
+    <string name="dialog_edit_cup_preset_title">Upraviť predvoľbu šálky</string>
+    <string name="screen_add_cup_preset_title">Pridať predvoľbu šálky</string>
+    <string name="screen_edit_cup_preset_title">Upraviť predvoľbu šálky</string>
+    <string name="msg_cup_preset_name_required">Pre pokračovanie zadajte názov</string>
+    <string name="msg_cup_preset_volume_required">Zadajte objem väčší ako 0</string>
+    <string name="cd_cup_preset_preview">Náhľad %1$s</string>
+    <string name="label_scan_debug">Ladenie skenovania</string>
+    <string name="action_view_history">Zobraziť históriu</string>
+    <string name="action_share_report">Zdieľať správu</string>
+    <string name="action_clear">Vymazať</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Ľahká</string>
+    <string name="strength_balanced">Vyvážená</string>
+    <string name="strength_strong">Silná</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Ovocná</string>
+    <string name="flavor_chocolate">Čokoládová</string>
+    <string name="flavor_nutty">Orechová</string>
+    <string name="flavor_floral">Kvetinová</string>
+    <string name="flavor_bright">Svieža</string>
+    <string name="flavor_smooth">Jemná</string>
+    <string name="flavor_bitter">Horká</string>
+    <string name="flavor_sweet">Sladká</string>
+    <string name="flavor_earthy">Zemitá</string>
+    <string name="flavor_spicy">Korenistá</string>
+    <string name="flavor_citrus">Citrusová</string>
+    <string name="flavor_berry">Bobuľová</string>
+    <string name="flavor_caramel">Karamelová</string>
+    <string name="flavor_wine">Vínová</string>
+    <string name="flavor_clean">Čistá</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Veľmi jemné</string>
+    <string name="grind_fine">Jemné</string>
+    <string name="grind_medium_fine">Stredne jemné</string>
+    <string name="grind_medium">Stredné</string>
+    <string name="grind_medium_coarse">Stredne hrubé</string>
+    <string name="grind_coarse">Hrubé</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Výborné</string>
+    <string name="rating_good">Dobré</string>
+    <string name="rating_not_great">Nebolo to ono</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Príliš horká</string>
+    <string name="taste_issue_too_sour">Príliš kyslá</string>
+    <string name="taste_issue_too_weak">Príliš slabá</string>
+    <string name="taste_issue_too_strong">Príliš silná</string>
+    <string name="taste_issue_bitter_suggestion">Skúste hrubšie mletie alebo kratší čas prípravy</string>
+    <string name="taste_issue_sour_suggestion">Skúste jemnejšie mletie alebo dlhší čas prípravy</string>
+    <string name="taste_issue_weak_suggestion">Skúste silnejší pomer alebo viac kávy</string>
+    <string name="taste_issue_strong_suggestion">Skúste slabší pomer alebo menej kávy</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Zapečatené</string>
+    <string name="bag_status_open">Otvorené</string>
+    <string name="bag_status_frozen">Zmrazené</string>
+    <string name="bag_status_finished">Spotrebované</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Neznámy / neuvedený</string>
+    <string name="decaf_swiss_water">Swiss Water (vodný proces)</string>
+    <string name="decaf_mountain_water">Mountain Water (vodný proces)</string>
+    <string name="decaf_co2">Superkritický CO₂</string>
+    <string name="decaf_ea_sugarcane">Etylacetát (cukrová trstina / prírodný EA)</string>
+    <string name="decaf_mc_direct">Metylénchlorid (priame rozpúšťadlo)</string>
+    <string name="decaf_ea_direct">Etylacetát (priame rozpúšťadlo)</string>
+    <string name="decaf_short_unknown">Neznámy</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (cukrová trstina)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (rozpúšťadlo)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Svetlé</string>
+    <string name="roast_medium_light">Stredne svetlé</string>
+    <string name="roast_medium">Stredné</string>
+    <string name="roast_medium_dark">Stredne tmavé</string>
+    <string name="roast_dark">Tmavé</string>
+    <string name="roast_filter">Filter</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Škoricové</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Praná</string>
+    <string name="process_natural">Natural</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaeróbna</string>
+    <string name="process_carbonic_maceration">Karbonická macerácia</string>
+    <string name="process_semi_washed">Polopraná</string>
+    <string name="process_wet_hulled">Mokré lúpanie</string>
+    <string name="process_pulped_natural">Pulped natural</string>
+    <string name="process_double_fermented">Dvojitá fermentácia</string>
+    <string name="process_thermal_shock">Tepelný šok</string>
+</resources>

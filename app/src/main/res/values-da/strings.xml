@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Bryg</string>
+    <string name="nav_log">Log</string>
+    <string name="nav_more">Mere</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Tilbage</string>
+    <string name="action_close">Luk</string>
+    <string name="action_cancel">Annuller</string>
+    <string name="action_delete">Slet</string>
+    <string name="action_save">Gem ændringer</string>
+    <string name="action_saved">✓ Gemt</string>
+    <string name="action_skip">Spring over</string>
+    <string name="action_finish">Afslut</string>
+    <string name="action_next">Næste</string>
+    <string name="action_go_back">Gå tilbage</string>
+<!-- Common labels -->
+    <string name="label_coffee">Kaffe</string>
+    <string name="label_water">Vand</string>
+    <string name="label_ratio">Forhold</string>
+    <string name="label_strength">Styrke</string>
+    <string name="label_grind">Maling</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_decaf">Koffeinfri</string>
+    <string name="label_decaf_suffix"> · Koffeinfri</string>
+    <string name="label_loading">Indlæser…</string>
+    <string name="label_none">Ingen</string>
+    <string name="label_taste">Smag</string>
+    <string name="label_rating">Bedømmelse</string>
+    <string name="label_notes">Noter</string>
+    <string name="label_no_filter">Intet filter</string>
+    <string name="label_settings">Indstillinger</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg i koppen</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+    <plurals name="format_selected">
+        <item quantity="one">%1$d valgt</item>
+        <item quantity="other">%1$d valgt</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Konfigurer dit bryg</string>
+    <string name="label_coffee_input">Kaffe (g)</string>
+    <string name="label_water_input">Vand (g)</string>
+    <string name="label_brew_size_input">Brygstørrelse (ml)</string>
+    <string name="label_cup_size_input">Kopstørrelse (ml)</string>
+    <string name="label_brew_size">Brygstørrelse</string>
+    <string name="label_cup_size">Kopstørrelse</string>
+    <string name="format_capacity_note">%1$s rummer %2$dg vand — genopfyldning sker automatisk ved større bryg</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Vælg kaffepose</string>
+    <string name="cd_clear_bag">Ryd kaffepose</string>
+    <string name="format_brewing_with">Brygger med %1$s</string>
+    <string name="label_freshness">Friskhed</string>
+    <string name="format_recommended_now">Anbefalet nu: %1$s</string>
+    <string name="format_last_time">Sidste gang: %1$s</string>
+    <string name="action_save_as_favorite">Gem som favorit</string>
+    <string name="label_select_coffee_bag_title">Vælg kaffepose</string>
+    <string name="msg_no_active_bags">Ingen aktive poser. Tilføj en i afsnittet Dine bønner.</string>
+    <string name="action_brew_without_bag">Bryg uden at vælge pose</string>
+    <string name="label_best_now">Bedst nu</string>
+    <string name="format_grind_generic">Maling: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Malingsgrad: %1$s–%2$s · Juster efter smag</string>
+    <string name="format_weight_left"> · %1$.0fg tilbage</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Pulsar-tip: Hold slurryen ~1cm over kaffebedet under hældningerne. De fleste brygger 20–25g for en balanceret enkelt kop.</string>
+    <string name="tip_generic">💡 Tip: Start med standardforholdet, og juster styrken efter smag. Finere maling ekstraherer mere, grovere maling ekstraherer mindre.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Brygopsætning</string>
+    <string name="label_custom_ratio">Tilpasset forhold (fx 16)</string>
+    <string name="label_temperature">Temperatur (°C)</string>
+    <string name="label_bloom_multiplier">Bloom-multiplikator (fx 3.0)</string>
+    <string name="label_pulse_count">Antal pulser</string>
+    <string name="action_start_brewing">Start brygning →</string>
+    <string name="label_advanced_options">Avancerede indstillinger</string>
+    <string name="cd_collapse_advanced">Skjul avancerede indstillinger</string>
+    <string name="cd_expand_advanced">Vis avancerede indstillinger</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Kaffedosis: %1$d gram</item>
+        <item quantity="other">Kaffedosis: %1$d gram</item>
+    </plurals>
+    <string name="label_decrease">Sænk %1$s</string>
+    <string name="label_increase">Øg %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Forbered dit bryg</string>
+    <string name="action_ready_to_brew_short">Klar til at brygge</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Forberedelse</string>
+    <string name="label_recipe_heading">Opskrift</string>
+    <string name="label_set_grinder_to">Indstil kværnen til</string>
+    <string name="label_temp_short">Temp.</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Fugt papirfilteret i bunden (ventil åben), og lad det dryppe af. Monter cylinderen, tilsæt kaffe, jævn bedet, og sæt dispersionslåget på. Tarér vægten.</string>
+    <string name="prep_tip_pulsar_19k">Skyl 19K-metalfilteret, så det sætter sig, og forvarm cylinderen. Monter cylinderen, tilsæt kaffe, jævn bedet, og sæt dispersionslåget på. Tarér vægten.</string>
+    <string name="prep_tip_pulsar_40k">Skyl 40K-metalfilteret for at forvarme cylinderen. Monter cylinderen, tilsæt kaffe, jævn bedet, og sæt dispersionslåget på. Tarér vægten.</string>
+    <string name="prep_tip_pour_over_paper">Sæt papirfilteret i, og skyl med varmt vand for at forvarme og fjerne papirsmag. Tilsæt kaffe, og tarér vægten.</string>
+    <string name="prep_tip_french_press">Forvarm stempelkanden, og tøm den. Tilsæt kaffe, sæt den på vægten, og tarér, før du tilsætter vand.</string>
+    <string name="prep_tip_aeropress">Sæt et skyllet filter i låget. Tilsæt kaffe, stil bryggeren på et solidt krus eller en server, og tarér vægten.</string>
+    <string name="prep_tip_espresso">Tør portafilteret af. Doser, fordel, og tamp plant, før du låser det i.</string>
+    <string name="prep_tip_moka">Fyld bundkammeret op til ventilen. Fyld kurven med kaffe, jævn — tamp ikke. Saml forsigtigt.</string>
+    <string name="prep_tip_cold_brew">Tilsæt kaffe i beholderen, tarér vægten, tilsæt vand ved stuetemperatur eller koldt vand, og dæk til.</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Pause</string>
+    <string name="action_resume">Fortsæt</string>
+    <string name="cd_disable_minute_alerts">Slå minutalarmer fra</string>
+    <string name="cd_enable_minute_alerts">Slå minutalarmer til</string>
+    <string name="cd_bloom_animation">Bloom-animation med kaffebønne</string>
+    <string name="format_pour_bloom_water">Hæld %1$.0fg bloom-vand</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · I alt %2$.0fg</string>
+    <string name="action_start_bloom">☕ Start bloom</string>
+    <string name="label_bloom_done">✅ Bloom færdig!</string>
+    <string name="action_finish_brew">Afslut bryg</string>
+    <string name="dialog_exit_brew_title">Afslut bryg?</string>
+    <string name="dialog_exit_brew_message">Din aktuelle brygstatus går tabt.</string>
+    <string name="action_exit_brew">Afslut</string>
+
+    <!-- Calculator Brew Screen -->
+    <string name="label_water_to_dose">Vand → Dosis</string>
+    <string name="label_dose_to_water">Dosis → Vand</string>
+    <string name="cd_backspace">Slet tilbage</string>
+    <string name="action_brew">Start</string>
+    <string name="label_total_water">vand i alt</string>
+<!-- Settings Screen -->
+    <string name="screen_settings_title">Indstillinger</string>
+    <string name="label_cup_presets">Kopforudindstillinger</string>
+    <string name="action_add_preset">Tilføj forudindstilling</string>
+    <string name="action_reset_defaults">Nulstil til standarder</string>
+    <string name="msg_presets_hint">Forudindstillinger vises som hurtigknapper i beregneren</string>
+    <string name="label_brew_methods">Brygmetoder</string>
+    <string name="msg_methods_hint">Valgte metoder vises først. Tryk for at slå til eller fra.</string>
+    <string name="label_default_method">Standardmetode</string>
+    <string name="format_edit_preset">Rediger %1$s</string>
+    <string name="label_bloom_animation_settings">Bloom-animationer</string>
+    <string name="msg_bloom_animation_settings_subtitle">Vælg hvor ofte hver bloom-sprite vises</string>
+    <string name="cd_open_bloom_animation_settings">Åbn indstillinger for bloom-animationer</string>
+    <string name="screen_bloom_animation_settings_title">Bloom-animationer</string>
+    <string name="msg_bloom_animation_settings_hint">Tryk på hver kontrol for at skifte mellem normal chance, dobbelt chance og udelukket. Hvis alle sprites er udelukket, skjuler bloom-timere animationen.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s er sat til %2$s. Tryk for at ændre.</string>
+    <string name="label_bloom_sprite_coffee_flower">Kaffeblomst</string>
+    <string name="desc_bloom_sprite_coffee_flower">Klassisk hvid kaffeblomst, der åbner sig fra bønnen.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Stjernelys kaffe</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Flødegyldne dampblade med små stjernelys-højdepunkter.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte-bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Blød latte-art-rosetta i varme mælkeskumstoner.</string>
+    <string name="label_bloom_sprite_coffee_plant">Kaffeplante</string>
+    <string name="desc_bloom_sprite_coffee_plant">Frisk grøn kaffespire med parvise blade.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Cherrytomat</string>
+    <string name="desc_bloom_sprite_cherry_tomato">En kaffebønne spirer til en tomatranke, mens røde frugter modner.</string>
+    <string name="label_bloom_sprite_strawberry">Jordbær</string>
+    <string name="desc_bloom_sprite_strawberry">En kaffebønne spirer til en jordbærplante med blomster og røde bær.</string>
+    <string name="label_bloom_sprite_raspberry">Hindbær</string>
+    <string name="desc_bloom_sprite_raspberry">En kaffebønne vokser til ranker med lyse blomster og røde hindbærklaser.</string>
+    <string name="label_bloom_sprite_blueberry">Blåbær</string>
+    <string name="desc_bloom_sprite_blueberry">En kaffebønne vokser til en blåbærkvist med klokkeformede blomster og blå frugter.</string>
+    <string name="label_bloom_sprite_blackberry">Brombær</string>
+    <string name="desc_bloom_sprite_blackberry">En kaffebønne vokser til tornede ranker med mørke brombærklaser.</string>
+    <string name="label_bloom_sprite_coffee_brew">Kaffebryg</string>
+    <string name="desc_bloom_sprite_coffee_brew">Ravfarvet kaffeglød med cremede dampkrøller.</string>
+    <string name="label_bloom_sprite_cursed_relic">Forbandet relikvie</string>
+    <string name="desc_bloom_sprite_cursed_relic">En revnet bønne frigiver gylden magi og sort damp ind i en ulvelignende medaljon.</string>
+    <string name="label_bloom_sprite_rose">Rose</string>
+    <string name="desc_bloom_sprite_rose">Kompakt rød rose, der folder sig ud over bønnen.</string>
+    <string name="label_bloom_sprite_lotus">Lotus</string>
+    <string name="desc_bloom_sprite_lotus">Cremefarvet lotusblomst med lagdelte, skålformede kronblade.</string>
+    <string name="label_bloom_sprite_sunflower">Solsikke</string>
+    <string name="desc_bloom_sprite_sunflower">Klar solsikke med gyldne kronblade og mørk midte.</string>
+    <string name="label_bloom_sprite_orchid">Orkidé</string>
+    <string name="desc_bloom_sprite_orchid">Fin hvid orkidé med afrundede lapper.</string>
+    <string name="label_bloom_sprite_jasmine">Jasmin</string>
+    <string name="desc_bloom_sprite_jasmine">Blød hvid jasminblomst med en let vindmølleform.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Løjtnantshjerte</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Buede stængler med lyserøde hjerteformede blomster og hvide dråbespidser rejser sig fra bønnen.</string>
+    <string name="label_bloom_sprite_passionflower">Passionsblomst</string>
+    <string name="desc_bloom_sprite_passionflower">Snoede ranker åbner sig til en udsmykket lilla-hvid passionsblomst over bønnen.</string>
+    <string name="label_bloom_sprite_bee_orchid">Bi-orkidé</string>
+    <string name="desc_bloom_sprite_bee_orchid">Lyserøde orkidéblade afslører mørke, bi-formede læber på slanke stængler.</string>
+    <string name="label_bloom_sprite_jade_vine">Jaderanke</string>
+    <string name="desc_bloom_sprite_jade_vine">En klatrende ranke hænger turkise jadeblomst-klaser fra bønnen.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Paradisfugl</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Orange og dybblå Strelitzia-kronblade folder sig ud fra oprette grønne blade.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Blå himalayavalmue</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">En hængende knop åbner sig til en himmelblå valmue med gyldne støvdragere.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">En rødplettet parasitisk bloom svulmer op til en enorm femlappet blomst.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Chokoladekosmos</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Fjerlette blade løfter fløjlsmørke bordeaux kosmosblomster fra bønnen.</string>
+    <string name="label_bloom_sprite_flame_lily">Flammelilje</string>
+    <string name="desc_bloom_sprite_flame_lily">Krøllede, flammefarvede liljeblade rejser sig på slyngede grønne stængler.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Nattens dronning</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">En kaktusstængel åbner sig til en dramatisk, lagdelt hvid natblomstrende blomst.</string>
+    <string name="label_bloom_sprite_snowdrop">Vintergæk</string>
+    <string name="desc_bloom_sprite_snowdrop">Fine hvide vintergæk-klokker rejser sig fra den revnede bønne.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Små blå forglemmigej-blomster med gule centre folder sig ud fra bønnen.</string>
+    <string name="label_bloom_sprite_fantasy_citadel">Fantasy-citadel</string>
+    <string name="desc_bloom_sprite_fantasy_citadel">En revnet bønne åbner sig til et lille stencitadel med varme vinduer.</string>
+    <string name="label_bloom_sprite_cyber_city_vines">Cyberby-ranker</string>
+    <string name="desc_bloom_sprite_cyber_city_vines">Neonprint-ranker vokser til en kompakt miniature-cyberby.</string>
+    <string name="label_bloom_sprite_pixel_micro_world">Pixel-mikroverden</string>
+    <string name="desc_bloom_sprite_pixel_micro_world">Bønnen bliver pixeleret til en lille retro-mikroverden af blokke og terræn.</string>
+    <string name="label_bloom_sprite_tabletop_adventure_map">Bordrollespils-eventyrkort</string>
+    <string name="desc_bloom_sprite_tabletop_adventure_map">En rullende bønne folder sig ud til et lille pergament-eventyrkort og en blank ædelstens-terning.</string>
+    <string name="label_bloom_sprite_alchemy_astrolabe">Alkymi-astrolabium</string>
+    <string name="desc_bloom_sprite_alchemy_astrolabe">Messingringe og kredsende glasflasker folder sig ud fra kaffebønnen.</string>
+    <string name="label_bloom_sprite_espresso_robot">Espresso-robot</string>
+    <string name="desc_bloom_sprite_espresso_robot">Bønnen folder sig ud til en lille espressodrevet messingrobot.</string>
+    <string name="label_bloom_sprite_space_habitat_ring">Rumhabitat-ring</string>
+    <string name="desc_bloom_sprite_space_habitat_ring">Buede skaldele deler sig til en miniature roterende habitat-ring.</string>
+    <string name="label_bloom_sprite_nerd_library_nook">Nørdet bibliotekskrog</string>
+    <string name="desc_bloom_sprite_nerd_library_nook">En pop op-bibliotekskrog åbner sig fra bønnen med hylder, lampe og krus.</string>
+    <string name="label_bloom_sprite_arcade_platformer_level">Arkade-platformbane</string>
+    <string name="desc_bloom_sprite_arcade_platformer_level">Bønnen spirer til en lille original platformbane med blokke, ædelsten og et flag.</string>
+    <string name="label_bloom_sprite_clockwork_dragonfly">Urværksguldsmed</string>
+    <string name="desc_bloom_sprite_clockwork_dragonfly">En kaffeskal klækker til en messingguldsmed af urværk.</string>
+    <string name="label_bloom_sprite_observatory_dome">Observatoriekuppel</string>
+    <string name="desc_bloom_sprite_observatory_dome">Bønnen åbner sig som en lille observatoriekuppel med et messingteleskop.</string>
+    <string name="label_bloom_sprite_cyber_alchemy_engine">Cyberalkymi-motor</string>
+    <string name="desc_bloom_sprite_cyber_alchemy_engine">Messingringe, kredsløb og en ravfarvet kerne danner en kompakt cyberalkymi-motor.</string>
+    <string name="label_bloom_sprite_tabletop_space_colony">Bordspils-rumkoloni</string>
+    <string name="desc_bloom_sprite_tabletop_space_colony">En lille bordspils-rumkoloni rejser sig med kupler og blanke terningemåner.</string>
+    <string name="label_bloom_sprite_observatory_library">Observatoriebibliotek</string>
+    <string name="desc_bloom_sprite_observatory_library">Et hyggeligt observatoriebibliotek åbner sig med hylder, teleskop og dampkonstellationer.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Bryglog</string>
+    <string name="msg_log_empty_title">Start med at brygge for at se din historik</string>
+    <string name="msg_log_empty_subtitle">Hvert færdigt bryg med feedback vises her</string>
+    <string name="action_rate_brew">Bedøm bryg</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Brygdetaljer</string>
+    <string name="dialog_delete_brew_title">Slet bryglog?</string>
+    <string name="dialog_delete_brew_message">Denne handling kan ikke fortrydes.</string>
+    <string name="label_coffee_bag">Kaffepose</string>
+    <string name="label_brew_time">Brygtid</string>
+    <string name="label_coffee_type">Kaffetype</string>
+    <string name="label_flavor_notes">Smagsnoter</string>
+    <string name="hint_add_notes">Tilføj noter…</string>
+    <string name="msg_brew_not_found">Bryglog ikke fundet</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Dine favoritter</string>
+    <string name="msg_no_favorites_title">Ingen favoritter endnu</string>
+    <string name="msg_no_favorites_subtitle">Gem en opskrift fra brygskærmen med ♡-knappen</string>
+    <string name="label_untitled">Uden titel</string>
+    <string name="format_recipe_summary">%1$sg kaffe / %2$sg vand</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Tilpas dit bryg</string>
+    <string name="label_pulsar_filter_type">Pulsar-filtertype</string>
+    <string name="msg_filter_hint">Påvirker kopprofil og malingsanbefalinger</string>
+    <string name="label_your_grinder">Din kværn</string>
+    <string name="msg_grinder_hint">Valgfrit — giver specifikke anbefalinger til malingsgrad. Vælg Ingen kværn / Andet, hvis din ikke er på listen.</string>
+    <string name="label_no_grinder">Ingen kværn / Andet</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Hvad brygger du med?</string>
+    <string name="msg_methods_subtitle">Vælg dine brygmetoder. Tryk på ★ for at vælge standard.</string>
+    <string name="label_set_as_default">Angiv som standard</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Mere</string>
+    <string name="label_your_favorites">Dine favoritter</string>
+    <string name="msg_favorites_subtitle">Gentag dine favoritbryg</string>
+    <string name="label_your_beans">Dine bønner</string>
+    <string name="msg_beans_subtitle">Friskhed, beholdning og hvad du kan brygge næste gang</string>
+    <string name="msg_settings_subtitle">Metoder, kværn og præferencer</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Kameratilladelse kræves for at scanne stregkoder</string>
+    <string name="msg_point_camera">Ret kameraet mod stregkoden</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Bryg gemt! Bedøm det, når du har smagt det.</string>
+    <string name="snackbar_action_view_log">Vis log</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Påmindelser om brygbedømmelse</string>
+    <string name="notif_channel_rating_reminder_desc">Et blidt puf ~30 minutter efter et bryg, så du kan bedømme det, mens smagen er frisk i hukommelsen.</string>
+    <string name="notif_rating_title">Hvordan var dit bryg?</string>
+    <string name="format_notif_rating_title">Hvordan var dit %1$s-bryg?</string>
+    <string name="notif_rating_body">Tryk på en emoji for at bedømme det, eller åbn appen for mere.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Bedøm med 1 ud af 5 stjerner</string>
+    <string name="cd_notif_rating_2">Bedøm med 2 ud af 5 stjerner</string>
+    <string name="cd_notif_rating_3">Bedøm med 3 ud af 5 stjerner</string>
+    <string name="cd_notif_rating_4">Bedøm med 4 ud af 5 stjerner</string>
+    <string name="cd_notif_rating_5">Bedøm med 5 ud af 5 stjerner</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Bedømmelsespåmindelse</string>
+    <string name="msg_rating_reminder_hint">Send en notifikation ~30 minutter efter et bryg, så du kan bedømme det, mens smagen er frisk i hukommelsen.</string>
+    <string name="msg_rating_reminder_perm_denied">Notifikationer er blokeret. Slå dem til i systemindstillingerne for at modtage påmindelser.</string>
+    <string name="action_open_app_settings">Åbn systemindstillinger</string>
+
+    <!-- Settings: bag selection prompt -->
+    <string name="label_bag_prompt">Påmindelse om kaffepose</string>
+    <string name="msg_bag_prompt_hint">Når du starter et bryg uden at vælge en pose, bliver du bedt om at vælge en af dine registrerede poser.</string>
+
+    <!-- Bag selection prompt dialog -->
+    <string name="dialog_pick_bag_title">Brygger du med en pose?</string>
+    <plurals name="msg_pick_bag_body">
+        <item quantity="one">Du har %1$d registreret kaffepose. Hvis du vælger den, holdes din log, friskhed og malingsforslag præcise.</item>
+        <item quantity="other">Du har %1$d registrerede kaffeposer. Hvis du vælger en, holdes din log, friskhed og malingsforslag præcise.</item>
+    </plurals>
+    <string name="action_pick_bag">Vælg en pose</string>
+    <string name="action_brew_without_bag_short">Bryg alligevel</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Vandretention</string>
+    <string name="format_retention_explanation">Malet kaffe absorberer cirka 2× sin tørvægt i vand. Med %1$.0fg kaffe holdes ~%2$.0fg tilbage, så der er ~%3$.0fg i koppen.\n\nDet er et estimat — mørke ristninger absorberer lidt mere, lyse ristninger lidt mindre.</string>
+    <string name="cd_about_cup_volume">Om kopvolumen</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+    <string name="label_target">Mål</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
+    <string name="format_ratio_bright">Livlig · 1:%1$d</string>
+    <string name="format_ratio_balanced">Balanceret · 1:%1$d</string>
+    <string name="format_ratio_rich">Fyldig · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+<!-- Input Mode -->
+    <string name="input_coffee_to_water">Kaffe → Vand</string>
+    <string name="input_water_to_coffee">Vand → Kaffe</string>
+    <string name="input_brew_to_both">Brygstørrelse → Begge</string>
+    <string name="input_cup_to_both">Kopstørrelse → Begge</string>
+    <string name="input_coffee_short">Kaffe</string>
+    <string name="input_water_short">Vand</string>
+    <string name="input_brew_short">Bryg</string>
+    <string name="input_cup_short">Kop</string>
+    <string name="input_coffee_desc">Indtast kaffedosis, beregn vand</string>
+    <string name="input_water_desc">Indtast vandmængde, beregn kaffe</string>
+    <string name="input_brew_desc">Indtast ønsket brygstørrelse, beregn kaffe og vand med absorption medregnet</string>
+    <string name="input_cup_desc">Indtast kopstørrelse, beregn kaffe og vand</string>
+
+    <!-- Phase names -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Hæld til %1$.0fg</string>
+    <string name="instruction_pour_total">Hæld til %1$.0fg i alt</string>
+    <string name="instruction_open_valve_short">Åbn ventil</string>
+    <string name="instruction_close_valve_short">Luk ventil</string>
+    <string name="instruction_bloom_wait">Sving &amp; vent på bloom</string>
+    <string name="instruction_french_press_start">Tilsæt alt vandet, rør forsigtigt, og læg låget på</string>
+    <string name="instruction_french_press_steep">Lad trække uforstyrret til den ønskede tid</string>
+    <string name="instruction_french_press_plunge">Pres langsomt ned, og hæld derefter kaffen fra</string>
+    <string name="instruction_aeropress_start">Tilsæt vand, rør, og start trækketiden</string>
+    <string name="instruction_aeropress_steep">Lad trække med låget på; gør klar til at presse</string>
+    <string name="instruction_aeropress_press">Pres jævnt, indtil det hvæser, og stop så</string>
+    <string name="instruction_espresso_start">Lås portafilteret i, og start shottet</string>
+    <string name="instruction_espresso_pull">Hold øje med flow og yield; behold koppen på vægten</string>
+    <string name="instruction_espresso_stop">Stop ved ønsket yield, eller når shottet bliver lyst</string>
+    <string name="instruction_moka_start">Saml kanden, og varm forsigtigt med åbent låg</string>
+    <string name="instruction_moka_flow">Hold øje med kaffe, der løber op i det øverste kammer</string>
+    <string name="instruction_moka_remove">Tag af varmen, når flowet bliver lyst eller sprutter</string>
+    <string name="instruction_cold_brew_start">Bland kaffe og vand, og rør, så alt grums bliver vådt</string>
+    <string name="instruction_cold_brew_steep">Dæk til, og lad trække; hold kaffen helt mættet</string>
+    <string name="instruction_cold_brew_filter">Filtrer koncentratet, og køl eller fortynd ved servering</string>
+
+    <!-- Warnings -->
+<!-- Taste Feedback -->
+    <string name="feedback_too_sour">For syrlig / svag</string>
+    <string name="feedback_balanced">Balanceret</string>
+    <string name="feedback_too_bitter">For bitter / hård</string>
+    <string name="feedback_astringent">Astringerende / tør</string>
+    <string name="feedback_clogged">Tilstoppet / gået i stå</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Mal finere med 2–4 klik</string>
+    <string name="adjust_try_finer">Prøv en finere malingsgrad</string>
+    <string name="adjust_no_change">Ingen justering nødvendig — gem opskriften!</string>
+    <string name="adjust_grind_coarser">Mal grovere med 2–4 klik</string>
+    <string name="adjust_grind_coarser_valve">Mal grovere med 2–4 klik\nPrøv at åbne ventilen tidligere</string>
+    <string name="adjust_try_coarser">Prøv en grovere malingsgrad</string>
+    <string name="adjust_try_coarser_water">Prøv en grovere malingsgrad\nEller prøv køligere vand</string>
+    <string name="adjust_astringent_pulsar">Øg dosis til 20g+ for et dybere kaffebed\nReducer bevægelse under bloom\nHold slurryen ~1cm over bedet</string>
+    <string name="adjust_astringent_grinder">Mal lidt grovere, reducer bevægelse</string>
+    <string name="adjust_astringent_no_grinder">Mal lidt grovere, hæld mere forsigtigt</string>
+    <string name="adjust_clogged_pulsar_grinder">Mal meget grovere med 3–5 klik\nReducer bevægelse (kun et blidt sving)\nTjek om kaffen er for frisk — lad den hvile 7+ dage</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Mal meget grovere\nReducer bevægelse\nSørg for blide hældninger gennem dispersionslåget</string>
+    <string name="adjust_clogged_grinder">Mal meget grovere med 3–5 klik</string>
+    <string name="adjust_clogged_no_grinder">Prøv en meget grovere malingsgrad</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Kaffe: %1$s gram</string>
+    <string name="cd_water_grams">Vand: %1$s gram</string>
+    <string name="cd_ratio">Forhold 1 til %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Navn</string>
+    <string name="label_roaster">Risteri</string>
+    <string name="label_origin">Oprindelse</string>
+    <string name="label_barcode_ean">Stregkode / EAN</string>
+    <string name="action_scan_barcode">Scan stregkode</string>
+    <string name="label_name_required">Navn *</string>
+    <string name="label_weight_grams">Vægt (g)</string>
+    <string name="label_roast_date">Ristedato</string>
+    <string name="label_roast_level">Ristning</string>
+    <string name="label_variety">Varietet</string>
+    <string name="label_process">Proces</string>
+    <string name="label_tasting_notes">Smagsnoter</string>
+    <string name="label_best_before">Bedst før</string>
+    <string name="label_decaf_coffee">Koffeinfri kaffe</string>
+    <string name="msg_decaf_guidance">Holder bryggevejledning synkroniseret med koffeinfri bønner og kortere trækketider.</string>
+    <string name="label_decaf_process_optional">Koffeinfri proces (valgfrit)</string>
+    <string name="msg_decaf_process_hint">Lader brygreglen justere malingen let: vandproces- og CO₂-decaf kræver typisk mindre grov maling end solventprocesser.</string>
+    <string name="cd_captured_bag_photo">Foto af kaffepose</string>
+    <string name="label_detected_details">Registrerede detaljer</string>
+    <string name="msg_tap_chip_to_edit">Tryk på en chip for at redigere</string>
+    <string name="label_needs_review">Kræver gennemgang</string>
+    <string name="action_edit_all_fields">Rediger alle felter</string>
+    <string name="action_add_more_details">Tilføj flere detaljer</string>
+    <string name="msg_analyzing_label">Analyserer labelfotos</string>
+    <string name="msg_analyzing_label_detail">Vi tjekker slør, samler tekst fra for- og bagside og forbereder de mest pålidelige felter.</string>
+    <string name="label_review_fields">Gennemgå disse felter</string>
+    <string name="label_qr_website">QR-websted</string>
+    <string name="action_open_website">Åbn websted</string>
+    <string name="label_qr_link_found">QR-link fundet</string>
+    <string name="action_explore_extract">Udforsk &amp; udtræk</string>
+    <string name="label_detected_field_evidence">Evidens for registrerede felter</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Foto af pose</string>
+    <string name="action_rescan_label">Scan label igen</string>
+    <string name="action_edit_bag">Rediger pose</string>
+    <string name="label_sensory_snapshot">Sensorisk overblik</string>
+    <string name="label_grind_intelligence">Malingsanbefalinger</string>
+    <string name="label_remaining_coffee">Resterende kaffe</string>
+    <string name="action_adjust_weight">Juster vægt</string>
+    <string name="action_add_weight_tracking">Tilføj vægtsporing</string>
+    <string name="label_brew_history">Bryghistorik</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Hvordan var det?</string>
+    <string name="msg_rate_brew_fresh">Bedøm dette bryg, mens smagen stadig er frisk i hukommelsen.</string>
+    <string name="label_flavor_notes_section">Smagsnoter</string>
+    <string name="hint_what_stood_out">Valgfri note - hvad skilte sig ud?</string>
+    <string name="action_save_rating">Gem bedømmelse</string>
+
+    <!-- EmptyStateBox -->
+<!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Dine favoritter</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Andet</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">AI-tjeneste (Mindlayer)</string>
+    <string name="action_test_connection">Test forbindelse</string>
+    <string name="action_run_test_prompt">Kør testprompt</string>
+    <string name="label_testing">Tester…</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Hvordan var din sidste kop?</string>
+    <string name="label_what_was_off">Hvad var forkert?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Den scannede label matcher din gemte pose — der er intet at opdatere.</string>
+    <string name="action_update_bag">Opdater pose</string>
+    <string name="action_new_bag">Ny pose</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Gem som favorit</string>
+    <string name="msg_save_favorite_hint">Giv opskriften et navn, du kan huske</string>
+    <string name="hint_save_favorite_example">fx Mandag morgen, Langsom weekend</string>
+    <string name="action_save_simple">Gem</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Scanningshistorik</string>
+    <string name="msg_no_scan_sessions">Ingen scanningssessioner registreret endnu.</string>
+    <string name="action_share_session">Del denne session</string>
+    <string name="label_component_timings">Komponenttider</string>
+    <string name="msg_no_timing_data">Ingen timingdata tilgængelige</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Advarsel</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Juster vægt</string>
+    <string name="label_remaining_weight_grams">Resterende vægt (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Fra foto</string>
+    <string name="action_scan_label">Scan label</string>
+    <string name="action_add_bag_gallery">Fra galleri</string>
+    <string name="action_add_bag_camera">Scan med kamera</string>
+    <string name="action_add_bag_barcode">Scan stregkode</string>
+    <string name="action_add_bag_manual">Tilføj manuelt</string>
+    <string name="msg_no_beans_yet">Ingen bønner endnu</string>
+    <string name="msg_add_coffee_hint">Tilføj din kaffe for at følge friskhed og få brygforslag</string>
+    <string name="action_brew_now">Bryg nu</string>
+    <string name="msg_could_not_read_label">Kunne ikke læse labelen</string>
+    <string name="action_retake_photo">Tag foto igen</string>
+    <string name="action_add_details_manually">Tilføj detaljer manuelt</string>
+    <string name="msg_llm_enrichment_succeeded">AI-berigelse forbedrede denne labelscanning.</string>
+    <string name="msg_llm_enrichment_failed">AI-berigelse mislykkedes. Du kan prøve igen eller fortsætte med manuel redigering.</string>
+    <string name="msg_llm_enrichment_unavailable">AI-berigelse er ikke tilgængelig lige nu. Du kan prøve igen eller fortsætte med manuel redigering.</string>
+    <string name="action_retry_llm_enrichment">Prøv AI-berigelse igen</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Del bryg</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Kassér scanning?</string>
+    <string name="msg_discard_scan_body">Du har registrerede felter, som ikke er gemt.</string>
+    <string name="action_discard">Kassér</string>
+    <string name="action_keep_scanning">Fortsæt scanning</string>
+    <string name="msg_camera_permission_required">Kameratilladelse kræves</string>
+    <string name="screen_scan_bag_title">Scan kaffepose</string>
+    <string name="cd_toggle_debug_overlay">Slå debug-overlay til/fra</string>
+    <string name="msg_both_sides_scanned">Begge sider af posen er scannet</string>
+    <string name="msg_scanning_front_side">Scanner forsiden af posen</string>
+    <string name="action_quick_save">Gem hurtigt</string>
+    <string name="msg_repackaged_product">Dette kan være et ompakket eller importeret produkt</string>
+    <string name="action_use_barcode">Brug stregkode</string>
+    <string name="action_use_label">Brug label</string>
+    <string name="label_confirmed">Bekræftet</string>
+    <string name="label_ai_contributed">AI bidrog</string>
+    <string name="cd_manual_capture">Manuel optagelse — gennemtving behandling af aktuelt billede</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Synkroniser med pose</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Anvendes ved brygning med Pulsar</string>
+    <string name="label_quick_brew">Hurtigt bryg</string>
+    <string name="msg_quick_brew_hint">Spring forberedelse af maling over, og gå direkte til timeren, når du starter et bryg</string>
+    <string name="label_show_brewing_instructions">Vis bryggevejledning</string>
+    <string name="msg_show_brewing_instructions_hint">Vis vejledningskortet trin for trin under brygning og forberedelsestjeklisten på forberedelsesskærmen. Slå fra, hvis du kan din metode udenad.</string>
+    <string name="label_dim_mode">Automatisk dæmpning</string>
+    <string name="msg_dim_mode_hint">Efter 25 s uden aktivitet fjernes farvede baggrunde, og teksten dæmpes til grå. Layoutet bliver stående, og et enkelt tryk vækker skærmen og udløser samtidig handlingen under fingeren.</string>
+    <string name="label_dim_mode_true_black">Ægte sort baggrund</string>
+    <string name="msg_dim_mode_true_black_hint">Når skærmen dæmpes i mørkt tema, sænkes skærmbaggrunden også til helt sort. Bedst på OLED — sparer strøm og føles helt i ro. Ingen effekt i lyse temaer.</string>
+    <string name="label_dim_mode_reduce_brightness">Reducer skærmlysstyrke</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Sænk også displayets baglys, mens skærmen er dæmpet. Sparer lidt strøm og gør skærmen endnu blødere.</string>
+    <string name="label_dim_mode_fullscreen">Skjul systembjælker</string>
+    <string name="msg_dim_mode_fullscreen_hint">Skjul også statuslinjen og navigationslinjen, mens skærmen er dæmpet. Swipe fra en kant for at kigge; ethvert tryk på skærmen vækker tilbage til normal.</string>
+    <string name="label_dim_mode_force_dark_in_light">Brug mørk stil ved dæmpning</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Skift til dæmpet visning i mørkt tema, selv når systemet er i lyst tema. Passer naturligt med Ægte sort baggrund for altid mørk dæmpning.</string>
+    <string name="action_add_cup_preset">Tilføj kopforudindstilling</string>
+    <string name="label_volume_ml">Volumen (ml)</string>
+    <string name="msg_dose_from_ratio">Kaffedosis beregnes ud fra dit forhold</string>
+    <string name="label_icon">Ikon</string>
+    <string name="label_color">Farve</string>
+    <string name="action_add">Tilføj</string>
+    <string name="dialog_edit_cup_preset_title">Rediger kopforudindstilling</string>
+    <string name="screen_add_cup_preset_title">Tilføj kopforudindstilling</string>
+    <string name="screen_edit_cup_preset_title">Rediger kopforudindstilling</string>
+    <string name="msg_cup_preset_name_required">Tilføj et navn for at fortsætte</string>
+    <string name="msg_cup_preset_volume_required">Tilføj en volumen større end 0</string>
+    <string name="cd_cup_preset_preview">Forhåndsvisning af %1$s</string>
+    <string name="label_scan_debug">Scanningsdebug</string>
+    <string name="action_view_history">Vis historik</string>
+    <string name="action_share_report">Del rapport</string>
+    <string name="action_clear">Ryd</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Let</string>
+    <string name="strength_balanced">Balanceret</string>
+    <string name="strength_strong">Stærk</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Frugtig</string>
+    <string name="flavor_chocolate">Chokolade</string>
+    <string name="flavor_nutty">Nøddeagtig</string>
+    <string name="flavor_floral">Blomstret</string>
+    <string name="flavor_bright">Frisk</string>
+    <string name="flavor_smooth">Blød</string>
+    <string name="flavor_bitter">Bitter</string>
+    <string name="flavor_sweet">Sød</string>
+    <string name="flavor_earthy">Jordagtig</string>
+    <string name="flavor_spicy">Krydret</string>
+    <string name="flavor_citrus">Citrus</string>
+    <string name="flavor_berry">Bær</string>
+    <string name="flavor_caramel">Karamel</string>
+    <string name="flavor_wine">Vinøs</string>
+    <string name="flavor_clean">Ren</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Meget fin</string>
+    <string name="grind_fine">Fin</string>
+    <string name="grind_medium_fine">Mellemfin</string>
+    <string name="grind_medium">Mellem</string>
+    <string name="grind_medium_coarse">Mellemgrov</string>
+    <string name="grind_coarse">Grov</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Fantastisk</string>
+    <string name="rating_good">God</string>
+    <string name="rating_not_great">Ikke god</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">For bitter</string>
+    <string name="taste_issue_too_sour">For syrlig</string>
+    <string name="taste_issue_too_weak">For svag</string>
+    <string name="taste_issue_too_strong">For stærk</string>
+    <string name="taste_issue_bitter_suggestion">Prøv grovere maling eller kortere brygtid</string>
+    <string name="taste_issue_sour_suggestion">Prøv finere maling eller længere brygtid</string>
+    <string name="taste_issue_weak_suggestion">Prøv et stærkere forhold eller mere kaffe</string>
+    <string name="taste_issue_strong_suggestion">Prøv et lettere forhold eller mindre kaffe</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Forseglet</string>
+    <string name="bag_status_open">Åben</string>
+    <string name="bag_status_frozen">Frosset</string>
+    <string name="bag_status_finished">Brugt op</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Ukendt / ikke angivet</string>
+    <string name="decaf_swiss_water">Swiss Water (vandproces)</string>
+    <string name="decaf_mountain_water">Mountain Water (vandproces)</string>
+    <string name="decaf_co2">Superkritisk CO₂</string>
+    <string name="decaf_ea_sugarcane">Ethylacetat (sukkerrør / naturlig EA)</string>
+    <string name="decaf_mc_direct">Methylenchlorid (direkte solvent)</string>
+    <string name="decaf_ea_direct">Ethylacetat (direkte solvent)</string>
+    <string name="decaf_short_unknown">Ukendt</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (sukkerrør)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (solvent)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Lys</string>
+    <string name="roast_medium_light">Mellemlys</string>
+    <string name="roast_medium">Mellem</string>
+    <string name="roast_medium_dark">Mellemmørk</string>
+    <string name="roast_dark">Mørk</string>
+    <string name="roast_filter">Filter</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Kanel</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Vasket</string>
+    <string name="process_natural">Natural</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaerob</string>
+    <string name="process_carbonic_maceration">Carbonic maceration</string>
+    <string name="process_semi_washed">Semi-vasket</string>
+    <string name="process_wet_hulled">Wet-hulled</string>
+    <string name="process_pulped_natural">Pulped natural</string>
+    <string name="process_double_fermented">Dobbeltfermenteret</string>
+    <string name="process_thermal_shock">Thermal shock</string>
+</resources>

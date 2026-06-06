@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Supported app languages, surfaced in the Android 13+ per-app language picker
+  (Settings > Apps > Starlit Coffee > Language). Each entry must have a matching
+  res/values-<code>/strings.xml. Keep this list in sync when adding a locale.
+-->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="cs" />
+    <locale android:name="da" />
+    <locale android:name="de" />
+    <locale android:name="es" />
+    <locale android:name="fr" />
+    <locale android:name="it" />
+    <locale android:name="nl" />
+    <locale android:name="pl" />
+    <locale android:name="sk" />
+    <locale android:name="zh" />
+</locale-config>

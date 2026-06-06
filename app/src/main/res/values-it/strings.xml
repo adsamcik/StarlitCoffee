@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Prepara</string>
+    <string name="nav_log">Registro</string>
+    <string name="nav_more">Altro</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Indietro</string>
+    <string name="action_close">Chiudi</string>
+    <string name="action_cancel">Annulla</string>
+    <string name="action_delete">Elimina</string>
+    <string name="action_save">Salva modifiche</string>
+    <string name="action_saved">✓ Salvato</string>
+    <string name="action_skip">Salta</string>
+    <string name="action_finish">Completa</string>
+    <string name="action_next">Avanti</string>
+    <string name="action_go_back">Torna indietro</string>
+<!-- Common labels -->
+    <string name="label_coffee">Caffè</string>
+    <string name="label_water">Acqua</string>
+    <string name="label_ratio">Rapporto</string>
+    <string name="label_strength">Intensità</string>
+    <string name="label_grind">Macinatura</string>
+    <string name="label_filter">Filtro</string>
+<string name="label_decaf">Decaffeinato</string>
+    <string name="label_decaf_suffix"> · Decaffeinato</string>
+    <string name="label_loading">Caricamento…</string>
+    <string name="label_none">Nessuno</string>
+    <string name="label_taste">Gusto</string>
+    <string name="label_rating">Valutazione</string>
+    <string name="label_notes">Note</string>
+    <string name="label_no_filter">Nessun filtro</string>
+    <string name="label_settings">Impostazioni</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg in tazza</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+<plurals name="format_selected">
+        <item quantity="one">%1$d selezionato</item>
+        <item quantity="other">%1$d selezionati</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Configura la tua preparazione</string>
+    <string name="label_coffee_input">Caffè (g)</string>
+    <string name="label_water_input">Acqua (g)</string>
+    <string name="label_brew_size_input">Quantità preparata (ml)</string>
+    <string name="label_cup_size_input">Dimensione tazza (ml)</string>
+    <string name="label_brew_size">Quantità preparata</string>
+    <string name="label_cup_size">Dimensione tazza</string>
+    <string name="format_capacity_note">%1$s contiene %2$dg d\'acqua — i rabbocchi sono automatici per preparazioni più grandi</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Seleziona confezione di caffè</string>
+    <string name="cd_clear_bag">Deseleziona confezione</string>
+    <string name="format_brewing_with">Preparazione con %1$s</string>
+    <string name="label_freshness">Freschezza</string>
+    <string name="format_recommended_now">Consigliato ora: %1$s</string>
+    <string name="format_last_time">Ultima volta: %1$s</string>
+    <string name="action_save_as_favorite">Salva come preferito</string>
+    <string name="label_select_coffee_bag_title">Seleziona confezione di caffè</string>
+    <string name="msg_no_active_bags">Nessuna confezione attiva. Aggiungine una nella sezione I tuoi chicchi.</string>
+    <string name="action_brew_without_bag">Prepara senza selezionare una confezione</string>
+    <string name="label_best_now">Al meglio ora</string>
+    <string name="format_grind_generic">Macinatura: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Impostazione macinatura: %1$s–%2$s · Regola in base al gusto</string>
+    <string name="format_weight_left"> · %1$.0fg rimasti</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Suggerimento Pulsar: mantieni il liquido ~1cm sopra il letto di caffè durante i versamenti. La maggior parte degli utenti prepara 20–25g per una tazza singola bilanciata.</string>
+    <string name="tip_generic">💡 Suggerimento: parti dal rapporto predefinito e regola l\'intensità in base al gusto. Macinature più fini estraggono di più, quelle più grosse estraggono meno.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Impostazioni preparazione</string>
+<string name="label_custom_ratio">Rapporto personalizzato (es. 16)</string>
+    <string name="label_temperature">Temperatura (°C)</string>
+    <string name="label_bloom_multiplier">Moltiplicatore del bloom (es. 3.0)</string>
+    <string name="label_pulse_count">Numero di versamenti</string>
+<string name="action_start_brewing">Avvia preparazione →</string>
+    <string name="label_advanced_options">Opzioni avanzate</string>
+    <string name="cd_collapse_advanced">Comprimi opzioni avanzate</string>
+    <string name="cd_expand_advanced">Espandi opzioni avanzate</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Dose caffè: %1$d grammo</item>
+        <item quantity="other">Dose caffè: %1$d grammi</item>
+    </plurals>
+    <string name="label_decrease">Diminuisci %1$s</string>
+    <string name="label_increase">Aumenta %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Prepara la tua estrazione</string>
+<string name="action_ready_to_brew_short">Tutto pronto</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Preparazione</string>
+    <string name="label_recipe_heading">Ricetta</string>
+    <string name="label_set_grinder_to">Imposta il macinacaffè su</string>
+    <string name="label_temp_short">Temp</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Bagna il filtro di carta nella base (valvola aperta) e fai scolare. Monta il cilindro, aggiungi il caffè macinato, livella il letto, posiziona il tappo di dispersione. Tara la bilancia.</string>
+    <string name="prep_tip_pulsar_19k">Sciacqua il filtro metallico 19K per farlo aderire e preriscaldare il cilindro. Monta il cilindro, aggiungi il caffè macinato, livella il letto, posiziona il tappo di dispersione. Tara la bilancia.</string>
+    <string name="prep_tip_pulsar_40k">Sciacqua il filtro metallico 40K per preriscaldare il cilindro. Monta il cilindro, aggiungi il caffè macinato, livella il letto, posiziona il tappo di dispersione. Tara la bilancia.</string>
+    <string name="prep_tip_pour_over_paper">Inserisci il filtro di carta e sciacqualo con acqua calda per preriscaldare e rimuovere il gusto di carta. Aggiungi il caffè macinato e tara la bilancia.</string>
+    <string name="prep_tip_french_press">Preriscalda la pressa, poi svuotala. Aggiungi il caffè macinato, metti sulla bilancia e tara prima di aggiungere acqua.</string>
+    <string name="prep_tip_aeropress">Inserisci un filtro sciacquato nel tappo. Aggiungi il caffè macinato, appoggia l\'AeroPress su una tazza o server stabile e tara la bilancia.</string>
+    <string name="prep_tip_espresso">Asciuga il portafiltro. Dosa, distribuisci e pressa in piano prima di agganciare.</string>
+    <string name="prep_tip_moka">Riempi la camera inferiore fino alla valvola. Riempi il filtro con il caffè macinato, livella — non pressare. Assembla con attenzione.</string>
+    <string name="prep_tip_cold_brew">Aggiungi il caffè macinato al recipiente, tara la bilancia, poi aggiungi acqua fredda o a temperatura ambiente e copri.</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Pausa</string>
+    <string name="action_resume">Riprendi</string>
+    <string name="cd_disable_minute_alerts">Disattiva avvisi ogni minuto</string>
+    <string name="cd_enable_minute_alerts">Attiva avvisi ogni minuto</string>
+    <string name="cd_bloom_animation">Animazione bloom del chicco di caffè</string>
+<string name="format_pour_bloom_water">Versa %1$.0fg d\'acqua per il bloom</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Totale %2$.0fg</string>
+<string name="action_start_bloom">☕ Avvia bloom</string>
+<string name="label_bloom_done">✅ Bloom completato!</string>
+    <string name="action_finish_brew">Completa preparazione</string>
+    <string name="dialog_exit_brew_title">Uscire dalla preparazione?</string>
+    <string name="dialog_exit_brew_message">I progressi della preparazione attuale andranno persi.</string>
+    <string name="action_exit_brew">Esci</string>
+
+    <!-- Calculator Brew Screen -->
+<string name="label_water_to_dose">Acqua → Dose</string>
+    <string name="label_dose_to_water">Dose → Acqua</string>
+    <string name="cd_backspace">Cancella</string>
+    <string name="action_brew">Avvia</string>
+    <string name="label_total_water">acqua totale</string>
+<!-- Settings Screen -->
+    <string name="screen_settings_title">Impostazioni</string>
+    <string name="label_cup_presets">Preset tazze</string>
+    <string name="action_add_preset">Aggiungi preset</string>
+    <string name="action_reset_defaults">Ripristina predefiniti</string>
+    <string name="msg_presets_hint">I preset appaiono come pulsanti rapidi nel calcolatore</string>
+    <string name="label_brew_methods">Metodi di preparazione</string>
+    <string name="msg_methods_hint">I metodi selezionati appaiono per primi. Tocca per attivarli o disattivarli.</string>
+    <string name="label_default_method">Metodo predefinito</string>
+    <string name="format_edit_preset">Modifica %1$s</string>
+    <string name="label_bloom_animation_settings">Animazioni bloom</string>
+    <string name="msg_bloom_animation_settings_subtitle">Scegli quanto spesso appare ogni sprite del bloom</string>
+    <string name="cd_open_bloom_animation_settings">Apri impostazioni animazioni bloom</string>
+    <string name="screen_bloom_animation_settings_title">Animazioni bloom</string>
+    <string name="msg_bloom_animation_settings_hint">Tocca ogni controllo per passare tra probabilità normale, probabilità doppia ed escluso. Se tutti gli sprite sono esclusi, i timer del bloom nascondono l\'animazione.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s è impostato su %2$s. Tocca per cambiare.</string>
+    <string name="label_bloom_sprite_coffee_flower">Fiore del caffè</string>
+    <string name="desc_bloom_sprite_coffee_flower">Classico fiore bianco del caffè che si apre dal chicco.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Caffè stellato</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Petali di vapore color crema e oro con piccoli riflessi stellati.</string>
+    <string name="label_bloom_sprite_coffee_latte">Bloom latte</string>
+    <string name="desc_bloom_sprite_coffee_latte">Morbida rosetta di latte art in toni caldi di schiuma di latte.</string>
+    <string name="label_bloom_sprite_coffee_plant">Pianta di caffè</string>
+    <string name="desc_bloom_sprite_coffee_plant">Giovane piantina di caffè verde brillante con foglie appaiate.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Pomodorino</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Da un chicco di caffè germoglia una vite di pomodoro mentre maturano frutti rossi.</string>
+    <string name="label_bloom_sprite_strawberry">Fragola</string>
+    <string name="desc_bloom_sprite_strawberry">Da un chicco di caffè germoglia una pianta di fragola con fiori e bacche rosse.</string>
+    <string name="label_bloom_sprite_raspberry">Lampone</string>
+    <string name="desc_bloom_sprite_raspberry">Un chicco di caffè fa crescere rovi con fiori chiari e grappoli di lamponi rossi.</string>
+    <string name="label_bloom_sprite_blueberry">Mirtillo</string>
+    <string name="desc_bloom_sprite_blueberry">Un chicco di caffè fa crescere un rametto di mirtillo con fiori a campana e frutti blu.</string>
+    <string name="label_bloom_sprite_blackberry">Mora</string>
+    <string name="desc_bloom_sprite_blackberry">Un chicco di caffè fa crescere rovi spinosi con grappoli di more scure.</string>
+    <string name="label_bloom_sprite_coffee_brew">Caffè in estrazione</string>
+    <string name="desc_bloom_sprite_coffee_brew">Bagliore ambrato di caffè con spirali di vapore crema.</string>
+    <string name="label_bloom_sprite_cursed_relic">Reliquia maledetta</string>
+    <string name="desc_bloom_sprite_cursed_relic">Un chicco crepato libera magia dorata e vapore nero in un medaglione lupesco.</string>
+    <string name="label_bloom_sprite_rose">Rosa</string>
+    <string name="desc_bloom_sprite_rose">Rosa rossa compatta che si schiude sopra il chicco.</string>
+    <string name="label_bloom_sprite_lotus">Loto</string>
+    <string name="desc_bloom_sprite_lotus">Fiore di loto color crema con petali concavi sovrapposti.</string>
+    <string name="label_bloom_sprite_sunflower">Girasole</string>
+    <string name="desc_bloom_sprite_sunflower">Girasole luminoso con petali dorati e centro scuro.</string>
+    <string name="label_bloom_sprite_orchid">Orchidea</string>
+    <string name="desc_bloom_sprite_orchid">Delicata orchidea bianca con lobi arrotondati.</string>
+    <string name="label_bloom_sprite_jasmine">Gelsomino</string>
+    <string name="desc_bloom_sprite_jasmine">Morbido fiore bianco di gelsomino con delicata forma a girandola.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Dicentra</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Steli arcuati con fiori rosa a forma di cuore e punte bianche a goccia emergono dal chicco.</string>
+    <string name="label_bloom_sprite_passionflower">Passiflora</string>
+    <string name="desc_bloom_sprite_passionflower">Viti arricciate si aprono in una passiflora ornata viola e bianca sopra il chicco.</string>
+    <string name="label_bloom_sprite_bee_orchid">Ofride fior di ape</string>
+    <string name="desc_bloom_sprite_bee_orchid">Petali rosa di orchidea rivelano labelli scuri a forma di ape su steli sottili.</string>
+    <string name="label_bloom_sprite_jade_vine">Vite di giada</string>
+    <string name="desc_bloom_sprite_jade_vine">Una vite rampicante fa pendere dal chicco grappoli turchesi di fiori di giada.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Strelitzia</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Petali arancioni e blu profondo di Strelitzia si schiudono da foglie verdi erette.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Papavero blu himalayano</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Un bocciolo pendulo si apre in un papavero azzurro cielo con stami dorati.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">Un fiore parassita rosso maculato si gonfia in un enorme fiore a cinque lobi.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Cosmos cioccolato</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Foglie piumose sollevano dal chicco fiori di cosmos vellutati color borgogna scuro.</string>
+    <string name="label_bloom_sprite_flame_lily">Giglio fiamma</string>
+    <string name="desc_bloom_sprite_flame_lily">Petali di giglio color fiamma si arricciano su steli verdi con viticci.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Regina della notte</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Uno stelo di cactus si apre in un drammatico fiore notturno bianco a strati.</string>
+    <string name="label_bloom_sprite_snowdrop">Bucaneve</string>
+    <string name="desc_bloom_sprite_snowdrop">Delicate campanelle bianche di bucaneve emergono dal chicco crepato.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Minuscoli fiori blu di non ti scordar di me con centri gialli si schiudono dal chicco.</string>
+    <string name="label_bloom_sprite_fantasy_citadel">Cittadella fantasy</string>
+    <string name="desc_bloom_sprite_fantasy_citadel">Un chicco crepato si apre in una minuscola cittadella di pietra con finestre calde.</string>
+    <string name="label_bloom_sprite_cyber_city_vines">Rampicanti cyber city</string>
+    <string name="desc_bloom_sprite_cyber_city_vines">Viti circuitali al neon crescono in una compatta cyber city in miniatura.</string>
+    <string name="label_bloom_sprite_pixel_micro_world">Micro-mondo pixel</string>
+    <string name="desc_bloom_sprite_pixel_micro_world">Il chicco si pixelizza in un micro-mondo retro di blocchi e terreno.</string>
+    <string name="label_bloom_sprite_tabletop_adventure_map">Mappa di avventura da tavolo</string>
+    <string name="desc_bloom_sprite_tabletop_adventure_map">Un chicco rotolante si dispiega in una piccola mappa di avventura su pergamena e un dado-gemma vuoto.</string>
+    <string name="label_bloom_sprite_alchemy_astrolabe">Astrolabio alchemico</string>
+    <string name="desc_bloom_sprite_alchemy_astrolabe">Anelli di ottone e fiale di vetro orbitanti si aprono dal chicco di caffè.</string>
+    <string name="label_bloom_sprite_espresso_robot">Robot espresso</string>
+    <string name="desc_bloom_sprite_espresso_robot">Il chicco si dispiega in un piccolo robot di ottone alimentato a espresso.</string>
+    <string name="label_bloom_sprite_space_habitat_ring">Anello habitat spaziale</string>
+    <string name="desc_bloom_sprite_space_habitat_ring">Pezzi curvi di guscio si separano in un anello habitat rotante in miniatura.</string>
+    <string name="label_bloom_sprite_nerd_library_nook">Angolo biblioteca nerd</string>
+    <string name="desc_bloom_sprite_nerd_library_nook">Un angolo biblioteca pop-up si apre dal chicco con scaffali, lampada e mug.</string>
+    <string name="label_bloom_sprite_arcade_platformer_level">Livello platform arcade</string>
+    <string name="desc_bloom_sprite_arcade_platformer_level">Dal chicco spunta un minuscolo livello platform originale con blocchi, gemme e bandiera.</string>
+    <string name="label_bloom_sprite_clockwork_dragonfly">Libellula meccanica</string>
+    <string name="desc_bloom_sprite_clockwork_dragonfly">Un guscio di caffè si schiude in una libellula meccanica di ottone.</string>
+    <string name="label_bloom_sprite_observatory_dome">Cupola osservatorio</string>
+    <string name="desc_bloom_sprite_observatory_dome">Il chicco si apre come una minuscola cupola di osservatorio con telescopio in ottone.</string>
+    <string name="label_bloom_sprite_cyber_alchemy_engine">Motore cyber-alchemico</string>
+    <string name="desc_bloom_sprite_cyber_alchemy_engine">Anelli di ottone, circuiti e un nucleo ambrato formano un compatto motore cyber-alchemico.</string>
+    <string name="label_bloom_sprite_tabletop_space_colony">Colonia spaziale da tavolo</string>
+    <string name="desc_bloom_sprite_tabletop_space_colony">Una piccola colonia spaziale da gioco da tavolo si solleva con cupole e lune-dado vuote.</string>
+    <string name="label_bloom_sprite_observatory_library">Biblioteca osservatorio</string>
+    <string name="desc_bloom_sprite_observatory_library">Una biblioteca osservatorio accogliente si apre con scaffali, telescopio e costellazioni di vapore.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Registro preparazioni</string>
+    <string name="msg_log_empty_title">Inizia a preparare per vedere la cronologia</string>
+    <string name="msg_log_empty_subtitle">Ogni preparazione completata con feedback apparirà qui</string>
+<string name="action_rate_brew">Valuta preparazione</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Dettagli preparazione</string>
+    <string name="dialog_delete_brew_title">Eliminare il registro della preparazione?</string>
+    <string name="dialog_delete_brew_message">Questa azione non può essere annullata.</string>
+    <string name="label_coffee_bag">Confezione di caffè</string>
+    <string name="label_brew_time">Tempo di preparazione</string>
+    <string name="label_coffee_type">Tipo di caffè</string>
+    <string name="label_flavor_notes">Note aromatiche</string>
+    <string name="hint_add_notes">Aggiungi note…</string>
+    <string name="msg_brew_not_found">Registro preparazione non trovato</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">I tuoi preferiti</string>
+    <string name="msg_no_favorites_title">Ancora nessun preferito</string>
+    <string name="msg_no_favorites_subtitle">Salva una ricetta dalla schermata di preparazione con il pulsante ♡</string>
+    <string name="label_untitled">Senza titolo</string>
+    <string name="format_recipe_summary">%1$sg caffè / %2$sg acqua</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Personalizza la tua preparazione</string>
+    <string name="label_pulsar_filter_type">Tipo di filtro Pulsar</string>
+    <string name="msg_filter_hint">Influisce sul profilo in tazza e sui consigli di macinatura</string>
+    <string name="label_your_grinder">Il tuo macinacaffè</string>
+    <string name="msg_grinder_hint">Facoltativo — abilita consigli di macinatura specifici. Scegli Nessun macinacaffè / Altro se il tuo non è in elenco.</string>
+    <string name="label_no_grinder">Nessun macinacaffè / Altro</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Con cosa prepari il caffè?</string>
+    <string name="msg_methods_subtitle">Seleziona i tuoi metodi di preparazione. Tocca ★ per impostare il predefinito.</string>
+    <string name="label_set_as_default">Imposta come predefinito</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Altro</string>
+    <string name="label_your_favorites">I tuoi preferiti</string>
+    <string name="msg_favorites_subtitle">Ripeti le tue preparazioni preferite</string>
+    <string name="label_your_beans">I tuoi chicchi</string>
+    <string name="msg_beans_subtitle">Freschezza, scorte e cosa preparare ora</string>
+    <string name="msg_settings_subtitle">Metodi, macinacaffè e preferenze</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">È necessaria l\'autorizzazione della fotocamera per scansionare codici a barre</string>
+    <string name="msg_point_camera">Punta la fotocamera sul codice a barre</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Preparazione salvata! Valutala dopo l\'assaggio.</string>
+    <string name="snackbar_action_view_log">Vedi registro</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Promemoria valutazione preparazione</string>
+    <string name="notif_channel_rating_reminder_desc">Promemoria leggero ~30 minuti dopo una preparazione per valutarla mentre il gusto è ancora fresco.</string>
+    <string name="notif_rating_title">Come è venuta la tua preparazione?</string>
+    <string name="format_notif_rating_title">Come è venuta la tua preparazione con %1$s?</string>
+    <string name="notif_rating_body">Tocca un emoji per valutarla, oppure apri l\'app per altro.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Valuta 1 stella su 5</string>
+    <string name="cd_notif_rating_2">Valuta 2 stelle su 5</string>
+    <string name="cd_notif_rating_3">Valuta 3 stelle su 5</string>
+    <string name="cd_notif_rating_4">Valuta 4 stelle su 5</string>
+    <string name="cd_notif_rating_5">Valuta 5 stelle su 5</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Promemoria valutazione</string>
+    <string name="msg_rating_reminder_hint">Invia una notifica ~30 minuti dopo una preparazione, così puoi valutarla mentre il gusto è ancora fresco.</string>
+    <string name="msg_rating_reminder_perm_denied">Le notifiche sono bloccate. Abilitale nelle impostazioni di sistema per ricevere promemoria.</string>
+    <string name="action_open_app_settings">Apri impostazioni di sistema</string>
+
+    <!-- Settings: bag selection prompt -->
+    <string name="label_bag_prompt">Promemoria confezione di caffè</string>
+    <string name="msg_bag_prompt_hint">Quando avvii una preparazione senza scegliere una confezione, chiedi di sceglierne una tra le confezioni monitorate.</string>
+
+    <!-- Bag selection prompt dialog -->
+    <string name="dialog_pick_bag_title">Prepari con una confezione?</string>
+    <plurals name="msg_pick_bag_body">
+        <item quantity="one">Hai %1$d confezione monitorata. Selezionandola mantieni precisi registro, freschezza e suggerimenti di macinatura.</item>
+        <item quantity="other">Hai %1$d confezioni monitorate. Sceglierne una mantiene precisi registro, freschezza e suggerimenti di macinatura.</item>
+    </plurals>
+    <string name="action_pick_bag">Scegli confezione</string>
+    <string name="action_brew_without_bag_short">Prepara comunque</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Assorbimento dell\'acqua</string>
+    <string name="format_retention_explanation">Il caffè macinato assorbe circa 2× il suo peso secco in acqua. Con %1$.0fg di caffè, il letto trattiene ~%2$.0fg, lasciando ~%3$.0fg nella tazza.\n\nÈ una stima — le tostature scure assorbono leggermente di più, quelle chiare leggermente di meno.</string>
+    <string name="cd_about_cup_volume">Informazioni sul volume in tazza</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+<string name="label_target">Obiettivo</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
+    <string name="format_ratio_bright">Vivace · 1:%1$d</string>
+    <string name="format_ratio_balanced">Bilanciato · 1:%1$d</string>
+    <string name="format_ratio_rich">Corposo · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+<!-- Input Mode -->
+    <string name="input_coffee_to_water">Caffè → Acqua</string>
+    <string name="input_water_to_coffee">Acqua → Caffè</string>
+    <string name="input_brew_to_both">Quantità preparata → Entrambi</string>
+    <string name="input_cup_to_both">Dimensione tazza → Entrambi</string>
+    <string name="input_coffee_short">Caffè</string>
+    <string name="input_water_short">Acqua</string>
+    <string name="input_brew_short">Preparazione</string>
+    <string name="input_cup_short">Tazza</string>
+    <string name="input_coffee_desc">Inserisci la dose di caffè, calcola l\'acqua</string>
+    <string name="input_water_desc">Inserisci la quantità d\'acqua, calcola il caffè</string>
+    <string name="input_brew_desc">Inserisci la quantità preparata target, calcola caffè e acqua considerando l\'assorbimento</string>
+    <string name="input_cup_desc">Inserisci la dimensione della tazza, calcola caffè e acqua</string>
+
+    <!-- Phase names -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Versa fino a %1$.0fg</string>
+    <string name="instruction_pour_total">Versa fino a %1$.0fg totali</string>
+    <string name="instruction_open_valve_short">Apri valvola</string>
+    <string name="instruction_close_valve_short">Chiudi valvola</string>
+    <string name="instruction_bloom_wait">Ruota &amp; attendi il bloom</string>
+    <string name="instruction_french_press_start">Aggiungi tutta l\'acqua, mescola delicatamente e appoggia il coperchio sopra</string>
+    <string name="instruction_french_press_steep">Lascia in infusione senza disturbare fino al tempo target</string>
+    <string name="instruction_french_press_plunge">Abbassa lentamente il pistone, poi versa il caffè</string>
+    <string name="instruction_aeropress_start">Aggiungi acqua, mescola e avvia l\'infusione</string>
+    <string name="instruction_aeropress_steep">Lascia in infusione con il tappo; preparati a premere</string>
+    <string name="instruction_aeropress_press">Premi con costanza fino al sibilo, poi fermati</string>
+    <string name="instruction_espresso_start">Aggancia il portafiltro e avvia lo shot</string>
+    <string name="instruction_espresso_pull">Osserva flusso e resa; tieni la tazza sulla bilancia</string>
+    <string name="instruction_espresso_stop">Ferma alla resa target o quando lo shot schiarisce</string>
+    <string name="instruction_moka_start">Assembla la moka e scalda dolcemente con il coperchio aperto</string>
+    <string name="instruction_moka_flow">Osserva il caffè che sale nella camera superiore</string>
+    <string name="instruction_moka_remove">Togli dal calore quando il flusso diventa chiaro o borbotta</string>
+    <string name="instruction_cold_brew_start">Unisci caffè e acqua, mescola per bagnare tutta la macinatura</string>
+    <string name="instruction_cold_brew_steep">Copri e lascia in infusione; tieni il caffè completamente saturo</string>
+    <string name="instruction_cold_brew_filter">Filtra il concentrato e servi freddo o diluito</string>
+
+    <!-- Warnings -->
+<!-- Taste Feedback -->
+    <string name="feedback_too_sour">Troppo acido / Debole</string>
+    <string name="feedback_balanced">Bilanciato</string>
+    <string name="feedback_too_bitter">Troppo amaro / Duro</string>
+    <string name="feedback_astringent">Astringente / Secco</string>
+    <string name="feedback_clogged">Intasato / Bloccato</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Macina 2–4 clic più fine</string>
+    <string name="adjust_try_finer">Prova una macinatura più fine</string>
+    <string name="adjust_no_change">Nessuna regolazione necessaria — salva questa ricetta!</string>
+    <string name="adjust_grind_coarser">Macina 2–4 clic più grosso</string>
+    <string name="adjust_grind_coarser_valve">Macina 2–4 clic più grosso\nProva ad aprire la valvola prima</string>
+    <string name="adjust_try_coarser">Prova una macinatura più grossa</string>
+    <string name="adjust_try_coarser_water">Prova una macinatura più grossa\nOppure acqua più fresca</string>
+    <string name="adjust_astringent_pulsar">Aumenta la dose a 20g+ per un letto più profondo\nRiduci l\'agitazione durante il bloom\nMantieni il liquido ~1cm sopra il letto</string>
+    <string name="adjust_astringent_grinder">Macina leggermente più grosso, riduci l\'agitazione</string>
+    <string name="adjust_astringent_no_grinder">Macina leggermente più grosso, versa più delicatamente</string>
+    <string name="adjust_clogged_pulsar_grinder">Macina molto più grosso di 3–5 clic\nRiduci l\'agitazione (solo rotazione delicata)\nControlla se il caffè è troppo fresco — lascialo riposare 7+ giorni</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Macina molto più grosso\nRiduci l\'agitazione\nAssicurati di versare delicatamente attraverso il tappo di dispersione</string>
+    <string name="adjust_clogged_grinder">Macina molto più grosso di 3–5 clic</string>
+    <string name="adjust_clogged_no_grinder">Prova una macinatura molto più grossa</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Caffè: %1$s grammi</string>
+    <string name="cd_water_grams">Acqua: %1$s grammi</string>
+    <string name="cd_ratio">Rapporto 1 a %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Nome</string>
+    <string name="label_roaster">Torrefazione</string>
+    <string name="label_origin">Origine</string>
+<string name="label_barcode_ean">Codice a barre / EAN</string>
+    <string name="action_scan_barcode">Scansiona codice a barre</string>
+    <string name="label_name_required">Nome *</string>
+    <string name="label_weight_grams">Peso (g)</string>
+    <string name="label_roast_date">Data di tostatura</string>
+    <string name="label_roast_level">Livello di tostatura</string>
+    <string name="label_variety">Varietà</string>
+    <string name="label_process">Processo</string>
+    <string name="label_tasting_notes">Note aromatiche</string>
+    <string name="label_best_before">Da consumarsi preferibilmente entro</string>
+    <string name="label_decaf_coffee">Caffè decaffeinato</string>
+    <string name="msg_decaf_guidance">Mantiene i consigli di preparazione coerenti con chicchi decaffeinati e tempi target più brevi.</string>
+    <string name="label_decaf_process_optional">Processo decaffeinato (facoltativo)</string>
+    <string name="msg_decaf_process_hint">Permette alla regola di preparazione di orientare leggermente la macinatura: i deca a processo ad acqua e CO₂ in genere richiedono meno grossolanità rispetto a quelli a solvente.</string>
+    <string name="cd_captured_bag_photo">Foto confezione acquisita</string>
+<string name="label_detected_details">Dettagli rilevati</string>
+    <string name="msg_tap_chip_to_edit">Tocca qualsiasi chip per modificare</string>
+    <string name="label_needs_review">Da rivedere</string>
+<string name="action_edit_all_fields">Modifica tutti i campi</string>
+    <string name="action_add_more_details">Aggiungi altri dettagli</string>
+    <string name="msg_analyzing_label">Analisi foto etichetta</string>
+    <string name="msg_analyzing_label_detail">Stiamo controllando sfocatura, unendo il testo fronte/retro e preparando i campi più affidabili.</string>
+    <string name="label_review_fields">Rivedi questi campi</string>
+    <string name="label_qr_website">Sito QR</string>
+    <string name="action_open_website">Apri sito web</string>
+    <string name="label_qr_link_found">Link QR trovato</string>
+<string name="action_explore_extract">Esplora &amp; estrai</string>
+    <string name="label_detected_field_evidence">Evidenza dei campi rilevati</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Foto confezione</string>
+    <string name="action_rescan_label">Riscansiona etichetta</string>
+    <string name="action_edit_bag">Modifica confezione</string>
+    <string name="label_sensory_snapshot">Profilo sensoriale</string>
+    <string name="label_grind_intelligence">Intelligenza macinatura</string>
+    <string name="label_remaining_coffee">Caffè rimanente</string>
+    <string name="action_adjust_weight">Regola peso</string>
+    <string name="action_add_weight_tracking">Aggiungi monitoraggio peso</string>
+    <string name="label_brew_history">Cronologia preparazioni</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Come è andata?</string>
+    <string name="msg_rate_brew_fresh">Valuta questa preparazione mentre il gusto è ancora fresco.</string>
+    <string name="label_flavor_notes_section">Note aromatiche</string>
+    <string name="hint_what_stood_out">Nota facoltativa - cosa ti è rimasto in mente?</string>
+    <string name="action_save_rating">Salva valutazione</string>
+
+    <!-- EmptyStateBox -->
+<!-- FavoritesRow -->
+    <string name="label_your_favorites_section">I tuoi preferiti</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Altro</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">Servizio AI (Mindlayer)</string>
+    <string name="action_test_connection">Testa la connessione</string>
+    <string name="action_run_test_prompt">Esegui prompt di test</string>
+    <string name="label_testing">Test in corso…</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Come era la tua ultima tazza?</string>
+    <string name="label_what_was_off">Cosa non andava?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">L\'etichetta scansionata corrisponde alla confezione salvata — niente da aggiornare.</string>
+    <string name="action_update_bag">Aggiorna confezione</string>
+    <string name="action_new_bag">Nuova confezione</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Salva come preferito</string>
+    <string name="msg_save_favorite_hint">Dai a questa ricetta un nome che ricorderai</string>
+    <string name="hint_save_favorite_example">es. Lunedì mattina, Weekend lento</string>
+    <string name="action_save_simple">Salva</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Cronologia scansioni</string>
+    <string name="msg_no_scan_sessions">Ancora nessuna sessione di scansione registrata.</string>
+    <string name="action_share_session">Condividi questa sessione</string>
+    <string name="label_component_timings">Tempi componenti</string>
+    <string name="msg_no_timing_data">Nessun dato sui tempi disponibile</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Avviso</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Regola peso</string>
+    <string name="label_remaining_weight_grams">Peso rimanente (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Da foto</string>
+    <string name="action_scan_label">Scansiona etichetta</string>
+    <string name="action_add_bag_gallery">Da galleria</string>
+    <string name="action_add_bag_camera">Scansiona con fotocamera</string>
+    <string name="action_add_bag_barcode">Scansiona codice a barre</string>
+    <string name="action_add_bag_manual">Aggiungi manualmente</string>
+    <string name="msg_no_beans_yet">Ancora nessun chicco</string>
+    <string name="msg_add_coffee_hint">Aggiungi il tuo caffè per monitorare freschezza e ricevere suggerimenti di preparazione</string>
+    <string name="action_brew_now">Prepara ora</string>
+    <string name="msg_could_not_read_label">Impossibile leggere etichetta</string>
+    <string name="action_retake_photo">Scatta di nuovo</string>
+    <string name="action_add_details_manually">Aggiungi dettagli manualmente</string>
+    <string name="msg_llm_enrichment_succeeded">L\'arricchimento AI ha migliorato questa scansione dell\'etichetta.</string>
+    <string name="msg_llm_enrichment_failed">L\'arricchimento AI non è riuscito. Puoi riprovare o continuare a modificare manualmente.</string>
+    <string name="msg_llm_enrichment_unavailable">L\'arricchimento AI non è disponibile ora. Puoi riprovare o continuare a modificare manualmente.</string>
+    <string name="action_retry_llm_enrichment">Riprova arricchimento AI</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Condividi preparazione</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Eliminare la scansione?</string>
+    <string name="msg_discard_scan_body">Hai campi rilevati che non sono stati salvati.</string>
+    <string name="action_discard">Scarta</string>
+    <string name="action_keep_scanning">Continua scansione</string>
+    <string name="msg_camera_permission_required">Autorizzazione fotocamera richiesta</string>
+    <string name="screen_scan_bag_title">Scansiona confezione di caffè</string>
+    <string name="cd_toggle_debug_overlay">Attiva/disattiva overlay debug</string>
+    <string name="msg_both_sides_scanned">Entrambi i lati della confezione sono stati scansionati</string>
+    <string name="msg_scanning_front_side">Scansione lato frontale della confezione</string>
+<string name="action_quick_save">Salvataggio rapido</string>
+    <string name="msg_repackaged_product">Potrebbe essere un prodotto riconfezionato o importato</string>
+    <string name="action_use_barcode">Usa codice a barre</string>
+    <string name="action_use_label">Usa etichetta</string>
+<string name="label_confirmed">Confermato</string>
+    <string name="label_ai_contributed">Contributo AI</string>
+    <string name="cd_manual_capture">Acquisizione manuale — forza elaborazione frame corrente</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Sincronizza con confezione</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Applicato quando prepari con Pulsar</string>
+    <string name="label_quick_brew">Preparazione rapida</string>
+    <string name="msg_quick_brew_hint">Salta il passaggio di preparazione della macinatura e vai direttamente al timer quando avvii una preparazione</string>
+    <string name="label_show_brewing_instructions">Mostra istruzioni di preparazione</string>
+    <string name="msg_show_brewing_instructions_hint">Mostra la scheda guida passo-passo durante la preparazione e la checklist nella schermata di preparazione. Disattiva se conosci il metodo a memoria.</string>
+    <string name="label_dim_mode">Modalità attenuazione automatica</string>
+    <string name="msg_dim_mode_hint">Dopo 25 s di inattività, rimuove gli sfondi colorati e attenua il testo in grigio. Il layout resta fermo e un solo tocco riattiva lo schermo ed esegue l\'azione sottostante.</string>
+    <string name="label_dim_mode_true_black">Sfondo nero puro</string>
+    <string name="msg_dim_mode_true_black_hint">Quando attenuato in tema scuro, porta anche lo sfondo dello schermo al nero puro. Ideale su OLED — risparmia energia e dà una vera sensazione di riposo. Nessun effetto nei temi chiari.</string>
+    <string name="label_dim_mode_reduce_brightness">Riduci luminosità schermo</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Abbassa anche la retroilluminazione del display durante l\'attenuazione. Risparmia un po\' di energia e rende lo schermo ancora più morbido.</string>
+    <string name="label_dim_mode_fullscreen">Nascondi barre di sistema</string>
+    <string name="msg_dim_mode_fullscreen_hint">Nasconde anche la barra di stato e la barra di navigazione durante l\'attenuazione. Scorri da un bordo per vederle; qualsiasi tocco sullo schermo torna alla normalità.</string>
+    <string name="label_dim_mode_force_dark_in_light">Usa stile scuro quando attenuato</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Passa alla presentazione attenuata del tema scuro anche quando il sistema è in modalità chiara. Si abbina naturalmente allo sfondo nero puro per un\'attenuazione sempre scura.</string>
+    <string name="action_add_cup_preset">Aggiungi preset tazza</string>
+    <string name="label_volume_ml">Volume (ml)</string>
+    <string name="msg_dose_from_ratio">La dose di caffè viene calcolata dal tuo rapporto</string>
+    <string name="label_icon">Icona</string>
+    <string name="label_color">Colore</string>
+    <string name="action_add">Aggiungi</string>
+    <string name="dialog_edit_cup_preset_title">Modifica preset tazza</string>
+    <string name="screen_add_cup_preset_title">Aggiungi preset tazza</string>
+    <string name="screen_edit_cup_preset_title">Modifica preset tazza</string>
+    <string name="msg_cup_preset_name_required">Aggiungi un nome per continuare</string>
+    <string name="msg_cup_preset_volume_required">Aggiungi un volume maggiore di 0</string>
+    <string name="cd_cup_preset_preview">Anteprima di %1$s</string>
+    <string name="label_scan_debug">Debug scansione</string>
+    <string name="action_view_history">Vedi cronologia</string>
+    <string name="action_share_report">Condividi report</string>
+    <string name="action_clear">Cancella</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Leggera</string>
+    <string name="strength_balanced">Bilanciata</string>
+    <string name="strength_strong">Intensa</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Fruttato</string>
+    <string name="flavor_chocolate">Cioccolato</string>
+    <string name="flavor_nutty">Frutta secca</string>
+    <string name="flavor_floral">Floreale</string>
+    <string name="flavor_bright">Vivace</string>
+    <string name="flavor_smooth">Morbido</string>
+    <string name="flavor_bitter">Amaro</string>
+    <string name="flavor_sweet">Dolce</string>
+    <string name="flavor_earthy">Terroso</string>
+    <string name="flavor_spicy">Speziato</string>
+    <string name="flavor_citrus">Agrumato</string>
+    <string name="flavor_berry">Frutti di bosco</string>
+    <string name="flavor_caramel">Caramello</string>
+    <string name="flavor_wine">Vinoso</string>
+    <string name="flavor_clean">Pulito</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Molto fine</string>
+    <string name="grind_fine">Fine</string>
+    <string name="grind_medium_fine">Medio-fine</string>
+    <string name="grind_medium">Media</string>
+    <string name="grind_medium_coarse">Medio-grossa</string>
+    <string name="grind_coarse">Grossa</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Ottimo</string>
+    <string name="rating_good">Buono</string>
+    <string name="rating_not_great">Non il massimo</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Troppo amaro</string>
+    <string name="taste_issue_too_sour">Troppo acido</string>
+    <string name="taste_issue_too_weak">Troppo debole</string>
+    <string name="taste_issue_too_strong">Troppo intenso</string>
+    <string name="taste_issue_bitter_suggestion">Prova una macinatura più grossa o un tempo di preparazione più breve</string>
+    <string name="taste_issue_sour_suggestion">Prova una macinatura più fine o un tempo di preparazione più lungo</string>
+    <string name="taste_issue_weak_suggestion">Prova un rapporto più intenso o più caffè</string>
+    <string name="taste_issue_strong_suggestion">Prova un rapporto più leggero o meno caffè</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Sigillata</string>
+    <string name="bag_status_open">Aperta</string>
+    <string name="bag_status_frozen">Congelata</string>
+    <string name="bag_status_finished">Finita</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Sconosciuto / non specificato</string>
+    <string name="decaf_swiss_water">Swiss Water (processo ad acqua)</string>
+    <string name="decaf_mountain_water">Mountain Water (processo ad acqua)</string>
+    <string name="decaf_co2">CO₂ supercritica</string>
+    <string name="decaf_ea_sugarcane">Acetato di etile (canna da zucchero / EA naturale)</string>
+    <string name="decaf_mc_direct">Cloruro di metilene (solvente diretto)</string>
+    <string name="decaf_ea_direct">Acetato di etile (solvente diretto)</string>
+    <string name="decaf_short_unknown">Sconosciuto</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (canna da zucchero)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (solvente)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Chiara</string>
+    <string name="roast_medium_light">Medio-chiara</string>
+    <string name="roast_medium">Media</string>
+    <string name="roast_medium_dark">Medio-scura</string>
+    <string name="roast_dark">Scura</string>
+    <string name="roast_filter">Filtro</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Cinnamon</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Lavato</string>
+    <string name="process_natural">Naturale</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaerobico</string>
+    <string name="process_carbonic_maceration">Macerazione carbonica</string>
+    <string name="process_semi_washed">Semi-lavato</string>
+    <string name="process_wet_hulled">Wet-hulled</string>
+    <string name="process_pulped_natural">Pulped natural</string>
+    <string name="process_double_fermented">Doppia fermentazione</string>
+    <string name="process_thermal_shock">Shock termico</string>
+</resources>

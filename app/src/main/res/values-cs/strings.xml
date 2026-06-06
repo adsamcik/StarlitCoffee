@@ -508,6 +508,18 @@
     <string name="action_run_test_prompt">Spustit testovací prompt</string>
     <string name="label_testing">Testování…</string>
 
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Povolit AI</string>
+    <string name="consent_requesting">Žádost o přístup k AI…</string>
+    <string name="consent_granted">AI povolena</string>
+    <string name="consent_already_approved">AI je už povolena</string>
+    <string name="consent_still_unavailable">AI je schválena, ale služba ještě není připravena</string>
+    <string name="consent_declined">Přístup k AI nebyl udělen</string>
+    <string name="consent_denied_temporary">Přístup k AI byl odepřen — zkuste to znovu později</string>
+    <string name="consent_denied_permanent">Přístup k AI je zablokován — odblokujte jej v aplikaci Mindlayer</string>
+    <string name="consent_service_unavailable">Služba Mindlayer AI není dostupná</string>
+    <string name="consent_failed">Nepodařilo se požádat o přístup k AI</string>
+
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">Jak byl váš poslední šálek?</string>
     <string name="label_what_was_off">Co nehraje?</string>

@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">冲煮</string>
+    <string name="nav_log">记录</string>
+    <string name="nav_more">更多</string>
+
+    <!-- Common actions -->
+    <string name="action_back">返回</string>
+    <string name="action_close">关闭</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_delete">删除</string>
+    <string name="action_save">保存更改</string>
+    <string name="action_saved">✓ 已保存</string>
+    <string name="action_skip">跳过</string>
+    <string name="action_finish">完成</string>
+    <string name="action_next">下一步</string>
+    <string name="action_go_back">返回</string>
+<!-- Common labels -->
+    <string name="label_coffee">咖啡</string>
+    <string name="label_water">水</string>
+    <string name="label_ratio">粉水比</string>
+    <string name="label_strength">浓度</string>
+    <string name="label_grind">研磨</string>
+    <string name="label_filter">滤纸/滤网</string>
+<string name="label_decaf">低因</string>
+    <string name="label_decaf_suffix"> · 低因</string>
+    <string name="label_loading">加载中…</string>
+    <string name="label_none">无</string>
+    <string name="label_taste">味道</string>
+    <string name="label_rating">评分</string>
+    <string name="label_notes">备注</string>
+    <string name="label_no_filter">无滤纸/滤网</string>
+    <string name="label_settings">设置</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">闷蒸%1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg入杯</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+<plurals name="format_selected">
+        <item quantity="other">已选%1$d项</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">配置冲煮</string>
+    <string name="label_coffee_input">咖啡（g）</string>
+    <string name="label_water_input">水（g）</string>
+    <string name="label_brew_size_input">出品量（ml）</string>
+    <string name="label_cup_size_input">杯量（ml）</string>
+    <string name="label_brew_size">出品量</string>
+    <string name="label_cup_size">杯量</string>
+    <string name="format_capacity_note">%1$s可容纳%2$dg水—大份冲煮会自动补水</string>
+    <string name="format_amount_cd">%1$s：%2$d%3$s</string>
+    <string name="label_select_coffee_bag">选择咖啡袋</string>
+    <string name="cd_clear_bag">清除咖啡袋</string>
+    <string name="format_brewing_with">正在使用%1$s冲煮</string>
+    <string name="label_freshness">新鲜度</string>
+    <string name="format_recommended_now">当前推荐：%1$s</string>
+    <string name="format_last_time">上次：%1$s</string>
+    <string name="action_save_as_favorite">保存为收藏</string>
+    <string name="label_select_coffee_bag_title">选择咖啡袋</string>
+    <string name="msg_no_active_bags">没有活跃的咖啡袋。请在“你的咖啡豆”中添加。</string>
+    <string name="action_brew_without_bag">不选择咖啡袋直接冲煮</string>
+    <string name="label_best_now">现在最佳</string>
+    <string name="format_grind_generic">研磨：%1$s – %2$s</string>
+    <string name="format_grind_specific_range">研磨度：%1$s–%2$s · 按口味调整</string>
+    <string name="format_weight_left"> · 剩余%1$.0fg</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Pulsar提示：注水时让液面保持在粉层上方约1cm。多数用户用20–25g冲煮一杯平衡风味。</string>
+    <string name="tip_generic">💡 提示：先用默认粉水比，再按口味调整浓度。研磨越细萃取越多，越粗萃取越少。</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">冲煮设置</string>
+<string name="label_custom_ratio">自定义粉水比（例如16）</string>
+    <string name="label_temperature">温度（°C）</string>
+    <string name="label_bloom_multiplier">闷蒸倍数（例如3.0）</string>
+    <string name="label_pulse_count">注水次数</string>
+<string name="action_start_brewing">开始冲煮 →</string>
+    <string name="label_advanced_options">高级选项</string>
+    <string name="cd_collapse_advanced">收起高级选项</string>
+    <string name="cd_expand_advanced">展开高级选项</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="other">咖啡粉量：%1$d克</item>
+    </plurals>
+    <string name="label_decrease">减少%1$s</string>
+    <string name="label_increase">增加%1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">准备冲煮</string>
+<string name="action_ready_to_brew_short">准备好了</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">准备</string>
+    <string name="label_recipe_heading">配方</string>
+    <string name="label_set_grinder_to">磨豆机设为</string>
+    <string name="label_temp_short">温度</string>
+    <string name="label_bloom_short">闷蒸</string>
+    <string name="prep_tip_pulsar_paper">润湿底座中的纸滤纸（阀门打开）并沥干。装上筒身，加入咖啡粉，铺平粉层，放上分水盖。将秤归零。</string>
+    <string name="prep_tip_pulsar_19k">冲洗19K金属滤网，使其贴合并预热筒身。装上筒身，加入咖啡粉，铺平粉层，放上分水盖。将秤归零。</string>
+    <string name="prep_tip_pulsar_40k">冲洗40K金属滤网以预热筒身。装上筒身，加入咖啡粉，铺平粉层，放上分水盖。将秤归零。</string>
+    <string name="prep_tip_pour_over_paper">放入纸滤纸并用热水冲洗，以预热并去除纸味。加入咖啡粉，将秤归零。</string>
+    <string name="prep_tip_french_press">预热法压壶后倒掉热水。加入咖啡粉，放到秤上，注水前归零。</string>
+    <string name="prep_tip_aeropress">把冲洗过的滤纸装入滤盖。加入咖啡粉，将AeroPress放在稳固的杯子或分享壶上，并将秤归零。</string>
+    <string name="prep_tip_espresso">擦干粉碗手柄。称量粉量、均匀布粉并水平压粉后再扣上。</string>
+    <string name="prep_tip_moka">下壶加水到阀门处。粉杯装入咖啡粉并刮平—不要压粉。小心拧紧组装。</string>
+    <string name="prep_tip_cold_brew">将咖啡粉加入容器，秤归零，再加入常温或冷水并盖好。</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">暂停</string>
+    <string name="action_resume">继续</string>
+    <string name="cd_disable_minute_alerts">关闭整分钟提醒</string>
+    <string name="cd_enable_minute_alerts">开启整分钟提醒</string>
+    <string name="cd_bloom_animation">咖啡豆闷蒸动画</string>
+<string name="format_pour_bloom_water">注入%1$.0fg闷蒸水</string>
+    <string name="format_bloom_total">闷蒸%1$.0fg · 总计%2$.0fg</string>
+<string name="action_start_bloom">☕ 开始闷蒸</string>
+<string name="label_bloom_done">✅ 闷蒸完成！</string>
+    <string name="action_finish_brew">完成冲煮</string>
+    <string name="dialog_exit_brew_title">退出冲煮？</string>
+    <string name="dialog_exit_brew_message">当前冲煮进度将丢失。</string>
+    <string name="action_exit_brew">退出</string>
+
+    <!-- Calculator Brew Screen -->
+<string name="label_water_to_dose">水量 → 粉量</string>
+    <string name="label_dose_to_water">粉量 → 水量</string>
+    <string name="cd_backspace">退格</string>
+    <string name="action_brew">开始</string>
+    <string name="label_total_water">总水量</string>
+<!-- Settings Screen -->
+    <string name="screen_settings_title">设置</string>
+    <string name="label_cup_presets">杯量预设</string>
+    <string name="action_add_preset">添加预设</string>
+    <string name="action_reset_defaults">恢复默认</string>
+    <string name="msg_presets_hint">预设会在计算器上显示为快捷按钮</string>
+    <string name="label_brew_methods">冲煮方式</string>
+    <string name="msg_methods_hint">已选方式会优先显示。点按可切换。</string>
+    <string name="label_default_method">默认方式</string>
+    <string name="format_edit_preset">编辑%1$s</string>
+    <string name="label_bloom_animation_settings">闷蒸动画</string>
+    <string name="msg_bloom_animation_settings_subtitle">选择每个闷蒸精灵出现的频率</string>
+    <string name="cd_open_bloom_animation_settings">打开闷蒸动画设置</string>
+    <string name="screen_bloom_animation_settings_title">闷蒸动画</string>
+    <string name="msg_bloom_animation_settings_hint">点按每个控件，在普通概率、双倍概率和排除之间切换。如果排除所有精灵，闷蒸计时器会隐藏动画。</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s当前设为%2$s。点按可更改。</string>
+    <string name="label_bloom_sprite_coffee_flower">咖啡花</string>
+    <string name="desc_bloom_sprite_coffee_flower">经典白色咖啡花从咖啡豆中绽放。</string>
+    <string name="label_bloom_sprite_coffee_starlit">星光咖啡</string>
+    <string name="desc_bloom_sprite_coffee_starlit">奶油金色蒸汽花瓣，带有细小星光高光。</string>
+    <string name="label_bloom_sprite_coffee_latte">拿铁闷蒸</string>
+    <string name="desc_bloom_sprite_coffee_latte">温暖奶泡色调中的柔和拉花玫瑰图案。</string>
+    <string name="label_bloom_sprite_coffee_plant">咖啡树苗</string>
+    <string name="desc_bloom_sprite_coffee_plant">清新的绿色咖啡幼苗，长着成对叶片。</string>
+    <string name="label_bloom_sprite_cherry_tomato">樱桃番茄</string>
+    <string name="desc_bloom_sprite_cherry_tomato">咖啡豆发芽成番茄藤，红色果实逐渐成熟。</string>
+    <string name="label_bloom_sprite_strawberry">草莓</string>
+    <string name="desc_bloom_sprite_strawberry">咖啡豆发芽成草莓植株，开花并结出红莓。</string>
+    <string name="label_bloom_sprite_raspberry">覆盆子</string>
+    <string name="desc_bloom_sprite_raspberry">咖啡豆长出带浅色花朵和红色覆盆子果簇的藤蔓。</string>
+    <string name="label_bloom_sprite_blueberry">蓝莓</string>
+    <string name="desc_bloom_sprite_blueberry">咖啡豆长出蓝莓小枝，带铃形花和蓝色果实。</string>
+    <string name="label_bloom_sprite_blackberry">黑莓</string>
+    <string name="desc_bloom_sprite_blackberry">咖啡豆长出带刺藤蔓和深色黑莓果簇。</string>
+    <string name="label_bloom_sprite_coffee_brew">咖啡冲煮</string>
+    <string name="desc_bloom_sprite_coffee_brew">琥珀色咖啡光泽与奶油色蒸汽卷。</string>
+    <string name="label_bloom_sprite_cursed_relic">诅咒遗物</string>
+    <string name="desc_bloom_sprite_cursed_relic">裂开的咖啡豆释放金色魔法和黑色蒸汽，化作狼形徽章。</string>
+    <string name="label_bloom_sprite_rose">玫瑰</string>
+    <string name="desc_bloom_sprite_rose">紧凑的红玫瑰在咖啡豆上方展开。</string>
+    <string name="label_bloom_sprite_lotus">莲花</string>
+    <string name="desc_bloom_sprite_lotus">奶油色莲花，层叠杯状花瓣。</string>
+    <string name="label_bloom_sprite_sunflower">向日葵</string>
+    <string name="desc_bloom_sprite_sunflower">明亮向日葵，金色花瓣与深色花心。</string>
+    <string name="label_bloom_sprite_orchid">兰花</string>
+    <string name="desc_bloom_sprite_orchid">精致白色兰花，花瓣圆润。</string>
+    <string name="label_bloom_sprite_jasmine">茉莉</string>
+    <string name="desc_bloom_sprite_jasmine">柔白茉莉花，带轻柔的风车形。</string>
+    <string name="label_bloom_sprite_bleeding_heart">荷包牡丹</string>
+    <string name="desc_bloom_sprite_bleeding_heart">弧形茎秆从咖啡豆中升起，挂着粉色心形花和白色泪滴尖端。</string>
+    <string name="label_bloom_sprite_passionflower">西番莲</string>
+    <string name="desc_bloom_sprite_passionflower">卷曲藤蔓在咖啡豆上方绽开华丽的紫白色西番莲。</string>
+    <string name="label_bloom_sprite_bee_orchid">蜂兰</string>
+    <string name="desc_bloom_sprite_bee_orchid">粉色兰花花瓣露出深色、像蜜蜂的唇瓣，立在细茎上。</string>
+    <string name="label_bloom_sprite_jade_vine">翡翠葛</string>
+    <string name="desc_bloom_sprite_jade_vine">攀援藤蔓从咖啡豆上垂下绿松石色翡翠花簇。</string>
+    <string name="label_bloom_sprite_bird_of_paradise">天堂鸟</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">橙色与深蓝色Strelitzia花瓣从直立绿叶中展开。</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">蓝色喜马拉雅罂粟</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">低垂花苞张开成天蓝色罂粟，带金色花蕊。</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">红色斑点寄生花膨胀成巨大的五裂花朵。</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">巧克力波斯菊</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">羽状叶托起天鹅绒般深酒红色的波斯菊花。</string>
+    <string name="label_bloom_sprite_flame_lily">火焰百合</string>
+    <string name="desc_bloom_sprite_flame_lily">卷曲火焰色百合花瓣从带卷须的绿色茎上升起。</string>
+    <string name="label_bloom_sprite_queen_of_the_night">夜之女王</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">仙人掌茎打开成层叠而戏剧性的白色夜开花。</string>
+    <string name="label_bloom_sprite_snowdrop">雪滴花</string>
+    <string name="desc_bloom_sprite_snowdrop">精致白色雪滴花铃从裂开的咖啡豆中升起。</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">小小的蓝色勿忘我花带黄色花心，从咖啡豆中展开。</string>
+    <string name="label_bloom_sprite_fantasy_citadel">幻想城堡</string>
+    <string name="desc_bloom_sprite_fantasy_citadel">裂开的咖啡豆打开成一座带温暖窗光的小石堡。</string>
+    <string name="label_bloom_sprite_cyber_city_vines">赛博城市藤蔓</string>
+    <string name="desc_bloom_sprite_cyber_city_vines">霓虹电路藤蔓长成紧凑的微型赛博城市。</string>
+    <string name="label_bloom_sprite_pixel_micro_world">像素微世界</string>
+    <string name="desc_bloom_sprite_pixel_micro_world">咖啡豆像素化，变成由方块和地形组成的复古小世界。</string>
+    <string name="label_bloom_sprite_tabletop_adventure_map">桌面冒险地图</string>
+    <string name="desc_bloom_sprite_tabletop_adventure_map">滚动的咖啡豆展开成小羊皮纸冒险地图和空白宝石骰。</string>
+    <string name="label_bloom_sprite_alchemy_astrolabe">炼金星盘</string>
+    <string name="desc_bloom_sprite_alchemy_astrolabe">黄铜环和环绕的玻璃小瓶从咖啡豆中展开。</string>
+    <string name="label_bloom_sprite_espresso_robot">浓缩机器人</string>
+    <string name="desc_bloom_sprite_espresso_robot">咖啡豆展开成一个由浓缩咖啡驱动的黄铜小机器人。</string>
+    <string name="label_bloom_sprite_space_habitat_ring">太空栖居环</string>
+    <string name="desc_bloom_sprite_space_habitat_ring">弧形外壳碎片分开，变成微型旋转栖居环。</string>
+    <string name="label_bloom_sprite_nerd_library_nook">极客图书角</string>
+    <string name="desc_bloom_sprite_nerd_library_nook">咖啡豆弹出一个带书架、台灯和杯子的图书角。</string>
+    <string name="label_bloom_sprite_arcade_platformer_level">街机平台关卡</string>
+    <string name="desc_bloom_sprite_arcade_platformer_level">咖啡豆冒出一个由方块、宝石和旗帜组成的原创小平台关卡。</string>
+    <string name="label_bloom_sprite_clockwork_dragonfly">发条蜻蜓</string>
+    <string name="desc_bloom_sprite_clockwork_dragonfly">咖啡壳孵化出一只黄铜发条蜻蜓。</string>
+    <string name="label_bloom_sprite_observatory_dome">天文台穹顶</string>
+    <string name="desc_bloom_sprite_observatory_dome">咖啡豆像小天文台穹顶一样打开，里面有黄铜望远镜。</string>
+    <string name="label_bloom_sprite_cyber_alchemy_engine">赛博炼金引擎</string>
+    <string name="desc_bloom_sprite_cyber_alchemy_engine">黄铜环、电路和琥珀核心组成紧凑的赛博炼金引擎。</string>
+    <string name="label_bloom_sprite_tabletop_space_colony">桌面太空殖民地</string>
+    <string name="desc_bloom_sprite_tabletop_space_colony">小小的棋盘式太空殖民地升起，带穹顶和空白骰子月亮。</string>
+    <string name="label_bloom_sprite_observatory_library">天文台图书馆</string>
+    <string name="desc_bloom_sprite_observatory_library">舒适的天文台图书馆打开，里面有书架、望远镜和蒸汽星座。</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">冲煮记录</string>
+    <string name="msg_log_empty_title">开始冲煮后即可查看历史</string>
+    <string name="msg_log_empty_subtitle">每次完成并留下反馈的冲煮都会显示在这里</string>
+<string name="action_rate_brew">为冲煮评分</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">冲煮详情</string>
+    <string name="dialog_delete_brew_title">删除冲煮记录？</string>
+    <string name="dialog_delete_brew_message">此操作无法撤销。</string>
+    <string name="label_coffee_bag">咖啡袋</string>
+    <string name="label_brew_time">冲煮时间</string>
+    <string name="label_coffee_type">咖啡类型</string>
+    <string name="label_flavor_notes">风味描述</string>
+    <string name="hint_add_notes">添加备注…</string>
+    <string name="msg_brew_not_found">未找到冲煮记录</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">你的收藏</string>
+    <string name="msg_no_favorites_title">还没有收藏</string>
+    <string name="msg_no_favorites_subtitle">在冲煮屏幕用♡按钮保存配方</string>
+    <string name="label_untitled">未命名</string>
+    <string name="format_recipe_summary">%1$sg咖啡 / %2$sg水</string>
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">个性化你的冲煮</string>
+    <string name="label_pulsar_filter_type">Pulsar滤纸/滤网类型</string>
+    <string name="msg_filter_hint">影响杯中风味和研磨建议</string>
+    <string name="label_your_grinder">你的磨豆机</string>
+    <string name="msg_grinder_hint">可选—启用具体研磨度建议。如果列表中没有你的磨豆机，请选择“无磨豆机/其他”。</string>
+    <string name="label_no_grinder">无磨豆机/其他</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">你用什么冲煮？</string>
+    <string name="msg_methods_subtitle">选择你的冲煮方式。点按★设为默认。</string>
+    <string name="label_set_as_default">设为默认</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">更多</string>
+    <string name="label_your_favorites">你的收藏</string>
+    <string name="msg_favorites_subtitle">重现你喜欢的冲煮</string>
+    <string name="label_your_beans">你的咖啡豆</string>
+    <string name="msg_beans_subtitle">新鲜度、库存和下一杯建议</string>
+    <string name="msg_settings_subtitle">方式、磨豆机和偏好</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">需要相机权限才能扫描条形码</string>
+    <string name="msg_point_camera">将相机对准条形码</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">冲煮已保存！品尝后给它评分。</string>
+    <string name="snackbar_action_view_log">查看记录</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">冲煮评分提醒</string>
+    <string name="notif_channel_rating_reminder_desc">冲煮约30分钟后轻轻提醒你，在味道还新鲜时评分。</string>
+    <string name="notif_rating_title">这次冲煮怎么样？</string>
+    <string name="format_notif_rating_title">你的%1$s冲煮怎么样？</string>
+    <string name="notif_rating_body">点按表情评分，或打开应用查看更多。</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">评为5星中的1星</string>
+    <string name="cd_notif_rating_2">评为5星中的2星</string>
+    <string name="cd_notif_rating_3">评为5星中的3星</string>
+    <string name="cd_notif_rating_4">评为5星中的4星</string>
+    <string name="cd_notif_rating_5">评为5星中的5星</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">评分提醒</string>
+    <string name="msg_rating_reminder_hint">冲煮约30分钟后发送通知，方便你在味道还新鲜时评分。</string>
+    <string name="msg_rating_reminder_perm_denied">通知已被阻止。请在系统设置中启用，以接收提醒。</string>
+    <string name="action_open_app_settings">打开系统设置</string>
+
+    <!-- Settings: bag selection prompt -->
+    <string name="label_bag_prompt">咖啡袋提醒</string>
+    <string name="msg_bag_prompt_hint">当你未选择咖啡袋就开始冲煮时，提示从已追踪的咖啡袋中选择一个。</string>
+
+    <!-- Bag selection prompt dialog -->
+    <string name="dialog_pick_bag_title">使用咖啡袋冲煮吗？</string>
+    <plurals name="msg_pick_bag_body">
+        <item quantity="other">你有%1$d个已追踪咖啡袋。选择一个可保持记录、新鲜度和研磨建议准确。</item>
+    </plurals>
+    <string name="action_pick_bag">选择咖啡袋</string>
+    <string name="action_brew_without_bag_short">仍然冲煮</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">水分滞留</string>
+    <string name="format_retention_explanation">咖啡粉大约会吸收自身干重2×的水。使用%1$.0fg咖啡粉时，粉层会保留约%2$.0fg水，杯中约剩%3$.0fg。\n\n这只是估算—深烘焙吸水略多，浅烘焙略少。</string>
+    <string name="cd_about_cup_volume">关于入杯量</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+<string name="label_target">目标</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
+    <string name="format_ratio_bright">明亮 · 1:%1$d</string>
+    <string name="format_ratio_balanced">平衡 · 1:%1$d</string>
+    <string name="format_ratio_rich">醇厚 · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+<!-- Input Mode -->
+    <string name="input_coffee_to_water">咖啡 → 水</string>
+    <string name="input_water_to_coffee">水 → 咖啡</string>
+    <string name="input_brew_to_both">出品量 → 两者</string>
+    <string name="input_cup_to_both">杯量 → 两者</string>
+    <string name="input_coffee_short">咖啡</string>
+    <string name="input_water_short">水</string>
+    <string name="input_brew_short">出品</string>
+    <string name="input_cup_short">杯量</string>
+    <string name="input_coffee_desc">输入咖啡粉量，计算水量</string>
+    <string name="input_water_desc">输入水量，计算咖啡粉量</string>
+    <string name="input_brew_desc">输入目标出品量，按吸水量计算咖啡粉和水</string>
+    <string name="input_cup_desc">输入杯量，计算咖啡粉和水</string>
+
+    <!-- Phase names -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">注水到%1$.0fg</string>
+    <string name="instruction_pour_total">总量注水到%1$.0fg</string>
+    <string name="instruction_open_valve_short">打开阀门</string>
+    <string name="instruction_close_valve_short">关闭阀门</string>
+    <string name="instruction_bloom_wait">晃动并等待闷蒸</string>
+    <string name="instruction_french_press_start">加入全部水，轻轻搅拌，然后盖上盖子</string>
+    <string name="instruction_french_press_steep">静置浸泡至目标时间</string>
+    <string name="instruction_french_press_plunge">缓慢下压，再倒出咖啡</string>
+    <string name="instruction_aeropress_start">加水、搅拌，开始浸泡</string>
+    <string name="instruction_aeropress_steep">盖上滤盖浸泡；准备下压</string>
+    <string name="instruction_aeropress_press">稳定下压直到听到嘶声，然后停止</string>
+    <string name="instruction_espresso_start">扣上手柄并开始萃取</string>
+    <string name="instruction_espresso_pull">观察流速和出液量；让杯子留在秤上</string>
+    <string name="instruction_espresso_stop">达到目标出液量或液流变浅时停止</string>
+    <string name="instruction_moka_start">组装摩卡壶，开盖小火加热</string>
+    <string name="instruction_moka_flow">观察咖啡流入上壶</string>
+    <string name="instruction_moka_remove">液流变浅或喷溅时离火</string>
+    <string name="instruction_cold_brew_start">混合咖啡粉和水，搅拌至所有咖啡粉湿润</string>
+    <string name="instruction_cold_brew_steep">盖好并浸泡；保持咖啡粉充分浸没</string>
+    <string name="instruction_cold_brew_filter">过滤浓缩液，冷藏或稀释后饮用</string>
+
+    <!-- Warnings -->
+<!-- Taste Feedback -->
+    <string name="feedback_too_sour">过酸/偏淡</string>
+    <string name="feedback_balanced">平衡</string>
+    <string name="feedback_too_bitter">过苦/粗糙</string>
+    <string name="feedback_astringent">涩/发干</string>
+    <string name="feedback_clogged">堵塞/停滞</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">研磨调细2–4格</string>
+    <string name="adjust_try_finer">尝试更细的研磨度</string>
+    <string name="adjust_no_change">无需调整—保存这个配方吧！</string>
+    <string name="adjust_grind_coarser">研磨调粗2–4格</string>
+    <string name="adjust_grind_coarser_valve">研磨调粗2–4格\n尝试更早打开阀门</string>
+    <string name="adjust_try_coarser">尝试更粗的研磨度</string>
+    <string name="adjust_try_coarser_water">尝试更粗的研磨度\n或试试更低的水温</string>
+    <string name="adjust_astringent_pulsar">把粉量增加到20g+，让粉层更深\n闷蒸时减少扰动\n让液面保持在粉层上方约1cm</string>
+    <string name="adjust_astringent_grinder">研磨稍微调粗，减少扰动</string>
+    <string name="adjust_astringent_no_grinder">研磨稍微调粗，注水更轻柔</string>
+    <string name="adjust_clogged_pulsar_grinder">研磨大幅调粗3–5格\n减少扰动（只轻轻晃动）\n检查咖啡是否太新鲜—静置7天以上</string>
+    <string name="adjust_clogged_pulsar_no_grinder">研磨大幅调粗\n减少扰动\n确保通过分水盖轻柔注水</string>
+    <string name="adjust_clogged_grinder">研磨大幅调粗3–5格</string>
+    <string name="adjust_clogged_no_grinder">尝试大幅更粗的研磨度</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">咖啡：%1$s克</string>
+    <string name="cd_water_grams">水：%1$s克</string>
+    <string name="cd_ratio">粉水比1比%1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">名称</string>
+    <string name="label_roaster">烘焙商</string>
+    <string name="label_origin">产地</string>
+<string name="label_barcode_ean">条形码/EAN</string>
+    <string name="action_scan_barcode">扫描条形码</string>
+    <string name="label_name_required">名称*</string>
+    <string name="label_weight_grams">重量（g）</string>
+    <string name="label_roast_date">烘焙日期</string>
+    <string name="label_roast_level">烘焙度</string>
+    <string name="label_variety">品种</string>
+    <string name="label_process">处理法</string>
+    <string name="label_tasting_notes">风味描述</string>
+    <string name="label_best_before">最佳赏味期</string>
+    <string name="label_decaf_coffee">低因咖啡</string>
+    <string name="msg_decaf_guidance">让冲煮指引与低因豆和更短浸泡目标保持同步。</string>
+    <string name="label_decaf_process_optional">脱咖啡因处理法（可选）</string>
+    <string name="msg_decaf_process_hint">让冲煮规则对研磨做轻微偏置：水处理和CO₂低因通常比溶剂处理低因需要更少调粗。</string>
+    <string name="cd_captured_bag_photo">已拍摄的咖啡袋照片</string>
+<string name="label_detected_details">识别到的详情</string>
+    <string name="msg_tap_chip_to_edit">点按任意标签进行编辑</string>
+    <string name="label_needs_review">需要检查</string>
+<string name="action_edit_all_fields">编辑所有字段</string>
+    <string name="action_add_more_details">添加更多详情</string>
+    <string name="msg_analyzing_label">正在分析标签照片</string>
+    <string name="msg_analyzing_label_detail">我们正在检查模糊度，合并正反面文字，并准备最可靠的字段。</string>
+    <string name="label_review_fields">检查这些字段</string>
+    <string name="label_qr_website">二维码网站</string>
+    <string name="action_open_website">打开网站</string>
+    <string name="label_qr_link_found">找到二维码链接</string>
+<string name="action_explore_extract">探索并提取</string>
+    <string name="label_detected_field_evidence">识别字段证据</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">咖啡袋照片</string>
+    <string name="action_rescan_label">重新扫描标签</string>
+    <string name="action_edit_bag">编辑咖啡袋</string>
+    <string name="label_sensory_snapshot">感官概览</string>
+    <string name="label_grind_intelligence">研磨智能建议</string>
+    <string name="label_remaining_coffee">剩余咖啡</string>
+    <string name="action_adjust_weight">调整重量</string>
+    <string name="action_add_weight_tracking">添加重量追踪</string>
+    <string name="label_brew_history">冲煮历史</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">味道怎么样？</string>
+    <string name="msg_rate_brew_fresh">趁味道还新鲜，为这次冲煮评分。</string>
+    <string name="label_flavor_notes_section">风味描述</string>
+    <string name="hint_what_stood_out">可选备注—有什么突出？</string>
+    <string name="action_save_rating">保存评分</string>
+
+    <!-- EmptyStateBox -->
+<!-- FavoritesRow -->
+    <string name="label_your_favorites_section">你的收藏</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">其他</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">AI服务（Mindlayer）</string>
+    <string name="action_test_connection">测试连接</string>
+    <string name="action_run_test_prompt">运行测试提示词</string>
+    <string name="label_testing">测试中…</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">上一杯怎么样？</string>
+    <string name="label_what_was_off">哪里不对？</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">扫描到的标签与你保存的咖啡袋一致—无需更新。</string>
+    <string name="action_update_bag">更新咖啡袋</string>
+    <string name="action_new_bag">新咖啡袋</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">保存为收藏</string>
+    <string name="msg_save_favorite_hint">给这个配方起个容易记住的名字</string>
+    <string name="hint_save_favorite_example">例如周一早晨、周末慢冲</string>
+    <string name="action_save_simple">保存</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">扫描历史</string>
+    <string name="msg_no_scan_sessions">还没有记录扫描会话。</string>
+    <string name="action_share_session">分享此会话</string>
+    <string name="label_component_timings">组件耗时</string>
+    <string name="msg_no_timing_data">没有可用的耗时数据</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">警告</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">调整重量</string>
+    <string name="label_remaining_weight_grams">剩余重量（g）</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">从照片</string>
+    <string name="action_scan_label">扫描标签</string>
+    <string name="action_add_bag_gallery">从图库</string>
+    <string name="action_add_bag_camera">用相机扫描</string>
+    <string name="action_add_bag_barcode">扫描条形码</string>
+    <string name="action_add_bag_manual">手动添加</string>
+    <string name="msg_no_beans_yet">还没有咖啡豆</string>
+    <string name="msg_add_coffee_hint">添加你的咖啡，用于追踪新鲜度并获得冲煮建议</string>
+    <string name="action_brew_now">现在冲煮</string>
+    <string name="msg_could_not_read_label">无法读取标签</string>
+    <string name="action_retake_photo">重新拍照</string>
+    <string name="action_add_details_manually">手动添加详情</string>
+    <string name="msg_llm_enrichment_succeeded">AI增强改进了这次标签扫描。</string>
+    <string name="msg_llm_enrichment_failed">AI增强失败。你可以重试，或继续手动编辑。</string>
+    <string name="msg_llm_enrichment_unavailable">AI增强暂时不可用。你可以重试，或继续手动编辑。</string>
+    <string name="action_retry_llm_enrichment">重试AI增强</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">分享冲煮</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">放弃扫描？</string>
+    <string name="msg_discard_scan_body">你有已识别但尚未保存的字段。</string>
+    <string name="action_discard">放弃</string>
+    <string name="action_keep_scanning">继续扫描</string>
+    <string name="msg_camera_permission_required">需要相机权限</string>
+    <string name="screen_scan_bag_title">扫描咖啡袋</string>
+    <string name="cd_toggle_debug_overlay">切换调试覆盖层</string>
+    <string name="msg_both_sides_scanned">咖啡袋两面都已扫描</string>
+    <string name="msg_scanning_front_side">正在扫描咖啡袋正面</string>
+<string name="action_quick_save">快速保存</string>
+    <string name="msg_repackaged_product">这可能是重新包装或进口产品</string>
+    <string name="action_use_barcode">使用条形码</string>
+    <string name="action_use_label">使用标签</string>
+<string name="label_confirmed">已确认</string>
+    <string name="label_ai_contributed">AI参与</string>
+    <string name="cd_manual_capture">手动捕获—强制处理当前帧</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">同步到咖啡袋</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">使用Pulsar冲煮时生效</string>
+    <string name="label_quick_brew">快速冲煮</string>
+    <string name="msg_quick_brew_hint">开始冲煮时跳过研磨准备步骤，直接进入计时器</string>
+    <string name="label_show_brewing_instructions">显示冲煮指引</string>
+    <string name="msg_show_brewing_instructions_hint">冲煮时显示分步指引卡片，并在准备屏幕显示检查清单。如果你已经熟记方法，可以关闭。</string>
+    <string name="label_dim_mode">自动暗屏模式</string>
+    <string name="msg_dim_mode_hint">闲置25秒后，移除彩色背景并将文字降为灰色。布局保持不变，点按一次既会唤醒屏幕，也会触发下方操作。</string>
+    <string name="label_dim_mode_true_black">纯黑背景</string>
+    <string name="msg_dim_mode_true_black_hint">深色主题下暗屏时，也将屏幕背景降为纯黑。最适合OLED—省电，也更像真正静置。浅色主题无效。</string>
+    <string name="label_dim_mode_reduce_brightness">降低屏幕亮度</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">暗屏时也降低显示背光。稍微省电，并进一步柔化屏幕。</string>
+    <string name="label_dim_mode_fullscreen">隐藏系统栏</string>
+    <string name="msg_dim_mode_fullscreen_hint">暗屏时也隐藏状态栏和导航栏。从边缘滑动可临时查看；点按屏幕任意处会恢复正常。</string>
+    <string name="label_dim_mode_force_dark_in_light">暗屏时使用深色样式</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">即使系统处于浅色模式，暗屏时也切换为深色主题呈现。与纯黑背景自然搭配，形成始终深色的暗屏。</string>
+    <string name="action_add_cup_preset">添加杯量预设</string>
+    <string name="label_volume_ml">容量（ml）</string>
+    <string name="msg_dose_from_ratio">咖啡粉量会根据你的粉水比计算</string>
+    <string name="label_icon">图标</string>
+    <string name="label_color">颜色</string>
+    <string name="action_add">添加</string>
+    <string name="dialog_edit_cup_preset_title">编辑杯量预设</string>
+    <string name="screen_add_cup_preset_title">添加杯量预设</string>
+    <string name="screen_edit_cup_preset_title">编辑杯量预设</string>
+    <string name="msg_cup_preset_name_required">添加名称以继续</string>
+    <string name="msg_cup_preset_volume_required">添加大于0的容量</string>
+    <string name="cd_cup_preset_preview">%1$s预览</string>
+    <string name="label_scan_debug">扫描调试</string>
+    <string name="action_view_history">查看历史</string>
+    <string name="action_share_report">分享报告</string>
+    <string name="action_clear">清除</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">清淡</string>
+    <string name="strength_balanced">平衡</string>
+    <string name="strength_strong">浓郁</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">果香</string>
+    <string name="flavor_chocolate">巧克力</string>
+    <string name="flavor_nutty">坚果</string>
+    <string name="flavor_floral">花香</string>
+    <string name="flavor_bright">明亮</string>
+    <string name="flavor_smooth">顺滑</string>
+    <string name="flavor_bitter">苦味</string>
+    <string name="flavor_sweet">甜感</string>
+    <string name="flavor_earthy">泥土感</string>
+    <string name="flavor_spicy">香料感</string>
+    <string name="flavor_citrus">柑橘</string>
+    <string name="flavor_berry">莓果</string>
+    <string name="flavor_caramel">焦糖</string>
+    <string name="flavor_wine">酒香</string>
+    <string name="flavor_clean">干净</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">极细</string>
+    <string name="grind_fine">细</string>
+    <string name="grind_medium_fine">中细</string>
+    <string name="grind_medium">中等</string>
+    <string name="grind_medium_coarse">中粗</string>
+    <string name="grind_coarse">粗</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">很棒</string>
+    <string name="rating_good">不错</string>
+    <string name="rating_not_great">不太好</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">太苦</string>
+    <string name="taste_issue_too_sour">太酸</string>
+    <string name="taste_issue_too_weak">太淡</string>
+    <string name="taste_issue_too_strong">太浓</string>
+    <string name="taste_issue_bitter_suggestion">试试更粗研磨或缩短冲煮时间</string>
+    <string name="taste_issue_sour_suggestion">试试更细研磨或延长冲煮时间</string>
+    <string name="taste_issue_weak_suggestion">试试更浓的粉水比或增加咖啡粉</string>
+    <string name="taste_issue_strong_suggestion">试试更淡的粉水比或减少咖啡粉</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">未开封</string>
+    <string name="bag_status_open">已开封</string>
+    <string name="bag_status_frozen">已冷冻</string>
+    <string name="bag_status_finished">已用完</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">未知/未指定</string>
+    <string name="decaf_swiss_water">瑞士水洗（水处理）</string>
+    <string name="decaf_mountain_water">山泉水（水处理）</string>
+    <string name="decaf_co2">超临界CO₂</string>
+    <string name="decaf_ea_sugarcane">乙酸乙酯（甘蔗/天然EA）</string>
+    <string name="decaf_mc_direct">二氯甲烷（直接溶剂）</string>
+    <string name="decaf_ea_direct">乙酸乙酯（直接溶剂）</string>
+    <string name="decaf_short_unknown">未知</string>
+    <string name="decaf_short_swiss_water">瑞士水洗</string>
+    <string name="decaf_short_mountain_water">山泉水处理</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA（甘蔗）</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA（溶剂）</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">浅烘焙</string>
+    <string name="roast_medium_light">中浅烘焙</string>
+    <string name="roast_medium">中烘焙</string>
+    <string name="roast_medium_dark">中深烘焙</string>
+    <string name="roast_dark">深烘焙</string>
+    <string name="roast_filter">滤泡</string>
+    <string name="roast_espresso">意式</string>
+    <string name="roast_omniroast">全能烘焙</string>
+    <string name="roast_cinnamon">肉桂烘焙</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">水洗</string>
+    <string name="process_natural">日晒</string>
+    <string name="process_honey">蜜处理</string>
+    <string name="process_anaerobic">厌氧处理</string>
+    <string name="process_carbonic_maceration">二氧化碳浸渍</string>
+    <string name="process_semi_washed">半水洗</string>
+    <string name="process_wet_hulled">湿刨</string>
+    <string name="process_pulped_natural">去果皮日晒</string>
+    <string name="process_double_fermented">双重发酵</string>
+    <string name="process_thermal_shock">热冲击</string>
+</resources>
+

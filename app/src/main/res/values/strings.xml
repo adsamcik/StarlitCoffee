@@ -475,6 +475,18 @@
     <string name="action_run_test_prompt">Run Test Prompt</string>
     <string name="label_testing">Testing…</string>
 
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Enable AI</string>
+    <string name="consent_requesting">Requesting AI access…</string>
+    <string name="consent_granted">AI enabled</string>
+    <string name="consent_already_approved">AI is already enabled</string>
+    <string name="consent_still_unavailable">AI is approved but the service isn\'t ready yet</string>
+    <string name="consent_declined">AI access wasn\'t granted</string>
+    <string name="consent_denied_temporary">AI access was denied — try again later</string>
+    <string name="consent_denied_permanent">AI access is blocked — unblock it in the Mindlayer app</string>
+    <string name="consent_service_unavailable">Mindlayer AI service is unavailable</string>
+    <string name="consent_failed">Couldn\'t request AI access</string>
+
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">How was your last cup?</string>
     <string name="label_what_was_off">What was off?</string>
