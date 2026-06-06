@@ -53,6 +53,7 @@ import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.notification.RatingReminders
+import com.adsamcik.starlitcoffee.scan.BagFieldContextMapper
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
@@ -1852,7 +1853,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         // just OCR. The LLM prompt treats each source (USER / LOOKUP / OCR / LLM)
         // with different trust rules, so barcode/QR lookup results MUST reach
         // the LLM too — otherwise it will hallucinate over known product data.
-        val existingFields = buildExistingFieldsContext(allCandidates)
+        val existingFields = BagFieldContextMapper.buildExistingFieldsContext(allCandidates)
 
         // Read the best-quality photo bytes
         val bestPhotoUri = processedPhotos.maxByOrNull { it.quality.blurScore }?.uri
@@ -1875,68 +1876,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             rawOcrText = combinedOcrText.takeIf { it.isNotBlank() },
             knownFieldValues = knownFieldValues,
         )
-    }
-
-    /**
-     * Collapse the candidate list to a single best value per field, mapped to
-     * the [FieldSource] taxonomy the LLM prompt understands.
-     *
-     * Priority order: USER (if any exist in candidates — rare in photo path),
-     * LOOKUP (barcode/QR), LLM (from prior runs, if any), OCR. Only
-     * HIGH/MEDIUM-confidence candidates are forwarded to avoid feeding the LLM
-     * low-confidence OCR noise.
-     */
-    private fun buildExistingFieldsContext(
-        candidates: List<BagFieldCandidate>,
-    ): Map<String, com.adsamcik.starlitcoffee.domain.scanfield.FieldContext> {
-        val strong = candidates.filter {
-            it.confidenceHint == BagFieldConfidence.HIGH ||
-                it.confidenceHint == BagFieldConfidence.MEDIUM
-        }
-        fun sourceOf(c: BagFieldCandidate): com.adsamcik.starlitcoffee.domain.scanfield.FieldSource =
-            when (c.sourceType) {
-                BagFieldSourceType.LLM ->
-                    com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.LLM
-                BagFieldSourceType.BARCODE_LOOKUP,
-                BagFieldSourceType.LOCAL_BARCODE_MATCH,
-                BagFieldSourceType.QR_LINK_LOOKUP,
-                BagFieldSourceType.OBSERVED_BARCODE_STEM ->
-                    com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.LOOKUP
-                BagFieldSourceType.OCR,
-                BagFieldSourceType.CONSENSUS ->
-                    com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.OCR
-            }
-        // Per-source priority for picking the representative value per field.
-        val sourceRank = mapOf(
-            com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.USER to 0,
-            com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.LOOKUP to 1,
-            com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.LLM to 2,
-            com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.OCR to 3,
-        )
-        val confidenceRank = mapOf(
-            BagFieldConfidence.HIGH to 0,
-            BagFieldConfidence.MEDIUM to 1,
-            BagFieldConfidence.LOW to 2,
-            BagFieldConfidence.NEEDS_REVIEW to 3,
-        )
-        return strong
-            .groupBy { it.fieldName }
-            .mapNotNull { (fieldName, group) ->
-                val winner = group.minWithOrNull(
-                    compareBy(
-                        { sourceRank[sourceOf(it)] ?: Int.MAX_VALUE },
-                        { confidenceRank[it.confidenceHint] ?: Int.MAX_VALUE },
-                    ),
-                ) ?: return@mapNotNull null
-                val value = winner.value.trim()
-                if (value.isEmpty()) null
-                else fieldName to com.adsamcik.starlitcoffee.domain.scanfield.FieldContext(
-                    value = value,
-                    source = sourceOf(winner),
-                    confidence = winner.confidenceHint.name,
-                )
-            }
-            .toMap()
     }
 
     private suspend fun tryLlmEnrichment(
@@ -2039,7 +1978,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         fieldsNeeded: Set<String>,
         knownFieldValues: KnownFieldValues,
     ): LlmEnrichmentOutcome {
-        val existingFields = buildExistingFieldsContext(existingCandidates)
+        val existingFields = BagFieldContextMapper.buildExistingFieldsContext(existingCandidates)
         val bestPhotoUri = processedPhotos.maxByOrNull { it.quality.blurScore }?.uri
             ?: photoUriList.firstOrNull()
         val photoBytes = bestPhotoUri?.let { uri ->
