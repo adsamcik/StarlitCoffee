@@ -4,8 +4,8 @@ import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.scan.model.AccumulatorConfig
-import com.adsamcik.starlitcoffee.scan.model.FieldContext
-import com.adsamcik.starlitcoffee.scan.model.FieldSource
+import com.adsamcik.starlitcoffee.domain.scanfield.FieldContext
+import com.adsamcik.starlitcoffee.domain.scanfield.FieldSource
 import com.adsamcik.starlitcoffee.scan.model.FrameResult
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate

@@ -1,7 +1,7 @@
 package com.adsamcik.starlitcoffee.data.network.llm
 
-import com.adsamcik.starlitcoffee.scan.model.FieldContext
-import com.adsamcik.starlitcoffee.scan.model.FieldSource
+import com.adsamcik.starlitcoffee.domain.scanfield.FieldContext
+import com.adsamcik.starlitcoffee.domain.scanfield.FieldSource
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence

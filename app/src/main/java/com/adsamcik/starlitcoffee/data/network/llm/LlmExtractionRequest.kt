@@ -1,6 +1,6 @@
 package com.adsamcik.starlitcoffee.data.network.llm
 
-import com.adsamcik.starlitcoffee.scan.model.FieldContext
+import com.adsamcik.starlitcoffee.domain.scanfield.FieldContext
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 
 /**

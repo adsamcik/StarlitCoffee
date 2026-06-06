@@ -7,7 +7,7 @@ import android.graphics.Matrix
 import androidx.exifinterface.media.ExifInterface
 import java.io.ByteArrayInputStream
 import java.util.concurrent.atomic.AtomicBoolean
-import com.adsamcik.starlitcoffee.scan.model.FieldSource
+import com.adsamcik.starlitcoffee.domain.scanfield.FieldSource
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
@@ -802,7 +802,7 @@ Rules:
         }
 
         private fun entriesToJsonObject(
-            entries: List<Map.Entry<String, com.adsamcik.starlitcoffee.scan.model.FieldContext>>,
+            entries: List<Map.Entry<String, com.adsamcik.starlitcoffee.domain.scanfield.FieldContext>>,
         ): JsonObject = buildJsonObject {
             entries.forEach { (k, v) -> put(k, JsonPrimitive(v.value)) }
         }

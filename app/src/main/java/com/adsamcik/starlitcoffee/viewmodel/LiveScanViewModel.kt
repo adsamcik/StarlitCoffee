@@ -16,8 +16,8 @@ import com.adsamcik.starlitcoffee.scan.LlmTelemetrySnapshot
 import com.adsamcik.starlitcoffee.scan.SideDetector
 import com.adsamcik.starlitcoffee.scan.model.AccumulatedEvidence
 import com.adsamcik.starlitcoffee.scan.model.AccumulatorConfig
-import com.adsamcik.starlitcoffee.scan.model.FieldContext
-import com.adsamcik.starlitcoffee.scan.model.FieldSource
+import com.adsamcik.starlitcoffee.domain.scanfield.FieldContext
+import com.adsamcik.starlitcoffee.domain.scanfield.FieldSource
 import com.adsamcik.starlitcoffee.scan.model.FieldStatus
 import com.adsamcik.starlitcoffee.scan.model.FrameResult
 import com.adsamcik.starlitcoffee.scan.model.LlmUiStatus

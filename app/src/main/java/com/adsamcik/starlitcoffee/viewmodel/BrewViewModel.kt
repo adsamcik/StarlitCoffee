@@ -1888,30 +1888,30 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
      */
     private fun buildExistingFieldsContext(
         candidates: List<BagFieldCandidate>,
-    ): Map<String, com.adsamcik.starlitcoffee.scan.model.FieldContext> {
+    ): Map<String, com.adsamcik.starlitcoffee.domain.scanfield.FieldContext> {
         val strong = candidates.filter {
             it.confidenceHint == BagFieldConfidence.HIGH ||
                 it.confidenceHint == BagFieldConfidence.MEDIUM
         }
-        fun sourceOf(c: BagFieldCandidate): com.adsamcik.starlitcoffee.scan.model.FieldSource =
+        fun sourceOf(c: BagFieldCandidate): com.adsamcik.starlitcoffee.domain.scanfield.FieldSource =
             when (c.sourceType) {
                 BagFieldSourceType.LLM ->
-                    com.adsamcik.starlitcoffee.scan.model.FieldSource.LLM
+                    com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.LLM
                 BagFieldSourceType.BARCODE_LOOKUP,
                 BagFieldSourceType.LOCAL_BARCODE_MATCH,
                 BagFieldSourceType.QR_LINK_LOOKUP,
                 BagFieldSourceType.OBSERVED_BARCODE_STEM ->
-                    com.adsamcik.starlitcoffee.scan.model.FieldSource.LOOKUP
+                    com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.LOOKUP
                 BagFieldSourceType.OCR,
                 BagFieldSourceType.CONSENSUS ->
-                    com.adsamcik.starlitcoffee.scan.model.FieldSource.OCR
+                    com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.OCR
             }
         // Per-source priority for picking the representative value per field.
         val sourceRank = mapOf(
-            com.adsamcik.starlitcoffee.scan.model.FieldSource.USER to 0,
-            com.adsamcik.starlitcoffee.scan.model.FieldSource.LOOKUP to 1,
-            com.adsamcik.starlitcoffee.scan.model.FieldSource.LLM to 2,
-            com.adsamcik.starlitcoffee.scan.model.FieldSource.OCR to 3,
+            com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.USER to 0,
+            com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.LOOKUP to 1,
+            com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.LLM to 2,
+            com.adsamcik.starlitcoffee.domain.scanfield.FieldSource.OCR to 3,
         )
         val confidenceRank = mapOf(
             BagFieldConfidence.HIGH to 0,
@@ -1930,7 +1930,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 ) ?: return@mapNotNull null
                 val value = winner.value.trim()
                 if (value.isEmpty()) null
-                else fieldName to com.adsamcik.starlitcoffee.scan.model.FieldContext(
+                else fieldName to com.adsamcik.starlitcoffee.domain.scanfield.FieldContext(
                     value = value,
                     source = sourceOf(winner),
                     confidence = winner.confidenceHint.name,
@@ -1941,7 +1941,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     private suspend fun tryLlmEnrichment(
         photoBytes: ByteArray,
-        existingFields: Map<String, com.adsamcik.starlitcoffee.scan.model.FieldContext>,
+        existingFields: Map<String, com.adsamcik.starlitcoffee.domain.scanfield.FieldContext>,
         fieldsNeeded: Set<String>,
         rawOcrText: String?,
         knownFieldValues: KnownFieldValues?,
