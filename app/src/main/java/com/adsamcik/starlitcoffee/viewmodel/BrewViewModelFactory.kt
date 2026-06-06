@@ -12,6 +12,7 @@ import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
+import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.notification.RatingReminderScheduler
 
@@ -38,6 +39,7 @@ class BrewViewModelFactory(
                 ocrService = ocr,
                 userBarcodeStemDao = database.userBarcodeStemDao(),
                 ratingReminderScheduler = RatingReminderScheduler(application),
+                transactionRunner = TransactionRunner.room(database),
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

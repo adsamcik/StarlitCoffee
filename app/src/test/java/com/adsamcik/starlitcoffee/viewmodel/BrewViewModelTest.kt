@@ -15,6 +15,7 @@ import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
+import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -1636,6 +1637,28 @@ class BrewViewModelTest {
     }
 
     @Test
+    fun `logBrew groups its log and inventory writes into a single transaction`() {
+        val recordingRunner = RecordingTransactionRunner()
+        val vm = BrewViewModel(
+            recipeRepository = RecipeRepository(FakeRecipeDao()),
+            brewLogRepository = BrewLogRepository(null, FakeBrewLogDao(), FakeFlavorTagDao()),
+            coffeeBagRepository = CoffeeBagRepository(FakeCoffeeBagDao()),
+            transactionRunner = recordingRunner,
+        )
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Atomic Bag", weightG = 250f))
+        vm.selectBag(vm.coffeeBags.value.first().id)
+        vm.setAmount("18")
+
+        vm.logBrew()
+
+        // Both the brew-log insert and the bag weight decrement must run under
+        // exactly one transaction, not one-per-write and not outside it.
+        assertEquals(1, recordingRunner.invocations)
+        assertEquals(1, vm.brewLogs.value.size)
+        assertEquals(232f, vm.coffeeBags.value.first().weightG!!, 0.01f)
+    }
+
+    @Test
     fun `logBrew that depletes weight changes status to FINISHED`() {
         val vm = createPersistenceViewModel()
         vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Almost Empty", weightG = 15f))
@@ -1800,6 +1823,16 @@ class BrewViewModelTest {
         noArgViewModel.logBrew()
 
         assertTrue(noArgViewModel.brewLogs.value.isEmpty())
+    }
+
+    private class RecordingTransactionRunner : TransactionRunner {
+        var invocations = 0
+            private set
+
+        override suspend fun <R> runInTransaction(block: suspend () -> R): R {
+            invocations++
+            return block()
+        }
     }
 
     private fun createPersistenceViewModel(): BrewViewModel {

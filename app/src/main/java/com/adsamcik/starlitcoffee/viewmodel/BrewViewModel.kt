@@ -49,6 +49,7 @@ import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
+import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.notification.RatingReminders
@@ -197,6 +198,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private val ocrService: OcrService? = null,
     private val userBarcodeStemDao: UserBarcodeStemDao? = null,
     private val ratingReminderScheduler: RatingReminders? = null,
+    // Groups multi-table brew-log writes (log + inventory) into one atomic
+    // transaction. Defaults to a direct runner for unit tests; the factory
+    // wires a Room-backed runner in production.
+    private val transactionRunner: TransactionRunner = TransactionRunner.Direct,
     // Wall-clock source in milliseconds, injectable for deterministic timer
     // tests. Defaults to a monotonic clock (nanoTime) so elapsed time survives
     // wall-clock changes; tests back it with the coroutine test scheduler.
@@ -605,82 +610,99 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val repository = brewLogRepository ?: return
         val state = _uiState.value
         viewModelScope.launch {
-            val logId = repository.insertLog(
-                BrewLogEntity(
-                    coffeeBagId = _selectedBagId.value,
-                    method = state.method.name,
-                    doseG = state.coffeeG,
-                    waterG = state.waterG,
-                    ratio = state.effectiveRatio,
-                    grindSetting = when (val result = state.grindResult) {
-                        is GrindResult.Generic -> result.descriptor.displayName
-                        is GrindResult.Specific -> {
-                            "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
-                        }
-                    },
-                    filterType = state.filterType?.name,
-                    isDecaf = state.isDecafBrew,
-                    tasteFeedback = state.tasteFeedback?.name,
-                    rating = state.rating.takeIf { it > 0 }?.toFloat(),
-                    freeformNotes = state.feedbackNotes.takeIf { it.isNotBlank() },
-                    brewTimeSeconds = state.elapsedSeconds.takeIf { it > 0 },
-                ),
-            )
-            lastLoggedBrewId = logId
-            // Auto-decrement bag weight + auto-status transitions
-            _selectedBagId.value?.let { bagId ->
-                val bag = _coffeeBags.value.find { it.id == bagId }
-                if (bag != null) {
-                    var updated = bag
-                    // SEALED → OPEN on first brew
-                    if (bag.status == "SEALED") {
-                        updated = updated.copy(
-                            status = "OPEN",
-                            openedDate = System.currentTimeMillis(),
-                        )
-                    }
-                    // Save dialed-in grind setting to bag
-                    val grindStr = when (val result = state.grindResult) {
-                        is GrindResult.Specific ->
-                            "%.1f".format(result.recommendation.suggestedStart)
-                        is GrindResult.Generic -> null
-                    }
-                    if (grindStr != null && updated.grindSetting != grindStr) {
-                        updated = updated.copy(grindSetting = grindStr)
-                    }
-                    // Decrement weight
-                    if (updated.weightG != null) {
-                        val newWeight = (updated.weightG - state.coffeeG).coerceAtLeast(0f)
-                        updated = updated.copy(weightG = newWeight)
-                        // OPEN → FINISHED when depleted
-                        if (newWeight <= 0f && updated.status == "OPEN") {
-                            updated = updated.copy(status = "FINISHED")
-                        }
-                    }
-                    if (updated != bag) {
-                        coffeeBagRepository?.updateBag(updated)
-                    }
-                    // Auto-rotate: when bag finishes, open next sealed bag of same coffee
-                    if (updated.status == "FINISHED" && bag.status != "FINISHED") {
-                        val nextBag = coffeeBagRepository?.findNextSealed(
-                            updated.name,
-                            updated.roaster,
-                        )
-                        if (nextBag != null) {
-                            val opened = nextBag.copy(
-                                status = "OPEN",
-                                openedDate = System.currentTimeMillis(),
-                                grindSetting = updated.grindSetting,
-                            )
-                            coffeeBagRepository.updateBag(opened)
-                            _selectedBagId.value = opened.id
-                        }
-                    }
-                }
+            val log = buildBrewLogEntity(state)
+            // Compute the inventory mutations (current bag + optional rotation)
+            // before opening the transaction, then persist the log and all bag
+            // updates atomically so a process death can't leave a logged brew
+            // without its inventory decrement (or vice versa).
+            val plan = planInventoryUpdatesForBrew(state)
+            transactionRunner {
+                val logId = repository.insertLog(log)
+                lastLoggedBrewId = logId
+                plan.bagUpdates.forEach { coffeeBagRepository?.updateBag(it) }
             }
+            plan.rotatedToBagId?.let { _selectedBagId.value = it }
             refreshLastUnrated()
-            scheduleRatingReminderIfEnabled(logId, state.method)
+            scheduleRatingReminderIfEnabled(requireNotNull(lastLoggedBrewId), state.method)
         }
+    }
+
+    private fun buildBrewLogEntity(state: BrewUiState): BrewLogEntity = BrewLogEntity(
+        coffeeBagId = _selectedBagId.value,
+        method = state.method.name,
+        doseG = state.coffeeG,
+        waterG = state.waterG,
+        ratio = state.effectiveRatio,
+        grindSetting = when (val result = state.grindResult) {
+            is GrindResult.Generic -> result.descriptor.displayName
+            is GrindResult.Specific -> {
+                "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
+            }
+        },
+        filterType = state.filterType?.name,
+        isDecaf = state.isDecafBrew,
+        tasteFeedback = state.tasteFeedback?.name,
+        rating = state.rating.takeIf { it > 0 }?.toFloat(),
+        freeformNotes = state.feedbackNotes.takeIf { it.isNotBlank() },
+        brewTimeSeconds = state.elapsedSeconds.takeIf { it > 0 },
+    )
+
+    private data class BrewInventoryPlan(
+        val bagUpdates: List<CoffeeBagEntity>,
+        val rotatedToBagId: Long?,
+    )
+
+    /**
+     * Compute the inventory side-effects of logging a brew: SEALED→OPEN on first
+     * brew, save the dialed-in grind, decrement weight, OPEN→FINISHED when
+     * depleted, and auto-rotate to the next sealed bag of the same coffee. Pure
+     * apart from the [findNextSealed] read; returns the bag entities to persist
+     * plus the bag we rotated selection to.
+     */
+    private suspend fun planInventoryUpdatesForBrew(state: BrewUiState): BrewInventoryPlan {
+        val bagId = _selectedBagId.value ?: return BrewInventoryPlan(emptyList(), null)
+        val bag = _coffeeBags.value.find { it.id == bagId }
+            ?: return BrewInventoryPlan(emptyList(), null)
+
+        var updated = bag
+        if (bag.status == "SEALED") {
+            updated = updated.copy(status = "OPEN", openedDate = System.currentTimeMillis())
+        }
+        val grindStr = when (val result = state.grindResult) {
+            is GrindResult.Specific -> "%.1f".format(result.recommendation.suggestedStart)
+            is GrindResult.Generic -> null
+        }
+        if (grindStr != null && updated.grindSetting != grindStr) {
+            updated = updated.copy(grindSetting = grindStr)
+        }
+        if (updated.weightG != null) {
+            val newWeight = (updated.weightG - state.coffeeG).coerceAtLeast(0f)
+            updated = updated.copy(weightG = newWeight)
+            if (newWeight <= 0f && updated.status == "OPEN") {
+                updated = updated.copy(status = "FINISHED")
+            }
+        }
+
+        val bagUpdates = mutableListOf<CoffeeBagEntity>()
+        if (updated != bag) bagUpdates += updated
+
+        var rotatedToBagId: Long? = null
+        if (updated.status == "FINISHED" && bag.status != "FINISHED") {
+            // Exclude the just-depleted bag: writes are deferred to the transaction,
+            // so the lookup still sees this bag's pre-update (possibly SEALED) row and
+            // must not rotate selection back onto the bag we are finishing.
+            val nextBag = coffeeBagRepository?.findNextSealed(updated.name, updated.roaster)
+                ?.takeIf { it.id != bag.id }
+            if (nextBag != null) {
+                bagUpdates += nextBag.copy(
+                    status = "OPEN",
+                    openedDate = System.currentTimeMillis(),
+                    grindSetting = updated.grindSetting,
+                )
+                rotatedToBagId = nextBag.id
+            }
+        }
+        return BrewInventoryPlan(bagUpdates, rotatedToBagId)
     }
 
     private suspend fun scheduleRatingReminderIfEnabled(brewLogId: Long, method: BrewMethod) {
