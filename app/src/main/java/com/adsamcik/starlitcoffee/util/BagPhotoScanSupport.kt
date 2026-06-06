@@ -194,6 +194,7 @@ object BagPhotoScanSupport {
         photoAnalyses: List<BagPhotoAnalysis>,
         resolvedFields: Map<String, BagFieldEvidence>,
         additionalHints: List<BagPhotoReviewHint> = emptyList(),
+        scanServiceUnavailable: Boolean = false,
     ): List<BagPhotoReviewHint> {
         val hints = mutableListOf<BagPhotoReviewHint>()
         val criticalFields = listOf("name", "roaster")
@@ -213,11 +214,18 @@ object BagPhotoScanSupport {
         hints += additionalHints
 
         if (missingCritical.isNotEmpty() && !hasAnyFields) {
-            // No fields at all — likely a bad photo, suggest retake
-            hints += BagPhotoReviewHint(
-                severity = BagReviewSeverity.WARNING,
-                message = "Could not read any fields — retake the photo or add details manually.",
-            )
+            // No fields at all. Only blame the photo + suggest a retake when the
+            // scan/AI service actually ran — retaking can't help when the empty
+            // result is because the on-device service was unavailable. In that
+            // case the LLM-status card ("AI enrichment is not available right
+            // now") is the single source of truth and offers the retry path, so
+            // we suppress this otherwise-contradictory WARNING.
+            if (!scanServiceUnavailable) {
+                hints += BagPhotoReviewHint(
+                    severity = BagReviewSeverity.WARNING,
+                    message = "Could not read any fields — retake the photo or add details manually.",
+                )
+            }
         } else if (missingCritical.isNotEmpty()) {
             // Some fields found but missing name/roaster — common for small bags
             hints += BagPhotoReviewHint(

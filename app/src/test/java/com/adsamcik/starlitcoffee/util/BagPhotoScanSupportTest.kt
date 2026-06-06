@@ -153,4 +153,63 @@ class BagPhotoScanSupportTest {
         assertEquals("ETHIOPIA", resolved.canonicalKey)
         assertEquals(BagFieldConfidence.HIGH, resolved.confidence)
     }
+
+    // --- Review hints ---
+
+    private fun evidence(field: String): BagFieldEvidence = BagFieldEvidence(
+        fieldName = field,
+        value = "value",
+        sourceType = BagFieldSourceType.OCR,
+        confidence = BagFieldConfidence.MEDIUM,
+    )
+
+    @Test
+    fun `buildReviewHints warns to retake when no fields read and service was available`() {
+        val hints = BagPhotoScanSupport.buildReviewHints(
+            photoAnalyses = emptyList(),
+            resolvedFields = emptyMap(),
+            scanServiceUnavailable = false,
+        )
+        val retake = hints.single { it.severity == BagReviewSeverity.WARNING }
+        assertEquals(
+            "Could not read any fields — retake the photo or add details manually.",
+            retake.message,
+        )
+    }
+
+    @Test
+    fun `buildReviewHints suppresses retake warning when scan service was unavailable`() {
+        val hints = BagPhotoScanSupport.buildReviewHints(
+            photoAnalyses = emptyList(),
+            resolvedFields = emptyMap(),
+            scanServiceUnavailable = true,
+        )
+        // No misleading "retake the photo" warning — the empty result is the
+        // service being down, not a bad photo. The LLM-status card owns that
+        // message and the retry action.
+        assertEquals(emptyList<BagPhotoReviewHint>(), hints)
+        assertEquals(0, hints.count { it.severity == BagReviewSeverity.WARNING })
+    }
+
+    @Test
+    fun `buildReviewHints still flags missing critical fields when some were read`() {
+        // origin resolved but name/roaster missing — informational, not a retake.
+        val hints = BagPhotoScanSupport.buildReviewHints(
+            photoAnalyses = emptyList(),
+            resolvedFields = mapOf("origin" to evidence("origin")),
+            scanServiceUnavailable = true,
+        )
+        val info = hints.single()
+        assertEquals(BagReviewSeverity.INFO, info.severity)
+        assertEquals(0, hints.count { it.severity == BagReviewSeverity.WARNING })
+    }
+
+    @Test
+    fun `buildReviewHints emits no critical hints when name and roaster are present`() {
+        val hints = BagPhotoScanSupport.buildReviewHints(
+            photoAnalyses = emptyList(),
+            resolvedFields = mapOf("name" to evidence("name"), "roaster" to evidence("roaster")),
+        )
+        assertEquals(emptyList<BagPhotoReviewHint>(), hints)
+    }
 }

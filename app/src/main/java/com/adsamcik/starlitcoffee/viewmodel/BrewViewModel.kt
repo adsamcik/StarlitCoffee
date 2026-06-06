@@ -1142,6 +1142,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 matchedBag = matchedBagByBarcode,
                 observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode),
             ) + qrEnrichment.reviewHints,
+            // When the on-device AI was unavailable, an empty result isn't a bad
+            // photo — suppress the "retake the photo" warning so it doesn't
+            // contradict the "AI enrichment is not available" status card.
+            scanServiceUnavailable = llmOutcome.status == LlmEnrichmentStatus.UNAVAILABLE,
         )
         val ocrPrefill = fieldEvidence
             .takeIf { it.isNotEmpty() }
