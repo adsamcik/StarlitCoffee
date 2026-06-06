@@ -435,6 +435,12 @@ visual cues that OCR text cannot capture:
   2 of 5 = Medium-Light, 3 of 5 = Medium, 4 of 5 = Medium-Dark, 5 of 5 = Dark.
   Scale proportionally for a different number of dots, and report the filled
   position — not the total count.
+- ROAST PURPOSE ("roasted for") is often a CHOICE of intended brew method — e.g.
+  "Roast: [ ] Filter [x] Espresso" (the local-language word for "roast" followed
+  by brew-method options) shown as checkboxes, circles, or one highlighted word.
+  Report the MARKED / ticked / filled option ONLY, into roastLevel as "Filter",
+  "Espresso", or "Omni". If no option is clearly marked, use null — never report
+  every option or guess.
 - isDecaf is true ONLY if the label clearly says decaf/decaffeinated or shows a
   decaf icon; otherwise null.
 
@@ -555,7 +561,7 @@ Multilingual rules (apply BEFORE everything else):
 - Output CONCEPT fields in canonical ENGLISH regardless of the source language:
   * `origin`: the English country name (e.g. "Colombia", "Ethiopia", "Kenya"). Translate from any source language.
   * `process`: the English coffee-industry term (e.g. "Washed", "Natural", "Honey", "Anaerobic", "Wet-hulled", "Carbonic Maceration", "Sugarcane EA Decaf", "Swiss Water Decaf", "CO2 Decaf"). Translate from any source language.
-  * `roastLevel`: the English roast term (e.g. "Light", "Medium", "Dark", "Filter", "Espresso", "Omni"). Translate from any source language.
+  * `roastLevel`: the English roast term (e.g. "Light", "Medium", "Dark", "Filter", "Espresso", "Omni"). Translate from any source language. "Filter" / "Espresso" / "Omni" capture what the coffee was ROASTED FOR (its intended brew method) — extract those too, not only light/medium/dark. When the label offers a roast-purpose CHOICE (a "Roast" line followed by filter / espresso / omni options with one ticked or circled), output ONLY the selected option; if the OCR text lists the options but gives no textual cue which is chosen, emit "not_visible" so the image pass can read the mark.
   * `tastingNotes`: translate flavour descriptors to English, lowercase, comma-separated.
 - Keep PROPER-NOUN fields VERBATIM in their original spelling — brand and identity strings must not be translated:
   * `name`: blend / product name.
@@ -664,7 +670,7 @@ Multilingual rules (apply BEFORE field notes):
   * `origin`: the English country name (e.g. "Colombia", "Ethiopia", "Kenya"). Translate the country from any source language to its standard English form.
   * `region`: the standard English transliteration when one exists (e.g. "Yirgacheffe", "Huila", "Nariño"); otherwise the local spelling.
   * `process`: the English coffee-industry term — "Washed", "Natural" (or "Dry"), "Honey" (with colour qualifier when present: "Red Honey", "Yellow Honey", "Black Honey", "White Honey"), "Anaerobic", "Semi-washed", "Wet-hulled" (or "Giling Basah"), "Carbonic Maceration", "Sugarcane EA Decaf", "Swiss Water Decaf", "CO2 Decaf". Translate the source-language process word to its English equivalent.
-  * `roastLevel`: the English roast term — "Light", "Medium", "Dark", "Filter", "Espresso", "Omni". Translate from any source language.
+  * `roastLevel`: the English roast term — "Light", "Medium", "Dark", "Filter", "Espresso", "Omni". Translate from any source language. "Filter" / "Espresso" / "Omni" are the roast PURPOSE (what the coffee was ROASTED FOR) — capture them, not just the light/medium/dark level. For a roast-purpose CHOICE (the local-language word for "roast" followed by filter / espresso / omni options with one ticked or circled), output ONLY the selected option; if the OCR shows the options but not which is marked, emit "not_visible" so the image pass reads the checkbox.
   * `variety`: the standard cultivar name (e.g. "Heirloom", "Bourbon", "Geisha", "Caturra", "Catuai", "SL28", "SL34", "Pacamara", "Maragogype", "Typica"). Cultivar names are essentially language-independent — use the standard form.
   * `tastingNotes`: translate flavour descriptors to English. Keep them lowercase, comma-separated.
 - Keep PROPER-NOUN fields VERBATIM in their original spelling — these are brand and identity strings that must not be translated:
