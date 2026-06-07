@@ -1,0 +1,94 @@
+name: Release APK
+
+# Builds an UNSIGNED RELEASE APK and attaches it to the matching GitHub Release.
+# Triggers automatically when a v* tag is pushed, and can be run manually for an
+# existing tag (e.g. to backfill an APK on a release that predates this workflow).
+#
+# The APK is the R8-minified `release` build type but is NOT signed (the release
+# build type has no signing config), so it is NOT Play-installable and cannot be
+# sideloaded without first signing it. It's for inspection / signing downstream.
+# Add a signed-release job later (keystore + secrets) for a distributable build.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to build and attach the unsigned release APK to (e.g. v1.2.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write   # upload the APK as a release asset
+  packages: read    # read the Mindlayer SDK from GitHub Packages
+
+# One build per tag; cancel a superseded run.
+concurrency:
+  group: release-apk-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    steps:
+      - name: Check out the release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle (with caching)
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Set up Android SDK and accept licenses
+        uses: android-actions/setup-android@v3
+
+      - name: Build the unsigned release APK
+        env:
+          # Mindlayer is a PUBLIC GitHub Packages Maven artifact, but Maven reads
+          # still require a token — any valid GitHub token works, so the built-in
+          # GITHUB_TOKEN is sufficient. settings.gradle.kts reads it from this
+          # env var. If GitHub ever restricts cross-repo public-package reads,
+          # replace this with a read:packages PAT stored as a repo secret.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          chmod +x ./gradlew
+          ./gradlew :app:assembleRelease --no-daemon --stacktrace
+
+      - name: Rename the APK with the version tag
+        id: apk
+        run: |
+          src=app/build/outputs/apk/release/app-release-unsigned.apk
+          dest="starlit-coffee-${TAG}-release-unsigned.apk"
+          cp "$src" "$dest"
+          echo "path=$dest" >> "$GITHUB_OUTPUT"
+
+      - name: Attach the APK to the GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          apk='${{ steps.apk.outputs.path }}'
+          # Attach to the existing (curated) release without touching its notes;
+          # if no release exists yet for the tag, create one with generated notes.
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$apk" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$TAG" "$apk" --repo "$GITHUB_REPOSITORY" \
+              --title "$TAG" --generate-notes
+          fi
+
+      - name: Upload the APK as a workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: starlit-coffee-${{ env.TAG }}-release-unsigned
+          path: ${{ steps.apk.outputs.path }}
+          if-no-files-found: error
