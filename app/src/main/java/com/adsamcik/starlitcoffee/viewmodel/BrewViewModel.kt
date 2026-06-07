@@ -532,7 +532,11 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     private companion object {
-        private const val BAG_PHOTO_LLM_TIMEOUT_MS = 95_000L
+        // Outer safety-net cap around the text/combine LLM call. Above the
+        // provider's inner generation timeout and the Mindlayer service's 5-min
+        // single-inference cap (MAX_INFERENCE_MS), so a legitimately long run
+        // isn't aborted client-side. Mirrors BagPhotoExtractor.
+        private const val BAG_PHOTO_LLM_TIMEOUT_MS = 390_000L
         private const val LLM_MAX_ATTEMPTS = 3
         private const val LLM_RETRY_BACKOFF_MS = 600L
         private const val BAG_SCAN_PREFS = "bag_scan"

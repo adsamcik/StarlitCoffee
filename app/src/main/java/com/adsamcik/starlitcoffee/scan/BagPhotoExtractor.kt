@@ -156,13 +156,20 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
 
     private companion object {
         private const val BAG_PHOTO_TAG = "BagPhotoProcessing"
-        private const val BAG_PHOTO_LLM_TIMEOUT_MS = 95_000L
+        // Outer safety-net cap around the whole text/combine LLM call (permit
+        // acquisition + provider inference). Kept above the provider's inner
+        // generation timeout so the inner one fires first with a precise
+        // message; both sit above the Mindlayer service's 5-min single-inference
+        // cap (MAX_INFERENCE_MS) so a legitimately long run isn't aborted early.
+        private const val BAG_PHOTO_LLM_TIMEOUT_MS = 390_000L
         // Auto-recover from transient LLM failures (timeouts, one-off inference
         // errors) without bugging the user: retry a retryable failure up to this
         // many TOTAL attempts before giving up, with a short backoff between.
         private const val LLM_MAX_ATTEMPTS = 3
         private const val LLM_RETRY_BACKOFF_MS = 600L
-        private const val BAG_PHOTO_VISION_TIMEOUT_MS = 305_000L
+        // Outer safety-net cap for the multimodal vision call — same reasoning as
+        // BAG_PHOTO_LLM_TIMEOUT_MS, above the inner vision generation timeout.
+        private const val BAG_PHOTO_VISION_TIMEOUT_MS = 390_000L
         private const val MAX_LLM_PHOTO_BYTES = 20 * 1024 * 1024
         private const val LLM_READ_BUFFER_SIZE = 8 * 1024
         // Padding factor and JPEG quality for the cropped label sent to the

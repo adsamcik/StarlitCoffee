@@ -489,8 +489,15 @@ class MindlayerLlmInferenceProvider(
         /** Longest edge (px) the label image is downscaled to before the vision pass. */
         private const val MAX_VISION_IMAGE_DIM = 1024
 
-        /** Timeout for a single multimodal inference (slower than text-only). */
-        internal const val VISION_TIMEOUT_MS = 300_000L
+        /**
+         * Timeout for a single multimodal inference (slower than text-only).
+         *
+         * Sits above the Mindlayer service's 5-min single-inference cap
+         * (`InferenceOrchestrator.MAX_INFERENCE_MS`) and the SDK's 5-min
+         * `awaitDeferred` default so a legitimately long generation isn't
+         * abandoned client-side; the margin covers binder marshalling overhead.
+         */
+        internal const val VISION_TIMEOUT_MS = 360_000L
 
         /**
          * One image inference per app process — see [extractBagFieldsWithVision].
@@ -627,13 +634,14 @@ Response format (JSON only, no markdown):
         /**
          * Bounded generation time so a wedged model cannot hang a scan forever.
          *
-         * Sized for text-only Gemma 4 E2B inference (no vision encoder pass).
-         * Typical warm-pass latency on CPU emulator: 10–30 s for the schema +
-         * extraction. First-call cold init adds the engine warmup cost
-         * separately (handled by Mindlayer's [Mindlayer.prewarm]), so this
-         * budget covers the inference itself plus a small grace margin.
+         * Sized to sit above the Mindlayer service's 5-min single-inference cap
+         * (`InferenceOrchestrator.MAX_INFERENCE_MS`) and the SDK's 5-min
+         * `awaitDeferred` default (PR #184), so a legitimately long run isn't
+         * aborted client-side; the extra minute covers binder marshalling and
+         * the permit/queue wait. First-call cold init adds the engine warmup
+         * cost separately (handled by Mindlayer's [Mindlayer.prewarm]).
          */
-        internal const val EXTRACTION_TIMEOUT_MS = 300_000L
+        internal const val EXTRACTION_TIMEOUT_MS = 360_000L
 
         internal fun buildSystemPrompt(extended: Boolean = false): String =
             if (extended) SYSTEM_PROMPT_14 else SYSTEM_PROMPT_10
