@@ -54,12 +54,17 @@ jobs:
 
       - name: Build the unsigned release APK
         env:
-          # Mindlayer is a PUBLIC GitHub Packages Maven artifact, but Maven reads
-          # still require a token — any valid GitHub token works, so the built-in
-          # GITHUB_TOKEN is sufficient. settings.gradle.kts reads it from this
-          # env var. If GitHub ever restricts cross-repo public-package reads,
-          # replace this with a read:packages PAT stored as a repo secret.
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The Mindlayer SDK is a PUBLIC GitHub Packages Maven artifact in a
+          # DIFFERENT repo (adsamcik/Mindlayer). A workflow's built-in
+          # GITHUB_TOKEN cannot read packages from another repository, so this
+          # needs ONE of:
+          #   (a) a `read:packages` PAT stored as the MINDLAYER_PACKAGES_TOKEN
+          #       repo secret (owned by an account that can read the package), or
+          #   (b) granting THIS repo read access on the Mindlayer package's
+          #       "Manage Actions access" settings — then the built-in token
+          #       (the `|| GITHUB_TOKEN` fallback below) is enough.
+          # settings.gradle.kts reads the token from this env var.
+          GITHUB_TOKEN: ${{ secrets.MINDLAYER_PACKAGES_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           chmod +x ./gradlew
           ./gradlew :app:assembleRelease --no-daemon --stacktrace
