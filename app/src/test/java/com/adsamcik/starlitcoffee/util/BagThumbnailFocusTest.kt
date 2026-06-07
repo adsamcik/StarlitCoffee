@@ -74,4 +74,36 @@ class BagThumbnailFocusTest {
         val focus = BagPhotoRect(0.2f, 0.2f, 0.4f, 0.4f)
         assertEquals(focus, BagThumbnailFocus.squareCrop(focus, 0, 0))
     }
+
+    @Test
+    fun `paddedRegion expands about the centre keeping aspect`() {
+        val focus = BagPhotoRect(0.4f, 0.4f, 0.6f, 0.5f)
+        val padded = BagThumbnailFocus.paddedRegion(focus, expansion = 1.5f)
+
+        // Centre is preserved.
+        assertEquals(0.5f, (padded.leftFraction + padded.rightFraction) / 2f, 1e-4f)
+        assertEquals(0.45f, (padded.topFraction + padded.bottomFraction) / 2f, 1e-4f)
+        // Each dimension grew by ~1.5x (0.2 -> 0.3 wide, 0.1 -> 0.15 tall).
+        assertEquals(0.3f, padded.rightFraction - padded.leftFraction, 1e-4f)
+        assertEquals(0.15f, padded.bottomFraction - padded.topFraction, 1e-4f)
+    }
+
+    @Test
+    fun `paddedRegion clamps to the unit box at the edges`() {
+        val focus = BagPhotoRect(0.0f, 0.0f, 0.2f, 0.2f)
+        val padded = BagThumbnailFocus.paddedRegion(focus, expansion = 2.0f)
+
+        assertEquals(0f, padded.leftFraction, 1e-4f)
+        assertEquals(0f, padded.topFraction, 1e-4f)
+        assertTrue(padded.rightFraction <= 1f)
+        assertTrue(padded.bottomFraction <= 1f)
+        assertTrue(padded.rightFraction > padded.leftFraction)
+    }
+
+    @Test
+    fun `paddedRegion returns the focus unchanged when expansion is not greater than one`() {
+        val focus = BagPhotoRect(0.2f, 0.2f, 0.4f, 0.4f)
+        assertEquals(focus, BagThumbnailFocus.paddedRegion(focus, expansion = 1.0f))
+        assertEquals(focus, BagThumbnailFocus.paddedRegion(focus, expansion = 0.5f))
+    }
 }

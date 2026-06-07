@@ -32,6 +32,27 @@ object BagThumbnailFocus {
     }
 
     /**
+     * Expand [focus] about its centre by [expansion] (keeping aspect, NOT
+     * squared), clamped to the `[0, 1]` unit box. Used to add a little margin
+     * around the detected label before cropping it for the vision pass, so a
+     * tight OCR union doesn't shave off edge glyphs or a logo. Returns [focus]
+     * unchanged when [expansion] <= 1 or the result would be degenerate.
+     */
+    fun paddedRegion(focus: BagPhotoRect, expansion: Float = DEFAULT_EXPANSION): BagPhotoRect {
+        if (expansion <= 1f) return focus
+        val centerX = (focus.leftFraction + focus.rightFraction) / 2f
+        val centerY = (focus.topFraction + focus.bottomFraction) / 2f
+        val halfWidth = (focus.rightFraction - focus.leftFraction) / 2f * expansion
+        val halfHeight = (focus.bottomFraction - focus.topFraction) / 2f * expansion
+        val left = (centerX - halfWidth).coerceIn(0f, 1f)
+        val right = (centerX + halfWidth).coerceIn(0f, 1f)
+        val top = (centerY - halfHeight).coerceIn(0f, 1f)
+        val bottom = (centerY + halfHeight).coerceIn(0f, 1f)
+        if (right <= left || bottom <= top) return focus
+        return BagPhotoRect(left, top, right, bottom)
+    }
+
+    /**
      * A centred, pixel-square crop (normalized fractions) around [focus],
      * suitable for a square thumbnail slot. The square side is the larger of the
      * focus dimensions times [expansion], clamped so the crop fits inside the

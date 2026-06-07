@@ -149,6 +149,11 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         private const val BAG_PHOTO_VISION_TIMEOUT_MS = 305_000L
         private const val MAX_LLM_PHOTO_BYTES = 20 * 1024 * 1024
         private const val LLM_READ_BUFFER_SIZE = 8 * 1024
+        // Padding factor and JPEG quality for the cropped label sent to the
+        // vision pass. A little margin around the OCR union avoids shaving edge
+        // glyphs / logos; quality 90 keeps text crisp without bloating bytes.
+        private const val VISION_CROP_EXPANSION = 1.12f
+        private const val VISION_CROP_JPEG_QUALITY = 90
 
         private val CANONICAL_METADATA_FIELDS = setOf(
             "origin",
@@ -836,6 +841,54 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         return output.toByteArray()
     }
 
+    /**
+     * Crop [photo] to its detected label region and re-encode as JPEG bytes for
+     * the vision pass. The label region is the padded union of the OCR text
+     * blocks ([labelRegionForVision]); cropping removes background/hands and
+     * enlarges the text, which the small on-device vision model reads far more
+     * reliably than a full frame. Returns null when no region was found or the
+     * crop fails, so the caller can fall back to the full image.
+     */
+    private suspend fun cropLabelJpegBytes(photo: ProcessedBagPhoto): ByteArray? =
+        withContext(Dispatchers.IO) {
+            val rect = labelRegionForVision(photo) ?: return@withContext null
+            val bitmap = decodeBagPhotoBitmap(photo.uri) ?: return@withContext null
+            @Suppress("TooGenericExceptionCaught")
+            try {
+                val cropped = cropBitmapToRect(bitmap, rect) ?: return@withContext null
+                ByteArrayOutputStream().use { out ->
+                    cropped.compress(Bitmap.CompressFormat.JPEG, VISION_CROP_JPEG_QUALITY, out)
+                    if (cropped != bitmap) cropped.recycle()
+                    bitmap.recycle()
+                    out.toByteArray()
+                }
+            } catch (e: Exception) {
+                Log.w(BAG_PHOTO_TAG, "Failed to crop label for vision pass", e)
+                bitmap.recycle()
+                null
+            }
+        }
+
+    private fun labelRegionForVision(photo: ProcessedBagPhoto): BagPhotoRect? {
+        val blocks = photo.passes.firstOrNull { it.label == "original" }?.blocks
+            ?: photo.passes.firstOrNull()?.blocks
+            ?: return null
+        val region = BagThumbnailFocus.labelRegion(blocks.mapNotNull { it.normalizedBounds() })
+            ?: return null
+        return BagThumbnailFocus.paddedRegion(region, VISION_CROP_EXPANSION)
+    }
+
+    private fun cropBitmapToRect(bitmap: Bitmap, rect: BagPhotoRect): Bitmap? {
+        val left = (rect.leftFraction * bitmap.width).toInt().coerceIn(0, bitmap.width - 1)
+        val top = (rect.topFraction * bitmap.height).toInt().coerceIn(0, bitmap.height - 1)
+        val right = (rect.rightFraction * bitmap.width).toInt().coerceIn(left + 1, bitmap.width)
+        val bottom = (rect.bottomFraction * bitmap.height).toInt().coerceIn(top + 1, bitmap.height)
+        val width = right - left
+        val height = bottom - top
+        if (width <= 0 || height <= 0) return null
+        return Bitmap.createBitmap(bitmap, left, top, width, height)
+    }
+
     private suspend fun tryLlmEnrichment(
         photoUriList: List<String>,
         processedPhotos: List<ProcessedBagPhoto>,
@@ -1147,17 +1200,19 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         knownFieldValues: KnownFieldValues,
     ): LlmEnrichmentOutcome {
         val existingFields = BagFieldContextMapper.buildExistingFieldsContext(existingCandidates)
-        val bestPhotoUri = processedPhotos.maxByOrNull { it.quality.blurScore }?.uri
-            ?: photoUriList.firstOrNull()
-        val photoBytes = bestPhotoUri?.let { uri ->
-            try {
-                readPhotoBytesForLlm(uri)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-                Log.w(BAG_PHOTO_TAG, "Failed to read photo bytes for vision pass", e)
-                null
-            }
+        val bestPhoto = processedPhotos.maxByOrNull { it.quality.blurScore }
+        val bestPhotoUri = bestPhoto?.uri ?: photoUriList.firstOrNull()
+        val photoBytes = try {
+            // Prefer the cropped label region — it removes background/hands and
+            // enlarges the text for the on-device vision model. Fall back to the
+            // full frame when no usable label region was detected.
+            (bestPhoto?.let { cropLabelJpegBytes(it) })
+                ?: bestPhotoUri?.let { readPhotoBytesForLlm(it) }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            Log.w(BAG_PHOTO_TAG, "Failed to read photo bytes for vision pass", e)
+            null
         } ?: return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
 
         val cacheKey = LlmCacheKey.compute(
