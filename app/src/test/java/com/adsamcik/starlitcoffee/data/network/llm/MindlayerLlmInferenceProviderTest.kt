@@ -889,4 +889,43 @@ class MindlayerLlmInferenceProviderTest {
         assertTrue("Newline must be escaped", prompt.contains("\\n"))
         assertTrue("Section label present", prompt.contains("user_confirmed"))
     }
+
+    // ==================== buildCombinePrompt ====================
+
+    @Test
+    fun `buildCombinePrompt lists both passes using JSON field keys`() {
+        val request = com.adsamcik.starlitcoffee.data.network.llm.LlmCombineRequest(
+            fieldsNeeded = setOf("name", "roaster", "processType"),
+            textPassFields = mapOf("name" to "Tunbaga", "processType" to "Washed"),
+            visionPassFields = mapOf("name" to "Tumbaga", "roaster" to "Acme"),
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildCombinePrompt(request)
+
+        assertTrue("Should label the text pass", prompt.contains("Text pass extracted"))
+        assertTrue("Should label the vision pass", prompt.contains("Vision pass extracted"))
+        assertTrue("Should carry the text-pass name value", prompt.contains("Tunbaga"))
+        assertTrue("Should carry the vision-pass name value", prompt.contains("Tumbaga"))
+        // processType must be presented under its JSON schema key `process`.
+        assertTrue("Should map processType to JSON key 'process'", prompt.contains("process: Washed"))
+        assertFalse("Should not leak the internal field name", prompt.contains("processType: Washed"))
+        assertTrue("Should end with JSON instruction", prompt.contains("Respond with JSON only"))
+    }
+
+    @Test
+    fun `buildCombinePrompt marks an empty pass and grounds with known vocabulary`() {
+        val request = com.adsamcik.starlitcoffee.data.network.llm.LlmCombineRequest(
+            fieldsNeeded = setOf("name"),
+            textPassFields = mapOf("name" to "Tumbaga"),
+            visionPassFields = emptyMap(),
+            knownFieldValues = com.adsamcik.starlitcoffee.util.KnownFieldValues(
+                roasters = listOf("Acme", "Onyx"),
+            ),
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildCombinePrompt(request)
+
+        assertTrue("Empty pass should be marked", prompt.contains("Vision pass extracted: (no values)"))
+        assertTrue("Known roasters should ground the reconciliation", prompt.contains("Known roasters: Acme, Onyx"))
+    }
 }

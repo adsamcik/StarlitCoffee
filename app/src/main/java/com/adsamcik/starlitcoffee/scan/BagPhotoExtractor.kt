@@ -15,6 +15,7 @@ import com.adsamcik.starlitcoffee.data.network.ProductResult
 import com.adsamcik.starlitcoffee.data.network.QrLinkMetadataExplorer
 import com.adsamcik.starlitcoffee.data.network.SafeQrLinkMetadataExplorer
 import com.adsamcik.starlitcoffee.data.network.llm.LlmCacheKey
+import com.adsamcik.starlitcoffee.data.network.llm.LlmCombineRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
@@ -88,6 +89,15 @@ private object BagPhotoVisionPlanner {
         resolved: Map<String, BagFieldEvidence>,
     ): List<BagFieldCandidate> =
         visionCandidates.filterNot { candidate -> isSettledForVision(resolved[candidate.fieldName]) }
+
+    /**
+     * Whether a field is already pinned by an authoritative non-OCR/LLM source
+     * (barcode / QR / local-match / multi-source consensus). The combine pass
+     * skips such fields so it can't override a trusted database/consensus value
+     * with a reconciliation of the AI passes.
+     */
+    fun isAuthoritativelySettled(evidence: BagFieldEvidence?): Boolean =
+        evidence != null && evidence.sourceType in AUTHORITATIVE_SOURCES
 
     private fun isSettledForVision(evidence: BagFieldEvidence?): Boolean {
         if (evidence == null) return false
@@ -215,6 +225,9 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             if (llmProvider.supportsVision()) {
                 add(ScanStage.VISION)
             }
+            if (llmProvider.supportsCombine()) {
+                add(ScanStage.COMBINING)
+            }
         }
         add(ScanStage.FINALIZING)
     }
@@ -256,25 +269,14 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         val qrEnrichment = buildQrLinkEnrichment(rawDetectedQrUrl)
         allCandidates += qrEnrichment.candidates
 
-        val baseCandidates = allCandidates.toList()
-        val llmOutcome = if (runLlm) {
-            reporter.report(ScanStage.LLM_EXTRACT)
-            tryLlmEnrichment(
-                photoUriList = photoUriList,
-                processedPhotos = processedPhotos,
-                allCandidates = baseCandidates,
-                combinedOcrText = combinedOcrText,
-                knownFieldValues = currentKnownValues,
-            )
-        } else {
-            LlmEnrichmentOutcome(status = LlmEnrichmentStatus.NOT_RUN)
-        }
-        allCandidates += llmOutcome.candidates
-
-        if (runLlm) {
-            reporter.report(ScanStage.VISION)
-            runVisionEnrichmentIfNeeded(photoUriList, processedPhotos, allCandidates)
-        }
+        val llmOutcome = runLlmEnrichmentStages(
+            photoUriList = photoUriList,
+            processedPhotos = processedPhotos,
+            combinedOcrText = combinedOcrText,
+            runLlm = runLlm,
+            reporter = reporter,
+            allCandidates = allCandidates,
+        )
 
         reporter.report(ScanStage.FINALIZING)
         val fieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
@@ -963,24 +965,178 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         }
     }
 
+    /**
+     * Runs the three LLM-powered stages in order — text extract (pass 1),
+     * vision (pass 2), then the text-only combine/reconciliation — appending
+     * each stage's candidates to [allCandidates] and reporting progress. A
+     * no-op when [runLlm] is false. Returns the text-pass outcome (its status
+     * drives the "AI unavailable" review hint).
+     */
+    private suspend fun runLlmEnrichmentStages(
+        photoUriList: List<String>,
+        processedPhotos: List<ProcessedBagPhoto>,
+        combinedOcrText: String,
+        runLlm: Boolean,
+        reporter: ScanProgressReporter,
+        allCandidates: MutableList<BagFieldCandidate>,
+    ): LlmEnrichmentOutcome {
+        if (!runLlm) return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.NOT_RUN)
+
+        reporter.report(ScanStage.LLM_EXTRACT)
+        val llmOutcome = tryLlmEnrichment(
+            photoUriList = photoUriList,
+            processedPhotos = processedPhotos,
+            allCandidates = allCandidates.toList(),
+            combinedOcrText = combinedOcrText,
+            knownFieldValues = currentKnownValues,
+        )
+        allCandidates += llmOutcome.candidates
+
+        reporter.report(ScanStage.VISION)
+        val visionCandidates = runVisionEnrichmentIfNeeded(
+            photoUriList = photoUriList,
+            processedPhotos = processedPhotos,
+            existingCandidates = allCandidates.toList(),
+        )
+        allCandidates += visionCandidates
+
+        reporter.report(ScanStage.COMBINING)
+        allCandidates += runCombineEnrichmentIfNeeded(
+            textPassCandidates = llmOutcome.candidates,
+            visionPassCandidates = visionCandidates,
+            allCandidates = allCandidates.toList(),
+            knownFieldValues = currentKnownValues,
+        )
+        return llmOutcome
+    }
+
     private suspend fun runVisionEnrichmentIfNeeded(
         photoUriList: List<String>,
         processedPhotos: List<ProcessedBagPhoto>,
-        allCandidates: MutableList<BagFieldCandidate>,
-    ) {
-        if (!llmProvider.supportsVision() || !llmProvider.isAvailable()) return
-        val preVisionEvidence = resolveBagPhotoFieldEvidence(allCandidates)
+        existingCandidates: List<BagFieldCandidate>,
+    ): List<BagFieldCandidate> {
+        if (!llmProvider.supportsVision() || !llmProvider.isAvailable()) return emptyList()
+        val preVisionEvidence = resolveBagPhotoFieldEvidence(existingCandidates)
         val visionFields = BagPhotoVisionPlanner.selectVisionFields(preVisionEvidence)
-        if (visionFields.isEmpty()) return
+        if (visionFields.isEmpty()) return emptyList()
 
         val visionOutcome = tryVisionLlmEnrichment(
             photoUriList = photoUriList,
             processedPhotos = processedPhotos,
-            existingCandidates = allCandidates.toList(),
+            existingCandidates = existingCandidates,
             fieldsNeeded = visionFields,
             knownFieldValues = currentKnownValues,
         )
-        allCandidates += BagPhotoVisionPlanner.filterVisionCandidates(visionOutcome.candidates, preVisionEvidence)
+        return BagPhotoVisionPlanner.filterVisionCandidates(visionOutcome.candidates, preVisionEvidence)
+    }
+
+    /**
+     * Final reconciliation pass. Feeds ONLY the structured outputs of the prior
+     * LLM stages — the text pass ([textPassCandidates]) and vision pass
+     * ([visionPassCandidates]) — to the combine model, which selects the best
+     * value per field (especially proper-noun identity fields). Returns the
+     * chosen values as candidates that reinforce their value group in consensus
+     * (sourceCount=2 acts as a deliberate, principled tie-breaker).
+     *
+     * Skips fields already pinned by an authoritative source (barcode / QR /
+     * local-match / consensus) so it never overrides trusted data, and runs at
+     * all only when BOTH passes produced something to reconcile.
+     */
+    @VisibleForTesting
+    internal suspend fun runCombineEnrichmentIfNeeded(
+        textPassCandidates: List<BagFieldCandidate>,
+        visionPassCandidates: List<BagFieldCandidate>,
+        allCandidates: List<BagFieldCandidate>,
+        knownFieldValues: KnownFieldValues,
+    ): List<BagFieldCandidate> {
+        if (!llmProvider.supportsCombine() || !llmProvider.isAvailable()) return emptyList()
+
+        val textPassFields = bestValuesByField(textPassCandidates)
+        val visionPassFields = bestValuesByField(visionPassCandidates)
+        if (textPassFields.isEmpty() || visionPassFields.isEmpty()) return emptyList()
+
+        val settled = resolveBagPhotoFieldEvidence(allCandidates)
+        val fieldsNeeded = (textPassFields.keys + visionPassFields.keys)
+            .filterNot { BagPhotoVisionPlanner.isAuthoritativelySettled(settled[it]) }
+            .toSet()
+        if (fieldsNeeded.isEmpty()) return emptyList()
+
+        val request = LlmCombineRequest(
+            fieldsNeeded = fieldsNeeded,
+            textPassFields = textPassFields.filterKeys { it in fieldsNeeded },
+            visionPassFields = visionPassFields.filterKeys { it in fieldsNeeded },
+            knownFieldValues = knownFieldValues,
+        )
+        return tryCombineEnrichment(request).map { it.copy(sourceCount = 2) }
+    }
+
+    private suspend fun tryCombineEnrichment(request: LlmCombineRequest): List<BagFieldCandidate> {
+        val cacheKey = LlmCacheKey.compute(
+            imageBytes = ByteArray(0),
+            fieldsNeeded = request.fieldsNeeded,
+            rawOcrText = serializeCombineInputs(request),
+            existingFields = emptyMap(),
+            mode = "combine",
+        )
+        llmCache.get(cacheKey)?.let { return it.fieldCandidates }
+
+        val result = try {
+            MindlayerLlmCallGate.withPermit {
+                withTimeout(BAG_PHOTO_LLM_TIMEOUT_MS) {
+                    llmProvider.combineBagFields(request)
+                }
+            }
+        } catch (_: TimeoutCancellationException) {
+            LlmExtractionResult.Failed("Combine enrichment timed out", retryable = false)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            LlmExtractionResult.Failed("Combine enrichment threw: ${e.message}", retryable = false)
+        }
+
+        return when (result) {
+            is LlmExtractionResult.Success -> {
+                llmCache.put(cacheKey, result)
+                result.fieldCandidates
+            }
+            is LlmExtractionResult.Unavailable -> {
+                Log.w(BAG_PHOTO_TAG, "Combine enrichment unavailable: ${result.reason}")
+                emptyList()
+            }
+            is LlmExtractionResult.Failed -> {
+                Log.w(BAG_PHOTO_TAG, "Combine enrichment failed: ${result.error}")
+                emptyList()
+            }
+        }
+    }
+
+    /**
+     * Collapse a source's candidates to one best value per field — the highest
+     * confidence value wins (the LLM passes emit at most one per field, but this
+     * stays robust). Empty values are dropped.
+     */
+    private fun bestValuesByField(candidates: List<BagFieldCandidate>): Map<String, String> =
+        candidates
+            .filter { it.value.isNotBlank() }
+            .groupBy { it.fieldName }
+            .mapValues { (_, group) ->
+                group.minByOrNull { confidenceRank(it.confidenceHint) }?.value.orEmpty()
+            }
+            .filterValues { it.isNotBlank() }
+
+    private fun confidenceRank(confidence: BagFieldConfidence): Int = when (confidence) {
+        BagFieldConfidence.HIGH -> 0
+        BagFieldConfidence.MEDIUM -> 1
+        BagFieldConfidence.LOW -> 2
+        BagFieldConfidence.NEEDS_REVIEW -> 3
+    }
+
+    private fun serializeCombineInputs(request: LlmCombineRequest): String = buildString {
+        append(request.fieldsNeeded.sorted().joinToString(","))
+        append('|')
+        append(request.textPassFields.entries.sortedBy { it.key }.joinToString(",") { "${it.key}=${it.value}" })
+        append('|')
+        append(request.visionPassFields.entries.sortedBy { it.key }.joinToString(",") { "${it.key}=${it.value}" })
     }
 
     private suspend fun tryVisionLlmEnrichment(

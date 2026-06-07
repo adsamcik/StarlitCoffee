@@ -65,6 +65,28 @@ interface LlmInferenceProvider {
         LlmExtractionResult.Unavailable("Vision extraction not supported by this provider")
 
     /**
+     * Whether this provider can run the final text-only **combine** pass via
+     * [combineBagFields]. Default `false`. Unlike vision, combine is text-only
+     * and so is NOT limited by the per-process multimodal-inference budget.
+     * Should be cheap/non-blocking.
+     */
+    fun supportsCombine(): Boolean = false
+
+    /**
+     * Final reconciliation pass: given the structured OUTPUTS of the earlier
+     * text and vision passes (and known-value grounding), select the single
+     * best value per requested field — especially proper-noun identity fields
+     * (`name` / `roaster`) where the passes disagree. Returns the chosen values
+     * as [BagFieldCandidate]s that fold back into the consensus engine.
+     *
+     * Honours the same threading and cancellation contracts as
+     * [extractBagFields]. Default returns [LlmExtractionResult.Unavailable];
+     * the orchestration only calls this when [supportsCombine] is true.
+     */
+    suspend fun combineBagFields(request: LlmCombineRequest): LlmExtractionResult =
+        LlmExtractionResult.Unavailable("Combine pass not supported by this provider")
+
+    /**
      * Whether the LLM provider is configured and available.
      * If false, callers should skip LLM enrichment gracefully.
      *
