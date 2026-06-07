@@ -5,6 +5,103 @@ All notable changes to **Starlit Coffee** are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-06-07
+
+The **AI coffee-bag scanning** release. The bag-scan path was rebuilt end to
+end around the on-device Mindlayer LLM: a guided capture flow, a durable
+multi-stage extraction pipeline (OCR → text LLM → cropped vision → combine),
+live progress, and a corpus-backed quality harness. Ships alongside a brew-timer
+refresh, dim-mode rework, expanded localization, and a broad build/lint/warning
+sweep.
+
+### Added — AI bag scanning
+
+- **Guided bag-scan capture** — a single full-screen flow that captures front /
+  back photos, lets you "scan more", and starts extraction after the first
+  photo, refining as more arrive.
+- **Durable on-device extraction** — bag-label analysis runs through a
+  WorkManager job so it survives app backgrounding and process death, with an
+  ongoing foreground-service progress notification and a "tap to review" result
+  notification.
+- **Phase-aware progress UI** — the analyzing screen and notification now show a
+  determinate, per-stage bar (reading the label → understanding the details →
+  inspecting the image → combining → finishing) instead of an opaque spinner.
+- **Final combine / name-selection pass** — a text-only reconciliation pass
+  consumes only the structured outputs of the prior text and vision passes (plus
+  the user's known-value vocabulary) to choose the single best value per field,
+  especially proper-noun identity fields like name / roaster.
+- **Cropped-label vision pass** — a single multimodal pass over the detected,
+  cropped label region recovers identity and concept fields (name, roaster,
+  origin, region, variety, process, roast level, tasting notes, decaf) and
+  visual-only cues such as a roast-level dot scale or decaf icon.
+- **Hierarchical OCR** with region-targeted re-recognition for mashed text,
+  **front + back photo fusion**, **"roasted for" (Filter / Espresso / Omni)**
+  roast-purpose extraction, multi-page cross-reference, and brand-logo vs
+  product-sticker name/roaster disambiguation.
+- **Language-blind extraction prompts** — concept fields are translated to
+  canonical English while proper nouns stay verbatim, with no per-language
+  vocabulary tables.
+- **Mindlayer consent flow** surfaced from the add-bag "AI unavailable" card; an
+  **Analyzing screen** with Skip-AI and run-in-background; **gallery import**;
+  **tap-to-view full-screen** bag photos; and **AI-label-focused thumbnails**.
+- **Quality harness** — a committed synthetic coffee-bag corpus, a JVM scoring
+  harness, an instrumented LLM benchmark, and a Q0 best-case extraction gate.
+
+### Added — Brewing & UI
+
+- **Cup preset editor** screen and navigation.
+- **Bloom spritesheet selector** with new artwork, runtime grid parser
+  hardening, and an ambient-occlusion-style halo.
+- **Dim mode** reworked into a theme override with a force-dark-in-light
+  sub-toggle and a frozen fullscreen layout.
+- **Brew-timer hero** swapped to the target total water; redundant Bloom pill
+  removed; water-target hero kept readable with the time window moved to the Now
+  pill.
+- **"Show brewing instructions"** Settings toggle.
+- **Rating-reminder notification** and a bag-selection prompt.
+
+### Changed
+
+- **Mindlayer SDK → 1.0.0 (v1 API)** — gallery-photo OCR migrated from ML Kit to
+  Mindlayer, the SDK is warmed off the main thread at startup, and AI service
+  binding is declared via a `<queries>` package-visibility block (Android 11+).
+- **Bag fields are now LLM-only** — the legacy regex field extractor was removed;
+  the LLM is the single field source over merged OCR text (text-only enrichment).
+- **AI inference timeouts raised to ≥ 5 minutes** to match the Mindlayer 5-minute
+  single-inference server cap, so a legitimately long on-device generation is no
+  longer aborted client-side.
+- **`versionCode`** bumped `2 → 3`; **`versionName`** bumped `1.1.0 → 1.2.0`.
+
+### Fixed
+
+- **Status sentinels** (`not_visible`, `uncertain`, …) no longer leak into the
+  "Detected Details" chips when the model places a status token in the value slot.
+- **Camera freeze** during AI scanning resolved by keeping inference and bitmap
+  marshalling off the main thread.
+- The scan no longer **tells users to retake the photo** when the failure was
+  that the AI service was simply unavailable.
+- **Native LiteRT-LM crash** avoided by prewarming the CPU backend before the
+  first inference.
+- DataStore recovery, atomic LiveScan state and accumulator-job resilience,
+  Mindlayer availability reporting, dark-mode primary-button readability, and EXIF
+  rotation on photo previews.
+
+### Engineering
+
+- Broke the `scan ↔ data.network.llm` package cycle; extracted
+  `BagFieldContextMapper`, `BrewDerivation`, and `BrewTimerController`; made
+  `logBrew` atomic via a `TransactionRunner`.
+- Added a `MigrationTestHelper` safety net and fixed schema drift; instrumented
+  benchmark + corpus tooling.
+- Cleared Android Lint errors/warnings, swept Kotlin compiler warnings, pruned
+  dead code and unused resources, and adopted AndroidX KTX extensions.
+
+### Localization
+
+- **9 locale translations** added with per-app language configuration.
+
+---
+
 ## [1.1.0] — 2026-05-27
 
 First post-launch release. Focused on the Android 16 / SDK 37 platform jump,
@@ -179,5 +276,6 @@ shipped in version `1.0.0` (`versionCode = 1`).
 - Background timer & rating-reminder services in favour of
   in-process state and `WorkManager` where appropriate.
 
+[1.2.0]: https://github.com/adsamcik/StarlitCoffee/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/adsamcik/StarlitCoffee/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/adsamcik/StarlitCoffee/releases/tag/v1.0.0
