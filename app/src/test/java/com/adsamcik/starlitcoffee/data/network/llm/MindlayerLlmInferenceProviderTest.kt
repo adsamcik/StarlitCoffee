@@ -548,6 +548,30 @@ class MindlayerLlmInferenceProviderTest {
     }
 
     @Test
+    fun `parseResponse rejects a status sentinel placed in the value slot`() {
+        // The model sometimes leaks the STATUS token into the value (nested with
+        // a bogus "found" status, or the flat shape) — those must never surface
+        // as a "not_visible" chip.
+        val json = """
+            {
+              "fields": {
+                "roastLevel":   {"value": "not_visible", "status": "found"},
+                "tastingNotes": "not_visible",
+                "variety":      {"value": "Unknown", "status": "found"},
+                "name":         {"value": "Tumbaga", "status": "found"}
+              }
+            }
+        """.trimIndent()
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+
+        assertTrue(result is LlmExtractionResult.Success)
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+        assertEquals(listOf("name"), candidates.map { it.fieldName })
+        assertEquals("Tumbaga", candidates.single().value)
+    }
+
+    @Test
     fun `parseResponse nestedFormat uncertainWithValue included`() {
         val json = """
             {

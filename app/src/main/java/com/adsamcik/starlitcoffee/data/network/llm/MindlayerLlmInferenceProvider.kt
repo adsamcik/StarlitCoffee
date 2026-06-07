@@ -1086,8 +1086,11 @@ Response format (JSON only, no markdown):
          *  * Nested `{"value": "...", "status": "found"}` (current schema).
          *  * Legacy flat `"name": "value"` (older deployments).
          *
-         * Returns `null` when the field is missing, marked `not_visible`,
-         * or has an empty value.
+         * Returns `null` when the field is missing, marked `not_visible`, has an
+         * empty value, or the model placed a STATUS/sentinel token in the value
+         * slot (e.g. flat `"roastLevel": "not_visible"`, or a nested
+         * `{"value": "not_visible", "status": "found"}`) — those are never real
+         * field values and must not surface as chips.
          */
         private fun extractFieldCandidate(
             fieldName: String,
@@ -1107,6 +1110,7 @@ Response format (JSON only, no markdown):
                 else -> null to "not_visible"
             }
             if (value.isNullOrBlank() || status == "not_visible") return null
+            if (value.trim().lowercase() in SENTINEL_NON_VALUES) return null
             return BagFieldCandidate(
                 fieldName = fieldName,
                 value = value.trim(),
@@ -1118,5 +1122,23 @@ Response format (JSON only, no markdown):
                 },
             )
         }
+
+        /**
+         * Tokens that are status flags / placeholders, never real field values.
+         * The model sometimes emits these in the value slot (especially in the
+         * flat shape) — reject them so they don't render as "not_visible" chips.
+         */
+        private val SENTINEL_NON_VALUES: Set<String> = setOf(
+            "not_visible",
+            "not visible",
+            "notvisible",
+            "uncertain",
+            "found",
+            "null",
+            "none",
+            "n/a",
+            "na",
+            "unknown",
+        )
     }
 }
