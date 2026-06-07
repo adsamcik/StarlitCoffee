@@ -19,14 +19,29 @@ import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 internal object BagVisionPlanner {
 
     /**
-     * Fields whose value is frequently **visual** on a label (e.g. a roast
-     * level shown as a filled-dot scale, or a decaf icon) and which OCR text
-     * therefore often can't capture. v1 deliberately scopes the (slow, and —
-     * per MindlayerLlmInferenceProvider — crash-risky) multimodal call to these
-     * fields only, rather than re-running vision for every commonly-absent
-     * field on a normal label.
+     * Fields the vision pass reads from the cropped label image.
+     *
+     * Beyond visual-only details (a roast-level filled-dot scale, a decaf icon),
+     * the cropped-label vision pass also re-reads proper-noun and concept fields
+     * that OCR garbled, so the combine pass has a genuine second reading to
+     * reconcile against (especially `name` / `roaster`). Structural numeric/date
+     * fields (weight, altitude, dates) are left to OCR, which is more reliable on
+     * exact digits. The [selectVisionFields] gate still skips any field already
+     * settled authoritatively or by a confident OCR read, so a typical scan where
+     * OCR + text-LLM already agree won't waste the (slow, budgeted) vision call.
      */
-    val VISION_WORTHY_FIELDS: Set<String> = setOf("roastLevel", "isDecaf")
+    val VISION_WORTHY_FIELDS: Set<String> = setOf(
+        "name",
+        "roaster",
+        "origin",
+        "region",
+        "farm",
+        "variety",
+        "processType",
+        "roastLevel",
+        "tastingNotes",
+        "isDecaf",
+    )
 
     /** Sources whose value must never be replaced by a best-effort vision guess. */
     private val AUTHORITATIVE_SOURCES: Set<BagFieldSourceType> = setOf(

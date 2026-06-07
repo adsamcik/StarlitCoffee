@@ -44,6 +44,18 @@ class BrewBagVisionTest {
     }
 
     @Test
+    fun `vision-worthy fields cover identity and concept fields, not structural ones`() {
+        val fields = BagVisionPlanner.VISION_WORTHY_FIELDS
+        // Identity + concept fields the cropped-label vision pass re-reads so the
+        // combine pass can reconcile them (especially names).
+        listOf("name", "roaster", "origin", "variety", "processType", "roastLevel", "isDecaf")
+            .forEach { assertTrue("$it should be vision-worthy", it in fields) }
+        // Structural numeric/date fields stay with OCR (more reliable on digits).
+        listOf("weight", "altitude", "roastDate", "expiryDate")
+            .forEach { assertFalse("$it should NOT be vision-worthy", it in fields) }
+    }
+
+    @Test
     fun `selectVisionFields excludes a field resolved by barcode lookup`() {
         val resolved = mapOf(
             "roastLevel" to evidence("roastLevel", BagFieldSourceType.BARCODE_LOOKUP, BagFieldConfidence.HIGH),

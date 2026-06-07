@@ -71,7 +71,23 @@ import kotlinx.coroutines.withTimeout
 data class OffLookupSummary(val name: String?, val brand: String?)
 
 private object BagPhotoVisionPlanner {
-    private val VISION_WORTHY_FIELDS: Set<String> = setOf("roastLevel", "isDecaf")
+    // The vision pass reads the cropped label image. It can recover both
+    // visual-only details (roast-dot scale, decaf icon) AND proper-noun /
+    // concept fields that OCR garbled, giving the combine pass a genuine second
+    // reading to reconcile against. Structural numeric/date fields (weight,
+    // altitude, dates) are left to OCR, which is more reliable on exact digits.
+    private val VISION_WORTHY_FIELDS: Set<String> = setOf(
+        "name",
+        "roaster",
+        "origin",
+        "region",
+        "farm",
+        "variety",
+        "processType",
+        "roastLevel",
+        "tastingNotes",
+        "isDecaf",
+    )
 
     private val AUTHORITATIVE_SOURCES: Set<BagFieldSourceType> = setOf(
         BagFieldSourceType.BARCODE_LOOKUP,

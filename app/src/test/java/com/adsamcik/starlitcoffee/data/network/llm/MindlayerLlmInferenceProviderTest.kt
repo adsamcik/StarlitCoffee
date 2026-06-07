@@ -928,4 +928,27 @@ class MindlayerLlmInferenceProviderTest {
         assertTrue("Empty pass should be marked", prompt.contains("Vision pass extracted: (no values)"))
         assertTrue("Known roasters should ground the reconciliation", prompt.contains("Known roasters: Acme, Onyx"))
     }
+
+    // ==================== buildVisionPrompt ====================
+
+    @Test
+    fun `buildVisionPrompt lists requested fields and grounds with known vocabulary`() {
+        val request = LlmExtractionRequest(
+            imageBytes = ByteArray(0),
+            existingFields = mapOf("roaster" to FieldContext("Acme", FieldSource.LLM)),
+            fieldsNeeded = setOf("name", "roaster", "roastLevel"),
+            rawOcrText = null,
+            knownFieldValues = com.adsamcik.starlitcoffee.util.KnownFieldValues(
+                roasters = listOf("Acme", "Onyx"),
+            ),
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildVisionPrompt(request)
+
+        assertTrue("Should request name", prompt.contains("name"))
+        assertTrue("Should request roastLevel", prompt.contains("roastLevel"))
+        assertTrue("Should pass prior step values", prompt.contains("roaster: Acme"))
+        assertTrue("Should ground with known roasters", prompt.contains("Known roasters: Acme, Onyx"))
+        assertTrue("Should end with JSON instruction", prompt.contains("Respond with JSON only"))
+    }
 }
