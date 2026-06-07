@@ -49,6 +49,8 @@ import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.NormalizedCoffeeField
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
+import com.adsamcik.starlitcoffee.util.ScanProgress
+import com.adsamcik.starlitcoffee.util.ScanStage
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
@@ -92,6 +94,22 @@ private object BagPhotoVisionPlanner {
         if (evidence.sourceType in AUTHORITATIVE_SOURCES) return true
         return evidence.sourceType == BagFieldSourceType.OCR &&
             evidence.confidence == BagFieldConfidence.HIGH
+    }
+}
+
+/**
+ * Maps pipeline stages to monotonic [ScanProgress] snapshots. The concrete
+ * stage list is planned up front so the UI bar is determinate; a stage absent
+ * from [plannedStages] (because it won't run this pass) is ignored.
+ */
+internal class ScanProgressReporter(
+    private val plannedStages: List<ScanStage>,
+    private val onProgress: (ScanProgress) -> Unit,
+) {
+    fun report(stage: ScanStage) {
+        val index = plannedStages.indexOf(stage)
+        if (index < 0) return
+        onProgress(ScanProgress(stage = stage, stepIndex = index + 1, stepCount = plannedStages.size))
     }
 }
 
@@ -152,14 +170,17 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         photoUris: List<String>,
         knownFieldValues: KnownFieldValues,
         runLlm: Boolean = true,
+        onProgress: (ScanProgress) -> Unit = {},
     ): BagPhotoProcessingResult {
         currentKnownValues = knownFieldValues
         if (photoUris.isEmpty()) {
             return BagPhotoProcessingResult(capturedPhotoUris = "")
         }
 
+        val reporter = ScanProgressReporter(planProgressStages(runLlm), onProgress)
         val barcodeScanner = BarcodeScanning.getClient()
         return try {
+            reporter.report(ScanStage.OCR)
             val processedPhotos = photoUris.mapIndexedNotNull { index, uriStr ->
                 processBagPhoto(
                     uriStr = uriStr,
@@ -171,17 +192,40 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 photoUriList = photoUris,
                 processedPhotos = processedPhotos,
                 runLlm = runLlm,
+                reporter = reporter,
             )
         } finally {
             barcodeScanner.close()
         }
     }
 
+    /**
+     * Plans the determinate progress stage list for a run. Only stages that can
+     * actually execute are included, so the UI bar reflects real work: the LLM
+     * stages are dropped when AI is unavailable or the user skipped it, and the
+     * vision stage is included only when the provider can run it (it may still
+     * be a no-op if nothing needs a visual pass).
+     */
+    @VisibleForTesting
+    internal fun planProgressStages(runLlm: Boolean): List<ScanStage> = buildList {
+        add(ScanStage.OCR)
+        add(ScanStage.BARCODE_LOOKUP)
+        if (runLlm && llmProvider.isAvailable()) {
+            add(ScanStage.LLM_EXTRACT)
+            if (llmProvider.supportsVision()) {
+                add(ScanStage.VISION)
+            }
+        }
+        add(ScanStage.FINALIZING)
+    }
+
     private suspend fun emitBagPhotoResult(
         photoUriList: List<String>,
         processedPhotos: List<ProcessedBagPhoto>,
         runLlm: Boolean,
+        reporter: ScanProgressReporter,
     ): BagPhotoProcessingResult {
+        reporter.report(ScanStage.BARCODE_LOOKUP)
         val photoAnalyses = processedPhotos.map { photo ->
             BagPhotoAnalysis(
                 uri = photo.uri,
@@ -214,6 +258,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
 
         val baseCandidates = allCandidates.toList()
         val llmOutcome = if (runLlm) {
+            reporter.report(ScanStage.LLM_EXTRACT)
             tryLlmEnrichment(
                 photoUriList = photoUriList,
                 processedPhotos = processedPhotos,
@@ -227,9 +272,11 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         allCandidates += llmOutcome.candidates
 
         if (runLlm) {
+            reporter.report(ScanStage.VISION)
             runVisionEnrichmentIfNeeded(photoUriList, processedPhotos, allCandidates)
         }
 
+        reporter.report(ScanStage.FINALIZING)
         val fieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
         val reviewHints = BagPhotoScanSupport.buildReviewHints(
             photoAnalyses = photoAnalyses,

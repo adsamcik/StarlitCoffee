@@ -77,6 +77,7 @@ fun GuidedScanFlow(
 ) {
     val state by captureViewModel.uiState.collectAsStateWithLifecycle()
     val bagPhotoResult by brewViewModel.bagPhotoResult.collectAsStateWithLifecycle()
+    val bagPhotoProgress by brewViewModel.bagPhotoProgress.collectAsStateWithLifecycle()
 
     var reviewData by remember { mutableStateOf(ScanReviewData()) }
     var isProcessing by remember { mutableStateOf(false) }
@@ -151,6 +152,7 @@ fun GuidedScanFlow(
                         captureViewModel.reset()
                         onExit()
                     },
+                    progress = bagPhotoProgress,
                 )
             } else {
                 reviewContent(

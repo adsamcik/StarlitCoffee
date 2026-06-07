@@ -62,6 +62,8 @@ import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.InventoryAlertEngine
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
+import com.adsamcik.starlitcoffee.util.ScanProgress
+import com.adsamcik.starlitcoffee.util.ScanStage
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -235,6 +237,13 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private val _bagPhotoResult = MutableStateFlow<BagPhotoProcessingResult?>(null)
     val bagPhotoResult: StateFlow<BagPhotoProcessingResult?> = _bagPhotoResult.asStateFlow()
     private var bagPhotoLlmRetryContext: BagPhotoLlmRetryContext? = null
+
+    // Live per-stage progress of the in-flight bag-photo extraction, surfaced to
+    // the analyzing screen as a determinate bar. Null when no pass is running.
+    // Fed by the extractor's onProgress callback (inline path) or WorkManager's
+    // RUNNING progress data (background path).
+    private val _bagPhotoProgress = MutableStateFlow<ScanProgress?>(null)
+    val bagPhotoProgress: StateFlow<ScanProgress?> = _bagPhotoProgress.asStateFlow()
 
     // Holds a bag-photo result that finished while the user had sent the AI
     // extraction to the background. It is NOT pushed into [bagPhotoResult] (which
@@ -1065,6 +1074,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     ) {
         bagPhotoSkipRequested = false
         bagAnalysisBackgrounded = false
+        _bagPhotoProgress.value = null
 
         val photoUriList = photosCsv.split(",").map(String::trim).filter(String::isNotBlank)
         bagPhotoProcessJob?.cancel()
@@ -1110,6 +1120,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     photoUris = context.photoUriList,
                     knownFieldValues = context.knownFieldValues,
                     runLlm = runLlm,
+                    onProgress = { progress -> _bagPhotoProgress.value = progress },
                 )
             }
             bagPhotoLlmRetryContext = context
@@ -1125,6 +1136,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
      * form opens only when the user taps it.
      */
     private fun deliverBagPhotoResult(result: BagPhotoProcessingResult) {
+        _bagPhotoProgress.value = null
         if (bagAnalysisBackgrounded) {
             bagAnalysisBackgrounded = false
             _completedBackgroundResult.value = result
@@ -1143,10 +1155,12 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         photoUris: List<String>,
         knownFieldValues: KnownFieldValues,
         runLlm: Boolean,
+        onProgress: (ScanProgress) -> Unit = {},
     ): BagPhotoProcessingResult = bagPhotoExtractor.extract(
         photoUris = photoUris,
         knownFieldValues = knownFieldValues,
         runLlm = runLlm,
+        onProgress = onProgress,
     )
 
     @VisibleForTesting
@@ -1272,6 +1286,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     fun clearBagPhotoResult() {
         bagPhotoLlmRetryContext = null
+        _bagPhotoProgress.value = null
         _bagPhotoResult.value = null
     }
 
@@ -1287,6 +1302,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         bagPhotoLlmDeferred = null
         if (useWorkManager) BagExtractionScheduler.cancel(requireNotNull(application))
         bagPhotoLlmRetryContext = null
+        _bagPhotoProgress.value = null
         _bagPhotoResult.value = null
     }
 
@@ -1314,12 +1330,23 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         viewModelScope.launch {
             BagExtractionScheduler.workInfoFlow(app).collect { workInfo ->
                 when (workInfo?.state) {
+                    WorkInfo.State.ENQUEUED, WorkInfo.State.RUNNING -> updateBagExtractionProgress(workInfo)
                     WorkInfo.State.SUCCEEDED -> handleSucceededBagExtraction(workInfo)
                     WorkInfo.State.FAILED -> handleFailedBagExtraction(workInfo)
                     else -> Unit
                 }
             }
         }
+    }
+
+    private fun updateBagExtractionProgress(workInfo: WorkInfo) {
+        val stageName = workInfo.progress.getString(BagExtractionWorker.KEY_PROGRESS_STAGE) ?: return
+        val stage = runCatching { ScanStage.valueOf(stageName) }.getOrNull() ?: return
+        _bagPhotoProgress.value = ScanProgress(
+            stage = stage,
+            stepIndex = workInfo.progress.getInt(BagExtractionWorker.KEY_PROGRESS_INDEX, 0),
+            stepCount = workInfo.progress.getInt(BagExtractionWorker.KEY_PROGRESS_COUNT, 0),
+        )
     }
 
     private fun handleSucceededBagExtraction(workInfo: WorkInfo) {

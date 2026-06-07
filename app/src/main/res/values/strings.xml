@@ -322,6 +322,15 @@
     <string name="notif_scan_progress_title">Reading bag label…</string>
     <string name="notif_bag_analysis_title">Bag analysis complete</string>
     <string name="notif_bag_analysis_body">Tap to review the details we found.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Reading the label…</string>
+    <string name="scan_stage_barcode">Looking up the barcode…</string>
+    <string name="scan_stage_llm">Understanding the details…</string>
+    <string name="scan_stage_crop">Finding the label…</string>
+    <string name="scan_stage_vision">Inspecting the label image…</string>
+    <string name="scan_stage_combine">Combining the results…</string>
+    <string name="scan_stage_finalizing">Finishing up…</string>
+    <string name="format_scan_stage_step">Step %1$d of %2$d</string>
     <string name="format_notif_bag_analysis_body">Tap to review %1$s.</string>
 
     <!-- Settings: rating reminder -->

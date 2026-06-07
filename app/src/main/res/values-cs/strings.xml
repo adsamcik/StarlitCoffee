@@ -316,6 +316,15 @@
     <string name="notif_bag_analysis_title">Analýza balení dokončena</string>
     <string name="notif_bag_analysis_body">Klepnutím zkontrolujete zjištěné údaje.</string>
     <string name="format_notif_bag_analysis_body">Klepnutím zkontrolujete %1$s.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Čtu etiketu…</string>
+    <string name="scan_stage_barcode">Vyhledávám čárový kód…</string>
+    <string name="scan_stage_llm">Rozpoznávám údaje…</string>
+    <string name="scan_stage_crop">Hledám etiketu…</string>
+    <string name="scan_stage_vision">Prohlížím obrázek etikety…</string>
+    <string name="scan_stage_combine">Slučuji výsledky…</string>
+    <string name="scan_stage_finalizing">Dokončuji…</string>
+    <string name="format_scan_stage_step">Krok %1$d z %2$d</string>
 
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Připomínka hodnocení</string>

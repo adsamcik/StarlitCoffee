@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,12 +12,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,12 +28,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.util.ScanProgress
+import com.adsamcik.starlitcoffee.util.ScanStage
 
 /**
  * Full-screen "Analyzing your bag" screen shown while the AI extraction runs on
  * a freshly captured coffee-bag photo. Because extraction can take a while, the
  * user can either [onSkip] it (settle with the OCR/barcode results) or send it
  * to the background with [onRunInBackground] (a notification fires when done).
+ *
+ * When [progress] is non-null the screen shows a determinate per-stage bar and
+ * a stage label so the wait is legible; otherwise it falls back to an
+ * indeterminate spinner (the pass hasn't reported a stage yet).
  *
  * Like [AddBagSheet] this is a Material full-screen dialog that cannot be
  * swipe- or tap-outside-dismissed; an intentional back press is treated as
@@ -41,6 +50,7 @@ import com.adsamcik.starlitcoffee.R
 fun BagAnalysisProgressScreen(
     onSkip: () -> Unit,
     onRunInBackground: () -> Unit,
+    progress: ScanProgress? = null,
 ) {
     Dialog(
         onDismissRequest = onRunInBackground,
@@ -64,7 +74,35 @@ fun BagAnalysisProgressScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                CircularProgressIndicator(modifier = Modifier.size(64.dp))
+                if (progress != null && progress.stepCount > 0) {
+                    val animatedFraction by animateFloatAsState(
+                        targetValue = progress.fraction,
+                        label = "scanProgress",
+                    )
+                    Text(
+                        text = stringResource(progress.stage.labelRes()),
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    LinearProgressIndicator(
+                        progress = { animatedFraction },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(
+                            R.string.format_scan_stage_step,
+                            progress.stepIndex,
+                            progress.stepCount,
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                    )
+                } else {
+                    CircularProgressIndicator(modifier = Modifier.size(64.dp))
+                }
                 Spacer(modifier = Modifier.height(28.dp))
                 Text(
                     text = stringResource(R.string.screen_analyzing_bag_title),
@@ -103,4 +141,15 @@ fun BagAnalysisProgressScreen(
             }
         }
     }
+}
+
+/** In-app stage label for the determinate analyzing bar. */
+private fun ScanStage.labelRes(): Int = when (this) {
+    ScanStage.OCR -> R.string.scan_stage_ocr
+    ScanStage.BARCODE_LOOKUP -> R.string.scan_stage_barcode
+    ScanStage.LLM_EXTRACT -> R.string.scan_stage_llm
+    ScanStage.LABEL_CROP -> R.string.scan_stage_crop
+    ScanStage.VISION -> R.string.scan_stage_vision
+    ScanStage.COMBINING -> R.string.scan_stage_combine
+    ScanStage.FINALIZING -> R.string.scan_stage_finalizing
 }
