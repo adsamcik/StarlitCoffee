@@ -176,8 +176,6 @@
     <string name="desc_bloom_sprite_blackberry">Un chicco di caffè fa crescere rovi spinosi con grappoli di more scure.</string>
     <string name="label_bloom_sprite_coffee_brew">Caffè in estrazione</string>
     <string name="desc_bloom_sprite_coffee_brew">Bagliore ambrato di caffè con spirali di vapore crema.</string>
-    <string name="label_bloom_sprite_cursed_relic">Reliquia maledetta</string>
-    <string name="desc_bloom_sprite_cursed_relic">Un chicco crepato libera magia dorata e vapore nero in un medaglione lupesco.</string>
     <string name="label_bloom_sprite_rose">Rosa</string>
     <string name="desc_bloom_sprite_rose">Rosa rossa compatta che si schiude sopra il chicco.</string>
     <string name="label_bloom_sprite_lotus">Loto</string>
@@ -212,34 +210,6 @@
     <string name="desc_bloom_sprite_snowdrop">Delicate campanelle bianche di bucaneve emergono dal chicco crepato.</string>
     <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
     <string name="desc_bloom_sprite_myosotis_sylvatica">Minuscoli fiori blu di non ti scordar di me con centri gialli si schiudono dal chicco.</string>
-    <string name="label_bloom_sprite_fantasy_citadel">Cittadella fantasy</string>
-    <string name="desc_bloom_sprite_fantasy_citadel">Un chicco crepato si apre in una minuscola cittadella di pietra con finestre calde.</string>
-    <string name="label_bloom_sprite_cyber_city_vines">Rampicanti cyber city</string>
-    <string name="desc_bloom_sprite_cyber_city_vines">Viti circuitali al neon crescono in una compatta cyber city in miniatura.</string>
-    <string name="label_bloom_sprite_pixel_micro_world">Micro-mondo pixel</string>
-    <string name="desc_bloom_sprite_pixel_micro_world">Il chicco si pixelizza in un micro-mondo retro di blocchi e terreno.</string>
-    <string name="label_bloom_sprite_tabletop_adventure_map">Mappa di avventura da tavolo</string>
-    <string name="desc_bloom_sprite_tabletop_adventure_map">Un chicco rotolante si dispiega in una piccola mappa di avventura su pergamena e un dado-gemma vuoto.</string>
-    <string name="label_bloom_sprite_alchemy_astrolabe">Astrolabio alchemico</string>
-    <string name="desc_bloom_sprite_alchemy_astrolabe">Anelli di ottone e fiale di vetro orbitanti si aprono dal chicco di caffè.</string>
-    <string name="label_bloom_sprite_espresso_robot">Robot espresso</string>
-    <string name="desc_bloom_sprite_espresso_robot">Il chicco si dispiega in un piccolo robot di ottone alimentato a espresso.</string>
-    <string name="label_bloom_sprite_space_habitat_ring">Anello habitat spaziale</string>
-    <string name="desc_bloom_sprite_space_habitat_ring">Pezzi curvi di guscio si separano in un anello habitat rotante in miniatura.</string>
-    <string name="label_bloom_sprite_nerd_library_nook">Angolo biblioteca nerd</string>
-    <string name="desc_bloom_sprite_nerd_library_nook">Un angolo biblioteca pop-up si apre dal chicco con scaffali, lampada e mug.</string>
-    <string name="label_bloom_sprite_arcade_platformer_level">Livello platform arcade</string>
-    <string name="desc_bloom_sprite_arcade_platformer_level">Dal chicco spunta un minuscolo livello platform originale con blocchi, gemme e bandiera.</string>
-    <string name="label_bloom_sprite_clockwork_dragonfly">Libellula meccanica</string>
-    <string name="desc_bloom_sprite_clockwork_dragonfly">Un guscio di caffè si schiude in una libellula meccanica di ottone.</string>
-    <string name="label_bloom_sprite_observatory_dome">Cupola osservatorio</string>
-    <string name="desc_bloom_sprite_observatory_dome">Il chicco si apre come una minuscola cupola di osservatorio con telescopio in ottone.</string>
-    <string name="label_bloom_sprite_cyber_alchemy_engine">Motore cyber-alchemico</string>
-    <string name="desc_bloom_sprite_cyber_alchemy_engine">Anelli di ottone, circuiti e un nucleo ambrato formano un compatto motore cyber-alchemico.</string>
-    <string name="label_bloom_sprite_tabletop_space_colony">Colonia spaziale da tavolo</string>
-    <string name="desc_bloom_sprite_tabletop_space_colony">Una piccola colonia spaziale da gioco da tavolo si solleva con cupole e lune-dado vuote.</string>
-    <string name="label_bloom_sprite_observatory_library">Biblioteca osservatorio</string>
-    <string name="desc_bloom_sprite_observatory_library">Una biblioteca osservatorio accogliente si apre con scaffali, telescopio e costellazioni di vapore.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Registro preparazioni</string>

@@ -140,12 +140,6 @@ val BloomSpritesheetOptions = listOf(
         descriptionRes = R.string.desc_bloom_sprite_coffee_brew,
     ),
     BloomSpritesheetOption(
-        id = "cursed_relic",
-        drawableRes = R.drawable.bloom_cursed_relic_spritesheet,
-        labelRes = R.string.label_bloom_sprite_cursed_relic,
-        descriptionRes = R.string.desc_bloom_sprite_cursed_relic,
-    ),
-    BloomSpritesheetOption(
         id = "rose",
         drawableRes = R.drawable.bloom_rose_spritesheet,
         labelRes = R.string.label_bloom_sprite_rose,
@@ -246,90 +240,6 @@ val BloomSpritesheetOptions = listOf(
         drawableRes = R.drawable.bloom_myosotis_sylvatica_spritesheet,
         labelRes = R.string.label_bloom_sprite_myosotis_sylvatica,
         descriptionRes = R.string.desc_bloom_sprite_myosotis_sylvatica,
-    ),
-    BloomSpritesheetOption(
-        id = "fantasy_citadel",
-        drawableRes = R.drawable.bloom_fantasy_citadel_spritesheet,
-        labelRes = R.string.label_bloom_sprite_fantasy_citadel,
-        descriptionRes = R.string.desc_bloom_sprite_fantasy_citadel,
-    ),
-    BloomSpritesheetOption(
-        id = "cyber_city_vines",
-        drawableRes = R.drawable.bloom_cyber_city_vines_spritesheet,
-        labelRes = R.string.label_bloom_sprite_cyber_city_vines,
-        descriptionRes = R.string.desc_bloom_sprite_cyber_city_vines,
-    ),
-    BloomSpritesheetOption(
-        id = "pixel_micro_world",
-        drawableRes = R.drawable.bloom_pixel_micro_world_spritesheet,
-        labelRes = R.string.label_bloom_sprite_pixel_micro_world,
-        descriptionRes = R.string.desc_bloom_sprite_pixel_micro_world,
-    ),
-    BloomSpritesheetOption(
-        id = "tabletop_adventure_map",
-        drawableRes = R.drawable.bloom_tabletop_adventure_map_spritesheet,
-        labelRes = R.string.label_bloom_sprite_tabletop_adventure_map,
-        descriptionRes = R.string.desc_bloom_sprite_tabletop_adventure_map,
-    ),
-    BloomSpritesheetOption(
-        id = "alchemy_astrolabe",
-        drawableRes = R.drawable.bloom_alchemy_astrolabe_spritesheet,
-        labelRes = R.string.label_bloom_sprite_alchemy_astrolabe,
-        descriptionRes = R.string.desc_bloom_sprite_alchemy_astrolabe,
-    ),
-    BloomSpritesheetOption(
-        id = "espresso_robot",
-        drawableRes = R.drawable.bloom_espresso_robot_spritesheet,
-        labelRes = R.string.label_bloom_sprite_espresso_robot,
-        descriptionRes = R.string.desc_bloom_sprite_espresso_robot,
-    ),
-    BloomSpritesheetOption(
-        id = "space_habitat_ring",
-        drawableRes = R.drawable.bloom_space_habitat_ring_spritesheet,
-        labelRes = R.string.label_bloom_sprite_space_habitat_ring,
-        descriptionRes = R.string.desc_bloom_sprite_space_habitat_ring,
-    ),
-    BloomSpritesheetOption(
-        id = "nerd_library_nook",
-        drawableRes = R.drawable.bloom_nerd_library_nook_spritesheet,
-        labelRes = R.string.label_bloom_sprite_nerd_library_nook,
-        descriptionRes = R.string.desc_bloom_sprite_nerd_library_nook,
-    ),
-    BloomSpritesheetOption(
-        id = "arcade_platformer_level",
-        drawableRes = R.drawable.bloom_arcade_platformer_level_spritesheet,
-        labelRes = R.string.label_bloom_sprite_arcade_platformer_level,
-        descriptionRes = R.string.desc_bloom_sprite_arcade_platformer_level,
-    ),
-    BloomSpritesheetOption(
-        id = "clockwork_dragonfly",
-        drawableRes = R.drawable.bloom_clockwork_dragonfly_spritesheet,
-        labelRes = R.string.label_bloom_sprite_clockwork_dragonfly,
-        descriptionRes = R.string.desc_bloom_sprite_clockwork_dragonfly,
-    ),
-    BloomSpritesheetOption(
-        id = "observatory_dome",
-        drawableRes = R.drawable.bloom_observatory_dome_spritesheet,
-        labelRes = R.string.label_bloom_sprite_observatory_dome,
-        descriptionRes = R.string.desc_bloom_sprite_observatory_dome,
-    ),
-    BloomSpritesheetOption(
-        id = "cyber_alchemy_engine",
-        drawableRes = R.drawable.bloom_cyber_alchemy_engine_spritesheet,
-        labelRes = R.string.label_bloom_sprite_cyber_alchemy_engine,
-        descriptionRes = R.string.desc_bloom_sprite_cyber_alchemy_engine,
-    ),
-    BloomSpritesheetOption(
-        id = "tabletop_space_colony",
-        drawableRes = R.drawable.bloom_tabletop_space_colony_spritesheet,
-        labelRes = R.string.label_bloom_sprite_tabletop_space_colony,
-        descriptionRes = R.string.desc_bloom_sprite_tabletop_space_colony,
-    ),
-    BloomSpritesheetOption(
-        id = "observatory_library",
-        drawableRes = R.drawable.bloom_observatory_library_spritesheet,
-        labelRes = R.string.label_bloom_sprite_observatory_library,
-        descriptionRes = R.string.desc_bloom_sprite_observatory_library,
     ),
 ).also { options ->
     // Guard against the option metadata drifting from the domain ID list:

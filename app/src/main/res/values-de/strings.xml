@@ -176,8 +176,6 @@
     <string name="desc_bloom_sprite_blackberry">Aus einer Kaffeebohne wachsen dornige Ranken mit dunklen Brombeertrauben.</string>
     <string name="label_bloom_sprite_coffee_brew">Kaffeezubereitung</string>
     <string name="desc_bloom_sprite_coffee_brew">Bernsteinfarbener Kaffeeschein mit cremefarbenen Dampfschwüngen.</string>
-    <string name="label_bloom_sprite_cursed_relic">Verfluchtes Relikt</string>
-    <string name="desc_bloom_sprite_cursed_relic">Eine aufgebrochene Bohne setzt goldene Magie und schwarzen Dampf in ein wolfsähnliches Medaillon frei.</string>
     <string name="label_bloom_sprite_rose">Rose</string>
     <string name="desc_bloom_sprite_rose">Kompakte rote Rose, die sich über der Bohne entfaltet.</string>
     <string name="label_bloom_sprite_lotus">Lotus</string>
@@ -212,34 +210,6 @@
     <string name="desc_bloom_sprite_snowdrop">Zarte weiße Schneeglöckchen steigen aus der aufgebrochenen Bohne.</string>
     <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
     <string name="desc_bloom_sprite_myosotis_sylvatica">Winzige blaue Vergissmeinnicht-Blüten mit gelben Zentren entfalten sich aus der Bohne.</string>
-    <string name="label_bloom_sprite_fantasy_citadel">Fantasy-Zitadelle</string>
-    <string name="desc_bloom_sprite_fantasy_citadel">Eine aufgebrochene Bohne öffnet sich zu einer winzigen steinernen Zitadelle mit warmen Fenstern.</string>
-    <string name="label_bloom_sprite_cyber_city_vines">Cyber-City-Ranken</string>
-    <string name="desc_bloom_sprite_cyber_city_vines">Neon-Leiterbahn-Ranken wachsen zu einer kompakten Miniatur-Cyberstadt.</string>
-    <string name="label_bloom_sprite_pixel_micro_world">Pixel-Mikrowelt</string>
-    <string name="desc_bloom_sprite_pixel_micro_world">Die Bohne verpixelt zu einer winzigen Retro-Mikrowelt aus Blöcken und Gelände.</string>
-    <string name="label_bloom_sprite_tabletop_adventure_map">Tabletop-Abenteuerkarte</string>
-    <string name="desc_bloom_sprite_tabletop_adventure_map">Eine rollende Bohne entfaltet sich zu einer winzigen Pergament-Abenteuerkarte und einem blanken Edelsteinwürfel.</string>
-    <string name="label_bloom_sprite_alchemy_astrolabe">Alchemie-Astrolabium</string>
-    <string name="desc_bloom_sprite_alchemy_astrolabe">Messingringe und umlaufende Glasfläschchen entfalten sich aus der Kaffeebohne.</string>
-    <string name="label_bloom_sprite_espresso_robot">Espresso-Roboter</string>
-    <string name="desc_bloom_sprite_espresso_robot">Die Bohne entfaltet sich zu einem winzigen messingfarbenen, espresso-betriebenen Roboter.</string>
-    <string name="label_bloom_sprite_space_habitat_ring">Weltraumhabitat-Ring</string>
-    <string name="desc_bloom_sprite_space_habitat_ring">Gebogene Schalenteile spalten sich zu einem rotierenden Miniatur-Habitat-Ring.</string>
-    <string name="label_bloom_sprite_nerd_library_nook">Nerdige Bibliotheksecke</string>
-    <string name="desc_bloom_sprite_nerd_library_nook">Aus der Bohne öffnet sich eine Pop-up-Bibliotheksecke mit Regalen, Lampe und Becher.</string>
-    <string name="label_bloom_sprite_arcade_platformer_level">Arcade-Plattformer-Level</string>
-    <string name="desc_bloom_sprite_arcade_platformer_level">Aus der Bohne sprießt ein winziges originales Plattformer-Level mit Blöcken, Edelsteinen und Flagge.</string>
-    <string name="label_bloom_sprite_clockwork_dragonfly">Uhrwerk-Libelle</string>
-    <string name="desc_bloom_sprite_clockwork_dragonfly">Eine Kaffeeschale schlüpft zu einer messingfarbenen Uhrwerk-Libelle.</string>
-    <string name="label_bloom_sprite_observatory_dome">Observatoriumskuppel</string>
-    <string name="desc_bloom_sprite_observatory_dome">Die Bohne öffnet sich wie eine winzige Observatoriumskuppel mit einem Messingteleskop.</string>
-    <string name="label_bloom_sprite_cyber_alchemy_engine">Cyber-Alchemie-Maschine</string>
-    <string name="desc_bloom_sprite_cyber_alchemy_engine">Messingringe, Schaltkreise und ein bernsteinfarbener Kern formen eine kompakte Cyber-Alchemie-Maschine.</string>
-    <string name="label_bloom_sprite_tabletop_space_colony">Tabletop-Weltraumkolonie</string>
-    <string name="desc_bloom_sprite_tabletop_space_colony">Eine winzige Brettspiel-Weltraumkolonie erhebt sich mit Kuppeln und blanken Würfelmonden.</string>
-    <string name="label_bloom_sprite_observatory_library">Observatoriumsbibliothek</string>
-    <string name="desc_bloom_sprite_observatory_library">Eine gemütliche Observatoriumsbibliothek öffnet sich mit Regalen, Teleskop und Dampf-Sternbildern.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Brüh-Log</string>

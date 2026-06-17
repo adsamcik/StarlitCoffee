@@ -180,8 +180,6 @@
     <string name="desc_bloom_sprite_blackberry">Z kávového zrna vyrastú tŕnisté šľahúne s tmavými černicami.</string>
     <string name="label_bloom_sprite_coffee_brew">Kávová príprava</string>
     <string name="desc_bloom_sprite_coffee_brew">Jantárová kávová žiara s krémovými kučerami pary.</string>
-    <string name="label_bloom_sprite_cursed_relic">Prekliata relikvia</string>
-    <string name="desc_bloom_sprite_cursed_relic">Prasknuté zrno vypustí zlatú mágiu a čiernu paru do vlčieho medailónu.</string>
     <string name="label_bloom_sprite_rose">Ruža</string>
     <string name="desc_bloom_sprite_rose">Kompaktná červená ruža rozvíjajúca sa nad zrnom.</string>
     <string name="label_bloom_sprite_lotus">Lotos</string>
@@ -216,34 +214,6 @@
     <string name="desc_bloom_sprite_snowdrop">Z prasknutého zrna vyrastajú jemné biele zvončeky snežienky.</string>
     <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
     <string name="desc_bloom_sprite_myosotis_sylvatica">Zo zrna sa rozvíjajú drobné modré kvety nezábudky so žltými stredmi.</string>
-    <string name="label_bloom_sprite_fantasy_citadel">Fantasy citadela</string>
-    <string name="desc_bloom_sprite_fantasy_citadel">Prasknuté zrno sa otvorí do drobnej kamennej citadely s teplými oknami.</string>
-    <string name="label_bloom_sprite_cyber_city_vines">Kybermestské liany</string>
-    <string name="desc_bloom_sprite_cyber_city_vines">Neónové obvodové liany vyrastú do kompaktnej miniatúrnej kybermetropoly.</string>
-    <string name="label_bloom_sprite_pixel_micro_world">Pixelový mikrosvet</string>
-    <string name="desc_bloom_sprite_pixel_micro_world">Zrno sa rozpixeluje do drobného retro mikrosveta z blokov a terénu.</string>
-    <string name="label_bloom_sprite_tabletop_adventure_map">Stolová dobrodružná mapa</string>
-    <string name="desc_bloom_sprite_tabletop_adventure_map">Kotúľajúce sa zrno rozvinie drobnú pergamenovú dobrodružnú mapu a prázdnu drahokamovú kocku.</string>
-    <string name="label_bloom_sprite_alchemy_astrolabe">Alchymistický astroláb</string>
-    <string name="desc_bloom_sprite_alchemy_astrolabe">Zo zrna sa rozvíjajú mosadzné kruhy a obiehajúce sklenené ampulky.</string>
-    <string name="label_bloom_sprite_espresso_robot">Espresso robot</string>
-    <string name="desc_bloom_sprite_espresso_robot">Zrno sa rozvinie do drobného mosadzného robota poháňaného espressom.</string>
-    <string name="label_bloom_sprite_space_habitat_ring">Prstenec vesmírneho habitatu</string>
-    <string name="desc_bloom_sprite_space_habitat_ring">Zakrivené časti škrupiny sa rozdelia do miniatúrneho rotujúceho prstenca habitatu.</string>
-    <string name="label_bloom_sprite_nerd_library_nook">Nerdovský knižničný kútik</string>
-    <string name="desc_bloom_sprite_nerd_library_nook">Zo zrna vyskočí knižničný kútik s policami, lampou a hrnčekom.</string>
-    <string name="label_bloom_sprite_arcade_platformer_level">Arkádová plošinovka</string>
-    <string name="desc_bloom_sprite_arcade_platformer_level">Zo zrna vyrastie drobná originálna úroveň plošinovky z blokov, drahokamov a vlajky.</string>
-    <string name="label_bloom_sprite_clockwork_dragonfly">Hodinárska vážka</string>
-    <string name="desc_bloom_sprite_clockwork_dragonfly">Kávová škrupina sa vyliahne do mosadznej hodinárskej vážky.</string>
-    <string name="label_bloom_sprite_observatory_dome">Kupola observatória</string>
-    <string name="desc_bloom_sprite_observatory_dome">Zrno sa otvorí ako drobná kupola observatória s mosadzným ďalekohľadom.</string>
-    <string name="label_bloom_sprite_cyber_alchemy_engine">Kyberalchymistický stroj</string>
-    <string name="desc_bloom_sprite_cyber_alchemy_engine">Mosadzné kruhy, obvody a jantárové jadro vytvoria kompaktný kyberalchymistický stroj.</string>
-    <string name="label_bloom_sprite_tabletop_space_colony">Stolová vesmírna kolónia</string>
-    <string name="desc_bloom_sprite_tabletop_space_colony">Drobná dosková vesmírna kolónia vyrastie s kupolami a prázdnymi kockovými mesiacmi.</string>
-    <string name="label_bloom_sprite_observatory_library">Observatórna knižnica</string>
-    <string name="desc_bloom_sprite_observatory_library">Útulná observatórna knižnica sa otvorí s policami, ďalekohľadom a parnými súhvezdiami.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Záznam príprav</string>

@@ -176,8 +176,6 @@
     <string name="desc_bloom_sprite_blackberry">A coffee bean grows thorny brambles with dark blackberry clusters.</string>
     <string name="label_bloom_sprite_coffee_brew">Coffee brew</string>
     <string name="desc_bloom_sprite_coffee_brew">Amber coffee glow with cream steam curls.</string>
-    <string name="label_bloom_sprite_cursed_relic">Cursed relic</string>
-    <string name="desc_bloom_sprite_cursed_relic">A cracked bean releases gold magic and black vapor into a wolf-like medallion.</string>
     <string name="label_bloom_sprite_rose">Rose</string>
     <string name="desc_bloom_sprite_rose">Compact red rose unfolding above the bean.</string>
     <string name="label_bloom_sprite_lotus">Lotus</string>
@@ -212,39 +210,12 @@
     <string name="desc_bloom_sprite_snowdrop">Delicate white snowdrop bells rise from the cracked bean.</string>
     <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
     <string name="desc_bloom_sprite_myosotis_sylvatica">Tiny blue forget-me-not blossoms with yellow centers unfold from the bean.</string>
-    <string name="label_bloom_sprite_fantasy_citadel">Fantasy citadel</string>
-    <string name="desc_bloom_sprite_fantasy_citadel">A cracked bean opens into a tiny stone citadel with warm windows.</string>
-    <string name="label_bloom_sprite_cyber_city_vines">Cyber city vines</string>
-    <string name="desc_bloom_sprite_cyber_city_vines">Neon circuit vines grow into a compact miniature cyber city.</string>
-    <string name="label_bloom_sprite_pixel_micro_world">Pixel micro-world</string>
-    <string name="desc_bloom_sprite_pixel_micro_world">The bean pixelates into a tiny retro micro-world of blocks and terrain.</string>
-    <string name="label_bloom_sprite_tabletop_adventure_map">Tabletop adventure map</string>
-    <string name="desc_bloom_sprite_tabletop_adventure_map">A rolling bean unfolds into a tiny parchment adventure map and blank gem die.</string>
-    <string name="label_bloom_sprite_alchemy_astrolabe">Alchemy astrolabe</string>
-    <string name="desc_bloom_sprite_alchemy_astrolabe">Brass rings and orbiting glass vials unfold from the coffee bean.</string>
-    <string name="label_bloom_sprite_espresso_robot">Espresso robot</string>
-    <string name="desc_bloom_sprite_espresso_robot">The bean unfolds into a tiny espresso-powered brass robot.</string>
-    <string name="label_bloom_sprite_space_habitat_ring">Space habitat ring</string>
-    <string name="desc_bloom_sprite_space_habitat_ring">Curved shell pieces split into a miniature rotating habitat ring.</string>
-    <string name="label_bloom_sprite_nerd_library_nook">Nerd library nook</string>
-    <string name="desc_bloom_sprite_nerd_library_nook">A pop-up library nook opens from the bean with shelves, lamp, and mug.</string>
-    <string name="label_bloom_sprite_arcade_platformer_level">Arcade platformer level</string>
-    <string name="desc_bloom_sprite_arcade_platformer_level">The bean sprouts a tiny original platformer level of blocks, gems, and a flag.</string>
-    <string name="label_bloom_sprite_clockwork_dragonfly">Clockwork dragonfly</string>
-    <string name="desc_bloom_sprite_clockwork_dragonfly">A coffee shell hatches into a brass clockwork dragonfly.</string>
-    <string name="label_bloom_sprite_observatory_dome">Observatory dome</string>
-    <string name="desc_bloom_sprite_observatory_dome">The bean opens like a tiny observatory dome with a brass telescope.</string>
-    <string name="label_bloom_sprite_cyber_alchemy_engine">Cyber-alchemy engine</string>
-    <string name="desc_bloom_sprite_cyber_alchemy_engine">Brass rings, circuits, and an amber core form a compact cyber-alchemy engine.</string>
-    <string name="label_bloom_sprite_tabletop_space_colony">Tabletop space colony</string>
-    <string name="desc_bloom_sprite_tabletop_space_colony">A tiny board-game space colony rises with domes and blank dice moons.</string>
-    <string name="label_bloom_sprite_observatory_library">Observatory library</string>
-    <string name="desc_bloom_sprite_observatory_library">A cozy observatory library opens with shelves, telescope, and steam constellations.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Brew Log</string>
     <string name="msg_log_empty_title">Start brewing to see your history</string>
     <string name="msg_log_empty_subtitle">Each completed brew with feedback will appear here</string>
+    <string name="msg_select_brew_log">Select a brew log to see its details</string>
 <string name="action_rate_brew">Rate brew</string>
 
     <!-- Brew Log Detail Screen -->

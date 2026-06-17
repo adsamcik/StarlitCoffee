@@ -21,7 +21,6 @@ val BloomSpritesheetIds: List<String> = listOf(
     "blueberry",
     "blackberry",
     "coffee_brew",
-    "cursed_relic",
     "rose",
     "lotus",
     "sunflower",
@@ -39,20 +38,6 @@ val BloomSpritesheetIds: List<String> = listOf(
     "queen_of_the_night",
     "snowdrop",
     "myosotis_sylvatica",
-    "fantasy_citadel",
-    "cyber_city_vines",
-    "pixel_micro_world",
-    "tabletop_adventure_map",
-    "alchemy_astrolabe",
-    "espresso_robot",
-    "space_habitat_ring",
-    "nerd_library_nook",
-    "arcade_platformer_level",
-    "clockwork_dragonfly",
-    "observatory_dome",
-    "cyber_alchemy_engine",
-    "tabletop_space_colony",
-    "observatory_library",
 )
 
 /**

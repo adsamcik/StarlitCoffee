@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,10 +34,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +61,7 @@ import com.adsamcik.starlitcoffee.ui.component.InsightChip
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.StarRatingRow
 import com.adsamcik.starlitcoffee.ui.component.SwipeToDismissCard
+import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -64,6 +70,11 @@ import java.util.Date
 import java.util.Locale
 
 private const val TAG = "BrewLogScreen"
+
+// List-detail pane split used on Expanded windows: the log list keeps a compact
+// master column while the selected entry gets the larger detail pane.
+private const val BrewLogListPaneWeight = 0.42f
+private const val BrewLogDetailPaneWeight = 0.58f
 
 @Composable
 fun BrewLogScreen(
@@ -94,57 +105,108 @@ fun BrewLogScreen(
         logs.filter { decafFilter.matches(it.isDecaf) }
     }
 
+    var selectedLogId by rememberSaveable { mutableStateOf<Long?>(null) }
+    // Expanded windows (large tablets, desktop) show the log list and the
+    // selected entry side by side; compact / medium keep the navigate-to-detail
+    // flow. The detail route still exists for notification deep links.
+    val listDetail = LocalWindowWidthClass.current.isExpanded
+
+    val logList: @Composable (Modifier, (Long) -> Unit) -> Unit = { listModifier, onTapLog ->
+        LazyColumn(
+            modifier = listModifier.padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp),
+        ) {
+            if (showDecafFilter) {
+                item {
+                    com.adsamcik.starlitcoffee.ui.component.DecafFilterChipRow(
+                        selected = decafFilter,
+                        counts = decafCounts,
+                        onSelected = { decafFilter = it },
+                        modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+                    )
+                }
+            }
+            items(filteredLogs, key = { it.id }) { log ->
+                val bagName = log.coffeeBagId?.let { bagId ->
+                    bags.find { it.id == bagId }?.let { bag ->
+                        bag.name + (bag.roaster?.let { " · $it" } ?: "")
+                    }
+                }
+                val logTags = tagsByLog[log.id]?.take(3) ?: emptyList()
+
+                BrewLogCard(
+                    log = log,
+                    bagName = bagName,
+                    flavorTags = logTags,
+                    dateFormat = dateFormat,
+                    selected = listDetail && log.id == selectedLogId,
+                    onTap = { onTapLog(log.id) },
+                    onDelete = {
+                        if (selectedLogId == log.id) selectedLogId = null
+                        brewViewModel.deleteBrewLog(log)
+                    },
+                )
+            }
+        }
+    }
+
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            ScreenTopBar(title = stringResource(R.string.screen_brew_log_title), onBack = onBack)
+            // Horizontal padding aligns the title with the 16dp-inset list/cards
+            // below (there is no back button on the Log tab to inset it).
+            ScreenTopBar(
+                title = stringResource(R.string.screen_brew_log_title),
+                onBack = onBack,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
 
-            if (logs.isEmpty()) {
-                EmptyStateBox(
+            when {
+                logs.isEmpty() -> EmptyStateBox(
                     icon = Icons.Filled.History,
                     message = stringResource(R.string.msg_log_empty_title),
                     subtitle = stringResource(R.string.msg_log_empty_subtitle),
                     modifier = Modifier.fillMaxSize(),
                 )
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                    contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp),
-                ) {
-                    if (showDecafFilter) {
-                        item {
-                            com.adsamcik.starlitcoffee.ui.component.DecafFilterChipRow(
-                                selected = decafFilter,
-                                counts = decafCounts,
-                                onSelected = { decafFilter = it },
-                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+
+                listDetail -> Row(modifier = Modifier.fillMaxSize()) {
+                    logList(
+                        Modifier
+                            .weight(BrewLogListPaneWeight)
+                            .fillMaxHeight(),
+                    ) { id -> selectedLogId = id }
+                    VerticalDivider()
+                    Box(
+                        modifier = Modifier
+                            .weight(BrewLogDetailPaneWeight)
+                            .fillMaxHeight(),
+                    ) {
+                        val sel = selectedLogId
+                        if (sel == null) {
+                            EmptyStateBox(
+                                icon = Icons.Filled.History,
+                                message = stringResource(R.string.msg_select_brew_log),
+                                modifier = Modifier.fillMaxSize(),
                             )
-                        }
-                    }
-                    items(filteredLogs, key = { it.id }) { log ->
-                        val bagName = log.coffeeBagId?.let { bagId ->
-                            bags.find { it.id == bagId }?.let { bag ->
-                                bag.name + (bag.roaster?.let { " · $it" } ?: "")
+                        } else {
+                            // Re-key on the selected id so the detail screen's
+                            // internal remembered state resets when switching logs.
+                            key(sel) {
+                                BrewLogDetailScreen(
+                                    brewViewModel = brewViewModel,
+                                    logId = sel,
+                                    onBack = { selectedLogId = null },
+                                )
                             }
                         }
-                        val logTags = tagsByLog[log.id]?.take(3) ?: emptyList()
-
-                        BrewLogCard(
-                            log = log,
-                            bagName = bagName,
-                            flavorTags = logTags,
-                            dateFormat = dateFormat,
-                            onTap = { onNavigateToDetail(log.id) },
-                            onDelete = { brewViewModel.deleteBrewLog(log) },
-                        )
                     }
                 }
+
+                else -> logList(Modifier.fillMaxSize(), onNavigateToDetail)
             }
         }
     }
@@ -159,6 +221,7 @@ private fun BrewLogCard(
     dateFormat: SimpleDateFormat,
     onTap: () -> Unit,
     onDelete: () -> Unit,
+    selected: Boolean = false,
 ) {
     val feedbackEmoji = log.tasteFeedback?.let { name ->
         try {
@@ -191,6 +254,17 @@ private fun BrewLogCard(
             ),
             modifier = Modifier
                 .fillMaxWidth()
+                .then(
+                    if (selected) {
+                        Modifier.border(
+                            width = 2.dp,
+                            color = MaterialTheme.colorScheme.primary,
+                            shape = MaterialTheme.shapes.large,
+                        )
+                    } else {
+                        Modifier
+                    },
+                )
                 .testTag("brew_log_card_${log.id}"),
         ) {
             Column(

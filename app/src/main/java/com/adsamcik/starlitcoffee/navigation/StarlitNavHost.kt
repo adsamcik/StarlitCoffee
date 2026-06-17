@@ -8,8 +8,13 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.LocalCafe
@@ -17,6 +22,8 @@ import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -38,6 +45,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -51,6 +59,7 @@ import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.notification.DeepLinkBus
+import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.screen.BagInventoryScreen
 import com.adsamcik.starlitcoffee.ui.screen.BarcodeScannerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BloomAnimationSettingsScreen
@@ -159,6 +168,18 @@ fun StarlitNavHost() {
         bottomBarRoutes.any { dest.hasRoute(it) }
     } ?: false
 
+    val widthClass = LocalWindowWidthClass.current
+    // On wide windows (Medium/Expanded — tablets, foldables, landscape, desktop
+    // mode), the bottom bar is replaced by a side NavigationRail per the adaptive
+    // navigation guidance. This matters on Android 17 (SDK 37), where the portrait
+    // lock is ignored on sw>=600dp so the app is regularly shown in wide windows.
+    val useNavigationRail = showBottomBar && widthClass.isWide
+    // The bottom navigation bar is only present on compact top-level tabs. On
+    // every other route (sub-screens, and wide windows that use the rail) there
+    // is no bottom bar to consume the system navigation-bar inset, so screens
+    // that don't host their own Scaffold would otherwise be clipped behind it.
+    val bottomNavBarVisible = showBottomBar && !useNavigationRail
+
     // Wait for prefs to load before rendering
     val prefs = userPrefs
     if (prefs == null) {
@@ -196,24 +217,25 @@ fun StarlitNavHost() {
         }
     }
 
+    // Shared top-level navigation action used by both the bottom bar (compact)
+    // and the side rail (wide) so the two stay behaviourally identical.
+    val onSelectTopLevel: (Any) -> Unit = { route ->
+        navController.navigate(route) {
+            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
-            if (showBottomBar) {
+            if (showBottomBar && !useNavigationRail) {
                 NavigationBar {
                     bottomNavItems.forEach { item ->
-                        val selected = currentDestination.hasRoute(item.route::class)
                         NavigationBarItem(
-                            selected = selected,
-                            onClick = {
-                                navController.navigate(item.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            },
+                            selected = currentDestination?.hasRoute(item.route::class) == true,
+                            onClick = { onSelectTopLevel(item.route) },
                             icon = {
                                 val label = stringResource(item.labelRes)
                                 Icon(item.icon, contentDescription = label)
@@ -225,302 +247,352 @@ fun StarlitNavHost() {
             }
         },
     ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = startDestination,
-            modifier = Modifier.padding(innerPadding),
-            enterTransition = {
-                fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) +
-                    slideInHorizontally(spring(stiffness = Spring.StiffnessMediumLow)) { it / 4 }
-            },
-            exitTransition = {
-                fadeOut(spring(stiffness = Spring.StiffnessMediumLow))
-            },
-            popEnterTransition = {
-                fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) +
-                    slideInHorizontally(spring(stiffness = Spring.StiffnessMediumLow)) { -it / 4 }
-            },
-            popExitTransition = {
-                fadeOut(spring(stiffness = Spring.StiffnessMediumLow)) +
-                    slideOutHorizontally(spring(stiffness = Spring.StiffnessMediumLow)) { it / 4 }
-            },
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .then(
+                    // Apply the navigation-bar inset to the content when no bottom
+                    // bar is present. windowInsetsPadding is consumption-aware, so
+                    // screens that host their own Scaffold won't double-inset.
+                    if (bottomNavBarVisible) {
+                        Modifier
+                    } else {
+                        Modifier.windowInsetsPadding(WindowInsets.navigationBars)
+                    },
+                ),
         ) {
-            // Onboarding flow
-            composable<OnboardingMethods> {
-                OnboardingMethodsScreen(
-                    initialMethods = onboardingMethods.value,
-                    initialDefault = onboardingDefault.value.takeIf { onboardingMethods.value.isNotEmpty() },
-                    onNext = { methods, default ->
-                        onboardingMethods.value = methods
-                        onboardingDefault.value = default
-                        navController.navigate(OnboardingPersonalize)
-                    },
+            if (useNavigationRail) {
+                StarlitNavigationRail(
+                    items = bottomNavItems,
+                    currentDestination = currentDestination,
+                    onSelect = onSelectTopLevel,
                 )
             }
-            composable<OnboardingPersonalize> {
-                OnboardingPersonalizeScreen(
-                    selectedMethods = onboardingMethods.value,
-                    initialFilter = onboardingFilter.value,
-                    initialGrinder = onboardingGrinder.value,
-                    onBack = {
-                        // Save personalize state before going back
-                        navController.popBackStack()
-                    },
-                    onSelectionChanged = { filter, grinder ->
-                        onboardingFilter.value = filter
-                        onboardingGrinder.value = grinder
-                    },
-                    onFinish = { filterType, grinderId ->
-                        scope.launch {
-                            userPreferencesRepository.completeOnboarding(
-                                enabledMethods = onboardingMethods.value,
-                                defaultMethod = onboardingDefault.value,
-                                defaultFilterType = filterType,
-                                selectedGrinderId = grinderId,
-                            )
-                        }
-                        brewViewModel.setMethod(onboardingDefault.value)
-                        if (filterType != null) brewViewModel.setFilterType(filterType)
-                        if (grinderId != null) brewViewModel.setGrinder(grinderId)
-
-                        navController.navigate(CalculatorBrew) {
-                            popUpTo(0) { inclusive = true }
-                        }
-                    },
-                )
-            }
-
-            // Main app screens
-            composable<CalculatorBrew> {
-                CalculatorBrewScreen(
-                    calculatorViewModel = calculatorViewModel,
-                    brewViewModel = brewViewModel,
-                    userPreferencesRepository = userPreferencesRepository,
-                    onNavigateToBrew = {
-                        brewViewModel.startNewBrewSession()
-                        // Quick Brew preference jumps past the grind/prep
-                        // checkpoint and lands directly in the timer. Default
-                        // flow keeps GrindPrep as the pre-flight checkpoint.
-                        val target: Any = if (prefs.skipMethodSelection) BrewTimer else GrindPrep
-                        navController.navigate(target)
-                    },
-                )
-            }
-            composable<GrindPrep> {
-                GrindPrepScreen(
-                    brewViewModel = brewViewModel,
-                    dimModeEnabled = prefs.dimModeEnabled,
-                    dimModeTrueBlack = prefs.dimModeTrueBlack,
-                    dimModeReduceBrightness = prefs.dimModeReduceBrightness,
-                    dimModeFullscreen = prefs.dimModeFullscreen,
-                    dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
-                    showBrewingInstructions = prefs.showBrewingInstructions,
-                    onNavigateToBrew = { navController.navigate(BrewTimer) },
-                    onBack = { navController.popBackStack() },
-                )
-            }
-            composable<BloomTimer> {
-                BloomTimerScreen(
-                    brewViewModel = brewViewModel,
-                    bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
-                    dimModeEnabled = prefs.dimModeEnabled,
-                    dimModeTrueBlack = prefs.dimModeTrueBlack,
-                    dimModeReduceBrightness = prefs.dimModeReduceBrightness,
-                    dimModeFullscreen = prefs.dimModeFullscreen,
-                    dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
-                    onNavigateToBrew = {
-                        navController.navigate(BrewTimer) {
-                            popUpTo(GrindPrep) { inclusive = true }
-                        }
-                    },
-                    onBack = { navController.popBackStack() },
-                )
-            }
-            composable<BrewTimer> {
-                val brewSavedMsg = stringResource(R.string.snackbar_brew_saved)
-                val viewLogAction = stringResource(R.string.snackbar_action_view_log)
-                BrewTimerScreen(
-                    brewViewModel = brewViewModel,
-                    bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
-                    dimModeEnabled = prefs.dimModeEnabled,
-                    dimModeTrueBlack = prefs.dimModeTrueBlack,
-                    dimModeReduceBrightness = prefs.dimModeReduceBrightness,
-                    dimModeFullscreen = prefs.dimModeFullscreen,
-                    dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
-                    showBrewingInstructions = prefs.showBrewingInstructions,
-                    onBack = { navController.popBackStack() },
-                    onComplete = {
-                        // Save the brew log immediately (without feedback — user rates later)
-                        brewViewModel.logBrew()
-                        // Navigate back to calculator, clearing the brew flow from backstack
-                        navController.navigate(CalculatorBrew) {
-                            popUpTo(CalculatorBrew) { inclusive = true }
-                        }
-                        // Show snackbar prompting async feedback
-                        scope.launch {
-                            val result = snackbarHostState.showSnackbar(
-                                message = brewSavedMsg,
-                                actionLabel = viewLogAction,
-                                duration = SnackbarDuration.Long,
-                            )
-                            if (result == SnackbarResult.ActionPerformed) {
-                                navController.navigate(BrewLogList)
-                            }
-                        }
-                    },
-                )
-            }
-            composable<SavedRecipes> {
-                SavedRecipesScreen(
-                    brewViewModel = brewViewModel,
-                    onNavigateToAmount = { navController.navigate(CalculatorBrew) },
-                    onBack = { navController.popBackStack() },
-                )
-            }
-            composable<BagInventory> { backStackEntry ->
-                val capturedPhotos by backStackEntry.savedStateHandle
-                    .getStateFlow<String?>("captured_photos", null)
-                    .collectAsStateWithLifecycle()
-                val scanFields by backStackEntry.savedStateHandle
-                    .getStateFlow<HashMap<String, String>?>("scan_fields", null)
-                    .collectAsStateWithLifecycle()
-                val scannedBarcode by backStackEntry.savedStateHandle
-                    .getStateFlow<String?>("scanned_barcode", null)
-                    .collectAsStateWithLifecycle()
-                BagInventoryScreen(
-                    brewViewModel = brewViewModel,
-                    onNavigateToCamera = { navController.navigate(GuidedScan) },
-                    onNavigateToBarcode = { navController.navigate(BarcodeScanner) },
-                    onBack = { navController.popBackStack() },
-                    onNavigateToBrewWithBag = { bagId ->
-                        brewViewModel.selectBagForBrewing(bagId)
-                        navController.navigate(CalculatorBrew) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    onNavigateToRescan = { bagId ->
-                        navController.navigate(RescanBag(bagId))
-                    },
-                    capturedPhotosResult = capturedPhotos,
-                    scanFieldsResult = scanFields,
-                    scannedBarcodeResult = scannedBarcode,
-                )
-            }
-            composable<BrewLogList> {
-                BrewLogScreen(
-                    brewViewModel = brewViewModel,
-                    onBack = null,
-                    onNavigateToDetail = { logId ->
-                        navController.navigate(BrewLogDetail(logId = logId))
-                    },
-                )
-            }
-            composable<More> {
-                MoreScreen(
-                    onNavigateToRecipes = { navController.navigate(SavedRecipes) },
-                    onNavigateToBags = { navController.navigate(BagInventory) },
-                    onNavigateToSettings = { navController.navigate(Settings) },
-                )
-            }
-            composable<Settings> {
-                SettingsScreen(
-                    userPreferencesRepository = userPreferencesRepository,
-                    cupPresetRepository = cupPresetRepository,
-                    onNavigateToBloomAnimationSettings = {
-                        navController.navigate(BloomAnimationSettings)
-                    },
-                    onNavigateToCupPresetEditor = { presetId ->
-                        navController.navigate(CupPresetEditor(presetId = presetId))
-                    },
-                    onBack = { navController.popBackStack() },
-                )
-            }
-            composable<BloomAnimationSettings> {
-                BloomAnimationSettingsScreen(
-                    userPreferencesRepository = userPreferencesRepository,
-                    onBack = { navController.popBackStack() },
-                )
-            }
-            composable<CupPresetEditor> { backStackEntry ->
-                val route = backStackEntry.toRoute<CupPresetEditor>()
-                CupPresetEditorScreen(
-                    cupPresetRepository = cupPresetRepository,
-                    presetId = route.presetId,
-                    onBack = { navController.popBackStack() },
-                )
-            }
-            composable<BrewLogDetail> { backStackEntry ->
-                val route = backStackEntry.toRoute<BrewLogDetail>()
-                BrewLogDetailScreen(
-                    brewViewModel = brewViewModel,
-                    logId = route.logId,
-                    onBack = { navController.popBackStack() },
-                )
-            }
-            composable<BarcodeScanner> {
-                BarcodeScannerScreen(
-                    onBack = { navController.popBackStack() },
-                    onBarcodeScanned = { barcode ->
-                        navController.previousBackStackEntry
-                            ?.savedStateHandle
-                            ?.set("scanned_barcode", barcode)
-                        navController.popBackStack()
-                    },
-                )
-            }
-            composable<GuidedScan> {
-                val captureViewModel: BagScanCaptureViewModel = viewModel()
-                val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
-                GuidedScanFlow(
-                    captureViewModel = captureViewModel,
-                    brewViewModel = brewViewModel,
-                    onExit = { navController.popBackStack() },
-                ) { data, callbacks ->
-                    ScanAddBagReview(
-                        brewViewModel = brewViewModel,
-                        data = data,
-                        callbacks = callbacks,
-                        existingBags = bags,
-                    )
-                }
-            }
-            composable<RescanBag> { backStackEntry ->
-                val route = backStackEntry.toRoute<RescanBag>()
-                val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
-                val originalBag = remember(bags, route.bagId) {
-                    bags.find { it.id == route.bagId }
-                }
-
-                if (originalBag == null) {
-                    // Bag was deleted while navigating — go back
-                    navController.popBackStack()
-                    return@composable
-                }
-
-                val captureViewModel: BagScanCaptureViewModel = viewModel()
-                GuidedScanFlow(
-                    captureViewModel = captureViewModel,
-                    brewViewModel = brewViewModel,
-                    onExit = { navController.popBackStack() },
-                ) { data, callbacks ->
-                    ScanRescanReview(
-                        brewViewModel = brewViewModel,
-                        bag = originalBag,
-                        data = data,
-                        callbacks = callbacks,
-                        onNewBag = { fields ->
-                            // Fork into a new bag — hand fields to BagInventory's AddBagSheet.
-                            navController.getBackStackEntry(BagInventory)
-                                .savedStateHandle
-                                .set("scan_fields", HashMap(fields))
+            NavHost(
+                navController = navController,
+                startDestination = startDestination,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight(),
+                enterTransition = {
+                    fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) +
+                        slideInHorizontally(spring(stiffness = Spring.StiffnessMediumLow)) { it / 4 }
+                },
+                exitTransition = {
+                    fadeOut(spring(stiffness = Spring.StiffnessMediumLow))
+                },
+                popEnterTransition = {
+                    fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) +
+                        slideInHorizontally(spring(stiffness = Spring.StiffnessMediumLow)) { -it / 4 }
+                },
+                popExitTransition = {
+                    fadeOut(spring(stiffness = Spring.StiffnessMediumLow)) +
+                        slideOutHorizontally(spring(stiffness = Spring.StiffnessMediumLow)) { it / 4 }
+                },
+            ) {
+                // Onboarding flow
+                composable<OnboardingMethods> {
+                    OnboardingMethodsScreen(
+                        initialMethods = onboardingMethods.value,
+                        initialDefault = onboardingDefault.value.takeIf { onboardingMethods.value.isNotEmpty() },
+                        onNext = { methods, default ->
+                            onboardingMethods.value = methods
+                            onboardingDefault.value = default
+                            navController.navigate(OnboardingPersonalize)
                         },
                     )
                 }
+                composable<OnboardingPersonalize> {
+                    OnboardingPersonalizeScreen(
+                        selectedMethods = onboardingMethods.value,
+                        initialFilter = onboardingFilter.value,
+                        initialGrinder = onboardingGrinder.value,
+                        onBack = {
+                            // Save personalize state before going back
+                            navController.popBackStack()
+                        },
+                        onSelectionChanged = { filter, grinder ->
+                            onboardingFilter.value = filter
+                            onboardingGrinder.value = grinder
+                        },
+                        onFinish = { filterType, grinderId ->
+                            scope.launch {
+                                userPreferencesRepository.completeOnboarding(
+                                    enabledMethods = onboardingMethods.value,
+                                    defaultMethod = onboardingDefault.value,
+                                    defaultFilterType = filterType,
+                                    selectedGrinderId = grinderId,
+                                )
+                            }
+                            brewViewModel.setMethod(onboardingDefault.value)
+                            if (filterType != null) brewViewModel.setFilterType(filterType)
+                            if (grinderId != null) brewViewModel.setGrinder(grinderId)
+
+                            navController.navigate(CalculatorBrew) {
+                                popUpTo(0) { inclusive = true }
+                            }
+                        },
+                    )
+                }
+
+                // Main app screens
+                composable<CalculatorBrew> {
+                    CalculatorBrewScreen(
+                        calculatorViewModel = calculatorViewModel,
+                        brewViewModel = brewViewModel,
+                        userPreferencesRepository = userPreferencesRepository,
+                        onNavigateToBrew = {
+                            brewViewModel.startNewBrewSession()
+                            // Quick Brew preference jumps past the grind/prep
+                            // checkpoint and lands directly in the timer. Default
+                            // flow keeps GrindPrep as the pre-flight checkpoint.
+                            val target: Any = if (prefs.skipMethodSelection) BrewTimer else GrindPrep
+                            navController.navigate(target)
+                        },
+                    )
+                }
+                composable<GrindPrep> {
+                    GrindPrepScreen(
+                        brewViewModel = brewViewModel,
+                        dimModeEnabled = prefs.dimModeEnabled,
+                        dimModeTrueBlack = prefs.dimModeTrueBlack,
+                        dimModeReduceBrightness = prefs.dimModeReduceBrightness,
+                        dimModeFullscreen = prefs.dimModeFullscreen,
+                        dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
+                        showBrewingInstructions = prefs.showBrewingInstructions,
+                        onNavigateToBrew = { navController.navigate(BrewTimer) },
+                        onBack = { navController.popBackStack() },
+                    )
+                }
+                composable<BloomTimer> {
+                    BloomTimerScreen(
+                        brewViewModel = brewViewModel,
+                        bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
+                        dimModeEnabled = prefs.dimModeEnabled,
+                        dimModeTrueBlack = prefs.dimModeTrueBlack,
+                        dimModeReduceBrightness = prefs.dimModeReduceBrightness,
+                        dimModeFullscreen = prefs.dimModeFullscreen,
+                        dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
+                        onNavigateToBrew = {
+                            navController.navigate(BrewTimer) {
+                                popUpTo(GrindPrep) { inclusive = true }
+                            }
+                        },
+                        onBack = { navController.popBackStack() },
+                    )
+                }
+                composable<BrewTimer> {
+                    val brewSavedMsg = stringResource(R.string.snackbar_brew_saved)
+                    val viewLogAction = stringResource(R.string.snackbar_action_view_log)
+                    BrewTimerScreen(
+                        brewViewModel = brewViewModel,
+                        bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
+                        dimModeEnabled = prefs.dimModeEnabled,
+                        dimModeTrueBlack = prefs.dimModeTrueBlack,
+                        dimModeReduceBrightness = prefs.dimModeReduceBrightness,
+                        dimModeFullscreen = prefs.dimModeFullscreen,
+                        dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
+                        showBrewingInstructions = prefs.showBrewingInstructions,
+                        onBack = { navController.popBackStack() },
+                        onComplete = {
+                            // Save the brew log immediately (without feedback — user rates later)
+                            brewViewModel.logBrew()
+                            // Navigate back to calculator, clearing the brew flow from backstack
+                            navController.navigate(CalculatorBrew) {
+                                popUpTo(CalculatorBrew) { inclusive = true }
+                            }
+                            // Show snackbar prompting async feedback
+                            scope.launch {
+                                val result = snackbarHostState.showSnackbar(
+                                    message = brewSavedMsg,
+                                    actionLabel = viewLogAction,
+                                    duration = SnackbarDuration.Long,
+                                )
+                                if (result == SnackbarResult.ActionPerformed) {
+                                    navController.navigate(BrewLogList)
+                                }
+                            }
+                        },
+                    )
+                }
+                composable<SavedRecipes> {
+                    SavedRecipesScreen(
+                        brewViewModel = brewViewModel,
+                        onNavigateToAmount = { navController.navigate(CalculatorBrew) },
+                        onBack = { navController.popBackStack() },
+                    )
+                }
+                composable<BagInventory> { backStackEntry ->
+                    val capturedPhotos by backStackEntry.savedStateHandle
+                        .getStateFlow<String?>("captured_photos", null)
+                        .collectAsStateWithLifecycle()
+                    val scanFields by backStackEntry.savedStateHandle
+                        .getStateFlow<HashMap<String, String>?>("scan_fields", null)
+                        .collectAsStateWithLifecycle()
+                    val scannedBarcode by backStackEntry.savedStateHandle
+                        .getStateFlow<String?>("scanned_barcode", null)
+                        .collectAsStateWithLifecycle()
+                    BagInventoryScreen(
+                        brewViewModel = brewViewModel,
+                        onNavigateToCamera = { navController.navigate(GuidedScan) },
+                        onNavigateToBarcode = { navController.navigate(BarcodeScanner) },
+                        onBack = { navController.popBackStack() },
+                        onNavigateToBrewWithBag = { bagId ->
+                            brewViewModel.selectBagForBrewing(bagId)
+                            navController.navigate(CalculatorBrew) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
+                        onNavigateToRescan = { bagId ->
+                            navController.navigate(RescanBag(bagId))
+                        },
+                        capturedPhotosResult = capturedPhotos,
+                        scanFieldsResult = scanFields,
+                        scannedBarcodeResult = scannedBarcode,
+                    )
+                }
+                composable<BrewLogList> {
+                    BrewLogScreen(
+                        brewViewModel = brewViewModel,
+                        onBack = null,
+                        onNavigateToDetail = { logId ->
+                            navController.navigate(BrewLogDetail(logId = logId))
+                        },
+                    )
+                }
+                composable<More> {
+                    MoreScreen(
+                        onNavigateToRecipes = { navController.navigate(SavedRecipes) },
+                        onNavigateToBags = { navController.navigate(BagInventory) },
+                        onNavigateToSettings = { navController.navigate(Settings) },
+                    )
+                }
+                composable<Settings> {
+                    SettingsScreen(
+                        userPreferencesRepository = userPreferencesRepository,
+                        cupPresetRepository = cupPresetRepository,
+                        onNavigateToBloomAnimationSettings = {
+                            navController.navigate(BloomAnimationSettings)
+                        },
+                        onNavigateToCupPresetEditor = { presetId ->
+                            navController.navigate(CupPresetEditor(presetId = presetId))
+                        },
+                        onBack = { navController.popBackStack() },
+                    )
+                }
+                composable<BloomAnimationSettings> {
+                    BloomAnimationSettingsScreen(
+                        userPreferencesRepository = userPreferencesRepository,
+                        onBack = { navController.popBackStack() },
+                    )
+                }
+                composable<CupPresetEditor> { backStackEntry ->
+                    val route = backStackEntry.toRoute<CupPresetEditor>()
+                    CupPresetEditorScreen(
+                        cupPresetRepository = cupPresetRepository,
+                        presetId = route.presetId,
+                        onBack = { navController.popBackStack() },
+                    )
+                }
+                composable<BrewLogDetail> { backStackEntry ->
+                    val route = backStackEntry.toRoute<BrewLogDetail>()
+                    BrewLogDetailScreen(
+                        brewViewModel = brewViewModel,
+                        logId = route.logId,
+                        onBack = { navController.popBackStack() },
+                    )
+                }
+                composable<BarcodeScanner> {
+                    BarcodeScannerScreen(
+                        onBack = { navController.popBackStack() },
+                        onBarcodeScanned = { barcode ->
+                            navController.previousBackStackEntry
+                                ?.savedStateHandle
+                                ?.set("scanned_barcode", barcode)
+                            navController.popBackStack()
+                        },
+                    )
+                }
+                composable<GuidedScan> {
+                    val captureViewModel: BagScanCaptureViewModel = viewModel()
+                    val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+                    GuidedScanFlow(
+                        captureViewModel = captureViewModel,
+                        brewViewModel = brewViewModel,
+                        onExit = { navController.popBackStack() },
+                    ) { data, callbacks ->
+                        ScanAddBagReview(
+                            brewViewModel = brewViewModel,
+                            data = data,
+                            callbacks = callbacks,
+                            existingBags = bags,
+                        )
+                    }
+                }
+                composable<RescanBag> { backStackEntry ->
+                    val route = backStackEntry.toRoute<RescanBag>()
+                    val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+                    val originalBag = remember(bags, route.bagId) {
+                        bags.find { it.id == route.bagId }
+                    }
+
+                    if (originalBag == null) {
+                        // Bag was deleted while navigating — go back
+                        navController.popBackStack()
+                        return@composable
+                    }
+
+                    val captureViewModel: BagScanCaptureViewModel = viewModel()
+                    GuidedScanFlow(
+                        captureViewModel = captureViewModel,
+                        brewViewModel = brewViewModel,
+                        onExit = { navController.popBackStack() },
+                    ) { data, callbacks ->
+                        ScanRescanReview(
+                            brewViewModel = brewViewModel,
+                            bag = originalBag,
+                            data = data,
+                            callbacks = callbacks,
+                            onNewBag = { fields ->
+                                // Fork into a new bag — hand fields to BagInventory's AddBagSheet.
+                                navController.getBackStackEntry(BagInventory)
+                                    .savedStateHandle
+                                    .set("scan_fields", HashMap(fields))
+                            },
+                        )
+                    }
+                }
             }
+        }
+    }
+}
+
+/**
+ * Side navigation rail shown on wide windows (Medium / Expanded) in place of the
+ * bottom navigation bar. Mirrors the bottom bar's destinations and behaviour so
+ * the app's primary navigation is reachable without a bottom bar on tablets,
+ * foldables, landscape phones, and desktop windows targeting Android 17.
+ */
+@Composable
+private fun StarlitNavigationRail(
+    items: List<BottomNavItem>,
+    currentDestination: NavDestination?,
+    onSelect: (Any) -> Unit,
+) {
+    NavigationRail(modifier = Modifier.fillMaxHeight()) {
+        items.forEach { item ->
+            val label = stringResource(item.labelRes)
+            NavigationRailItem(
+                selected = currentDestination?.hasRoute(item.route::class) == true,
+                onClick = { onSelect(item.route) },
+                icon = { Icon(item.icon, contentDescription = label) },
+                label = { Text(label) },
+            )
         }
     }
 }

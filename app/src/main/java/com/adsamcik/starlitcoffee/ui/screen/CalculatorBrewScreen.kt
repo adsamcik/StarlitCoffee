@@ -15,11 +15,13 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -86,6 +88,7 @@ import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
@@ -138,6 +141,16 @@ fun CalculatorBrewScreen(
     val sectionSpacer = if (isCompactHeight) 6.dp else 12.dp
     val barSpacer = if (isCompactHeight) 4.dp else 8.dp
 
+    // Wide-window adaptation: in landscape on large-enough windows (tablets,
+    // foldables, landscape phones, desktop) lay the calculator out as a classic
+    // two-pane split — display + settings on the left, keypad on the right —
+    // instead of one tall column. Width class gates "is this wide enough"; the
+    // landscape check gates "is a side-by-side split actually better than a
+    // centered column" so portrait tablets keep the single column.
+    val screenWidthDp = with(density) { containerSize.width.toDp().value }
+    val isLandscape = screenWidthDp > screenHeightDp
+    val twoPaneCalculator = LocalWindowWidthClass.current.isWide && isLandscape
+
     val coffeeBags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
     val selectedBag = remember(coffeeBags, selectedBagId) {
@@ -157,11 +170,9 @@ fun CalculatorBrewScreen(
         brewViewModel.setAmount(state.previewDoseG.toString())
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-    ) {
+    // Content blocks shared by the single-column (compact/portrait) and the
+    // two-pane (wide landscape) layouts so the two never drift apart.
+    val header: @Composable () -> Unit = {
         // Combined header: direction toggle + expression (with optional inline
         // result on compact heights) + save-favorite. Replaces the older
         // dedicated TopControlBar row, recovering ~48dp of vertical space.
@@ -179,68 +190,60 @@ fun CalculatorBrewScreen(
                 showSaveFavoriteDialog = true
             },
         )
+    }
 
-        Spacer(modifier = Modifier.height(sectionSpacer))
-
-        // Scrollable content: preview + config
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .verticalScroll(scrollState),
-        ) {
-            // Live preview card — always visible on regular-height screens so
-            // the direction-swap control between the coffee and water values
-            // is discoverable even before the user has typed a valid
-            // expression. Empty values render as "—" via formatAmount. On
-            // compact heights the inline result in the expression header
-            // replaces this entirely, so the swap stays in the header there.
-            if (!isCompactHeight) {
-                LivePreviewCard(
-                    doseG = state.previewDoseG,
-                    waterMl = state.previewWaterMl,
-                    direction = state.inputDirection,
-                    onToggleDirection = { calculatorViewModel.toggleDirection() },
-                )
-            }
-
-            // Selected bag indicator — visible reminder that a bag is in play,
-            // with one-tap clear so the user can switch to brewing without one.
-            selectedBag?.let { bag ->
-                Spacer(modifier = Modifier.height(sectionSpacer))
-                InputChip(
-                    selected = true,
-                    onClick = { brewViewModel.selectBag(null) },
-                    label = {
-                        Text(
-                            text = stringResource(R.string.format_brewing_with, bag.name),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.LocalCafe,
-                            contentDescription = null,
-                            modifier = Modifier.size(InputChipDefaults.IconSize),
-                        )
-                    },
-                    trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Close,
-                            contentDescription = stringResource(R.string.cd_clear_bag),
-                            modifier = Modifier.size(InputChipDefaults.IconSize),
-                        )
-                    },
-                )
-            }
-
+    val previewAndConfig: @Composable () -> Unit = {
+        // Live preview card — always visible on regular-height screens so
+        // the direction-swap control between the coffee and water values
+        // is discoverable even before the user has typed a valid
+        // expression. Empty values render as "—" via formatAmount. On
+        // compact heights the inline result in the expression header
+        // replaces this entirely, so the swap stays in the header there.
+        if (!isCompactHeight) {
+            LivePreviewCard(
+                doseG = state.previewDoseG,
+                waterMl = state.previewWaterMl,
+                direction = state.inputDirection,
+                onToggleDirection = { calculatorViewModel.toggleDirection() },
+            )
         }
 
-        // Pills bar — quick-access brew settings above the keyboard, within
+        // Selected bag indicator — visible reminder that a bag is in play,
+        // with one-tap clear so the user can switch to brewing without one.
+        selectedBag?.let { bag ->
+            Spacer(modifier = Modifier.height(sectionSpacer))
+            InputChip(
+                selected = true,
+                onClick = { brewViewModel.selectBag(null) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.format_brewing_with, bag.name),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.LocalCafe,
+                        contentDescription = null,
+                        modifier = Modifier.size(InputChipDefaults.IconSize),
+                    )
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = stringResource(R.string.cd_clear_bag),
+                        modifier = Modifier.size(InputChipDefaults.IconSize),
+                    )
+                },
+            )
+        }
+    }
+
+    val pills: @Composable () -> Unit = {
+        // Pills bar — quick-access brew settings near the keyboard, within
         // thumb reach while the user is entering numbers. Replaces the older
         // expandable config card.
-        Spacer(modifier = Modifier.height(sectionSpacer))
-
         BrewSettingsPillBar(
             enabledMethods = prefs.enabledMethods.toList(),
             selectedMethod = selectedMethod,
@@ -253,10 +256,9 @@ fun CalculatorBrewScreen(
             onGrinderChange = { brewViewModel.setGrinder(it) },
             onRatioChange = { calculatorViewModel.setRatio(it) },
         )
+    }
 
-        // Calculator keyboard — pinned to bottom, outside scroll
-        Spacer(modifier = Modifier.height(barSpacer))
-
+    val keyboard: @Composable () -> Unit = {
         CalculatorKeyboard(
             presets = state.availablePresets,
             hasValidExpression = state.hasValidExpression,
@@ -273,8 +275,61 @@ fun CalculatorBrewScreen(
                 onNavigateToBrew()
             },
         )
+    }
 
-        Spacer(modifier = Modifier.height(barSpacer))
+    if (twoPaneCalculator) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+        ) {
+            // Left pane: display + settings, top-aligned and scrollable so they
+            // stay grouped at the top instead of being spread down a tall window.
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .verticalScroll(scrollState),
+            ) {
+                header()
+                Spacer(modifier = Modifier.height(sectionSpacer))
+                previewAndConfig()
+                Spacer(modifier = Modifier.height(sectionSpacer))
+                pills()
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight(),
+                contentAlignment = Alignment.Center,
+            ) {
+                keyboard()
+            }
+        }
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+        ) {
+            header()
+            Spacer(modifier = Modifier.height(sectionSpacer))
+            // Scrollable content: preview + config
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(scrollState),
+            ) {
+                previewAndConfig()
+            }
+            Spacer(modifier = Modifier.height(sectionSpacer))
+            pills()
+            // Calculator keyboard — pinned to bottom, outside scroll
+            Spacer(modifier = Modifier.height(barSpacer))
+            keyboard()
+            Spacer(modifier = Modifier.height(barSpacer))
+        }
     }
 
     if (showSaveFavoriteDialog) {

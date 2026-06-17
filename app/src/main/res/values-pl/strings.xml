@@ -180,8 +180,6 @@
     <string name="desc_bloom_sprite_blackberry">Ziarno kawy wypuszcza kolczaste pędy z gronami ciemnych jeżyn.</string>
     <string name="label_bloom_sprite_coffee_brew">Napar kawowy</string>
     <string name="desc_bloom_sprite_coffee_brew">Bursztynowa poświata kawy z kremowymi zawijasami pary.</string>
-    <string name="label_bloom_sprite_cursed_relic">Przeklęty relikt</string>
-    <string name="desc_bloom_sprite_cursed_relic">Pęknięte ziarno uwalnia złotą magię i czarny opar do medalionu podobnego do wilka.</string>
     <string name="label_bloom_sprite_rose">Róża</string>
     <string name="desc_bloom_sprite_rose">Zwarta czerwona róża rozwijająca się nad ziarnem.</string>
     <string name="label_bloom_sprite_lotus">Lotos</string>
@@ -216,34 +214,6 @@
     <string name="desc_bloom_sprite_snowdrop">Delikatne białe dzwonki przebiśniegu wyrastają z pękniętego ziarna.</string>
     <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
     <string name="desc_bloom_sprite_myosotis_sylvatica">Maleńkie niebieskie kwiaty niezapominajki z żółtymi środkami rozwijają się z ziarna.</string>
-    <string name="label_bloom_sprite_fantasy_citadel">Fantastyczna cytadela</string>
-    <string name="desc_bloom_sprite_fantasy_citadel">Pęknięte ziarno otwiera się w maleńką kamienną cytadelę z ciepłymi oknami.</string>
-    <string name="label_bloom_sprite_cyber_city_vines">Pnącza cybermiasta</string>
-    <string name="desc_bloom_sprite_cyber_city_vines">Neonowe pnącza obwodów wyrastają w kompaktowe miniaturowe cybermiasto.</string>
-    <string name="label_bloom_sprite_pixel_micro_world">Pikselowy mikroświat</string>
-    <string name="desc_bloom_sprite_pixel_micro_world">Ziarno rozpikselowuje się w maleńki retro mikroświat z bloków i terenu.</string>
-    <string name="label_bloom_sprite_tabletop_adventure_map">Planszowa mapa przygody</string>
-    <string name="desc_bloom_sprite_tabletop_adventure_map">Toczące się ziarno rozwija maleńką pergaminową mapę przygody i pustą klejnotową kość.</string>
-    <string name="label_bloom_sprite_alchemy_astrolabe">Alchemiczne astrolabium</string>
-    <string name="desc_bloom_sprite_alchemy_astrolabe">Mosiężne pierścienie i orbitujące szklane fiolki rozwijają się z ziarna kawy.</string>
-    <string name="label_bloom_sprite_espresso_robot">Robot espresso</string>
-    <string name="desc_bloom_sprite_espresso_robot">Ziarno rozwija się w maleńkiego mosiężnego robota napędzanego espresso.</string>
-    <string name="label_bloom_sprite_space_habitat_ring">Pierścień kosmicznego habitatu</string>
-    <string name="desc_bloom_sprite_space_habitat_ring">Zakrzywione fragmenty skorupki rozdzielają się w miniaturowy obracający się pierścień habitatu.</string>
-    <string name="label_bloom_sprite_nerd_library_nook">Kącik biblioteczny geeka</string>
-    <string name="desc_bloom_sprite_nerd_library_nook">Z ziarna wyskakuje biblioteczny kącik z półkami, lampą i kubkiem.</string>
-    <string name="label_bloom_sprite_arcade_platformer_level">Poziom arcade platformówki</string>
-    <string name="desc_bloom_sprite_arcade_platformer_level">Ziarno wypuszcza maleńki oryginalny poziom platformowy z blokami, klejnotami i flagą.</string>
-    <string name="label_bloom_sprite_clockwork_dragonfly">Mechaniczna ważka</string>
-    <string name="desc_bloom_sprite_clockwork_dragonfly">Kawowa skorupka wykluwa się w mosiężną nakręcaną ważkę.</string>
-    <string name="label_bloom_sprite_observatory_dome">Kopuła obserwatorium</string>
-    <string name="desc_bloom_sprite_observatory_dome">Ziarno otwiera się jak maleńka kopuła obserwatorium z mosiężnym teleskopem.</string>
-    <string name="label_bloom_sprite_cyber_alchemy_engine">Silnik cyberalchemiczny</string>
-    <string name="desc_bloom_sprite_cyber_alchemy_engine">Mosiężne pierścienie, obwody i bursztynowy rdzeń tworzą kompaktowy silnik cyberalchemiczny.</string>
-    <string name="label_bloom_sprite_tabletop_space_colony">Planszowa kolonia kosmiczna</string>
-    <string name="desc_bloom_sprite_tabletop_space_colony">Maleńka planszowa kolonia kosmiczna wyrasta z kopułami i pustymi księżycami z kości.</string>
-    <string name="label_bloom_sprite_observatory_library">Biblioteka w obserwatorium</string>
-    <string name="desc_bloom_sprite_observatory_library">Przytulna biblioteka w obserwatorium otwiera się z półkami, teleskopem i parowymi konstelacjami.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Dziennik parzeń</string>

@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.adsamcik.starlitcoffee.navigation.StarlitNavHost
 import com.adsamcik.starlitcoffee.notification.DeepLinkBus
+import com.adsamcik.starlitcoffee.ui.adaptive.ProvideWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,7 +19,9 @@ class MainActivity : ComponentActivity() {
         consumeDeepLinkExtras(intent)
         setContent {
             StarlitCoffeeTheme {
-                StarlitNavHost()
+                ProvideWindowWidthClass {
+                    StarlitNavHost()
+                }
             }
         }
     }

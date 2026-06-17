@@ -176,8 +176,6 @@
     <string name="desc_bloom_sprite_blackberry">Un grain de café fait pousser des ronces épineuses avec des grappes de mûres sombres.</string>
     <string name="label_bloom_sprite_coffee_brew">Préparation café</string>
     <string name="desc_bloom_sprite_coffee_brew">Lueur ambrée de café avec volutes de vapeur crème.</string>
-    <string name="label_bloom_sprite_cursed_relic">Relique maudite</string>
-    <string name="desc_bloom_sprite_cursed_relic">Un grain fissuré libère de la magie dorée et une vapeur noire dans un médaillon lupin.</string>
     <string name="label_bloom_sprite_rose">Rose</string>
     <string name="desc_bloom_sprite_rose">Rose rouge compacte qui s\'épanouit au-dessus du grain.</string>
     <string name="label_bloom_sprite_lotus">Lotus</string>
@@ -212,34 +210,6 @@
     <string name="desc_bloom_sprite_snowdrop">De délicates clochettes blanches de perce-neige montent depuis le grain fissuré.</string>
     <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
     <string name="desc_bloom_sprite_myosotis_sylvatica">De minuscules fleurs bleues de myosotis aux centres jaunes se déploient depuis le grain.</string>
-    <string name="label_bloom_sprite_fantasy_citadel">Citadelle fantasy</string>
-    <string name="desc_bloom_sprite_fantasy_citadel">Un grain fissuré s\'ouvre en minuscule citadelle de pierre aux fenêtres chaleureuses.</string>
-    <string name="label_bloom_sprite_cyber_city_vines">Lianes de cyber-cité</string>
-    <string name="desc_bloom_sprite_cyber_city_vines">Des lianes de circuits néon se développent en petite cyber-cité compacte.</string>
-    <string name="label_bloom_sprite_pixel_micro_world">Micro-monde pixel</string>
-    <string name="desc_bloom_sprite_pixel_micro_world">Le grain se pixellise en minuscule micro-monde rétro de blocs et de terrain.</string>
-    <string name="label_bloom_sprite_tabletop_adventure_map">Carte d\'aventure de plateau</string>
-    <string name="desc_bloom_sprite_tabletop_adventure_map">Un grain roulant se déploie en petite carte d\'aventure en parchemin et dé gemme vierge.</string>
-    <string name="label_bloom_sprite_alchemy_astrolabe">Astrolabe alchimique</string>
-    <string name="desc_bloom_sprite_alchemy_astrolabe">Des anneaux de laiton et des fioles de verre en orbite se déploient depuis le grain de café.</string>
-    <string name="label_bloom_sprite_espresso_robot">Robot espresso</string>
-    <string name="desc_bloom_sprite_espresso_robot">Le grain se déploie en minuscule robot de laiton propulsé par espresso.</string>
-    <string name="label_bloom_sprite_space_habitat_ring">Anneau d\'habitat spatial</string>
-    <string name="desc_bloom_sprite_space_habitat_ring">Des morceaux de coque courbes se séparent en anneau d\'habitat miniature en rotation.</string>
-    <string name="label_bloom_sprite_nerd_library_nook">Coin bibliothèque geek</string>
-    <string name="desc_bloom_sprite_nerd_library_nook">Un coin bibliothèque pop-up s\'ouvre depuis le grain avec étagères, lampe et mug.</string>
-    <string name="label_bloom_sprite_arcade_platformer_level">Niveau de plateformes arcade</string>
-    <string name="desc_bloom_sprite_arcade_platformer_level">Le grain fait apparaître un petit niveau de plateforme original avec blocs, gemmes et drapeau.</string>
-    <string name="label_bloom_sprite_clockwork_dragonfly">Libellule mécanique</string>
-    <string name="desc_bloom_sprite_clockwork_dragonfly">Une coque de café éclot en libellule de laiton à mécanisme d\'horlogerie.</string>
-    <string name="label_bloom_sprite_observatory_dome">Dôme d\'observatoire</string>
-    <string name="desc_bloom_sprite_observatory_dome">Le grain s\'ouvre comme un petit dôme d\'observatoire avec télescope en laiton.</string>
-    <string name="label_bloom_sprite_cyber_alchemy_engine">Moteur cyber-alchimique</string>
-    <string name="desc_bloom_sprite_cyber_alchemy_engine">Des anneaux de laiton, des circuits et un noyau ambré forment un moteur cyber-alchimique compact.</string>
-    <string name="label_bloom_sprite_tabletop_space_colony">Colonie spatiale de plateau</string>
-    <string name="desc_bloom_sprite_tabletop_space_colony">Une minuscule colonie spatiale de jeu de plateau s\'élève avec dômes et lunes en dés vierges.</string>
-    <string name="label_bloom_sprite_observatory_library">Bibliothèque d\'observatoire</string>
-    <string name="desc_bloom_sprite_observatory_library">Une bibliothèque d\'observatoire chaleureuse s\'ouvre avec étagères, télescope et constellations de vapeur.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Journal des préparations</string>

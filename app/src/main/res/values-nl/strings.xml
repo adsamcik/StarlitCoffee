@@ -176,8 +176,6 @@
     <string name="desc_bloom_sprite_blackberry">Een koffieboon groeit uit tot doornige braamranken met donkere bramentrossen.</string>
     <string name="label_bloom_sprite_coffee_brew">Koffiebereiding</string>
     <string name="desc_bloom_sprite_coffee_brew">Amberkleurige koffiegloed met roomkleurige stoomkrullen.</string>
-    <string name="label_bloom_sprite_cursed_relic">Vervloekte relikwie</string>
-    <string name="desc_bloom_sprite_cursed_relic">Een gebarsten boon laat gouden magie en zwarte damp los in een wolfachtig medaillon.</string>
     <string name="label_bloom_sprite_rose">Roos</string>
     <string name="desc_bloom_sprite_rose">Compacte rode roos die boven de boon openvouwt.</string>
     <string name="label_bloom_sprite_lotus">Lotus</string>
@@ -212,34 +210,6 @@
     <string name="desc_bloom_sprite_snowdrop">Fijne witte sneeuwklokjes rijzen uit de gebarsten boon.</string>
     <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
     <string name="desc_bloom_sprite_myosotis_sylvatica">Kleine blauwe vergeet-mij-nietbloesems met gele harten vouwen open uit de boon.</string>
-    <string name="label_bloom_sprite_fantasy_citadel">Fantasycitadel</string>
-    <string name="desc_bloom_sprite_fantasy_citadel">Een gebarsten boon opent tot een kleine stenen citadel met warme ramen.</string>
-    <string name="label_bloom_sprite_cyber_city_vines">Cyberstad-ranken</string>
-    <string name="desc_bloom_sprite_cyber_city_vines">Neon-circuitranken groeien uit tot een compacte miniatuur-cyberstad.</string>
-    <string name="label_bloom_sprite_pixel_micro_world">Pixel-microwereld</string>
-    <string name="desc_bloom_sprite_pixel_micro_world">De boon verpixelt tot een kleine retro-microwereld van blokken en terrein.</string>
-    <string name="label_bloom_sprite_tabletop_adventure_map">Tabletop-avonturenkaart</string>
-    <string name="desc_bloom_sprite_tabletop_adventure_map">Een rollende boon vouwt open tot een kleine perkamenten avonturenkaart en blanco edelsteendobbelsteen.</string>
-    <string name="label_bloom_sprite_alchemy_astrolabe">Alchemistisch astrolabium</string>
-    <string name="desc_bloom_sprite_alchemy_astrolabe">Messing ringen en ronddraaiende glazen flesjes vouwen open uit de koffieboon.</string>
-    <string name="label_bloom_sprite_espresso_robot">Espressorobot</string>
-    <string name="desc_bloom_sprite_espresso_robot">De boon vouwt open tot een kleine, door espresso aangedreven messing robot.</string>
-    <string name="label_bloom_sprite_space_habitat_ring">Ruimtehabitat-ring</string>
-    <string name="desc_bloom_sprite_space_habitat_ring">Gebogen schilfragmenten splitsen tot een miniatuur roterende habitat-ring.</string>
-    <string name="label_bloom_sprite_nerd_library_nook">Nerdy bibliotheekhoekje</string>
-    <string name="desc_bloom_sprite_nerd_library_nook">Een pop-upbibliotheekhoekje opent uit de boon met planken, lamp en mok.</string>
-    <string name="label_bloom_sprite_arcade_platformer_level">Arcade-platformlevel</string>
-    <string name="desc_bloom_sprite_arcade_platformer_level">De boon laat een klein origineel platformlevel groeien met blokken, edelstenen en een vlag.</string>
-    <string name="label_bloom_sprite_clockwork_dragonfly">Uurwerklibel</string>
-    <string name="desc_bloom_sprite_clockwork_dragonfly">Een koffieschil komt uit als een messing uurwerklibel.</string>
-    <string name="label_bloom_sprite_observatory_dome">Observatoriumkoepel</string>
-    <string name="desc_bloom_sprite_observatory_dome">De boon opent als een kleine observatoriumkoepel met een messing telescoop.</string>
-    <string name="label_bloom_sprite_cyber_alchemy_engine">Cyberalchemie-engine</string>
-    <string name="desc_bloom_sprite_cyber_alchemy_engine">Messing ringen, circuits en een amberkleurige kern vormen een compacte cyberalchemie-engine.</string>
-    <string name="label_bloom_sprite_tabletop_space_colony">Tabletop-ruimtekolonie</string>
-    <string name="desc_bloom_sprite_tabletop_space_colony">Een kleine bordspel-ruimtekolonie rijst op met koepels en blanco dobbelsteenmanen.</string>
-    <string name="label_bloom_sprite_observatory_library">Observatoriumbibliotheek</string>
-    <string name="desc_bloom_sprite_observatory_library">Een knusse observatoriumbibliotheek opent met planken, telescoop en stoomsterrenbeelden.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Zetlogboek</string>

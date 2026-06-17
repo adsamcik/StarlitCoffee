@@ -5,6 +5,29 @@ All notable changes to **Starlit Coffee** are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Adaptive large-screen layouts (Android 17 / SDK 37)** — on `sw>=600dp` the
+  portrait orientation lock is ignored, so the app now adapts to tablets,
+  foldables, landscape, and desktop windows: a side **navigation rail** replaces
+  the bottom bar on wide windows; the **calculator** splits into a display +
+  settings pane beside the keypad in wide landscape; and the **brew log** becomes
+  a list-detail view with the selected entry shown alongside the list on large
+  screens. Width is tracked live via a new `WindowWidthClass` so resizing and
+  rotation reflow instantly.
+
+### Removed
+
+- **Non-bloom timer animations** — dropped the scene/object spritesheet themes
+  that don't depict a flower opening (fantasy citadel, cyber city vines, pixel
+  micro-world, tabletop adventure map, alchemy astrolabe, espresso robot, space
+  habitat ring, nerd library nook, arcade platformer level, clockwork dragonfly,
+  observatory dome, cyber-alchemy engine, tabletop space colony, observatory
+  library) plus the cursed-relic medallion and the orphaned punk-theme assets.
+  The bloom picker now keeps only true floral, fruiting-plant, and coffee blooms.
+
 ## [1.2.0] — 2026-06-07
 
 The **AI coffee-bag scanning** release. The bag-scan path was rebuilt end to

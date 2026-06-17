@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Settings
@@ -29,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 
+private val MoreContentMaxWidth = 600.dp
+
 @Composable
 fun MoreScreen(
     onNavigateToRecipes: () -> Unit,
@@ -39,14 +44,23 @@ fun MoreScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                // Horizontal padding lives on the outer column so the title in
+                // ScreenTopBar lines up with the cards below it (the top bar has
+                // no back button here, so it has no leading icon to inset it).
+                .padding(horizontal = 16.dp)
+                .padding(top = 8.dp),
         ) {
             ScreenTopBar(title = stringResource(R.string.screen_more_title))
 
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth()
+                    // Keep the menu a comfortable, centered column instead of
+                    // stretching edge to edge on tablets / wide windows.
+                    .widthIn(max = MoreContentMaxWidth)
+                    .align(Alignment.CenterHorizontally)
+                    .verticalScroll(rememberScrollState())
                     .padding(top = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {

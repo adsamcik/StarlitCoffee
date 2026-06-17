@@ -174,8 +174,6 @@
     <string name="desc_bloom_sprite_blackberry">咖啡豆长出带刺藤蔓和深色黑莓果簇。</string>
     <string name="label_bloom_sprite_coffee_brew">咖啡冲煮</string>
     <string name="desc_bloom_sprite_coffee_brew">琥珀色咖啡光泽与奶油色蒸汽卷。</string>
-    <string name="label_bloom_sprite_cursed_relic">诅咒遗物</string>
-    <string name="desc_bloom_sprite_cursed_relic">裂开的咖啡豆释放金色魔法和黑色蒸汽，化作狼形徽章。</string>
     <string name="label_bloom_sprite_rose">玫瑰</string>
     <string name="desc_bloom_sprite_rose">紧凑的红玫瑰在咖啡豆上方展开。</string>
     <string name="label_bloom_sprite_lotus">莲花</string>
@@ -210,34 +208,6 @@
     <string name="desc_bloom_sprite_snowdrop">精致白色雪滴花铃从裂开的咖啡豆中升起。</string>
     <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
     <string name="desc_bloom_sprite_myosotis_sylvatica">小小的蓝色勿忘我花带黄色花心，从咖啡豆中展开。</string>
-    <string name="label_bloom_sprite_fantasy_citadel">幻想城堡</string>
-    <string name="desc_bloom_sprite_fantasy_citadel">裂开的咖啡豆打开成一座带温暖窗光的小石堡。</string>
-    <string name="label_bloom_sprite_cyber_city_vines">赛博城市藤蔓</string>
-    <string name="desc_bloom_sprite_cyber_city_vines">霓虹电路藤蔓长成紧凑的微型赛博城市。</string>
-    <string name="label_bloom_sprite_pixel_micro_world">像素微世界</string>
-    <string name="desc_bloom_sprite_pixel_micro_world">咖啡豆像素化，变成由方块和地形组成的复古小世界。</string>
-    <string name="label_bloom_sprite_tabletop_adventure_map">桌面冒险地图</string>
-    <string name="desc_bloom_sprite_tabletop_adventure_map">滚动的咖啡豆展开成小羊皮纸冒险地图和空白宝石骰。</string>
-    <string name="label_bloom_sprite_alchemy_astrolabe">炼金星盘</string>
-    <string name="desc_bloom_sprite_alchemy_astrolabe">黄铜环和环绕的玻璃小瓶从咖啡豆中展开。</string>
-    <string name="label_bloom_sprite_espresso_robot">浓缩机器人</string>
-    <string name="desc_bloom_sprite_espresso_robot">咖啡豆展开成一个由浓缩咖啡驱动的黄铜小机器人。</string>
-    <string name="label_bloom_sprite_space_habitat_ring">太空栖居环</string>
-    <string name="desc_bloom_sprite_space_habitat_ring">弧形外壳碎片分开，变成微型旋转栖居环。</string>
-    <string name="label_bloom_sprite_nerd_library_nook">极客图书角</string>
-    <string name="desc_bloom_sprite_nerd_library_nook">咖啡豆弹出一个带书架、台灯和杯子的图书角。</string>
-    <string name="label_bloom_sprite_arcade_platformer_level">街机平台关卡</string>
-    <string name="desc_bloom_sprite_arcade_platformer_level">咖啡豆冒出一个由方块、宝石和旗帜组成的原创小平台关卡。</string>
-    <string name="label_bloom_sprite_clockwork_dragonfly">发条蜻蜓</string>
-    <string name="desc_bloom_sprite_clockwork_dragonfly">咖啡壳孵化出一只黄铜发条蜻蜓。</string>
-    <string name="label_bloom_sprite_observatory_dome">天文台穹顶</string>
-    <string name="desc_bloom_sprite_observatory_dome">咖啡豆像小天文台穹顶一样打开，里面有黄铜望远镜。</string>
-    <string name="label_bloom_sprite_cyber_alchemy_engine">赛博炼金引擎</string>
-    <string name="desc_bloom_sprite_cyber_alchemy_engine">黄铜环、电路和琥珀核心组成紧凑的赛博炼金引擎。</string>
-    <string name="label_bloom_sprite_tabletop_space_colony">桌面太空殖民地</string>
-    <string name="desc_bloom_sprite_tabletop_space_colony">小小的棋盘式太空殖民地升起，带穹顶和空白骰子月亮。</string>
-    <string name="label_bloom_sprite_observatory_library">天文台图书馆</string>
-    <string name="desc_bloom_sprite_observatory_library">舒适的天文台图书馆打开，里面有书架、望远镜和蒸汽星座。</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">冲煮记录</string>

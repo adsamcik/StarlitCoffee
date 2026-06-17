@@ -176,8 +176,6 @@
     <string name="desc_bloom_sprite_blackberry">En kaffebønne vokser til tornede ranker med mørke brombærklaser.</string>
     <string name="label_bloom_sprite_coffee_brew">Kaffebryg</string>
     <string name="desc_bloom_sprite_coffee_brew">Ravfarvet kaffeglød med cremede dampkrøller.</string>
-    <string name="label_bloom_sprite_cursed_relic">Forbandet relikvie</string>
-    <string name="desc_bloom_sprite_cursed_relic">En revnet bønne frigiver gylden magi og sort damp ind i en ulvelignende medaljon.</string>
     <string name="label_bloom_sprite_rose">Rose</string>
     <string name="desc_bloom_sprite_rose">Kompakt rød rose, der folder sig ud over bønnen.</string>
     <string name="label_bloom_sprite_lotus">Lotus</string>
@@ -212,34 +210,6 @@
     <string name="desc_bloom_sprite_snowdrop">Fine hvide vintergæk-klokker rejser sig fra den revnede bønne.</string>
     <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
     <string name="desc_bloom_sprite_myosotis_sylvatica">Små blå forglemmigej-blomster med gule centre folder sig ud fra bønnen.</string>
-    <string name="label_bloom_sprite_fantasy_citadel">Fantasy-citadel</string>
-    <string name="desc_bloom_sprite_fantasy_citadel">En revnet bønne åbner sig til et lille stencitadel med varme vinduer.</string>
-    <string name="label_bloom_sprite_cyber_city_vines">Cyberby-ranker</string>
-    <string name="desc_bloom_sprite_cyber_city_vines">Neonprint-ranker vokser til en kompakt miniature-cyberby.</string>
-    <string name="label_bloom_sprite_pixel_micro_world">Pixel-mikroverden</string>
-    <string name="desc_bloom_sprite_pixel_micro_world">Bønnen bliver pixeleret til en lille retro-mikroverden af blokke og terræn.</string>
-    <string name="label_bloom_sprite_tabletop_adventure_map">Bordrollespils-eventyrkort</string>
-    <string name="desc_bloom_sprite_tabletop_adventure_map">En rullende bønne folder sig ud til et lille pergament-eventyrkort og en blank ædelstens-terning.</string>
-    <string name="label_bloom_sprite_alchemy_astrolabe">Alkymi-astrolabium</string>
-    <string name="desc_bloom_sprite_alchemy_astrolabe">Messingringe og kredsende glasflasker folder sig ud fra kaffebønnen.</string>
-    <string name="label_bloom_sprite_espresso_robot">Espresso-robot</string>
-    <string name="desc_bloom_sprite_espresso_robot">Bønnen folder sig ud til en lille espressodrevet messingrobot.</string>
-    <string name="label_bloom_sprite_space_habitat_ring">Rumhabitat-ring</string>
-    <string name="desc_bloom_sprite_space_habitat_ring">Buede skaldele deler sig til en miniature roterende habitat-ring.</string>
-    <string name="label_bloom_sprite_nerd_library_nook">Nørdet bibliotekskrog</string>
-    <string name="desc_bloom_sprite_nerd_library_nook">En pop op-bibliotekskrog åbner sig fra bønnen med hylder, lampe og krus.</string>
-    <string name="label_bloom_sprite_arcade_platformer_level">Arkade-platformbane</string>
-    <string name="desc_bloom_sprite_arcade_platformer_level">Bønnen spirer til en lille original platformbane med blokke, ædelsten og et flag.</string>
-    <string name="label_bloom_sprite_clockwork_dragonfly">Urværksguldsmed</string>
-    <string name="desc_bloom_sprite_clockwork_dragonfly">En kaffeskal klækker til en messingguldsmed af urværk.</string>
-    <string name="label_bloom_sprite_observatory_dome">Observatoriekuppel</string>
-    <string name="desc_bloom_sprite_observatory_dome">Bønnen åbner sig som en lille observatoriekuppel med et messingteleskop.</string>
-    <string name="label_bloom_sprite_cyber_alchemy_engine">Cyberalkymi-motor</string>
-    <string name="desc_bloom_sprite_cyber_alchemy_engine">Messingringe, kredsløb og en ravfarvet kerne danner en kompakt cyberalkymi-motor.</string>
-    <string name="label_bloom_sprite_tabletop_space_colony">Bordspils-rumkoloni</string>
-    <string name="desc_bloom_sprite_tabletop_space_colony">En lille bordspils-rumkoloni rejser sig med kupler og blanke terningemåner.</string>
-    <string name="label_bloom_sprite_observatory_library">Observatoriebibliotek</string>
-    <string name="desc_bloom_sprite_observatory_library">Et hyggeligt observatoriebibliotek åbner sig med hylder, teleskop og dampkonstellationer.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Bryglog</string>
