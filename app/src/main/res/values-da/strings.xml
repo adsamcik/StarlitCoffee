@@ -330,19 +330,6 @@
     <string name="msg_rating_reminder_perm_denied">Notifikationer er blokeret. Slå dem til i systemindstillingerne for at modtage påmindelser.</string>
     <string name="action_open_app_settings">Åbn systemindstillinger</string>
 
-    <!-- Settings: bag selection prompt -->
-    <string name="label_bag_prompt">Påmindelse om kaffepose</string>
-    <string name="msg_bag_prompt_hint">Når du starter et bryg uden at vælge en pose, bliver du bedt om at vælge en af dine registrerede poser.</string>
-
-    <!-- Bag selection prompt dialog -->
-    <string name="dialog_pick_bag_title">Brygger du med en pose?</string>
-    <plurals name="msg_pick_bag_body">
-        <item quantity="one">Du har %1$d registreret kaffepose. Hvis du vælger den, holdes din log, friskhed og malingsforslag præcise.</item>
-        <item quantity="other">Du har %1$d registrerede kaffeposer. Hvis du vælger en, holdes din log, friskhed og malingsforslag præcise.</item>
-    </plurals>
-    <string name="action_pick_bag">Vælg en pose</string>
-    <string name="action_brew_without_bag_short">Bryg alligevel</string>
-
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">Vandretention</string>
     <string name="format_retention_explanation">Malet kaffe absorberer cirka 2× sin tørvægt i vand. Med %1$.0fg kaffe holdes ~%2$.0fg tilbage, så der er ~%3$.0fg i koppen.\n\nDet er et estimat — mørke ristninger absorberer lidt mere, lyse ristninger lidt mindre.</string>

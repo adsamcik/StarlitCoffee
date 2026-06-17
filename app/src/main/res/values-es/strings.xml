@@ -330,19 +330,6 @@
     <string name="msg_rating_reminder_perm_denied">Las notificaciones están bloqueadas. Actívalas en los ajustes del sistema para recibir recordatorios.</string>
     <string name="action_open_app_settings">Abrir ajustes del sistema</string>
 
-    <!-- Settings: bag selection prompt -->
-    <string name="label_bag_prompt">Recordatorio de bolsa de café</string>
-    <string name="msg_bag_prompt_hint">Al iniciar una preparación sin elegir bolsa, pedir elegir una de tus bolsas registradas.</string>
-
-    <!-- Bag selection prompt dialog -->
-    <string name="dialog_pick_bag_title">¿Preparando con una bolsa?</string>
-    <plurals name="msg_pick_bag_body">
-        <item quantity="one">Tienes %1$d bolsa registrada. Elegirla mantiene precisos el registro, la frescura y las sugerencias de molienda.</item>
-        <item quantity="other">Tienes %1$d bolsas registradas. Elegir una mantiene precisos el registro, la frescura y las sugerencias de molienda.</item>
-    </plurals>
-    <string name="action_pick_bag">Elegir una bolsa</string>
-    <string name="action_brew_without_bag_short">Preparar igualmente</string>
-
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">Retención de agua</string>
     <string name="format_retention_explanation">El café molido absorbe aproximadamente 2× su peso seco en agua. Con %1$.0fg de café, el café retiene ~%2$.0fg y deja ~%3$.0fg en tu taza.\n\nEs una estimación — los tuestes oscuros absorben un poco más, los claros un poco menos.</string>

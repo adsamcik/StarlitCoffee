@@ -145,12 +145,6 @@ fun CalculatorBrewScreen(
     }
 
     var showSaveFavoriteDialog by remember { mutableStateOf(false) }
-    var showBagPromptDialog by remember { mutableStateOf(false) }
-
-    // Tracked bags = anything that isn't FINISHED. Matches CoffeeBagDao.getActive() semantics.
-    val trackedBags = remember(coffeeBags) {
-        coffeeBags.filter { it.status != "FINISHED" }
-    }
 
     val scrollState = rememberScrollState()
 
@@ -276,40 +270,11 @@ fun CalculatorBrewScreen(
             onClear = { calculatorViewModel.clear() },
             onBrew = {
                 syncCalcDerivedState()
-                // Gate: optional reminder to pick one of the tracked bags
-                // when none is currently selected. Pref defaults to ON; user
-                // can disable in Settings or dismiss with "Brew anyway".
-                if (
-                    prefs.bagSelectionPromptEnabled &&
-                    selectedBagId == null &&
-                    trackedBags.isNotEmpty()
-                ) {
-                    showBagPromptDialog = true
-                } else {
-                    onNavigateToBrew()
-                }
+                onNavigateToBrew()
             },
         )
 
         Spacer(modifier = Modifier.height(barSpacer))
-    }
-
-    if (showBagPromptDialog) {
-        com.adsamcik.starlitcoffee.ui.component.BagSelectionPromptDialog(
-            trackedBags = trackedBags,
-            onSelectBag = { bagId ->
-                brewViewModel.selectBag(bagId)
-                showBagPromptDialog = false
-                onNavigateToBrew()
-            },
-            onBrewWithoutBag = {
-                showBagPromptDialog = false
-                onNavigateToBrew()
-            },
-            onDismiss = {
-                showBagPromptDialog = false
-            },
-        )
     }
 
     if (showSaveFavoriteDialog) {

@@ -334,21 +334,6 @@
     <string name="msg_rating_reminder_perm_denied">Powiadomienia są zablokowane. Włącz je w ustawieniach systemu, aby otrzymywać przypomnienia.</string>
     <string name="action_open_app_settings">Otwórz ustawienia systemu</string>
 
-    <!-- Settings: bag selection prompt -->
-    <string name="label_bag_prompt">Przypomnienie o opakowaniu kawy</string>
-    <string name="msg_bag_prompt_hint">Gdy zaczynasz parzenie bez wybranego opakowania, pokaż prośbę o wybór jednego ze śledzonych opakowań.</string>
-
-    <!-- Bag selection prompt dialog -->
-    <string name="dialog_pick_bag_title">Parzysz z opakowania?</string>
-    <plurals name="msg_pick_bag_body">
-        <item quantity="one">Masz %1$d śledzone opakowanie. Wybranie go utrzyma dokładny dziennik, świeżość i sugestie mielenia.</item>
-        <item quantity="few">Masz %1$d śledzone opakowania. Wybranie jednego utrzyma dokładny dziennik, świeżość i sugestie mielenia.</item>
-        <item quantity="many">Masz %1$d śledzonych opakowań. Wybranie jednego utrzyma dokładny dziennik, świeżość i sugestie mielenia.</item>
-        <item quantity="other">Masz %1$d śledzonego opakowania. Wybranie jednego utrzyma dokładny dziennik, świeżość i sugestie mielenia.</item>
-    </plurals>
-    <string name="action_pick_bag">Wybierz opakowanie</string>
-    <string name="action_brew_without_bag_short">Parz mimo to</string>
-
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">Retencja wody</string>
     <string name="format_retention_explanation">Zmielona kawa absorbuje około 2× swojej suchej masy w wodzie. Przy %1$.0fg kawy złoże zatrzyma ~%2$.0fg, zostawiając ~%3$.0fg w filiżance.\n\nTo szacunek — ciemne palenia absorbują nieco więcej, jasne nieco mniej.</string>

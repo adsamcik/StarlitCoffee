@@ -330,19 +330,6 @@
     <string name="msg_rating_reminder_perm_denied">Le notifiche sono bloccate. Abilitale nelle impostazioni di sistema per ricevere promemoria.</string>
     <string name="action_open_app_settings">Apri impostazioni di sistema</string>
 
-    <!-- Settings: bag selection prompt -->
-    <string name="label_bag_prompt">Promemoria confezione di caffè</string>
-    <string name="msg_bag_prompt_hint">Quando avvii una preparazione senza scegliere una confezione, chiedi di sceglierne una tra le confezioni monitorate.</string>
-
-    <!-- Bag selection prompt dialog -->
-    <string name="dialog_pick_bag_title">Prepari con una confezione?</string>
-    <plurals name="msg_pick_bag_body">
-        <item quantity="one">Hai %1$d confezione monitorata. Selezionandola mantieni precisi registro, freschezza e suggerimenti di macinatura.</item>
-        <item quantity="other">Hai %1$d confezioni monitorate. Sceglierne una mantiene precisi registro, freschezza e suggerimenti di macinatura.</item>
-    </plurals>
-    <string name="action_pick_bag">Scegli confezione</string>
-    <string name="action_brew_without_bag_short">Prepara comunque</string>
-
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">Assorbimento dell\'acqua</string>
     <string name="format_retention_explanation">Il caffè macinato assorbe circa 2× il suo peso secco in acqua. Con %1$.0fg di caffè, il letto trattiene ~%2$.0fg, lasciando ~%3$.0fg nella tazza.\n\nÈ una stima — le tostature scure assorbono leggermente di più, quelle chiare leggermente di meno.</string>

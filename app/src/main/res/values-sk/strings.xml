@@ -334,21 +334,6 @@
     <string name="msg_rating_reminder_perm_denied">Upozornenia sú zablokované. Povoľte ich v systémových nastaveniach, aby ste dostávali pripomienky.</string>
     <string name="action_open_app_settings">Otvoriť systémové nastavenia</string>
 
-    <!-- Settings: bag selection prompt -->
-    <string name="label_bag_prompt">Pripomienka výberu balenia</string>
-    <string name="msg_bag_prompt_hint">Keď začnete prípravu bez výberu balenia, zobrazí výzvu na výber jedného zo sledovaných balení.</string>
-
-    <!-- Bag selection prompt dialog -->
-    <string name="dialog_pick_bag_title">Pripravujete s balením?</string>
-    <plurals name="msg_pick_bag_body">
-        <item quantity="one">Máte %1$d sledované balenie. Výberom zostane presný záznam, čerstvosť aj odporúčania mletia.</item>
-        <item quantity="few">Máte %1$d sledované balenia. Výberom jedného zostane presný záznam, čerstvosť aj odporúčania mletia.</item>
-        <item quantity="many">Máte %1$d sledovaného balenia. Výberom jedného zostane presný záznam, čerstvosť aj odporúčania mletia.</item>
-        <item quantity="other">Máte %1$d sledovaných balení. Výberom jedného zostane presný záznam, čerstvosť aj odporúčania mletia.</item>
-    </plurals>
-    <string name="action_pick_bag">Vybrať balenie</string>
-    <string name="action_brew_without_bag_short">Aj tak pripraviť</string>
-
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">Zadržiavanie vody</string>
     <string name="format_retention_explanation">Kávová usadenina absorbuje približne 2× svoju suchú hmotnosť vo vode. Pri %1$.0fg kávy zadrží ~%2$.0fg a v šálke zostane ~%3$.0fg.\n\nJe to odhad — tmavé praženia absorbujú o niečo viac, svetlé o niečo menej.</string>

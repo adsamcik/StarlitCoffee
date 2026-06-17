@@ -472,15 +472,6 @@ fun SettingsScreen(
                 },
             )
 
-            BagSelectionPromptSettingCard(
-                enabled = prefs.bagSelectionPromptEnabled,
-                onEnabledChange = { enabled ->
-                    scope.launch {
-                        userPreferencesRepository.updateBagSelectionPromptEnabled(enabled)
-                    }
-                },
-            )
-
             // Show brewing instructions — sits alongside the other in-brew
             // courtesy toggles. Hides the BrewGuidanceCard on BrewTimer and
             // the Prep section on GrindPrep for users who know their method
@@ -880,43 +871,6 @@ private fun RatingReminderSettingCard(
                 ) {
                     Text(stringResource(R.string.action_open_app_settings))
                 }
-            }
-        }
-    }
-}
-
-@Composable
-private fun BagSelectionPromptSettingCard(
-    enabled: Boolean,
-    onEnabledChange: (Boolean) -> Unit,
-) {
-    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 16.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.label_bag_prompt),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                    Text(
-                        text = stringResource(R.string.msg_bag_prompt_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                Switch(
-                    checked = enabled,
-                    onCheckedChange = onEnabledChange,
-                )
             }
         }
     }

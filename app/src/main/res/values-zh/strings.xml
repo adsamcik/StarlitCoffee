@@ -327,18 +327,6 @@
     <string name="msg_rating_reminder_perm_denied">通知已被阻止。请在系统设置中启用，以接收提醒。</string>
     <string name="action_open_app_settings">打开系统设置</string>
 
-    <!-- Settings: bag selection prompt -->
-    <string name="label_bag_prompt">咖啡袋提醒</string>
-    <string name="msg_bag_prompt_hint">当你未选择咖啡袋就开始冲煮时，提示从已追踪的咖啡袋中选择一个。</string>
-
-    <!-- Bag selection prompt dialog -->
-    <string name="dialog_pick_bag_title">使用咖啡袋冲煮吗？</string>
-    <plurals name="msg_pick_bag_body">
-        <item quantity="other">你有%1$d个已追踪咖啡袋。选择一个可保持记录、新鲜度和研磨建议准确。</item>
-    </plurals>
-    <string name="action_pick_bag">选择咖啡袋</string>
-    <string name="action_brew_without_bag_short">仍然冲煮</string>
-
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">水分滞留</string>
     <string name="format_retention_explanation">咖啡粉大约会吸收自身干重2×的水。使用%1$.0fg咖啡粉时，粉层会保留约%2$.0fg水，杯中约剩%3$.0fg。\n\n这只是估算—深烘焙吸水略多，浅烘焙略少。</string>

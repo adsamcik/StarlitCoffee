@@ -330,19 +330,6 @@
     <string name="msg_rating_reminder_perm_denied">Les notifications sont bloquées. Activez-les dans les paramètres système pour recevoir les rappels.</string>
     <string name="action_open_app_settings">Ouvrir les paramètres système</string>
 
-    <!-- Settings: bag selection prompt -->
-    <string name="label_bag_prompt">Rappel du paquet de café</string>
-    <string name="msg_bag_prompt_hint">Lorsque vous démarrez une préparation sans choisir de paquet, proposer de sélectionner l\'un de vos paquets suivis.</string>
-
-    <!-- Bag selection prompt dialog -->
-    <string name="dialog_pick_bag_title">Vous préparez avec un paquet ?</string>
-    <plurals name="msg_pick_bag_body">
-        <item quantity="one">Vous avez %1$d paquet suivi. Le sélectionner garde votre journal, la fraîcheur et les suggestions de mouture exacts.</item>
-        <item quantity="other">Vous avez %1$d paquets suivis. En sélectionner un garde votre journal, la fraîcheur et les suggestions de mouture exacts.</item>
-    </plurals>
-    <string name="action_pick_bag">Choisir un paquet</string>
-    <string name="action_brew_without_bag_short">Préparer quand même</string>
-
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">Rétention d\'eau</string>
     <string name="format_retention_explanation">La mouture absorbe environ 2× son poids sec en eau. Avec %1$.0fg de café, la mouture retient ~%2$.0fg, laissant ~%3$.0fg dans votre tasse.\n\nC\'est une estimation — les torréfactions foncées absorbent un peu plus, les torréfactions claires un peu moins.</string>

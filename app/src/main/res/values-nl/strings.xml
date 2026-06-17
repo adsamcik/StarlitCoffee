@@ -330,19 +330,6 @@
     <string name="msg_rating_reminder_perm_denied">Meldingen zijn geblokkeerd. Zet ze aan in de systeeminstellingen om herinneringen te ontvangen.</string>
     <string name="action_open_app_settings">Systeeminstellingen openen</string>
 
-    <!-- Settings: bag selection prompt -->
-    <string name="label_bag_prompt">Koffiezak-herinnering</string>
-    <string name="msg_bag_prompt_hint">Toon een vraag wanneer je een bereiding start zonder zak te kiezen, zodat je een van je bijgehouden zakken kunt selecteren.</string>
-
-    <!-- Bag selection prompt dialog -->
-    <string name="dialog_pick_bag_title">Zet je met een koffiezak?</string>
-    <plurals name="msg_pick_bag_body">
-        <item quantity="one">Je hebt %1$d bijgehouden koffiezak. Door die te kiezen blijven je logboek, versheid en maalsuggesties nauwkeurig.</item>
-        <item quantity="other">Je hebt %1$d bijgehouden koffiezakken. Door er een te kiezen blijven je logboek, versheid en maalsuggesties nauwkeurig.</item>
-    </plurals>
-    <string name="action_pick_bag">Zak kiezen</string>
-    <string name="action_brew_without_bag_short">Toch zetten</string>
-
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">Waterretentie</string>
     <string name="format_retention_explanation">Koffiedik absorbeert ongeveer 2× zijn droge gewicht aan water. Met %1$.0fg koffie houdt de maling ~%2$.0fg vast, waardoor ~%3$.0fg in je kopje overblijft.\n\nDit is een schatting — donkere brandingen absorberen iets meer, lichte brandingen iets minder.</string>

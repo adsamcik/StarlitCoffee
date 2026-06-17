@@ -38,6 +38,7 @@ import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderScaleType
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
+import com.adsamcik.starlitcoffee.ui.component.CoffeeBagSelector
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
@@ -61,6 +62,17 @@ fun GrindPrepScreen(
     onBack: () -> Unit,
 ) {
     val state by brewViewModel.uiState.collectAsStateWithLifecycle()
+
+    // Optional coffee selection happens right here on the grind step: the user
+    // is committing to a brew, so let them attach which coffee they're making.
+    val coffeeBags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+    val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
+    val trackedBags = remember(coffeeBags) {
+        coffeeBags.filter { it.status != "FINISHED" }
+    }
+    val selectedBag = remember(coffeeBags, selectedBagId) {
+        coffeeBags.find { it.id == selectedBagId }
+    }
 
     // Hands are busy with grinder/scale/kettle here — don't let the screen sleep.
     KeepScreenOn()
@@ -123,6 +135,18 @@ fun GrindPrepScreen(
                     filter = state.filterType,
                     ratio = state.effectiveRatio,
                 )
+
+                // Optional: attach the coffee being brewed. Only surfaced when
+                // there's something to pick (a tracked bag exists or one is
+                // already selected) so the grind hero stays the focus otherwise.
+                if (trackedBags.isNotEmpty() || selectedBag != null) {
+                    CoffeeBagSelector(
+                        bags = trackedBags,
+                        selectedBag = selectedBag,
+                        onSelectBag = { brewViewModel.selectBagForBrewing(it) },
+                        onClearBag = { brewViewModel.selectBag(null) },
+                    )
+                }
 
                 // Surface guardrail warnings so the user notices issues with the
                 // current setup (e.g. bloom > water, ratio outside sane range)

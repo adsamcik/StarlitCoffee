@@ -330,19 +330,6 @@
     <string name="msg_rating_reminder_perm_denied">Benachrichtigungen sind blockiert. Aktivieren Sie sie in den Systemeinstellungen, um Erinnerungen zu erhalten.</string>
     <string name="action_open_app_settings">Systemeinstellungen öffnen</string>
 
-    <!-- Settings: bag selection prompt -->
-    <string name="label_bag_prompt">Erinnerung an Kaffeepackung</string>
-    <string name="msg_bag_prompt_hint">Wenn Sie ohne ausgewählte Packung brühen, werden Sie aufgefordert, eine Ihrer erfassten Packungen auszuwählen.</string>
-
-    <!-- Bag selection prompt dialog -->
-    <string name="dialog_pick_bag_title">Mit einer Packung brühen?</string>
-    <plurals name="msg_pick_bag_body">
-        <item quantity="one">Sie haben %1$d erfasste Packung. Durch die Auswahl bleiben Ihr Log, die Frische und die Mahlgrad-Empfehlungen genau.</item>
-        <item quantity="other">Sie haben %1$d erfasste Packungen. Durch die Auswahl bleiben Ihr Log, die Frische und die Mahlgrad-Empfehlungen genau.</item>
-    </plurals>
-    <string name="action_pick_bag">Packung auswählen</string>
-    <string name="action_brew_without_bag_short">Trotzdem brühen</string>
-
     <!-- Water Retention (info sheet) -->
     <string name="label_water_retention">Wasserbindung</string>
     <string name="format_retention_explanation">Kaffeemehl absorbiert etwa 2× sein Trockengewicht an Wasser. Bei %1$.0fg Kaffee hält das Mahlgut ~%2$.0fg zurück, sodass ~%3$.0fg in Ihrer Tasse landen.\n\nDies ist eine Schätzung — dunkle Röstungen absorbieren etwas mehr, helle Röstungen etwas weniger.</string>

@@ -45,10 +45,6 @@ data class UserPreferences(
     // asking the user to rate it with 5 emojis. Opt-in because it needs
     // POST_NOTIFICATIONS permission on Android 13+ and not every user wants it.
     val ratingReminderEnabled: Boolean = false,
-    // When true, prompt the user to pick one of their tracked (active) coffee
-    // bags if they start a brew without selecting one and at least one bag is
-    // currently tracked. Enabled by default — easy escape hatch to brew anyway.
-    val bagSelectionPromptEnabled: Boolean = true,
 )
 
 class UserPreferencesRepository(private val context: Context) {
@@ -72,7 +68,6 @@ class UserPreferencesRepository(private val context: Context) {
         val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
         val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
         val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
-        val BAG_SELECTION_PROMPT_ENABLED = booleanPreferencesKey("bag_selection_prompt_enabled")
     }
 
     val userPreferences: Flow<UserPreferences> = context.dataStore.data
@@ -117,7 +112,6 @@ class UserPreferencesRepository(private val context: Context) {
                     prefs[Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS].orEmpty(),
                 ),
                 ratingReminderEnabled = prefs[Keys.RATING_REMINDER_ENABLED] ?: false,
-                bagSelectionPromptEnabled = prefs[Keys.BAG_SELECTION_PROMPT_ENABLED] ?: true,
             )
         }
         .distinctUntilChanged()
@@ -256,12 +250,6 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun updateRatingReminderEnabled(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.RATING_REMINDER_ENABLED] = enabled
-        }
-    }
-
-    suspend fun updateBagSelectionPromptEnabled(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.BAG_SELECTION_PROMPT_ENABLED] = enabled
         }
     }
 
