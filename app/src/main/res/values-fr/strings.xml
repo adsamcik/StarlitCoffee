@@ -103,7 +103,6 @@
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Préparation</string>
     <string name="label_recipe_heading">Recette</string>
-    <string name="label_set_grinder_to">Régler le moulin sur</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Pré-infusion</string>
     <string name="prep_tip_pulsar_paper">Mouillez le filtre papier dans la base (valve ouverte), puis laissez égoutter. Montez le cylindre, ajoutez la mouture, nivelez le lit et placez le couvercle de dispersion. Tarez la balance.</string>
@@ -115,6 +114,8 @@
     <string name="prep_tip_espresso">Essuyez le porte-filtre. Dosez, répartissez et tassez à niveau avant de verrouiller.</string>
     <string name="prep_tip_moka">Remplissez la chambre inférieure jusqu\'à la valve. Remplissez le panier de mouture, nivelez — ne tassez pas. Assemblez avec précaution.</string>
     <string name="prep_tip_cold_brew">Ajoutez la mouture dans le récipient, tarez la balance, puis ajoutez de l\'eau froide ou à température ambiante et couvrez.</string>
+    <string name="format_prep_grind_specific">Moulez %1$s — réglez %2$s sur %3$s</string>
+    <string name="format_prep_grind_generic">Moulez %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Mettre en pause</string>

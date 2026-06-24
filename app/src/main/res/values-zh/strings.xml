@@ -101,7 +101,6 @@
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">准备</string>
     <string name="label_recipe_heading">配方</string>
-    <string name="label_set_grinder_to">磨豆机设为</string>
     <string name="label_temp_short">温度</string>
     <string name="label_bloom_short">闷蒸</string>
     <string name="prep_tip_pulsar_paper">润湿底座中的纸滤纸（阀门打开）并沥干。装上筒身，加入咖啡粉，铺平粉层，放上分水盖。将秤归零。</string>
@@ -113,6 +112,8 @@
     <string name="prep_tip_espresso">擦干粉碗手柄。称量粉量、均匀布粉并水平压粉后再扣上。</string>
     <string name="prep_tip_moka">下壶加水到阀门处。粉杯装入咖啡粉并刮平—不要压粉。小心拧紧组装。</string>
     <string name="prep_tip_cold_brew">将咖啡粉加入容器，秤归零，再加入常温或冷水并盖好。</string>
+    <string name="format_prep_grind_specific">研磨 %1$s — 将 %2$s 设为 %3$s</string>
+    <string name="format_prep_grind_generic">研磨 %1$s — %2$s（%3$s）</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">暂停</string>

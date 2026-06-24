@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -43,11 +45,17 @@ import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
+import com.adsamcik.starlitcoffee.ui.util.keepScreenOnTimeoutMillis
 import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.viewmodel.BrewUiState
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 import kotlin.math.abs
+
+// Generous estimate of how long hands-busy grind prep (grind + weigh + heat
+// water) takes. There is no live timer on this screen, so it seeds the
+// keep-awake safety timeout instead of a measured target time.
+private const val GRIND_PREP_ESTIMATE_SECONDS = 240
 
 @Composable
 fun GrindPrepScreen(
@@ -75,7 +83,10 @@ fun GrindPrepScreen(
     }
 
     // Hands are busy with grinder/scale/kettle here — don't let the screen sleep.
-    KeepScreenOn()
+    // No live timer drives this step, so cap the hold at a generous multiple of
+    // an estimated prep window (grind + weigh + heat water) so a phone left on
+    // the counter eventually sleeps instead of being pinned on indefinitely.
+    KeepScreenOn(timeoutMillis = keepScreenOnTimeoutMillis(GRIND_PREP_ESTIMATE_SECONDS))
 
     val dimController = rememberDimModeController(featureEnabled = dimModeEnabled)
     DimModeScaffold(
@@ -160,7 +171,7 @@ fun GrindPrepScreen(
                     WarningCard(message = warning)
                 }
 
-                GrindSection(grindResult = state.grindResult)
+                DualHeroSection(state = state)
 
                 SectionDivider()
 
@@ -175,6 +186,8 @@ fun GrindPrepScreen(
                     PrepSection(
                         method = state.method,
                         filter = state.filterType,
+                        grindResult = state.grindResult,
+                        coffeeG = state.coffeeG,
                     )
                 }
             }
@@ -206,35 +219,92 @@ private fun MethodBreadcrumb(
 }
 
 /**
- * Hero number with an imperative verb prefix ("Set grinder to …") so the
- * value is never ambiguous. Centred so the eye lands on the number directly.
+ * Two co-equal hero stats side by side: the coffee dose (how much to weigh
+ * and grind — the number most people reach for first) and the grinder
+ * setting (often already known, but kept just as prominent). Detail that
+ * doesn't belong in the columns — grinder name, suggested range, or the
+ * generic texture cue — drops to a full-width caption beneath both.
  */
 @Composable
-private fun GrindSection(grindResult: GrindResult) {
+private fun DualHeroSection(state: BrewUiState) {
     Column(
         modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
+            verticalAlignment = Alignment.Top,
+        ) {
+            DoseHero(
+                modifier = Modifier.weight(1f),
+                coffeeG = state.coffeeG,
+            )
+            VerticalDivider(
+                modifier = Modifier.padding(horizontal = 12.dp),
+                color = MaterialTheme.colorScheme.outlineVariant,
+            )
+            GrinderHero(
+                modifier = Modifier.weight(1f),
+                grindResult = state.grindResult,
+            )
+        }
+        GrinderHeroCaption(grindResult = state.grindResult)
+    }
+}
+
+/**
+ * Coffee dose hero — the "how much do I grind?" answer in grams.
+ */
+@Composable
+private fun DoseHero(modifier: Modifier = Modifier, coffeeG: Float) {
+    Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        Text(
-            text = stringResource(R.string.label_set_grinder_to),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Spacer(Modifier.height(4.dp))
+        HeroLabel(text = stringResource(R.string.label_coffee))
+        Row(
+            verticalAlignment = Alignment.Bottom,
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            Text(
+                text = "%.0f".format(coffeeG),
+                style = MaterialTheme.typography.displayMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                text = "g",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(bottom = 10.dp),
+            )
+        }
+    }
+}
+
+/**
+ * Grinder setting hero — the dial value (or generic descriptor) to dial in.
+ * Co-equal in size with the dose; the breakdown line stays compact so the
+ * two columns balance, with the rest pushed to [GrinderHeroCaption].
+ */
+@Composable
+private fun GrinderHero(modifier: Modifier = Modifier, grindResult: GrindResult) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        HeroLabel(text = stringResource(R.string.label_grind))
         when (grindResult) {
             is GrindResult.Generic -> {
                 Text(
                     text = grindResult.descriptor.displayName,
-                    style = MaterialTheme.typography.displayMedium,
+                    style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface,
-                )
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = grindResult.descriptor.visualCue,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                 )
             }
@@ -245,11 +315,11 @@ private fun GrindSection(grindResult: GrindResult) {
                 )
                 Row(
                     verticalAlignment = Alignment.Bottom,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     Text(
                         text = formatted.primary,
-                        style = MaterialTheme.typography.displayLarge,
+                        style = MaterialTheme.typography.displayMedium,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
@@ -258,36 +328,55 @@ private fun GrindSection(grindResult: GrindResult) {
                             text = formatted.unit,
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(bottom = 14.dp),
+                            modifier = Modifier.padding(bottom = 10.dp),
                         )
                     }
                 }
-                Spacer(Modifier.height(2.dp))
-                // Breakdown + range collapsed onto a single subdued line.
-                // Both are useful but secondary to the hero number.
-                val subline = buildList {
-                    formatted.breakdown?.let { add(it) }
-                    add(
-                        rangeLine(
-                            grinder = grindResult.grinder,
-                            rec = grindResult.recommendation,
-                        ),
+                formatted.breakdown?.let { breakdown ->
+                    Text(
+                        text = breakdown,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
                     )
-                }.joinToString(separator = " · ")
-                Text(
-                    text = subline,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                )
-                Text(
-                    text = "${grindResult.grinder.brand} ${grindResult.grinder.model}",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                }
             }
         }
     }
+}
+
+/**
+ * Full-width supporting caption under the two heroes: the grinder name and
+ * suggested range for a specific grinder, or the texture cue for a generic
+ * descriptor.
+ */
+@Composable
+private fun GrinderHeroCaption(grindResult: GrindResult) {
+    val caption = when (grindResult) {
+        is GrindResult.Generic -> grindResult.descriptor.visualCue
+        is GrindResult.Specific -> buildList {
+            add("${grindResult.grinder.brand} ${grindResult.grinder.model}")
+            add(rangeLine(grinder = grindResult.grinder, rec = grindResult.recommendation))
+        }.joinToString(separator = " · ")
+    }
+    if (caption.isNotBlank()) {
+        Text(
+            text = caption,
+            modifier = Modifier.fillMaxWidth(),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+        )
+    }
+}
+
+@Composable
+private fun HeroLabel(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.labelMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
 }
 
 /**
@@ -302,12 +391,6 @@ private fun RecipeSection(state: BrewUiState) {
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         SectionHeader(text = stringResource(R.string.label_recipe_heading))
-        if (state.coffeeG > 0f) {
-            RecipeRow(
-                label = stringResource(R.string.label_coffee),
-                value = "${"%.0f".format(state.coffeeG)} g",
-            )
-        }
         if (state.waterG > 0f) {
             RecipeRow(
                 label = stringResource(R.string.label_water),
@@ -369,16 +452,83 @@ private fun RecipeRow(label: String, value: String) {
  * checklist can be scanned at a glance with busy hands.
  */
 @Composable
-private fun PrepSection(method: BrewMethod, filter: FilterType?) {
+private fun PrepSection(
+    method: BrewMethod,
+    filter: FilterType?,
+    grindResult: GrindResult,
+    coffeeG: Float,
+) {
     val tipString = stringResource(prepTipFor(method, filter))
     val steps = remember(tipString) { splitIntoSteps(tipString) }
+    // Lead the checklist with a grind step tailored to the current setup: the
+    // exact dose plus the grinder's dial setting for a known grinder, or a
+    // texture cue when no grinder is configured. Keeps the prep actionable for
+    // each supported grinder instead of a generic "add grounds".
+    val grindStep = grindPrepStep(grindResult = grindResult, coffeeG = coffeeG)
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         SectionHeader(text = stringResource(R.string.prep_tip_label))
+        grindStep?.let { PrepStep(text = it) }
         steps.forEach { step ->
             PrepStep(text = step)
+        }
+    }
+}
+
+/**
+ * Builds the setup-aware grind step shown at the top of the prep checklist.
+ * Returns null when there is no dose to act on yet.
+ */
+@Composable
+private fun grindPrepStep(grindResult: GrindResult, coffeeG: Float): String? {
+    if (coffeeG <= 0f) return null
+    val dose = "${"%.0f".format(coffeeG)} g"
+    return when (grindResult) {
+        is GrindResult.Generic -> stringResource(
+            R.string.format_prep_grind_generic,
+            dose,
+            grindResult.descriptor.displayName,
+            grindResult.descriptor.visualCue,
+        )
+        is GrindResult.Specific -> stringResource(
+            R.string.format_prep_grind_specific,
+            dose,
+            "${grindResult.grinder.brand} ${grindResult.grinder.model}",
+            grindSettingInline(
+                grinder = grindResult.grinder,
+                value = grindResult.recommendation.suggestedStart,
+            ),
+        )
+    }
+}
+
+/**
+ * Compact one-line grinder setting for the prep step — the dial value plus a
+ * clicks breakdown only where it clarifies (manual click grinders). Mirrors
+ * [formatGrindSetting] but drops the parenthetical noise ("on dial", "from
+ * zero") that doesn't help inside a sentence.
+ */
+private fun grindSettingInline(grinder: Grinder, value: Float): String {
+    return when (grinder.scaleType) {
+        GrinderScaleType.DIAL_CLICKS -> {
+            val whole = value.toInt()
+            val clicks = Math.round((value - whole) * 10f).coerceAtLeast(0)
+            if (clicks > 0) {
+                val label = if (clicks == 1) "click" else "clicks"
+                "${"%.1f".format(value)} ($whole + $clicks $label)"
+            } else {
+                "%.1f".format(value)
+            }
+        }
+        GrinderScaleType.PURE_CLICKS -> {
+            val rounded = Math.round(value)
+            val label = if (rounded == 1) "click" else "clicks"
+            "$rounded $label"
+        }
+        GrinderScaleType.NUMBERED_DIAL -> {
+            if (value % 1f == 0f) value.toInt().toString() else "%.1f".format(value)
         }
     }
 }

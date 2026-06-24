@@ -103,7 +103,6 @@
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Vorbereitung</string>
     <string name="label_recipe_heading">Rezept</string>
-    <string name="label_set_grinder_to">Mühle einstellen auf</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Papierfilter in der Basis benetzen (Ventil offen) und ablaufen lassen. Zylinder aufsetzen, Mahlgut einfüllen, Bett ebnen, Dispersionskappe aufsetzen. Waage tarieren.</string>
@@ -115,6 +114,8 @@
     <string name="prep_tip_espresso">Siebträger trocken auswischen. Dosieren, verteilen und eben tampen, bevor er eingespannt wird.</string>
     <string name="prep_tip_moka">Untere Kammer bis zum Ventil füllen. Sieb mit Mahlgut füllen, glattstreichen — nicht tampen. Vorsichtig zusammenschrauben.</string>
     <string name="prep_tip_cold_brew">Mahlgut in das Gefäß geben, Waage tarieren, dann Wasser mit Raumtemperatur oder kaltes Wasser zugeben und abdecken.</string>
+    <string name="format_prep_grind_specific">%1$s mahlen — %2$s auf %3$s einstellen</string>
+    <string name="format_prep_grind_generic">%1$s mahlen — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pausieren</string>

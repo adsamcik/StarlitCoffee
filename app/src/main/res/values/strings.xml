@@ -103,7 +103,6 @@
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Prep</string>
     <string name="label_recipe_heading">Recipe</string>
-    <string name="label_set_grinder_to">Set grinder to</string>
     <string name="label_temp_short">Temp</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Wet the paper filter in the base (valve open) and drain. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>
@@ -115,6 +114,8 @@
     <string name="prep_tip_espresso">Wipe the portafilter dry. Dose, distribute, and tamp level before locking in.</string>
     <string name="prep_tip_moka">Fill the bottom chamber to the valve. Fill the basket with grounds, level — don\'t tamp. Assemble carefully.</string>
     <string name="prep_tip_cold_brew">Add grounds to the vessel, tare scale, then add room-temperature or cold water and cover.</string>
+    <string name="format_prep_grind_specific">Grind %1$s — set %2$s to %3$s</string>
+    <string name="format_prep_grind_generic">Grind %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pause</string>

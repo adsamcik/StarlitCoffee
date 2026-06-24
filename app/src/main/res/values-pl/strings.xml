@@ -107,7 +107,6 @@
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Przygotowanie</string>
     <string name="label_recipe_heading">Przepis</string>
-    <string name="label_set_grinder_to">Ustaw młynek na</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Zwilż papierowy filtr w podstawie (zawór otwarty) i pozwól wodzie spłynąć. Zamontuj cylinder, wsyp kawę, wyrównaj złoże, załóż pokrywkę dyspersyjną. Wytaruj wagę.</string>
@@ -119,6 +118,8 @@
     <string name="prep_tip_espresso">Wytrzyj kolbę do sucha. Odmierz dawkę, rozprowadź ją równo i ubij poziomo przed zapięciem.</string>
     <string name="prep_tip_moka">Napełnij dolną komorę do zaworu. Wsyp kawę do sitka, wyrównaj — nie ubijaj. Ostrożnie skręć kawiarkę.</string>
     <string name="prep_tip_cold_brew">Wsyp kawę do naczynia, wytaruj wagę, dodaj zimną wodę lub wodę w temperaturze pokojowej i przykryj.</string>
+    <string name="format_prep_grind_specific">Zmiel %1$s — ustaw %2$s na %3$s</string>
+    <string name="format_prep_grind_generic">Zmiel %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Wstrzymaj</string>

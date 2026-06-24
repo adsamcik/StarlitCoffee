@@ -103,7 +103,6 @@
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Preparación</string>
     <string name="label_recipe_heading">Receta</string>
-    <string name="label_set_grinder_to">Ajustar molinillo a</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Humedece el filtro de papel en la base (válvula abierta) y deja escurrir. Monta el cilindro, añade el café molido, nivela la cama y coloca la tapa de dispersión. Tara la báscula.</string>
@@ -115,6 +114,8 @@
     <string name="prep_tip_espresso">Seca el portafiltro. Dosifica, distribuye y compacta nivelado antes de encajarlo.</string>
     <string name="prep_tip_moka">Llena la cámara inferior hasta la válvula. Llena el cesto con café molido, nivela — no compactes. Ensambla con cuidado.</string>
     <string name="prep_tip_cold_brew">Añade el café molido al recipiente, tara la báscula, añade agua a temperatura ambiente o fría y tapa.</string>
+    <string name="format_prep_grind_specific">Muele %1$s — ajusta %2$s a %3$s</string>
+    <string name="format_prep_grind_generic">Muele %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pausar</string>

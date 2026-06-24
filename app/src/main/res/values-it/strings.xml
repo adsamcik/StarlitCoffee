@@ -103,7 +103,6 @@
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Preparazione</string>
     <string name="label_recipe_heading">Ricetta</string>
-    <string name="label_set_grinder_to">Imposta il macinacaffè su</string>
     <string name="label_temp_short">Temp</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Bagna il filtro di carta nella base (valvola aperta) e fai scolare. Monta il cilindro, aggiungi il caffè macinato, livella il letto, posiziona il tappo di dispersione. Tara la bilancia.</string>
@@ -115,6 +114,8 @@
     <string name="prep_tip_espresso">Asciuga il portafiltro. Dosa, distribuisci e pressa in piano prima di agganciare.</string>
     <string name="prep_tip_moka">Riempi la camera inferiore fino alla valvola. Riempi il filtro con il caffè macinato, livella — non pressare. Assembla con attenzione.</string>
     <string name="prep_tip_cold_brew">Aggiungi il caffè macinato al recipiente, tara la bilancia, poi aggiungi acqua fredda o a temperatura ambiente e copri.</string>
+    <string name="format_prep_grind_specific">Macina %1$s — imposta %2$s su %3$s</string>
+    <string name="format_prep_grind_generic">Macina %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pausa</string>

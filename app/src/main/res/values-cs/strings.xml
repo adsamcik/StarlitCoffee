@@ -101,7 +101,6 @@
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="prep_tip_label">Příprava</string>
     <string name="label_recipe_heading">Recept</string>
-    <string name="label_set_grinder_to">Nastavte mlýnek na</string>
     <string name="label_temp_short">Teplota</string>
     <string name="label_bloom_short">Předluh</string>
     <string name="prep_tip_pulsar_paper">Namočte papírový filtr v základně (ventil otevřený) a nechte odkapat. Nasaďte válec, přidejte kávu, zarovnejte a nasaďte rozptylovací kryt. Vytárujte váhu.</string>
@@ -113,6 +112,8 @@
     <string name="prep_tip_espresso">Otřete páku do sucha. Nadávkujte, rovnoměrně rozprostřete a utemujte do roviny před nasazením.</string>
     <string name="prep_tip_moka">Naplňte spodní část po ventil. Do sítka nasypte kávu, zarovnejte — neutemujte. Opatrně sešroubujte.</string>
     <string name="prep_tip_cold_brew">Nasypte kávu do nádoby, vytárujte váhu, přidejte studenou vodu nebo vodu pokojové teploty a zakryjte.</string>
+    <string name="format_prep_grind_specific">Namelte %1$s — nastavte %2$s na %3$s</string>
+    <string name="format_prep_grind_generic">Namelte %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pauza</string>
