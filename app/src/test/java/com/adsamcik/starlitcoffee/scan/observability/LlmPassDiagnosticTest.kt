@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.scan.observability
 
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmPassDiagnostic
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull

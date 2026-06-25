@@ -17,8 +17,8 @@ import com.adsamcik.mindlayer.sdk.InferenceHandle
 import com.adsamcik.mindlayer.sdk.Mindlayer
 import com.adsamcik.mindlayer.sdk.MindlayerException
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
-import com.adsamcik.starlitcoffee.scan.observability.LlmDiagnosticsRecorder
-import com.adsamcik.starlitcoffee.scan.observability.LlmPassDiagnostic
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmDiagnosticsRecorder
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmPassDiagnostic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
