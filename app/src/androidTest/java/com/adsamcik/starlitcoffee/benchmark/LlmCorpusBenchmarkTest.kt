@@ -39,11 +39,26 @@ import org.junit.runner.RunWith
  *
  * # Running
  *
+ * Use the `scanBenchmark` Gradle task — it installs the app + test APK ONCE and
+ * drives both passes via `adb am instrument`:
+ *
  * ```
- * ./gradlew pushTestImages   # corpus + metadata to the device
- * ./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.OcrFixtureCaptureTest"   # once
- * ./gradlew connectedDebugAndroidTest "-Pandroid.testInstrumentationRunnerArguments.class=com.adsamcik.starlitcoffee.benchmark.LlmCorpusBenchmarkTest"
- * adb pull /sdcard/Android/data/com.adsamcik.starlitcoffee/files/coffee-bags-fixtures/
+ * .\gradlew.bat scanBenchmark                # capture OCR fixtures, then benchmark
+ * .\gradlew.bat scanBenchmark -PskipCapture  # reuse fixtures (prompt-only iteration)
+ * ```
+ *
+ * The report is pulled to `build/reports/scan-benchmark/`.
+ *
+ * Do NOT run capture and benchmark as two separate `connectedDebugAndroidTest`
+ * invocations: `connectedAndroidTest` UNINSTALLS the app after each run, wiping
+ * the OCR fixtures (written to the app's external files dir) between the two
+ * steps. If you must drive it by hand, install once and instrument directly:
+ *
+ * ```
+ * .\gradlew.bat pushTestImages installDebug installDebugAndroidTest
+ * adb shell am instrument -w -e class com.adsamcik.starlitcoffee.benchmark.OcrFixtureCaptureTest com.adsamcik.starlitcoffee.debug.test/androidx.test.runner.AndroidJUnitRunner
+ * adb shell am instrument -w -e class com.adsamcik.starlitcoffee.benchmark.LlmCorpusBenchmarkTest com.adsamcik.starlitcoffee.debug.test/androidx.test.runner.AndroidJUnitRunner
+ * adb pull /sdcard/Android/data/com.adsamcik.starlitcoffee.debug/files/coffee-bags-fixtures/
  * ```
  */
 @RunWith(AndroidJUnit4::class)

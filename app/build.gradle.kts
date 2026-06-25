@@ -178,6 +178,80 @@ tasks.register("pushTestImages") {
     }
 }
 
+// Run the instrumented bag-scan LLM benchmark the RELIABLE way.
+//
+// `connectedDebugAndroidTest` UNINSTALLS the app after every run, which wipes the
+// OCR fixtures the capture step writes to the app's external files dir — so
+// running capture and benchmark as two separate `connectedAndroidTest`
+// invocations silently loses the fixtures in between (run-as then reports
+// "unknown package"). This task installs both APKs ONCE and drives the
+// instrumentation directly via `adb am instrument`, so the app — and its
+// fixtures — survive across the capture and benchmark passes.
+//
+//   .\gradlew.bat scanBenchmark                # capture OCR fixtures, then benchmark
+//   .\gradlew.bat scanBenchmark -PskipCapture  # reuse existing fixtures (prompt-only iteration)
+//
+// The per-field quality report is pulled to build/reports/scan-benchmark/.
+tasks.register("scanBenchmark") {
+    group = "verification"
+    description = "Install once + run OCR capture and the LLM benchmark via am instrument (no uninstall between runs)"
+    dependsOn("pushTestImages", "installDebug", "installDebugAndroidTest")
+
+    val adbProvider = androidComponents.sdkComponents.adb
+    val skipCapture = project.hasProperty("skipCapture")
+    val reportOut = layout.buildDirectory.dir("reports/scan-benchmark")
+
+    doLast {
+        val adb = adbProvider.get().asFile.absolutePath
+        val appId = "com.adsamcik.starlitcoffee.debug"
+        val instrumentation = "$appId.test/androidx.test.runner.AndroidJUnitRunner"
+        val benchmarkPkg = "com.adsamcik.starlitcoffee.benchmark"
+
+        fun adb(vararg args: String, allowFailure: Boolean = false): Int {
+            val cmd = listOf(adb) + args.toList()
+            val code = ProcessBuilder(cmd).inheritIO().start().waitFor()
+            require(allowFailure || code == 0) { "adb command failed: ${cmd.joinToString(" ")}" }
+            return code
+        }
+
+        fun instrument(testClass: String) {
+            // am instrument exits 0 even when individual tests fail (the
+            // benchmark only asserts run validity), so a non-zero here means the
+            // instrumentation itself could not start, e.g. the app is not installed.
+            adb("shell", "am", "instrument", "-w", "-e", "class", "$benchmarkPkg.$testClass", instrumentation)
+        }
+
+        // Let the on-device Mindlayer AI service run unattended (debug builds
+        // expose an auto-accept receiver). Harmless no-op if already enabled.
+        adb(
+            "shell", "am", "broadcast", "-n",
+            "com.adsamcik.mindlayer.service.debug/com.adsamcik.mindlayer.service.security.DebugAutoAcceptReceiver",
+            "-a", "com.adsamcik.mindlayer.debug.SET_AUTO_ACCEPT", "--ez", "enabled", "true",
+            allowFailure = true,
+        )
+
+        if (skipCapture) {
+            println("scanBenchmark: -PskipCapture set — reusing existing OCR fixtures")
+        } else {
+            println("scanBenchmark: capturing OCR fixtures (OcrFixtureCaptureTest)…")
+            instrument("OcrFixtureCaptureTest")
+        }
+        println("scanBenchmark: running LLM benchmark (LlmCorpusBenchmarkTest)…")
+        instrument("LlmCorpusBenchmarkTest")
+
+        val outDir = reportOut.get().asFile.apply { mkdirs() }
+        val deviceReport =
+            "/sdcard/Android/data/$appId/files/coffee-bags-fixtures/llm-fixture-quality-report"
+        listOf("txt", "json").forEach { ext ->
+            adb(
+                "pull", "$deviceReport.$ext", "${outDir.absolutePath}/llm-fixture-quality-report.$ext",
+                allowFailure = true,
+            )
+        }
+        println("scanBenchmark: report pulled to $outDir")
+    }
+}
+
 dependencies {
     // Compose BOM
     val composeBom = platform(libs.compose.bom)

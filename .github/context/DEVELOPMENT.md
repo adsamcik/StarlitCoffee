@@ -151,3 +151,25 @@ When adding new background work, foreground services, or LAN features, re-check 
 | Brew ratio mismatch in tests | Pulsar default assumed as 1:16 | Use `BrewMethod.PULSAR.defaultRatio == 17f`. |
 
 <!-- context-init:user-content-below -->
+
+## Scan LLM benchmark (instrumented)
+
+The bag-scan extraction quality benchmark is a two-step instrumented flow:
+`OcrFixtureCaptureTest` captures OCR text to the app's external files dir, then
+`LlmCorpusBenchmarkTest` scores LLM extraction against the corpus ground truth.
+
+Run it with the dedicated task — **not** `connectedDebugAndroidTest`:
+
+```powershell
+.\gradlew.bat scanBenchmark                # capture OCR fixtures, then benchmark
+.\gradlew.bat scanBenchmark -PskipCapture  # reuse fixtures (prompt-only iteration)
+```
+
+Report: `app\build\reports\scan-benchmark\llm-fixture-quality-report.{txt,json}`.
+
+> **Why a dedicated task?** `connectedAndroidTest` uninstalls the app after every
+> run, wiping the OCR fixtures between the capture and benchmark steps. The
+> `scanBenchmark` task installs both APKs once and drives instrumentation via
+> `adb am instrument`, so the app and its fixtures survive across both passes. It
+> also enables the Mindlayer debug auto-accept receiver so on-device inference
+> runs unattended. See `.github/instructions/benchmark.instructions.md`.
