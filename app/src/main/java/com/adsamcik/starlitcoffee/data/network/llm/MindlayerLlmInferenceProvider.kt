@@ -472,7 +472,9 @@ class MindlayerLlmInferenceProvider(
 
     companion object {
         /**
-         * Max tokens per extraction.
+         * Max tokens per extraction — the session's **total** KV-cache budget
+         * (system-prompt reservation + input + generated output), not just the
+         * output length.
          *
          * Sized for the 14-field extended schema with verbose tasting notes
          * and roastery text in any language. The earlier 2048 budget hit
@@ -480,11 +482,24 @@ class MindlayerLlmInferenceProvider(
          * mid-field on real Czech-language Nordbeans bags where the model
          * generated multi-sentence "uncertain" explanations for
          * `processType` / `tastingNotes` before circling back to the rest
-         * of the schema. 4096 matches the engine's `maxMaxTokens`
-         * (`MemoryBudget.deviceTier.maxMaxTokens`) so we always have the
-         * full headroom the engine can give us.
+         * of the schema.
+         *
+         * 4096 was then ALSO too small, but silently: the extraction system
+         * prompt reserves ~3700 tokens of KV cache at session creation, so a
+         * 4096 ceiling left only ~350 tokens for input and the text pass died
+         * instantly with `input_exceeds_context (reserved=3743,
+         * estimated_input=406, max=4096, remaining=353)` — never a timeout.
+         * (The vision pass survived only because its system prompt is shorter.)
+         *
+         * 8192 is the Mindlayer SDK's documented per-session ceiling
+         * (`maxTokens(n)` requires `n in 128..8192`); the service then clamps it
+         * down to the device's memory tier / pressure as needed
+         * (`SessionManager` → `MemoryBudget.DeviceTier`, whose `maxMaxTokens` is
+         * 8192–131072, far above this). At 8192 the ~3700-token prompt plus a
+         * typical ~400–1500-token bag OCR payload leaves several thousand tokens
+         * for the JSON output, so general bags fit with wide margin.
          */
-        private const val MAX_TOKENS = 4096
+        private const val MAX_TOKENS = 8192
 
         /** Longest edge (px) the label image is downscaled to before the vision pass. */
         private const val MAX_VISION_IMAGE_DIM = 1024
