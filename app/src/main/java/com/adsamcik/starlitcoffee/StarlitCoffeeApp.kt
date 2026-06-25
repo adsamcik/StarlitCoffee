@@ -9,6 +9,7 @@ import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.ocr.HierarchicalOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
+import com.adsamcik.starlitcoffee.scan.observability.PersistentLlmDiagnosticsRecorder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -29,7 +30,10 @@ class StarlitCoffeeApp : Application() {
 
     val llmProvider: LlmInferenceProvider by lazy {
         try {
-            MindlayerLlmInferenceProvider(mindlayer)
+            MindlayerLlmInferenceProvider(
+                mindlayer,
+                PersistentLlmDiagnosticsRecorder(applicationContext),
+            )
         } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
             Log.e(TAG, "Mindlayer init failed — falling back to stub", error)
             StubLlmInferenceProvider()

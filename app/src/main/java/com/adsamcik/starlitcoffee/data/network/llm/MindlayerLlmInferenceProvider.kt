@@ -17,6 +17,8 @@ import com.adsamcik.mindlayer.sdk.InferenceHandle
 import com.adsamcik.mindlayer.sdk.Mindlayer
 import com.adsamcik.mindlayer.sdk.MindlayerException
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
+import com.adsamcik.starlitcoffee.scan.observability.LlmDiagnosticsRecorder
+import com.adsamcik.starlitcoffee.scan.observability.LlmPassDiagnostic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
@@ -73,6 +75,7 @@ private const val MINDLAYER_LLM_TAG = "MindlayerLlm"
  */
 class MindlayerLlmInferenceProvider(
     private val mindlayer: Mindlayer,
+    private val diagnosticsRecorder: LlmDiagnosticsRecorder? = null,
 ) : LlmInferenceProvider {
 
     /**
@@ -82,6 +85,37 @@ class MindlayerLlmInferenceProvider(
      * injects the app-owned shared client via the primary constructor.
      */
     constructor(context: Context) : this(Mindlayer.shared(context.applicationContext))
+
+    /**
+     * Record one extraction pass into the injected [diagnosticsRecorder] (no-op
+     * when none is wired, e.g. in unit tests). Captures the real outcome — the
+     * model output on success, or the precise failure reason on timeout/error —
+     * so a scan failure is attributable from the in-app Scan Debug surface
+     * instead of a long-gone logcat line.
+     */
+    private fun recordPass(
+        pass: LlmPassDiagnostic.Pass,
+        status: LlmPassDiagnostic.Status,
+        startMs: Long,
+        promptCharLen: Int,
+        output: String? = null,
+        error: String? = null,
+    ) {
+        val recorder = diagnosticsRecorder ?: return
+        recorder.record(
+            LlmPassDiagnostic(
+                timestampMs = System.currentTimeMillis(),
+                pass = pass.name,
+                status = status.name,
+                elapsedMs = System.currentTimeMillis() - startMs,
+                maxTokens = MAX_TOKENS,
+                promptCharLen = promptCharLen,
+                outputCharLen = output?.length ?: 0,
+                outputSample = output?.take(LlmPassDiagnostic.OUTPUT_SAMPLE_LIMIT),
+                errorMessage = error,
+            ),
+        )
+    }
 
     override fun isAvailable(): Boolean {
         val state = mindlayer.connectionState.value
@@ -168,6 +202,7 @@ class MindlayerLlmInferenceProvider(
 
         val prompt = buildExtractionPrompt(request)
         val extended = useExtendedSchema(request)
+        val startMs = System.currentTimeMillis()
 
         // Boundary catch on the generic `Exception` branch: model inference
         // can throw anything from JSON parsing failures to native crashes;
@@ -209,8 +244,13 @@ class MindlayerLlmInferenceProvider(
                 logLongDebug("LLM prompt (debug)", prompt)
                 logLongDebug("LLM response (debug)", responseText)
             }
+            recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
             parseResponse(responseText, request.fieldsNeeded)
         } catch (_: TimeoutCancellationException) {
+            recordPass(
+                LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
+                error = "Inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
+            )
             LlmExtractionResult.Failed(
                 "Inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
                 retryable = true,
@@ -221,11 +261,13 @@ class MindlayerLlmInferenceProvider(
             // session that has already been torn down.
             throw e
         } catch (e: MindlayerException) {
+            recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
             LlmExtractionResult.Failed(
                 "Inference failed: ${e.message}",
                 retryable = e.codeName != "UNSUPPORTED_TOOL_CALL",
             )
         } catch (e: Exception) {
+            recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
             LlmExtractionResult.Failed("Inference failed: ${e.message}", retryable = true)
         }
     }
@@ -298,6 +340,7 @@ class MindlayerLlmInferenceProvider(
             ?: return@withContext LlmExtractionResult.Unavailable("Could not decode label image for vision pass")
 
         val prompt = buildVisionPrompt(request)
+        val startMs = System.currentTimeMillis()
         try {
             val responseText = withTimeout(VISION_TIMEOUT_MS) {
                 val handle = mindlayer.infer {
@@ -317,14 +360,21 @@ class MindlayerLlmInferenceProvider(
                 (handle as InferenceHandle.Text).awaitText()
             }
             android.util.Log.d(MINDLAYER_LLM_TAG, "Vision inference complete: ${responseText.length} chars")
+            recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
             parseResponse(responseText, request.fieldsNeeded)
         } catch (_: TimeoutCancellationException) {
+            recordPass(
+                LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
+                error = "Vision inference timed out after ${VISION_TIMEOUT_MS / 1000}s",
+            )
             LlmExtractionResult.Failed("Vision inference timed out after ${VISION_TIMEOUT_MS / 1000}s", retryable = false)
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: MindlayerException) {
+            recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
             LlmExtractionResult.Failed("Vision inference failed: ${e.message}", retryable = false)
         } catch (e: Exception) {
+            recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
             LlmExtractionResult.Failed("Vision inference failed: ${e.message}", retryable = false)
         } finally {
             bitmap.recycle()
@@ -362,6 +412,7 @@ class MindlayerLlmInferenceProvider(
         }
 
         val prompt = buildCombinePrompt(request)
+        val startMs = System.currentTimeMillis()
         try {
             val responseText = withTimeout(EXTRACTION_TIMEOUT_MS) {
                 val handle = mindlayer.infer {
@@ -384,8 +435,13 @@ class MindlayerLlmInferenceProvider(
                 logLongDebug("Combine prompt (debug)", prompt)
                 logLongDebug("Combine response (debug)", responseText)
             }
+            recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
             parseResponse(responseText, request.fieldsNeeded)
         } catch (_: TimeoutCancellationException) {
+            recordPass(
+                LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
+                error = "Combine inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
+            )
             LlmExtractionResult.Failed(
                 "Combine inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
                 retryable = false,
@@ -393,8 +449,10 @@ class MindlayerLlmInferenceProvider(
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: MindlayerException) {
+            recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
             LlmExtractionResult.Failed("Combine inference failed: ${e.message}", retryable = false)
         } catch (e: Exception) {
+            recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
             LlmExtractionResult.Failed("Combine inference failed: ${e.message}", retryable = false)
         }
     }
