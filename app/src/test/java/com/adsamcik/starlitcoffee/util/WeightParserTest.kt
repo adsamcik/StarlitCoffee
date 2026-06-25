@@ -30,4 +30,31 @@ class WeightParserTest {
         assertNull(WeightParser.parseToGrams("not a weight"))
         assertNull(WeightParser.parseToGrams(null))
     }
+
+    // --- extractFirstWeightToken (noisy / OCR-merged input) ---
+
+    @Test
+    fun `extractFirstWeightToken returns a clean already-valid value`() {
+        assertEquals("250g", WeightParser.extractFirstWeightToken("250g"))
+        assertEquals("1kg", WeightParser.extractFirstWeightToken("1kg"))
+    }
+
+    @Test
+    fun `extractFirstWeightToken recovers the first token from a merged cell`() {
+        assertEquals("250g", WeightParser.extractFirstWeightToken("250gC1000g"))
+        assertEquals("250g", WeightParser.extractFirstWeightToken("Hmotnost 250 g"))
+    }
+
+    @Test
+    fun `extractFirstWeightToken returns null when no value+unit token exists`() {
+        assertNull(WeightParser.extractFirstWeightToken("no weight here"))
+        assertNull(WeightParser.extractFirstWeightToken(""))
+        assertNull(WeightParser.extractFirstWeightToken(null))
+    }
+
+    @Test
+    fun `extractFirstWeightToken keeps a bare number as grams`() {
+        // parseToGrams treats a unit-less number as grams, so it is already valid.
+        assertEquals("1000", WeightParser.extractFirstWeightToken("1000"))
+    }
 }

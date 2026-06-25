@@ -53,6 +53,51 @@ data class NormalizedCoffeeBagMetadata(
     val tasteNoteIds: String? = null,
 )
 
+/** What [CoffeeMetadataNormalizer.sanitizeExtraction] did to a single field. */
+enum class ScanFieldCorrectionAction {
+    /** Value moved to the field it canonically belongs to (its slot was wrong). */
+    RELOCATED,
+
+    /** Value removed — it duplicated/conflicted with another field or didn't parse. */
+    DROPPED,
+
+    /** Value rewritten to a clean form (e.g. weight token recovered from noise). */
+    NORMALIZED,
+
+    /** A bare decaf marker was moved out of a content field into the isDecaf flag. */
+    FLAGGED_DECAF,
+}
+
+/**
+ * One field-level correction applied while sanitising a raw LLM/OCR extraction.
+ * Carried in [SanitizedExtraction.corrections] so callers can log/telemeter why
+ * a detected value changed (the scan pipeline otherwise persists no per-field
+ * provenance).
+ */
+data class ScanFieldCorrection(
+    val field: String,
+    val action: ScanFieldCorrectionAction,
+    val from: String?,
+    val to: String?,
+    val reason: String,
+)
+
+/**
+ * Result of running raw extracted fields through the field contracts. Mirrors
+ * the controlled-vocabulary + format fields of an extraction; free-text fields
+ * (name, roaster, farm, …) are intentionally not touched here.
+ */
+data class SanitizedExtraction(
+    val origin: String? = null,
+    val region: String? = null,
+    val processType: String? = null,
+    val roastLevel: String? = null,
+    val variety: String? = null,
+    val weight: String? = null,
+    val isDecaf: Boolean? = null,
+    val corrections: List<ScanFieldCorrection> = emptyList(),
+)
+
 object CoffeeMetadataNormalizer {
     private enum class MetadataFieldType(
         val fieldName: String,
@@ -574,6 +619,165 @@ object CoffeeMetadataNormalizer {
         return regionEntries
             .filter { it.relatedCanonicalKeys[MetadataFieldType.ORIGIN.fieldName] == originId }
             .flatMapTo(linkedSetOf()) { it.aliases }
+    }
+
+    // Controlled-vocabulary slots that participate in cross-field
+    // reclassification. Free-text fields (name, roaster, farm, altitude,
+    // tasting notes) are deliberately excluded — they have no closed dictionary
+    // to validate against, so a dictionary "match" there would be a false hit.
+    private val controlledSlotTypes = listOf(
+        MetadataFieldType.ORIGIN,
+        MetadataFieldType.REGION,
+        MetadataFieldType.PROCESS_TYPE,
+        MetadataFieldType.ROAST_LEVEL,
+        MetadataFieldType.VARIETY,
+    )
+
+    // When a value belongs to several fields, prefer the more specific/atomic
+    // one as the relocation target. Origin first (country names are unambiguous),
+    // then process/roast/variety, region last (region is the widest free-text
+    // slot, so it's the least authoritative target).
+    private val reclassifyTargetPriority = listOf("origin", "processType", "roastLevel", "variety", "region")
+
+    /**
+     * The controlled field(s) whose canonical dictionary contains an EXACT
+     * alias for [rawValue]. Strict by design (no substring matching): this
+     * drives cross-field reclassification, so a free-text value that merely
+     * *contains* a dictionary word (e.g. a farm name) must not be treated as
+     * belonging to that field.
+     */
+    fun classifyControlledValue(rawValue: String?): Set<String> {
+        val normalized = rawValue?.let(::normalizeSearch)?.takeIf(String::isNotBlank) ?: return emptySet()
+        return controlledSlotTypes
+            .filter { type -> entriesByField[type].orEmpty().any { normalized in it.normalizedAliases } }
+            .map { it.fieldName }
+            .toSet()
+    }
+
+    private fun canonicalIdFor(fieldName: String, value: String?): String? =
+        value?.let { normalizeField(fieldName, it, Locale.ENGLISH)?.canonicalKey }
+
+    /**
+     * Enforce per-field contracts on a raw LLM/OCR extraction before it reaches
+     * the review chips and the saved bag — the extraction step itself trusts
+     * whatever the on-device model emits, which on bilingual/structured labels
+     * routinely lands correctly-read tokens in the wrong field.
+     *
+     * Three deterministic, dictionary-driven rules (all reversible by the user,
+     * all preferring relocate-over-drop so nothing real is silently lost):
+     *  1. Decaf displacement — a bare decaf marker is never a process/region/
+     *     variety/roast value; move it to the [isDecaf] flag and clear the slot.
+     *  2. Cross-field reclassification — a controlled value that exactly matches
+     *     a *different* field's dictionary (e.g. a country name in `region`) is
+     *     relocated when its true field is empty, else dropped as a duplicate/
+     *     conflict. Unknown free-text values pass through untouched.
+     *  3. Weight recovery — a weight that doesn't parse is reduced to its first
+     *     valid token (OCR merges like "250gC1000g" → "250g"), else dropped.
+     *
+     * Espresso/Filter roast values, genuine free-text regions ("Tumbaga") and
+     * already-valid weights are intentionally preserved.
+     */
+    @Suppress("LongParameterList", "LongMethod", "CyclomaticComplexMethod", "NestedBlockDepth")
+    fun sanitizeExtraction(
+        origin: String?,
+        region: String?,
+        processType: String?,
+        roastLevel: String?,
+        variety: String?,
+        weight: String?,
+        isDecaf: Boolean?,
+    ): SanitizedExtraction {
+        val corrections = mutableListOf<ScanFieldCorrection>()
+        val values = linkedMapOf(
+            "origin" to origin?.trim()?.takeIf(String::isNotBlank),
+            "region" to region?.trim()?.takeIf(String::isNotBlank),
+            "processType" to processType?.trim()?.takeIf(String::isNotBlank),
+            "roastLevel" to roastLevel?.trim()?.takeIf(String::isNotBlank),
+            "variety" to variety?.trim()?.takeIf(String::isNotBlank),
+        )
+        var outDecaf = isDecaf
+
+        // Rule 1 — decaf displacement.
+        for (field in listOf("processType", "region", "variety", "roastLevel")) {
+            val value = values[field] ?: continue
+            if (containsDecafMarker(value) && field !in classifyControlledValue(value)) {
+                values[field] = null
+                if (outDecaf != true) outDecaf = true
+                corrections += ScanFieldCorrection(
+                    field = field,
+                    action = ScanFieldCorrectionAction.FLAGGED_DECAF,
+                    from = value,
+                    to = null,
+                    reason = "decaf marker is not a $field value; moved to isDecaf flag",
+                )
+            }
+        }
+
+        // Rule 2 — cross-field reclassification.
+        for (sourceField in listOf("region", "processType", "roastLevel", "variety", "origin")) {
+            val value = values[sourceField] ?: continue
+            val belongsTo = classifyControlledValue(value)
+            if (belongsTo.isEmpty() || sourceField in belongsTo) continue
+            val target = reclassifyTargetPriority.firstOrNull { it in belongsTo } ?: continue
+            val targetValue = values[target]
+            when {
+                targetValue == null -> {
+                    values[target] = value
+                    values[sourceField] = null
+                    corrections += ScanFieldCorrection(
+                        field = sourceField,
+                        action = ScanFieldCorrectionAction.RELOCATED,
+                        from = value,
+                        to = target,
+                        reason = "value belongs to $target, which was empty",
+                    )
+                }
+                canonicalIdFor(target, targetValue) != null &&
+                    canonicalIdFor(target, targetValue) == canonicalIdFor(target, value) -> {
+                    values[sourceField] = null
+                    corrections += ScanFieldCorrection(
+                        field = sourceField,
+                        action = ScanFieldCorrectionAction.DROPPED,
+                        from = value,
+                        to = null,
+                        reason = "duplicates $target",
+                    )
+                }
+                else -> {
+                    values[sourceField] = null
+                    corrections += ScanFieldCorrection(
+                        field = sourceField,
+                        action = ScanFieldCorrectionAction.DROPPED,
+                        from = value,
+                        to = null,
+                        reason = "belongs to $target, which already holds a different value",
+                    )
+                }
+            }
+        }
+
+        // Rule 3 — weight format recovery.
+        var outWeight = weight?.trim()?.takeIf(String::isNotBlank)
+        if (outWeight != null && WeightParser.parseToGrams(outWeight) == null) {
+            val recovered = WeightParser.extractFirstWeightToken(outWeight)
+            corrections += if (recovered != null) {
+                ScanFieldCorrection("weight", ScanFieldCorrectionAction.NORMALIZED, outWeight, recovered, "recovered weight token from noisy value")
+            } else {
+                ScanFieldCorrection("weight", ScanFieldCorrectionAction.DROPPED, outWeight, null, "no parseable weight token")
+            }
+            outWeight = recovered
+        }
+
+        return SanitizedExtraction(
+            origin = values["origin"],
+            region = values["region"],
+            processType = values["processType"],
+            roastLevel = values["roastLevel"],
+            variety = values["variety"],
+            weight = outWeight,
+            isDecaf = outDecaf,
+            corrections = corrections,
+        )
     }
 
     fun parseCanonicalIds(ids: String?): List<String> = ids

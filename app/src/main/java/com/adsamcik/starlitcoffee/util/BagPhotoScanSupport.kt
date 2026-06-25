@@ -262,21 +262,36 @@ object BagPhotoScanSupport {
                 else -> true
             }
         }
+        // Enforce field contracts before the values reach the review chips and
+        // the saved bag. The extraction step trusts the raw on-device-LLM
+        // output, which routinely misfiles correctly-read tokens on bilingual /
+        // structured labels (a country name in `region`, a decaf marker in
+        // `process`, an OCR-merged weight). This is the single choke point for
+        // every prefill path, so one call fixes chips + save together.
+        val sanitized = CoffeeMetadataNormalizer.sanitizeExtraction(
+            origin = value("origin"),
+            region = value("region"),
+            processType = value("processType"),
+            roastLevel = value("roastLevel"),
+            variety = value("variety"),
+            weight = value("weight"),
+            isDecaf = isDecaf,
+        )
         return OcrFieldExtractor.OcrExtractionResult(
             name = value("name"),
             roaster = value("roaster"),
-            origin = value("origin"),
-            region = value("region"),
+            origin = sanitized.origin,
+            region = sanitized.region,
             farm = value("farm"),
-            variety = value("variety"),
-            processType = value("processType"),
+            variety = sanitized.variety,
+            processType = sanitized.processType,
             altitude = value("altitude"),
             tastingNotes = value("tastingNotes"),
-            roastLevel = value("roastLevel"),
+            roastLevel = sanitized.roastLevel,
             roastDate = value("roastDate"),
             expiryDate = value("expiryDate"),
-            weight = value("weight"),
-            isDecaf = isDecaf,
+            weight = sanitized.weight,
+            isDecaf = sanitized.isDecaf,
             fieldConfidence = fieldConfidence,
         )
     }
