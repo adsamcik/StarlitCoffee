@@ -117,6 +117,63 @@ class MindlayerLlmInferenceProvider(
         )
     }
 
+    /**
+     * Normalize raw (often bilingual) OCR text into clean English for the
+     * downstream extractor — translate descriptive words and field labels, keep
+     * every proper noun / number / date / unit / section marker verbatim. This
+     * is a best-effort pre-pass: any failure, blank result, or cancellation
+     * falls back to the original [ocrText] so extraction always has something to
+     * work with. Recorded as a [LlmPassDiagnostic.Pass.TRANSLATE] pass.
+     */
+    private suspend fun normalizeOcrToEnglish(ocrText: String): String {
+        if (ocrText.isBlank()) return ocrText
+        val prompt = buildString {
+            append("Normalize this coffee bag OCR text to English. Keep all proper nouns, numbers, ")
+            append("dates, units, codes and any \"--- FRONT ---\" / \"--- BACK ---\" markers verbatim.\n\n")
+            append("\"\"\"\n")
+            append(ocrText)
+            append("\n\"\"\"")
+        }
+        val startMs = System.currentTimeMillis()
+        @Suppress("TooGenericExceptionCaught")
+        return try {
+            val out = withTimeout(EXTRACTION_TIMEOUT_MS) {
+                val handle = mindlayer.infer {
+                    ephemeralSession {
+                        systemPrompt = TRANSLATE_SYSTEM_PROMPT
+                        maxTokens = MAX_TOKENS
+                    }
+                    text(prompt)
+                    sampling {
+                        temperature = EXTRACTION_TEMPERATURE
+                        topK = EXTRACTION_TOP_K
+                        topP = EXTRACTION_TOP_P
+                    }
+                    outputText()
+                }
+                (handle as InferenceHandle.Text).awaitText()
+            }.trim()
+            val normalized = out.ifBlank { ocrText }
+            android.util.Log.d(MINDLAYER_LLM_TAG, "Translate complete: ${out.length} chars")
+            if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
+                logLongDebug("Translate output (debug)", normalized)
+            }
+            recordPass(LlmPassDiagnostic.Pass.TRANSLATE, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = normalized)
+            normalized
+        } catch (_: TimeoutCancellationException) {
+            recordPass(
+                LlmPassDiagnostic.Pass.TRANSLATE, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
+                error = "Translate timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
+            )
+            ocrText
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            recordPass(LlmPassDiagnostic.Pass.TRANSLATE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
+            ocrText
+        }
+    }
+
     override fun isAvailable(): Boolean {
         val state = mindlayer.connectionState.value
         // Report actual connectivity. Previously this also returned true after
@@ -200,8 +257,17 @@ class MindlayerLlmInferenceProvider(
             // service is truly down.
         }
 
-        val prompt = buildExtractionPrompt(request)
-        val extended = useExtendedSchema(request)
+        // Step 1 — normalize the OCR text to English. Splitting "understand
+        // the (often bilingual) label" from "extract the schema" lets the small
+        // on-device model do one job at a time; the extraction prompt below
+        // then assumes English and drops its heavy multilingual-translation
+        // section. Best-effort: a failed/blank translation falls back to the raw
+        // OCR so extraction still runs.
+        val normalizedOcr = normalizeOcrToEnglish(request.rawOcrText.orEmpty())
+        val effectiveRequest = request.copy(rawOcrText = normalizedOcr)
+
+        val prompt = buildExtractionPrompt(effectiveRequest)
+        val extended = useExtendedSchema(effectiveRequest)
         val startMs = System.currentTimeMillis()
 
         // Boundary catch on the generic `Exception` branch: model inference
@@ -730,6 +796,36 @@ Response format (JSON only, no markdown):
         internal fun useExtendedSchema(request: LlmExtractionRequest): Boolean =
             !request.rawOcrText.isNullOrBlank() || request.existingFields.isNotEmpty()
 
+        /**
+         * System prompt for the translate/normalize pre-pass. Output is plain
+         * normalized text (not JSON) that the extraction prompt then consumes.
+         * The hard rule is preservation: descriptive words translate, but every
+         * identity/structured token survives verbatim so no value is lost before
+         * extraction even sees it.
+         */
+        private val TRANSLATE_SYSTEM_PROMPT = """
+You normalize OCR text from a coffee bag label into clean English for a
+downstream extractor. Output ONLY the normalized text — no commentary, no JSON.
+
+TRANSLATE to English:
+- country names (e.g. Czech "Kolumbie" -> "Colombia", German "Äthiopien" -> "Ethiopia")
+- processing methods (e.g. "praná" -> "Washed", "natural" -> "Natural")
+- roast levels / purposes (e.g. "tmavé" -> "Dark", "filtr" -> "Filter", "espresso" -> "Espresso")
+- flavour / tasting notes (e.g. "smetana, vanilka" -> "cream, vanilla")
+- field LABELS (e.g. "Datum pražení" -> "Roast date", "Hmotnost" -> "Weight",
+  "Nadmořská výška" -> "Altitude", "Mindestens haltbar bis" -> "Best before")
+
+KEEP VERBATIM — never translate or alter:
+- brand / roaster names, product / blend names, farm / estate names
+- region names, coffee variety / cultivar names
+- all numbers, dates, weights, percentages, units, codes / EAN, emails, websites
+
+PRESERVE STRUCTURE:
+- keep line breaks and any "--- FRONT ---" / "--- BACK ---" markers exactly where they are
+- do not add, infer, summarize, reorder, or drop anything
+- fix only obvious OCR garble when the intended word is unambiguous; otherwise keep the token as-is
+""".trimIndent()
+
         private val SYSTEM_PROMPT_10 = """
 You are a coffee bag label analyzer. The user has run OCR on a coffee bag
 label photo. You receive the raw OCR text (which may contain recognition
@@ -782,67 +878,26 @@ Rules:
 """.trimIndent()
 
         private val SYSTEM_PROMPT_14 = """
-You are a coffee bag label analyzer. The user has run OCR on a coffee bag
-label photo. You receive the raw OCR text (which may contain recognition
-errors, line breaks, and noise) and you must extract structured fields.
+You are a coffee bag label analyzer. You receive label text that has ALREADY
+been normalized to English (proper nouns, numbers and dates were kept verbatim
+during normalization). Extract structured fields from it.
 
-The OCR text may be split into labeled sections — `--- FRONT ---` for
-the bag's front face, `--- BACK ---` for the back face. When both
-sections are present:
-- the FRONT typically carries the brand / name / origin / variety /
-  tasting-note text (marketing face);
-- the BACK typically carries the structured metadata strip — roast date,
-  expiry date, weight, batch number / EAN, process method, altitude.
-- **Negative constraint for proper-noun fields**: field LABELS that
-  precede metadata values on the BACK ("Datum pražení", "Hmotnost",
-  "Métode", "Mindestens haltbar bis", "Nadmořská výška", "Odrůda
-  kávovníku", "Chuťový profil", "Zubereitung", "Roast date", "Weight",
-  "Altitude", "Variety", "Process", "Best before") are NOT proper
-  nouns — they MUST NEVER be extracted as `name`, `roaster`, or `farm`,
-  even when the FRONT's proper-noun text is OCR-garbled and the BACK's
-  label text looks like a clean string.
-- **Multi-page cross-reference for proper nouns**: FRONT and BACK
-  are two photos of the same physical bag. When the same brand or
-  product name appears in MULTIPLE OCR variants across the two faces
-  (cursive logo on the front OCR'd differently than the printed
-  sticker on the back, or printed-and-mashed-together with adjacent
-  labels), treat them all as evidence of one intended word. Pick
-  the canonical spelling most likely to be a real brand or product,
-  not the most-frequent OCR variant. This applies to `name` /
-  `roaster` / `farm` only — the structured fields (weight, dates,
-  process, roastLevel, altitude, isDecaf) follow the type-specific
-  rules below.
-- **Decaf is NOT a process value**: `processType` lists what was done
-  to the green coffee (Washed / Natural / Honey / Anaerobic /
-  Sugarcane EA Decaf / Swiss Water Decaf / CO2 Decaf / etc.). The
-  bare word "Decaf" / "Decaffeinated" (in any language) sets
-  `isDecaf: true` but never `processType: "Decaf"`. If the OCR has
-  both a primary process word AND a decaf marker, use the primary
-  process for `processType` and set `isDecaf: true` separately. Only
-  emit a decaf-process string (e.g. "Sugarcane EA Decaf") when the
-  OCR explicitly names the decaffeination method AND no primary
-  process is present.
-- **Roast and expiry dates are different**: `roastDate` is when the
-  beans were roasted; `expiryDate` is best-before / minimum
-  durability. When both are labeled on the BACK (a roast-date label
-  vs a best-before / minimum-durability label, in whatever language
-  the bag uses), read each label's value. Never copy `roastDate`
-  into `expiryDate` — if only the roast date is visible, emit
-  `expiryDate: null, status: "not_visible"`.
-- **CONCEPT fields are still translated regardless of source side**:
-  `origin`, `region`, `process`, `roastLevel`, `variety`, `tastingNotes`
-  follow the multilingual rules below even when the only candidate
-  appears on the BACK — Czech "KOLUMBIE" on the back is still
-  `origin: "Colombia"`, not `origin: "KOLUMBIE"`. The front-vs-back
-  routing applies to WHICH token is the candidate, not to whether the
-  translation rule fires.
-Use this routing when a token appears in only one section. When sections
-are absent, treat the entire input as one face and apply the rules below.
+The text may be split into `--- FRONT ---` and `--- BACK ---` sections:
+- FRONT typically carries the brand / name / origin / variety / tasting notes.
+- BACK typically carries the metadata strip — roast date, expiry date, weight,
+  batch / EAN, process, altitude.
+- Field LABELS on the back ("Roast date", "Weight", "Altitude", "Variety",
+  "Process", "Best before", etc.) are NOT proper nouns — never extract a label
+  word as `name`, `roaster`, or `farm`.
+- FRONT and BACK are the same physical bag. When a brand / product name appears
+  in several OCR variants across the faces, treat them as one word and pick the
+  cleanest real spelling (this applies to `name` / `roaster` / `farm`).
+When sections are absent, treat the whole input as one face.
 
-For each field, report your confidence:
-- "found": The OCR text clearly contains this value
-- "uncertain": The OCR text hints at this but is garbled, partial, or ambiguous
-- "not_visible": The OCR text does not contain enough information for this field
+For each field report a status:
+- "found": clearly present in the text
+- "uncertain": hinted but garbled, partial, or ambiguous
+- "not_visible": not enough information for this field
 
 Response format (JSON only, no markdown):
 {
@@ -864,59 +919,65 @@ Response format (JSON only, no markdown):
   }
 }
 
-Multilingual rules (apply BEFORE field notes):
-- The OCR text may be in ANY language. Read it in its source language and use your knowledge of coffee terminology in that language to understand what each token means. Do not enumerate languages — handle whatever you receive.
-- Output CONCEPT fields in canonical ENGLISH regardless of the source language:
-  * `origin`: the English country name (e.g. "Colombia", "Ethiopia", "Kenya"). Translate the country from any source language to its standard English form.
-  * `region`: the standard English transliteration when one exists (e.g. "Yirgacheffe", "Huila", "Nariño"); otherwise the local spelling.
-  * `process`: the English coffee-industry term — "Washed", "Natural" (or "Dry"), "Honey" (with colour qualifier when present: "Red Honey", "Yellow Honey", "Black Honey", "White Honey"), "Anaerobic", "Semi-washed", "Wet-hulled" (or "Giling Basah"), "Carbonic Maceration", "Sugarcane EA Decaf", "Swiss Water Decaf", "CO2 Decaf". Translate the source-language process word to its English equivalent.
-  * `roastLevel`: the English roast term — "Light", "Medium", "Dark", "Filter", "Espresso", "Omni". Translate from any source language. "Filter" / "Espresso" / "Omni" are the roast PURPOSE (what the coffee was ROASTED FOR) — capture them, not just the light/medium/dark level. For a roast-purpose CHOICE (the local-language word for "roast" followed by filter / espresso / omni options with one ticked or circled), output ONLY the selected option; if the OCR shows the options but not which is marked, emit "not_visible" so the image pass reads the checkbox.
-  * `variety`: the standard cultivar name (e.g. "Heirloom", "Bourbon", "Geisha", "Caturra", "Catuai", "SL28", "SL34", "Pacamara", "Maragogype", "Typica"). Cultivar names are essentially language-independent — use the standard form.
-  * `tastingNotes`: translate flavour descriptors to English. Keep them lowercase, comma-separated.
-- Keep PROPER-NOUN fields VERBATIM in their original spelling — these are brand and identity strings that must not be translated:
-  * `name`: blend / product name. If OCR garbled it but the intended local-language spelling is recoverable, output the recovered local-language spelling. Never translate.
-  * `roaster`: company / brand name. Never translate, never substitute the country or product name. Trademarked brand names stay verbatim.
-  * `farm`: estate / cooperative name. Keep the local spelling.
-- Structural fields use universal formats:
-  * `roastDate` / `expiryDate`: emit as YYYY-MM-DD whenever the source format makes a full date recoverable. Common source formats include DD.MM.YYYY, MM/YYYY (no day → YYYY-MM), YYYY/MM/DD, and best-before/use-by phrases (strip the phrase, keep the date). When only a month + year are present, emit YYYY-MM.
-  * `weight`: native unit as written (metric preferred: 250g, 1kg, 340g; ounces when the bag is imperial-only).
-  * `altitude`: the number range plus unit, ASCII when possible (e.g. "1400-2100m", "1900 masl").
-  * `isDecaf`: boolean. true when the OCR text explicitly contains a decaffeination marker in ANY language (the local-language word for "decaf" / "decaffeinated", or a named decaffeination process like "Sugarcane EA Decaf", "Swiss Water Decaf", "CO2 Decaf"). false when clearly regular / caffeinated. not_visible otherwise.
+Field definitions — what each field is, and what does NOT belong in it:
+- name: the BAG-SPECIFIC product designation that distinguishes this bag from
+  the roaster's other coffees — a descriptor combining origin / variety /
+  process / decaf (e.g. "Tumbaga Decaf", "Yirgacheffe Natural") or a named blend
+  ("Espresso Blend"). NOT the company name.
+- roaster: the COMPANY that roasted it — brand logo on the front, legal entity
+  on the back. Keep it verbatim. When a logo word AND a product sticker are both
+  on the front, the logo word is the roaster and the sticker text is the name.
+- origin: the country of origin, English name (e.g. "Colombia", "Ethiopia").
+  A country name is ALWAYS origin — NEVER region, name, farm, or roaster.
+- region: the growing region / sub-origin (e.g. "Huila", "Yirgacheffe",
+  "Tumbaga"). NOT the country: if the only candidate is a country name, that is
+  origin and region is not_visible. Do not duplicate the country into region.
+- farm: estate / cooperative name. Verbatim.
+- variety: the cultivar (e.g. "Bourbon", "Geisha", "Caturra", "SL28",
+  "Heirloom"). Generic "mixed varieties" → not_visible.
+- process: the green-coffee processing METHOD — "Washed", "Natural", "Honey"
+  (with colour qualifier if present), "Anaerobic", "Semi-washed", "Wet-hulled",
+  "Carbonic Maceration", etc. NOT a roast word, NOT a bean-form word ("beans",
+  "whole bean", "ground"), and NOT "Decaf".
+- roastLevel: "Light", "Medium", "Dark", or the roast PURPOSE "Filter" /
+  "Espresso" / "Omni" (what it was roasted FOR). For a marked roast-purpose
+  choice (options with one ticked / circled), output ONLY the marked option; if
+  no mark is readable, emit not_visible.
+- tastingNotes: flavour descriptors, lowercase, comma-separated.
+- altitude: the number range plus unit, ASCII (e.g. "1400-2100m", "1900 masl").
+- weight: the NET weight in its printed unit (e.g. "250g", "1kg", "340g"). A
+  single value — never merge two numbers into one token.
+- roastDate / expiryDate: YYYY-MM-DD (or YYYY-MM when only month+year is given).
+  roastDate is when the beans were roasted; expiryDate is best-before / minimum
+  durability. Read each from its own label; never copy one into the other.
+- isDecaf: true when a decaffeination marker is present ("Decaf",
+  "Decaffeinated", or a named method like "Sugarcane EA Decaf", "Swiss Water
+  Decaf", "CO2 Decaf"); false when clearly regular; not_visible otherwise. The
+  bare word "Decaf" sets isDecaf=true but is NEVER the `process` value — use the
+  primary process for `process` and set isDecaf separately.
 
-Field notes:
-- name vs roaster — separating the bag's PRODUCT designation from the COMPANY:
-  * **name** = the BAG-SPECIFIC product designation that distinguishes
-    this bag from other coffees by the same roaster. Often a product
-    descriptor combining origin / variety / process / decaf state (e.g.
-    "Tumbaga Decaf", "Yirgacheffe Natural", "Sidamo G1"), or a named
-    blend ("Wildkaffee", "Espresso Blend"), or just the famous origin
-    region when the roaster sells it under that name ("Yirgacheffe").
-    NOT the roaster's company name.
-  * **roaster** = the COMPANY that roasted the coffee. Usually a brand
-    logo on the front and the legal entity on the back's contact info.
-    A single word or short brand phrase.
-  * **When both a brand logo AND a product descriptor sticker are on
-    the front** (very common pattern): the logo word goes in `roaster`,
-    the descriptor sticker text goes in `name`. Do not put the logo
-    word in `name` just because it's the most prominent visually — the
-    LOGO is the brand. Example: a bag with a large cursive "Acme"
-    logo + a small "Sidamo Natural" sticker on the front has
-    `name = "Sidamo Natural"`, `roaster = "Acme"`. If OCR garbled
-    the cursive logo (e.g. "Acne" instead of "Acme") and a cleaner
-    derivative of the same word appears on the back's contact info,
-    prefer the cleaner spelling for `roaster` per the multi-page
-    cross-reference rule above.
-- processType: ONLY actual processing methods. Do NOT use grind / form descriptors (the local-language word for "beans", "whole bean", "ground", etc.) — those are bean form, not process. When the OCR text only contains bean-form words, emit `not_visible` for processType.
+Multilingual safety net (normalization runs BEFORE this step, but it is
+best-effort — some tokens may reach you untranslated):
+- The text is normally English, but it may still be in ANY language. If a token
+  is not English, read it in its source language using your knowledge of coffee
+  terminology and output CONCEPT fields (origin, process, roastLevel,
+  tastingNotes) in canonical English. Do not enumerate languages — handle
+  whatever you receive.
+- Keep PROPER-NOUN fields (name, roaster, region, farm, variety) VERBATIM in
+  their original spelling — identity strings are never translated.
+- A local-language word for a PROCESS ("washed", "natural", "honey",
+  "anaerobic", "wet-hulled") or a ROAST ACTION ("roasted", "roast") is NEVER
+  origin, name, or roaster; a bean-form word ("beans", "whole bean", "ground")
+  is NEVER process.
 
-Universal field-type guards (apply regardless of language — these prevent process / roast verbs and measurements from leaking into proper-noun fields when OCR is noisy):
-- Words that describe a coffee PROCESS (the local-language word for "washed", "natural", "honey", "anaerobic", "wet-hulled", "carbonic maceration", etc.) or a ROAST ACTION (the local-language word for "roasted", "roast", "roasting", etc.) and their OCR-garbled variants are NEVER `origin`, `region`, `farm`, `name`, or `roaster`. If the only candidate for one of those fields is such a verb, emit `not_visible` instead.
-- Measurement and date strings (numbers + a unit like "m", "g", "kg", "%", or a date in any format) are NEVER `name`, `roaster`, `origin`, `region`, or `farm`. Emit `not_visible` for those fields if no real proper-noun value is present.
+Guards (keep noisy tokens out of the wrong field):
+- Process / roast words and measurement / date strings are NEVER `name`,
+  `roaster`, `origin`, `region`, or `farm`. If the only candidate for one of
+  those fields is such a token, emit not_visible instead.
 
 Rules:
-- Use "not_visible" when the OCR text does not contain the information. Never guess.
-- Use "uncertain" when the OCR characters are garbled, partial, or ambiguous, OR when you translated a non-English source.
-- Use "found" only when you can clearly read or determine the value from the OCR text.
-- Correct obvious OCR errors only when the intended word is unambiguous from context (e.g. "FESAUVAGE" → "CAFÉ SAUVAGE", "TUNBAGA" → "Tumbaga").
+- Use "not_visible" when the information is absent. Never guess.
+- Correct obvious OCR garble only when the intended word is unambiguous.
 - Respond with ONLY a JSON object. No markdown fences or explanation.
 """.trimIndent()
 
