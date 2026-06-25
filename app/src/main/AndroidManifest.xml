@@ -7,12 +7,15 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!--
-        Expedited WorkManager runs the on-device AI bag-label extraction so it
-        survives app backgrounding and process death. On API 26-30 an expedited
-        WorkRequest falls back to a short foreground service, which requires this
-        permission. On API 31+ it uses the expedited job quota (no service).
+        The on-device AI bag-label extraction runs as an expedited WorkManager
+        job that promotes itself to a foreground service (see BagExtractionWorker)
+        so it survives app backgrounding and process death while the multi-pass
+        LLM inference completes. FOREGROUND_SERVICE is the base permission; on
+        API 34+ the `dataSync` service type additionally requires the granular
+        FOREGROUND_SERVICE_DATA_SYNC permission below.
     -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
@@ -98,6 +101,17 @@
             android:name=".notification.RatingActionReceiver"
             android:enabled="true"
             android:exported="false" />
+
+        <!--
+            WorkManager's foreground-service host. BagExtractionWorker calls
+            setForeground() with the `dataSync` type; Android 14+ requires the
+            type to be declared on the hosting service, so we merge it onto the
+            library's SystemForegroundService here.
+        -->
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
     </application>
 
 </manifest>

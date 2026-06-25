@@ -2,6 +2,8 @@ package com.adsamcik.starlitcoffee.data.work
 
 import android.app.Notification
 import android.content.Context
+import android.content.pm.ServiceInfo
+import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -34,6 +36,13 @@ class BagExtractionWorker(
             val photoUris = photosCsv.split(",").map(String::trim).filter(String::isNotBlank)
             if (photoUris.isEmpty()) return Result.success()
 
+            // Real work ahead (OCR + on-device LLM passes, potentially minutes on
+            // a slow device). Promote to a foreground service so the OS keeps this
+            // process alive while the user is in another app — the LLM runs in the
+            // Mindlayer process over a binder, and if our process is reclaimed the
+            // binder drops and the whole pipeline restarts from scratch.
+            enterForeground()
+
             val knownValues = decodeKnownFieldValues(inputData.getString(KEY_KNOWN_VALUES))
             val runLlm = inputData.getBoolean(KEY_RUN_LLM, true)
             val result = buildExtractor()
@@ -50,10 +59,33 @@ class BagExtractionWorker(
     }
 
     /**
+     * Promote the worker to a foreground service for the duration of the
+     * pipeline. Best-effort: if the platform refuses the promotion (e.g. a
+     * background-start restriction on a corner-case launch path) we log it and
+     * keep running as ordinary background work rather than failing the scan —
+     * producing the result reliably matters more than the service guarantee.
+     */
+    private suspend fun enterForeground() {
+        @Suppress("TooGenericExceptionCaught")
+        try {
+            setForeground(getForegroundInfo())
+        } catch (error: Exception) {
+            Log.w(
+                TAG,
+                "Could not promote bag extraction to a foreground service; " +
+                    "continuing as background work",
+                error,
+            )
+        }
+    }
+
+    /**
      * Mirror a pipeline [progress] snapshot to both observers: WorkManager's
      * progress data (read by the in-app analyzing screen via WorkInfo) and the
-     * ongoing foreground notification (visible once the user backgrounds the
-     * scan). The notification re-post reuses the same id so it updates in place.
+     * ongoing foreground-service notification. The worker runs as a foreground
+     * service for the whole pipeline, so this low-priority notification is
+     * visible throughout (not only once backgrounded); re-posting under the same
+     * id updates the stage label and progress bar in place.
      */
     private fun publishProgress(progress: ScanProgress) {
         setProgressAsync(
@@ -76,8 +108,24 @@ class BagExtractionWorker(
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
         NotificationChannels.ensureBagScanProgressChannel(applicationContext)
-        return ForegroundInfo(NOTIFICATION_ID, buildProgressNotification(progress = null))
+        return buildForegroundInfo(buildProgressNotification(progress = null))
     }
+
+    /**
+     * Wrap the progress [notification] in a [ForegroundInfo]. On API 29+ the
+     * service is tagged `dataSync` (local on-device processing of user data);
+     * Android 14+ rejects a typeless foreground service, and the matching
+     * `FOREGROUND_SERVICE_DATA_SYNC` permission plus the `SystemForegroundService`
+     * type merge are declared in the manifest. `shortService` is deliberately not
+     * used — its hard ~3-minute cap conflicts with the long, device-dependent LLM
+     * inference budget.
+     */
+    private fun buildForegroundInfo(notification: Notification): ForegroundInfo =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ForegroundInfo(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        } else {
+            ForegroundInfo(NOTIFICATION_ID, notification)
+        }
 
     private fun buildProgressNotification(progress: ScanProgress?): Notification {
         NotificationChannels.ensureBagScanProgressChannel(applicationContext)
