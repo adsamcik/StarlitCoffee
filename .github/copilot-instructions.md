@@ -84,3 +84,13 @@ For detailed reference, see `.github/context/ARCHITECTURE.md`, `.github/context/
 - Do not put source-only strings directly in UI; use resources.
 
 <!-- context-init:user-content-below -->
+
+## On-Device Work (Android Emulator MCP)
+
+For any task that requires a running device or emulator — installing the app, launching it, UI verification, instrumented tests, reproducing bugs, reading logcat/crashes, or simulating GPS/network/battery — use the **`android-emulator-mcp`** MCP server instead of driving `adb`/`emulator` by hand.
+
+- **Claim first.** Call `android_list_devices`, then `android_claim_device` (or `android_await_device` if it's busy) before any device-touching action. The claim token is auto-applied for the rest of the session.
+- **Never start emulators yourself.** Claiming a defined-but-stopped AVD by name launches and boots it transparently.
+- **Drive the device through the MCP tools** (install, launch, tap/swipe/type, screenshot, `android_get_all_text`, `android_get_current_activity`, `android_get_logcat`, `android_detect_crash`, etc.) rather than raw shell commands. Any direct `adb -s <device>` you do run must come after a successful claim.
+- **Release when done** with `android_release_device` so other agents can use the device.
+- Gradle commands (`installDebug`, `connectedDebugAndroidTest`, etc.) still run from the shell, but use a claimed device for the install/run target and verify results through the MCP tools.

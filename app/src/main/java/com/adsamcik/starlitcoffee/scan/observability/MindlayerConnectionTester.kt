@@ -5,6 +5,7 @@ import com.adsamcik.mindlayer.sdk.ConnectionState
 import com.adsamcik.mindlayer.sdk.InferenceBackend
 import com.adsamcik.mindlayer.sdk.InferenceEvent
 import com.adsamcik.mindlayer.sdk.Mindlayer
+import com.adsamcik.mindlayer.sdk.MindlayerException
 import kotlinx.coroutines.withTimeoutOrNull
 
 data class ConnectionTestResult(
@@ -14,7 +15,7 @@ data class ConnectionTestResult(
     val errorMessage: String?,
 )
 
-enum class ConnectionStatus { DISCONNECTED, CONNECTING, CONNECTED, ERROR }
+enum class ConnectionStatus { DISCONNECTED, CONNECTING, INITIALIZING, CONNECTED, ERROR }
 
 data class EngineInfoSnapshot(
     val modelId: String,
@@ -32,6 +33,47 @@ data class TestResult(
     val latencyMs: Long,
     val tokenCount: Int,
 )
+
+private const val ENGINE_INITIALIZING_CODE_NAME = "ENGINE_INITIALIZING"
+private const val ENGINE_INITIALIZING_WIRE = "engine_initializing"
+
+/**
+ * True when [throwable] is the Mindlayer service's retryable
+ * `ENGINE_INITIALIZING` signal — the on-device engine is still warming up (a
+ * one-time 5–10 s cost), not a terminal failure. The service explicitly marks
+ * this code retryable, so the diagnostic must surface it as a transient
+ * "initializing" state rather than a red error. Detected by the typed
+ * [MindlayerException] code name, with the wire message as a fallback for
+ * paths that surface the signal as a plain throwable.
+ */
+internal fun isEngineInitializing(throwable: Throwable): Boolean {
+    if (throwable.message?.contains(ENGINE_INITIALIZING_WIRE, ignoreCase = true) == true) {
+        return true
+    }
+    return (throwable as? MindlayerException)?.codeName == ENGINE_INITIALIZING_CODE_NAME
+}
+
+/**
+ * Map a caught throwable to a result: the retryable engine-initializing signal
+ * becomes [ConnectionStatus.INITIALIZING] with no error banner; anything else
+ * is a genuine [ConnectionStatus.ERROR] with the message surfaced.
+ */
+internal fun errorResultFor(throwable: Throwable): ConnectionTestResult =
+    if (isEngineInitializing(throwable)) {
+        ConnectionTestResult(
+            status = ConnectionStatus.INITIALIZING,
+            engineInfo = null,
+            testResult = null,
+            errorMessage = null,
+        )
+    } else {
+        ConnectionTestResult(
+            status = ConnectionStatus.ERROR,
+            engineInfo = null,
+            testResult = null,
+            errorMessage = throwable.message ?: "Unknown error",
+        )
+    }
 
 /**
  * Debug/settings-screen diagnostic only.
@@ -80,12 +122,7 @@ object MindlayerConnectionTester {
                 errorMessage = null,
             )
         } catch (e: Exception) {
-            ConnectionTestResult(
-                status = ConnectionStatus.ERROR,
-                engineInfo = null,
-                testResult = null,
-                errorMessage = e.message ?: "Unknown error",
-            )
+            errorResultFor(e)
         } finally {
             mindlayer.disconnect()
         }
@@ -175,12 +212,7 @@ object MindlayerConnectionTester {
                 errorMessage = null,
             )
         } catch (e: Exception) {
-            ConnectionTestResult(
-                status = ConnectionStatus.ERROR,
-                engineInfo = null,
-                testResult = null,
-                errorMessage = e.message ?: "Unknown error",
-            )
+            errorResultFor(e)
         } finally {
             mindlayer.disconnect()
         }

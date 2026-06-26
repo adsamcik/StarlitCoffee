@@ -138,6 +138,14 @@
     <string name="label_total_water">总水量</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">设置</string>
+    <string name="label_settings_section_brewing">冲煮</string>
+    <string name="label_settings_section_appearance">外观</string>
+    <string name="label_settings_section_notifications">通知</string>
+    <string name="label_settings_section_developer">开发者</string>
+    <string name="label_settings_section_when_dimmed">暗屏时</string>
+    <string name="label_display_dim_settings">显示与暗屏模式</string>
+    <string name="msg_display_dim_settings_subtitle">暗屏模式、OLED 纯黑、亮度</string>
+    <string name="screen_display_settings_title">显示与暗屏模式</string>
     <string name="label_cup_presets">杯量预设</string>
     <string name="action_add_preset">添加预设</string>
     <string name="action_reset_defaults">恢复默认</string>

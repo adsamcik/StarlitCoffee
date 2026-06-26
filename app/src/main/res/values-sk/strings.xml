@@ -144,6 +144,14 @@
     <string name="label_total_water">celkom vody</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Nastavenia</string>
+    <string name="label_settings_section_brewing">Príprava</string>
+    <string name="label_settings_section_appearance">Vzhľad</string>
+    <string name="label_settings_section_notifications">Oznámenia</string>
+    <string name="label_settings_section_developer">Pre vývojárov</string>
+    <string name="label_settings_section_when_dimmed">Pri stlmení</string>
+    <string name="label_display_dim_settings">Displej a tlmený režim</string>
+    <string name="msg_display_dim_settings_subtitle">Tlmený režim, čierna OLED, jas</string>
+    <string name="screen_display_settings_title">Displej a tlmený režim</string>
     <string name="label_cup_presets">Predvoľby šálok</string>
     <string name="action_add_preset">Pridať predvoľbu</string>
     <string name="action_reset_defaults">Obnoviť predvolené</string>

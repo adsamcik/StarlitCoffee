@@ -29,11 +29,9 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -65,6 +63,12 @@ import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
+import com.adsamcik.starlitcoffee.ui.component.SettingsGroup
+import com.adsamcik.starlitcoffee.ui.component.SettingsNavigationRow
+import com.adsamcik.starlitcoffee.ui.component.SettingsRowDivider
+import com.adsamcik.starlitcoffee.ui.component.SettingsSectionHeader
+import com.adsamcik.starlitcoffee.ui.component.SettingsSelectorBlock
+import com.adsamcik.starlitcoffee.ui.component.SettingsSwitchRow
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.BuildConfig
 import android.Manifest
@@ -77,6 +81,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
+import com.adsamcik.starlitcoffee.scan.observability.ScanLlmDiagnosticsStore
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.ui.component.MindlayerSettingsCard
 import com.adsamcik.starlitcoffee.ui.component.ScanHistoryDialog
@@ -93,6 +98,7 @@ fun SettingsScreen(
     userPreferencesRepository: UserPreferencesRepository,
     cupPresetRepository: CupPresetRepository,
     onNavigateToBloomAnimationSettings: () -> Unit,
+    onNavigateToDisplaySettings: () -> Unit,
     onNavigateToCupPresetEditor: (presetId: Long?) -> Unit,
     onBack: () -> Unit,
 ){
@@ -119,10 +125,13 @@ fun SettingsScreen(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            // Cup Presets
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+            // ---------- Brewing ----------
+            SettingsSectionHeader(stringResource(R.string.label_settings_section_brewing))
+
+            // Cup presets — keeps its add/reset actions and tappable list.
+            SettingsGroup {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -220,20 +229,12 @@ fun SettingsScreen(
                 }
             }
 
-            // Enabled methods
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = stringResource(R.string.label_brew_methods),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                    Text(
-                        text = stringResource(R.string.msg_methods_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
+            // Brew configuration — methods, default, filter, grinder grouped together.
+            SettingsGroup {
+                SettingsSelectorBlock(
+                    title = stringResource(R.string.label_brew_methods),
+                    summary = stringResource(R.string.msg_methods_hint),
+                ) {
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -244,7 +245,6 @@ fun SettingsScreen(
                                 selected = enabled,
                                 onClick = {
                                     val newSet = if (enabled) {
-                                        // Don't allow deselecting last method
                                         if (prefs.enabledMethods.size > 1) {
                                             prefs.enabledMethods - method
                                         } else {
@@ -266,17 +266,8 @@ fun SettingsScreen(
                         }
                     }
                 }
-            }
-
-            // Default method
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = stringResource(R.string.label_default_method),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
+                SettingsRowDivider()
+                SettingsSelectorBlock(title = stringResource(R.string.label_default_method)) {
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -296,22 +287,11 @@ fun SettingsScreen(
                         }
                     }
                 }
-            }
-
-            // Filter type (always visible in settings)
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = stringResource(R.string.label_pulsar_filter_type),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                    Text(
-                        text = stringResource(R.string.msg_pulsar_settings_applied),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
+                SettingsRowDivider()
+                SettingsSelectorBlock(
+                    title = stringResource(R.string.label_pulsar_filter_type),
+                    summary = stringResource(R.string.msg_pulsar_settings_applied),
+                ) {
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
@@ -340,17 +320,8 @@ fun SettingsScreen(
                         }
                     }
                 }
-            }
-
-            // Grinder
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = stringResource(R.string.label_your_grinder),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
+                SettingsRowDivider()
+                SettingsSelectorBlock(title = stringResource(R.string.label_your_grinder)) {
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -389,314 +360,63 @@ fun SettingsScreen(
                 }
             }
 
-            ElevatedCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = onNavigateToBloomAnimationSettings),
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 16.dp),
-                    ) {
-                        Text(
-                            text = stringResource(R.string.label_bloom_animation_settings),
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.semantics { heading() },
-                        )
-                        Text(
-                            text = stringResource(R.string.msg_bloom_animation_settings_subtitle),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = stringResource(R.string.cd_open_bloom_animation_settings),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+            // Brew flow toggles.
+            SettingsGroup {
+                SettingsSwitchRow(
+                    title = stringResource(R.string.label_quick_brew),
+                    summary = stringResource(R.string.msg_quick_brew_hint),
+                    checked = prefs.skipMethodSelection,
+                    onCheckedChange = { enabled ->
+                        scope.launch {
+                            userPreferencesRepository.updateSkipMethodSelection(enabled)
+                        }
+                    },
+                )
+                SettingsRowDivider()
+                SettingsSwitchRow(
+                    title = stringResource(R.string.label_show_brewing_instructions),
+                    summary = stringResource(R.string.msg_show_brewing_instructions_hint),
+                    checked = prefs.showBrewingInstructions,
+                    onCheckedChange = { enabled ->
+                        scope.launch {
+                            userPreferencesRepository.updateShowBrewingInstructions(enabled)
+                        }
+                    },
+                )
             }
 
-            // Skip method selection
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 16.dp),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.label_quick_brew),
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.semantics { heading() },
-                            )
-                            Text(
-                                text = stringResource(R.string.msg_quick_brew_hint),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        Switch(
-                            checked = prefs.skipMethodSelection,
-                            onCheckedChange = { enabled ->
-                                scope.launch {
-                                    userPreferencesRepository.updateSkipMethodSelection(enabled)
-                                }
-                            },
-                        )
-                    }
-                }
+            // ---------- Appearance ----------
+            SettingsSectionHeader(stringResource(R.string.label_settings_section_appearance))
+            SettingsGroup {
+                SettingsNavigationRow(
+                    title = stringResource(R.string.label_display_dim_settings),
+                    summary = stringResource(R.string.msg_display_dim_settings_subtitle),
+                    onClick = onNavigateToDisplaySettings,
+                )
+                SettingsRowDivider()
+                SettingsNavigationRow(
+                    title = stringResource(R.string.label_bloom_animation_settings),
+                    summary = stringResource(R.string.msg_bloom_animation_settings_subtitle),
+                    onClick = onNavigateToBloomAnimationSettings,
+                )
             }
 
-            // Rating reminder + bag prompt — both are opt-in courtesy nudges
-            // grouped together so users find them next to "Quick brew".
-            RatingReminderSettingCard(
-                enabled = prefs.ratingReminderEnabled,
-                onEnabledChange = { enabled ->
-                    scope.launch {
-                        userPreferencesRepository.updateRatingReminderEnabled(enabled)
-                    }
-                },
-            )
-
-            // Show brewing instructions — sits alongside the other in-brew
-            // courtesy toggles. Hides the BrewGuidanceCard on BrewTimer and
-            // the Prep section on GrindPrep for users who know their method
-            // by heart and don't want the screen real estate / cognitive load.
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 16.dp),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.label_show_brewing_instructions),
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.semantics { heading() },
-                            )
-                            Text(
-                                text = stringResource(R.string.msg_show_brewing_instructions_hint),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
+            // ---------- Notifications ----------
+            SettingsSectionHeader(stringResource(R.string.label_settings_section_notifications))
+            SettingsGroup {
+                RatingReminderRow(
+                    enabled = prefs.ratingReminderEnabled,
+                    onEnabledChange = { enabled ->
+                        scope.launch {
+                            userPreferencesRepository.updateRatingReminderEnabled(enabled)
                         }
-                        Switch(
-                            checked = prefs.showBrewingInstructions,
-                            onCheckedChange = { enabled ->
-                                scope.launch {
-                                    userPreferencesRepository.updateShowBrewingInstructions(enabled)
-                                }
-                            },
-                        )
-                    }
-                }
+                    },
+                )
             }
 
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 16.dp),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.label_dim_mode),
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.semantics { heading() },
-                            )
-                            Text(
-                                text = stringResource(R.string.msg_dim_mode_hint),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        Switch(
-                            checked = prefs.dimModeEnabled,
-                            onCheckedChange = { enabled ->
-                                scope.launch {
-                                    userPreferencesRepository.updateDimModeEnabled(enabled)
-                                }
-                            },
-                        )
-                    }
-
-                    // Sub-toggles: child preferences that only take effect when
-                    // the parent dim toggle is on. Both render disabled and at
-                    // reduced alpha when the parent is off, so they're
-                    // discoverable but clearly inactive.
-                    val subToggleAlpha = if (prefs.dimModeEnabled) 1f else 0.5f
-                    HorizontalDivider(
-                        modifier = Modifier.padding(vertical = 12.dp),
-                        color = MaterialTheme.colorScheme.outlineVariant,
-                    )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 16.dp),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.label_dim_mode_true_black),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = subToggleAlpha),
-                            )
-                            Text(
-                                text = stringResource(R.string.msg_dim_mode_true_black_hint),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    .copy(alpha = subToggleAlpha),
-                            )
-                        }
-                        Switch(
-                            checked = prefs.dimModeTrueBlack,
-                            enabled = prefs.dimModeEnabled,
-                            onCheckedChange = { enabled ->
-                                scope.launch {
-                                    userPreferencesRepository.updateDimModeTrueBlack(enabled)
-                                }
-                            },
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 16.dp),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.label_dim_mode_reduce_brightness),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = subToggleAlpha),
-                            )
-                            Text(
-                                text = stringResource(R.string.msg_dim_mode_reduce_brightness_hint),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    .copy(alpha = subToggleAlpha),
-                            )
-                        }
-                        Switch(
-                            checked = prefs.dimModeReduceBrightness,
-                            enabled = prefs.dimModeEnabled,
-                            onCheckedChange = { enabled ->
-                                scope.launch {
-                                    userPreferencesRepository.updateDimModeReduceBrightness(enabled)
-                                }
-                            },
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 16.dp),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.label_dim_mode_fullscreen),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = subToggleAlpha),
-                            )
-                            Text(
-                                text = stringResource(R.string.msg_dim_mode_fullscreen_hint),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    .copy(alpha = subToggleAlpha),
-                            )
-                        }
-                        Switch(
-                            checked = prefs.dimModeFullscreen,
-                            enabled = prefs.dimModeEnabled,
-                            onCheckedChange = { enabled ->
-                                scope.launch {
-                                    userPreferencesRepository.updateDimModeFullscreen(enabled)
-                                }
-                            },
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 16.dp),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.label_dim_mode_force_dark_in_light),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = subToggleAlpha),
-                            )
-                            Text(
-                                text = stringResource(R.string.msg_dim_mode_force_dark_in_light_hint),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    .copy(alpha = subToggleAlpha),
-                            )
-                        }
-                        Switch(
-                            checked = prefs.dimModeForceDarkInLight,
-                            enabled = prefs.dimModeEnabled,
-                            onCheckedChange = { enabled ->
-                                scope.launch {
-                                    userPreferencesRepository.updateDimModeForceDarkInLight(enabled)
-                                }
-                            },
-                        )
-                    }
-                }
-            }
-
-            // Debug-only cards
+            // ---------- Developer (debug only) ----------
             if (BuildConfig.DEBUG) {
+                SettingsSectionHeader(stringResource(R.string.label_settings_section_developer))
                 MindlayerSettingsCard()
                 ScanDebugCard()
             }
@@ -708,6 +428,7 @@ fun SettingsScreen(
 private fun ScanDebugCard() {
     val context = LocalContext.current
     var sessions by remember { mutableStateOf(ScanSessionRingBuffer.getAll(context)) }
+    var llmPasses by remember { mutableStateOf(ScanLlmDiagnosticsStore.getAll(context)) }
     var showHistory by remember { mutableStateOf(false) }
 
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
@@ -718,7 +439,7 @@ private fun ScanDebugCard() {
                 modifier = Modifier.semantics { heading() },
             )
             Text(
-                text = "${sessions.size} sessions stored",
+                text = "${sessions.size} sessions · ${llmPasses.size} LLM passes stored",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -733,7 +454,9 @@ private fun ScanDebugCard() {
                 FilledTonalButton(
                     onClick = {
                         ScanSessionRingBuffer.clear(context)
+                        ScanLlmDiagnosticsStore.clear(context)
                         sessions = emptyList()
+                        llmPasses = emptyList()
                     },
                     modifier = Modifier.weight(1f),
                 ) {
@@ -765,13 +488,14 @@ private fun ScanDebugCard() {
 }
 
 /**
- * Rating reminder toggle card. On Android 13+ enabling the toggle prompts the
- * runtime POST_NOTIFICATIONS permission inline; if the user denies it the
- * toggle reverts to off and a hint surfaces a deep-link into system settings.
- * Below SDK 33 no runtime permission exists, so the toggle is straightforward.
+ * Rating reminder switch row. On Android 13+ enabling it prompts the runtime
+ * POST_NOTIFICATIONS permission inline; if the user denies it the toggle
+ * reverts to off and a hint surfaces a deep-link into system settings. Below
+ * SDK 33 no runtime permission exists, so the toggle is straightforward.
+ * Designed to live inside a [SettingsGroup].
  */
 @Composable
-private fun RatingReminderSettingCard(
+private fun RatingReminderRow(
     enabled: Boolean,
     onEnabledChange: (Boolean) -> Unit,
 ) {
@@ -804,73 +528,52 @@ private fun RatingReminderSettingCard(
         }
     }
 
-    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 16.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.label_rating_reminder),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                    Text(
-                        text = stringResource(R.string.msg_rating_reminder_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+    SettingsSwitchRow(
+        title = stringResource(R.string.label_rating_reminder),
+        summary = stringResource(R.string.msg_rating_reminder_hint),
+        checked = enabled,
+        onCheckedChange = { wantEnabled ->
+            if (wantEnabled && !hasPostNotifications) {
+                // Defer the persisted toggle to the permission result.
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                } else {
+                    onEnabledChange(true)
                 }
-                Switch(
-                    checked = enabled,
-                    onCheckedChange = { wantEnabled ->
-                        if (wantEnabled && !hasPostNotifications) {
-                            // Defer the persisted toggle to the permission result.
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                            } else {
-                                onEnabledChange(true)
-                            }
-                        } else {
-                            onEnabledChange(wantEnabled)
-                        }
-                    },
-                )
+            } else {
+                onEnabledChange(wantEnabled)
             }
-            if (enabled && !hasPostNotifications) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.msg_rating_reminder_perm_denied),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error,
-                )
-                TextButton(
-                    onClick = {
-                        val intent = Intent(AndroidSettings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
-                            putExtra(
-                                AndroidSettings.EXTRA_APP_PACKAGE,
-                                context.packageName,
-                            )
-                            // Fallback for older runtime quirks where the action
-                            // intent fails to resolve.
-                            data = Uri.fromParts("package", context.packageName, null)
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        },
+    )
+    if (enabled && !hasPostNotifications) {
+        Column(
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.msg_rating_reminder_perm_denied),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
+            )
+            TextButton(
+                onClick = {
+                    val intent = Intent(AndroidSettings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                        putExtra(
+                            AndroidSettings.EXTRA_APP_PACKAGE,
+                            context.packageName,
+                        )
+                        // Fallback for older runtime quirks where the action
+                        // intent fails to resolve.
+                        data = Uri.fromParts("package", context.packageName, null)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    runCatching { context.startActivity(intent) }
+                        .onFailure {
+                            permissionTick++
                         }
-                        runCatching { context.startActivity(intent) }
-                            .onFailure {
-                                permissionTick++
-                            }
-                        permissionTick++
-                    },
-                ) {
-                    Text(stringResource(R.string.action_open_app_settings))
-                }
+                    permissionTick++
+                },
+            ) {
+                Text(stringResource(R.string.action_open_app_settings))
             }
         }
     }

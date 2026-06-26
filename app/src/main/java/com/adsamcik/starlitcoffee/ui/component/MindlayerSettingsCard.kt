@@ -93,6 +93,7 @@ fun MindlayerSettingsCard() {
                 val (dotColor, statusText) = when (result?.status) {
                     ConnectionStatus.CONNECTED -> connectedColor to "Connected"
                     ConnectionStatus.CONNECTING -> connectingColor to "Connecting…"
+                    ConnectionStatus.INITIALIZING -> connectingColor to "Initializing…"
                     ConnectionStatus.DISCONNECTED -> disconnectedColor to "Disconnected"
                     ConnectionStatus.ERROR -> errorColor to "Error"
                     null -> disconnectedColor to "Not tested"

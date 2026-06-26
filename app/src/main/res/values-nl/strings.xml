@@ -140,6 +140,14 @@
     <string name="label_total_water">totaal water</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Instellingen</string>
+    <string name="label_settings_section_brewing">Zetten</string>
+    <string name="label_settings_section_appearance">Weergave</string>
+    <string name="label_settings_section_notifications">Meldingen</string>
+    <string name="label_settings_section_developer">Ontwikkelaar</string>
+    <string name="label_settings_section_when_dimmed">Wanneer gedimd</string>
+    <string name="label_display_dim_settings">Scherm en dimmodus</string>
+    <string name="msg_display_dim_settings_subtitle">Dimmodus, OLED-zwart, helderheid</string>
+    <string name="screen_display_settings_title">Scherm en dimmodus</string>
     <string name="label_cup_presets">Kop-presets</string>
     <string name="action_add_preset">Preset toevoegen</string>
     <string name="action_reset_defaults">Standaardwaarden herstellen</string>

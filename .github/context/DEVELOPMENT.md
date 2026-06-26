@@ -120,7 +120,7 @@ Versions are centralized in `gradle/libs.versions.toml`.
 | Coroutines | 1.11.0 |
 | WorkManager | 2.10.1 |
 | Detekt | 1.23.8 |
-| Mindlayer SDK | 1.0.0-alpha01 |
+| Mindlayer SDK | 1.0.0-alpha.2 |
 
 ## Targeting Android 17 (SDK 37)
 

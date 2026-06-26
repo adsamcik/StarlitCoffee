@@ -140,6 +140,14 @@
     <string name="label_total_water">total water</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Settings</string>
+    <string name="label_settings_section_brewing">Brewing</string>
+    <string name="label_settings_section_appearance">Appearance</string>
+    <string name="label_settings_section_notifications">Notifications</string>
+    <string name="label_settings_section_developer">Developer</string>
+    <string name="label_settings_section_when_dimmed">When dimmed</string>
+    <string name="label_display_dim_settings">Display &amp; dim mode</string>
+    <string name="msg_display_dim_settings_subtitle">Dim mode, OLED black, brightness</string>
+    <string name="screen_display_settings_title">Display &amp; dim mode</string>
     <string name="label_cup_presets">Cup presets</string>
     <string name="action_add_preset">Add preset</string>
     <string name="action_reset_defaults">Reset to defaults</string>

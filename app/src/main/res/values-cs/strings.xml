@@ -133,6 +133,14 @@
     <!-- Calculator Brew Screen -->
 <!-- Settings Screen -->
     <string name="screen_settings_title">Nastavení</string>
+    <string name="label_settings_section_brewing">Příprava</string>
+    <string name="label_settings_section_appearance">Vzhled</string>
+    <string name="label_settings_section_notifications">Oznámení</string>
+    <string name="label_settings_section_developer">Pro vývojáře</string>
+    <string name="label_settings_section_when_dimmed">V klidném režimu</string>
+    <string name="label_display_dim_settings">Displej a klidný režim</string>
+    <string name="msg_display_dim_settings_subtitle">Klidný režim, černá OLED, jas</string>
+    <string name="screen_display_settings_title">Displej a klidný režim</string>
     <string name="label_cup_presets">Předvolby šálků</string>
     <string name="action_add_preset">Přidat předvolbu</string>
     <string name="action_reset_defaults">Obnovit výchozí</string>

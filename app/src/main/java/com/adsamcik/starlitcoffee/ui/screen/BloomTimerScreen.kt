@@ -53,6 +53,7 @@ import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
 import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
+import com.adsamcik.starlitcoffee.ui.util.keepScreenOnTimeoutMillis
 import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -75,7 +76,10 @@ fun BloomTimerScreen(
     val context = LocalContext.current
     val vibrator = remember { getBloomVibrator(context) }
 
-    KeepScreenOn()
+    // Bloom is hands-busy (pouring), so hold the screen awake — but only for a
+    // generous multiple of the bloom duration, so an abandoned bloom eventually
+    // lets the screen sleep instead of holding it forever.
+    KeepScreenOn(timeoutMillis = keepScreenOnTimeoutMillis(state.effectiveBloomDurationSeconds))
 
     // Pick the bloom spritesheet eagerly once weights are available so the
     // bud frame shown before bloom starts and the animation that runs during

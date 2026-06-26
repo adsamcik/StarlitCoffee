@@ -45,6 +45,9 @@ object Settings
 object BloomAnimationSettings
 
 @Serializable
+object DisplaySettings
+
+@Serializable
 data class CupPresetEditor(val presetId: Long? = null)
 
 @Serializable

@@ -140,6 +140,14 @@
     <string name="label_total_water">acqua totale</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Impostazioni</string>
+    <string name="label_settings_section_brewing">Preparazione</string>
+    <string name="label_settings_section_appearance">Aspetto</string>
+    <string name="label_settings_section_notifications">Notifiche</string>
+    <string name="label_settings_section_developer">Sviluppatore</string>
+    <string name="label_settings_section_when_dimmed">Quando attenuato</string>
+    <string name="label_display_dim_settings">Schermo e attenuazione</string>
+    <string name="msg_display_dim_settings_subtitle">Attenuazione, nero OLED, luminosità</string>
+    <string name="screen_display_settings_title">Schermo e attenuazione</string>
     <string name="label_cup_presets">Preset tazze</string>
     <string name="action_add_preset">Aggiungi preset</string>
     <string name="action_reset_defaults">Ripristina predefiniti</string>

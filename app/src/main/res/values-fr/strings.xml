@@ -140,6 +140,14 @@
     <string name="label_total_water">eau totale</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Paramètres</string>
+    <string name="label_settings_section_brewing">Préparation</string>
+    <string name="label_settings_section_appearance">Apparence</string>
+    <string name="label_settings_section_notifications">Notifications</string>
+    <string name="label_settings_section_developer">Développeur</string>
+    <string name="label_settings_section_when_dimmed">En mode atténué</string>
+    <string name="label_display_dim_settings">Affichage et mode atténué</string>
+    <string name="msg_display_dim_settings_subtitle">Mode atténué, noir OLED, luminosité</string>
+    <string name="screen_display_settings_title">Affichage et mode atténué</string>
     <string name="label_cup_presets">Préréglages de tasse</string>
     <string name="action_add_preset">Ajouter un préréglage</string>
     <string name="action_reset_defaults">Réinitialiser par défaut</string>

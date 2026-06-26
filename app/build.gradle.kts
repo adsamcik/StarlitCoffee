@@ -288,7 +288,13 @@ dependencies {
 
     // ML Kit Barcode Scanning
     implementation(libs.mlkit.barcode)
-    implementation(libs.mlkit.text.recognition)
+    // ML Kit text recognition is NOT used in production OCR — Mindlayer
+    // (PaddleOCR / PP-OCRv5) does on-device OCR via MindlayerOcrService, and
+    // the LLM does field extraction. The bundled Latin model (~15 MB in the
+    // APK) is only needed by OcrPipelineInstrumentedTest as a reference OCR
+    // primitive, so scope it to instrumented tests to keep it out of the
+    // shipped AAB.
+    androidTestImplementation(libs.mlkit.text.recognition)
 
     // OpenCV (image preprocessing for OCR)
     implementation(libs.opencv)

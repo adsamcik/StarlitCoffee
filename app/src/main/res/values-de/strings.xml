@@ -140,6 +140,14 @@
     <string name="label_total_water">Wasser gesamt</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Einstellungen</string>
+    <string name="label_settings_section_brewing">Brühen</string>
+    <string name="label_settings_section_appearance">Darstellung</string>
+    <string name="label_settings_section_notifications">Benachrichtigungen</string>
+    <string name="label_settings_section_developer">Entwickler</string>
+    <string name="label_settings_section_when_dimmed">Wenn gedimmt</string>
+    <string name="label_display_dim_settings">Display &amp; Dimm-Modus</string>
+    <string name="msg_display_dim_settings_subtitle">Dimm-Modus, OLED-Schwarz, Helligkeit</string>
+    <string name="screen_display_settings_title">Display &amp; Dimm-Modus</string>
     <string name="label_cup_presets">Tassen-Voreinstellungen</string>
     <string name="action_add_preset">Voreinstellung hinzufügen</string>
     <string name="action_reset_defaults">Auf Standard zurücksetzen</string>

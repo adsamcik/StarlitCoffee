@@ -144,6 +144,14 @@
     <string name="label_total_water">łącznie wody</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Ustawienia</string>
+    <string name="label_settings_section_brewing">Parzenie</string>
+    <string name="label_settings_section_appearance">Wygląd</string>
+    <string name="label_settings_section_notifications">Powiadomienia</string>
+    <string name="label_settings_section_developer">Dla programistów</string>
+    <string name="label_settings_section_when_dimmed">Po przyciemnieniu</string>
+    <string name="label_display_dim_settings">Ekran i przyciemnienie</string>
+    <string name="msg_display_dim_settings_subtitle">Przyciemnienie, czerń OLED, jasność</string>
+    <string name="screen_display_settings_title">Ekran i przyciemnienie</string>
     <string name="label_cup_presets">Presety filiżanek</string>
     <string name="action_add_preset">Dodaj preset</string>
     <string name="action_reset_defaults">Przywróć domyślne</string>

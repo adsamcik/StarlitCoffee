@@ -9,12 +9,10 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.LocalCafe
@@ -69,6 +67,7 @@ import com.adsamcik.starlitcoffee.ui.screen.CalculatorBrewScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BloomTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.CupPresetEditorScreen
+import com.adsamcik.starlitcoffee.ui.screen.DisplaySettingsScreen
 import com.adsamcik.starlitcoffee.ui.screen.GrindPrepScreen
 import com.adsamcik.starlitcoffee.ui.screen.GuidedScanFlow
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
@@ -174,11 +173,6 @@ fun StarlitNavHost() {
     // navigation guidance. This matters on Android 17 (SDK 37), where the portrait
     // lock is ignored on sw>=600dp so the app is regularly shown in wide windows.
     val useNavigationRail = showBottomBar && widthClass.isWide
-    // The bottom navigation bar is only present on compact top-level tabs. On
-    // every other route (sub-screens, and wide windows that use the rail) there
-    // is no bottom bar to consume the system navigation-bar inset, so screens
-    // that don't host their own Scaffold would otherwise be clipped behind it.
-    val bottomNavBarVisible = showBottomBar && !useNavigationRail
 
     // Wait for prefs to load before rendering
     val prefs = userPrefs
@@ -251,16 +245,14 @@ fun StarlitNavHost() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .then(
-                    // Apply the navigation-bar inset to the content when no bottom
-                    // bar is present. windowInsetsPadding is consumption-aware, so
-                    // screens that host their own Scaffold won't double-inset.
-                    if (bottomNavBarVisible) {
-                        Modifier
-                    } else {
-                        Modifier.windowInsetsPadding(WindowInsets.navigationBars)
-                    },
-                ),
+                // The Scaffold reports the system-bar insets (status bar at the
+                // top, nav bar at the bottom) as innerPadding, which we apply
+                // above. Consume them here so descendants don't re-apply the
+                // same insets: a nested Scaffold (e.g. MoreScreen) would
+                // otherwise double the status-bar gap, and a bare scrollable
+                // screen (e.g. SettingsScreen) would get a thick dead band of
+                // doubled nav-bar inset at the bottom that clipped its content.
+                .consumeWindowInsets(innerPadding),
         ) {
             if (useNavigationRail) {
                 StarlitNavigationRail(
@@ -479,6 +471,9 @@ fun StarlitNavHost() {
                         onNavigateToBloomAnimationSettings = {
                             navController.navigate(BloomAnimationSettings)
                         },
+                        onNavigateToDisplaySettings = {
+                            navController.navigate(DisplaySettings)
+                        },
                         onNavigateToCupPresetEditor = { presetId ->
                             navController.navigate(CupPresetEditor(presetId = presetId))
                         },
@@ -487,6 +482,12 @@ fun StarlitNavHost() {
                 }
                 composable<BloomAnimationSettings> {
                     BloomAnimationSettingsScreen(
+                        userPreferencesRepository = userPreferencesRepository,
+                        onBack = { navController.popBackStack() },
+                    )
+                }
+                composable<DisplaySettings> {
+                    DisplaySettingsScreen(
                         userPreferencesRepository = userPreferencesRepository,
                         onBack = { navController.popBackStack() },
                     )

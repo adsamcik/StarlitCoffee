@@ -70,6 +70,7 @@ import com.adsamcik.starlitcoffee.ui.component.WarningCard
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
+import com.adsamcik.starlitcoffee.ui.util.keepScreenOnTimeoutMillis
 import com.adsamcik.starlitcoffee.ui.util.rememberDimModeController
 import com.adsamcik.starlitcoffee.viewmodel.BrewUiState
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -95,7 +96,10 @@ fun BrewTimerScreen(
     val vibrator = remember { getVibrator(context) }
 
     if (usesActiveTimer) {
-        KeepScreenOn()
+        // Safety net so a paused or abandoned brew doesn't pin the display on
+        // forever: hold the screen awake for a generous multiple of the brew's
+        // target time, then let the system timeout reclaim it.
+        KeepScreenOn(timeoutMillis = keepScreenOnTimeoutMillis(state.timeTargetHighS))
     }
 
     // Pick the bloom spritesheet eagerly once weights are available so the

@@ -140,6 +140,14 @@
     <string name="label_total_water">vand i alt</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Indstillinger</string>
+    <string name="label_settings_section_brewing">Brygning</string>
+    <string name="label_settings_section_appearance">Udseende</string>
+    <string name="label_settings_section_notifications">Notifikationer</string>
+    <string name="label_settings_section_developer">Udvikler</string>
+    <string name="label_settings_section_when_dimmed">Når dæmpet</string>
+    <string name="label_display_dim_settings">Skærm og dæmpning</string>
+    <string name="msg_display_dim_settings_subtitle">Dæmpning, OLED-sort, lysstyrke</string>
+    <string name="screen_display_settings_title">Skærm og dæmpning</string>
     <string name="label_cup_presets">Kopforudindstillinger</string>
     <string name="action_add_preset">Tilføj forudindstilling</string>
     <string name="action_reset_defaults">Nulstil til standarder</string>
