@@ -193,6 +193,7 @@ tasks.register("pushTestImages") {
 //   .\gradlew.bat scanBenchmark -PfullPipeline  # text->vision->combine, ONE bag per process (curated subset)
 //   .\gradlew.bat scanBenchmark -PfullPipeline -PbagIds=scb-001-en-q0,scb-003-cs-q2
 //   .\gradlew.bat scanBenchmark -PfullPipeline -PallBags   # every automation-ready bag (slow: ~3-4 min/bag)
+//   .\gradlew.bat scanBenchmark -PfullPipeline -PknownVocab # also ground passes with the collection vocabulary
 //
 // The per-field quality report(s) are pulled to build/reports/scan-benchmark/.
 // Full-pipeline mode runs one bag per `am instrument` invocation because the
@@ -206,6 +207,7 @@ tasks.register("scanBenchmark") {
     val skipCapture = project.hasProperty("skipCapture")
     val fullPipeline = project.hasProperty("fullPipeline")
     val allBags = project.hasProperty("allBags")
+    val knownVocab = project.hasProperty("knownVocab")
     val explicitBagIds = (project.findProperty("bagIds") as String?)
         ?.split(",")?.map { it.trim() }?.filter { it.isNotBlank() }
     val corpusDir = rootProject.file("testdata/synthetic-coffee-bag-corpus")
@@ -278,7 +280,11 @@ tasks.register("scanBenchmark") {
             println("scanBenchmark: full pipeline over ${bagIds.size} bag(s), one process each (vision budget is per-process)…")
             bagIds.forEachIndexed { index, bagId ->
                 println("  [${index + 1}/${bagIds.size}] $bagId")
-                instrument("FullPipelineBenchmarkTest", "-e", "bagId", bagId)
+                if (knownVocab) {
+                    instrument("FullPipelineBenchmarkTest", "-e", "bagId", bagId, "-e", "knownVocab", "true")
+                } else {
+                    instrument("FullPipelineBenchmarkTest", "-e", "bagId", bagId)
+                }
             }
             println("scanBenchmark: aggregating full-pipeline records…")
             instrument("FullPipelineAggregateTest")

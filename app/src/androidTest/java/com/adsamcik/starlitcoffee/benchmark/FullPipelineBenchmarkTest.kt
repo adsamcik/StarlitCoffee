@@ -14,6 +14,7 @@ import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagFixture
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagOcrTextMerger
+import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -105,6 +106,16 @@ class FullPipelineBenchmarkTest {
         val ocrText = loadCombinedOcrFor(context, bag!!)
         assumeTrue("No OCR fixtures for '$bagId' — run OcrFixtureCaptureTest first.", ocrText != null)
 
+        // Idea #4 — known-vocabulary grounding. With -PknownVocab the benchmark
+        // simulates a returning user whose collection already contains this
+        // roaster/origin/variety among many: build that vocabulary from the whole
+        // corpus's ground truth and pass it to every pass. Off by default so the
+        // standard run still measures the cold-start case.
+        val useKnownVocab =
+            InstrumentationRegistry.getArguments().getString(ARG_KNOWN_VOCAB)?.equals("true", true) == true
+        val vocab = if (useKnownVocab) buildCollectionVocab(corpus.bags) else null
+        Log.i(CorpusFixture.BENCHMARK_TAG, "[$bagId] knownVocab=$useKnownVocab")
+
         // 1) TEXT pass — identical request shape to LlmCorpusBenchmarkTest.
         val textResult = llm.extractBagFields(
             LlmExtractionRequest(
@@ -112,7 +123,7 @@ class FullPipelineBenchmarkTest {
                 existingFields = emptyMap(),
                 fieldsNeeded = BagPipelineRunner.APP_FIELD_NAMES.toSet(),
                 rawOcrText = ocrText,
-                knownFieldValues = null,
+                knownFieldValues = vocab,
             ),
         )
         val textFields = nonBlank(BagPipelineRunner.extractedByField(textResult))
@@ -130,7 +141,7 @@ class FullPipelineBenchmarkTest {
                     existingFields = emptyMap(),
                     fieldsNeeded = BagPipelineRunner.APP_FIELD_NAMES.toSet(),
                     rawOcrText = null,
-                    knownFieldValues = null,
+                    knownFieldValues = vocab,
                 ),
             )
         }
@@ -153,7 +164,7 @@ class FullPipelineBenchmarkTest {
                     fieldsNeeded = (textFields.keys + visionFound.keys),
                     textPassFields = textFields,
                     visionPassFields = visionFound,
-                    knownFieldValues = null,
+                    knownFieldValues = vocab,
                     rawOcrText = ocrText,
                 ),
             )
@@ -189,6 +200,24 @@ class FullPipelineBenchmarkTest {
         val front = CorpusFixture.frontPhotoFile(bag).takeIf { it.isFile }
         val file = front ?: CorpusFixture.backPhotoFile(bag)?.takeIf { it.isFile }
         return file?.readBytes()
+    }
+
+    /**
+     * Build a realistic returning-user vocabulary from the whole corpus's ground
+     * truth (idea #4). The current bag's roaster/origin/etc. appear among ~28
+     * others — exactly the collection a user who has logged a few bags would have.
+     */
+    private fun buildCollectionVocab(bags: List<CoffeeBagFixture>): KnownFieldValues {
+        fun distinct(key: String) = bags.mapNotNull { it.groundTruth(key) }.distinct()
+        return KnownFieldValues(
+            names = distinct("name"),
+            roasters = distinct("roaster"),
+            origins = distinct("origin"),
+            regions = distinct("region"),
+            varieties = distinct("variety"),
+            processTypes = distinct("process"),
+            farms = distinct("farm"),
+        )
     }
 
     private fun loadCombinedOcrFor(context: Context, bag: CoffeeBagFixture): String? {
@@ -229,6 +258,7 @@ class FullPipelineBenchmarkTest {
 
     companion object {
         const val ARG_BAG_ID = "bagId"
+        const val ARG_KNOWN_VOCAB = "knownVocab"
         private val json = Json { ignoreUnknownKeys = true }
 
         /** Cross-process JSONL accumulator (one [FullPipelineBagRecord] per line). */
