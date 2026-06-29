@@ -56,7 +56,7 @@ object CorpusFields {
         FieldSpec("variety", "variety", GatePolicy.REPORT_ONLY, FieldComparators.TokenSet),
         FieldSpec("process", "processType", GatePolicy.GATE, FieldComparators.Process),
         FieldSpec("roastLevel", "roastLevel", GatePolicy.GATE, FieldComparators.RoastLevel),
-        FieldSpec("tastingNotes", "tastingNotes", GatePolicy.REPORT_ONLY, FieldComparators.TokenSet),
+        FieldSpec("tastingNotes", "tastingNotes", GatePolicy.REPORT_ONLY, FieldComparators.NoteSet),
         FieldSpec("altitude", "altitude", GatePolicy.REPORT_ONLY, FieldComparators.NumericRange),
         FieldSpec("weight", "weight", GatePolicy.GATE, FieldComparators.Weight),
         FieldSpec("roastDate", "roastDate", GatePolicy.REPORT_ONLY, FieldComparators.IsoDate),
@@ -111,7 +111,7 @@ object FieldComparators {
         }
     }
 
-    /** Comma/slash separated multi-value sets (variety, tasting notes). */
+    /** Comma/slash separated multi-value sets (variety). */
     val TokenSet = FieldComparator { expected, actual ->
         val e = tokens(expected)
         val a = tokens(actual)
@@ -123,6 +123,38 @@ object FieldComparators {
                 val union = e.union(a).size.toDouble()
                 if (union > 0 && intersection / union >= JACCARD_PARTIAL) MatchLevel.PARTIAL
                 else MatchLevel.NONE
+            }
+        }
+    }
+
+    /**
+     * Tasting notes as a set of comma-separated PHRASES (not word tokens).
+     *
+     * Word-token Jaccard is unfair to multi-word notes — "dark chocolate" vs
+     * "chocolate" scores poorly because "dark" dilutes the overlap. This
+     * comparator matches phrase-to-phrase and credits substring containment
+     * ("chocolate" covers "dark chocolate"), then grades by recall of the
+     * ground-truth notes with a light precision guard.
+     *
+     * It deliberately does NO cross-language matching: an untranslated note
+     * ("mirtillo" for "blueberry") must still score wrong, because surfacing
+     * non-English notes in the app is a real defect, not a formatting nicety.
+     */
+    val NoteSet = FieldComparator { expected, actual ->
+        val e = phrases(expected)
+        val a = phrases(actual)
+        when {
+            e.isEmpty() || a.isEmpty() -> MatchLevel.NONE
+            else -> {
+                val covered = e.count { gt -> a.any { act -> phrasesMatch(gt, act) } }
+                val matchedActual = a.count { act -> e.any { gt -> phrasesMatch(gt, act) } }
+                val recall = covered.toDouble() / e.size
+                val precision = matchedActual.toDouble() / a.size
+                when {
+                    recall >= 1.0 && precision >= NOTE_PRECISION_OK -> MatchLevel.EXACT
+                    recall >= NOTE_RECALL_PARTIAL -> MatchLevel.PARTIAL
+                    else -> MatchLevel.NONE
+                }
             }
         }
     }
@@ -208,8 +240,30 @@ object FieldComparators {
     private fun numbers(value: String): List<Int> =
         Regex("\\d+").findAll(value).mapNotNull { it.value.toIntOrNull() }.toList()
 
+    /** Split a tasting-note string into normalized comma/slash-separated phrases. */
+    private fun phrases(value: String): List<String> =
+        value.split(Regex("[,/;]+")).map { normalize(it) }.filter { it.isNotBlank() }
+
+    /**
+     * Two notes match when they are equal, one contains the other as a whole
+     * phrase ("chocolate" in "dark chocolate"), or every word of the shorter
+     * note appears in the longer. Pure string logic — never cross-language.
+     */
+    private fun phrasesMatch(a: String, b: String): Boolean {
+        if (a == b) return true
+        if (a.contains(b) || b.contains(a)) return true
+        val aw = a.split(' ').filter { it.isNotBlank() }.toSet()
+        val bw = b.split(' ').filter { it.isNotBlank() }.toSet()
+        if (aw.isEmpty() || bw.isEmpty()) return false
+        val shorter = if (aw.size <= bw.size) aw else bw
+        val longer = if (aw.size <= bw.size) bw else aw
+        return shorter.all { it in longer }
+    }
+
     private fun buildAlias(canonical: String, vararg variants: String): Map<String, String> =
         (listOf(canonical) + variants).associateWith { canonical }
 
     private const val JACCARD_PARTIAL = 0.34
+    private const val NOTE_PRECISION_OK = 0.6
+    private const val NOTE_RECALL_PARTIAL = 0.5
 }

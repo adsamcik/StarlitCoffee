@@ -37,4 +37,34 @@ class FieldSpecTest {
         assertEquals(CorpusFields.ALL.size, CorpusFields.metadataKeys.toSet().size)
         assertEquals(CorpusFields.ALL.size, CorpusFields.appFieldNames.toSet().size)
     }
+
+    // ==================== Idea #2 — NoteSet comparator ====================
+
+    private fun note(expected: String, actual: String) =
+        FieldComparators.NoteSet.compare(expected, actual)
+
+    @Test
+    fun `NoteSet is exact on identical notes and order-insensitive`() {
+        assertEquals(MatchLevel.EXACT, note("blueberry, jasmine, citrus", "blueberry, jasmine, citrus"))
+        assertEquals(MatchLevel.EXACT, note("citrus, blueberry, jasmine", "blueberry, jasmine, citrus"))
+    }
+
+    @Test
+    fun `NoteSet credits multi-word phrase containment`() {
+        // "chocolate" should cover "dark chocolate" (word-token Jaccard would not).
+        assertEquals(MatchLevel.PARTIAL, note("dark chocolate, toffee, dried cherry", "chocolate, toffee"))
+    }
+
+    @Test
+    fun `NoteSet is partial when a real note is missed`() {
+        assertEquals(MatchLevel.PARTIAL, note("dark chocolate, toffee, dried cherry", "dark chocolate, toffee"))
+    }
+
+    @Test
+    fun `NoteSet still marks untranslated notes wrong (no cross-language credit)`() {
+        // Italian / French notes are CORRECT content but the wrong language — a
+        // real defect the metric must keep visible, not paper over.
+        assertEquals(MatchLevel.NONE, note("blueberry, bergamot, cocoa", "mirtillo, bergamotto, cacao"))
+        assertEquals(MatchLevel.NONE, note("plum, honey, blood orange", "prune, miel, orange sanguine"))
+    }
 }
