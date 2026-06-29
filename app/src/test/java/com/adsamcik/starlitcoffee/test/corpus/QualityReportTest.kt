@@ -33,6 +33,26 @@ class QualityReportTest {
     }
 
     @Test
+    fun `exact accuracy ceiling and decision accuracy are abstention-aware`() {
+        // visible = 4, notVisible = 2, total = 6
+        val m = FieldMetrics(exact = 2, partial = 0, wrong = 1, missing = 1, hallucinated = 1, abstained = 1)
+        assertEquals(2.0 / 6.0, m.exactAccuracy!!, 1e-9) // 2/6
+        // ceiling = visible/total = 4/6: a perfect extractor still cannot beat this
+        assertEquals(4.0 / 6.0, m.exactAccuracyCeiling!!, 1e-9)
+        // decisionAccuracy = (exact + abstained)/total = 3/6: right value OR right blank
+        assertEquals(3.0 / 6.0, m.decisionAccuracy!!, 1e-9)
+    }
+
+    @Test
+    fun `a perfect extractor reaches the ceiling but not 100 percent exact`() {
+        // 3 visible all EXACT, 2 absent both correctly ABSTAINED -> flawless
+        val m = FieldMetrics(exact = 3, abstained = 2)
+        assertEquals(3.0 / 5.0, m.exactAccuracy!!, 1e-9) // 60%, not 100%
+        assertEquals(3.0 / 5.0, m.exactAccuracyCeiling!!, 1e-9) // ceiling == exactAcc when flawless
+        assertEquals(1.0, m.decisionAccuracy!!, 1e-9) // every decision correct
+    }
+
+    @Test
     fun `rates are null when the denominator is zero`() {
         val empty = FieldMetrics()
         assertNull(empty.exactAccuracy)
@@ -85,5 +105,9 @@ class QualityReportTest {
         assertTrue(text.contains("QUALITY REPORT: hdr"))
         assertTrue(text.contains("Per-field"))
         assertTrue(text.contains("Per-tier"))
+        // honest-metric surfacing (Item 2)
+        assertTrue("must show the exactAcc ceiling", text.contains("ceil"))
+        assertTrue("must show decision accuracy", text.contains("decisionAcc"))
+        assertTrue("must show hallucination on the headline", text.contains("halluc="))
     }
 }

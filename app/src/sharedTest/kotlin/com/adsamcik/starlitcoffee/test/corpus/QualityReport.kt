@@ -12,6 +12,11 @@ import kotlinx.serialization.json.Json
  *  - notVisible     = hallucinated + abstained            (GT was not_visible)
  *  - produced       = exact + partial + wrong + hallucinated (model emitted something)
  *  - exactAccuracy  = exact / total
+ *  - exactAccuracyCeiling = visible / total  (max exactAccuracy a PERFECT extractor
+ *      could reach: correct abstentions on absent fields are never "exact", so they
+ *      cap the score below 100% — read exactAccuracy against THIS, not 100%)
+ *  - decisionAccuracy = (exact + abstained) / total  (the honest "did the right
+ *      thing" rate: a correct extraction OR a correct abstention both count as a win)
  *  - recall         = exact / visible                     (strict, exact-only)
  *  - partialRecall  = (exact + partial) / visible
  *  - precision      = exact / produced
@@ -33,6 +38,21 @@ data class FieldMetrics(
     val produced: Int get() = exact + partial + wrong + hallucinated
 
     val exactAccuracy: Double? get() = ratio(exact, total)
+
+    /**
+     * Max exactAccuracy a *perfect* extractor could reach. Correct abstentions
+     * on absent fields are never scored EXACT, so they hold the ceiling below
+     * 100%. exactAccuracy should always be read against this, not against 100%.
+     */
+    val exactAccuracyCeiling: Double? get() = ratio(visible, total)
+
+    /**
+     * Honest "did the right thing" rate over all cells: a correct extraction
+     * (EXACT) OR a correct abstention (ABSTAINED) both count as a win. Unlike
+     * exactAccuracy this can reach 100%.
+     */
+    val decisionAccuracy: Double? get() = ratio(exact + abstained, total)
+
     val recall: Double? get() = ratio(exact, visible)
     val partialRecall: Double? get() = ratio(exact + partial, visible)
     val precision: Double? get() = ratio(exact, produced)
@@ -92,9 +112,14 @@ data class QualityReport(
         appendLine("===== QUALITY REPORT: $label =====")
         appendLine("Bags evaluated: $bagsEvaluated")
         appendLine(
-            "Overall: exactAcc=${pct(overall.exactAccuracy)} recall=${pct(overall.recall)} " +
-                "precision=${pct(overall.precision)} abstention=${pct(overall.abstentionRate)} " +
-                "hallucination=${pct(overall.hallucinationRate)}",
+            "Overall: exactAcc=${pct(overall.exactAccuracy)}/${pct(overall.exactAccuracyCeiling)}ceil " +
+                "decisionAcc=${pct(overall.decisionAccuracy)} recall=${pct(overall.recall)} " +
+                "partialRecall=${pct(overall.partialRecall)} precision=${pct(overall.precision)} " +
+                "halluc=${pct(overall.hallucinationRate)} abstention=${pct(overall.abstentionRate)}",
+        )
+        appendLine(
+            "  (exactAcc tops out at its ceiling, not 100%, because correct abstentions on absent " +
+                "fields are never \"exact\". decisionAcc counts a right value OR a right blank.)",
         )
         appendLine()
         appendLine("Per-field (\u2713 exact \u2248 partial \u2717 wrong ? missing + halluc \u00b7 abstain):")
@@ -104,7 +129,8 @@ data class QualityReport(
                 "  ${gateMark(f.gated)}${f.field.padEnd(13)} " +
                     "\u2713${m.exact} \u2248${m.partial} \u2717${m.wrong} ?${m.missing} " +
                     "+${m.hallucinated} \u00b7${m.abstained}   " +
-                    "exactAcc=${pct(m.exactAccuracy)} recall=${pct(m.recall)}",
+                    "exactAcc=${pct(m.exactAccuracy)} recall=${pct(m.recall)} " +
+                    "partialRecall=${pct(m.partialRecall)} halluc=${pct(m.hallucinationRate)}",
             )
         }
         appendLine()
@@ -112,7 +138,8 @@ data class QualityReport(
         for (t in perTier) {
             appendLine(
                 "  ${t.tier.padEnd(4)} bags=${t.bags} exactAcc=${pct(t.metrics.exactAccuracy)} " +
-                    "recall=${pct(t.metrics.recall)} hallucination=${pct(t.metrics.hallucinationRate)}",
+                    "decisionAcc=${pct(t.metrics.decisionAccuracy)} recall=${pct(t.metrics.recall)} " +
+                    "hallucination=${pct(t.metrics.hallucinationRate)}",
             )
         }
     }
