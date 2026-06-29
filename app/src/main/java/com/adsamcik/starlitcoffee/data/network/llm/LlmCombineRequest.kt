@@ -31,4 +31,10 @@ data class LlmCombineRequest(
     val visionPassFields: Map<String, String>,
     /** User vocabulary (roasters, origins, varieties, …) for grounding/disambiguation. */
     val knownFieldValues: KnownFieldValues? = null,
+    /**
+     * The merged OCR text the text pass read from. Optional context so the
+     * combine model can break proper-noun ties (name vs roaster) by consulting
+     * the original tokens instead of guessing between the two passes' values.
+     */
+    val rawOcrText: String? = null,
 )

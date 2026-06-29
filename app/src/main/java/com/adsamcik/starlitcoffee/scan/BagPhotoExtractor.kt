@@ -1082,6 +1082,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             visionPassCandidates = visionCandidates,
             allCandidates = allCandidates.toList(),
             knownFieldValues = currentKnownValues,
+            combinedOcrText = combinedOcrText,
         )
         return llmOutcome
     }
@@ -1124,6 +1125,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         visionPassCandidates: List<BagFieldCandidate>,
         allCandidates: List<BagFieldCandidate>,
         knownFieldValues: KnownFieldValues,
+        combinedOcrText: String? = null,
     ): List<BagFieldCandidate> {
         if (!llmProvider.supportsCombine() || !llmProvider.isAvailable()) return emptyList()
 
@@ -1142,6 +1144,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             textPassFields = textPassFields.filterKeys { it in fieldsNeeded },
             visionPassFields = visionPassFields.filterKeys { it in fieldsNeeded },
             knownFieldValues = knownFieldValues,
+            rawOcrText = combinedOcrText,
         )
         return tryCombineEnrichment(request).map { it.copy(sourceCount = 2) }
     }

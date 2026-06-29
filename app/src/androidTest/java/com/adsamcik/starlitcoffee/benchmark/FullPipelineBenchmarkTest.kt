@@ -154,6 +154,7 @@ class FullPipelineBenchmarkTest {
                     textPassFields = textFields,
                     visionPassFields = visionFound,
                     knownFieldValues = null,
+                    rawOcrText = ocrText,
                 ),
             )
             Log.i(CorpusFixture.BENCHMARK_TAG, "[$bagId] combine pass ($combineResult)")

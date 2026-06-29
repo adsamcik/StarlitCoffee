@@ -1107,7 +1107,10 @@ Pick the single best value for each requested field:
   more complete proper noun and fix obvious OCR/vision glyph errors only when the
   intended word is unambiguous. NEVER translate these; keep them verbatim.
 - name vs roaster: `name` is the bag's product / blend designation; `roaster` is
-  the company brand. Never swap them; never copy one into the other.
+  the company brand. Never swap them; never copy one into the other. If the two
+  passes disagree on which is which, consult the original OCR text (when provided)
+  — the brand logo line is usually the roaster — but never extract a value that
+  appears in neither pass.
 - Concept fields (origin, region, process, roastLevel, variety, tastingNotes):
   output canonical ENGLISH. If one pass gives English and the other a translation
   or local spelling, keep the canonical English form.
@@ -1136,6 +1139,7 @@ Response format (JSON only, no markdown):
 
             appendPassFields("Text pass extracted", request.textPassFields, toJsonKey)
             appendPassFields("Vision pass extracted", request.visionPassFields, toJsonKey)
+            appendOcrContext(request.rawOcrText)
 
             request.knownFieldValues?.let { known ->
                 val parts = mutableListOf<String>()
@@ -1164,6 +1168,17 @@ Response format (JSON only, no markdown):
                 }
             }
             append("\n\nRespond with JSON only.")
+        }
+
+        /** Longest slice of raw OCR text passed to the combine pass for tie-breaking. */
+        private const val COMBINE_OCR_CONTEXT_LIMIT = 1200
+
+        private fun StringBuilder.appendOcrContext(rawOcrText: String?) {
+            val ocr = rawOcrText?.trim().orEmpty()
+            if (ocr.isEmpty()) return
+            append("\n\nOriginal OCR text (reference only — for breaking proper-noun ties; ")
+            append("do not extract new fields from it):\n")
+            append(ocr.take(COMBINE_OCR_CONTEXT_LIMIT))
         }
 
         private fun StringBuilder.appendPassFields(

@@ -1008,6 +1008,31 @@ class MindlayerLlmInferenceProviderTest {
         assertTrue("Known roasters should ground the reconciliation", prompt.contains("Known roasters: Acme, Onyx"))
     }
 
+    @Test
+    fun `buildCombinePrompt includes raw OCR context when provided`() {
+        val request = com.adsamcik.starlitcoffee.data.network.llm.LlmCombineRequest(
+            fieldsNeeded = setOf("name", "roaster"),
+            textPassFields = mapOf("name" to "Tumbaga", "roaster" to "Acme"),
+            visionPassFields = mapOf("name" to "Acme", "roaster" to "Tumbaga"),
+            rawOcrText = "ACME ROASTERS\nTumbaga Decaf\n250g",
+        )
+        val prompt = MindlayerLlmInferenceProvider.buildCombinePrompt(request)
+        assertTrue("Should label the OCR reference", prompt.contains("Original OCR text"))
+        assertTrue("Should carry the OCR tokens for tie-breaking", prompt.contains("ACME ROASTERS"))
+    }
+
+    @Test
+    fun `buildCombinePrompt omits OCR context when absent`() {
+        val request = com.adsamcik.starlitcoffee.data.network.llm.LlmCombineRequest(
+            fieldsNeeded = setOf("name"),
+            textPassFields = mapOf("name" to "Tumbaga"),
+            visionPassFields = mapOf("name" to "Tumbaga"),
+            rawOcrText = null,
+        )
+        val prompt = MindlayerLlmInferenceProvider.buildCombinePrompt(request)
+        assertFalse("Should not mention OCR reference when none supplied", prompt.contains("Original OCR text"))
+    }
+
     // ==================== buildVisionPrompt ====================
 
     @Test
