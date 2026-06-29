@@ -121,18 +121,29 @@ class FullPipelineBenchmarkTest {
         val vocab = if (useKnownVocab) buildCollectionVocab(corpus.bags) else null
         Log.i(CorpusFixture.BENCHMARK_TAG, "[$bagId] knownVocab=$useKnownVocab")
 
-        // 1) TEXT pass — identical request shape to LlmCorpusBenchmarkTest.
-        val textResult = llm.extractBagFields(
-            LlmExtractionRequest(
-                imageBytes = ByteArray(0),
-                existingFields = emptyMap(),
-                fieldsNeeded = BagPipelineRunner.APP_FIELD_NAMES.toSet(),
-                rawOcrText = ocrText,
-                knownFieldValues = vocab,
-            ),
+        // 1) TEXT pass. With -PselfConsistency the (cheap, re-runnable) text pass
+        // is sampled several times and the per-field MODE is taken (idea #8) — a
+        // targeted defence against the low-temperature run-to-run wobble. Vision
+        // is never re-sampled (one-shot per process). Default: a single pass.
+        val selfConsistencyRuns =
+            InstrumentationRegistry.getArguments().getString(ARG_SELF_CONSISTENCY)?.toIntOrNull()
+                ?.coerceIn(1, MAX_SELF_CONSISTENCY) ?: 1
+        val textRequest = LlmExtractionRequest(
+            imageBytes = ByteArray(0),
+            existingFields = emptyMap(),
+            fieldsNeeded = BagPipelineRunner.APP_FIELD_NAMES.toSet(),
+            rawOcrText = ocrText,
+            knownFieldValues = vocab,
         )
-        val textFields = nonBlank(BagPipelineRunner.extractedByField(textResult))
-        Log.i(CorpusFixture.BENCHMARK_TAG, "[$bagId] text pass -> ${textFields.size} fields")
+        val textFields = if (selfConsistencyRuns > 1) {
+            selfConsistentTextFields(llm, textRequest, selfConsistencyRuns)
+        } else {
+            nonBlank(BagPipelineRunner.extractedByField(llm.extractBagFields(textRequest)))
+        }
+        Log.i(
+            CorpusFixture.BENCHMARK_TAG,
+            "[$bagId] text pass -> ${textFields.size} fields (selfConsistency=$selfConsistencyRuns)",
+        )
 
         // 2) VISION pass — full field set, independent read. With -Pstitch the
         // front and back are composited into ONE image so the single (one-shot,
@@ -288,6 +299,28 @@ class FullPipelineBenchmarkTest {
         fields.mapNotNull { (k, v) -> v?.takeIf { it.isNotBlank() }?.let { k to it } }.toMap()
 
     /**
+     * Run the text pass [runs] times and take the per-field MODE (idea #8). For
+     * each field the most frequently produced value wins; ties keep the value
+     * from the earliest run. Fields absent in a run simply don't vote, so a
+     * field most runs agree on stays stable even if one run drops or garbles it.
+     */
+    private suspend fun selfConsistentTextFields(
+        llm: MindlayerLlmInferenceProvider,
+        request: LlmExtractionRequest,
+        runs: Int,
+    ): Map<String, String> {
+        val perField = linkedMapOf<String, MutableList<String>>()
+        repeat(runs) {
+            nonBlank(BagPipelineRunner.extractedByField(llm.extractBagFields(request)))
+                .forEach { (field, value) -> perField.getOrPut(field) { mutableListOf() }.add(value) }
+        }
+        return perField.mapValues { (_, values) ->
+            values.groupingBy { it }.eachCount().entries
+                .maxWithOrNull(compareBy({ it.value }, { -values.indexOf(it.key) }))!!.key
+        }
+    }
+
+    /**
      * Field -> value for only the HIGH-confidence ("found") candidates of [result].
      * Drops "uncertain" (LOW) reads — the basis of idea #7's vision abstention
      * calibration.
@@ -313,6 +346,8 @@ class FullPipelineBenchmarkTest {
         const val ARG_BAG_ID = "bagId"
         const val ARG_KNOWN_VOCAB = "knownVocab"
         const val ARG_STITCH = "stitch"
+        const val ARG_SELF_CONSISTENCY = "selfConsistency"
+        private const val MAX_SELF_CONSISTENCY = 7
         private const val STITCH_GAP_RATIO = 0.02
         private const val STITCH_JPEG_QUALITY = 90
         private val json = Json { ignoreUnknownKeys = true }

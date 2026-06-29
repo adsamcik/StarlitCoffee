@@ -195,6 +195,7 @@ tasks.register("pushTestImages") {
 //   .\gradlew.bat scanBenchmark -PfullPipeline -PallBags   # every automation-ready bag (slow: ~3-4 min/bag)
 //   .\gradlew.bat scanBenchmark -PfullPipeline -PknownVocab # also ground passes with the collection vocabulary
 //   .\gradlew.bat scanBenchmark -PfullPipeline -Pstitch     # composite front+back into one image for the vision pass
+//   .\gradlew.bat scanBenchmark -PfullPipeline -PselfConsistency=3  # vote the text pass over N samples (text only)
 //
 // The per-field quality report(s) are pulled to build/reports/scan-benchmark/.
 // Full-pipeline mode runs one bag per `am instrument` invocation because the
@@ -210,6 +211,7 @@ tasks.register("scanBenchmark") {
     val allBags = project.hasProperty("allBags")
     val knownVocab = project.hasProperty("knownVocab")
     val stitch = project.hasProperty("stitch")
+    val selfConsistency = (project.findProperty("selfConsistency") as String?)?.takeIf { it.toIntOrNull() != null }
     val explicitBagIds = (project.findProperty("bagIds") as String?)
         ?.split(",")?.map { it.trim() }?.filter { it.isNotBlank() }
     val corpusDir = rootProject.file("testdata/synthetic-coffee-bag-corpus")
@@ -286,6 +288,7 @@ tasks.register("scanBenchmark") {
                     add("-e"); add("bagId"); add(bagId)
                     if (knownVocab) { add("-e"); add("knownVocab"); add("true") }
                     if (stitch) { add("-e"); add("stitch"); add("true") }
+                    if (selfConsistency != null) { add("-e"); add("selfConsistency"); add(selfConsistency) }
                 }
                 instrument("FullPipelineBenchmarkTest", *extra.toTypedArray())
             }
