@@ -1,5 +1,7 @@
 package com.adsamcik.starlitcoffee.test.corpus
 
+import kotlinx.serialization.Serializable
+
 /**
  * Outcome of scoring one field for one bag against ground truth.
  *
@@ -7,6 +9,7 @@ package com.adsamcik.starlitcoffee.test.corpus
  * already uses (precision / recall / abstention / hallucination) plus exact
  * accuracy — see [QualityReport].
  */
+@Serializable
 enum class FieldOutcome(val symbol: String, val label: String) {
     /** Extracted value matches ground truth after canonicalization. */
     EXACT("\u2713", "exact"),
@@ -28,6 +31,7 @@ enum class FieldOutcome(val symbol: String, val label: String) {
 }
 
 /** Per-field score for a single bag. */
+@Serializable
 data class FieldScore(
     val metadataKey: String,
     val expected: String?,
@@ -36,6 +40,7 @@ data class FieldScore(
 )
 
 /** All field scores for one bag, plus its tier. */
+@Serializable
 data class BagScore(
     val bagId: String,
     val tier: String?,

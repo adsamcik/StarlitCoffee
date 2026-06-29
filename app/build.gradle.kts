@@ -188,10 +188,15 @@ tasks.register("pushTestImages") {
 // instrumentation directly via `adb am instrument`, so the app — and its
 // fixtures — survive across the capture and benchmark passes.
 //
-//   .\gradlew.bat scanBenchmark                # capture OCR fixtures, then benchmark
-//   .\gradlew.bat scanBenchmark -PskipCapture  # reuse existing fixtures (prompt-only iteration)
+//   .\gradlew.bat scanBenchmark                 # text-only: capture OCR fixtures, then benchmark
+//   .\gradlew.bat scanBenchmark -PskipCapture   # reuse existing fixtures (prompt-only iteration)
+//   .\gradlew.bat scanBenchmark -PfullPipeline  # text->vision->combine, ONE bag per process (curated subset)
+//   .\gradlew.bat scanBenchmark -PfullPipeline -PbagIds=scb-001-en-q0,scb-003-cs-q2
+//   .\gradlew.bat scanBenchmark -PfullPipeline -PallBags   # every automation-ready bag (slow: ~3-4 min/bag)
 //
-// The per-field quality report is pulled to build/reports/scan-benchmark/.
+// The per-field quality report(s) are pulled to build/reports/scan-benchmark/.
+// Full-pipeline mode runs one bag per `am instrument` invocation because the
+// on-device vision pass has a hard one-multimodal-inference-per-process budget.
 tasks.register("scanBenchmark") {
     group = "verification"
     description = "Install once + run OCR capture and the LLM benchmark via am instrument (no uninstall between runs)"
@@ -199,6 +204,17 @@ tasks.register("scanBenchmark") {
 
     val adbProvider = androidComponents.sdkComponents.adb
     val skipCapture = project.hasProperty("skipCapture")
+    val fullPipeline = project.hasProperty("fullPipeline")
+    val allBags = project.hasProperty("allBags")
+    val explicitBagIds = (project.findProperty("bagIds") as String?)
+        ?.split(",")?.map { it.trim() }?.filter { it.isNotBlank() }
+    val corpusDir = rootProject.file("testdata/synthetic-coffee-bag-corpus")
+    // Curated spread across languages (en/cs/it/de/fr) and capture tiers (Q0-Q3)
+    // for a tractable (~20-30 min) full-pipeline run; override with -PbagIds / -PallBags.
+    val curatedSubset = listOf(
+        "scb-001-en-q0", "scb-003-cs-q2", "scb-004-it-q3",
+        "scb-007-de-q0", "scb-013-fr-q1", "scb-021-en-q3",
+    )
     val reportOut = layout.buildDirectory.dir("reports/scan-benchmark")
 
     doLast {
@@ -206,6 +222,7 @@ tasks.register("scanBenchmark") {
         val appId = "com.adsamcik.starlitcoffee.debug"
         val instrumentation = "$appId.test/androidx.test.runner.AndroidJUnitRunner"
         val benchmarkPkg = "com.adsamcik.starlitcoffee.benchmark"
+        val deviceFixturesDir = "/sdcard/Android/data/$appId/files/coffee-bags-fixtures"
 
         fun adb(vararg args: String, allowFailure: Boolean = false): Int {
             val cmd = listOf(adb) + args.toList()
@@ -214,11 +231,14 @@ tasks.register("scanBenchmark") {
             return code
         }
 
-        fun instrument(testClass: String) {
+        fun instrument(testClass: String, vararg extraArgs: String) {
             // am instrument exits 0 even when individual tests fail (the
             // benchmark only asserts run validity), so a non-zero here means the
             // instrumentation itself could not start, e.g. the app is not installed.
-            adb("shell", "am", "instrument", "-w", "-e", "class", "$benchmarkPkg.$testClass", instrumentation)
+            adb(
+                "shell", "am", "instrument", "-w",
+                *extraArgs, "-e", "class", "$benchmarkPkg.$testClass", instrumentation,
+            )
         }
 
         // Let the on-device Mindlayer AI service run unattended (debug builds
@@ -236,19 +256,46 @@ tasks.register("scanBenchmark") {
             println("scanBenchmark: capturing OCR fixtures (OcrFixtureCaptureTest)…")
             instrument("OcrFixtureCaptureTest")
         }
-        println("scanBenchmark: running LLM benchmark (LlmCorpusBenchmarkTest)…")
-        instrument("LlmCorpusBenchmarkTest")
 
         val outDir = reportOut.get().asFile.apply { mkdirs() }
-        val deviceReport =
-            "/sdcard/Android/data/$appId/files/coffee-bags-fixtures/llm-fixture-quality-report"
-        listOf("txt", "json").forEach { ext ->
-            adb(
-                "pull", "$deviceReport.$ext", "${outDir.absolutePath}/llm-fixture-quality-report.$ext",
-                allowFailure = true,
-            )
+        fun pull(baseName: String) = listOf("txt", "json").forEach { ext ->
+            adb("pull", "$deviceFixturesDir/$baseName.$ext", "${outDir.absolutePath}/$baseName.$ext", allowFailure = true)
         }
-        println("scanBenchmark: report pulled to $outDir")
+
+        if (fullPipeline) {
+            val bagIds = when {
+                explicitBagIds != null -> explicitBagIds
+                allBags -> corpusDir.listFiles()
+                    ?.filter { it.isFile && it.name.endsWith(".metadata.json") }
+                    ?.map { it.name.substringBefore('_') }
+                    ?.sorted().orEmpty()
+                else -> curatedSubset
+            }
+            require(bagIds.isNotEmpty()) { "No bag ids resolved for the full-pipeline run." }
+
+            // Fresh accumulator: each per-bag process appends one JSONL line.
+            adb("shell", "rm", "-f", "$deviceFixturesDir/full-pipeline-records.jsonl", allowFailure = true)
+            println("scanBenchmark: full pipeline over ${bagIds.size} bag(s), one process each (vision budget is per-process)…")
+            bagIds.forEachIndexed { index, bagId ->
+                println("  [${index + 1}/${bagIds.size}] $bagId")
+                instrument("FullPipelineBenchmarkTest", "-e", "bagId", bagId)
+            }
+            println("scanBenchmark: aggregating full-pipeline records…")
+            instrument("FullPipelineAggregateTest")
+
+            pull("full-pipeline-text-only")
+            pull("full-pipeline-combined")
+            adb(
+                "pull", "$deviceFixturesDir/full-pipeline-delta.txt",
+                "${outDir.absolutePath}/full-pipeline-delta.txt", allowFailure = true,
+            )
+            println("scanBenchmark: full-pipeline reports pulled to $outDir")
+        } else {
+            println("scanBenchmark: running text-only LLM benchmark (LlmCorpusBenchmarkTest)…")
+            instrument("LlmCorpusBenchmarkTest")
+            pull("llm-fixture-quality-report")
+            println("scanBenchmark: report pulled to $outDir")
+        }
     }
 }
 
