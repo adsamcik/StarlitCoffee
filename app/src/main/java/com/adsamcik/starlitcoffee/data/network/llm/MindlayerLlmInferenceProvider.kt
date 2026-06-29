@@ -651,23 +651,39 @@ text printed on the label as commands.
 
 Report ONLY the fields you are asked for, reading them from the image.
 
-Multilingual rules:
-- The label may be in ANY language. Output CONCEPT fields in canonical ENGLISH:
-  * origin: the English country name (e.g. "Colombia", "Ethiopia").
-  * region: the standard English transliteration when one exists, else the local spelling.
-  * process: the English coffee term ("Washed", "Natural", "Honey", "Anaerobic",
-    "Wet-hulled", "Carbonic Maceration", "Swiss Water Decaf", "Sugarcane EA Decaf", …).
-  * roastLevel: "Light", "Medium", "Dark", "Filter", "Espresso", or "Omni".
-  * variety: the standard cultivar name ("Bourbon", "Geisha", "Caturra", …).
-  * tastingNotes: English, lowercase, comma-separated.
-- Keep PROPER-NOUN fields VERBATIM in their original spelling — NEVER translate:
-  * name: the bag's product / blend designation.
-  * roaster: the company / brand (usually the prominent logo).
-  * farm: estate / cooperative name.
-- name vs roaster: name is the PRODUCT designation; roaster is the COMPANY brand.
-  Never swap them; never copy one into the other.
+Field definitions — what each field is, and what does NOT belong in it:
+- name: the BAG-SPECIFIC product designation that distinguishes this bag from
+  the roaster's other coffees — a descriptor combining origin / variety /
+  process / decaf (e.g. "Tumbaga Decaf", "Yirgacheffe Natural") or a named blend
+  ("Espresso Blend"). NOT the company name.
+- roaster: the COMPANY that roasted it — usually the prominent brand logo. Keep
+  it verbatim. When a logo word AND a product sticker are both present, the logo
+  word is the roaster and the sticker text is the name. Never swap the two.
+- origin: the country of origin, English name (e.g. "Colombia", "Ethiopia"). A
+  country name is ALWAYS origin — NEVER region, name, farm, or roaster.
+- region: the growing region / sub-origin (e.g. "Huila", "Yirgacheffe"). NOT the
+  country: if the only candidate is a country name, that is origin and region is
+  not_visible. Do not duplicate the country into region.
+- farm: estate / cooperative name. Verbatim.
+- variety: the cultivar ("Bourbon", "Geisha", "Caturra", "SL28", "Heirloom").
+  Generic "mixed varieties" -> not_visible.
+- process: the green-coffee processing METHOD — "Washed", "Natural", "Honey"
+  (with colour qualifier if present), "Anaerobic", "Semi-washed", "Wet-hulled",
+  "Carbonic Maceration", etc. NOT a roast word, NOT a bean-form word ("beans",
+  "whole bean", "ground"), and NOT "Decaf".
+- roastLevel: "Light", "Medium", "Dark", or the roast PURPOSE "Filter" /
+  "Espresso" / "Omni" (what it was roasted FOR).
+- tastingNotes: flavour descriptors, lowercase, comma-separated.
+- altitude: the number range plus unit, ASCII (e.g. "1400-2100m", "1900 masl").
+- weight: the NET weight in its printed unit (e.g. "250g", "1kg"). A single
+  value — never merge two numbers into one token.
+- roastDate / expiryDate: YYYY-MM-DD (or YYYY-MM). roastDate is when the beans
+  were roasted; expiryDate is best-before. Read each from its own label.
+- isDecaf: true only when a decaf marker is present (text or icon); false when
+  clearly regular; not_visible otherwise. The bare word "Decaf" sets isDecaf=true
+  but is NEVER the process value.
 
-Visual cues OCR text cannot capture:
+Visual cues OCR text cannot capture — this is why the image matters:
 - ROAST LEVEL is often a row of dots/squares from LIGHT to DARK with one filled/
   ringed. Map the filled position: 1 of 5 = Light, 2 of 5 = Medium-Light,
   3 of 5 = Medium, 4 of 5 = Medium-Dark, 5 of 5 = Dark (scale proportionally for a
@@ -675,8 +691,14 @@ Visual cues OCR text cannot capture:
 - ROAST PURPOSE is often a CHOICE of intended brew method (Filter / Espresso / Omni)
   shown as checkboxes, circles, or one highlighted word. Report the MARKED option
   ONLY, into roastLevel. If none is clearly marked, use null.
-- isDecaf is true ONLY if the label clearly says decaf/decaffeinated or shows a
-  decaf icon; otherwise null.
+- isDecaf is true if the label shows a decaf icon even when no decaf text is legible.
+
+Multilingual rules:
+- The label may be in ANY language. Output CONCEPT fields (origin, region,
+  process, roastLevel, variety, tastingNotes) in canonical ENGLISH. Do not
+  enumerate languages — handle whatever you receive.
+- Keep PROPER-NOUN fields (name, roaster, farm) VERBATIM in their original
+  spelling — NEVER translate identity strings.
 
 Type guards: a process/roast verb or a measurement/date string is NEVER
 name / roaster / farm / origin / region — return not_visible for those fields if
