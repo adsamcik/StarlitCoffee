@@ -1,6 +1,10 @@
 package com.adsamcik.starlitcoffee.benchmark
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -23,6 +27,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 /**
@@ -129,11 +134,18 @@ class FullPipelineBenchmarkTest {
         val textFields = nonBlank(BagPipelineRunner.extractedByField(textResult))
         Log.i(CorpusFixture.BENCHMARK_TAG, "[$bagId] text pass -> ${textFields.size} fields")
 
-        // 2) VISION pass — front label image, full field set, independent read.
-        val imageBytes = frontImageBytes(bag)
+        // 2) VISION pass — full field set, independent read. With -Pstitch the
+        // front and back are composited into ONE image so the single (one-shot,
+        // budget-limited) vision inference can see both faces; otherwise the
+        // front alone is used. Whether stitching helps (it halves per-panel
+        // resolution) is exactly what this opt-in measures.
+        val useStitch =
+            InstrumentationRegistry.getArguments().getString(ARG_STITCH)?.equals("true", true) == true
+        val imageBytes = if (useStitch) stitchedImageBytes(bag) else frontImageBytes(bag)
+        Log.i(CorpusFixture.BENCHMARK_TAG, "[$bagId] stitch=$useStitch image=${imageBytes?.size ?: 0}B")
         val visionResult = if (imageBytes == null) {
-            Log.w(CorpusFixture.BENCHMARK_TAG, "[$bagId] no front image — skipping vision pass")
-            LlmExtractionResult.Unavailable("No front image")
+            Log.w(CorpusFixture.BENCHMARK_TAG, "[$bagId] no image — skipping vision pass")
+            LlmExtractionResult.Unavailable("No image")
         } else {
             llm.extractBagFieldsWithVision(
                 LlmExtractionRequest(
@@ -203,6 +215,47 @@ class FullPipelineBenchmarkTest {
     }
 
     /**
+     * Composite the front and back label images into ONE portrait image (front
+     * on top, back below, scaled to a common width with a thin separator) and
+     * encode it as JPEG. Falls back to the front alone when there is no back.
+     * This lets the single one-shot vision inference see both faces (idea #5).
+     */
+    private fun stitchedImageBytes(bag: CoffeeBagFixture): ByteArray? {
+        val frontFile = CorpusFixture.frontPhotoFile(bag).takeIf { it.isFile }
+        val backFile = CorpusFixture.backPhotoFile(bag)?.takeIf { it.isFile }
+        val front = frontFile?.let { BitmapFactory.decodeFile(it.absolutePath) } ?: return frontImageBytes(bag)
+        val back = backFile?.let { BitmapFactory.decodeFile(it.absolutePath) }
+            ?: return front.toJpegBytes().also { front.recycle() }
+
+        val width = maxOf(front.width, back.width).coerceAtLeast(1)
+        val gap = (width * STITCH_GAP_RATIO).toInt().coerceAtLeast(1)
+        val frontScaled = scaleToWidth(front, width)
+        val backScaled = scaleToWidth(back, width)
+        val height = frontScaled.height + gap + backScaled.height
+
+        val composite = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        Canvas(composite).apply {
+            drawColor(Color.WHITE)
+            drawBitmap(frontScaled, 0f, 0f, null)
+            drawBitmap(backScaled, 0f, (frontScaled.height + gap).toFloat(), null)
+        }
+        val bytes = composite.toJpegBytes()
+        listOf(front, back, frontScaled, backScaled, composite).forEach { it.recycle() }
+        return bytes
+    }
+
+    private fun scaleToWidth(bitmap: Bitmap, width: Int): Bitmap {
+        if (bitmap.width == width) return bitmap
+        val height = (bitmap.height.toLong() * width / bitmap.width).toInt().coerceAtLeast(1)
+        return Bitmap.createScaledBitmap(bitmap, width, height, true)
+    }
+
+    private fun Bitmap.toJpegBytes(): ByteArray = ByteArrayOutputStream().use { out ->
+        compress(Bitmap.CompressFormat.JPEG, STITCH_JPEG_QUALITY, out)
+        out.toByteArray()
+    }
+
+    /**
      * Build a realistic returning-user vocabulary from the whole corpus's ground
      * truth (idea #4). The current bag's roaster/origin/etc. appear among ~28
      * others — exactly the collection a user who has logged a few bags would have.
@@ -259,6 +312,9 @@ class FullPipelineBenchmarkTest {
     companion object {
         const val ARG_BAG_ID = "bagId"
         const val ARG_KNOWN_VOCAB = "knownVocab"
+        const val ARG_STITCH = "stitch"
+        private const val STITCH_GAP_RATIO = 0.02
+        private const val STITCH_JPEG_QUALITY = 90
         private val json = Json { ignoreUnknownKeys = true }
 
         /** Cross-process JSONL accumulator (one [FullPipelineBagRecord] per line). */
