@@ -35,6 +35,13 @@ class BrewBagVisionTest {
         confidenceHint = BagFieldConfidence.HIGH,
     )
 
+    private fun lowCandidate(field: String) = BagFieldCandidate(
+        fieldName = field,
+        value = "Medium-Light",
+        sourceType = BagFieldSourceType.LLM,
+        confidenceHint = BagFieldConfidence.LOW,
+    )
+
     // --- selectVisionFields ---
 
     @Test
@@ -115,5 +122,22 @@ class BrewBagVisionTest {
         )
         val kept = BagVisionPlanner.filterVisionCandidates(listOf(candidate("roastLevel")), resolved)
         assertEquals(1, kept.size)
+    }
+
+    // --- Idea #7: low-confidence vision abstention calibration ---
+
+    @Test
+    fun `filterVisionCandidates drops a low-confidence candidate overriding a present value`() {
+        val resolved = mapOf(
+            "roastLevel" to evidence("roastLevel", BagFieldSourceType.LLM, BagFieldConfidence.MEDIUM),
+        )
+        val kept = BagVisionPlanner.filterVisionCandidates(listOf(lowCandidate("roastLevel")), resolved)
+        assertTrue("an uncertain vision guess must not clobber a present value", kept.isEmpty())
+    }
+
+    @Test
+    fun `filterVisionCandidates keeps a low-confidence candidate that only fills a gap`() {
+        val kept = BagVisionPlanner.filterVisionCandidates(listOf(lowCandidate("roastLevel")), emptyMap())
+        assertEquals("an uncertain vision read may still fill an empty field", 1, kept.size)
     }
 }

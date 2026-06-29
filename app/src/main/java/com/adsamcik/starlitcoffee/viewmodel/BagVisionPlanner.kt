@@ -77,7 +77,23 @@ internal object BagVisionPlanner {
         visionCandidates: List<BagFieldCandidate>,
         resolved: Map<String, BagFieldEvidence>,
     ): List<BagFieldCandidate> =
-        visionCandidates.filterNot { candidate -> isSettledForVision(resolved[candidate.fieldName]) }
+        visionCandidates.filterNot { candidate ->
+            isSettledForVision(resolved[candidate.fieldName]) ||
+                overridesPresentValueWithGuess(candidate, resolved[candidate.fieldName])
+        }
+
+    /**
+     * Idea #7 — abstention calibration. A LOW-confidence ("uncertain") vision
+     * read is a guess; don't let it overwrite a value an earlier pass already
+     * produced. It may still FILL a gap (no prior value), but it can't clobber
+     * one. This is what stops, e.g., a roast level guessed from style from
+     * replacing a value the text pass already read.
+     */
+    private fun overridesPresentValueWithGuess(
+        candidate: BagFieldCandidate,
+        evidence: BagFieldEvidence?,
+    ): Boolean =
+        candidate.confidenceHint == BagFieldConfidence.LOW && evidence != null && evidence.value.isNotBlank()
 
     private fun isSettledForVision(evidence: BagFieldEvidence?): Boolean {
         if (evidence == null) return false

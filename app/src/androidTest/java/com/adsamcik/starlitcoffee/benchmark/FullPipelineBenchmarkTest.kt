@@ -12,6 +12,7 @@ import com.adsamcik.starlitcoffee.test.corpus.BagFieldScorer
 import com.adsamcik.starlitcoffee.test.corpus.BagScore
 import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagFixture
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
+import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagOcrTextMerger
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
@@ -134,15 +135,24 @@ class FullPipelineBenchmarkTest {
             )
         }
         val visionFields = nonBlank(BagPipelineRunner.extractedByField(visionResult))
-        Log.i(CorpusFixture.BENCHMARK_TAG, "[$bagId] vision pass -> ${visionFields.size} fields ($visionResult)")
+        // Idea #7 — abstention calibration: only let vision contribute fields it
+        // is CONFIDENT about ("found" => HIGH). An "uncertain" (LOW) vision read
+        // is a guess; letting it feed combine or overwrite text is how a vision
+        // hallucination (e.g. a roastLevel guessed from style) sneaks into the
+        // final result. Uncertain vision values are dropped here.
+        val visionFound = confidentValues(visionResult)
+        Log.i(
+            CorpusFixture.BENCHMARK_TAG,
+            "[$bagId] vision pass -> ${visionFields.size} fields (${visionFound.size} confident) ($visionResult)",
+        )
 
-        // 3) COMBINE pass — reconcile text + vision (only when both produced values).
-        val combineFields = if (textFields.isNotEmpty() && visionFields.isNotEmpty()) {
+        // 3) COMBINE pass — reconcile text + CONFIDENT vision (only when both have values).
+        val combineFields = if (textFields.isNotEmpty() && visionFound.isNotEmpty()) {
             val combineResult = llm.combineBagFields(
                 LlmCombineRequest(
-                    fieldsNeeded = (textFields.keys + visionFields.keys),
+                    fieldsNeeded = (textFields.keys + visionFound.keys),
                     textPassFields = textFields,
-                    visionPassFields = visionFields,
+                    visionPassFields = visionFound,
                     knownFieldValues = null,
                 ),
             )
@@ -152,10 +162,10 @@ class FullPipelineBenchmarkTest {
             emptyMap()
         }
 
-        // Final pipeline output: text, overlaid by vision, overlaid by combine.
+        // Final pipeline output: text, overlaid by CONFIDENT vision, overlaid by combine.
         val combinedExtraction = buildMap<String, String?> {
             putAll(textFields)
-            putAll(visionFields)
+            putAll(visionFound)
             putAll(combineFields)
         }
 
@@ -193,6 +203,22 @@ class FullPipelineBenchmarkTest {
 
     private fun nonBlank(fields: Map<String, String?>): Map<String, String> =
         fields.mapNotNull { (k, v) -> v?.takeIf { it.isNotBlank() }?.let { k to it } }.toMap()
+
+    /**
+     * Field -> value for only the HIGH-confidence ("found") candidates of [result].
+     * Drops "uncertain" (LOW) reads — the basis of idea #7's vision abstention
+     * calibration.
+     */
+    private fun confidentValues(result: LlmExtractionResult?): Map<String, String> {
+        if (result !is LlmExtractionResult.Success) return emptyMap()
+        return result.fieldCandidates
+            .filter { it.confidenceHint == BagFieldConfidence.HIGH }
+            .groupBy { it.fieldName }
+            .mapNotNull { (field, candidates) ->
+                candidates.firstOrNull()?.value?.takeIf { it.isNotBlank() }?.let { field to it }
+            }
+            .toMap()
+    }
 
     private fun appendRecord(context: Context, record: FullPipelineBagRecord) {
         val file = recordsFile(context)
