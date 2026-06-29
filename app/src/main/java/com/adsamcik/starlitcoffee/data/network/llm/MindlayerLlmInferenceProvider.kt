@@ -1231,6 +1231,21 @@ Response format (JSON only, no markdown):
                 } else {
                     extractFieldCandidate(fieldName, fieldsObj[jsonKey])
                 }
+            }.toMutableList()
+
+            // Idea #1 — a coffee with no decaf marker is regular coffee. When
+            // isDecaf is explicitly requested but the model abstained (no
+            // candidate), default it to false rather than leaving it unknown:
+            // ground truth and users treat "no decaf marker visible" as regular.
+            // Gated on EXPLICIT membership so the all-fields (emptySet) callers in
+            // unit tests are unaffected.
+            if ("isDecaf" in fieldsNeeded && candidates.none { it.fieldName == "isDecaf" }) {
+                candidates += BagFieldCandidate(
+                    fieldName = "isDecaf",
+                    value = "false",
+                    sourceType = BagFieldSourceType.LLM,
+                    confidenceHint = BagFieldConfidence.MEDIUM,
+                )
             }
             return LlmExtractionResult.Success(fieldCandidates = candidates)
         }
@@ -1267,9 +1282,11 @@ Response format (JSON only, no markdown):
             }
             if (value.isNullOrBlank() || status == "not_visible") return null
             if (value.trim().lowercase() in SENTINEL_NON_VALUES) return null
+            val normalized = normalizeControlledValue(fieldName, value.trim())
+            if (normalized.isBlank()) return null
             return BagFieldCandidate(
                 fieldName = fieldName,
-                value = value.trim(),
+                value = normalized,
                 sourceType = BagFieldSourceType.LLM,
                 confidenceHint = when (status) {
                     "found" -> BagFieldConfidence.HIGH
@@ -1278,6 +1295,24 @@ Response format (JSON only, no markdown):
                 },
             )
         }
+
+        /**
+         * Idea #6 — deterministic enum normalization for controlled-vocabulary
+         * fields, the pragmatic stand-in for true grammar-constrained decoding
+         * (the Mindlayer SDK offers `outputJson` schema+validate+retry, but its
+         * retry conflicts with the one-shot vision budget — left as a follow-up).
+         *
+         * For roastLevel, strip a trailing "Roast"/"Roasted" qualifier so the
+         * model's "Light Roast" collapses to the canonical "Light" (the corpus
+         * and UI use the bare term). Gradations ("Medium-Light") and roast
+         * purposes ("Filter"/"Espresso"/"Omni") are left untouched.
+         */
+        internal fun normalizeControlledValue(fieldName: String, value: String): String = when (fieldName) {
+            "roastLevel" -> value.replace(ROAST_SUFFIX, "").trim().ifBlank { value }
+            else -> value
+        }
+
+        private val ROAST_SUFFIX = Regex("(?i)\\s+roast(ed)?\\s*$")
 
         /**
          * Tokens that are status flags / placeholders, never real field values.

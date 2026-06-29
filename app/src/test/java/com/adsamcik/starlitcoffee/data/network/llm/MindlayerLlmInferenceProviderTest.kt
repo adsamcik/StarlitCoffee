@@ -870,6 +870,61 @@ class MindlayerLlmInferenceProviderTest {
         assertEquals("true", decaf?.value)
     }
 
+    // ==================== Idea #1 — isDecaf defaults to false ====================
+
+    @Test
+    fun `parseResponse defaults isDecaf to false when requested but model abstained`() {
+        val json = """{ "fields": { "name": {"value": "X", "status": "found"} } }"""
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, setOf("name", "isDecaf"))
+        val decaf = (result as LlmExtractionResult.Success).fieldCandidates
+            .firstOrNull { it.fieldName == "isDecaf" }
+        assertEquals("absent isDecaf should default to false when explicitly requested", "false", decaf?.value)
+    }
+
+    @Test
+    fun `parseResponse does not default isDecaf when not requested`() {
+        val json = """{ "fields": { "name": {"value": "X", "status": "found"} } }"""
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, setOf("name"))
+        assertTrue(
+            "isDecaf must not be invented when it was not requested",
+            (result as LlmExtractionResult.Success).fieldCandidates.none { it.fieldName == "isDecaf" },
+        )
+    }
+
+    @Test
+    fun `parseResponse keeps explicit isDecaf true over the false default`() {
+        val json = """{ "fields": { "isDecaf": {"value": true, "status": "found"} } }"""
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, setOf("isDecaf"))
+        val decaf = (result as LlmExtractionResult.Success).fieldCandidates
+            .first { it.fieldName == "isDecaf" }
+        assertEquals("true", decaf.value)
+    }
+
+    // ==================== Idea #6 — roastLevel enum normalization ====================
+
+    @Test
+    fun `normalizeControlledValue strips the roast suffix from roastLevel`() {
+        assertEquals("Light", MindlayerLlmInferenceProvider.normalizeControlledValue("roastLevel", "Light Roast"))
+        assertEquals("Dark", MindlayerLlmInferenceProvider.normalizeControlledValue("roastLevel", "Dark Roasted"))
+        assertEquals("Medium", MindlayerLlmInferenceProvider.normalizeControlledValue("roastLevel", "Medium roast"))
+    }
+
+    @Test
+    fun `normalizeControlledValue leaves gradations purposes and other fields untouched`() {
+        assertEquals("Medium-Light", MindlayerLlmInferenceProvider.normalizeControlledValue("roastLevel", "Medium-Light"))
+        assertEquals("Filter", MindlayerLlmInferenceProvider.normalizeControlledValue("roastLevel", "Filter"))
+        assertEquals("Washed", MindlayerLlmInferenceProvider.normalizeControlledValue("process", "Washed"))
+    }
+
+    @Test
+    fun `parseResponse normalizes a roastLevel value through to the candidate`() {
+        val json = """{ "fields": { "roastLevel": {"value": "Light Roast", "status": "found"} } }"""
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+        val roast = (result as LlmExtractionResult.Success).fieldCandidates
+            .first { it.fieldName == "roastLevel" }
+        assertEquals("Light", roast.value)
+    }
+
     // ==================== Prompt-injection escape ====================
 
     @Test
