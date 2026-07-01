@@ -37,7 +37,9 @@
       "barcode_visible"
     ],
     "bagDescription": "Handheld botanical kraft bag with a producer-forward sticker, visible barcode, and close framing.",
-    "barcode": "8595173840526"
+    "barcode": "8595173840526",
+    "barcodeUnique": false,
+    "barcodeCollisionGroup": "ean13-8595173840526"
   },
   "notes": "Single-side close handheld capture. Origin and many detailed fields are not visible, but the producer, roast profile, expiry date, and barcode are."
 }
