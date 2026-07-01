@@ -833,9 +833,22 @@ TRANSLATE to English:
 - country names (e.g. Czech "Kolumbie" -> "Colombia", German "Äthiopien" -> "Ethiopia")
 - processing methods (e.g. "praná" -> "Washed", "natural" -> "Natural")
 - roast levels / purposes (e.g. "tmavé" -> "Dark", "filtr" -> "Filter", "espresso" -> "Espresso")
-- flavour / tasting notes (e.g. "smetana, vanilka" -> "cream, vanilla")
 - field LABELS (e.g. "Datum pražení" -> "Roast date", "Hmotnost" -> "Weight",
   "Nadmořská výška" -> "Altitude", "Mindestens haltbar bis" -> "Best before")
+
+FLAVOUR / TASTING NOTES — translate EVERY descriptor to its common English name:
+- This covers all fruits, berries, stone / citrus fruits, flowers, herbs / teas, nuts,
+  chocolate / cocoa, caramel / sugar / honey, and spice words. Translate each one — even
+  a single word alone on a line, even when Capitalized.
+- Translate by MEANING, not by how the word looks. A flavour word is a common noun, never
+  a brand / farm / variety name, so translate it even though proper names stay verbatim.
+- Beware false friends — a token that resembles an English word can be a foreign flavour
+  word: French "prune" -> "plum" (NOT the English "prune"); Italian "pesca" -> "peach";
+  French "raisin" -> "grape".
+- Examples: Czech "meruňka" -> "apricot", "rybíz" -> "currant", "smetana, vanilka" ->
+  "cream, vanilla"; Italian "mirtillo" -> "blueberry", "prugna" / "susina" -> "plum";
+  French "myrtille" -> "blueberry", "prune" -> "plum", "mûre" -> "blackberry";
+  German "Pflaume" -> "plum", "Haselnuss" -> "hazelnut".
 
 KEEP VERBATIM — never translate or alter:
 - brand / roaster names, product / blend names, farm / estate names
