@@ -680,7 +680,11 @@ Field definitions — what each field is, and what does NOT belong in it:
   filled dot / ticked box on a light-to-dark scale) is actually printed and
   legible on the label. If neither a roast word nor a roast-scale mark is
   legible, set roastLevel to not_visible — never guess from appearance.
-- tastingNotes: flavour descriptors, lowercase, comma-separated.
+- tastingNotes: flavour descriptors, lowercase, comma-separated. TRANSLATE every
+  descriptor to its common English name by MEANING, even a single word and even
+  when it looks like a name or looks English — e.g. Italian "mirtillo" -> blueberry,
+  French "prune" -> plum, Czech "meruňka" -> apricot. Never leave a foreign flavour
+  word untranslated.
 - altitude: the number range plus unit, ASCII (e.g. "1400-2100m", "1900 masl").
 - weight: the NET weight in its printed unit (e.g. "250g", "1kg"). A single
   value — never merge two numbers into one token.
@@ -987,7 +991,9 @@ Field definitions — what each field is, and what does NOT belong in it:
   "Espresso" / "Omni" (what it was roasted FOR). For a marked roast-purpose
   choice (options with one ticked / circled), output ONLY the marked option; if
   no mark is readable, emit not_visible.
-- tastingNotes: flavour descriptors, lowercase, comma-separated.
+- tastingNotes: flavour descriptors, lowercase, comma-separated. TRANSLATE every
+  descriptor to its common English name by MEANING (e.g. "mirtillo" -> blueberry,
+  "prune" -> plum, "meruňka" -> apricot); never leave a foreign flavour word as-is.
 - altitude: the number range plus unit, ASCII (e.g. "1400-2100m", "1900 masl").
 - weight: the NET weight in its printed unit (e.g. "250g", "1kg", "340g"). A
   single value — never merge two numbers into one token.
@@ -1136,6 +1142,10 @@ Pick the single best value for each requested field:
 - Concept fields (origin, region, process, roastLevel, variety, tastingNotes):
   output canonical ENGLISH. If one pass gives English and the other a translation
   or local spelling, keep the canonical English form.
+- tastingNotes is a comma-separated LIST: translate any remaining non-English
+  flavour word to English by meaning, then MERGE the two passes' notes and
+  DEDUPLICATE — two entries that are the same flavour in different languages
+  (e.g. "blueberry" and "mirtillo") are ONE note; keep only the English form.
 - Structural fields (weight, altitude, roastDate, expiryDate): prefer the value
   that is well-formed for its type; never put a measurement or date into a
   proper-noun field.
