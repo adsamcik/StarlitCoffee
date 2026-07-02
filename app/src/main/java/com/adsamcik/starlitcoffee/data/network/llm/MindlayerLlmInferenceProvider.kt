@@ -660,17 +660,28 @@ Field definitions — what each field is, and what does NOT belong in it:
   it verbatim. When a logo word AND a product sticker are both present, the logo
   word is the roaster and the sticker text is the name. Never swap the two.
 - origin: the country of origin, English name (e.g. "Colombia", "Ethiopia"). A
-  country name is ALWAYS origin — NEVER region, name, farm, or roaster.
+  country name is ALWAYS origin — NEVER region, name, farm, or roaster. A bare
+  botanical species name ("Arabica", "Robusta") is NEVER a country and NEVER
+  origin — nearly all specialty coffee is Arabica, so the bare species word
+  carries no information; if that is the only candidate, origin is not_visible.
 - region: the growing region / sub-origin (e.g. "Huila", "Yirgacheffe"). NOT the
   country: if the only candidate is a country name, that is origin and region is
-  not_visible. Do not duplicate the country into region.
+  not_visible. Do not duplicate the country into region. Region is ALSO never a
+  city or address (a roaster's business address, e.g. "Prague", is not a growing
+  region) and NEVER the bag's own product name (do not reuse the `name` field's
+  value as region just because nothing else is visible) — if no genuine growing
+  region/sub-origin is legible, region is not_visible.
 - farm: estate / cooperative name. Verbatim.
 - variety: the cultivar ("Bourbon", "Geisha", "Caturra", "SL28", "Heirloom").
-  Generic "mixed varieties" -> not_visible.
+  Generic "mixed varieties" -> not_visible. A bare botanical species name
+  ("Arabica", "Robusta") is NOT a distinguishing cultivar either — it does not
+  tell you which variety, so it is also not_visible.
 - process: the green-coffee processing METHOD — "Washed", "Natural", "Honey"
   (with colour qualifier if present), "Anaerobic", "Semi-washed", "Wet-hulled",
-  "Carbonic Maceration", etc. NOT a roast word, NOT a bean-form word ("beans",
-  "whole bean", "ground"), and NOT "Decaf".
+  "Carbonic Maceration", etc. NOT a roast word, NOT a bean-form/packaging word
+  ("beans", "whole bean", "whole beans", "ground", "ground coffee"), and NOT
+  "Decaf". If the only candidate is a bean-form/packaging word, process is
+  not_visible — do not report it as the processing method.
 - roastLevel: "Light", "Medium", "Dark", or the roast PURPOSE "Filter" /
   "Espresso" / "Omni" (what it was roasted FOR). CRITICAL: NEVER infer the roast
   level from the bag colour, the bean colour, or the overall darkness of the
@@ -689,7 +700,11 @@ Field definitions — what each field is, and what does NOT belong in it:
 - weight: the NET weight in its printed unit (e.g. "250g", "1kg"). A single
   value — never merge two numbers into one token.
 - roastDate / expiryDate: YYYY-MM-DD (or YYYY-MM). roastDate is when the beans
-  were roasted; expiryDate is best-before. Read each from its own label.
+  were roasted; expiryDate is best-before. Read each from its own printed date
+  ONLY — report a date ONLY when an actual calendar date is legibly printed on
+  the label. NEVER invent a plausible-looking date, and NEVER report a relative
+  or descriptive phrase ("3 months from roast date", "best before 6 months") as
+  if it were a date — if no calendar date is legible, the field is not_visible.
 - isDecaf: true only when a decaf marker is present (text or icon); false when
   clearly regular; not_visible otherwise. The bare word "Decaf" sets isDecaf=true
   but is NEVER the process value.
@@ -921,6 +936,8 @@ Rules:
   * Words that describe a coffee PROCESS (the local-language word for "washed", "natural", "honey", "anaerobic", "wet-hulled", etc.) or a ROAST ACTION (the local-language word for "roasted", "roast", "roasting", etc.) are NEVER `origin`, `name`, or `roaster`. They describe how the coffee was made or roasted, never where it came from or what it's called.
   * Words that describe BEAN FORM (the local-language word for "beans", "whole bean", "ground", etc.) are NEVER `process`. Emit `not_visible` for `process` if only bean-form words are present.
   * Measurement and date strings (numbers + a unit like "m", "g", "kg", "%", or a date in any format) are NEVER `name`, `roaster`, or `origin`. Emit `not_visible` if no real proper-noun value is present.
+  * A bare botanical species name ("Arabica", "Robusta") is NEVER `origin` (it is not a country) and is NOT a distinguishing `variety` either — emit `not_visible` for whichever field it would otherwise fill.
+  * `roastDate` must be an actual calendar date legibly present in the OCR text — never invent one, and never report a relative/descriptive phrase ("3 months from roast date") as if it were a date; emit `not_visible` if no real date is present.
 - Correct obvious OCR errors only when the intended word is unambiguous from context.
 - Respond with ONLY a JSON object. No markdown fences or explanation.
 """.trimIndent()
@@ -976,17 +993,24 @@ Field definitions — what each field is, and what does NOT belong in it:
   on the back. Keep it verbatim. When a logo word AND a product sticker are both
   on the front, the logo word is the roaster and the sticker text is the name.
 - origin: the country of origin, English name (e.g. "Colombia", "Ethiopia").
-  A country name is ALWAYS origin — NEVER region, name, farm, or roaster.
+  A country name is ALWAYS origin — NEVER region, name, farm, or roaster. A bare
+  botanical species name ("Arabica", "Robusta") is NEVER a country and NEVER
+  origin — if that is the only candidate, origin is not_visible.
 - region: the growing region / sub-origin (e.g. "Huila", "Yirgacheffe",
   "Tumbaga"). NOT the country: if the only candidate is a country name, that is
   origin and region is not_visible. Do not duplicate the country into region.
+  Region is ALSO never a city/business address or the bag's own product name —
+  if no genuine growing region is legible, region is not_visible.
 - farm: estate / cooperative name. Verbatim.
 - variety: the cultivar (e.g. "Bourbon", "Geisha", "Caturra", "SL28",
-  "Heirloom"). Generic "mixed varieties" → not_visible.
+  "Heirloom"). Generic "mixed varieties" → not_visible. A bare botanical
+  species name ("Arabica", "Robusta") does not distinguish a cultivar either
+  → not_visible.
 - process: the green-coffee processing METHOD — "Washed", "Natural", "Honey"
   (with colour qualifier if present), "Anaerobic", "Semi-washed", "Wet-hulled",
-  "Carbonic Maceration", etc. NOT a roast word, NOT a bean-form word ("beans",
-  "whole bean", "ground"), and NOT "Decaf".
+  "Carbonic Maceration", etc. NOT a roast word, NOT a bean-form/packaging word
+  ("beans", "whole bean", "whole beans", "ground", "ground coffee"), and NOT
+  "Decaf". If the only candidate is a bean-form/packaging word, not_visible.
 - roastLevel: "Light", "Medium", "Dark", or the roast PURPOSE "Filter" /
   "Espresso" / "Omni" (what it was roasted FOR). For a marked roast-purpose
   choice (options with one ticked / circled), output ONLY the marked option; if
@@ -1000,6 +1024,10 @@ Field definitions — what each field is, and what does NOT belong in it:
 - roastDate / expiryDate: YYYY-MM-DD (or YYYY-MM when only month+year is given).
   roastDate is when the beans were roasted; expiryDate is best-before / minimum
   durability. Read each from its own label; never copy one into the other.
+  Report a date ONLY when an actual calendar date is legibly printed — NEVER
+  invent a plausible-looking date, and NEVER report a relative/descriptive
+  phrase ("3 months from roast date") as if it were a date; if no calendar
+  date is legible, not_visible.
 - isDecaf: true when a decaffeination marker is present ("Decaf",
   "Decaffeinated", or a named method like "Sugarcane EA Decaf", "Swiss Water
   Decaf", "CO2 Decaf"); false when clearly regular; not_visible otherwise. The
@@ -1141,14 +1169,24 @@ Pick the single best value for each requested field:
   appears in neither pass.
 - Concept fields (origin, region, process, roastLevel, variety, tastingNotes):
   output canonical ENGLISH. If one pass gives English and the other a translation
-  or local spelling, keep the canonical English form.
+  or local spelling, keep the canonical English form. Never duplicate the origin
+  country into region, and never use a city/business address or the bag's own
+  product name as region — if neither pass has a genuine growing region, region
+  is not_visible. A bare botanical species name ("Arabica", "Robusta") from
+  either pass is NEVER origin and NEVER a distinguishing variety — treat it as
+  not_visible for that field even if one pass reported it. A bean-form/packaging
+  word ("whole bean", "ground") from either pass is NEVER process — not_visible
+  if that is the only candidate.
 - tastingNotes is a comma-separated LIST: translate any remaining non-English
   flavour word to English by meaning, then MERGE the two passes' notes and
   DEDUPLICATE — two entries that are the same flavour in different languages
   (e.g. "blueberry" and "mirtillo") are ONE note; keep only the English form.
 - Structural fields (weight, altitude, roastDate, expiryDate): prefer the value
   that is well-formed for its type; never put a measurement or date into a
-  proper-noun field.
+  proper-noun field. roastDate/expiryDate specifically: only accept an actual
+  calendar date from either pass — never invent one, and never accept a
+  relative/descriptive phrase ("3 months from roast date") as if it were a
+  date; not_visible if neither pass has a real date.
 - isDecaf: true only if a pass clearly indicates decaf; otherwise keep false.
 - If only ONE pass has a value, use it — UNLESS it is obviously a field label or a
   measurement leaking into a proper-noun field, in which case return not_visible.

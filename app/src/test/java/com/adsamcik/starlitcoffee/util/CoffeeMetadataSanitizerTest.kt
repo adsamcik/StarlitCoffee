@@ -14,6 +14,72 @@ import org.junit.Test
  */
 class CoffeeMetadataSanitizerTest {
 
+    // --- Rule 0: generic/non-value guards (bare species, bean-form process) ---
+
+    @Test
+    fun `bare Arabica in origin is dropped not relocated`() {
+        // Real hallucination observed on-device: the model reported the bag's
+        // origin as "Arabica" (a species, never a country) when ground truth
+        // was not visible on the label at all.
+        val result = CoffeeMetadataNormalizer.sanitizeExtraction(
+            origin = "Arabica", region = null, processType = null,
+            roastLevel = null, variety = null, weight = null, isDecaf = null,
+        )
+        assertNull(result.origin)
+        assertTrue(
+            result.corrections.any {
+                it.field == "origin" && it.action == ScanFieldCorrectionAction.DROPPED
+            },
+        )
+    }
+
+    @Test
+    fun `bare Robusta in variety is dropped`() {
+        // Bare species names don't distinguish a cultivar the way "Bourbon"
+        // or "Geisha" do — nearly all specialty coffee is Arabica already.
+        val result = CoffeeMetadataNormalizer.sanitizeExtraction(
+            origin = null, region = null, processType = null,
+            roastLevel = null, variety = "Robusta", weight = null, isDecaf = null,
+        )
+        assertNull(result.variety)
+    }
+
+    @Test
+    fun `a real cultivar in variety is preserved`() {
+        val result = CoffeeMetadataNormalizer.sanitizeExtraction(
+            origin = null, region = null, processType = null,
+            roastLevel = null, variety = "Geisha", weight = null, isDecaf = null,
+        )
+        assertEquals("Geisha", result.variety)
+        assertTrue(result.corrections.isEmpty())
+    }
+
+    @Test
+    fun `whole bean in process is dropped as bean-form not processing method`() {
+        // Real hallucination observed on-device: process="Whole Bean" when
+        // ground truth was not visible — a packaging descriptor, not a
+        // washed/natural/honey processing method.
+        val result = CoffeeMetadataNormalizer.sanitizeExtraction(
+            origin = null, region = null, processType = "Whole Bean",
+            roastLevel = null, variety = null, weight = null, isDecaf = null,
+        )
+        assertNull(result.processType)
+        assertTrue(
+            result.corrections.any {
+                it.field == "processType" && it.action == ScanFieldCorrectionAction.DROPPED
+            },
+        )
+    }
+
+    @Test
+    fun `ground in process is dropped as bean-form`() {
+        val result = CoffeeMetadataNormalizer.sanitizeExtraction(
+            origin = null, region = null, processType = "Ground",
+            roastLevel = null, variety = null, weight = null, isDecaf = null,
+        )
+        assertNull(result.processType)
+    }
+
     // --- Rule 1: decaf displacement ---
 
     @Test
@@ -220,5 +286,49 @@ class CoffeeMetadataSanitizerTest {
     @Test
     fun `classify returns empty for unknown free text`() {
         assertTrue(CoffeeMetadataNormalizer.classifyControlledValue("Tumbaga").isEmpty())
+    }
+
+    // --- sanitizeDate ---
+
+    @Test
+    fun `full ISO date is preserved`() {
+        assertEquals("2026-05-28", CoffeeMetadataNormalizer.sanitizeDate("2026-05-28"))
+    }
+
+    @Test
+    fun `year-month date is preserved`() {
+        assertEquals("2026-08", CoffeeMetadataNormalizer.sanitizeDate("2026-08"))
+    }
+
+    @Test
+    fun `relative date phrase is rejected`() {
+        // Real hallucination observed on-device: expiryDate reported as
+        // "3 months from roast date" — a relative description, not a date.
+        assertNull(CoffeeMetadataNormalizer.sanitizeDate("3 months from roast date"))
+    }
+
+    @Test
+    fun `garbled non-date text is rejected`() {
+        assertNull(CoffeeMetadataNormalizer.sanitizeDate("best before"))
+    }
+
+    @Test
+    fun `blank and null are rejected`() {
+        assertNull(CoffeeMetadataNormalizer.sanitizeDate(""))
+        assertNull(CoffeeMetadataNormalizer.sanitizeDate("   "))
+        assertNull(CoffeeMetadataNormalizer.sanitizeDate(null))
+    }
+
+    @Test
+    fun `european dd-mm-yyyy date is preserved`() {
+        // DateParser already recognizes this format (common on EU labels);
+        // sanitizeDate must delegate to it rather than reject anything that
+        // isn't strict ISO, or it would regress real, previously-working dates.
+        assertEquals("20.03.2026", CoffeeMetadataNormalizer.sanitizeDate("20.03.2026"))
+    }
+
+    @Test
+    fun `month name date is preserved`() {
+        assertEquals("January 15, 2026", CoffeeMetadataNormalizer.sanitizeDate("January 15, 2026"))
     }
 }

@@ -195,6 +195,25 @@ object CoffeeMetadataNormalizer {
     // part of legitimate decaf phrases.
     private val decafNegationTokens = setOf("not", "non", "no", "never")
 
+    // Bare botanical species names ("Arabica", "Robusta") are never a valid
+    // origin (they are not a country) and never a meaningfully distinguishing
+    // variety either — nearly all specialty coffee is Arabica, so the bare
+    // word carries no information a real cultivar name ("Bourbon", "Geisha")
+    // would. The prompt already asks the model to translate concept fields to
+    // canonical English, so this check is intentionally English-only.
+    private val bareSpeciesTokens = setOf("arabica", "robusta", "liberica", "excelsa")
+
+    // Bean-form / roast-form descriptors are not a processing METHOD — they
+    // describe how the coffee is packaged (whole bean vs ground), not how the
+    // green coffee was processed (washed, natural, honey, ...). Prompt-side
+    // exclusion exists (VISION_SYSTEM_PROMPT / SYSTEM_PROMPT_14) but was
+    // observed leaking through on real bags, so this is a deterministic
+    // backstop. English-only for the same reason as [bareSpeciesTokens].
+    private val beanFormOnlyTokens = setOf(
+        "whole bean", "whole beans", "bean", "beans",
+        "ground", "ground coffee", "coffee beans", "roasted beans", "roasted coffee",
+    )
+
     private val originCountryCodes = mapOf(
         CoffeeOrigin.Known.ETHIOPIA.name to "ET",
         CoffeeOrigin.Known.COLOMBIA.name to "CO",
@@ -697,6 +716,47 @@ object CoffeeMetadataNormalizer {
         )
         var outDecaf = isDecaf
 
+        // Rule 0 — generic/non-values that are never valid regardless of which
+        // slot they landed in: a bare botanical species name (origin/variety)
+        // or a bean-form/roast-form descriptor (processType). These must be
+        // dropped BEFORE Rule 2 runs, not relocated between slots — moving
+        // "Arabica" from origin to variety would just move the hallucination.
+        run {
+            val origin = values["origin"]
+            if (origin != null && normalizeSearch(origin) in bareSpeciesTokens) {
+                values["origin"] = null
+                corrections += ScanFieldCorrection(
+                    field = "origin",
+                    action = ScanFieldCorrectionAction.DROPPED,
+                    from = origin,
+                    to = null,
+                    reason = "bare species name is not a country of origin",
+                )
+            }
+            val variety = values["variety"]
+            if (variety != null && normalizeSearch(variety) in bareSpeciesTokens) {
+                values["variety"] = null
+                corrections += ScanFieldCorrection(
+                    field = "variety",
+                    action = ScanFieldCorrectionAction.DROPPED,
+                    from = variety,
+                    to = null,
+                    reason = "bare species name does not distinguish a cultivar",
+                )
+            }
+            val process = values["processType"]
+            if (process != null && normalizeSearch(process) in beanFormOnlyTokens) {
+                values["processType"] = null
+                corrections += ScanFieldCorrection(
+                    field = "processType",
+                    action = ScanFieldCorrectionAction.DROPPED,
+                    from = process,
+                    to = null,
+                    reason = "bean-form/roast-form descriptor is not a processing method",
+                )
+            }
+        }
+
         // Rule 1 — decaf displacement.
         for (field in listOf("processType", "region", "variety", "roastLevel")) {
             val value = values[field] ?: continue
@@ -778,6 +838,27 @@ object CoffeeMetadataNormalizer {
             isDecaf = outDecaf,
             corrections = corrections,
         )
+    }
+
+    // Matches YYYY-MM (bare year-month, which DateParser doesn't parse but the
+    // extraction prompts explicitly allow as a valid partial date).
+    private val yearMonthPattern = Regex("^\\d{4}-\\d{2}$")
+
+    /**
+     * Deterministic guard for `roastDate`/`expiryDate`: returns [value]
+     * unchanged if [DateParser] can actually parse it (or it is a bare
+     * `YYYY-MM`, which the extraction prompts allow but DateParser doesn't
+     * parse), else `null`. Delegates to DateParser rather than a private
+     * format list so this accepts every format the rest of the app already
+     * recognizes (ISO, dd.MM.yyyy, "January 2026", ...) and rejects anything
+     * it doesn't — including a relative/descriptive phrase like "3 months
+     * from roast date" or a garbled OCR token, which is exactly how a
+     * hallucinated expiry date would otherwise reach the saved bag.
+     */
+    fun sanitizeDate(value: String?): String? {
+        val trimmed = value?.trim()?.takeIf(String::isNotBlank) ?: return null
+        val isValid = DateParser.parse(trimmed) != null || yearMonthPattern.matches(trimmed)
+        return trimmed.takeIf { isValid }
     }
 
     fun parseCanonicalIds(ids: String?): List<String> = ids

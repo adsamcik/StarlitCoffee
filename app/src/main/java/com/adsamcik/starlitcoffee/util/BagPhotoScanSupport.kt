@@ -266,8 +266,11 @@ object BagPhotoScanSupport {
         // the saved bag. The extraction step trusts the raw on-device-LLM
         // output, which routinely misfiles correctly-read tokens on bilingual /
         // structured labels (a country name in `region`, a decaf marker in
-        // `process`, an OCR-merged weight). This is the single choke point for
-        // every prefill path, so one call fixes chips + save together.
+        // `process`, an OCR-merged weight, a bare species name masquerading as
+        // origin/variety, a bean-form word leaking into process). This is the
+        // single choke point for every prefill path, so one call fixes chips +
+        // save together. roastDate/expiryDate are format-validated separately
+        // below (sanitizeExtraction has no dictionary to check dates against).
         val sanitized = CoffeeMetadataNormalizer.sanitizeExtraction(
             origin = value("origin"),
             region = value("region"),
@@ -288,8 +291,8 @@ object BagPhotoScanSupport {
             altitude = value("altitude"),
             tastingNotes = value("tastingNotes"),
             roastLevel = sanitized.roastLevel,
-            roastDate = value("roastDate"),
-            expiryDate = value("expiryDate"),
+            roastDate = CoffeeMetadataNormalizer.sanitizeDate(value("roastDate")),
+            expiryDate = CoffeeMetadataNormalizer.sanitizeDate(value("expiryDate")),
             weight = sanitized.weight,
             isDecaf = sanitized.isDecaf,
             fieldConfidence = fieldConfidence,

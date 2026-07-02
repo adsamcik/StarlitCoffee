@@ -18,6 +18,7 @@ import com.adsamcik.starlitcoffee.test.corpus.CoffeeBagFixture
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagOcrTextMerger
+import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
@@ -204,11 +205,39 @@ class FullPipelineBenchmarkTest {
             putAll(combineFields)
         }
 
+        // Apply the SAME deterministic sanitization every real save/prefill
+        // goes through (BagPhotoScanSupport.buildPrefill) before scoring, so
+        // this benchmark measures what a user actually sees, not the raw
+        // pre-sanitization model output. Skipping this step was itself a real
+        // gap: it made the benchmark measure hallucinations (e.g. a country
+        // duplicated into region) that production already silently corrects,
+        // while understating others production doesn't sanitize (dates).
+        val sanitized = CoffeeMetadataNormalizer.sanitizeExtraction(
+            origin = combinedExtraction["origin"],
+            region = combinedExtraction["region"],
+            processType = combinedExtraction["processType"],
+            roastLevel = combinedExtraction["roastLevel"],
+            variety = combinedExtraction["variety"],
+            weight = combinedExtraction["weight"],
+            isDecaf = combinedExtraction["isDecaf"]?.toBooleanStrictOrNull(),
+        )
+        val sanitizedExtraction = combinedExtraction + mapOf(
+            "origin" to sanitized.origin,
+            "region" to sanitized.region,
+            "processType" to sanitized.processType,
+            "roastLevel" to sanitized.roastLevel,
+            "variety" to sanitized.variety,
+            "weight" to sanitized.weight,
+            "isDecaf" to sanitized.isDecaf?.toString(),
+            "roastDate" to CoffeeMetadataNormalizer.sanitizeDate(combinedExtraction["roastDate"]),
+            "expiryDate" to CoffeeMetadataNormalizer.sanitizeDate(combinedExtraction["expiryDate"]),
+        )
+
         val record = FullPipelineBagRecord(
             bagId = bag.id,
             tier = bag.captureTier,
             textScore = BagFieldScorer.scoreBag(bag, textFields),
-            combinedScore = BagFieldScorer.scoreBag(bag, combinedExtraction),
+            combinedScore = BagFieldScorer.scoreBag(bag, sanitizedExtraction),
         )
         appendRecord(context, record)
 
