@@ -249,12 +249,19 @@ tasks.register("scanBenchmark") {
 
         // Let the on-device Mindlayer AI service run unattended (debug builds
         // expose an auto-accept receiver). Harmless no-op if already enabled.
-        adb(
-            "shell", "am", "broadcast", "-n",
-            "com.adsamcik.mindlayer.service.debug/com.adsamcik.mindlayer.service.security.DebugAutoAcceptReceiver",
-            "-a", "com.adsamcik.mindlayer.debug.SET_AUTO_ACCEPT", "--ez", "enabled", "true",
-            allowFailure = true,
-        )
+        // Broadcast to BOTH the pre-rename and post-rename service package
+        // names (mirrors the AndroidManifest <queries> dual-package fix):
+        // the SDK's actual bound component depends on which Mindlayer build
+        // is installed, and targeting only one name silently no-ops against
+        // the other, leaving fresh consent ungranted with no visible error.
+        listOf("com.adsamcik.mindlayer.service.debug", "com.adsamcik.mindlayer.debug").forEach { pkg ->
+            adb(
+                "shell", "am", "broadcast", "-n",
+                "$pkg/com.adsamcik.mindlayer.service.security.DebugAutoAcceptReceiver",
+                "-a", "com.adsamcik.mindlayer.debug.SET_AUTO_ACCEPT", "--ez", "enabled", "true",
+                allowFailure = true,
+            )
+        }
 
         if (skipCapture) {
             println("scanBenchmark: -PskipCapture set — reusing existing OCR fixtures")
