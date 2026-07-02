@@ -925,7 +925,47 @@ class MindlayerLlmInferenceProviderTest {
         assertEquals("Light", roast.value)
     }
 
-    // ==================== Prompt-injection escape ====================
+    @Test
+    fun `VISION_SYSTEM_PROMPT forbids inferring roast level from bag or bean darkness`() {
+        val prompt = MindlayerLlmInferenceProvider.VISION_SYSTEM_PROMPT
+
+        assertTrue(
+            "Vision prompt must forbid inferring roast level from colour/darkness",
+            prompt.contains("NEVER infer the roast") && prompt.contains("bag colour, the bean colour"),
+        )
+        assertTrue(
+            "Vision prompt must require a printed roast WORD or roast-scale MARK",
+            prompt.contains("roast WORD") && prompt.contains("roast-scale MARK"),
+        )
+        assertTrue(
+            "Vision prompt must instruct not_visible when no word/mark is legible",
+            prompt.contains("set roastLevel to not_visible"),
+        )
+        assertTrue(
+            "Roast-dot cue must reinforce that bean/bag darkness is never a roast cue",
+            prompt.contains("never a roast-level cue"),
+        )
+    }
+
+    @Test
+    fun `parseResponse drops not-specified and unspecified placeholder values`() {
+        val json = """
+            { "fields": {
+                "roastLevel": {"value": "not specified", "status": "found"},
+                "process":    {"value": "unspecified",   "status": "found"},
+                "variety":    {"value": "not_applicable", "status": "found"},
+                "origin":     {"value": "Ethiopia",       "status": "found"}
+            } }
+        """.trimIndent()
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+
+        assertTrue("Placeholder roastLevel must be dropped", candidates.none { it.fieldName == "roastLevel" })
+        assertTrue("Placeholder process must be dropped", candidates.none { it.fieldName == "processType" })
+        assertTrue("Placeholder variety must be dropped", candidates.none { it.fieldName == "variety" })
+        assertEquals("Ethiopia", candidates.first { it.fieldName == "origin" }.value)
+    }
 
     @Test
     fun `buildExtractionPrompt escapes triple quotes in rawOcrText`() {
