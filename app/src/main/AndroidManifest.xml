@@ -26,11 +26,13 @@
         found") because the target package is filtered out. Visibility used to
         come implicitly from the com.adsamcik.mindlayer.permission.BIND_ML_SERVICE
         uses-permission, but Mindlayer no longer defines that permission, so the
-        app must declare the service packages directly. Both the release and
-        debug service variants are listed because the SDK binds the variant that
-        matches the build type.
+        app must declare the service packages directly. Both current and legacy
+        release/debug service package names are listed for SDK compatibility
+        across Mindlayer's applicationId rename.
     -->
     <queries>
+        <package android:name="com.adsamcik.mindlayer" />
+        <package android:name="com.adsamcik.mindlayer.debug" />
         <package android:name="com.adsamcik.mindlayer.service" />
         <package android:name="com.adsamcik.mindlayer.service.debug" />
     </queries>

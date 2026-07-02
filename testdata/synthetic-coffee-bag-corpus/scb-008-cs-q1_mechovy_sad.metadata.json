@@ -35,7 +35,9 @@
       "natural_light"
     ],
     "bagDescription": "Kraft bag covered in block-printed leaves and coffee cherries with an integrated Czech information frame.",
-    "barcode": "8595173840526"
+    "barcode": "8595173840526",
+    "barcodeUnique": false,
+    "barcodeCollisionGroup": "ean13-8595173840526"
   },
   "notes": "Graphic botanical design that keeps the text readable while surrounding it with dense illustration. Producer 'Kanzu Cooperative' is visible on the back label."
 }
