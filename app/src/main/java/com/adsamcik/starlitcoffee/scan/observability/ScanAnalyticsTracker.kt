@@ -42,6 +42,19 @@ object ScanAnalyticsTracker {
         Log.d(TAG, "event=user_edited field_name=$fieldName")
     }
 
+    /**
+     * Richer review signal than [trackUserEdited]: whether the user kept or
+     * changed the model's proposed value for a field, and the model's stated
+     * confidence. Feeds the on-device [ScanCorrectionLog] quality signal.
+     */
+    fun trackFieldReview(fieldName: String, wasEdited: Boolean, modelConfidence: String?) {
+        Log.d(
+            TAG,
+            "event=field_review field_name=$fieldName was_edited=$wasEdited " +
+                "model_confidence=${modelConfidence ?: "unknown"}",
+        )
+    }
+
     fun trackScanAbandoned(durationMs: Long, fieldsResolved: Int) {
         Log.d(TAG, "event=scan_abandoned duration_ms=$durationMs fields_resolved=$fieldsResolved")
     }

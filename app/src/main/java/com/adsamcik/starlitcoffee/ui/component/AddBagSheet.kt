@@ -58,10 +58,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
@@ -82,6 +84,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
+import com.adsamcik.starlitcoffee.scan.observability.ScanCorrectionLog
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
 import com.adsamcik.starlitcoffee.data.model.CoffeeProcessType
@@ -101,6 +104,7 @@ import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.ThumbnailLoader
 import com.adsamcik.starlitcoffee.util.WeightParser
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.URL
 
@@ -230,6 +234,8 @@ fun AddBagSheet(
     }
 
     val isEditMode = bagToEdit != null
+    val correctionContext = LocalContext.current
+    val correctionScope = rememberCoroutineScope()
     var name by rememberSaveable(ocrPrefill, initialName, bagToEdit) {
         mutableStateOf(bagToEdit?.name ?: ocrPrefill?.name ?: initialName ?: "")
     }
@@ -980,6 +986,39 @@ fun AddBagSheet(
             Button(
                 onClick = {
                     if (name.isNotBlank()) {
+                        if (ocrPrefill != null) {
+                            // Phase 3 — capture a real-world model-vs-user diff for
+                            // this scanned bag. Opt-in + on-device; the recorder is
+                            // a no-op unless the user enabled correction logging.
+                            val prefill = ocrPrefill
+                            val modelValues = mapOf(
+                                "name" to prefill.name,
+                                "roaster" to prefill.roaster,
+                                "origin" to prefill.origin,
+                                "region" to prefill.region,
+                                "variety" to prefill.variety,
+                                "processType" to prefill.processType,
+                                "roastLevel" to prefill.roastLevel,
+                                "tastingNotes" to prefill.tastingNotes,
+                            )
+                            val finalValues = mapOf(
+                                "name" to name,
+                                "roaster" to roaster,
+                                "origin" to originCountry,
+                                "region" to originRegion,
+                                "variety" to variety,
+                                "processType" to processType,
+                                "roastLevel" to roastLevel,
+                                "tastingNotes" to tastingNotes,
+                            )
+                            val corrections = ScanCorrectionLog.buildCorrections(
+                                modelValues = modelValues,
+                                finalValues = finalValues,
+                                confidence = prefill.fieldConfidence,
+                            )
+                            val appContext = correctionContext.applicationContext
+                            correctionScope.launch { ScanCorrectionLog.record(appContext, corrections) }
+                        }
                         if (bagToEdit != null && onEdit != null) {
                             onEdit(
                                 bagToEdit.copy(

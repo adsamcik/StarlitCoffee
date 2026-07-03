@@ -419,6 +419,22 @@ fun SettingsScreen(
                 SettingsSectionHeader(stringResource(R.string.label_settings_section_developer))
                 MindlayerSettingsCard()
                 ScanDebugCard()
+                // Phase 3 — opt-in, on-device capture of model-vs-user field
+                // corrections, used to measure extraction quality on real bags.
+                // Debug-only + default off: the flag never activates in release,
+                // so there is no release-time data-collection surface.
+                SettingsSwitchRow(
+                    title = "Log scan corrections (on-device)",
+                    summary = "Record what the AI extracted vs. what you saved, on this " +
+                        "device only, to measure extraction quality on real bags. Nothing " +
+                        "is uploaded.",
+                    checked = prefs.scanCorrectionLoggingEnabled,
+                    onCheckedChange = { enabled ->
+                        scope.launch {
+                            userPreferencesRepository.updateScanCorrectionLoggingEnabled(enabled)
+                        }
+                    },
+                )
             }
         }
     }

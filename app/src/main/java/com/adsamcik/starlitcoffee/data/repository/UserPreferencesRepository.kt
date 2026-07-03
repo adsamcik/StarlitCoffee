@@ -45,6 +45,11 @@ data class UserPreferences(
     // asking the user to rate it with 5 emojis. Opt-in because it needs
     // POST_NOTIFICATIONS permission on Android 13+ and not every user wants it.
     val ratingReminderEnabled: Boolean = false,
+    // When true, the bag-scan review screen records, on-device, a diff between
+    // what the model extracted and what the user finally saved. This is a
+    // privacy-sensitive quality signal (it captures edited label metadata), so
+    // it is strictly opt-in and stays on the device — nothing is uploaded.
+    val scanCorrectionLoggingEnabled: Boolean = false,
 )
 
 class UserPreferencesRepository(private val context: Context) {
@@ -68,6 +73,7 @@ class UserPreferencesRepository(private val context: Context) {
         val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
         val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
         val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
+        val SCAN_CORRECTION_LOGGING_ENABLED = booleanPreferencesKey("scan_correction_logging_enabled")
     }
 
     val userPreferences: Flow<UserPreferences> = context.dataStore.data
@@ -112,6 +118,7 @@ class UserPreferencesRepository(private val context: Context) {
                     prefs[Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS].orEmpty(),
                 ),
                 ratingReminderEnabled = prefs[Keys.RATING_REMINDER_ENABLED] ?: false,
+                scanCorrectionLoggingEnabled = prefs[Keys.SCAN_CORRECTION_LOGGING_ENABLED] ?: false,
             )
         }
         .distinctUntilChanged()
@@ -250,6 +257,12 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun updateRatingReminderEnabled(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.RATING_REMINDER_ENABLED] = enabled
+        }
+    }
+
+    suspend fun updateScanCorrectionLoggingEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.SCAN_CORRECTION_LOGGING_ENABLED] = enabled
         }
     }
 
