@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-117-el-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-117-el-q2_laiki_agora.front.png",
+    "back": "scb-117-el-q2_laiki_agora.back.png"
+  },
+  "language": [
+    "el"
+  ],
+  "fields": {
+    "name": "Λαϊκή Αγορά",
+    "roaster": "Ρίζα Καφέ",
+    "origin": "Kenya",
+    "region": null,
+    "farm": null,
+    "variety": "SL28",
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "ντομάτα, μαύρη σταφίδα, καστανή ζάχαρη",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-21",
+    "expiryDate": "2026-12-21",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "greek_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_flat_bottom_pouch",
+    "bagMaterial": "matte olive-green laminate with metallic side fold",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "Greek market-themed front specialty label and rear barcode/QR brew panel",
+    "sizeClass": "250 g flat-bottom pouch",
+    "viewContext": "Greek laiki farmers market stall",
+    "cameraAngle": "handheld front and rear market-counter views",
+    "handling": "held_at_lower_side",
+    "culturalDesignCues": [
+      "laiki farmers market crate and handwritten produce-price notes",
+      "olive-green palette and market-stall illustration",
+      "Greek specialty coffee field names and date labels"
+    ],
+    "localLabelConventions": [
+      "Προέλευση",
+      "Ποικιλία",
+      "Επεξεργασία",
+      "Καθαρό βάρος",
+      "Καβουρδισμένο",
+      "Ανάλωση πριν"
+    ],
+    "riskTags": [
+      "greek_label",
+      "flat_bottom_pouch",
+      "high_barrier_pouch",
+      "degassing_valve",
+      "farmers_market",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "muddy water on table",
+      "dirt specks on pouch",
+      "wrinkled label",
+      "mixed sun and awning shade",
+      "hand occlusion"
+    ],
+    "bagDescription": "Olive high-barrier flat-bottom pouch held at a wet Greek farmers market stall with tomato crate, herbs, handwritten price notes, dirt, and daylight glare."
+  },
+  "notes": "Adds market-clutter and metallic barrier cues while keeping a single coffee package in frame."
+}

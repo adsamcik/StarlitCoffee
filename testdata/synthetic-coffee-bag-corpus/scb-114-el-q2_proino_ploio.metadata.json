@@ -1,0 +1,73 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-114-el-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-114-el-q2_proino_ploio.front.png",
+    "back": "scb-114-el-q2_proino_ploio.back.png"
+  },
+  "language": [
+    "el"
+  ],
+  "fields": {
+    "name": "Πρωινό Πλοίο",
+    "roaster": "Αιγαίο Καβούρδισμα",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "μέλι, λεμόνι, κακάο",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-07",
+    "expiryDate": "2026-12-07",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "greek_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch",
+    "bagMaterial": "matte Aegean-blue laminate",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "Greek front specialty label and rear barcode/QR retail panel",
+    "sizeClass": "250 g whole bean stand-up pouch",
+    "viewContext": "overnight ferry cabin table",
+    "cameraAngle": "front and rear three-quarter phone views from a cabin table",
+    "handling": "free_standing_on_ferry_table",
+    "culturalDesignCues": [
+      "blue-and-white Aegean ferry visual language",
+      "Greek specialty label hierarchy with Greek field names",
+      "generic ferry boarding stub and cabin window setting"
+    ],
+    "localLabelConventions": [
+      "Καθαρό βάρος",
+      "Παρτίδα",
+      "Καβουρδισμένο",
+      "Ανάλωση πριν",
+      "Οδηγίες παρασκευής",
+      "barcode and QR-style blocks"
+    ],
+    "riskTags": [
+      "greek_label",
+      "stand_up_pouch",
+      "degassing_valve",
+      "ferry_cabin",
+      "window_glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "sesame crumbs",
+      "crumpled napkin",
+      "condensation on cup",
+      "window reflections",
+      "slight phone skew"
+    ],
+    "bagDescription": "Greek stand-up pouch on a messy overnight ferry cabin table with one fictional coffee bag, ferry stub, water cup, napkin, crumbs, and dim reflective cabin lighting."
+  },
+  "notes": "All ferry-ticket and compliance-like details are fictional scene context."
+}

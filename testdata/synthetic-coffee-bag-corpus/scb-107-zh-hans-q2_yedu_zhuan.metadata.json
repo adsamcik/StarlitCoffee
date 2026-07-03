@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-107-zh-hans-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-107-zh-hans-q2_yedu_zhuan.front.png",
+    "back": "scb-107-zh-hans-q2_yedu_zhuan.back.png"
+  },
+  "language": [
+    "zh-Hans"
+  ],
+  "fields": {
+    "name": "夜读砖",
+    "roaster": "寝室角落烘焙",
+    "origin": "Peru",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, walnut, smoke",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-08",
+    "expiryDate": "2027-05-09",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "chinese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy black and copper foil laminate",
+    "closure": "tight vacuum-sealed film with crimped seams and no reseal",
+    "labelType": "Simplified Chinese printed vacuum-brick panel and rear barcode/QR panel",
+    "sizeClass": "250 g ground coffee brick",
+    "viewContext": "university dorm laundry counter",
+    "cameraAngle": "close harsh-fluorescent front and rear three-quarter phone views",
+    "handling": "free_standing_hard_brick",
+    "culturalDesignCues": [
+      "dorm laundry counter with generic laundry card",
+      "Chinese rear preparation panel with multiple brewing methods",
+      "compact glossy brick format with black-copper palette"
+    ],
+    "localLabelConventions": [
+      "粉咖啡",
+      "保质期至",
+      "生产商",
+      "地址",
+      "包装材质",
+      "净含量"
+    ],
+    "riskTags": [
+      "simplified_chinese_label",
+      "vacuum_brick",
+      "foil_glare",
+      "dorm_laundry_counter",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "lint",
+      "detergent drips",
+      "damp towel",
+      "dented seam",
+      "fluorescent glare"
+    ],
+    "bagDescription": "Simplified Chinese glossy vacuum brick on a university dorm laundry counter with lint, generic laundry card, damp towel, detergent spots, plastic basket edge, and harsh fluorescent light."
+  },
+  "notes": "Adds a Chinese no-reseal vacuum brick with dorm utility-room clutter and reflective black foil."
+}

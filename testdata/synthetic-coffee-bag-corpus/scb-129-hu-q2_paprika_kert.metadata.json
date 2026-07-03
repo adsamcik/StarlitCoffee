@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-129-hu-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-129-hu-q2_paprika_kert.front.png",
+    "back": "scb-129-hu-q2_paprika_kert.back.png"
+  },
+  "language": [
+    "hu"
+  ],
+  "fields": {
+    "name": "Paprika Kert",
+    "roaster": "Földszag Kávé",
+    "origin": "Kenya",
+    "region": null,
+    "farm": null,
+    "variety": "SL28",
+    "process": "Mosott",
+    "roastLevel": "Világos",
+    "tastingNotes": "ribizli, rebarbara, nádcukor",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-23",
+    "expiryDate": "2026-12-23",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "hungarian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_flat_bottom_pouch",
+    "bagMaterial": "matte paprika-red laminate with metallic side fold",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "Hungarian garden-themed front specialty label and rear barcode/QR brew panel",
+    "sizeClass": "250 g flat-bottom pouch",
+    "viewContext": "paprika garden shed potting bench",
+    "cameraAngle": "handheld front and rear shed-bench views",
+    "handling": "held_at_lower_side",
+    "culturalDesignCues": [
+      "paprika garden shed and drying pepper stems",
+      "plain seed envelopes and planting note in Hungarian",
+      "paprika-red pouch with Hungarian specialty coffee fields"
+    ],
+    "localLabelConventions": [
+      "Származás",
+      "Fajta",
+      "Feldolgozás",
+      "Pörkölés",
+      "Ízjegyek",
+      "Nettó tömeg",
+      "Pörkölve",
+      "Minőségét megőrzi"
+    ],
+    "riskTags": [
+      "hungarian_label",
+      "flat_bottom_pouch",
+      "high_barrier_pouch",
+      "degassing_valve",
+      "garden_shed",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "soil specks",
+      "dry pepper stems",
+      "water rings",
+      "mud on pouch",
+      "mixed shed daylight"
+    ],
+    "bagDescription": "Paprika-red high-barrier flat-bottom pouch held on a Hungarian garden shed bench with soil, pepper stems, seed envelopes, twine, trowel, and daylight glare."
+  },
+  "notes": "Adds Hungarian garden context and metallic barrier cues while keeping one package in frame."
+}

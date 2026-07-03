@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-049-cs-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-049-cs-q2_lesni_klid.front.png",
+    "back": "scb-049-cs-q2_lesni_klid.back.png"
+  },
+  "language": [
+    "cs"
+  ],
+  "fields": {
+    "name": "Lesní Klid",
+    "roaster": "Pražírna U Mostu",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Medium",
+    "tastingNotes": "hazelnut, cocoa, plum",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": "2026-06-12",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "czech_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "tin_tie_kraft_bag",
+    "bagMaterial": "brown kraft paper",
+    "closure": "folded top with bendable tin tie",
+    "labelType": "Czech paper front sticker and rear batch sticker",
+    "sizeClass": "200 g cafe bag",
+    "viewContext": "rainy cottage windowsill",
+    "cameraAngle": "slightly low windowsill-height phone photo",
+    "handling": "free_standing_leaning",
+    "riskTags": [
+      "czech_label",
+      "tin_tie",
+      "rainy_window",
+      "dim_daylight",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "rain glare",
+      "kraft wrinkles",
+      "crooked sticker",
+      "water ring",
+      "crumbs"
+    ],
+    "bagDescription": "Czech kraft tin-tie bag leaning on a rainy cottage windowsill beside an enamel mug and book."
+  },
+  "notes": "Scenario adds wet-window glare and small-cafe kraft bag handling without additional coffee packages."
+}

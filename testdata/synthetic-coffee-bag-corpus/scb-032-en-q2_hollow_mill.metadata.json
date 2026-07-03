@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-032-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-032-en-q2_hollow_mill.front.png",
+    "back": "scb-032-en-q2_hollow_mill.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Hollow Mill",
+    "roaster": "Duskline Roasters",
+    "origin": "Guatemala",
+    "region": "Huehuetenango",
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light-Medium",
+    "tastingNotes": "orange, honey, milk chocolate",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-14",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "stand_up_pouch_doypack",
+    "bagMaterial": "matte navy laminate",
+    "closure": "zipper under heat seal with tear notches",
+    "labelType": "front origin label and rear barcode information panel",
+    "sizeClass": "250 g retail pouch",
+    "viewContext": "kitchen counter with grinder and mug",
+    "cameraAngle": "three-quarter phone-height view",
+    "handling": "free_standing",
+    "riskTags": [
+      "stand_up_pouch",
+      "degassing_valve",
+      "bottom_gusset",
+      "counter_clutter",
+      "two_sided"
+    ],
+    "imperfections": [
+      "mild glare",
+      "coffee grounds",
+      "crooked framing",
+      "gusset wrinkles",
+      "fingerprints"
+    ],
+    "bagDescription": "Common retail doypack with oval bottom gusset, valve, zipper, tear notches, and a bulged upright body."
+  },
+  "notes": "Includes both front valve view and rear information-panel view for side-fusion validation."
+}

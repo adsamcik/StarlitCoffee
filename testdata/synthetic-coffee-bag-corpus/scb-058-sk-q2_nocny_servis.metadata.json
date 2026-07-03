@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-058-sk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-058-sk-q2_nocny_servis.front.png",
+    "back": "scb-058-sk-q2_nocny_servis.back.png"
+  },
+  "language": [
+    "sk"
+  ],
+  "fields": {
+    "name": "Nočný Servis",
+    "roaster": "Dielenská Pražiareň",
+    "origin": "Costa Rica",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Light",
+    "tastingNotes": "grape, cocoa, citrus",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-05-06",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "slovak_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_foil_laminate_pouch",
+    "bagMaterial": "dark graphite foil laminate",
+    "closure": "heat seal, zipper ridge, one-way valve",
+    "labelType": "Slovak front label and rear technical barcode label",
+    "sizeClass": "250 g protective pouch",
+    "viewContext": "bicycle repair bench",
+    "cameraAngle": "close angled garage phone photo",
+    "handling": "pressed_or_held_by_hand",
+    "riskTags": [
+      "slovak_label",
+      "foil_laminate",
+      "reflective_glare",
+      "tool_clutter",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "foil crinkles",
+      "greasy fingerprints",
+      "harsh garage light",
+      "dust",
+      "tool clutter"
+    ],
+    "bagDescription": "Slovak dark graphite foil pouch on a bicycle repair bench with tools, chain oil, receipt, glare, and hand deformation."
+  },
+  "notes": "Back side was regenerated to keep origin/process/weight coherent with the front."
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-060-de-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-060-de-q2_waschtag_blend.front.png",
+    "back": "scb-060-de-q2_waschtag_blend.back.png"
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Waschtag Blend",
+    "roaster": "Rösterei Hinterhof",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "apple, caramel, hazelnut",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-05-06",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "german_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch_doypack",
+    "bagMaterial": "matte mustard-yellow laminate",
+    "closure": "heat seal, tear notches, zipper ridge, one-way valve",
+    "labelType": "German front label and rear batch/barcode label",
+    "sizeClass": "250 g retail pouch",
+    "viewContext": "coin laundromat folding table",
+    "cameraAngle": "fluorescent handheld laundromat phone photo",
+    "handling": "free_standing",
+    "riskTags": [
+      "german_label",
+      "laundromat",
+      "fluorescent_light",
+      "scratched_table",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "table scratches",
+      "coins",
+      "detergent cap",
+      "washer glare",
+      "label wrinkle"
+    ],
+    "bagDescription": "German mustard doypack in a laundromat, with scratched folding table, coins, detergent cap, receipt, and washer reflections."
+  },
+  "notes": "Selected the messier duplicate front from the generated batch."
+}

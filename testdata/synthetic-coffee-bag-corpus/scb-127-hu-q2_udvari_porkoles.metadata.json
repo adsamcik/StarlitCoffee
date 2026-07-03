@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-127-hu-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-127-hu-q2_udvari_porkoles.front.png",
+    "back": "scb-127-hu-q2_udvari_porkoles.back.png"
+  },
+  "language": [
+    "hu"
+  ],
+  "fields": {
+    "name": "Udvari Pörkölés",
+    "roaster": "Körgang Kávé",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Sötét",
+    "tastingNotes": "csokoládé, dió, szilva",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-15",
+    "expiryDate": "2026-12-15",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "hungarian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "kraft_side_gusset_bag",
+    "bagMaterial": "brown kraft paper",
+    "closure": "uneven folded top secured with a visible tin tie",
+    "labelType": "paper Hungarian front sticker and rear batch/storage sticker",
+    "sizeClass": "500 g kraft side-gusset bag",
+    "viewContext": "fictional ruin-bar table after a game",
+    "cameraAngle": "close handheld front and rear inspection shots",
+    "handling": "held_near_folded_top",
+    "culturalDesignCues": [
+      "mismatched tile and scratched-table ruin-bar atmosphere",
+      "generic receipt and dice score sheet",
+      "kraft local-roaster label with Hungarian dates and storage copy"
+    ],
+    "localLabelConventions": [
+      "Tétel",
+      "Pörkölve",
+      "Minőségét megőrzi",
+      "Nettó tömeg",
+      "Tárolja hűvös, száraz helyen",
+      "barcode"
+    ],
+    "riskTags": [
+      "hungarian_label",
+      "kraft_bag",
+      "side_gusset",
+      "tin_tie",
+      "ruin_bar_table",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "peanut shells",
+      "wrinkled kraft paper",
+      "finger pressure creases",
+      "crooked label",
+      "colored low light"
+    ],
+    "bagDescription": "Single 500 g kraft side-gusset bag with tin-tie closure, held on a cluttered fictional ruin-bar table with peanut shells, receipt, dice score sheet, and dim colored light."
+  },
+  "notes": "All bar and receipt details are fictional; fixture validates kraft texture, tin-tie closure, and Hungarian label fields."
+}

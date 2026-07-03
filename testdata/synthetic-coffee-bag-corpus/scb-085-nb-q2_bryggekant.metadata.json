@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-085-nb-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-085-nb-q2_bryggekant.front.png",
+    "back": "scb-085-nb-q2_bryggekant.back.png"
+  },
+  "language": [
+    "nb"
+  ],
+  "fields": {
+    "name": "Bryggekant",
+    "roaster": "Naustkaffe",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Medium",
+    "tastingNotes": "cocoa, almond, plum",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-15",
+    "expiryDate": "2026-12-15",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "nordic_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "tin_tie_side_gusset_bag",
+    "bagMaterial": "brown kraft paper with navy side gussets",
+    "closure": "folded top secured with visible bendable tin tie",
+    "labelType": "Norwegian Bokmål front sticker with handwritten roast-date sticker and rear batch label",
+    "sizeClass": "500 g whole bean cafe-roaster bag",
+    "viewContext": "boathouse worktable",
+    "cameraAngle": "close handheld front and rear inspection views",
+    "handling": "held_near_folded_tin_tie",
+    "riskTags": [
+      "norwegian_label",
+      "kraft_bag",
+      "tin_tie",
+      "side_gusset",
+      "wet_rope",
+      "hand_occlusion",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "wet rope fibers",
+      "salt spots",
+      "paper wrinkles",
+      "damp wood",
+      "dim gray daylight"
+    ],
+    "bagDescription": "Norwegian kraft tin-tie side-gusset bag held on a boathouse worktable with wet rope, work gloves, salt spots, and damp wood."
+  },
+  "notes": "Adds a larger kraft bag in a marine work setting with hand pressure around the closure."
+}

@@ -19,15 +19,32 @@ Example:
 
 ## Current Set
 
-- 29 sidecar metadata files
-- 28 automation-ready fixtures used by the JVM/instrumented corpus loaders
+- 143 sidecar metadata files
+- 142 automation-ready fixtures used by the JVM/instrumented corpus loaders
 - 13 original audited core bags
 - 15 additional reference-inspired / format-variation fixtures
+- 18 packaging-type expansion fixtures with matched front/back photos
+- 6 Czech scenario fixtures with matched front/back photos
+- 6 Slovak scenario fixtures with matched front/back photos
+- 6 German scenario fixtures with matched front/back photos
+- 6 French scenario fixtures with matched front/back photos
+- 6 Spanish scenario fixtures with matched front/back photos
+- 6 Danish scenario fixtures with matched front/back photos
+- 6 mixed Nordic scenario fixtures with matched front/back photos
+- 6 American English scenario fixtures with matched front/back photos
+- 6 Japanese scenario fixtures with matched front/back photos
+- 6 Simplified Chinese scenario fixtures with matched front/back photos
+- 6 Indian scenario fixtures with matched front/back photos
+- 6 Greek scenario fixtures with matched front/back photos
+- 6 Swedish scenario fixtures with matched front/back photos
+- 6 Hungarian scenario fixtures with matched front/back photos
+- 6 mixed Eastern European scenario fixtures with matched front/back photos
+- 6 Ukrainian scenario fixtures with matched front/back photos
 - 1 back-only unlabeled reverse-side control image
 
 The committed set now spans:
 
-- `en`, `de`, `cs`, `it`, `fr`
+- `en`, `en-US`, `en-IN`, `de`, `cs`, `sk`, `it`, `fr`, `es`, `da`, `sv`, `nb`, `fi`, `is`, `fo`, `se`, `ja`, `zh-Hans`, `hi`, `el`, `hu`, `pl`, `ro`, `uk`, `bg`, `sr-Latn`, `hr`
 - one bilingual `en` + `mr` reference fixture
 - one `und` reverse-side control fixture
 

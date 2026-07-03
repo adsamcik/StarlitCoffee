@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-079-da-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-079-da-q2_havblik.front.png",
+    "back": "scb-079-da-q2_havblik.back.png"
+  },
+  "language": [
+    "da"
+  ],
+  "fields": {
+    "name": "Havblik",
+    "roaster": "Færgekaffe",
+    "origin": "Costa Rica",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Light",
+    "tastingNotes": "grape, cocoa, citrus",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-03",
+    "expiryDate": "2026-12-03",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "danish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_stand_up_pouch",
+    "bagMaterial": "matte blue-gray laminate with silver metallized side fold",
+    "closure": "heat-sealed top above zipper with tear notch",
+    "labelType": "Danish front label and rear QR/barcode label",
+    "sizeClass": "250 g whole bean fresh pouch",
+    "viewContext": "rainy ferry passenger table",
+    "cameraAngle": "handheld front and rear ferry-table phone views",
+    "handling": "hand_steadying_side_of_bag",
+    "riskTags": [
+      "danish_label",
+      "degassing_valve",
+      "foil_side_fold",
+      "window_glare",
+      "hand_occlusion",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "water droplets",
+      "crumbs",
+      "wet raincoat",
+      "window glare",
+      "finger creases"
+    ],
+    "bagDescription": "Danish high-barrier pouch held on a ferry passenger table beside a rainy window, damp raincoat, crumbs, and a generic ticket."
+  },
+  "notes": "Adds a transport-context pouch with wet surfaces, window glare, and hand pressure."
+}

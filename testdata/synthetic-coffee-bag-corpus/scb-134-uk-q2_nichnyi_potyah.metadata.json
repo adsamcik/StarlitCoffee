@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-134-uk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-134-uk-q2_nichnyi_potyah.front.png",
+    "back": "scb-134-uk-q2_nichnyi_potyah.back.png"
+  },
+  "language": [
+    "uk"
+  ],
+  "fields": {
+    "name": "Нічний Потяг",
+    "roaster": "Купейна Кава",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Світле",
+    "tastingNotes": "акацієвий мед, персик, чорний чай",
+    "altitude": null,
+    "weight": "18 г",
+    "roastDate": null,
+    "expiryDate": "2027-04-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "eastern_european_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy crimp-sealed laminate",
+    "closure": "heat-sealed crimped edges with tear notches and no reseal",
+    "labelType": "Ukrainian single-dose front label and dense rear brewing panel",
+    "sizeClass": "18 g single-serve sachet",
+    "viewContext": "overnight train berth table",
+    "cameraAngle": "top-down phone snapshots with diagonal skew",
+    "handling": "lying_flat_on_train_table",
+    "culturalDesignCues": [
+      "overnight compartment table with generic train document",
+      "tea stains and sunflower seed shells",
+      "Ukrainian Cyrillic single-dose brew instructions"
+    ],
+    "localLabelConventions": [
+      "разова порція",
+      "Спосіб приготування",
+      "Партія",
+      "Вжити до",
+      "Маса нетто",
+      "recycling icon"
+    ],
+    "riskTags": [
+      "ukrainian_label",
+      "single_serve_sachet",
+      "crimp_seal",
+      "tear_notch",
+      "no_reseal",
+      "train_table",
+      "glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "tea stains",
+      "sunflower-seed shells",
+      "biscuit crumbs",
+      "glossy reflections",
+      "warm berth lamp"
+    ],
+    "bagDescription": "Single glossy 18 g Ukrainian sachet on an overnight train berth table with tea stains, sunflower seed shells, ticket stub, spoon, crumbs, and warm lamp glare."
+  },
+  "notes": "Railway document text is fictional scene context; fixture keeps one sachet only."
+}

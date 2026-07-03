@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-126-hu-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-126-hu-q2_villamos_eso.front.png",
+    "back": "scb-126-hu-q2_villamos_eso.back.png"
+  },
+  "language": [
+    "hu"
+  ],
+  "fields": {
+    "name": "Villamos Eső",
+    "roaster": "Ablakpárkány Pörkölő",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Mosott",
+    "roastLevel": "Közepes",
+    "tastingNotes": "méz, alma, kakaó",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-10",
+    "expiryDate": "2026-12-10",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "hungarian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch",
+    "bagMaterial": "matte deep green laminate",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "Hungarian front specialty label and rear barcode/QR brew panel",
+    "sizeClass": "250 g whole bean stand-up pouch",
+    "viewContext": "rainy tram or apartment-window ledge",
+    "cameraAngle": "close front and rear three-quarter phone views",
+    "handling": "free_standing_on_rainy_ledge",
+    "culturalDesignCues": [
+      "rainy Budapest tram-window visual cue without real transit branding",
+      "generic one-line ticket stub in forint",
+      "Hungarian specialty coffee field labels"
+    ],
+    "localLabelConventions": [
+      "Származás",
+      "Feldolgozás",
+      "Pörkölés",
+      "Ízjegyek",
+      "Nettó tömeg",
+      "Pörkölve",
+      "Minőségét megőrzi"
+    ],
+    "riskTags": [
+      "hungarian_label",
+      "stand_up_pouch",
+      "degassing_valve",
+      "rainy_window",
+      "ticket_stub",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "rain on glass",
+      "pastry crumbs",
+      "crumpled napkin",
+      "pouch wrinkles",
+      "soft gray daylight"
+    ],
+    "bagDescription": "Hungarian stand-up pouch on a rainy tram or apartment-window ledge with pogácsa crumbs, generic ticket stub, keys, cable, and visible valve and zipper ridge."
+  },
+  "notes": "Ticket and transit-like details are fictional and should be treated as scene context only."
+}

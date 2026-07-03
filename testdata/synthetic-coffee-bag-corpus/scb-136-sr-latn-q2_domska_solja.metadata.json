@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-136-sr-latn-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-136-sr-latn-q2_domska_solja.front.png",
+    "back": "scb-136-sr-latn-q2_domska_solja.back.png"
+  },
+  "language": [
+    "sr-Latn"
+  ],
+  "fields": {
+    "name": "Domska Šolja",
+    "roaster": "Vešeraj Kafa",
+    "origin": "Rwanda",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Svetlo",
+    "tastingNotes": "narandža, med, čaj",
+    "altitude": null,
+    "weight": "50 g",
+    "roastDate": "2026-06-27",
+    "expiryDate": "2026-12-27",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "eastern_european_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_sample_pouch",
+    "bagMaterial": "off-white paper-look laminate",
+    "closure": "heat-sealed top and sides with tear notch and no reseal",
+    "labelType": "small Serbian Latin sample sticker with rear batch/storage sticker",
+    "sizeClass": "50 g sample pouch",
+    "viewContext": "student dorm kitchenette desk",
+    "cameraAngle": "close handheld front and rear scale photos",
+    "handling": "held_between_fingers_for_scale",
+    "culturalDesignCues": [
+      "student dorm kitchenette with chores note",
+      "burek crumbs and cafeteria receipt in dinars",
+      "small sample-bag label in Serbian Latin"
+    ],
+    "localLabelConventions": [
+      "Uzorak",
+      "Neto masa",
+      "Serija",
+      "Prženo",
+      "Najbolje upotrebiti do",
+      "Držati kesicu zatvorenu"
+    ],
+    "riskTags": [
+      "serbian_latin_label",
+      "flat_sample_pouch",
+      "tear_notch",
+      "no_reseal",
+      "student_kitchen",
+      "handheld_scale",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "burek crumbs",
+      "sticky note",
+      "finger pressure wrinkles",
+      "gray desk-lamp light",
+      "edge softness"
+    ],
+    "bagDescription": "Tiny 50 g off-white flat sample pouch held over a Serbian dorm kitchenette desk with burek crumbs, receipt, notebook, sticky note, and lamp light."
+  },
+  "notes": "Small-format Serbian Latin sample fixture for scale, hand occlusion, tear-notch, and partial label extraction."
+}

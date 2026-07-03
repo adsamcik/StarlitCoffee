@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-091-en-us-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-091-en-us-q2_bleacher_blend.front.png",
+    "back": "scb-091-en-us-q2_bleacher_blend.back.png"
+  },
+  "language": [
+    "en-US"
+  ],
+  "fields": {
+    "name": "Bleacher Blend",
+    "roaster": "Sandlot Roasters",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Medium Dark",
+    "tastingNotes": "cocoa, almond, plum",
+    "altitude": null,
+    "weight": "1 lb / 454 g",
+    "roastDate": "2026-06-14",
+    "expiryDate": "2026-12-14",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "american_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "tin_tie_side_gusset_bag",
+    "bagMaterial": "brown kraft paper with forest-green side gussets",
+    "closure": "folded top secured with visible bendable tin tie",
+    "labelType": "American English front sticker with roast-date sticker and rear batch label",
+    "sizeClass": "1 lb whole bean kraft bag",
+    "viewContext": "local baseball bleachers",
+    "cameraAngle": "close handheld front and rear inspection views",
+    "handling": "held_near_folded_tin_tie",
+    "riskTags": [
+      "american_english_label",
+      "kraft_bag",
+      "tin_tie",
+      "side_gusset",
+      "bleacher_glare",
+      "hand_occlusion",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "sunflower seed shells",
+      "aluminum glare",
+      "paper wrinkles",
+      "dusty bleachers",
+      "finger pressure"
+    ],
+    "bagDescription": "American English kraft tin-tie coffee bag held on dusty local baseball bleachers with scorecard, pencil, sunflower seed shells, and hard sunlight."
+  },
+  "notes": "Adds a U.S. sports-bleacher handling case without real teams or stadium branding."
+}

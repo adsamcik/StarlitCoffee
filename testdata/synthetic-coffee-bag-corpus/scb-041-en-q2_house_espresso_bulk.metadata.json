@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-041-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-041-en-q2_house_espresso_bulk.front.png",
+    "back": "scb-041-en-q2_house_espresso_bulk.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "House Espresso Bulk",
+    "roaster": "Ledger Mill Coffee Supply",
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium-Dark",
+    "tastingNotes": "dark chocolate, roasted almond, molasses",
+    "altitude": null,
+    "weight": "5 kg",
+    "roastDate": "2026-06-25",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "bulk_coffee_bag",
+    "bagMaterial": "large black wholesale laminate",
+    "closure": "large heat-sealed top",
+    "labelType": "utilitarian front and rear wholesale batch labels",
+    "sizeClass": "2.5-5 kg wholesale",
+    "viewContext": "cafe storeroom floor",
+    "cameraAngle": "low practical warehouse-style phone photo",
+    "handling": "free_standing_slumped",
+    "riskTags": [
+      "bulk_bag",
+      "large_scale",
+      "slumped_body",
+      "dim_storeroom",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dust",
+      "scuffed floor",
+      "creases",
+      "label wrinkles",
+      "harsh shadow"
+    ],
+    "bagDescription": "Large heavy wholesale coffee bag, partly slumped on a storeroom floor near boxes and cafe equipment."
+  },
+  "notes": "Covers multi-kg cafe supply packaging rather than retail display."
+}

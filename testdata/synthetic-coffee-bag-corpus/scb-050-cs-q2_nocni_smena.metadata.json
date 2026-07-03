@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-050-cs-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-050-cs-q2_nocni_smena.front.png",
+    "back": "scb-050-cs-q2_nocni_smena.back.png"
+  },
+  "language": [
+    "cs"
+  ],
+  "fields": {
+    "name": "Noční Směna",
+    "roaster": "Severní Dvůr",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "red currant, tea, caramel",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-05-28",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "czech_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_bottom_pouch",
+    "bagMaterial": "black matte laminate",
+    "closure": "heat seal, tear notch, zipper ridge, one-way valve",
+    "labelType": "Czech specialty front label and rear QR/barcode label",
+    "sizeClass": "250 g specialty bag",
+    "viewContext": "messy home-office desk at night",
+    "cameraAngle": "low desk-level phone photo",
+    "handling": "free_standing",
+    "riskTags": [
+      "czech_label",
+      "dark_matte_bag",
+      "mixed_screen_light",
+      "office_clutter",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "keyboard glow",
+      "lamp glare",
+      "fingerprints",
+      "coffee ring",
+      "soft focus"
+    ],
+    "bagDescription": "Czech black flat-bottom pouch on a late-night desk with keyboard light, sticky notes, and harsh desk-lamp glare."
+  },
+  "notes": "Night office context adds mixed lighting and dark-package glare."
+}

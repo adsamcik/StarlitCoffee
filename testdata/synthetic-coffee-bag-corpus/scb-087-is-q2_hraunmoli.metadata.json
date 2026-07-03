@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-087-is-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-087-is-q2_hraunmoli.front.png",
+    "back": "scb-087-is-q2_hraunmoli.back.png"
+  },
+  "language": [
+    "is"
+  ],
+  "fields": {
+    "name": "Hraunmoli",
+    "roaster": "Hraun Kaffi",
+    "origin": "Peru",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, walnut, smoke",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-09",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "nordic_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy black and lava-red foil laminate",
+    "closure": "tight vacuum-sealed film with crimped seams and no reseal",
+    "labelType": "Icelandic printed vacuum-brick panel and rear barcode/QR panel",
+    "sizeClass": "250 g ground coffee brick",
+    "viewContext": "hostel boot-room shelf",
+    "cameraAngle": "close harsh-utility-light front and rear three-quarter phone views",
+    "handling": "free_standing_hard_brick",
+    "riskTags": [
+      "icelandic_label",
+      "vacuum_brick",
+      "foil_glare",
+      "wet_boot_tray",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "wet grit",
+      "puddle spots",
+      "dented corner",
+      "foil glare",
+      "utility light noise"
+    ],
+    "bagDescription": "Icelandic glossy vacuum brick on a hostel boot-room tray with wet boots, grit, damp clothing, ticket stub, and harsh reflective glare."
+  },
+  "notes": "Adds another no-reseal brick with dark reflective packaging and wet boot-room contamination."
+}

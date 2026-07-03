@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-123-sv-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-123-sv-q2_kolonilott.front.png",
+    "back": "scb-123-sv-q2_kolonilott.back.png"
+  },
+  "language": [
+    "sv"
+  ],
+  "fields": {
+    "name": "Kolonilott",
+    "roaster": "Jordnära Kaffe",
+    "origin": "Kenya",
+    "region": null,
+    "farm": null,
+    "variety": "SL28",
+    "process": "Tvättat",
+    "roastLevel": "Ljus",
+    "tastingNotes": "svarta vinbär, rabarber, råsocker",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-22",
+    "expiryDate": "2026-12-22",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "swedish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_flat_bottom_pouch",
+    "bagMaterial": "matte moss-green laminate with metallic side fold",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "Swedish allotment-themed front specialty label and rear barcode/QR brew panel",
+    "sizeClass": "250 g flat-bottom pouch",
+    "viewContext": "kolonilott garden shed potting bench",
+    "cameraAngle": "handheld front and rear shed-bench views",
+    "handling": "held_at_lower_side",
+    "culturalDesignCues": [
+      "kolonilott garden-shed setting",
+      "handwritten planting note and plain seed envelopes",
+      "muted garden-green pouch with Swedish field labels"
+    ],
+    "localLabelConventions": [
+      "Ursprung",
+      "Varietal",
+      "Process",
+      "Rostning",
+      "Smaknoter",
+      "Nettovikt",
+      "Rostad",
+      "Bäst före"
+    ],
+    "riskTags": [
+      "swedish_label",
+      "flat_bottom_pouch",
+      "high_barrier_pouch",
+      "degassing_valve",
+      "garden_shed",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "soil specks",
+      "wet leaves",
+      "water rings",
+      "mud on pouch",
+      "mixed shed daylight"
+    ],
+    "bagDescription": "Moss-green high-barrier flat-bottom pouch held on a Swedish allotment shed bench with soil, wet leaves, twine, trowel, and plain seed packets."
+  },
+  "notes": "Adds Swedish allotment context and metallic side-barrier cues while keeping one coffee package in frame."
+}

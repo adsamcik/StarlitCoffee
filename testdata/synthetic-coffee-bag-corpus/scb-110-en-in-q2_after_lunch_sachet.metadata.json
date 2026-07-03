@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-110-en-in-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-110-en-in-q2_after_lunch_sachet.front.png",
+    "back": "scb-110-en-in-q2_after_lunch_sachet.back.png"
+  },
+  "language": [
+    "en-IN",
+    "hi"
+  ],
+  "fields": {
+    "name": "After Lunch Sachet",
+    "roaster": "Tiffin Break Coffee",
+    "origin": "Baba Budangiri",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium",
+    "tastingNotes": "jaggery, citrus, cocoa",
+    "altitude": null,
+    "weight": "15 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "indian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy crimp-sealed laminate",
+    "closure": "heat-sealed edges with tear notch and no reseal",
+    "labelType": "front instant/filter coffee sachet label with dense rear manufacturing panel",
+    "sizeClass": "15 g single-serve sachet",
+    "viewContext": "office lunch table with tiffin containers and sticky note clutter",
+    "cameraAngle": "top-down phone snapshot front and rear",
+    "handling": "lying_flat_on_lunch_table",
+    "culturalDesignCues": [
+      "office tiffin lunch setting",
+      "green vegetarian mark",
+      "MRP and batch fields in a small-format Indian retail layout",
+      "English primary label with Hindi secondary roaster text"
+    ],
+    "localLabelConventions": [
+      "Net Qty",
+      "MRP",
+      "Batch",
+      "Best Before",
+      "veg symbol",
+      "packed and manufactured text"
+    ],
+    "riskTags": [
+      "en_in_label",
+      "hindi_secondary_text",
+      "single_serve_sachet",
+      "crimp_seal",
+      "no_reseal",
+      "office_lunch_clutter",
+      "glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "food stains",
+      "crumbs",
+      "glossy glare",
+      "partly cropped spoon",
+      "slight perspective skew"
+    ],
+    "bagDescription": "Single glossy coffee sachet on a messy office lunch table with tiffin containers, stains, crumbs, a sticky note, and harsh overhead glare."
+  },
+  "notes": "Dense manufacturing-style text is fictional; expected extraction should rely on visible product fields and single-sachet geometry."
+}

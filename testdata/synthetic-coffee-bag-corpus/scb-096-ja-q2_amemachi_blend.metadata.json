@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-096-ja-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-096-ja-q2_amemachi_blend.front.png",
+    "back": "scb-096-ja-q2_amemachi_blend.back.png"
+  },
+  "language": [
+    "ja"
+  ],
+  "fields": {
+    "name": "雨待ちブレンド",
+    "roaster": "星路焙煎所",
+    "origin": "Guatemala",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "apple, caramel, almond",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-08",
+    "expiryDate": "2026-12-08",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "japanese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch",
+    "bagMaterial": "muted navy matte laminate",
+    "closure": "heat-sealed top with zipper ridge and tear notches",
+    "labelType": "Japanese front specialty sticker and rear barcode/QR brew label",
+    "sizeClass": "250 g whole bean stand-up pouch",
+    "viewContext": "rainy train-station coin-locker ledge",
+    "cameraAngle": "handheld front and rear three-quarter phone views",
+    "handling": "free_standing_on_wet_station_ledge",
+    "riskTags": [
+      "japanese_label",
+      "stand_up_pouch",
+      "degassing_valve",
+      "rain_drops",
+      "station_lighting",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "water droplets",
+      "wet umbrella",
+      "loose coins",
+      "scuffed sticker",
+      "fluorescent glare"
+    ],
+    "bagDescription": "Japanese navy stand-up pouch on a wet train-station coin-locker ledge with umbrella, ticket, loose coins, rain drops, and fluorescent glare."
+  },
+  "notes": "Adds Japanese label coverage with wet station reflections and visible valve/zipper structure."
+}

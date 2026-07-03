@@ -1,0 +1,78 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-111-en-in-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-111-en-in-q2_morning_mandi.front.png",
+    "back": "scb-111-en-in-q2_morning_mandi.back.png"
+  },
+  "language": [
+    "en-IN",
+    "hi"
+  ],
+  "fields": {
+    "name": "Morning Mandi",
+    "roaster": "Phool Bazaar Coffee",
+    "origin": "Araku Valley",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Light",
+    "tastingNotes": "grape, cocoa, orange peel",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-07-02",
+    "expiryDate": "2027-01-02",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "indian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_stand_up_pouch",
+    "bagMaterial": "orange matte laminate with metallic side fold and inner barrier hints",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and visible valve on front",
+    "labelType": "bilingual front specialty label and rear barcode/QR brew guide label",
+    "sizeClass": "250 g whole bean stand-up pouch",
+    "viewContext": "flower market counter with marigolds, newspaper, and hand-written price slip",
+    "cameraAngle": "handheld flower-stall front and rear close views",
+    "handling": "held_at_lower_corner_on_back_view",
+    "culturalDesignCues": [
+      "marigold flower-market setting",
+      "orange pouch color and floral motif",
+      "English and Devanagari brand lockup",
+      "MRP, packed-on, QR, barcode, and India-origin retail fields"
+    ],
+    "localLabelConventions": [
+      "Packed On",
+      "Best Before",
+      "Net Qty",
+      "MRP",
+      "Country of Origin: India",
+      "Scan for recipes"
+    ],
+    "riskTags": [
+      "en_in_label",
+      "hindi_secondary_text",
+      "high_barrier_pouch",
+      "degassing_valve",
+      "flower_market",
+      "barcode",
+      "qr_code",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "flower petals stuck to wet counter",
+      "hand partly covering lower label",
+      "creased metallic side fold",
+      "surface grime",
+      "uneven daylight and shade"
+    ],
+    "bagDescription": "Orange high-barrier stand-up pouch photographed at a flower market with marigolds, newspaper, handwritten price note, wet counter dirt, and one partially handled coffee bag."
+  },
+  "notes": "Contact and QR-like text on the back is fictional scene detail; product validation should focus on the listed coffee fields."
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-063-de-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-063-de-q2_feierabend.front.png",
+    "back": "scb-063-de-q2_feierabend.back.png"
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Feierabend",
+    "roaster": "Werkbank Kaffee",
+    "origin": "Honduras",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Medium",
+    "tastingNotes": "cherry, cocoa, almond",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-17",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "german_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_bottom_pouch",
+    "bagMaterial": "burnt-orange matte laminate",
+    "closure": "heat seal, tear notch, zipper ridge, one-way valve",
+    "labelType": "German specialty front label and rear QR/barcode label",
+    "sizeClass": "250 g flat-bottom bag",
+    "viewContext": "basement hardware workbench",
+    "cameraAngle": "low harsh-light workbench phone photo",
+    "handling": "free_standing",
+    "riskTags": [
+      "german_label",
+      "flat_bottom",
+      "hardware_clutter",
+      "dust",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "sawdust",
+      "paint chips",
+      "scuffed corner",
+      "glare stripe",
+      "crooked framing"
+    ],
+    "bagDescription": "German burnt-orange flat-bottom pouch on a dusty hardware workbench with screws, measuring tape, paint chips, and harsh basement light."
+  },
+  "notes": "Workbench fixture emphasizes dust and non-kitchen household clutter."
+}

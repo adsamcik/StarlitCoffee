@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-116-el-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-116-el-q2_meta_to_meze.front.png",
+    "back": "scb-116-el-q2_meta_to_meze.back.png"
+  },
+  "language": [
+    "el"
+  ],
+  "fields": {
+    "name": "Μετά το Μεζέ",
+    "roaster": "Μικρό Φλιτζάνι",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Light",
+    "tastingNotes": "ανθόμελο, ροδάκινο, τσάι",
+    "altitude": null,
+    "weight": "18 g",
+    "roastDate": null,
+    "expiryDate": "2027-04-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "greek_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy crimp-sealed laminate",
+    "closure": "heat-sealed crimped edges with tear notches and no reseal",
+    "labelType": "Greek single-dose front label and dense rear instruction panel",
+    "sizeClass": "18 g single-serve sachet",
+    "viewContext": "messy tavern table after meze",
+    "cameraAngle": "top-down phone snapshots with diagonal skew",
+    "handling": "lying_flat_on_tavern_table",
+    "culturalDesignCues": [
+      "tavern tabletop after a shared meze meal",
+      "Greek receipt and placemat clutter",
+      "single-dose coffee wording in Greek"
+    ],
+    "localLabelConventions": [
+      "μονή δόση",
+      "Καθαρό βάρος",
+      "Παρτίδα",
+      "Ανάλωση πριν",
+      "Οδηγίες παρασκευής",
+      "recycling/disposal icon"
+    ],
+    "riskTags": [
+      "greek_label",
+      "single_serve_sachet",
+      "crimp_seal",
+      "tear_notch",
+      "no_reseal",
+      "tavern_table",
+      "glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "oil stains",
+      "bread crumbs",
+      "lemon wedge",
+      "glossy reflections",
+      "partly cropped fork"
+    ],
+    "bagDescription": "Single glossy 18 g sachet lying on a greasy tavern table with bread crumbs, lemon, receipt, water glass, and top-down phone glare."
+  },
+  "notes": "Designed to validate one-packet sachet recognition without multi-sachet ambiguity."
+}

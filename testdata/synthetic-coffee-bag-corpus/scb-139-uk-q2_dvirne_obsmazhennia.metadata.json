@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-139-uk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-139-uk-q2_dvirne_obsmazhennia.front.png",
+    "back": "scb-139-uk-q2_dvirne_obsmazhennia.back.png"
+  },
+  "language": [
+    "uk"
+  ],
+  "fields": {
+    "name": "Двірне Обсмаження",
+    "roaster": "Арка Кава",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Темне",
+    "tastingNotes": "шоколад, горіх, слива",
+    "altitude": null,
+    "weight": "500 г",
+    "roastDate": "2026-06-17",
+    "expiryDate": "2026-12-17",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "ukrainian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "kraft_side_gusset_bag",
+    "bagMaterial": "brown kraft paper",
+    "closure": "uneven folded top secured with a visible tin tie",
+    "labelType": "paper Ukrainian front sticker and rear batch/storage sticker",
+    "sizeClass": "500 g kraft side-gusset bag",
+    "viewContext": "old apartment courtyard chess table",
+    "cameraAngle": "close handheld front and rear inspection shots",
+    "handling": "held_near_folded_top",
+    "culturalDesignCues": [
+      "courtyard chess table with worn pieces",
+      "sunflower-seed shells and generic hryvnia receipt",
+      "kraft local-roaster label with Ukrainian storage copy"
+    ],
+    "localLabelConventions": [
+      "Партія",
+      "Обсмажено",
+      "Вжити до",
+      "Маса нетто",
+      "Зберігати",
+      "barcode"
+    ],
+    "riskTags": [
+      "ukrainian_label",
+      "kraft_bag",
+      "side_gusset",
+      "tin_tie",
+      "courtyard_table",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "sunflower-seed shells",
+      "wrinkled kraft paper",
+      "finger pressure creases",
+      "scratched painted table",
+      "warm uneven light"
+    ],
+    "bagDescription": "Single 500 g kraft side-gusset bag with tin-tie closure, held on an old courtyard chess table with seed shells, receipt, enamel cup, and warm light."
+  },
+  "notes": "Back-panel contact-like text is fictional; expected validation should focus on product fields and packaging geometry."
+}

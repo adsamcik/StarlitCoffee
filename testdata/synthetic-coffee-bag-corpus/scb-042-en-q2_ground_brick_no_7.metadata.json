@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-042-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-042-en-q2_ground_brick_no_7.front.png",
+    "back": "scb-042-en-q2_ground_brick_no_7.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Ground Brick No. 7",
+    "roaster": "Red Tile Coffee",
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "dark cocoa, toasted grain, smoke",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": "2027-03-01",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy foil laminate film",
+    "closure": "vacuum sealed folded film, no reseal",
+    "labelType": "printed brick front and rear barcode/instruction panel",
+    "sizeClass": "250 g vacuum ground coffee",
+    "viewContext": "pantry or supermarket-style kitchen counter",
+    "cameraAngle": "close three-quarter phone view",
+    "handling": "free_standing_hard_brick",
+    "riskTags": [
+      "vacuum_brick",
+      "hard_rectangular_shape",
+      "foil_glare",
+      "no_zipper",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dented corner",
+      "tight film wrinkles",
+      "harsh overhead light",
+      "fingerprints",
+      "reflective glare"
+    ],
+    "bagDescription": "Dense rectangular vacuum-packed ground coffee brick with taut film, folded edges, and no resealable features."
+  },
+  "notes": "Explicit no-zipper control for compressed brick-style packaging."
+}

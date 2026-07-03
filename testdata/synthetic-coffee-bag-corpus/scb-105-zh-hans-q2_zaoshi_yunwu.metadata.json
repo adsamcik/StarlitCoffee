@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-105-zh-hans-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-105-zh-hans-q2_zaoshi_yunwu.front.png",
+    "back": "scb-105-zh-hans-q2_zaoshi_yunwu.back.png"
+  },
+  "language": [
+    "zh-Hans"
+  ],
+  "fields": {
+    "name": "早市云雾",
+    "roaster": "菜市口烘焙",
+    "origin": "Costa Rica",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Light",
+    "tastingNotes": "grape, cocoa, citrus",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-07-02",
+    "expiryDate": "2027-01-02",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "chinese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_valve_pouch",
+    "bagMaterial": "matte jade-green laminate with crinkly silver side fold",
+    "closure": "heat-sealed top above zipper with tear notch",
+    "labelType": "Simplified Chinese valve-focused front label and rear barcode/QR brew label",
+    "sizeClass": "250 g whole bean fresh pouch",
+    "viewContext": "wet market produce prep counter",
+    "cameraAngle": "close handheld front valve inspection and rear phone views",
+    "handling": "hand_pressing_valve_area",
+    "culturalDesignCues": [
+      "market-counter visual context with handwritten price card",
+      "Chinese specialty-coffee label fields in compact grid",
+      "jade-green pouch color and restrained paper label"
+    ],
+    "localLabelConventions": [
+      "处理法",
+      "烘焙度",
+      "风味",
+      "净含量",
+      "二维码"
+    ],
+    "riskTags": [
+      "simplified_chinese_label",
+      "degassing_valve",
+      "foil_side_fold",
+      "wet_market_surface",
+      "hand_occlusion",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "wet vegetable leaves",
+      "stainless glare",
+      "generic scale",
+      "hand pressure wrinkles",
+      "water droplets"
+    ],
+    "bagDescription": "Simplified Chinese jade-green high-barrier pouch on a wet market produce counter with vegetable leaves, generic scale, handwritten price card, and hand pressure around the valve."
+  },
+  "notes": "Adds Chinese valve and high-barrier material coverage in a wet market setting."
+}

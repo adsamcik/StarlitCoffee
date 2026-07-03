@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-067-fr-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-067-fr-q2_averse_douce.front.png",
+    "back": "scb-067-fr-q2_averse_douce.back.png"
+  },
+  "language": [
+    "fr"
+  ],
+  "fields": {
+    "name": "Averse Douce",
+    "roaster": "Torréfaction Parapluie",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Medium",
+    "tastingNotes": "cocoa, almond, plum",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": "2026-05-16",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "french_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "tin_tie_kraft_bag",
+    "bagMaterial": "brown kraft paper",
+    "closure": "folded top with bendable tin tie",
+    "labelType": "French paper front sticker and rear batch sticker",
+    "sizeClass": "200 g cafe bag",
+    "viewContext": "rainy car passenger seat",
+    "cameraAngle": "cramped driver-seat handheld phone photo",
+    "handling": "held_near_folded_top",
+    "riskTags": [
+      "french_label",
+      "tin_tie",
+      "car_interior",
+      "rain_glare",
+      "hand_occlusion",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "wet umbrella",
+      "crumbs",
+      "muddy floor mat",
+      "kraft creases",
+      "window glare"
+    ],
+    "bagDescription": "French kraft tin-tie bag held in a rainy car interior with damp umbrella, ticket, crumbs, napkin, keys, and window glare."
+  },
+  "notes": "Car scenario adds wet, cramped, handheld capture conditions."
+}

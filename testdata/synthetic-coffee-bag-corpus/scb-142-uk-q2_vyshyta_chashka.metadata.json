@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-142-uk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-142-uk-q2_vyshyta_chashka.front.png",
+    "back": "scb-142-uk-q2_vyshyta_chashka.back.png"
+  },
+  "language": [
+    "uk"
+  ],
+  "fields": {
+    "name": "Вишита Чашка",
+    "roaster": "Нитка Кава",
+    "origin": "Rwanda",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Світле",
+    "tastingNotes": "апельсин, мед, чай",
+    "altitude": null,
+    "weight": "50 г",
+    "roastDate": "2026-06-27",
+    "expiryDate": "2026-12-27",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "ukrainian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_sample_pouch",
+    "bagMaterial": "off-white paper-look laminate",
+    "closure": "heat-sealed top and sides with tear notch and no reseal",
+    "labelType": "small Ukrainian sample sticker with rear batch/storage sticker",
+    "sizeClass": "50 g sample pouch",
+    "viewContext": "embroidery workshop table",
+    "cameraAngle": "close handheld front and rear scale photos",
+    "handling": "held_between_fingers_for_scale",
+    "culturalDesignCues": [
+      "embroidery table with thread spools and fabric scraps",
+      "partly visible embroidered cloth pattern",
+      "small sample-bag label in Ukrainian"
+    ],
+    "localLabelConventions": [
+      "Зразок",
+      "Маса нетто",
+      "Партія",
+      "Обсмажено",
+      "Вжити до",
+      "Тримати пакет закритим"
+    ],
+    "riskTags": [
+      "ukrainian_label",
+      "flat_sample_pouch",
+      "tear_notch",
+      "no_reseal",
+      "embroidery_table",
+      "handheld_scale",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "thread lint",
+      "fabric scraps",
+      "finger pressure wrinkles",
+      "biscuit crumbs",
+      "shallow focus"
+    ],
+    "bagDescription": "Tiny 50 g off-white flat sample pouch held over a Ukrainian embroidery table with thread, fabric scraps, tailor chalk, receipt, cup, crumbs, and warm light."
+  },
+  "notes": "Small-format Ukrainian sample fixture for scale, hand occlusion, tear-notch, and partial label extraction."
+}

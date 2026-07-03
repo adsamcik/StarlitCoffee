@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-064-de-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-064-de-q2_beetpause.front.png",
+    "back": "scb-064-de-q2_beetpause.back.png"
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Beetpause",
+    "roaster": "Gartenhof Rösterei",
+    "origin": "Rwanda",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "apricot, honey, black tea",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-07-02",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "german_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "compostable_paper_style_pouch",
+    "bagMaterial": "off-white paper-look matte pouch",
+    "closure": "top heat seal, tear notch, zipper ridge, small valve",
+    "labelType": "restrained German paper label and rear QR/barcode label",
+    "sizeClass": "250 g specialty bag",
+    "viewContext": "garden shed potting bench",
+    "cameraAngle": "dusty daylight shed phone photo",
+    "handling": "free_standing",
+    "riskTags": [
+      "german_label",
+      "paper_texture",
+      "garden_soil",
+      "overexposed_edge",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "soil specks",
+      "muddy gloves",
+      "paper wrinkles",
+      "water stains",
+      "plant debris"
+    ],
+    "bagDescription": "German off-white paper-look pouch on a garden shed potting bench with soil, terracotta pot, seed packets, muddy gloves, and dusty daylight."
+  },
+  "notes": "Compostable-style fixture with garden mess and paper texture."
+}

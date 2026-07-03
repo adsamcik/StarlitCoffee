@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-098-ja-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-098-ja-q2_ikkyokume.front.png",
+    "back": "scb-098-ja-q2_ikkyokume.back.png"
+  },
+  "language": [
+    "ja"
+  ],
+  "fields": {
+    "name": "一曲目",
+    "roaster": "夜音コーヒー",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium",
+    "tastingNotes": "caramel, citrus, cocoa",
+    "altitude": null,
+    "weight": "14 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "japanese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy navy laminated film",
+    "closure": "heat-sealed edges with tear notch and no reseal",
+    "labelType": "Japanese printed front packet and rear preparation/barcode panel",
+    "sizeClass": "14 g single-serve ground coffee packet",
+    "viewContext": "karaoke-room table after use",
+    "cameraAngle": "top-down front and rear phone snapshots",
+    "handling": "lying_flat_on_karaoke_table",
+    "riskTags": [
+      "japanese_label",
+      "single_serve",
+      "heat_sealed_edges",
+      "karaoke_table",
+      "neon_glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "condensation rings",
+      "snack crumbs",
+      "wrinkled request slips",
+      "glossy glare",
+      "neon color cast"
+    ],
+    "bagDescription": "Japanese single-serve packet on a karaoke-room table with request slips, microphone cable, condensation rings, crumbs, and neon reflections."
+  },
+  "notes": "Adds a single-packet Japanese fixture with no-reseal heat-sealed film and low-light glare."
+}

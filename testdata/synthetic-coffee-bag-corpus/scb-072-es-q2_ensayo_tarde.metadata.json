@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-072-es-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-072-es-q2_ensayo_tarde.front.png",
+    "back": "scb-072-es-q2_ensayo_tarde.back.png"
+  },
+  "language": [
+    "es"
+  ],
+  "fields": {
+    "name": "Ensayo Tarde",
+    "roaster": "Tostadores Patio",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "apple, caramel, hazelnut",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-05-06",
+    "expiryDate": "2026-11-06",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "spanish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch",
+    "bagMaterial": "matte indigo black laminate",
+    "closure": "heat seal with tear notches and zipper ridge",
+    "labelType": "Spanish front specialty sticker plus rear barcode and brewing label",
+    "sizeClass": "250 g whole bean retail pouch",
+    "viewContext": "garage-band rehearsal room with cables and dusty equipment",
+    "cameraAngle": "crooked handheld front and rear three-quarter phone views",
+    "handling": "free_standing_on_rehearsal_table",
+    "riskTags": [
+      "spanish_label",
+      "dark_matte_bag",
+      "cable_clutter",
+      "dusty_surface",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dust",
+      "fingerprints",
+      "wrinkled setlist",
+      "uneven warm light",
+      "soft focus"
+    ],
+    "bagDescription": "Spanish matte stand-up pouch on a dusty rehearsal-room table with tangled cables, tape, a pedal, and a wrinkled setlist."
+  },
+  "notes": "Adds a music-practice environment with dark laminate glare and cluttered foreground text."
+}

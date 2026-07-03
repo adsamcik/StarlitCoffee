@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-069-fr-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-069-fr-q2_maree_haute.front.png",
+    "back": "scb-069-fr-q2_maree_haute.back.png"
+  },
+  "language": [
+    "fr"
+  ],
+  "fields": {
+    "name": "Marée Haute",
+    "roaster": "Brûlerie du Rivage",
+    "origin": "Costa Rica",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Light",
+    "tastingNotes": "grape, cocoa, citrus",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-05-06",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "french_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_foil_laminate_pouch",
+    "bagMaterial": "dark teal foil laminate",
+    "closure": "heat seal, zipper ridge, one-way valve",
+    "labelType": "French front label and rear barcode sticker",
+    "sizeClass": "250 g protective pouch",
+    "viewContext": "windy beach picnic blanket",
+    "cameraAngle": "close harsh-sun beach phone photo",
+    "handling": "pressed_or_held_by_hand",
+    "riskTags": [
+      "french_label",
+      "foil_laminate",
+      "sand",
+      "harsh_sun_glare",
+      "hand_occlusion",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "sand on bag",
+      "foil glare",
+      "fingerprints",
+      "towel lint",
+      "wind motion blur"
+    ],
+    "bagDescription": "French dark teal foil pouch on a sandy beach blanket with towel, sunscreen, crumbs, sea glare, and hand pressure near the valve."
+  },
+  "notes": "Beach fixture emphasizes sand, glare, foil crinkles, and outdoor handling."
+}

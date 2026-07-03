@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-077-es-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-077-es-q2_pasillo_azul.front.png",
+    "back": "scb-077-es-q2_pasillo_azul.back.png"
+  },
+  "language": [
+    "es"
+  ],
+  "fields": {
+    "name": "Pasillo Azul",
+    "roaster": "Café Pasillo",
+    "origin": "Peru",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, walnut, smoke",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-08",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "spanish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy navy printed foil laminate",
+    "closure": "tight vacuum-sealed film with crimped seams and no reseal",
+    "labelType": "Spanish printed vacuum-brick panel and rear barcode/QR panel",
+    "sizeClass": "250 g ground coffee brick",
+    "viewContext": "shared hallway kitchenette or laundry sink counter",
+    "cameraAngle": "close harsh-overhead-light front and rear three-quarter phone views",
+    "handling": "free_standing_hard_brick",
+    "riskTags": [
+      "spanish_label",
+      "vacuum_brick",
+      "foil_glare",
+      "wet_sink_counter",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "water spots",
+      "wet sponge",
+      "used cup",
+      "dented corner",
+      "reflective glare"
+    ],
+    "bagDescription": "Spanish glossy vacuum brick on a shared sink counter with sponge, used cup, key tag, water spots, harsh light, and scuffed surfaces."
+  },
+  "notes": "Adds a Spanish vacuum-brick control with no zipper, no valve, and strong reflective film artifacts."
+}

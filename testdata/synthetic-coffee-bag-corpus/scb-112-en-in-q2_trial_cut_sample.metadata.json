@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-112-en-in-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-112-en-in-q2_trial_cut_sample.front.png",
+    "back": "scb-112-en-in-q2_trial_cut_sample.back.png"
+  },
+  "language": [
+    "en-IN",
+    "hi"
+  ],
+  "fields": {
+    "name": "Trial Cut Sample",
+    "roaster": "Stitch Line Coffee",
+    "origin": "Nilgiris",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Light",
+    "tastingNotes": "strawberry, jasmine, lime",
+    "altitude": null,
+    "weight": "50 g",
+    "roastDate": "2026-06-25",
+    "expiryDate": "2026-12-25",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "indian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_sample_pouch",
+    "bagMaterial": "thin cream film with heat-sealed edges",
+    "closure": "flat heat seal with tear notch and no reseal",
+    "labelType": "small bilingual front sticker and plain rear batch sticker",
+    "sizeClass": "50 g sample pouch",
+    "viewContext": "tailoring shop cutting table with measuring tape, chalk, thread, and fabric scraps",
+    "cameraAngle": "close handheld front and back phone photos",
+    "handling": "held_between_fingers_for_scale",
+    "culturalDesignCues": [
+      "neighborhood tailoring table setting",
+      "label styling inspired by measuring marks and garment tags",
+      "Hindi secondary product naming",
+      "small sample-size retail fields with MRP and roast date"
+    ],
+    "localLabelConventions": [
+      "Sample",
+      "Net Qty",
+      "MRP",
+      "Roasted On",
+      "Best Before",
+      "Batch"
+    ],
+    "riskTags": [
+      "en_in_label",
+      "hindi_secondary_text",
+      "flat_sample_pouch",
+      "tear_notch",
+      "no_reseal",
+      "tailoring_table",
+      "handheld_scale",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "fabric lint",
+      "chalk dust",
+      "finger pressure wrinkles",
+      "crooked sticker",
+      "soft focus at one edge"
+    ],
+    "bagDescription": "A tiny 50 g flat sample pouch held over a tailoring table, with thread, chalk dust, fabric scraps, and a crooked bilingual label."
+  },
+  "notes": "Small-package sample intended to test scale, flat-pouch geometry, and partial hand occlusion."
+}

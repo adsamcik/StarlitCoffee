@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-062-de-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-062-de-q2_fensterplatz.front.png",
+    "back": "scb-062-de-q2_fensterplatz.back.png"
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Fensterplatz",
+    "roaster": "Gleis Sieben Rösterei",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "bergamot, tea, honey",
+    "altitude": null,
+    "weight": "75 g",
+    "roastDate": "2026-05-06",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "german_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "mini_sample_bag",
+    "bagMaterial": "matte forest-green laminate",
+    "closure": "tiny top seal, tear notch, zipper ridge, small valve",
+    "labelType": "German mini front label and rear batch/barcode sticker",
+    "sizeClass": "75 g mini sample",
+    "viewContext": "long-distance train compartment table",
+    "cameraAngle": "close handheld train-window phone photo",
+    "handling": "held_between_thumb_and_fingers",
+    "riskTags": [
+      "german_label",
+      "mini_bag",
+      "hand_occlusion",
+      "train_table_clutter",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "crumbs",
+      "used napkin",
+      "tangled earbuds",
+      "squeezed creases",
+      "motion softness"
+    ],
+    "bagDescription": "German 75 g mini pouch held on a messy train table with crumbs, napkin, earbuds, handwritten travel note, and blurred window."
+  },
+  "notes": "Front side was regenerated to avoid real transport logos and to increase real-world messiness."
+}

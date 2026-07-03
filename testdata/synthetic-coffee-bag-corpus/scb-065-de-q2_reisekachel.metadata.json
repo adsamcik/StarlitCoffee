@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-065-de-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-065-de-q2_reisekachel.front.png",
+    "back": "scb-065-de-q2_reisekachel.back.png"
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Reisekachel",
+    "roaster": "Zimmerlicht Kaffee",
+    "origin": "Peru",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, walnut, smoke",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-08",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "german_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy navy and silver foil laminate",
+    "closure": "vacuum sealed folded film, no reseal",
+    "labelType": "German printed brick label and rear barcode/instruction panel",
+    "sizeClass": "250 g ground coffee brick",
+    "viewContext": "hotel bathroom sink counter",
+    "cameraAngle": "close harsh mirror-light phone view",
+    "handling": "free_standing_hard_brick",
+    "riskTags": [
+      "german_label",
+      "vacuum_brick",
+      "bathroom_water_spots",
+      "foil_glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "water droplets",
+      "toothbrush clutter",
+      "reflective glare",
+      "dented corner",
+      "tight film wrinkles"
+    ],
+    "bagDescription": "German glossy vacuum brick on a hotel sink counter with toothbrush, towel, water droplets, room-key sleeve, and harsh mirror lighting."
+  },
+  "notes": "Ground-coffee brick fixture with hotel-bathroom clutter and no resealable geometry."
+}

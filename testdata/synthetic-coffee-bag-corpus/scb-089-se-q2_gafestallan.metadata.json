@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-089-se-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-089-se-q2_gafestallan.front.png",
+    "back": "scb-089-se-q2_gafestallan.back.png"
+  },
+  "language": [
+    "se"
+  ],
+  "fields": {
+    "name": "Gáfestallan",
+    "roaster": "Duottar Gáffe",
+    "origin": "Guatemala",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium Light",
+    "tastingNotes": "apple, caramel, almond",
+    "altitude": null,
+    "weight": "100 g",
+    "roastDate": "2026-06-28",
+    "expiryDate": "2026-12-28",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "nordic_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "mini_stand_up_sample_pouch",
+    "bagMaterial": "matte rust-red laminate with kraft sticker",
+    "closure": "heat-sealed top with zipper ridge and tear notch",
+    "labelType": "Northern Sámi front sample sticker and rear QR/barcode storage label",
+    "sizeClass": "100 g mini whole bean sample pouch",
+    "viewContext": "community radio desk",
+    "cameraAngle": "close desk-height front and rear phone views",
+    "handling": "free_standing_among_audio_clutter",
+    "riskTags": [
+      "northern_sami_label",
+      "mini_pouch",
+      "small_valve",
+      "radio_desk",
+      "cable_clutter",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dusty keyboard edge",
+      "headphone cable",
+      "paper notes",
+      "crumbs",
+      "mixed monitor light"
+    ],
+    "bagDescription": "Northern Sámi rust-red mini stand-up pouch on a community radio desk with headphones, coiled cables, handwritten rundown, sticky note, crumbs, and monitor glow."
+  },
+  "notes": "Uses ISO 639-1 code se for Northern Sámi; regenerated front image avoids real package branding while keeping radio-desk mess."
+}

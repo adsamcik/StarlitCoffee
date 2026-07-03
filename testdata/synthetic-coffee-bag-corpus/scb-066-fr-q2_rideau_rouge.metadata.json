@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-066-fr-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-066-fr-q2_rideau_rouge.front.png",
+    "back": "scb-066-fr-q2_rideau_rouge.back.png"
+  },
+  "language": [
+    "fr"
+  ],
+  "fields": {
+    "name": "Rideau Rouge",
+    "roaster": "Brûlerie des Coulisses",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "apple, caramel, hazelnut",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-05-06",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "french_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch_doypack",
+    "bagMaterial": "matte violet laminate",
+    "closure": "heat seal, tear notches, zipper ridge, one-way valve",
+    "labelType": "French front label and rear batch/barcode label",
+    "sizeClass": "250 g retail pouch",
+    "viewContext": "theater dressing-room table",
+    "cameraAngle": "warm backstage handheld phone photo",
+    "handling": "free_standing",
+    "riskTags": [
+      "french_label",
+      "theater_backstage",
+      "powder_dust",
+      "mirror_glare",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "makeup powder",
+      "lipstick tissue",
+      "tape scraps",
+      "mirror bulb glare",
+      "label wrinkle"
+    ],
+    "bagDescription": "French violet stand-up pouch on a messy theater dressing table with makeup dust, tape scraps, script pages, and mirror-bulb glare."
+  },
+  "notes": "Theater scenario adds warm uneven light and backstage surface clutter."
+}

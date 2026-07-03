@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-052-cs-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-052-cs-q2_letni_sad.front.png",
+    "back": "scb-052-cs-q2_letni_sad.back.png"
+  },
+  "language": [
+    "cs"
+  ],
+  "fields": {
+    "name": "Letní Sad",
+    "roaster": "Malá Hvězda",
+    "origin": "Rwanda",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "apricot, honey, black tea",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-07-02",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "czech_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "compostable_paper_style_pouch",
+    "bagMaterial": "off-white paper-look matte pouch",
+    "closure": "top heat seal, tear notches, zipper ridge",
+    "labelType": "restrained Czech front label and rear QR/barcode label",
+    "sizeClass": "250 g specialty bag",
+    "viewContext": "small apartment balcony table",
+    "cameraAngle": "casual overexposed daylight phone shot",
+    "handling": "free_standing",
+    "riskTags": [
+      "czech_label",
+      "paper_texture",
+      "balcony_daylight",
+      "plant_clutter",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "window overexposure",
+      "paper wrinkles",
+      "crooked label",
+      "water spots",
+      "plant dirt"
+    ],
+    "bagDescription": "Czech off-white paper-look pouch on a small balcony table with herbs, cup, plant mister, and morning overexposure."
+  },
+  "notes": "Paper-texture Czech fixture with balcony daylight and household plant clutter."
+}

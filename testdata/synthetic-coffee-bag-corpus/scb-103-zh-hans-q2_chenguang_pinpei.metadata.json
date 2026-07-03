@@ -1,0 +1,73 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-103-zh-hans-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-103-zh-hans-q2_chenguang_pinpei.front.png",
+    "back": "scb-103-zh-hans-q2_chenguang_pinpei.back.png"
+  },
+  "language": [
+    "zh-Hans"
+  ],
+  "fields": {
+    "name": "晨光拼配",
+    "roaster": "巷口烘焙",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Medium Dark",
+    "tastingNotes": "cocoa, almond, plum",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-14",
+    "expiryDate": "2026-12-14",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "chinese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "tin_tie_side_gusset_bag",
+    "bagMaterial": "brown kraft paper with dark green side gussets",
+    "closure": "folded top secured with visible bendable tin tie",
+    "labelType": "Simplified Chinese paper sticker with roast-date sticker and rear batch label",
+    "sizeClass": "500 g whole bean kraft bag",
+    "viewContext": "old courtyard apartment shared table",
+    "cameraAngle": "close handheld front and rear inspection views",
+    "handling": "held_near_folded_tin_tie",
+    "culturalDesignCues": [
+      "small roaster kraft-bag style with applied paper labels",
+      "courtyard apartment table with enamel mug and bicycle repair clutter",
+      "Chinese batch/date fields instead of Western front-label layout"
+    ],
+    "localLabelConventions": [
+      "精品咖啡",
+      "咖啡豆",
+      "净含量",
+      "烘焙日期",
+      "保质期至"
+    ],
+    "riskTags": [
+      "simplified_chinese_label",
+      "kraft_bag",
+      "tin_tie",
+      "side_gusset",
+      "hand_occlusion",
+      "courtyard_clutter",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "paper wrinkles",
+      "dusty table",
+      "chipped enamel mug",
+      "finger pressure",
+      "warm doorway light"
+    ],
+    "bagDescription": "Simplified Chinese kraft tin-tie side-gusset bag held on an old courtyard apartment table with enamel mug, bicycle pump, keys, dust, and a generic utility bill."
+  },
+  "notes": "Adds a hand-held Chinese kraft-bag case with local household table clutter."
+}

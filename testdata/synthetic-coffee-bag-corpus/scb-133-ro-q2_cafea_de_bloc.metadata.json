@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-133-ro-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-133-ro-q2_cafea_de_bloc.front.png",
+    "back": "scb-133-ro-q2_cafea_de_bloc.back.png"
+  },
+  "language": [
+    "ro"
+  ],
+  "fields": {
+    "name": "Cafea de Bloc",
+    "roaster": "Prăjitoria Scării",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Închisă",
+    "tastingNotes": "ciocolată, nucă, prune",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-16",
+    "expiryDate": "2026-12-16",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "eastern_european_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "kraft_side_gusset_bag",
+    "bagMaterial": "brown kraft paper",
+    "closure": "uneven folded top secured with a visible tin tie",
+    "labelType": "paper Romanian front sticker and rear batch/storage sticker",
+    "sizeClass": "500 g kraft side-gusset bag",
+    "viewContext": "old apartment bloc kitchen table",
+    "cameraAngle": "close handheld front and rear inspection shots",
+    "handling": "held_near_folded_top",
+    "culturalDesignCues": [
+      "bloc-apartment kitchen table with oilcloth and radiator",
+      "sunflower-seed shells and chipped enamel cup",
+      "Romanian local-roaster kraft label with storage copy"
+    ],
+    "localLabelConventions": [
+      "Lot",
+      "Prăjit",
+      "A se consuma de preferință înainte de",
+      "Greutate netă",
+      "A se păstra",
+      "barcode"
+    ],
+    "riskTags": [
+      "romanian_label",
+      "kraft_bag",
+      "side_gusset",
+      "tin_tie",
+      "apartment_kitchen",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "sunflower-seed shells",
+      "wrinkled kraft paper",
+      "finger pressure creases",
+      "oilcloth stains",
+      "warm weak bulb light"
+    ],
+    "bagDescription": "Single 500 g kraft side-gusset bag with tin-tie closure, held on an old apartment kitchen table with sunflower-seed shells, receipt, enamel cup, and dim warm light."
+  },
+  "notes": "Back-panel contact-like text is fictional; expected validation should focus on product fields and packaging geometry."
+}

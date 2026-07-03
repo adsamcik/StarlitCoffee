@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-061-de-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-061-de-q2_morgenmehl.front.png",
+    "back": "scb-061-de-q2_morgenmehl.back.png"
+  },
+  "language": [
+    "de"
+  ],
+  "fields": {
+    "name": "Morgenmehl",
+    "roaster": "Backstuben Kaffee",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Medium-Dark",
+    "tastingNotes": "cocoa, almond, plum",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-12",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "german_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "side_gusset_bag",
+    "bagMaterial": "brown kraft paper laminate",
+    "closure": "crimped top heat seal",
+    "labelType": "German front sticker and rear batch/barcode sticker",
+    "sizeClass": "500 g side-gusset bag",
+    "viewContext": "bakery prep table before opening",
+    "cameraAngle": "warm counter-height phone photo",
+    "handling": "free_standing_leaning",
+    "riskTags": [
+      "german_label",
+      "side_gusset",
+      "flour_dust",
+      "warm_oven_light",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "flour dust",
+      "crumbs",
+      "kraft wrinkles",
+      "label scuff",
+      "uneven shadows"
+    ],
+    "bagDescription": "German kraft side-gusset bag on a bakery prep table with flour, rolling pin, dough scraper, towel, and warm early light."
+  },
+  "notes": "Bakery context adds flour dust and warm non-studio lighting."
+}

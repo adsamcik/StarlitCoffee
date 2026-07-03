@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-137-hr-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-137-hr-q2_podrumska_jaka.front.png",
+    "back": "scb-137-hr-q2_podrumska_jaka.back.png"
+  },
+  "language": [
+    "hr"
+  ],
+  "fields": {
+    "name": "Podrumska Jaka",
+    "roaster": "Stubište Kava",
+    "origin": "Honduras",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Tamno",
+    "tastingNotes": "kakao, tostirani orah, začini",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": "2026-06-20",
+    "expiryDate": "2027-06-20",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "eastern_european_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy dark navy foil laminate",
+    "closure": "compressed heat-sealed vacuum brick with no zipper or reseal",
+    "labelType": "printed Croatian front panel and rear brew/retail panel",
+    "sizeClass": "200 g ground coffee vacuum brick",
+    "viewContext": "old apartment cellar pantry shelf",
+    "cameraAngle": "close front and rear three-quarter phone views",
+    "handling": "free_standing_on_cellar_shelf",
+    "culturalDesignCues": [
+      "cellar pantry shelf with preserve jars",
+      "handwritten Croatian shelf note and local coins",
+      "Croatian brew guidance for džezva or filter"
+    ],
+    "localLabelConventions": [
+      "Mljevena kava",
+      "Neto količina",
+      "Serija",
+      "Prženo",
+      "Najbolje upotrijebiti do",
+      "Upute za pripremu",
+      "recycling icon"
+    ],
+    "riskTags": [
+      "croatian_label",
+      "vacuum_brick",
+      "ground_coffee",
+      "no_reseal",
+      "glossy_reflection",
+      "cellar_pantry",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dented brick corners",
+      "fingerprints on glossy film",
+      "dusty shelf",
+      "jar rings",
+      "harsh bulb glare"
+    ],
+    "bagDescription": "Glossy dark-navy vacuum-packed ground coffee brick on an old apartment cellar shelf with unlabeled jars, paper bag, coins, dusty wood, and harsh bulb glare."
+  },
+  "notes": "All contact-like label text is fictional; fixture validates hard vacuum-brick geometry and Croatian retail fields."
+}

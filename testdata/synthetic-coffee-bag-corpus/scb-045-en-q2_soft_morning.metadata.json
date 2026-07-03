@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-045-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-045-en-q2_soft_morning.front.png",
+    "back": "scb-045-en-q2_soft_morning.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Soft Morning",
+    "roaster": "Fern Yard Coffee",
+    "origin": "Rwanda",
+    "region": "Nyamasheke",
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light-Medium",
+    "tastingNotes": "red currant, honey, tea",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-19",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "compostable_paper_style_pouch",
+    "bagMaterial": "off-white kraft paper-look matte pouch",
+    "closure": "top seal with zipper area",
+    "labelType": "restrained paper front label and rear QR/barcode label",
+    "sizeClass": "250 g specialty bag",
+    "viewContext": "wooden table near plants and window",
+    "cameraAngle": "casual daylight phone shot",
+    "handling": "free_standing",
+    "riskTags": [
+      "paper_texture",
+      "soft_overexposure",
+      "plant_clutter",
+      "modest_qr_label",
+      "two_sided"
+    ],
+    "imperfections": [
+      "paper wrinkles",
+      "crooked label",
+      "window overexposure",
+      "water ring",
+      "scattered beans"
+    ],
+    "bagDescription": "Eco-positioned paper-look pouch with restrained labeling, QR/disposal icon cues, and daylight window glare."
+  },
+  "notes": "Avoids prominent unsupported claims while preserving compostable-looking material cues."
+}

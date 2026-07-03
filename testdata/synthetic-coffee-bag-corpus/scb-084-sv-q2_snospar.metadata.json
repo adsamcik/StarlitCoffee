@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-084-sv-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-084-sv-q2_snospar.front.png",
+    "back": "scb-084-sv-q2_snospar.back.png"
+  },
+  "language": [
+    "sv"
+  ],
+  "fields": {
+    "name": "Snöspår",
+    "roaster": "Fjällrosteriet",
+    "origin": "Kenya",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "blackcurrant, honey, citrus",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-04",
+    "expiryDate": "2026-12-04",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "nordic_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_bottom_pouch",
+    "bagMaterial": "dark charcoal matte laminate",
+    "closure": "heat-sealed top above zipper with tear notch",
+    "labelType": "Swedish front specialty sticker and rear barcode/QR brew label",
+    "sizeClass": "250 g whole bean specialty pouch",
+    "viewContext": "ski-waxing bench in storage room",
+    "cameraAngle": "low front and rear three-quarter phone views",
+    "handling": "free_standing_on_wax_bench",
+    "riskTags": [
+      "swedish_label",
+      "flat_bottom",
+      "degassing_valve",
+      "wax_shavings",
+      "wet_gloves",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "wax shavings",
+      "wet glove marks",
+      "scratched bench",
+      "dusty pouch",
+      "cold uneven light"
+    ],
+    "bagDescription": "Swedish dark flat-bottom pouch on a ski-waxing bench with wax shavings, damp gloves, scraper, training note, and scratched wood."
+  },
+  "notes": "Nordic mixed-language batch; Swedish fixture stresses cold workshop clutter and matte dark packaging."
+}

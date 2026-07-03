@@ -1,0 +1,73 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-102-zh-hans-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-102-zh-hans-q2_chechuang_landiao.front.png",
+    "back": "scb-102-zh-hans-q2_chechuang_landiao.back.png"
+  },
+  "language": [
+    "zh-Hans"
+  ],
+  "fields": {
+    "name": "车窗蓝调",
+    "roaster": "远野烘焙",
+    "origin": "Guatemala",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "apple, caramel, almond",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-08",
+    "expiryDate": "2026-12-08",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "chinese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch",
+    "bagMaterial": "matte deep-blue laminate",
+    "closure": "heat-sealed top with zipper ridge and tear notches",
+    "labelType": "Simplified Chinese front specialty sticker and rear barcode/QR brew label",
+    "sizeClass": "250 g whole bean stand-up pouch",
+    "viewContext": "high-speed rail tray table",
+    "cameraAngle": "seat-level front and rear three-quarter phone views",
+    "handling": "free_standing_on_train_tray",
+    "culturalDesignCues": [
+      "restrained vertical-and-horizontal Chinese label hierarchy",
+      "mainland retail fields for origin, process, roast and net weight",
+      "generic high-speed rail tray-table clutter"
+    ],
+    "localLabelConventions": [
+      "净含量",
+      "批次",
+      "烘焙日期",
+      "保质期至",
+      "二维码",
+      "条形码"
+    ],
+    "riskTags": [
+      "simplified_chinese_label",
+      "stand_up_pouch",
+      "degassing_valve",
+      "train_tray_table",
+      "window_glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "tea stains",
+      "snack crumbs",
+      "generic ticket stub",
+      "window glare",
+      "scuffed label"
+    ],
+    "bagDescription": "Simplified Chinese stand-up pouch on a high-speed rail tray table with generic ticket stub, charging cable, tissue, crumbs, tea stains, and window glare."
+  },
+  "notes": "Adds mainland Chinese label conventions and a transit scene without real railway branding."
+}

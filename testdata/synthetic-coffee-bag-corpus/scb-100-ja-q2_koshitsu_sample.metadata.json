@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-100-ja-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-100-ja-q2_koshitsu_sample.front.png",
+    "back": "scb-100-ja-q2_koshitsu_sample.back.png"
+  },
+  "language": [
+    "ja"
+  ],
+  "fields": {
+    "name": "個室サンプル",
+    "roaster": "余白珈琲",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Light",
+    "tastingNotes": "strawberry, jasmine, lemon",
+    "altitude": null,
+    "weight": "50 g",
+    "roastDate": "2026-06-25",
+    "expiryDate": "2026-12-25",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "japanese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_sample_pouch",
+    "bagMaterial": "thin off-white laminate",
+    "closure": "heat-sealed top and bottom with tear notch and no reseal",
+    "labelType": "Japanese front sample sticker and rear barcode/QR sticker",
+    "sizeClass": "50 g ground coffee sample pouch",
+    "viewContext": "manga-café cubicle desk",
+    "cameraAngle": "slightly top-down front and rear phone snapshots",
+    "handling": "lying_flat_on_cubicle_desk",
+    "riskTags": [
+      "japanese_label",
+      "flat_sample",
+      "heat_seal",
+      "manga_cafe_desk",
+      "monitor_glow",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "desk crumbs",
+      "charging cable",
+      "generic receipt",
+      "screen glow",
+      "thin pouch wrinkles"
+    ],
+    "bagDescription": "Japanese flat sample pouch on a manga-café cubicle desk with generic comic pages, receipt, charging cable, crumbs, tissue wrapper, and monitor glow."
+  },
+  "notes": "Adds a small flat pouch with Japanese text in a cramped cubicle desk setting."
+}

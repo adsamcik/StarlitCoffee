@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-070-fr-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-070-fr-q2_bloc_minuit.front.png",
+    "back": "scb-070-fr-q2_bloc_minuit.back.png"
+  },
+  "language": [
+    "fr"
+  ],
+  "fields": {
+    "name": "Bloc Minuit",
+    "roaster": "Café Couloir",
+    "origin": "Peru",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, walnut, smoke",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-08",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "french_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy navy and silver foil laminate",
+    "closure": "vacuum sealed folded film, no reseal",
+    "labelType": "French printed brick label and rear barcode/instruction panel",
+    "sizeClass": "250 g ground coffee brick",
+    "viewContext": "hostel shared-kitchen sink counter",
+    "cameraAngle": "close harsh-kitchen-light phone view",
+    "handling": "free_standing_hard_brick",
+    "riskTags": [
+      "french_label",
+      "vacuum_brick",
+      "sink_grime",
+      "foil_glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "water droplets",
+      "wet sponge",
+      "used plate",
+      "reflective glare",
+      "dented corner"
+    ],
+    "bagDescription": "French glossy vacuum brick on a hostel shared-kitchen sink counter with sponge, dish soap, used plate, paper towel, and water spots."
+  },
+  "notes": "Shared-kitchen fixture adds grime, water, and harsh overhead reflections."
+}

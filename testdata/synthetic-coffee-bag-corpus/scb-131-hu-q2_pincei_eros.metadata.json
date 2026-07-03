@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-131-hu-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-131-hu-q2_pincei_eros.front.png",
+    "back": "scb-131-hu-q2_pincei_eros.back.png"
+  },
+  "language": [
+    "hu"
+  ],
+  "fields": {
+    "name": "Pincei Erős",
+    "roaster": "Lépcsőház Kávé",
+    "origin": "Honduras",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Sötét",
+    "tastingNotes": "kakaó, pirított dió, fűszer",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": "2026-06-19",
+    "expiryDate": "2027-06-19",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "hungarian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy dark blue foil laminate",
+    "closure": "compressed heat-sealed vacuum brick with no zipper or reseal",
+    "labelType": "printed Hungarian front panel and rear brew/retail panel",
+    "sizeClass": "200 g ground coffee vacuum brick",
+    "viewContext": "old apartment cellar pantry shelf",
+    "cameraAngle": "close front and rear three-quarter phone views",
+    "handling": "free_standing_on_cellar_shelf",
+    "culturalDesignCues": [
+      "old cellar pantry shelf with preserve jars",
+      "handwritten Hungarian shelf note and forint coins",
+      "Hungarian brew guidance for kotyogó or filter"
+    ],
+    "localLabelConventions": [
+      "Őrölt kávé",
+      "Nettó tömeg",
+      "Tétel",
+      "Pörkölve",
+      "Minőségét megőrzi",
+      "Elkészítési javaslat",
+      "Környezetkímélő csomagolás"
+    ],
+    "riskTags": [
+      "hungarian_label",
+      "vacuum_brick",
+      "ground_coffee",
+      "no_reseal",
+      "glossy_reflection",
+      "cellar_pantry",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dented brick corners",
+      "fingerprints on glossy film",
+      "dusty shelf",
+      "jar rings",
+      "harsh bulb glare"
+    ],
+    "bagDescription": "Glossy dark-blue vacuum-packed ground coffee brick on an old cellar pantry shelf with unlabeled jars, paper bag, forint coins, dusty wood, and harsh bulb glare."
+  },
+  "notes": "All contact-like label text is fictional; fixture validates hard vacuum-brick geometry and Hungarian retail fields."
+}

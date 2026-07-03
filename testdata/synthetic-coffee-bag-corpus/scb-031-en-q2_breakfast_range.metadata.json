@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-031-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-031-en-q2_breakfast_range.front.png",
+    "back": "scb-031-en-q2_breakfast_range.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Breakfast Range",
+    "roaster": "Block & Beam Coffee",
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium-Dark",
+    "tastingNotes": "toast, cocoa, mild citrus",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": null,
+    "expiryDate": "2027-02-15",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "pillow_pouch",
+    "bagMaterial": "glossy printed roll film",
+    "closure": "crimped top and bottom heat seals, no reseal",
+    "labelType": "printed mass-market color blocking with back barcode panel",
+    "sizeClass": "200 g supermarket pouch",
+    "viewContext": "grocery counter clutter",
+    "cameraAngle": "casual angled phone snapshot",
+    "handling": "free_standing_lying_slumped",
+    "riskTags": [
+      "pillow_pouch",
+      "glossy_glare",
+      "fin_seal",
+      "motion_blur",
+      "two_sided"
+    ],
+    "imperfections": [
+      "glare",
+      "crinkled film",
+      "rounded inflated body",
+      "uneven fluorescent light",
+      "household clutter"
+    ],
+    "bagDescription": "Soft roll-film pillow pouch with crimped seals, rounded body, and visible reverse fin-seal behavior."
+  },
+  "notes": "Designed to test non-standing supermarket-style pouch geometry and back-seam recognition."
+}

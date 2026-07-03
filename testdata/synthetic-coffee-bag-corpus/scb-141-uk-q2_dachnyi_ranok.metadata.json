@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-141-uk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-141-uk-q2_dachnyi_ranok.front.png",
+    "back": "scb-141-uk-q2_dachnyi_ranok.back.png"
+  },
+  "language": [
+    "uk"
+  ],
+  "fields": {
+    "name": "Дачний Ранок",
+    "roaster": "Ґрунт Кава",
+    "origin": "Kenya",
+    "region": null,
+    "farm": null,
+    "variety": "SL28",
+    "process": "Мита",
+    "roastLevel": "Світле",
+    "tastingNotes": "смородина, ревінь, тростинний цукор",
+    "altitude": null,
+    "weight": "250 г",
+    "roastDate": "2026-06-24",
+    "expiryDate": "2026-12-24",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "ukrainian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_flat_bottom_pouch",
+    "bagMaterial": "matte beetroot-red laminate with metallic side fold",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "Ukrainian dacha-themed front specialty label and rear barcode/QR brew panel",
+    "sizeClass": "250 g flat-bottom pouch",
+    "viewContext": "dacha greenhouse workbench",
+    "cameraAngle": "handheld front and rear greenhouse-bench views",
+    "handling": "held_at_lower_side",
+    "culturalDesignCues": [
+      "dacha greenhouse with tomato leaves and planting note",
+      "plain seed envelopes and rusty garden trowel",
+      "beetroot-red pouch with Ukrainian specialty coffee fields"
+    ],
+    "localLabelConventions": [
+      "Походження",
+      "Сорт",
+      "Обробка",
+      "Обсмаження",
+      "Ноти",
+      "Маса нетто",
+      "Вжити до"
+    ],
+    "riskTags": [
+      "ukrainian_label",
+      "flat_bottom_pouch",
+      "high_barrier_pouch",
+      "degassing_valve",
+      "greenhouse",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "soil specks",
+      "water rings",
+      "tomato leaves",
+      "hand occlusion",
+      "mixed greenhouse daylight"
+    ],
+    "bagDescription": "Beetroot-red high-barrier flat-bottom pouch held on a Ukrainian dacha greenhouse bench with soil, tomato leaves, seed envelopes, twine, trowel, and visible valve."
+  },
+  "notes": "Adds Ukrainian dacha context and metallic barrier cues while keeping one package in frame."
+}

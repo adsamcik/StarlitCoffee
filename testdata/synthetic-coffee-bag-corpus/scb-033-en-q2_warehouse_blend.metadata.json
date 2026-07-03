@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-033-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-033-en-q2_warehouse_blend.front.png",
+    "back": "scb-033-en-q2_warehouse_blend.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Warehouse Blend",
+    "roaster": "Old Quay Coffee",
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium",
+    "tastingNotes": "cocoa, hazelnut, brown sugar",
+    "altitude": null,
+    "weight": "1 kg",
+    "roastDate": "2026-06-03",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "side_gusset_bag",
+    "bagMaterial": "kraft paper laminate",
+    "closure": "crimped and folded top",
+    "labelType": "rectangular front paper label with rear batch sticker",
+    "sizeClass": "1 kg classic bag",
+    "viewContext": "pantry shelf",
+    "cameraAngle": "shelf-level dim phone photo",
+    "handling": "free_standing_leaning",
+    "riskTags": [
+      "side_gusset",
+      "tall_bag",
+      "dim_light",
+      "pantry_clutter",
+      "two_sided"
+    ],
+    "imperfections": [
+      "kraft wrinkles",
+      "crushed top",
+      "dust",
+      "label scuffs",
+      "soft focus"
+    ],
+    "bagDescription": "Tall traditional kraft side-gusset bag with narrow front face, expandable side folds, and folded top."
+  },
+  "notes": "Captures side gusset visibility in both front and back shelf-level views."
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-080-da-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-080-da-q2_nattevagt.front.png",
+    "back": "scb-080-da-q2_nattevagt.back.png"
+  },
+  "language": [
+    "da"
+  ],
+  "fields": {
+    "name": "Nattevagt",
+    "roaster": "Korridor Kaffe",
+    "origin": "Peru",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, walnut, smoke",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-21",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "danish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy burgundy and silver foil laminate",
+    "closure": "tight vacuum-sealed film with crimped seams and no reseal",
+    "labelType": "Danish printed vacuum-brick panel and rear barcode/QR panel",
+    "sizeClass": "250 g ground coffee brick",
+    "viewContext": "late-night staff break-room counter",
+    "cameraAngle": "close harsh-fluorescent front and rear three-quarter phone views",
+    "handling": "free_standing_hard_brick",
+    "riskTags": [
+      "danish_label",
+      "vacuum_brick",
+      "foil_glare",
+      "break_room_grime",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "microwave stains",
+      "vending receipt",
+      "crumbs",
+      "water ring",
+      "dented corner"
+    ],
+    "bagDescription": "Danish glossy vacuum brick on a night-shift break-room counter with microwave grime, receipt, crumbs, water ring, and hard overhead glare."
+  },
+  "notes": "Adds another no-reseal vacuum brick under harsh fluorescent lighting."
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-040-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-040-en-q2_pebble_sample.front.png",
+    "back": "scb-040-en-q2_pebble_sample.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Pebble Sample",
+    "roaster": "Little Signal Coffee",
+    "origin": "Kenya",
+    "region": "Nyeri",
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "blackcurrant, citrus, cane sugar",
+    "altitude": null,
+    "weight": "75 g",
+    "roastDate": "2026-06-17",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "mini_sample_bag",
+    "bagMaterial": "dark green matte laminate",
+    "closure": "small zipper/top seam with tear notch",
+    "labelType": "tiny front label and tiny rear batch sticker",
+    "sizeClass": "50-100 g mini retail sample",
+    "viewContext": "blurred cafe table",
+    "cameraAngle": "close-up shallow-focus phone photo",
+    "handling": "held_between_thumb_and_fingers",
+    "riskTags": [
+      "mini_bag",
+      "hand_occlusion",
+      "shallow_focus",
+      "tiny_label",
+      "two_sided"
+    ],
+    "imperfections": [
+      "squeezed creases",
+      "label occlusion",
+      "tiny glare",
+      "background blur",
+      "off-center framing"
+    ],
+    "bagDescription": "Miniature sample pouch, overbuilt for its size and held between fingers for scale."
+  },
+  "notes": "Hand-held scale cue helps validate miniature bag proportions."
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-071-fr-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-071-fr-q2_siege_hublot.front.png",
+    "back": "scb-071-fr-q2_siege_hublot.back.png"
+  },
+  "language": [
+    "fr"
+  ],
+  "fields": {
+    "name": "Siège Hublot",
+    "roaster": "Escalier Café",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, hazelnut",
+    "altitude": null,
+    "weight": "15 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-16",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "french_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy heat-sealed film packet",
+    "closure": "heat sealed edges with tear notch, no reseal",
+    "labelType": "French sachet front and rear instruction/barcode panel",
+    "sizeClass": "15 g single-serve packet",
+    "viewContext": "airplane tray table",
+    "cameraAngle": "top-down cramped cabin phone snapshot",
+    "handling": "free_standing_single_packet",
+    "riskTags": [
+      "french_label",
+      "single_packet",
+      "tiny_text",
+      "tray_table_clutter",
+      "gloss_glare",
+      "two_sided"
+    ],
+    "imperfections": [
+      "pretzel crumbs",
+      "tray scratches",
+      "crumpled napkin",
+      "gloss glare",
+      "cool cabin light"
+    ],
+    "bagDescription": "One French single-serve sachet on a cramped airplane tray with generic boarding card, crumbs, water cup, napkin, and cabin light."
+  },
+  "notes": "Single-packet French fixture with travel clutter and cramped framing."
+}

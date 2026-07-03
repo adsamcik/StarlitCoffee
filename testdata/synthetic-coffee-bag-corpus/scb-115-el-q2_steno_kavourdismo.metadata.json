@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-115-el-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-115-el-q2_steno_kavourdismo.front.png",
+    "back": "scb-115-el-q2_steno_kavourdismo.back.png"
+  },
+  "language": [
+    "el"
+  ],
+  "fields": {
+    "name": "Στενό Καβούρδισμα",
+    "roaster": "Καφές της Γωνίας",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Dark",
+    "tastingNotes": "σοκολάτα, καρύδι, περγαμόντο",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-12",
+    "expiryDate": "2026-12-12",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "greek_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "kraft_side_gusset_bag",
+    "bagMaterial": "brown kraft paper",
+    "closure": "uneven folded top secured with a visible tin tie",
+    "labelType": "paper Greek label with rear batch/storage sticker",
+    "sizeClass": "500 g kraft side-gusset bag",
+    "viewContext": "old neighborhood kafeneio table",
+    "cameraAngle": "close handheld front and rear inspection shots",
+    "handling": "held_near_folded_top",
+    "culturalDesignCues": [
+      "old kafeneio table with backgammon board and worry beads",
+      "Greek coffeehouse-inspired illustration style",
+      "simple local-roaster kraft label with Greek dates and storage copy"
+    ],
+    "localLabelConventions": [
+      "Παρτίδα",
+      "Καβουρδισμένο",
+      "Ανάλωση πριν",
+      "Καθαρό βάρος",
+      "Αποθήκευση",
+      "barcode"
+    ],
+    "riskTags": [
+      "greek_label",
+      "kraft_bag",
+      "side_gusset",
+      "tin_tie",
+      "kafeneio_table",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "coffee ring stains",
+      "wrinkled kraft paper",
+      "finger pressure creases",
+      "scratched tabletop",
+      "warm dim light"
+    ],
+    "bagDescription": "Single 500 g kraft side-gusset coffee bag with folded tin-tie top, photographed on an old kafeneio table with backgammon, worry beads, coffee rings, and hand occlusion."
+  },
+  "notes": "Contact-like rear text is fictional; fixture validates kraft texture, tin-tie closure, and Greek back-panel fields."
+}

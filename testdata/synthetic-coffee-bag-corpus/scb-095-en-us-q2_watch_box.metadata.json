@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-095-en-us-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-095-en-us-q2_watch_box.front.png",
+    "back": "scb-095-en-us-q2_watch_box.back.png"
+  },
+  "language": [
+    "en-US"
+  ],
+  "fields": {
+    "name": "Watch Box",
+    "roaster": "Storm Cellar Roasters",
+    "origin": "Costa Rica",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Light",
+    "tastingNotes": "grape, cocoa, citrus",
+    "altitude": null,
+    "weight": "12 oz / 340 g",
+    "roastDate": "2026-07-02",
+    "expiryDate": "2027-01-02",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "american_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_valve_pouch",
+    "bagMaterial": "matte storm-gray laminate with crinkly silver side fold",
+    "closure": "heat-sealed top above zipper with tear notch",
+    "labelType": "American English valve-focused front label and rear barcode/QR brew label",
+    "sizeClass": "12 oz whole bean fresh pouch",
+    "viewContext": "basement storm-shelter utility shelf",
+    "cameraAngle": "close handheld front valve inspection and rear phone views",
+    "handling": "hand_pressing_valve_area",
+    "riskTags": [
+      "american_english_label",
+      "degassing_valve",
+      "foil_side_fold",
+      "storm_shelter",
+      "hand_occlusion",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "concrete dust",
+      "flashlight scuffs",
+      "old batteries",
+      "dim utility light",
+      "finger pressure wrinkles"
+    ],
+    "bagDescription": "American English storm-gray high-barrier pouch in a basement storm shelter, with hand pressure around the valve, weather radio, flashlight, batteries, and concrete dust."
+  },
+  "notes": "Adds U.S. storm-shelter context with valve-focused deformation and high-barrier foil cues."
+}

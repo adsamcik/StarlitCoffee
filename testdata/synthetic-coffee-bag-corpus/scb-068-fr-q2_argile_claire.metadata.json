@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-068-fr-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-068-fr-q2_argile_claire.front.png",
+    "back": "scb-068-fr-q2_argile_claire.back.png"
+  },
+  "language": [
+    "fr"
+  ],
+  "fields": {
+    "name": "Argile Claire",
+    "roaster": "Atelier Torréfaction",
+    "origin": "Rwanda",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "apricot, honey, black tea",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-07-02",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "french_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_bottom_pouch",
+    "bagMaterial": "terracotta matte laminate",
+    "closure": "heat seal, tear notch, zipper ridge, one-way valve",
+    "labelType": "French specialty label and rear QR/barcode label",
+    "sizeClass": "250 g flat-bottom bag",
+    "viewContext": "pottery studio workbench",
+    "cameraAngle": "low dusty workshop phone photo",
+    "handling": "free_standing",
+    "riskTags": [
+      "french_label",
+      "flat_bottom",
+      "clay_dust",
+      "workshop_clutter",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "clay dust",
+      "water spots",
+      "smudged label edge",
+      "scuffed corner",
+      "messy tools"
+    ],
+    "bagDescription": "French terracotta flat-bottom pouch on a pottery workbench with clay dust, trimming tools, sponge, damp rag, and chipped tile."
+  },
+  "notes": "Pottery studio context adds dust, smears, and non-kitchen workshop clutter."
+}

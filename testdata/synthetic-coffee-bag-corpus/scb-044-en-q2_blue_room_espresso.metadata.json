@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-044-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-044-en-q2_blue_room_espresso.front.png",
+    "back": "scb-044-en-q2_blue_room_espresso.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Blue Room Espresso",
+    "roaster": "Harbor Moth Coffee",
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "dark chocolate, toffee, smoke",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-10",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "zipper_focused_retail_bag",
+    "bagMaterial": "dark matte laminate with silver foil lining",
+    "closure": "opened resealable zipper with torn heat-seal remnant",
+    "labelType": "front espresso label and rear roast/date sticker",
+    "sizeClass": "250 g used retail pouch",
+    "viewContext": "messy kitchen counter",
+    "cameraAngle": "close top-down handheld phone angle",
+    "handling": "pulled_open_by_hand",
+    "riskTags": [
+      "open_zipper",
+      "visible_inner_foil",
+      "beans_visible",
+      "hand_occlusion",
+      "two_sided"
+    ],
+    "imperfections": [
+      "coffee dust at zipper",
+      "torn top edge",
+      "foil glare",
+      "messy counter",
+      "imperfect focus"
+    ],
+    "bagDescription": "Used retail pouch held open to expose the resealable zipper, inner foil lining, and whole beans."
+  },
+  "notes": "One of the hand-handled fixtures; intended for zipper and opened-bag validation."
+}

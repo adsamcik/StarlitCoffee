@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-135-bg-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-135-bg-q2_pazarna_iskra.front.png",
+    "back": "scb-135-bg-q2_pazarna_iskra.back.png"
+  },
+  "language": [
+    "bg"
+  ],
+  "fields": {
+    "name": "Пазарна Искра",
+    "roaster": "Квартално Кафе",
+    "origin": "Kenya",
+    "region": null,
+    "farm": null,
+    "variety": "SL28",
+    "process": "Washed",
+    "roastLevel": "Светло",
+    "tastingNotes": "касис, ревен, кафява захар",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-24",
+    "expiryDate": "2026-12-24",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "eastern_european_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_flat_bottom_pouch",
+    "bagMaterial": "matte paprika-red laminate with metallic side fold",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "Bulgarian market-themed front specialty label and rear barcode/QR brew panel",
+    "sizeClass": "250 g flat-bottom pouch",
+    "viewContext": "open-air market stall",
+    "cameraAngle": "handheld front and rear market-stall views",
+    "handling": "held_at_lower_side",
+    "culturalDesignCues": [
+      "open-air pepper and herb market stall",
+      "handwritten Cyrillic price note",
+      "Bulgarian Cyrillic specialty coffee fields"
+    ],
+    "localLabelConventions": [
+      "Произход",
+      "Сорт",
+      "Обработка",
+      "Изпичане",
+      "Вкусови нотки",
+      "Нетно количество",
+      "Най-добър до"
+    ],
+    "riskTags": [
+      "bulgarian_label",
+      "flat_bottom_pouch",
+      "high_barrier_pouch",
+      "degassing_valve",
+      "market_stall",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "water droplets",
+      "muddy table",
+      "vegetable leaves",
+      "hand occlusion",
+      "mixed sun and shade"
+    ],
+    "bagDescription": "Paprika-red high-barrier flat-bottom pouch held at a Bulgarian market stall with peppers, herbs, damp cardboard, handwritten price note, and visible valve."
+  },
+  "notes": "Back-panel contact-like and QR/barcode details are fictional; fixture adds Bulgarian Cyrillic and market-stall clutter."
+}

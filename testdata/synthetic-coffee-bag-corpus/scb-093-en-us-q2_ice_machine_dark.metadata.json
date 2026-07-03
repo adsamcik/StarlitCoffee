@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-093-en-us-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-093-en-us-q2_ice_machine_dark.front.png",
+    "back": "scb-093-en-us-q2_ice_machine_dark.back.png"
+  },
+  "language": [
+    "en-US"
+  ],
+  "fields": {
+    "name": "Ice Machine Dark",
+    "roaster": "Exit Ramp Coffee",
+    "origin": "Peru",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, walnut, smoke",
+    "altitude": null,
+    "weight": "10 oz / 283 g",
+    "roastDate": "2026-06-08",
+    "expiryDate": "2027-05-09",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "american_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy teal and silver foil laminate",
+    "closure": "tight vacuum-sealed film with crimped seams and no reseal",
+    "labelType": "American English printed vacuum-brick panel and rear directions/barcode panel",
+    "sizeClass": "10 oz ground coffee brick",
+    "viewContext": "roadside motel ice-machine hallway",
+    "cameraAngle": "close harsh-fluorescent front and rear three-quarter phone views",
+    "handling": "free_standing_hard_brick",
+    "riskTags": [
+      "american_english_label",
+      "vacuum_brick",
+      "foil_glare",
+      "wet_tile",
+      "motel_hallway",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "melting ice drips",
+      "wet keycard",
+      "vending receipt",
+      "dented seam",
+      "fluorescent glare"
+    ],
+    "bagDescription": "American English glossy vacuum brick in a motel ice-machine alcove with wet tile, blank keycard, vending receipt, ice bucket edge, and harsh hallway light."
+  },
+  "notes": "Adds a no-reseal vacuum brick in a U.S. motel-hallway context."
+}

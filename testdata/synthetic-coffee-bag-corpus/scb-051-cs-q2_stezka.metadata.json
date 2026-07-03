@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-051-cs-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-051-cs-q2_stezka.front.png",
+    "back": "scb-051-cs-q2_stezka.back.png"
+  },
+  "language": [
+    "cs"
+  ],
+  "fields": {
+    "name": "Stezka",
+    "roaster": "Pražírna Kometa",
+    "origin": "Guatemala",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "apple, nougat, citrus",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-18",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "czech_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "side_gusset_bag",
+    "bagMaterial": "tan kraft-look laminate",
+    "closure": "crimped top heat seal",
+    "labelType": "Czech front field label and rear batch/barcode sticker",
+    "sizeClass": "500 g outdoor-use bag",
+    "viewContext": "covered campsite shelter table",
+    "cameraAngle": "cold daylight handheld phone photo",
+    "handling": "held_and_squeezed",
+    "riskTags": [
+      "czech_label",
+      "side_gusset",
+      "outdoor_mud",
+      "hand_occlusion",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "mud flecks",
+      "rain spots",
+      "finger deformation",
+      "wet table",
+      "motion blur"
+    ],
+    "bagDescription": "Czech 500 g side-gusset bag squeezed by hand at a wet campsite table near a kettle and map."
+  },
+  "notes": "Hand-held outdoor fixture for side-gusset recognition under mud, rain, and label occlusion."
+}

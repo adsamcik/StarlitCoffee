@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-037-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-037-en-q2_corner_house_blend.front.png",
+    "back": "scb-037-en-q2_corner_house_blend.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Corner House Blend",
+    "roaster": "Maple Door Coffee",
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium",
+    "tastingNotes": "brown sugar, raisin, cocoa",
+    "altitude": null,
+    "weight": "340 g",
+    "roastDate": "2026-06-21",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "tin_tie_kraft_bag",
+    "bagMaterial": "brown kraft paper",
+    "closure": "folded top with bendable tin tie",
+    "labelType": "paper sticker with handwritten roast date and rear batch sticker",
+    "sizeClass": "340 g cafe bag",
+    "viewContext": "warm cafe counter",
+    "cameraAngle": "close handheld phone shot",
+    "handling": "held_near_top",
+    "riskTags": [
+      "tin_tie",
+      "hand_occlusion",
+      "kraft_wrinkles",
+      "handwritten_date",
+      "two_sided"
+    ],
+    "imperfections": [
+      "finger pressure wrinkles",
+      "uneven fold",
+      "warm low light",
+      "partial label occlusion",
+      "crumbs"
+    ],
+    "bagDescription": "Small-cafe kraft bag with uneven folded top, visible tin tie, paper sticker, and natural hand handling."
+  },
+  "notes": "One of the required hand-handled fixtures; validates closure recognition under finger occlusion."
+}

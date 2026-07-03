@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-094-en-us-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-094-en-us-q2_dollar_box_sample.front.png",
+    "back": "scb-094-en-us-q2_dollar_box_sample.back.png"
+  },
+  "language": [
+    "en-US"
+  ],
+  "fields": {
+    "name": "Dollar Box Sample",
+    "roaster": "Porch Table Coffee",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Light",
+    "tastingNotes": "strawberry, jasmine, lemon",
+    "altitude": null,
+    "weight": "2 oz / 57 g",
+    "roastDate": "2026-06-25",
+    "expiryDate": "2026-12-25",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "american_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_sample_pouch",
+    "bagMaterial": "thin off-white laminate",
+    "closure": "heat-sealed top and bottom with tear notch and no reseal",
+    "labelType": "American English front sample sticker and rear barcode/QR sticker",
+    "sizeClass": "2 oz ground coffee sample pouch",
+    "viewContext": "suburban yard-sale folding table",
+    "cameraAngle": "slightly top-down front and rear phone snapshots",
+    "handling": "lying_flat_on_yard_sale_table",
+    "riskTags": [
+      "american_english_label",
+      "flat_sample",
+      "heat_seal",
+      "yard_sale_clutter",
+      "outdoor_sun",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "price stickers",
+      "loose coins",
+      "masking tape",
+      "dry leaves",
+      "uneven sunlight"
+    ],
+    "bagDescription": "American English flat sample pouch on a suburban yard-sale folding table with price stickers, coins, tape, paper clutter, dust, and dry leaves."
+  },
+  "notes": "Adds a U.S. small-format flat pouch in an outdoor yard-sale scene."
+}

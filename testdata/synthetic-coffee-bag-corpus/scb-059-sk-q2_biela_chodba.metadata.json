@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-059-sk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-059-sk-q2_biela_chodba.front.png",
+    "back": "scb-059-sk-q2_biela_chodba.back.png"
+  },
+  "language": [
+    "sk"
+  ],
+  "fields": {
+    "name": "Biela Chodba",
+    "roaster": "Pražiareň Čakáreň",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, hazelnut",
+    "altitude": null,
+    "weight": "15 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-16",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "slovak_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy heat-sealed film packet",
+    "closure": "heat sealed edges with tear notch, no reseal",
+    "labelType": "Slovak sachet front and rear instruction/barcode panel",
+    "sizeClass": "15 g single-serve packet",
+    "viewContext": "clinic waiting-room side table",
+    "cameraAngle": "top-down cool-light phone snapshot",
+    "handling": "free_standing_single_packet",
+    "riskTags": [
+      "slovak_label",
+      "single_packet",
+      "tiny_text",
+      "gloss_glare",
+      "two_sided"
+    ],
+    "imperfections": [
+      "gloss glare",
+      "crinkled sachet",
+      "sterile reflections",
+      "small text blur",
+      "cool fluorescent light"
+    ],
+    "bagDescription": "One Slovak single-serve sachet on a clinic waiting-room table with sanitizer, appointment card, pen, water cup, and fluorescent glare."
+  },
+  "notes": "Single-packet Slovak fixture in a clinic waiting-room scene."
+}

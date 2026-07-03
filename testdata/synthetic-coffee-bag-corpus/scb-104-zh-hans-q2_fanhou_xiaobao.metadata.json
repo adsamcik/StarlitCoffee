@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-104-zh-hans-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-104-zh-hans-q2_fanhou_xiaobao.front.png",
+    "back": "scb-104-zh-hans-q2_fanhou_xiaobao.back.png"
+  },
+  "language": [
+    "zh-Hans"
+  ],
+  "fields": {
+    "name": "饭后小包",
+    "roaster": "小料台咖啡",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium",
+    "tastingNotes": "caramel, citrus, cocoa",
+    "altitude": null,
+    "weight": "15 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "chinese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy dark green laminated film",
+    "closure": "heat-sealed edges with tear notch and no reseal",
+    "labelType": "Simplified Chinese printed front packet and rear preparation/barcode panel",
+    "sizeClass": "15 g single-serve drip coffee packet",
+    "viewContext": "hotpot restaurant table after meal",
+    "cameraAngle": "top-down front and rear phone snapshots",
+    "handling": "lying_flat_on_hotpot_table",
+    "culturalDesignCues": [
+      "single-serve packet styled like a table-side add-on product",
+      "hotpot-table clutter with sauce bowls and chopsticks sleeve",
+      "Chinese preparation and storage panel on rear"
+    ],
+    "localLabelConventions": [
+      "单杯挂耳咖啡",
+      "撕口",
+      "冲泡方法",
+      "保质期至",
+      "净含量"
+    ],
+    "riskTags": [
+      "simplified_chinese_label",
+      "single_serve",
+      "heat_sealed_edges",
+      "hotpot_table",
+      "oil_smears",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "chili oil spots",
+      "sauce smears",
+      "crumpled napkin",
+      "receipt clutter",
+      "glossy glare"
+    ],
+    "bagDescription": "Simplified Chinese single-serve packet on a hotpot table after a meal with chili oil, sauce bowl, chopsticks sleeve, receipt, napkin, and warm overhead glare."
+  },
+  "notes": "Adds a single-packet Chinese fixture with food-table mess and rear brewing directions."
+}

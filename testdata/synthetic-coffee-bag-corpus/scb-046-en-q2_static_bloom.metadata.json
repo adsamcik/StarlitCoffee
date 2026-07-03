@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-046-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-046-en-q2_static_bloom.front.png",
+    "back": "scb-046-en-q2_static_bloom.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Static Bloom",
+    "roaster": "Iron Finch Roasters",
+    "origin": "Costa Rica",
+    "region": "Tarrazu",
+    "farm": null,
+    "variety": null,
+    "process": "Anaerobic",
+    "roastLevel": "Light",
+    "tastingNotes": "grape, cacao, citrus",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-23",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "high_barrier_foil_laminate_pouch",
+    "bagMaterial": "black metallized high-barrier laminate with silver lining",
+    "closure": "partly open top with protective foil lining",
+    "labelType": "front technical label and rear batch/barcode sticker",
+    "sizeClass": "250 g protective retail pouch",
+    "viewContext": "kitchen counter beside scoop and grinder",
+    "cameraAngle": "angled close-up phone photo",
+    "handling": "free_standing_lying_open",
+    "riskTags": [
+      "foil_laminate",
+      "silver_inner_lining",
+      "reflective_glare",
+      "crinkles",
+      "two_sided"
+    ],
+    "imperfections": [
+      "strong glare",
+      "foil crinkles",
+      "fingerprints",
+      "coffee dust",
+      "uncontrolled highlights"
+    ],
+    "bagDescription": "Protective high-barrier pouch with metallized side folds, visible silver inner lining, and crinkly reflective edges."
+  },
+  "notes": "Useful for glare, foil, and inner-lining validation."
+}

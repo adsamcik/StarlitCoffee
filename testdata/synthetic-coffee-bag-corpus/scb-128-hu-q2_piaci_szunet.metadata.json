@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-128-hu-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-128-hu-q2_piaci_szunet.front.png",
+    "back": "scb-128-hu-q2_piaci_szunet.back.png"
+  },
+  "language": [
+    "hu"
+  ],
+  "fields": {
+    "name": "Piaci Szünet",
+    "roaster": "Csarnok Kávé",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Világos",
+    "tastingNotes": "akácméz, barack, fekete tea",
+    "altitude": null,
+    "weight": "18 g",
+    "roastDate": null,
+    "expiryDate": "2027-04-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "hungarian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy crimp-sealed laminate",
+    "closure": "heat-sealed crimped edges with tear notches and no reseal",
+    "labelType": "Hungarian single-dose front label and dense rear brewing panel",
+    "sizeClass": "18 g single-serve sachet",
+    "viewContext": "messy market-hall lunch counter",
+    "cameraAngle": "top-down phone snapshots with diagonal skew",
+    "handling": "lying_flat_on_market_counter",
+    "culturalDesignCues": [
+      "market-hall lunch counter with paprika dust",
+      "generic forint receipt and metal spoon",
+      "single-dose Hungarian brew instructions"
+    ],
+    "localLabelConventions": [
+      "egyszeri adag",
+      "Elkészítési javaslat",
+      "Tétel",
+      "Minőségét megőrzi",
+      "Nettó tömeg",
+      "Kérjük, vigyázzon a környezetre"
+    ],
+    "riskTags": [
+      "hungarian_label",
+      "single_serve_sachet",
+      "crimp_seal",
+      "tear_notch",
+      "no_reseal",
+      "market_counter",
+      "glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "paprika dust",
+      "bread crumbs",
+      "glossy reflections",
+      "partly cropped spoon",
+      "warm overhead light"
+    ],
+    "bagDescription": "Single glossy 18 g Hungarian sachet on a messy market-hall counter with paprika dust, bread crumbs, receipt, spoon, and top-down glare."
+  },
+  "notes": "Back-panel contact-like and barcode-like details are fictional; fixture keeps one sachet only."
+}

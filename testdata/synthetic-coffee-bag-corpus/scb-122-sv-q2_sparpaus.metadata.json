@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-122-sv-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-122-sv-q2_sparpaus.front.png",
+    "back": "scb-122-sv-q2_sparpaus.back.png"
+  },
+  "language": [
+    "sv"
+  ],
+  "fields": {
+    "name": "Spårpaus",
+    "roaster": "Fjällbrygg",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Ljus",
+    "tastingNotes": "blåbär, honung, svart te",
+    "altitude": null,
+    "weight": "18 g",
+    "roastDate": "2026-06-09",
+    "expiryDate": "2027-04-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "swedish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy crimp-sealed laminate",
+    "closure": "heat-sealed crimped edges with tear notches and no reseal",
+    "labelType": "Swedish single-dose front label and dense rear brewing panel",
+    "sizeClass": "18 g single-serve sachet",
+    "viewContext": "ski cabin waxing bench",
+    "cameraAngle": "top-down phone snapshots with diagonal skew",
+    "handling": "lying_flat_on_waxing_bench",
+    "culturalDesignCues": [
+      "ski-cabin break setting with snowmelt and mittens",
+      "generic trail-map fragment with no real place branding",
+      "single-dose Swedish brew instructions"
+    ],
+    "localLabelConventions": [
+      "engångsdos",
+      "Brygganvisning",
+      "Batch",
+      "Rostad",
+      "Bäst före",
+      "Nettovikt",
+      "Förpackning återvinns"
+    ],
+    "riskTags": [
+      "swedish_label",
+      "single_serve_sachet",
+      "crimp_seal",
+      "tear_notch",
+      "no_reseal",
+      "ski_cabin",
+      "glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "snowmelt droplets",
+      "wax shavings",
+      "cracker crumbs",
+      "glossy reflections",
+      "wet mitten nearby"
+    ],
+    "bagDescription": "Single glossy 18 g Swedish sachet on a messy ski-cabin waxing bench with snowmelt, wax shavings, cracker crumbs, and a generic trail-map fragment."
+  },
+  "notes": "A prior generated back image was discarded due to real background branding; this fixture uses the replacement back image."
+}

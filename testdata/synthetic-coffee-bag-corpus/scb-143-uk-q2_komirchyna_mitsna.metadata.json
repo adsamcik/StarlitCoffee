@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-143-uk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-143-uk-q2_komirchyna_mitsna.front.png",
+    "back": "scb-143-uk-q2_komirchyna_mitsna.back.png"
+  },
+  "language": [
+    "uk"
+  ],
+  "fields": {
+    "name": "Комірчина Міцна",
+    "roaster": "Сходи Кава",
+    "origin": "Honduras",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Темне",
+    "tastingNotes": "какао, підсмажений горіх, спеції",
+    "altitude": null,
+    "weight": "200 г",
+    "roastDate": "2026-06-20",
+    "expiryDate": "2027-06-20",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "ukrainian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy dark blue foil laminate",
+    "closure": "compressed heat-sealed vacuum brick with no zipper or reseal",
+    "labelType": "printed Ukrainian front panel and rear brew/retail panel",
+    "sizeClass": "200 g ground coffee vacuum brick",
+    "viewContext": "old apartment pantry shelf",
+    "cameraAngle": "close front and rear three-quarter phone views",
+    "handling": "free_standing_on_pantry_shelf",
+    "culturalDesignCues": [
+      "old apartment pantry shelf with preserve jars",
+      "handwritten Ukrainian shelf note and loose coins",
+      "Ukrainian brew guidance for cezve or filter"
+    ],
+    "localLabelConventions": [
+      "мелена кава",
+      "Маса нетто",
+      "Партія",
+      "Обсмажено",
+      "Вжити до",
+      "Рекомендації",
+      "recycling icon"
+    ],
+    "riskTags": [
+      "ukrainian_label",
+      "vacuum_brick",
+      "ground_coffee",
+      "no_reseal",
+      "glossy_reflection",
+      "pantry_shelf",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dented brick corners",
+      "fingerprints on glossy film",
+      "dusty shelf",
+      "jar rings",
+      "harsh bulb glare"
+    ],
+    "bagDescription": "Glossy dark-blue vacuum-packed ground coffee brick on an old apartment pantry shelf with unlabeled jars, paper bag, coins, dusty wood, and harsh bulb glare."
+  },
+  "notes": "All contact-like label text is fictional; fixture validates hard vacuum-brick geometry and Ukrainian retail fields."
+}

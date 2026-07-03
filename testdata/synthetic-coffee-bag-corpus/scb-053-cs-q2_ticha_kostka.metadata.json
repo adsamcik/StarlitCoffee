@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-053-cs-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-053-cs-q2_ticha_kostka.front.png",
+    "back": "scb-053-cs-q2_ticha_kostka.back.png"
+  },
+  "language": [
+    "cs"
+  ],
+  "fields": {
+    "name": "Tichá Kostka",
+    "roaster": "Pražírna Nádraží",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, hazelnut, smoky",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-08",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "czech_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy red and silver foil laminate",
+    "closure": "vacuum sealed folded film, no reseal",
+    "labelType": "Czech printed brick label and rear barcode/instruction panel",
+    "sizeClass": "250 g ground coffee brick",
+    "viewContext": "train-station waiting-room snack table",
+    "cameraAngle": "close harsh-overhead phone view",
+    "handling": "free_standing_hard_brick",
+    "riskTags": [
+      "czech_label",
+      "vacuum_brick",
+      "foil_glare",
+      "train_station_clutter",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "reflective glare",
+      "dented corner",
+      "tight film wrinkles",
+      "ticket clutter",
+      "motion softness"
+    ],
+    "bagDescription": "Czech glossy vacuum brick of ground coffee on a train-station table with ticket, timetable, cup, and harsh fluorescent glare."
+  },
+  "notes": "Single-package Czech vacuum-brick fixture; process is not visible on the label."
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-056-sk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-056-sk-q2_sobota_rano.front.png",
+    "back": "scb-056-sk-q2_sobota_rano.back.png"
+  },
+  "language": [
+    "sk"
+  ],
+  "fields": {
+    "name": "Sobota Ráno",
+    "roaster": "Trhová Pražiareň",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Light",
+    "tastingNotes": "strawberry, cocoa, jasmine",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-22",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "slovak_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_bottom_pouch",
+    "bagMaterial": "white matte laminate",
+    "closure": "heat seal, tear notch, zipper ridge, one-way valve",
+    "labelType": "Slovak specialty label and rear QR/barcode label",
+    "sizeClass": "250 g specialty bag",
+    "viewContext": "outdoor farmers market crate table",
+    "cameraAngle": "standing-height market phone photo",
+    "handling": "free_standing",
+    "riskTags": [
+      "slovak_label",
+      "flat_bottom",
+      "outdoor_market_light",
+      "vegetable_dirt",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dusty crate",
+      "vegetable dirt",
+      "label wrinkle",
+      "sun patches",
+      "crooked framing"
+    ],
+    "bagDescription": "Slovak white flat-bottom pouch on an outdoor market crate with carrots, canvas bag, scale ticket, dust, and uneven sunlight."
+  },
+  "notes": "Market context adds outdoor dirt and mixed sun/shade."
+}

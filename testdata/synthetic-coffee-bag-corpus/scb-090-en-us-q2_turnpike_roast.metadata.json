@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-090-en-us-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-090-en-us-q2_turnpike_roast.front.png",
+    "back": "scb-090-en-us-q2_turnpike_roast.back.png"
+  },
+  "language": [
+    "en-US"
+  ],
+  "fields": {
+    "name": "Turnpike Roast",
+    "roaster": "Mile Marker Roasting",
+    "origin": "Guatemala",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "apple, caramel, almond",
+    "altitude": null,
+    "weight": "12 oz / 340 g",
+    "roastDate": "2026-06-08",
+    "expiryDate": "2026-12-08",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "american_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch",
+    "bagMaterial": "matte faded red laminate",
+    "closure": "heat-sealed top with zipper ridge and tear notches",
+    "labelType": "American English front specialty label and rear barcode/QR brew label",
+    "sizeClass": "12 oz whole bean retail pouch",
+    "viewContext": "truck-stop car dashboard",
+    "cameraAngle": "passenger-seat front and rear three-quarter phone views",
+    "handling": "free_standing_wedged_near_cupholder",
+    "riskTags": [
+      "american_english_label",
+      "stand_up_pouch",
+      "degassing_valve",
+      "dashboard_glare",
+      "fuel_receipt",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "windshield glare",
+      "dashboard dust",
+      "crumbs",
+      "scuffed label",
+      "hard midday sun"
+    ],
+    "bagDescription": "American English stand-up pouch on a dusty truck-stop dashboard with fuel receipt, toll ticket, crumbs, windshield glare, and cupholder clutter."
+  },
+  "notes": "Adds U.S. road-trip context with Net Wt ounce labeling and harsh windshield lighting."
+}

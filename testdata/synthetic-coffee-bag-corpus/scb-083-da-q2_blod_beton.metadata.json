@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-083-da-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-083-da-q2_blod_beton.front.png",
+    "back": "scb-083-da-q2_blod_beton.back.png"
+  },
+  "language": [
+    "da"
+  ],
+  "fields": {
+    "name": "Blød Beton",
+    "roaster": "Kælder Rist",
+    "origin": "Rwanda",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium Light",
+    "tastingNotes": "apricot, honey, black tea",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-07-02",
+    "expiryDate": "2027-01-02",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "danish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "compostable_paper_style_stand_up_pouch",
+    "bagMaterial": "off-white fiber-textured matte paper-look laminate",
+    "closure": "heat-sealed top with zipper, tear notches and small valve",
+    "labelType": "restrained Danish front label and rear QR/barcode brew panel",
+    "sizeClass": "250 g whole bean paper-look pouch",
+    "viewContext": "basement laundry room folding counter",
+    "cameraAngle": "standing-height front and rear three-quarter phone views",
+    "handling": "free_standing_slightly_slumped",
+    "riskTags": [
+      "danish_label",
+      "paper_texture",
+      "stand_up_pouch",
+      "laundry_room_grime",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "lint",
+      "detergent drips",
+      "damp floor",
+      "creased zipper area",
+      "harsh utility light"
+    ],
+    "bagDescription": "Danish off-white paper-look stand-up pouch in a basement laundry room with lint, detergent drips, damp concrete, sock, and peeling wall paint."
+  },
+  "notes": "Adds a paper-texture pouch with basement utility-light overexposure and household grime."
+}

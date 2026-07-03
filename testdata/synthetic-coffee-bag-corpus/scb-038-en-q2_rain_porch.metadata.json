@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-038-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-038-en-q2_rain_porch.front.png",
+    "back": "scb-038-en-q2_rain_porch.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Rain Porch",
+    "roaster": "North Window Coffee",
+    "origin": "Peru",
+    "region": "Cajamarca",
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light-Medium",
+    "tastingNotes": "pear, cocoa nib, floral",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-11",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "roll_top_bag",
+    "bagMaterial": "paper-look laminate",
+    "closure": "rolled top secured with clip",
+    "labelType": "small front label and rear batch sticker",
+    "sizeClass": "250 g reusable craft bag",
+    "viewContext": "messy brewing counter",
+    "cameraAngle": "top-down side hybrid phone view",
+    "handling": "free_standing_rolled_closed",
+    "riskTags": [
+      "roll_top",
+      "clip_closure",
+      "motion_blur",
+      "brewing_clutter",
+      "two_sided"
+    ],
+    "imperfections": [
+      "uneven rolled top",
+      "clip indentation",
+      "coffee dust",
+      "water spots",
+      "label scuff"
+    ],
+    "bagDescription": "Opened reusable paper-look coffee bag rolled down several times and clipped, with front and back label views."
+  },
+  "notes": "Tests recognition of non-factory roll-top closure and used-bag deformation."
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-078-da-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-078-da-q2_bryg_i_skur.front.png",
+    "back": "scb-078-da-q2_bryg_i_skur.back.png"
+  },
+  "language": [
+    "da"
+  ],
+  "fields": {
+    "name": "Bryg i Skur",
+    "roaster": "Skur Risteri",
+    "origin": "Guatemala",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "apple, caramel, almond",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-12",
+    "expiryDate": "2026-12-12",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "danish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "side_gusset_bag",
+    "bagMaterial": "kraft paper with black matte side gussets",
+    "closure": "folded crimped top with adhesive strip",
+    "labelType": "Danish front sticker plus rear barcode and storage sticker",
+    "sizeClass": "500 g whole bean side-gusset bag",
+    "viewContext": "bicycle repair shed workbench",
+    "cameraAngle": "low bench-level front and rear three-quarter phone views",
+    "handling": "free_standing_leaning_against_toolbox",
+    "riskTags": [
+      "danish_label",
+      "side_gusset",
+      "kraft_bag",
+      "bike_grease",
+      "tool_clutter",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "grease smudges",
+      "dusty workbench",
+      "crushed folded top",
+      "dirty label",
+      "dim warm light"
+    ],
+    "bagDescription": "Danish side-gusset kraft coffee bag on a bicycle repair bench with chain grease, tools, patch paper, dust, and scuffed surfaces."
+  },
+  "notes": "Adds a workshop contamination case with visible side folds and folded top closure."
+}

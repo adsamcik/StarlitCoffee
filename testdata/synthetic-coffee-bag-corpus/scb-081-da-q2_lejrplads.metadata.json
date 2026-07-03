@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-081-da-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-081-da-q2_lejrplads.front.png",
+    "back": "scb-081-da-q2_lejrplads.back.png"
+  },
+  "language": [
+    "da"
+  ],
+  "fields": {
+    "name": "Lejrplads",
+    "roaster": "Bål Risteri",
+    "origin": "Honduras",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Medium",
+    "tastingNotes": "pear, brown sugar, hazelnut",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": "2026-06-18",
+    "expiryDate": "2026-12-18",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "danish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "roll_top_pouch",
+    "bagMaterial": "tan paper-look exterior",
+    "closure": "opened top rolled down and secured with metal clip",
+    "labelType": "Danish small front label and rear brew/storage sticker",
+    "sizeClass": "200 g campsite whole bean pouch",
+    "viewContext": "muddy campsite picnic table after rain",
+    "cameraAngle": "top-down side-hybrid front and rear phone views",
+    "handling": "hand_adjusting_metal_clip",
+    "riskTags": [
+      "danish_label",
+      "roll_top",
+      "clip_closure",
+      "muddy_table",
+      "hand_occlusion",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "mud specks",
+      "wet wood",
+      "pine needles",
+      "motion blur",
+      "paper wrinkles"
+    ],
+    "bagDescription": "Danish roll-top pouch on a damp campsite picnic table with map, mug, thermos, mud, crumbs, and a hand adjusting the clip."
+  },
+  "notes": "Adds a reusable roll-top closure in an outdoor wet-weather scene."
+}

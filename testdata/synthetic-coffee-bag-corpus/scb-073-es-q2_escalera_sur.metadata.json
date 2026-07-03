@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-073-es-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-073-es-q2_escalera_sur.front.png",
+    "back": "scb-073-es-q2_escalera_sur.back.png"
+  },
+  "language": [
+    "es"
+  ],
+  "fields": {
+    "name": "Escalera Sur",
+    "roaster": "Café Mudanza",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Medium",
+    "tastingNotes": "cocoa, almond, plum",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": "2026-05-16",
+    "expiryDate": "2026-11-16",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "spanish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "tin_tie_kraft_bag",
+    "bagMaterial": "brown kraft paper",
+    "closure": "uneven folded top secured with bendable tin tie",
+    "labelType": "Spanish paper sticker with handwritten-style roast date and rear storage label",
+    "sizeClass": "200 g cafe-roaster bag",
+    "viewContext": "apartment stairwell during moving",
+    "cameraAngle": "close handheld front and back inspection views",
+    "handling": "held_near_folded_top",
+    "riskTags": [
+      "spanish_label",
+      "kraft_bag",
+      "tin_tie",
+      "hand_occlusion",
+      "moving_clutter",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "paper wrinkles",
+      "finger pressure",
+      "dusty stairs",
+      "tape scraps",
+      "dim hallway light"
+    ],
+    "bagDescription": "Spanish kraft tin-tie bag held in a stairwell beside moving boxes, packing tape, keys, and dusty tile."
+  },
+  "notes": "Covers hand-held tin-tie closure recognition with a non-kitchen residential context."
+}

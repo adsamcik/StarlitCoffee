@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-035-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-035-en-q2_kanzu_field.front.png",
+    "back": "scb-035-en-q2_kanzu_field.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Kanzu Field",
+    "roaster": "Amber Lane Coffee",
+    "origin": "Uganda",
+    "region": "Rwenzori",
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Light",
+    "tastingNotes": "plum, vanilla, black tea",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-09",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "flat_bottom_block_bottom_bag",
+    "bagMaterial": "muted teal matte laminate",
+    "closure": "zipper, tear notch, heat seal, one-way valve",
+    "labelType": "front specialty label and rear QR/barcode label",
+    "sizeClass": "250 g specialty bag",
+    "viewContext": "cluttered dining table",
+    "cameraAngle": "front and rear three-quarter phone shots",
+    "handling": "free_standing",
+    "riskTags": [
+      "flat_bottom",
+      "five_panel_structure",
+      "degassing_valve",
+      "table_clutter",
+      "two_sided"
+    ],
+    "imperfections": [
+      "corner creases",
+      "crumbs",
+      "mild glare",
+      "off-center framing",
+      "label wrinkle"
+    ],
+    "bagDescription": "Premium 250 g flat-bottom pouch with rectangular base, five-panel structure, zipper, tear notch, and valve."
+  },
+  "notes": "Designed for flat-bottom shelf-stability and specialty-label extraction coverage."
+}

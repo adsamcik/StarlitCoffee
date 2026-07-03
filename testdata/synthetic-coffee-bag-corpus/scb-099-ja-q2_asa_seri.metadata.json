@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-099-ja-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-099-ja-q2_asa_seri.front.png",
+    "back": "scb-099-ja-q2_asa_seri.back.png"
+  },
+  "language": [
+    "ja"
+  ],
+  "fields": {
+    "name": "朝競り",
+    "roaster": "波止場焙煎",
+    "origin": "Costa Rica",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Light",
+    "tastingNotes": "grape, cocoa, citrus",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-07-02",
+    "expiryDate": "2027-01-02",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "japanese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_valve_pouch",
+    "bagMaterial": "matte sea-green laminate with crinkly silver side fold",
+    "closure": "heat-sealed top above zipper with tear notch",
+    "labelType": "Japanese valve-focused front label and rear barcode/QR brew label",
+    "sizeClass": "250 g whole bean fresh pouch",
+    "viewContext": "fish-market stainless prep table",
+    "cameraAngle": "close handheld front valve inspection and rear phone views",
+    "handling": "hand_pressing_valve_area",
+    "riskTags": [
+      "japanese_label",
+      "degassing_valve",
+      "foil_side_fold",
+      "fish_market_wet_surface",
+      "hand_occlusion",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "ice chips",
+      "wet stainless glare",
+      "generic scale",
+      "finger pressure wrinkles",
+      "water droplets"
+    ],
+    "bagDescription": "Japanese sea-green high-barrier pouch on a wet fish-market prep table with ice chips, scale, order slip, stainless glare, and hand pressure around the valve."
+  },
+  "notes": "Adds Japanese high-barrier/valve recognition under wet reflective market lighting."
+}

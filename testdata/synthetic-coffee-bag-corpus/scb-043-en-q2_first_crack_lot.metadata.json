@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-043-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-043-en-q2_first_crack_lot.front.png",
+    "back": "scb-043-en-q2_first_crack_lot.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "First Crack Lot",
+    "roaster": "Steamrail Roasters",
+    "origin": "Ethiopia",
+    "region": "Sidama",
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Light",
+    "tastingNotes": "blueberry, jasmine, cocoa",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-28",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "valve_focused_fresh_bean_bag",
+    "bagMaterial": "matte burgundy laminate",
+    "closure": "heat seal above zipper with one-way degassing valve",
+    "labelType": "cropped front label and rear roast information sticker",
+    "sizeClass": "250 g fresh whole bean",
+    "viewContext": "messy kitchen counter",
+    "cameraAngle": "close-up phone inspection shot",
+    "handling": "pressed_by_hand",
+    "riskTags": [
+      "degassing_valve",
+      "fresh_puffed_bag",
+      "hand_occlusion",
+      "close_crop",
+      "two_sided"
+    ],
+    "imperfections": [
+      "wrinkles around valve",
+      "fingerprints",
+      "mild glare",
+      "cropped label",
+      "coffee dust"
+    ],
+    "bagDescription": "Fresh-roasted whole-bean bag with puffed body and prominent one-way valve being pressed by hand."
+  },
+  "notes": "One of the hand-handled fixtures; emphasizes valve recognition under compression."
+}

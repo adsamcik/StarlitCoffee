@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-074-es-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-074-es-q2_arcilla_roja.front.png",
+    "back": "scb-074-es-q2_arcilla_roja.back.png"
+  },
+  "language": [
+    "es"
+  ],
+  "fields": {
+    "name": "Arcilla Roja",
+    "roaster": "Tostaduría Taller",
+    "origin": "Rwanda",
+    "region": null,
+    "farm": null,
+    "variety": "Bourbon",
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "apricot, honey, black tea",
+    "altitude": "1800 msnm",
+    "weight": "250 g",
+    "roastDate": "2026-07-02",
+    "expiryDate": "2027-01-02",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "spanish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_bottom_pouch",
+    "bagMaterial": "terracotta matte laminate with paper-feel surface",
+    "closure": "zipper under torn heat-sealed top with tear notch",
+    "labelType": "Spanish origin/process/tasting-note front label and rear QR label",
+    "sizeClass": "250 g specialty flat-bottom pouch",
+    "viewContext": "ceramic tile workshop table",
+    "cameraAngle": "low front three-quarter and rear angled phone views",
+    "handling": "free_standing_on_clay_dust_table",
+    "riskTags": [
+      "spanish_label",
+      "flat_bottom",
+      "matte_laminate",
+      "clay_dust",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "clay dust",
+      "water rings",
+      "scuffed label",
+      "crushed base corner",
+      "mixed workshop light"
+    ],
+    "bagDescription": "Spanish terracotta flat-bottom pouch standing on a ceramics worktable with clay smears, sponge, tile fragments, brushes, and water marks."
+  },
+  "notes": "Adds flat-bottom structure in a dusty workshop scene with visible craft-material contamination."
+}

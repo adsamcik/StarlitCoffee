@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-075-es-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-075-es-q2_marea_verde.front.png",
+    "back": "scb-075-es-q2_marea_verde.back.png"
+  },
+  "language": [
+    "es"
+  ],
+  "fields": {
+    "name": "Marea Verde",
+    "roaster": "Café del Muelle",
+    "origin": "Costa Rica",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Light",
+    "tastingNotes": "grape, cocoa, citrus",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-05-06",
+    "expiryDate": "2026-11-06",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "spanish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_valve_pouch",
+    "bagMaterial": "dark green matte laminate with crinkly metallized side folds",
+    "closure": "heat-sealed top above zipper with tear notch",
+    "labelType": "Spanish waterproof-style front label and rear batch label",
+    "sizeClass": "250 g fresh whole bean pouch",
+    "viewContext": "wet fishing pier or small boat bench",
+    "cameraAngle": "close handheld valve inspection and rear foil-side phone views",
+    "handling": "hand_pressing_valve_area",
+    "riskTags": [
+      "spanish_label",
+      "degassing_valve",
+      "foil_side_fold",
+      "wet_surface",
+      "hand_occlusion",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "water droplets",
+      "foil glare",
+      "finger pressure wrinkles",
+      "rope clutter",
+      "outdoor overexposure"
+    ],
+    "bagDescription": "Spanish dark green high-barrier pouch on a damp pier bench, with hand pressure around the front valve and metallic side folds on the reverse."
+  },
+  "notes": "Focuses on valve and high-barrier cues under wet, reflective outdoor conditions."
+}

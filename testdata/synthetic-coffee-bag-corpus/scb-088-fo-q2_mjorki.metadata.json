@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-088-fo-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-088-fo-q2_mjorki.front.png",
+    "back": "scb-088-fo-q2_mjorki.back.png"
+  },
+  "language": [
+    "fo"
+  ],
+  "fields": {
+    "name": "Mjørki",
+    "roaster": "Brimrost",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "apple, caramel, hazelnut",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-10",
+    "expiryDate": "2026-12-10",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "nordic_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "high_barrier_stand_up_pouch",
+    "bagMaterial": "storm-blue matte laminate with silver metallized side fold",
+    "closure": "heat-sealed top above zipper with tear notch",
+    "labelType": "Faroese front label and rear QR/barcode storage label",
+    "sizeClass": "250 g whole bean high-barrier pouch",
+    "viewContext": "rainy bus shelter bench",
+    "cameraAngle": "close handheld front and rear inspection phone views",
+    "handling": "hand_steadying_side_of_bag",
+    "riskTags": [
+      "faroese_label",
+      "degassing_valve",
+      "foil_side_fold",
+      "rainy_window",
+      "hand_occlusion",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "water droplets",
+      "wet bench",
+      "rain glare",
+      "creased pouch",
+      "wind-blown paper"
+    ],
+    "bagDescription": "Faroese storm-blue high-barrier pouch on a rainy bus shelter bench with timetable paper, wool hat, water droplets, and hand pressure."
+  },
+  "notes": "Adds Faroese label coverage with rain-smeared glass, wet bench glare, and visible foil side fold."
+}

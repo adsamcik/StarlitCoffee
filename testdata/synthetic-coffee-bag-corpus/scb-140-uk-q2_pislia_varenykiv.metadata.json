@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-140-uk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-140-uk-q2_pislia_varenykiv.front.png",
+    "back": "scb-140-uk-q2_pislia_varenykiv.back.png"
+  },
+  "language": [
+    "uk"
+  ],
+  "fields": {
+    "name": "Після Вареників",
+    "roaster": "Кухонна Кава",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Світле",
+    "tastingNotes": "акацієвий мед, персик, чорний чай",
+    "altitude": null,
+    "weight": "18 г",
+    "roastDate": null,
+    "expiryDate": "2027-04-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "ukrainian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy crimp-sealed laminate",
+    "closure": "heat-sealed crimped edges with tear notches and no reseal",
+    "labelType": "Ukrainian single-dose front label and dense rear brewing panel",
+    "sizeClass": "18 g single-serve sachet",
+    "viewContext": "messy kitchen table after varenyky dinner",
+    "cameraAngle": "top-down phone snapshots with diagonal skew",
+    "handling": "lying_flat_on_kitchen_table",
+    "culturalDesignCues": [
+      "varenyky dinner table with sour cream and dill",
+      "generic grocery receipt in hryvnia",
+      "Ukrainian Cyrillic single-dose brew instructions"
+    ],
+    "localLabelConventions": [
+      "разова порція",
+      "Спосіб приготування",
+      "Партія",
+      "Вжити до",
+      "Маса нетто",
+      "recycling icon"
+    ],
+    "riskTags": [
+      "ukrainian_label",
+      "single_serve_sachet",
+      "crimp_seal",
+      "tear_notch",
+      "no_reseal",
+      "kitchen_table",
+      "glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "sour cream smears",
+      "dill leaves",
+      "bread crumbs",
+      "glossy reflections",
+      "warm overhead light"
+    ],
+    "bagDescription": "Single glossy 18 g Ukrainian sachet on a messy varenyky dinner table with sour cream, dill, crumbs, receipt, fork, and top-down glare."
+  },
+  "notes": "Designed to validate one-packet sachet recognition without multi-sachet ambiguity."
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-086-fi-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-086-fi-q2_loylyhetki.front.png",
+    "back": "scb-086-fi-q2_loylyhetki.back.png"
+  },
+  "language": [
+    "fi"
+  ],
+  "fields": {
+    "name": "Löylyhetki",
+    "roaster": "Sauna Paahto",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Light",
+    "tastingNotes": "strawberry, jasmine, lemon",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": "2026-06-22",
+    "expiryDate": "2026-12-22",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "nordic_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "compostable_paper_style_stand_up_pouch",
+    "bagMaterial": "warm off-white fiber-textured matte paper-look laminate",
+    "closure": "heat-sealed top with zipper, tear notch and small valve",
+    "labelType": "Finnish restrained front label and rear barcode/QR brew label",
+    "sizeClass": "200 g whole bean paper-look pouch",
+    "viewContext": "sauna changing-room bench",
+    "cameraAngle": "bench-height front and rear three-quarter phone views",
+    "handling": "free_standing_slightly_slumped",
+    "riskTags": [
+      "finnish_label",
+      "paper_texture",
+      "stand_up_pouch",
+      "sauna_moisture",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "water drops",
+      "damp towel",
+      "soap residue",
+      "steam haze",
+      "lint"
+    ],
+    "bagDescription": "Finnish off-white paper-look stand-up pouch on a sauna changing-room bench with damp towel, soap residue, water drops, and warm steamy light."
+  },
+  "notes": "Adds Finnish label coverage with humidity, soft haze, and fiber-textured pouch material."
+}

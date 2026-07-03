@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-132-pl-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-132-pl-q2_deszczowy_dworzec.front.png",
+    "back": "scb-132-pl-q2_deszczowy_dworzec.back.png"
+  },
+  "language": [
+    "pl"
+  ],
+  "fields": {
+    "name": "Deszczowy Dworzec",
+    "roaster": "Parapet Palarnia",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Średnie",
+    "tastingNotes": "miód, jabłko, kakao",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-11",
+    "expiryDate": "2026-12-11",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "eastern_european_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch",
+    "bagMaterial": "matte burgundy laminate",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "Polish front specialty label and rear barcode/QR brew panel",
+    "sizeClass": "250 g whole bean stand-up pouch",
+    "viewContext": "rainy railway waiting-room windowsill",
+    "cameraAngle": "close front and rear three-quarter phone views",
+    "handling": "free_standing_on_window_ledge",
+    "culturalDesignCues": [
+      "rainy railway waiting-room scene without real railway branding",
+      "generic one-use ticket stub in złoty",
+      "Polish specialty coffee field labels"
+    ],
+    "localLabelConventions": [
+      "Pochodzenie",
+      "Obróbka",
+      "Palenie",
+      "Nuty",
+      "Masa netto",
+      "Palono",
+      "Najlepiej spożyć przed"
+    ],
+    "riskTags": [
+      "polish_label",
+      "stand_up_pouch",
+      "degassing_valve",
+      "rainy_station",
+      "ticket_stub",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "rain on glass",
+      "pastry crumbs",
+      "crumpled napkin",
+      "pouch dust",
+      "soft gray daylight"
+    ],
+    "bagDescription": "Polish stand-up pouch on a rainy railway waiting-room ledge with pastry crumbs, generic ticket stub, keys, cable, and visible valve and zipper ridge."
+  },
+  "notes": "Ticket and railway-like details are fictional scene context."
+}

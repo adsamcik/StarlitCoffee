@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-054-sk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-054-sk-q2_ranny_dunaj.front.png",
+    "back": "scb-054-sk-q2_ranny_dunaj.back.png"
+  },
+  "language": [
+    "sk"
+  ],
+  "fields": {
+    "name": "Ranný Dunaj",
+    "roaster": "Pražiareň Pod Hradom",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "apple, caramel, hazelnut",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-14",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "slovak_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch_doypack",
+    "bagMaterial": "matte deep-blue laminate",
+    "closure": "heat seal, tear notches, zipper ridge, one-way valve",
+    "labelType": "Slovak front label and rear batch/barcode label",
+    "sizeClass": "250 g retail pouch",
+    "viewContext": "apartment elevator with generic parcel slip",
+    "cameraAngle": "cramped handheld elevator phone photo",
+    "handling": "held_near_elevator_panel",
+    "riskTags": [
+      "slovak_label",
+      "elevator_mirror_glare",
+      "hand_occlusion",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "mirror smudges",
+      "dusty ledge",
+      "finger occlusion",
+      "soft wrinkles",
+      "mild motion blur"
+    ],
+    "bagDescription": "Slovak blue stand-up pouch held in a dim elevator/lobby scene with generic parcel slip, keys, smudged mirror, and real-world clutter."
+  },
+  "notes": "Replacement pair avoids real parcel-service marks while retaining a messy real-world elevator context."
+}

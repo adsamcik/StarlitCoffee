@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-097-ja-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-097-ja-q2_bandai_blend.front.png",
+    "back": "scb-097-ja-q2_bandai_blend.back.png"
+  },
+  "language": [
+    "ja"
+  ],
+  "fields": {
+    "name": "番台ブレンド",
+    "roaster": "湯けむり珈琲",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Medium Dark",
+    "tastingNotes": "cocoa, almond, plum",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-14",
+    "expiryDate": "2026-12-14",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "japanese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "tin_tie_side_gusset_bag",
+    "bagMaterial": "brown kraft paper with moss-green side gussets",
+    "closure": "folded top secured with visible bendable tin tie",
+    "labelType": "Japanese front sticker with roast-date sticker and rear batch label",
+    "sizeClass": "500 g whole bean kraft bag",
+    "viewContext": "sentō shoe-locker bench",
+    "cameraAngle": "close handheld front and rear inspection views",
+    "handling": "held_near_folded_tin_tie",
+    "riskTags": [
+      "japanese_label",
+      "kraft_bag",
+      "tin_tie",
+      "side_gusset",
+      "bathhouse_moisture",
+      "hand_occlusion",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "damp towel",
+      "water spots",
+      "paper wrinkles",
+      "scuffed wood",
+      "warm uneven light"
+    ],
+    "bagDescription": "Japanese kraft tin-tie side-gusset bag held on a sentō shoe-locker bench with damp towel, locker key tag, water spots, and scuffed wood."
+  },
+  "notes": "Adds a larger Japanese kraft bag in a humid bathhouse-entry setting."
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-092-en-us-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-092-en-us-q2_first_bell.front.png",
+    "back": "scb-092-en-us-q2_first_bell.back.png"
+  },
+  "language": [
+    "en-US"
+  ],
+  "fields": {
+    "name": "First Bell",
+    "roaster": "Homeroom Coffee",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium",
+    "tastingNotes": "caramel, citrus, cocoa",
+    "altitude": null,
+    "weight": "0.5 oz / 14 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-30",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "american_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy navy laminated film",
+    "closure": "heat-sealed edges with tear notch and no reseal",
+    "labelType": "American English printed front packet and rear directions/barcode panel",
+    "sizeClass": "0.5 oz single-serve ground coffee packet",
+    "viewContext": "after-hours classroom teacher desk",
+    "cameraAngle": "top-down front and rear phone snapshots",
+    "handling": "lying_flat_on_teacher_desk",
+    "riskTags": [
+      "american_english_label",
+      "single_serve",
+      "heat_sealed_edges",
+      "teacher_desk",
+      "pencil_shavings",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "pencil shavings",
+      "graded papers",
+      "sticky notes",
+      "desk dust",
+      "fluorescent glare"
+    ],
+    "bagDescription": "American English single-serve coffee packet on a cluttered teacher desk with pencil shavings, red pen, graded worksheets, sticky notes, and harsh classroom light."
+  },
+  "notes": "Adds a single-packet American classroom case without student names or school branding."
+}

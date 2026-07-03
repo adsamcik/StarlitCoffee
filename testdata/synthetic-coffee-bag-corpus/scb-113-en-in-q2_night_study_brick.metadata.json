@@ -1,0 +1,78 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-113-en-in-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-113-en-in-q2_night_study_brick.front.png",
+    "back": "scb-113-en-in-q2_night_study_brick.back.png"
+  },
+  "language": [
+    "en-IN",
+    "hi"
+  ],
+  "fields": {
+    "name": "Night Study Brick",
+    "roaster": "Hostel Corner Coffee",
+    "origin": "Wayanad",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, walnut, smoke",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-08",
+    "expiryDate": "2027-05-09",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "indian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy black vacuum film with copper side reflection",
+    "closure": "factory heat-sealed vacuum brick with no zipper or reseal",
+    "labelType": "printed bilingual front panel and rear brew/retail information panel",
+    "sizeClass": "250 g ground coffee vacuum brick",
+    "viewContext": "hostel laundry sink and night-study clutter",
+    "cameraAngle": "close three-quarter phone views under harsh bathroom light",
+    "handling": "free_standing_on_wet_sink_edge",
+    "culturalDesignCues": [
+      "student-hostel setting with laundry token and handwritten receipt",
+      "South Indian filter coffee reference on the rear panel",
+      "green vegetarian mark",
+      "MRP and packed-on fields in Indian retail style"
+    ],
+    "localLabelConventions": [
+      "Ground Coffee",
+      "Net Qty",
+      "MRP",
+      "Packed On",
+      "Best Before",
+      "veg symbol",
+      "Roasted & Packed in India"
+    ],
+    "riskTags": [
+      "en_in_label",
+      "hindi_secondary_text",
+      "vacuum_brick",
+      "ground_coffee",
+      "no_reseal",
+      "glossy_reflection",
+      "wet_sink",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "water droplets",
+      "bathroom tile grime",
+      "harsh specular glare",
+      "creased vacuum corners",
+      "partly skewed phone perspective"
+    ],
+    "bagDescription": "A compact glossy vacuum-packed coffee brick on a messy hostel laundry sink with water droplets, receipt, laundry token, towel, and harsh overhead glare."
+  },
+  "notes": "Back-panel feedback/contact-like text is fictional; this fixture validates vacuum-brick geometry and Indian retail fields."
+}

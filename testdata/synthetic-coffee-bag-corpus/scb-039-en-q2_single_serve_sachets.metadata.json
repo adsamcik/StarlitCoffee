@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-039-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-039-en-q2_single_serve_sachets.front.png",
+    "back": "scb-039-en-q2_single_serve_sachets.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Desk Blend",
+    "roaster": "Metro Cup",
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium",
+    "tastingNotes": null,
+    "altitude": null,
+    "weight": "12 g",
+    "roastDate": null,
+    "expiryDate": "2026-09-02",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "sachet_single_serve_packet",
+    "bagMaterial": "small glossy heat-sealed film packets",
+    "closure": "heat sealed edges with tear notches, no reseal",
+    "labelType": "printed sachet front and tiny rear instruction panel",
+    "sizeClass": "single dose sachets",
+    "viewContext": "hotel desk clutter",
+    "cameraAngle": "top-down phone snapshot",
+    "handling": "free_standing_single_packet",
+    "riskTags": [
+      "single_packet",
+      "single_serve",
+      "tiny_text",
+      "packet_crop",
+      "two_sided"
+    ],
+    "imperfections": [
+      "single crinkled sachet",
+      "gloss glare",
+      "charger cable clutter",
+      "dim hotel light",
+      "cropped packet"
+    ],
+    "bagDescription": "One tiny heat-sealed single-serve coffee sachet photographed front-side and back-side on a cluttered hotel desk."
+  },
+  "notes": "A single-packet fixture for validating sachet scale, tear notches, and very small text."
+}

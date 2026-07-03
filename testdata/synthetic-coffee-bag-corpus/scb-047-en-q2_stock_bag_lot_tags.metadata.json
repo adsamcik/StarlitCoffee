@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-047-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-047-en-q2_stock_bag_lot_tags.front.png",
+    "back": "scb-047-en-q2_stock_bag_lot_tags.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Aster Lot",
+    "roaster": "Plain Kite Roasting",
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": null,
+    "tastingNotes": "blackberry, cocoa, brown sugar",
+    "altitude": null,
+    "weight": "340 g",
+    "roastDate": "2026-05-05",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "minimal_label_over_stock_bag",
+    "bagMaterial": "generic white matte stock bag",
+    "closure": "generic top heat seal and zipper ridges",
+    "labelType": "simple applied front sticker plus separate roast-date and rear batch sticker",
+    "sizeClass": "340 g stock bag",
+    "viewContext": "packing table with labels and tape",
+    "cameraAngle": "casual packing-table phone photo",
+    "handling": "free_standing_single_stock_bag",
+    "riskTags": [
+      "single_bag",
+      "generic_stock_bag",
+      "crooked_stickers",
+      "packing_table_clutter",
+      "two_sided"
+    ],
+    "imperfections": [
+      "peeling sticker corners",
+      "scuffed bags",
+      "marker and tape clutter",
+      "mild blur",
+      "wrinkles"
+    ],
+    "bagDescription": "One generic white stock coffee bag with a simple applied front label, a separate roast-date sticker, and a small rear batch sticker."
+  },
+  "notes": "Single-bag fixture for generic stock-bag recognition and small-roaster label workflows."
+}

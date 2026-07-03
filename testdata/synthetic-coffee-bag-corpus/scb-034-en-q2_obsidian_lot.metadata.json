@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-034-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-034-en-q2_obsidian_lot.front.png",
+    "back": "scb-034-en-q2_obsidian_lot.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Obsidian Lot",
+    "roaster": "Vanta Well Roasters",
+    "origin": "Honduras",
+    "region": "Marcala",
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Medium",
+    "tastingNotes": "black cherry, cocoa, molasses",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-18",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "quad_seal_bag",
+    "bagMaterial": "dark matte laminate",
+    "closure": "top heat seal",
+    "labelType": "clean front label with side and rear information panels",
+    "sizeClass": "250 g premium bag",
+    "viewContext": "cafe counter",
+    "cameraAngle": "low three-quarter phone angle",
+    "handling": "free_standing",
+    "riskTags": [
+      "quad_seal",
+      "dark_matte",
+      "corner_seals",
+      "shallow_focus",
+      "two_sided"
+    ],
+    "imperfections": [
+      "fingerprints",
+      "grounds spill",
+      "small glare",
+      "dented lower corner",
+      "shallow focus"
+    ],
+    "bagDescription": "Rigid block-like quad-seal bag with four vertical corner seals, squared edges, and cafe-counter context."
+  },
+  "notes": "Premium dark bag intended to test corner-seal geometry and low-angle glare handling."
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-048-cs-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-048-cs-q2_ranni_mlha.front.png",
+    "back": "scb-048-cs-q2_ranni_mlha.back.png"
+  },
+  "language": [
+    "cs"
+  ],
+  "fields": {
+    "name": "Ranní Mlha",
+    "roaster": "Kavárna Pod Lipou",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Light",
+    "tastingNotes": "apple, honey, hazelnut",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2025-05-06",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "czech_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch_doypack",
+    "bagMaterial": "matte olive laminate",
+    "closure": "heat seal, tear notches, zipper ridge, one-way valve",
+    "labelType": "Czech front origin label and rear transit-bag information label",
+    "sizeClass": "250 g retail pouch",
+    "viewContext": "tram seat with tote bag and transit ticket",
+    "cameraAngle": "commuter lap-level handheld phone photo",
+    "handling": "held_over_tote",
+    "riskTags": [
+      "czech_label",
+      "public_transit",
+      "hand_occlusion",
+      "window_glare",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "motion softness",
+      "finger occlusion",
+      "window glare",
+      "wrinkled pouch",
+      "transit clutter"
+    ],
+    "bagDescription": "Czech-labeled olive stand-up pouch held in a tram over a canvas tote, with valve, zipper ridge, and transit-window glare."
+  },
+  "notes": "Generated as a single-coffee Czech commute scenario. Ground truth follows the visible Czech front label."
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-106-zh-hans-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-106-zh-hans-q2_shiyin_xiaoyang.front.png",
+    "back": "scb-106-zh-hans-q2_shiyin_xiaoyang.back.png"
+  },
+  "language": [
+    "zh-Hans"
+  ],
+  "fields": {
+    "name": "试饮小样",
+    "roaster": "墨边咖啡",
+    "origin": "Ethiopia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Light",
+    "tastingNotes": "strawberry, jasmine, lemon",
+    "altitude": null,
+    "weight": "50 g",
+    "roastDate": "2026-06-25",
+    "expiryDate": "2026-12-25",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "chinese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_sample_pouch",
+    "bagMaterial": "thin off-white laminate",
+    "closure": "heat-sealed top and bottom with tear notch and no reseal",
+    "labelType": "Simplified Chinese front sample sticker and rear barcode/QR sticker",
+    "sizeClass": "50 g ground coffee sample pouch",
+    "viewContext": "calligraphy practice desk",
+    "cameraAngle": "slightly top-down front and rear phone snapshots",
+    "handling": "lying_flat_on_calligraphy_desk",
+    "culturalDesignCues": [
+      "practice-paper and brush-desk environment",
+      "small fictional red batch stamp graphic",
+      "compact sample-pouch label with Chinese sample wording"
+    ],
+    "localLabelConventions": [
+      "粉咖啡小样",
+      "烘焙日期",
+      "保质期至",
+      "储存方法",
+      "冲泡建议"
+    ],
+    "riskTags": [
+      "simplified_chinese_label",
+      "flat_sample",
+      "heat_seal",
+      "calligraphy_desk",
+      "ink_smudge",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "ink smudges",
+      "tea cup ring",
+      "desk dust",
+      "paper fibers",
+      "thin pouch wrinkles"
+    ],
+    "bagDescription": "Simplified Chinese flat sample pouch on a calligraphy practice desk with ink smudges, brush rest, practice paper, water dish, tea cup ring, and warm lamp light."
+  },
+  "notes": "Adds a small flat sample pouch with cultural design cues and no real seal or copied calligraphy."
+}

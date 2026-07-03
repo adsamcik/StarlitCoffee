@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-119-el-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-119-el-q2_nychterini_vardia.front.png",
+    "back": "scb-119-el-q2_nychterini_vardia.back.png"
+  },
+  "language": [
+    "el"
+  ],
+  "fields": {
+    "name": "Νυχτερινή Βάρδια",
+    "roaster": "Περίπτερο 24",
+    "origin": "Honduras",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "κακάο, φουντούκι, μπαχαρικά",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": "2026-06-18",
+    "expiryDate": "2027-06-18",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "greek_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy dark burgundy foil laminate",
+    "closure": "compressed heat-sealed vacuum brick with no zipper or reseal",
+    "labelType": "printed Greek front panel and rear brew/retail panel",
+    "sizeClass": "200 g ground coffee vacuum brick",
+    "viewContext": "late-night neighborhood kiosk counter",
+    "cameraAngle": "close front and rear three-quarter phone views",
+    "handling": "free_standing_on_kiosk_counter",
+    "culturalDesignCues": [
+      "periptero-style kiosk counter context",
+      "late-night fluorescent convenience retail setting",
+      "Greek brew guidance for briki or filter preparation"
+    ],
+    "localLabelConventions": [
+      "Αλεσμένος",
+      "Καθαρό βάρος",
+      "Παρτίδα",
+      "Καβουρδισμένο",
+      "Ανάλωση πριν",
+      "Οδηγίες παρασκευής",
+      "Ανακυκλώσιμη συσκευασία"
+    ],
+    "riskTags": [
+      "greek_label",
+      "vacuum_brick",
+      "ground_coffee",
+      "no_reseal",
+      "glossy_reflection",
+      "kiosk_counter",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dented brick corner",
+      "fingerprints on glossy film",
+      "fluorescent glare",
+      "dusty scratched counter",
+      "close crop"
+    ],
+    "bagDescription": "Glossy dark vacuum-packed ground coffee brick on a late-night kiosk counter with coins, receipt roll, generic slips, tape, harsh fluorescent glare, and scuffed plastic."
+  },
+  "notes": "The package uses Greek coffee-style cultural cues, but all brand and contact-like text is fictional."
+}

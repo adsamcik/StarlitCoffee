@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-120-sv-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-120-sv-q2_regnfika.front.png",
+    "back": "scb-120-sv-q2_regnfika.back.png"
+  },
+  "language": [
+    "sv"
+  ],
+  "fields": {
+    "name": "Regnfika",
+    "roaster": "Fönsterrosteriet",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Tvättat",
+    "roastLevel": "Mellan",
+    "tastingNotes": "kanelbulle, äpple, kakao",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-09",
+    "expiryDate": "2026-12-09",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "swedish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch",
+    "bagMaterial": "matte dark blue laminate",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "Swedish front specialty label and rear barcode/QR brew panel",
+    "sizeClass": "250 g whole bean stand-up pouch",
+    "viewContext": "rainy apartment fika windowsill",
+    "cameraAngle": "close front and rear three-quarter phone views",
+    "handling": "held_or_free_standing_on_windowsill",
+    "culturalDesignCues": [
+      "rainy fika windowsill with cinnamon bun crumbs",
+      "restrained Swedish specialty-coffee label hierarchy",
+      "muted Nordic apartment palette and radiator/window context"
+    ],
+    "localLabelConventions": [
+      "Ursprung",
+      "Process",
+      "Rostning",
+      "Smaknoter",
+      "Nettovikt",
+      "Rostad",
+      "Bäst före"
+    ],
+    "riskTags": [
+      "swedish_label",
+      "stand_up_pouch",
+      "degassing_valve",
+      "rainy_window",
+      "fika_context",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "rain on window",
+      "cinnamon bun crumbs",
+      "coffee stains",
+      "wrinkled pouch",
+      "soft gray daylight"
+    ],
+    "bagDescription": "Swedish stand-up pouch photographed on a rainy apartment windowsill with cinnamon bun crumbs, coffee stains, keys, cable, and a visible valve and zipper ridge."
+  },
+  "notes": "Replacement front image avoids real readable background titles while preserving the messy fika setting."
+}

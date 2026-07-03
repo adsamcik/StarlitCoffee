@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-101-ja-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-101-ja-q2_shinya_brick.front.png",
+    "back": "scb-101-ja-q2_shinya_brick.back.png"
+  },
+  "language": [
+    "ja"
+  ],
+  "fields": {
+    "name": "深夜ブリック",
+    "roaster": "小箱焙煎",
+    "origin": "Peru",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, walnut, smoke",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-09",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "japanese_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy black and copper foil laminate",
+    "closure": "tight vacuum-sealed film with crimped seams and no reseal",
+    "labelType": "Japanese printed vacuum-brick panel and rear barcode/QR panel",
+    "sizeClass": "250 g ground coffee brick",
+    "viewContext": "capsule-hotel laundry shelf",
+    "cameraAngle": "close harsh-fluorescent front and rear three-quarter phone views",
+    "handling": "free_standing_hard_brick",
+    "riskTags": [
+      "japanese_label",
+      "vacuum_brick",
+      "foil_glare",
+      "laundry_shelf",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "lint",
+      "laundry token",
+      "damp towel",
+      "dented seam",
+      "fluorescent glare"
+    ],
+    "bagDescription": "Japanese glossy vacuum brick on a capsule-hotel laundry shelf with lint, laundry token, damp towel, receipt, basket edge, and harsh fluorescent light."
+  },
+  "notes": "Adds Japanese no-reseal vacuum brick coverage with laundry-room grime and reflective black foil."
+}

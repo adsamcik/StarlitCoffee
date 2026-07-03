@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-076-es-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-076-es-q2_corte_largo.front.png",
+    "back": "scb-076-es-q2_corte_largo.back.png"
+  },
+  "language": [
+    "es"
+  ],
+  "fields": {
+    "name": "Corte Largo",
+    "roaster": "Café Peine",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Dark",
+    "tastingNotes": "cocoa, hazelnut",
+    "altitude": null,
+    "weight": "15 g",
+    "roastDate": null,
+    "expiryDate": "2027-05-16",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "spanish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "single_serve_sachet",
+    "bagMaterial": "glossy green laminate film",
+    "closure": "heat-sealed edges with tear notch and no reseal",
+    "labelType": "Spanish printed sachet front and rear preparation/barcode panel",
+    "sizeClass": "15 g single-serve ground coffee packet",
+    "viewContext": "barber shop counter",
+    "cameraAngle": "top-down casual phone snapshots of front and back",
+    "handling": "lying_flat_on_counter",
+    "riskTags": [
+      "spanish_label",
+      "single_serve",
+      "heat_sealed_edges",
+      "barber_counter",
+      "hair_clippings",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "hair clippings",
+      "glossy glare",
+      "creased sachet corner",
+      "smudged counter",
+      "harsh mirror light"
+    ],
+    "bagDescription": "Spanish single-serve sachet on a barber counter with hair clippings, comb, appointment card, towel, spray bottle, and mirror glare."
+  },
+  "notes": "Adds a single-sachet case with one packet only."
+}

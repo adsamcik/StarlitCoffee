@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-109-en-in-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-109-en-in-q2_mechanics_roast.front.png",
+    "back": "scb-109-en-in-q2_mechanics_roast.back.png"
+  },
+  "language": [
+    "en-IN",
+    "hi"
+  ],
+  "fields": {
+    "name": "Mechanic's Roast",
+    "roaster": "Gully Gear Coffee",
+    "origin": "Coorg",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Medium Dark",
+    "tastingNotes": "cocoa, peanut chikki, plum",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-14",
+    "expiryDate": "2026-12-14",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "indian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "kraft_side_gusset_bag",
+    "bagMaterial": "brown kraft paper with oily handling marks",
+    "closure": "uneven folded top secured with a visible tin tie",
+    "labelType": "paper front sticker with handwritten-style roast date and rear batch sticker",
+    "sizeClass": "500 g whole bean kraft bag",
+    "viewContext": "small scooter repair counter beside tools and parts",
+    "cameraAngle": "handheld counter-height front and back inspection shots",
+    "handling": "held_near_folded_top",
+    "culturalDesignCues": [
+      "street-side workshop setting common to Indian urban lanes",
+      "kraft local-roaster look with hand-applied label",
+      "Hindi secondary naming and MRP-style price block",
+      "tasting note references peanut chikki as a local sweet"
+    ],
+    "localLabelConventions": [
+      "MRP",
+      "Net Weight",
+      "Packed On",
+      "Roasted On",
+      "Batch",
+      "Best Before"
+    ],
+    "riskTags": [
+      "en_in_label",
+      "hindi_secondary_text",
+      "kraft_bag",
+      "tin_tie",
+      "side_gusset",
+      "workshop_clutter",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dust on kraft surface",
+      "wrinkled folded top",
+      "tool marks on counter",
+      "finger pressure creases",
+      "uneven warm light"
+    ],
+    "bagDescription": "A single 500 g kraft side-gusset coffee bag with tin-tie closure, held at a scooter repair counter among tools, dust, and oil-stained clutter."
+  },
+  "notes": "Fictional small-roaster sample designed to stress handwritten dates, kraft texture, and tin-tie closure detection."
+}

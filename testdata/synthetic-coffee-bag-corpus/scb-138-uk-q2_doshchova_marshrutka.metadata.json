@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-138-uk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-138-uk-q2_doshchova_marshrutka.front.png",
+    "back": "scb-138-uk-q2_doshchova_marshrutka.back.png"
+  },
+  "language": [
+    "uk"
+  ],
+  "fields": {
+    "name": "Дощова Маршрутка",
+    "roaster": "Підвіконня Кава",
+    "origin": "Colombia",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Мита",
+    "roastLevel": "Середнє",
+    "tastingNotes": "мед, яблуко, какао",
+    "altitude": null,
+    "weight": "250 г",
+    "roastDate": "2026-06-12",
+    "expiryDate": "2026-12-12",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "ukrainian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch",
+    "bagMaterial": "matte sunflower-yellow laminate",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "Ukrainian front specialty label and rear barcode/QR brew panel",
+    "sizeClass": "250 g whole bean stand-up pouch",
+    "viewContext": "rainy marshrutka window ledge",
+    "cameraAngle": "close front and rear three-quarter phone views",
+    "handling": "free_standing_on_transit_window_ledge",
+    "culturalDesignCues": [
+      "rainy marshrutka or bus-window commute scene",
+      "generic transit ticket stub in hryvnia",
+      "Ukrainian Cyrillic specialty coffee field labels"
+    ],
+    "localLabelConventions": [
+      "Походження",
+      "Обробка",
+      "Обсмаження",
+      "Ноти",
+      "Маса нетто",
+      "Партія",
+      "Вжити до"
+    ],
+    "riskTags": [
+      "ukrainian_label",
+      "stand_up_pouch",
+      "degassing_valve",
+      "rainy_transit",
+      "ticket_stub",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "rain on glass",
+      "pastry crumbs",
+      "crumpled napkin",
+      "pouch wrinkles",
+      "soft gray daylight"
+    ],
+    "bagDescription": "Sunflower-yellow Ukrainian stand-up pouch on a rainy marshrutka-style window ledge with pastry crumbs, generic ticket, keys, cable, and visible valve."
+  },
+  "notes": "Transit ticket and route-like details are fictional scene context."
+}

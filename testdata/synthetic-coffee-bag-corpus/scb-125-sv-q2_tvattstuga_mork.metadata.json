@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-125-sv-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-125-sv-q2_tvattstuga_mork.front.png",
+    "back": "scb-125-sv-q2_tvattstuga_mork.back.png"
+  },
+  "language": [
+    "sv"
+  ],
+  "fields": {
+    "name": "Tvättstuga Mörk",
+    "roaster": "Källarrost",
+    "origin": "Honduras",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Mörk",
+    "tastingNotes": "kakao, rostat bröd, kryddor",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": "2026-06-18",
+    "expiryDate": "2027-06-18",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "swedish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "vacuum_brick_pack",
+    "bagMaterial": "glossy deep red foil laminate",
+    "closure": "compressed heat-sealed vacuum brick with no zipper or reseal",
+    "labelType": "printed Swedish front panel and rear brew/retail panel",
+    "sizeClass": "200 g ground coffee vacuum brick",
+    "viewContext": "apartment laundry room booking counter",
+    "cameraAngle": "close front and rear three-quarter phone views",
+    "handling": "free_standing_on_laundry_counter",
+    "culturalDesignCues": [
+      "tvättstuga booking-board context",
+      "basement laundry-room fluorescent lighting",
+      "Swedish brew guidance for bryggare or kokkaffe"
+    ],
+    "localLabelConventions": [
+      "Malet kaffe",
+      "Nettovikt",
+      "Batch",
+      "Rostad",
+      "Bäst före",
+      "Bryggtips",
+      "Återvinn som plast"
+    ],
+    "riskTags": [
+      "swedish_label",
+      "vacuum_brick",
+      "ground_coffee",
+      "no_reseal",
+      "glossy_reflection",
+      "laundry_room",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dented brick corners",
+      "fingerprints on glossy film",
+      "detergent residue",
+      "lint on counter",
+      "harsh fluorescent glare"
+    ],
+    "bagDescription": "Glossy deep-red vacuum-packed ground coffee brick on a Swedish laundry-room counter with booking board, lint, detergent residue, coins, towel, and harsh fluorescent glare."
+  },
+  "notes": "All contact-like label text is fictional; fixture validates hard vacuum-brick geometry and Swedish retail fields."
+}

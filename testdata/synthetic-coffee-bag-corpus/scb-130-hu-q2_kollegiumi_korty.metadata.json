@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-130-hu-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-130-hu-q2_kollegiumi_korty.front.png",
+    "back": "scb-130-hu-q2_kollegiumi_korty.back.png"
+  },
+  "language": [
+    "hu"
+  ],
+  "fields": {
+    "name": "Kollégiumi Korty",
+    "roaster": "Mosókonyha Kávé",
+    "origin": "Rwanda",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Világos",
+    "tastingNotes": "narancs, méz, tea",
+    "altitude": null,
+    "weight": "50 g",
+    "roastDate": "2026-06-26",
+    "expiryDate": "2026-12-26",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "hungarian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_sample_pouch",
+    "bagMaterial": "off-white paper-look laminate",
+    "closure": "heat-sealed top and sides with tear notch and no reseal",
+    "labelType": "small Hungarian sample sticker with rear batch/storage sticker",
+    "sizeClass": "50 g sample pouch",
+    "viewContext": "university dorm desk",
+    "cameraAngle": "close handheld front and rear scale photos",
+    "handling": "held_between_fingers_for_scale",
+    "culturalDesignCues": [
+      "Hungarian dorm desk with study notes",
+      "cafeteria receipt in forint and sticky reminder note",
+      "small sample-bag label in Hungarian"
+    ],
+    "localLabelConventions": [
+      "Mintacsomag",
+      "Nettó tömeg",
+      "Tétel",
+      "Pörkölve",
+      "Minőségét megőrzi",
+      "Tartsa a tasakot zárva"
+    ],
+    "riskTags": [
+      "hungarian_label",
+      "flat_sample_pouch",
+      "tear_notch",
+      "no_reseal",
+      "dorm_desk",
+      "handheld_scale",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "biscuit crumbs",
+      "highlighter marks",
+      "finger pressure wrinkles",
+      "gray desk-lamp light",
+      "edge softness"
+    ],
+    "bagDescription": "Tiny 50 g off-white flat sample pouch held over a messy Hungarian dorm desk with notes, receipt, crumbs, USB cable, sticky note, and lamp light."
+  },
+  "notes": "Small-format Hungarian sample fixture for scale, hand occlusion, tear-notch, and partial label extraction."
+}

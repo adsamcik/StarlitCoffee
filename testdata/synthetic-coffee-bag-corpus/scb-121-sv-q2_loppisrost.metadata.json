@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-121-sv-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-121-sv-q2_loppisrost.front.png",
+    "back": "scb-121-sv-q2_loppisrost.back.png"
+  },
+  "language": [
+    "sv"
+  ],
+  "fields": {
+    "name": "Loppisrost",
+    "roaster": "Kvarterets Rosteriet",
+    "origin": "Brazil",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Natural",
+    "roastLevel": "Mörk",
+    "tastingNotes": "choklad, hasselnöt, lingon",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-14",
+    "expiryDate": "2026-12-14",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "swedish_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "kraft_side_gusset_bag",
+    "bagMaterial": "brown kraft paper",
+    "closure": "uneven folded top secured with a visible tin tie",
+    "labelType": "paper Swedish front sticker and rear batch/storage sticker",
+    "sizeClass": "500 g kraft side-gusset bag",
+    "viewContext": "cluttered loppis flea-market table",
+    "cameraAngle": "close handheld front and rear inspection shots",
+    "handling": "held_near_folded_top",
+    "culturalDesignCues": [
+      "loppis table with dusty price tags in kronor",
+      "enamel mug, old wooden box, and textile scrap",
+      "simple local-roaster kraft label with Swedish dates and storage copy"
+    ],
+    "localLabelConventions": [
+      "Batch",
+      "Rostad",
+      "Bäst före",
+      "Nettovikt",
+      "Förvara svalt och torrt",
+      "barcode"
+    ],
+    "riskTags": [
+      "swedish_label",
+      "kraft_bag",
+      "side_gusset",
+      "tin_tie",
+      "loppis_table",
+      "handheld",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "dusty table",
+      "wrinkled kraft paper",
+      "finger pressure creases",
+      "crooked label",
+      "warm uneven light"
+    ],
+    "bagDescription": "Single 500 g kraft side-gusset bag with tin-tie closure, held on a cluttered Swedish loppis table with old objects, receipts, dust, and warm indoor light."
+  },
+  "notes": "Fictional local-roaster kraft sample intended to stress Swedish labels, tin-tie closure, and hand occlusion."
+}

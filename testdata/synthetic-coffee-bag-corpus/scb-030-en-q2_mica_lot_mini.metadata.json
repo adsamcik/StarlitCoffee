@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-030-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-030-en-q2_mica_lot_mini.front.png",
+    "back": "scb-030-en-q2_mica_lot_mini.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Mica Lot Mini",
+    "roaster": "Crane Street Samples",
+    "origin": "Colombia",
+    "region": "Tolima",
+    "farm": null,
+    "variety": "Caturra",
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "stone fruit, cocoa, clean",
+    "altitude": null,
+    "weight": "40 g",
+    "roastDate": "2026-05-20",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "flat_pouch_sample_bag",
+    "bagMaterial": "thin white matte laminate",
+    "closure": "heat seal with tear notch",
+    "labelType": "front sticker and small back batch sticker",
+    "sizeClass": "25-50 g sample",
+    "viewContext": "messy kitchen table",
+    "cameraAngle": "slightly top-down phone photo",
+    "handling": "free_standing_flat",
+    "riskTags": [
+      "small_sample",
+      "flat_pouch",
+      "crumb_clutter",
+      "partial_label_blur",
+      "two_sided"
+    ],
+    "imperfections": [
+      "soft creases",
+      "crumbs",
+      "receipt clutter",
+      "imperfect focus",
+      "water spots"
+    ],
+    "bagDescription": "Small flat envelope-style sample pouch with almost no base expansion, heat-sealed edges, and a simple sticker label."
+  },
+  "notes": "Front and back images intentionally preserve casual tabletop clutter and sample-pouch scale."
+}

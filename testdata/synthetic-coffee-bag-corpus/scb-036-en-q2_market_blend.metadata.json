@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-036-en-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-036-en-q2_market_blend.front.png",
+    "back": "scb-036-en-q2_market_blend.back.png"
+  },
+  "language": [
+    "en"
+  ],
+  "fields": {
+    "name": "Market Blend",
+    "roaster": "Paper Lantern Roastery",
+    "origin": null,
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": null,
+    "roastLevel": "Medium",
+    "tastingNotes": "caramel, almond, red apple",
+    "altitude": null,
+    "weight": "500 g",
+    "roastDate": "2026-06-07",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "packaging_type_expansion_2026_07",
+    "packagingType": "box_bottom_pouch",
+    "bagMaterial": "cream matte laminate",
+    "closure": "top seal with zipper area",
+    "labelType": "wraparound label with rear barcode panel",
+    "sizeClass": "500 g wide bag",
+    "viewContext": "pantry items and jars",
+    "cameraAngle": "medium standing-height phone shot",
+    "handling": "free_standing_squeezed_between_jars",
+    "riskTags": [
+      "box_bottom",
+      "wide_500g",
+      "wraparound_label",
+      "pantry_clutter",
+      "two_sided"
+    ],
+    "imperfections": [
+      "squeezed sides",
+      "top crop",
+      "cream surface stains",
+      "label peeling",
+      "uneven kitchen light"
+    ],
+    "bagDescription": "Wide 500 g box-bottom pouch with especially obvious squared base and wraparound label."
+  },
+  "notes": "Useful for distinguishing 500 g box-bottom proportions from smaller flat-bottom pouches."
+}

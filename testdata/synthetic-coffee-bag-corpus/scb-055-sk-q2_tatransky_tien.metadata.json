@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-055-sk-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-055-sk-q2_tatransky_tien.front.png",
+    "back": "scb-055-sk-q2_tatransky_tien.back.png"
+  },
+  "language": [
+    "sk"
+  ],
+  "fields": {
+    "name": "Tatranský Tieň",
+    "roaster": "Horská Pražiareň",
+    "origin": "Rwanda",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Light",
+    "tastingNotes": "raspberry, honey, black tea",
+    "altitude": null,
+    "weight": "200 g",
+    "roastDate": "2026-02-15",
+    "expiryDate": null,
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "slovak_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "tin_tie_kraft_bag",
+    "bagMaterial": "brown kraft paper",
+    "closure": "folded top with bendable tin tie",
+    "labelType": "Slovak paper front sticker and rear batch sticker",
+    "sizeClass": "200 g cafe bag",
+    "viewContext": "ski lodge boot-room table",
+    "cameraAngle": "slightly high casual phone photo",
+    "handling": "free_standing_leaning",
+    "riskTags": [
+      "slovak_label",
+      "tin_tie",
+      "wet_table",
+      "cold_warm_mixed_light",
+      "single_bag",
+      "two_sided"
+    ],
+    "imperfections": [
+      "melted snow",
+      "wet glove shadow",
+      "kraft creases",
+      "crooked sticker",
+      "boot scuffs"
+    ],
+    "bagDescription": "Slovak kraft tin-tie bag on a ski-lodge boot-room bench with wet gloves, lift pass, thermos cap, and melted snow."
+  },
+  "notes": "Adds cold/wet lodge lighting and kraft closure variation."
+}

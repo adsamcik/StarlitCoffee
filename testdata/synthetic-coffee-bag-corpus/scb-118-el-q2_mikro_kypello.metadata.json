@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-118-el-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-118-el-q2_mikro_kypello.front.png",
+    "back": "scb-118-el-q2_mikro_kypello.back.png"
+  },
+  "language": [
+    "el"
+  ],
+  "fields": {
+    "name": "Μικρό Κύπελλο",
+    "roaster": "Πηλός Coffee Lab",
+    "origin": "Rwanda",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Honey",
+    "roastLevel": "Light",
+    "tastingNotes": "πορτοκάλι, μέλι, τσάι",
+    "altitude": null,
+    "weight": "50 g",
+    "roastDate": "2026-06-24",
+    "expiryDate": "2026-12-24",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "greek_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "flat_sample_pouch",
+    "bagMaterial": "off-white paper-look laminate",
+    "closure": "heat-sealed top and sides with tear notch and no reseal",
+    "labelType": "small Greek sample sticker with rear batch/storage sticker",
+    "sizeClass": "50 g sample pouch",
+    "viewContext": "ceramic workshop bench",
+    "cameraAngle": "close handheld front and rear scale photos",
+    "handling": "held_between_fingers_for_scale",
+    "culturalDesignCues": [
+      "pottery workshop table with clay dust and glaze tiles",
+      "ceramic-cup motif and Greek sample label",
+      "small roastery lab naming with Greek product fields"
+    ],
+    "localLabelConventions": [
+      "Δείγμα",
+      "Καθαρό βάρος",
+      "Παρτίδα",
+      "Καβουρδισμένο",
+      "Ανάλωση πριν",
+      "Φυλάσσεται κλειστό"
+    ],
+    "riskTags": [
+      "greek_label",
+      "flat_sample_pouch",
+      "tear_notch",
+      "no_reseal",
+      "pottery_workshop",
+      "handheld_scale",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "clay dust on fingers",
+      "dust specks on pouch",
+      "glaze drips",
+      "chipped ceramic cup",
+      "shallow focus"
+    ],
+    "bagDescription": "Tiny 50 g off-white flat sample pouch held in dusty fingers above a pottery bench with clay, glaze test tiles, ceramic cup, water spots, and workshop grime."
+  },
+  "notes": "Small-format sample fixture for scale, hand occlusion, tear-notch, and Greek sample-field extraction."
+}

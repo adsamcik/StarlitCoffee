@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "fixture_type": "coffee_bag",
+  "id": "scb-108-en-in-q2",
+  "automation_ready": true,
+  "photos": {
+    "front": "scb-108-en-in-q2_window_seat_filter.front.png",
+    "back": "scb-108-en-in-q2_window_seat_filter.back.png"
+  },
+  "language": [
+    "en-IN",
+    "hi"
+  ],
+  "fields": {
+    "name": "Window Seat Filter",
+    "roaster": "Platform 8 Roasters",
+    "origin": "Chikmagalur",
+    "region": null,
+    "farm": null,
+    "variety": null,
+    "process": "Washed",
+    "roastLevel": "Medium",
+    "tastingNotes": "jaggery, cocoa, citrus",
+    "altitude": null,
+    "weight": "250 g",
+    "roastDate": "2026-06-08",
+    "expiryDate": "2026-12-08",
+    "isDecaf": false
+  },
+  "extras": {
+    "captureTier": "Q2",
+    "sourceCollection": "indian_scenario_expansion_2026_07",
+    "subjectCount": 1,
+    "packagingType": "stand_up_pouch",
+    "bagMaterial": "matte indigo laminate",
+    "closure": "heat-sealed top with zipper ridge, tear notches, and front valve",
+    "labelType": "bilingual English and Devanagari front label with rear retail information block",
+    "sizeClass": "250 g whole bean stand-up pouch",
+    "viewContext": "overnight train upper-berth tray and window ledge",
+    "cameraAngle": "close front and rear phone views from a train seat",
+    "handling": "free_standing_on_train_tray",
+    "culturalDesignCues": [
+      "fictional Indian railway platform illustration",
+      "MRP and packed-on fields in an India retail layout",
+      "English headline with secondary Devanagari roaster text",
+      "messy overnight train tray with generic ticket stub and steel cup"
+    ],
+    "localLabelConventions": [
+      "Net Qty",
+      "MRP",
+      "Packed On",
+      "Best Before",
+      "incl. of all taxes",
+      "fictional food-safety style panel"
+    ],
+    "riskTags": [
+      "en_in_label",
+      "hindi_secondary_text",
+      "stand_up_pouch",
+      "degassing_valve",
+      "train_tray_table",
+      "night_glare",
+      "single_package",
+      "two_sided"
+    ],
+    "imperfections": [
+      "crumbs on tray",
+      "creased pouch edges",
+      "window reflections",
+      "partly dirty receipt",
+      "slightly harsh phone flash"
+    ],
+    "bagDescription": "Indian rail-themed stand-up pouch on a messy overnight train tray with one fictional coffee package, front valve, zipper ridge, ticket stub, crumbs, and uneven reflective lighting."
+  },
+  "notes": "All compliance-looking and railway-ticket text is fictional and should be treated as scene context rather than validated brand affiliation."
+}
