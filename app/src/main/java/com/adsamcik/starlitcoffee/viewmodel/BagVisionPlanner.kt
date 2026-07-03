@@ -67,6 +67,15 @@ internal object BagVisionPlanner {
         VISION_WORTHY_FIELDS.filterNot { field -> isSettledForVision(resolved[field]) }.toSet()
 
     /**
+     * Whether a field is already pinned by an authoritative non-OCR/LLM source
+     * (barcode / QR / local-match / multi-source consensus). The combine pass
+     * skips such fields so it can't override a trusted database/consensus value
+     * with a reconciliation of the AI passes.
+     */
+    fun isAuthoritativelySettled(evidence: BagFieldEvidence?): Boolean =
+        evidence != null && evidence.sourceType in AUTHORITATIVE_SOURCES
+
+    /**
      * Drop any vision candidate that would override an already-settled field;
      * keep the ones that fill a gap or refine a weak/text-only value. This is
      * the safety net that stops a vision hallucination from clobbering a

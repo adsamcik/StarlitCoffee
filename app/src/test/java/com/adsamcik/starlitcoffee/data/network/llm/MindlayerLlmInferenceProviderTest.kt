@@ -926,6 +926,94 @@ class MindlayerLlmInferenceProviderTest {
     }
 
     @Test
+    fun `parseResponse requireEvidence drops roastLevel with no evidence`() {
+        val json = """
+            { "fields": {
+                "roastLevel": {"value": "Dark", "status": "found"},
+                "origin":     {"value": "Ethiopia", "status": "found"}
+            } }
+        """.trimIndent()
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(
+            json,
+            emptySet(),
+            requireEvidenceFor = setOf("roastLevel"),
+        )
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+
+        assertTrue(
+            "A confident roastLevel with no quotable evidence must abstain",
+            candidates.none { it.fieldName == "roastLevel" },
+        )
+        // Non-evidence-required fields are unaffected.
+        assertTrue(candidates.any { it.fieldName == "origin" && it.value == "Ethiopia" })
+    }
+
+    @Test
+    fun `parseResponse requireEvidence keeps roastLevel with substantive evidence`() {
+        val json = """
+            { "fields": {
+                "roastLevel": {"value": "Dark", "status": "found", "evidence": "printed word 'Dark'"}
+            } }
+        """.trimIndent()
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(
+            json,
+            emptySet(),
+            requireEvidenceFor = setOf("roastLevel"),
+        )
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+
+        assertEquals("Dark", candidates.first { it.fieldName == "roastLevel" }.value)
+    }
+
+    @Test
+    fun `parseResponse requireEvidence drops roastLevel with sentinel evidence`() {
+        val json = """
+            { "fields": {
+                "roastLevel": {"value": "Medium", "status": "uncertain", "evidence": "unknown"}
+            } }
+        """.trimIndent()
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(
+            json,
+            emptySet(),
+            requireEvidenceFor = setOf("roastLevel"),
+        )
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+
+        assertTrue(candidates.none { it.fieldName == "roastLevel" })
+    }
+
+    @Test
+    fun `parseResponse without requireEvidence keeps roastLevel lacking evidence`() {
+        val json = """{ "fields": { "roastLevel": {"value": "Dark", "status": "found"} } }"""
+
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, emptySet())
+        val candidates = (result as LlmExtractionResult.Success).fieldCandidates
+
+        assertEquals("Dark", candidates.first { it.fieldName == "roastLevel" }.value)
+    }
+
+    @Test
+    fun `EVIDENCE_REQUIRED_FIELDS contains roastLevel`() {
+        assertTrue(MindlayerLlmInferenceProvider.EVIDENCE_REQUIRED_FIELDS.contains("roastLevel"))
+    }
+
+    @Test
+    fun `prompts disambiguate process from bean-form with a contrastive example`() {
+        val vision = MindlayerLlmInferenceProvider.VISION_SYSTEM_PROMPT
+        assertTrue(
+            "Vision prompt must contrast a bean-form + method line to process = the method",
+            vision.contains("Whole Bean") && vision.contains("Washed"),
+        )
+        assertTrue(
+            "Vision prompt must ask the model to classify method vs bean-form",
+            vision.contains("CLASSIFY"),
+        )
+    }
+
+    @Test
     fun `VISION_SYSTEM_PROMPT forbids inferring roast level from bag or bean darkness`() {
         val prompt = MindlayerLlmInferenceProvider.VISION_SYSTEM_PROMPT
 

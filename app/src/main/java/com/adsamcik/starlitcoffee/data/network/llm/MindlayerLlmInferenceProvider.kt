@@ -427,7 +427,7 @@ class MindlayerLlmInferenceProvider(
             }
             android.util.Log.d(MINDLAYER_LLM_TAG, "Vision inference complete: ${responseText.length} chars")
             recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
-            parseResponse(responseText, request.fieldsNeeded)
+            parseResponse(responseText, request.fieldsNeeded, requireEvidenceFor = EVIDENCE_REQUIRED_FIELDS)
         } catch (_: TimeoutCancellationException) {
             recordPass(
                 LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
@@ -682,6 +682,12 @@ Field definitions — what each field is, and what does NOT belong in it:
   ("beans", "whole bean", "whole beans", "ground", "ground coffee"), and NOT
   "Decaf". If the only candidate is a bean-form/packaging word, process is
   not_visible — do not report it as the processing method.
+  Before you fill process, CLASSIFY the candidate token: is it a processing
+  METHOD (HOW the green coffee was prepared) or a packaging / BEAN-FORM term
+  (how it is sold)? Only a method belongs in process. These two often sit right
+  next to each other on the label, so read them apart:
+    * label line "Whole Bean · Washed"  -> process = "Washed"  (NOT "Whole Bean")
+    * label marked only "Ground"          -> process = not_visible
 - roastLevel: "Light", "Medium", "Dark", or the roast PURPOSE "Filter" /
   "Espresso" / "Omni" (what it was roasted FOR). CRITICAL: NEVER infer the roast
   level from the bag colour, the bean colour, or the overall darkness of the
@@ -691,6 +697,11 @@ Field definitions — what each field is, and what does NOT belong in it:
   filled dot / ticked box on a light-to-dark scale) is actually printed and
   legible on the label. If neither a roast word nor a roast-scale mark is
   legible, set roastLevel to not_visible — never guess from appearance.
+  When you DO report roastLevel you MUST also fill an "evidence" string that
+  quotes the exact printed roast WORD or describes the exact filled/ticked MARK
+  you read (e.g. "printed word 'Dark'", "4th of 5 roast dots filled"). The
+  colour or darkness of the bag or the beans is NOT evidence — if your only
+  basis is appearance, set roastLevel to not_visible and leave evidence empty.
 - tastingNotes: flavour descriptors, lowercase, comma-separated. TRANSLATE every
   descriptor to its common English name by MEANING, even a single word and even
   when it looks like a name or looks English — e.g. Italian "mirtillo" -> blueberry,
@@ -742,7 +753,7 @@ Response format (JSON only, no markdown):
   "fields": {
     "name":       {"value": "Tumbaga",      "status": "found"},
     "roaster":    {"value": "Acme",          "status": "found"},
-    "roastLevel": {"value": "Medium-Light",  "status": "found"},
+    "roastLevel": {"value": "Medium-Light",  "status": "found", "evidence": "3rd of 5 roast dots filled"},
     "isDecaf":    {"value": null,            "status": "not_visible"}
   }
 }
@@ -934,7 +945,7 @@ Rules:
 - name vs roaster: `name` is the product / blend; `roaster` is the company brand. Do not confuse the two.
 - Universal field-type guards (apply regardless of language):
   * Words that describe a coffee PROCESS (the local-language word for "washed", "natural", "honey", "anaerobic", "wet-hulled", etc.) or a ROAST ACTION (the local-language word for "roasted", "roast", "roasting", etc.) are NEVER `origin`, `name`, or `roaster`. They describe how the coffee was made or roasted, never where it came from or what it's called.
-  * Words that describe BEAN FORM (the local-language word for "beans", "whole bean", "ground", etc.) are NEVER `process`. Emit `not_visible` for `process` if only bean-form words are present.
+  * Words that describe BEAN FORM (the local-language word for "beans", "whole bean", "ground", etc.) are NEVER `process`. Classify each candidate as a processing METHOD or a packaging/BEAN-FORM term first; only a method fills `process`. When both appear together (e.g. "Whole Bean, Washed") emit `process` = "Washed"; emit `not_visible` for `process` if only bean-form words are present.
   * Measurement and date strings (numbers + a unit like "m", "g", "kg", "%", or a date in any format) are NEVER `name`, `roaster`, or `origin`. Emit `not_visible` if no real proper-noun value is present.
   * A bare botanical species name ("Arabica", "Robusta") is NEVER `origin` (it is not a country) and is NOT a distinguishing `variety` either — emit `not_visible` for whichever field it would otherwise fill.
   * `roastDate` must be an actual calendar date legibly present in the OCR text — never invent one, and never report a relative/descriptive phrase ("3 months from roast date") as if it were a date; emit `not_visible` if no real date is present.
@@ -1011,6 +1022,10 @@ Field definitions — what each field is, and what does NOT belong in it:
   "Carbonic Maceration", etc. NOT a roast word, NOT a bean-form/packaging word
   ("beans", "whole bean", "whole beans", "ground", "ground coffee"), and NOT
   "Decaf". If the only candidate is a bean-form/packaging word, not_visible.
+  First CLASSIFY the token: processing METHOD (how it was prepared) vs. a
+  packaging / BEAN-FORM term (how it is sold) — only a method belongs here. They
+  often appear together, so e.g. "Whole Bean · Washed" -> process = "Washed"
+  (NOT "Whole Bean"); a bag marked only "Ground" -> process = not_visible.
 - roastLevel: "Light", "Medium", "Dark", or the roast PURPOSE "Filter" /
   "Espresso" / "Omni" (what it was roasted FOR). For a marked roast-purpose
   choice (options with one ticked / circled), output ONLY the marked option; if
@@ -1175,8 +1190,9 @@ Pick the single best value for each requested field:
   is not_visible. A bare botanical species name ("Arabica", "Robusta") from
   either pass is NEVER origin and NEVER a distinguishing variety — treat it as
   not_visible for that field even if one pass reported it. A bean-form/packaging
-  word ("whole bean", "ground") from either pass is NEVER process — not_visible
-  if that is the only candidate.
+  word ("whole bean", "ground") from either pass is NEVER process — classify
+  method vs. bean-form and keep only a real method (e.g. from "Whole Bean,
+  Washed" keep process = "Washed"); not_visible if that is the only candidate.
 - tastingNotes is a comma-separated LIST: translate any remaining non-English
   flavour word to English by meaning, then MERGE the two passes' notes and
   DEDUPLICATE — two entries that are the same flavour in different languages
@@ -1286,6 +1302,7 @@ Response format (JSON only, no markdown):
         internal fun parseResponse(
             response: String,
             fieldsNeeded: Set<String>,
+            requireEvidenceFor: Set<String> = emptySet(),
         ): LlmExtractionResult {
             val cleaned = response.trim()
                 .removePrefix("```json").removePrefix("```")
@@ -1314,7 +1331,11 @@ Response format (JSON only, no markdown):
                 if (fieldsNeeded.isNotEmpty() && fieldName !in fieldsNeeded) {
                     null
                 } else {
-                    extractFieldCandidate(fieldName, fieldsObj[jsonKey])
+                    extractFieldCandidate(
+                        fieldName,
+                        fieldsObj[jsonKey],
+                        requireEvidence = fieldName in requireEvidenceFor,
+                    )
                 }
             }.toMutableList()
 
@@ -1343,14 +1364,16 @@ Response format (JSON only, no markdown):
          *  * Legacy flat `"name": "value"` (older deployments).
          *
          * Returns `null` when the field is missing, marked `not_visible`, has an
-         * empty value, or the model placed a STATUS/sentinel token in the value
+         * empty value, the model placed a STATUS/sentinel token in the value
          * slot (e.g. flat `"roastLevel": "not_visible"`, or a nested
-         * `{"value": "not_visible", "status": "found"}`) — those are never real
-         * field values and must not surface as chips.
+         * `{"value": "not_visible", "status": "found"}`), or — when
+         * [requireEvidence] is set — the entry lacks a substantive `evidence`
+         * string. Those are never real field values and must not surface as chips.
          */
         private fun extractFieldCandidate(
             fieldName: String,
             fieldEntry: kotlinx.serialization.json.JsonElement?,
+            requireEvidence: Boolean = false,
         ): BagFieldCandidate? {
             val (value, status) = when {
                 fieldEntry is JsonObject -> {
@@ -1367,6 +1390,7 @@ Response format (JSON only, no markdown):
             }
             if (value.isNullOrBlank() || status == "not_visible") return null
             if (value.trim().lowercase() in SENTINEL_NON_VALUES) return null
+            if (requireEvidence && !hasSubstantiveEvidence(fieldEntry)) return null
             val normalized = normalizeControlledValue(fieldName, value.trim())
             if (normalized.isBlank()) return null
             return BagFieldCandidate(
@@ -1382,19 +1406,43 @@ Response format (JSON only, no markdown):
         }
 
         /**
+         * Phase 1 — evidence-grounded abstention for confident-wrong visual
+         * fields (roastLevel). A "found"/"uncertain" value with no quotable
+         * printed-word/mark evidence is the signature of a guess from bag or bean
+         * appearance; treat it as unsubstantiated so the field abstains instead
+         * of surfacing a confident hallucination. A structural presence check on
+         * the model's OWN stated justification, not a value dictionary.
+         */
+        private fun hasSubstantiveEvidence(fieldEntry: kotlinx.serialization.json.JsonElement?): Boolean {
+            val evidence = (fieldEntry as? JsonObject)
+                ?.get("evidence")
+                ?.let { e -> if (e is JsonNull) null else e.jsonPrimitive.contentOrNull }
+                ?.trim()
+            return !evidence.isNullOrBlank() && evidence.lowercase() !in SENTINEL_NON_VALUES
+        }
+
+        /**
          * Idea #6 — deterministic enum normalization for controlled-vocabulary
          * fields, the pragmatic stand-in for true grammar-constrained decoding.
          *
          * The SDK exposes structured output (`JsonOutputBuilder` +
-         * `structured_output` envelope), but the `infer { ... }` builder's
-         * `outputJson(...)` is a NON-FUNCTIONAL surface at the pinned SDK
-         * `1.0.0-alpha.2`: it records `OutputMode.Json`, yet `sessionConfigureFrom`
-         * only consumes `OutputMode.Tools`, so the schema is silently dropped and
-         * no validation/retry runs. The only wired path (`SessionScope
-         * .extraContextJson` carrying a hand-built `structured_output` envelope)
-         * additionally depends on the connected service supporting the feature,
-         * which cannot be validated on-device right now. So the deterministic
-         * enum-snap stays in place pending an SDK bump that wires `OutputMode.Json`.
+         * `structured_output` envelope). Historically the `infer { ... }` builder's
+         * `outputJson(...)` was a NON-FUNCTIONAL surface at the pinned SDK
+         * `1.0.0-alpha.2`: it recorded `OutputMode.Json`, yet `sessionConfigureFrom`
+         * only consumed `OutputMode.Tools`, so the schema was silently dropped and
+         * no validation/retry ran. That wiring bug has since been FIXED upstream in
+         * Mindlayer `main` (`infer { outputJson(schema) }` / `extractJson` now emit
+         * the `structured_output` envelope, and its `enum`/type is validated
+         * server-side, generate→validate→retry→fail-closed). Adopting it here to
+         * enum-constrain `process`/`roastLevel` (a preventive control, distinct from
+         * this reactive snap) is a follow-up gated on an SDK version bump — the app
+         * still depends on the un-republished pinned build. Until then the
+         * deterministic enum-snap below stays as the interim stand-in. NOTE: the
+         * upstream mechanism is post-hoc validate-and-retry, not token-masked
+         * grammar-constrained decoding, so it catches an out-of-enum value
+         * ("Whole Bean" for process) but not a valid-but-hallucinated one
+         * ("Dark" roast guessed from a dark bag — that is handled by the vision
+         * evidence-requirement in `extractFieldCandidate`).
          *
          * For roastLevel, strip a trailing "Roast"/"Roasted" qualifier so the
          * model's "Light Roast" collapses to the canonical "Light" (the corpus
@@ -1407,6 +1455,17 @@ Response format (JSON only, no markdown):
         }
 
         private val ROAST_SUFFIX = Regex("(?i)\\s+roast(ed)?\\s*$")
+
+        /**
+         * Fields for which the VISION pass must supply a quotable `evidence`
+         * string (printed word or scale mark) before a value is trusted. These
+         * are the visual-inference-prone fields where the model is otherwise
+         * prone to a CONFIDENT guess from appearance (e.g. reading a "dark" roast
+         * off a dark bag). Enforced only on vision — the text passes read OCR and
+         * cannot guess from appearance, so requiring evidence there would only
+         * suppress legitimate reads.
+         */
+        internal val EVIDENCE_REQUIRED_FIELDS: Set<String> = setOf("roastLevel")
 
         /**
          * Tokens that are status flags / placeholders, never real field values.

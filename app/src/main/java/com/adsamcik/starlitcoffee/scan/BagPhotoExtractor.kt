@@ -52,6 +52,7 @@ import com.adsamcik.starlitcoffee.util.NormalizedCoffeeField
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
+import com.adsamcik.starlitcoffee.viewmodel.BagVisionPlanner
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
@@ -69,59 +70,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeout
 
 data class OffLookupSummary(val name: String?, val brand: String?)
-
-private object BagPhotoVisionPlanner {
-    // The vision pass reads the cropped label image. It can recover both
-    // visual-only details (roast-dot scale, decaf icon) AND proper-noun /
-    // concept fields that OCR garbled, giving the combine pass a genuine second
-    // reading to reconcile against. Structural numeric/date fields (weight,
-    // altitude, dates) are left to OCR, which is more reliable on exact digits.
-    private val VISION_WORTHY_FIELDS: Set<String> = setOf(
-        "name",
-        "roaster",
-        "origin",
-        "region",
-        "farm",
-        "variety",
-        "processType",
-        "roastLevel",
-        "tastingNotes",
-        "isDecaf",
-    )
-
-    private val AUTHORITATIVE_SOURCES: Set<BagFieldSourceType> = setOf(
-        BagFieldSourceType.BARCODE_LOOKUP,
-        BagFieldSourceType.LOCAL_BARCODE_MATCH,
-        BagFieldSourceType.QR_LINK_LOOKUP,
-        BagFieldSourceType.OBSERVED_BARCODE_STEM,
-        BagFieldSourceType.CONSENSUS,
-    )
-
-    fun selectVisionFields(resolved: Map<String, BagFieldEvidence>): Set<String> =
-        VISION_WORTHY_FIELDS.filterNot { field -> isSettledForVision(resolved[field]) }.toSet()
-
-    fun filterVisionCandidates(
-        visionCandidates: List<BagFieldCandidate>,
-        resolved: Map<String, BagFieldEvidence>,
-    ): List<BagFieldCandidate> =
-        visionCandidates.filterNot { candidate -> isSettledForVision(resolved[candidate.fieldName]) }
-
-    /**
-     * Whether a field is already pinned by an authoritative non-OCR/LLM source
-     * (barcode / QR / local-match / multi-source consensus). The combine pass
-     * skips such fields so it can't override a trusted database/consensus value
-     * with a reconciliation of the AI passes.
-     */
-    fun isAuthoritativelySettled(evidence: BagFieldEvidence?): Boolean =
-        evidence != null && evidence.sourceType in AUTHORITATIVE_SOURCES
-
-    private fun isSettledForVision(evidence: BagFieldEvidence?): Boolean {
-        if (evidence == null) return false
-        if (evidence.sourceType in AUTHORITATIVE_SOURCES) return true
-        return evidence.sourceType == BagFieldSourceType.OCR &&
-            evidence.confidence == BagFieldConfidence.HIGH
-    }
-}
 
 /**
  * Maps pipeline stages to monotonic [ScanProgress] snapshots. The concrete
@@ -809,6 +757,30 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         BagFieldConfidence.NEEDS_REVIEW -> BagFieldConfidence.NEEDS_REVIEW
     }
 
+    /**
+     * Phase 1 — image-quality-aware confidence attenuation for LLM/vision
+     * candidates. The provider sets a candidate's confidence purely from the
+     * model's self-reported status (`found` -> HIGH). But a confident read off a
+     * blurry / glared / under-exposed golden frame is exactly how a vision
+     * hallucination (e.g. a roast level guessed from a dark bag) enters
+     * consensus at full weight. When the chosen frame is degraded, drop each LLM
+     * candidate's confidence one step (mirroring [inferredConfidence]) so a poor
+     * photo cannot yield a HIGH-weight value. OCR candidates already get this via
+     * [confidenceHintForPass]; this gives the LLM path parity while keeping the
+     * provider itself image-quality-agnostic.
+     */
+    private fun attenuateLlmConfidenceForQuality(
+        candidates: List<BagFieldCandidate>,
+        quality: BagCaptureQuality?,
+    ): List<BagFieldCandidate> {
+        if (quality == null || !isDegradedForLlm(quality)) return candidates
+        return candidates.map { it.copy(confidenceHint = inferredConfidence(it.confidenceHint)) }
+    }
+
+    /** A frame is "degraded" for LLM-trust purposes if it is soft, glared, or poorly exposed. */
+    private fun isDegradedForLlm(quality: BagCaptureQuality): Boolean =
+        !quality.sharpEnough || !quality.glareOkay || !quality.exposureOkay
+
     private fun coffeeProducingCountryFromTag(tag: String): String? {
         val countryPart = tag.substringAfter(":", tag)
             .replace("-", " ")
@@ -1058,6 +1030,12 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
     ): LlmEnrichmentOutcome {
         if (!runLlm) return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.NOT_RUN)
 
+        // Phase 1 — the golden frame (sharpest) drives every LLM/vision pass;
+        // its capture quality gates how much we trust the model's confident
+        // reads (a value read off a blurry/glared/dark frame must not enter
+        // consensus at HIGH weight).
+        val goldenQuality = processedPhotos.maxByOrNull { it.quality.blurScore }?.quality
+
         reporter.report(ScanStage.LLM_EXTRACT)
         val llmOutcome = tryLlmEnrichment(
             photoUriList = photoUriList,
@@ -1066,19 +1044,23 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             combinedOcrText = combinedOcrText,
             knownFieldValues = currentKnownValues,
         )
-        allCandidates += llmOutcome.candidates
+        val textCandidates = attenuateLlmConfidenceForQuality(llmOutcome.candidates, goldenQuality)
+        allCandidates += textCandidates
 
         reporter.report(ScanStage.VISION)
-        val visionCandidates = runVisionEnrichmentIfNeeded(
-            photoUriList = photoUriList,
-            processedPhotos = processedPhotos,
-            existingCandidates = allCandidates.toList(),
+        val visionCandidates = attenuateLlmConfidenceForQuality(
+            runVisionEnrichmentIfNeeded(
+                photoUriList = photoUriList,
+                processedPhotos = processedPhotos,
+                existingCandidates = allCandidates.toList(),
+            ),
+            goldenQuality,
         )
         allCandidates += visionCandidates
 
         reporter.report(ScanStage.COMBINING)
         allCandidates += runCombineEnrichmentIfNeeded(
-            textPassCandidates = llmOutcome.candidates,
+            textPassCandidates = textCandidates,
             visionPassCandidates = visionCandidates,
             allCandidates = allCandidates.toList(),
             knownFieldValues = currentKnownValues,
@@ -1094,7 +1076,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
     ): List<BagFieldCandidate> {
         if (!llmProvider.supportsVision() || !llmProvider.isAvailable()) return emptyList()
         val preVisionEvidence = resolveBagPhotoFieldEvidence(existingCandidates)
-        val visionFields = BagPhotoVisionPlanner.selectVisionFields(preVisionEvidence)
+        val visionFields = BagVisionPlanner.selectVisionFields(preVisionEvidence)
         if (visionFields.isEmpty()) return emptyList()
 
         val visionOutcome = tryVisionLlmEnrichment(
@@ -1104,7 +1086,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             fieldsNeeded = visionFields,
             knownFieldValues = currentKnownValues,
         )
-        return BagPhotoVisionPlanner.filterVisionCandidates(visionOutcome.candidates, preVisionEvidence)
+        return BagVisionPlanner.filterVisionCandidates(visionOutcome.candidates, preVisionEvidence)
     }
 
     /**
@@ -1135,7 +1117,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
 
         val settled = resolveBagPhotoFieldEvidence(allCandidates)
         val fieldsNeeded = (textPassFields.keys + visionPassFields.keys)
-            .filterNot { BagPhotoVisionPlanner.isAuthoritativelySettled(settled[it]) }
+            .filterNot { BagVisionPlanner.isAuthoritativelySettled(settled[it]) }
             .toSet()
         if (fieldsNeeded.isEmpty()) return emptyList()
 

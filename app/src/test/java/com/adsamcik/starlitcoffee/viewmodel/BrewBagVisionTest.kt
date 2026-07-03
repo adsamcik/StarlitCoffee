@@ -140,4 +140,22 @@ class BrewBagVisionTest {
         val kept = BagVisionPlanner.filterVisionCandidates(listOf(lowCandidate("roastLevel")), emptyMap())
         assertEquals("an uncertain vision read may still fill an empty field", 1, kept.size)
     }
+
+    // --- isAuthoritativelySettled ---
+
+    @Test
+    fun `isAuthoritativelySettled is true only for authoritative sources`() {
+        assertTrue(
+            BagVisionPlanner.isAuthoritativelySettled(
+                evidence("origin", BagFieldSourceType.CONSENSUS, BagFieldConfidence.HIGH),
+            ),
+        )
+        assertFalse(
+            "a confident LLM read is not authoritative",
+            BagVisionPlanner.isAuthoritativelySettled(
+                evidence("origin", BagFieldSourceType.LLM, BagFieldConfidence.HIGH),
+            ),
+        )
+        assertFalse(BagVisionPlanner.isAuthoritativelySettled(null))
+    }
 }
