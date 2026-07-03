@@ -17,8 +17,13 @@ import kotlinx.serialization.json.Json
  *      cap the score below 100% — read exactAccuracy against THIS, not 100%)
  *  - decisionAccuracy = (exact + abstained) / total  (the honest "did the right
  *      thing" rate: a correct extraction OR a correct abstention both count as a win)
+ *  - practicalAccuracy = (exact + partial + abstained) / total  (most forgiving
+ *      honest rate: an acceptable partial — e.g. a superset name or a high-recall
+ *      tasting-note list — also counts. Read next to exactAccuracy to see how much
+ *      of the gap is strict-matching artifact vs. genuine model error.)
  *  - recall         = exact / visible                     (strict, exact-only)
- *  - partialRecall  = (exact + partial) / visible
+ *  - softRecall     = (exact + 0.5*partial) / visible     (graduated: partial half-credit)
+ *  - partialRecall  = (exact + partial) / visible         (partial full-credit)
  *  - precision      = exact / produced
  *  - abstentionRate = abstained / notVisible
  *  - hallucinationRate = hallucinated / notVisible
@@ -53,7 +58,24 @@ data class FieldMetrics(
      */
     val decisionAccuracy: Double? get() = ratio(exact + abstained, total)
 
+    /**
+     * Most forgiving honest rate over all cells: a correct value (EXACT), an
+     * acceptable partial (PARTIAL), OR a correct abstention all count. For the
+     * free-text fields (name, tastingNotes) whose strict EXACT threshold is
+     * deliberately harsh, this reveals how much of the exactAccuracy gap is a
+     * strict-matching artifact rather than a genuine model defect.
+     */
+    val practicalAccuracy: Double? get() = ratio(exact + partial + abstained, total)
+
     val recall: Double? get() = ratio(exact, visible)
+
+    /**
+     * Graduated recall over visible fields: EXACT full credit, PARTIAL half.
+     * The truth for a free-text field sits between [recall] (partial=0) and
+     * [partialRecall] (partial=1); this brackets it with a single number.
+     */
+    val softRecall: Double? get() = if (visible <= 0) null else (exact + 0.5 * partial) / visible
+
     val partialRecall: Double? get() = ratio(exact + partial, visible)
     val precision: Double? get() = ratio(exact, produced)
     val abstentionRate: Double? get() = ratio(abstained, notVisible)
@@ -113,13 +135,21 @@ data class QualityReport(
         appendLine("Bags evaluated: $bagsEvaluated")
         appendLine(
             "Overall: exactAcc=${pct(overall.exactAccuracy)}/${pct(overall.exactAccuracyCeiling)}ceil " +
-                "decisionAcc=${pct(overall.decisionAccuracy)} recall=${pct(overall.recall)} " +
+                "decisionAcc=${pct(overall.decisionAccuracy)} practicalAcc=${pct(overall.practicalAccuracy)} " +
+                "recall=${pct(overall.recall)} softRecall=${pct(overall.softRecall)} " +
                 "partialRecall=${pct(overall.partialRecall)} precision=${pct(overall.precision)} " +
                 "halluc=${pct(overall.hallucinationRate)} abstention=${pct(overall.abstentionRate)}",
         )
         appendLine(
             "  (exactAcc tops out at its ceiling, not 100%, because correct abstentions on absent " +
-                "fields are never \"exact\". decisionAcc counts a right value OR a right blank.)",
+                "fields are never \"exact\". decisionAcc counts a right value OR a right blank; " +
+                "practicalAcc also credits an acceptable partial. For free-text fields (name, " +
+                "tastingNotes) read exactAcc against softRecall/partialRecall to separate strict-" +
+                "matching artifact from real model error.)",
+        )
+        appendLine(
+            "  recall 95% CI: \u00b1${ciPct(overall.exact, overall.visible)}pp " +
+                "(n=${overall.visible} visible cells) \u2014 treat deltas smaller than the CI as noise.",
         )
         appendLine()
         appendLine("Per-field (\u2713 exact \u2248 partial \u2717 wrong ? missing + halluc \u00b7 abstain):")
@@ -130,7 +160,8 @@ data class QualityReport(
                     "\u2713${m.exact} \u2248${m.partial} \u2717${m.wrong} ?${m.missing} " +
                     "+${m.hallucinated} \u00b7${m.abstained}   " +
                     "exactAcc=${pct(m.exactAccuracy)} recall=${pct(m.recall)} " +
-                    "partialRecall=${pct(m.partialRecall)} halluc=${pct(m.hallucinationRate)}",
+                    "softRecall=${pct(m.softRecall)} partialRecall=${pct(m.partialRecall)} " +
+                    "halluc=${pct(m.hallucinationRate)}",
             )
         }
         appendLine()
@@ -138,7 +169,9 @@ data class QualityReport(
         for (t in perTier) {
             appendLine(
                 "  ${t.tier.padEnd(4)} bags=${t.bags} exactAcc=${pct(t.metrics.exactAccuracy)} " +
-                    "decisionAcc=${pct(t.metrics.decisionAccuracy)} recall=${pct(t.metrics.recall)} " +
+                    "decisionAcc=${pct(t.metrics.decisionAccuracy)} practicalAcc=${pct(t.metrics.practicalAccuracy)} " +
+                    "recall=${pct(t.metrics.recall)}\u00b1${ciPct(t.metrics.exact, t.metrics.visible)}pp " +
+                    "partialRecall=${pct(t.metrics.partialRecall)} " +
                     "hallucination=${pct(t.metrics.hallucinationRate)}",
             )
         }
@@ -185,6 +218,12 @@ data class QualityReport(
 
         private fun pct(value: Double?): String =
             if (value == null) "n/a" else "${(value * 100).toInt()}%"
+
+        /** 95% Wilson CI half-width (± percentage points) for successes/total. */
+        private fun ciPct(successes: Int, total: Int): String {
+            val hw = Stats.wilson95HalfWidthPct(successes, total) ?: return "n/a"
+            return hw.toInt().toString()
+        }
 
         private fun gateMark(gated: Boolean): String = if (gated) "* " else "  "
     }

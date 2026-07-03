@@ -99,6 +99,24 @@ class QualityReportTest {
     }
 
     @Test
+    fun `practical accuracy and soft recall give graduated partial credit`() {
+        // visible = exact+partial+wrong+missing = 4 ; notVisible = halluc+abstain = 2 ; total = 6
+        val m = FieldMetrics(exact = 2, partial = 2, wrong = 0, missing = 0, hallucinated = 0, abstained = 2)
+        // practicalAccuracy = (exact+partial+abstained)/total = 6/6
+        assertEquals(6.0 / 6.0, m.practicalAccuracy!!, 1e-9)
+        // recall (partial=0) = 2/4 ; softRecall (partial=0.5) = (2+1)/4 ; partialRecall (partial=1) = 4/4
+        assertEquals(2.0 / 4.0, m.recall!!, 1e-9)
+        assertEquals(3.0 / 4.0, m.softRecall!!, 1e-9)
+        assertEquals(4.0 / 4.0, m.partialRecall!!, 1e-9)
+    }
+
+    @Test
+    fun `soft recall is null when nothing is visible`() {
+        assertNull(FieldMetrics(abstained = 3).softRecall)
+        assertNull(FieldMetrics().practicalAccuracy)
+    }
+
+    @Test
     fun `text rendering includes headline metrics`() {
         val scores = listOf(score("b1", "Q0", "name" to FieldOutcome.EXACT))
         val text = QualityReport.from("hdr", scores).toText()
@@ -109,5 +127,8 @@ class QualityReportTest {
         assertTrue("must show the exactAcc ceiling", text.contains("ceil"))
         assertTrue("must show decision accuracy", text.contains("decisionAcc"))
         assertTrue("must show hallucination on the headline", text.contains("halluc="))
+        // graduated free-text metrics (Phase 0)
+        assertTrue("must show practical accuracy", text.contains("practicalAcc="))
+        assertTrue("must show soft recall", text.contains("softRecall="))
     }
 }
