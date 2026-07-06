@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Plikyti</string>
+    <string name="nav_log">Žurnalas</string>
+    <string name="nav_more">Daugiau</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Atgal</string>
+    <string name="action_close">Uždaryti</string>
+    <string name="action_cancel">Atšaukti</string>
+    <string name="action_delete">Ištrinti</string>
+    <string name="action_save">Išsaugoti pakeitimus</string>
+    <string name="action_saved">✓ Išsaugota</string>
+    <string name="action_skip">Praleisti</string>
+    <string name="action_finish">Baigti</string>
+    <string name="action_next">Toliau</string>
+    <string name="action_go_back">Grįžti</string>
+    <!-- Common labels -->
+    <string name="label_coffee">Kava</string>
+    <string name="label_water">Vanduo</string>
+    <string name="label_ratio">Santykis</string>
+    <string name="label_strength">Stiprumas</string>
+    <string name="label_grind">Malimas</string>
+    <string name="label_filter">Filtras</string>
+    <string name="label_decaf">Be kofeino</string>
+    <string name="label_decaf_suffix"> · Be kofeino</string>
+    <string name="label_loading">Įkeliama…</string>
+    <string name="label_none">Nėra</string>
+    <string name="label_taste">Skonis</string>
+    <string name="label_rating">Įvertinimas</string>
+    <string name="label_notes">Pastabos</string>
+    <string name="label_no_filter">Be filtro</string>
+    <string name="label_settings">Nustatymai</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloomas %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg puodelyje</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+    <plurals name="format_selected">
+        <item quantity="one">%1$d pasirinkta</item>
+        <item quantity="few">%1$d pasirinkta</item>
+        <item quantity="other">%1$d pasirinkta</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Sukonfigūruokite plikymą</string>
+    <string name="label_coffee_input">Kava (g)</string>
+    <string name="label_water_input">Vanduo (g)</string>
+    <string name="label_brew_size_input">Gėrimo tūris (ml)</string>
+    <string name="label_cup_size_input">Puodelio tūris (ml)</string>
+    <string name="label_brew_size">Gėrimo tūris</string>
+    <string name="label_cup_size">Puodelio tūris</string>
+    <string name="format_capacity_note">%1$s talpina %2$dg vandens — didesniems plikymams vanduo papildomas automatiškai</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Pasirinkite kavos pakuotę</string>
+    <string name="cd_clear_bag">Išvalyti pakuotę</string>
+    <string name="format_brewing_with">Plikoma su %1$s</string>
+    <string name="label_freshness">Šviežumas</string>
+    <string name="format_recommended_now">Rekomenduojama dabar: %1$s</string>
+    <string name="format_last_time">Praėjusį kartą: %1$s</string>
+    <string name="action_save_as_favorite">Išsaugoti kaip mėgstamą</string>
+    <string name="label_select_coffee_bag_title">Pasirinkite kavos pakuotę</string>
+    <string name="msg_no_active_bags">Nėra aktyvių pakuočių. Pridėkite jų skiltyje „Jūsų pupelės“.</string>
+    <string name="action_brew_without_bag">Plikyti nepasirinkus pakuotės</string>
+    <string name="label_best_now">Geriausia dabar</string>
+    <string name="format_grind_generic">Malimas: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Malimo nustatymas: %1$s–%2$s · Koreguokite pagal skonį</string>
+    <string name="format_weight_left"> · liko %1$.0fg</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Pulsar patarimas: Pildami laikykite skystį ~1cm virš kavos sluoksnio. Daugelis plikina 20–25g subalansuotam puodeliui.</string>
+    <string name="tip_generic">💡 Patarimas: Pradėkite nuo numatytojo santykio ir koreguokite stiprumą pagal skonį. Smulkesnis malimas ekstrahuoja daugiau, stambesnis — mažiau.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Plikymo nustatymai</string>
+    <string name="label_custom_ratio">Pasirinktinis santykis (pvz., 16)</string>
+    <string name="label_temperature">Temperatūra (°C)</string>
+    <string name="label_bloom_multiplier">Bloomo daugiklis (pvz., 3.0)</string>
+    <string name="label_pulse_count">Pylimų skaičius</string>
+    <string name="action_start_brewing">Pradėti plikyti →</string>
+    <string name="label_advanced_options">Išplėstinės parinktys</string>
+    <string name="cd_collapse_advanced">Suskleisti išplėstines parinktis</string>
+    <string name="cd_expand_advanced">Išskleisti išplėstines parinktis</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Kavos dozė: %1$d gramas</item>
+        <item quantity="few">Kavos dozė: %1$d gramai</item>
+        <item quantity="other">Kavos dozė: %1$d gramų</item>
+    </plurals>
+    <string name="label_decrease">Sumažinti %1$s</string>
+    <string name="label_increase">Padidinti %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Paruoškite plikymą</string>
+    <string name="action_ready_to_brew_short">Plikyti</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Paruošimas</string>
+    <string name="label_recipe_heading">Receptas</string>
+    <string name="label_temp_short">Temp.</string>
+    <string name="label_bloom_short">Bloomas</string>
+    <string name="prep_tip_pulsar_paper">Sudrėkinkite popierinį filtrą pagrinde (vožtuvas atviras) ir nusausinkite. Uždėkite cilindrą, suberkite kavą, išlyginkite sluoksnį, uždėkite paskirstymo dangtelį. Nunulinkite svarstykles.</string>
+    <string name="prep_tip_pulsar_19k">Praskalaukite 19K metalinį filtrą, kad jis prisitvirtintų ir įkaistų cilindras. Uždėkite cilindrą, suberkite kavą, išlyginkite sluoksnį, uždėkite paskirstymo dangtelį. Nunulinkite svarstykles.</string>
+    <string name="prep_tip_pulsar_40k">Praskalaukite 40K metalinį filtrą, kad įkaistų cilindras. Uždėkite cilindrą, suberkite kavą, išlyginkite sluoksnį, uždėkite paskirstymo dangtelį. Nunulinkite svarstykles.</string>
+    <string name="prep_tip_pour_over_paper">Įdėkite popierinį filtrą ir praskalaukite karštu vandeniu, kad įkaistų ir dingtų popieriaus skonis. Suberkite kavą, nunulinkite svarstykles.</string>
+    <string name="prep_tip_french_press">Pašildykite presą, tada išpilkite vandenį. Suberkite kavą, pastatykite ant svarstyklių ir nunulinkite prieš pildami vandenį.</string>
+    <string name="prep_tip_aeropress">Įdėkite praskalautą filtrą į dangtelį. Suberkite kavą, pastatykite prietaisą ant tvirto puodelio ar indo ir nunulinkite svarstykles.</string>
+    <string name="prep_tip_espresso">Nusausinkite portafiltrą. Įdėkite dozę, paskirstykite ir tolygiai suspauskite prieš įtvirtindami.</string>
+    <string name="prep_tip_moka">Pripilkite apatinę kamerą iki vožtuvo. Pripildykite krepšelį kava, išlyginkite — nespauskite. Atsargiai surinkite.</string>
+    <string name="prep_tip_cold_brew">Suberkite kavą į indą, nunulinkite svarstykles, tada įpilkite kambario temperatūros ar šalto vandens ir uždenkite.</string>
+    <string name="format_prep_grind_specific">Malimas %1$s — nustatykite %2$s į %3$s</string>
+    <string name="format_prep_grind_generic">Malimas %1$s — %2$s (%3$s)</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Pristabdyti</string>
+    <string name="action_resume">Tęsti</string>
+    <string name="cd_disable_minute_alerts">Išjungti minučių signalus</string>
+    <string name="cd_enable_minute_alerts">Įjungti minučių signalus</string>
+    <string name="cd_bloom_animation">Kavos pupelės bloomo animacija</string>
+    <string name="format_pour_bloom_water">Įpilkite %1$.0fg bloomo vandens</string>
+    <string name="format_bloom_total">Bloomas %1$.0fg · Iš viso %2$.0fg</string>
+    <string name="action_start_bloom">☕ Pradėti bloomą</string>
+    <string name="label_bloom_done">✅ Bloomas baigtas!</string>
+    <string name="action_finish_brew">Baigti plikyti</string>
+    <string name="dialog_exit_brew_title">Nutraukti plikymą?</string>
+    <string name="dialog_exit_brew_message">Dabartinio plikymo eiga bus prarasta.</string>
+    <string name="action_exit_brew">Išeiti</string>
+
+    <!-- Calculator Brew Screen -->
+    <string name="label_water_to_dose">Vanduo → Dozė</string>
+    <string name="label_dose_to_water">Dozė → Vanduo</string>
+    <string name="cd_backspace">Trinti</string>
+    <string name="action_brew">Pradėti</string>
+    <string name="label_total_water">iš viso vandens</string>
+    <!-- Settings Screen -->
+    <string name="screen_settings_title">Nustatymai</string>
+    <string name="label_settings_section_brewing">Plikymas</string>
+    <string name="label_settings_section_appearance">Išvaizda</string>
+    <string name="label_settings_section_notifications">Pranešimai</string>
+    <string name="label_settings_section_developer">Kūrėjas</string>
+    <string name="label_settings_section_when_dimmed">Kai pritemdyta</string>
+    <string name="label_display_dim_settings">Ekranas ir pritemdymo režimas</string>
+    <string name="msg_display_dim_settings_subtitle">Pritemdymo režimas, OLED juoda, ryškumas</string>
+    <string name="screen_display_settings_title">Ekranas ir pritemdymo režimas</string>
+    <string name="label_cup_presets">Puodelių šablonai</string>
+    <string name="action_add_preset">Pridėti šabloną</string>
+    <string name="action_reset_defaults">Atkurti numatytuosius</string>
+    <string name="msg_presets_hint">Šablonai rodomi kaip spartieji mygtukai skaičiuoklėje</string>
+    <string name="label_brew_methods">Plikymo būdai</string>
+    <string name="msg_methods_hint">Pasirinkti būdai rodomi pirmiausia. Bakstelėkite, kad perjungtumėte.</string>
+    <string name="label_default_method">Numatytasis būdas</string>
+    <string name="format_edit_preset">Redaguoti %1$s</string>
+    <string name="label_bloom_animation_settings">Bloomo animacijos</string>
+    <string name="msg_bloom_animation_settings_subtitle">Pasirinkite, kaip dažnai rodomas kiekvienas bloomo vaizdinys</string>
+    <string name="cd_open_bloom_animation_settings">Atverti bloomo animacijų nustatymus</string>
+    <string name="screen_bloom_animation_settings_title">Bloomo animacijos</string>
+    <string name="msg_bloom_animation_settings_hint">Bakstelėkite kiekvieną valdiklį, kad perjungtumėte tarp įprastos tikimybės, dvigubos tikimybės ir pašalinimo. Jei pašalinami visi vaizdiniai, bloomo laikmačiai animacijos nerodo.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s nustatyta į %2$s. Bakstelėkite, kad pakeistumėte.</string>
+    <string name="label_bloom_sprite_coffee_flower">Kavos žiedas</string>
+    <string name="desc_bloom_sprite_coffee_flower">Klasikinis baltas kavos žiedas, prasiskleidžiantis iš pupelės.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Žvaigždėta kava</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Kreminės auksinės garų lapelės su mažyčiais žvaigždžių blyksniais.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte bloomas</string>
+    <string name="desc_bloom_sprite_coffee_latte">Švelni latte-art rozetė šiltais pieno putos tonais.</string>
+    <string name="label_bloom_sprite_coffee_plant">Kavamedis</string>
+    <string name="desc_bloom_sprite_coffee_plant">Šviežias žalias kavos daigas su poromis išsidėsčiusiais lapais.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Vyšninis pomidoras</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Kavos pupelė sudygsta į pomidorų augalą, bręstant raudoniems vaisiams.</string>
+    <string name="label_bloom_sprite_strawberry">Braškė</string>
+    <string name="desc_bloom_sprite_strawberry">Kavos pupelė sudygsta į braškės augalą su žiedais ir raudonomis uogomis.</string>
+    <string name="label_bloom_sprite_raspberry">Avietė</string>
+    <string name="desc_bloom_sprite_raspberry">Iš kavos pupelės išauga krūmas su blyškiais žiedais ir raudonų aviečių kekėmis.</string>
+    <string name="label_bloom_sprite_blueberry">Šilauogė</string>
+    <string name="desc_bloom_sprite_blueberry">Iš kavos pupelės išauga šilauogės šakelė su varpelio formos žiedais ir mėlynomis uogomis.</string>
+    <string name="label_bloom_sprite_blackberry">Gervuogė</string>
+    <string name="desc_bloom_sprite_blackberry">Iš kavos pupelės išauga dygliuoti krūmai su tamsių gervuogių kekėmis.</string>
+    <string name="label_bloom_sprite_coffee_brew">Kavos gėrimas</string>
+    <string name="desc_bloom_sprite_coffee_brew">Gintarinis kavos švytėjimas su kreminiais garų sūkuriais.</string>
+    <string name="label_bloom_sprite_rose">Rožė</string>
+    <string name="desc_bloom_sprite_rose">Kompaktiška raudona rožė, skleidžiasi virš pupelės.</string>
+    <string name="label_bloom_sprite_lotus">Lotosas</string>
+    <string name="desc_bloom_sprite_lotus">Kreminis lotoso žiedas su sluoksniuotais taurės formos lapeliais.</string>
+    <string name="label_bloom_sprite_sunflower">Saulėgrąža</string>
+    <string name="desc_bloom_sprite_sunflower">Ryški saulėgrąža su auksiniais lapeliais ir tamsia šerdimi.</string>
+    <string name="label_bloom_sprite_orchid">Orchidėja</string>
+    <string name="desc_bloom_sprite_orchid">Trapi balta orchidėja su apvaliais lapeliais.</string>
+    <string name="label_bloom_sprite_jasmine">Jazminas</string>
+    <string name="desc_bloom_sprite_jasmine">Švelnus baltas jazmino žiedas, primenantis vėjo malūnėlio formą.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Kraujuojanti širdis</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Iš pupelės kyla lenkti stiebai su rožinėmis širdies formos gėlėmis ir baltais lašo formos galiukais.</string>
+    <string name="label_bloom_sprite_passionflower">Pasiflora</string>
+    <string name="desc_bloom_sprite_passionflower">Besiraitantys ūgliai virš pupelės prasiskleidžia į puošnią violetinę ir baltą pasiflorą.</string>
+    <string name="label_bloom_sprite_bee_orchid">Bičių orchidėja</string>
+    <string name="desc_bloom_sprite_bee_orchid">Rožiniai orchidėjos lapeliai atskleidžia tamsias bitės formos lūpeles ant plonų stiebų.</string>
+    <string name="label_bloom_sprite_jade_vine">Nefrito vijoklis</string>
+    <string name="desc_bloom_sprite_jade_vine">Besivijantis augalas nuo pupelės nuleidžia turkio spalvos nefrito žiedų kekes.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Rojaus paukštė</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Oranžiniai ir tamsiai mėlyni strelicijos žiedlapiai prasiskleidžia iš stačių žalių lapų.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Mėlynoji Himalajų aguona</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Nusviręs pumpuras prasiskleidžia į dangaus mėlynumo aguoną su auksiniais kuokeliais.</string>
+    <string name="label_bloom_sprite_rafflesia">Raflezija</string>
+    <string name="desc_bloom_sprite_rafflesia">Raudonai dėmėtas parazitinis žiedas išbrinksta į didžiulę penkialapę gėlę.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Šokoladinė kosmėja</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Plunksniški lapai iškelia aksominius tamsiai bordo kosmėjos žiedus iš pupelės.</string>
+    <string name="label_bloom_sprite_flame_lily">Liepsnojanti lelija</string>
+    <string name="desc_bloom_sprite_flame_lily">Besiraitantys liepsnos spalvos lelijos žiedlapiai kyla ant ūseliais apraizgytų žalių stiebų.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Nakties karalienė</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Kaktuso stiebas prasiskleidžia į įspūdingą sluoksniuotą baltą naktinį žiedą.</string>
+    <string name="label_bloom_sprite_snowdrop">Snieguolė</string>
+    <string name="desc_bloom_sprite_snowdrop">Trapūs balti snieguolės varpeliai kyla iš įtrūkusios pupelės.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Iš pupelės prasiskleidžia mažyčiai mėlyni neužmirštuolės žiedeliai su geltonomis šerdimis.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Plikymo žurnalas</string>
+    <string name="msg_log_empty_title">Pradėkite plikyti, kad pamatytumėte istoriją</string>
+    <string name="msg_log_empty_subtitle">Kiekvienas užbaigtas plikymas su atsiliepimu bus rodomas čia</string>
+    <string name="msg_select_brew_log">Pasirinkite plikymo įrašą, kad matytumėte išsamią informaciją</string>
+    <string name="action_rate_brew">Įvertinti kavą</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Plikymo informacija</string>
+    <string name="dialog_delete_brew_title">Ištrinti plikymo įrašą?</string>
+    <string name="dialog_delete_brew_message">Šio veiksmo anuliuoti nebus galima.</string>
+    <string name="label_coffee_bag">Kavos pakuotė</string>
+    <string name="label_brew_time">Plikymo laikas</string>
+    <string name="label_coffee_type">Kavos tipas</string>
+    <string name="label_flavor_notes">Skonio natos</string>
+    <string name="hint_add_notes">Pridėti pastabų…</string>
+    <string name="msg_brew_not_found">Plikymo įrašas nerastas</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Jūsų mėgstami</string>
+    <string name="msg_no_favorites_title">Kol kas nėra mėgstamų</string>
+    <string name="msg_no_favorites_subtitle">Išsaugokite receptą plikymo ekrane paspaudę ♡ mygtuką</string>
+    <string name="label_untitled">Be pavadinimo</string>
+    <string name="format_recipe_summary">%1$sg kavos / %2$sg vandens</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Pritaikykite plikymą sau</string>
+    <string name="label_pulsar_filter_type">Pulsar filtro tipas</string>
+    <string name="msg_filter_hint">Turi įtakos puodelio profiliui ir malimo rekomendacijoms</string>
+    <string name="label_your_grinder">Jūsų malūnėlis</string>
+    <string name="msg_grinder_hint">Nebūtina — įgalina konkrečias malimo rekomendacijas. Pasirinkite „Nėra malūnėlio / Kita“, jei jūsiškio sąraše nėra.</string>
+    <string name="label_no_grinder">Nėra malūnėlio / Kita</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Kuo plikote kavą?</string>
+    <string name="msg_methods_subtitle">Pasirinkite plikymo būdus. Bakstelėkite ★, kad nustatytumėte numatytąjį.</string>
+    <string name="label_set_as_default">Nustatyti numatytuoju</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Daugiau</string>
+    <string name="label_your_favorites">Jūsų mėgstami</string>
+    <string name="msg_favorites_subtitle">Pakartokite mėgstamus plikymus</string>
+    <string name="label_your_beans">Jūsų pupelės</string>
+    <string name="msg_beans_subtitle">Šviežumas, atsargos ir ką plikyti toliau</string>
+    <string name="msg_settings_subtitle">Būdai, malūnėlis ir nuostatos</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Norint nuskaityti brūkšninius kodus, reikalingas kameros leidimas</string>
+    <string name="msg_point_camera">Nukreipkite kamerą į brūkšninį kodą</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Plikymas išsaugotas! Įvertinkite jį paragavę.</string>
+    <string name="snackbar_action_view_log">Peržiūrėti žurnalą</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Plikymo įvertinimo priminimai</string>
+    <string name="notif_channel_rating_reminder_desc">Švelnus priminimas maždaug po 30 minučių, kad įvertintumėte kavą, kol skonis dar šviežias.</string>
+    <string name="notif_rating_title">Kaip jūsų kava?</string>
+    <string name="format_notif_rating_title">Kaip jūsų %1$s kava?</string>
+    <string name="notif_rating_body">Bakstelėkite jaustuką, kad įvertintumėte, arba atverkite programėlę, jei norite daugiau.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Įvertinti 1 iš 5 žvaigždučių</string>
+    <string name="cd_notif_rating_2">Įvertinti 2 iš 5 žvaigždučių</string>
+    <string name="cd_notif_rating_3">Įvertinti 3 iš 5 žvaigždučių</string>
+    <string name="cd_notif_rating_4">Įvertinti 4 iš 5 žvaigždučių</string>
+    <string name="cd_notif_rating_5">Įvertinti 5 iš 5 žvaigždučių</string>
+
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analizuojama jūsų pakuotė</string>
+    <string name="msg_analyzing_bag_subtitle">DI skaito etiketę, kad užpildytų informaciją. Tai gali šiek tiek užtrukti.</string>
+    <string name="msg_analyzing_bag_background_hint">Galite toliau naudotis programėle — pranešime, kai bus baigta.</string>
+    <string name="action_skip_ai">Praleisti DI</string>
+    <string name="action_run_in_background">Tęsti fone</string>
+    <string name="notif_channel_bag_analysis">Pakuotės analizė</string>
+    <string name="notif_channel_bag_analysis_desc">Praneša, kai DI baigia skaityti kavos pakuotės etiketę.</string>
+    <string name="notif_scan_progress_title">Skaitoma pakuotės etiketė…</string>
+    <string name="notif_bag_analysis_title">Pakuotės analizė baigta</string>
+    <string name="notif_bag_analysis_body">Bakstelėkite, kad peržiūrėtumėte rastą informaciją.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Skaitoma etiketė…</string>
+    <string name="scan_stage_barcode">Ieškoma brūkšninio kodo…</string>
+    <string name="scan_stage_llm">Suprantami duomenys…</string>
+    <string name="scan_stage_crop">Ieškoma etiketės…</string>
+    <string name="scan_stage_vision">Tikrinamas etiketės vaizdas…</string>
+    <string name="scan_stage_combine">Sujungiami rezultatai…</string>
+    <string name="scan_stage_finalizing">Užbaigiama…</string>
+    <string name="format_scan_stage_step">%1$d žingsnis iš %2$d</string>
+    <string name="format_notif_bag_analysis_body">Bakstelėkite, kad peržiūrėtumėte %1$s.</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Įvertinimo priminimas</string>
+    <string name="msg_rating_reminder_hint">Siųsti pranešimą maždaug po 30 minučių, kad galėtumėte įvertinti kavą, kol skonis dar šviežias.</string>
+    <string name="msg_rating_reminder_perm_denied">Pranešimai užblokuoti. Įjunkite juos sistemos nustatymuose, kad gautumėte priminimus.</string>
+    <string name="action_open_app_settings">Atverti sistemos nustatymus</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Vandens sulaikymas</string>
+    <string name="format_retention_explanation">Malta kava sugeria maždaug 2× savo sauso svorio vandens. Su %1$.0fg kavos tirščiai sulaiko ~%2$.0fg, tad puodelyje lieka ~%3$.0fg.\n\nTai apytikslis įvertis — tamsiai skrudinta kava sugeria šiek tiek daugiau, šviesiai skrudinta — šiek tiek mažiau.</string>
+    <string name="cd_about_cup_volume">Apie puodelio tūrį</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+    <string name="label_target">Tikslas</string>
+    <!-- Grind notes -->
+    <!-- Dose notes -->
+    <!-- Brew Method names -->
+    <!-- Ratio presets -->
+    <string name="format_ratio_bright">Ryškus · 1:%1$d</string>
+    <string name="format_ratio_balanced">Subalansuotas · 1:%1$d</string>
+    <string name="format_ratio_rich">Sodrus · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+    <!-- Input Mode -->
+    <string name="input_coffee_to_water">Kava → Vanduo</string>
+    <string name="input_water_to_coffee">Vanduo → Kava</string>
+    <string name="input_brew_to_both">Gėrimo tūris → Abu</string>
+    <string name="input_cup_to_both">Puodelio tūris → Abu</string>
+    <string name="input_coffee_short">Kava</string>
+    <string name="input_water_short">Vanduo</string>
+    <string name="input_brew_short">Gėrimas</string>
+    <string name="input_cup_short">Puodelis</string>
+    <string name="input_coffee_desc">Įveskite kavos dozę, apskaičiuokite vandenį</string>
+    <string name="input_water_desc">Įveskite vandens kiekį, apskaičiuokite kavą</string>
+    <string name="input_brew_desc">Įveskite pageidaujamą gėrimo tūrį, apskaičiuokite kavą ir vandenį atsižvelgiant į sugertį</string>
+    <string name="input_cup_desc">Įveskite puodelio tūrį, apskaičiuokite kavą ir vandenį</string>
+
+    <!-- Phase names -->
+    <!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Įpilkite iki %1$.0fg</string>
+    <string name="instruction_pour_total">Įpilkite iki %1$.0fg iš viso</string>
+    <string name="instruction_open_valve_short">Atidarykite vožtuvą</string>
+    <string name="instruction_close_valve_short">Uždarykite vožtuvą</string>
+    <string name="instruction_bloom_wait">Pasukite ir palaukite bloomo</string>
+    <string name="instruction_french_press_start">Įpilkite visą vandenį, švelniai pamaišykite ir uždėkite dangtį</string>
+    <string name="instruction_french_press_steep">Leiskite plikytis netrikdant iki nustatyto laiko</string>
+    <string name="instruction_french_press_plunge">Lėtai nuspauskite stūmoklį, tada nupilkite kavą</string>
+    <string name="instruction_aeropress_start">Įpilkite vandens, pamaišykite ir pradėkite plikymą</string>
+    <string name="instruction_aeropress_steep">Plikykite su uždėtu dangteliu; pasiruoškite spausti</string>
+    <string name="instruction_aeropress_press">Spauskite tolygiai iki šnypštimo, tada sustokite</string>
+    <string name="instruction_espresso_start">Įtvirtinkite portafiltrą ir pradėkite ekstrakciją</string>
+    <string name="instruction_espresso_pull">Stebėkite tėkmę ir išeigą; laikykite puodelį ant svarstyklių</string>
+    <string name="instruction_espresso_stop">Sustokite pasiekę tikslinę išeigą arba kai srovė pašviesėja</string>
+    <string name="instruction_moka_start">Surinkite kavinuką ir švelniai kaitinkite atidarę dangtį</string>
+    <string name="instruction_moka_flow">Stebėkite, kaip kava teka į viršutinę kamerą</string>
+    <string name="instruction_moka_remove">Nukelkite nuo ugnies, kai srovė pašviesėja arba pradeda purkšti</string>
+    <string name="instruction_cold_brew_start">Sumaišykite kavą ir vandenį, pamaišykite, kad sudrėktų visa kava</string>
+    <string name="instruction_cold_brew_steep">Uždenkite ir palikite plikytis; kava turi būti visiškai sudrėkusi</string>
+    <string name="instruction_cold_brew_filter">Nufiltruokite koncentratą ir atvėsinkite arba atskieskite prieš patiekdami</string>
+
+    <!-- Warnings -->
+    <!-- Taste Feedback -->
+    <string name="feedback_too_sour">Per rūgšti / silpna</string>
+    <string name="feedback_balanced">Subalansuota</string>
+    <string name="feedback_too_bitter">Per karti / aitri</string>
+    <string name="feedback_astringent">Sutraukianti / sausa</string>
+    <string name="feedback_clogged">Užsikimšusi / sustojusi</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Malkite 2–4 spragtelėjimais smulkiau</string>
+    <string name="adjust_try_finer">Pabandykite smulkesnį malimo nustatymą</string>
+    <string name="adjust_no_change">Koreguoti nereikia — išsaugokite šį receptą!</string>
+    <string name="adjust_grind_coarser">Malkite 2–4 spragtelėjimais stambiau</string>
+    <string name="adjust_grind_coarser_valve">Malkite 2–4 spragtelėjimais stambiau\nPabandykite atidaryti vožtuvą anksčiau</string>
+    <string name="adjust_try_coarser">Pabandykite stambesnį malimo nustatymą</string>
+    <string name="adjust_try_coarser_water">Pabandykite stambesnį malimo nustatymą\nArba pabandykite vėsesnį vandenį</string>
+    <string name="adjust_astringent_pulsar">Padidinkite dozę iki 20g+, kad sluoksnis būtų gilesnis\nMažiau maišykite bloomo metu\nLaikykite skystį ~1cm virš sluoksnio</string>
+    <string name="adjust_astringent_grinder">Malkite šiek tiek stambiau, mažiau maišykite</string>
+    <string name="adjust_astringent_no_grinder">Malkite šiek tiek stambiau, pilkite švelniau</string>
+    <string name="adjust_clogged_pulsar_grinder">Malkite gerokai stambiau 3–5 spragtelėjimais\nMažiau maišykite (tik švelnus pasukimas)\nPatikrinkite, ar kava ne per šviežia — palaikykite 7+ dienas</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Malkite gerokai stambiau\nMažiau maišykite\nPilkite švelniai per paskirstymo dangtelį</string>
+    <string name="adjust_clogged_grinder">Malkite gerokai stambiau 3–5 spragtelėjimais</string>
+    <string name="adjust_clogged_no_grinder">Pabandykite gerokai stambesnį malimo nustatymą</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Kava: %1$s gramų</string>
+    <string name="cd_water_grams">Vanduo: %1$s gramų</string>
+    <string name="cd_ratio">Santykis 1 su %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Pavadinimas</string>
+    <string name="label_roaster">Skrudykla</string>
+    <string name="label_origin">Kilmė</string>
+    <string name="label_barcode_ean">Brūkšninis kodas / EAN</string>
+    <string name="action_scan_barcode">Nuskaityti brūkšninį kodą</string>
+    <string name="label_name_required">Pavadinimas *</string>
+    <string name="label_weight_grams">Svoris (g)</string>
+    <string name="label_roast_date">Skrudinimo data</string>
+    <string name="label_roast_level">Skrudinimo laipsnis</string>
+    <string name="label_variety">Veislė</string>
+    <string name="label_process">Apdorojimas</string>
+    <string name="label_tasting_notes">Skonio natos</string>
+    <string name="label_best_before">Tinka iki</string>
+    <string name="label_decaf_coffee">Kava be kofeino</string>
+    <string name="msg_decaf_guidance">Suderina plikymo patarimus su kava be kofeino ir trumpesniu plikymo laiku.</string>
+    <string name="label_decaf_process_optional">Kofeino šalinimo būdas (nebūtina)</string>
+    <string name="msg_decaf_process_hint">Leidžia plikymo taisyklei švelniai koreguoti malimą: vandeniu ir CO₂ apdorotai kavai be kofeino paprastai reikia mažiau stambinti nei apdorotai tirpikliais.</string>
+    <string name="cd_captured_bag_photo">Nufotografuota pakuotė</string>
+    <string name="label_detected_details">Aptikta informacija</string>
+    <string name="msg_tap_chip_to_edit">Bakstelėkite bet kurį elementą, kad redaguotumėte</string>
+    <string name="label_needs_review">Reikia peržiūrėti</string>
+    <string name="action_edit_all_fields">Redaguoti visus laukus</string>
+    <string name="action_add_more_details">Pridėti daugiau informacijos</string>
+    <string name="msg_analyzing_label">Analizuojamos etiketės nuotraukos</string>
+    <string name="msg_analyzing_label_detail">Tikriname ryškumą, sujungiame priekinės ir galinės pusės tekstą ir parengiame patikimiausius laukus.</string>
+    <string name="label_review_fields">Peržiūrėkite šiuos laukus</string>
+    <string name="label_qr_website">QR svetainė</string>
+    <string name="action_open_website">Atverti svetainę</string>
+    <string name="label_qr_link_found">Rasta QR nuoroda</string>
+    <string name="action_explore_extract">Naršyti ir išgauti</string>
+    <string name="label_detected_field_evidence">Aptiktų laukų įrodymai</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Pakuotės nuotrauka</string>
+    <string name="action_rescan_label">Nuskaityti etiketę iš naujo</string>
+    <string name="action_edit_bag">Redaguoti pakuotę</string>
+    <string name="label_sensory_snapshot">Juslinis profilis</string>
+    <string name="label_grind_intelligence">Sumanusis malimas</string>
+    <string name="label_remaining_coffee">Likusi kava</string>
+    <string name="action_adjust_weight">Koreguoti svorį</string>
+    <string name="action_add_weight_tracking">Pridėti svorio stebėjimą</string>
+    <string name="label_brew_history">Plikymo istorija</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Kaip pavyko?</string>
+    <string name="msg_rate_brew_fresh">Įvertinkite šį plikymą, kol skonis dar šviežias.</string>
+    <string name="label_flavor_notes_section">Skonio natos</string>
+    <string name="hint_what_stood_out">Neprivaloma pastaba – kas išsiskyrė?</string>
+    <string name="action_save_rating">Išsaugoti įvertinimą</string>
+
+    <!-- EmptyStateBox -->
+    <!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Jūsų mėgstami</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Kita</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">DI paslauga (Mindlayer)</string>
+    <string name="action_test_connection">Tikrinti ryšį</string>
+    <string name="action_run_test_prompt">Paleisti bandomąją užklausą</string>
+    <string name="label_testing">Tikrinama…</string>
+
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Įjungti DI</string>
+    <string name="consent_requesting">Prašoma DI prieigos…</string>
+    <string name="consent_granted">DI įjungtas</string>
+    <string name="consent_already_approved">DI jau įjungtas</string>
+    <string name="consent_still_unavailable">DI patvirtintas, bet paslauga dar neparengta</string>
+    <string name="consent_declined">DI prieiga nesuteikta</string>
+    <string name="consent_denied_temporary">DI prieiga atmesta — bandykite vėliau</string>
+    <string name="consent_denied_permanent">DI prieiga užblokuota — atblokuokite ją programėlėje „Mindlayer“</string>
+    <string name="consent_service_unavailable">Mindlayer DI paslauga nepasiekiama</string>
+    <string name="consent_failed">Nepavyko paprašyti DI prieigos</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Koks buvo paskutinis puodelis?</string>
+    <string name="label_what_was_off">Kas buvo negerai?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Nuskaityta etiketė sutampa su išsaugota pakuote — atnaujinti nėra ko.</string>
+    <string name="action_update_bag">Atnaujinti pakuotę</string>
+    <string name="action_new_bag">Nauja pakuotė</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Išsaugoti kaip mėgstamą</string>
+    <string name="msg_save_favorite_hint">Suteikite šiam receptui įsimintiną pavadinimą</string>
+    <string name="hint_save_favorite_example">pvz., pirmadienio rytas, savaitgalio ramybė</string>
+    <string name="action_save_simple">Išsaugoti</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Nuskaitymų istorija</string>
+    <string name="msg_no_scan_sessions">Kol kas neįrašyta nuskaitymų sesijų.</string>
+    <string name="action_share_session">Dalytis šia sesija</string>
+    <string name="label_component_timings">Komponentų trukmės</string>
+    <string name="msg_no_timing_data">Trukmės duomenų nėra</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Įspėjimas</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Koreguoti svorį</string>
+    <string name="label_remaining_weight_grams">Likęs svoris (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Iš nuotraukos</string>
+    <string name="action_scan_label">Nuskaityti etiketę</string>
+    <string name="action_add_bag_gallery">Iš galerijos</string>
+    <string name="action_add_bag_camera">Nuskaityti kamera</string>
+    <string name="action_add_bag_barcode">Nuskaityti brūkšninį kodą</string>
+    <string name="action_add_bag_manual">Pridėti rankiniu būdu</string>
+    <string name="msg_no_beans_yet">Kol kas nėra pupelių</string>
+    <string name="msg_add_coffee_hint">Pridėkite kavą, kad galėtumėte stebėti šviežumą ir gauti plikymo pasiūlymų</string>
+    <string name="action_brew_now">Plikyti dabar</string>
+    <string name="msg_could_not_read_label">Nepavyko perskaityti etiketės</string>
+    <string name="action_retake_photo">Fotografuoti iš naujo</string>
+    <string name="action_add_details_manually">Pridėti informaciją rankiniu būdu</string>
+    <string name="msg_llm_enrichment_succeeded">DI papildymas pagerino šį etiketės nuskaitymą.</string>
+    <string name="msg_llm_enrichment_failed">DI šįkart nespėjo perskaityti šios etiketės — baigėsi skirtas laikas arba įvyko laikina klaida (bandymas jau buvo pakartotas automatiškai). Bakstelėkite pakartojimą, kad bandytumėte dar kartą, arba tiesiog užpildykite laukus žemiau.</string>
+    <string name="msg_llm_enrichment_unavailable">DI papildymas šiuo metu nepasiekiamas. Galite pakartoti arba toliau redaguoti rankiniu būdu.</string>
+    <string name="action_retry_llm_enrichment">Kartoti DI papildymą</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Dalytis kava</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Atmesti nuskaitymą?</string>
+    <string name="msg_discard_scan_body">Yra aptiktų laukų, kurie nebuvo išsaugoti.</string>
+    <string name="action_discard">Atmesti</string>
+    <string name="action_keep_scanning">Tęsti nuskaitymą</string>
+    <string name="msg_camera_permission_required">Reikalingas kameros leidimas</string>
+    <string name="screen_scan_bag_title">Nuskaityti kavos pakuotę</string>
+    <string name="cd_toggle_debug_overlay">Perjungti derinimo perdangą</string>
+    <string name="msg_both_sides_scanned">Nuskaitytos abi pakuotės pusės</string>
+    <string name="msg_scanning_front_side">Nuskaitoma priekinė pakuotės pusė</string>
+    <string name="action_quick_save">Greitas išsaugojimas</string>
+    <string name="msg_repackaged_product">Tai gali būti perpakuotas arba importuotas produktas</string>
+    <string name="action_use_barcode">Naudoti brūkšninį kodą</string>
+    <string name="action_use_label">Naudoti etiketę</string>
+    <string name="label_confirmed">Patvirtinta</string>
+    <string name="label_ai_contributed">Prisidėjo DI</string>
+    <string name="cd_manual_capture">Rankinis fiksavimas — priverstinai apdoroti dabartinį kadrą</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Sinchronizuoti su pakuote</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Taikoma plikant su Pulsar</string>
+    <string name="label_quick_brew">Greitas plikymas</string>
+    <string name="msg_quick_brew_hint">Praleisti malimo paruošimo žingsnį ir pradedant plikyti eiti tiesiai į laikmatį</string>
+    <string name="label_show_brewing_instructions">Rodyti plikymo instrukcijas</string>
+    <string name="msg_show_brewing_instructions_hint">Rodyti nuoseklių patarimų kortelę plikant ir paruošimo sąrašą paruošimo ekrane. Išjunkite, jei savo būdą mokate atmintinai.</string>
+    <string name="label_dim_mode">Automatinis pritemdymo režimas</string>
+    <string name="msg_dim_mode_hint">Po 25 s neveiklumo pašalinami spalvoti fonai, o tekstas paverčiamas pilku. Išdėstymas nesikeičia, o vienu bakstelėjimu ir pažadinamas ekranas, ir įvykdomas veiksmas.</string>
+    <string name="label_dim_mode_true_black">Tikras juodas fonas</string>
+    <string name="msg_dim_mode_true_black_hint">Pritemdžius tamsioje temoje, ekrano fonas taip pat tampa visiškai juodas. Geriausia OLED ekranuose — taupo energiją ir atrodo tinkamai. Šviesiose temose poveikio nėra.</string>
+    <string name="label_dim_mode_reduce_brightness">Sumažinti ekrano ryškumą</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Pritemdžius taip pat sumažina ekrano apšvietimą. Šiek tiek taupo energiją ir dar labiau sušvelnina ekraną.</string>
+    <string name="label_dim_mode_fullscreen">Slėpti sistemos juostas</string>
+    <string name="msg_dim_mode_fullscreen_hint">Pritemdžius taip pat slepia būsenos ir naršymo juostas. Braukite nuo krašto, kad pažvelgtumėte; bet koks bakstelėjimas grąžina į įprastą būseną.</string>
+    <string name="label_dim_mode_force_dark_in_light">Pritemdžius naudoti tamsų stilių</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Perjungti į tamsios temos pritemdymą, net kai sistema veikia šviesiu režimu. Puikiai dera su tikru juodu fonu, kad pritemdymas visada būtų tamsus.</string>
+    <string name="action_add_cup_preset">Pridėti puodelio šabloną</string>
+    <string name="label_volume_ml">Tūris (ml)</string>
+    <string name="msg_dose_from_ratio">Kavos dozė apskaičiuojama pagal jūsų santykį</string>
+    <string name="label_icon">Piktograma</string>
+    <string name="label_color">Spalva</string>
+    <string name="action_add">Pridėti</string>
+    <string name="dialog_edit_cup_preset_title">Redaguoti puodelio šabloną</string>
+    <string name="screen_add_cup_preset_title">Pridėti puodelio šabloną</string>
+    <string name="screen_edit_cup_preset_title">Redaguoti puodelio šabloną</string>
+    <string name="msg_cup_preset_name_required">Įveskite pavadinimą, kad tęstumėte</string>
+    <string name="msg_cup_preset_volume_required">Įveskite didesnį nei 0 tūrį</string>
+    <string name="cd_cup_preset_preview">%1$s peržiūra</string>
+    <string name="label_scan_debug">Nuskaitymo derinimas</string>
+    <string name="action_view_history">Peržiūrėti istoriją</string>
+    <string name="action_share_report">Dalytis ataskaita</string>
+    <string name="action_clear">Išvalyti</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Švelni</string>
+    <string name="strength_balanced">Subalansuota</string>
+    <string name="strength_strong">Stipri</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Vaisiška</string>
+    <string name="flavor_chocolate">Šokoladinė</string>
+    <string name="flavor_nutty">Riešutinė</string>
+    <string name="flavor_floral">Gėlėta</string>
+    <string name="flavor_bright">Ryški</string>
+    <string name="flavor_smooth">Švelni</string>
+    <string name="flavor_bitter">Karti</string>
+    <string name="flavor_sweet">Saldi</string>
+    <string name="flavor_earthy">Žemiška</string>
+    <string name="flavor_spicy">Prieskoninė</string>
+    <string name="flavor_citrus">Citrusinė</string>
+    <string name="flavor_berry">Uoginė</string>
+    <string name="flavor_caramel">Karamelinė</string>
+    <string name="flavor_wine">Vyniška</string>
+    <string name="flavor_clean">Švari</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Labai smulkus</string>
+    <string name="grind_fine">Smulkus</string>
+    <string name="grind_medium_fine">Vidutiniškai smulkus</string>
+    <string name="grind_medium">Vidutinis</string>
+    <string name="grind_medium_coarse">Vidutiniškai stambus</string>
+    <string name="grind_coarse">Stambus</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Puiki</string>
+    <string name="rating_good">Gera</string>
+    <string name="rating_not_great">Vidutiniška</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Per karti</string>
+    <string name="taste_issue_too_sour">Per rūgšti</string>
+    <string name="taste_issue_too_weak">Per silpna</string>
+    <string name="taste_issue_too_strong">Per stipri</string>
+    <string name="taste_issue_bitter_suggestion">Pabandykite malti stambiau arba trumpinti plikymo laiką</string>
+    <string name="taste_issue_sour_suggestion">Pabandykite malti smulkiau arba ilginti plikymo laiką</string>
+    <string name="taste_issue_weak_suggestion">Pabandykite stipresnį santykį arba daugiau kavos</string>
+    <string name="taste_issue_strong_suggestion">Pabandykite silpnesnį santykį arba mažiau kavos</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Užsandarinta</string>
+    <string name="bag_status_open">Atidaryta</string>
+    <string name="bag_status_frozen">Užšaldyta</string>
+    <string name="bag_status_finished">Baigta</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Nežinoma / nenurodyta</string>
+    <string name="decaf_swiss_water">Swiss Water (vandens procesas)</string>
+    <string name="decaf_mountain_water">Mountain Water (vandens procesas)</string>
+    <string name="decaf_co2">Superkritinis CO₂</string>
+    <string name="decaf_ea_sugarcane">Etilo acetatas (cukranendrių / natūralus EA)</string>
+    <string name="decaf_mc_direct">Metileno chloridas (tiesioginis tirpiklis)</string>
+    <string name="decaf_ea_direct">Etilo acetatas (tiesioginis tirpiklis)</string>
+    <string name="decaf_short_unknown">Nežinoma</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (cukranendrės)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (tirpiklis)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Šviesus</string>
+    <string name="roast_medium_light">Vidutiniškai šviesus</string>
+    <string name="roast_medium">Vidutinis</string>
+    <string name="roast_medium_dark">Vidutiniškai tamsus</string>
+    <string name="roast_dark">Tamsus</string>
+    <string name="roast_filter">Filtrinis</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Universalus</string>
+    <string name="roast_cinnamon">Cinamono</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Plautas</string>
+    <string name="process_natural">Natūralus</string>
+    <string name="process_honey">Medaus</string>
+    <string name="process_anaerobic">Anaerobinis</string>
+    <string name="process_carbonic_maceration">Karboninė maceracija</string>
+    <string name="process_semi_washed">Pusiau plautas</string>
+    <string name="process_wet_hulled">Drėgnai lukštentas</string>
+    <string name="process_pulped_natural">Nulukštentas natūralus</string>
+    <string name="process_double_fermented">Dvigubai fermentuotas</string>
+    <string name="process_thermal_shock">Terminis šokas</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Laikykite priekinę pakuotės pusę kadro centre</string>
+    <string name="guided_scan_aim_back">Dabar nuskaitykite galinę pakuotės pusę</string>
+    <string name="guided_scan_aim_more">Pridėkite dar vieną nuotrauką (nebūtina)</string>
+    <string name="guided_scan_hold_steady">Laikykite ramiai…</string>
+    <string name="guided_scan_skip_photos">Praleisti nuotraukas</string>
+    <string name="guided_scan_finished">Baigta</string>
+    <string name="guided_scan_auto_on">Auto įjungta</string>
+    <string name="guided_scan_auto_off">Auto išjungta</string>
+    <string name="guided_scan_capture">Fotografuoti</string>
+    <string name="guided_scan_scan_more">Nuskaityti daugiau nuotraukų</string>
+    <string name="scan_warn_glare">Sumažinkite blizgesį</string>
+    <string name="scan_warn_lighting">Pagerinkite apšvietimą</string>
+    <string name="cd_remove_photo">Pašalinti nuotrauką</string>
+    <string name="msg_bag_saved">Pakuotė išsaugota</string>
+</resources>

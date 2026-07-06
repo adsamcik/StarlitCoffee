@@ -34,6 +34,7 @@ sealed interface CoffeeOrigin {
         INDIA("India"),
         VIETNAM("Vietnam"),
         MYANMAR("Myanmar"),
+        NEPAL("Nepal", listOf("NPL")),
         LAOS("Laos"),
         THAILAND("Thailand"),
         CHINA("China"),

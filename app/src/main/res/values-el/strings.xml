@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Παρασκευή</string>
+    <string name="nav_log">Ημερολόγιο</string>
+    <string name="nav_more">Περισσότερα</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Πίσω</string>
+    <string name="action_close">Κλείσιμο</string>
+    <string name="action_cancel">Ακύρωση</string>
+    <string name="action_delete">Διαγραφή</string>
+    <string name="action_save">Αποθήκευση αλλαγών</string>
+    <string name="action_saved">✓ Αποθηκεύτηκε</string>
+    <string name="action_skip">Παράλειψη</string>
+    <string name="action_finish">Ολοκλήρωση</string>
+    <string name="action_next">Επόμενο</string>
+    <string name="action_go_back">Επιστροφή</string>
+<!-- Common labels -->
+    <string name="label_coffee">Καφές</string>
+    <string name="label_water">Νερό</string>
+    <string name="label_ratio">Αναλογία</string>
+    <string name="label_strength">Ένταση</string>
+    <string name="label_grind">Άλεσμα</string>
+    <string name="label_filter">Φίλτρο</string>
+    <string name="label_decaf">Decaf</string>
+    <string name="label_decaf_suffix"> · Decaf</string>
+    <string name="label_loading">Φόρτωση…</string>
+    <string name="label_none">Κανένα</string>
+    <string name="label_taste">Γεύση</string>
+    <string name="label_rating">Αξιολόγηση</string>
+    <string name="label_notes">Σημειώσεις</string>
+    <string name="label_no_filter">Χωρίς φίλτρο</string>
+    <string name="label_settings">Ρυθμίσεις</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg στο φλιτζάνι</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+    <plurals name="format_selected">
+        <item quantity="one">%1$d επιλεγμένο</item>
+        <item quantity="other">%1$d επιλεγμένα</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Ρυθμίστε την παρασκευή σας</string>
+    <string name="label_coffee_input">Καφές (g)</string>
+    <string name="label_water_input">Νερό (g)</string>
+    <string name="label_brew_size_input">Μέγεθος παρασκευής (ml)</string>
+    <string name="label_cup_size_input">Μέγεθος φλιτζανιού (ml)</string>
+    <string name="label_brew_size">Μέγεθος παρασκευής</string>
+    <string name="label_cup_size">Μέγεθος φλιτζανιού</string>
+    <string name="format_capacity_note">Το %1$s χωρά %2$dg νερό — για μεγαλύτερες παρασκευές τα γεμίσματα γίνονται αυτόματα</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Επιλέξτε συσκευασία καφέ</string>
+    <string name="cd_clear_bag">Αφαίρεση συσκευασίας</string>
+    <string name="format_brewing_with">Παρασκευή με %1$s</string>
+    <string name="label_freshness">Φρεσκάδα</string>
+    <string name="format_recommended_now">Προτείνεται τώρα: %1$s</string>
+    <string name="format_last_time">Την προηγούμενη φορά: %1$s</string>
+    <string name="action_save_as_favorite">Αποθήκευση ως αγαπημένο</string>
+    <string name="label_select_coffee_bag_title">Επιλέξτε συσκευασία καφέ</string>
+    <string name="msg_no_active_bags">Δεν υπάρχουν ενεργές συσκευασίες. Προσθέστε μία στην ενότητα Οι κόκκοι σας.</string>
+    <string name="action_brew_without_bag">Παρασκευή χωρίς επιλογή συσκευασίας</string>
+    <string name="label_best_now">Καλύτερο τώρα</string>
+    <string name="format_grind_generic">Άλεσμα: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Ρύθμιση μύλου: %1$s–%2$s · Προσαρμόστε στη γεύση</string>
+    <string name="format_weight_left"> · απομένουν %1$.0fg</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Συμβουλή Pulsar: Κρατήστε τη στάθμη του νερού περίπου 1cm πάνω από το στρώμα καφέ κατά τις ρίψεις. Οι περισσότεροι χρήστες παρασκευάζουν 20–25g για ένα ισορροπημένο μονό φλιτζάνι.</string>
+    <string name="tip_generic">💡 Συμβουλή: Ξεκινήστε με την προεπιλεγμένη αναλογία και προσαρμόστε την ένταση στη γεύση σας. Τα πιο ψιλά αλέσματα εκχυλίζουν περισσότερο, τα πιο χοντρά λιγότερο.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Ρύθμιση παρασκευής</string>
+    <string name="label_custom_ratio">Προσαρμοσμένη αναλογία (π.χ. 16)</string>
+    <string name="label_temperature">Θερμοκρασία (°C)</string>
+    <string name="label_bloom_multiplier">Πολλαπλασιαστής bloom (π.χ. 3.0)</string>
+    <string name="label_pulse_count">Αριθμός ρίψεων</string>
+    <string name="action_start_brewing">Έναρξη παρασκευής →</string>
+    <string name="label_advanced_options">Σύνθετες επιλογές</string>
+    <string name="cd_collapse_advanced">Σύμπτυξη σύνθετων επιλογών</string>
+    <string name="cd_expand_advanced">Ανάπτυξη σύνθετων επιλογών</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Δόση καφέ: %1$d γραμμάριο</item>
+        <item quantity="other">Δόση καφέ: %1$d γραμμάρια</item>
+    </plurals>
+    <string name="label_decrease">Μειώστε %1$s</string>
+    <string name="label_increase">Αυξήστε %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Προετοιμάστε την παρασκευή σας</string>
+    <string name="action_ready_to_brew_short">Έτοιμο για παρασκευή</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Προετοιμασία</string>
+    <string name="label_recipe_heading">Συνταγή</string>
+    <string name="label_temp_short">Θερμ.</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Βρέξτε το χάρτινο φίλτρο στη βάση (με ανοιχτή βαλβίδα) και αφήστε το να στραγγίξει. Τοποθετήστε τον κύλινδρο, προσθέστε τον αλεσμένο καφέ, ισιώστε το στρώμα και βάλτε το καπάκι διασποράς. Μηδενίστε τη ζυγαριά.</string>
+    <string name="prep_tip_pulsar_19k">Ξεπλύνετε το μεταλλικό φίλτρο 19K για να καθίσει σωστά και να προθερμάνετε τον κύλινδρο. Τοποθετήστε τον κύλινδρο, προσθέστε τον αλεσμένο καφέ, ισιώστε το στρώμα και βάλτε το καπάκι διασποράς. Μηδενίστε τη ζυγαριά.</string>
+    <string name="prep_tip_pulsar_40k">Ξεπλύνετε το μεταλλικό φίλτρο 40K για να προθερμάνετε τον κύλινδρο. Τοποθετήστε τον κύλινδρο, προσθέστε τον αλεσμένο καφέ, ισιώστε το στρώμα και βάλτε το καπάκι διασποράς. Μηδενίστε τη ζυγαριά.</string>
+    <string name="prep_tip_pour_over_paper">Τοποθετήστε το χάρτινο φίλτρο και ξεπλύνετε με ζεστό νερό για προθέρμανση και αφαίρεση της χάρτινης γεύσης. Προσθέστε τον αλεσμένο καφέ και μηδενίστε τη ζυγαριά.</string>
+    <string name="prep_tip_french_press">Προθερμάνετε την πρέσα και μετά αδειάστε την. Προσθέστε τον αλεσμένο καφέ, βάλτε τη στη ζυγαριά και μηδενίστε πριν προσθέσετε νερό.</string>
+    <string name="prep_tip_aeropress">Τοποθετήστε ένα ξεπλυμένο φίλτρο στο καπάκι. Προσθέστε τον αλεσμένο καφέ, βάλτε το brewer πάνω σε σταθερή κούπα ή server και μηδενίστε τη ζυγαριά.</string>
+    <string name="prep_tip_espresso">Σκουπίστε το portafilter ώστε να είναι στεγνό. Δοσομετρήστε, κατανείμετε και πατήστε επίπεδα πριν το κλειδώσετε.</string>
+    <string name="prep_tip_moka">Γεμίστε τον κάτω θάλαμο μέχρι τη βαλβίδα. Γεμίστε το καλαθάκι με αλεσμένο καφέ, ισιώστε — μην τον πατήσετε. Συναρμολογήστε προσεκτικά.</string>
+    <string name="prep_tip_cold_brew">Προσθέστε τον αλεσμένο καφέ στο δοχείο, μηδενίστε τη ζυγαριά, έπειτα προσθέστε νερό σε θερμοκρασία δωματίου ή κρύο και καλύψτε.</string>
+    <string name="format_prep_grind_specific">Αλέστε %1$s — ρυθμίστε %2$s στο %3$s</string>
+    <string name="format_prep_grind_generic">Αλέστε %1$s — %2$s (%3$s)</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Παύση</string>
+    <string name="action_resume">Συνέχεια</string>
+    <string name="cd_disable_minute_alerts">Απενεργοποίηση ειδοποιήσεων λεπτού</string>
+    <string name="cd_enable_minute_alerts">Ενεργοποίηση ειδοποιήσεων λεπτού</string>
+    <string name="cd_bloom_animation">Κινούμενη εικόνα bloom κόκκου καφέ</string>
+    <string name="format_pour_bloom_water">Ρίξτε %1$.0fg νερό για το bloom</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Σύνολο %2$.0fg</string>
+    <string name="action_start_bloom">☕ Έναρξη bloom</string>
+    <string name="label_bloom_done">✅ Το bloom ολοκληρώθηκε!</string>
+    <string name="action_finish_brew">Ολοκλήρωση παρασκευής</string>
+    <string name="dialog_exit_brew_title">Έξοδος από την παρασκευή;</string>
+    <string name="dialog_exit_brew_message">Η τρέχουσα πρόοδος παρασκευής σας θα χαθεί.</string>
+    <string name="action_exit_brew">Έξοδος</string>
+
+    <!-- Calculator Brew Screen -->
+    <string name="label_water_to_dose">Νερό → Δόση</string>
+    <string name="label_dose_to_water">Δόση → Νερό</string>
+    <string name="cd_backspace">Διαγραφή χαρακτήρα</string>
+    <string name="action_brew">Έναρξη</string>
+    <string name="label_total_water">συνολικό νερό</string>
+<!-- Settings Screen -->
+    <string name="screen_settings_title">Ρυθμίσεις</string>
+    <string name="label_settings_section_brewing">Παρασκευή</string>
+    <string name="label_settings_section_appearance">Εμφάνιση</string>
+    <string name="label_settings_section_notifications">Ειδοποιήσεις</string>
+    <string name="label_settings_section_developer">Προγραμματιστής</string>
+    <string name="label_settings_section_when_dimmed">Όταν είναι χαμηλωμένη</string>
+    <string name="label_display_dim_settings">Οθόνη &amp; λειτουργία χαμηλού φωτισμού</string>
+    <string name="msg_display_dim_settings_subtitle">Χαμηλός φωτισμός, μαύρο OLED, φωτεινότητα</string>
+    <string name="screen_display_settings_title">Οθόνη &amp; λειτουργία χαμηλού φωτισμού</string>
+    <string name="label_cup_presets">Προεπιλογές φλιτζανιού</string>
+    <string name="action_add_preset">Προσθήκη προεπιλογής</string>
+    <string name="action_reset_defaults">Επαναφορά προεπιλογών</string>
+    <string name="msg_presets_hint">Οι προεπιλογές εμφανίζονται ως γρήγορα κουμπιά στην αριθμομηχανή</string>
+    <string name="label_brew_methods">Μέθοδοι παρασκευής</string>
+    <string name="msg_methods_hint">Οι επιλεγμένες μέθοδοι εμφανίζονται πρώτες. Πατήστε για εναλλαγή.</string>
+    <string name="label_default_method">Προεπιλεγμένη μέθοδος</string>
+    <string name="format_edit_preset">Επεξεργασία %1$s</string>
+    <string name="label_bloom_animation_settings">Κινούμενα bloom</string>
+    <string name="msg_bloom_animation_settings_subtitle">Επιλέξτε πόσο συχνά εμφανίζεται κάθε γραφικό bloom</string>
+    <string name="cd_open_bloom_animation_settings">Άνοιγμα ρυθμίσεων κινούμενων bloom</string>
+    <string name="screen_bloom_animation_settings_title">Κινούμενα bloom</string>
+    <string name="msg_bloom_animation_settings_hint">Πατήστε κάθε στοιχείο ελέγχου για εναλλαγή ανάμεσα σε κανονική πιθανότητα, διπλή πιθανότητα και εξαίρεση. Αν εξαιρεθούν όλα τα γραφικά, οι χρονομετρητές bloom κρύβουν την κινούμενη εικόνα.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">Το %1$s έχει οριστεί σε %2$s. Πατήστε για αλλαγή.</string>
+    <string name="label_bloom_sprite_coffee_flower">Άνθος καφέ</string>
+    <string name="desc_bloom_sprite_coffee_flower">Κλασικό λευκό άνθος καφέ που ανοίγει από τον κόκκο.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Starlit coffee</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Πέταλα ατμού σε κρεμ-χρυσούς τόνους με μικρές λαμπερές ανταύγειες.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Απαλή ροζέτα latte art σε ζεστούς τόνους αφρού γάλακτος.</string>
+    <string name="label_bloom_sprite_coffee_plant">Φυτό καφέ</string>
+    <string name="desc_bloom_sprite_coffee_plant">Φρέσκο πράσινο φυτάριο καφέ με ζευγαρωτά φύλλα.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Ντοματίνι</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Ένας κόκκος καφέ βλασταίνει σε κληματίδα ντοματιάς καθώς ωριμάζουν κόκκινοι καρποί.</string>
+    <string name="label_bloom_sprite_strawberry">Φράουλα</string>
+    <string name="desc_bloom_sprite_strawberry">Ένας κόκκος καφέ βλασταίνει σε φυτό φράουλας με άνθη και κόκκινους καρπούς.</string>
+    <string name="label_bloom_sprite_raspberry">Σμέουρο</string>
+    <string name="desc_bloom_sprite_raspberry">Ένας κόκκος καφέ γίνεται βάτος με ανοιχτόχρωμα άνθη και τσαμπιά κόκκινων σμέουρων.</string>
+    <string name="label_bloom_sprite_blueberry">Μύρτιλο</string>
+    <string name="desc_bloom_sprite_blueberry">Ένας κόκκος καφέ μεγαλώνει σε κλαδάκι μύρτιλου με καμπανοειδή άνθη και μπλε καρπούς.</string>
+    <string name="label_bloom_sprite_blackberry">Βατόμουρο</string>
+    <string name="desc_bloom_sprite_blackberry">Ένας κόκκος καφέ γίνεται αγκαθωτός βάτος με τσαμπιά σκούρων βατόμουρων.</string>
+    <string name="label_bloom_sprite_coffee_brew">Εκχύλιση καφέ</string>
+    <string name="desc_bloom_sprite_coffee_brew">Κεχριμπαρένια λάμψη καφέ με κρεμ μπούκλες ατμού.</string>
+    <string name="label_bloom_sprite_rose">Τριαντάφυλλο</string>
+    <string name="desc_bloom_sprite_rose">Συμπαγές κόκκινο τριαντάφυλλο που ξεδιπλώνεται πάνω από τον κόκκο.</string>
+    <string name="label_bloom_sprite_lotus">Λωτός</string>
+    <string name="desc_bloom_sprite_lotus">Κρεμ άνθος λωτού με πολυεπίπεδα κοίλα πέταλα.</string>
+    <string name="label_bloom_sprite_sunflower">Ηλίανθος</string>
+    <string name="desc_bloom_sprite_sunflower">Λαμπερός ηλίανθος με χρυσαφένια πέταλα και σκούρο κέντρο.</string>
+    <string name="label_bloom_sprite_orchid">Ορχιδέα</string>
+    <string name="desc_bloom_sprite_orchid">Λεπτεπίλεπτη λευκή ορχιδέα με στρογγυλεμένους λοβούς.</string>
+    <string name="label_bloom_sprite_jasmine">Γιασεμί</string>
+    <string name="desc_bloom_sprite_jasmine">Απαλό λευκό άνθος γιασεμιού με ήπιο σχήμα ανεμόμυλου.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Ματωμένη καρδιά</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Τοξωτοί βλαστοί με ροζ καρδιόσχημα άνθη και λευκές άκρες σαν σταγόνες υψώνονται από τον κόκκο.</string>
+    <string name="label_bloom_sprite_passionflower">Πασιφλόρα</string>
+    <string name="desc_bloom_sprite_passionflower">Στριφογυριστές κληματίδες ανοίγουν σε περίτεχνη μωβ-λευκή πασιφλόρα πάνω από τον κόκκο.</string>
+    <string name="label_bloom_sprite_bee_orchid">Ορχιδέα-μέλισσα</string>
+    <string name="desc_bloom_sprite_bee_orchid">Ροζ πέταλα ορχιδέας αποκαλύπτουν σκούρα χείλη σε σχήμα μέλισσας πάνω σε λεπτούς βλαστούς.</string>
+    <string name="label_bloom_sprite_jade_vine">Κληματίδα νεφρίτη</string>
+    <string name="desc_bloom_sprite_jade_vine">Μια αναρριχώμενη κληματίδα κρεμά τιρκουάζ τσαμπιά ανθέων νεφρίτη από τον κόκκο.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Πουλί του παραδείσου</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Πορτοκαλί και βαθύ μπλε πέταλα στρελίτσιας ξεδιπλώνονται από όρθια πράσινα φύλλα.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Μπλε παπαρούνα Ιμαλαΐων</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Ένα γερτό μπουμπούκι ανοίγει σε γαλάζια παπαρούνα με χρυσαφένιους στήμονες.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">Ένα κόκκινο κηλιδωτό παρασιτικό άνθος φουσκώνει σε τεράστιο πεντάλοβο λουλούδι.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Σοκολατένιος κόσμος</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Φτερωτά φύλλα σηκώνουν βελούδινα σκούρα μπορντό άνθη κόσμου από τον κόκκο.</string>
+    <string name="label_bloom_sprite_flame_lily">Κρίνος της φλόγας</string>
+    <string name="desc_bloom_sprite_flame_lily">Στριφτά πέταλα κρίνου στο χρώμα της φλόγας υψώνονται πάνω σε πράσινους βλαστούς με έλικες.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Βασίλισσα της νύχτας</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Ένας βλαστός κάκτου ανοίγει σε εντυπωσιακό πολυεπίπεδο λευκό νυχτολούλουδο.</string>
+    <string name="label_bloom_sprite_snowdrop">Γάλανθος</string>
+    <string name="desc_bloom_sprite_snowdrop">Λεπτεπίλεπτα λευκά καμπανάκια γάλανθου υψώνονται από τον ραγισμένο κόκκο.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Μικροσκοπικά μπλε άνθη μη με λησμόνει με κίτρινα κέντρα ξεδιπλώνονται από τον κόκκο.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Ημερολόγιο παρασκευών</string>
+    <string name="msg_log_empty_title">Ξεκινήστε παρασκευή για να δείτε το ιστορικό σας</string>
+    <string name="msg_log_empty_subtitle">Κάθε ολοκληρωμένη παρασκευή με σχόλια θα εμφανίζεται εδώ</string>
+    <string name="msg_select_brew_log">Επιλέξτε μια καταγραφή παρασκευής για να δείτε τις λεπτομέρειές της</string>
+    <string name="action_rate_brew">Αξιολόγηση παρασκευής</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Λεπτομέρειες παρασκευής</string>
+    <string name="dialog_delete_brew_title">Διαγραφή καταγραφής παρασκευής;</string>
+    <string name="dialog_delete_brew_message">Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</string>
+    <string name="label_coffee_bag">Συσκευασία καφέ</string>
+    <string name="label_brew_time">Χρόνος παρασκευής</string>
+    <string name="label_coffee_type">Τύπος καφέ</string>
+    <string name="label_flavor_notes">Γευστικές νότες</string>
+    <string name="hint_add_notes">Προσθήκη σημειώσεων…</string>
+    <string name="msg_brew_not_found">Η καταγραφή παρασκευής δεν βρέθηκε</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Τα αγαπημένα σας</string>
+    <string name="msg_no_favorites_title">Δεν υπάρχουν ακόμα αγαπημένα</string>
+    <string name="msg_no_favorites_subtitle">Αποθηκεύστε μια συνταγή από την οθόνη παρασκευής με το κουμπί ♡</string>
+    <string name="label_untitled">Χωρίς τίτλο</string>
+    <string name="format_recipe_summary">%1$sg καφές / %2$sg νερό</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Προσωποποιήστε την παρασκευή σας</string>
+    <string name="label_pulsar_filter_type">Τύπος φίλτρου Pulsar</string>
+    <string name="msg_filter_hint">Επηρεάζει το προφίλ στο φλιτζάνι και τις προτάσεις άλεσης</string>
+    <string name="label_your_grinder">Ο μύλος σας</string>
+    <string name="msg_grinder_hint">Προαιρετικό — ενεργοποιεί συγκεκριμένες προτάσεις άλεσης. Επιλέξτε Χωρίς μύλο / Άλλο αν ο δικός σας δεν βρίσκεται στη λίστα.</string>
+    <string name="label_no_grinder">Χωρίς μύλο / Άλλο</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Με τι παρασκευάζετε καφέ;</string>
+    <string name="msg_methods_subtitle">Επιλέξτε τις μεθόδους παρασκευής σας. Πατήστε ★ για να ορίσετε την προεπιλογή σας.</string>
+    <string name="label_set_as_default">Ορισμός ως προεπιλογή</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Περισσότερα</string>
+    <string name="label_your_favorites">Τα αγαπημένα σας</string>
+    <string name="msg_favorites_subtitle">Επαναλάβετε τις αγαπημένες σας παρασκευές</string>
+    <string name="label_your_beans">Οι κόκκοι σας</string>
+    <string name="msg_beans_subtitle">Φρεσκάδα, απόθεμα και τι να παρασκευάσετε μετά</string>
+    <string name="msg_settings_subtitle">Μέθοδοι, μύλος και προτιμήσεις</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Απαιτείται άδεια κάμερας για σάρωση barcode</string>
+    <string name="msg_point_camera">Στρέψτε την κάμερα στο barcode</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Η παρασκευή αποθηκεύτηκε! Αξιολογήστε τη αφού τη δοκιμάσετε.</string>
+    <string name="snackbar_action_view_log">Προβολή ημερολογίου</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Υπενθυμίσεις αξιολόγησης παρασκευής</string>
+    <string name="notif_channel_rating_reminder_desc">Ήπια υπενθύμιση περίπου 30 λεπτά μετά την παρασκευή, για να την αξιολογήσετε όσο η γεύση είναι ακόμα φρέσκια.</string>
+    <string name="notif_rating_title">Πώς ήταν η παρασκευή σας;</string>
+    <string name="format_notif_rating_title">Πώς ήταν η παρασκευή %1$s;</string>
+    <string name="notif_rating_body">Πατήστε ένα emoji για να την αξιολογήσετε ή ανοίξτε την εφαρμογή για περισσότερα.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Αξιολόγηση 1 από 5 αστέρια</string>
+    <string name="cd_notif_rating_2">Αξιολόγηση 2 από 5 αστέρια</string>
+    <string name="cd_notif_rating_3">Αξιολόγηση 3 από 5 αστέρια</string>
+    <string name="cd_notif_rating_4">Αξιολόγηση 4 από 5 αστέρια</string>
+    <string name="cd_notif_rating_5">Αξιολόγηση 5 από 5 αστέρια</string>
+
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Ανάλυση της συσκευασίας σας</string>
+    <string name="msg_analyzing_bag_subtitle">Η AI διαβάζει την ετικέτα για να συμπληρώσει τις λεπτομέρειες. Αυτό μπορεί να πάρει λίγο χρόνο.</string>
+    <string name="msg_analyzing_bag_background_hint">Μπορείτε να συνεχίσετε να χρησιμοποιείτε την εφαρμογή — θα σας ειδοποιήσουμε όταν ολοκληρωθεί.</string>
+    <string name="action_skip_ai">Παράλειψη AI</string>
+    <string name="action_run_in_background">Συνέχεια στο παρασκήνιο</string>
+    <string name="notif_channel_bag_analysis">Ανάλυση συσκευασίας</string>
+    <string name="notif_channel_bag_analysis_desc">Σας ενημερώνει όταν η AI ολοκληρώσει την ανάγνωση της ετικέτας συσκευασίας καφέ.</string>
+    <string name="notif_scan_progress_title">Ανάγνωση ετικέτας συσκευασίας…</string>
+    <string name="notif_bag_analysis_title">Η ανάλυση συσκευασίας ολοκληρώθηκε</string>
+    <string name="notif_bag_analysis_body">Πατήστε για να ελέγξετε τις λεπτομέρειες που βρήκαμε.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Ανάγνωση της ετικέτας…</string>
+    <string name="scan_stage_barcode">Αναζήτηση του barcode…</string>
+    <string name="scan_stage_llm">Κατανόηση των λεπτομερειών…</string>
+    <string name="scan_stage_crop">Εντοπισμός της ετικέτας…</string>
+    <string name="scan_stage_vision">Έλεγχος της εικόνας ετικέτας…</string>
+    <string name="scan_stage_combine">Συνδυασμός των αποτελεσμάτων…</string>
+    <string name="scan_stage_finalizing">Ολοκλήρωση…</string>
+    <string name="format_scan_stage_step">Βήμα %1$d από %2$d</string>
+    <string name="format_notif_bag_analysis_body">Πατήστε για να ελέγξετε το %1$s.</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Υπενθύμιση αξιολόγησης</string>
+    <string name="msg_rating_reminder_hint">Στείλτε ειδοποίηση περίπου 30 λεπτά μετά την παρασκευή, ώστε να την αξιολογήσετε όσο η γεύση είναι ακόμα φρέσκια.</string>
+    <string name="msg_rating_reminder_perm_denied">Οι ειδοποιήσεις είναι αποκλεισμένες. Ενεργοποιήστε τις στις ρυθμίσεις συστήματος για να λαμβάνετε υπενθυμίσεις.</string>
+    <string name="action_open_app_settings">Άνοιγμα ρυθμίσεων συστήματος</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Κατακράτηση νερού</string>
+    <string name="format_retention_explanation">Ο αλεσμένος καφές απορροφά περίπου 2× το ξηρό βάρος του σε νερό. Με %1$.0fg καφέ, ο καφές κρατά ~%2$.0fg, αφήνοντας ~%3$.0fg στο φλιτζάνι σας.\n\nΠρόκειται για εκτίμηση — τα σκούρα καβουρδίσματα απορροφούν λίγο περισσότερο, τα ανοιχτά λίγο λιγότερο.</string>
+    <string name="cd_about_cup_volume">Σχετικά με τον όγκο φλιτζανιού</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+    <string name="label_target">Στόχος</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
+    <string name="format_ratio_bright">Φωτεινό · 1:%1$d</string>
+    <string name="format_ratio_balanced">Ισορροπημένο · 1:%1$d</string>
+    <string name="format_ratio_rich">Γεμάτο · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+<!-- Input Mode -->
+    <string name="input_coffee_to_water">Καφές → Νερό</string>
+    <string name="input_water_to_coffee">Νερό → Καφές</string>
+    <string name="input_brew_to_both">Μέγεθος παρασκευής → Και τα δύο</string>
+    <string name="input_cup_to_both">Μέγεθος φλιτζανιού → Και τα δύο</string>
+    <string name="input_coffee_short">Καφές</string>
+    <string name="input_water_short">Νερό</string>
+    <string name="input_brew_short">Παρασκευή</string>
+    <string name="input_cup_short">Φλιτζάνι</string>
+    <string name="input_coffee_desc">Εισαγάγετε δόση καφέ, υπολογίστε νερό</string>
+    <string name="input_water_desc">Εισαγάγετε ποσότητα νερού, υπολογίστε καφέ</string>
+    <string name="input_brew_desc">Εισαγάγετε στόχο μεγέθους παρασκευής, υπολογίστε καφέ και νερό λαμβάνοντας υπόψη την απορρόφηση</string>
+    <string name="input_cup_desc">Εισαγάγετε μέγεθος φλιτζανιού, υπολογίστε καφέ και νερό</string>
+
+    <!-- Phase names -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Ρίξτε μέχρι %1$.0fg</string>
+    <string name="instruction_pour_total">Ρίξτε μέχρι %1$.0fg συνολικά</string>
+    <string name="instruction_open_valve_short">Ανοίξτε τη βαλβίδα</string>
+    <string name="instruction_close_valve_short">Κλείστε τη βαλβίδα</string>
+    <string name="instruction_bloom_wait">Περιστρέψτε &amp; περιμένετε το bloom</string>
+    <string name="instruction_french_press_start">Προσθέστε όλο το νερό, ανακατέψτε απαλά και τοποθετήστε το καπάκι επάνω</string>
+    <string name="instruction_french_press_steep">Αφήστε να εκχυλιστεί χωρίς ενόχληση μέχρι τον στόχο χρόνου</string>
+    <string name="instruction_french_press_plunge">Πιέστε αργά και μετά σερβίρετε τον καφέ</string>
+    <string name="instruction_aeropress_start">Προσθέστε νερό, ανακατέψτε και ξεκινήστε την εκχύλιση</string>
+    <string name="instruction_aeropress_steep">Αφήστε να εκχυλιστεί με το καπάκι τοποθετημένο, ετοιμαστείτε να πιέσετε</string>
+    <string name="instruction_aeropress_press">Πιέστε σταθερά μέχρι το σφύριγμα και μετά σταματήστε</string>
+    <string name="instruction_espresso_start">Κλειδώστε το portafilter και ξεκινήστε το shot</string>
+    <string name="instruction_espresso_pull">Παρακολουθήστε τη ροή και την απόδοση, κρατήστε το φλιτζάνι στη ζυγαριά</string>
+    <string name="instruction_espresso_stop">Σταματήστε στον στόχο απόδοσης ή όταν το shot ξανθύνει</string>
+    <string name="instruction_moka_start">Συναρμολογήστε το Moka Pot και θερμάνετε απαλά με ανοιχτό καπάκι</string>
+    <string name="instruction_moka_flow">Παρακολουθήστε τον καφέ που ρέει στον επάνω θάλαμο</string>
+    <string name="instruction_moka_remove">Αποσύρετε από τη φωτιά όταν η ροή γίνει ανοιχτόχρωμη ή αρχίσει να πιτσιλά</string>
+    <string name="instruction_cold_brew_start">Συνδυάστε καφέ και νερό, ανακατέψτε για να βραχεί όλος ο αλεσμένος καφές</string>
+    <string name="instruction_cold_brew_steep">Καλύψτε και αφήστε να εκχυλιστεί, κρατήστε όλο τον καφέ πλήρως βρεγμένο</string>
+    <string name="instruction_cold_brew_filter">Φιλτράρετε το συμπύκνωμα και ψύξτε ή αραιώστε για σερβίρισμα</string>
+
+    <!-- Warnings -->
+<!-- Taste Feedback -->
+    <string name="feedback_too_sour">Πολύ ξινό / αδύναμο</string>
+    <string name="feedback_balanced">Ισορροπημένο</string>
+    <string name="feedback_too_bitter">Πολύ πικρό / σκληρό</string>
+    <string name="feedback_astringent">Στυφό / ξηρό</string>
+    <string name="feedback_clogged">Βούλωσε / κόλλησε</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Αλέστε 2–4 κλικ πιο ψιλά</string>
+    <string name="adjust_try_finer">Δοκιμάστε πιο ψιλή ρύθμιση άλεσης</string>
+    <string name="adjust_no_change">Δεν χρειάζεται προσαρμογή — αποθηκεύστε αυτή τη συνταγή!</string>
+    <string name="adjust_grind_coarser">Αλέστε 2–4 κλικ πιο χοντρά</string>
+    <string name="adjust_grind_coarser_valve">Αλέστε 2–4 κλικ πιο χοντρά\nΔοκιμάστε να ανοίξετε τη βαλβίδα νωρίτερα</string>
+    <string name="adjust_try_coarser">Δοκιμάστε πιο χοντρή ρύθμιση άλεσης</string>
+    <string name="adjust_try_coarser_water">Δοκιμάστε πιο χοντρή ρύθμιση άλεσης\nΉ δοκιμάστε πιο δροσερό νερό</string>
+    <string name="adjust_astringent_pulsar">Αυξήστε τη δόση σε 20g+ για καλύτερο βάθος στρώματος\nΜειώστε την ανάδευση κατά το bloom\nΚρατήστε τη στάθμη του νερού περίπου 1cm πάνω από το στρώμα</string>
+    <string name="adjust_astringent_grinder">Αλέστε ελαφρώς πιο χοντρά, μειώστε την ανάδευση</string>
+    <string name="adjust_astringent_no_grinder">Αλέστε ελαφρώς πιο χοντρά, ρίξτε πιο απαλά</string>
+    <string name="adjust_clogged_pulsar_grinder">Αλέστε πολύ πιο χοντρά κατά 3–5 κλικ\nΜειώστε την ανάδευση (μόνο απαλό swirl)\nΕλέγξτε αν ο καφές είναι υπερβολικά φρέσκος — αφήστε τον 7+ ημέρες</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Αλέστε πολύ πιο χοντρά\nΜειώστε την ανάδευση\nΕξασφαλίστε απαλές ρίψεις μέσα από το καπάκι διασποράς</string>
+    <string name="adjust_clogged_grinder">Αλέστε πολύ πιο χοντρά κατά 3–5 κλικ</string>
+    <string name="adjust_clogged_no_grinder">Δοκιμάστε πολύ πιο χοντρή ρύθμιση άλεσης</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Καφές: %1$s γραμμάρια</string>
+    <string name="cd_water_grams">Νερό: %1$s γραμμάρια</string>
+    <string name="cd_ratio">Αναλογία 1 προς %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Όνομα</string>
+    <string name="label_roaster">Καβουρδιστήριο</string>
+    <string name="label_origin">Προέλευση</string>
+    <string name="label_barcode_ean">Barcode / EAN</string>
+    <string name="action_scan_barcode">Σάρωση barcode</string>
+    <string name="label_name_required">Όνομα *</string>
+    <string name="label_weight_grams">Βάρος (g)</string>
+    <string name="label_roast_date">Ημερομηνία καβουρδίσματος</string>
+    <string name="label_roast_level">Επίπεδο καβουρδίσματος</string>
+    <string name="label_variety">Ποικιλία</string>
+    <string name="label_process">Επεξεργασία</string>
+    <string name="label_tasting_notes">Γευστικές νότες</string>
+    <string name="label_best_before">Ανάλωση κατά προτίμηση πριν από</string>
+    <string name="label_decaf_coffee">Καφές decaf</string>
+    <string name="msg_decaf_guidance">Διατηρεί τις οδηγίες παρασκευής συγχρονισμένες με τους decaf κόκκους και τους συντομότερους στόχους εκχύλισης.</string>
+    <string name="label_decaf_process_optional">Μέθοδος decaf (προαιρετικά)</string>
+    <string name="msg_decaf_process_hint">Επιτρέπει στον κανόνα παρασκευής να προσαρμόζει ήπια την άλεση: οι decaf με μέθοδο νερού και CO₂ συνήθως χρειάζονται μικρότερη μετατόπιση προς χοντρότερη άλεση από εκείνους με διαλύτη.</string>
+    <string name="cd_captured_bag_photo">Φωτογραφία συσκευασίας που λήφθηκε</string>
+    <string name="label_detected_details">Εντοπισμένες λεπτομέρειες</string>
+    <string name="msg_tap_chip_to_edit">Πατήστε οποιαδήποτε ετικέτα για επεξεργασία</string>
+    <string name="label_needs_review">Χρειάζεται έλεγχο</string>
+    <string name="action_edit_all_fields">Επεξεργασία όλων των πεδίων</string>
+    <string name="action_add_more_details">Προσθήκη περισσότερων λεπτομερειών</string>
+    <string name="msg_analyzing_label">Ανάλυση φωτογραφιών ετικέτας</string>
+    <string name="msg_analyzing_label_detail">Ελέγχουμε το θάμπωμα, συνδυάζουμε το κείμενο εμπρός/πίσω και προετοιμάζουμε τα πιο αξιόπιστα πεδία.</string>
+    <string name="label_review_fields">Ελέγξτε αυτά τα πεδία</string>
+    <string name="label_qr_website">Ιστότοπος QR</string>
+    <string name="action_open_website">Άνοιγμα ιστοτόπου</string>
+    <string name="label_qr_link_found">Βρέθηκε σύνδεσμος QR</string>
+    <string name="action_explore_extract">Εξερεύνηση &amp; εξαγωγή</string>
+    <string name="label_detected_field_evidence">Ενδείξεις εντοπισμένου πεδίου</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Φωτογραφία συσκευασίας</string>
+    <string name="action_rescan_label">Επανάληψη σάρωσης ετικέτας</string>
+    <string name="action_edit_bag">Επεξεργασία συσκευασίας</string>
+    <string name="label_sensory_snapshot">Αισθητηριακό στιγμιότυπο</string>
+    <string name="label_grind_intelligence">Έξυπνες προτάσεις άλεσης</string>
+    <string name="label_remaining_coffee">Καφές που απομένει</string>
+    <string name="action_adjust_weight">Προσαρμογή βάρους</string>
+    <string name="action_add_weight_tracking">Προσθήκη παρακολούθησης βάρους</string>
+    <string name="label_brew_history">Ιστορικό παρασκευών</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Πώς ήταν;</string>
+    <string name="msg_rate_brew_fresh">Αξιολογήστε αυτή την παρασκευή όσο η γεύση είναι ακόμα φρέσκια.</string>
+    <string name="label_flavor_notes_section">Γευστικές νότες</string>
+    <string name="hint_what_stood_out">Προαιρετική σημείωση - τι ξεχώρισε;</string>
+    <string name="action_save_rating">Αποθήκευση αξιολόγησης</string>
+
+    <!-- EmptyStateBox -->
+<!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Τα αγαπημένα σας</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Άλλο</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">Υπηρεσία AI (Mindlayer)</string>
+    <string name="action_test_connection">Δοκιμή σύνδεσης</string>
+    <string name="action_run_test_prompt">Εκτέλεση δοκιμαστικού prompt</string>
+    <string name="label_testing">Δοκιμή…</string>
+
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Ενεργοποίηση AI</string>
+    <string name="consent_requesting">Αίτημα πρόσβασης AI…</string>
+    <string name="consent_granted">Η AI ενεργοποιήθηκε</string>
+    <string name="consent_already_approved">Η AI είναι ήδη ενεργοποιημένη</string>
+    <string name="consent_still_unavailable">Η AI έχει εγκριθεί αλλά η υπηρεσία δεν είναι ακόμα έτοιμη</string>
+    <string name="consent_declined">Δεν παραχωρήθηκε πρόσβαση AI</string>
+    <string name="consent_denied_temporary">Η πρόσβαση AI απορρίφθηκε — δοκιμάστε ξανά αργότερα</string>
+    <string name="consent_denied_permanent">Η πρόσβαση AI είναι αποκλεισμένη — ξεμπλοκάρετέ την στην εφαρμογή Mindlayer</string>
+    <string name="consent_service_unavailable">Η υπηρεσία Mindlayer AI δεν είναι διαθέσιμη</string>
+    <string name="consent_failed">Δεν ήταν δυνατό να ζητηθεί πρόσβαση AI</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Πώς ήταν το τελευταίο σας φλιτζάνι;</string>
+    <string name="label_what_was_off">Τι δεν πήγε καλά;</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Η σαρωμένη ετικέτα ταιριάζει με την αποθηκευμένη συσκευασία σας — δεν υπάρχει κάτι για ενημέρωση.</string>
+    <string name="action_update_bag">Ενημέρωση συσκευασίας</string>
+    <string name="action_new_bag">Νέα συσκευασία</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Αποθήκευση ως αγαπημένο</string>
+    <string name="msg_save_favorite_hint">Δώστε σε αυτή τη συνταγή ένα όνομα που θα θυμάστε</string>
+    <string name="hint_save_favorite_example">π.χ. Δευτέρα πρωί, Αργό Σαββατοκύριακο</string>
+    <string name="action_save_simple">Αποθήκευση</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Ιστορικό σαρώσεων</string>
+    <string name="msg_no_scan_sessions">Δεν έχουν καταγραφεί ακόμα συνεδρίες σάρωσης.</string>
+    <string name="action_share_session">Κοινοποίηση αυτής της συνεδρίας</string>
+    <string name="label_component_timings">Χρόνοι στοιχείων</string>
+    <string name="msg_no_timing_data">Δεν υπάρχουν διαθέσιμα δεδομένα χρονισμού</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Προειδοποίηση</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Προσαρμογή βάρους</string>
+    <string name="label_remaining_weight_grams">Βάρος που απομένει (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Από φωτογραφία</string>
+    <string name="action_scan_label">Σάρωση ετικέτας</string>
+    <string name="action_add_bag_gallery">Από συλλογή</string>
+    <string name="action_add_bag_camera">Σάρωση με κάμερα</string>
+    <string name="action_add_bag_barcode">Σάρωση barcode</string>
+    <string name="action_add_bag_manual">Χειροκίνητη προσθήκη</string>
+    <string name="msg_no_beans_yet">Δεν υπάρχουν ακόμα κόκκοι</string>
+    <string name="msg_add_coffee_hint">Προσθέστε τον καφέ σας για να παρακολουθείτε τη φρεσκάδα και να λαμβάνετε προτάσεις παρασκευής</string>
+    <string name="action_brew_now">Παρασκευή τώρα</string>
+    <string name="msg_could_not_read_label">Δεν ήταν δυνατή η ανάγνωση της ετικέτας</string>
+    <string name="action_retake_photo">Νέα λήψη φωτογραφίας</string>
+    <string name="action_add_details_manually">Προσθήκη λεπτομερειών χειροκίνητα</string>
+    <string name="msg_llm_enrichment_succeeded">Ο εμπλουτισμός AI βελτίωσε αυτή τη σάρωση ετικέτας.</string>
+    <string name="msg_llm_enrichment_failed">Η AI δεν μπόρεσε να ολοκληρώσει την ανάγνωση αυτής της ετικέτας αυτή τη φορά — έληξε ο χρόνος ή προέκυψε προσωρινό σφάλμα (έγινε ήδη αυτόματη επανάληψη). Πατήστε επανάληψη για να δοκιμάσετε άλλη μία φορά ή συμπληρώστε απλώς τα παρακάτω πεδία.</string>
+    <string name="msg_llm_enrichment_unavailable">Ο εμπλουτισμός AI δεν είναι διαθέσιμος αυτή τη στιγμή. Μπορείτε να δοκιμάσετε ξανά ή να συνεχίσετε χειροκίνητη επεξεργασία.</string>
+    <string name="action_retry_llm_enrichment">Επανάληψη εμπλουτισμού AI</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Κοινοποίηση παρασκευής</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Απόρριψη σάρωσης;</string>
+    <string name="msg_discard_scan_body">Έχετε εντοπισμένα πεδία που δεν έχουν αποθηκευτεί.</string>
+    <string name="action_discard">Απόρριψη</string>
+    <string name="action_keep_scanning">Συνέχιση σάρωσης</string>
+    <string name="msg_camera_permission_required">Απαιτείται άδεια κάμερας</string>
+    <string name="screen_scan_bag_title">Σάρωση συσκευασίας καφέ</string>
+    <string name="cd_toggle_debug_overlay">Εναλλαγή επικάλυψης debug</string>
+    <string name="msg_both_sides_scanned">Έχουν σαρωθεί και οι δύο πλευρές της συσκευασίας</string>
+    <string name="msg_scanning_front_side">Σάρωση της μπροστινής πλευράς της συσκευασίας</string>
+    <string name="action_quick_save">Γρήγορη αποθήκευση</string>
+    <string name="msg_repackaged_product">Αυτό μπορεί να είναι επανασυσκευασμένο ή εισαγόμενο προϊόν</string>
+    <string name="action_use_barcode">Χρήση barcode</string>
+    <string name="action_use_label">Χρήση ετικέτας</string>
+    <string name="label_confirmed">Επιβεβαιώθηκε</string>
+    <string name="label_ai_contributed">Συνεισφορά AI</string>
+    <string name="cd_manual_capture">Χειροκίνητη λήψη — εξαναγκασμένη επεξεργασία του τρέχοντος καρέ</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Συγχρονισμός με συσκευασία</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Εφαρμόζεται όταν παρασκευάζετε με Pulsar</string>
+    <string name="label_quick_brew">Γρήγορη παρασκευή</string>
+    <string name="msg_quick_brew_hint">Παραλείψτε το βήμα προετοιμασίας άλεσης και μεταβείτε απευθείας στο χρονόμετρο όταν ξεκινάτε παρασκευή</string>
+    <string name="label_show_brewing_instructions">Εμφάνιση οδηγιών παρασκευής</string>
+    <string name="msg_show_brewing_instructions_hint">Εμφανίστε την κάρτα βήμα προς βήμα κατά την παρασκευή και τη λίστα προετοιμασίας στην οθόνη προετοιμασίας. Απενεργοποιήστε το αν γνωρίζετε τη μέθοδό σας απέξω.</string>
+    <string name="label_dim_mode">Αυτόματη λειτουργία χαμηλού φωτισμού</string>
+    <string name="msg_dim_mode_hint">Μετά από 25 s αδράνειας, αφαιρούνται τα χρωματιστά φόντα και το κείμενο γίνεται γκρι. Η διάταξη μένει στη θέση της και ένα μόνο πάτημα ξυπνά την οθόνη και ενεργοποιεί την υποκείμενη ενέργεια.</string>
+    <string name="label_dim_mode_true_black">Πραγματικό μαύρο φόντο</string>
+    <string name="msg_dim_mode_true_black_hint">Όταν η οθόνη χαμηλώνει σε σκοτεινό θέμα, το φόντο γίνεται επίσης καθαρό μαύρο. Ιδανικό για OLED — εξοικονομεί ενέργεια και δείχνει πραγματικά σε ηρεμία. Δεν έχει επίδραση σε φωτεινά θέματα.</string>
+    <string name="label_dim_mode_reduce_brightness">Μείωση φωτεινότητας οθόνης</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Χαμηλώνει επίσης τον οπίσθιο φωτισμό της οθόνης όσο είναι χαμηλωμένη. Εξοικονομεί λίγη ενέργεια και μαλακώνει ακόμη περισσότερο την οθόνη.</string>
+    <string name="label_dim_mode_fullscreen">Απόκρυψη γραμμών συστήματος</string>
+    <string name="msg_dim_mode_fullscreen_hint">Κρύβει επίσης τη γραμμή κατάστασης και τη γραμμή πλοήγησης όσο η οθόνη είναι χαμηλωμένη. Σύρετε από μια άκρη για προσωρινή προβολή· οποιοδήποτε πάτημα στην οθόνη επιστρέφει στην κανονική προβολή.</string>
+    <string name="label_dim_mode_force_dark_in_light">Χρήση σκοτεινού στιλ όταν είναι χαμηλωμένη</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Αλλάζει στη σκοτεινή παρουσίαση χαμηλού φωτισμού ακόμα και όταν το σύστημα είναι σε φωτεινή λειτουργία. Συνδυάζεται φυσικά με το πραγματικό μαύρο φόντο για πάντα σκοτεινή χαμηλωμένη οθόνη.</string>
+    <string name="action_add_cup_preset">Προσθήκη προεπιλογής φλιτζανιού</string>
+    <string name="label_volume_ml">Όγκος (ml)</string>
+    <string name="msg_dose_from_ratio">Η δόση καφέ υπολογίζεται από την αναλογία σας</string>
+    <string name="label_icon">Εικονίδιο</string>
+    <string name="label_color">Χρώμα</string>
+    <string name="action_add">Προσθήκη</string>
+    <string name="dialog_edit_cup_preset_title">Επεξεργασία προεπιλογής φλιτζανιού</string>
+    <string name="screen_add_cup_preset_title">Προσθήκη προεπιλογής φλιτζανιού</string>
+    <string name="screen_edit_cup_preset_title">Επεξεργασία προεπιλογής φλιτζανιού</string>
+    <string name="msg_cup_preset_name_required">Προσθέστε όνομα για να συνεχίσετε</string>
+    <string name="msg_cup_preset_volume_required">Προσθέστε όγκο μεγαλύτερο από 0</string>
+    <string name="cd_cup_preset_preview">Προεπισκόπηση του %1$s</string>
+    <string name="label_scan_debug">Debug σάρωσης</string>
+    <string name="action_view_history">Προβολή ιστορικού</string>
+    <string name="action_share_report">Κοινοποίηση αναφοράς</string>
+    <string name="action_clear">Εκκαθάριση</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Ελαφρύ</string>
+    <string name="strength_balanced">Ισορροπημένο</string>
+    <string name="strength_strong">Δυνατό</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Φρουτώδες</string>
+    <string name="flavor_chocolate">Σοκολατένιο</string>
+    <string name="flavor_nutty">Ξηροκαρπάτο</string>
+    <string name="flavor_floral">Ανθικό</string>
+    <string name="flavor_bright">Φωτεινό</string>
+    <string name="flavor_smooth">Απαλό</string>
+    <string name="flavor_bitter">Πικρό</string>
+    <string name="flavor_sweet">Γλυκό</string>
+    <string name="flavor_earthy">Γήινο</string>
+    <string name="flavor_spicy">Πικάντικο</string>
+    <string name="flavor_citrus">Εσπεριδοειδή</string>
+    <string name="flavor_berry">Μούρα</string>
+    <string name="flavor_caramel">Καραμέλα</string>
+    <string name="flavor_wine">Κρασάτο</string>
+    <string name="flavor_clean">Καθαρό</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Πολύ ψιλό</string>
+    <string name="grind_fine">Ψιλό</string>
+    <string name="grind_medium_fine">Μεσαίο-ψιλό</string>
+    <string name="grind_medium">Μεσαίο</string>
+    <string name="grind_medium_coarse">Μεσαίο-χοντρό</string>
+    <string name="grind_coarse">Χοντρό</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Εξαιρετικό</string>
+    <string name="rating_good">Καλό</string>
+    <string name="rating_not_great">Όχι τόσο καλό</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Πολύ πικρό</string>
+    <string name="taste_issue_too_sour">Πολύ ξινό</string>
+    <string name="taste_issue_too_weak">Πολύ αδύναμο</string>
+    <string name="taste_issue_too_strong">Πολύ δυνατό</string>
+    <string name="taste_issue_bitter_suggestion">Δοκιμάστε πιο χοντρό άλεσμα ή μικρότερο χρόνο παρασκευής</string>
+    <string name="taste_issue_sour_suggestion">Δοκιμάστε πιο ψιλό άλεσμα ή μεγαλύτερο χρόνο παρασκευής</string>
+    <string name="taste_issue_weak_suggestion">Δοκιμάστε πιο δυνατή αναλογία ή περισσότερο καφέ</string>
+    <string name="taste_issue_strong_suggestion">Δοκιμάστε πιο ελαφριά αναλογία ή λιγότερο καφέ</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Σφραγισμένη</string>
+    <string name="bag_status_open">Ανοιχτή</string>
+    <string name="bag_status_frozen">Κατεψυγμένη</string>
+    <string name="bag_status_finished">Τελειωμένη</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Άγνωστο / δεν έχει οριστεί</string>
+    <string name="decaf_swiss_water">Swiss Water (μέθοδος νερού)</string>
+    <string name="decaf_mountain_water">Mountain Water (μέθοδος νερού)</string>
+    <string name="decaf_co2">Υπερκρίσιμο CO₂</string>
+    <string name="decaf_ea_sugarcane">Ethyl Acetate (ζαχαροκάλαμο / φυσικό EA)</string>
+    <string name="decaf_mc_direct">Methylene Chloride (άμεσος διαλύτης)</string>
+    <string name="decaf_ea_direct">Ethyl Acetate (άμεσος διαλύτης)</string>
+    <string name="decaf_short_unknown">Άγνωστο</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (ζαχαροκάλαμο)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (διαλύτης)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Ανοιχτό</string>
+    <string name="roast_medium_light">Μεσαίο-ανοιχτό</string>
+    <string name="roast_medium">Μεσαίο</string>
+    <string name="roast_medium_dark">Μεσαίο-σκούρο</string>
+    <string name="roast_dark">Σκούρο</string>
+    <string name="roast_filter">Filter</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Cinnamon</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Washed</string>
+    <string name="process_natural">Natural</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaerobic</string>
+    <string name="process_carbonic_maceration">Carbonic Maceration</string>
+    <string name="process_semi_washed">Semi-Washed</string>
+    <string name="process_wet_hulled">Wet-Hulled</string>
+    <string name="process_pulped_natural">Pulped Natural</string>
+    <string name="process_double_fermented">Double Fermented</string>
+    <string name="process_thermal_shock">Thermal Shock</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Κεντράρετε την μπροστινή πλευρά της συσκευασίας στο κάδρο</string>
+    <string name="guided_scan_aim_back">Τώρα σαρώστε την πίσω πλευρά της συσκευασίας</string>
+    <string name="guided_scan_aim_more">Προσθέστε άλλη μία φωτογραφία (προαιρετικά)</string>
+    <string name="guided_scan_hold_steady">Κρατήστε σταθερά…</string>
+    <string name="guided_scan_skip_photos">Παράλειψη φωτογραφιών</string>
+    <string name="guided_scan_finished">Ολοκληρώθηκε</string>
+    <string name="guided_scan_auto_on">Αυτόματο ενεργό</string>
+    <string name="guided_scan_auto_off">Αυτόματο ανενεργό</string>
+    <string name="guided_scan_capture">Λήψη φωτογραφίας</string>
+    <string name="guided_scan_scan_more">Σάρωση περισσότερων φωτογραφιών</string>
+    <string name="scan_warn_glare">Μειώστε την αντανάκλαση</string>
+    <string name="scan_warn_lighting">Βελτιώστε τον φωτισμό</string>
+    <string name="cd_remove_photo">Αφαίρεση φωτογραφίας</string>
+    <string name="msg_bag_saved">Η συσκευασία αποθηκεύτηκε</string>
+</resources>

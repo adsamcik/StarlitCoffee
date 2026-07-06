@@ -1,0 +1,1999 @@
+{
+  "_meta": {
+    "version": 1,
+    "generated": "2026-07-06",
+    "description": "Curated coffee-bag filter vocabulary used to seed KnownFieldValues hints for the on-device LLM. Each entry has a canonical `value` and OCR/spelling `aliases`. Hand-maintainable.",
+    "sources": [
+      "World Coffee Research Arabica Variety Catalog (varieties.worldcoffeeresearch.org)",
+      "SCA Coffee Taster's Flavor Wheel / WCR Sensory Lexicon",
+      "International Coffee Organization producing-country list",
+      "Shopify collection facets scraped from specialty roasters: Onyx Coffee Lab, Sey Coffee, Verve Coffee, George Howell, Methodical, Ceremony, Black & White, Corvus, Passenger, Square Mile, Subtext",
+      "Second scrape (drinktrade/Peet's/Stumptown/Counter Culture/Equator/La Colombe/George Howell) aggregated in TeacupOrchestra docs/coffee-filter-vocabulary.json"
+    ],
+    "retailObserved": {
+      "origins": [
+        "California",
+        "Colombia",
+        "Ecuador",
+        "Ethiopia",
+        "Honduras",
+        "Kenya",
+        "Panama",
+        "Peru"
+      ],
+      "processes": [
+        "Anaerobic Natural",
+        "Anaerobic Washed",
+        "Dry Washed",
+        "Innoculated",
+        "Natural",
+        "Washed",
+        "White Honey"
+      ],
+      "extraOriginsNotInCanonical": [],
+      "extraProcessesNotInCanonical": []
+    }
+  },
+  "origins": [
+    {
+      "value": "Bolivia",
+      "aliases": [
+        "Bolivian",
+        "BOL"
+      ]
+    },
+    {
+      "value": "Brazil",
+      "aliases": [
+        "Brazilian",
+        "Brasil",
+        "BRA"
+      ]
+    },
+    {
+      "value": "Burundi",
+      "aliases": [
+        "Burundian"
+      ]
+    },
+    {
+      "value": "Cameroon",
+      "aliases": []
+    },
+    {
+      "value": "China",
+      "aliases": [
+        "Yunnan",
+        "Chinese"
+      ]
+    },
+    {
+      "value": "Colombia",
+      "aliases": [
+        "Colombian",
+        "COL"
+      ]
+    },
+    {
+      "value": "Costa Rica",
+      "aliases": [
+        "CRI"
+      ]
+    },
+    {
+      "value": "Cuba",
+      "aliases": [
+        "Cuban"
+      ]
+    },
+    {
+      "value": "Dominican Republic",
+      "aliases": []
+    },
+    {
+      "value": "DR Congo",
+      "aliases": [
+        "Democratic Republic of Congo",
+        "DRC",
+        "Congo"
+      ]
+    },
+    {
+      "value": "East Timor",
+      "aliases": [
+        "Timor-Leste",
+        "Timor Leste"
+      ]
+    },
+    {
+      "value": "Ecuador",
+      "aliases": [
+        "Ecuadorian",
+        "ECU"
+      ]
+    },
+    {
+      "value": "El Salvador",
+      "aliases": [
+        "Salvadoran",
+        "SAL"
+      ]
+    },
+    {
+      "value": "Ethiopia",
+      "aliases": [
+        "Ethiopian",
+        "ETH"
+      ]
+    },
+    {
+      "value": "Guatemala",
+      "aliases": [
+        "Guatemalan",
+        "GUA"
+      ]
+    },
+    {
+      "value": "Haiti",
+      "aliases": []
+    },
+    {
+      "value": "Hawaii",
+      "aliases": [
+        "Kona",
+        "Hawaiian"
+      ]
+    },
+    {
+      "value": "Honduras",
+      "aliases": [
+        "Honduran",
+        "HON"
+      ]
+    },
+    {
+      "value": "India",
+      "aliases": [
+        "Indian"
+      ]
+    },
+    {
+      "value": "Indonesia",
+      "aliases": [
+        "Indonesian"
+      ]
+    },
+    {
+      "value": "Ivory Coast",
+      "aliases": [
+        "Cote d'Ivoire",
+        "Côte d'Ivoire"
+      ]
+    },
+    {
+      "value": "Jamaica",
+      "aliases": [
+        "Jamaican"
+      ]
+    },
+    {
+      "value": "Kenya",
+      "aliases": [
+        "Kenyan",
+        "KEN"
+      ]
+    },
+    {
+      "value": "Laos",
+      "aliases": [
+        "Lao"
+      ]
+    },
+    {
+      "value": "Malawi",
+      "aliases": []
+    },
+    {
+      "value": "Mexico",
+      "aliases": [
+        "Mexican",
+        "México",
+        "MEX"
+      ]
+    },
+    {
+      "value": "Myanmar",
+      "aliases": [
+        "Burma"
+      ]
+    },
+    {
+      "value": "Nepal",
+      "aliases": [
+        "Nepalese"
+      ]
+    },
+    {
+      "value": "Nicaragua",
+      "aliases": [
+        "Nicaraguan",
+        "NIC"
+      ]
+    },
+    {
+      "value": "Panama",
+      "aliases": [
+        "Panamanian",
+        "PAN"
+      ]
+    },
+    {
+      "value": "Papua New Guinea",
+      "aliases": [
+        "PNG"
+      ]
+    },
+    {
+      "value": "Peru",
+      "aliases": [
+        "Peruvian",
+        "PER"
+      ]
+    },
+    {
+      "value": "Philippines",
+      "aliases": [
+        "Filipino"
+      ]
+    },
+    {
+      "value": "Puerto Rico",
+      "aliases": []
+    },
+    {
+      "value": "Rwanda",
+      "aliases": [
+        "Rwandan",
+        "RWA"
+      ]
+    },
+    {
+      "value": "Tanzania",
+      "aliases": [
+        "Tanzanian"
+      ]
+    },
+    {
+      "value": "Thailand",
+      "aliases": [
+        "Thai"
+      ]
+    },
+    {
+      "value": "Uganda",
+      "aliases": [
+        "Ugandan"
+      ]
+    },
+    {
+      "value": "Venezuela",
+      "aliases": []
+    },
+    {
+      "value": "Vietnam",
+      "aliases": [
+        "Viet Nam",
+        "Vietnamese"
+      ]
+    },
+    {
+      "value": "Yemen",
+      "aliases": [
+        "Yemeni"
+      ]
+    },
+    {
+      "value": "Zambia",
+      "aliases": []
+    },
+    {
+      "value": "Zimbabwe",
+      "aliases": []
+    }
+  ],
+  "regions": [
+    {
+      "value": "Acatenango",
+      "aliases": [],
+      "country": "Guatemala"
+    },
+    {
+      "value": "Antigua",
+      "aliases": [],
+      "country": "Guatemala"
+    },
+    {
+      "value": "Antioquia",
+      "aliases": [],
+      "country": "Colombia"
+    },
+    {
+      "value": "Araku Valley",
+      "aliases": [
+        "Araku"
+      ],
+      "country": "India"
+    },
+    {
+      "value": "Atitlán",
+      "aliases": [
+        "Atitlan"
+      ],
+      "country": "Guatemala"
+    },
+    {
+      "value": "Baba Budangiri",
+      "aliases": [
+        "Baba Budan",
+        "Bababudangiri"
+      ],
+      "country": "India"
+    },
+    {
+      "value": "Bali",
+      "aliases": [],
+      "country": "Indonesia"
+    },
+    {
+      "value": "Blue Mountain",
+      "aliases": [],
+      "country": "Jamaica"
+    },
+    {
+      "value": "Boquete",
+      "aliases": [],
+      "country": "Panama"
+    },
+    {
+      "value": "Cajamarca",
+      "aliases": [],
+      "country": "Peru"
+    },
+    {
+      "value": "Cauca",
+      "aliases": [],
+      "country": "Colombia"
+    },
+    {
+      "value": "Central Valley",
+      "aliases": [],
+      "country": "Costa Rica"
+    },
+    {
+      "value": "Cerrado",
+      "aliases": [],
+      "country": "Brazil"
+    },
+    {
+      "value": "Chanchamayo",
+      "aliases": [],
+      "country": "Peru"
+    },
+    {
+      "value": "Chiapas",
+      "aliases": [],
+      "country": "Mexico"
+    },
+    {
+      "value": "Chikmagalur",
+      "aliases": [
+        "Chikkamagaluru"
+      ],
+      "country": "India"
+    },
+    {
+      "value": "Coorg",
+      "aliases": [
+        "Kodagu"
+      ],
+      "country": "India"
+    },
+    {
+      "value": "Copán",
+      "aliases": [
+        "Copan"
+      ],
+      "country": "Honduras"
+    },
+    {
+      "value": "Cusco",
+      "aliases": [
+        "Cuzco"
+      ],
+      "country": "Peru"
+    },
+    {
+      "value": "Embu",
+      "aliases": [],
+      "country": "Kenya"
+    },
+    {
+      "value": "Flores",
+      "aliases": [],
+      "country": "Indonesia"
+    },
+    {
+      "value": "Gayo",
+      "aliases": [],
+      "country": "Indonesia"
+    },
+    {
+      "value": "Gedeb",
+      "aliases": [
+        "Gedeo"
+      ],
+      "country": "Ethiopia"
+    },
+    {
+      "value": "Guji",
+      "aliases": [],
+      "country": "Ethiopia"
+    },
+    {
+      "value": "Harrar",
+      "aliases": [
+        "Harar"
+      ],
+      "country": "Ethiopia"
+    },
+    {
+      "value": "Huehuetenango",
+      "aliases": [
+        "Huehue"
+      ],
+      "country": "Guatemala"
+    },
+    {
+      "value": "Huila",
+      "aliases": [],
+      "country": "Colombia"
+    },
+    {
+      "value": "Java",
+      "aliases": [],
+      "country": "Indonesia"
+    },
+    {
+      "value": "Jimma",
+      "aliases": [
+        "Djimmah"
+      ],
+      "country": "Ethiopia"
+    },
+    {
+      "value": "Jinotega",
+      "aliases": [],
+      "country": "Nicaragua"
+    },
+    {
+      "value": "Kaffa",
+      "aliases": [],
+      "country": "Ethiopia"
+    },
+    {
+      "value": "Kayanza",
+      "aliases": [],
+      "country": "Burundi"
+    },
+    {
+      "value": "Kiambu",
+      "aliases": [],
+      "country": "Kenya"
+    },
+    {
+      "value": "Kirinyaga",
+      "aliases": [],
+      "country": "Kenya"
+    },
+    {
+      "value": "Kivu",
+      "aliases": [],
+      "country": "DR Congo"
+    },
+    {
+      "value": "Kona",
+      "aliases": [],
+      "country": "Hawaii"
+    },
+    {
+      "value": "Limu",
+      "aliases": [
+        "Limmu"
+      ],
+      "country": "Ethiopia"
+    },
+    {
+      "value": "Mandheling",
+      "aliases": [
+        "Mandailing"
+      ],
+      "country": "Indonesia"
+    },
+    {
+      "value": "Marcala",
+      "aliases": [],
+      "country": "Honduras"
+    },
+    {
+      "value": "Matas de Minas",
+      "aliases": [],
+      "country": "Brazil"
+    },
+    {
+      "value": "Maval",
+      "aliases": [],
+      "country": "India"
+    },
+    {
+      "value": "Mogiana",
+      "aliases": [],
+      "country": "Brazil"
+    },
+    {
+      "value": "Murang'a",
+      "aliases": [
+        "Muranga"
+      ],
+      "country": "Kenya"
+    },
+    {
+      "value": "Nariño",
+      "aliases": [
+        "Narino"
+      ],
+      "country": "Colombia"
+    },
+    {
+      "value": "Ngozi",
+      "aliases": [],
+      "country": "Burundi"
+    },
+    {
+      "value": "Nilgiris",
+      "aliases": [
+        "Nilgiri"
+      ],
+      "country": "India"
+    },
+    {
+      "value": "Nueva Segovia",
+      "aliases": [],
+      "country": "Nicaragua"
+    },
+    {
+      "value": "Nyamasheke",
+      "aliases": [],
+      "country": "Rwanda"
+    },
+    {
+      "value": "Nyeri",
+      "aliases": [],
+      "country": "Kenya"
+    },
+    {
+      "value": "Oaxaca",
+      "aliases": [],
+      "country": "Mexico"
+    },
+    {
+      "value": "Quindío",
+      "aliases": [
+        "Quindio"
+      ],
+      "country": "Colombia"
+    },
+    {
+      "value": "Rwenzori",
+      "aliases": [
+        "Rwenzori Mountains"
+      ],
+      "country": "Uganda"
+    },
+    {
+      "value": "Santander",
+      "aliases": [],
+      "country": "Colombia"
+    },
+    {
+      "value": "Sidamo",
+      "aliases": [
+        "Sidama"
+      ],
+      "country": "Ethiopia"
+    },
+    {
+      "value": "Sierra Nevada",
+      "aliases": [],
+      "country": "Colombia"
+    },
+    {
+      "value": "Sul de Minas",
+      "aliases": [],
+      "country": "Brazil"
+    },
+    {
+      "value": "Sulawesi",
+      "aliases": [],
+      "country": "Indonesia"
+    },
+    {
+      "value": "Sumatra",
+      "aliases": [],
+      "country": "Indonesia"
+    },
+    {
+      "value": "Tarrazú",
+      "aliases": [
+        "Tarrazu"
+      ],
+      "country": "Costa Rica"
+    },
+    {
+      "value": "Tolima",
+      "aliases": [],
+      "country": "Colombia"
+    },
+    {
+      "value": "Toraja",
+      "aliases": [],
+      "country": "Indonesia"
+    },
+    {
+      "value": "Veracruz",
+      "aliases": [],
+      "country": "Mexico"
+    },
+    {
+      "value": "Volcán",
+      "aliases": [
+        "Volcan"
+      ],
+      "country": "Panama"
+    },
+    {
+      "value": "Wayanad",
+      "aliases": [],
+      "country": "India"
+    },
+    {
+      "value": "West Arsi",
+      "aliases": [],
+      "country": "Ethiopia"
+    },
+    {
+      "value": "West Valley",
+      "aliases": [],
+      "country": "Costa Rica"
+    },
+    {
+      "value": "Western Ghats",
+      "aliases": [],
+      "country": "India"
+    },
+    {
+      "value": "Yirgacheffe",
+      "aliases": [
+        "Yirga Cheffe"
+      ],
+      "country": "Ethiopia"
+    }
+  ],
+  "varieties": [
+    {
+      "value": "74110",
+      "aliases": []
+    },
+    {
+      "value": "74112",
+      "aliases": []
+    },
+    {
+      "value": "74158",
+      "aliases": []
+    },
+    {
+      "value": "Anacafe 14",
+      "aliases": [
+        "Anacafé 14"
+      ]
+    },
+    {
+      "value": "Batian",
+      "aliases": []
+    },
+    {
+      "value": "Bernardina",
+      "aliases": []
+    },
+    {
+      "value": "Bourbon",
+      "aliases": []
+    },
+    {
+      "value": "Bourbon Pointu",
+      "aliases": [
+        "Laurina",
+        "Pointu"
+      ]
+    },
+    {
+      "value": "Castillo",
+      "aliases": []
+    },
+    {
+      "value": "Catimor",
+      "aliases": []
+    },
+    {
+      "value": "Catuai",
+      "aliases": [
+        "Catuaí"
+      ]
+    },
+    {
+      "value": "Caturra",
+      "aliases": []
+    },
+    {
+      "value": "Cauvery",
+      "aliases": []
+    },
+    {
+      "value": "Cenicafé 1",
+      "aliases": [
+        "Cenicafe 1"
+      ]
+    },
+    {
+      "value": "Centroamericano",
+      "aliases": [
+        "H1",
+        "Centroamericano H1"
+      ]
+    },
+    {
+      "value": "Chiroso",
+      "aliases": []
+    },
+    {
+      "value": "Colombia",
+      "aliases": []
+    },
+    {
+      "value": "Costa Rica 95",
+      "aliases": []
+    },
+    {
+      "value": "Cuscatleco",
+      "aliases": []
+    },
+    {
+      "value": "Dega",
+      "aliases": []
+    },
+    {
+      "value": "Eugenioides",
+      "aliases": [
+        "Eugenoides"
+      ]
+    },
+    {
+      "value": "Excelsa",
+      "aliases": []
+    },
+    {
+      "value": "Geisha",
+      "aliases": [
+        "Gesha"
+      ]
+    },
+    {
+      "value": "Heirloom",
+      "aliases": [
+        "Ethiopian Heirloom",
+        "Landrace",
+        "Local Landrace"
+      ]
+    },
+    {
+      "value": "IHCAFE 90",
+      "aliases": [
+        "IHCAFE90"
+      ]
+    },
+    {
+      "value": "Jackson",
+      "aliases": []
+    },
+    {
+      "value": "K7",
+      "aliases": []
+    },
+    {
+      "value": "Kent",
+      "aliases": []
+    },
+    {
+      "value": "Kurume",
+      "aliases": []
+    },
+    {
+      "value": "Lempira",
+      "aliases": []
+    },
+    {
+      "value": "Liberica",
+      "aliases": [
+        "Liberika"
+      ]
+    },
+    {
+      "value": "Limani",
+      "aliases": []
+    },
+    {
+      "value": "Maracaturra",
+      "aliases": []
+    },
+    {
+      "value": "Maragogype",
+      "aliases": [
+        "Maragogipe",
+        "Elephant Bean"
+      ]
+    },
+    {
+      "value": "Marsellesa",
+      "aliases": []
+    },
+    {
+      "value": "Mokka",
+      "aliases": [
+        "Mocca",
+        "Moka"
+      ]
+    },
+    {
+      "value": "Mundo Novo",
+      "aliases": []
+    },
+    {
+      "value": "Obata",
+      "aliases": []
+    },
+    {
+      "value": "Ombligón",
+      "aliases": [
+        "Ombligon"
+      ]
+    },
+    {
+      "value": "Orange Bourbon",
+      "aliases": []
+    },
+    {
+      "value": "Pacamara",
+      "aliases": []
+    },
+    {
+      "value": "Pacas",
+      "aliases": []
+    },
+    {
+      "value": "Pache",
+      "aliases": []
+    },
+    {
+      "value": "Parainema",
+      "aliases": []
+    },
+    {
+      "value": "Pink Bourbon",
+      "aliases": []
+    },
+    {
+      "value": "Red Bourbon",
+      "aliases": []
+    },
+    {
+      "value": "Red Catuai",
+      "aliases": []
+    },
+    {
+      "value": "Robusta",
+      "aliases": []
+    },
+    {
+      "value": "Ruiru 11",
+      "aliases": [
+        "Ruiru11"
+      ]
+    },
+    {
+      "value": "Rume Sudan",
+      "aliases": [
+        "Sudan Rume"
+      ]
+    },
+    {
+      "value": "S795",
+      "aliases": [
+        "S 795"
+      ]
+    },
+    {
+      "value": "Sarchimor",
+      "aliases": []
+    },
+    {
+      "value": "Sidra",
+      "aliases": []
+    },
+    {
+      "value": "SL14",
+      "aliases": [
+        "SL 14"
+      ]
+    },
+    {
+      "value": "SL28",
+      "aliases": [
+        "SL 28"
+      ]
+    },
+    {
+      "value": "SL34",
+      "aliases": [
+        "SL 34"
+      ]
+    },
+    {
+      "value": "SLN9",
+      "aliases": [
+        "SLN 9",
+        "Sln 9",
+        "Selection 9"
+      ]
+    },
+    {
+      "value": "Stripe Bourbon",
+      "aliases": []
+    },
+    {
+      "value": "Tabi",
+      "aliases": []
+    },
+    {
+      "value": "Tekisic",
+      "aliases": []
+    },
+    {
+      "value": "Typica",
+      "aliases": []
+    },
+    {
+      "value": "Typica Mejorado",
+      "aliases": [
+        "Mejorado"
+      ]
+    },
+    {
+      "value": "Villa Sarchi",
+      "aliases": []
+    },
+    {
+      "value": "Villalobos",
+      "aliases": []
+    },
+    {
+      "value": "Wolisho",
+      "aliases": []
+    },
+    {
+      "value": "Wush Wush",
+      "aliases": [
+        "Wushwush"
+      ]
+    },
+    {
+      "value": "Yellow Bourbon",
+      "aliases": []
+    },
+    {
+      "value": "Yellow Catuai",
+      "aliases": []
+    }
+  ],
+  "processTypes": [
+    {
+      "value": "Anaerobic",
+      "aliases": [
+        "Anaerobic Fermentation"
+      ]
+    },
+    {
+      "value": "Anaerobic Honey",
+      "aliases": []
+    },
+    {
+      "value": "Anaerobic Natural",
+      "aliases": []
+    },
+    {
+      "value": "Anaerobic Washed",
+      "aliases": []
+    },
+    {
+      "value": "Barrel Aged",
+      "aliases": [
+        "Barrel-Aged"
+      ]
+    },
+    {
+      "value": "Black Honey",
+      "aliases": []
+    },
+    {
+      "value": "Carbonic Maceration",
+      "aliases": [
+        "Carbonic"
+      ]
+    },
+    {
+      "value": "Co-Fermentation",
+      "aliases": [
+        "Co-Ferment",
+        "Coferment",
+        "Co Fermented"
+      ]
+    },
+    {
+      "value": "CO2 Decaf",
+      "aliases": [
+        "CO2 Process",
+        "Carbon Dioxide Decaf"
+      ]
+    },
+    {
+      "value": "Double Fermented",
+      "aliases": [
+        "Double Fermentation"
+      ]
+    },
+    {
+      "value": "Double Washed",
+      "aliases": [
+        "Double Fermented Washed"
+      ]
+    },
+    {
+      "value": "Experimental",
+      "aliases": [
+        "Experimental Fermentation"
+      ]
+    },
+    {
+      "value": "Extended Fermentation",
+      "aliases": [
+        "Extended Ferment"
+      ]
+    },
+    {
+      "value": "Honey",
+      "aliases": [
+        "Honey Process",
+        "Pulped Natural",
+        "Miel"
+      ]
+    },
+    {
+      "value": "Lactic",
+      "aliases": [
+        "Lactic Fermentation"
+      ]
+    },
+    {
+      "value": "Mountain Water Decaf",
+      "aliases": [
+        "Mountain Water",
+        "Mountain Water Process",
+        "Water Processed Decaf",
+        "Water Process"
+      ]
+    },
+    {
+      "value": "Natural",
+      "aliases": [
+        "Dry Process",
+        "Sun-Dried",
+        "Sun Dried",
+        "Dry"
+      ]
+    },
+    {
+      "value": "Nitro",
+      "aliases": [
+        "Nitrogen"
+      ]
+    },
+    {
+      "value": "Red Honey",
+      "aliases": []
+    },
+    {
+      "value": "Semi-Washed",
+      "aliases": [
+        "Semi Washed",
+        "Dry Washed"
+      ]
+    },
+    {
+      "value": "Sugarcane Decaf",
+      "aliases": [
+        "Sugarcane EA",
+        "Ethyl Acetate",
+        "EA Decaf",
+        "E.A. Process",
+        "EA Process"
+      ]
+    },
+    {
+      "value": "Supernatural",
+      "aliases": []
+    },
+    {
+      "value": "Swiss Water Decaf",
+      "aliases": [
+        "Swiss Water",
+        "Swiss Water Process",
+        "SWP"
+      ]
+    },
+    {
+      "value": "Thermal Shock",
+      "aliases": [
+        "Temperature Shock"
+      ]
+    },
+    {
+      "value": "Washed",
+      "aliases": [
+        "Wet Process",
+        "Fully Washed",
+        "Wet"
+      ]
+    },
+    {
+      "value": "Wet-Hulled",
+      "aliases": [
+        "Wet Hulled",
+        "Giling Basah"
+      ]
+    },
+    {
+      "value": "White Honey",
+      "aliases": []
+    },
+    {
+      "value": "Wine Process",
+      "aliases": [
+        "Winey Process"
+      ]
+    },
+    {
+      "value": "Yeast Inoculated",
+      "aliases": [
+        "Inoculated",
+        "Innoculated",
+        "Yeast Fermentation"
+      ]
+    },
+    {
+      "value": "Yellow Honey",
+      "aliases": []
+    }
+  ],
+  "roastLevels": [
+    {
+      "value": "Cinnamon",
+      "aliases": [
+        "Cinnamon Roast"
+      ]
+    },
+    {
+      "value": "Dark",
+      "aliases": [
+        "Dark Roast",
+        "Darker"
+      ]
+    },
+    {
+      "value": "Espresso",
+      "aliases": [
+        "Espresso Roast",
+        "Full City",
+        "Full City Roast"
+      ]
+    },
+    {
+      "value": "Filter",
+      "aliases": [
+        "Filter Roast",
+        "City",
+        "City Roast"
+      ]
+    },
+    {
+      "value": "French",
+      "aliases": [
+        "French Roast"
+      ]
+    },
+    {
+      "value": "Italian",
+      "aliases": [
+        "Italian Roast"
+      ]
+    },
+    {
+      "value": "Light",
+      "aliases": [
+        "Blonde",
+        "Light Roast",
+        "Lighter"
+      ]
+    },
+    {
+      "value": "Medium",
+      "aliases": [
+        "Medium Roast"
+      ]
+    },
+    {
+      "value": "Medium-Dark",
+      "aliases": [
+        "Medium Dark",
+        "Med Dark"
+      ]
+    },
+    {
+      "value": "Medium-Light",
+      "aliases": [
+        "Medium Light",
+        "Light-Medium",
+        "Med Light"
+      ]
+    },
+    {
+      "value": "Omniroast",
+      "aliases": [
+        "Omni Roast",
+        "Omni-Roast"
+      ]
+    }
+  ],
+  "tastingNotes": [
+    {
+      "value": "Allspice",
+      "aliases": []
+    },
+    {
+      "value": "Almond",
+      "aliases": [
+        "Roasted Almond"
+      ]
+    },
+    {
+      "value": "Almond Butter",
+      "aliases": []
+    },
+    {
+      "value": "Angel Food Cake",
+      "aliases": []
+    },
+    {
+      "value": "Anise",
+      "aliases": [
+        "Star Anise"
+      ]
+    },
+    {
+      "value": "Apple",
+      "aliases": [
+        "Green Apple",
+        "Red Apple"
+      ]
+    },
+    {
+      "value": "Apricot",
+      "aliases": []
+    },
+    {
+      "value": "Baked Plum",
+      "aliases": []
+    },
+    {
+      "value": "Balanced",
+      "aliases": [
+        "Well Balanced"
+      ]
+    },
+    {
+      "value": "Banana",
+      "aliases": []
+    },
+    {
+      "value": "Bergamot",
+      "aliases": []
+    },
+    {
+      "value": "Bergamot Tea",
+      "aliases": []
+    },
+    {
+      "value": "Berry",
+      "aliases": [
+        "Red Berries",
+        "Mixed Berries"
+      ]
+    },
+    {
+      "value": "Black Pepper",
+      "aliases": [
+        "Pepper"
+      ]
+    },
+    {
+      "value": "Black Tea",
+      "aliases": []
+    },
+    {
+      "value": "Blackberry",
+      "aliases": []
+    },
+    {
+      "value": "Blackcurrant",
+      "aliases": [
+        "Black Currant",
+        "Cassis"
+      ]
+    },
+    {
+      "value": "Blueberry",
+      "aliases": []
+    },
+    {
+      "value": "Bold",
+      "aliases": []
+    },
+    {
+      "value": "Boozy",
+      "aliases": [
+        "Fermented",
+        "Funky",
+        "Funk"
+      ]
+    },
+    {
+      "value": "Boysenberry",
+      "aliases": []
+    },
+    {
+      "value": "Bright",
+      "aliases": [
+        "Vibrant"
+      ]
+    },
+    {
+      "value": "Brioche",
+      "aliases": []
+    },
+    {
+      "value": "Brown Sugar",
+      "aliases": []
+    },
+    {
+      "value": "Brownie",
+      "aliases": [
+        "Brownie Batter",
+        "Baked Goods"
+      ]
+    },
+    {
+      "value": "Burnt Sugar",
+      "aliases": []
+    },
+    {
+      "value": "Butterscotch",
+      "aliases": []
+    },
+    {
+      "value": "Buttery",
+      "aliases": []
+    },
+    {
+      "value": "Candied Peel",
+      "aliases": []
+    },
+    {
+      "value": "Cane Sugar",
+      "aliases": [
+        "Cane Cola"
+      ]
+    },
+    {
+      "value": "Caramel",
+      "aliases": []
+    },
+    {
+      "value": "Cardamom",
+      "aliases": []
+    },
+    {
+      "value": "Cashew",
+      "aliases": []
+    },
+    {
+      "value": "Cereal",
+      "aliases": [
+        "Grain"
+      ]
+    },
+    {
+      "value": "Chamomile",
+      "aliases": []
+    },
+    {
+      "value": "Cherry",
+      "aliases": [
+        "Dried Cherry",
+        "Black Cherry"
+      ]
+    },
+    {
+      "value": "Chocolate",
+      "aliases": [
+        "Chocolatey",
+        "Chocolate Candy Bar"
+      ]
+    },
+    {
+      "value": "Chocolate Ganache",
+      "aliases": [
+        "Ganache"
+      ]
+    },
+    {
+      "value": "Cinnamon",
+      "aliases": []
+    },
+    {
+      "value": "Citrus",
+      "aliases": [
+        "Dried Citrus"
+      ]
+    },
+    {
+      "value": "Clean",
+      "aliases": []
+    },
+    {
+      "value": "Clove",
+      "aliases": []
+    },
+    {
+      "value": "Cocoa",
+      "aliases": [
+        "Cacao",
+        "Cacao Nibs"
+      ]
+    },
+    {
+      "value": "Coconut",
+      "aliases": []
+    },
+    {
+      "value": "Complex",
+      "aliases": []
+    },
+    {
+      "value": "Cranberry",
+      "aliases": []
+    },
+    {
+      "value": "Creamy",
+      "aliases": [
+        "Cream"
+      ]
+    },
+    {
+      "value": "Crisp",
+      "aliases": []
+    },
+    {
+      "value": "Dark Chocolate",
+      "aliases": []
+    },
+    {
+      "value": "Dark Honey",
+      "aliases": []
+    },
+    {
+      "value": "Date",
+      "aliases": []
+    },
+    {
+      "value": "Dragon Fruit",
+      "aliases": []
+    },
+    {
+      "value": "Dried Mulberry",
+      "aliases": [
+        "Mulberry"
+      ]
+    },
+    {
+      "value": "Dried Orange Peel",
+      "aliases": [
+        "Orange Peel"
+      ]
+    },
+    {
+      "value": "Dulce de Leche",
+      "aliases": []
+    },
+    {
+      "value": "Earl Grey",
+      "aliases": []
+    },
+    {
+      "value": "Earthy",
+      "aliases": []
+    },
+    {
+      "value": "Elderflower",
+      "aliases": []
+    },
+    {
+      "value": "Fig",
+      "aliases": [
+        "Dried Fig"
+      ]
+    },
+    {
+      "value": "Floral",
+      "aliases": []
+    },
+    {
+      "value": "Fruity",
+      "aliases": [
+        "Juicy"
+      ]
+    },
+    {
+      "value": "Fudge",
+      "aliases": []
+    },
+    {
+      "value": "Ginger",
+      "aliases": []
+    },
+    {
+      "value": "Graham Cracker",
+      "aliases": []
+    },
+    {
+      "value": "Grape",
+      "aliases": [
+        "Concord Grape"
+      ]
+    },
+    {
+      "value": "Grapefruit",
+      "aliases": []
+    },
+    {
+      "value": "Green",
+      "aliases": [
+        "Grassy",
+        "Vegetal"
+      ]
+    },
+    {
+      "value": "Green Tea",
+      "aliases": []
+    },
+    {
+      "value": "Guava",
+      "aliases": []
+    },
+    {
+      "value": "Hazelnut",
+      "aliases": []
+    },
+    {
+      "value": "Herbal",
+      "aliases": [
+        "Herbaceous"
+      ]
+    },
+    {
+      "value": "Hibiscus",
+      "aliases": []
+    },
+    {
+      "value": "Honey",
+      "aliases": [
+        "Raw Honey"
+      ]
+    },
+    {
+      "value": "Honey Nougat",
+      "aliases": []
+    },
+    {
+      "value": "Honeysuckle",
+      "aliases": []
+    },
+    {
+      "value": "Jasmine",
+      "aliases": []
+    },
+    {
+      "value": "Juicy",
+      "aliases": []
+    },
+    {
+      "value": "Lavender",
+      "aliases": []
+    },
+    {
+      "value": "Lemon",
+      "aliases": [
+        "Lemon Candy"
+      ]
+    },
+    {
+      "value": "Lemon Shortbread",
+      "aliases": [
+        "Shortbread"
+      ]
+    },
+    {
+      "value": "Lime",
+      "aliases": [
+        "Key Lime"
+      ]
+    },
+    {
+      "value": "Lychee",
+      "aliases": [
+        "Litchi"
+      ]
+    },
+    {
+      "value": "Malt",
+      "aliases": [
+        "Malty"
+      ]
+    },
+    {
+      "value": "Mandarin",
+      "aliases": [
+        "Mandarin Orange",
+        "Tangerine"
+      ]
+    },
+    {
+      "value": "Mango",
+      "aliases": []
+    },
+    {
+      "value": "Maple Syrup",
+      "aliases": [
+        "Maple"
+      ]
+    },
+    {
+      "value": "Marshmallow",
+      "aliases": []
+    },
+    {
+      "value": "Marzipan",
+      "aliases": []
+    },
+    {
+      "value": "Melon",
+      "aliases": [
+        "Cantaloupe"
+      ]
+    },
+    {
+      "value": "Meyer Lemon",
+      "aliases": []
+    },
+    {
+      "value": "Mild",
+      "aliases": []
+    },
+    {
+      "value": "Milk Chocolate",
+      "aliases": []
+    },
+    {
+      "value": "Molasses",
+      "aliases": []
+    },
+    {
+      "value": "Nectarine",
+      "aliases": []
+    },
+    {
+      "value": "Nougat",
+      "aliases": []
+    },
+    {
+      "value": "Nutmeg",
+      "aliases": []
+    },
+    {
+      "value": "Nutty",
+      "aliases": [
+        "Nuts"
+      ]
+    },
+    {
+      "value": "Orange",
+      "aliases": []
+    },
+    {
+      "value": "Orange Blossom",
+      "aliases": []
+    },
+    {
+      "value": "Papaya",
+      "aliases": []
+    },
+    {
+      "value": "Passion Fruit",
+      "aliases": [
+        "Passionfruit"
+      ]
+    },
+    {
+      "value": "Peach",
+      "aliases": [
+        "Peach Tea",
+        "White Peach"
+      ]
+    },
+    {
+      "value": "Peanut",
+      "aliases": [
+        "Peanut Butter"
+      ]
+    },
+    {
+      "value": "Pear",
+      "aliases": []
+    },
+    {
+      "value": "Pecan",
+      "aliases": []
+    },
+    {
+      "value": "Pineapple",
+      "aliases": []
+    },
+    {
+      "value": "Plum",
+      "aliases": []
+    },
+    {
+      "value": "Pomegranate",
+      "aliases": []
+    },
+    {
+      "value": "Prune",
+      "aliases": []
+    },
+    {
+      "value": "Raisin",
+      "aliases": []
+    },
+    {
+      "value": "Raspberry",
+      "aliases": []
+    },
+    {
+      "value": "Red Currant",
+      "aliases": [
+        "Redcurrant"
+      ]
+    },
+    {
+      "value": "Red Fruit",
+      "aliases": [
+        "Red Fruits"
+      ]
+    },
+    {
+      "value": "Rhubarb",
+      "aliases": []
+    },
+    {
+      "value": "Rose",
+      "aliases": []
+    },
+    {
+      "value": "Rum",
+      "aliases": []
+    },
+    {
+      "value": "Sandalwood",
+      "aliases": []
+    },
+    {
+      "value": "Savory",
+      "aliases": [
+        "Umami"
+      ]
+    },
+    {
+      "value": "Sea Salt",
+      "aliases": [
+        "Salted",
+        "Salt"
+      ]
+    },
+    {
+      "value": "Silky",
+      "aliases": [
+        "Silky Body"
+      ]
+    },
+    {
+      "value": "Smoke",
+      "aliases": [
+        "Smoky"
+      ]
+    },
+    {
+      "value": "Smooth",
+      "aliases": [
+        "Velvety"
+      ]
+    },
+    {
+      "value": "Spice",
+      "aliases": [
+        "Spicy",
+        "Baking Spice"
+      ]
+    },
+    {
+      "value": "Spiced Sugar",
+      "aliases": []
+    },
+    {
+      "value": "Stone Fruit",
+      "aliases": []
+    },
+    {
+      "value": "Strawberry",
+      "aliases": [
+        "Wild Strawberry"
+      ]
+    },
+    {
+      "value": "Strawberry Jam",
+      "aliases": []
+    },
+    {
+      "value": "Sugar",
+      "aliases": [
+        "Sweet",
+        "Sweet Tea"
+      ]
+    },
+    {
+      "value": "Sugarcane",
+      "aliases": []
+    },
+    {
+      "value": "Syrupy",
+      "aliases": []
+    },
+    {
+      "value": "Tamarind",
+      "aliases": []
+    },
+    {
+      "value": "Tea",
+      "aliases": []
+    },
+    {
+      "value": "Toast",
+      "aliases": [
+        "Toasted"
+      ]
+    },
+    {
+      "value": "Toasted Pecan",
+      "aliases": []
+    },
+    {
+      "value": "Toasty",
+      "aliases": []
+    },
+    {
+      "value": "Tobacco",
+      "aliases": [
+        "Pipe Tobacco"
+      ]
+    },
+    {
+      "value": "Toffee",
+      "aliases": []
+    },
+    {
+      "value": "Tropical Fruit",
+      "aliases": [
+        "Tropical"
+      ]
+    },
+    {
+      "value": "Turbinado Sugar",
+      "aliases": [
+        "Turbinado"
+      ]
+    },
+    {
+      "value": "Vanilla",
+      "aliases": []
+    },
+    {
+      "value": "Walnut",
+      "aliases": []
+    },
+    {
+      "value": "Watermelon",
+      "aliases": []
+    },
+    {
+      "value": "Whiskey",
+      "aliases": [
+        "Whisky"
+      ]
+    },
+    {
+      "value": "Wine",
+      "aliases": [
+        "Winey",
+        "Wine-like",
+        "Red Wine"
+      ]
+    },
+    {
+      "value": "Woody",
+      "aliases": [
+        "Cedar",
+        "Oak"
+      ]
+    },
+    {
+      "value": "Yuzu",
+      "aliases": []
+    }
+  ]
+}

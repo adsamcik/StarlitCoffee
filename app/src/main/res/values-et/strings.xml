@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Valmista</string>
+    <string name="nav_log">Logi</string>
+    <string name="nav_more">Rohkem</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Tagasi</string>
+    <string name="action_close">Sulge</string>
+    <string name="action_cancel">Tühista</string>
+    <string name="action_delete">Kustuta</string>
+    <string name="action_save">Salvesta muudatused</string>
+    <string name="action_saved">✓ Salvestatud</string>
+    <string name="action_skip">Jäta vahele</string>
+    <string name="action_finish">Lõpeta</string>
+    <string name="action_next">Edasi</string>
+    <string name="action_go_back">Mine tagasi</string>
+<!-- Common labels -->
+    <string name="label_coffee">Kohv</string>
+    <string name="label_water">Vesi</string>
+    <string name="label_ratio">Suhe</string>
+    <string name="label_strength">Kangus</string>
+    <string name="label_grind">Jahvatus</string>
+    <string name="label_filter">Filter</string>
+<string name="label_decaf">Decaf</string>
+    <string name="label_decaf_suffix"> · Decaf</string>
+    <string name="label_loading">Laadimine…</string>
+    <string name="label_none">Puudub</string>
+    <string name="label_taste">Maitse</string>
+    <string name="label_rating">Hinnang</string>
+    <string name="label_notes">Märkmed</string>
+    <string name="label_no_filter">Filter puudub</string>
+    <string name="label_settings">Seaded</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg tassis</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+<plurals name="format_selected">
+        <item quantity="one">%1$d valitud</item>
+        <item quantity="other">%1$d valitud</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Seadista oma kohv</string>
+    <string name="label_coffee_input">Kohv (g)</string>
+    <string name="label_water_input">Vesi (g)</string>
+    <string name="label_brew_size_input">Valmistuse maht (ml)</string>
+    <string name="label_cup_size_input">Tassi maht (ml)</string>
+    <string name="label_brew_size">Valmistuse maht</string>
+    <string name="label_cup_size">Tassi maht</string>
+    <string name="format_capacity_note">%1$s mahutab %2$dg vett — suuremate valmistuste jaoks lisatakse vett automaatselt</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Vali kohvipakk</string>
+    <string name="cd_clear_bag">Eemalda pakk</string>
+    <string name="format_brewing_with">Valmistamisel: %1$s</string>
+    <string name="label_freshness">Värskus</string>
+    <string name="format_recommended_now">Soovitatud praegu: %1$s</string>
+    <string name="format_last_time">Eelmine kord: %1$s</string>
+    <string name="action_save_as_favorite">Salvesta lemmikuks</string>
+    <string name="label_select_coffee_bag_title">Vali kohvipakk</string>
+    <string name="msg_no_active_bags">Aktiivseid pakke pole. Lisa üks jaotises „Sinu oad“.</string>
+    <string name="action_brew_without_bag">Valmista ilma pakki valimata</string>
+    <string name="label_best_now">Praegu parim</string>
+    <string name="format_grind_generic">Jahvatus: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Jahvatusaste: %1$s–%2$s · Kohanda maitse järgi</string>
+    <string name="format_weight_left"> · %1$.0fg alles</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Pulsari nõuanne: hoia valamise ajal vedelik ~1cm kohvikihi kohal. Enamik kasutajaid valmistab tasakaalustatud üksiktassiks 20–25g.</string>
+    <string name="tip_generic">💡 Nõuanne: alusta vaikesuhtega ja kohanda kangust maitse järgi. Peenem jahvatus ekstraheerib rohkem, jämedam vähem.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Valmistuse seaded</string>
+<string name="label_custom_ratio">Kohandatud suhe (nt 16)</string>
+    <string name="label_temperature">Temperatuur (°C)</string>
+    <string name="label_bloom_multiplier">Bloomi kordaja (nt 3.0)</string>
+    <string name="label_pulse_count">Pulsside arv</string>
+<string name="action_start_brewing">Alusta valmistamist →</string>
+    <string name="label_advanced_options">Täpsemad valikud</string>
+    <string name="cd_collapse_advanced">Ahenda täpsemad valikud</string>
+    <string name="cd_expand_advanced">Laienda täpsemad valikud</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Kohvi kogus: %1$d gramm</item>
+        <item quantity="other">Kohvi kogus: %1$d grammi</item>
+    </plurals>
+    <string name="label_decrease">Vähenda %1$s</string>
+    <string name="label_increase">Suurenda %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Ettevalmistus</string>
+<string name="action_ready_to_brew_short">Valmis alustama</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Ettevalmistus</string>
+    <string name="label_recipe_heading">Retsept</string>
+    <string name="label_temp_short">Temp</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Niisuta paberfilter alusel (ventiil avatud) ja lase nõrguda. Paigalda silinder, lisa kohvipuru, tasanda kiht, aseta hajutuskork. Nulli kaal.</string>
+    <string name="prep_tip_pulsar_19k">Loputa 19K metallfilter, et see paika istuks ja silinder soojeneks. Paigalda silinder, lisa kohvipuru, tasanda kiht, aseta hajutuskork. Nulli kaal.</string>
+    <string name="prep_tip_pulsar_40k">Loputa 40K metallfilter, et silinder soojeneks. Paigalda silinder, lisa kohvipuru, tasanda kiht, aseta hajutuskork. Nulli kaal.</string>
+    <string name="prep_tip_pour_over_paper">Aseta paberfilter ja loputa kuuma veega, et see soojeneks ja paberimaitse kaoks. Lisa kohvipuru, nulli kaal.</string>
+    <string name="prep_tip_french_press">Soojenda press ja vala tühjaks. Lisa kohvipuru, aseta kaalule ja nulli enne vee lisamist.</string>
+    <string name="prep_tip_aeropress">Aseta loputatud filter korgi sisse. Lisa kohvipuru, aseta seade kindlale tassile või kannule ja nulli kaal.</string>
+    <string name="prep_tip_espresso">Pühi portafilter kuivaks. Doseeri, jaota ja tampi ühtlaselt enne lukustamist.</string>
+    <string name="prep_tip_moka">Täida alumine kamber ventiilini. Täida korv kohvipuruga, tasanda — ära tampi. Pane hoolikalt kokku.</string>
+    <string name="prep_tip_cold_brew">Lisa kohvipuru anumasse, nulli kaal, seejärel lisa toasooja või külma vett ja kata kinni.</string>
+    <string name="format_prep_grind_specific">Jahvata %1$s — sea %2$s väärtusele %3$s</string>
+    <string name="format_prep_grind_generic">Jahvata %1$s — %2$s (%3$s)</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Peata</string>
+    <string name="action_resume">Jätka</string>
+    <string name="cd_disable_minute_alerts">Keela minutimärguanded</string>
+    <string name="cd_enable_minute_alerts">Luba minutimärguanded</string>
+    <string name="cd_bloom_animation">Kohvioa bloomi animatsioon</string>
+<string name="format_pour_bloom_water">Vala %1$.0fg bloomivett</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Kokku %2$.0fg</string>
+<string name="action_start_bloom">☕ Alusta bloomi</string>
+<string name="label_bloom_done">✅ Bloom valmis!</string>
+    <string name="action_finish_brew">Lõpeta valmistus</string>
+    <string name="dialog_exit_brew_title">Välju valmistusest?</string>
+    <string name="dialog_exit_brew_message">Praeguse valmistuse edenemine läheb kaotsi.</string>
+    <string name="action_exit_brew">Välju</string>
+
+    <!-- Calculator Brew Screen -->
+<string name="label_water_to_dose">Vesi → Kogus</string>
+    <string name="label_dose_to_water">Kogus → Vesi</string>
+    <string name="cd_backspace">Tagasilüke</string>
+    <string name="action_brew">Alusta</string>
+    <string name="label_total_water">vesi kokku</string>
+<!-- Settings Screen -->
+    <string name="screen_settings_title">Seaded</string>
+    <string name="label_settings_section_brewing">Valmistamine</string>
+    <string name="label_settings_section_appearance">Välimus</string>
+    <string name="label_settings_section_notifications">Teavitused</string>
+    <string name="label_settings_section_developer">Arendaja</string>
+    <string name="label_settings_section_when_dimmed">Tuhmrežiimis</string>
+    <string name="label_display_dim_settings">Ekraan ja tuhmrežiim</string>
+    <string name="msg_display_dim_settings_subtitle">Tuhmrežiim, OLED-must, heledus</string>
+    <string name="screen_display_settings_title">Ekraan ja tuhmrežiim</string>
+    <string name="label_cup_presets">Tassi eelseaded</string>
+    <string name="action_add_preset">Lisa eelseade</string>
+    <string name="action_reset_defaults">Taasta vaikeseaded</string>
+    <string name="msg_presets_hint">Eelseaded ilmuvad kalkulaatoris kiirnuppudena</string>
+    <string name="label_brew_methods">Valmistusviisid</string>
+    <string name="msg_methods_hint">Valitud viisid kuvatakse esimesena. Puuduta lülitamiseks.</string>
+    <string name="label_default_method">Vaikeviis</string>
+    <string name="format_edit_preset">Muuda %1$s</string>
+    <string name="label_bloom_animation_settings">Bloomi animatsioonid</string>
+    <string name="msg_bloom_animation_settings_subtitle">Vali, kui sageli iga bloomisprait ilmub</string>
+    <string name="cd_open_bloom_animation_settings">Ava bloomi animatsioonide seaded</string>
+    <string name="screen_bloom_animation_settings_title">Bloomi animatsioonid</string>
+    <string name="msg_bloom_animation_settings_hint">Puuduta iga juhtelementi, et vahetada tavalise tõenäosuse, kahekordse tõenäosuse ja välistatud oleku vahel. Kui kõik spraidid on välistatud, peidavad bloomitaimerid animatsiooni.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s on seatud väärtusele %2$s. Puuduta muutmiseks.</string>
+    <string name="label_bloom_sprite_coffee_flower">Kohviõis</string>
+    <string name="desc_bloom_sprite_coffee_flower">Klassikaline valge kohviõis, mis avaneb oa seest.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Tähine kohv</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Kreemikuldsed auruõielehed pisikeste tähehelkidega.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Pehme latte-art rosett soojades piimavahu toonides.</string>
+    <string name="label_bloom_sprite_coffee_plant">Kohvitaim</string>
+    <string name="desc_bloom_sprite_coffee_plant">Värske roheline kohvitaime seemik paarislehtedega.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Kirsstomat</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Kohviuba tärkab tomativäädiks, kui punased viljad valmivad.</string>
+    <string name="label_bloom_sprite_strawberry">Maasikas</string>
+    <string name="desc_bloom_sprite_strawberry">Kohviuba tärkab maasikataimeks õite ja punaste marjadega.</string>
+    <string name="label_bloom_sprite_raspberry">Vaarikas</string>
+    <string name="desc_bloom_sprite_raspberry">Kohvioast kasvavad põõsad kahvatute õite ja punaste vaarikakobaratega.</string>
+    <string name="label_bloom_sprite_blueberry">Mustikas</string>
+    <string name="desc_bloom_sprite_blueberry">Kohvioast kasvab mustikaoks kellukesekujuliste õite ja siniste marjadega.</string>
+    <string name="label_bloom_sprite_blackberry">Põldmurakas</string>
+    <string name="desc_bloom_sprite_blackberry">Kohvioast kasvavad okkalised põõsad tumedate põldmurakakobaratega.</string>
+    <string name="label_bloom_sprite_coffee_brew">Valmis kohv</string>
+    <string name="desc_bloom_sprite_coffee_brew">Merevaigukarva kohvihelk kreemja aurukeeristega.</string>
+    <string name="label_bloom_sprite_rose">Roos</string>
+    <string name="desc_bloom_sprite_rose">Kompaktne punane roos avaneb oa kohal.</string>
+    <string name="label_bloom_sprite_lotus">Lootos</string>
+    <string name="desc_bloom_sprite_lotus">Kreemjas lootoseõis kihiliste kausikujuliste õielehtedega.</string>
+    <string name="label_bloom_sprite_sunflower">Päevalill</string>
+    <string name="desc_bloom_sprite_sunflower">Ere päevalill kuldsete õielehtede ja tumeda keskmega.</string>
+    <string name="label_bloom_sprite_orchid">Orhidee</string>
+    <string name="desc_bloom_sprite_orchid">Õrn valge orhidee ümarate hõlmadega.</string>
+    <string name="label_bloom_sprite_jasmine">Jasmiin</string>
+    <string name="desc_bloom_sprite_jasmine">Pehme valge jasmiiniõis õrna tuuleveski kujuga.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Pisarsüda</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Oast tõusevad kaardus varred roosade südamekujuliste õite ja valgete pisarakujuliste tippudega.</string>
+    <string name="label_bloom_sprite_passionflower">Kannatuslill</string>
+    <string name="desc_bloom_sprite_passionflower">Keerdväädid avanevad oa kohal uhkeks lilla-valgeks kannatuslilleks.</string>
+    <string name="label_bloom_sprite_bee_orchid">Mesilasorhidee</string>
+    <string name="desc_bloom_sprite_bee_orchid">Roosad orhideeõielehed paljastavad peenikestel vartel tumedad mesilasekujulised huuled.</string>
+    <string name="label_bloom_sprite_jade_vine">Nefriitväät</string>
+    <string name="desc_bloom_sprite_jade_vine">Roniv väät riputab oast türkiissiniseid nefriitõie kobaraid.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Paradiisilinnulill</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Oranžid ja sügavsinised streliitsia õielehed avanevad püstistest rohelistest lehtedest.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Sinine Himaalaja moon</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Longu vajunud pung avaneb taevassiniseks mooniks kuldsete tolmukatega.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">Punane täpiline parasiitõis paisub hiiglaslikuks viiehõlmaliseks õieks.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Šokolaadikosmos</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Sulgjad lehed tõstavad oast sametised tumepunased kosmoslille õied.</string>
+    <string name="label_bloom_sprite_flame_lily">Leekliilia</string>
+    <string name="desc_bloom_sprite_flame_lily">Keerdunud leegivärvi liiliaõielehed tõusevad väätidega rohelistel vartel.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Öökuninganna</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Kaktusevars avaneb dramaatiliseks kihiliseks valgeks öösel õitsevaks õieks.</string>
+    <string name="label_bloom_sprite_snowdrop">Lumikelluke</string>
+    <string name="desc_bloom_sprite_snowdrop">Õrnad valged lumikellukesed tõusevad pragunenud oast.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Oast avanevad pisikesed sinised lõosilma õied kollaste keskmetega.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Valmistuslogi</string>
+    <string name="msg_log_empty_title">Alusta valmistamist, et näha oma ajalugu</string>
+    <string name="msg_log_empty_subtitle">Iga lõpetatud valmistus koos tagasisidega ilmub siia</string>
+    <string name="msg_select_brew_log">Vali valmistuslogi, et näha selle üksikasju</string>
+<string name="action_rate_brew">Hinda valmistust</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Valmistuse üksikasjad</string>
+    <string name="dialog_delete_brew_title">Kustutada valmistuslogi?</string>
+    <string name="dialog_delete_brew_message">Seda toimingut ei saa tagasi võtta.</string>
+    <string name="label_coffee_bag">Kohvipakk</string>
+    <string name="label_brew_time">Valmistusaeg</string>
+    <string name="label_coffee_type">Kohvi tüüp</string>
+    <string name="label_flavor_notes">Maitsenoodid</string>
+    <string name="hint_add_notes">Lisa märkmed…</string>
+    <string name="msg_brew_not_found">Valmistuslogi ei leitud</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Sinu lemmikud</string>
+    <string name="msg_no_favorites_title">Lemmikuid veel pole</string>
+    <string name="msg_no_favorites_subtitle">Salvesta retsept valmistusekraanilt ♡ nupuga</string>
+    <string name="label_untitled">Pealkirjata</string>
+    <string name="format_recipe_summary">%1$sg kohvi / %2$sg vett</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Isikupärasta oma kohv</string>
+    <string name="label_pulsar_filter_type">Pulsari filtri tüüp</string>
+    <string name="msg_filter_hint">Mõjutab tassi profiili ja jahvatussoovitusi</string>
+    <string name="label_your_grinder">Sinu veski</string>
+    <string name="msg_grinder_hint">Valikuline — võimaldab täpseid jahvatussoovitusi. Vali „Veski puudub / muu“, kui sinu oma pole loendis.</string>
+    <string name="label_no_grinder">Veski puudub / muu</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Millega kohvi valmistad?</string>
+    <string name="msg_methods_subtitle">Vali oma valmistusviisid. Puuduta ★, et määrata vaikeviis.</string>
+    <string name="label_set_as_default">Määra vaikeviisiks</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Rohkem</string>
+    <string name="label_your_favorites">Sinu lemmikud</string>
+    <string name="msg_favorites_subtitle">Korda oma lemmikvalmistusi</string>
+    <string name="label_your_beans">Sinu oad</string>
+    <string name="msg_beans_subtitle">Värskus, varud ja mida järgmisena valmistada</string>
+    <string name="msg_settings_subtitle">Viisid, veski ja eelistused</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Vöötkoodide skannimiseks on vaja kaamera luba</string>
+    <string name="msg_point_camera">Suuna kaamera vöötkoodile</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Valmistus salvestatud! Hinda seda pärast maitsmist.</string>
+    <string name="snackbar_action_view_log">Ava logi</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Valmistuse hindamise meeldetuletused</string>
+    <string name="notif_channel_rating_reminder_desc">Õrn meeldetuletus ~30 minutit pärast valmistamist, et hinnata kohvi, kuni maitse on värske.</string>
+    <string name="notif_rating_title">Kuidas su kohv oli?</string>
+    <string name="format_notif_rating_title">Kuidas su %1$s kohv oli?</string>
+    <string name="notif_rating_body">Puuduta emojit, et hinnata, või ava rohkema jaoks rakendus.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Anna hinnang 1 tärni 5-st</string>
+    <string name="cd_notif_rating_2">Anna hinnang 2 tärni 5-st</string>
+    <string name="cd_notif_rating_3">Anna hinnang 3 tärni 5-st</string>
+    <string name="cd_notif_rating_4">Anna hinnang 4 tärni 5-st</string>
+    <string name="cd_notif_rating_5">Anna hinnang 5 tärni 5-st</string>
+
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Paki analüüsimine</string>
+    <string name="msg_analyzing_bag_subtitle">Tehisintellekt loeb etiketti, et üksikasjad täita. See võib veidi aega võtta.</string>
+    <string name="msg_analyzing_bag_background_hint">Võid rakendust edasi kasutada — teavitame, kui valmis.</string>
+    <string name="action_skip_ai">Jäta AI vahele</string>
+    <string name="action_run_in_background">Jätka taustal</string>
+    <string name="notif_channel_bag_analysis">Paki analüüs</string>
+    <string name="notif_channel_bag_analysis_desc">Teavitab, kui AI on kohvipaki etiketi lugemise lõpetanud.</string>
+    <string name="notif_scan_progress_title">Paki etiketi lugemine…</string>
+    <string name="notif_bag_analysis_title">Paki analüüs lõpetatud</string>
+    <string name="notif_bag_analysis_body">Puuduta leitud üksikasjade ülevaatamiseks.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Etiketi lugemine…</string>
+    <string name="scan_stage_barcode">Vöötkoodi otsimine…</string>
+    <string name="scan_stage_llm">Üksikasjade mõistmine…</string>
+    <string name="scan_stage_crop">Etiketi leidmine…</string>
+    <string name="scan_stage_vision">Etiketi pildi uurimine…</string>
+    <string name="scan_stage_combine">Tulemuste ühendamine…</string>
+    <string name="scan_stage_finalizing">Lõpetamine…</string>
+    <string name="format_scan_stage_step">Samm %1$d / %2$d</string>
+    <string name="format_notif_bag_analysis_body">Puuduta, et vaadata üle %1$s.</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Hindamise meeldetuletus</string>
+    <string name="msg_rating_reminder_hint">Saada teavitus ~30 minutit pärast valmistamist, et saaksid hinnata kohvi, kuni maitse on värske.</string>
+    <string name="msg_rating_reminder_perm_denied">Teavitused on blokeeritud. Luba need süsteemi seadetes, et saada meeldetuletusi.</string>
+    <string name="action_open_app_settings">Ava süsteemi seaded</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Veepeetus</string>
+    <string name="format_retention_explanation">Kohvipuru neelab umbes 2× oma kuivkaalust vett. %1$.0fg kohviga peab puru kinni ~%2$.0fg, jättes tassi ~%3$.0fg.\n\nSee on hinnang — tumedad röstid neelavad veidi rohkem, heledad veidi vähem.</string>
+    <string name="cd_about_cup_volume">Teave tassi mahu kohta</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+<string name="label_target">Siht</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
+    <string name="format_ratio_bright">Erk · 1:%1$d</string>
+    <string name="format_ratio_balanced">Tasakaalus · 1:%1$d</string>
+    <string name="format_ratio_rich">Rikkalik · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+<!-- Input Mode -->
+    <string name="input_coffee_to_water">Kohv → Vesi</string>
+    <string name="input_water_to_coffee">Vesi → Kohv</string>
+    <string name="input_brew_to_both">Valmistuse maht → Mõlemad</string>
+    <string name="input_cup_to_both">Tassi maht → Mõlemad</string>
+    <string name="input_coffee_short">Kohv</string>
+    <string name="input_water_short">Vesi</string>
+    <string name="input_brew_short">Valmistus</string>
+    <string name="input_cup_short">Tass</string>
+    <string name="input_coffee_desc">Sisesta kohvikogus, arvuta vesi</string>
+    <string name="input_water_desc">Sisesta veekogus, arvuta kohv</string>
+    <string name="input_brew_desc">Sisesta soovitud valmistuse maht, arvuta kohv ja vesi, arvestades imendumist</string>
+    <string name="input_cup_desc">Sisesta tassi maht, arvuta kohv ja vesi</string>
+
+    <!-- Phase names -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Vala kuni %1$.0fg</string>
+    <string name="instruction_pour_total">Vala kokku kuni %1$.0fg</string>
+    <string name="instruction_open_valve_short">Ava ventiil</string>
+    <string name="instruction_close_valve_short">Sulge ventiil</string>
+    <string name="instruction_bloom_wait">Keeruta ja oota bloomi</string>
+    <string name="instruction_french_press_start">Lisa kogu vesi, sega õrnalt ja aseta kaas peale</string>
+    <string name="instruction_french_press_steep">Lase segamatult tõmmata kuni sihtajani</string>
+    <string name="instruction_french_press_plunge">Vajuta kolb aeglaselt alla, seejärel vala kohv välja</string>
+    <string name="instruction_aeropress_start">Lisa vesi, sega ja alusta tõmbamist</string>
+    <string name="instruction_aeropress_steep">Lase tõmmata kork peal; valmistu pressimiseks</string>
+    <string name="instruction_aeropress_press">Pressi ühtlaselt kuni sisinani, seejärel peata</string>
+    <string name="instruction_espresso_start">Lukusta portafilter ja alusta ekstraktsiooni</string>
+    <string name="instruction_espresso_pull">Jälgi voolu ja saagist; hoia tass kaalul</string>
+    <string name="instruction_espresso_stop">Peata sihtsaagise juures või kui vool heledaks muutub</string>
+    <string name="instruction_moka_start">Pane kann kokku ja soojenda õrnalt, kaas lahti</string>
+    <string name="instruction_moka_flow">Jälgi kohvi voolamist ülemisse kambrisse</string>
+    <string name="instruction_moka_remove">Tõsta tulelt, kui vool muutub heledaks või pahiseb</string>
+    <string name="instruction_cold_brew_start">Sega kohv ja vesi kokku, sega, et kogu puru saaks märjaks</string>
+    <string name="instruction_cold_brew_steep">Kata kinni ja lase tõmmata; hoia puru täielikult niiskena</string>
+    <string name="instruction_cold_brew_filter">Filtreeri kontsentraat ja jahuta või lahjenda serveerimiseks</string>
+
+    <!-- Warnings -->
+<!-- Taste Feedback -->
+    <string name="feedback_too_sour">Liiga hapu / lahja</string>
+    <string name="feedback_balanced">Tasakaalus</string>
+    <string name="feedback_too_bitter">Liiga mõru / kare</string>
+    <string name="feedback_astringent">Kootav / kuiv</string>
+    <string name="feedback_clogged">Ummistunud / seiskunud</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Jahvata 2–4 klõpsu peenemaks</string>
+    <string name="adjust_try_finer">Proovi peenemat jahvatusastet</string>
+    <string name="adjust_no_change">Kohandamist pole vaja — salvesta see retsept!</string>
+    <string name="adjust_grind_coarser">Jahvata 2–4 klõpsu jämedamaks</string>
+    <string name="adjust_grind_coarser_valve">Jahvata 2–4 klõpsu jämedamaks\nProovi ventiili varem avada</string>
+    <string name="adjust_try_coarser">Proovi jämedamat jahvatusastet</string>
+    <string name="adjust_try_coarser_water">Proovi jämedamat jahvatusastet\nVõi proovi jahedamat vett</string>
+    <string name="adjust_astringent_pulsar">Suurenda kogust 20g+, et saada sügavam kiht\nVähenda segamist bloomi ajal\nHoia vedelik ~1cm kihi kohal</string>
+    <string name="adjust_astringent_grinder">Jahvata veidi jämedamaks, vähenda segamist</string>
+    <string name="adjust_astringent_no_grinder">Jahvata veidi jämedamaks, vala õrnemalt</string>
+    <string name="adjust_clogged_pulsar_grinder">Jahvata 3–5 klõpsu palju jämedamaks\nVähenda segamist (ainult õrn keerutus)\nKontrolli, kas kohv on liiga värske — lase seista 7+ päeva</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Jahvata palju jämedamaks\nVähenda segamist\nTaga õrnad valamised läbi hajutuskorgi</string>
+    <string name="adjust_clogged_grinder">Jahvata 3–5 klõpsu palju jämedamaks</string>
+    <string name="adjust_clogged_no_grinder">Proovi palju jämedamat jahvatusastet</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Kohv: %1$s grammi</string>
+    <string name="cd_water_grams">Vesi: %1$s grammi</string>
+    <string name="cd_ratio">Suhe 1 kuni %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Nimi</string>
+    <string name="label_roaster">Röster</string>
+    <string name="label_origin">Päritolu</string>
+<string name="label_barcode_ean">Vöötkood / EAN</string>
+    <string name="action_scan_barcode">Skanni vöötkood</string>
+    <string name="label_name_required">Nimi *</string>
+    <string name="label_weight_grams">Kaal (g)</string>
+    <string name="label_roast_date">Röstikuupäev</string>
+    <string name="label_roast_level">Röstiaste</string>
+    <string name="label_variety">Sort</string>
+    <string name="label_process">Töötlus</string>
+    <string name="label_tasting_notes">Maitsenoodid</string>
+    <string name="label_best_before">Parim enne</string>
+    <string name="label_decaf_coffee">Kofeiinivaba kohv</string>
+    <string name="msg_decaf_guidance">Hoiab valmistusjuhised kooskõlas kofeiinivabade ubade ja lühemate tõmbamisaegadega.</string>
+    <string name="label_decaf_process_optional">Kofeiinieemalduse viis (valikuline)</string>
+    <string name="msg_decaf_process_hint">Laseb valmistusreeglil jahvatust pehmelt kohandada: vee- ja CO₂-töötlusega kofeiinivabad vajavad tavaliselt vähem jämestamist kui lahustiga töödeldud.</string>
+    <string name="cd_captured_bag_photo">Jäädvustatud paki foto</string>
+<string name="label_detected_details">Tuvastatud üksikasjad</string>
+    <string name="msg_tap_chip_to_edit">Puuduta muutmiseks mõnda silti</string>
+    <string name="label_needs_review">Vajab ülevaatamist</string>
+<string name="action_edit_all_fields">Muuda kõiki välju</string>
+    <string name="action_add_more_details">Lisa rohkem üksikasju</string>
+    <string name="msg_analyzing_label">Etiketi fotode analüüsimine</string>
+    <string name="msg_analyzing_label_detail">Kontrollime hägusust, ühendame esi- ja tagakülje teksti ning valmistame ette kõige usaldusväärsemad väljad.</string>
+    <string name="label_review_fields">Vaata need väljad üle</string>
+    <string name="label_qr_website">QR-veebisait</string>
+    <string name="action_open_website">Ava veebisait</string>
+    <string name="label_qr_link_found">QR-link leitud</string>
+<string name="action_explore_extract">Uuri ja hangi</string>
+    <string name="label_detected_field_evidence">Tuvastatud väljade tõendid</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Paki foto</string>
+    <string name="action_rescan_label">Skanni etikett uuesti</string>
+    <string name="action_edit_bag">Muuda pakki</string>
+    <string name="label_sensory_snapshot">Sensoorne ülevaade</string>
+    <string name="label_grind_intelligence">Nutikas jahvatus</string>
+    <string name="label_remaining_coffee">Järelejäänud kohv</string>
+    <string name="action_adjust_weight">Kohanda kaalu</string>
+    <string name="action_add_weight_tracking">Lisa kaalu jälgimine</string>
+    <string name="label_brew_history">Valmistuse ajalugu</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Kuidas oli?</string>
+    <string name="msg_rate_brew_fresh">Hinda seda valmistust, kuni maitse on veel värske.</string>
+    <string name="label_flavor_notes_section">Maitsenoodid</string>
+    <string name="hint_what_stood_out">Valikuline märkus – mis paistis silma?</string>
+    <string name="action_save_rating">Salvesta hinnang</string>
+
+    <!-- EmptyStateBox -->
+<!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Sinu lemmikud</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Muu</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">AI-teenus (Mindlayer)</string>
+    <string name="action_test_connection">Testi ühendust</string>
+    <string name="action_run_test_prompt">Käivita testpäring</string>
+    <string name="label_testing">Testimine…</string>
+
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Luba AI</string>
+    <string name="consent_requesting">AI juurdepääsu taotlemine…</string>
+    <string name="consent_granted">AI lubatud</string>
+    <string name="consent_already_approved">AI on juba lubatud</string>
+    <string name="consent_still_unavailable">AI on heaks kiidetud, kuid teenus pole veel valmis</string>
+    <string name="consent_declined">AI juurdepääsu ei antud</string>
+    <string name="consent_denied_temporary">AI juurdepääs keelati — proovi hiljem uuesti</string>
+    <string name="consent_denied_permanent">AI juurdepääs on blokeeritud — vabasta see Mindlayeri rakenduses</string>
+    <string name="consent_service_unavailable">Mindlayeri AI-teenus pole saadaval</string>
+    <string name="consent_failed">AI juurdepääsu ei õnnestunud taotleda</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Kuidas su eelmine tass oli?</string>
+    <string name="label_what_was_off">Mis oli valesti?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Skannitud etikett vastab salvestatud pakile — pole midagi uuendada.</string>
+    <string name="action_update_bag">Uuenda pakki</string>
+    <string name="action_new_bag">Uus pakk</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Salvesta lemmikuks</string>
+    <string name="msg_save_favorite_hint">Anna sellele retseptile nimi, mida mäletad</string>
+    <string name="hint_save_favorite_example">nt esmaspäeva hommik, nädalavahetuse rahulik</string>
+    <string name="action_save_simple">Salvesta</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Skannimise ajalugu</string>
+    <string name="msg_no_scan_sessions">Ühtegi skannimisseanssi pole veel salvestatud.</string>
+    <string name="action_share_session">Jaga seda seanssi</string>
+    <string name="label_component_timings">Komponentide ajad</string>
+    <string name="msg_no_timing_data">Ajaandmed pole saadaval</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Hoiatus</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Kohanda kaalu</string>
+    <string name="label_remaining_weight_grams">Järelejäänud kaal (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Fotolt</string>
+    <string name="action_scan_label">Skanni etikett</string>
+    <string name="action_add_bag_gallery">Galeriist</string>
+    <string name="action_add_bag_camera">Skanni kaameraga</string>
+    <string name="action_add_bag_barcode">Skanni vöötkood</string>
+    <string name="action_add_bag_manual">Lisa käsitsi</string>
+    <string name="msg_no_beans_yet">Ube veel pole</string>
+    <string name="msg_add_coffee_hint">Lisa oma kohv, et jälgida värskust ja saada valmistussoovitusi</string>
+    <string name="action_brew_now">Valmista kohe</string>
+    <string name="msg_could_not_read_label">Etiketti ei õnnestunud lugeda</string>
+    <string name="action_retake_photo">Tee foto uuesti</string>
+    <string name="action_add_details_manually">Lisa üksikasjad käsitsi</string>
+    <string name="msg_llm_enrichment_succeeded">AI-rikastus parandas selle etiketi skannimist.</string>
+    <string name="msg_llm_enrichment_failed">AI ei suutnud seekord seda etiketti lõpuni lugeda — aeg sai otsa või tekkis ajutine viga (proovis juba automaatselt uuesti). Puuduta „Proovi uuesti“, et veel kord proovida, või täida lihtsalt allolevad väljad.</string>
+    <string name="msg_llm_enrichment_unavailable">AI-rikastus pole praegu saadaval. Võid proovida uuesti või jätkata käsitsi muutmist.</string>
+    <string name="action_retry_llm_enrichment">Proovi AI-rikastust uuesti</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Jaga valmistust</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Loobuda skannist?</string>
+    <string name="msg_discard_scan_body">Sul on tuvastatud välju, mida pole salvestatud.</string>
+    <string name="action_discard">Loobu</string>
+    <string name="action_keep_scanning">Jätka skannimist</string>
+    <string name="msg_camera_permission_required">Vajalik on kaamera luba</string>
+    <string name="screen_scan_bag_title">Skanni kohvipakk</string>
+    <string name="cd_toggle_debug_overlay">Lülita silumiskate</string>
+    <string name="msg_both_sides_scanned">Paki mõlemad küljed on skannitud</string>
+    <string name="msg_scanning_front_side">Paki esikülje skannimine</string>
+<string name="action_quick_save">Kiirsalvestus</string>
+    <string name="msg_repackaged_product">See võib olla ümberpakendatud või imporditud toode</string>
+    <string name="action_use_barcode">Kasuta vöötkoodi</string>
+    <string name="action_use_label">Kasuta etiketti</string>
+<string name="label_confirmed">Kinnitatud</string>
+    <string name="label_ai_contributed">AI panustas</string>
+    <string name="cd_manual_capture">Käsitsi jäädvustus — töötle praegust kaadrit kohe</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Sünkrooni pakiga</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Rakendatakse Pulsariga valmistamisel</string>
+    <string name="label_quick_brew">Kiirvalmistus</string>
+    <string name="msg_quick_brew_hint">Jäta jahvatuse ettevalmistuse samm vahele ja mine valmistuse alustamisel otse taimeri juurde</string>
+    <string name="label_show_brewing_instructions">Näita valmistusjuhiseid</string>
+    <string name="msg_show_brewing_instructions_hint">Näita valmistamise ajal samm-sammulist juhiskaarti ja ettevalmistusekraanil kontroll-loendit. Lülita välja, kui tunned oma viisi peast.</string>
+    <string name="label_dim_mode">Automaatne tuhmrežiim</string>
+    <string name="msg_dim_mode_hint">Pärast 25 s tegevusetust eemaldab värvilised taustad ja muudab teksti halliks. Paigutus jääb samaks ning üks puudutus nii äratab ekraani kui käivitab all oleva toimingu.</string>
+    <string name="label_dim_mode_true_black">Tõeliselt must taust</string>
+    <string name="msg_dim_mode_true_black_hint">Tuhmimisel tumedas teemas muudab ka ekraani tausta puhtaks mustaks. Parim OLED-il — säästab energiat ja tundub õigesti puhkeasendis. Heledates teemades mõju puudub.</string>
+    <string name="label_dim_mode_reduce_brightness">Vähenda ekraani heledust</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Vähendab tuhmimisel ka ekraani taustavalgust. Säästab veidi energiat ja pehmendab ekraani veelgi.</string>
+    <string name="label_dim_mode_fullscreen">Peida süsteemiribad</string>
+    <string name="msg_dim_mode_fullscreen_hint">Peidab tuhmimisel ka olekuriba ja navigeerimisriba. Vaatamiseks pühi servast; iga puudutus ekraanil äratab tavaseisu tagasi.</string>
+    <string name="label_dim_mode_force_dark_in_light">Kasuta tuhmimisel tumedat stiili</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Lülitub tumeda teema tuhmesitusele ka siis, kui süsteem on heledas režiimis. Sobib loomulikult „Tõeliselt musta taustaga“, et tuhmimine oleks alati tume.</string>
+    <string name="action_add_cup_preset">Lisa tassi eelseade</string>
+    <string name="label_volume_ml">Maht (ml)</string>
+    <string name="msg_dose_from_ratio">Kohvikogus arvutatakse sinu suhte põhjal</string>
+    <string name="label_icon">Ikoon</string>
+    <string name="label_color">Värv</string>
+    <string name="action_add">Lisa</string>
+    <string name="dialog_edit_cup_preset_title">Muuda tassi eelseadet</string>
+    <string name="screen_add_cup_preset_title">Lisa tassi eelseade</string>
+    <string name="screen_edit_cup_preset_title">Muuda tassi eelseadet</string>
+    <string name="msg_cup_preset_name_required">Jätkamiseks lisa nimi</string>
+    <string name="msg_cup_preset_volume_required">Lisa maht, mis on suurem kui 0</string>
+    <string name="cd_cup_preset_preview">%1$s eelvaade</string>
+    <string name="label_scan_debug">Skannimise silumine</string>
+    <string name="action_view_history">Vaata ajalugu</string>
+    <string name="action_share_report">Jaga aruannet</string>
+    <string name="action_clear">Tühjenda</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Lahja</string>
+    <string name="strength_balanced">Tasakaalus</string>
+    <string name="strength_strong">Kange</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Puuviljane</string>
+    <string name="flavor_chocolate">Šokolaadine</string>
+    <string name="flavor_nutty">Pähkline</string>
+    <string name="flavor_floral">Lilleline</string>
+    <string name="flavor_bright">Erk</string>
+    <string name="flavor_smooth">Mahe</string>
+    <string name="flavor_bitter">Mõru</string>
+    <string name="flavor_sweet">Magus</string>
+    <string name="flavor_earthy">Mullane</string>
+    <string name="flavor_spicy">Vürtsikas</string>
+    <string name="flavor_citrus">Tsitruseline</string>
+    <string name="flavor_berry">Marjane</string>
+    <string name="flavor_caramel">Karamellne</string>
+    <string name="flavor_wine">Veinine</string>
+    <string name="flavor_clean">Puhas</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Väga peen</string>
+    <string name="grind_fine">Peen</string>
+    <string name="grind_medium_fine">Keskmiselt peen</string>
+    <string name="grind_medium">Keskmine</string>
+    <string name="grind_medium_coarse">Keskmiselt jäme</string>
+    <string name="grind_coarse">Jäme</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Suurepärane</string>
+    <string name="rating_good">Hea</string>
+    <string name="rating_not_great">Pole eriti hea</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Liiga mõru</string>
+    <string name="taste_issue_too_sour">Liiga hapu</string>
+    <string name="taste_issue_too_weak">Liiga lahja</string>
+    <string name="taste_issue_too_strong">Liiga kange</string>
+    <string name="taste_issue_bitter_suggestion">Proovi jämedamat jahvatust või lühemat valmistusaega</string>
+    <string name="taste_issue_sour_suggestion">Proovi peenemat jahvatust või pikemat valmistusaega</string>
+    <string name="taste_issue_weak_suggestion">Proovi kangemat suhet või rohkem kohvi</string>
+    <string name="taste_issue_strong_suggestion">Proovi lahjemat suhet või vähem kohvi</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Avamata</string>
+    <string name="bag_status_open">Avatud</string>
+    <string name="bag_status_frozen">Külmutatud</string>
+    <string name="bag_status_finished">Otsas</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Teadmata / määramata</string>
+    <string name="decaf_swiss_water">Swiss Water (veetöötlus)</string>
+    <string name="decaf_mountain_water">Mountain Water (veetöötlus)</string>
+    <string name="decaf_co2">Ülekriitiline CO₂</string>
+    <string name="decaf_ea_sugarcane">Etüülatsetaat (suhkruroog / naturaalne EA)</string>
+    <string name="decaf_mc_direct">Metüleenkloriid (otsene lahusti)</string>
+    <string name="decaf_ea_direct">Etüülatsetaat (otsene lahusti)</string>
+    <string name="decaf_short_unknown">Teadmata</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (suhkruroog)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (lahusti)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Hele</string>
+    <string name="roast_medium_light">Keskmiselt hele</string>
+    <string name="roast_medium">Keskmine</string>
+    <string name="roast_medium_dark">Keskmiselt tume</string>
+    <string name="roast_dark">Tume</string>
+    <string name="roast_filter">Filter</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniröst</string>
+    <string name="roast_cinnamon">Kaneelröst</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Pestud</string>
+    <string name="process_natural">Naturaalne</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaeroobne</string>
+    <string name="process_carbonic_maceration">Karboonmatseratsioon</string>
+    <string name="process_semi_washed">Poolpestud</string>
+    <string name="process_wet_hulled">Märgkoorimine</string>
+    <string name="process_pulped_natural">Pulped Natural</string>
+    <string name="process_double_fermented">Topeltfermenteeritud</string>
+    <string name="process_thermal_shock">Termošokk</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Sea paki esikülg kaadri keskele</string>
+    <string name="guided_scan_aim_back">Nüüd skanni paki tagakülg</string>
+    <string name="guided_scan_aim_more">Lisa veel üks foto (valikuline)</string>
+    <string name="guided_scan_hold_steady">Hoia paigal…</string>
+    <string name="guided_scan_skip_photos">Jäta fotod vahele</string>
+    <string name="guided_scan_finished">Valmis</string>
+    <string name="guided_scan_auto_on">Automaatika sees</string>
+    <string name="guided_scan_auto_off">Automaatika väljas</string>
+    <string name="guided_scan_capture">Jäädvusta foto</string>
+    <string name="guided_scan_scan_more">Skanni veel fotosid</string>
+    <string name="scan_warn_glare">Vähenda helki</string>
+    <string name="scan_warn_lighting">Paranda valgustust</string>
+    <string name="cd_remove_photo">Eemalda foto</string>
+    <string name="msg_bag_saved">Pakk salvestatud</string>
+</resources>

@@ -99,6 +99,12 @@ data class SanitizedExtraction(
 )
 
 object CoffeeMetadataNormalizer {
+    // Declared first so eagerly-initialized entry tables (e.g. tasteNoteEntries),
+    // which normalize aliases via normalizeSearch during class init, see non-null
+    // regexes. Precompiled once instead of per normalizeSearch call.
+    private val DIACRITICS_REGEX = "\\p{M}+".toRegex()
+    private val NON_ALNUM_REGEX = "[^\\p{Alnum}]+".toRegex()
+
     private enum class MetadataFieldType(
         val fieldName: String,
         val multiValue: Boolean = false,
@@ -1087,8 +1093,8 @@ object CoffeeMetadataNormalizer {
     }
 
     internal fun normalizeSearch(value: String): String = Normalizer.normalize(value, Normalizer.Form.NFD)
-        .replace("\\p{M}+".toRegex(), "")
+        .replace(DIACRITICS_REGEX, "")
         .lowercase(Locale.ROOT)
-        .replace("[^\\p{Alnum}]+".toRegex(), " ")
+        .replace(NON_ALNUM_REGEX, " ")
         .trim()
 }

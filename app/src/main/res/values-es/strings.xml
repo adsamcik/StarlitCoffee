@@ -224,6 +224,7 @@
     <string name="screen_brew_log_title">Registro de preparaciones</string>
     <string name="msg_log_empty_title">Empieza a preparar para ver tu historial</string>
     <string name="msg_log_empty_subtitle">Cada preparación completada con valoración aparecerá aquí</string>
+    <string name="msg_select_brew_log">Selecciona un registro de preparación para ver sus detalles</string>
 <string name="action_rate_brew">Valorar preparación</string>
 
     <!-- Brew Log Detail Screen -->
@@ -301,6 +302,15 @@
     <string name="notif_scan_progress_title">Leyendo la etiqueta de la bolsa…</string>
     <string name="notif_bag_analysis_title">Análisis de bolsa completado</string>
     <string name="notif_bag_analysis_body">Toca para revisar los detalles encontrados.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Leyendo la etiqueta…</string>
+    <string name="scan_stage_barcode">Buscando el código de barras…</string>
+    <string name="scan_stage_llm">Interpretando los detalles…</string>
+    <string name="scan_stage_crop">Localizando la etiqueta…</string>
+    <string name="scan_stage_vision">Inspeccionando la imagen de la etiqueta…</string>
+    <string name="scan_stage_combine">Combinando los resultados…</string>
+    <string name="scan_stage_finalizing">Finalizando…</string>
+    <string name="format_scan_stage_step">Paso %1$d de %2$d</string>
     <string name="format_notif_bag_analysis_body">Toca para revisar %1$s.</string>
 
     <!-- Settings: rating reminder -->

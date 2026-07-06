@@ -43,8 +43,11 @@ import com.adsamcik.starlitcoffee.util.BagReviewSeverity
 import com.adsamcik.starlitcoffee.util.BagThumbnailFocus
 import com.adsamcik.starlitcoffee.util.BarcodeInsights
 import com.adsamcik.starlitcoffee.util.CoffeeCountryDictionaries
+import com.adsamcik.starlitcoffee.util.CoffeeFilterVocabulary
+import com.adsamcik.starlitcoffee.util.CoffeeFilterVocabularyLoader
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataMatchStrategy
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
+import com.adsamcik.starlitcoffee.util.CoffeeVocabularyMatcher
 import com.adsamcik.starlitcoffee.util.ImagePreprocessor
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
@@ -99,6 +102,9 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         OpenFoodFactsClient.lookupBarcode(it)
     },
     private val llmCache: LlmResultCache = LlmResultCache(),
+    private val vocabularyProvider: () -> CoffeeFilterVocabulary? = {
+        appContext?.let { CoffeeFilterVocabularyLoader.getInstance(it) }
+    },
 ) {
     private var currentKnownValues: KnownFieldValues = KnownFieldValues.EMPTY
 
@@ -125,6 +131,10 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         // glyphs / logos; quality 90 keeps text crisp without bloating bytes.
         private const val VISION_CROP_EXPANSION = 1.12f
         private const val VISION_CROP_JPEG_QUALITY = 90
+        // Per-field cap on curated-vocabulary hints merged into KnownFieldValues.
+        // Kept at/under the prompt's own .take(...) caps so vocab hints and the
+        // user's own collection both fit in the reference-vocabulary section.
+        private const val MAX_VOCAB_HINTS_PER_FIELD = 8
 
         private val CANONICAL_METADATA_FIELDS = setOf(
             "origin",
@@ -240,6 +250,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             inferredLocale = inferredLocale,
         )
         boostKnownFieldValuesForBarcode(detectedBarcode)
+        boostKnownFieldValuesFromVocabulary(combinedOcrText)
 
         val offSummary = addOpenFoodFactsCandidates(allCandidates, detectedBarcode)
         val qrEnrichment = buildQrLinkEnrichment(rawDetectedQrUrl)
@@ -351,6 +362,28 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         )
         if (boostedKnownValues !== currentKnownValues) {
             currentKnownValues = boostedKnownValues
+        }
+    }
+
+    /**
+     * Grounds the LLM prompt against the curated global coffee vocabulary by
+     * fuzzy-matching the merged OCR text and merging the most likely per-field
+     * values into [currentKnownValues]. This runs on every scan (not just when the
+     * user already owns matching bags), so a first-time scan still gets strong
+     * origin/variety/process/roast/tasting-note hints spotted directly on the bag.
+     */
+    private fun boostKnownFieldValuesFromVocabulary(combinedOcrText: String) {
+        if (combinedOcrText.isBlank()) return
+        val vocabulary = vocabularyProvider() ?: return
+        if (vocabulary.isEmpty) return
+        val matched = CoffeeVocabularyMatcher.match(
+            ocrText = combinedOcrText,
+            vocabulary = vocabulary,
+            maxPerField = MAX_VOCAB_HINTS_PER_FIELD,
+        )
+        val merged = CoffeeVocabularyMatcher.merge(currentKnownValues, matched)
+        if (merged != currentKnownValues) {
+            currentKnownValues = merged
         }
     }
 

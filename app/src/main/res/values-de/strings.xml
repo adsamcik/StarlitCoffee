@@ -224,6 +224,7 @@
     <string name="screen_brew_log_title">Brüh-Log</string>
     <string name="msg_log_empty_title">Starten Sie eine Zubereitung, um Ihre Historie zu sehen</string>
     <string name="msg_log_empty_subtitle">Jede abgeschlossene Zubereitung mit Feedback erscheint hier</string>
+    <string name="msg_select_brew_log">Wählen Sie ein Brüh-Log aus, um die Details zu sehen</string>
 <string name="action_rate_brew">Zubereitung bewerten</string>
 
     <!-- Brew Log Detail Screen -->
@@ -301,6 +302,15 @@
     <string name="notif_scan_progress_title">Etikett der Tüte wird gelesen…</string>
     <string name="notif_bag_analysis_title">Tütenanalyse abgeschlossen</string>
     <string name="notif_bag_analysis_body">Tippen Sie, um die gefundenen Details zu prüfen.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Etikett wird gelesen…</string>
+    <string name="scan_stage_barcode">Barcode wird nachgeschlagen…</string>
+    <string name="scan_stage_llm">Details werden interpretiert…</string>
+    <string name="scan_stage_crop">Etikett wird gesucht…</string>
+    <string name="scan_stage_vision">Etikettenbild wird geprüft…</string>
+    <string name="scan_stage_combine">Ergebnisse werden kombiniert…</string>
+    <string name="scan_stage_finalizing">Wird abgeschlossen…</string>
+    <string name="format_scan_stage_step">Schritt %1$d von %2$d</string>
     <string name="format_notif_bag_analysis_body">Tippen Sie, um %1$s zu prüfen.</string>
 
     <!-- Settings: rating reminder -->

@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Gatavošana</string>
+    <string name="nav_log">Žurnāls</string>
+    <string name="nav_more">Vairāk</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Atpakaļ</string>
+    <string name="action_close">Aizvērt</string>
+    <string name="action_cancel">Atcelt</string>
+    <string name="action_delete">Dzēst</string>
+    <string name="action_save">Saglabāt izmaiņas</string>
+    <string name="action_saved">✓ Saglabāts</string>
+    <string name="action_skip">Izlaist</string>
+    <string name="action_finish">Pabeigt</string>
+    <string name="action_next">Tālāk</string>
+    <string name="action_go_back">Atgriezties</string>
+<!-- Common labels -->
+    <string name="label_coffee">Kafija</string>
+    <string name="label_water">Ūdens</string>
+    <string name="label_ratio">Attiecība</string>
+    <string name="label_strength">Stiprums</string>
+    <string name="label_grind">Malums</string>
+    <string name="label_filter">Filtrs</string>
+<string name="label_decaf">Decaf</string>
+    <string name="label_decaf_suffix"> · Decaf</string>
+    <string name="label_loading">Notiek ielāde…</string>
+    <string name="label_none">Nav</string>
+    <string name="label_taste">Garša</string>
+    <string name="label_rating">Vērtējums</string>
+    <string name="label_notes">Piezīmes</string>
+    <string name="label_no_filter">Bez filtra</string>
+    <string name="label_settings">Iestatījumi</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg tasē</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+<plurals name="format_selected">
+        <item quantity="zero">%1$d atlasīti</item>
+        <item quantity="one">%1$d atlasīts</item>
+        <item quantity="other">%1$d atlasīti</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Konfigurējiet gatavošanu</string>
+    <string name="label_coffee_input">Kafija (g)</string>
+    <string name="label_water_input">Ūdens (g)</string>
+    <string name="label_brew_size_input">Pagatavojamais daudzums (ml)</string>
+    <string name="label_cup_size_input">Tases tilpums (ml)</string>
+    <string name="label_brew_size">Pagatavojamais daudzums</string>
+    <string name="label_cup_size">Tases tilpums</string>
+    <string name="format_capacity_note">%1$s ietilpst %2$dg ūdens — lielākām gatavošanām uzpilde notiek automātiski</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Izvēlēties kafijas iepakojumu</string>
+    <string name="cd_clear_bag">Notīrīt iepakojumu</string>
+    <string name="format_brewing_with">Gatavošana ar %1$s</string>
+    <string name="label_freshness">Svaigums</string>
+    <string name="format_recommended_now">Ieteicams tagad: %1$s</string>
+    <string name="format_last_time">Iepriekš: %1$s</string>
+    <string name="action_save_as_favorite">Saglabāt izlasē</string>
+    <string name="label_select_coffee_bag_title">Izvēlēties kafijas iepakojumu</string>
+    <string name="msg_no_active_bags">Nav aktīvu iepakojumu. Pievienojiet kādu sadaļā Jūsu pupiņas.</string>
+    <string name="action_brew_without_bag">Gatavot bez izvēlēta iepakojuma</string>
+    <string name="label_best_now">Pašlaik labākais</string>
+    <string name="format_grind_generic">Malums: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Maluma iestatījums: %1$s–%2$s · Pielāgojiet pēc garšas</string>
+    <string name="format_weight_left"> · Atlicis %1$.0fg</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Pulsar padoms: Lejot uzturiet ūdens līmeni ~1cm virs kafijas slāņa. Lielākā daļa lietotāju gatavo 20–25g vienai sabalansētai tasei.</string>
+    <string name="tip_generic">💡 Padoms: Sāciet ar noklusējuma attiecību un pielāgojiet stiprumu pēc garšas. Smalkāks malums ekstrahē vairāk, rupjāks — mazāk.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Pagatavošanas iestatīšana</string>
+<string name="label_custom_ratio">Pielāgota attiecība (piem., 16)</string>
+    <string name="label_temperature">Temperatūra (°C)</string>
+    <string name="label_bloom_multiplier">Bloom reizinātājs (piem., 3.0)</string>
+    <string name="label_pulse_count">Pulsu skaits</string>
+<string name="action_start_brewing">Sākt gatavošanu →</string>
+    <string name="label_advanced_options">Papildu iespējas</string>
+    <string name="cd_collapse_advanced">Sakļaut papildu iespējas</string>
+    <string name="cd_expand_advanced">Izvērst papildu iespējas</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="zero">Kafijas deva: %1$d gramu</item>
+        <item quantity="one">Kafijas deva: %1$d grams</item>
+        <item quantity="other">Kafijas deva: %1$d grami</item>
+    </plurals>
+    <string name="label_decrease">Samazināt %1$s</string>
+    <string name="label_increase">Palielināt %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Sagatavojiet kafiju</string>
+<string name="action_ready_to_brew_short">Gatavs gatavošanai</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Sagatavošana</string>
+    <string name="label_recipe_heading">Recepte</string>
+    <string name="label_temp_short">Temp.</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Samitriniet papīra filtru pamatnē (vārsts atvērts) un noteciniet. Uzlieciet cilindru, pievienojiet malto kafiju, izlīdziniet slāni, uzlieciet dispersijas vāciņu. Nulējiet svarus.</string>
+    <string name="prep_tip_pulsar_19k">Noskalojiet 19K metāla filtru, lai tas iegultos, un uzsildiet cilindru. Uzlieciet cilindru, pievienojiet malto kafiju, izlīdziniet slāni, uzlieciet dispersijas vāciņu. Nulējiet svarus.</string>
+    <string name="prep_tip_pulsar_40k">Noskalojiet 40K metāla filtru, lai uzsildītu cilindru. Uzlieciet cilindru, pievienojiet malto kafiju, izlīdziniet slāni, uzlieciet dispersijas vāciņu. Nulējiet svarus.</string>
+    <string name="prep_tip_pour_over_paper">Ievietojiet papīra filtru un izskalojiet ar karstu ūdeni, lai uzsildītu un noņemtu papīra garšu. Pievienojiet malto kafiju, nulējiet svarus.</string>
+    <string name="prep_tip_french_press">Uzsildiet preskannu, tad izlejiet ūdeni. Pievienojiet malto kafiju, novietojiet uz svariem un nulējiet pirms ūdens pievienošanas.</string>
+    <string name="prep_tip_aeropress">Ievietojiet noskalotu filtru vāciņā. Pievienojiet malto kafiju, novietojiet gatavotāju uz stabilas krūzes vai servēšanas trauka un nulējiet svarus.</string>
+    <string name="prep_tip_espresso">Nosusiniet portafiltru. Ievietojiet devu, vienmērīgi sadaliet un līdzeni tampējiet pirms nostiprināšanas grupā.</string>
+    <string name="prep_tip_moka">Piepildiet apakšējo kameru līdz vārstam. Piepildiet groziņu ar maltu kafiju, izlīdziniet — netampējiet. Salieciet uzmanīgi.</string>
+    <string name="prep_tip_cold_brew">Pievienojiet malto kafiju traukā, nulējiet svarus, tad pievienojiet istabas temperatūras vai aukstu ūdeni un pārklājiet.</string>
+    <string name="format_prep_grind_specific">Samaļiet %1$s — iestatiet %2$s uz %3$s</string>
+    <string name="format_prep_grind_generic">Samaļiet %1$s — %2$s (%3$s)</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Pauzēt</string>
+    <string name="action_resume">Turpināt</string>
+    <string name="cd_disable_minute_alerts">Izslēgt minūšu brīdinājumus</string>
+    <string name="cd_enable_minute_alerts">Ieslēgt minūšu brīdinājumus</string>
+    <string name="cd_bloom_animation">Kafijas pupiņas bloom animācija</string>
+<string name="format_pour_bloom_water">Ielejiet %1$.0fg bloom ūdeni</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Kopā %2$.0fg</string>
+<string name="action_start_bloom">☕ Sākt bloom</string>
+<string name="label_bloom_done">✅ Bloom pabeigts!</string>
+    <string name="action_finish_brew">Pabeigt gatavošanu</string>
+    <string name="dialog_exit_brew_title">Iziet no gatavošanas?</string>
+    <string name="dialog_exit_brew_message">Pašreizējais gatavošanas progress tiks zaudēts.</string>
+    <string name="action_exit_brew">Iziet</string>
+
+    <!-- Calculator Brew Screen -->
+<string name="label_water_to_dose">Ūdens → deva</string>
+    <string name="label_dose_to_water">Deva → ūdens</string>
+    <string name="cd_backspace">Dzēst pēdējo rakstzīmi</string>
+    <string name="action_brew">Sākt</string>
+    <string name="label_total_water">kopējais ūdens</string>
+<!-- Settings Screen -->
+    <string name="screen_settings_title">Iestatījumi</string>
+    <string name="label_settings_section_brewing">Gatavošana</string>
+    <string name="label_settings_section_appearance">Izskats</string>
+    <string name="label_settings_section_notifications">Paziņojumi</string>
+    <string name="label_settings_section_developer">Izstrādātājs</string>
+    <string name="label_settings_section_when_dimmed">Kad aptumšots</string>
+    <string name="label_display_dim_settings">Displejs un aptumšošanas režīms</string>
+    <string name="msg_display_dim_settings_subtitle">Aptumšošanas režīms, OLED melnais, spilgtums</string>
+    <string name="screen_display_settings_title">Displejs un aptumšošanas režīms</string>
+    <string name="label_cup_presets">Tases priekšiestatījumi</string>
+    <string name="action_add_preset">Pievienot priekšiestatījumu</string>
+    <string name="action_reset_defaults">Atjaunot noklusējumus</string>
+    <string name="msg_presets_hint">Priekšiestatījumi kalkulatorā parādās kā ātrās pogas</string>
+    <string name="label_brew_methods">Pagatavošanas metodes</string>
+    <string name="msg_methods_hint">Atlasītās metodes parādās pirmās. Pieskarieties, lai pārslēgtu.</string>
+    <string name="label_default_method">Noklusējuma metode</string>
+    <string name="format_edit_preset">Rediģēt %1$s</string>
+    <string name="label_bloom_animation_settings">Bloom animācijas</string>
+    <string name="msg_bloom_animation_settings_subtitle">Izvēlieties, cik bieži parādās katra bloom animācija</string>
+    <string name="cd_open_bloom_animation_settings">Atvērt bloom animāciju iestatījumus</string>
+    <string name="screen_bloom_animation_settings_title">Bloom animācijas</string>
+    <string name="msg_bloom_animation_settings_hint">Pieskarieties katrai vadīklai, lai pārslēgtu starp parastu iespējamību, dubultu iespējamību un izslēgšanu. Ja visas animācijas ir izslēgtas, bloom taimeri animāciju slēpj.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s ir iestatīts uz %2$s. Pieskarieties, lai mainītu.</string>
+    <string name="label_bloom_sprite_coffee_flower">Kafijas zieds</string>
+    <string name="desc_bloom_sprite_coffee_flower">Klasisks balts kafijas zieds atveras no pupiņas.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Zvaigžņota kafija</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Krēmīgi zelta tvaika ziedlapas ar sīkiem zvaigžņotiem akcentiem.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Maiga latte art rozete siltos piena putu toņos.</string>
+    <string name="label_bloom_sprite_coffee_plant">Kafijas augs</string>
+    <string name="desc_bloom_sprite_coffee_plant">Svaigs zaļš kafijas stāds ar pāru lapām.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Ķiršu tomāts</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Kafijas pupiņa izdzen tomāta vīteņaugu, kam nogatavojas sarkani augļi.</string>
+    <string name="label_bloom_sprite_strawberry">Zemene</string>
+    <string name="desc_bloom_sprite_strawberry">No kafijas pupiņas izaug zemenes stāds ar ziediem un sarkanām ogām.</string>
+    <string name="label_bloom_sprite_raspberry">Avene</string>
+    <string name="desc_bloom_sprite_raspberry">No kafijas pupiņas izaug ērkšķains dzinums ar gaišiem ziediem un sarkanu aveņu ķekariem.</string>
+    <string name="label_bloom_sprite_blueberry">Mellene</string>
+    <string name="desc_bloom_sprite_blueberry">No kafijas pupiņas izaug mellenes zariņš ar zvaniņu ziediem un zilām ogām.</string>
+    <string name="label_bloom_sprite_blackberry">Kazene</string>
+    <string name="desc_bloom_sprite_blackberry">No kafijas pupiņas izaug ērkšķaini dzinumi ar tumšiem kazeņu ķekariem.</string>
+    <string name="label_bloom_sprite_coffee_brew">Pagatavota kafija</string>
+    <string name="desc_bloom_sprite_coffee_brew">Dzintarains kafijas mirdzums ar krēmīgām tvaika lokām.</string>
+    <string name="label_bloom_sprite_rose">Roze</string>
+    <string name="desc_bloom_sprite_rose">Kompakta sarkana roze atveras virs pupiņas.</string>
+    <string name="label_bloom_sprite_lotus">Lotoss</string>
+    <string name="desc_bloom_sprite_lotus">Krēmkrāsas lotosa zieds ar kārtainām, kausveida ziedlapām.</string>
+    <string name="label_bloom_sprite_sunflower">Saulespuķe</string>
+    <string name="desc_bloom_sprite_sunflower">Koša saulespuķe ar zeltainām ziedlapām un tumšu vidu.</string>
+    <string name="label_bloom_sprite_orchid">Orhideja</string>
+    <string name="desc_bloom_sprite_orchid">Smalkā balta orhideja ar noapaļotām daivām.</string>
+    <string name="label_bloom_sprite_jasmine">Jasmīns</string>
+    <string name="desc_bloom_sprite_jasmine">Maigs balts jasmīna zieds ar vieglu vējdzirnaviņu formu.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Lauztā sirds</string>
+    <string name="desc_bloom_sprite_bleeding_heart">No pupiņas paceļas izliekti kāti ar rozā sirds formas ziediem un baltiem asaru galiem.</string>
+    <string name="label_bloom_sprite_passionflower">Pasiflora</string>
+    <string name="desc_bloom_sprite_passionflower">Lokani vīteņi virs pupiņas atver greznu violeti baltu pasifloru.</string>
+    <string name="label_bloom_sprite_bee_orchid">Bišu orhideja</string>
+    <string name="desc_bloom_sprite_bee_orchid">Rozā orhidejas ziedlapas uz slaidiem kātiem atsedz tumšas, bitei līdzīgas lūpas.</string>
+    <string name="label_bloom_sprite_jade_vine">Nefrīta vīteņaugs</string>
+    <string name="desc_bloom_sprite_jade_vine">Kāpjošs vīteņaugs no pupiņas nolaiž tirkīza nefrīta ziedu ķekarus.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Paradīzes putns</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Oranžas un tumši zilas strelīcijas ziedlapas atveras no stāvām zaļām lapām.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Zilā Himalaju magone</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Nokarens pumpurs atveras debeszilā magonē ar zeltainām putekšņlapām.</string>
+    <string name="label_bloom_sprite_rafflesia">Raflēzija</string>
+    <string name="desc_bloom_sprite_rafflesia">Sarkans plankumains parazītisks zieds uzbriest par milzīgu piecdaivu ziedu.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Šokolādes kosmeja</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Spalvainas lapas no pupiņas paceļ samtaini tumši bordo kosmejas ziedus.</string>
+    <string name="label_bloom_sprite_flame_lily">Liesmu lilija</string>
+    <string name="desc_bloom_sprite_flame_lily">Liesmu krāsas lilijas ziedlapas paceļas uz vītņainiem zaļiem kātiem.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Nakts karaliene</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Kaktusa stublājs atveras dramatiskā, kārtainā baltā nakts ziedā.</string>
+    <string name="label_bloom_sprite_snowdrop">Sniegpulkstenīte</string>
+    <string name="desc_bloom_sprite_snowdrop">No ieplīsušas pupiņas paceļas smalki balti sniegpulkstenīšu zvaniņi.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">No pupiņas atveras sīki zili neaizmirstulīšu ziedi ar dzelteniem centriem.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Gatavošanas žurnāls</string>
+    <string name="msg_log_empty_title">Sāciet gatavot, lai redzētu savu vēsturi</string>
+    <string name="msg_log_empty_subtitle">Katra pabeigtā gatavošana ar atsauksmi parādīsies šeit</string>
+    <string name="msg_select_brew_log">Izvēlieties gatavošanas ierakstu, lai skatītu informāciju</string>
+<string name="action_rate_brew">Novērtēt kafiju</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Gatavošanas informācija</string>
+    <string name="dialog_delete_brew_title">Dzēst gatavošanas ierakstu?</string>
+    <string name="dialog_delete_brew_message">Šo darbību nevar atsaukt.</string>
+    <string name="label_coffee_bag">Kafijas iepakojums</string>
+    <string name="label_brew_time">Gatavošanas laiks</string>
+    <string name="label_coffee_type">Kafijas veids</string>
+    <string name="label_flavor_notes">Garšas piezīmes</string>
+    <string name="hint_add_notes">Pievienojiet piezīmes…</string>
+    <string name="msg_brew_not_found">Gatavošanas ieraksts nav atrasts</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Jūsu izlase</string>
+    <string name="msg_no_favorites_title">Izlasē vēl nav ierakstu</string>
+    <string name="msg_no_favorites_subtitle">Saglabājiet recepti no gatavošanas ekrāna ar pogu ♡</string>
+    <string name="label_untitled">Bez nosaukuma</string>
+    <string name="format_recipe_summary">%1$sg kafijas / %2$sg ūdens</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Personalizējiet savu gatavošanu</string>
+    <string name="label_pulsar_filter_type">Pulsar filtra veids</string>
+    <string name="msg_filter_hint">Ietekmē tases profilu un maluma ieteikumus</string>
+    <string name="label_your_grinder">Jūsu dzirnaviņas</string>
+    <string name="msg_grinder_hint">Neobligāti — iespējo konkrētus maluma ieteikumus. Izvēlieties Nav dzirnaviņu / Cits, ja Jūsu modelis nav sarakstā.</string>
+    <string name="label_no_grinder">Nav dzirnaviņu / Cits</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Ar ko Jūs gatavojat?</string>
+    <string name="msg_methods_subtitle">Izvēlieties savas gatavošanas metodes. Pieskarieties ★, lai iestatītu noklusējumu.</string>
+    <string name="label_set_as_default">Iestatīt kā noklusējumu</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Vairāk</string>
+    <string name="label_your_favorites">Jūsu izlase</string>
+    <string name="msg_favorites_subtitle">Atkārtojiet savas iecienītās gatavošanas</string>
+    <string name="label_your_beans">Jūsu pupiņas</string>
+    <string name="msg_beans_subtitle">Svaigums, krājums un ko gatavot tālāk</string>
+    <string name="msg_settings_subtitle">Metodes, dzirnaviņas un preferences</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Kameras atļauja ir nepieciešama svītrkodu skenēšanai</string>
+    <string name="msg_point_camera">Pavērsiet kameru pret svītrkodu</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Gatavošana saglabāta! Novērtējiet to pēc nogaršošanas.</string>
+    <string name="snackbar_action_view_log">Skatīt žurnālu</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Gatavošanas vērtēšanas atgādinājumi</string>
+    <string name="notif_channel_rating_reminder_desc">Maigs atgādinājums ~30 minūtes pēc gatavošanas, lai novērtētu to, kamēr garša vēl ir svaiga.</string>
+    <string name="notif_rating_title">Kā izdevās Jūsu kafija?</string>
+    <string name="format_notif_rating_title">Kā izdevās Jūsu %1$s kafija?</string>
+    <string name="notif_rating_body">Pieskarieties emocijzīmei, lai novērtētu, vai atveriet lietotni, lai skatītu vairāk.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Novērtēt ar 1 no 5 zvaigznēm</string>
+    <string name="cd_notif_rating_2">Novērtēt ar 2 no 5 zvaigznēm</string>
+    <string name="cd_notif_rating_3">Novērtēt ar 3 no 5 zvaigznēm</string>
+    <string name="cd_notif_rating_4">Novērtēt ar 4 no 5 zvaigznēm</string>
+    <string name="cd_notif_rating_5">Novērtēt ar 5 no 5 zvaigznēm</string>
+
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analizējam Jūsu iepakojumu</string>
+    <string name="msg_analyzing_bag_subtitle">AI lasa etiķeti, lai aizpildītu informāciju. Tas var aizņemt brīdi.</string>
+    <string name="msg_analyzing_bag_background_hint">Jūs varat turpināt lietot lietotni — paziņosim, kad tas būs pabeigts.</string>
+    <string name="action_skip_ai">Izlaist AI</string>
+    <string name="action_run_in_background">Turpināt fonā</string>
+    <string name="notif_channel_bag_analysis">Iepakojuma analīze</string>
+    <string name="notif_channel_bag_analysis_desc">Paziņo, kad AI ir pabeidzis lasīt kafijas iepakojuma etiķeti.</string>
+    <string name="notif_scan_progress_title">Lasām iepakojuma etiķeti…</string>
+    <string name="notif_bag_analysis_title">Iepakojuma analīze pabeigta</string>
+    <string name="notif_bag_analysis_body">Pieskarieties, lai pārskatītu atrasto informāciju.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Lasām etiķeti…</string>
+    <string name="scan_stage_barcode">Meklējam svītrkodu…</string>
+    <string name="scan_stage_llm">Izprotam informāciju…</string>
+    <string name="scan_stage_crop">Atrodam etiķeti…</string>
+    <string name="scan_stage_vision">Pārbaudām etiķetes attēlu…</string>
+    <string name="scan_stage_combine">Apvienojam rezultātus…</string>
+    <string name="scan_stage_finalizing">Pabeidzam…</string>
+    <string name="format_scan_stage_step">%1$d. solis no %2$d</string>
+    <string name="format_notif_bag_analysis_body">Pieskarieties, lai pārskatītu %1$s.</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Vērtēšanas atgādinājums</string>
+    <string name="msg_rating_reminder_hint">Nosūtīt paziņojumu ~30 minūtes pēc gatavošanas, lai Jūs varētu novērtēt, kamēr garša vēl ir svaiga.</string>
+    <string name="msg_rating_reminder_perm_denied">Paziņojumi ir bloķēti. Ieslēdziet tos sistēmas iestatījumos, lai saņemtu atgādinājumus.</string>
+    <string name="action_open_app_settings">Atvērt sistēmas iestatījumus</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Ūdens aizture</string>
+    <string name="format_retention_explanation">Kafijas biezumi ūdenī absorbē apmēram 2× savu sauso svaru. Ar %1$.0fg kafijas biezumi satur ~%2$.0fg, un Jūsu tasē paliek ~%3$.0fg.\n\nTas ir aprēķins — tumši grauzdējumi absorbē nedaudz vairāk, gaiši nedaudz mazāk.</string>
+    <string name="cd_about_cup_volume">Par tases tilpumu</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+<string name="label_target">Mērķis</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
+    <string name="format_ratio_bright">Spilgta · 1:%1$d</string>
+    <string name="format_ratio_balanced">Sabalansēta · 1:%1$d</string>
+    <string name="format_ratio_rich">Piesātināta · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+<!-- Input Mode -->
+    <string name="input_coffee_to_water">Kafija → ūdens</string>
+    <string name="input_water_to_coffee">Ūdens → kafija</string>
+    <string name="input_brew_to_both">Gatavošanas daudzums → abi</string>
+    <string name="input_cup_to_both">Tases tilpums → abi</string>
+    <string name="input_coffee_short">Kafija</string>
+    <string name="input_water_short">Ūdens</string>
+    <string name="input_brew_short">Gatavošana</string>
+    <string name="input_cup_short">Tase</string>
+    <string name="input_coffee_desc">Ievadiet kafijas devu, aprēķiniet ūdeni</string>
+    <string name="input_water_desc">Ievadiet ūdens daudzumu, aprēķiniet kafiju</string>
+    <string name="input_brew_desc">Ievadiet mērķa pagatavošanas daudzumu, aprēķiniet kafiju un ūdeni, ņemot vērā absorbciju</string>
+    <string name="input_cup_desc">Ievadiet tases tilpumu, aprēķiniet kafiju un ūdeni</string>
+
+    <!-- Phase names -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Lejiet līdz %1$.0fg</string>
+    <string name="instruction_pour_total">Lejiet līdz %1$.0fg kopā</string>
+    <string name="instruction_open_valve_short">Atveriet vārstu</string>
+    <string name="instruction_close_valve_short">Aizveriet vārstu</string>
+    <string name="instruction_bloom_wait">Pavirpiniet un gaidiet bloom</string>
+    <string name="instruction_french_press_start">Pievienojiet visu ūdeni, maigi apmaisiet un uzlieciet vāku</string>
+    <string name="instruction_french_press_steep">Ļaujiet ievilkties netraucēti līdz mērķa laikam</string>
+    <string name="instruction_french_press_plunge">Lēni nospiediet virzuli, tad nolejiet kafiju</string>
+    <string name="instruction_aeropress_start">Pievienojiet ūdeni, apmaisiet un sāciet ievilkšanu</string>
+    <string name="instruction_aeropress_steep">Ļaujiet ievilkties ar uzliktu vāciņu; gatavojieties spiest</string>
+    <string name="instruction_aeropress_press">Spiediet vienmērīgi līdz šņākoņai, tad apstājieties</string>
+    <string name="instruction_espresso_start">Nostipriniet portafiltru un sāciet šotu</string>
+    <string name="instruction_espresso_pull">Vērojiet plūsmu un iznākumu; turiet tasi uz svariem</string>
+    <string name="instruction_espresso_stop">Apstājieties pie mērķa iznākuma vai kad šots kļūst gaišs</string>
+    <string name="instruction_moka_start">Salieciet kanniņu un karsējiet maigi ar atvērtu vāku</string>
+    <string name="instruction_moka_flow">Vērojiet, kad kafija sāk plūst augšējā kamerā</string>
+    <string name="instruction_moka_remove">Noņemiet no karstuma, kad plūsma kļūst bāla vai sāk šļakstīties</string>
+    <string name="instruction_cold_brew_start">Sajauciet kafiju un ūdeni, apmaisiet, lai samitrinātu katru daļiņu</string>
+    <string name="instruction_cold_brew_steep">Pārklājiet un ļaujiet ievilkties; turiet biezumus pilnībā piesātinātus</string>
+    <string name="instruction_cold_brew_filter">Filtrējiet koncentrātu un atdzesējiet vai atšķaidiet pasniegšanai</string>
+
+    <!-- Warnings -->
+<!-- Taste Feedback -->
+    <string name="feedback_too_sour">Pārāk skāba / vāja</string>
+    <string name="feedback_balanced">Sabalansēta</string>
+    <string name="feedback_too_bitter">Pārāk rūgta / asa</string>
+    <string name="feedback_astringent">Savelkoša / sausa</string>
+    <string name="feedback_clogged">Aizsērējusi / apstājusies</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Samaļiet par 2–4 klikšķiem smalkāk</string>
+    <string name="adjust_try_finer">Izmēģiniet smalkāku maluma iestatījumu</string>
+    <string name="adjust_no_change">Pielāgošana nav nepieciešama — saglabājiet šo recepti!</string>
+    <string name="adjust_grind_coarser">Samaļiet par 2–4 klikšķiem rupjāk</string>
+    <string name="adjust_grind_coarser_valve">Samaļiet par 2–4 klikšķiem rupjāk\nMēģiniet atvērt vārstu agrāk</string>
+    <string name="adjust_try_coarser">Izmēģiniet rupjāku maluma iestatījumu</string>
+    <string name="adjust_try_coarser_water">Izmēģiniet rupjāku maluma iestatījumu\nVai izmēģiniet vēsāku ūdeni</string>
+    <string name="adjust_astringent_pulsar">Palieliniet devu līdz 20g+ labākam slāņa dziļumam\nSamaziniet kustību bloom laikā\nUzturiet ūdens līmeni ~1cm virs slāņa</string>
+    <string name="adjust_astringent_grinder">Samaļiet nedaudz rupjāk, samaziniet kustību</string>
+    <string name="adjust_astringent_no_grinder">Samaļiet nedaudz rupjāk, lejiet maigāk</string>
+    <string name="adjust_clogged_pulsar_grinder">Samaļiet daudz rupjāk par 3–5 klikšķiem\nSamaziniet kustību (tikai maigi pavirpiniet)\nPārbaudiet, vai kafija nav pārāk svaiga — atpūtiniet 7+ dienas</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Samaļiet daudz rupjāk\nSamaziniet kustību\nLejiet maigi caur dispersijas vāciņu</string>
+    <string name="adjust_clogged_grinder">Samaļiet daudz rupjāk par 3–5 klikšķiem</string>
+    <string name="adjust_clogged_no_grinder">Izmēģiniet daudz rupjāku maluma iestatījumu</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Kafija: %1$s g</string>
+    <string name="cd_water_grams">Ūdens: %1$s g</string>
+    <string name="cd_ratio">Attiecība 1 pret %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Nosaukums</string>
+    <string name="label_roaster">Grauzdētava</string>
+    <string name="label_origin">Izcelsme</string>
+<string name="label_barcode_ean">Svītrkods / EAN</string>
+    <string name="action_scan_barcode">Skenēt svītrkodu</string>
+    <string name="label_name_required">Nosaukums *</string>
+    <string name="label_weight_grams">Svars (g)</string>
+    <string name="label_roast_date">Grauzdēšanas datums</string>
+    <string name="label_roast_level">Grauzdējuma pakāpe</string>
+    <string name="label_variety">Šķirne</string>
+    <string name="label_process">Apstrāde</string>
+    <string name="label_tasting_notes">Garšas piezīmes</string>
+    <string name="label_best_before">Ieteicams līdz</string>
+    <string name="label_decaf_coffee">Bezkofeīna kafija</string>
+    <string name="msg_decaf_guidance">Sinhronizē gatavošanas ieteikumus ar bezkofeīna pupiņām un īsākiem ievilkšanas mērķiem.</string>
+    <string name="label_decaf_process_optional">Dekofeinizācijas process (neobligāti)</string>
+    <string name="msg_decaf_process_hint">Ļauj gatavošanas noteikumam maigi koriģēt malumu: ūdens procesa un CO₂ decaf parasti nepieciešama mazāka maluma rupjināšana nekā šķīdinātāju procesa decaf.</string>
+    <string name="cd_captured_bag_photo">Uzņemts iepakojuma fotoattēls</string>
+<string name="label_detected_details">Atrasta informācija</string>
+    <string name="msg_tap_chip_to_edit">Pieskarieties jebkuram čipam, lai rediģētu</string>
+    <string name="label_needs_review">Jāpārskata</string>
+<string name="action_edit_all_fields">Rediģēt visus laukus</string>
+    <string name="action_add_more_details">Pievienot vairāk informācijas</string>
+    <string name="msg_analyzing_label">Analizējam etiķetes fotoattēlus</string>
+    <string name="msg_analyzing_label_detail">Pārbaudām izplūdumu, apvienojam priekšpuses/aizmugures tekstu un sagatavojam uzticamākos laukus.</string>
+    <string name="label_review_fields">Pārskatiet šos laukus</string>
+    <string name="label_qr_website">QR tīmekļa vietne</string>
+    <string name="action_open_website">Atvērt tīmekļa vietni</string>
+    <string name="label_qr_link_found">Atrasta QR saite</string>
+<string name="action_explore_extract">Izpētīt un izvilkt</string>
+    <string name="label_detected_field_evidence">Atrasto lauku pierādījumi</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Iepakojuma fotoattēls</string>
+    <string name="action_rescan_label">Atkārtoti skenēt etiķeti</string>
+    <string name="action_edit_bag">Rediģēt iepakojumu</string>
+    <string name="label_sensory_snapshot">Sensorais kopsavilkums</string>
+    <string name="label_grind_intelligence">Maluma analītika</string>
+    <string name="label_remaining_coffee">Atlikusī kafija</string>
+    <string name="action_adjust_weight">Pielāgot svaru</string>
+    <string name="action_add_weight_tracking">Pievienot svara uzskaiti</string>
+    <string name="label_brew_history">Gatavošanas vēsture</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Kā izdevās?</string>
+    <string name="msg_rate_brew_fresh">Novērtējiet šo kafiju, kamēr garša vēl ir svaiga.</string>
+    <string name="label_flavor_notes_section">Garšas piezīmes</string>
+    <string name="hint_what_stood_out">Neobligāta piezīme — kas izcēlās?</string>
+    <string name="action_save_rating">Saglabāt vērtējumu</string>
+
+    <!-- EmptyStateBox -->
+<!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Jūsu izlase</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Cits</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">AI pakalpojums (Mindlayer)</string>
+    <string name="action_test_connection">Pārbaudīt savienojumu</string>
+    <string name="action_run_test_prompt">Palaist testa vaicājumu</string>
+    <string name="label_testing">Notiek testēšana…</string>
+
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Ieslēgt AI</string>
+    <string name="consent_requesting">Pieprasām AI piekļuvi…</string>
+    <string name="consent_granted">AI ieslēgts</string>
+    <string name="consent_already_approved">AI jau ir ieslēgts</string>
+    <string name="consent_still_unavailable">AI ir apstiprināts, bet pakalpojums vēl nav gatavs</string>
+    <string name="consent_declined">AI piekļuve netika piešķirta</string>
+    <string name="consent_denied_temporary">AI piekļuve tika atteikta — mēģiniet vēlāk</string>
+    <string name="consent_denied_permanent">AI piekļuve ir bloķēta — atbloķējiet to Mindlayer lietotnē</string>
+    <string name="consent_service_unavailable">Mindlayer AI pakalpojums nav pieejams</string>
+    <string name="consent_failed">Neizdevās pieprasīt AI piekļuvi</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Kā izdevās Jūsu pēdējā tase?</string>
+    <string name="label_what_was_off">Kas nebija kā vajag?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Skenētā etiķete atbilst saglabātajam iepakojumam — nav ko atjaunināt.</string>
+    <string name="action_update_bag">Atjaunināt iepakojumu</string>
+    <string name="action_new_bag">Jauns iepakojums</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Saglabāt izlasē</string>
+    <string name="msg_save_favorite_hint">Piešķiriet šai receptei viegli atceramu nosaukumu</string>
+    <string name="hint_save_favorite_example">piem., Pirmdienas rīts, Lēna nedēļas nogale</string>
+    <string name="action_save_simple">Saglabāt</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Skenēšanas vēsture</string>
+    <string name="msg_no_scan_sessions">Vēl nav reģistrētu skenēšanas sesiju.</string>
+    <string name="action_share_session">Kopīgot šo sesiju</string>
+    <string name="label_component_timings">Komponentu laiki</string>
+    <string name="msg_no_timing_data">Laika datu nav</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Brīdinājums</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Pielāgot svaru</string>
+    <string name="label_remaining_weight_grams">Atlikušais svars (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">No fotoattēla</string>
+    <string name="action_scan_label">Skenēt etiķeti</string>
+    <string name="action_add_bag_gallery">No galerijas</string>
+    <string name="action_add_bag_camera">Skenēt ar kameru</string>
+    <string name="action_add_bag_barcode">Skenēt svītrkodu</string>
+    <string name="action_add_bag_manual">Pievienot manuāli</string>
+    <string name="msg_no_beans_yet">Pupiņu vēl nav</string>
+    <string name="msg_add_coffee_hint">Pievienojiet savu kafiju, lai sekotu svaigumam un saņemtu gatavošanas ieteikumus</string>
+    <string name="action_brew_now">Gatavot tagad</string>
+    <string name="msg_could_not_read_label">Neizdevās nolasīt etiķeti</string>
+    <string name="action_retake_photo">Uzņemt fotoattēlu vēlreiz</string>
+    <string name="action_add_details_manually">Pievienot informāciju manuāli</string>
+    <string name="msg_llm_enrichment_succeeded">AI papildināšana uzlaboja šo etiķetes skenējumu.</string>
+    <string name="msg_llm_enrichment_failed">AI šoreiz nevarēja pabeigt etiķetes nolasīšanu — iestājās noildze vai radās īslaicīga kļūda (tas jau automātiski mēģināja vēlreiz). Pieskarieties pogai Mēģināt vēlreiz, lai mēģinātu vēlreiz, vai vienkārši aizpildiet laukus zemāk.</string>
+    <string name="msg_llm_enrichment_unavailable">AI papildināšana pašlaik nav pieejama. Varat mēģināt vēlreiz vai turpināt rediģēt manuāli.</string>
+    <string name="action_retry_llm_enrichment">Atkārtot AI papildināšanu</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Kopīgot gatavošanu</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Atmest skenējumu?</string>
+    <string name="msg_discard_scan_body">Ir atrasti lauki, kas vēl nav saglabāti.</string>
+    <string name="action_discard">Atmest</string>
+    <string name="action_keep_scanning">Turpināt skenēšanu</string>
+    <string name="msg_camera_permission_required">Nepieciešama kameras atļauja</string>
+    <string name="screen_scan_bag_title">Skenēt kafijas iepakojumu</string>
+    <string name="cd_toggle_debug_overlay">Pārslēgt atkļūdošanas pārklājumu</string>
+    <string name="msg_both_sides_scanned">Abas iepakojuma puses ir noskenētas</string>
+    <string name="msg_scanning_front_side">Skenējam iepakojuma priekšpusi</string>
+<string name="action_quick_save">Ātri saglabāt</string>
+    <string name="msg_repackaged_product">Tas var būt pārpakots vai importēts produkts</string>
+    <string name="action_use_barcode">Izmantot svītrkodu</string>
+    <string name="action_use_label">Izmantot etiķeti</string>
+<string name="label_confirmed">Apstiprināts</string>
+    <string name="label_ai_contributed">AI palīdzēja</string>
+    <string name="cd_manual_capture">Manuāla uzņemšana — piespiedu kārtā apstrādāt pašreizējo kadru</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Sinhronizēt ar iepakojumu</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Tiek lietots, gatavojot ar Pulsar</string>
+    <string name="label_quick_brew">Ātrā gatavošana</string>
+    <string name="msg_quick_brew_hint">Izlaist maluma sagatavošanas soli un pēc gatavošanas sākšanas pāriet tieši uz taimeri</string>
+    <string name="label_show_brewing_instructions">Rādīt gatavošanas instrukcijas</string>
+    <string name="msg_show_brewing_instructions_hint">Gatavošanas laikā rādīt soli pa solim norāžu kartīti un sagatavošanas kontrolsarakstu sagatavošanas ekrānā. Izslēdziet, ja metodi zināt no galvas.</string>
+    <string name="label_dim_mode">Automātiskais aptumšošanas režīms</string>
+    <string name="msg_dim_mode_hint">Pēc 25 s bezdarbības noņem krāsainos fonus un pieklusina tekstu līdz pelēkam. Izkārtojums paliek vietā, un viens pieskāriens gan pamodina ekrānu, gan aktivizē apakšā esošo darbību.</string>
+    <string name="label_dim_mode_true_black">Patiesi melns fons</string>
+    <string name="msg_dim_mode_true_black_hint">Tumšajā tēmā, kad ekrāns aptumšots, arī ekrāna fons kļūst pilnīgi melns. Vislabāk OLED — taupa enerģiju un rada īstu miera sajūtu. Gaišajās tēmās neietekmē.</string>
+    <string name="label_dim_mode_reduce_brightness">Samazināt ekrāna spilgtumu</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Aptumšošanas laikā samazina arī displeja apgaismojumu. Tas nedaudz taupa enerģiju un vēl vairāk nomierina ekrānu.</string>
+    <string name="label_dim_mode_fullscreen">Paslēpt sistēmas joslas</string>
+    <string name="msg_dim_mode_fullscreen_hint">Aptumšošanas laikā paslēpj arī statusa joslu un navigācijas joslu. Pavelciet no malas, lai tās īslaicīgi parādītu; jebkurš pieskāriens ekrānam atgriež normālu režīmu.</string>
+    <string name="label_dim_mode_force_dark_in_light">Aptumšojot izmantot tumšo stilu</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Pārslēgties uz tumšās tēmas aptumšoto izskatu arī tad, ja sistēma ir gaišajā režīmā. Labi sader ar patiesi melnu fonu vienmēr tumšam aptumšojumam.</string>
+    <string name="action_add_cup_preset">Pievienot tases priekšiestatījumu</string>
+    <string name="label_volume_ml">Tilpums (ml)</string>
+    <string name="msg_dose_from_ratio">Kafijas deva tiek aprēķināta pēc Jūsu attiecības</string>
+    <string name="label_icon">Ikona</string>
+    <string name="label_color">Krāsa</string>
+    <string name="action_add">Pievienot</string>
+    <string name="dialog_edit_cup_preset_title">Rediģēt tases priekšiestatījumu</string>
+    <string name="screen_add_cup_preset_title">Pievienot tases priekšiestatījumu</string>
+    <string name="screen_edit_cup_preset_title">Rediģēt tases priekšiestatījumu</string>
+    <string name="msg_cup_preset_name_required">Pievienojiet nosaukumu, lai turpinātu</string>
+    <string name="msg_cup_preset_volume_required">Pievienojiet tilpumu, kas lielāks par 0</string>
+    <string name="cd_cup_preset_preview">%1$s priekšskatījums</string>
+    <string name="label_scan_debug">Skenēšanas atkļūdošana</string>
+    <string name="action_view_history">Skatīt vēsturi</string>
+    <string name="action_share_report">Kopīgot pārskatu</string>
+    <string name="action_clear">Notīrīt</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Viegla</string>
+    <string name="strength_balanced">Sabalansēta</string>
+    <string name="strength_strong">Stipra</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Augļaina</string>
+    <string name="flavor_chocolate">Šokolādīga</string>
+    <string name="flavor_nutty">Riekstaina</string>
+    <string name="flavor_floral">Ziedaina</string>
+    <string name="flavor_bright">Spilgta</string>
+    <string name="flavor_smooth">Maiga</string>
+    <string name="flavor_bitter">Rūgta</string>
+    <string name="flavor_sweet">Salda</string>
+    <string name="flavor_earthy">Zemīga</string>
+    <string name="flavor_spicy">Pikanta</string>
+    <string name="flavor_citrus">Citrusīga</string>
+    <string name="flavor_berry">Ogu</string>
+    <string name="flavor_caramel">Karameles</string>
+    <string name="flavor_wine">Vīnam līdzīga</string>
+    <string name="flavor_clean">Tīra</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Ļoti smalks</string>
+    <string name="grind_fine">Smalks</string>
+    <string name="grind_medium_fine">Vidēji smalks</string>
+    <string name="grind_medium">Vidējs</string>
+    <string name="grind_medium_coarse">Vidēji rupjš</string>
+    <string name="grind_coarse">Rupjš</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Lieliski</string>
+    <string name="rating_good">Labi</string>
+    <string name="rating_not_great">Ne pārāk labi</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Pārāk rūgta</string>
+    <string name="taste_issue_too_sour">Pārāk skāba</string>
+    <string name="taste_issue_too_weak">Pārāk vāja</string>
+    <string name="taste_issue_too_strong">Pārāk stipra</string>
+    <string name="taste_issue_bitter_suggestion">Mēģiniet rupjāku malumu vai īsāku gatavošanas laiku</string>
+    <string name="taste_issue_sour_suggestion">Mēģiniet smalkāku malumu vai ilgāku gatavošanas laiku</string>
+    <string name="taste_issue_weak_suggestion">Mēģiniet stiprāku attiecību vai vairāk kafijas</string>
+    <string name="taste_issue_strong_suggestion">Mēģiniet vieglāku attiecību vai mazāk kafijas</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Aizzīmogots</string>
+    <string name="bag_status_open">Atvērts</string>
+    <string name="bag_status_frozen">Saldēts</string>
+    <string name="bag_status_finished">Izlietots</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Nezināms / nav norādīts</string>
+    <string name="decaf_swiss_water">Swiss Water (ūdens process)</string>
+    <string name="decaf_mountain_water">Mountain Water (ūdens process)</string>
+    <string name="decaf_co2">Superkritiskais CO₂</string>
+    <string name="decaf_ea_sugarcane">Etilacetāts (cukurniedres / dabīgais EA)</string>
+    <string name="decaf_mc_direct">Metilēnhlorīds (tiešais šķīdinātājs)</string>
+    <string name="decaf_ea_direct">Etilacetāts (tiešais šķīdinātājs)</string>
+    <string name="decaf_short_unknown">Nezināms</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (cukurniedres)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (šķīdinātājs)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Gaišs</string>
+    <string name="roast_medium_light">Vidēji gaišs</string>
+    <string name="roast_medium">Vidējs</string>
+    <string name="roast_medium_dark">Vidēji tumšs</string>
+    <string name="roast_dark">Tumšs</string>
+    <string name="roast_filter">Filtrs</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Kanēļa</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Mazgāta</string>
+    <string name="process_natural">Naturāla</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaeroba</string>
+    <string name="process_carbonic_maceration">Karboniskā macerācija</string>
+    <string name="process_semi_washed">Daļēji mazgāta</string>
+    <string name="process_wet_hulled">Mitrā lobīšana</string>
+    <string name="process_pulped_natural">Pulped Natural</string>
+    <string name="process_double_fermented">Dubulti fermentēta</string>
+    <string name="process_thermal_shock">Termiskais šoks</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Iecentrējiet iepakojuma priekšpusi kadrā</string>
+    <string name="guided_scan_aim_back">Tagad skenējiet iepakojuma aizmuguri</string>
+    <string name="guided_scan_aim_more">Pievienojiet vēl vienu fotoattēlu (neobligāti)</string>
+    <string name="guided_scan_hold_steady">Turiet nekustīgi…</string>
+    <string name="guided_scan_skip_photos">Izlaist fotoattēlus</string>
+    <string name="guided_scan_finished">Pabeigts</string>
+    <string name="guided_scan_auto_on">Automātiski ieslēgts</string>
+    <string name="guided_scan_auto_off">Automātiski izslēgts</string>
+    <string name="guided_scan_capture">Uzņemt fotoattēlu</string>
+    <string name="guided_scan_scan_more">Skenēt vairāk fotoattēlu</string>
+    <string name="scan_warn_glare">Samaziniet atspīdumu</string>
+    <string name="scan_warn_lighting">Uzlabojiet apgaismojumu</string>
+    <string name="cd_remove_photo">Noņemt fotoattēlu</string>
+    <string name="msg_bag_saved">Iepakojums saglabāts</string>
+</resources>

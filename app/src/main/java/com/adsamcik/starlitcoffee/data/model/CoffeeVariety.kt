@@ -19,6 +19,7 @@ sealed interface CoffeeVariety {
         YELLOW_CATUAI("Yellow Catuai"),
         RED_CATUAI("Red Catuai"),
         MUNDO_NOVO("Mundo Novo"),
+        TYPICA_MEJORADO("Typica Mejorado", listOf("Mejorado")),
         RUIRU_11("Ruiru 11"),
         SL28("SL28"),
         SL34("SL34"),

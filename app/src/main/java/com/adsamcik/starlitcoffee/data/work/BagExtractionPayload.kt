@@ -77,6 +77,7 @@ private data class KnownFieldValuesDto(
     val varieties: List<String> = emptyList(),
     val processTypes: List<String> = emptyList(),
     val roastLevels: List<String> = emptyList(),
+    val tastingNotes: List<String> = emptyList(),
     val farms: List<String> = emptyList(),
 )
 
@@ -200,6 +201,7 @@ private fun KnownFieldValues.toDto(): KnownFieldValuesDto =
         varieties = varieties,
         processTypes = processTypes,
         roastLevels = roastLevels,
+        tastingNotes = tastingNotes,
         farms = farms,
     )
 
@@ -212,5 +214,6 @@ private fun KnownFieldValuesDto.toKnownFieldValues(): KnownFieldValues =
         varieties = varieties,
         processTypes = processTypes,
         roastLevels = roastLevels,
+        tastingNotes = tastingNotes,
         farms = farms,
     )

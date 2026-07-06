@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Приготвяне</string>
+    <string name="nav_log">Дневник</string>
+    <string name="nav_more">Още</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Назад</string>
+    <string name="action_close">Затворете</string>
+    <string name="action_cancel">Откажете</string>
+    <string name="action_delete">Изтрийте</string>
+    <string name="action_save">Запазете промените</string>
+    <string name="action_saved">✓ Запазено</string>
+    <string name="action_skip">Пропуснете</string>
+    <string name="action_finish">Завършете</string>
+    <string name="action_next">Напред</string>
+    <string name="action_go_back">Върнете се</string>
+<!-- Common labels -->
+    <string name="label_coffee">Кафе</string>
+    <string name="label_water">Вода</string>
+    <string name="label_ratio">Съотношение</string>
+    <string name="label_strength">Сила</string>
+    <string name="label_grind">Смилане</string>
+    <string name="label_filter">Филтър</string>
+<string name="label_decaf">Декаф</string>
+    <string name="label_decaf_suffix"> · Декаф</string>
+    <string name="label_loading">Зареждане…</string>
+    <string name="label_none">Няма</string>
+    <string name="label_taste">Вкус</string>
+    <string name="label_rating">Оценка</string>
+    <string name="label_notes">Бележки</string>
+    <string name="label_no_filter">Без филтър</string>
+    <string name="label_settings">Настройки</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Блум %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg в чашата</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+<plurals name="format_selected">
+        <item quantity="one">%1$d избран</item>
+        <item quantity="other">%1$d избрани</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Настройте приготвянето</string>
+    <string name="label_coffee_input">Кафе (g)</string>
+    <string name="label_water_input">Вода (g)</string>
+    <string name="label_brew_size_input">Размер на приготвяне (ml)</string>
+    <string name="label_cup_size_input">Размер на чаша (ml)</string>
+    <string name="label_brew_size">Размер на приготвяне</string>
+    <string name="label_cup_size">Размер на чаша</string>
+    <string name="format_capacity_note">%1$s побира %2$dg вода — за по-големи приготвяния презареждането е автоматично</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Изберете пакет кафе</string>
+    <string name="cd_clear_bag">Изчистете пакета</string>
+    <string name="format_brewing_with">Приготвяне с %1$s</string>
+    <string name="label_freshness">Свежест</string>
+    <string name="format_recommended_now">Препоръчано сега: %1$s</string>
+    <string name="format_last_time">Последния път: %1$s</string>
+    <string name="action_save_as_favorite">Запазете като любимо</string>
+    <string name="label_select_coffee_bag_title">Изберете пакет кафе</string>
+    <string name="msg_no_active_bags">Няма активни пакети. Добавете един в секцията Вашите зърна.</string>
+    <string name="action_brew_without_bag">Пригответе без избран пакет</string>
+    <string name="label_best_now">Най-добро сега</string>
+    <string name="format_grind_generic">Смилане: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Настройка на смилане: %1$s–%2$s · Коригирайте според вкуса</string>
+    <string name="format_weight_left"> · остават %1$.0fg</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Съвет за Pulsar: Поддържайте слърито ~1cm над кафеното легло по време на наливанията. Повечето хора приготвят 20–25g за балансирана единична чаша.</string>
+    <string name="tip_generic">💡 Съвет: Започнете със стандартното съотношение и настройте силата според вкуса. По-финото смилане извлича повече, по-едрото — по-малко.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Настройка на приготвяне</string>
+<string name="label_custom_ratio">Персонално съотношение (напр. 16)</string>
+    <string name="label_temperature">Температура (°C)</string>
+    <string name="label_bloom_multiplier">Множител за блум (напр. 3.0)</string>
+    <string name="label_pulse_count">Брой пулсове</string>
+<string name="action_start_brewing">Започнете приготвяне →</string>
+    <string name="label_advanced_options">Разширени опции</string>
+    <string name="cd_collapse_advanced">Свийте разширените опции</string>
+    <string name="cd_expand_advanced">Разгънете разширените опции</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Доза кафе: %1$d грам</item>
+        <item quantity="other">Доза кафе: %1$d грама</item>
+    </plurals>
+    <string name="label_decrease">Намалете %1$s</string>
+    <string name="label_increase">Увеличете %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Подгответе приготвянето</string>
+<string name="action_ready_to_brew_short">Готово за приготвяне</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Подготовка</string>
+    <string name="label_recipe_heading">Рецепта</string>
+    <string name="label_temp_short">Темп.</string>
+    <string name="label_bloom_short">Блум</string>
+    <string name="prep_tip_pulsar_paper">Намокрете хартиения филтър в основата (с отворен клапан) и оставете да се отцеди. Монтирайте цилиндъра, добавете смляното кафе, изравнете леглото и поставете дисперсионната капачка. Тарирайте везната.</string>
+    <string name="prep_tip_pulsar_19k">Изплакнете 19K металния филтър, за да легне добре, и подгрейте цилиндъра. Монтирайте цилиндъра, добавете смляното кафе, изравнете леглото и поставете дисперсионната капачка. Тарирайте везната.</string>
+    <string name="prep_tip_pulsar_40k">Изплакнете 40K металния филтър, за да подгреете цилиндъра. Монтирайте цилиндъра, добавете смляното кафе, изравнете леглото и поставете дисперсионната капачка. Тарирайте везната.</string>
+    <string name="prep_tip_pour_over_paper">Поставете хартиения филтър и го изплакнете с гореща вода, за да подгреете и да премахнете хартиения вкус. Добавете смляното кафе и тарирайте везната.</string>
+    <string name="prep_tip_french_press">Подгрейте френската преса и я изпразнете. Добавете смляното кафе, поставете върху везната и тарирайте преди да добавите вода.</string>
+    <string name="prep_tip_aeropress">Поставете изплакнат филтър в капачката. Добавете смляното кафе, сложете уреда върху стабилна чаша или сървър и тарирайте везната.</string>
+    <string name="prep_tip_espresso">Подсушете портафилтъра. Дозирайте, разпределете и тампирайте равномерно преди да го заключите.</string>
+    <string name="prep_tip_moka">Напълнете долната камера до клапана. Напълнете кошничката със смляно кафе, изравнете — не тампирайте. Сглобете внимателно.</string>
+    <string name="prep_tip_cold_brew">Добавете смляното кафе в съда, тарирайте везната, после добавете вода със стайна температура или студена вода и покрийте.</string>
+    <string name="format_prep_grind_specific">Смелете %1$s — настройте %2$s на %3$s</string>
+    <string name="format_prep_grind_generic">Смелете %1$s — %2$s (%3$s)</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Пауза</string>
+    <string name="action_resume">Продължете</string>
+    <string name="cd_disable_minute_alerts">Изключете минутните известия</string>
+    <string name="cd_enable_minute_alerts">Включете минутните известия</string>
+    <string name="cd_bloom_animation">Анимация на блум с кафено зърно</string>
+<string name="format_pour_bloom_water">Налейте %1$.0fg вода за блум</string>
+    <string name="format_bloom_total">Блум %1$.0fg · Общо %2$.0fg</string>
+<string name="action_start_bloom">☕ Започнете блум</string>
+<string name="label_bloom_done">✅ Блумът е готов!</string>
+    <string name="action_finish_brew">Завършете приготвянето</string>
+    <string name="dialog_exit_brew_title">Да излезете от приготвянето?</string>
+    <string name="dialog_exit_brew_message">Текущият напредък на приготвянето ще бъде изгубен.</string>
+    <string name="action_exit_brew">Излезте</string>
+
+    <!-- Calculator Brew Screen -->
+<string name="label_water_to_dose">Вода → Доза</string>
+    <string name="label_dose_to_water">Доза → Вода</string>
+    <string name="cd_backspace">Изтриване назад</string>
+    <string name="action_brew">Старт</string>
+    <string name="label_total_water">обща вода</string>
+<!-- Settings Screen -->
+    <string name="screen_settings_title">Настройки</string>
+    <string name="label_settings_section_brewing">Приготвяне</string>
+    <string name="label_settings_section_appearance">Външен вид</string>
+    <string name="label_settings_section_notifications">Известия</string>
+    <string name="label_settings_section_developer">Разработчик</string>
+    <string name="label_settings_section_when_dimmed">При затъмняване</string>
+    <string name="label_display_dim_settings">Дисплей &amp; режим на затъмняване</string>
+    <string name="msg_display_dim_settings_subtitle">Режим на затъмняване, OLED черно, яркост</string>
+    <string name="screen_display_settings_title">Дисплей &amp; режим на затъмняване</string>
+    <string name="label_cup_presets">Предварителни чаши</string>
+    <string name="action_add_preset">Добавете предварителна настройка</string>
+    <string name="action_reset_defaults">Върнете настройките по подразбиране</string>
+    <string name="msg_presets_hint">Предварителните настройки се показват като бързи бутони в калкулатора</string>
+    <string name="label_brew_methods">Методи за приготвяне</string>
+    <string name="msg_methods_hint">Избраните методи се показват първи. Докоснете, за да включите или изключите.</string>
+    <string name="label_default_method">Метод по подразбиране</string>
+    <string name="format_edit_preset">Редактирайте %1$s</string>
+    <string name="label_bloom_animation_settings">Анимации на блум</string>
+    <string name="msg_bloom_animation_settings_subtitle">Изберете колко често да се появява всеки блум спрайт</string>
+    <string name="cd_open_bloom_animation_settings">Отворете настройките за анимации на блум</string>
+    <string name="screen_bloom_animation_settings_title">Анимации на блум</string>
+    <string name="msg_bloom_animation_settings_hint">Докоснете всяка контрола, за да превключвате между нормален шанс, двоен шанс и изключено. Ако всички спрайтове са изключени, таймерите за блум скриват анимацията.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s е настроен на %2$s. Докоснете, за да промените.</string>
+    <string name="label_bloom_sprite_coffee_flower">Кафен цвят</string>
+    <string name="desc_bloom_sprite_coffee_flower">Класически бял кафен цвят, който се отваря от зърното.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Starlit Coffee</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Кремаво-златни парни венчелистчета с малки звездни отблясъци.</string>
+    <string name="label_bloom_sprite_coffee_latte">Лате блум</string>
+    <string name="desc_bloom_sprite_coffee_latte">Нежна лате-арт розета в топли тонове на млечна пяна.</string>
+    <string name="label_bloom_sprite_coffee_plant">Кафено растение</string>
+    <string name="desc_bloom_sprite_coffee_plant">Свеж зелен кафен разсад с двойки листа.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Чери домат</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Кафено зърно покарва в доматена лоза, докато червени плодове узряват.</string>
+    <string name="label_bloom_sprite_strawberry">Ягода</string>
+    <string name="desc_bloom_sprite_strawberry">Кафено зърно покарва в ягодово растение с цветове и червени плодове.</string>
+    <string name="label_bloom_sprite_raspberry">Малина</string>
+    <string name="desc_bloom_sprite_raspberry">Кафено зърно израства в бодливи клонки с бледи цветове и червени гроздове малини.</string>
+    <string name="label_bloom_sprite_blueberry">Боровинка</string>
+    <string name="desc_bloom_sprite_blueberry">Кафено зърно израства в боровинкова клонка с камбанковидни цветове и сини плодове.</string>
+    <string name="label_bloom_sprite_blackberry">Къпина</string>
+    <string name="desc_bloom_sprite_blackberry">Кафено зърно израства в бодливи клонки с тъмни гроздове къпини.</string>
+    <string name="label_bloom_sprite_coffee_brew">Приготвено кафе</string>
+    <string name="desc_bloom_sprite_coffee_brew">Кехлибарено сияние на кафе с кремави извивки пара.</string>
+    <string name="label_bloom_sprite_rose">Роза</string>
+    <string name="desc_bloom_sprite_rose">Компактна червена роза, която се разтваря над зърното.</string>
+    <string name="label_bloom_sprite_lotus">Лотос</string>
+    <string name="desc_bloom_sprite_lotus">Кремав лотосов цвят с наслоени чашковидни венчелистчета.</string>
+    <string name="label_bloom_sprite_sunflower">Слънчоглед</string>
+    <string name="desc_bloom_sprite_sunflower">Ярък слънчоглед със златни венчелистчета и тъмен център.</string>
+    <string name="label_bloom_sprite_orchid">Орхидея</string>
+    <string name="desc_bloom_sprite_orchid">Деликатна бяла орхидея със заоблени дялове.</string>
+    <string name="label_bloom_sprite_jasmine">Жасмин</string>
+    <string name="desc_bloom_sprite_jasmine">Нежен бял жасминов цвят с плавна форма на въртележка.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Разбито сърце</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Извити стъбла с розови сърцевидни цветове и бели капковидни върхове се издигат от зърното.</string>
+    <string name="label_bloom_sprite_passionflower">Пасифлора</string>
+    <string name="desc_bloom_sprite_passionflower">Увиващи се лози се отварят в пищна лилаво-бяла пасифлора над зърното.</string>
+    <string name="label_bloom_sprite_bee_orchid">Пчелна орхидея</string>
+    <string name="desc_bloom_sprite_bee_orchid">Розови венчелистчета на орхидея разкриват тъмни устни с форма на пчела върху тънки стъбла.</string>
+    <string name="label_bloom_sprite_jade_vine">Нефритена лоза</string>
+    <string name="desc_bloom_sprite_jade_vine">Катерлива лоза спуска тюркоазени гроздове нефритени цветове от зърното.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Райска птица</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Оранжеви и тъмносини венчелистчета на Strelitzia се разгръщат от изправени зелени листа.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Син хималайски мак</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Увиснала пъпка се отваря в небесносин мак със златни тичинки.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">Червен петнист паразитен цвят набъбва в огромно петделно цвете.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Шоколадов космос</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Перообразни листа издигат кадифени тъмнобургундски цветове космос от зърното.</string>
+    <string name="label_bloom_sprite_flame_lily">Огнена лилия</string>
+    <string name="desc_bloom_sprite_flame_lily">Извити огнено оцветени венчелистчета на лилия се издигат върху зелени стъбла с мустачки.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Царица на нощта</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Кактусово стъбло се отваря в драматичен наслоен бял нощноцъфтящ цвят.</string>
+    <string name="label_bloom_sprite_snowdrop">Кокиче</string>
+    <string name="desc_bloom_sprite_snowdrop">Деликатни бели камбанки на кокиче се издигат от напуканото зърно.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Малки сини цветове незабравка с жълти центрове се разгръщат от зърното.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Дневник на приготвянията</string>
+    <string name="msg_log_empty_title">Започнете приготвяне, за да видите историята си</string>
+    <string name="msg_log_empty_subtitle">Всяко завършено приготвяне с обратна връзка ще се появи тук</string>
+    <string name="msg_select_brew_log">Изберете запис от дневника, за да видите подробностите</string>
+<string name="action_rate_brew">Оценете приготвянето</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Подробности за приготвянето</string>
+    <string name="dialog_delete_brew_title">Да изтриете записа?</string>
+    <string name="dialog_delete_brew_message">Това действие не може да бъде отменено.</string>
+    <string name="label_coffee_bag">Пакет кафе</string>
+    <string name="label_brew_time">Време на приготвяне</string>
+    <string name="label_coffee_type">Тип кафе</string>
+    <string name="label_flavor_notes">Вкусови нотки</string>
+    <string name="hint_add_notes">Добавете бележки…</string>
+    <string name="msg_brew_not_found">Записът не е намерен</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Вашите любими</string>
+    <string name="msg_no_favorites_title">Все още няма любими</string>
+    <string name="msg_no_favorites_subtitle">Запазете рецепта от екрана за приготвяне с бутона ♡</string>
+    <string name="label_untitled">Без заглавие</string>
+    <string name="format_recipe_summary">%1$sg кафе / %2$sg вода</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Персонализирайте приготвянето</string>
+    <string name="label_pulsar_filter_type">Тип филтър Pulsar</string>
+    <string name="msg_filter_hint">Влияе на профила в чашата и препоръките за смилане</string>
+    <string name="label_your_grinder">Вашата мелачка</string>
+    <string name="msg_grinder_hint">По избор — включва конкретни препоръки за смилане. Изберете Без мелачка / Друга, ако Вашата не е в списъка.</string>
+    <string name="label_no_grinder">Без мелачка / Друга</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">С какво приготвяте?</string>
+    <string name="msg_methods_subtitle">Изберете методите си за приготвяне. Докоснете ★, за да зададете стандартния.</string>
+    <string name="label_set_as_default">Задайте по подразбиране</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Още</string>
+    <string name="label_your_favorites">Вашите любими</string>
+    <string name="msg_favorites_subtitle">Повторете любимите си приготвяния</string>
+    <string name="label_your_beans">Вашите зърна</string>
+    <string name="msg_beans_subtitle">Свежест, наличност и какво да приготвите следващо</string>
+    <string name="msg_settings_subtitle">Методи, мелачка и предпочитания</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Необходимо е разрешение за камерата, за да сканирате баркодове</string>
+    <string name="msg_point_camera">Насочете камерата към баркода</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Приготвянето е запазено! Оценете го, след като го опитате.</string>
+    <string name="snackbar_action_view_log">Вижте дневника</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Напомняния за оценка на приготвяне</string>
+    <string name="notif_channel_rating_reminder_desc">Леко напомняне ~30 минути след приготвяне, за да го оцените, докато вкусът е свеж.</string>
+    <string name="notif_rating_title">Как беше Вашето кафе?</string>
+    <string name="format_notif_rating_title">Как беше Вашето приготвяне с %1$s?</string>
+    <string name="notif_rating_body">Докоснете емоджи, за да го оцените, или отворете приложението за още.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Оценете с 1 от 5 звезди</string>
+    <string name="cd_notif_rating_2">Оценете с 2 от 5 звезди</string>
+    <string name="cd_notif_rating_3">Оценете с 3 от 5 звезди</string>
+    <string name="cd_notif_rating_4">Оценете с 4 от 5 звезди</string>
+    <string name="cd_notif_rating_5">Оценете с 5 от 5 звезди</string>
+
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Анализ на Вашия пакет</string>
+    <string name="msg_analyzing_bag_subtitle">ИИ чете етикета, за да попълни подробностите. Това може да отнеме малко време.</string>
+    <string name="msg_analyzing_bag_background_hint">Можете да продължите да използвате приложението — ще Ви уведомим, когато приключи.</string>
+    <string name="action_skip_ai">Пропуснете ИИ</string>
+    <string name="action_run_in_background">Продължете във фонов режим</string>
+    <string name="notif_channel_bag_analysis">Анализ на пакет</string>
+    <string name="notif_channel_bag_analysis_desc">Уведомява Ви, когато ИИ приключи с четенето на етикета на пакет кафе.</string>
+    <string name="notif_scan_progress_title">Четене на етикета на пакета…</string>
+    <string name="notif_bag_analysis_title">Анализът на пакета е завършен</string>
+    <string name="notif_bag_analysis_body">Докоснете, за да прегледате намерените подробности.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Четене на етикета…</string>
+    <string name="scan_stage_barcode">Проверка на баркода…</string>
+    <string name="scan_stage_llm">Разчитане на подробностите…</string>
+    <string name="scan_stage_crop">Откриване на етикета…</string>
+    <string name="scan_stage_vision">Преглед на изображението на етикета…</string>
+    <string name="scan_stage_combine">Обединяване на резултатите…</string>
+    <string name="scan_stage_finalizing">Финализиране…</string>
+    <string name="format_scan_stage_step">Стъпка %1$d от %2$d</string>
+    <string name="format_notif_bag_analysis_body">Докоснете, за да прегледате %1$s.</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Напомняне за оценка</string>
+    <string name="msg_rating_reminder_hint">Изпраща известие ~30 минути след приготвяне, за да можете да го оцените, докато вкусът е свеж.</string>
+    <string name="msg_rating_reminder_perm_denied">Известията са блокирани. Разрешете ги в системните настройки, за да получавате напомняния.</string>
+    <string name="action_open_app_settings">Отворете системните настройки</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Задържане на вода</string>
+    <string name="format_retention_explanation">Смляното кафе абсорбира около 2× собственото си сухо тегло във вода. При %1$.0fg кафе утайката задържа ~%2$.0fg, оставяйки ~%3$.0fg във Вашата чаша.\n\nТова е приблизителна оценка — тъмните изпичания абсорбират малко повече, светлите — малко по-малко.</string>
+    <string name="cd_about_cup_volume">За обема в чашата</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+<string name="label_target">Цел</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
+    <string name="format_ratio_bright">Ярко · 1:%1$d</string>
+    <string name="format_ratio_balanced">Балансирано · 1:%1$d</string>
+    <string name="format_ratio_rich">Плътно · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+<!-- Input Mode -->
+    <string name="input_coffee_to_water">Кафе → Вода</string>
+    <string name="input_water_to_coffee">Вода → Кафе</string>
+    <string name="input_brew_to_both">Размер на приготвяне → Двете</string>
+    <string name="input_cup_to_both">Размер на чаша → Двете</string>
+    <string name="input_coffee_short">Кафе</string>
+    <string name="input_water_short">Вода</string>
+    <string name="input_brew_short">Приготвяне</string>
+    <string name="input_cup_short">Чаша</string>
+    <string name="input_coffee_desc">Въведете доза кафе, изчислете вода</string>
+    <string name="input_water_desc">Въведете количество вода, изчислете кафе</string>
+    <string name="input_brew_desc">Въведете целеви размер на приготвяне, изчислете кафе и вода с отчитане на абсорбцията</string>
+    <string name="input_cup_desc">Въведете размер на чаша, изчислете кафе и вода</string>
+
+    <!-- Phase names -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Налейте до %1$.0fg</string>
+    <string name="instruction_pour_total">Налейте до общо %1$.0fg</string>
+    <string name="instruction_open_valve_short">Отворете клапана</string>
+    <string name="instruction_close_valve_short">Затворете клапана</string>
+    <string name="instruction_bloom_wait">Завъртете &amp; изчакайте блум</string>
+    <string name="instruction_french_press_start">Добавете цялата вода, разбъркайте внимателно и поставете капака отгоре</string>
+    <string name="instruction_french_press_steep">Оставете да се запарва необезпокоявано до целевото време</string>
+    <string name="instruction_french_press_plunge">Натиснете бавно, после излейте кафето</string>
+    <string name="instruction_aeropress_start">Добавете вода, разбъркайте и започнете запарката</string>
+    <string name="instruction_aeropress_steep">Запарвайте с капачката; подгответе се да натиснете</string>
+    <string name="instruction_aeropress_press">Натискайте равномерно до съскането, после спрете</string>
+    <string name="instruction_espresso_start">Заключете портафилтъра и стартирайте шота</string>
+    <string name="instruction_espresso_pull">Следете потока и добива; дръжте чашата върху везната</string>
+    <string name="instruction_espresso_stop">Спрете при целевия добив или когато шотът изсветлее</string>
+    <string name="instruction_moka_start">Сглобете Moka Pot и загрявайте леко с отворен капак</string>
+    <string name="instruction_moka_flow">Следете как кафето тече в горната камера</string>
+    <string name="instruction_moka_remove">Махнете от котлона, когато потокът избледнее или започне да пръска</string>
+    <string name="instruction_cold_brew_start">Смесете кафе и вода, разбъркайте, за да намокрите всяка частица</string>
+    <string name="instruction_cold_brew_steep">Покрийте и оставете да се запарва; дръжте кафето напълно наситено</string>
+    <string name="instruction_cold_brew_filter">Филтрирайте концентрата и охладете или разредете за сервиране</string>
+
+    <!-- Warnings -->
+<!-- Taste Feedback -->
+    <string name="feedback_too_sour">Твърде кисело / слабо</string>
+    <string name="feedback_balanced">Балансирано</string>
+    <string name="feedback_too_bitter">Твърде горчиво / грубо</string>
+    <string name="feedback_astringent">Стипчиво / сухо</string>
+    <string name="feedback_clogged">Запушено / застой</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Смелете по-фино с 2–4 клика</string>
+    <string name="adjust_try_finer">Опитайте по-фина настройка на смилане</string>
+    <string name="adjust_no_change">Не е нужна корекция — запазете тази рецепта!</string>
+    <string name="adjust_grind_coarser">Смелете по-едро с 2–4 клика</string>
+    <string name="adjust_grind_coarser_valve">Смелете по-едро с 2–4 клика\nОпитайте да отворите клапана по-рано</string>
+    <string name="adjust_try_coarser">Опитайте по-едра настройка на смилане</string>
+    <string name="adjust_try_coarser_water">Опитайте по-едра настройка на смилане\nИли опитайте по-хладна вода</string>
+    <string name="adjust_astringent_pulsar">Увеличете дозата до 20g+ за по-дълбоко легло\nНамалете агитацията по време на блум\nДръжте слърито ~1cm над леглото</string>
+    <string name="adjust_astringent_grinder">Смелете малко по-едро, намалете агитацията</string>
+    <string name="adjust_astringent_no_grinder">Смелете малко по-едро, наливайте по-нежно</string>
+    <string name="adjust_clogged_pulsar_grinder">Смелете значително по-едро с 3–5 клика\nНамалете агитацията (само нежно завъртане)\nПроверете дали кафето не е твърде прясно — оставете го 7+ дни</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Смелете значително по-едро\nНамалете агитацията\nОсигурете нежни наливания през дисперсионната капачка</string>
+    <string name="adjust_clogged_grinder">Смелете значително по-едро с 3–5 клика</string>
+    <string name="adjust_clogged_no_grinder">Опитайте много по-едра настройка на смилане</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Кафе: %1$s грама</string>
+    <string name="cd_water_grams">Вода: %1$s грама</string>
+    <string name="cd_ratio">Съотношение 1 към %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Име</string>
+    <string name="label_roaster">Пекарна</string>
+    <string name="label_origin">Произход</string>
+<string name="label_barcode_ean">Баркод / EAN</string>
+    <string name="action_scan_barcode">Сканирайте баркод</string>
+    <string name="label_name_required">Име *</string>
+    <string name="label_weight_grams">Тегло (g)</string>
+    <string name="label_roast_date">Дата на изпичане</string>
+    <string name="label_roast_level">Степен на изпичане</string>
+    <string name="label_variety">Разновидност</string>
+    <string name="label_process">Обработка</string>
+    <string name="label_tasting_notes">Вкусови нотки</string>
+    <string name="label_best_before">Най-добър до</string>
+    <string name="label_decaf_coffee">Безкофеиново кафе</string>
+    <string name="msg_decaf_guidance">Поддържа насоките за приготвяне синхронизирани с декаф зърна и по-кратки цели за запарване.</string>
+    <string name="label_decaf_process_optional">Процес на декофеинизиране (по избор)</string>
+    <string name="msg_decaf_process_hint">Позволява на правилото за приготвяне леко да насочи смилането: декафите с воден процес и CO₂ обикновено имат нужда от по-малко поедряване от тези с разтворител.</string>
+    <string name="cd_captured_bag_photo">Заснета снимка на пакета</string>
+<string name="label_detected_details">Открити подробности</string>
+    <string name="msg_tap_chip_to_edit">Докоснете който и да е чип, за да редактирате</string>
+    <string name="label_needs_review">Нуждае се от преглед</string>
+<string name="action_edit_all_fields">Редактирайте всички полета</string>
+    <string name="action_add_more_details">Добавете още подробности</string>
+    <string name="msg_analyzing_label">Анализ на снимките на етикета</string>
+    <string name="msg_analyzing_label_detail">Проверяваме размазване, обединяваме текста от предната и задната страна и подготвяме най-надеждните полета.</string>
+    <string name="label_review_fields">Прегледайте тези полета</string>
+    <string name="label_qr_website">QR уебсайт</string>
+    <string name="action_open_website">Отворете уебсайта</string>
+    <string name="label_qr_link_found">Намерена е QR връзка</string>
+<string name="action_explore_extract">Изследвайте &amp; извлечете</string>
+    <string name="label_detected_field_evidence">Открити доказателства за поле</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Снимка на пакета</string>
+    <string name="action_rescan_label">Сканирайте етикета отново</string>
+    <string name="action_edit_bag">Редактирайте пакета</string>
+    <string name="label_sensory_snapshot">Сензорен преглед</string>
+    <string name="label_grind_intelligence">Интелигентно смилане</string>
+    <string name="label_remaining_coffee">Оставащо кафе</string>
+    <string name="action_adjust_weight">Коригирайте теглото</string>
+    <string name="action_add_weight_tracking">Добавете проследяване на тегло</string>
+    <string name="label_brew_history">История на приготвянията</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Как беше?</string>
+    <string name="msg_rate_brew_fresh">Оценете това приготвяне, докато вкусът още е свеж.</string>
+    <string name="label_flavor_notes_section">Вкусови нотки</string>
+    <string name="hint_what_stood_out">Бележка по избор - какво изпъкна?</string>
+    <string name="action_save_rating">Запазете оценката</string>
+
+    <!-- EmptyStateBox -->
+<!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Вашите любими</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Друго</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">ИИ услуга (Mindlayer)</string>
+    <string name="action_test_connection">Тествайте връзката</string>
+    <string name="action_run_test_prompt">Пуснете тестова подкана</string>
+    <string name="label_testing">Тестване…</string>
+
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Активирайте ИИ</string>
+    <string name="consent_requesting">Заявяване на ИИ достъп…</string>
+    <string name="consent_granted">ИИ е активиран</string>
+    <string name="consent_already_approved">ИИ вече е активиран</string>
+    <string name="consent_still_unavailable">ИИ е одобрен, но услугата още не е готова</string>
+    <string name="consent_declined">ИИ достъпът не беше предоставен</string>
+    <string name="consent_denied_temporary">ИИ достъпът беше отказан — опитайте отново по-късно</string>
+    <string name="consent_denied_permanent">ИИ достъпът е блокиран — отблокирайте го в приложението Mindlayer</string>
+    <string name="consent_service_unavailable">ИИ услугата Mindlayer не е налична</string>
+    <string name="consent_failed">Неуспешна заявка за ИИ достъп</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Как беше последната Ви чаша?</string>
+    <string name="label_what_was_off">Какво не беше наред?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Сканираният етикет съвпада със запазения Ви пакет — няма нищо за обновяване.</string>
+    <string name="action_update_bag">Обновете пакета</string>
+    <string name="action_new_bag">Нов пакет</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Запазете като любимо</string>
+    <string name="msg_save_favorite_hint">Дайте на тази рецепта име, което ще запомните</string>
+    <string name="hint_save_favorite_example">напр. Понеделник сутрин, Бавен уикенд</string>
+    <string name="action_save_simple">Запазете</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">История на сканиранията</string>
+    <string name="msg_no_scan_sessions">Все още няма записани сесии на сканиране.</string>
+    <string name="action_share_session">Споделете тази сесия</string>
+    <string name="label_component_timings">Времена на компонентите</string>
+    <string name="msg_no_timing_data">Няма налични данни за времена</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Предупреждение</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Коригирайте теглото</string>
+    <string name="label_remaining_weight_grams">Оставащо тегло (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">От снимка</string>
+    <string name="action_scan_label">Сканирайте етикет</string>
+    <string name="action_add_bag_gallery">От галерия</string>
+    <string name="action_add_bag_camera">Сканирайте с камера</string>
+    <string name="action_add_bag_barcode">Сканирайте баркод</string>
+    <string name="action_add_bag_manual">Добавете ръчно</string>
+    <string name="msg_no_beans_yet">Все още няма зърна</string>
+    <string name="msg_add_coffee_hint">Добавете кафето си, за да следите свежестта и да получавате предложения за приготвяне</string>
+    <string name="action_brew_now">Пригответе сега</string>
+    <string name="msg_could_not_read_label">Етикетът не можа да бъде разчетен</string>
+    <string name="action_retake_photo">Заснемете отново</string>
+    <string name="action_add_details_manually">Добавете подробности ръчно</string>
+    <string name="msg_llm_enrichment_succeeded">ИИ обогатяването подобри това сканиране на етикет.</string>
+    <string name="msg_llm_enrichment_failed">ИИ не успя да дочете този етикет този път — изтече времето или възникна временна грешка (автоматичният повторен опит вече е направен). Докоснете повторен опит, за да опитате още веднъж, или просто попълнете полетата по-долу.</string>
+    <string name="msg_llm_enrichment_unavailable">ИИ обогатяването не е налично в момента. Можете да опитате отново или да продължите да редактирате ръчно.</string>
+    <string name="action_retry_llm_enrichment">Опитайте ИИ обогатяване отново</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Споделете приготвянето</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Да отхвърлите сканирането?</string>
+    <string name="msg_discard_scan_body">Имате открити полета, които не са запазени.</string>
+    <string name="action_discard">Отхвърлете</string>
+    <string name="action_keep_scanning">Продължете сканирането</string>
+    <string name="msg_camera_permission_required">Необходимо е разрешение за камерата</string>
+    <string name="screen_scan_bag_title">Сканирайте пакет кафе</string>
+    <string name="cd_toggle_debug_overlay">Превключете диагностичния слой</string>
+    <string name="msg_both_sides_scanned">Двете страни на пакета са сканирани</string>
+    <string name="msg_scanning_front_side">Сканиране на предната страна на пакета</string>
+<string name="action_quick_save">Бързо запазване</string>
+    <string name="msg_repackaged_product">Това може да е препакетиран или внесен продукт</string>
+    <string name="action_use_barcode">Използвайте баркода</string>
+    <string name="action_use_label">Използвайте етикета</string>
+<string name="label_confirmed">Потвърдено</string>
+    <string name="label_ai_contributed">ИИ допринесе</string>
+    <string name="cd_manual_capture">Ръчно заснемане — принудителна обработка на текущия кадър</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Синхронизирайте с пакета</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Прилага се при приготвяне с Pulsar</string>
+    <string name="label_quick_brew">Бързо приготвяне</string>
+    <string name="msg_quick_brew_hint">Пропуснете стъпката за подготовка на смилането и преминете направо към таймера, когато започнете приготвяне</string>
+    <string name="label_show_brewing_instructions">Показване на инструкции за приготвяне</string>
+    <string name="msg_show_brewing_instructions_hint">Показва картата с насоки стъпка по стъпка по време на приготвяне и чеклиста за подготовка на екрана за подготовка. Изключете, ако знаете метода си наизуст.</string>
+    <string name="label_dim_mode">Автоматичен режим на затъмняване</string>
+    <string name="msg_dim_mode_hint">След 25 s неактивност цветните фонове се премахват, а текстът се приглушава в сиво. Оформлението остава на място и едно докосване едновременно събужда екрана и задейства основното действие.</string>
+    <string name="label_dim_mode_true_black">Истински черен фон</string>
+    <string name="msg_dim_mode_true_black_hint">Когато е затъмнен в тъмна тема, фонът на екрана също става чисто черен. Най-добре за OLED — пести енергия и усещането е наистина спокойно. Няма ефект в светли теми.</string>
+    <string name="label_dim_mode_reduce_brightness">Намаляване на яркостта на екрана</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Допълнително намалява подсветката на дисплея при затъмняване. Пести малко енергия и омекотява екрана още повече.</string>
+    <string name="label_dim_mode_fullscreen">Скриване на системните ленти</string>
+    <string name="msg_dim_mode_fullscreen_hint">Скрива и статус лентата, и навигационната лента при затъмняване. Плъзнете от ръб, за да ги покажете за кратко; всяко докосване на екрана връща нормалния режим.</string>
+    <string name="label_dim_mode_force_dark_in_light">Използване на тъмен стил при затъмняване</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Превключва към тъмното представяне за затъмняване дори когато системата е в светъл режим. Съчетава се естествено с Истински черен фон за винаги тъмно затъмняване.</string>
+    <string name="action_add_cup_preset">Добавете предварителна чаша</string>
+    <string name="label_volume_ml">Обем (ml)</string>
+    <string name="msg_dose_from_ratio">Дозата кафе се изчислява от Вашето съотношение</string>
+    <string name="label_icon">Икона</string>
+    <string name="label_color">Цвят</string>
+    <string name="action_add">Добавете</string>
+    <string name="dialog_edit_cup_preset_title">Редактирайте предварителна чаша</string>
+    <string name="screen_add_cup_preset_title">Добавете предварителна чаша</string>
+    <string name="screen_edit_cup_preset_title">Редактирайте предварителна чаша</string>
+    <string name="msg_cup_preset_name_required">Добавете име, за да продължите</string>
+    <string name="msg_cup_preset_volume_required">Добавете обем, по-голям от 0</string>
+    <string name="cd_cup_preset_preview">Преглед на %1$s</string>
+    <string name="label_scan_debug">Диагностика на сканиране</string>
+    <string name="action_view_history">Вижте историята</string>
+    <string name="action_share_report">Споделете отчет</string>
+    <string name="action_clear">Изчистете</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Леко</string>
+    <string name="strength_balanced">Балансирано</string>
+    <string name="strength_strong">Силно</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Плодово</string>
+    <string name="flavor_chocolate">Шоколадово</string>
+    <string name="flavor_nutty">Ядково</string>
+    <string name="flavor_floral">Флорално</string>
+    <string name="flavor_bright">Ярко</string>
+    <string name="flavor_smooth">Гладко</string>
+    <string name="flavor_bitter">Горчиво</string>
+    <string name="flavor_sweet">Сладко</string>
+    <string name="flavor_earthy">Землисто</string>
+    <string name="flavor_spicy">Пикантно</string>
+    <string name="flavor_citrus">Цитрусово</string>
+    <string name="flavor_berry">Горски плодове</string>
+    <string name="flavor_caramel">Карамелено</string>
+    <string name="flavor_wine">Винено</string>
+    <string name="flavor_clean">Чисто</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Много фино</string>
+    <string name="grind_fine">Фино</string>
+    <string name="grind_medium_fine">Средно фино</string>
+    <string name="grind_medium">Средно</string>
+    <string name="grind_medium_coarse">Средно едро</string>
+    <string name="grind_coarse">Едро</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Чудесно</string>
+    <string name="rating_good">Добро</string>
+    <string name="rating_not_great">Не особено добро</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Твърде горчиво</string>
+    <string name="taste_issue_too_sour">Твърде кисело</string>
+    <string name="taste_issue_too_weak">Твърде слабо</string>
+    <string name="taste_issue_too_strong">Твърде силно</string>
+    <string name="taste_issue_bitter_suggestion">Опитайте по-едро смилане или по-кратко време на приготвяне</string>
+    <string name="taste_issue_sour_suggestion">Опитайте по-фино смилане или по-дълго време на приготвяне</string>
+    <string name="taste_issue_weak_suggestion">Опитайте по-силно съотношение или повече кафе</string>
+    <string name="taste_issue_strong_suggestion">Опитайте по-леко съотношение или по-малко кафе</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Запечатан</string>
+    <string name="bag_status_open">Отворен</string>
+    <string name="bag_status_frozen">Замразен</string>
+    <string name="bag_status_finished">Приключен</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Неизвестно / не е посочено</string>
+    <string name="decaf_swiss_water">Swiss Water (воден процес)</string>
+    <string name="decaf_mountain_water">Mountain Water (воден процес)</string>
+    <string name="decaf_co2">Свръхкритичен CO₂</string>
+    <string name="decaf_ea_sugarcane">Етил ацетат (захарна тръстика / натурален EA)</string>
+    <string name="decaf_mc_direct">Метилен хлорид (директен разтворител)</string>
+    <string name="decaf_ea_direct">Етил ацетат (директен разтворител)</string>
+    <string name="decaf_short_unknown">Неизвестно</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (захарна тръстика)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (разтворител)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Светло</string>
+    <string name="roast_medium_light">Средно-светло</string>
+    <string name="roast_medium">Средно</string>
+    <string name="roast_medium_dark">Средно-тъмно</string>
+    <string name="roast_dark">Тъмно</string>
+    <string name="roast_filter">Филтър</string>
+    <string name="roast_espresso">Еспресо</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Cinnamon</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Мита</string>
+    <string name="process_natural">Натурална</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Анаеробна</string>
+    <string name="process_carbonic_maceration">Карбонова мацерация</string>
+    <string name="process_semi_washed">Полумита</string>
+    <string name="process_wet_hulled">Wet-Hulled</string>
+    <string name="process_pulped_natural">Pulped Natural</string>
+    <string name="process_double_fermented">Двойно ферментирала</string>
+    <string name="process_thermal_shock">Термичен шок</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Центрирайте предната страна на пакета в кадъра</string>
+    <string name="guided_scan_aim_back">Сега сканирайте задната страна на пакета</string>
+    <string name="guided_scan_aim_more">Добавете още една снимка (по избор)</string>
+    <string name="guided_scan_hold_steady">Дръжте стабилно…</string>
+    <string name="guided_scan_skip_photos">Пропуснете снимките</string>
+    <string name="guided_scan_finished">Готово</string>
+    <string name="guided_scan_auto_on">Автоматично включено</string>
+    <string name="guided_scan_auto_off">Автоматично изключено</string>
+    <string name="guided_scan_capture">Заснемете снимка</string>
+    <string name="guided_scan_scan_more">Сканирайте още снимки</string>
+    <string name="scan_warn_glare">Намалете отблясъците</string>
+    <string name="scan_warn_lighting">Подобрете осветлението</string>
+    <string name="cd_remove_photo">Премахнете снимката</string>
+    <string name="msg_bag_saved">Пакетът е запазен</string>
+</resources>

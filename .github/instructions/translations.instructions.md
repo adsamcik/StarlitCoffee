@@ -5,21 +5,35 @@ description: "How to translate user-facing strings for Starlit Coffee (multi-lan
 
 # Translation Guide
 
-Starlit Coffee ships in **11 languages**. English (`values/strings.xml`) is the source of truth; every other locale MUST have an identical `<string>` key set at all times.
+Starlit Coffee ships in **23 languages**. English (`values/strings.xml`) is the source of truth; every other locale MUST have an identical `<string>` key set at all times.
 
 | Language | Locale | Directory |
 |---|---|---|
 | English (source) | en | `values/` |
+| Bulgarian | bg | `values-bg/` |
 | Czech | cs | `values-cs/` |
 | Danish | da | `values-da/` |
 | German | de | `values-de/` |
+| Greek | el | `values-el/` |
 | Spanish | es | `values-es/` |
+| Estonian | et | `values-et/` |
+| Finnish | fi | `values-fi/` |
 | French | fr | `values-fr/` |
+| Croatian | hr | `values-hr/` |
+| Hungarian | hu | `values-hu/` |
 | Italian | it | `values-it/` |
+| Lithuanian | lt | `values-lt/` |
+| Latvian | lv | `values-lv/` |
 | Dutch | nl | `values-nl/` |
 | Polish | pl | `values-pl/` |
+| Portuguese | pt | `values-pt/` |
+| Romanian | ro | `values-ro/` |
 | Slovak | sk | `values-sk/` |
+| Slovenian | sl | `values-sl/` |
+| Swedish | sv | `values-sv/` |
 | Chinese (Simplified) | zh | `values-zh/` |
+
+The EU-official locales cover the 22 "common" EU languages (all 24 minus Irish `ga` and Maltese `mt`); Chinese `zh` is the sole non-EU locale.
 
 The supported locales are also declared in `res/xml/locales_config.xml` (referenced by `android:localeConfig` in the manifest), which drives the Android 13+ per-app language picker. **When adding or removing a locale, update both that file and this table.**
 
@@ -39,13 +53,13 @@ The Czech-specific glossary and conventions below remain the canonical worked ex
 2. Verify keys stay aligned across **all** locales (each `Compare-Object` must return nothing):
    ```powershell
    $en = (Select-Xml -Path app\src\main\res\values\strings.xml -XPath "//string").Node.name | Sort-Object
-   foreach ($loc in 'cs','da','de','es','fr','it','nl','pl','sk','zh') {
+   foreach ($loc in 'bg','cs','da','de','el','es','et','fi','fr','hr','hu','it','lt','lv','nl','pl','pt','ro','sk','sl','sv','zh') {
        $tgt = (Select-Xml -Path "app\src\main\res\values-$loc\strings.xml" -XPath "//string").Node.name | Sort-Object
        $diff = Compare-Object $en $tgt
        if ($diff) { Write-Host "$loc MISMATCH"; $diff } else { Write-Host "$loc OK" }
    }
    ```
-3. For `<plurals>`, use the correct CLDR categories per language: `one`/`other` for da, de, es, fr, it, nl; `one`/`few`/`many`/`other` for cs, pl, sk; `other` only for zh.
+3. For `<plurals>`, use the correct CLDR categories per language: `one`/`other` for bg, da, de, el, es, et, fi, fr, hu, it, nl, pt, sv; `one`/`few`/`other` for hr, lt, ro; `zero`/`one`/`other` for lv; `one`/`two`/`few`/`other` for sl; `one`/`few`/`many`/`other` for cs, pl, sk; `other` only for zh.
 4. Use `snake_case` keys with an affordance prefix:
    - `action_*` — button labels, menu actions
    - `label_*` — field labels, section titles

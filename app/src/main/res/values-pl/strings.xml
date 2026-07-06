@@ -228,6 +228,7 @@
     <string name="screen_brew_log_title">Dziennik parzeń</string>
     <string name="msg_log_empty_title">Zacznij parzyć, aby zobaczyć historię</string>
     <string name="msg_log_empty_subtitle">Każde ukończone parzenie z oceną pojawi się tutaj</string>
+    <string name="msg_select_brew_log">Wybierz wpis parzenia, aby zobaczyć szczegóły</string>
 <string name="action_rate_brew">Oceń parzenie</string>
 
     <!-- Brew Log Detail Screen -->
@@ -305,6 +306,14 @@
     <string name="notif_scan_progress_title">Odczytywanie etykiety opakowania…</string>
     <string name="notif_bag_analysis_title">Analiza opakowania zakończona</string>
     <string name="notif_bag_analysis_body">Dotknij, aby przejrzeć znalezione szczegóły.</string>
+    <string name="scan_stage_ocr">Odczytywanie etykiety…</string>
+    <string name="scan_stage_barcode">Sprawdzanie kodu kreskowego…</string>
+    <string name="scan_stage_llm">Rozpoznawanie szczegółów…</string>
+    <string name="scan_stage_crop">Wykrywanie etykiety…</string>
+    <string name="scan_stage_vision">Analizowanie obrazu etykiety…</string>
+    <string name="scan_stage_combine">Łączenie wyników…</string>
+    <string name="scan_stage_finalizing">Kończenie…</string>
+    <string name="format_scan_stage_step">Krok %1$d z %2$d</string>
     <string name="format_notif_bag_analysis_body">Dotknij, aby przejrzeć %1$s.</string>
 
     <!-- Settings: rating reminder -->

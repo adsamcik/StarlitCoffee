@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Valmista</string>
+    <string name="nav_log">Loki</string>
+    <string name="nav_more">Lisää</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Takaisin</string>
+    <string name="action_close">Sulje</string>
+    <string name="action_cancel">Peruuta</string>
+    <string name="action_delete">Poista</string>
+    <string name="action_save">Tallenna muutokset</string>
+    <string name="action_saved">✓ Tallennettu</string>
+    <string name="action_skip">Ohita</string>
+    <string name="action_finish">Valmis</string>
+    <string name="action_next">Seuraava</string>
+    <string name="action_go_back">Palaa takaisin</string>
+<!-- Common labels -->
+    <string name="label_coffee">Kahvi</string>
+    <string name="label_water">Vesi</string>
+    <string name="label_ratio">Suhde</string>
+    <string name="label_strength">Vahvuus</string>
+    <string name="label_grind">Jauhatus</string>
+    <string name="label_filter">Suodatin</string>
+<string name="label_decaf">Kofeiiniton</string>
+    <string name="label_decaf_suffix"> · Kofeiiniton</string>
+    <string name="label_loading">Ladataan…</string>
+    <string name="label_none">Ei mitään</string>
+    <string name="label_taste">Maku</string>
+    <string name="label_rating">Arvio</string>
+    <string name="label_notes">Muistiinpanot</string>
+    <string name="label_no_filter">Ei suodatinta</string>
+    <string name="label_settings">Asetukset</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg kupissa</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+<plurals name="format_selected">
+        <item quantity="one">%1$d valittu</item>
+        <item quantity="other">%1$d valittua</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Määritä valmistus</string>
+    <string name="label_coffee_input">Kahvi (g)</string>
+    <string name="label_water_input">Vesi (g)</string>
+    <string name="label_brew_size_input">Annoksen koko (ml)</string>
+    <string name="label_cup_size_input">Kupin koko (ml)</string>
+    <string name="label_brew_size">Annoksen koko</string>
+    <string name="label_cup_size">Kupin koko</string>
+    <string name="format_capacity_note">%1$s vetää %2$dg vettä — suuremmissa annoksissa täyttö tapahtuu automaattisesti</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Valitse kahvipussi</string>
+    <string name="cd_clear_bag">Poista pussivalinta</string>
+    <string name="format_brewing_with">Valmistetaan: %1$s</string>
+    <string name="label_freshness">Tuoreus</string>
+    <string name="format_recommended_now">Suositellaan nyt: %1$s</string>
+    <string name="format_last_time">Viimeksi: %1$s</string>
+    <string name="action_save_as_favorite">Tallenna suosikiksi</string>
+    <string name="label_select_coffee_bag_title">Valitse kahvipussi</string>
+    <string name="msg_no_active_bags">Ei aktiivisia pusseja. Lisää sellainen Omat pavut -osiossa.</string>
+    <string name="action_brew_without_bag">Valmista ilman pussia</string>
+    <string name="label_best_now">Paras nyt</string>
+    <string name="format_grind_generic">Jauhatus: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Jauhatusaste: %1$s–%2$s · Säädä maun mukaan</string>
+    <string name="format_weight_left"> · %1$.0fg jäljellä</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Pulsar-vinkki: Pidä lietteen pinta noin 1 cm kahvipedin yläpuolella kaatojen aikana. Useimmat valmistavat 20–25 g tasapainoiseen yhden kupin annokseen.</string>
+    <string name="tip_generic">💡 Vinkki: Aloita oletussuhteella ja säädä vahvuus maun mukaan. Hienompi jauhatus uuttaa enemmän, karkeampi vähemmän.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Valmistuksen asetukset</string>
+<string name="label_custom_ratio">Mukautettu suhde (esim. 16)</string>
+    <string name="label_temperature">Lämpötila (°C)</string>
+    <string name="label_bloom_multiplier">Bloom-kerroin (esim. 3.0)</string>
+    <string name="label_pulse_count">Pulssien määrä</string>
+<string name="action_start_brewing">Aloita valmistus →</string>
+    <string name="label_advanced_options">Lisäasetukset</string>
+    <string name="cd_collapse_advanced">Piilota lisäasetukset</string>
+    <string name="cd_expand_advanced">Näytä lisäasetukset</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Kahviannos: %1$d gramma</item>
+        <item quantity="other">Kahviannos: %1$d grammaa</item>
+    </plurals>
+    <string name="label_decrease">Vähennä %1$s</string>
+    <string name="label_increase">Lisää %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Valmistele kahvi</string>
+<string name="action_ready_to_brew_short">Valmis aloittamaan</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Valmistelu</string>
+    <string name="label_recipe_heading">Resepti</string>
+    <string name="label_temp_short">Lämpö</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Kostuta paperisuodatin alaosassa (venttiili auki) ja anna valua. Kiinnitä sylinteri, lisää kahvijauhe, tasoita peti ja aseta hajotuskansi. Nollaa vaaka.</string>
+    <string name="prep_tip_pulsar_19k">Huuhtele 19K-metallisuodatin, jotta se asettuu ja sylinteri lämpenee. Kiinnitä sylinteri, lisää kahvijauhe, tasoita peti ja aseta hajotuskansi. Nollaa vaaka.</string>
+    <string name="prep_tip_pulsar_40k">Huuhtele 40K-metallisuodatin lämmittääksesi sylinterin. Kiinnitä sylinteri, lisää kahvijauhe, tasoita peti ja aseta hajotuskansi. Nollaa vaaka.</string>
+    <string name="prep_tip_pour_over_paper">Aseta paperisuodatin ja huuhtele kuumalla vedellä esilämmittääksesi ja poistaaksesi paperin maun. Lisää kahvijauhe ja nollaa vaaka.</string>
+    <string name="prep_tip_french_press">Esilämmitä pressopannu ja tyhjennä se. Lisää kahvijauhe, aseta vaa\'alle ja nollaa ennen veden lisäämistä.</string>
+    <string name="prep_tip_aeropress">Aseta huuhdeltu suodatin korkkiin. Lisää kahvijauhe, aseta keitin tukevan mukin tai kannun päälle ja nollaa vaaka.</string>
+    <string name="prep_tip_espresso">Pyyhi suodatinkahva kuivaksi. Annostele, jaa tasaisesti ja tamppaa suoraksi ennen kiinnittämistä.</string>
+    <string name="prep_tip_moka">Täytä alaosa venttiiliin asti. Täytä siivilä kahvijauheella ja tasoita — älä tampaa. Kokoa varovasti.</string>
+    <string name="prep_tip_cold_brew">Lisää kahvijauhe astiaan, nollaa vaaka ja lisää sitten huoneenlämpöistä tai kylmää vettä ja peitä.</string>
+    <string name="format_prep_grind_specific">Jauhatus %1$s — aseta %2$s arvoon %3$s</string>
+    <string name="format_prep_grind_generic">Jauhatus %1$s — %2$s (%3$s)</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Keskeytä</string>
+    <string name="action_resume">Jatka</string>
+    <string name="cd_disable_minute_alerts">Poista minuuttihälytykset käytöstä</string>
+    <string name="cd_enable_minute_alerts">Ota minuuttihälytykset käyttöön</string>
+    <string name="cd_bloom_animation">Kahvipavun bloom-animaatio</string>
+<string name="format_pour_bloom_water">Kaada %1$.0fg bloom-vettä</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Yhteensä %2$.0fg</string>
+<string name="action_start_bloom">☕ Aloita bloom</string>
+<string name="label_bloom_done">✅ Bloom valmis!</string>
+    <string name="action_finish_brew">Lopeta valmistus</string>
+    <string name="dialog_exit_brew_title">Poistutaanko valmistuksesta?</string>
+    <string name="dialog_exit_brew_message">Nykyinen valmistuksen edistyminen menetetään.</string>
+    <string name="action_exit_brew">Poistu</string>
+
+    <!-- Calculator Brew Screen -->
+<string name="label_water_to_dose">Vesi → Annos</string>
+    <string name="label_dose_to_water">Annos → Vesi</string>
+    <string name="cd_backspace">Askelpalautin</string>
+    <string name="action_brew">Aloita</string>
+    <string name="label_total_water">vettä yhteensä</string>
+<!-- Settings Screen -->
+    <string name="screen_settings_title">Asetukset</string>
+    <string name="label_settings_section_brewing">Valmistus</string>
+    <string name="label_settings_section_appearance">Ulkoasu</string>
+    <string name="label_settings_section_notifications">Ilmoitukset</string>
+    <string name="label_settings_section_developer">Kehittäjä</string>
+    <string name="label_settings_section_when_dimmed">Himmennettäessä</string>
+    <string name="label_display_dim_settings">Näyttö &amp; himmennystila</string>
+    <string name="msg_display_dim_settings_subtitle">Himmennystila, OLED-musta, kirkkaus</string>
+    <string name="screen_display_settings_title">Näyttö &amp; himmennystila</string>
+    <string name="label_cup_presets">Kupin esiasetukset</string>
+    <string name="action_add_preset">Lisää esiasetus</string>
+    <string name="action_reset_defaults">Palauta oletukset</string>
+    <string name="msg_presets_hint">Esiasetukset näkyvät pikapainikkeina laskimessa</string>
+    <string name="label_brew_methods">Valmistustavat</string>
+    <string name="msg_methods_hint">Valitut tavat näkyvät ensin. Napauta vaihtaaksesi.</string>
+    <string name="label_default_method">Oletusvalmistustapa</string>
+    <string name="format_edit_preset">Muokkaa: %1$s</string>
+    <string name="label_bloom_animation_settings">Bloom-animaatiot</string>
+    <string name="msg_bloom_animation_settings_subtitle">Valitse, kuinka usein kukin bloom-sprite näkyy</string>
+    <string name="cd_open_bloom_animation_settings">Avaa bloom-animaatioiden asetukset</string>
+    <string name="screen_bloom_animation_settings_title">Bloom-animaatiot</string>
+    <string name="msg_bloom_animation_settings_hint">Napauta kutakin säädintä vaihtaaksesi normaalin todennäköisyyden, kaksinkertaisen todennäköisyyden ja poissuljetun välillä. Jos kaikki spritet on poissuljettu, bloom-ajastimet piilottavat animaation.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s on asetettu arvoon %2$s. Napauta muuttaaksesi.</string>
+    <string name="label_bloom_sprite_coffee_flower">Kahvinkukka</string>
+    <string name="desc_bloom_sprite_coffee_flower">Klassinen valkoinen kahvinkukka avautuu pavusta.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Tähtikahvi</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Kermankultaiset höyryterälehdet ja pienet tähtikorostukset.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte-bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Pehmeä latte-taiteen rosetta lämpimissä maitovaahdon sävyissä.</string>
+    <string name="label_bloom_sprite_coffee_plant">Kahvikasvi</string>
+    <string name="desc_bloom_sprite_coffee_plant">Tuore vihreä kahvintaimi, jossa on parilliset lehdet.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Kirsikkatomaatti</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Kahvipavusta versoo tomaattiköynnös, kun punaiset hedelmät kypsyvät.</string>
+    <string name="label_bloom_sprite_strawberry">Mansikka</string>
+    <string name="desc_bloom_sprite_strawberry">Kahvipavusta versoo mansikkakasvi kukkineen ja punaisine marjoineen.</string>
+    <string name="label_bloom_sprite_raspberry">Vadelma</string>
+    <string name="desc_bloom_sprite_raspberry">Kahvipavusta kasvaa pensaikko, jossa on vaaleat kukat ja punaiset vadelmarypäät.</string>
+    <string name="label_bloom_sprite_blueberry">Mustikka</string>
+    <string name="desc_bloom_sprite_blueberry">Kahvipavusta kasvaa mustikanoksa, jossa on kellomaiset kukat ja siniset marjat.</string>
+    <string name="label_bloom_sprite_blackberry">Karhunvatukka</string>
+    <string name="desc_bloom_sprite_blackberry">Kahvipavusta kasvaa piikikäs pensaikko tummine karhunvatukkarypäineen.</string>
+    <string name="label_bloom_sprite_coffee_brew">Kahvijuoma</string>
+    <string name="desc_bloom_sprite_coffee_brew">Meripihkanvärinen kahvin hehku ja kermaiset höyrykiehkurat.</string>
+    <string name="label_bloom_sprite_rose">Ruusu</string>
+    <string name="desc_bloom_sprite_rose">Tiivis punainen ruusu avautuu pavun yläpuolelle.</string>
+    <string name="label_bloom_sprite_lotus">Lootus</string>
+    <string name="desc_bloom_sprite_lotus">Kermanvärinen lootuksenkukka kerroksittaisine maljaterälehtineen.</string>
+    <string name="label_bloom_sprite_sunflower">Auringonkukka</string>
+    <string name="desc_bloom_sprite_sunflower">Kirkas auringonkukka, jossa on kultaiset terälehdet ja tumma keskusta.</string>
+    <string name="label_bloom_sprite_orchid">Orkidea</string>
+    <string name="desc_bloom_sprite_orchid">Herkkä valkoinen orkidea pyöreine terälehtineen.</string>
+    <string name="label_bloom_sprite_jasmine">Jasmiini</string>
+    <string name="desc_bloom_sprite_jasmine">Pehmeä valkoinen jasmiininkukka, muodoltaan lempeän tuulimyllymäinen.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Särkynytsydän</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Pavusta nousee kaartuvia varsia, joissa on vaaleanpunaiset sydämenmuotoiset kukat ja valkoiset kyynelmäiset kärjet.</string>
+    <string name="label_bloom_sprite_passionflower">Kärsimyskukka</string>
+    <string name="desc_bloom_sprite_passionflower">Kiertyvät köynnökset avautuvat koristeelliseksi violetti-valkoiseksi kärsimyskukaksi pavun yläpuolelle.</string>
+    <string name="label_bloom_sprite_bee_orchid">Mehiläisorho</string>
+    <string name="desc_bloom_sprite_bee_orchid">Vaaleanpunaiset orkidean terälehdet paljastavat tummat mehiläisenmuotoiset huulet hoikilla varsilla.</string>
+    <string name="label_bloom_sprite_jade_vine">Jadeköynnös</string>
+    <string name="desc_bloom_sprite_jade_vine">Kiipeävä köynnös ripustaa turkoosinvihreitä jadekukkarypäitä pavusta.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Paratiisinlintukukka</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Oranssit ja syvänsiniset Strelitzia-terälehdet avautuvat pystyjen vihreiden lehtien keskeltä.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Sininen himalajanunikko</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Riippuva nuppu avautuu taivaansiniseksi unikoksi, jossa on kultaiset heteet.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">Punatäpläinen loiskukka paisuu valtavaksi viisiliuskaiseksi kukaksi.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Suklaakosmos</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Höyhenmäiset lehdet nostavat pavusta samettisia, tummanviininpunaisia kosmoskukkia.</string>
+    <string name="label_bloom_sprite_flame_lily">Liekkililja</string>
+    <string name="desc_bloom_sprite_flame_lily">Kiertyvät liekinväriset liljan terälehdet nousevat kärhällisillä vihreillä varsilla.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Yön kuningatar</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Kaktuksen varsi avautuu näyttäväksi, kerroksittaiseksi valkoiseksi yökukkijaksi.</string>
+    <string name="label_bloom_sprite_snowdrop">Lumikello</string>
+    <string name="desc_bloom_sprite_snowdrop">Herkät valkoiset lumikellot nousevat haljenneesta pavusta.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Pienet siniset lemmikinkukat keltaisine keskustoineen avautuvat pavusta.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Valmistusloki</string>
+    <string name="msg_log_empty_title">Aloita valmistus nähdäksesi historian</string>
+    <string name="msg_log_empty_subtitle">Jokainen valmis kahvi palautteineen näkyy täällä</string>
+    <string name="msg_select_brew_log">Valitse valmistusloki nähdäksesi sen tiedot</string>
+<string name="action_rate_brew">Arvioi kahvi</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Valmistuksen tiedot</string>
+    <string name="dialog_delete_brew_title">Poistetaanko valmistusloki?</string>
+    <string name="dialog_delete_brew_message">Tätä toimintoa ei voi peruuttaa.</string>
+    <string name="label_coffee_bag">Kahvipussi</string>
+    <string name="label_brew_time">Valmistusaika</string>
+    <string name="label_coffee_type">Kahvin tyyppi</string>
+    <string name="label_flavor_notes">Makuvivahteet</string>
+    <string name="hint_add_notes">Lisää muistiinpanoja…</string>
+    <string name="msg_brew_not_found">Valmistuslokia ei löytynyt</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Suosikkisi</string>
+    <string name="msg_no_favorites_title">Ei vielä suosikkeja</string>
+    <string name="msg_no_favorites_subtitle">Tallenna resepti valmistusnäytöltä ♡-painikkeella</string>
+    <string name="label_untitled">Nimetön</string>
+    <string name="format_recipe_summary">%1$sg kahvia / %2$sg vettä</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Räätälöi valmistus</string>
+    <string name="label_pulsar_filter_type">Pulsar-suodattimen tyyppi</string>
+    <string name="msg_filter_hint">Vaikuttaa kupin profiiliin ja jauhatussuosituksiin</string>
+    <string name="label_your_grinder">Myllysi</string>
+    <string name="msg_grinder_hint">Valinnainen — ottaa käyttöön tarkat jauhatussuositukset. Valitse Ei myllyä / Muu, jos omaasi ei ole listalla.</string>
+    <string name="label_no_grinder">Ei myllyä / Muu</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Millä valmistat kahvisi?</string>
+    <string name="msg_methods_subtitle">Valitse valmistustavat. Napauta ★ asettaaksesi oletuksen.</string>
+    <string name="label_set_as_default">Aseta oletukseksi</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Lisää</string>
+    <string name="label_your_favorites">Suosikkisi</string>
+    <string name="msg_favorites_subtitle">Toista suosikkivalmistuksesi</string>
+    <string name="label_your_beans">Omat pavut</string>
+    <string name="msg_beans_subtitle">Tuoreus, varasto ja mitä valmistaa seuraavaksi</string>
+    <string name="msg_settings_subtitle">Tavat, mylly ja asetukset</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Viivakoodien skannaus vaatii kameran käyttöoikeuden</string>
+    <string name="msg_point_camera">Suuntaa kamera viivakoodiin</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Valmistus tallennettu! Arvioi se maistamisen jälkeen.</string>
+    <string name="snackbar_action_view_log">Näytä loki</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Arviointimuistutukset</string>
+    <string name="notif_channel_rating_reminder_desc">Hienovarainen muistutus noin 30 minuuttia valmistuksen jälkeen, jotta voit arvioida kahvin maun ollessa tuore.</string>
+    <string name="notif_rating_title">Millainen kahvisi oli?</string>
+    <string name="format_notif_rating_title">Millainen %1$s-kahvisi oli?</string>
+    <string name="notif_rating_body">Napauta emojia arvioidaksesi tai avaa sovellus saadaksesi lisää.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Arvioi 1/5 tähteä</string>
+    <string name="cd_notif_rating_2">Arvioi 2/5 tähteä</string>
+    <string name="cd_notif_rating_3">Arvioi 3/5 tähteä</string>
+    <string name="cd_notif_rating_4">Arvioi 4/5 tähteä</string>
+    <string name="cd_notif_rating_5">Arvioi 5/5 tähteä</string>
+
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analysoidaan pussia</string>
+    <string name="msg_analyzing_bag_subtitle">Tekoäly lukee etikettiä ja täydentää tiedot. Tämä voi kestää hetken.</string>
+    <string name="msg_analyzing_bag_background_hint">Voit jatkaa sovelluksen käyttöä — ilmoitamme, kun se on valmis.</string>
+    <string name="action_skip_ai">Ohita tekoäly</string>
+    <string name="action_run_in_background">Jatka taustalla</string>
+    <string name="notif_channel_bag_analysis">Pussin analysointi</string>
+    <string name="notif_channel_bag_analysis_desc">Kertoo, kun tekoäly on lukenut kahvipussin etiketin.</string>
+    <string name="notif_scan_progress_title">Luetaan pussin etikettiä…</string>
+    <string name="notif_bag_analysis_title">Pussin analysointi valmis</string>
+    <string name="notif_bag_analysis_body">Napauta tarkistaaksesi löydetyt tiedot.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Luetaan etikettiä…</string>
+    <string name="scan_stage_barcode">Haetaan viivakoodia…</string>
+    <string name="scan_stage_llm">Tulkitaan tietoja…</string>
+    <string name="scan_stage_crop">Etsitään etikettiä…</string>
+    <string name="scan_stage_vision">Tarkastellaan etiketin kuvaa…</string>
+    <string name="scan_stage_combine">Yhdistetään tuloksia…</string>
+    <string name="scan_stage_finalizing">Viimeistellään…</string>
+    <string name="format_scan_stage_step">Vaihe %1$d/%2$d</string>
+    <string name="format_notif_bag_analysis_body">Napauta tarkistaaksesi: %1$s.</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Arviointimuistutus</string>
+    <string name="msg_rating_reminder_hint">Lähetä ilmoitus noin 30 minuuttia valmistuksen jälkeen, jotta voit arvioida kahvin maun ollessa tuore.</string>
+    <string name="msg_rating_reminder_perm_denied">Ilmoitukset on estetty. Ota ne käyttöön järjestelmäasetuksissa saadaksesi muistutuksia.</string>
+    <string name="action_open_app_settings">Avaa järjestelmäasetukset</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Veden imeytyminen</string>
+    <string name="format_retention_explanation">Kahvijauhe imee vettä noin 2× kuivapainonsa verran. Kun kahvia on %1$.0fg, jauhe pidättää noin %2$.0fg, jolloin kuppiin jää noin %3$.0fg.\n\nTämä on arvio — tummat paahdot imevät hieman enemmän, vaaleat hieman vähemmän.</string>
+    <string name="cd_about_cup_volume">Tietoa kupin tilavuudesta</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+<string name="label_target">Tavoite</string>
+<!-- Grind notes -->
+<!-- Dose notes -->
+<!-- Brew Method names -->
+<!-- Ratio presets -->
+    <string name="format_ratio_bright">Kirkas · 1:%1$d</string>
+    <string name="format_ratio_balanced">Tasapainoinen · 1:%1$d</string>
+    <string name="format_ratio_rich">Täyteläinen · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+<!-- Input Mode -->
+    <string name="input_coffee_to_water">Kahvi → Vesi</string>
+    <string name="input_water_to_coffee">Vesi → Kahvi</string>
+    <string name="input_brew_to_both">Annoksen koko → Molemmat</string>
+    <string name="input_cup_to_both">Kupin koko → Molemmat</string>
+    <string name="input_coffee_short">Kahvi</string>
+    <string name="input_water_short">Vesi</string>
+    <string name="input_brew_short">Annos</string>
+    <string name="input_cup_short">Kuppi</string>
+    <string name="input_coffee_desc">Syötä kahviannos, laske vesi</string>
+    <string name="input_water_desc">Syötä veden määrä, laske kahvi</string>
+    <string name="input_brew_desc">Syötä tavoiteltu annoskoko, laske kahvi ja vesi imeytyminen huomioiden</string>
+    <string name="input_cup_desc">Syötä kupin koko, laske kahvi ja vesi</string>
+
+    <!-- Phase names -->
+<!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Kaada arvoon %1$.0fg</string>
+    <string name="instruction_pour_total">Kaada yhteensä arvoon %1$.0fg</string>
+    <string name="instruction_open_valve_short">Avaa venttiili</string>
+    <string name="instruction_close_valve_short">Sulje venttiili</string>
+    <string name="instruction_bloom_wait">Pyöräytä &amp; odota bloomia</string>
+    <string name="instruction_french_press_start">Lisää kaikki vesi, sekoita varovasti ja aseta kansi päälle</string>
+    <string name="instruction_french_press_steep">Anna hautua rauhassa tavoiteaikaan asti</string>
+    <string name="instruction_french_press_plunge">Paina mäntä hitaasti alas ja kaada kahvi pois</string>
+    <string name="instruction_aeropress_start">Lisää vesi, sekoita ja aloita haudutus</string>
+    <string name="instruction_aeropress_steep">Anna hautua korkki paikallaan; valmistaudu puristamaan</string>
+    <string name="instruction_aeropress_press">Purista tasaisesti sihinään asti ja lopeta</string>
+    <string name="instruction_espresso_start">Kiinnitä suodatinkahva ja aloita uutto</string>
+    <string name="instruction_espresso_pull">Tarkkaile virtausta ja saantoa; pidä kuppi vaa\'alla</string>
+    <string name="instruction_espresso_stop">Lopeta tavoitesaantoon tai kun uutos vaalenee</string>
+    <string name="instruction_moka_start">Kokoa pannu ja kuumenna varovasti kansi auki</string>
+    <string name="instruction_moka_flow">Tarkkaile kahvin virtaamista yläosaan</string>
+    <string name="instruction_moka_remove">Ota pois lämmöltä, kun virtaus vaalenee tai pärskii</string>
+    <string name="instruction_cold_brew_start">Yhdistä kahvi ja vesi, sekoita niin että kaikki jauhe kostuu</string>
+    <string name="instruction_cold_brew_steep">Peitä ja anna hautua; pidä jauhe täysin kosteana</string>
+    <string name="instruction_cold_brew_filter">Suodata tiiviste ja jäähdytä tai laimenna tarjoiltavaksi</string>
+
+    <!-- Warnings -->
+<!-- Taste Feedback -->
+    <string name="feedback_too_sour">Liian hapan / laiha</string>
+    <string name="feedback_balanced">Tasapainoinen</string>
+    <string name="feedback_too_bitter">Liian karvas / kitkerä</string>
+    <string name="feedback_astringent">Kuivattava / karhea</string>
+    <string name="feedback_clogged">Tukkeutunut / pysähtynyt</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Jauha hienommaksi 2–4 pykälää</string>
+    <string name="adjust_try_finer">Kokeile hienompaa jauhatusastetta</string>
+    <string name="adjust_no_change">Säätöä ei tarvita — tallenna tämä resepti!</string>
+    <string name="adjust_grind_coarser">Jauha karkeammaksi 2–4 pykälää</string>
+    <string name="adjust_grind_coarser_valve">Jauha karkeammaksi 2–4 pykälää\nKokeile avata venttiili aiemmin</string>
+    <string name="adjust_try_coarser">Kokeile karkeampaa jauhatusastetta</string>
+    <string name="adjust_try_coarser_water">Kokeile karkeampaa jauhatusastetta\nTai kokeile viileämpää vettä</string>
+    <string name="adjust_astringent_pulsar">Lisää annos 20 g:aan tai yli paremman pedin syvyyden vuoksi\nVähennä liikuttelua bloomin aikana\nPidä liete noin 1 cm pedin yläpuolella</string>
+    <string name="adjust_astringent_grinder">Jauha hieman karkeammaksi, vähennä liikuttelua</string>
+    <string name="adjust_astringent_no_grinder">Jauha hieman karkeammaksi, kaada varovaisemmin</string>
+    <string name="adjust_clogged_pulsar_grinder">Jauha paljon karkeammaksi 3–5 pykälää\nVähennä liikuttelua (vain kevyt pyöräytys)\nTarkista, onko kahvi liian tuoretta — anna levätä 7+ päivää</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Jauha paljon karkeammaksi\nVähennä liikuttelua\nVarmista kevyet kaadot hajotuskannen läpi</string>
+    <string name="adjust_clogged_grinder">Jauha paljon karkeammaksi 3–5 pykälää</string>
+    <string name="adjust_clogged_no_grinder">Kokeile paljon karkeampaa jauhatusastetta</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Kahvi: %1$s grammaa</string>
+    <string name="cd_water_grams">Vesi: %1$s grammaa</string>
+    <string name="cd_ratio">Suhde 1 / %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Nimi</string>
+    <string name="label_roaster">Paahtimo</string>
+    <string name="label_origin">Alkuperä</string>
+<string name="label_barcode_ean">Viivakoodi / EAN</string>
+    <string name="action_scan_barcode">Skannaa viivakoodi</string>
+    <string name="label_name_required">Nimi *</string>
+    <string name="label_weight_grams">Paino (g)</string>
+    <string name="label_roast_date">Paahtopäivä</string>
+    <string name="label_roast_level">Paahtoaste</string>
+    <string name="label_variety">Lajike</string>
+    <string name="label_process">Käsittely</string>
+    <string name="label_tasting_notes">Makuvivahteet</string>
+    <string name="label_best_before">Parasta ennen</string>
+    <string name="label_decaf_coffee">Kofeiiniton kahvi</string>
+    <string name="msg_decaf_guidance">Pitää valmistusohjeet linjassa kofeiinittomien papujen ja lyhyempien haudutusaikojen kanssa.</string>
+    <string name="label_decaf_process_optional">Kofeiininpoistomenetelmä (valinnainen)</string>
+    <string name="msg_decaf_process_hint">Antaa valmistussäännön hienosäätää jauhatusta: vesi- ja CO₂-menetelmän kofeiinittomat vaativat yleensä vähemmän karkeutta kuin liuotinmenetelmällä käsitellyt.</string>
+    <string name="cd_captured_bag_photo">Otettu kuva pussista</string>
+<string name="label_detected_details">Tunnistetut tiedot</string>
+    <string name="msg_tap_chip_to_edit">Napauta mitä tahansa kenttää muokataksesi</string>
+    <string name="label_needs_review">Vaatii tarkistuksen</string>
+<string name="action_edit_all_fields">Muokkaa kaikkia kenttiä</string>
+    <string name="action_add_more_details">Lisää tietoja</string>
+    <string name="msg_analyzing_label">Analysoidaan etikettikuvia</string>
+    <string name="msg_analyzing_label_detail">Tarkistamme sumeutta, yhdistämme etu- ja takapuolen tekstit ja valmistelemme luotettavimmat kentät.</string>
+    <string name="label_review_fields">Tarkista nämä kentät</string>
+    <string name="label_qr_website">QR-verkkosivusto</string>
+    <string name="action_open_website">Avaa verkkosivusto</string>
+    <string name="label_qr_link_found">QR-linkki löytyi</string>
+<string name="action_explore_extract">Tutki &amp; poimi</string>
+    <string name="label_detected_field_evidence">Tunnistettujen kenttien todisteet</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Kuva pussista</string>
+    <string name="action_rescan_label">Skannaa etiketti uudelleen</string>
+    <string name="action_edit_bag">Muokkaa pussia</string>
+    <string name="label_sensory_snapshot">Aistikatsaus</string>
+    <string name="label_grind_intelligence">Älykäs jauhatus</string>
+    <string name="label_remaining_coffee">Jäljellä oleva kahvi</string>
+    <string name="action_adjust_weight">Säädä painoa</string>
+    <string name="action_add_weight_tracking">Lisää painonseuranta</string>
+    <string name="label_brew_history">Valmistushistoria</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Millainen se oli?</string>
+    <string name="msg_rate_brew_fresh">Arvioi tämä kahvi, kun maku on vielä tuore.</string>
+    <string name="label_flavor_notes_section">Makuvivahteet</string>
+    <string name="hint_what_stood_out">Valinnainen muistiinpano – mikä erottui?</string>
+    <string name="action_save_rating">Tallenna arvio</string>
+
+    <!-- EmptyStateBox -->
+<!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Suosikkisi</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Muu</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">Tekoälypalvelu (Mindlayer)</string>
+    <string name="action_test_connection">Testaa yhteys</string>
+    <string name="action_run_test_prompt">Suorita testikehote</string>
+    <string name="label_testing">Testataan…</string>
+
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Ota tekoäly käyttöön</string>
+    <string name="consent_requesting">Pyydetään tekoälyn käyttöoikeutta…</string>
+    <string name="consent_granted">Tekoäly käytössä</string>
+    <string name="consent_already_approved">Tekoäly on jo käytössä</string>
+    <string name="consent_still_unavailable">Tekoäly on hyväksytty, mutta palvelu ei ole vielä valmis</string>
+    <string name="consent_declined">Tekoälyn käyttöoikeutta ei myönnetty</string>
+    <string name="consent_denied_temporary">Tekoälyn käyttö evättiin — yritä myöhemmin uudelleen</string>
+    <string name="consent_denied_permanent">Tekoälyn käyttö on estetty — poista esto Mindlayer-sovelluksessa</string>
+    <string name="consent_service_unavailable">Mindlayer-tekoälypalvelu ei ole käytettävissä</string>
+    <string name="consent_failed">Tekoälyn käyttöoikeutta ei voitu pyytää</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Millainen viimeisin kuppisi oli?</string>
+    <string name="label_what_was_off">Mikä oli pielessä?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Skannattu etiketti vastaa tallennettua pussia — ei päivitettävää.</string>
+    <string name="action_update_bag">Päivitä pussi</string>
+    <string name="action_new_bag">Uusi pussi</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Tallenna suosikiksi</string>
+    <string name="msg_save_favorite_hint">Anna reseptille nimi, jonka muistat</string>
+    <string name="hint_save_favorite_example">esim. Maanantaiaamu, Viikonlopun hidas</string>
+    <string name="action_save_simple">Tallenna</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Skannaushistoria</string>
+    <string name="msg_no_scan_sessions">Skannauskertoja ei ole vielä tallennettu.</string>
+    <string name="action_share_session">Jaa tämä istunto</string>
+    <string name="label_component_timings">Komponenttien ajat</string>
+    <string name="msg_no_timing_data">Aikatietoja ei ole saatavilla</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Varoitus</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Säädä painoa</string>
+    <string name="label_remaining_weight_grams">Jäljellä oleva paino (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Kuvasta</string>
+    <string name="action_scan_label">Skannaa etiketti</string>
+    <string name="action_add_bag_gallery">Galleriasta</string>
+    <string name="action_add_bag_camera">Skannaa kameralla</string>
+    <string name="action_add_bag_barcode">Skannaa viivakoodi</string>
+    <string name="action_add_bag_manual">Lisää käsin</string>
+    <string name="msg_no_beans_yet">Ei vielä papuja</string>
+    <string name="msg_add_coffee_hint">Lisää kahvisi seurataksesi tuoreutta ja saadaksesi valmistusehdotuksia</string>
+    <string name="action_brew_now">Valmista nyt</string>
+    <string name="msg_could_not_read_label">Etikettiä ei voitu lukea</string>
+    <string name="action_retake_photo">Ota kuva uudelleen</string>
+    <string name="action_add_details_manually">Lisää tiedot käsin</string>
+    <string name="msg_llm_enrichment_succeeded">Tekoälyn rikastus paransi tätä etiketin skannausta.</string>
+    <string name="msg_llm_enrichment_failed">Tekoäly ei saanut luettua tätä etikettiä loppuun tällä kertaa — aika loppui tai tuli tilapäinen virhe (se yritti jo automaattisesti uudelleen). Napauta yritä uudelleen kokeillaksesi vielä kerran tai täytä alla olevat kentät itse.</string>
+    <string name="msg_llm_enrichment_unavailable">Tekoälyn rikastus ei ole juuri nyt käytettävissä. Voit yrittää uudelleen tai jatkaa muokkaamista käsin.</string>
+    <string name="action_retry_llm_enrichment">Yritä tekoälyn rikastusta uudelleen</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Jaa valmistus</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Hylätäänkö skannaus?</string>
+    <string name="msg_discard_scan_body">Sinulla on tunnistettuja kenttiä, joita ei ole tallennettu.</string>
+    <string name="action_discard">Hylkää</string>
+    <string name="action_keep_scanning">Jatka skannausta</string>
+    <string name="msg_camera_permission_required">Kameran käyttöoikeus vaaditaan</string>
+    <string name="screen_scan_bag_title">Skannaa kahvipussi</string>
+    <string name="cd_toggle_debug_overlay">Näytä tai piilota vianjäljityspeitto</string>
+    <string name="msg_both_sides_scanned">Pussin molemmat puolet on skannattu</string>
+    <string name="msg_scanning_front_side">Skannataan pussin etupuolta</string>
+<string name="action_quick_save">Pikatallenna</string>
+    <string name="msg_repackaged_product">Tämä voi olla uudelleenpakattu tai maahantuotu tuote</string>
+    <string name="action_use_barcode">Käytä viivakoodia</string>
+    <string name="action_use_label">Käytä etikettiä</string>
+<string name="label_confirmed">Vahvistettu</string>
+    <string name="label_ai_contributed">Tekoälyn lisäämä</string>
+    <string name="cd_manual_capture">Manuaalinen kuvaus — pakota nykyisen ruudun käsittely</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Synkronoi pussiin</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Käytössä Pulsarilla valmistettaessa</string>
+    <string name="label_quick_brew">Pikavalmistus</string>
+    <string name="msg_quick_brew_hint">Ohita jauhatuksen valmisteluvaihe ja siirry suoraan ajastimeen valmistusta aloittaessasi</string>
+    <string name="label_show_brewing_instructions">Näytä valmistusohjeet</string>
+    <string name="msg_show_brewing_instructions_hint">Näytä vaiheittainen ohjekortti valmistuksen aikana ja valmistelun tarkistuslista valmistelunäytöllä. Poista käytöstä, jos osaat tapasi ulkoa.</string>
+    <string name="label_dim_mode">Automaattinen himmennystila</string>
+    <string name="msg_dim_mode_hint">25 sekunnin käyttämättömyyden jälkeen poista väritaustat ja vaimenna teksti harmaaksi. Asettelu pysyy paikallaan, ja yksi napautus sekä herättää näytön että käynnistää taustalla olevan toiminnon.</string>
+    <string name="label_dim_mode_true_black">Täysmusta tausta</string>
+    <string name="msg_dim_mode_true_black_hint">Kun näyttö on himmennetty tummassa teemassa, muuta näytön tausta myös täysin mustaksi. Paras OLED-näytöllä — säästää virtaa ja tuntuu kunnolla levossa olevalta. Ei vaikutusta vaaleissa teemoissa.</string>
+    <string name="label_dim_mode_reduce_brightness">Vähennä näytön kirkkautta</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Laske myös näytön taustavaloa himmennyksen aikana. Säästää hieman virtaa ja pehmentää näyttöä entisestään.</string>
+    <string name="label_dim_mode_fullscreen">Piilota järjestelmäpalkit</string>
+    <string name="msg_dim_mode_fullscreen_hint">Piilota myös tila- ja navigointipalkki himmennyksen aikana. Pyyhkäise reunasta kurkistaaksesi; mikä tahansa napautus näytöllä palauttaa normaalitilaan.</string>
+    <string name="label_dim_mode_force_dark_in_light">Käytä tummaa tyyliä himmennettäessä</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Vaihda tumman teeman himmennysesitykseen, vaikka järjestelmä olisi vaaleassa tilassa. Sopii luontevasti yhteen täysmustan taustan kanssa aina tummaa himmennystä varten.</string>
+    <string name="action_add_cup_preset">Lisää kupin esiasetus</string>
+    <string name="label_volume_ml">Tilavuus (ml)</string>
+    <string name="msg_dose_from_ratio">Kahviannos lasketaan suhteesi perusteella</string>
+    <string name="label_icon">Kuvake</string>
+    <string name="label_color">Väri</string>
+    <string name="action_add">Lisää</string>
+    <string name="dialog_edit_cup_preset_title">Muokkaa kupin esiasetusta</string>
+    <string name="screen_add_cup_preset_title">Lisää kupin esiasetus</string>
+    <string name="screen_edit_cup_preset_title">Muokkaa kupin esiasetusta</string>
+    <string name="msg_cup_preset_name_required">Lisää nimi jatkaaksesi</string>
+    <string name="msg_cup_preset_volume_required">Lisää nollaa suurempi tilavuus</string>
+    <string name="cd_cup_preset_preview">Esikatselu: %1$s</string>
+    <string name="label_scan_debug">Skannauksen vianjäljitys</string>
+    <string name="action_view_history">Näytä historia</string>
+    <string name="action_share_report">Jaa raportti</string>
+    <string name="action_clear">Tyhjennä</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Kevyt</string>
+    <string name="strength_balanced">Tasapainoinen</string>
+    <string name="strength_strong">Vahva</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Hedelmäinen</string>
+    <string name="flavor_chocolate">Suklainen</string>
+    <string name="flavor_nutty">Pähkinäinen</string>
+    <string name="flavor_floral">Kukkainen</string>
+    <string name="flavor_bright">Kirkas</string>
+    <string name="flavor_smooth">Pehmeä</string>
+    <string name="flavor_bitter">Karvas</string>
+    <string name="flavor_sweet">Makea</string>
+    <string name="flavor_earthy">Maanläheinen</string>
+    <string name="flavor_spicy">Mausteinen</string>
+    <string name="flavor_citrus">Sitruksinen</string>
+    <string name="flavor_berry">Marjainen</string>
+    <string name="flavor_caramel">Karamellinen</string>
+    <string name="flavor_wine">Viinimäinen</string>
+    <string name="flavor_clean">Puhdas</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Erittäin hieno</string>
+    <string name="grind_fine">Hieno</string>
+    <string name="grind_medium_fine">Keskihieno</string>
+    <string name="grind_medium">Keskikarkea</string>
+    <string name="grind_medium_coarse">Karkeahko</string>
+    <string name="grind_coarse">Karkea</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Erinomainen</string>
+    <string name="rating_good">Hyvä</string>
+    <string name="rating_not_great">Ei kovin hyvä</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Liian karvas</string>
+    <string name="taste_issue_too_sour">Liian hapan</string>
+    <string name="taste_issue_too_weak">Liian laiha</string>
+    <string name="taste_issue_too_strong">Liian vahva</string>
+    <string name="taste_issue_bitter_suggestion">Kokeile karkeampaa jauhatusta tai lyhyempää valmistusaikaa</string>
+    <string name="taste_issue_sour_suggestion">Kokeile hienompaa jauhatusta tai pidempää valmistusaikaa</string>
+    <string name="taste_issue_weak_suggestion">Kokeile vahvempaa suhdetta tai enemmän kahvia</string>
+    <string name="taste_issue_strong_suggestion">Kokeile kevyempää suhdetta tai vähemmän kahvia</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Avaamaton</string>
+    <string name="bag_status_open">Avattu</string>
+    <string name="bag_status_frozen">Pakastettu</string>
+    <string name="bag_status_finished">Loppunut</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Tuntematon / ei määritelty</string>
+    <string name="decaf_swiss_water">Swiss Water (vesimenetelmä)</string>
+    <string name="decaf_mountain_water">Mountain Water (vesimenetelmä)</string>
+    <string name="decaf_co2">Ylikriittinen CO₂</string>
+    <string name="decaf_ea_sugarcane">Etyyliasetaatti (sokeriruoko / luonnollinen EA)</string>
+    <string name="decaf_mc_direct">Metyleenikloridi (suora liuotin)</string>
+    <string name="decaf_ea_direct">Etyyliasetaatti (suora liuotin)</string>
+    <string name="decaf_short_unknown">Tuntematon</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (sokeriruoko)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (liuotin)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Vaalea</string>
+    <string name="roast_medium_light">Keskivaalea</string>
+    <string name="roast_medium">Keskipaahto</string>
+    <string name="roast_medium_dark">Keskitumma</string>
+    <string name="roast_dark">Tumma</string>
+    <string name="roast_filter">Suodatin</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Kanelipaahto</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Pesty</string>
+    <string name="process_natural">Natural</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaerobinen</string>
+    <string name="process_carbonic_maceration">Carbonic maceration</string>
+    <string name="process_semi_washed">Puolipesty</string>
+    <string name="process_wet_hulled">Märkäkuorittu</string>
+    <string name="process_pulped_natural">Pulped natural</string>
+    <string name="process_double_fermented">Kaksoisfermentoitu</string>
+    <string name="process_thermal_shock">Lämpöshokki</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Keskitä pussin etupuoli ruutuun</string>
+    <string name="guided_scan_aim_back">Skannaa nyt pussin takapuoli</string>
+    <string name="guided_scan_aim_more">Lisää toinen kuva (valinnainen)</string>
+    <string name="guided_scan_hold_steady">Pidä vakaana…</string>
+    <string name="guided_scan_skip_photos">Ohita kuvat</string>
+    <string name="guided_scan_finished">Valmis</string>
+    <string name="guided_scan_auto_on">Automaatti päällä</string>
+    <string name="guided_scan_auto_off">Automaatti pois</string>
+    <string name="guided_scan_capture">Ota kuva</string>
+    <string name="guided_scan_scan_more">Skannaa lisää kuvia</string>
+    <string name="scan_warn_glare">Vähennä heijastusta</string>
+    <string name="scan_warn_lighting">Paranna valaistusta</string>
+    <string name="cd_remove_photo">Poista kuva</string>
+    <string name="msg_bag_saved">Pussi tallennettu</string>
+</resources>

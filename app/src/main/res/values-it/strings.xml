@@ -224,6 +224,7 @@
     <string name="screen_brew_log_title">Registro preparazioni</string>
     <string name="msg_log_empty_title">Inizia a preparare per vedere la cronologia</string>
     <string name="msg_log_empty_subtitle">Ogni preparazione completata con feedback apparirà qui</string>
+    <string name="msg_select_brew_log">Seleziona una preparazione per vederne i dettagli</string>
 <string name="action_rate_brew">Valuta preparazione</string>
 
     <!-- Brew Log Detail Screen -->
@@ -301,6 +302,15 @@
     <string name="notif_scan_progress_title">Lettura dell’etichetta della confezione…</string>
     <string name="notif_bag_analysis_title">Analisi della confezione completata</string>
     <string name="notif_bag_analysis_body">Tocca per rivedere i dettagli trovati.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Lettura dell’etichetta…</string>
+    <string name="scan_stage_barcode">Ricerca del codice a barre…</string>
+    <string name="scan_stage_llm">Interpretazione dei dettagli…</string>
+    <string name="scan_stage_crop">Individuazione dell’etichetta…</string>
+    <string name="scan_stage_vision">Ispezione dell’immagine dell’etichetta…</string>
+    <string name="scan_stage_combine">Combinazione dei risultati…</string>
+    <string name="scan_stage_finalizing">Completamento…</string>
+    <string name="format_scan_stage_step">Passo %1$d di %2$d</string>
     <string name="format_notif_bag_analysis_body">Tocca per rivedere %1$s.</string>
 
     <!-- Settings: rating reminder -->

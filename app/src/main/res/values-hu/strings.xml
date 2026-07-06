@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Főzés</string>
+    <string name="nav_log">Napló</string>
+    <string name="nav_more">Továbbiak</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Vissza</string>
+    <string name="action_close">Bezárás</string>
+    <string name="action_cancel">Mégse</string>
+    <string name="action_delete">Törlés</string>
+    <string name="action_save">Módosítások mentése</string>
+    <string name="action_saved">✓ Mentve</string>
+    <string name="action_skip">Kihagyás</string>
+    <string name="action_finish">Befejezés</string>
+    <string name="action_next">Tovább</string>
+    <string name="action_go_back">Vissza</string>
+    <!-- Common labels -->
+    <string name="label_coffee">Kávé</string>
+    <string name="label_water">Víz</string>
+    <string name="label_ratio">Arány</string>
+    <string name="label_strength">Erősség</string>
+    <string name="label_grind">Őrlés</string>
+    <string name="label_filter">Szűrő</string>
+    <string name="label_decaf">Koffeinmentes</string>
+    <string name="label_decaf_suffix"> · Koffeinmentes</string>
+    <string name="label_loading">Betöltés…</string>
+    <string name="label_none">Nincs</string>
+    <string name="label_taste">Íz</string>
+    <string name="label_rating">Értékelés</string>
+    <string name="label_notes">Jegyzetek</string>
+    <string name="label_no_filter">Nincs szűrő</string>
+    <string name="label_settings">Beállítások</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg a csészében</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+    <plurals name="format_selected">
+        <item quantity="one">%1$d kijelölve</item>
+        <item quantity="other">%1$d kijelölve</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Főzés összeállítása</string>
+    <string name="label_coffee_input">Kávé (g)</string>
+    <string name="label_water_input">Víz (g)</string>
+    <string name="label_brew_size_input">Főzet mennyisége (ml)</string>
+    <string name="label_cup_size_input">Csésze mérete (ml)</string>
+    <string name="label_brew_size">Főzet mennyisége</string>
+    <string name="label_cup_size">Csésze mérete</string>
+    <string name="format_capacity_note">A(z) %1$s %2$dg vizet fogad be — nagyobb főzeteknél az utántöltés automatikus</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Kávézacskó kiválasztása</string>
+    <string name="cd_clear_bag">Zacskó törlése</string>
+    <string name="format_brewing_with">Főzés ezzel: %1$s</string>
+    <string name="label_freshness">Frissesség</string>
+    <string name="format_recommended_now">Most ajánlott: %1$s</string>
+    <string name="format_last_time">Legutóbb: %1$s</string>
+    <string name="action_save_as_favorite">Mentés kedvencként</string>
+    <string name="label_select_coffee_bag_title">Kávézacskó kiválasztása</string>
+    <string name="msg_no_active_bags">Nincs aktív zacskó. Adjon hozzá egyet a Kávékészlet szakaszban.</string>
+    <string name="action_brew_without_bag">Főzés zacskó kiválasztása nélkül</string>
+    <string name="label_best_now">Most a legjobb</string>
+    <string name="format_grind_generic">Őrlés: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Őrlési fokozat: %1$s–%2$s · Ízlés szerint állítsa</string>
+    <string name="format_weight_left"> · %1$.0fg maradt</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Pulsar tipp: Öntés közben tartsa a kávélevet kb. 1 cm-rel a kávéágy felett. A legtöbben 20–25 g-ot főznek egy kiegyensúlyozott csészéhez.</string>
+    <string name="tip_generic">💡 Tipp: Kezdje az alapértelmezett aránnyal, és állítsa az erősséget ízlés szerint. A finomabb őrlemény többet, a durvább kevesebbet old ki.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Főzés beállítása</string>
+    <string name="label_custom_ratio">Egyéni arány (pl. 16)</string>
+    <string name="label_temperature">Hőmérséklet (°C)</string>
+    <string name="label_bloom_multiplier">Bloom szorzó (pl. 3.0)</string>
+    <string name="label_pulse_count">Öntések száma</string>
+    <string name="action_start_brewing">Főzés indítása →</string>
+    <string name="label_advanced_options">Speciális beállítások</string>
+    <string name="cd_collapse_advanced">Speciális beállítások összecsukása</string>
+    <string name="cd_expand_advanced">Speciális beállítások kibontása</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Kávéadag: %1$d gramm</item>
+        <item quantity="other">Kávéadag: %1$d gramm</item>
+    </plurals>
+    <string name="label_decrease">%1$s csökkentése</string>
+    <string name="label_increase">%1$s növelése</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Főzés előkészítése</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="action_ready_to_brew_short">Kész a főzésre</string>
+    <string name="prep_tip_label">Előkészítés</string>
+    <string name="label_recipe_heading">Recept</string>
+    <string name="label_temp_short">Hőm.</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Nedvesítse be a papírszűrőt az alaptestben (nyitott szeleppel), majd engedje le. Helyezze fel a hengert, adja hozzá az őrleményt, egyengesse el a kávéágyat, tegye fel az elosztósapkát. Nullázza a mérleget.</string>
+    <string name="prep_tip_pulsar_19k">Öblítse át a 19K fémszűrőt, hogy a helyére üljön és előmelegítse a hengert. Helyezze fel a hengert, adja hozzá az őrleményt, egyengesse el a kávéágyat, tegye fel az elosztósapkát. Nullázza a mérleget.</string>
+    <string name="prep_tip_pulsar_40k">Öblítse át a 40K fémszűrőt a henger előmelegítéséhez. Helyezze fel a hengert, adja hozzá az őrleményt, egyengesse el a kávéágyat, tegye fel az elosztósapkát. Nullázza a mérleget.</string>
+    <string name="prep_tip_pour_over_paper">Helyezze be a papírszűrőt, és öblítse át forró vízzel az előmelegítéshez és a papírízek eltávolításához. Adja hozzá az őrleményt, nullázza a mérleget.</string>
+    <string name="prep_tip_french_press">Melegítse elő a French presst, majd öntse ki. Adja hozzá az őrleményt, tegye a mérlegre, és nullázza a víz hozzáadása előtt.</string>
+    <string name="prep_tip_aeropress">Tegyen egy átöblített szűrőt a kupakba. Adja hozzá az őrleményt, helyezze a készüléket egy stabil bögrére vagy kancsóra, és nullázza a mérleget.</string>
+    <string name="prep_tip_espresso">Törölje szárazra a szűrőkart. Adagolja be, ossza el egyenletesen, és tömörítse laposra a rögzítés előtt.</string>
+    <string name="prep_tip_moka">Töltse fel az alsó kamrát a szelepig. Töltse meg a kosarat őrleménnyel, egyengesse el — ne tömörítse. Óvatosan szerelje össze.</string>
+    <string name="prep_tip_cold_brew">Adja az őrleményt az edénybe, nullázza a mérleget, majd öntsön hozzá szobahőmérsékletű vagy hideg vizet, és fedje le.</string>
+    <string name="format_prep_grind_specific">Őrlés: %1$s — %2$s beállítása: %3$s</string>
+    <string name="format_prep_grind_generic">Őrlés: %1$s — %2$s (%3$s)</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Szünet</string>
+    <string name="action_resume">Folytatás</string>
+    <string name="cd_disable_minute_alerts">Perc-jelzések kikapcsolása</string>
+    <string name="cd_enable_minute_alerts">Perc-jelzések bekapcsolása</string>
+    <string name="cd_bloom_animation">Kávébab bloom animáció</string>
+    <string name="format_pour_bloom_water">Öntsön %1$.0fg bloom vizet</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Összesen %2$.0fg</string>
+    <string name="action_start_bloom">☕ Bloom indítása</string>
+    <string name="label_bloom_done">✅ Bloom kész!</string>
+    <string name="action_finish_brew">Főzés befejezése</string>
+    <string name="dialog_exit_brew_title">Kilép a főzésből?</string>
+    <string name="dialog_exit_brew_message">A jelenlegi főzés folyamata elveszik.</string>
+    <string name="action_exit_brew">Kilépés</string>
+
+    <!-- Calculator Brew Screen -->
+    <string name="label_water_to_dose">Víz → Adag</string>
+    <string name="label_dose_to_water">Adag → Víz</string>
+    <string name="cd_backspace">Visszatörlés</string>
+    <string name="action_brew">Indítás</string>
+    <string name="label_total_water">összes víz</string>
+    <!-- Settings Screen -->
+    <string name="screen_settings_title">Beállítások</string>
+    <string name="label_settings_section_brewing">Főzés</string>
+    <string name="label_settings_section_appearance">Megjelenés</string>
+    <string name="label_settings_section_notifications">Értesítések</string>
+    <string name="label_settings_section_developer">Fejlesztői</string>
+    <string name="label_settings_section_when_dimmed">Halványításkor</string>
+    <string name="label_display_dim_settings">Kijelző és halványítás</string>
+    <string name="msg_display_dim_settings_subtitle">Halványítás, OLED-fekete, fényerő</string>
+    <string name="screen_display_settings_title">Kijelző és halványítás</string>
+    <string name="label_cup_presets">Csésze-előbeállítások</string>
+    <string name="action_add_preset">Előbeállítás hozzáadása</string>
+    <string name="action_reset_defaults">Visszaállítás alapértelmezettre</string>
+    <string name="msg_presets_hint">Az előbeállítások gyorsgombként jelennek meg a kalkulátoron</string>
+    <string name="label_brew_methods">Főzési módszerek</string>
+    <string name="msg_methods_hint">A kijelölt módszerek elöl jelennek meg. Koppintson a be- és kikapcsoláshoz.</string>
+    <string name="label_default_method">Alapértelmezett módszer</string>
+    <string name="format_edit_preset">%1$s szerkesztése</string>
+    <string name="label_bloom_animation_settings">Bloom animációk</string>
+    <string name="msg_bloom_animation_settings_subtitle">Válassza ki, milyen gyakran jelenjen meg az egyes bloom animációk</string>
+    <string name="cd_open_bloom_animation_settings">Bloom animációs beállítások megnyitása</string>
+    <string name="screen_bloom_animation_settings_title">Bloom animációk</string>
+    <string name="msg_bloom_animation_settings_hint">Koppintson az egyes vezérlőkre a normál esély, dupla esély és kizárva állapotok közötti váltáshoz. Ha minden animáció ki van zárva, a bloom-időzítők elrejtik az animációt.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">A(z) %1$s beállítása: %2$s. Koppintson a módosításhoz.</string>
+    <string name="label_bloom_sprite_coffee_flower">Kávévirág</string>
+    <string name="desc_bloom_sprite_coffee_flower">Klasszikus fehér kávévirág nyílik ki a babból.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Csillagfényes kávé</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Krémarany gőzszirmok apró csillagfényes csillogással.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Lágy latte-art rozetta meleg tejhab-árnyalatokban.</string>
+    <string name="label_bloom_sprite_coffee_plant">Kávénövény</string>
+    <string name="desc_bloom_sprite_coffee_plant">Friss zöld kávépalánta páros levelekkel.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Koktélparadicsom</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Egy kávébabból paradicsominda hajt ki, ahogy a piros termés beérik.</string>
+    <string name="label_bloom_sprite_strawberry">Eper</string>
+    <string name="desc_bloom_sprite_strawberry">Egy kávébabból epernövény hajt ki virágokkal és piros szemekkel.</string>
+    <string name="label_bloom_sprite_raspberry">Málna</string>
+    <string name="desc_bloom_sprite_raspberry">Egy kávébabból tüskés indák nőnek halvány virágokkal és piros málnafürtökkel.</string>
+    <string name="label_bloom_sprite_blueberry">Áfonya</string>
+    <string name="desc_bloom_sprite_blueberry">Egy kávébabból áfonyaág nő harang alakú virágokkal és kék termésekkel.</string>
+    <string name="label_bloom_sprite_blackberry">Szeder</string>
+    <string name="desc_bloom_sprite_blackberry">Egy kávébabból tüskés indák nőnek sötét szederfürtökkel.</string>
+    <string name="label_bloom_sprite_coffee_brew">Kávéfőzet</string>
+    <string name="desc_bloom_sprite_coffee_brew">Borostyánszínű kávéragyogás krémes gőzpászmákkal.</string>
+    <string name="label_bloom_sprite_rose">Rózsa</string>
+    <string name="desc_bloom_sprite_rose">Kompakt piros rózsa bontakozik ki a bab felett.</string>
+    <string name="label_bloom_sprite_lotus">Lótusz</string>
+    <string name="desc_bloom_sprite_lotus">Krémszínű lótuszvirág réteges, kehely alakú szirmokkal.</string>
+    <string name="label_bloom_sprite_sunflower">Napraforgó</string>
+    <string name="desc_bloom_sprite_sunflower">Élénk napraforgó aranyszínű szirmokkal és sötét középpel.</string>
+    <string name="label_bloom_sprite_orchid">Orchidea</string>
+    <string name="desc_bloom_sprite_orchid">Finom fehér orchidea lekerekített szirmokkal.</string>
+    <string name="label_bloom_sprite_jasmine">Jázmin</string>
+    <string name="desc_bloom_sprite_jasmine">Lágy fehér jázminvirág finom szélforgó alakban.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Szívvirág</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Íves szárak emelkednek a babból rózsaszín, szív alakú virágokkal és fehér cseppformájú csúcsokkal.</string>
+    <string name="label_bloom_sprite_passionflower">Golgotavirág</string>
+    <string name="desc_bloom_sprite_passionflower">Kúszó indák bontakoznak ki díszes, lila-fehér golgotavirággá a bab felett.</string>
+    <string name="label_bloom_sprite_bee_orchid">Méhbangó</string>
+    <string name="desc_bloom_sprite_bee_orchid">Rózsaszín orchideaszirmok sötét, méh alakú ajkakat tárnak fel karcsú szárakon.</string>
+    <string name="label_bloom_sprite_jade_vine">Jádeinda</string>
+    <string name="desc_bloom_sprite_jade_vine">Egy kúszóinda türkiz jádevirág-fürtöket lógat a babból.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Papagájvirág</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Narancssárga és mélykék strelícia-szirmok bontakoznak ki felálló zöld levelekből.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Kék himalájai mák</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Egy lecsüngő bimbó égszínkék mákvirággá nyílik arany porzókkal.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">Egy piros foltos, élősködő virág hatalmas, öt karéjú virággá duzzad.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Csokoládévirág</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Pihés levelek emelnek bársonyos, sötét bordó csokoládévirágokat a babból.</string>
+    <string name="label_bloom_sprite_flame_lily">Lángliliom</string>
+    <string name="desc_bloom_sprite_flame_lily">Göndörödő, lángszínű liliomszirmok emelkednek kacsos zöld szárakon.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Éj királynője</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Egy kaktuszszár látványos, réteges, fehér, éjjel nyíló virággá bomlik ki.</string>
+    <string name="label_bloom_sprite_snowdrop">Hóvirág</string>
+    <string name="desc_bloom_sprite_snowdrop">Finom fehér hóvirágharangok emelkednek a felrepedt babból.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Apró kék nefelejcsvirágok sárga középpel bontakoznak ki a babból.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Főzési napló</string>
+    <string name="msg_log_empty_title">Kezdjen főzni az előzmények megtekintéséhez</string>
+    <string name="msg_log_empty_subtitle">Minden visszajelzéssel lezárt főzés itt jelenik meg</string>
+    <string name="msg_select_brew_log">Válasszon ki egy naplóbejegyzést a részletek megtekintéséhez</string>
+    <string name="action_rate_brew">Főzés értékelése</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Főzés részletei</string>
+    <string name="dialog_delete_brew_title">Törli a naplóbejegyzést?</string>
+    <string name="dialog_delete_brew_message">Ez a művelet nem vonható vissza.</string>
+    <string name="label_coffee_bag">Kávézacskó</string>
+    <string name="label_brew_time">Főzési idő</string>
+    <string name="label_coffee_type">Kávé típusa</string>
+    <string name="label_flavor_notes">Ízjegyek</string>
+    <string name="hint_add_notes">Jegyzet hozzáadása…</string>
+    <string name="msg_brew_not_found">A naplóbejegyzés nem található</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Kedvencek</string>
+    <string name="msg_no_favorites_title">Még nincsenek kedvencek</string>
+    <string name="msg_no_favorites_subtitle">Mentsen egy receptet a főzési képernyőn a ♡ gombbal</string>
+    <string name="label_untitled">Névtelen</string>
+    <string name="format_recipe_summary">%1$sg kávé / %2$sg víz</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Főzés testreszabása</string>
+    <string name="label_pulsar_filter_type">Pulsar szűrő típusa</string>
+    <string name="msg_filter_hint">Befolyásolja a csészeprofilt és az őrlési ajánlásokat</string>
+    <string name="label_your_grinder">Az Ön darálója</string>
+    <string name="msg_grinder_hint">Nem kötelező — konkrét őrlési ajánlásokat tesz lehetővé. Válassza a Nincs daráló / Egyéb lehetőséget, ha az Öné nem szerepel a listában.</string>
+    <string name="label_no_grinder">Nincs daráló / Egyéb</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Mivel főz?</string>
+    <string name="msg_methods_subtitle">Válassza ki a főzési módszereit. Koppintson a ★ ikonra az alapértelmezett beállításához.</string>
+    <string name="label_set_as_default">Beállítás alapértelmezettként</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Továbbiak</string>
+    <string name="label_your_favorites">Kedvencek</string>
+    <string name="msg_favorites_subtitle">Játssza le újra a kedvenc főzéseit</string>
+    <string name="label_your_beans">Kávékészlet</string>
+    <string name="msg_beans_subtitle">Frissesség, készlet és a következő főzés</string>
+    <string name="msg_settings_subtitle">Módszerek, daráló és beállítások</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">A vonalkódok beolvasásához kameraengedély szükséges</string>
+    <string name="msg_point_camera">Irányítsa a kamerát a vonalkódra</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Főzés mentve! Értékelje, miután megkóstolta.</string>
+    <string name="snackbar_action_view_log">Napló megtekintése</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Főzésértékelési emlékeztetők</string>
+    <string name="notif_channel_rating_reminder_desc">Finom emlékeztető a főzés után kb. 30 perccel, hogy még frissen értékelhesse az ízét.</string>
+    <string name="notif_rating_title">Milyen lett a kávéja?</string>
+    <string name="format_notif_rating_title">Milyen lett a(z) %1$s kávéja?</string>
+    <string name="notif_rating_body">Koppintson egy emojira az értékeléshez, vagy nyissa meg az alkalmazást a továbbiakért.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Értékelés: 5-ből 1 csillag</string>
+    <string name="cd_notif_rating_2">Értékelés: 5-ből 2 csillag</string>
+    <string name="cd_notif_rating_3">Értékelés: 5-ből 3 csillag</string>
+    <string name="cd_notif_rating_4">Értékelés: 5-ből 4 csillag</string>
+    <string name="cd_notif_rating_5">Értékelés: 5-ből 5 csillag</string>
+
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Zacskó elemzése</string>
+    <string name="msg_analyzing_bag_subtitle">Az MI beolvassa a címkét, hogy kitöltse a részleteket. Ez eltarthat egy ideig.</string>
+    <string name="msg_analyzing_bag_background_hint">Közben tovább használhatja az alkalmazást — értesítjük, amint elkészült.</string>
+    <string name="action_skip_ai">MI kihagyása</string>
+    <string name="action_run_in_background">Folytatás a háttérben</string>
+    <string name="notif_channel_bag_analysis">Zacskóelemzés</string>
+    <string name="notif_channel_bag_analysis_desc">Jelzi, amikor az MI befejezte egy kávézacskó címkéjének beolvasását.</string>
+    <string name="notif_scan_progress_title">Zacskócímke beolvasása…</string>
+    <string name="notif_bag_analysis_title">A zacskóelemzés elkészült</string>
+    <string name="notif_bag_analysis_body">Koppintson a talált részletek áttekintéséhez.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Címke beolvasása…</string>
+    <string name="scan_stage_barcode">Vonalkód keresése…</string>
+    <string name="scan_stage_llm">Részletek értelmezése…</string>
+    <string name="scan_stage_crop">Címke megkeresése…</string>
+    <string name="scan_stage_vision">Címkekép vizsgálata…</string>
+    <string name="scan_stage_combine">Eredmények összesítése…</string>
+    <string name="scan_stage_finalizing">Befejezés…</string>
+    <string name="format_scan_stage_step">%1$d. lépés a(z) %2$d-ből</string>
+    <string name="format_notif_bag_analysis_body">Koppintson a(z) %1$s áttekintéséhez.</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Értékelési emlékeztető</string>
+    <string name="msg_rating_reminder_hint">Küld egy értesítést a főzés után kb. 30 perccel, hogy még frissen értékelhesse az ízt.</string>
+    <string name="msg_rating_reminder_perm_denied">Az értesítések le vannak tiltva. Engedélyezze őket a rendszerbeállításokban az emlékeztetők fogadásához.</string>
+    <string name="action_open_app_settings">Rendszerbeállítások megnyitása</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Vízmegtartás</string>
+    <string name="format_retention_explanation">A kávéőrlemény száraz tömegének kb. 2×-esét szívja fel vízből. %1$.0fg kávé esetén az őrlemény ~%2$.0fg-ot tart vissza, így ~%3$.0fg marad a csészében.\n\nEz becslés — a sötét pörkölés kissé többet, a világos kissé kevesebbet szív fel.</string>
+    <string name="cd_about_cup_volume">A csésze térfogatáról</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+    <string name="label_target">Cél</string>
+    <!-- Grind notes -->
+    <!-- Dose notes -->
+    <!-- Brew Method names -->
+    <!-- Ratio presets -->
+    <string name="format_ratio_bright">Élénk · 1:%1$d</string>
+    <string name="format_ratio_balanced">Kiegyensúlyozott · 1:%1$d</string>
+    <string name="format_ratio_rich">Gazdag · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+    <!-- Input Mode -->
+    <string name="input_coffee_to_water">Kávé → Víz</string>
+    <string name="input_water_to_coffee">Víz → Kávé</string>
+    <string name="input_brew_to_both">Főzet mérete → Mindkettő</string>
+    <string name="input_cup_to_both">Csésze mérete → Mindkettő</string>
+    <string name="input_coffee_short">Kávé</string>
+    <string name="input_water_short">Víz</string>
+    <string name="input_brew_short">Főzet</string>
+    <string name="input_cup_short">Csésze</string>
+    <string name="input_coffee_desc">Adja meg a kávéadagot, a víz kiszámításához</string>
+    <string name="input_water_desc">Adja meg a vízmennyiséget, a kávé kiszámításához</string>
+    <string name="input_brew_desc">Adja meg a cél főzetmennyiséget, a kávé és a víz kiszámításához a felszívódás figyelembevételével</string>
+    <string name="input_cup_desc">Adja meg a csésze méretét, a kávé és a víz kiszámításához</string>
+
+    <!-- Phase names -->
+    <!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Öntsön %1$.0fg-ig</string>
+    <string name="instruction_pour_total">Öntsön összesen %1$.0fg-ig</string>
+    <string name="instruction_open_valve_short">Nyissa ki a szelepet</string>
+    <string name="instruction_close_valve_short">Zárja el a szelepet</string>
+    <string name="instruction_bloom_wait">Forgassa meg, és várja meg a bloomot</string>
+    <string name="instruction_french_press_start">Adja hozzá az összes vizet, keverje meg finoman, és tegye rá a fedelet</string>
+    <string name="instruction_french_press_steep">Hagyja állni háborítatlanul a célidő eléréséig</string>
+    <string name="instruction_french_press_plunge">Nyomja le lassan a szűrőt, majd öntse le a kávét</string>
+    <string name="instruction_aeropress_start">Adja hozzá a vizet, keverje meg, és kezdje meg az áztatást</string>
+    <string name="instruction_aeropress_steep">Áztassa lezárt kupakkal; készüljön a lenyomásra</string>
+    <string name="instruction_aeropress_press">Nyomja egyenletesen a sziszegésig, majd álljon meg</string>
+    <string name="instruction_espresso_start">Rögzítse a szűrőkart, és indítsa el a lövetet</string>
+    <string name="instruction_espresso_pull">Figyelje a folyást és a hozamot; hagyja a csészét a mérlegen</string>
+    <string name="instruction_espresso_stop">Álljon meg a célhozamnál, vagy amikor a lövet kivilágosodik</string>
+    <string name="instruction_moka_start">Szerelje össze a kannát, és melegítse óvatosan nyitott fedéllel</string>
+    <string name="instruction_moka_flow">Figyelje, ahogy a kávé a felső kamrába folyik</string>
+    <string name="instruction_moka_remove">Vegye le a tűzről, amikor a folyás kivilágosodik vagy prüszkölni kezd</string>
+    <string name="instruction_cold_brew_start">Keverje össze a kávét és a vizet, hogy minden szemcse átnedvesedjen</string>
+    <string name="instruction_cold_brew_steep">Fedje le és áztassa; tartsa az őrleményt teljesen átitatva</string>
+    <string name="instruction_cold_brew_filter">Szűrje le a koncentrátumot, majd tálaláshoz hűtse le vagy hígítsa</string>
+
+    <!-- Warnings -->
+    <!-- Taste Feedback -->
+    <string name="feedback_too_sour">Túl savas / gyenge</string>
+    <string name="feedback_balanced">Kiegyensúlyozott</string>
+    <string name="feedback_too_bitter">Túl keserű / durva</string>
+    <string name="feedback_astringent">Fanyar / száraz</string>
+    <string name="feedback_clogged">Eldugult / megakadt</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Őröljön finomabbra 2–4 kattintással</string>
+    <string name="adjust_try_finer">Próbáljon finomabb őrlési fokozatot</string>
+    <string name="adjust_no_change">Nincs szükség módosításra — mentse el ezt a receptet!</string>
+    <string name="adjust_grind_coarser">Őröljön durvábbra 2–4 kattintással</string>
+    <string name="adjust_grind_coarser_valve">Őröljön durvábbra 2–4 kattintással\nPróbálja korábban kinyitni a szelepet</string>
+    <string name="adjust_try_coarser">Próbáljon durvább őrlési fokozatot</string>
+    <string name="adjust_try_coarser_water">Próbáljon durvább őrlési fokozatot\nVagy próbáljon hidegebb vizet</string>
+    <string name="adjust_astringent_pulsar">Növelje az adagot 20 g fölé a mélyebb kávéágyért\nCsökkentse a kavarást a bloom alatt\nTartsa a kávélevet kb. 1 cm-rel az ágy felett</string>
+    <string name="adjust_astringent_grinder">Őröljön kissé durvábbra, csökkentse a kavarást</string>
+    <string name="adjust_astringent_no_grinder">Őröljön kissé durvábbra, öntsön finomabban</string>
+    <string name="adjust_clogged_pulsar_grinder">Őröljön sokkal durvábbra 3–5 kattintással\nCsökkentse a kavarást (csak finom forgatás)\nEllenőrizze, nem túl friss-e a kávé — pihentesse 7+ napig</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Őröljön sokkal durvábbra\nCsökkentse a kavarást\nGondoskodjon finom öntésről az elosztósapkán át</string>
+    <string name="adjust_clogged_grinder">Őröljön sokkal durvábbra 3–5 kattintással</string>
+    <string name="adjust_clogged_no_grinder">Próbáljon sokkal durvább őrlési fokozatot</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Kávé: %1$s gramm</string>
+    <string name="cd_water_grams">Víz: %1$s gramm</string>
+    <string name="cd_ratio">Arány 1:%1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Név</string>
+    <string name="label_roaster">Pörkölő</string>
+    <string name="label_origin">Származás</string>
+    <string name="label_barcode_ean">Vonalkód / EAN</string>
+    <string name="action_scan_barcode">Vonalkód beolvasása</string>
+    <string name="label_name_required">Név *</string>
+    <string name="label_weight_grams">Tömeg (g)</string>
+    <string name="label_roast_date">Pörkölés dátuma</string>
+    <string name="label_roast_level">Pörkölési szint</string>
+    <string name="label_variety">Fajta</string>
+    <string name="label_process">Feldolgozás</string>
+    <string name="label_tasting_notes">Ízjegyek</string>
+    <string name="label_best_before">Minőségét megőrzi</string>
+    <string name="label_decaf_coffee">Koffeinmentes kávé</string>
+    <string name="msg_decaf_guidance">A főzési útmutatót összhangban tartja a koffeinmentes babbal és a rövidebb áztatási célokkal.</string>
+    <string name="label_decaf_process_optional">Koffeinmentesítési eljárás (nem kötelező)</string>
+    <string name="msg_decaf_process_hint">Lehetővé teszi, hogy a főzési szabály finoman igazítsa az őrlést: a vizes és CO₂-eljárású koffeinmentes kávék általában kevesebb durvítást igényelnek, mint az oldószeresek.</string>
+    <string name="cd_captured_bag_photo">Rögzített zacskófotó</string>
+    <string name="label_detected_details">Felismert részletek</string>
+    <string name="msg_tap_chip_to_edit">Koppintson bármelyik elemre a szerkesztéshez</string>
+    <string name="label_needs_review">Ellenőrzést igényel</string>
+    <string name="action_edit_all_fields">Összes mező szerkesztése</string>
+    <string name="action_add_more_details">További részletek hozzáadása</string>
+    <string name="msg_analyzing_label">Címkefotók elemzése</string>
+    <string name="msg_analyzing_label_detail">Ellenőrizzük az elmosódottságot, összefésüljük az elülső és hátsó szöveget, és előkészítjük a legmegbízhatóbb mezőket.</string>
+    <string name="label_review_fields">Ellenőrizze ezeket a mezőket</string>
+    <string name="label_qr_website">QR-weboldal</string>
+    <string name="action_open_website">Weboldal megnyitása</string>
+    <string name="label_qr_link_found">QR-hivatkozás található</string>
+    <string name="action_explore_extract">Felfedezés és kinyerés</string>
+    <string name="label_detected_field_evidence">Felismert mezők bizonyítékai</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Zacskófotó</string>
+    <string name="action_rescan_label">Címke újraolvasása</string>
+    <string name="action_edit_bag">Zacskó szerkesztése</string>
+    <string name="label_sensory_snapshot">Érzékszervi pillanatkép</string>
+    <string name="label_grind_intelligence">Okos őrlés</string>
+    <string name="label_remaining_coffee">Megmaradt kávé</string>
+    <string name="action_adjust_weight">Tömeg módosítása</string>
+    <string name="action_add_weight_tracking">Tömegkövetés hozzáadása</string>
+    <string name="label_brew_history">Főzési előzmények</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Milyen lett?</string>
+    <string name="msg_rate_brew_fresh">Értékelje ezt a főzést, amíg az íz még friss.</string>
+    <string name="label_flavor_notes_section">Ízjegyek</string>
+    <string name="hint_what_stood_out">Nem kötelező jegyzet – mi volt kiemelkedő?</string>
+    <string name="action_save_rating">Értékelés mentése</string>
+
+    <!-- EmptyStateBox -->
+    <!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Kedvencek</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Egyéb</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">MI-szolgáltatás (Mindlayer)</string>
+    <string name="action_test_connection">Kapcsolat tesztelése</string>
+    <string name="action_run_test_prompt">Tesztkérés futtatása</string>
+    <string name="label_testing">Tesztelés…</string>
+
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">MI bekapcsolása</string>
+    <string name="consent_requesting">MI-hozzáférés kérése…</string>
+    <string name="consent_granted">MI bekapcsolva</string>
+    <string name="consent_already_approved">Az MI már be van kapcsolva</string>
+    <string name="consent_still_unavailable">Az MI jóvá van hagyva, de a szolgáltatás még nem áll készen</string>
+    <string name="consent_declined">Az MI-hozzáférés nem lett megadva</string>
+    <string name="consent_denied_temporary">Az MI-hozzáférés meg lett tagadva — próbálja újra később</string>
+    <string name="consent_denied_permanent">Az MI-hozzáférés le van tiltva — oldja fel a Mindlayer alkalmazásban</string>
+    <string name="consent_service_unavailable">A Mindlayer MI-szolgáltatás nem érhető el</string>
+    <string name="consent_failed">Az MI-hozzáférés kérése nem sikerült</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Milyen volt a legutóbbi csészéje?</string>
+    <string name="label_what_was_off">Mi volt a hiba?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">A beolvasott címke megegyezik a tárolt zacskóval — nincs mit frissíteni.</string>
+    <string name="action_update_bag">Zacskó frissítése</string>
+    <string name="action_new_bag">Új zacskó</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Mentés kedvencként</string>
+    <string name="msg_save_favorite_hint">Adjon ennek a receptnek egy könnyen megjegyezhető nevet</string>
+    <string name="hint_save_favorite_example">pl. Hétfő reggel, Lassú hétvége</string>
+    <string name="action_save_simple">Mentés</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Beolvasási előzmények</string>
+    <string name="msg_no_scan_sessions">Még nincsenek rögzített beolvasási munkamenetek.</string>
+    <string name="action_share_session">Munkamenet megosztása</string>
+    <string name="label_component_timings">Összetevők időzítései</string>
+    <string name="msg_no_timing_data">Nincsenek elérhető időzítési adatok</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Figyelmeztetés</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Tömeg módosítása</string>
+    <string name="label_remaining_weight_grams">Megmaradt tömeg (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Fotóról</string>
+    <string name="action_scan_label">Címke beolvasása</string>
+    <string name="action_add_bag_gallery">Galériából</string>
+    <string name="action_add_bag_camera">Beolvasás kamerával</string>
+    <string name="action_add_bag_barcode">Vonalkód beolvasása</string>
+    <string name="action_add_bag_manual">Kézi hozzáadás</string>
+    <string name="msg_no_beans_yet">Még nincs kávé</string>
+    <string name="msg_add_coffee_hint">Adja hozzá a kávéját a frissesség követéséhez és a főzési javaslatokhoz</string>
+    <string name="action_brew_now">Főzés most</string>
+    <string name="msg_could_not_read_label">A címkét nem sikerült beolvasni</string>
+    <string name="action_retake_photo">Fotó újrakészítése</string>
+    <string name="action_add_details_manually">Részletek kézi hozzáadása</string>
+    <string name="msg_llm_enrichment_succeeded">Az MI-kiegészítés javította ezt a címkebeolvasást.</string>
+    <string name="msg_llm_enrichment_failed">Az MI ezúttal nem tudta befejezni a címke beolvasását — időtúllépés vagy átmeneti hiba történt (automatikusan újra is próbálkozott). Koppintson az újrapróbálkozásra, vagy egyszerűen töltse ki az alábbi mezőket.</string>
+    <string name="msg_llm_enrichment_unavailable">Az MI-kiegészítés jelenleg nem érhető el. Újrapróbálkozhat, vagy folytathatja a szerkesztést kézzel.</string>
+    <string name="action_retry_llm_enrichment">MI-kiegészítés újrapróbálása</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Főzés megosztása</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Elveti a beolvasást?</string>
+    <string name="msg_discard_scan_body">Vannak felismert mezők, amelyeket még nem mentett el.</string>
+    <string name="action_discard">Elvetés</string>
+    <string name="action_keep_scanning">Beolvasás folytatása</string>
+    <string name="msg_camera_permission_required">Kameraengedély szükséges</string>
+    <string name="screen_scan_bag_title">Kávézacskó beolvasása</string>
+    <string name="cd_toggle_debug_overlay">Hibakeresési réteg be- és kikapcsolása</string>
+    <string name="msg_both_sides_scanned">A zacskó mindkét oldalát beolvastuk</string>
+    <string name="msg_scanning_front_side">A zacskó elülső oldalának beolvasása</string>
+    <string name="action_quick_save">Gyors mentés</string>
+    <string name="msg_repackaged_product">Ez lehet újracsomagolt vagy importált termék</string>
+    <string name="action_use_barcode">Vonalkód használata</string>
+    <string name="action_use_label">Címke használata</string>
+    <string name="label_confirmed">Megerősítve</string>
+    <string name="label_ai_contributed">MI közreműködött</string>
+    <string name="cd_manual_capture">Kézi rögzítés — az aktuális képkocka azonnali feldolgozása</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Szinkronizálás a zacskóval</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Pulsarral való főzéskor érvényes</string>
+    <string name="label_quick_brew">Gyors főzés</string>
+    <string name="msg_quick_brew_hint">Kihagyja az őrlés-előkészítési lépést, és a főzés indításakor egyből az időzítőre lép</string>
+    <string name="label_show_brewing_instructions">Főzési utasítások megjelenítése</string>
+    <string name="msg_show_brewing_instructions_hint">Megjeleníti a lépésről lépésre útmutató kártyát főzés közben és az előkészítési ellenőrzőlistát az előkészítő képernyőn. Kapcsolja ki, ha fejből tudja a módszerét.</string>
+    <string name="label_dim_mode">Automatikus halványítás</string>
+    <string name="msg_dim_mode_hint">25 másodperc tétlenség után eltünteti a színes háttereket, és szürkévé halványítja a szöveget. Az elrendezés a helyén marad, és egyetlen koppintás egyszerre ébreszti fel a képernyőt és váltja ki az adott műveletet.</string>
+    <string name="label_dim_mode_true_black">Valódi fekete háttér</string>
+    <string name="msg_dim_mode_true_black_hint">Sötét témában, halványításkor a képernyő hátterét is tiszta feketére állítja. OLED-en a legjobb — energiát takarít meg, és igazán nyugodt hatást kelt. Világos témákban nincs hatása.</string>
+    <string name="label_dim_mode_reduce_brightness">Képernyő fényerejének csökkentése</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Halványításkor a kijelző háttérvilágítását is csökkenti. Kevés energiát takarít meg, és tovább lágyítja a képernyőt.</string>
+    <string name="label_dim_mode_fullscreen">Rendszersávok elrejtése</string>
+    <string name="msg_dim_mode_fullscreen_hint">Halványításkor az állapotsávot és a navigációs sávot is elrejti. Húzzon be a szélről a rápillantáshoz; a képernyő bármely koppintása visszaébreszti a normál állapotba.</string>
+    <string name="label_dim_mode_force_dark_in_light">Sötét stílus használata halványításkor</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">A sötét témájú halványított megjelenítésre vált akkor is, ha a rendszer világos módban van. Természetesen párosul a Valódi fekete háttérrel egy mindig sötét halványításhoz.</string>
+    <string name="action_add_cup_preset">Csésze-előbeállítás hozzáadása</string>
+    <string name="label_volume_ml">Térfogat (ml)</string>
+    <string name="msg_dose_from_ratio">A kávéadag az arányból számítódik ki</string>
+    <string name="label_icon">Ikon</string>
+    <string name="label_color">Szín</string>
+    <string name="action_add">Hozzáadás</string>
+    <string name="dialog_edit_cup_preset_title">Csésze-előbeállítás szerkesztése</string>
+    <string name="screen_add_cup_preset_title">Csésze-előbeállítás hozzáadása</string>
+    <string name="screen_edit_cup_preset_title">Csésze-előbeállítás szerkesztése</string>
+    <string name="msg_cup_preset_name_required">A folytatáshoz adjon meg egy nevet</string>
+    <string name="msg_cup_preset_volume_required">Adjon meg 0-nál nagyobb térfogatot</string>
+    <string name="cd_cup_preset_preview">%1$s előnézete</string>
+    <string name="label_scan_debug">Beolvasás hibakeresés</string>
+    <string name="action_view_history">Előzmények megtekintése</string>
+    <string name="action_share_report">Jelentés megosztása</string>
+    <string name="action_clear">Törlés</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Enyhe</string>
+    <string name="strength_balanced">Kiegyensúlyozott</string>
+    <string name="strength_strong">Erős</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Gyümölcsös</string>
+    <string name="flavor_chocolate">Csokoládés</string>
+    <string name="flavor_nutty">Diós</string>
+    <string name="flavor_floral">Virágos</string>
+    <string name="flavor_bright">Élénk</string>
+    <string name="flavor_smooth">Lágy</string>
+    <string name="flavor_bitter">Keserű</string>
+    <string name="flavor_sweet">Édes</string>
+    <string name="flavor_earthy">Földes</string>
+    <string name="flavor_spicy">Fűszeres</string>
+    <string name="flavor_citrus">Citrusos</string>
+    <string name="flavor_berry">Bogyós</string>
+    <string name="flavor_caramel">Karamellás</string>
+    <string name="flavor_wine">Boros</string>
+    <string name="flavor_clean">Tiszta</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Nagyon finom</string>
+    <string name="grind_fine">Finom</string>
+    <string name="grind_medium_fine">Közepesen finom</string>
+    <string name="grind_medium">Közepes</string>
+    <string name="grind_medium_coarse">Közepesen durva</string>
+    <string name="grind_coarse">Durva</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Kiváló</string>
+    <string name="rating_good">Jó</string>
+    <string name="rating_not_great">Nem túl jó</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Túl keserű</string>
+    <string name="taste_issue_too_sour">Túl savas</string>
+    <string name="taste_issue_too_weak">Túl gyenge</string>
+    <string name="taste_issue_too_strong">Túl erős</string>
+    <string name="taste_issue_bitter_suggestion">Próbáljon durvábbra őrölni vagy rövidebb főzési időt</string>
+    <string name="taste_issue_sour_suggestion">Próbáljon finomabbra őrölni vagy hosszabb főzési időt</string>
+    <string name="taste_issue_weak_suggestion">Próbáljon erősebb arányt vagy több kávét</string>
+    <string name="taste_issue_strong_suggestion">Próbáljon gyengébb arányt vagy kevesebb kávét</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Lezárt</string>
+    <string name="bag_status_open">Felbontott</string>
+    <string name="bag_status_frozen">Fagyasztott</string>
+    <string name="bag_status_finished">Elfogyott</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Ismeretlen / nincs megadva</string>
+    <string name="decaf_swiss_water">Swiss Water (vizes eljárás)</string>
+    <string name="decaf_mountain_water">Mountain Water (vizes eljárás)</string>
+    <string name="decaf_co2">Szuperkritikus CO₂</string>
+    <string name="decaf_ea_sugarcane">Etil-acetát (cukornád / természetes EA)</string>
+    <string name="decaf_mc_direct">Metilén-klorid (közvetlen oldószeres)</string>
+    <string name="decaf_ea_direct">Etil-acetát (közvetlen oldószeres)</string>
+    <string name="decaf_short_unknown">Ismeretlen</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (cukornád)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (oldószeres)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Világos</string>
+    <string name="roast_medium_light">Közepesen világos</string>
+    <string name="roast_medium">Közepes</string>
+    <string name="roast_medium_dark">Közepesen sötét</string>
+    <string name="roast_dark">Sötét</string>
+    <string name="roast_filter">Filter</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Fahéjszínű</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Mosott</string>
+    <string name="process_natural">Natúr</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaerob</string>
+    <string name="process_carbonic_maceration">Karbonikus macerálás</string>
+    <string name="process_semi_washed">Félig mosott</string>
+    <string name="process_wet_hulled">Nedves hántolású</string>
+    <string name="process_pulped_natural">Pulped Natural</string>
+    <string name="process_double_fermented">Kétszer erjesztett</string>
+    <string name="process_thermal_shock">Hősokk</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Igazítsa a zacskó elejét a keret közepére</string>
+    <string name="guided_scan_aim_back">Most olvassa be a zacskó hátoldalát</string>
+    <string name="guided_scan_aim_more">Adjon hozzá egy újabb fotót (nem kötelező)</string>
+    <string name="guided_scan_hold_steady">Tartsa stabilan…</string>
+    <string name="guided_scan_skip_photos">Fotók kihagyása</string>
+    <string name="guided_scan_finished">Kész</string>
+    <string name="guided_scan_auto_on">Automatikus be</string>
+    <string name="guided_scan_auto_off">Automatikus ki</string>
+    <string name="guided_scan_capture">Fotó készítése</string>
+    <string name="guided_scan_scan_more">További fotók beolvasása</string>
+    <string name="scan_warn_glare">Csökkentse a csillogást</string>
+    <string name="scan_warn_lighting">Javítsa a megvilágítást</string>
+    <string name="cd_remove_photo">Fotó eltávolítása</string>
+    <string name="msg_bag_saved">Zacskó mentve</string>
+</resources>

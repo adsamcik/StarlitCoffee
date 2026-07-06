@@ -222,6 +222,7 @@
     <string name="screen_brew_log_title">冲煮记录</string>
     <string name="msg_log_empty_title">开始冲煮后即可查看历史</string>
     <string name="msg_log_empty_subtitle">每次完成并留下反馈的冲煮都会显示在这里</string>
+    <string name="msg_select_brew_log">选择一条冲煮记录以查看详情</string>
 <string name="action_rate_brew">为冲煮评分</string>
 
     <!-- Brew Log Detail Screen -->
@@ -298,6 +299,14 @@
     <string name="notif_scan_progress_title">正在读取咖啡袋标签…</string>
     <string name="notif_bag_analysis_title">咖啡袋分析完成</string>
     <string name="notif_bag_analysis_body">点按以查看识别到的详情。</string>
+    <string name="scan_stage_ocr">正在读取标签…</string>
+    <string name="scan_stage_barcode">正在查询条形码…</string>
+    <string name="scan_stage_llm">正在解析详情…</string>
+    <string name="scan_stage_crop">正在定位标签…</string>
+    <string name="scan_stage_vision">正在检查标签图像…</string>
+    <string name="scan_stage_combine">正在合并结果…</string>
+    <string name="scan_stage_finalizing">正在收尾…</string>
+    <string name="format_scan_stage_step">第%1$d步，共%2$d步</string>
     <string name="format_notif_bag_analysis_body">点按以查看 %1$s。</string>
 
     <!-- Settings: rating reminder -->

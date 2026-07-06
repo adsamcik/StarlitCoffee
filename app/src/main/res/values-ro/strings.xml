@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Preparare</string>
+    <string name="nav_log">Jurnal</string>
+    <string name="nav_more">Mai multe</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Înapoi</string>
+    <string name="action_close">Închideți</string>
+    <string name="action_cancel">Anulați</string>
+    <string name="action_delete">Ștergeți</string>
+    <string name="action_save">Salvați modificările</string>
+    <string name="action_saved">✓ Salvat</string>
+    <string name="action_skip">Omiteți</string>
+    <string name="action_finish">Finalizați</string>
+    <string name="action_next">Înainte</string>
+    <string name="action_go_back">Reveniți</string>
+    <!-- Common labels -->
+    <string name="label_coffee">Cafea</string>
+    <string name="label_water">Apă</string>
+    <string name="label_ratio">Raport</string>
+    <string name="label_strength">Intensitate</string>
+    <string name="label_grind">Măcinare</string>
+    <string name="label_filter">Filtru</string>
+    <string name="label_decaf">Decaf</string>
+    <string name="label_decaf_suffix"> · Decaf</string>
+    <string name="label_loading">Se încarcă…</string>
+    <string name="label_none">Niciunul</string>
+    <string name="label_taste">Gust</string>
+    <string name="label_rating">Evaluare</string>
+    <string name="label_notes">Note</string>
+    <string name="label_no_filter">Fără filtru</string>
+    <string name="label_settings">Setări</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg în ceașcă</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+    <plurals name="format_selected">
+        <item quantity="one">%1$d selectat</item>
+        <item quantity="few">%1$d selectate</item>
+        <item quantity="other">%1$d selectate</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Configurați prepararea</string>
+    <string name="label_coffee_input">Cafea (g)</string>
+    <string name="label_water_input">Apă (g)</string>
+    <string name="label_brew_size_input">Volum preparat (ml)</string>
+    <string name="label_cup_size_input">Volum ceașcă (ml)</string>
+    <string name="label_brew_size">Volum preparat</string>
+    <string name="label_cup_size">Volum ceașcă</string>
+    <string name="format_capacity_note">%1$s ține %2$dg de apă — reumplerile sunt automate pentru preparări mai mari</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Selectați pachetul de cafea</string>
+    <string name="cd_clear_bag">Eliminați pachetul</string>
+    <string name="format_brewing_with">Preparare cu %1$s</string>
+    <string name="label_freshness">Prospețime</string>
+    <string name="format_recommended_now">Recomandat acum: %1$s</string>
+    <string name="format_last_time">Data trecută: %1$s</string>
+    <string name="action_save_as_favorite">Salvați ca favorit</string>
+    <string name="label_select_coffee_bag_title">Selectați pachetul de cafea</string>
+    <string name="msg_no_active_bags">Nu există pachete active. Adăugați unul în secțiunea Boabele dumneavoastră.</string>
+    <string name="action_brew_without_bag">Preparați fără să selectați un pachet</string>
+    <string name="label_best_now">Cel mai bun acum</string>
+    <string name="format_grind_generic">Măcinare: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Setare râșniță: %1$s–%2$s · Ajustați după gust</string>
+    <string name="format_weight_left"> · %1$.0fg rămase</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Sfat Pulsar: Mențineți suspensia la ~1cm deasupra patului de cafea în timpul turnărilor. Majoritatea utilizatorilor prepară 20–25g pentru o ceașcă echilibrată.</string>
+    <string name="tip_generic">💡 Sfat: Începeți cu raportul implicit și ajustați intensitatea după gust. Măcinările mai fine extrag mai mult, cele mai grosiere extrag mai puțin.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Configurare preparare</string>
+    <string name="label_custom_ratio">Raport personalizat (ex. 16)</string>
+    <string name="label_temperature">Temperatură (°C)</string>
+    <string name="label_bloom_multiplier">Multiplicator de bloom (ex. 3.0)</string>
+    <string name="label_pulse_count">Număr de turnări</string>
+    <string name="action_start_brewing">Începeți prepararea →</string>
+    <string name="label_advanced_options">Opțiuni avansate</string>
+    <string name="cd_collapse_advanced">Restrângeți opțiunile avansate</string>
+    <string name="cd_expand_advanced">Extindeți opțiunile avansate</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Doză de cafea: %1$d gram</item>
+        <item quantity="few">Doză de cafea: %1$d grame</item>
+        <item quantity="other">Doză de cafea: %1$d grame</item>
+    </plurals>
+    <string name="label_decrease">Reduceți %1$s</string>
+    <string name="label_increase">Măriți %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Pregătiți prepararea</string>
+    <string name="action_ready_to_brew_short">Gata de preparare</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Pregătire</string>
+    <string name="label_recipe_heading">Rețetă</string>
+    <string name="label_temp_short">Temp.</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Umeziți filtrul de hârtie în bază (supapa deschisă) și scurgeți. Montați cilindrul, adăugați cafeaua măcinată, nivelați patul de cafea, așezați capacul de dispersie. Tarați cântarul.</string>
+    <string name="prep_tip_pulsar_19k">Clătiți filtrul metalic 19K ca să se așeze și să preîncălziți cilindrul. Montați cilindrul, adăugați cafeaua măcinată, nivelați patul de cafea, așezați capacul de dispersie. Tarați cântarul.</string>
+    <string name="prep_tip_pulsar_40k">Clătiți filtrul metalic 40K ca să preîncălziți cilindrul. Montați cilindrul, adăugați cafeaua măcinată, nivelați patul de cafea, așezați capacul de dispersie. Tarați cântarul.</string>
+    <string name="prep_tip_pour_over_paper">Așezați filtrul de hârtie și clătiți cu apă fierbinte pentru preîncălzire și pentru a elimina gustul de hârtie. Adăugați cafeaua măcinată, tarați cântarul.</string>
+    <string name="prep_tip_french_press">Preîncălziți presa, apoi goliți-o. Adăugați cafeaua măcinată, puneți pe cântar și tarați înainte de a adăuga apa.</string>
+    <string name="prep_tip_aeropress">Introduceți un filtru clătit în capac. Adăugați cafeaua măcinată, așezați dispozitivul pe o cană sau un server stabil și tarați cântarul.</string>
+    <string name="prep_tip_espresso">Ștergeți portafiltrul până este uscat. Dozați, distribuiți și tasați drept înainte de cuplare.</string>
+    <string name="prep_tip_moka">Umpleți camera inferioară până la supapă. Umpleți coșul cu cafea măcinată, nivelați — nu tasați. Asamblați cu grijă.</string>
+    <string name="prep_tip_cold_brew">Adăugați cafeaua măcinată în vas, tarați cântarul, apoi adăugați apă la temperatura camerei sau rece și acoperiți.</string>
+    <string name="format_prep_grind_specific">Măcinați %1$s — setați %2$s la %3$s</string>
+    <string name="format_prep_grind_generic">Măcinați %1$s — %2$s (%3$s)</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Pauzați</string>
+    <string name="action_resume">Reluați</string>
+    <string name="cd_disable_minute_alerts">Dezactivați alertele la fiecare minut</string>
+    <string name="cd_enable_minute_alerts">Activați alertele la fiecare minut</string>
+    <string name="cd_bloom_animation">Animație de bloom cu bob de cafea</string>
+    <string name="format_pour_bloom_water">Turnați %1$.0fg de apă pentru bloom</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Total %2$.0fg</string>
+    <string name="action_start_bloom">☕ Începeți bloom-ul</string>
+    <string name="label_bloom_done">✅ Bloom finalizat!</string>
+    <string name="action_finish_brew">Finalizați prepararea</string>
+    <string name="dialog_exit_brew_title">Ieșiți din preparare?</string>
+    <string name="dialog_exit_brew_message">Progresul preparării curente se va pierde.</string>
+    <string name="action_exit_brew">Ieșiți</string>
+
+    <!-- Calculator Brew Screen -->
+    <string name="label_water_to_dose">Apă → Doză</string>
+    <string name="label_dose_to_water">Doză → Apă</string>
+    <string name="cd_backspace">Ștergere înapoi</string>
+    <string name="action_brew">Începeți</string>
+    <string name="label_total_water">apă totală</string>
+    <!-- Settings Screen -->
+    <string name="screen_settings_title">Setări</string>
+    <string name="label_settings_section_brewing">Preparare</string>
+    <string name="label_settings_section_appearance">Aspect</string>
+    <string name="label_settings_section_notifications">Notificări</string>
+    <string name="label_settings_section_developer">Dezvoltator</string>
+    <string name="label_settings_section_when_dimmed">Când este estompat</string>
+    <string name="label_display_dim_settings">Afișaj &amp; mod de estompare</string>
+    <string name="msg_display_dim_settings_subtitle">Mod estompat, negru OLED, luminozitate</string>
+    <string name="screen_display_settings_title">Afișaj &amp; mod de estompare</string>
+    <string name="label_cup_presets">Presetări de ceașcă</string>
+    <string name="action_add_preset">Adăugați presetare</string>
+    <string name="action_reset_defaults">Resetați la valorile implicite</string>
+    <string name="msg_presets_hint">Presetările apar ca butoane rapide în calculator</string>
+    <string name="label_brew_methods">Metode de preparare</string>
+    <string name="msg_methods_hint">Metodele selectate apar primele. Atingeți pentru comutare.</string>
+    <string name="label_default_method">Metodă implicită</string>
+    <string name="format_edit_preset">Editați %1$s</string>
+    <string name="label_bloom_animation_settings">Animații de bloom</string>
+    <string name="msg_bloom_animation_settings_subtitle">Alegeți cât de des apare fiecare animație de bloom</string>
+    <string name="cd_open_bloom_animation_settings">Deschideți setările animațiilor de bloom</string>
+    <string name="screen_bloom_animation_settings_title">Animații de bloom</string>
+    <string name="msg_bloom_animation_settings_hint">Atingeți fiecare control pentru a comuta între șansă normală, șansă dublă și exclus. Dacă fiecare animație este exclusă, cronometrele de bloom ascund animația.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s este setat la %2$s. Atingeți pentru modificare.</string>
+    <string name="label_bloom_sprite_coffee_flower">Floare de cafea</string>
+    <string name="desc_bloom_sprite_coffee_flower">Floare albă clasică de cafea care se deschide din bob.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Cafea sub stele</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Petale de abur crem-aurii cu mici sclipiri stelare.</string>
+    <string name="label_bloom_sprite_coffee_latte">Bloom latte</string>
+    <string name="desc_bloom_sprite_coffee_latte">Rosetta fină de latte art în tonuri calde de spumă de lapte.</string>
+    <string name="label_bloom_sprite_coffee_plant">Plantă de cafea</string>
+    <string name="desc_bloom_sprite_coffee_plant">Răsad verde proaspăt de cafea cu frunze pereche.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Roșie cherry</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Un bob de cafea încolțește într-o viță de roșie pe care se coc fructe roșii.</string>
+    <string name="label_bloom_sprite_strawberry">Căpșună</string>
+    <string name="desc_bloom_sprite_strawberry">Un bob de cafea încolțește într-o plantă de căpșun cu flori și fructe roșii.</string>
+    <string name="label_bloom_sprite_raspberry">Zmeură</string>
+    <string name="desc_bloom_sprite_raspberry">Un bob de cafea crește tufe de zmeur cu flori palide și ciorchini roșii.</string>
+    <string name="label_bloom_sprite_blueberry">Afină</string>
+    <string name="desc_bloom_sprite_blueberry">Un bob de cafea crește o crenguță de afin cu flori clopoțel și fructe albastre.</string>
+    <string name="label_bloom_sprite_blackberry">Mură</string>
+    <string name="desc_bloom_sprite_blackberry">Un bob de cafea crește tufe spinoase cu ciorchini întunecați de mure.</string>
+    <string name="label_bloom_sprite_coffee_brew">Cafea preparată</string>
+    <string name="desc_bloom_sprite_coffee_brew">Strălucire de cafea ambrată cu bucle de abur crem.</string>
+    <string name="label_bloom_sprite_rose">Trandafir</string>
+    <string name="desc_bloom_sprite_rose">Trandafir roșu compact care se desface deasupra bobului.</string>
+    <string name="label_bloom_sprite_lotus">Lotus</string>
+    <string name="desc_bloom_sprite_lotus">Floare de lotus crem cu petale stratificate, în formă de cupă.</string>
+    <string name="label_bloom_sprite_sunflower">Floarea-soarelui</string>
+    <string name="desc_bloom_sprite_sunflower">Floarea-soarelui luminoasă cu petale aurii și centru închis.</string>
+    <string name="label_bloom_sprite_orchid">Orhidee</string>
+    <string name="desc_bloom_sprite_orchid">Orhidee albă delicată cu lobi rotunjiți.</string>
+    <string name="label_bloom_sprite_jasmine">Iasomie</string>
+    <string name="desc_bloom_sprite_jasmine">Bloom alb și fin de iasomie cu formă blândă de morișcă.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Inimă sângerândă</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Tulpini arcuite cu flori roz în formă de inimă și vârfuri albe ca lacrimile se ridică din bob.</string>
+    <string name="label_bloom_sprite_passionflower">Floarea pasiunii</string>
+    <string name="desc_bloom_sprite_passionflower">Vrejuri răsucite se deschid într-o floare a pasiunii mov-albă, bogat ornamentată, deasupra bobului.</string>
+    <string name="label_bloom_sprite_bee_orchid">Orhidee-albină</string>
+    <string name="desc_bloom_sprite_bee_orchid">Petalele roz de orhidee dezvăluie buze întunecate în formă de albină pe tulpini subțiri.</string>
+    <string name="label_bloom_sprite_jade_vine">Viță de jad</string>
+    <string name="desc_bloom_sprite_jade_vine">O viță cățărătoare atârnă ciorchini turcoaz de flori de jad din bob.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Pasărea paradisului</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Petale portocalii și albastru intens de Strelitzia se desfac din frunze verzi verticale.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Mac albastru de Himalaya</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Un boboc aplecat se deschide într-un mac albastru ca cerul, cu stamine aurii.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">Un bloom parazitic roșu, pătat, se umflă într-o floare uriașă cu cinci lobi.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Cosmos ciocolatiu</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Frunze fine ridică din bob flori catifelate de cosmos vișiniu închis.</string>
+    <string name="label_bloom_sprite_flame_lily">Crin de foc</string>
+    <string name="desc_bloom_sprite_flame_lily">Petale de crin în culori de flacără se ridică pe tulpini verzi cu cârcei.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Regina nopții</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">O tulpină de cactus se deschide într-o floare albă nocturnă, dramatică și stratificată.</string>
+    <string name="label_bloom_sprite_snowdrop">Ghiocel</string>
+    <string name="desc_bloom_sprite_snowdrop">Clopoței albi delicați de ghiocel se ridică din bobul crăpat.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Flori mici albastre de nu-mă-uita, cu centre galbene, se desfac din bob.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Jurnal de preparări</string>
+    <string name="msg_log_empty_title">Începeți să preparați ca să vedeți istoricul</string>
+    <string name="msg_log_empty_subtitle">Fiecare preparare finalizată cu feedback va apărea aici</string>
+    <string name="msg_select_brew_log">Selectați o înregistrare din jurnal pentru a-i vedea detaliile</string>
+    <string name="action_rate_brew">Evaluați prepararea</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Detalii preparare</string>
+    <string name="dialog_delete_brew_title">Ștergeți înregistrarea preparării?</string>
+    <string name="dialog_delete_brew_message">Această acțiune nu poate fi anulată.</string>
+    <string name="label_coffee_bag">Pachet de cafea</string>
+    <string name="label_brew_time">Timp de preparare</string>
+    <string name="label_coffee_type">Tip de cafea</string>
+    <string name="label_flavor_notes">Note de aromă</string>
+    <string name="hint_add_notes">Adăugați note…</string>
+    <string name="msg_brew_not_found">Înregistrarea preparării nu a fost găsită</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Favoritele dumneavoastră</string>
+    <string name="msg_no_favorites_title">Încă nu aveți favorite</string>
+    <string name="msg_no_favorites_subtitle">Salvați o rețetă din ecranul de preparare cu butonul ♡</string>
+    <string name="label_untitled">Fără titlu</string>
+    <string name="format_recipe_summary">%1$sg cafea / %2$sg apă</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Personalizați prepararea</string>
+    <string name="label_pulsar_filter_type">Tip de filtru Pulsar</string>
+    <string name="msg_filter_hint">Influențează profilul în ceașcă și recomandările de măcinare</string>
+    <string name="label_your_grinder">Râșnița dumneavoastră</string>
+    <string name="msg_grinder_hint">Opțional — activează recomandări specifice de măcinare. Alegeți Fără râșniță / Alta dacă a dumneavoastră nu este listată.</string>
+    <string name="label_no_grinder">Fără râșniță / Alta</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Cu ce preparați cafeaua?</string>
+    <string name="msg_methods_subtitle">Selectați metodele de preparare. Atingeți ★ pentru a seta metoda implicită.</string>
+    <string name="label_set_as_default">Setați ca implicită</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Mai multe</string>
+    <string name="label_your_favorites">Favoritele dumneavoastră</string>
+    <string name="msg_favorites_subtitle">Reluați preparările favorite</string>
+    <string name="label_your_beans">Boabele dumneavoastră</string>
+    <string name="msg_beans_subtitle">Prospețime, stoc și ce să preparați în continuare</string>
+    <string name="msg_settings_subtitle">Metode, râșniță și preferințe</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Permisiunea pentru cameră este necesară pentru scanarea codurilor de bare</string>
+    <string name="msg_point_camera">Îndreptați camera spre codul de bare</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Preparare salvată! Evaluați-o după degustare.</string>
+    <string name="snackbar_action_view_log">Vedeți jurnalul</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Mementouri pentru evaluarea preparărilor</string>
+    <string name="notif_channel_rating_reminder_desc">Un imbold discret la ~30 de minute după preparare, pentru a o evalua cât gustul este proaspăt.</string>
+    <string name="notif_rating_title">Cum a fost prepararea?</string>
+    <string name="format_notif_rating_title">Cum a fost prepararea cu %1$s?</string>
+    <string name="notif_rating_body">Atingeți un emoji ca să o evaluați sau deschideți aplicația pentru mai multe opțiuni.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Evaluați cu 1 din 5 stele</string>
+    <string name="cd_notif_rating_2">Evaluați cu 2 din 5 stele</string>
+    <string name="cd_notif_rating_3">Evaluați cu 3 din 5 stele</string>
+    <string name="cd_notif_rating_4">Evaluați cu 4 din 5 stele</string>
+    <string name="cd_notif_rating_5">Evaluați cu 5 din 5 stele</string>
+
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analizăm pachetul dumneavoastră</string>
+    <string name="msg_analyzing_bag_subtitle">AI citește eticheta pentru a completa detaliile. Poate dura câteva momente.</string>
+    <string name="msg_analyzing_bag_background_hint">Puteți continua să folosiți aplicația — vă vom notifica atunci când este gata.</string>
+    <string name="action_skip_ai">Omiteți AI</string>
+    <string name="action_run_in_background">Continuați în fundal</string>
+    <string name="notif_channel_bag_analysis">Analiză pachet</string>
+    <string name="notif_channel_bag_analysis_desc">Vă anunță când AI a terminat de citit eticheta unui pachet de cafea.</string>
+    <string name="notif_scan_progress_title">Se citește eticheta pachetului…</string>
+    <string name="notif_bag_analysis_title">Analiza pachetului este gata</string>
+    <string name="notif_bag_analysis_body">Atingeți pentru a revizui detaliile găsite.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Se citește eticheta…</string>
+    <string name="scan_stage_barcode">Se caută codul de bare…</string>
+    <string name="scan_stage_llm">Se înțeleg detaliile…</string>
+    <string name="scan_stage_crop">Se găsește eticheta…</string>
+    <string name="scan_stage_vision">Se inspectează imaginea etichetei…</string>
+    <string name="scan_stage_combine">Se combină rezultatele…</string>
+    <string name="scan_stage_finalizing">Se finalizează…</string>
+    <string name="format_scan_stage_step">Pasul %1$d din %2$d</string>
+    <string name="format_notif_bag_analysis_body">Atingeți pentru a revizui %1$s.</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Memento de evaluare</string>
+    <string name="msg_rating_reminder_hint">Trimite o notificare la ~30 de minute după preparare, ca să o puteți evalua cât gustul este proaspăt.</string>
+    <string name="msg_rating_reminder_perm_denied">Notificările sunt blocate. Activați-le în setările sistemului pentru a primi mementouri.</string>
+    <string name="action_open_app_settings">Deschideți setările sistemului</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Retenția apei</string>
+    <string name="format_retention_explanation">Cafeaua măcinată absoarbe aproximativ 2× greutatea ei uscată în apă. Cu %1$.0fg de cafea, patul reține ~%2$.0fg, lăsând ~%3$.0fg în ceașca dumneavoastră.\n\nAceasta este o estimare — prăjirile închise absorb puțin mai mult, cele deschise puțin mai puțin.</string>
+    <string name="cd_about_cup_volume">Despre volumul din ceașcă</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+    <string name="label_target">Țintă</string>
+    <!-- Grind notes -->
+    <!-- Dose notes -->
+    <!-- Brew Method names -->
+    <!-- Ratio presets -->
+    <string name="format_ratio_bright">Vioi · 1:%1$d</string>
+    <string name="format_ratio_balanced">Echilibrat · 1:%1$d</string>
+    <string name="format_ratio_rich">Corpolent · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+    <!-- Input Mode -->
+    <string name="input_coffee_to_water">Cafea → Apă</string>
+    <string name="input_water_to_coffee">Apă → Cafea</string>
+    <string name="input_brew_to_both">Volum preparat → Ambele</string>
+    <string name="input_cup_to_both">Volum ceașcă → Ambele</string>
+    <string name="input_coffee_short">Cafea</string>
+    <string name="input_water_short">Apă</string>
+    <string name="input_brew_short">Preparare</string>
+    <string name="input_cup_short">Ceașcă</string>
+    <string name="input_coffee_desc">Introduceți doza de cafea, calculați apa</string>
+    <string name="input_water_desc">Introduceți cantitatea de apă, calculați cafeaua</string>
+    <string name="input_brew_desc">Introduceți volumul țintă al preparării, calculați cafeaua și apa ținând cont de absorbție</string>
+    <string name="input_cup_desc">Introduceți volumul ceștii, calculați cafeaua și apa</string>
+
+    <!-- Phase names -->
+    <!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Turnați până la %1$.0fg</string>
+    <string name="instruction_pour_total">Turnați până la %1$.0fg total</string>
+    <string name="instruction_open_valve_short">Deschideți supapa</string>
+    <string name="instruction_close_valve_short">Închideți supapa</string>
+    <string name="instruction_bloom_wait">Rotiți &amp; așteptați bloom-ul</string>
+    <string name="instruction_french_press_start">Adăugați toată apa, amestecați ușor și puneți capacul deasupra</string>
+    <string name="instruction_french_press_steep">Lăsați la infuzat nemișcat până la timpul țintă</string>
+    <string name="instruction_french_press_plunge">Apăsați lent pistonul, apoi turnați cafeaua</string>
+    <string name="instruction_aeropress_start">Adăugați apa, amestecați și porniți infuzarea</string>
+    <string name="instruction_aeropress_steep">Infuzați cu capacul pus; pregătiți-vă să presați</string>
+    <string name="instruction_aeropress_press">Presați constant până la șuierat, apoi opriți-vă</string>
+    <string name="instruction_espresso_start">Cuplați portafiltrul și porniți shot-ul</string>
+    <string name="instruction_espresso_pull">Urmăriți fluxul și randamentul; țineți ceașca pe cântar</string>
+    <string name="instruction_espresso_stop">Opriți la randamentul țintă sau când shot-ul devine blond</string>
+    <string name="instruction_moka_start">Asamblați ibricul Moka Pot și încălziți ușor cu capacul deschis</string>
+    <string name="instruction_moka_flow">Urmăriți cafeaua curgând în camera superioară</string>
+    <string name="instruction_moka_remove">Luați de pe foc când fluxul devine pal sau începe să stropească</string>
+    <string name="instruction_cold_brew_start">Combinați cafeaua și apa, amestecați pentru a umezi fiecare particulă</string>
+    <string name="instruction_cold_brew_steep">Acoperiți și lăsați la infuzat; păstrați cafeaua măcinată complet saturată</string>
+    <string name="instruction_cold_brew_filter">Filtrați concentratul și răciți-l sau diluați-l pentru servire</string>
+
+    <!-- Warnings -->
+    <!-- Taste Feedback -->
+    <string name="feedback_too_sour">Prea acră / slabă</string>
+    <string name="feedback_balanced">Echilibrată</string>
+    <string name="feedback_too_bitter">Prea amară / aspră</string>
+    <string name="feedback_astringent">Astringentă / uscată</string>
+    <string name="feedback_clogged">Înfundată / blocată</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Măcinați mai fin cu 2–4 clicuri</string>
+    <string name="adjust_try_finer">Încercați o setare de măcinare mai fină</string>
+    <string name="adjust_no_change">Nu este necesară nicio ajustare — salvați această rețetă!</string>
+    <string name="adjust_grind_coarser">Măcinați mai grosier cu 2–4 clicuri</string>
+    <string name="adjust_grind_coarser_valve">Măcinați mai grosier cu 2–4 clicuri\nÎncercați să deschideți supapa mai devreme</string>
+    <string name="adjust_try_coarser">Încercați o setare de măcinare mai grosieră</string>
+    <string name="adjust_try_coarser_water">Încercați o setare de măcinare mai grosieră\nSau încercați apă mai rece</string>
+    <string name="adjust_astringent_pulsar">Măriți doza la 20g+ pentru o adâncime mai bună a patului\nReduceți agitarea în timpul bloom-ului\nMențineți suspensia la ~1cm deasupra patului</string>
+    <string name="adjust_astringent_grinder">Măcinați puțin mai grosier, reduceți agitarea</string>
+    <string name="adjust_astringent_no_grinder">Măcinați puțin mai grosier, turnați mai blând</string>
+    <string name="adjust_clogged_pulsar_grinder">Măcinați mult mai grosier cu 3–5 clicuri\nReduceți agitarea (doar o rotire ușoară)\nVerificați dacă boabele sunt prea proaspete — lăsați-le să se odihnească 7+ zile</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Măcinați mult mai grosier\nReduceți agitarea\nAsigurați turnări blânde prin capacul de dispersie</string>
+    <string name="adjust_clogged_grinder">Măcinați mult mai grosier cu 3–5 clicuri</string>
+    <string name="adjust_clogged_no_grinder">Încercați o setare de măcinare mult mai grosieră</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Cafea: %1$s grame</string>
+    <string name="cd_water_grams">Apă: %1$s grame</string>
+    <string name="cd_ratio">Raport 1 la %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Nume</string>
+    <string name="label_roaster">Prăjitorie</string>
+    <string name="label_origin">Origine</string>
+    <string name="label_barcode_ean">Cod de bare / EAN</string>
+    <string name="action_scan_barcode">Scanați codul de bare</string>
+    <string name="label_name_required">Nume *</string>
+    <string name="label_weight_grams">Greutate (g)</string>
+    <string name="label_roast_date">Data prăjirii</string>
+    <string name="label_roast_level">Nivel de prăjire</string>
+    <string name="label_variety">Varietate</string>
+    <string name="label_process">Procesare</string>
+    <string name="label_tasting_notes">Note de degustare</string>
+    <string name="label_best_before">A se consuma de preferință înainte de</string>
+    <string name="label_decaf_coffee">Cafea decaf</string>
+    <string name="msg_decaf_guidance">Menține ghidajul de preparare sincronizat cu boabele decaf și cu ținte de infuzare mai scurte.</string>
+    <string name="label_decaf_process_optional">Proces decaf (opțional)</string>
+    <string name="msg_decaf_process_hint">Permite regulii de preparare să ajusteze ușor măcinarea: decafurile procesate cu apă și CO₂ au de obicei nevoie de mai puțină grosierire decât cele procesate cu solvenți.</string>
+    <string name="cd_captured_bag_photo">Fotografie capturată a pachetului</string>
+    <string name="label_detected_details">Detalii detectate</string>
+    <string name="msg_tap_chip_to_edit">Atingeți orice etichetă pentru editare</string>
+    <string name="label_needs_review">Necesită revizuire</string>
+    <string name="action_edit_all_fields">Editați toate câmpurile</string>
+    <string name="action_add_more_details">Adăugați mai multe detalii</string>
+    <string name="msg_analyzing_label">Se analizează fotografiile etichetei</string>
+    <string name="msg_analyzing_label_detail">Verificăm neclaritatea, combinăm textul de pe față/spate și pregătim cele mai fiabile câmpuri.</string>
+    <string name="label_review_fields">Revizuiți aceste câmpuri</string>
+    <string name="label_qr_website">Site QR</string>
+    <string name="action_open_website">Deschideți site-ul</string>
+    <string name="label_qr_link_found">Link QR găsit</string>
+    <string name="action_explore_extract">Explorați &amp; extrageți</string>
+    <string name="label_detected_field_evidence">Dovezi pentru câmpul detectat</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Fotografie pachet</string>
+    <string name="action_rescan_label">Rescanați eticheta</string>
+    <string name="action_edit_bag">Editați pachetul</string>
+    <string name="label_sensory_snapshot">Profil senzorial</string>
+    <string name="label_grind_intelligence">Măcinare inteligentă</string>
+    <string name="label_remaining_coffee">Cafea rămasă</string>
+    <string name="action_adjust_weight">Ajustați greutatea</string>
+    <string name="action_add_weight_tracking">Adăugați monitorizarea greutății</string>
+    <string name="label_brew_history">Istoric preparări</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Cum a fost?</string>
+    <string name="msg_rate_brew_fresh">Evaluați această preparare cât gustul este încă proaspăt.</string>
+    <string name="label_flavor_notes_section">Note de aromă</string>
+    <string name="hint_what_stood_out">Notă opțională - ce a ieșit în evidență?</string>
+    <string name="action_save_rating">Salvați evaluarea</string>
+
+    <!-- EmptyStateBox -->
+    <!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Favoritele dumneavoastră</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Altceva</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">Serviciu AI (Mindlayer)</string>
+    <string name="action_test_connection">Testați conexiunea</string>
+    <string name="action_run_test_prompt">Rulați promptul de test</string>
+    <string name="label_testing">Se testează…</string>
+
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Activați AI</string>
+    <string name="consent_requesting">Se solicită acces AI…</string>
+    <string name="consent_granted">AI activat</string>
+    <string name="consent_already_approved">AI este deja activat</string>
+    <string name="consent_still_unavailable">AI este aprobat, dar serviciul nu este încă pregătit</string>
+    <string name="consent_declined">Accesul AI nu a fost acordat</string>
+    <string name="consent_denied_temporary">Accesul AI a fost refuzat — încercați din nou mai târziu</string>
+    <string name="consent_denied_permanent">Accesul AI este blocat — deblocați-l în aplicația Mindlayer</string>
+    <string name="consent_service_unavailable">Serviciul Mindlayer AI nu este disponibil</string>
+    <string name="consent_failed">Nu s-a putut solicita accesul AI</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Cum a fost ultima ceașcă?</string>
+    <string name="label_what_was_off">Ce nu a fost în regulă?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Eticheta scanată se potrivește cu pachetul stocat — nu este nimic de actualizat.</string>
+    <string name="action_update_bag">Actualizați pachetul</string>
+    <string name="action_new_bag">Pachet nou</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Salvați ca favorit</string>
+    <string name="msg_save_favorite_hint">Dați acestei rețete un nume pe care îl veți ține minte</string>
+    <string name="hint_save_favorite_example">ex. Luni dimineață, Weekend lent</string>
+    <string name="action_save_simple">Salvați</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Istoric scanări</string>
+    <string name="msg_no_scan_sessions">Nu există încă sesiuni de scanare înregistrate.</string>
+    <string name="action_share_session">Distribuiți această sesiune</string>
+    <string name="label_component_timings">Timpi pe componente</string>
+    <string name="msg_no_timing_data">Nu există date de timp disponibile</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Avertisment</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Ajustați greutatea</string>
+    <string name="label_remaining_weight_grams">Greutate rămasă (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Din fotografie</string>
+    <string name="action_scan_label">Scanați eticheta</string>
+    <string name="action_add_bag_gallery">Din galerie</string>
+    <string name="action_add_bag_camera">Scanați cu camera</string>
+    <string name="action_add_bag_barcode">Scanați codul de bare</string>
+    <string name="action_add_bag_manual">Adăugați manual</string>
+    <string name="msg_no_beans_yet">Încă nu aveți boabe</string>
+    <string name="msg_add_coffee_hint">Adăugați cafeaua pentru a urmări prospețimea și a primi sugestii de preparare</string>
+    <string name="action_brew_now">Preparați acum</string>
+    <string name="msg_could_not_read_label">Eticheta nu a putut fi citită</string>
+    <string name="action_retake_photo">Refaceți fotografia</string>
+    <string name="action_add_details_manually">Adăugați detaliile manual</string>
+    <string name="msg_llm_enrichment_succeeded">Îmbogățirea AI a îmbunătățit această scanare a etichetei.</string>
+    <string name="msg_llm_enrichment_failed">AI nu a putut termina citirea acestei etichete de data aceasta — timpul a expirat sau a apărut o eroare temporară (a reîncercat deja automat). Atingeți reîncercare pentru a încerca încă o dată sau completați câmpurile de mai jos.</string>
+    <string name="msg_llm_enrichment_unavailable">Îmbogățirea AI nu este disponibilă acum. Puteți reîncerca sau continua editarea manuală.</string>
+    <string name="action_retry_llm_enrichment">Reîncercați îmbogățirea AI</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Distribuiți prepararea</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Renunțați la scanare?</string>
+    <string name="msg_discard_scan_body">Aveți câmpuri detectate care nu au fost salvate.</string>
+    <string name="action_discard">Renunțați</string>
+    <string name="action_keep_scanning">Continuați scanarea</string>
+    <string name="msg_camera_permission_required">Permisiunea pentru cameră este necesară</string>
+    <string name="screen_scan_bag_title">Scanați pachetul de cafea</string>
+    <string name="cd_toggle_debug_overlay">Comutați suprapunerea de depanare</string>
+    <string name="msg_both_sides_scanned">Ambele fețe ale pachetului au fost scanate</string>
+    <string name="msg_scanning_front_side">Se scanează fața pachetului</string>
+    <string name="action_quick_save">Salvare rapidă</string>
+    <string name="msg_repackaged_product">Acesta poate fi un produs reambalat sau importat</string>
+    <string name="action_use_barcode">Folosiți codul de bare</string>
+    <string name="action_use_label">Folosiți eticheta</string>
+    <string name="label_confirmed">Confirmat</string>
+    <string name="label_ai_contributed">AI a contribuit</string>
+    <string name="cd_manual_capture">Captură manuală — procesați forțat cadrul curent</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Sincronizați cu pachetul</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Aplicat la prepararea cu Pulsar</string>
+    <string name="label_quick_brew">Preparare rapidă</string>
+    <string name="msg_quick_brew_hint">Omiteți etapa de pregătire a măcinării și treceți direct la cronometru când începeți o preparare</string>
+    <string name="label_show_brewing_instructions">Afișați instrucțiunile de preparare</string>
+    <string name="msg_show_brewing_instructions_hint">Afișați cardul cu ghidaj pas cu pas în timpul preparării și lista de verificare pe ecranul de pregătire. Dezactivați dacă vă cunoașteți metoda pe de rost.</string>
+    <string name="label_dim_mode">Mod de estompare automată</string>
+    <string name="msg_dim_mode_hint">După 25 s de inactivitate, elimină fundalurile colorate și estompează textul spre gri. Aspectul rămâne neschimbat, iar o singură atingere trezește ecranul și declanșează acțiunea de dedesubt.</string>
+    <string name="label_dim_mode_true_black">Fundal negru pur</string>
+    <string name="msg_dim_mode_true_black_hint">Când ecranul este estompat într-o temă întunecată, reduce și fundalul ecranului la negru pur. Ideal pe OLED — economisește energie și pare complet în repaus. Nu are efect în temele luminoase.</string>
+    <string name="label_dim_mode_reduce_brightness">Reduceți luminozitatea ecranului</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Reduce și iluminarea ecranului în timp ce este estompat. Economisește puțină energie și îmblânzește și mai mult ecranul.</string>
+    <string name="label_dim_mode_fullscreen">Ascundeți barele de sistem</string>
+    <string name="msg_dim_mode_fullscreen_hint">Ascunde și bara de stare și bara de navigare în timp ce ecranul este estompat. Glisați de la o margine pentru a le vedea temporar; orice atingere pe ecran revine la normal.</string>
+    <string name="label_dim_mode_force_dark_in_light">Folosiți stil întunecat când este estompat</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Comută la prezentarea estompată a temei întunecate chiar și când sistemul este în modul luminos. Se potrivește natural cu Fundal negru pur pentru o estompare mereu întunecată.</string>
+    <string name="action_add_cup_preset">Adăugați presetare de ceașcă</string>
+    <string name="label_volume_ml">Volum (ml)</string>
+    <string name="msg_dose_from_ratio">Doza de cafea este calculată din raportul dumneavoastră</string>
+    <string name="label_icon">Pictogramă</string>
+    <string name="label_color">Culoare</string>
+    <string name="action_add">Adăugați</string>
+    <string name="dialog_edit_cup_preset_title">Editați presetarea de ceașcă</string>
+    <string name="screen_add_cup_preset_title">Adăugați presetare de ceașcă</string>
+    <string name="screen_edit_cup_preset_title">Editați presetarea de ceașcă</string>
+    <string name="msg_cup_preset_name_required">Adăugați un nume pentru a continua</string>
+    <string name="msg_cup_preset_volume_required">Adăugați un volum mai mare decât 0</string>
+    <string name="cd_cup_preset_preview">Previzualizare pentru %1$s</string>
+    <string name="label_scan_debug">Depanare scanare</string>
+    <string name="action_view_history">Vedeți istoricul</string>
+    <string name="action_share_report">Distribuiți raportul</string>
+    <string name="action_clear">Ștergeți</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Ușoară</string>
+    <string name="strength_balanced">Echilibrată</string>
+    <string name="strength_strong">Puternică</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Fructată</string>
+    <string name="flavor_chocolate">Ciocolatie</string>
+    <string name="flavor_nutty">Cu note de nuci</string>
+    <string name="flavor_floral">Florală</string>
+    <string name="flavor_bright">Vioaie</string>
+    <string name="flavor_smooth">Catifelată</string>
+    <string name="flavor_bitter">Amară</string>
+    <string name="flavor_sweet">Dulce</string>
+    <string name="flavor_earthy">Pământie</string>
+    <string name="flavor_spicy">Condimentată</string>
+    <string name="flavor_citrus">Citrică</string>
+    <string name="flavor_berry">Fructe de pădure</string>
+    <string name="flavor_caramel">Caramel</string>
+    <string name="flavor_wine">Vinoasă</string>
+    <string name="flavor_clean">Curată</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Foarte fină</string>
+    <string name="grind_fine">Fină</string>
+    <string name="grind_medium_fine">Mediu-fină</string>
+    <string name="grind_medium">Medie</string>
+    <string name="grind_medium_coarse">Mediu-grosieră</string>
+    <string name="grind_coarse">Grosieră</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Excelentă</string>
+    <string name="rating_good">Bună</string>
+    <string name="rating_not_great">Nu prea bună</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Prea amară</string>
+    <string name="taste_issue_too_sour">Prea acră</string>
+    <string name="taste_issue_too_weak">Prea slabă</string>
+    <string name="taste_issue_too_strong">Prea puternică</string>
+    <string name="taste_issue_bitter_suggestion">Încercați o măcinare mai grosieră sau un timp de preparare mai scurt</string>
+    <string name="taste_issue_sour_suggestion">Încercați o măcinare mai fină sau un timp de preparare mai lung</string>
+    <string name="taste_issue_weak_suggestion">Încercați un raport mai puternic sau mai multă cafea</string>
+    <string name="taste_issue_strong_suggestion">Încercați un raport mai lejer sau mai puțină cafea</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Sigilat</string>
+    <string name="bag_status_open">Deschis</string>
+    <string name="bag_status_frozen">Înghețat</string>
+    <string name="bag_status_finished">Terminat</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Necunoscut / nespecificat</string>
+    <string name="decaf_swiss_water">Swiss Water (proces cu apă)</string>
+    <string name="decaf_mountain_water">Mountain Water (proces cu apă)</string>
+    <string name="decaf_co2">CO₂ supercritic</string>
+    <string name="decaf_ea_sugarcane">Acetat de etil (trestie de zahăr / EA natural)</string>
+    <string name="decaf_mc_direct">Clorură de metilen (solvent direct)</string>
+    <string name="decaf_ea_direct">Acetat de etil (solvent direct)</string>
+    <string name="decaf_short_unknown">Necunoscut</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (trestie de zahăr)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (solvent)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Deschisă</string>
+    <string name="roast_medium_light">Medie-deschisă</string>
+    <string name="roast_medium">Medie</string>
+    <string name="roast_medium_dark">Medie-închisă</string>
+    <string name="roast_dark">Închisă</string>
+    <string name="roast_filter">Filtru</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Scorțișoară</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Spălată</string>
+    <string name="process_natural">Naturală</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaerobă</string>
+    <string name="process_carbonic_maceration">Macerare carbonică</string>
+    <string name="process_semi_washed">Semi-spălată</string>
+    <string name="process_wet_hulled">Decorticare umedă</string>
+    <string name="process_pulped_natural">Natural depulpat</string>
+    <string name="process_double_fermented">Dublu fermentată</string>
+    <string name="process_thermal_shock">Șoc termic</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Centrați partea din față a pachetului în cadru</string>
+    <string name="guided_scan_aim_back">Acum scanați spatele pachetului</string>
+    <string name="guided_scan_aim_more">Adăugați încă o fotografie (opțional)</string>
+    <string name="guided_scan_hold_steady">Țineți nemișcat…</string>
+    <string name="guided_scan_skip_photos">Omiteți fotografiile</string>
+    <string name="guided_scan_finished">Finalizat</string>
+    <string name="guided_scan_auto_on">Auto pornit</string>
+    <string name="guided_scan_auto_off">Auto oprit</string>
+    <string name="guided_scan_capture">Capturați fotografia</string>
+    <string name="guided_scan_scan_more">Scanați mai multe fotografii</string>
+    <string name="scan_warn_glare">Reduceți reflexiile</string>
+    <string name="scan_warn_lighting">Îmbunătățiți iluminarea</string>
+    <string name="cd_remove_photo">Eliminați fotografia</string>
+    <string name="msg_bag_saved">Pachet salvat</string>
+</resources>

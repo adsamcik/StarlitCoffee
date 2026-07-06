@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Starlit Coffee</string>
+
+    <!-- Navigation -->
+    <string name="nav_brew">Priprema</string>
+    <string name="nav_log">Dnevnik</string>
+    <string name="nav_more">Više</string>
+
+    <!-- Common actions -->
+    <string name="action_back">Natrag</string>
+    <string name="action_close">Zatvorite</string>
+    <string name="action_cancel">Odustanite</string>
+    <string name="action_delete">Izbrišite</string>
+    <string name="action_save">Spremite promjene</string>
+    <string name="action_saved">✓ Spremljeno</string>
+    <string name="action_skip">Preskočite</string>
+    <string name="action_finish">Završite</string>
+    <string name="action_next">Dalje</string>
+    <string name="action_go_back">Natrag</string>
+    <!-- Common labels -->
+    <string name="label_coffee">Kava</string>
+    <string name="label_water">Voda</string>
+    <string name="label_ratio">Omjer</string>
+    <string name="label_strength">Jačina</string>
+    <string name="label_grind">Mljevenje</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_decaf">Bez kofeina</string>
+    <string name="label_decaf_suffix"> · bez kofeina</string>
+    <string name="label_loading">Učitavanje…</string>
+    <string name="label_none">Nema</string>
+    <string name="label_taste">Okus</string>
+    <string name="label_rating">Ocjena</string>
+    <string name="label_notes">Bilješke</string>
+    <string name="label_no_filter">Bez filtera</string>
+    <string name="label_settings">Postavke</string>
+
+    <!-- Units -->
+    <string name="unit_grams">g</string>
+    <string name="unit_ml">ml</string>
+
+    <!-- Format strings -->
+    <string name="format_coffee_grams">☕ %1$sg</string>
+    <string name="format_water_grams">💧 %1$sg</string>
+    <string name="format_ratio">1:%1$s</string>
+    <string name="format_bloom_grams">Bloom %1$.0fg</string>
+    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
+    <string name="format_cup_volume">🥤 ~%1$.0fg u šalici</string>
+    <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
+    <plurals name="format_selected">
+        <item quantity="one">%1$d odabrana</item>
+        <item quantity="few">%1$d odabrane</item>
+        <item quantity="other">%1$d odabranih</item>
+    </plurals>
+
+    <!-- Method Picker Screen -->
+    <string name="screen_method_picker_title">Postavite svoju pripremu</string>
+    <string name="label_coffee_input">Kava (g)</string>
+    <string name="label_water_input">Voda (g)</string>
+    <string name="label_brew_size_input">Količina pripreme (ml)</string>
+    <string name="label_cup_size_input">Veličina šalice (ml)</string>
+    <string name="label_brew_size">Količina pripreme</string>
+    <string name="label_cup_size">Veličina šalice</string>
+    <string name="format_capacity_note">%1$s prima %2$dg vode — za veće pripreme dolijevanje je automatsko</string>
+    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
+    <string name="label_select_coffee_bag">Odaberite vrećicu kave</string>
+    <string name="cd_clear_bag">Poništi odabir vrećice</string>
+    <string name="format_brewing_with">Priprema s %1$s</string>
+    <string name="label_freshness">Svježina</string>
+    <string name="format_recommended_now">Preporučeno sada: %1$s</string>
+    <string name="format_last_time">Prošli put: %1$s</string>
+    <string name="action_save_as_favorite">Spremite kao favorit</string>
+    <string name="label_select_coffee_bag_title">Odabir vrećice kave</string>
+    <string name="msg_no_active_bags">Nema aktivnih vrećica. Dodajte je u odjeljku Vaša zrna.</string>
+    <string name="action_brew_without_bag">Pripremite bez odabira vrećice</string>
+    <string name="label_best_now">Najbolje sada</string>
+    <string name="format_grind_generic">Mljevenje: %1$s – %2$s</string>
+    <string name="format_grind_specific_range">Postavka mljevenja: %1$s–%2$s · Prilagodite po okusu</string>
+    <string name="format_weight_left"> · preostalo %1$.0fg</string>
+    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
+    <string name="tip_pulsar">💡 Pulsar savjet: Tijekom ulijevanja držite smjesu ~1 cm iznad sloja kave. Većina korisnika priprema 20–25 g za uravnoteženu šalicu.</string>
+    <string name="tip_generic">💡 Savjet: Krenite od zadanog omjera i prilagodite jačinu po okusu. Finije mljevenje ekstrahira više, grublje mljevenje ekstrahira manje.</string>
+
+    <!-- Amount & Strength Screen -->
+    <string name="screen_brew_setup_title">Postavke pripreme</string>
+    <string name="label_custom_ratio">Prilagođeni omjer (npr. 16)</string>
+    <string name="label_temperature">Temperatura (°C)</string>
+    <string name="label_bloom_multiplier">Množitelj blooma (npr. 3.0)</string>
+    <string name="label_pulse_count">Broj pulseva</string>
+    <string name="action_start_brewing">Započnite pripremu →</string>
+    <string name="label_advanced_options">Napredne opcije</string>
+    <string name="cd_collapse_advanced">Sažmi napredne opcije</string>
+    <string name="cd_expand_advanced">Proširi napredne opcije</string>
+    <plurals name="format_coffee_dose_cd">
+        <item quantity="one">Doza kave: %1$d gram</item>
+        <item quantity="few">Doza kave: %1$d grama</item>
+        <item quantity="other">Doza kave: %1$d grama</item>
+    </plurals>
+    <string name="label_decrease">Smanjite %1$s</string>
+    <string name="label_increase">Povećajte %1$s</string>
+
+    <!-- Grind Prep Screen -->
+    <string name="screen_grind_prep_title">Priprema kave</string>
+    <string name="action_ready_to_brew_short">Spremni za pripremu</string>
+    <!-- Prep screen: single concise method + filter specific tip -->
+    <string name="prep_tip_label">Priprema</string>
+    <string name="label_recipe_heading">Recept</string>
+    <string name="label_temp_short">Temp</string>
+    <string name="label_bloom_short">Bloom</string>
+    <string name="prep_tip_pulsar_paper">Navlažite papirnati filter u bazi (ventil otvoren) i ocijedite. Postavite komoru, dodajte kavu, poravnajte sloj i stavite disperzijski poklopac. Tarirajte vagu.</string>
+    <string name="prep_tip_pulsar_19k">Isperite metalni filter 19K da sjedne i zagrijte komoru. Postavite komoru, dodajte kavu, poravnajte sloj i stavite disperzijski poklopac. Tarirajte vagu.</string>
+    <string name="prep_tip_pulsar_40k">Isperite metalni filter 40K da zagrijete komoru. Postavite komoru, dodajte kavu, poravnajte sloj i stavite disperzijski poklopac. Tarirajte vagu.</string>
+    <string name="prep_tip_pour_over_paper">Umetnite papirnati filter i isperite ga vrućom vodom da ga zagrijete i uklonite okus papira. Dodajte kavu i tarirajte vagu.</string>
+    <string name="prep_tip_french_press">Zagrijte press i ispraznite ga. Dodajte kavu, stavite na vagu i tarirajte prije dolijevanja vode.</string>
+    <string name="prep_tip_aeropress">Umetnite isprani filter u poklopac. Dodajte kavu, postavite uređaj na čvrstu šalicu ili posudu i tarirajte vagu.</string>
+    <string name="prep_tip_espresso">Osušite nosač filtera. Dozirajte, rasporedite i ravnomjerno tampirajte prije zaključavanja.</string>
+    <string name="prep_tip_moka">Napunite donju komoru do ventila. Napunite košaricu kavom, poravnajte — ne tampirajte. Pažljivo sastavite.</string>
+    <string name="prep_tip_cold_brew">Dodajte kavu u posudu, tarirajte vagu, zatim dolijte vodu sobne temperature ili hladnu i poklopite.</string>
+    <string name="format_prep_grind_specific">Meljite %1$s — postavite %2$s na %3$s</string>
+    <string name="format_prep_grind_generic">Meljite %1$s — %2$s (%3$s)</string>
+
+    <!-- Brew Timer Screen -->
+    <string name="action_pause">Pauzirajte</string>
+    <string name="action_resume">Nastavite</string>
+    <string name="cd_disable_minute_alerts">Isključite upozorenja na minute</string>
+    <string name="cd_enable_minute_alerts">Uključite upozorenja na minute</string>
+    <string name="cd_bloom_animation">Animacija cvjetanja zrna kave</string>
+    <string name="format_pour_bloom_water">Ulijte %1$.0fg vode za bloom</string>
+    <string name="format_bloom_total">Bloom %1$.0fg · Ukupno %2$.0fg</string>
+    <string name="action_start_bloom">☕ Započnite bloom</string>
+    <string name="label_bloom_done">✅ Bloom gotov!</string>
+    <string name="action_finish_brew">Završite pripremu</string>
+    <string name="dialog_exit_brew_title">Izlaz iz pripreme?</string>
+    <string name="dialog_exit_brew_message">Trenutačni napredak pripreme bit će izgubljen.</string>
+    <string name="action_exit_brew">Izađite</string>
+
+    <!-- Calculator Brew Screen -->
+    <string name="label_water_to_dose">Voda → doza</string>
+    <string name="label_dose_to_water">Doza → voda</string>
+    <string name="cd_backspace">Brisanje unatrag</string>
+    <string name="action_brew">Pokrenite</string>
+    <string name="label_total_water">ukupno vode</string>
+    <!-- Settings Screen -->
+    <string name="screen_settings_title">Postavke</string>
+    <string name="label_settings_section_brewing">Priprema</string>
+    <string name="label_settings_section_appearance">Izgled</string>
+    <string name="label_settings_section_notifications">Obavijesti</string>
+    <string name="label_settings_section_developer">Razvojne opcije</string>
+    <string name="label_settings_section_when_dimmed">Kad je zatamnjeno</string>
+    <string name="label_display_dim_settings">Zaslon i način zatamnjivanja</string>
+    <string name="msg_display_dim_settings_subtitle">Zatamnjivanje, OLED crna, svjetlina</string>
+    <string name="screen_display_settings_title">Zaslon i način zatamnjivanja</string>
+    <string name="label_cup_presets">Predlošci šalica</string>
+    <string name="action_add_preset">Dodajte predložak</string>
+    <string name="action_reset_defaults">Vratite na zadano</string>
+    <string name="msg_presets_hint">Predlošci se pojavljuju kao brzi gumbi na kalkulatoru</string>
+    <string name="label_brew_methods">Metode pripreme</string>
+    <string name="msg_methods_hint">Odabrane metode prikazuju se prve. Dodirnite za uključivanje ili isključivanje.</string>
+    <string name="label_default_method">Zadana metoda</string>
+    <string name="format_edit_preset">Uredite %1$s</string>
+    <string name="label_bloom_animation_settings">Animacije blooma</string>
+    <string name="msg_bloom_animation_settings_subtitle">Odaberite koliko se često pojavljuje svaki sprite blooma</string>
+    <string name="cd_open_bloom_animation_settings">Otvorite postavke animacija blooma</string>
+    <string name="screen_bloom_animation_settings_title">Animacije blooma</string>
+    <string name="msg_bloom_animation_settings_hint">Dodirnite svaku kontrolu za kruženje između normalne vjerojatnosti, dvostruke vjerojatnosti i isključenog stanja. Ako je svaki sprite isključen, bloom timeri skrivaju animaciju.</string>
+    <string name="label_bloom_weight_1x">1×</string>
+    <string name="label_bloom_weight_2x">★ 2×</string>
+    <string name="label_bloom_weight_0x">X 0×</string>
+    <string name="format_bloom_spritesheet_weight_cd">%1$s je postavljeno na %2$s. Dodirnite za promjenu.</string>
+    <string name="label_bloom_sprite_coffee_flower">Cvijet kave</string>
+    <string name="desc_bloom_sprite_coffee_flower">Klasičan bijeli cvijet kave koji se otvara iz zrna.</string>
+    <string name="label_bloom_sprite_coffee_starlit">Zvjezdana kava</string>
+    <string name="desc_bloom_sprite_coffee_starlit">Kremasto-zlatne latice pare s malenim zvjezdanim odsjajima.</string>
+    <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
+    <string name="desc_bloom_sprite_coffee_latte">Nježna rozeta latte arta u toplim tonovima mliječne pjene.</string>
+    <string name="label_bloom_sprite_coffee_plant">Biljka kave</string>
+    <string name="desc_bloom_sprite_coffee_plant">Svježa zelena sadnica kave s parovima listova.</string>
+    <string name="label_bloom_sprite_cherry_tomato">Cherry rajčica</string>
+    <string name="desc_bloom_sprite_cherry_tomato">Zrno kave klija u lozu rajčice dok crveni plodovi sazrijevaju.</string>
+    <string name="label_bloom_sprite_strawberry">Jagoda</string>
+    <string name="desc_bloom_sprite_strawberry">Zrno kave klija u biljku jagode s cvjetovima i crvenim bobicama.</string>
+    <string name="label_bloom_sprite_raspberry">Malina</string>
+    <string name="desc_bloom_sprite_raspberry">Iz zrna kave rastu grmovi s blijedim cvjetovima i grozdovima crvenih malina.</string>
+    <string name="label_bloom_sprite_blueberry">Borovnica</string>
+    <string name="desc_bloom_sprite_blueberry">Iz zrna kave raste grančica borovnice sa zvonolikim cvjetovima i plavim plodovima.</string>
+    <string name="label_bloom_sprite_blackberry">Kupina</string>
+    <string name="desc_bloom_sprite_blackberry">Iz zrna kave rastu trnoviti grmovi s tamnim grozdovima kupina.</string>
+    <string name="label_bloom_sprite_coffee_brew">Skuhana kava</string>
+    <string name="desc_bloom_sprite_coffee_brew">Jantarni sjaj kave s kremastim uvojcima pare.</string>
+    <string name="label_bloom_sprite_rose">Ruža</string>
+    <string name="desc_bloom_sprite_rose">Zbijena crvena ruža koja se rastvara iznad zrna.</string>
+    <string name="label_bloom_sprite_lotus">Lotos</string>
+    <string name="desc_bloom_sprite_lotus">Kremasti cvijet lotosa sa slojevitim, čašastim laticama.</string>
+    <string name="label_bloom_sprite_sunflower">Suncokret</string>
+    <string name="desc_bloom_sprite_sunflower">Sjajan suncokret sa zlatnim laticama i tamnom sredinom.</string>
+    <string name="label_bloom_sprite_orchid">Orhideja</string>
+    <string name="desc_bloom_sprite_orchid">Nježna bijela orhideja sa zaobljenim laticama.</string>
+    <string name="label_bloom_sprite_jasmine">Jasmin</string>
+    <string name="desc_bloom_sprite_jasmine">Nježan bijeli cvijet jasmina blagog vrtuljkastog oblika.</string>
+    <string name="label_bloom_sprite_bleeding_heart">Srčanica</string>
+    <string name="desc_bloom_sprite_bleeding_heart">Iz zrna se izdižu lučne stabljike s ružičastim cvjetovima u obliku srca i bijelim vrhovima poput suza.</string>
+    <string name="label_bloom_sprite_passionflower">Pasiflora</string>
+    <string name="desc_bloom_sprite_passionflower">Uvijene vitice iznad zrna otvaraju se u kićen ljubičasto-bijeli cvijet pasiflore.</string>
+    <string name="label_bloom_sprite_bee_orchid">Pčelina orhideja</string>
+    <string name="desc_bloom_sprite_bee_orchid">Ružičaste latice orhideje otkrivaju tamne usne u obliku pčele na vitkim stabljikama.</string>
+    <string name="label_bloom_sprite_jade_vine">Žad loza</string>
+    <string name="desc_bloom_sprite_jade_vine">Penjačica sa zrna vješa tirkizne grozdove cvjetova boje žada.</string>
+    <string name="label_bloom_sprite_bird_of_paradise">Rajska ptica</string>
+    <string name="desc_bloom_sprite_bird_of_paradise">Narančaste i tamnoplave latice strelicije rastvaraju se iz uspravnih zelenih listova.</string>
+    <string name="label_bloom_sprite_blue_himalayan_poppy">Plavi himalajski mak</string>
+    <string name="desc_bloom_sprite_blue_himalayan_poppy">Povijeni pupoljak otvara se u nebeskoplavi mak sa zlatnim prašnicima.</string>
+    <string name="label_bloom_sprite_rafflesia">Rafflesia</string>
+    <string name="desc_bloom_sprite_rafflesia">Crveni pjegavi parazitski cvijet nabubri u golem cvijet s pet režnjeva.</string>
+    <string name="label_bloom_sprite_chocolate_cosmos">Čokoladni kozmos</string>
+    <string name="desc_bloom_sprite_chocolate_cosmos">Pernati listovi izdižu baršunaste tamno bordo cvjetove kozmosa iz zrna.</string>
+    <string name="label_bloom_sprite_flame_lily">Plameni ljiljan</string>
+    <string name="desc_bloom_sprite_flame_lily">Uvijene latice ljiljana boje plamena izdižu se na zelenim stabljikama s viticama.</string>
+    <string name="label_bloom_sprite_queen_of_the_night">Kraljica noći</string>
+    <string name="desc_bloom_sprite_queen_of_the_night">Stabljika kaktusa otvara se u dramatičan slojevit bijeli noćni cvijet.</string>
+    <string name="label_bloom_sprite_snowdrop">Visibaba</string>
+    <string name="desc_bloom_sprite_snowdrop">Nježna bijela zvona visibabe izdižu se iz raspuknutog zrna.</string>
+    <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
+    <string name="desc_bloom_sprite_myosotis_sylvatica">Maleni plavi cvjetovi potočnice sa žutim sredinama rastvaraju se iz zrna.</string>
+
+    <!-- Brew Log Screen -->
+    <string name="screen_brew_log_title">Dnevnik priprema</string>
+    <string name="msg_log_empty_title">Započnite pripremu da vidite svoju povijest</string>
+    <string name="msg_log_empty_subtitle">Svaka dovršena priprema s povratnom informacijom pojavit će se ovdje</string>
+    <string name="msg_select_brew_log">Odaberite zapis pripreme za prikaz pojedinosti</string>
+    <string name="action_rate_brew">Ocijenite pripremu</string>
+
+    <!-- Brew Log Detail Screen -->
+    <string name="screen_brew_details_title">Pojedinosti pripreme</string>
+    <string name="dialog_delete_brew_title">Izbrisati zapis pripreme?</string>
+    <string name="dialog_delete_brew_message">Ova se radnja ne može poništiti.</string>
+    <string name="label_coffee_bag">Vrećica kave</string>
+    <string name="label_brew_time">Vrijeme pripreme</string>
+    <string name="label_coffee_type">Vrsta kave</string>
+    <string name="label_flavor_notes">Note okusa</string>
+    <string name="hint_add_notes">Dodajte bilješke…</string>
+    <string name="msg_brew_not_found">Zapis pripreme nije pronađen</string>
+
+    <!-- Saved Recipes Screen -->
+    <string name="screen_favorites_title">Vaši favoriti</string>
+    <string name="msg_no_favorites_title">Još nema favorita</string>
+    <string name="msg_no_favorites_subtitle">Spremite recept sa zaslona pripreme pomoću gumba ♡</string>
+    <string name="label_untitled">Bez naziva</string>
+    <string name="format_recipe_summary">%1$sg kave / %2$sg vode</string>
+
+    <!-- Onboarding Personalize Screen -->
+    <string name="screen_personalize_title">Personalizirajte svoju pripremu</string>
+    <string name="label_pulsar_filter_type">Vrsta Pulsar filtera</string>
+    <string name="msg_filter_hint">Utječe na profil šalice i preporuke za mljevenje</string>
+    <string name="label_your_grinder">Vaš mlinac</string>
+    <string name="msg_grinder_hint">Neobavezno — omogućuje specifične preporuke za mljevenje. Odaberite Nema mlinca / Ostalo ako vaš nije naveden.</string>
+    <string name="label_no_grinder">Nema mlinca / Ostalo</string>
+
+    <!-- Onboarding Methods Screen -->
+    <string name="screen_methods_title">Čime pripremate kavu?</string>
+    <string name="msg_methods_subtitle">Odaberite svoje metode pripreme. Dodirnite ★ da postavite zadanu.</string>
+    <string name="label_set_as_default">Postavite kao zadano</string>
+
+    <!-- More Screen -->
+    <string name="screen_more_title">Više</string>
+    <string name="label_your_favorites">Vaši favoriti</string>
+    <string name="msg_favorites_subtitle">Ponovite svoje najdraže pripreme</string>
+    <string name="label_your_beans">Vaša zrna</string>
+    <string name="msg_beans_subtitle">Svježina, zaliha i što sljedeće pripremiti</string>
+    <string name="msg_settings_subtitle">Metode, mlinac i postavke</string>
+
+    <!-- Barcode Scanner Screen -->
+    <string name="msg_camera_permission">Za skeniranje crtičnih kodova potrebno je dopuštenje za kameru</string>
+    <string name="msg_point_camera">Usmjerite kameru prema crtičnom kodu</string>
+
+    <!-- Snackbar / notifications -->
+    <string name="snackbar_brew_saved">Priprema spremljena! Ocijenite je nakon kušanja.</string>
+    <string name="snackbar_action_view_log">Prikažite dnevnik</string>
+
+    <!-- Rating reminder notification -->
+    <string name="notif_channel_rating_reminder">Podsjetnici za ocjenu pripreme</string>
+    <string name="notif_channel_rating_reminder_desc">Blagi podsjetnik ~30 minuta nakon pripreme da je ocijenite dok je okus svjež.</string>
+    <string name="notif_rating_title">Kakva je bila vaša kava?</string>
+    <string name="format_notif_rating_title">Kakva je bila vaša %1$s kava?</string>
+    <string name="notif_rating_body">Dodirnite emoji za ocjenu ili otvorite aplikaciju za više.</string>
+    <string name="notif_rating_emoji_1">😩</string>
+    <string name="notif_rating_emoji_2">😕</string>
+    <string name="notif_rating_emoji_3">🙂</string>
+    <string name="notif_rating_emoji_4">😀</string>
+    <string name="notif_rating_emoji_5">🤩</string>
+    <string name="cd_notif_rating_1">Ocijenite s 1 od 5 zvjezdica</string>
+    <string name="cd_notif_rating_2">Ocijenite s 2 od 5 zvjezdica</string>
+    <string name="cd_notif_rating_3">Ocijenite s 3 od 5 zvjezdica</string>
+    <string name="cd_notif_rating_4">Ocijenite s 4 od 5 zvjezdica</string>
+    <string name="cd_notif_rating_5">Ocijenite s 5 od 5 zvjezdica</string>
+
+    <!-- Bag analysis screen + notification -->
+    <string name="screen_analyzing_bag_title">Analiza vaše vrećice</string>
+    <string name="msg_analyzing_bag_subtitle">AI čita etiketu kako bi ispunio pojedinosti. To može potrajati trenutak.</string>
+    <string name="msg_analyzing_bag_background_hint">Možete nastaviti koristiti aplikaciju — obavijestit ćemo vas kad završi.</string>
+    <string name="action_skip_ai">Preskočite AI</string>
+    <string name="action_run_in_background">Nastavite u pozadini</string>
+    <string name="notif_channel_bag_analysis">Analiza vrećice</string>
+    <string name="notif_channel_bag_analysis_desc">Obavještava vas kad AI završi čitanje etikete vrećice kave.</string>
+    <string name="notif_scan_progress_title">Čitanje etikete vrećice…</string>
+    <string name="notif_bag_analysis_title">Analiza vrećice dovršena</string>
+    <string name="notif_bag_analysis_body">Dodirnite za pregled pronađenih pojedinosti.</string>
+    <!-- Bag scan progress stages -->
+    <string name="scan_stage_ocr">Čitanje etikete…</string>
+    <string name="scan_stage_barcode">Traženje crtičnog koda…</string>
+    <string name="scan_stage_llm">Razumijevanje pojedinosti…</string>
+    <string name="scan_stage_crop">Pronalaženje etikete…</string>
+    <string name="scan_stage_vision">Pregled slike etikete…</string>
+    <string name="scan_stage_combine">Kombiniranje rezultata…</string>
+    <string name="scan_stage_finalizing">Dovršavanje…</string>
+    <string name="format_scan_stage_step">Korak %1$d od %2$d</string>
+    <string name="format_notif_bag_analysis_body">Dodirnite za pregled %1$s.</string>
+
+    <!-- Settings: rating reminder -->
+    <string name="label_rating_reminder">Podsjetnik za ocjenu</string>
+    <string name="msg_rating_reminder_hint">Šalje obavijest ~30 minuta nakon pripreme kako biste je ocijenili dok je okus svjež.</string>
+    <string name="msg_rating_reminder_perm_denied">Obavijesti su blokirane. Omogućite ih u postavkama sustava za primanje podsjetnika.</string>
+    <string name="action_open_app_settings">Otvorite postavke sustava</string>
+
+    <!-- Water Retention (info sheet) -->
+    <string name="label_water_retention">Zadržavanje vode</string>
+    <string name="format_retention_explanation">Mljevena kava upija otprilike 2× svoje suhe težine u vodi. S %1$.0fg kave, talog zadržava ~%2$.0fg, ostavljajući ~%3$.0fg u vašoj šalici.\n\nOvo je procjena — tamnija prženja upijaju nešto više, svjetlija nešto manje.</string>
+    <string name="cd_about_cup_volume">O volumenu šalice</string>
+
+    <!-- Brew Visualization / Coffee Insights -->
+    <string name="label_target">Cilj</string>
+    <!-- Grind notes -->
+    <!-- Dose notes -->
+    <!-- Brew Method names -->
+    <!-- Ratio presets -->
+    <string name="format_ratio_bright">Svijetlo · 1:%1$d</string>
+    <string name="format_ratio_balanced">Uravnoteženo · 1:%1$d</string>
+    <string name="format_ratio_rich">Bogato · 1:%1$d</string>
+
+    <!-- Filter Type names -->
+    <!-- Input Mode -->
+    <string name="input_coffee_to_water">Kava → voda</string>
+    <string name="input_water_to_coffee">Voda → kava</string>
+    <string name="input_brew_to_both">Količina pripreme → oboje</string>
+    <string name="input_cup_to_both">Veličina šalice → oboje</string>
+    <string name="input_coffee_short">Kava</string>
+    <string name="input_water_short">Voda</string>
+    <string name="input_brew_short">Priprema</string>
+    <string name="input_cup_short">Šalica</string>
+    <string name="input_coffee_desc">Unesite dozu kave, izračunajte vodu</string>
+    <string name="input_water_desc">Unesite količinu vode, izračunajte kavu</string>
+    <string name="input_brew_desc">Unesite ciljanu količinu pripreme, izračunajte kavu i vodu uzimajući u obzir upijanje</string>
+    <string name="input_cup_desc">Unesite veličinu šalice, izračunajte kavu i vodu</string>
+
+    <!-- Phase names -->
+    <!-- Phase instructions (BrewViewModel.buildTimerPhases) -->
+    <string name="instruction_bloom_pour">Ulijte do %1$.0fg</string>
+    <string name="instruction_pour_total">Ulijte do ukupno %1$.0fg</string>
+    <string name="instruction_open_valve_short">Otvorite ventil</string>
+    <string name="instruction_close_valve_short">Zatvorite ventil</string>
+    <string name="instruction_bloom_wait">Zavrtite i pričekajte bloom</string>
+    <string name="instruction_french_press_start">Dodajte svu vodu, nježno promiješajte i stavite poklopac na vrh</string>
+    <string name="instruction_french_press_steep">Ostavite da se namače bez diranja do ciljanog vremena</string>
+    <string name="instruction_french_press_plunge">Polako pritisnite klip, zatim izlijte kavu</string>
+    <string name="instruction_aeropress_start">Dodajte vodu, promiješajte i započnite namakanje</string>
+    <string name="instruction_aeropress_steep">Namačite s poklopcem; pripremite se za pritiskanje</string>
+    <string name="instruction_aeropress_press">Ravnomjerno pritišćite do siktanja, zatim stanite</string>
+    <string name="instruction_espresso_start">Zaključajte nosač filtera i započnite ekstrakciju</string>
+    <string name="instruction_espresso_pull">Pratite protok i prinos; držite šalicu na vagi</string>
+    <string name="instruction_espresso_stop">Zaustavite pri ciljanom prinosu ili kad ekstrakcija posvijetli</string>
+    <string name="instruction_moka_start">Sastavite lončić i lagano zagrijavajte s otvorenim poklopcem</string>
+    <string name="instruction_moka_flow">Pazite kad kava počne teći u gornju komoru</string>
+    <string name="instruction_moka_remove">Maknite s vatre kad protok posvijetli ili počne prskati</string>
+    <string name="instruction_cold_brew_start">Pomiješajte kavu i vodu, promiješajte da se navlaži svaka čestica</string>
+    <string name="instruction_cold_brew_steep">Poklopite i namačite; držite kavu potpuno natopljenom</string>
+    <string name="instruction_cold_brew_filter">Profiltrirajte koncentrat te ohladite ili razrijedite za posluživanje</string>
+
+    <!-- Warnings -->
+    <!-- Taste Feedback -->
+    <string name="feedback_too_sour">Prekiselo / preslabo</string>
+    <string name="feedback_balanced">Uravnoteženo</string>
+    <string name="feedback_too_bitter">Pregorko / preoštro</string>
+    <string name="feedback_astringent">Trpko / suho</string>
+    <string name="feedback_clogged">Začepljeno / zaustavljeno</string>
+    <!-- Adjustment advice -->
+    <string name="adjust_grind_finer">Meljite finije za 2–4 klika</string>
+    <string name="adjust_try_finer">Pokušajte s finijom postavkom mljevenja</string>
+    <string name="adjust_no_change">Nije potrebna prilagodba — spremite ovaj recept!</string>
+    <string name="adjust_grind_coarser">Meljite grublje za 2–4 klika</string>
+    <string name="adjust_grind_coarser_valve">Meljite grublje za 2–4 klika\nPokušajte ranije otvoriti ventil</string>
+    <string name="adjust_try_coarser">Pokušajte s grubljom postavkom mljevenja</string>
+    <string name="adjust_try_coarser_water">Pokušajte s grubljom postavkom mljevenja\nIli pokušajte s hladnijom vodom</string>
+    <string name="adjust_astringent_pulsar">Povećajte dozu na 20 g+ za bolju dubinu sloja\nSmanjite miješanje tijekom blooma\nDržite smjesu ~1 cm iznad sloja</string>
+    <string name="adjust_astringent_grinder">Meljite malo grublje, smanjite miješanje</string>
+    <string name="adjust_astringent_no_grinder">Meljite malo grublje, ulijevajte nježnije</string>
+    <string name="adjust_clogged_pulsar_grinder">Meljite mnogo grublje za 3–5 klikova\nSmanjite miješanje (samo nježno vrtenje)\nProvjerite je li kava presvježa — odmarajte 7+ dana</string>
+    <string name="adjust_clogged_pulsar_no_grinder">Meljite mnogo grublje\nSmanjite miješanje\nOsigurajte nježno ulijevanje kroz disperzijski poklopac</string>
+    <string name="adjust_clogged_grinder">Meljite mnogo grublje za 3–5 klikova</string>
+    <string name="adjust_clogged_no_grinder">Pokušajte s mnogo grubljom postavkom mljevenja</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_coffee_grams">Kava: %1$s grama</string>
+    <string name="cd_water_grams">Voda: %1$s grama</string>
+    <string name="cd_ratio">Omjer 1 naprema %1$s</string>
+
+    <!-- AddBagSheet -->
+    <string name="label_name">Naziv</string>
+    <string name="label_roaster">Pržionica</string>
+    <string name="label_origin">Podrijetlo</string>
+    <string name="label_barcode_ean">Crtični kod / EAN</string>
+    <string name="action_scan_barcode">Skenirajte crtični kod</string>
+    <string name="label_name_required">Naziv *</string>
+    <string name="label_weight_grams">Težina (g)</string>
+    <string name="label_roast_date">Datum prženja</string>
+    <string name="label_roast_level">Razina prženja</string>
+    <string name="label_variety">Sorta</string>
+    <string name="label_process">Obrada</string>
+    <string name="label_tasting_notes">Note okusa</string>
+    <string name="label_best_before">Najbolje upotrijebiti do</string>
+    <string name="label_decaf_coffee">Kava bez kofeina</string>
+    <string name="msg_decaf_guidance">Održava upute za pripremu usklađene sa zrnima bez kofeina i kraćim ciljanim vremenima namakanja.</string>
+    <string name="label_decaf_process_optional">Postupak dekofeinizacije (neobavezno)</string>
+    <string name="msg_decaf_process_hint">Omogućuje pravilu pripreme da blago prilagodi mljevenje: kave bez kofeina obrađene vodom i CO₂ obično trebaju manje grubljeg mljevenja od onih obrađenih otapalima.</string>
+    <string name="cd_captured_bag_photo">Snimljena fotografija vrećice</string>
+    <string name="label_detected_details">Otkrivene pojedinosti</string>
+    <string name="msg_tap_chip_to_edit">Dodirnite bilo koji čip za uređivanje</string>
+    <string name="label_needs_review">Treba pregled</string>
+    <string name="action_edit_all_fields">Uredite sva polja</string>
+    <string name="action_add_more_details">Dodajte više pojedinosti</string>
+    <string name="msg_analyzing_label">Analiza fotografija etikete</string>
+    <string name="msg_analyzing_label_detail">Provjeravamo zamućenost, spajamo tekst s prednje i stražnje strane i pripremamo najpouzdanija polja.</string>
+    <string name="label_review_fields">Pregledajte ova polja</string>
+    <string name="label_qr_website">QR web-stranica</string>
+    <string name="action_open_website">Otvorite web-stranicu</string>
+    <string name="label_qr_link_found">Pronađena QR poveznica</string>
+    <string name="action_explore_extract">Istražite i izdvojite</string>
+    <string name="label_detected_field_evidence">Dokazi za otkrivena polja</string>
+
+    <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
+    <string name="cd_bag_photo">Fotografija vrećice</string>
+    <string name="action_rescan_label">Ponovno skenirajte etiketu</string>
+    <string name="action_edit_bag">Uredite vrećicu</string>
+    <string name="label_sensory_snapshot">Senzorski pregled</string>
+    <string name="label_grind_intelligence">Pametno mljevenje</string>
+    <string name="label_remaining_coffee">Preostala kava</string>
+    <string name="action_adjust_weight">Prilagodite težinu</string>
+    <string name="action_add_weight_tracking">Dodajte praćenje težine</string>
+    <string name="label_brew_history">Povijest priprema</string>
+
+    <!-- BrewRatingSheet -->
+    <string name="label_how_was_it">Kakva je bila?</string>
+    <string name="msg_rate_brew_fresh">Ocijenite ovu pripremu dok je okus još svjež.</string>
+    <string name="label_flavor_notes_section">Note okusa</string>
+    <string name="hint_what_stood_out">Neobavezna bilješka – što se istaknulo?</string>
+    <string name="action_save_rating">Spremite ocjenu</string>
+
+    <!-- EmptyStateBox -->
+    <!-- FavoritesRow -->
+    <string name="label_your_favorites_section">Vaši favoriti</string>
+
+    <!-- FieldChipPicker -->
+    <string name="label_other">Ostalo</string>
+
+    <!-- MindlayerSettingsCard -->
+    <string name="label_ai_service">AI usluga (Mindlayer)</string>
+    <string name="action_test_connection">Testirajte vezu</string>
+    <string name="action_run_test_prompt">Pokrenite testni upit</string>
+    <string name="label_testing">Testiranje…</string>
+
+    <!-- Mindlayer AI consent -->
+    <string name="action_enable_ai">Omogućite AI</string>
+    <string name="consent_requesting">Traženje pristupa AI-ju…</string>
+    <string name="consent_granted">AI omogućen</string>
+    <string name="consent_already_approved">AI je već omogućen</string>
+    <string name="consent_still_unavailable">AI je odobren, ali usluga još nije spremna</string>
+    <string name="consent_declined">Pristup AI-ju nije odobren</string>
+    <string name="consent_denied_temporary">Pristup AI-ju je odbijen — pokušajte kasnije</string>
+    <string name="consent_denied_permanent">Pristup AI-ju je blokiran — odblokirajte ga u aplikaciji Mindlayer</string>
+    <string name="consent_service_unavailable">Mindlayer AI usluga nije dostupna</string>
+    <string name="consent_failed">Zahtjev za pristup AI-ju nije uspio</string>
+
+    <!-- PostBrewCheckInCard -->
+    <string name="label_how_was_last_cup">Kakva je bila vaša posljednja šalica?</string>
+    <string name="label_what_was_off">Što nije bilo u redu?</string>
+
+    <!-- RescanDeltaDialog -->
+    <string name="msg_rescan_no_changes">Skenirana etiketa odgovara vašoj spremljenoj vrećici — nema ništa za ažuriranje.</string>
+    <string name="action_update_bag">Ažurirajte vrećicu</string>
+    <string name="action_new_bag">Nova vrećica</string>
+
+    <!-- SaveFavoriteDialog -->
+    <string name="dialog_save_favorite_title">Spremanje u favorite</string>
+    <string name="msg_save_favorite_hint">Dajte ovom receptu naziv koji ćete zapamtiti</string>
+    <string name="hint_save_favorite_example">npr. Ponedjeljak ujutro, Vikend polako</string>
+    <string name="action_save_simple">Spremite</string>
+
+    <!-- ScanHistoryDialog -->
+    <string name="dialog_scan_history_title">Povijest skeniranja</string>
+    <string name="msg_no_scan_sessions">Još nema zabilježenih sesija skeniranja.</string>
+    <string name="action_share_session">Podijelite ovu sesiju</string>
+    <string name="label_component_timings">Vremena komponenti</string>
+    <string name="msg_no_timing_data">Nema dostupnih podataka o vremenima</string>
+
+    <!-- ShareableBrewCard -->
+    <string name="label_starlit_coffee_brand">Starlit Coffee ☕</string>
+
+    <!-- WarningCard -->
+    <string name="label_warning">Upozorenje</string>
+
+    <!-- WeightAdjustDialog -->
+    <string name="dialog_adjust_weight_title">Prilagodba težine</string>
+    <string name="label_remaining_weight_grams">Preostala težina (g)</string>
+
+    <!-- BagInventoryScreen -->
+    <string name="action_from_photo">Iz fotografije</string>
+    <string name="action_scan_label">Skenirajte etiketu</string>
+    <string name="action_add_bag_gallery">Iz galerije</string>
+    <string name="action_add_bag_camera">Skenirajte kamerom</string>
+    <string name="action_add_bag_barcode">Skenirajte crtični kod</string>
+    <string name="action_add_bag_manual">Dodajte ručno</string>
+    <string name="msg_no_beans_yet">Još nema zrna</string>
+    <string name="msg_add_coffee_hint">Dodajte svoju kavu za praćenje svježine i preporuke za pripremu</string>
+    <string name="action_brew_now">Pripremite sada</string>
+    <string name="msg_could_not_read_label">Nije moguće pročitati etiketu</string>
+    <string name="action_retake_photo">Ponovno snimite fotografiju</string>
+    <string name="action_add_details_manually">Dodajte pojedinosti ručno</string>
+    <string name="msg_llm_enrichment_succeeded">AI obogaćivanje poboljšalo je ovo skeniranje etikete.</string>
+    <string name="msg_llm_enrichment_failed">AI ovaj put nije uspio dovršiti čitanje etikete — isteklo je vrijeme ili je došlo do privremene pogreške (već je automatski pokušao ponovno). Dodirnite ponovni pokušaj za još jedan pokušaj ili jednostavno ispunite polja u nastavku.</string>
+    <string name="msg_llm_enrichment_unavailable">AI obogaćivanje trenutačno nije dostupno. Možete pokušati ponovno ili nastaviti uređivati ručno.</string>
+    <string name="action_retry_llm_enrichment">Ponovite AI obogaćivanje</string>
+
+    <!-- BrewLogDetailScreen -->
+    <string name="action_share_brew">Podijelite pripremu</string>
+
+    <!-- LiveScanScreen -->
+    <string name="dialog_discard_scan_title">Odbaciti skeniranje?</string>
+    <string name="msg_discard_scan_body">Imate otkrivena polja koja nisu spremljena.</string>
+    <string name="action_discard">Odbacite</string>
+    <string name="action_keep_scanning">Nastavite skeniranje</string>
+    <string name="msg_camera_permission_required">Potrebno je dopuštenje za kameru</string>
+    <string name="screen_scan_bag_title">Skeniranje vrećice kave</string>
+    <string name="cd_toggle_debug_overlay">Uključivanje/isključivanje debug sloja</string>
+    <string name="msg_both_sides_scanned">Obje strane vrećice su skenirane</string>
+    <string name="msg_scanning_front_side">Skeniranje prednje strane vrećice</string>
+    <string name="action_quick_save">Brzo spremanje</string>
+    <string name="msg_repackaged_product">Ovo je možda prepakiran ili uvezen proizvod</string>
+    <string name="action_use_barcode">Upotrijebite crtični kod</string>
+    <string name="action_use_label">Upotrijebite etiketu</string>
+    <string name="label_confirmed">Potvrđeno</string>
+    <string name="label_ai_contributed">AI doprinos</string>
+    <string name="cd_manual_capture">Ručno snimanje — prisilno obradi trenutačni kadar</string>
+
+    <!-- MethodPickerScreen -->
+    <string name="action_sync_to_bag">Uskladite s vrećicom</string>
+
+    <!-- SettingsScreen -->
+    <string name="msg_pulsar_settings_applied">Primjenjuje se pri pripremi s Pulsarom</string>
+    <string name="label_quick_brew">Brza priprema</string>
+    <string name="msg_quick_brew_hint">Preskočite korak pripreme mljevenja i idite ravno na timer kad započnete pripremu</string>
+    <string name="label_show_brewing_instructions">Prikaz uputa za pripremu</string>
+    <string name="msg_show_brewing_instructions_hint">Prikazuje karticu s uputama korak po korak tijekom pripreme i popis za pripremu na zaslonu pripreme. Isključite ako svoju metodu znate napamet.</string>
+    <string name="label_dim_mode">Automatsko zatamnjivanje</string>
+    <string name="msg_dim_mode_hint">Nakon 25 s neaktivnosti uklanjaju se obojene pozadine, a tekst se stišava u sivo. Raspored ostaje na mjestu, a jedan dodir istovremeno budi zaslon i pokreće radnju ispod.</string>
+    <string name="label_dim_mode_true_black">Potpuno crna pozadina</string>
+    <string name="msg_dim_mode_true_black_hint">Kad je zatamnjeno u tamnoj temi, spusti pozadinu zaslona na potpuno crnu. Najbolje na OLED-u — štedi energiju i djeluje istinski mirno. Nema učinka u svijetlim temama.</string>
+    <string name="label_dim_mode_reduce_brightness">Smanji svjetlinu zaslona</string>
+    <string name="msg_dim_mode_reduce_brightness_hint">Dodatno smanjuje pozadinsko osvjetljenje zaslona dok je zatamnjeno. Štedi malo energije i dodatno ublažava zaslon.</string>
+    <string name="label_dim_mode_fullscreen">Sakrij trake sustava</string>
+    <string name="msg_dim_mode_fullscreen_hint">Dodatno skriva statusnu i navigacijsku traku dok je zatamnjeno. Povucite s ruba za kratki pregled; bilo koji dodir po zaslonu vraća na normalno.</string>
+    <string name="label_dim_mode_force_dark_in_light">Koristi tamni stil pri zatamnjivanju</string>
+    <string name="msg_dim_mode_force_dark_in_light_hint">Prebacuje na zatamnjeni prikaz tamne teme čak i kad je sustav u svijetlom načinu rada. Prirodno se uparuje s Potpuno crnom pozadinom za uvijek tamno zatamnjenje.</string>
+    <string name="action_add_cup_preset">Dodajte predložak šalice</string>
+    <string name="label_volume_ml">Volumen (ml)</string>
+    <string name="msg_dose_from_ratio">Doza kave izračunava se iz vašeg omjera</string>
+    <string name="label_icon">Ikona</string>
+    <string name="label_color">Boja</string>
+    <string name="action_add">Dodajte</string>
+    <string name="dialog_edit_cup_preset_title">Uređivanje predloška šalice</string>
+    <string name="screen_add_cup_preset_title">Dodavanje predloška šalice</string>
+    <string name="screen_edit_cup_preset_title">Uređivanje predloška šalice</string>
+    <string name="msg_cup_preset_name_required">Dodajte naziv za nastavak</string>
+    <string name="msg_cup_preset_volume_required">Dodajte volumen veći od 0</string>
+    <string name="cd_cup_preset_preview">Pretpregled za %1$s</string>
+    <string name="label_scan_debug">Debug skeniranja</string>
+    <string name="action_view_history">Prikažite povijest</string>
+    <string name="action_share_report">Podijelite izvješće</string>
+    <string name="action_clear">Očistite</string>
+
+    <!-- Enum: StrengthPreset -->
+    <string name="strength_light">Slabo</string>
+    <string name="strength_balanced">Uravnoteženo</string>
+    <string name="strength_strong">Jako</string>
+
+    <!-- Enum: FlavorDescriptor -->
+    <string name="flavor_fruity">Voćno</string>
+    <string name="flavor_chocolate">Čokolada</string>
+    <string name="flavor_nutty">Orašasto</string>
+    <string name="flavor_floral">Cvjetno</string>
+    <string name="flavor_bright">Svijetlo</string>
+    <string name="flavor_smooth">Glatko</string>
+    <string name="flavor_bitter">Gorko</string>
+    <string name="flavor_sweet">Slatko</string>
+    <string name="flavor_earthy">Zemljano</string>
+    <string name="flavor_spicy">Začinjeno</string>
+    <string name="flavor_citrus">Citrusi</string>
+    <string name="flavor_berry">Bobičasto</string>
+    <string name="flavor_caramel">Karamela</string>
+    <string name="flavor_wine">Vinsko</string>
+    <string name="flavor_clean">Čisto</string>
+
+    <!-- Enum: GrindDescriptor -->
+    <string name="grind_very_fine">Vrlo fino</string>
+    <string name="grind_fine">Fino</string>
+    <string name="grind_medium_fine">Srednje fino</string>
+    <string name="grind_medium">Srednje</string>
+    <string name="grind_medium_coarse">Srednje grubo</string>
+    <string name="grind_coarse">Grubo</string>
+
+    <!-- Enum: QuickRating -->
+    <string name="rating_great">Sjajno</string>
+    <string name="rating_good">Dobro</string>
+    <string name="rating_not_great">Nije sjajno</string>
+
+    <!-- Enum: TasteIssue -->
+    <string name="taste_issue_too_bitter">Pregorko</string>
+    <string name="taste_issue_too_sour">Prekiselo</string>
+    <string name="taste_issue_too_weak">Preslabo</string>
+    <string name="taste_issue_too_strong">Prejako</string>
+    <string name="taste_issue_bitter_suggestion">Pokušajte s grubljim mljevenjem ili kraćim vremenom pripreme</string>
+    <string name="taste_issue_sour_suggestion">Pokušajte s finijim mljevenjem ili duljim vremenom pripreme</string>
+    <string name="taste_issue_weak_suggestion">Pokušajte s jačim omjerom ili više kave</string>
+    <string name="taste_issue_strong_suggestion">Pokušajte sa slabijim omjerom ili manje kave</string>
+
+    <!-- Enum: CoffeeBagStatus -->
+    <string name="bag_status_sealed">Zapečaćeno</string>
+    <string name="bag_status_open">Otvoreno</string>
+    <string name="bag_status_frozen">Zamrznuto</string>
+    <string name="bag_status_finished">Potrošeno</string>
+
+    <!-- Enum: DecafProcess -->
+    <string name="decaf_unknown">Nepoznato / nije navedeno</string>
+    <string name="decaf_swiss_water">Swiss Water (obrada vodom)</string>
+    <string name="decaf_mountain_water">Mountain Water (obrada vodom)</string>
+    <string name="decaf_co2">Superkritični CO₂</string>
+    <string name="decaf_ea_sugarcane">Etil-acetat (šećerna trska / prirodni EA)</string>
+    <string name="decaf_mc_direct">Metilen-klorid (izravno otapalo)</string>
+    <string name="decaf_ea_direct">Etil-acetat (izravno otapalo)</string>
+    <string name="decaf_short_unknown">Nepoznato</string>
+    <string name="decaf_short_swiss_water">Swiss Water</string>
+    <string name="decaf_short_mountain_water">Mountain Water</string>
+    <string name="decaf_short_co2">CO₂</string>
+    <string name="decaf_short_ea_sugarcane">EA (šećerna trska)</string>
+    <string name="decaf_short_mc_direct">MC</string>
+    <string name="decaf_short_ea_direct">EA (otapalo)</string>
+
+    <!-- Enum: CoffeeRoastLevel -->
+    <string name="roast_light">Svijetlo</string>
+    <string name="roast_medium_light">Srednje svijetlo</string>
+    <string name="roast_medium">Srednje</string>
+    <string name="roast_medium_dark">Srednje tamno</string>
+    <string name="roast_dark">Tamno</string>
+    <string name="roast_filter">Filter</string>
+    <string name="roast_espresso">Espresso</string>
+    <string name="roast_omniroast">Omniroast</string>
+    <string name="roast_cinnamon">Cimet</string>
+
+    <!-- Enum: CoffeeProcessType -->
+    <string name="process_washed">Prana</string>
+    <string name="process_natural">Natural</string>
+    <string name="process_honey">Honey</string>
+    <string name="process_anaerobic">Anaerobna</string>
+    <string name="process_carbonic_maceration">Karbonska maceracija</string>
+    <string name="process_semi_washed">Poluprana</string>
+    <string name="process_wet_hulled">Wet-hulled</string>
+    <string name="process_pulped_natural">Pulped natural</string>
+    <string name="process_double_fermented">Dvostruko fermentirana</string>
+    <string name="process_thermal_shock">Termalni šok</string>
+    <!-- Guided bag scan -->
+    <string name="guided_scan_aim_front">Centrirajte prednju stranu vrećice u okvir</string>
+    <string name="guided_scan_aim_back">Sada skenirajte stražnju stranu vrećice</string>
+    <string name="guided_scan_aim_more">Dodajte još jednu fotografiju (neobavezno)</string>
+    <string name="guided_scan_hold_steady">Držite mirno…</string>
+    <string name="guided_scan_skip_photos">Preskočite fotografije</string>
+    <string name="guided_scan_finished">Gotovo</string>
+    <string name="guided_scan_auto_on">Auto uključeno</string>
+    <string name="guided_scan_auto_off">Auto isključeno</string>
+    <string name="guided_scan_capture">Snimite fotografiju</string>
+    <string name="guided_scan_scan_more">Skenirajte još fotografija</string>
+    <string name="scan_warn_glare">Smanjite odsjaj</string>
+    <string name="scan_warn_lighting">Poboljšajte osvjetljenje</string>
+    <string name="cd_remove_photo">Uklonite fotografiju</string>
+    <string name="msg_bag_saved">Vrećica spremljena</string>
+</resources>

@@ -79,14 +79,14 @@ extensions.configure<ApplicationExtension>("android") {
         // Expose the exported Room schemas to instrumented tests so
         // MigrationTestHelper can create historical databases and validate
         // migrations against the real schema history (not hand-written copies).
-        getByName("androidTest").assets.srcDir("$projectDir/schemas")
+        getByName("androidTest").assets.directories.add("$projectDir/schemas")
 
         // Pure-JVM corpus/scoring harness shared by both unit tests
         // (src/test) and instrumented tests (src/androidTest). Keep it
         // Android-free so the JVM unit tests can exercise the scoring math
         // deterministically while the on-device tests reuse the same logic.
-        getByName("test").kotlin.srcDir("src/sharedTest/kotlin")
-        getByName("androidTest").kotlin.srcDir("src/sharedTest/kotlin")
+        getByName("test").kotlin.directories.add("src/sharedTest/kotlin")
+        getByName("androidTest").kotlin.directories.add("src/sharedTest/kotlin")
     }
 
     testOptions {

@@ -39,6 +39,26 @@ class CoffeeMetadataNormalizerTest {
     }
 
     @Test
+    fun `normalizes Typica Mejorado variety and its Mejorado alias`() {
+        val full = CoffeeMetadataNormalizer.normalizeField("variety", "Typica Mejorado", Locale.ENGLISH)
+        val alias = CoffeeMetadataNormalizer.normalizeField("variety", "Mejorado", Locale.ENGLISH)
+
+        assertNotNull(full)
+        assertEquals("TYPICA_MEJORADO", full!!.canonicalKey)
+        assertEquals("Typica Mejorado", full.value)
+        assertEquals("TYPICA_MEJORADO", alias!!.canonicalKey)
+    }
+
+    @Test
+    fun `normalizes Nepal origin`() {
+        val normalized = CoffeeMetadataNormalizer.normalizeField("origin", "Nepal", Locale.ENGLISH)
+
+        assertNotNull(normalized)
+        assertEquals("NEPAL", normalized!!.canonicalKey)
+        assertEquals("Nepal", normalized.value)
+    }
+
+    @Test
     fun `normalizes multilingual tasting notes to canonical ids`() {
         val normalized = CoffeeMetadataNormalizer.normalizeField(
             fieldName = "tastingNotes",

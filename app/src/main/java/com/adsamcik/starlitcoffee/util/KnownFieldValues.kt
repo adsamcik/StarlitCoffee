@@ -8,6 +8,7 @@ data class KnownFieldValues(
     val varieties: List<String> = emptyList(),
     val processTypes: List<String> = emptyList(),
     val roastLevels: List<String> = emptyList(),
+    val tastingNotes: List<String> = emptyList(),
     val farms: List<String> = emptyList(),
 ) {
     companion object {
