@@ -14,6 +14,8 @@ import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.mindlayer.sdk.ConnectionState
 import com.adsamcik.mindlayer.sdk.InferenceBackend
 import com.adsamcik.mindlayer.sdk.InferenceHandle
+import com.adsamcik.mindlayer.sdk.JsonOutputStrategy
+import com.adsamcik.mindlayer.sdk.JsonValidationDepth
 import com.adsamcik.mindlayer.sdk.Mindlayer
 import com.adsamcik.mindlayer.sdk.MindlayerException
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
@@ -24,6 +26,7 @@ import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -32,6 +35,7 @@ import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonObject
 
 private const val MINDLAYER_LLM_TAG = "MindlayerLlm"
 
@@ -279,9 +283,11 @@ class MindlayerLlmInferenceProvider(
             // Stateless one-shot via the v1 canonical builder — a fresh
             // ephemeral session runs the inference and is torn down after.
             // No history carries over to the next extraction. Structured
-            // output is requested through the prompt-embedded schema
-            // (PromptAndValidate); the v1 infer{} builder has no extraContext
-            // envelope, and parseResponse lenient-parses the JSON it returns.
+            // output is requested via the SDK's jsonOutput { } DSL
+            // (PromptAndValidate + CALLER_VALIDATES): the RESPONSE_SCHEMA is
+            // injected into the system prompt to pin the envelope shape and the
+            // status vocabulary, while the service performs no validation/retry,
+            // so parseResponse remains the lenient client-side validator.
             //
             // Text-only: no `image(...)` input. The OCR text travels in the
             // prompt itself, escaped via the triple-quote block in
@@ -291,6 +297,11 @@ class MindlayerLlmInferenceProvider(
                     ephemeralSession {
                         systemPrompt = buildSystemPrompt(extended)
                         maxTokens = MAX_TOKENS
+                        jsonOutput {
+                            schema(RESPONSE_SCHEMA)
+                            strategy(JsonOutputStrategy.PromptAndValidate)
+                            validationDepth(JsonValidationDepth.CALLER_VALIDATES)
+                        }
                     }
                     text(prompt)
                     sampling {
@@ -413,6 +424,11 @@ class MindlayerLlmInferenceProvider(
                     ephemeralSession {
                         systemPrompt = VISION_SYSTEM_PROMPT
                         maxTokens = MAX_TOKENS
+                        jsonOutput {
+                            schema(RESPONSE_SCHEMA)
+                            strategy(JsonOutputStrategy.PromptAndValidate)
+                            validationDepth(JsonValidationDepth.CALLER_VALIDATES)
+                        }
                     }
                     text(prompt)
                     image(bitmap)
@@ -485,6 +501,11 @@ class MindlayerLlmInferenceProvider(
                     ephemeralSession {
                         systemPrompt = COMBINE_SYSTEM_PROMPT
                         maxTokens = MAX_TOKENS
+                        jsonOutput {
+                            schema(RESPONSE_SCHEMA)
+                            strategy(JsonOutputStrategy.PromptAndValidate)
+                            validationDepth(JsonValidationDepth.CALLER_VALIDATES)
+                        }
                     }
                     text(prompt)
                     sampling {
@@ -787,8 +808,14 @@ Response format (JSON only, no markdown):
                 known.processTypes.takeIf { it.isNotEmpty() }?.let {
                     parts.add("Known processes: ${it.take(10).joinToString(", ")}")
                 }
+                known.tastingNotes.takeIf { it.isNotEmpty() }?.let {
+                    parts.add("Known tasting notes: ${it.take(15).joinToString(", ")}")
+                }
                 if (parts.isNotEmpty()) {
-                    append("\n\nReference vocabulary from the user's coffee collection:")
+                    append(
+                        "\n\nReference vocabulary — likely values per field " +
+                            "(your saved coffees + a curated coffee reference):",
+                    )
                     parts.forEach { append("\n- $it") }
                     append(
                         "\nPrefer a known value when the image is a close match; do not force a match.",
@@ -1147,9 +1174,15 @@ Rules:
                 known.roasters.takeIf { it.isNotEmpty() }?.let { roasters ->
                     parts.add("Known roasters: ${roasters.take(20).joinToString(", ")}")
                 }
+                known.tastingNotes.takeIf { it.isNotEmpty() }?.let { notes ->
+                    parts.add("Known tasting notes: ${notes.take(15).joinToString(", ")}")
+                }
 
                 if (parts.isNotEmpty()) {
-                    append("\n\nReference vocabulary from user's coffee collection:")
+                    append(
+                        "\n\nReference vocabulary — likely values per field " +
+                            "(your saved coffees + a curated coffee reference):",
+                    )
                     parts.forEach { append("\n- $it") }
                     append(
                         "\nPrefer these values when a match is close. " +
@@ -1244,8 +1277,14 @@ Response format (JSON only, no markdown):
                 known.processTypes.takeIf { it.isNotEmpty() }?.let {
                     parts.add("Known processes: ${it.take(10).joinToString(", ")}")
                 }
+                known.tastingNotes.takeIf { it.isNotEmpty() }?.let {
+                    parts.add("Known tasting notes: ${it.take(15).joinToString(", ")}")
+                }
                 if (parts.isNotEmpty()) {
-                    append("\n\nReference vocabulary from the user's coffee collection:")
+                    append(
+                        "\n\nReference vocabulary — likely values per field " +
+                            "(your saved coffees + a curated coffee reference):",
+                    )
                     parts.forEach { append("\n- $it") }
                     append(
                         "\nPrefer a known value when a pass is a close OCR/vision variant of it; " +
@@ -1298,6 +1337,52 @@ Response format (JSON only, no markdown):
             "expiryDate" to "expiryDate",
             "isDecaf" to "isDecaf",
         )
+
+        /**
+         * Allowed values for a field entry's `status` slot. Kept in sync with the
+         * status handling in [extractFieldCandidate]; surfaced to the model via
+         * the structured-output schema so it uses only these tokens.
+         */
+        private val STATUS_VALUES = listOf("found", "uncertain", "not_visible")
+
+        /**
+         * Structured-output schema for the extraction response envelope, adopted
+         * via the SDK's `jsonOutput { }` DSL on the text/vision/combine passes.
+         *
+         * It is a RELIABILITY layer, not a value dictionary: it pins the envelope
+         * SHAPE (`{"fields": {<field>: {"value": ..., "status": <enum>}}}`) and the
+         * `status` vocabulary, but leaves every `value` UNTYPED so a null
+         * (not_visible) or any free-text string passes — `process`, `roastLevel`,
+         * etc. stay open-vocabulary. `evidence` is intentionally omitted (optional,
+         * checked client-side). All passes use CALLER_VALIDATES (see call sites):
+         * the schema is injected into the system prompt to guide the model, but the
+         * service performs NO validation/retry, so there is zero risk of a
+         * fail-closed regression, an extra (budgeted, crash-prone) vision inference,
+         * or a null-handling false positive. [parseResponse] remains the validator.
+         */
+        internal val RESPONSE_SCHEMA: JsonObject = buildJsonObject {
+            put("type", JsonPrimitive("object"))
+            putJsonObject("properties") {
+                putJsonObject("fields") {
+                    put("type", JsonPrimitive("object"))
+                    putJsonObject("properties") {
+                        fieldMapping.keys.forEach { key -> put(key, fieldEntrySchema()) }
+                    }
+                }
+            }
+        }
+
+        private fun fieldEntrySchema(): JsonObject = buildJsonObject {
+            put("type", JsonPrimitive("object"))
+            putJsonObject("properties") {
+                // Untyped: a string OR null (not_visible) both validate — values
+                // are deliberately free-form (no process/roastLevel enum).
+                putJsonObject("value") { }
+                putJsonObject("status") {
+                    put("enum", JsonArray(STATUS_VALUES.map { JsonPrimitive(it) }))
+                }
+            }
+        }
 
         internal fun parseResponse(
             response: String,
@@ -1422,27 +1507,18 @@ Response format (JSON only, no markdown):
         }
 
         /**
-         * Idea #6 — deterministic enum normalization for controlled-vocabulary
-         * fields, the pragmatic stand-in for true grammar-constrained decoding.
+         * Idea #6 — deterministic normalization for controlled-vocabulary fields.
          *
-         * The SDK exposes structured output (`JsonOutputBuilder` +
-         * `structured_output` envelope). Historically the `infer { ... }` builder's
-         * `outputJson(...)` was a NON-FUNCTIONAL surface at the pinned SDK
-         * `1.0.0-alpha.2`: it recorded `OutputMode.Json`, yet `sessionConfigureFrom`
-         * only consumed `OutputMode.Tools`, so the schema was silently dropped and
-         * no validation/retry ran. That wiring bug has since been FIXED upstream in
-         * Mindlayer `main` (`infer { outputJson(schema) }` / `extractJson` now emit
-         * the `structured_output` envelope, and its `enum`/type is validated
-         * server-side, generate→validate→retry→fail-closed). Adopting it here to
-         * enum-constrain `process`/`roastLevel` (a preventive control, distinct from
-         * this reactive snap) is a follow-up gated on an SDK version bump — the app
-         * still depends on the un-republished pinned build. Until then the
-         * deterministic enum-snap below stays as the interim stand-in. NOTE: the
-         * upstream mechanism is post-hoc validate-and-retry, not token-masked
-         * grammar-constrained decoding, so it catches an out-of-enum value
-         * ("Whole Bean" for process) but not a valid-but-hallucinated one
-         * ("Dark" roast guessed from a dark bag — that is handled by the vision
-         * evidence-requirement in `extractFieldCandidate`).
+         * Structured output is now adopted via the SDK's `jsonOutput { }` DSL on
+         * the text/vision/combine passes (see [RESPONSE_SCHEMA]) — but deliberately
+         * as a SHAPE + `status`-vocabulary reliability layer only (CALLER_VALIDATES,
+         * value left free-form), NOT a value enum. `process` is a semi-open
+         * vocabulary (Lactic, Thermal Shock, Yellow/Red Honey, Double Fermented…),
+         * so a fail-closed value enum would reject valid novel methods; and
+         * roastLevel's real failure is a valid-but-hallucinated value ("Dark"),
+         * which an enum cannot catch (handled instead by the vision
+         * evidence-requirement in [extractFieldCandidate]). So this deterministic
+         * step remains the canonicalizer for roastLevel.
          *
          * For roastLevel, strip a trailing "Roast"/"Roasted" qualifier so the
          * model's "Light Roast" collapses to the canonical "Light" (the corpus

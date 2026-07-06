@@ -6,8 +6,12 @@ import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -624,7 +628,7 @@ class MindlayerLlmInferenceProviderTest {
         val prompt = MindlayerLlmInferenceProvider.buildExtractionPrompt(request)
 
         assertTrue("Prompt should contain reference vocabulary header",
-            prompt.contains("Reference vocabulary from user's coffee collection"))
+            prompt.contains("Reference vocabulary — likely values per field"))
         assertTrue("Prompt should list known origins",
             prompt.contains("Known origins: Ethiopia, Colombia, Kenya"))
         assertTrue("Prompt should list known varieties",
@@ -1033,6 +1037,29 @@ class MindlayerLlmInferenceProviderTest {
             "Roast-dot cue must reinforce that bean/bag darkness is never a roast cue",
             prompt.contains("never a roast-level cue"),
         )
+    }
+
+    @Test
+    fun `RESPONSE_SCHEMA pins envelope shape and status enum but leaves value free-form`() {
+        val schema = MindlayerLlmInferenceProvider.RESPONSE_SCHEMA
+        assertEquals("object", schema["type"]!!.jsonPrimitive.content)
+        val fields = schema["properties"]!!.jsonObject["fields"]!!.jsonObject
+        assertEquals("object", fields["type"]!!.jsonPrimitive.content)
+        val fieldProps = fields["properties"]!!.jsonObject
+
+        // Every known field key is described.
+        MindlayerLlmInferenceProvider.fieldMapping.keys.forEach { key ->
+            assertTrue("schema must describe field $key", key in fieldProps)
+        }
+
+        val roastLevel = fieldProps["roastLevel"]!!.jsonObject["properties"]!!.jsonObject
+        // status is constrained to exactly the three allowed tokens.
+        val statusEnum = (roastLevel["status"]!!.jsonObject["enum"] as JsonArray).map { it.jsonPrimitive.content }
+        assertEquals(listOf("found", "uncertain", "not_visible"), statusEnum)
+        // value is UNTYPED (free-form): no process/roastLevel value enum, and null passes.
+        val value = roastLevel["value"]!!.jsonObject
+        assertNull("value must not constrain type (free-form + nullable)", value["type"])
+        assertNull("value must not enumerate allowed values", value["enum"])
     }
 
     @Test
