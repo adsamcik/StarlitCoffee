@@ -19,6 +19,7 @@ import com.adsamcik.starlitcoffee.data.network.llm.LlmCombineRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
+import com.adsamcik.starlitcoffee.data.network.llm.LlmRefineRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmCallGate
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
@@ -135,6 +136,13 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         // Kept at/under the prompt's own .take(...) caps so vocab hints and the
         // user's own collection both fit in the reference-vocabulary section.
         private const val MAX_VOCAB_HINTS_PER_FIELD = 8
+
+        // Post-translation refine pass: close vocabulary candidates offered per
+        // field for the LLM to keep-or-canonicalize. Only the English concept
+        // fields with a bounded vocabulary participate (proper nouns / structural
+        // fields have no canonical vocabulary to snap to).
+        private const val MAX_REFINE_SUGGESTIONS = 5
+        private val REFINE_FIELDS = listOf("origin", "region", "variety", "processType", "roastLevel")
 
         private val CANONICAL_METADATA_FIELDS = setOf(
             "origin",
@@ -1099,6 +1107,12 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             knownFieldValues = currentKnownValues,
             combinedOcrText = combinedOcrText,
         )
+        // Post-translation refinement: offer the LLM close vocabulary candidates
+        // for the now-English concept fields and let it keep or canonicalize.
+        allCandidates += runRefineEnrichmentIfNeeded(
+            allCandidates = allCandidates.toList(),
+            combinedOcrText = combinedOcrText,
+        )
         return llmOutcome
     }
 
@@ -1231,6 +1245,131 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         append(request.textPassFields.entries.sortedBy { it.key }.joinToString(",") { "${it.key}=${it.value}" })
         append('|')
         append(request.visionPassFields.entries.sortedBy { it.key }.joinToString(",") { "${it.key}=${it.value}" })
+    }
+
+    /**
+     * Post-translation refinement pass. For each already-English concept field,
+     * fuzzy-matches the current best value against the curated vocabulary and, if
+     * there are meaningfully different close candidates, asks the LLM to keep its
+     * value or adopt a cleaner canonical form. Skips fields already pinned by an
+     * authoritative source, and runs only when the provider supports refine, the
+     * vocabulary is loaded, and there is something to suggest.
+     */
+    @VisibleForTesting
+    internal suspend fun runRefineEnrichmentIfNeeded(
+        allCandidates: List<BagFieldCandidate>,
+        combinedOcrText: String? = null,
+    ): List<BagFieldCandidate> {
+        if (!llmProvider.supportsRefine() || !llmProvider.isAvailable()) return emptyList()
+        val vocabulary = vocabularyProvider() ?: return emptyList()
+        if (vocabulary.isEmpty) return emptyList()
+
+        val bestValues = bestValuesByField(allCandidates)
+        val settled = resolveBagPhotoFieldEvidence(allCandidates)
+        val currentFields = LinkedHashMap<String, String>()
+        val suggestionsByField = LinkedHashMap<String, List<String>>()
+        REFINE_FIELDS.forEach { field ->
+            refineSuggestionsForField(field, bestValues[field], settled[field], vocabulary)
+                ?.let { (value, suggestions) ->
+                    currentFields[field] = value
+                    suggestionsByField[field] = suggestions
+                }
+        }
+        if (suggestionsByField.isEmpty()) return emptyList()
+
+        return tryRefineEnrichment(
+            LlmRefineRequest(
+                fieldsNeeded = suggestionsByField.keys,
+                currentFields = currentFields,
+                suggestionsByField = suggestionsByField,
+                rawOcrText = combinedOcrText,
+            ),
+        )
+    }
+
+    /**
+     * Close vocabulary candidates for one field, or null when the field is
+     * authoritatively settled, has no value, isn't a vocabulary-backed field, or
+     * has no meaningfully different suggestion.
+     */
+    private fun refineSuggestionsForField(
+        field: String,
+        currentValue: String?,
+        evidence: BagFieldEvidence?,
+        vocabulary: CoffeeFilterVocabulary,
+    ): Pair<String, List<String>>? {
+        if (BagVisionPlanner.isAuthoritativelySettled(evidence)) return null
+        val value = currentValue?.takeIf { it.isNotBlank() } ?: return null
+        val entries = vocabularyEntriesForField(field, vocabulary) ?: return null
+        val suggestions = value.split(',')
+            .map(String::trim)
+            .filter(String::isNotBlank)
+            .flatMap { CoffeeVocabularyMatcher.suggest(it, entries, MAX_REFINE_SUGGESTIONS) }
+            .distinct()
+            .filterNot { it.equals(value, ignoreCase = true) }
+            .take(MAX_REFINE_SUGGESTIONS)
+        return if (suggestions.isNotEmpty()) value to suggestions else null
+    }
+
+    private suspend fun tryRefineEnrichment(request: LlmRefineRequest): List<BagFieldCandidate> {
+        val cacheKey = LlmCacheKey.compute(
+            imageBytes = ByteArray(0),
+            fieldsNeeded = request.fieldsNeeded,
+            rawOcrText = serializeRefineInputs(request),
+            existingFields = emptyMap(),
+            mode = "refine",
+        )
+        llmCache.get(cacheKey)?.let { return it.fieldCandidates }
+
+        val result = try {
+            MindlayerLlmCallGate.withPermit {
+                withTimeout(BAG_PHOTO_LLM_TIMEOUT_MS) {
+                    llmProvider.refineBagFields(request)
+                }
+            }
+        } catch (_: TimeoutCancellationException) {
+            LlmExtractionResult.Failed("Refine enrichment timed out", retryable = false)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            LlmExtractionResult.Failed("Refine enrichment threw: ${e.message}", retryable = false)
+        }
+
+        return when (result) {
+            is LlmExtractionResult.Success -> {
+                llmCache.put(cacheKey, result)
+                result.fieldCandidates
+            }
+            is LlmExtractionResult.Unavailable -> {
+                Log.w(BAG_PHOTO_TAG, "Refine enrichment unavailable: ${result.reason}")
+                emptyList()
+            }
+            is LlmExtractionResult.Failed -> {
+                Log.w(BAG_PHOTO_TAG, "Refine enrichment failed: ${result.error}")
+                emptyList()
+            }
+        }
+    }
+
+    private fun vocabularyEntriesForField(
+        field: String,
+        vocabulary: CoffeeFilterVocabulary,
+    ): List<com.adsamcik.starlitcoffee.util.CoffeeVocabularyEntry>? = when (field) {
+        "origin" -> vocabulary.origins
+        "region" -> vocabulary.regions
+        "variety" -> vocabulary.varieties
+        "processType" -> vocabulary.processTypes
+        "roastLevel" -> vocabulary.roastLevels
+        else -> null
+    }
+
+    private fun serializeRefineInputs(request: LlmRefineRequest): String = buildString {
+        append(request.currentFields.entries.sortedBy { it.key }.joinToString(",") { "${it.key}=${it.value}" })
+        append('|')
+        append(
+            request.suggestionsByField.entries.sortedBy { it.key }
+                .joinToString(",") { "${it.key}=${it.value.joinToString(";")}" },
+        )
     }
 
     private suspend fun tryVisionLlmEnrichment(

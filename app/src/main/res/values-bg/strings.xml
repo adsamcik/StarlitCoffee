@@ -280,16 +280,14 @@
     <string name="notif_rating_title">Как беше Вашето кафе?</string>
     <string name="format_notif_rating_title">Как беше Вашето приготвяне с %1$s?</string>
     <string name="notif_rating_body">Докоснете емоджи, за да го оцените, или отворете приложението за още.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Оценете с 1 от 5 звезди</string>
-    <string name="cd_notif_rating_2">Оценете с 2 от 5 звезди</string>
-    <string name="cd_notif_rating_3">Оценете с 3 от 5 звезди</string>
-    <string name="cd_notif_rating_4">Оценете с 4 от 5 звезди</string>
-    <string name="cd_notif_rating_5">Оценете с 5 от 5 звезди</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Оценете като лошо</string>
+    <string name="cd_notif_rating_2">Оценете като така-така</string>
+    <string name="cd_notif_rating_3">Оценете като добро</string>
+    <string name="cd_notif_rating_4">Оценете като страхотно</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Анализ на Вашия пакет</string>
@@ -613,10 +611,16 @@
     <string name="grind_medium_coarse">Средно едро</string>
     <string name="grind_coarse">Едро</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Чудесно</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Лошо</string>
+    <string name="rating_meh">Така-така</string>
     <string name="rating_good">Добро</string>
-    <string name="rating_not_great">Не особено добро</string>
+    <string name="rating_awesome">Страхотно</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Оценете като лошо</string>
+    <string name="cd_rate_meh">Оценете като така-така</string>
+    <string name="cd_rate_good">Оценете като добро</string>
+    <string name="cd_rate_awesome">Оценете като страхотно</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Твърде горчиво</string>

@@ -54,12 +54,13 @@ import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.component.ChipEmphasis
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.ui.component.InsightChip
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
-import com.adsamcik.starlitcoffee.ui.component.StarRatingRow
+import com.adsamcik.starlitcoffee.ui.component.BrewRatingBadge
 import com.adsamcik.starlitcoffee.ui.component.SwipeToDismissCard
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
@@ -380,7 +381,7 @@ private fun BrewLogCardHeader(
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                StarRatingRow(rating = rating, starSize = 14.dp)
+                BrewRatingBadge(ratingValue = rating)
                 if (feedbackEmoji != null) {
                     Text(
                         text = feedbackEmoji,
@@ -454,18 +455,15 @@ private data class RatingAccent(
 @Composable
 private fun ratingAccent(rating: Float?): RatingAccent {
     val scheme = MaterialTheme.colorScheme
-    return when {
-        rating == null -> RatingAccent(scheme.surfaceContainerHighest, scheme.onSurfaceVariant)
-        rating >= RATING_EXCELLENT -> RatingAccent(scheme.primaryContainer, scheme.onPrimaryContainer)
-        rating >= RATING_GOOD -> RatingAccent(scheme.secondaryContainer, scheme.onSecondaryContainer)
-        rating >= RATING_FAIR -> RatingAccent(scheme.tertiaryContainer, scheme.onTertiaryContainer)
-        else -> RatingAccent(scheme.errorContainer, scheme.onErrorContainer)
+    return when (BrewRating.fromStoredValue(rating)) {
+        null -> RatingAccent(scheme.surfaceContainerHighest, scheme.onSurfaceVariant)
+        BrewRating.AWESOME -> RatingAccent(scheme.primaryContainer, scheme.onPrimaryContainer)
+        BrewRating.GOOD -> RatingAccent(scheme.secondaryContainer, scheme.onSecondaryContainer)
+        BrewRating.MEH -> RatingAccent(scheme.tertiaryContainer, scheme.onTertiaryContainer)
+        BrewRating.BAD -> RatingAccent(scheme.errorContainer, scheme.onErrorContainer)
     }
 }
 
-private const val RATING_EXCELLENT = 4.5f
-private const val RATING_GOOD = 3.0f
-private const val RATING_FAIR = 2.0f
 private const val NOTES_PREVIEW_CHARS = 80
 
 private fun formatFilterType(filterType: String): String = when (filterType) {

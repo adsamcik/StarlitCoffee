@@ -67,7 +67,7 @@ import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
-import com.adsamcik.starlitcoffee.data.model.QuickRating
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
@@ -608,14 +608,13 @@ fun MethodPickerScreen(
                 onQuickRate = { rating ->
                     brewViewModel.quickRateBrewLog(
                         logId = unratedBrew.id,
-                        rating = rating.starRating,
-                        tasteFeedback = rating.tasteFeedback,
+                        rating = rating,
                     )
                 },
                 onIssueRate = { issue ->
                     brewViewModel.quickRateBrewLog(
                         logId = unratedBrew.id,
-                        rating = QuickRating.NOT_GREAT.starRating,
+                        rating = BrewRating.BAD,
                         tasteFeedback = issue.tasteFeedback,
                     )
                 },

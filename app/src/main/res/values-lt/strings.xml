@@ -282,16 +282,14 @@
     <string name="notif_rating_title">Kaip jūsų kava?</string>
     <string name="format_notif_rating_title">Kaip jūsų %1$s kava?</string>
     <string name="notif_rating_body">Bakstelėkite jaustuką, kad įvertintumėte, arba atverkite programėlę, jei norite daugiau.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Įvertinti 1 iš 5 žvaigždučių</string>
-    <string name="cd_notif_rating_2">Įvertinti 2 iš 5 žvaigždučių</string>
-    <string name="cd_notif_rating_3">Įvertinti 3 iš 5 žvaigždučių</string>
-    <string name="cd_notif_rating_4">Įvertinti 4 iš 5 žvaigždučių</string>
-    <string name="cd_notif_rating_5">Įvertinti 5 iš 5 žvaigždučių</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Įvertinti kaip prastą</string>
+    <string name="cd_notif_rating_2">Įvertinti kaip vidutinišką</string>
+    <string name="cd_notif_rating_3">Įvertinti kaip gerą</string>
+    <string name="cd_notif_rating_4">Įvertinti kaip puikų</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analizuojama jūsų pakuotė</string>
@@ -615,10 +613,16 @@
     <string name="grind_medium_coarse">Vidutiniškai stambus</string>
     <string name="grind_coarse">Stambus</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Puiki</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Prasta</string>
+    <string name="rating_meh">Šiaip sau</string>
     <string name="rating_good">Gera</string>
-    <string name="rating_not_great">Vidutiniška</string>
+    <string name="rating_awesome">Puiku</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Įvertinti kaip prastą</string>
+    <string name="cd_rate_meh">Įvertinti kaip vidutinišką</string>
+    <string name="cd_rate_good">Įvertinti kaip gerą</string>
+    <string name="cd_rate_awesome">Įvertinti kaip puikų</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Per karti</string>

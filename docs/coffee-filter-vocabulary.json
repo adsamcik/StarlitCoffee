@@ -1,0 +1,7487 @@
+{
+  "scraped_at": "2026-07-06",
+  "purpose": "Coffee field-value hints scraped from public coffee retailer collection/product metadata for OCR-to-field inference.",
+  "metadata_schema": {
+    "language_metadata": {
+      "retailer_country": "ISO 3166-1 alpha-2 country code for the retailer/storefront when clear; 'MULTI' for multi-market/global sources.",
+      "retailer_language": "Primary public storefront/feed language used for the scraped values, as a BCP-47-ish short tag.",
+      "scraped_value_languages": "Languages actually present in scraped filter/product values. Mixed-language shops include multiple tags.",
+      "confidence": "high when directly inferred from storefront locale/content; medium when page/feed is mixed or partially inferred.",
+      "note": "Short reason for mixed-language or inferred cases."
+    },
+    "usage": "For fuzzy/OCR matching, prefer *_aggregate_hints by target locale and use each source.language.scraped_value_languages to avoid cross-language overmatching. Source entries preserve retailer wording."
+  },
+  "sources": [
+    {
+      "name": "Onyx Coffee Lab",
+      "url": "https://onyxcoffeelab.com/collections/coffee",
+      "language": {
+        "retailer_country": "US",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "US storefront and English Shopify/feed values."
+      },
+      "product_feed": "https://onyxcoffeelab.com/collections/coffee/products.json?limit=250",
+      "product_count": 35,
+      "visible_filters": {
+        "roast_level": [
+          "Darker",
+          "Lighter"
+        ],
+        "origin": [
+          "California",
+          "Colombia",
+          "Ecuador",
+          "Ethiopia",
+          "Honduras",
+          "Kenya",
+          "Nepal",
+          "Panama",
+          "Peru"
+        ],
+        "caffeine": [
+          "Decaf",
+          "Full",
+          "Partial"
+        ],
+        "profile": [
+          "Traditional",
+          "Modern"
+        ],
+        "process": [
+          "Anaerobic Natural",
+          "Anaerobic Washed",
+          "Dry Washed",
+          "Innoculated",
+          "Natural",
+          "Washed",
+          "White Honey"
+        ],
+        "variety": [
+          "Bourbon",
+          "Caturra",
+          "Chiroso",
+          "Colombia",
+          "Gesha",
+          "Landrace",
+          "Mixed",
+          "Pink Bourbon",
+          "Sudan Rume",
+          "Typica Mejorado"
+        ]
+      },
+      "tag_filters": {
+        "caffeine": [
+          "full",
+          "decaf",
+          "partial"
+        ],
+        "method": [
+          "Filter",
+          "Espresso"
+        ],
+        "origin": [
+          "Colombia",
+          "Ethiopia",
+          "Panama",
+          "Ecuador",
+          "Honduras",
+          "Peru",
+          "Nepal",
+          "California",
+          "Kenya"
+        ],
+        "process": [
+          "Washed",
+          "Natural",
+          "Dry Washed",
+          "Innoculated",
+          "Anaerobic Washed",
+          "Anaerobic Natural",
+          "White Honey"
+        ],
+        "profile": [
+          "modern",
+          "traditional"
+        ],
+        "type": [
+          "single origin",
+          "blend",
+          "collaboration"
+        ]
+      },
+      "options": {
+        "Size": [
+          "10oz",
+          "10oz Case Pack (6)",
+          "27oz",
+          "2lbs",
+          "2oz",
+          "5lb",
+          "5lbs",
+          "5lbs Case Pack (8)",
+          "8oz"
+        ],
+        "Caffeine": [
+          "25%",
+          "50%",
+          "75%",
+          "Decaf",
+          "Full Caf"
+        ]
+      }
+    },
+    {
+      "name": "Stumptown Coffee Roasters",
+      "url": "https://www.stumptowncoffee.com/collections/coffee",
+      "language": {
+        "retailer_country": "US",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "US storefront and English Shopify/feed values."
+      },
+      "product_feed": "https://www.stumptowncoffee.com/collections/coffee/products.json?limit=250",
+      "product_count": 24,
+      "tag_filters": {
+        "coffee_type": [
+          "Blend",
+          "Single Origin",
+          "Subscription Only",
+          "Bundle",
+          "Gift Set"
+        ],
+        "filter": [
+          "5 LB Bags",
+          "Blends",
+          "Subscription Eligible",
+          "Single Origins",
+          "Organic Coffee",
+          "Bundles",
+          "Ground",
+          "Gift Sets",
+          "Decaf"
+        ],
+        "plain_filter_like_tags": [
+          "Medium Roast",
+          "Chocolate",
+          "Pour Over",
+          "Caramel",
+          "Bright",
+          "French Press",
+          "Bold",
+          "Espresso",
+          "Complex",
+          "Creamy",
+          "Decaf",
+          "Brown Sugar",
+          "Mild",
+          "Syrupy"
+        ]
+      },
+      "options": {
+        "Size": [
+          "10.5oz",
+          "12oz",
+          "12oz Ground",
+          "5lb"
+        ]
+      }
+    },
+    {
+      "name": "Counter Culture Coffee",
+      "url": "https://counterculturecoffee.com/collections/coffee",
+      "language": {
+        "retailer_country": "US",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "US storefront and English Shopify/feed values."
+      },
+      "product_feed": "https://counterculturecoffee.com/collections/coffee/products.json?limit=250",
+      "product_count": 30,
+      "tag_filters": {
+        "origin": [
+          "single-origin",
+          "year-round-blend",
+          "colombia",
+          "uganda",
+          "ethiopia",
+          "guatemala"
+        ],
+        "roastlevel": [
+          "light-roast",
+          "medium-roast",
+          "medium-dark-roast",
+          "dark-roast",
+          "medium-light-roast"
+        ],
+        "plain_filter_like_tags": [
+          "single-origin",
+          "year-round",
+          "organic",
+          "bestseller",
+          "recommended",
+          "limited-release",
+          "whole bean",
+          "bulk-coffee"
+        ]
+      },
+      "options": {
+        "Size": [
+          "12 oz",
+          "12 oz box",
+          "12oz",
+          "24 oz",
+          "24oz",
+          "5 lb",
+          "5lb"
+        ]
+      }
+    },
+    {
+      "name": "Verve Coffee Roasters",
+      "url": "https://www.vervecoffee.com/collections/all-coffee",
+      "language": {
+        "retailer_country": "US",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "US storefront and English Shopify/feed values."
+      },
+      "product_feed": "https://www.vervecoffee.com/collections/all-coffee/products.json?limit=250",
+      "product_count": 39,
+      "tag_filters": {
+        "cs": [
+          "Black",
+          "Coffee Maker",
+          "Enthusiast",
+          "Milk",
+          "Sugar",
+          "Chocolate",
+          "Espresso",
+          "French Press",
+          "Moka Pot",
+          "Not Sure",
+          "AeroPress",
+          "Citrus",
+          "Pods",
+          "Barista",
+          "Pour Over",
+          "Refining",
+          "Nuts",
+          "Floral",
+          "Fruit",
+          "Sweet"
+        ],
+        "method": [
+          "Instant"
+        ],
+        "region": [
+          "Latin America",
+          "Africa"
+        ],
+        "roast": [
+          "Medium",
+          "Dark"
+        ],
+        "types": [
+          "Blend",
+          "Single Origin",
+          "Decaf",
+          "Cascara"
+        ],
+        "plain_filter_like_tags": [
+          "Medium Roast",
+          "Dark Roast",
+          "Instant",
+          "Instant Coffee",
+          "Latin America",
+          "Africa",
+          "Ethiopia",
+          "Colombia",
+          "Honduras",
+          "Costa Rica",
+          "Decaf",
+          "Roast Level 5",
+          "Roast Level 6",
+          "Roast Level 7",
+          "Roast Level 8",
+          "Roast Level 9"
+        ]
+      },
+      "options": {
+        "Size": [
+          "12 OZ",
+          "125g",
+          "150g",
+          "2.2 LBS",
+          "5 LBS",
+          "6 OZ",
+          "70g"
+        ],
+        "Grind": [
+          "Coarse (French Press)",
+          "Fine (Espresso)",
+          "Medium (Filter)",
+          "Whole Bean"
+        ]
+      }
+    },
+    {
+      "name": "Peet's Coffee",
+      "url": "https://www.peets.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "US",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "US storefront and English Shopify/feed values."
+      },
+      "product_feed": "https://www.peets.com/products.json?limit=250",
+      "product_count": 250,
+      "tag_filters": {
+        "caffeine": [
+          "Regular",
+          "Decaf",
+          "Very Light Caffeine",
+          "Light Caffeine",
+          "No Caffeine",
+          "Moderate Caffeine",
+          "Half-Caf",
+          "Decaffeinated"
+        ],
+        "certifications": [
+          "Vegan",
+          "Kosher",
+          "Organic",
+          "Fair Trade"
+        ],
+        "coffee_type": [
+          "Limited Release",
+          "Single Origin",
+          "Signature Blend",
+          "Online Exclusive",
+          "Blend",
+          "Organic",
+          "Reserve"
+        ],
+        "flavor": [
+          "Nutty / Chocolate",
+          "Spicy / Complex",
+          "Bright / Citrus / Sweet",
+          "Fruity / Floral",
+          "Flavored Coffee",
+          "Herbal / Earthy",
+          "Flavored K-Cup Pods"
+        ],
+        "flavor_profile": [
+          "Milk Chocolate",
+          "Cocoa",
+          "Fruit",
+          "Spice",
+          "Citrus",
+          "Marzipan",
+          "Melon",
+          "Dried Orange Peel",
+          "Molasses",
+          "Tamarind",
+          "Baked Plum",
+          "Burnt Sugar",
+          "Cured Tobacco",
+          "Butterscotch",
+          "Dark Honey",
+          "Papaya",
+          "Lemon Shortbread",
+          "Nougat",
+          "Brown Sugar",
+          "Warming",
+          "Almond Butter",
+          "Pear",
+          "Honeysuckle",
+          "Strawberry Jam",
+          "Angel Food Cake",
+          "Chocolate Ganache",
+          "Strawberry",
+          "Caramel",
+          "Orange Blossom",
+          "Limon Mandarina",
+          "Spiced Sugar",
+          "Fruit Cup",
+          "Graham Crust",
+          "Brulee",
+          "Meyer Lemon",
+          "Brioche",
+          "Honey Nougat",
+          "Toasted Pecan",
+          "Vanilla",
+          "Dried mulberry",
+          "Nutmeg",
+          "Sandalwood",
+          "Allspice",
+          "Oak Barrel",
+          "Tart Cherry Pie",
+          "Dulce de Leche",
+          "Florals",
+          "Boysenberry",
+          "Dark Chocolate",
+          "Turbinado Sugar",
+          "Bergamot",
+          "Candied Peel",
+          "Wild Blueberry"
+        ],
+        "form": [
+          "Beans",
+          "Espresso Capsules",
+          "Capsules",
+          "Tea Bags",
+          "Loose Leaf",
+          "Coffee Pods",
+          "K-Cup Pods",
+          "Iced Tea"
+        ],
+        "grind": [
+          "Drip",
+          "Whole Bean",
+          "Espresso",
+          "Press Pot / Percolator"
+        ],
+        "preparation": [
+          "Drip",
+          "Press Pot",
+          "Pour Over",
+          "Espresso Capsule",
+          "Loose Leaf",
+          "Coffee Capsule",
+          "Cold Brew",
+          "Coffee Pod",
+          "K-Cup Pod",
+          "Espresso",
+          "Pouch"
+        ],
+        "process": [
+          "Washed",
+          "Natural",
+          "Washed and Wet-Hulled",
+          "Wet-hulled",
+          "Washed and Natural",
+          "Natural and Washed",
+          "Natural and rustic",
+          "Decaffinated",
+          "water-process decaffeination",
+          "water-processed decafination"
+        ],
+        "region": [
+          "Americas",
+          "Africa/Arabia",
+          "Indo-Pacific",
+          "Mighty Leaf Blend",
+          "China",
+          "Japan",
+          "India & Sri Lanka"
+        ],
+        "roast": [
+          "Dark",
+          "Medium",
+          "Light",
+          "Bright",
+          "Bright Medium"
+        ],
+        "single_origin_or_blend": [
+          "Blend",
+          "Single Origin"
+        ]
+      },
+      "options": {
+        "Grind": [
+          "Cold Brew",
+          "Drip",
+          "Espresso",
+          "Press Pot / Percolator",
+          "Whole Bean"
+        ],
+        "Size": [
+          "1.5oz Loose Leaf",
+          "100ct Tea Bags",
+          "12 OZ - $18.95",
+          "12 oz",
+          "12ct Packets",
+          "12ct Tea Bags",
+          "15ct Tea Bags",
+          "16 OZ - $24.95",
+          "16 oz",
+          "1lb Loose Leaf",
+          "3.5oz Loose Leaf",
+          "3oz Loose Leaf",
+          "4oz Loose Leaf"
+        ]
+      }
+    },
+    {
+      "name": "Equator Coffees",
+      "url": "https://www.equatorcoffees.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "US",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "US storefront and English Shopify/feed values."
+      },
+      "product_feed": "https://www.equatorcoffees.com/products.json?limit=250",
+      "product_count": 137,
+      "tag_filters": {
+        "origin": [
+          "south america",
+          "central america",
+          "africa",
+          "asia"
+        ],
+        "roast_level": [
+          "medium",
+          "light",
+          "med dark",
+          "med light",
+          "dark"
+        ],
+        "style": [
+          "organic",
+          "espresso",
+          "fair trade",
+          "decaf",
+          "cold brew"
+        ],
+        "plain_filter_like_tags": [
+          "process_washed",
+          "process_natural",
+          "process_wet hulled",
+          "process_honey",
+          "notes_fruity",
+          "notes_nutty and chocolatey",
+          "notes_sweet and floral",
+          "notes_toasty",
+          "notes_spicy and complex",
+          "type_blend",
+          "type_single origin",
+          "type_instant"
+        ]
+      },
+      "options": {
+        "Grind": [
+          "Coarse (Cold Brew)",
+          "Coarse Grind (Cold Brew)",
+          "Coarse Grind (French Press)",
+          "Espresso Grind",
+          "Medium Grind (Drip/Pour Over)",
+          "Medium Grind (for Hario V60)",
+          "Whole Bean"
+        ],
+        "Size": [
+          "12oz",
+          "2lb / Save 15% per oz",
+          "5lb / Save 20% per oz",
+          "6oz"
+        ]
+      }
+    },
+    {
+      "name": "La Colombe",
+      "url": "https://www.lacolombe.com/collections/coffee",
+      "language": {
+        "retailer_country": "US",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "US storefront and English Shopify/feed values."
+      },
+      "product_feed": "https://www.lacolombe.com/collections/coffee/products.json?limit=250",
+      "product_count": 32,
+      "tag_filters": {
+        "plain_filter_like_tags": [
+          "coffee blends",
+          "medium",
+          "medium roast coffee",
+          "Dark",
+          "dark roast coffee",
+          "Light",
+          "lighter roast coffee",
+          "single-origin coffee",
+          "single origin coffee",
+          "decaf",
+          "organic",
+          "French Press",
+          "Stove Top",
+          "Espresso",
+          "Percolator",
+          "Drip",
+          "drip grind",
+          "whole bean",
+          "whole beans",
+          "ground coffee",
+          "coffee grounds",
+          "coffee variety pack"
+        ]
+      },
+      "options": {
+        "Size": [
+          "1.5 lb (24 oz)",
+          "10 Pack",
+          "10 Pods",
+          "12 oz",
+          "2 lb",
+          "20 Pods (SAVE 18%)",
+          "5 lb"
+        ],
+        "Grind": [
+          "Drip",
+          "Espresso",
+          "French Press",
+          "Whole Bean"
+        ],
+        "Select Grind": [
+          "Drip",
+          "Whole Bean"
+        ]
+      }
+    },
+    {
+      "name": "George Howell Coffee",
+      "url": "https://georgehowellcoffee.com/collections/all-coffee",
+      "language": {
+        "retailer_country": "US",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "US storefront and English Shopify/feed values."
+      },
+      "product_feed": "https://georgehowellcoffee.com/collections/all-coffee/products.json?limit=250",
+      "product_count": 38,
+      "tag_filters": {
+        "plain_filter_like_tags": [
+          "limited"
+        ]
+      },
+      "options": {
+        "Size": [
+          "12 oz",
+          "12oz",
+          "2 lb",
+          "2lb",
+          "4 oz",
+          "4oz",
+          "5 lb",
+          "5lb",
+          "8 oz",
+          "8oz"
+        ],
+        "Grind": [
+          "Drip",
+          "Espresso",
+          "French Press",
+          "Mocha Pot",
+          "Whole Bean"
+        ],
+        "Grind size": [
+          "Drip",
+          "Espresso",
+          "French Press",
+          "Mocha Pot",
+          "Whole Bean"
+        ]
+      }
+    },
+    {
+      "name": "Black & White Coffee Roasters",
+      "url": "https://www.blackwhiteroasters.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "US",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "US storefront and English Shopify/feed values."
+      },
+      "product_feed": "https://www.blackwhiteroasters.com/products.json?limit=250",
+      "product_count": 250,
+      "tag_filters": {
+        "plain_filter_like_tags": [
+          "Colombia",
+          "Washed",
+          "Natural",
+          "Honduras",
+          "Black Label",
+          "Ethiopia",
+          "lighter",
+          "Co-ferment",
+          "thermal shock",
+          "Panama",
+          "clean",
+          "Blend",
+          "mild funk",
+          "Fermentation",
+          "Honey",
+          "Anaerobic Natural",
+          "Kenya",
+          "Costa Rica",
+          "funky",
+          "Ecuador",
+          "Anaerobic Washed",
+          "medium",
+          "Guatemala",
+          "Anaerobic Honey",
+          "China",
+          "El Salvador",
+          "Uganda",
+          "Rwanda",
+          "Year Round",
+          "darker",
+          "Mexico",
+          "Indonesia",
+          "Bolivia",
+          "Supernatural",
+          "Brazil"
+        ]
+      },
+      "options": {
+        "Size": [
+          "100g",
+          "12 oz",
+          "12oz",
+          "200g",
+          "2lb",
+          "4 oz",
+          "500g",
+          "5lb",
+          "8 oz",
+          "9 oz"
+        ],
+        "Bag Size": [
+          "12oz"
+        ]
+      }
+    },
+    {
+      "name": "Trade Coffee",
+      "url": "https://www.drinktrade.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "US",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "US storefront and English Shopify/feed values."
+      },
+      "product_feed": "https://www.drinktrade.com/products.json?limit=250",
+      "product_count": 250,
+      "tag_filters": {
+        "plain_filter_like_tags": [
+          "Women-Owned",
+          "Great for Espresso",
+          "Organic",
+          "Great for Chemex",
+          "Great for French Press",
+          "Great for Pour Over",
+          "E.A. Process",
+          "B Corp",
+          "Black-Owned",
+          "LGBTQ+-Owned",
+          "Mountain Water Process",
+          "Fair Trade",
+          "Regenerative Organic",
+          "Water Processed Decaf",
+          "Swiss Water Process"
+        ]
+      },
+      "options": {
+        "Size": [
+          "12-Pack",
+          "2 Standard Bags (10.93 oz)",
+          "4-Pack",
+          "6-Pack",
+          "Big Bag",
+          "Big Bag (32 oz)",
+          "Small Bag",
+          "Standard Bag",
+          "Standard Bag (10.93 oz)",
+          "Two (2x) 4-Packs"
+        ],
+        "Grind": [
+          "Ground",
+          "Whole Bean"
+        ],
+        "Grind Type": [
+          "Automatic Drip",
+          "Ground - Cold Brew",
+          "Ground- Automatic Drip",
+          "Whole Bean"
+        ],
+        "Bag Size": [
+          "Big Bag",
+          "Standard Bag"
+        ]
+      }
+    }
+  ],
+  "czech_sources": [
+    {
+      "name": "Kofio",
+      "url": "https://www.kofio.cz/kava/",
+      "language": {
+        "retailer_country": "CZ",
+        "retailer_language": "cs",
+        "scraped_value_languages": [
+          "cs",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Czech storefront; coffee process, roaster, and variety values include English loanwords/names."
+      },
+      "source_type": "visible category filter sidebar",
+      "visible_filters": {
+        "akce": [
+          "Slevy",
+          "Zachraň kafe",
+          "Novinky",
+          "Limitovaná nabídka",
+          "Kofio doporučuje",
+          "Na Cold Brew"
+        ],
+        "prazeni": [
+          "Filtr",
+          "Espresso",
+          "Omni"
+        ],
+        "prazirny": [
+          "The naughty dog",
+          "Oh My Bean Roastery",
+          "DAK Coffee Roasters",
+          "People Possession",
+          "Father's Coffee Roastery",
+          "Kmen Coffee Roasters",
+          "The Coffee Collective",
+          "Candycane Coffee",
+          "The Barn",
+          "HAYB Speciality Coffee",
+          "Concept Coffee Roasters",
+          "Sprout Coffee Roasters",
+          "Nordbeans",
+          "Mia Coffee Roastery",
+          "Fiftybeans",
+          "Beansmith.s",
+          "Industra Coffee",
+          "BirdSong Coffee",
+          "Black Mass Roasters",
+          "Boo!",
+          "Coffeein",
+          "Dark Arts Coffee",
+          "Dark Woods Coffee",
+          "Dos Mundos",
+          "Factory Coffee Roastery",
+          "Foundation Coffee",
+          "Kaffa",
+          "KB Coffee roasters",
+          "Kofio",
+          "Native by Diego Bermudez",
+          "Nomad Coffee",
+          "Not Another Boring Roastery",
+          "Ovni Coffee",
+          "Paloma Coffee Roastery",
+          "Poppy Beans",
+          "Punkt. coffee",
+          "Quickborn Roastery",
+          "Rocket Bean Roastery",
+          "September Coffee",
+          "Sey Coffee",
+          "Square Mile",
+          "Sydrip",
+          "Tanat Coffee",
+          "Typika",
+          "Unity Coffee Roasters",
+          "Von&Vonnie",
+          "April Coffee Roasters",
+          "Friedhats Coffee",
+          "Tim Wendelboe",
+          "Coffea Circulor",
+          "Prodigal Coffee",
+          "Doubleshot"
+        ],
+        "velikost_baleni": [
+          "do 199g",
+          "200 - 299g",
+          "300 - 999g",
+          "od 1000g"
+        ],
+        "chutovy_profil": [
+          "Sladký",
+          "Ovocný",
+          "Čokoládový",
+          "Oříškový",
+          "Květinový"
+        ],
+        "typ_kavy": [
+          "Arabica",
+          "Bezkofeinová (Decaf)",
+          "Cascara",
+          "Drip sáčky",
+          "Hybrid Timoru",
+          "Kapsle",
+          "Nízkokofeinová (Low-caf)",
+          "Robusta",
+          "Směs"
+        ],
+        "cuppingove_skore": [
+          "80.00 - 84.99",
+          "85.00 - 89.99",
+          "90.00+"
+        ],
+        "oblast_puvodu": [
+          "Afrika",
+          "Amerika",
+          "Asie",
+          "Exotické země"
+        ],
+        "zeme_puvodu": [
+          "Etiopie",
+          "Keňa",
+          "Rwanda",
+          "Kolumbie",
+          "Brazílie",
+          "Bolívie",
+          "Burundi",
+          "Ekvádor",
+          "El Salvador",
+          "Guatemala",
+          "Honduras",
+          "Indie",
+          "Indonésie",
+          "Jemen",
+          "Jižní Afrika",
+          "Kostarika",
+          "Mexiko",
+          "Nikaragua",
+          "Panama",
+          "Peru",
+          "Tanzanie",
+          "Thajsko",
+          "Uganda"
+        ],
+        "zpusob_zpracovani": [
+          "Suché (natural)",
+          "Promyté",
+          "Medové (honey)",
+          "Experimentální",
+          "Anaerobní"
+        ],
+        "pridane_prisady": [
+          "Bez přísad",
+          "Co-ferment",
+          "Infuze"
+        ],
+        "metoda_pripravy": [
+          "Aeropress",
+          "Hario V60",
+          "French Press",
+          "Moka konvička",
+          "Espresso",
+          "Chemex",
+          "Chytráček",
+          "Vacuum Pot"
+        ],
+        "stupen_prazeni": [
+          "Světlé až středně světlé",
+          "Střední",
+          "Střední až středně tmavé"
+        ],
+        "certifikace": [
+          "Rainforest Alliance"
+        ],
+        "zeme_prazirny": [
+          "Austrálie",
+          "Francie",
+          "Kanada",
+          "Kolumbie",
+          "Belgie",
+          "Velká Británie",
+          "Dánsko",
+          "Nizozemí",
+          "Norsko",
+          "Německo",
+          "Polsko",
+          "Česká republika",
+          "Slovensko",
+          "Španělsko",
+          "Lotyšsko",
+          "Portugalsko",
+          "Spojené státy americké",
+          "Thajsko"
+        ],
+        "odruda": [
+          "Batian",
+          "Bourbon",
+          "Castillo",
+          "Catuai",
+          "Typica",
+          "74-158 Kurume",
+          "74110",
+          "74112",
+          "74158",
+          "7454",
+          "Acaia",
+          "Andungsari",
+          "Arara",
+          "Baitan",
+          "Bourbon Aji",
+          "Bourbon Rosado",
+          "Castillo Tambo",
+          "Catimor",
+          "Catiope",
+          "Catuaí",
+          "Caturra",
+          "Caturra Chiroso",
+          "Colombia",
+          "Geisha",
+          "Gesha",
+          "Heirloom",
+          "JARC 74110",
+          "JARC 74112",
+          "Java",
+          "Kurume",
+          "Mundo Novo",
+          "Ombligon",
+          "Orange Castillo",
+          "Pacamara",
+          "Papayo",
+          "Pink Bourbon",
+          "Red Bourbon",
+          "Ruiru 11",
+          "SL28",
+          "SL34"
+        ],
+        "charakteristika_sample": [
+          "Ananas",
+          "Angrešt",
+          "Badyán",
+          "Banán",
+          "Bergamot",
+          "Bezový květ",
+          "Bobule",
+          "Borůvky",
+          "Broskev",
+          "Bílá čokoláda",
+          "Citrusy",
+          "Cukrová třtina",
+          "Earl Grey",
+          "Fialky",
+          "Granátové jablko",
+          "Grapefruit",
+          "Guava",
+          "Heřmánek",
+          "Hnědý cukr",
+          "Hořká čokoláda",
+          "Hrozno",
+          "Hruška",
+          "Ibišek",
+          "Jablko",
+          "Jahoda"
+        ]
+      }
+    },
+    {
+      "name": "Nordbeans",
+      "url": "https://www.nordbeans.cz/kava/",
+      "language": {
+        "retailer_country": "CZ",
+        "retailer_language": "cs",
+        "scraped_value_languages": [
+          "cs",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Czech storefront with English product labels such as FILTER/ESPRESSO and variety/process terms."
+      },
+      "source_type": "navigation categories and product-card metadata",
+      "visible_filters": {
+        "category_or_series": [
+          "Káva",
+          "Limitovaná edice",
+          "Espresso",
+          "Filtrovaná káva",
+          "Automatický kávovar",
+          "Rozpustná",
+          "Kapsle",
+          "Decaf",
+          "Filtry",
+          "Zvířecí charaktery",
+          "Kávová řada Nový Standard",
+          "Zrnka značky Sweet City"
+        ],
+        "product_card_labels": [
+          "NOVINKA",
+          "FILTR",
+          "ESPRESSO"
+        ],
+        "origins_seen": [
+          "Uganda",
+          "Brazílie",
+          "Honduras",
+          "Guatemala"
+        ],
+        "process_or_variety_seen": [
+          "Natural",
+          "Washed",
+          "Pink Bourbon"
+        ],
+        "product_names_seen": [
+          "Funky FILTR",
+          "Horizont",
+          "Brazílie",
+          "Funky ESPRESSO",
+          "WILD FOX ESPRESSO",
+          "House Blend",
+          "Keramo Natural",
+          "ELEGANT OWL",
+          "Honduras",
+          "Market Blend",
+          "Las Perlitas Pink Bourbon",
+          "Guatemala Washed"
+        ]
+      }
+    },
+    {
+      "name": "La Boheme Cafe",
+      "url": "https://labohemecafe.cz/collections/all/products.json?limit=250",
+      "language": {
+        "retailer_country": "CZ",
+        "retailer_language": "cs",
+        "scraped_value_languages": [
+          "cs",
+          "en"
+        ],
+        "confidence": "medium",
+        "note": "Czech/English Shopify tags and options appear together in the feed."
+      },
+      "source_type": "Shopify product feed tags and options",
+      "product_type": [
+        "Čerstvě pražená výběrová káva"
+      ],
+      "tag_filters": {
+        "plain_filter_like_tags": [
+          "Bio",
+          "Coffee",
+          "Espresso",
+          "Filtrovaná káva",
+          "Jednodruhové kávy",
+          "Natural",
+          "Rwanda",
+          "Moccapot",
+          "Nízká acidita",
+          "Pour Over / V60",
+          "Výrazná čokoláda",
+          "Brazílie",
+          "Vyvážená acidita",
+          "Vyvážený s ovocem a květinami",
+          "Chemex",
+          "Ethiopia",
+          "Etiopie",
+          "Kolumbie",
+          "filter",
+          "Bez kofeinu",
+          "Hario",
+          "Anaerobic",
+          "Direct Trade",
+          "Indonesia",
+          "Indonésie"
+        ]
+      },
+      "options": {
+        "Size": [
+          "1 kg",
+          "1000 g",
+          "226 g"
+        ],
+        "Hmotnost": [
+          "1000 g",
+          "150 g",
+          "226 g",
+          "500 g"
+        ]
+      }
+    },
+    {
+      "name": "Candycane Coffee",
+      "url": "https://www.candycane.coffee/kategorie/kava",
+      "language": {
+        "retailer_country": "CZ",
+        "retailer_language": "cs",
+        "scraped_value_languages": [
+          "cs",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Bilingual embedded product metadata; category page fetched in Czech."
+      },
+      "source_type": "category listing embedded product metadata",
+      "visible_filters": {
+        "category": [
+          "Káva",
+          "Espresso",
+          "Filtr",
+          "Kapsle",
+          "Cascara",
+          "Decaf"
+        ],
+        "flavor_tags": [
+          "Čokoládová",
+          "Oříšková",
+          "Kakaová",
+          "Karamelová",
+          "Ovocná",
+          "Citrusová",
+          "Sladká",
+          "Fermentovaná",
+          "Funky",
+          "Květinová",
+          "Čajová"
+        ],
+        "origins_seen": [
+          "Brazílie",
+          "Keňa",
+          "Etiopie",
+          "Kolumbie",
+          "Peru"
+        ],
+        "process_seen": [
+          "natural",
+          "extended fermentation natural",
+          "washed"
+        ],
+        "caffeine": [
+          "Decaf",
+          "Decaf de Caña"
+        ],
+        "package_size": [
+          "250 g",
+          "1 kg",
+          "2.5 kg"
+        ]
+      }
+    },
+    {
+      "name": "Father's Coffee Roastery",
+      "url": "https://fathers.cz/kava",
+      "language": {
+        "retailer_country": "CZ",
+        "retailer_language": "cs",
+        "scraped_value_languages": [
+          "cs",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Czech page with English alternate names and coffee terms."
+      },
+      "source_type": "category listing product cards and variants",
+      "visible_filters": {
+        "category_badges": [
+          "Espresso",
+          "Filtr"
+        ],
+        "origins_seen": [
+          "Etiopie",
+          "Peru",
+          "Nikaragua",
+          "Kolumbie",
+          "Keňa",
+          "Brazílie",
+          "Indonésie"
+        ],
+        "caffeine": [
+          "DECAF"
+        ],
+        "product_names_seen": [
+          "Etiopie - Chelbesa",
+          "Etiopie - Edn Pineapple",
+          "Inmaculada Tasting Box",
+          "Peru - Huabal",
+          "Etiopie - Beshasha",
+          "Peru - San Antonio",
+          "Nikaragua - Los Papales",
+          "Kolumbie - Dulce Misterio",
+          "Keňa - Kieni AB",
+          "Brazílie – Cafeina",
+          "Mother’s Blend",
+          "Indonésie – Ijen",
+          "Peru - Roger Chilcon",
+          "DECAF Atunkaa – Kolumbie",
+          "Kolumbie – Inzá"
+        ],
+        "package_size": [
+          "100g",
+          "250 g",
+          "1 kg",
+          "2 kg"
+        ]
+      }
+    },
+    {
+      "name": "mamacoffee",
+      "url": "https://www.mamacoffee.cz/kava/",
+      "language": {
+        "retailer_country": "CZ",
+        "retailer_language": "cs",
+        "scraped_value_languages": [
+          "cs",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Czech Shoptet listing with English country/product tokens."
+      },
+      "source_type": "Shoptet product listing metadata",
+      "visible_filters": {
+        "origins_seen": [
+          "Brasil",
+          "Nicaragua",
+          "Rwanda",
+          "Ethiopia",
+          "Uganda",
+          "Peru",
+          "Colombia"
+        ],
+        "coffee_type_or_format": [
+          "Espresso směs",
+          "Drip sáček",
+          "Degustační set",
+          "Bio",
+          "bez kofeinu"
+        ],
+        "product_names_seen": [
+          "Brasil Mogiana",
+          "Espresso směs Dejavu",
+          "Nicaragua Women's Project",
+          "Rwanda Nyabumera",
+          "Ethiopia Tero Kebele",
+          "Uganda Butawa",
+          "Drip sáček Nicaragua El Progreso",
+          "Drip sáček Nicaragua Women's Project",
+          "Drip sáček Brasil Fazenda Bela Época",
+          "Nicaragua Chavarría",
+          "Nicaragua El Progreso",
+          "Bio Peru Moyobamba",
+          "Degustační set drip sáčků",
+          "Colombia Sugarcane bez kofeinu",
+          "Degustační set káv mamacoffee",
+          "Degustační set káv v dárkovém balení"
+        ],
+        "options": [
+          "Hmotnost: 100 g",
+          "Mletí: Zrno"
+        ]
+      }
+    }
+  ],
+  "german_sources": [
+    {
+      "name": "roastmarket",
+      "url": "https://www.roastmarket.de/kaffee/",
+      "language": {
+        "retailer_country": "DE",
+        "retailer_language": "de",
+        "scraped_value_languages": [
+          "de",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "German marketplace navigation with some English method/brand terms."
+      },
+      "source_type": "visible navigation/category filters and query-parameter facets",
+      "visible_filters": {
+        "coffee_type": [
+          "Espresso",
+          "Cafe Crema",
+          "Filterkaffee",
+          "Cappuccino",
+          "Gemahlener Kaffee",
+          "Kaffeebohnen"
+        ],
+        "bohnensorte": [
+          "Arabica",
+          "Robusta"
+        ],
+        "zubereitungsart": [
+          "Siebträger",
+          "Vollautomat",
+          "Espressokocher",
+          "Kapseln",
+          "Pads",
+          "Filterkaffee",
+          "French Press",
+          "AeroPress",
+          "Handfilter",
+          "Pour Over"
+        ],
+        "geschmack": [
+          "Säurearm",
+          "Kräftig & intensiv",
+          "Schokoladig",
+          "Nussig",
+          "Fruchtig"
+        ],
+        "attribute": [
+          "Bio-Kaffee",
+          "Fairtrade Kaffee",
+          "Entkoffeinierter Kaffee",
+          "Prämierter Kaffee",
+          "Regionaler Kaffee",
+          "Kaffee Neuheiten"
+        ],
+        "brands_seen": [
+          "Berliner Kaffeerösterei",
+          "Speicherstadt Kaffee",
+          "Melitta",
+          "Moccamaster",
+          "Hario",
+          "Gaggia",
+          "Sage"
+        ]
+      }
+    },
+    {
+      "name": "Tchibo",
+      "url": "https://www.tchibo.de/kaffee-c400042126.html",
+      "language": {
+        "retailer_country": "DE",
+        "retailer_language": "de",
+        "scraped_value_languages": [
+          "de",
+          "it",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "German storefront with Italian line names and English capsule/system marks."
+      },
+      "source_type": "embedded app category/navigation metadata",
+      "visible_filters": {
+        "category": [
+          "Alle Kaffees",
+          "Kaffee von lokalen Röstereien",
+          "Kaffee für Vollautomaten",
+          "Espresso",
+          "Filterkaffee",
+          "Entkoffeinierter Kaffee",
+          "Qbo Kaffeekapseln",
+          "Cafissimo Kaffeekapseln",
+          "Kaffeekapseln für Nespresso® Maschinen",
+          "Kaffeepads",
+          "Instantkaffee",
+          "Kaffee Probiersets",
+          "Kaffee Bestseller",
+          "1 kg Packungen",
+          "Kaffee-Abo"
+        ],
+        "business_or_use_case": [
+          "Kaffee-Lösungen für Firmen",
+          "Kaffeevollautomaten für Firmen",
+          "Kaffee-Abo für Firmen",
+          "Kaffees für den professionellen Einsatz"
+        ],
+        "product_lines_seen": [
+          "Feine Milde",
+          "Caffe Crema",
+          "Privat Kaffee",
+          "Black & White",
+          "Tchibo Espresso VF"
+        ],
+        "attribute_seen": [
+          "Bio"
+        ]
+      }
+    },
+    {
+      "name": "Coffee Circle",
+      "url": "https://www.coffeecircle.com/de",
+      "language": {
+        "retailer_country": "DE",
+        "retailer_language": "de",
+        "scraped_value_languages": [
+          "de",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "German storefront with English equipment/method brand terms."
+      },
+      "source_type": "root navigation and product/category labels",
+      "visible_filters": {
+        "category": [
+          "Alle Kaffees",
+          "Kaffeesorten",
+          "Filterkaffee",
+          "Espresso",
+          "Decaf und Low Caf",
+          "Kaffee für Vollautomaten",
+          "Kaffeekapseln",
+          "Kaffeefinder",
+          "Kaffee Probiersets",
+          "Kaffee für Cold Brew",
+          "Gemahlener Kaffee",
+          "Kaffee-Sets & Angebote",
+          "Kaffee Geschenke"
+        ],
+        "zubereitung": [
+          "Kaffee für Siebträgermaschinen",
+          "Kaffee für French Press",
+          "Kaffee für Espressokocher / Mokkakanne",
+          "Kaffee für Handfilter / Pour Over",
+          "Kaffee für Kaffeemaschinen",
+          "Kaffee für Cold Brew"
+        ],
+        "origin_seen": [
+          "Äthiopien"
+        ],
+        "attribute_seen": [
+          "biologisch angebaut",
+          "Immer frisch geröstet"
+        ]
+      }
+    },
+    {
+      "name": "THE BARN",
+      "url": "https://thebarn.de/products.json?limit=250",
+      "language": {
+        "retailer_country": "DE",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Berlin retailer storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options plus collection navigation",
+      "product_count": 192,
+      "product_type": [
+        "Filter Coffee",
+        "Espresso Coffee",
+        "Coffee Bundle",
+        "Subscription",
+        "Instant & Capsules"
+      ],
+      "visible_filters": {
+        "category": [
+          "ALL COFFEE",
+          "FILTER",
+          "ESPRESSO",
+          "DECAF & LOW-CAF",
+          "INSTANT",
+          "CAPSULES",
+          "Coffee Bundles"
+        ],
+        "bundle_or_style": [
+          "SUMMER COFFEE",
+          "DECAF BALANCED",
+          "DECAF FUNKY",
+          "GENESIS COFFEE",
+          "ELEMENTAL COFFEE",
+          "ETHIOPIAN COFFEE BUNDLE",
+          "CORE COFFEE BUNDLE",
+          "SWEET COFFEE BUNDLE",
+          "DECAF COFFEE BUNDLE",
+          "FUNKY COFFEE BUNDLE",
+          "FRUITY COFFEE BUNDLE"
+        ],
+        "tag_filters": [
+          "Beans",
+          "Filter",
+          "Espresso",
+          "caffeine-conscious",
+          "Low Caf",
+          "Balanced",
+          "Terroir",
+          "Acidity:4",
+          "Body:3",
+          "Sweetness:5",
+          "Capsules",
+          "Drip Bag",
+          "Bestseller",
+          "Favourites"
+        ],
+        "origins_seen": [
+          "Brazil",
+          "Ethiopia",
+          "Colombia",
+          "Panama",
+          "Rwanda",
+          "Indonesia",
+          "Costa Rica",
+          "Kenya",
+          "Guatemala",
+          "El Salvador",
+          "Honduras",
+          "Burundi"
+        ],
+        "process_seen": [
+          "honey",
+          "natural",
+          "anaerobic",
+          "decaf",
+          "washed",
+          "fermented",
+          "sugar cane",
+          "low-caf"
+        ],
+        "variety_seen": [
+          "Caturra",
+          "Typica",
+          "Gesha",
+          "Pacamara",
+          "Bourbon",
+          "Pink Bourbon",
+          "Arabica",
+          "SL28",
+          "SL34",
+          "Heirloom",
+          "Geisha"
+        ]
+      },
+      "options": {
+        "Size": [
+          "100g",
+          "150g",
+          "175g",
+          "200g",
+          "250g",
+          "1000g",
+          "1kg",
+          "2 x 250g",
+          "3 x 250g",
+          "4 x 250g",
+          "6 x 250g",
+          "1 box (6 sachets)",
+          "3 boxes (18 sachets)"
+        ],
+        "Roast": [
+          "Espresso",
+          "Filter"
+        ],
+        "Region": [
+          "Brazil",
+          "Ethiopia"
+        ],
+        "Edition": [
+          "Masterpiece Gesha Costa Rica",
+          "Seasonal Brazil",
+          "Seasonal Ethiopia"
+        ]
+      }
+    },
+    {
+      "name": "Five Elephant",
+      "url": "https://www.fiveelephant.com/collections/coffee/products.json?limit=250",
+      "language": {
+        "retailer_country": "DE",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Berlin retailer Shopify feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options",
+      "product_count": 15,
+      "tag_filters": {
+        "plain_filter_like_tags": [
+          "Filter Roast",
+          "Coffee | All",
+          "Espresso Roast",
+          "Decaf",
+          "House Blend filter",
+          "House blend espresso",
+          "Monthly Subscription",
+          "Subscription"
+        ]
+      },
+      "visible_filters": {
+        "origins_seen": [
+          "Kenya",
+          "Ethiopia",
+          "Colombia",
+          "Brazil"
+        ],
+        "process_seen": [
+          "washed",
+          "fermented",
+          "honey",
+          "natural",
+          "processed"
+        ],
+        "variety_seen": [
+          "SL28",
+          "SL34",
+          "Pink Bourbon",
+          "Bourbon",
+          "Tabi",
+          "Colombia variety",
+          "Pacamara",
+          "Geisha"
+        ],
+        "tasting_notes_seen": [
+          "blackcurrant",
+          "citrus",
+          "floral",
+          "orange",
+          "apricot",
+          "peach",
+          "honey",
+          "cocoa",
+          "stone fruit",
+          "bright"
+        ]
+      },
+      "options": {
+        "Size": [
+          "100g - Sample",
+          "200g - Filter",
+          "250g - Filter",
+          "250g - Espresso",
+          "250g - Omni",
+          "1kg - Filter",
+          "1kg - Espresso",
+          "1kg - Omni",
+          "2 x 250g",
+          "3 x 250g",
+          "3kg - Filter",
+          "3kg - Espresso",
+          "5kg - Tin"
+        ],
+        "Style": [
+          "espresso",
+          "filter"
+        ]
+      }
+    },
+    {
+      "name": "Bonanza Coffee",
+      "url": "https://bonanzacoffee.de/collections/coffee/products.json?limit=250",
+      "language": {
+        "retailer_country": "DE",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Berlin retailer Shopify feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options",
+      "product_count": 16,
+      "tag_filters": {
+        "plain_filter_like_tags": [
+          "bonanza",
+          "brewing",
+          "coffee",
+          "colombia",
+          "costa rica",
+          "ethiopia",
+          "natural",
+          "brazil",
+          "dark roast",
+          "south america",
+          "blend",
+          "peru",
+          "washed",
+          "guatemala",
+          "espresso",
+          "filter"
+        ]
+      },
+      "visible_filters": {
+        "origins_seen": [
+          "Colombia",
+          "Ethiopia",
+          "Brazil",
+          "Peru",
+          "Costa Rica",
+          "Kenya"
+        ],
+        "process_seen": [
+          "anaerobic",
+          "fermented",
+          "natural",
+          "processed",
+          "honey",
+          "de-pulped",
+          "reposado"
+        ],
+        "variety_seen": [
+          "Caturra",
+          "Pink Bourbon",
+          "Bourbon",
+          "SL-28"
+        ],
+        "tasting_notes_seen": [
+          "berries",
+          "floral",
+          "bright",
+          "dark chocolate",
+          "creamy",
+          "honey",
+          "stone fruit",
+          "tropical fruits",
+          "blackcurrant"
+        ]
+      },
+      "options": {
+        "Weight": [
+          "250 g",
+          "250 grams",
+          "400 g",
+          "1 kg",
+          "1 KG",
+          "3 x 250g"
+        ],
+        "Grind Type": [
+          "Whole beans",
+          "Filter",
+          "Espresso",
+          "Moka Pot",
+          "Aeropress"
+        ]
+      }
+    },
+    {
+      "name": "19grams",
+      "url": "https://19grams.coffee/products.json?limit=250",
+      "language": {
+        "retailer_country": "DE",
+        "retailer_language": "de",
+        "scraped_value_languages": [
+          "de",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "German storefront and feed with English coffee names, tags, and option labels."
+      },
+      "source_type": "Shopify root product feed plus collection navigation",
+      "product_count": 250,
+      "visible_filters": {
+        "category": [
+          "Kaffee",
+          "Espresso",
+          "Alle Espresso Röstungen",
+          "Espresso - Bestseller",
+          "Helle Espressos",
+          "Dunkle Espressos",
+          "Filter",
+          "Alle Filter Röstungen",
+          "Allrounder - Für Filter-Einsteiger",
+          "Helle Filterröstungen",
+          "Espresso Decaf",
+          "Filter Decaf",
+          "Decaf im Abo",
+          "Kaffees im Set",
+          "Frisch geröstet"
+        ],
+        "origins_seen": [
+          "Thailand",
+          "Ruanda",
+          "Brasilien",
+          "Kolumbien",
+          "Peru",
+          "Kenia",
+          "Äthiopien",
+          "El Salvador",
+          "Dominikanische Republik",
+          "Panama",
+          "Nicaragua",
+          "Honduras",
+          "Guatemala",
+          "Mexiko",
+          "Bolivien",
+          "Costa Rica",
+          "China",
+          "Tansania",
+          "Myanmar",
+          "Uganda",
+          "Indien"
+        ],
+        "tag_filters": [
+          "Espresso",
+          "Filter",
+          "Geisha",
+          "single origin",
+          "Ohne Koffein",
+          "Decaf",
+          "Vollautomat",
+          "Natural",
+          "washed",
+          "Anaerob Natural",
+          "Classic Roast",
+          "Bourbon",
+          "Gesha",
+          "Cup of Excellence"
+        ],
+        "process_seen": [
+          "honey",
+          "natural",
+          "washed",
+          "decaf",
+          "anaerobic",
+          "carbonic maceration"
+        ],
+        "variety_seen": [
+          "Bourbon",
+          "Pink Bourbon",
+          "Caturra",
+          "Geisha",
+          "Arabica",
+          "Gesha",
+          "Catuaí",
+          "Heirloom",
+          "Pacamara",
+          "SL28",
+          "Robusta"
+        ],
+        "tasting_notes_seen": [
+          "Tropisch",
+          "süß",
+          "Beeren",
+          "Honig",
+          "floral",
+          "Nuss",
+          "orange",
+          "caramel",
+          "Karamell",
+          "Schokolade",
+          "Zitrus",
+          "Haselnuss"
+        ]
+      },
+      "options": {
+        "Röstung": [
+          "Beide",
+          "Espresso",
+          "Filter",
+          "Gemischt"
+        ],
+        "Röststyle": [
+          "Espresso",
+          "Filter",
+          "Gemischt"
+        ],
+        "Mahlgrad": [
+          "Aeropress",
+          "Bialetti",
+          "Chemex",
+          "Cold Brew",
+          "Espresso Maschine",
+          "French Press",
+          "Frenchpress",
+          "Moccamaster",
+          "V60",
+          "V60/Kalita",
+          "ganze Bohne",
+          "gemahlen"
+        ],
+        "Menge": [
+          "50g",
+          "100g",
+          "150g",
+          "200g",
+          "250g",
+          "750g",
+          "1000g",
+          "1kg",
+          "2 x 250g",
+          "2 x 1000g",
+          "3kg"
+        ]
+      }
+    },
+    {
+      "name": "Flying Roasters",
+      "url": "https://www.flyingroasters.de/shop/kaffee/",
+      "language": {
+        "retailer_country": "DE",
+        "retailer_language": "de",
+        "scraped_value_languages": [
+          "de",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "German storefront with English brew method names."
+      },
+      "source_type": "WooCommerce category/navigation filters",
+      "visible_filters": {
+        "category": [
+          "Alles",
+          "Abo",
+          "Espresso",
+          "Filterkaffee",
+          "Für Vollautomat",
+          "Geschenke",
+          "Zubehör"
+        ],
+        "zubereitung": [
+          "AeroPress",
+          "Chemex",
+          "Espresso / Siebträger",
+          "French Press",
+          "Karlsbader Kanne",
+          "Pour Over / Handfilter"
+        ],
+        "attribute": [
+          "Direkt",
+          "Ökologisch",
+          "Hochwertig",
+          "Solidarisch",
+          "Transparent"
+        ]
+      }
+    },
+    {
+      "name": "Röststätte Berlin",
+      "url": "https://www.roeststaette.com/collections/kaffee",
+      "language": {
+        "retailer_country": "DE",
+        "retailer_language": "de",
+        "scraped_value_languages": [
+          "de",
+          "en"
+        ],
+        "confidence": "medium",
+        "note": "German category page with English business/use-case labels."
+      },
+      "source_type": "category navigation metadata",
+      "visible_filters": {
+        "category": [
+          "Specialty Coffee",
+          "Espresso",
+          "Filterkaffee",
+          "DRIP BAGS",
+          "Deals",
+          "Midsommar Special",
+          "Probiersets",
+          "Meraki",
+          "Likör",
+          "Abos",
+          "Zubehör"
+        ],
+        "business_or_use_case": [
+          "Office",
+          "Gastro & Office",
+          "Home User",
+          "Professionals"
+        ],
+        "process_stage": [
+          "Sourcing",
+          "Roasting",
+          "Tasting"
+        ]
+      }
+    },
+    {
+      "name": "Speicherstadt Kaffeerösterei",
+      "url": "https://www.speicherstadt-kaffee.de/kaffee/",
+      "language": {
+        "retailer_country": "DE",
+        "retailer_language": "de",
+        "scraped_value_languages": [
+          "de",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "German site with project names and origin labels containing non-German proper names."
+      },
+      "source_type": "site navigation/project labels",
+      "visible_filters": {
+        "category": [
+          "Kaffeesortiment",
+          "Farbsystem",
+          "Zubereitung",
+          "Direkthandel",
+          "Kaffee Ale",
+          "Mokkalikör",
+          "Mokka Sahnelikör"
+        ],
+        "origins_or_projects_seen": [
+          "Orang Utan",
+          "Honduras 18 Conejo",
+          "Indonesien dunia kita",
+          "Kongo Rebuild Women´s Hope"
+        ],
+        "blend_components_seen": [
+          "Brasilien Doce Diamantina",
+          "Äthiopien Sidamo Shakiso",
+          "Brasilien Rio Minas",
+          "100% Arabica"
+        ]
+      }
+    }
+  ],
+  "italian_sources": [
+    {
+      "name": "Lavazza Italy",
+      "url": "https://www.lavazza.it/it/caffe.html",
+      "language": {
+        "retailer_country": "IT",
+        "retailer_language": "it",
+        "scraped_value_languages": [
+          "it",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Italian storefront with English system/line names such as Nespresso and Organic."
+      },
+      "source_type": "product-card data attributes from catalog page",
+      "product_count": 94,
+      "visible_filters": {
+        "category_or_format": [
+          "Tablì",
+          "Espresso Point",
+          "Kit",
+          "Capsule Lavazza compatibili con macchine Nespresso* Original",
+          "Caffè in grani",
+          "Caffè macinato",
+          "Capsule Lavazza A Modo Mio",
+          "Cialde"
+        ],
+        "collection": [
+          "Qualità Oro",
+          "Decaf",
+          "Suerte",
+          "Crema e Gusto",
+          "Qualità Rossa",
+          "¡Tierra!",
+          "Espresso",
+          "Tales of Italy"
+        ],
+        "intensity": [
+          "3/10",
+          "5/10",
+          "6/10",
+          "7/10",
+          "8/10",
+          "9/10",
+          "10/10",
+          "5/13",
+          "6/13",
+          "7/13",
+          "8/13",
+          "9/13",
+          "10/13",
+          "11/13",
+          "12/13",
+          "13/13"
+        ],
+        "blend": [
+          "100% Arabica",
+          "Arabica e Robusta",
+          "Robusta"
+        ],
+        "aromatic_notes": [
+          "Floreale",
+          "Fruttato",
+          "Cacao",
+          "Cioccolato",
+          "Cioccolato fondente",
+          "Nocciolato",
+          "Agrumato",
+          "Frutta secca",
+          "Tabacco",
+          "Legnoso",
+          "Caramellato",
+          "Spezie",
+          "Ginseng",
+          "Caramello",
+          "Vaniglia",
+          "Orzo",
+          "Cereali tostati",
+          "Biscotto"
+        ],
+        "preparation": [
+          "Espresso",
+          "Espresso, Filtro, Moka",
+          "Espresso, Filtro, French press, Moka",
+          "Filtro, French press, Moka",
+          "Espresso, Moka",
+          "Moka",
+          "French press",
+          "French press, Moka"
+        ],
+        "roast": [
+          "Chiara",
+          "Medio chiara",
+          "Media",
+          "Medio scura",
+          "Scura"
+        ],
+        "package_size": [
+          "10",
+          "12",
+          "16",
+          "30",
+          "36",
+          "50",
+          "60",
+          "80",
+          "100",
+          "180 g",
+          "200 g",
+          "250 g",
+          "500 g",
+          "1 Kg"
+        ],
+        "product_names_seen": [
+          "Qualità Oro",
+          "Qualità Rossa",
+          "Crema e Gusto",
+          "Crema & Aroma Espresso",
+          "Espresso Maestro Ristretto",
+          "Espresso Maestro Intenso",
+          "Espresso Maestro Lungo",
+          "Espresso Maestro Organic",
+          "Dek Espresso",
+          "DECAF Classico",
+          "DECAF Intenso",
+          "Tales of Napoli",
+          "Tales of Roma",
+          "Espresso Lamborghini",
+          "¡Tierra! For Planet",
+          "¡Tierra! For Africa"
+        ]
+      }
+    },
+    {
+      "name": "illy",
+      "url": "https://www.illy.com/it-it/caffe",
+      "language": {
+        "retailer_country": "IT",
+        "retailer_language": "it",
+        "scraped_value_languages": [
+          "it",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Italian storefront with English format names such as Cold Brew and CoffeeB."
+      },
+      "source_type": "navigation categories and product-card labels",
+      "visible_filters": {
+        "category": [
+          "Tutti i caffè",
+          "Caffè in capsule X▪CAPS",
+          "Capsule Iperespresso",
+          "Caffè in capsule compatibili",
+          "Caffè in sfere illy CoffeeB",
+          "Caffè macinato",
+          "Caffè in grani",
+          "Caffè in cialde E.S.E.",
+          "Caffè Arabica Selection",
+          "Caffè americano",
+          "Orzo e Ginseng",
+          "Caffè solubile",
+          "Cold Brew",
+          "Caffè decaffeinato",
+          "Abbonamento caffè"
+        ],
+        "preparation_or_recipe": [
+          "Caffè espresso",
+          "Caffè filtro",
+          "Caffè greco",
+          "Caffè Turco",
+          "Caffè viennese",
+          "Caffelatte",
+          "Caffettiera Napoletana",
+          "Cappuccino",
+          "Espresso freddo",
+          "French Press",
+          "Irish coffee",
+          "Latte macchiato",
+          "Moka"
+        ],
+        "machine_or_format": [
+          "Macchine da caffè a capsule X▪CAPS",
+          "Macchine da caffè a capsule Iperespresso",
+          "Macchine a sfere di caffè illy CoffeeB",
+          "Macchine da caffè a capsule compatibili",
+          "Macchine da caffè a cialde E.S.E.",
+          "Macchine per caffè macinato e cialde E.S.E."
+        ],
+        "product_names_seen": [
+          "Caffè in Capsule Iperespresso tostato CLASSICO",
+          "Caffè in grani Arabica Selection Brasile Cerrado Mineiro 250gr",
+          "Caffè macinato Arabica Selection Brasile Cerrado Mineiro 250gr"
+        ],
+        "origin_seen": [
+          "Brasile Cerrado Mineiro"
+        ]
+      }
+    },
+    {
+      "name": "Caffè Vergnano",
+      "url": "https://www.caffevergnano.com/shop/caffe",
+      "language": {
+        "retailer_country": "IT",
+        "retailer_language": "it",
+        "scraped_value_languages": [
+          "it",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Italian storefront with English line/business labels such as Women in Coffee."
+      },
+      "source_type": "shop navigation/category labels",
+      "visible_filters": {
+        "category": [
+          "Capsule Compatibili",
+          "Grani",
+          "Macinato",
+          "Cialde",
+          "Moka e tazzine",
+          "Macchine",
+          "Pink collection",
+          "Piani di abbonamento"
+        ],
+        "category_alt": [
+          "Capsule compatibili",
+          "Caffè macinato",
+          "Caffè in grani",
+          "Macchine da caffè",
+          "Abbonamento Caffè Vergnano"
+        ],
+        "business_or_use_case": [
+          "Bar e Ristorazione",
+          "Bar Women in Coffee",
+          "Apri una Caffetteria Caffè Vergnano 1882",
+          "Distribuzione automatica e OCS",
+          "Street Coffee"
+        ],
+        "attribute_seen": [
+          "Women in Coffee",
+          "Qualità senza compromessi"
+        ]
+      }
+    },
+    {
+      "name": "Caffè Borbone",
+      "url": "https://www.caffeborbone.com/it/it/caffe",
+      "language": {
+        "retailer_country": "IT",
+        "retailer_language": "it",
+        "scraped_value_languages": [
+          "it",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Italian storefront with English system/format marks and blend labels."
+      },
+      "source_type": "category listing filters and product-card metadata",
+      "visible_filters": {
+        "category": [
+          "Capsule compatibili",
+          "Cialde Compostabili",
+          "Caffè in grani",
+          "Macinato",
+          "Macchine per espresso",
+          "Moka"
+        ],
+        "compatibility": [
+          "Nespresso®* ad uso domestico",
+          "Nespresso®* Professional",
+          "Nescafè®* Dolce Gusto®*",
+          "Lavazza®* A Modo Mio®*",
+          "Lavazza®* Blue®* e In Black®*",
+          "Bialetti®* ad uso domestico",
+          "Caffitaly® System",
+          "Lavazza®* Espresso Point®*"
+        ],
+        "taste_profile": [
+          "Decaffeinato",
+          "Dolce e raffinato",
+          "Elegante e bilanciato",
+          "Equilibrato e corposo",
+          "Forte e persistente",
+          "Intenso e cremoso",
+          "Intenso e deciso",
+          "Intenso e robusto",
+          "Leggero e delicato",
+          "Raffinato e aromatico",
+          "Ricco e cremoso",
+          "Rotondo e corposo"
+        ],
+        "blend_or_line": [
+          "Miscela BLU",
+          "Miscela ROSSA",
+          "Miscela ORO",
+          "Miscela NERA",
+          "Miscela VERDE DEK",
+          "LIGHT miscela 50% Blu, 50% Dek",
+          "Ciao Venezia",
+          "Mia Napoli",
+          "Magica Palermo"
+        ],
+        "package_count": [
+          "50",
+          "90",
+          "100",
+          "150"
+        ]
+      }
+    },
+    {
+      "name": "Ditta Artigianale",
+      "url": "https://dittaartigianale.it/products.json?limit=250",
+      "language": {
+        "retailer_country": "IT",
+        "retailer_language": "it",
+        "scraped_value_languages": [
+          "it",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Italian Shopify feed with Italian options/tags and English coffee/product names."
+      },
+      "source_type": "Shopify root product feed tags/options",
+      "product_count": 64,
+      "product_type": [
+        "Coffee"
+      ],
+      "tag_filters": {
+        "plain_filter_like_tags": [
+          "Blend",
+          "coldbrew",
+          "agrumato",
+          "central america",
+          "espresso",
+          "filtro",
+          "french press",
+          "moka",
+          "nocciola",
+          "single origin",
+          "cioccolato",
+          "fruttato",
+          "South America",
+          "reserve collection",
+          "Africa",
+          "Citric",
+          "floreale",
+          "miscela caffè",
+          "specialty coffee",
+          "decaf",
+          "miscela caffe"
+        ]
+      },
+      "visible_filters": {
+        "origins_seen": [
+          "Brasile",
+          "Colombia",
+          "Guatemala",
+          "Honduras",
+          "Indonesia",
+          "Panama",
+          "Kenya",
+          "Etiopia",
+          "Costa Rica",
+          "Peru"
+        ],
+        "process_seen": [
+          "lavato",
+          "natural",
+          "naturale",
+          "anaerobic",
+          "washed",
+          "decaffeinato",
+          "decaf"
+        ],
+        "variety_seen": [
+          "Bourbon",
+          "Pacamara",
+          "Catuai",
+          "Caturra",
+          "Geisha",
+          "Typica"
+        ],
+        "tasting_notes_seen": [
+          "nocciola",
+          "miele",
+          "cioccolato",
+          "frutta",
+          "cacao",
+          "dolce",
+          "floreale",
+          "caramello",
+          "caramel",
+          "spezie"
+        ],
+        "product_names_seen": [
+          "Kit Degustazione Espresso Specialty",
+          "Set Cold Brew - Bottiglia + Guatemala Lavato",
+          "Colombia Mama Sierra",
+          "Indonesia - Asman Gayo",
+          "Brasile Santa Barbara",
+          "Finca Black Moon – Best of Panama 2024",
+          "Guatemala Finca Catalan De Las Mercedes Pacamara Lavato",
+          "Honduras Finca El Puente Catuai Anaerobic Natural",
+          "One. Espresso Process Blend",
+          "Colombia Galeras Decaf",
+          "Honduras Finca El Puente Geisha Washed"
+        ]
+      },
+      "options": {
+        "Grani/Macinato": [
+          "Grani",
+          "Macinato Espresso",
+          "Macinato Filtro",
+          "Macinato French Press",
+          "Macinato Moka"
+        ],
+        "Peso": [
+          "100 grammi",
+          "250 grammi",
+          "250g",
+          "1 kg",
+          "1kg"
+        ]
+      }
+    },
+    {
+      "name": "Gardelli Specialty Coffees",
+      "url": "https://shop.gardellicoffee.com/14-coffees",
+      "language": {
+        "retailer_country": "IT",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Italian retailer storefront category scraped in English."
+      },
+      "source_type": "PrestaShop coffee category product metadata",
+      "product_count": 19,
+      "visible_filters": {
+        "category": [
+          "Coffees",
+          "Premium Rarities",
+          "Filters",
+          "Brewers",
+          "Grinders",
+          "Education"
+        ],
+        "origins_seen": [
+          "Panama",
+          "Peru",
+          "Colombia",
+          "Ethiopia",
+          "India",
+          "Indonesia",
+          "Burundi",
+          "Rwanda",
+          "Brazil"
+        ],
+        "variety_seen": [
+          "Geisha",
+          "Sidra"
+        ],
+        "caffeine": [
+          "Decaffeinated"
+        ],
+        "package_size": [
+          "250g"
+        ],
+        "product_names_seen": [
+          "Finca Deborah, Aril Geisha (Panama)",
+          "Hacienda La Esmeralda, El Velo Geisha Lot 29-60-625 (Panama)",
+          "La Torre Mejia, Geisha (Peru)",
+          "Puerto Arturo Geisha (Colombia)",
+          "El Diviso Sidra (Colombia)",
+          "Gargari Gutiti (Ethiopia)",
+          "Ratnagiri Estate Lab (India)",
+          "El Silencio (Colombia)",
+          "Kartika (Indonesia)",
+          "Nyagishiru (Burundi)",
+          "Birembo 283 (Rwanda)",
+          "Fazenda Londrina (Brazil)",
+          "Cignobianco® signature blend",
+          "Cumbres, Decaffeinated (Colombia)"
+        ]
+      }
+    },
+    {
+      "name": "Mokaflor",
+      "url": "https://www.mokaflor-italian-coffee.com/shop/coffee-beans/",
+      "language": {
+        "retailer_country": "IT",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en",
+          "it"
+        ],
+        "confidence": "medium",
+        "note": "Fetched page was English, but brand/category names include Italian terms such as Caffèlab."
+      },
+      "source_type": "site navigation/category labels",
+      "visible_filters": {
+        "category": [
+          "The Espresso Blends",
+          "The Specialty Coffees",
+          "Organic & fair trade coffee",
+          "Mokaflor Line",
+          "Chiaroscuro Line",
+          "Capsules and Pods",
+          "Caffèlab Specialty Coffees"
+        ],
+        "origins_seen": [
+          "Brazil",
+          "Colombia",
+          "Tanzania",
+          "Guatemala"
+        ],
+        "blend_ratio": [
+          "100% Arabica",
+          "90% Arabica 10% Robusta",
+          "70% Arabica 30% Robusta",
+          "100% Robusta"
+        ],
+        "business_or_use_case": [
+          "COFFEE TRAINING FOR YOUR BUSINESS",
+          "YOUR TAILOR-MADE COFFEE",
+          "COFFEE MACHINES & EQUIPMENT"
+        ]
+      }
+    },
+    {
+      "name": "Caffè Pascucci",
+      "url": "https://shop.pascucci.it/caffe",
+      "language": {
+        "retailer_country": "IT",
+        "retailer_language": "it",
+        "scraped_value_languages": [
+          "it",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Italian product listing with English category phrase Specialty coffee & Home brewing."
+      },
+      "source_type": "WooCommerce product-card/category labels",
+      "visible_filters": {
+        "category": [
+          "Caffè Pascucci Torrefazione",
+          "Specialty coffee & Home brewing",
+          "caffè"
+        ],
+        "product_names_seen": [
+          "Caffè Bio Genesi in capsula Nipple (60 pz)",
+          "Caffè Bio Deca 0,0 in capsula Nipple (60 pz)",
+          "Caffè Golden Sack grani 1000 g",
+          "Caffè Bio grani 1000 g",
+          "Caffè Bio in capsula alluminio riciclabile 100% comp. Nespresso 100 pz",
+          "Caffè Mild in capsula alluminio riciclabile 100% comp. Nespresso 100 pz",
+          "Caffè Bio macinato Moka 250 g",
+          "Caffè Bio Mitul macinato moka 250 g"
+        ],
+        "format": [
+          "capsula Nipple",
+          "capsula alluminio riciclabile 100% comp. Nespresso",
+          "grani",
+          "macinato Moka"
+        ],
+        "attribute_seen": [
+          "Bio",
+          "Deca 0,0",
+          "Mild",
+          "Golden Sack"
+        ],
+        "package_size": [
+          "60 pz",
+          "100 pz",
+          "250 g",
+          "1000 g"
+        ]
+      }
+    },
+    {
+      "name": "Kimbo",
+      "url": "https://www.kimbo.it/it/caffe",
+      "language": {
+        "retailer_country": "IT",
+        "retailer_language": "it",
+        "scraped_value_languages": [
+          "it",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Italian storefront with English specialty/system terms."
+      },
+      "source_type": "category/navigation labels",
+      "visible_filters": {
+        "category": [
+          "Caffè",
+          "Capsule Compatibili",
+          "Cialde compostabili",
+          "Caffè in Grani",
+          "Specialty Coffee",
+          "Caffè Macinato",
+          "Macchine"
+        ],
+        "compatibility": [
+          "con Macchine Nespresso®* Original Alluminio",
+          "con Macchine Nespresso®* Original Plastica",
+          "con Macchine Nescafè®* Dolce Gusto®*"
+        ],
+        "package_size": [
+          "500 g",
+          "1 kg"
+        ],
+        "product_lines_seen": [
+          "Antica Miscela dal 1963",
+          "Amico - Caffè Decerato",
+          "Sapiente - Specialty Coffee"
+        ],
+        "machine_or_equipment": [
+          "Macchine per Caffè in Cialde",
+          "Macchine per Caffè in Grani",
+          "Macinacaffè Elettrico"
+        ]
+      }
+    },
+    {
+      "name": "Caffè Corsini",
+      "url": "https://www.caffecorsini.com/collections/caffe",
+      "language": {
+        "retailer_country": "IT",
+        "retailer_language": "it",
+        "scraped_value_languages": [
+          "it",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Italian collection navigation with English category terms such as American Coffee."
+      },
+      "source_type": "collection navigation/category labels",
+      "visible_filters": {
+        "category": [
+          "Grani",
+          "Macinato",
+          "Capsule",
+          "Cialde",
+          "American coffee",
+          "Caffè in grani",
+          "Caffè macinato",
+          "Caffè in capsule",
+          "Caffè al ginseng",
+          "American Coffee"
+        ],
+        "compatibility": [
+          "Capsule compatibili Nespresso®",
+          "Capsule compatibili A Modo Mio®",
+          "Capsule compatibili Dolce Gusto®",
+          "Capsule compatibili Lavazza Espresso Point®"
+        ],
+        "collection_or_attribute": [
+          "Compagnia dell'Arabica",
+          "I nostri caffè certificati",
+          "Nuova Gamma Home",
+          "I Nostri Caffè Certificati"
+        ],
+        "equipment_seen": [
+          "Macinacaffè Comandante",
+          "Hario, accessori per caffè e tè",
+          "Caffettiera e filtri Chemex",
+          "MACCHINE DA CAFFè IN GRANI",
+          "MACCHINE PER CAFFè FILTRO"
+        ]
+      }
+    }
+  ],
+  "french_sources": [
+    {
+      "name": "Terres de Café",
+      "url": "https://www.terresdecafe.com/10-cafes-en-grains-ou-moulus",
+      "language": {
+        "retailer_country": "FR",
+        "retailer_language": "fr",
+        "scraped_value_languages": [
+          "fr",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "French storefront; embedded product features include English process/roast words such as Semi washed Anaerobic and Uniroast."
+      },
+      "source_type": "category page embedded product feature metadata",
+      "product_count": 83,
+      "visible_filters": {
+        "gamme": [
+          "Légendes",
+          "Score 80+",
+          "Score 85+",
+          "Score 88+"
+        ],
+        "profil": [
+          "Epicé",
+          "Floral"
+        ],
+        "attribut": [
+          "Complexe",
+          "Elégant",
+          "Gourmand"
+        ],
+        "varietes": [
+          "Bourbon",
+          "Bourbon Pointu",
+          "Catuai",
+          "Caturra",
+          "Geisha",
+          "Heirloom",
+          "Hybrid",
+          "Java",
+          "Moka Heirloom",
+          "Multi variétés",
+          "Typica"
+        ],
+        "origine": [
+          "Bolivie",
+          "Brésil",
+          "Colombie",
+          "Ethiopie",
+          "Mexique"
+        ],
+        "altitude_metre": [
+          "1251 à 1500",
+          "1501 à 1750",
+          "1751 à 2000"
+        ],
+        "conditionnement": [
+          "200g",
+          "Sachet 150g",
+          "Sachet 250g"
+        ],
+        "process": [
+          "Lavé",
+          "Nature",
+          "Nature Anaérobique",
+          "Semi washed Anaerobic 20 heures"
+        ],
+        "collection": [
+          "Collection permanente"
+        ],
+        "prix": [
+          "10 à 15€",
+          "15 à 30€",
+          "30 à 50€"
+        ],
+        "torrefaction": [
+          "Expresso",
+          "Méthodes douces",
+          "Uniroast"
+        ],
+        "producteur": [
+          "Felix Chambi",
+          "Khalid Shifa",
+          "Oscar Daza",
+          "Paul Doyle",
+          "Pedro Vázquez",
+          "Plusieurs petits producteurs",
+          "Rigoberto & Luis Herrera"
+        ],
+        "region_ferme": [
+          "Caranavi, La Paz",
+          "Chiapas Highland / Aldama",
+          "Konki Yeti",
+          "La Mikava",
+          "Santander / Altos Del Bijao Estate",
+          "Valle Del Cauca / Granja la Esperanza"
+        ],
+        "saveur": [
+          "Fruité"
+        ],
+        "type_d_agriculture": [
+          "Agroforesterie",
+          "Agroforesterie complexe, certifié biologique",
+          "Café de forêt, certifiée biologique",
+          "Conventionnelle"
+        ]
+      }
+    },
+    {
+      "name": "Cafés Pfaff",
+      "url": "https://www.cafes-pfaff.com/5-cafes-en-grain",
+      "language": {
+        "retailer_country": "FR",
+        "retailer_language": "fr",
+        "scraped_value_languages": [
+          "fr",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "French category sidebar with mixed French coffee words and English loanwords such as Premium and Micro-lot."
+      },
+      "source_type": "category sidebar filters",
+      "product_count": 38,
+      "visible_filters": {
+        "intensite_du_cafe": [
+          "n°2/5 : Doux",
+          "n°3/5 : Équilibré",
+          "n°4/5 : Fort",
+          "n°5/5 : Très fort"
+        ],
+        "famille_aromatique": [
+          "les Boisés",
+          "les Floraux",
+          "les Fruités",
+          "les Gourmands",
+          "les Épicés"
+        ],
+        "types_de_cafe": [
+          "Assemblage Maison",
+          "Café Biologique",
+          "Café Cœur de Forêt",
+          "Café Médaillé",
+          "Café de spécialité (100% arabica)",
+          "Café transporté à la voile",
+          "Décaféiné",
+          "Premium et Micro-lot",
+          "Terroir"
+        ],
+        "pays_producteur": [
+          "Bolivie",
+          "Brésil",
+          "Burundi",
+          "Colombie",
+          "Ethiopie",
+          "Honduras",
+          "Inde",
+          "Jamaique",
+          "Mexique",
+          "Nicaragua",
+          "Pérou",
+          "Rwanda",
+          "Salvador"
+        ],
+        "prix": [
+          "6,00 € - 40,00 €"
+        ]
+      }
+    },
+    {
+      "name": "Malongo",
+      "url": "https://www.malongo.com/boutique/fr/20-cafes-du-monde",
+      "language": {
+        "retailer_country": "FR",
+        "retailer_language": "fr",
+        "scraped_value_languages": [
+          "fr",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "French storefront with English-origin cultivar and category labels such as Blue Mountain, Slow Coffee, and Stick."
+      },
+      "source_type": "category sidebar filters and category links",
+      "product_count": 140,
+      "visible_filters": {
+        "categories": [
+          "Café soluble et lyophilisé instantané",
+          "Cafés bio &/ou équitable en dosettes",
+          "Cafés en grains",
+          "Cafés moulus",
+          "Dosettes café"
+        ],
+        "label": [
+          "Bio",
+          "Commerce Equitable"
+        ],
+        "gamme_malongo": [
+          "Café de spécialité",
+          "Classique",
+          "Edition limitée",
+          "Exception",
+          "Plantation",
+          "Pure origine",
+          "Slow Coffee",
+          "Stick"
+        ],
+        "nombre_de_dosettes": [
+          "100 doses",
+          "128 doses",
+          "144 doses",
+          "16 doses",
+          "160 doses",
+          "20 doses",
+          "80 doses"
+        ],
+        "quantite_de_cafe_g": [
+          "1000",
+          "125",
+          "200",
+          "220",
+          "250",
+          "480",
+          "500"
+        ],
+        "intensite": [
+          "Corsé (5/5)",
+          "Doux (2/5)",
+          "Décaféiné (2,5/5)",
+          "Equilibré (3/5)"
+        ],
+        "cafe_parfait_pour": [
+          "Cafetière italienne",
+          "Cafetière à filtration",
+          "Cafetière à piston",
+          "Café italien",
+          "Expresso"
+        ],
+        "arome": [
+          "Acidulé",
+          "Chocolat",
+          "Epicé",
+          "Fin",
+          "Floral",
+          "Fruité",
+          "Grillé",
+          "Suave"
+        ],
+        "pays_de_provenance": [
+          "Assemblage",
+          "Bolivie",
+          "Brésil",
+          "Burundi",
+          "Chine",
+          "Colombie",
+          "Congo",
+          "Costa Rica",
+          "Ethiopie",
+          "Ethiopie / Laos / Mexique",
+          "Guatemala",
+          "Honduras",
+          "Jamaïque",
+          "Kenya",
+          "Laos",
+          "Madagascar",
+          "Mexique",
+          "Mix produits",
+          "Myanmar",
+          "Myanmar / Laos",
+          "Nicaragua",
+          "Papouasie",
+          "Pérou",
+          "Salvador",
+          "Zimbabwe"
+        ],
+        "continent": [
+          "Afrique",
+          "Amérique Centrale",
+          "Amérique du Nord",
+          "Amérique du Sud",
+          "Asie de l'Est",
+          "Asie du Sud-Est",
+          "Océanie"
+        ],
+        "variete": [
+          "Arabica",
+          "Blue Mountain",
+          "Bourbon",
+          "Catimor",
+          "Catuai",
+          "Caturra",
+          "Maragogype",
+          "Marsellesa",
+          "Moka",
+          "Mundo Novo",
+          "Robusta",
+          "Starmaya",
+          "Typica"
+        ],
+        "marques": [
+          "MALONGO"
+        ]
+      }
+    },
+    {
+      "name": "Coutume Café",
+      "url": "https://www.coutumecafe.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "FR",
+        "retailer_language": "fr",
+        "scraped_value_languages": [
+          "fr",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "French Shopify feed with English method/product labels such as Cold Brew, Slow Coffee, Espresso, and V60."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 103,
+      "visible_filters": {
+        "tag_filters": [
+          "A offrir",
+          "Abonnement café",
+          "Accessoires café",
+          "Café de spécialité",
+          "Cold Brew",
+          "Filtres et entretien",
+          "Gamme Apprécier",
+          "Gamme Déguster",
+          "Gamme Explorer",
+          "Matériels et accessoires",
+          "Recurrent",
+          "Slow Coffee",
+          "Tous nos cafés"
+        ],
+        "origin_seen": [
+          "Colombie",
+          "Costa Rica",
+          "Éthiopie",
+          "Guatemala",
+          "Mexique"
+        ],
+        "mouture": [
+          "Espresso",
+          "Filtre",
+          "Grains",
+          "Italienne",
+          "Piston"
+        ],
+        "format_or_size_seen": [
+          "250g",
+          "1kg",
+          "2kg",
+          "20cl",
+          "Pack 6 x 20cl",
+          "Pack 12 x 20cl",
+          "Pack 24 x 20cl"
+        ],
+        "brew_equipment_seen": [
+          "AeroPress",
+          "Chemex",
+          "Hario V60",
+          "Origami",
+          "NextLevel Pulsar",
+          "Timemore"
+        ]
+      }
+    }
+  ],
+  "uk_sources": [
+    {
+      "name": "Square Mile Coffee Roasters",
+      "url": "https://shop.squaremilecoffee.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "GB",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "UK storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 250,
+      "coffee_product_count": 103,
+      "visible_filters": {
+        "product_type": [
+          "Coffee"
+        ],
+        "tag_filters": [
+          "espresso",
+          "filter",
+          "Decaf"
+        ],
+        "origin_seen": [
+          "Costa Rica",
+          "Guatemala",
+          "Colombia",
+          "Burundi",
+          "Brazil",
+          "Uganda",
+          "Kenya",
+          "Peru"
+        ],
+        "process_seen": [
+          "Decaf",
+          "Washed",
+          "Natural"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Decaf",
+          "V60",
+          "Medium",
+          "Dark"
+        ],
+        "options": {
+          "Size": [
+            "350g",
+            "1kg",
+            "175g",
+            "2kg"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Origin Coffee",
+      "url": "https://www.origincoffee.co.uk/products.json?limit=250",
+      "language": {
+        "retailer_country": "GB",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "UK storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 235,
+      "coffee_product_count": 32,
+      "visible_filters": {
+        "product_type": [
+          "Coffee (Cold Brew)",
+          "Coffee (Pods)",
+          "Coffee (Mainstay SO)",
+          "Coffee (Feature)",
+          "Coffee (Decaf)"
+        ],
+        "tag_filters": [
+          "Espresso",
+          "Filter",
+          "Decaf"
+        ],
+        "origin_seen": [
+          "Dominican Republic",
+          "El Salvador",
+          "Madagascar",
+          "Guatemala",
+          "Colombia",
+          "Tanzania",
+          "Thailand",
+          "Burundi"
+        ],
+        "process_seen": [
+          "Natural",
+          "Decaf",
+          "Washed",
+          "Honey",
+          "Sugarcane",
+          "Swiss Water"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Pods",
+          "Capsules",
+          "Cold Brew",
+          "Decaf",
+          "Ground",
+          "Beans",
+          "Dark"
+        ],
+        "options": {
+          "Coffee Name": [
+            "Tres Meninas",
+            "Santa Barbara",
+            "Atlas Decaf"
+          ],
+          "Grind Type": [
+            "Whole Bean",
+            "Ground for Filter (Coarse)",
+            "Ground for Espresso (Fine)",
+            "Ground for AeroPress (Medium)",
+            "Whole Beans",
+            "Ground for Filter",
+            "Ground for Espresso",
+            "Ground for Aeropress",
+            "Ground for AeroPress"
+          ],
+          "Roast": [
+            "Espresso",
+            "Filter"
+          ],
+          "Size": [
+            "x2 500ml Pouches",
+            "500ml",
+            "10 Capsules",
+            "20 Capsules",
+            "250g",
+            "1kg"
+          ],
+          "Weight": [
+            "2kg",
+            "4kg",
+            "6kg",
+            "8kg",
+            "10kg"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Rave Coffee",
+      "url": "https://ravecoffee.co.uk/products.json?limit=250",
+      "language": {
+        "retailer_country": "GB",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "UK storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 193,
+      "coffee_product_count": 86,
+      "visible_filters": {
+        "product_type": [
+          "Blend",
+          "Single Origin",
+          "Green Coffee",
+          "Coffee Bags",
+          "Pods",
+          "Coffee",
+          "Cold Brew"
+        ],
+        "tag_filters": [
+          "Espresso",
+          "cafetiere",
+          "Caramel",
+          "Chocolate & Caramel",
+          "coffee bean blend",
+          "Dark",
+          "Citrus & Floral",
+          "Filter",
+          "Light",
+          "natural",
+          "Rare",
+          "Single Origin",
+          "Medium",
+          "Taste Honeycomb Papaya Lemon",
+          "Chocolate",
+          "Taste Dark-Chocolate Black-Cherry Roasted-Hazelnut",
+          "Taste Blackberry Apple Maple-Syrup",
+          "washed",
+          "Taste Caramel Nutmeg Dark-Chocolate",
+          "Taste Hazelnut Butter-Candy Milk-Chocolate",
+          "Taste Milk-Chocolate Pecan Glace-Cherry",
+          "decaf",
+          "Taste Chocolate Malt Spices",
+          "Taste Chocolate-Digestive Hazelnut Molasses",
+          "Floral",
+          "Natural Anaerobic",
+          "Taste Turkish-Delight Sweet-Vermouth Lychee",
+          "Taste Pomegranate Brown-Sugar Chocolate",
+          "Taste Brown-Sugar Chocolate Biscuit",
+          "Taste Malt Brown-Sugar Chocolate-Orange",
+          "organic",
+          "taste caramel vanilla molasses",
+          "taste latte caramel-latte",
+          "Sugarcane Decaf",
+          "Taste Big-Chocolate",
+          "taste Caramel Almond Chocolate",
+          "Berry",
+          "dark chocolate",
+          "taste Dark-Chocolate Toasted-Nuts Victory",
+          "India",
+          "Taste Chocolate Spice",
+          "Taste Caramel Almond Chocolate",
+          "Taste Dark-Chocolate Walnut",
+          "Taste Milk Dark-or-White",
+          "Taste Chocolate Earthy Spice",
+          "Taste Chocolate Spice Malt",
+          "taste Milk-Chocolate Hazelnut Caramel",
+          "Taste Chocolate Cedar Smokey Spice",
+          "Taste Dark-Chocolate Toffee Spice",
+          "Taste Chocolate Earthy Hazelnut",
+          "Taste Chocolate Cedar Smoky",
+          "Taste Bittersweet Chocolate Peanut",
+          "Taste Nuts Chocolate"
+        ],
+        "origin_seen": [
+          "Papua New Guinea",
+          "El Salvador",
+          "Costa Rica",
+          "Guatemala",
+          "Indonesia",
+          "Colombia",
+          "Ethiopia",
+          "Honduras",
+          "Sumatra",
+          "Brazil",
+          "Mexico",
+          "Rwanda",
+          "Uganda",
+          "India",
+          "Peru"
+        ],
+        "process_seen": [
+          "Washed",
+          "Natural",
+          "Honey",
+          "Fermented",
+          "Decaf",
+          "Swiss Water",
+          "Anaerobic",
+          "Sugarcane"
+        ],
+        "variety_seen": [
+          "Arabica",
+          "Robusta",
+          "Bourbon",
+          "Java"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Pods",
+          "Capsules",
+          "Cold Brew",
+          "Decaf",
+          "Whole Bean",
+          "Ground",
+          "Beans",
+          "Aeropress",
+          "AeroPress",
+          "V60",
+          "Chemex",
+          "French Press",
+          "Light",
+          "Medium",
+          "Dark"
+        ],
+        "options": {
+          "Coffee": [
+            "Signature",
+            "Decaf",
+            "Fudge"
+          ],
+          "Coffee Type": [
+            "Signature",
+            "Fudge",
+            "Decaf",
+            "Cold Brew Blend Nº9"
+          ],
+          "Grind": [
+            "Whole Bean",
+            "Filter",
+            "Cafetiere",
+            "Espresso",
+            "Green",
+            "green",
+            "Cafetiere / Chemex",
+            "Cold Brew"
+          ],
+          "Pack Size": [
+            "10 Pods",
+            "50 Pods",
+            "100 Pods",
+            "15 Pyramids",
+            "45 Pyramids"
+          ],
+          "Size": [
+            "Small (250g)",
+            "Large (1kg)",
+            "Small (500g)",
+            "500g",
+            "Large(1kg)",
+            "Large (1Kg)",
+            "Single Sack",
+            "Box of 3",
+            "Small (300g)"
+          ],
+          "Type": [
+            "Dark",
+            "Milk",
+            "White"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Caravan Coffee Roasters",
+      "url": "https://www.caravancoffeeroasters.co.uk/products.json?limit=250",
+      "language": {
+        "retailer_country": "GB",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "UK storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 52,
+      "coffee_product_count": 38,
+      "visible_filters": {
+        "product_type": [
+          "Pods",
+          "Coffee"
+        ],
+        "tag_filters": [
+          "style-espresso",
+          "style-filter"
+        ],
+        "origin_seen": [
+          "Papua New Guinea",
+          "Guatemala",
+          "Colombia",
+          "Ethiopia",
+          "Myanmar",
+          "Mexico",
+          "Rwanda",
+          "Uganda",
+          "China",
+          "Congo",
+          "Peru"
+        ],
+        "process_seen": [
+          "Decaf",
+          "Sugarcane",
+          "Honey",
+          "Carbonic maceration",
+          "Fermented",
+          "Washed",
+          "Anaerobic",
+          "Natural",
+          "Experimental"
+        ],
+        "variety_seen": [
+          "Pink Bourbon",
+          "Arabica",
+          "Bourbon",
+          "Caturra",
+          "Catimor",
+          "Gesha",
+          "Java"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Pods",
+          "Decaf",
+          "Whole Bean",
+          "Ground",
+          "Beans"
+        ],
+        "options": {
+          "Grind": [
+            "Whole Bean",
+            "Ground for Espresso",
+            "Ground for Filter",
+            "Whole bean"
+          ],
+          "How many bags?": [
+            "3 X 200g Bags",
+            "6 X 200g Bags",
+            "12 X 200g Bags",
+            "3 x 200g Bags",
+            "6 x 200g Bags",
+            "12 x 200g Bags"
+          ],
+          "Size": [
+            "200g",
+            "1kg"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Workshop Coffee",
+      "url": "https://www.workshopcoffee.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "GB",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "UK storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 106,
+      "coffee_product_count": 58,
+      "visible_filters": {
+        "product_type": [
+          "Cold Brew",
+          "Espresso",
+          "Single Origin",
+          "House Blends",
+          "Coffee"
+        ],
+        "tag_filters": [
+          "Single Origin",
+          "Single Origin Filter",
+          "Single Origin Espresso",
+          "House Blends",
+          "Espresso at home",
+          "Filters",
+          "Decaffeinated",
+          "Espresso"
+        ],
+        "origin_seen": [
+          "Nicaragua",
+          "Colombia",
+          "Rwanda"
+        ],
+        "process_seen": [
+          "Anaerobic",
+          "Decaf",
+          "Experimental"
+        ],
+        "variety_seen": [
+          "Pink Bourbon",
+          "Red Bourbon",
+          "Castillo",
+          "Bourbon",
+          "Caturra",
+          "Gesha",
+          "Sidra"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Cold Brew",
+          "Decaf",
+          "Whole Bean",
+          "Ground",
+          "Aeropress",
+          "AeroPress",
+          "Dark"
+        ],
+        "options": {
+          "Bag Size": [
+            "250g",
+            "1kg",
+            "500g",
+            "2kg",
+            "6kg",
+            "Article - 1kg",
+            "Article - 2kg",
+            "Article - 6kg",
+            "Legacy Espresso - 1kg",
+            "Legacy Espresso - 2kg",
+            "Legacy Espresso - 6kg"
+          ],
+          "Grind Type": [
+            "Whole Bean",
+            "V60 01 / AeroPress",
+            "V60 02 / Clever Dripper",
+            "French Press",
+            "Moccamaster / Chemex",
+            "Ground for Espresso",
+            "Stovetop Moka Pot",
+            "V60 01 / AeroPress / Steepshot",
+            "Espresso"
+          ],
+          "Size": [
+            "Single Can 250ml",
+            "6 Pack",
+            "60g",
+            "Small",
+            "Large",
+            "Single Can",
+            "8oz",
+            "12oz"
+          ]
+        }
+      }
+    }
+  ],
+  "spanish_sources": [
+    {
+      "name": "Nomad Coffee",
+      "url": "https://nomadcoffee.es/products.json?limit=250",
+      "language": {
+        "retailer_country": "ES",
+        "retailer_language": "es",
+        "scraped_value_languages": [
+          "es",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Spanish storefront/feed with English coffee process and category terms."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 120,
+      "coffee_product_count": 35,
+      "visible_filters": {
+        "product_type": [
+          "Café"
+        ],
+        "tag_filters": [
+          "limited"
+        ],
+        "origin_seen": [
+          "Costa Rica",
+          "Burundi",
+          "Kenia"
+        ],
+        "process_seen": [
+          "Washed",
+          "Natural",
+          "Experimental",
+          "Decaf"
+        ],
+        "variety_seen": [
+          "Parainema",
+          "Pacamara",
+          "Bourbon",
+          "Caturra",
+          "Catimor",
+          "Chiroso",
+          "Geisha",
+          "Gesha",
+          "Sidra"
+        ],
+        "roast_brew_or_format_seen": [
+          "Espresso",
+          "Cold Brew",
+          "Filtro"
+        ],
+        "options": {
+          "Molienda": [
+            "Café en Grano",
+            "Cold Brew",
+            "Moccamaster",
+            "Aeropress",
+            "French Press",
+            "V60",
+            "Moka/Italiana/Oroley",
+            "Espresso",
+            "Máquina Espresso",
+            "Café en grano"
+          ],
+          "Peso": [
+            "250gr",
+            "1kg",
+            "3kg",
+            "2kg",
+            "100gr",
+            "500gr"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Syra Coffee",
+      "url": "https://syra.coffee/products.json?limit=250",
+      "language": {
+        "retailer_country": "ES",
+        "retailer_language": "es",
+        "scraped_value_languages": [
+          "es",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Spanish storefront/feed with English tags such as Filter, espresso, and origin: values."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 128,
+      "coffee_product_count": 25,
+      "visible_filters": {
+        "product_type": [
+          "Coffee"
+        ],
+        "tag_filters": [
+          "cafe en grano",
+          "cafe molido",
+          "Citric",
+          "espresso",
+          "Filter",
+          "origin: Bolivia",
+          "Sweet",
+          "origin:Guatemala",
+          "origin:Brasil",
+          "Filter coffee",
+          "origin:Uganda",
+          "origin:Ethiopia",
+          "origin:Brazil",
+          "origin:Colombia",
+          "origin:mexico",
+          "origin:Peru",
+          "origin:Ruanda",
+          "origin:Kenya",
+          "decaf"
+        ],
+        "origin_seen": [
+          "Guatemala",
+          "Colombia",
+          "Ethiopia",
+          "Bolivia",
+          "Ecuador",
+          "Brasil",
+          "Brazil",
+          "Mexico",
+          "México",
+          "Ruanda",
+          "Uganda",
+          "Kenya",
+          "Kenia",
+          "Peru",
+          "Perú"
+        ],
+        "process_seen": [
+          "Washed",
+          "Natural",
+          "Experimental",
+          "Fermented",
+          "Decaf",
+          "Sugarcane"
+        ],
+        "variety_seen": [
+          "Red Bourbon",
+          "Castillo",
+          "Ruiru 11",
+          "Bourbon",
+          "Caturra",
+          "Catuaí",
+          "Catuai",
+          "Batian",
+          "SL28",
+          "SL34",
+          "JARC",
+          "Moka"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Omni",
+          "Decaf",
+          "Beans",
+          "cafe en grano",
+          "cafe molido",
+          "Grano",
+          "Molido",
+          "Filtro",
+          "Moka",
+          "V60",
+          "Chemex",
+          "French Press",
+          "Molienda",
+          "Tueste"
+        ],
+        "options": {
+          "Peso": [
+            "250GR.",
+            "1KG. Ahorra hasta un 20%"
+          ],
+          "Tipo de Tueste": [
+            "Tueste de Espresso",
+            "Tueste de Filtro"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Ineffable Coffee",
+      "url": "https://ineffablecoffee.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "ES",
+        "retailer_language": "es",
+        "scraped_value_languages": [
+          "es",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Spanish storefront/feed with English coffee process names and cultivar terms."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 250,
+      "coffee_product_count": 110,
+      "visible_filters": {
+        "product_type": [
+          "Café"
+        ],
+        "tag_filters": [
+          "Café Cold Brew",
+          "Café de competición",
+          "Café de especialidad",
+          "Café espresso",
+          "Café filtro",
+          "Café para filtro",
+          "Ver todos los cafés",
+          "afrutado",
+          "Café Colombia",
+          "rocket espresso",
+          "Café descafeinado",
+          "Packs Moka Italiana"
+        ],
+        "origin_seen": [
+          "Costa Rica",
+          "Guatemala",
+          "Nicaragua",
+          "Colombia",
+          "Tanzania",
+          "Bolivia",
+          "Brasil",
+          "Uganda"
+        ],
+        "process_seen": [
+          "Thermal shock",
+          "Natural",
+          "Washed",
+          "Anaerobic",
+          "Decaf"
+        ],
+        "variety_seen": [
+          "Typica Mejorado",
+          "Pacamara",
+          "Castillo",
+          "Mejorado",
+          "Robusta",
+          "Typica",
+          "Papayo",
+          "Gesha",
+          "SL28",
+          "Moka"
+        ],
+        "roast_brew_or_format_seen": [
+          "Espresso",
+          "Cold Brew",
+          "Decaf",
+          "Café en grano",
+          "Grano",
+          "Molido",
+          "Filtro",
+          "Moka",
+          "V60",
+          "Chemex",
+          "Italiana",
+          "Molienda",
+          "Tueste"
+        ],
+        "options": {
+          "Grano-Molido": [
+            "Café en grano",
+            "Molido émbolo",
+            "Molido AeroPress",
+            "Molido V60",
+            "Molido Chemex",
+            "Molido moka italiana",
+            "Molido espresso",
+            "Molido Cold Brew"
+          ],
+          "Grano-Molido:": [
+            "Café en grano",
+            "Molido Espresso",
+            "Molido Moka italiana",
+            "Molido AeroPress",
+            "Molido Chemex",
+            "Molido V60 / Orea / Kalita",
+            "Molido Máquinas de filtro",
+            "Molido Émbolo",
+            "Molido Cold Brew",
+            "Café en Grano",
+            "Molido V60 /Orea / Kalita",
+            "Molido Máquina de filtro",
+            "Molido émbolo",
+            "Molido V60",
+            "Molido moka italiana",
+            "Molido Máquinas de Filtro"
+          ],
+          "Variante": [
+            "4 Cups"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Hola Coffee",
+      "url": "https://hola.coffee/products.json?limit=250",
+      "language": {
+        "retailer_country": "ES",
+        "retailer_language": "es",
+        "scraped_value_languages": [
+          "es",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Spanish storefront/feed with Spanish options and mixed English sensory tags."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 119,
+      "coffee_product_count": 59,
+      "visible_filters": {
+        "product_type": [
+          "Café en grano"
+        ],
+        "tag_filters": [
+          "Floral",
+          "Frutal",
+          "Jugoso",
+          "Light",
+          "perú",
+          "Proceso Natural",
+          "Acaramelado",
+          "Brasil",
+          "Colombia",
+          "Costa Rica",
+          "Guatemala",
+          "Medium",
+          "Blend",
+          "México",
+          "Proceso Honey",
+          "Espresso",
+          "Ruanda",
+          "Descafeinado",
+          "Descafeinado Sugarcane",
+          "specialty coffee association"
+        ],
+        "origin_seen": [
+          "Costa Rica",
+          "Guatemala",
+          "Colombia",
+          "Brasil",
+          "México",
+          "Ruanda",
+          "Peru",
+          "Perú"
+        ],
+        "process_seen": [
+          "Washed",
+          "Natural",
+          "Honey",
+          "Fermented",
+          "Experimental",
+          "Decaf",
+          "Sugarcane"
+        ],
+        "variety_seen": [
+          "Yellow Bourbon",
+          "Pink Bourbon",
+          "Red Bourbon",
+          "Mundo Novo",
+          "Pacamara",
+          "Castillo",
+          "Bourbon",
+          "Caturra",
+          "Typica",
+          "Catuaí",
+          "Gesha",
+          "Sidra",
+          "Tabi"
+        ],
+        "roast_brew_or_format_seen": [
+          "Espresso",
+          "Cold Brew",
+          "Decaf",
+          "Café en grano",
+          "Grano",
+          "Molido",
+          "Filtro",
+          "Italiana",
+          "Molienda",
+          "Light",
+          "Medium"
+        ],
+        "options": {
+          "Grano o Molido": [
+            "Grano",
+            "Molido para Espresso",
+            "Molido para Filtro",
+            "Molido para Italiana o Moca",
+            "Molido para Moccamaster",
+            "Molido para French Press",
+            "Molido para Aeropress",
+            "Molido para Cold Brew"
+          ],
+          "Grano/Molido": [
+            "Grano",
+            "Molido espresso",
+            "Molido italiana o moka",
+            "Molido AeroPress",
+            "Molido V60 / Chemex / Kalita o similar",
+            "Molido French Press / Cold Brew",
+            "En grano",
+            "Molido Espresso",
+            "Molido Moka o Italiana",
+            "Molido V60 - Chemex - Kalita - Similar",
+            "Molido French Press",
+            "Molido Cold Brew",
+            "Molido filtro (V60 / Chemex / Kalita...)",
+            "Molido Filtro (V60 / Chemex / Kalita...)",
+            "Molido French Press - Cold Brew",
+            "Molido Aeropress",
+            "Molido para espresso",
+            "Molido para italiana o moka",
+            "Molido para aeropress",
+            "Molido para filtro (V60-Chemex-Kalita-similar)",
+            "Molido para french press",
+            "Molido para cold brew",
+            "Molido para moka o italiana",
+            "Molido para filtro (V60-Chemex-Kalita...)",
+            "Molido Moka - Italiana"
+          ],
+          "Tueste": [
+            "Light",
+            "Medium"
+          ]
+        }
+      }
+    }
+  ],
+  "danish_sources": [
+    {
+      "name": "Coffee Collective",
+      "url": "https://coffeecollective.dk/products.json?limit=250",
+      "language": {
+        "retailer_country": "DK",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en",
+          "da"
+        ],
+        "confidence": "high",
+        "note": "Danish retailer product feed is primarily English, with Danish labels such as Økologisk kaffe."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 196,
+      "coffee_product_count": 49,
+      "visible_filters": {
+        "tag_filters": [
+          "colombia",
+          "espresso",
+          "washed",
+          "Økologisk kaffe",
+          "bolivia",
+          "filter",
+          "natural",
+          "peru",
+          "brazil",
+          "blend"
+        ],
+        "origin_seen": [
+          "Colombia",
+          "Bolivia",
+          "Brazil",
+          "Peru"
+        ],
+        "process_seen": [
+          "Washed",
+          "Natural",
+          "Fermented"
+        ],
+        "variety_seen": [
+          "Gesha"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Medium",
+          "Dark"
+        ]
+      }
+    },
+    {
+      "name": "La Cabra",
+      "url": "https://www.lacabra.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "DK",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Danish retailer storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 69,
+      "coffee_product_count": 17,
+      "visible_filters": {
+        "product_type": [
+          "Coffee",
+          "Steeped",
+          "COFFEE",
+          "Coffee Bundle"
+        ],
+        "tag_filters": [
+          "Rare"
+        ],
+        "origin_seen": [
+          "Honduras",
+          "Ecuador",
+          "Peru"
+        ],
+        "process_seen": [
+          "Washed"
+        ],
+        "variety_seen": [
+          "Pink Bourbon",
+          "Sudan Rume",
+          "Parainema",
+          "Bourbon",
+          "Typica",
+          "Geisha"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Ground",
+          "Medium"
+        ],
+        "options": {
+          "Amount": [
+            "200g",
+            "1kg",
+            "250g",
+            "100g",
+            "Retail bundle (six units)",
+            "Single unit",
+            "1 kg",
+            "2 kg",
+            "2 x 250g",
+            "4 x 250g"
+          ],
+          "Profile": [
+            "Terra",
+            "Luna",
+            "Terra + Luna"
+          ],
+          "Size": [
+            "100g"
+          ]
+        }
+      }
+    },
+    {
+      "name": "April Coffee Roasters",
+      "url": "https://aprilcoffeeroasters.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "DK",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Danish retailer storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 72,
+      "coffee_product_count": 35,
+      "visible_filters": {
+        "product_type": [
+          "Coffee"
+        ],
+        "tag_filters": [
+          "Espresso Beans",
+          "Filter Beans",
+          "Limited Coffee beans",
+          "Espresso Coffee Beans",
+          "Limited Coffee",
+          "organic"
+        ],
+        "origin_seen": [
+          "Costa Rica",
+          "Guatemala",
+          "Colombia",
+          "Ethiopia",
+          "Brazil",
+          "Panama",
+          "China"
+        ],
+        "process_seen": [
+          "Washed",
+          "Natural",
+          "Honey",
+          "Decaf",
+          "Swiss Water",
+          "Fermented"
+        ],
+        "variety_seen": [
+          "Yellow Geisha",
+          "Heirloom",
+          "Pacamara",
+          "Castillo",
+          "Caturra",
+          "Catuai",
+          "Geisha",
+          "SL28"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Decaf",
+          "Beans",
+          "Light",
+          "Medium",
+          "kaffebønner"
+        ],
+        "options": {
+          "Roast": [
+            "Filter",
+            "Espresso"
+          ],
+          "Roast Type & Size": [
+            "250g",
+            "1kg",
+            "125g"
+          ],
+          "Size": [
+            "125g",
+            "250g",
+            "1kg",
+            "280 ml",
+            "500 ml",
+            "Ceramic / Glass / Hybrid Brewers",
+            "Plastic Brewer",
+            "Filter",
+            "Espresso",
+            "Sustainable Profile",
+            "500g",
+            "1kg - Decaf",
+            "1 x 125g April Filter",
+            "2 x 125g April Filter",
+            "1 x 250g April Filter",
+            "1 x 250g April Espresso",
+            "1 x 250g April Filter + 1 x 250g April Espresso",
+            "2 x 250g April Filter",
+            "2 x 250g April Espresso",
+            "3 x 250g April Filter",
+            "3 x 250g April Espresso",
+            "4 x 250g April Filter",
+            "4 x 250g April Espresso",
+            "2 x 250g April Filter + 2 x 250g April Espresso",
+            "3 x 250g April Filter + 3 x 250g April Espresso",
+            "5 x 250g April  Filter",
+            "5 x 250g April Espresso",
+            "6 x 250g April Filter",
+            "1 x 1kg April Espresso",
+            "1 x 1kg April Filter"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Prolog Coffee Bar",
+      "url": "https://prologcoffee.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "DK",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Danish retailer storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 25,
+      "coffee_product_count": 13,
+      "visible_filters": {
+        "product_type": [
+          "Coffee beans",
+          "Coffee subscription"
+        ],
+        "tag_filters": [
+          "Round and sweet"
+        ],
+        "origin_seen": [
+          "Costa Rica",
+          "Indonesia",
+          "Colombia",
+          "Mexico",
+          "Kenya",
+          "Peru"
+        ],
+        "process_seen": [
+          "Honey",
+          "Washed",
+          "Carbonic maceration",
+          "Fermented",
+          "Natural",
+          "Experimental"
+        ],
+        "variety_seen": [
+          "Mundo Novo",
+          "Castillo",
+          "Ruiru 11",
+          "Bourbon",
+          "Caturra",
+          "Chiroso",
+          "Typica",
+          "Catuai",
+          "Batian"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Omni",
+          "Beans",
+          "Light"
+        ],
+        "options": {
+          "Amount": [
+            "2 x 250g omni",
+            "1 x 1000g omni"
+          ],
+          "Roast": [
+            "Omni"
+          ],
+          "Size": [
+            "250g",
+            "1000g",
+            "125g",
+            "1kg"
+          ]
+        }
+      }
+    }
+  ],
+  "norwegian_sources": [
+    {
+      "name": "Tim Wendelboe",
+      "url": "https://timwendelboe.no/products.json?limit=250",
+      "language": {
+        "retailer_country": "NO",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Norwegian retailer storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 33,
+      "coffee_product_count": 18,
+      "visible_filters": {
+        "origin_seen": [
+          "Colombia"
+        ],
+        "process_seen": [
+          "Honey",
+          "Natural"
+        ],
+        "variety_seen": [
+          "Pacamara",
+          "Castillo",
+          "Bourbon",
+          "Geisha"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Dark"
+        ],
+        "options": {
+          "Flavour Profile": [
+            "Fresh & Fruity",
+            "Rich & Sweet",
+            "Surprise Me"
+          ],
+          "How many Espresso bags (250g)": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "How many Filter bags (250g)": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "0"
+          ],
+          "Roast Profile": [
+            "Filter Roast",
+            "Espresso Roast",
+            "Light Roast"
+          ],
+          "Select how many bags you want delivered": [
+            "1 bag",
+            "2 bags",
+            "3 bags",
+            "4 bags",
+            "5 bags",
+            "6 bags"
+          ],
+          "Size": [
+            "18g",
+            "20g"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Fuglen Coffee Roasters",
+      "url": "https://fuglencoffee.no/products.json?limit=250",
+      "language": {
+        "retailer_country": "NO",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Norwegian retailer storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 53,
+      "coffee_product_count": 9,
+      "visible_filters": {
+        "product_type": [
+          "Coffee"
+        ],
+        "tag_filters": [
+          "Filter",
+          "peru",
+          "Washed Process",
+          "kenya",
+          "colombia",
+          "uganda",
+          "Espresso",
+          "Ethiopia",
+          "honduras"
+        ],
+        "origin_seen": [
+          "Colombia",
+          "Ethiopia",
+          "Honduras",
+          "Uganda",
+          "Kenya",
+          "Peru"
+        ],
+        "process_seen": [
+          "Washed",
+          "Fermented",
+          "Experimental"
+        ],
+        "variety_seen": [
+          "Pink Bourbon",
+          "Heirloom",
+          "Ruiru 11",
+          "Bourbon",
+          "Batian",
+          "SL28",
+          "SL34"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Whole Bean",
+          "Dark"
+        ],
+        "options": {
+          "Grind": [
+            "Whole Bean",
+            "Filter Ground",
+            "French Press",
+            "Mokkapot"
+          ],
+          "Grind Option": [
+            "Whole Bean",
+            "Filter Ground",
+            "Other (specify at checkout)",
+            "Other (Specify at checkout)",
+            "Mokkapot"
+          ],
+          "Roast profile": [
+            "Filter",
+            "Espresso"
+          ],
+          "Weight": [
+            "250g",
+            "1kg"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Kaffa Oslo",
+      "url": "https://www.kaffa.no/products.json?limit=250",
+      "language": {
+        "retailer_country": "NO",
+        "retailer_language": "no",
+        "scraped_value_languages": [
+          "no",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Norwegian storefront/feed with Norwegian tags and English coffee-process terms."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 250,
+      "coffee_product_count": 49,
+      "visible_filters": {
+        "product_type": [
+          "Coffee",
+          "Råkaffe"
+        ],
+        "tag_filters": [
+          "iskaffe",
+          "kaldbrygg",
+          "kaldbrygge kaffe",
+          "sommerkaffe",
+          "filter",
+          "kaffebønner",
+          "colombia",
+          "espressokaffebønner",
+          "kenya",
+          "kenyansk kaffe",
+          "decaf",
+          "ettermiddagskaffe",
+          "gravidvennlig kaffe",
+          "kaffe uten koffein",
+          "koffeinfri kaffe",
+          "Lysbrent Kaffe",
+          "spesialkaffe",
+          "peru",
+          "økologisk",
+          "økologisk kaffe",
+          "honduras",
+          "månedens kaffe",
+          "økologisk te",
+          "etiopia",
+          "heirloom",
+          "håndbrygg",
+          "kaffebønner beholder",
+          "kaffekvern tilbehør",
+          "reiseutstyr kaffe",
+          "brasil",
+          "kaffetermometer",
+          "kaffebryggere",
+          "kaffemaskiner",
+          "kaffetrakter",
+          "verdens beste kaffe",
+          "espresso",
+          "espressoblanding",
+          "espressobønner",
+          "mørkbrent",
+          "costa rica",
+          "grønn kaffe",
+          "guatemala",
+          "råkaffe",
+          "Bryggevekt",
+          "filterkaffe",
+          "kaffebrygging",
+          "kaffedosering",
+          "kaffekvern",
+          "Filterpapir",
+          "Flatbunnet filter",
+          "Ren kopp kaffe",
+          "kaffedessert",
+          "kaffegave",
+          "kaffesirup",
+          "sirup til kaffe",
+          "smaksatt kaffe",
+          "kaffebeholder",
+          "håndbrygger",
+          "kaffe design",
+          "julekaffe"
+        ],
+        "origin_seen": [
+          "Costa Rica",
+          "Guatemala",
+          "Colombia",
+          "Honduras",
+          "Etiopia",
+          "Brasil",
+          "India",
+          "Kenya",
+          "Peru"
+        ],
+        "process_seen": [
+          "Decaf",
+          "Washed"
+        ],
+        "variety_seen": [
+          "Red Bourbon",
+          "Heirloom",
+          "Bourbon",
+          "Caturra",
+          "Typica",
+          "Geisha",
+          "SL28"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Decaf",
+          "Aeropress",
+          "AeroPress",
+          "V60",
+          "Chemex",
+          "French Press",
+          "Lysbrent",
+          "Mørkbrent",
+          "kaffebønner",
+          "kaldbrygg"
+        ],
+        "options": {
+          "Size": [
+            "480ml",
+            "0,7L",
+            "1,2L",
+            "0,4L"
+          ]
+        }
+      }
+    }
+  ],
+  "finnish_sources": [
+    {
+      "name": "Good Life Coffee",
+      "url": "https://goodlifecoffee.fi/products.json?limit=250",
+      "language": {
+        "retailer_country": "FI",
+        "retailer_language": "fi",
+        "scraped_value_languages": [
+          "fi",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Finnish storefront/feed with Finnish product types/options and English origin/process terms."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 31,
+      "coffee_product_count": 14,
+      "visible_filters": {
+        "product_type": [
+          "Suodatinkahvi",
+          "Espresso",
+          "Kofeiinitonkahvi"
+        ],
+        "origin_seen": [
+          "Colombia",
+          "Ecuador",
+          "Etiopia",
+          "Ruanda",
+          "Kenia"
+        ],
+        "process_seen": [
+          "Natural",
+          "Washed",
+          "Anaerobic",
+          "Fermented",
+          "Decaf",
+          "Sugarcane"
+        ],
+        "variety_seen": [
+          "Pink Bourbon",
+          "Heirloom",
+          "Landrace",
+          "Ruiru 11",
+          "Bourbon",
+          "Geisha",
+          "Batian",
+          "SL-28",
+          "SL-34",
+          "Java"
+        ],
+        "roast_brew_or_format_seen": [
+          "Espresso",
+          "Decaf",
+          "Suodatinkahvi",
+          "Tumma suodatinkahvi",
+          "V60"
+        ],
+        "options": {
+          "Koko": [
+            "225g",
+            "1kg",
+            "2x 225g",
+            "4x 225g",
+            "3x 225g"
+          ],
+          "Lajike": [
+            "Papu",
+            "Jauhettu suodatinkeittimelle",
+            "Jauhettu mutteripannulle"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Lehmus Roastery",
+      "url": "https://www.lehmusroastery.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "FI",
+        "retailer_language": "fi",
+        "scraped_value_languages": [
+          "fi",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Finnish storefront/feed with Finnish product types/options and English origin/process terms."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 201,
+      "coffee_product_count": 114,
+      "visible_filters": {
+        "product_type": [
+          "Kahvit",
+          "kahvit"
+        ],
+        "tag_filters": [
+          "Testipaahto",
+          "Kahvit",
+          "Keskipaahto",
+          "paahtoaste 2/5",
+          "espresso",
+          "keskipaahto",
+          "paahtoaste 3/5",
+          "paahtoaste 4/5",
+          "paahtoaste 5/5",
+          "paahtoaste 2.5/5"
+        ],
+        "origin_seen": [
+          "Costa Rica",
+          "Guatemala",
+          "Indonesia",
+          "Colombia",
+          "Honduras",
+          "Tansania",
+          "Etiopia",
+          "Burundi",
+          "Sumatra",
+          "Uganda",
+          "Kenia",
+          "Peru"
+        ],
+        "process_seen": [
+          "Washed",
+          "Natural",
+          "Decaf",
+          "Anaerobic",
+          "Fermented",
+          "Koji"
+        ],
+        "variety_seen": [
+          "Yellow Bourbon",
+          "Pink Bourbon",
+          "Maracaturra",
+          "Maragogype",
+          "Mundo Novo",
+          "Heirloom",
+          "Castillo",
+          "Ombligon",
+          "Ombligón",
+          "Ruiru 11",
+          "Arabica",
+          "Robusta",
+          "Bourbon",
+          "Caturra",
+          "Catimor",
+          "Typica",
+          "Catuai",
+          "Batian",
+          "Gesha",
+          "Mokka",
+          "SL28",
+          "SL34",
+          "JARC"
+        ],
+        "roast_brew_or_format_seen": [
+          "Espresso",
+          "Suodatinkahvi",
+          "Tummapaahto",
+          "Aeropress",
+          "AeroPress",
+          "V60",
+          "Chemex",
+          "Dark",
+          "tumma paahto",
+          "paahtoaste"
+        ],
+        "options": {
+          "Jauhatuskarkeus": [
+            "Suodatinjauhettuna",
+            "Papuina"
+          ],
+          "Koko": [
+            "220 g",
+            "300g",
+            "220g",
+            "500g",
+            "1000g",
+            "35-37",
+            "38-40",
+            "41-43",
+            "44-46"
+          ],
+          "Laatu": [
+            "Suodatinjauhettu",
+            "Papuja",
+            "Suodatinjauhatus",
+            "Papuina",
+            "Pannujauhatus",
+            "Pressojauhatus",
+            "Suodatinjauhettuna",
+            "Papu",
+            "1 x papu ja 1 x suodatinjauhatus",
+            "Spine #5 ja vaaleapaahtoinen kahvi suodatinjauhatus",
+            "Spine #5 ja vaaleapaahtoinen kahvi papu",
+            "Jauhettuna",
+            "Papuna",
+            "Espressojauhatus",
+            "Mutteripannu",
+            "Aeropress",
+            "Pressopannu",
+            "Mutteripannujauhatus",
+            "Aeropress -jauhatus",
+            "Aeropress-jauhatus"
+          ],
+          "Paahtoaste": [
+            "Tumma",
+            "Tosi tumma"
+          ],
+          "Paino": [
+            "2x220g"
+          ],
+          "Pakkauskoko": [
+            "1000g",
+            "220 g",
+            "500 g",
+            "100 g",
+            "200 g",
+            "3x220 g = 660 g",
+            "2 laatikkoa (6 x 220g)",
+            "200g",
+            "600g",
+            "1000 g",
+            "220g",
+            "500g"
+          ],
+          "Suodatinjauhettuna vai papuina?": [
+            "Suodatinjauhettuna",
+            "Papuina",
+            "Suodatinjauhettu"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Kaffa Roastery",
+      "url": "https://kaffaroastery.fi/products.json?limit=250",
+      "language": {
+        "retailer_country": "FI",
+        "retailer_language": "fi",
+        "scraped_value_languages": [
+          "fi",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Finnish storefront/feed with Finnish options and English coffee names/process terms."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 48,
+      "coffee_product_count": 16,
+      "visible_filters": {
+        "product_type": [
+          "Coffee Bags"
+        ],
+        "tag_filters": [
+          "single-origin",
+          "medium",
+          "dark",
+          "light"
+        ],
+        "origin_seen": [
+          "Costa Rica",
+          "Colombia",
+          "Ethiopia",
+          "Etiopia",
+          "Brazil",
+          "Rwanda",
+          "Uganda"
+        ],
+        "process_seen": [
+          "Washed",
+          "Natural",
+          "Decaf"
+        ],
+        "variety_seen": [
+          "Red Bourbon",
+          "Castillo",
+          "Arabica",
+          "Robusta",
+          "Bourbon",
+          "Caturra"
+        ],
+        "roast_brew_or_format_seen": [
+          "Espresso",
+          "Suodatinkahvi",
+          "Light",
+          "Medium",
+          "Dark"
+        ],
+        "options": {
+          "Jauhatus": [
+            "Papu",
+            "Suodatinjauhatus",
+            "Pressopannujauhatus",
+            "Mutteripannujauhatus",
+            "Espressojauhatus",
+            "Hienojauhatus HJ",
+            "Puolikarkeajauhatus PKJ",
+            "Hienojauhatus (HJ)",
+            "Puolikarkeajauhatus (PKJ)"
+          ],
+          "Koko": [
+            "250g",
+            "1000g"
+          ]
+        }
+      }
+    }
+  ],
+  "swedish_sources": [
+    {
+      "name": "Johan & Nyström",
+      "url": "https://johanochnystrom.se/products.json?limit=250",
+      "language": {
+        "retailer_country": "SE",
+        "retailer_language": "sv",
+        "scraped_value_languages": [
+          "sv",
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Swedish storefront/feed with Swedish product tags and English cultivar/process names."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 209,
+      "coffee_product_count": 55,
+      "visible_filters": {
+        "product_type": [
+          "Kaffe",
+          "Espresso",
+          "Bryggkaffe"
+        ],
+        "tag_filters": [
+          "Bryggkaffe",
+          "Hela bönor",
+          "ljusrost",
+          "Single Origin",
+          "Single origin",
+          "Espresso",
+          "mörkrost",
+          "decaf",
+          "Fairtrade & Ekologiskt",
+          "bryggmalet",
+          "organic"
+        ],
+        "origin_seen": [
+          "El Salvador",
+          "Guatemala",
+          "Nicaragua",
+          "Colombia",
+          "Honduras",
+          "Burundi",
+          "Brazil",
+          "Uganda",
+          "Kenya",
+          "Peru"
+        ],
+        "process_seen": [
+          "Natural",
+          "Washed",
+          "Honey",
+          "Decaf"
+        ],
+        "variety_seen": [
+          "Pink Bourbon",
+          "Red Bourbon",
+          "Mundo Novo",
+          "Pacamara",
+          "Arabica",
+          "Bourbon",
+          "Caturra",
+          "Typica",
+          "Catuai"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Omni",
+          "Pods",
+          "Decaf",
+          "Ground",
+          "Hela bönor",
+          "Bryggkaffe",
+          "Dark",
+          "ljusrost",
+          "mörkrost",
+          "mellanrost"
+        ],
+        "options": {
+          "Innehåll": [
+            "250 g",
+            "Sample Pack",
+            "100-pack",
+            "4 x 250 g Hela Bönor",
+            "Hela bönor, 500 g",
+            "Hela bönor, 250 g",
+            "Bryggmalet, 250 g",
+            "500 g",
+            "80 g‚ lösvikt",
+            "3 x 500 g Hela Bönor",
+            "3 x 500 g Bryggmalet"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Drop Coffee",
+      "url": "https://dropcoffee.com/products.json?limit=250",
+      "language": {
+        "retailer_country": "SE",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en",
+          "sv"
+        ],
+        "confidence": "high",
+        "note": "Swedish retailer storefront/feed scraped mostly in English with Swedish tags such as Specialkaffe."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 41,
+      "coffee_product_count": 22,
+      "visible_filters": {
+        "product_type": [
+          "Coffee"
+        ],
+        "tag_filters": [
+          "Bolivia",
+          "exclusive",
+          "Specialkaffe",
+          "Gesha",
+          "Guatemala",
+          "Washed",
+          "El Salvador",
+          "Honey",
+          "Sl28",
+          "caturra",
+          "Anaerobic",
+          "Bourbon",
+          "Natural",
+          "Pacamara",
+          "Java",
+          "Nicaragua"
+        ],
+        "origin_seen": [
+          "El Salvador",
+          "Costa Rica",
+          "Guatemala",
+          "Nicaragua",
+          "Ethiopia",
+          "Bolivia",
+          "Hawaii",
+          "Kenya",
+          "Yemen"
+        ],
+        "process_seen": [
+          "Washed",
+          "Fermented",
+          "Experimental",
+          "Lactic",
+          "Natural",
+          "Honey",
+          "Anaerobic"
+        ],
+        "variety_seen": [
+          "Pacamara",
+          "Bourbon",
+          "Caturra",
+          "Catuaí",
+          "Gesha",
+          "Java",
+          "SL28"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Ground",
+          "Beans",
+          "Light",
+          "Medium",
+          "Dark"
+        ],
+        "options": {
+          "Weight": [
+            "Whole Beans - 250g",
+            "Whole Beans -  250g",
+            "Whole Beans - 1000g",
+            "Ground for Filter/Bryggmalet - 250g",
+            "Ground for Filter/Bryggmalet - 1000g",
+            "Green Beans/Orostat - 1000g",
+            "Ground for Filter - 250g",
+            "Ground for Filter - 1000g"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Love Coffee Roasters",
+      "url": "https://www.lovecoffee.se/products.json?limit=250",
+      "language": {
+        "retailer_country": "SE",
+        "retailer_language": "en",
+        "scraped_value_languages": [
+          "en"
+        ],
+        "confidence": "high",
+        "note": "Swedish retailer storefront/feed scraped in English."
+      },
+      "source_type": "Shopify product feed tags/options/titles",
+      "product_count": 18,
+      "coffee_product_count": 17,
+      "visible_filters": {
+        "product_type": [
+          "House Coffee",
+          "Espresso"
+        ],
+        "origin_seen": [
+          "Colombia",
+          "Ethiopia",
+          "Kenya"
+        ],
+        "process_seen": [
+          "Honey",
+          "Fermented",
+          "Washed",
+          "Natural",
+          "Experimental",
+          "Decaf",
+          "Sugarcane"
+        ],
+        "variety_seen": [
+          "Caturra",
+          "Geisha",
+          "SL28"
+        ],
+        "roast_brew_or_format_seen": [
+          "Filter",
+          "Espresso",
+          "Decaf",
+          "Beans",
+          "French Press",
+          "Light",
+          "Dark"
+        ],
+        "options": {
+          "Size": [
+            "250g",
+            "1kg",
+            "1000g",
+            "2x250g",
+            "2x 250g Wholebean",
+            "3x 250g Wholebean",
+            "4x 250g Wholebean",
+            "2x 1kg Wholebean"
+          ],
+          "Variant": [
+            "Wholebean",
+            "Filter",
+            "French press",
+            "Moka",
+            "Espresso"
+          ]
+        }
+      }
+    }
+  ],
+  "aggregate_hints": {
+    "origin_or_region": [
+      "Africa",
+      "Africa/Arabia",
+      "Americas",
+      "Asia",
+      "Bolivia",
+      "Brazil",
+      "California",
+      "Central America",
+      "China",
+      "Colombia",
+      "Costa Rica",
+      "Ecuador",
+      "El Salvador",
+      "Ethiopia",
+      "Guatemala",
+      "Honduras",
+      "India & Sri Lanka",
+      "Indo-Pacific",
+      "Indonesia",
+      "Japan",
+      "Kenya",
+      "Latin America",
+      "Mexico",
+      "Nepal",
+      "Panama",
+      "Peru",
+      "Rwanda",
+      "South America",
+      "Uganda"
+    ],
+    "roast_level": [
+      "Light",
+      "Medium-Light",
+      "Medium",
+      "Medium-Dark",
+      "Dark",
+      "Bright",
+      "Bright Medium",
+      "Darker",
+      "Lighter",
+      "Roast Level 5",
+      "Roast Level 6",
+      "Roast Level 7",
+      "Roast Level 8",
+      "Roast Level 9"
+    ],
+    "process": [
+      "Anaerobic Honey",
+      "Anaerobic Natural",
+      "Anaerobic Washed",
+      "Co-ferment",
+      "Decaffinated",
+      "Dry Washed",
+      "E.A. Process",
+      "Fermentation",
+      "Honey",
+      "Innoculated",
+      "Mountain Water Process",
+      "Natural",
+      "Natural and Washed",
+      "Natural and rustic",
+      "Supernatural",
+      "Swiss Water Process",
+      "Thermal Shock",
+      "Washed",
+      "Washed and Natural",
+      "Washed and Wet-Hulled",
+      "Water Processed Decaf",
+      "Wet-hulled",
+      "White Honey"
+    ],
+    "variety": [
+      "Bourbon",
+      "Caturra",
+      "Chiroso",
+      "Colombia",
+      "Gesha",
+      "Landrace",
+      "Mixed",
+      "Pink Bourbon",
+      "Sudan Rume",
+      "Typica Mejorado"
+    ],
+    "caffeine": [
+      "25%",
+      "50%",
+      "75%",
+      "Decaf",
+      "Decaffeinated",
+      "Full",
+      "Full Caf",
+      "Half-Caf",
+      "Light Caffeine",
+      "Moderate Caffeine",
+      "No Caffeine",
+      "Partial",
+      "Regular",
+      "Very Light Caffeine"
+    ],
+    "profile_or_flavor_family": [
+      "Black",
+      "Bold",
+      "Bright",
+      "Bright / Citrus / Sweet",
+      "Brown Sugar",
+      "Caramel",
+      "Chocolate",
+      "Citrus",
+      "Clean",
+      "Complex",
+      "Creamy",
+      "Dark Chocolate",
+      "Floral",
+      "Florals",
+      "Fruit",
+      "Fruity / Floral",
+      "Herbal / Earthy",
+      "Mild",
+      "Modern",
+      "Nutty / Chocolate",
+      "Nuts",
+      "Spicy / Complex",
+      "Sweet",
+      "Syrupy",
+      "Traditional"
+    ],
+    "coffee_type": [
+      "Blend",
+      "Bundle",
+      "Cascara",
+      "Collaboration",
+      "Decaf",
+      "Gift Set",
+      "Limited Release",
+      "Online Exclusive",
+      "Organic",
+      "Reserve",
+      "Signature Blend",
+      "Single Origin",
+      "Subscription Only",
+      "Year Round"
+    ],
+    "brew_method_or_preparation": [
+      "AeroPress",
+      "Automatic Drip",
+      "Chemex",
+      "Cold Brew",
+      "Drip",
+      "Espresso",
+      "Espresso Capsule",
+      "Filter",
+      "French Press",
+      "Hario V60",
+      "Instant",
+      "Moka Pot",
+      "Mocha Pot",
+      "Percolator",
+      "Pour Over",
+      "Press Pot",
+      "Press Pot / Percolator",
+      "Stove Top"
+    ],
+    "grind": [
+      "Coarse (Cold Brew)",
+      "Coarse (French Press)",
+      "Coarse Grind (Cold Brew)",
+      "Coarse Grind (French Press)",
+      "Drip",
+      "Espresso",
+      "Espresso Grind",
+      "Fine (Espresso)",
+      "French Press",
+      "Ground",
+      "Ground - Cold Brew",
+      "Ground- Automatic Drip",
+      "Medium (Filter)",
+      "Medium Grind (Drip/Pour Over)",
+      "Medium Grind (for Hario V60)",
+      "Press Pot / Percolator",
+      "Whole Bean"
+    ],
+    "certification_or_ownership": [
+      "B Corp",
+      "Black-Owned",
+      "Fair Trade",
+      "Kosher",
+      "LGBTQ+-Owned",
+      "Organic",
+      "Regenerative Organic",
+      "Vegan",
+      "Women-Owned"
+    ]
+  },
+  "czech_aggregate_hints": {
+    "origin_or_region": [
+      "Afrika",
+      "Amerika",
+      "Asie",
+      "Brazílie",
+      "Brasil",
+      "Bolívie",
+      "Burundi",
+      "Ekvádor",
+      "El Salvador",
+      "Etiopie",
+      "Ethiopia",
+      "Guatemala",
+      "Honduras",
+      "Indie",
+      "Indonésie",
+      "Jemen",
+      "Jižní Afrika",
+      "Keňa",
+      "Kolumbie",
+      "Kostarika",
+      "Mexiko",
+      "Nicaragua",
+      "Nikaragua",
+      "Panama",
+      "Peru",
+      "Rwanda",
+      "Tanzanie",
+      "Thajsko",
+      "Uganda"
+    ],
+    "roast_or_brew_intent": [
+      "Filtr",
+      "Filtrovaná káva",
+      "Espresso",
+      "Omni",
+      "Automatický kávovar",
+      "Rozpustná",
+      "Kapsle",
+      "Cascara",
+      "Drip sáčky",
+      "Drip sáček",
+      "Decaf"
+    ],
+    "roast_level": [
+      "Světlé až středně světlé",
+      "Střední",
+      "Střední až středně tmavé"
+    ],
+    "process": [
+      "Anaerobní",
+      "Anaerobic",
+      "Co-ferment",
+      "Experimentální",
+      "extended fermentation natural",
+      "Infuze",
+      "Medové (honey)",
+      "Natural",
+      "natural",
+      "Promyté",
+      "Suché (natural)",
+      "Washed",
+      "washed"
+    ],
+    "variety": [
+      "74110",
+      "74112",
+      "Batian",
+      "Bourbon",
+      "Castillo",
+      "Catimor",
+      "Catuaí",
+      "Caturra",
+      "Colombia",
+      "Geisha",
+      "Gesha",
+      "Heirloom",
+      "JARC 74110",
+      "JARC 74112",
+      "Java",
+      "Mundo Novo",
+      "Orange Castillo",
+      "Pacamara",
+      "Papayo",
+      "Pink Bourbon",
+      "Red Bourbon",
+      "Ruiru 11",
+      "SL28",
+      "SL34",
+      "Typica"
+    ],
+    "caffeine": [
+      "Bezkofeinová (Decaf)",
+      "bez kofeinu",
+      "Decaf",
+      "DECAF",
+      "Decaf de Caña",
+      "Nízkokofeinová (Low-caf)"
+    ],
+    "profile_or_flavor_family": [
+      "Sladký",
+      "Sladká",
+      "Ovocný",
+      "Ovocná",
+      "Čokoládový",
+      "Čokoládová",
+      "Oříškový",
+      "Oříšková",
+      "Květinový",
+      "Květinová",
+      "Kakaová",
+      "Karamelová",
+      "Citrusová",
+      "Fermentovaná",
+      "Funky",
+      "Čajová",
+      "Nízká acidita",
+      "Výrazná čokoláda",
+      "Vyvážená acidita",
+      "Vyvážený s ovocem a květinami"
+    ],
+    "tasting_notes_czech": [
+      "Ananas",
+      "Angrešt",
+      "Banán",
+      "Bergamot",
+      "Bezový květ",
+      "Borůvky",
+      "Broskev",
+      "Bílá čokoláda",
+      "Citrusy",
+      "Cukrová třtina",
+      "Earl Grey",
+      "Fialky",
+      "Granátové jablko",
+      "Grapefruit",
+      "Guava",
+      "Heřmánek",
+      "Hnědý cukr",
+      "Hořká čokoláda",
+      "Hrozno",
+      "Hruška",
+      "Ibišek",
+      "Jablko",
+      "Jahoda"
+    ],
+    "coffee_type": [
+      "Arabica",
+      "Robusta",
+      "Hybrid Timoru",
+      "Směs",
+      "Espresso směs",
+      "Jednodruhové kávy",
+      "Degustační set",
+      "Limitovaná nabídka",
+      "Limitovaná edice",
+      "Novinky",
+      "Na Cold Brew",
+      "Bio",
+      "Direct Trade"
+    ],
+    "brew_method_or_preparation": [
+      "Aeropress",
+      "Chemex",
+      "Chytráček",
+      "French Press",
+      "Hario V60",
+      "Moka konvička",
+      "Moccapot",
+      "Pour Over / V60",
+      "Vacuum Pot"
+    ],
+    "grind": [
+      "Mletí: Zrno"
+    ],
+    "package_size": [
+      "do 199g",
+      "100g",
+      "100 g",
+      "150 g",
+      "200 - 299g",
+      "226 g",
+      "250 g",
+      "300 - 999g",
+      "500 g",
+      "1 kg",
+      "1000 g",
+      "2 kg",
+      "2.5 kg",
+      "od 1000g"
+    ],
+    "certification_or_attribute": [
+      "Bio",
+      "Rainforest Alliance",
+      "Direct Trade",
+      "Bez přísad",
+      "Kofio doporučuje",
+      "Slevy",
+      "Zachraň kafe"
+    ]
+  },
+  "german_aggregate_hints": {
+    "origin_or_region": [
+      "Äthiopien",
+      "Ethiopia",
+      "Brasilien",
+      "Brazil",
+      "Brasil",
+      "Kolumbien",
+      "Colombia",
+      "Kenia",
+      "Kenya",
+      "Costa Rica",
+      "El Salvador",
+      "Guatemala",
+      "Honduras",
+      "Peru",
+      "Ruanda",
+      "Rwanda",
+      "Burundi",
+      "Indonesien",
+      "Indonesia",
+      "Panama",
+      "Bolivien",
+      "Bolivia",
+      "Nicaragua",
+      "Mexiko",
+      "Mexico",
+      "China",
+      "Thailand",
+      "Dominikanische Republik",
+      "Venezuela",
+      "Uganda",
+      "Tansania",
+      "Myanmar",
+      "Indien",
+      "Südamerika",
+      "Lateinamerika"
+    ],
+    "roast_or_brew_intent": [
+      "Espresso",
+      "Filter",
+      "Filterkaffee",
+      "Cafe Crema",
+      "Caffe Crema",
+      "Cappuccino",
+      "Vollautomat",
+      "Für Vollautomat",
+      "Siebträger",
+      "Espressokocher",
+      "Kapseln",
+      "Pads",
+      "Instantkaffee",
+      "Drip Bags",
+      "Cold Brew",
+      "Omni",
+      "Classic Roast",
+      "Dark Roast",
+      "Helle Espressos",
+      "Dunkle Espressos",
+      "Helle Filterröstungen"
+    ],
+    "roast_level": [
+      "hell",
+      "dunkel",
+      "Dark Roast",
+      "Classic Roast",
+      "Helle Espressos",
+      "Dunkle Espressos",
+      "Helle Filterröstungen"
+    ],
+    "process": [
+      "washed",
+      "natural",
+      "honey",
+      "anaerobic",
+      "Anaerob Natural",
+      "fermented",
+      "semi-washed",
+      "wet-hulled",
+      "pulped natural",
+      "sugar cane",
+      "carbonic maceration",
+      "reposado",
+      "de-pulped",
+      "processed"
+    ],
+    "variety": [
+      "Arabica",
+      "Robusta",
+      "Bourbon",
+      "Pink Bourbon",
+      "Caturra",
+      "Catuaí",
+      "Catuai",
+      "Typica",
+      "Gesha",
+      "Geisha",
+      "Pacamara",
+      "SL28",
+      "SL34",
+      "SL-28",
+      "Heirloom",
+      "Castillo",
+      "Maracaturra",
+      "Sudan Rume",
+      "Starmaya",
+      "Tabi",
+      "Colombia variety"
+    ],
+    "caffeine": [
+      "Decaf",
+      "DECAF",
+      "Entkoffeinierter Kaffee",
+      "Ohne Koffein",
+      "Low Caf",
+      "Low-Caf",
+      "caffeine-conscious",
+      "Decaf und Low Caf",
+      "Espresso Decaf",
+      "Filter Decaf",
+      "Decaf im Abo"
+    ],
+    "profile_or_flavor_family": [
+      "Säurearm",
+      "Kräftig & intensiv",
+      "Schokoladig",
+      "Nussig",
+      "Fruchtig",
+      "floral",
+      "Zitrus",
+      "Beeren",
+      "Tropisch",
+      "Honig",
+      "Karamell",
+      "Schokolade",
+      "Haselnuss",
+      "dunkle Schokolade",
+      "blackcurrant",
+      "citrus",
+      "orange",
+      "apricot",
+      "peach",
+      "cocoa",
+      "stone fruit",
+      "tropical fruits",
+      "creamy",
+      "bright",
+      "süß"
+    ],
+    "coffee_type": [
+      "Single Origin",
+      "Blend",
+      "Kaffeebohnen",
+      "Gemahlener Kaffee",
+      "Kaffee Probiersets",
+      "Kaffee Bundle",
+      "Coffee Bundle",
+      "Subscription",
+      "Abo",
+      "Instant & Capsules",
+      "Kaffeekapseln",
+      "Kaffeepads",
+      "Capsules",
+      "Cascara",
+      "Drip Bag",
+      "Kaffee von lokalen Röstereien",
+      "Bio-Kaffee",
+      "Fairtrade Kaffee",
+      "Prämierter Kaffee",
+      "Regionaler Kaffee"
+    ],
+    "brew_method_or_preparation": [
+      "AeroPress",
+      "Aeropress",
+      "Bialetti",
+      "Chemex",
+      "Cold Brew",
+      "Espresso Maschine",
+      "Siebträger",
+      "French Press",
+      "Frenchpress",
+      "Moccamaster",
+      "V60",
+      "V60/Kalita",
+      "Espressokocher",
+      "Mokkakanne",
+      "Handfilter",
+      "Pour Over",
+      "Kaffeemaschinen",
+      "Vollautomaten",
+      "Karlsbader Kanne"
+    ],
+    "grind": [
+      "ganze Bohne",
+      "gemahlen",
+      "Whole beans",
+      "Filter",
+      "Espresso",
+      "Moka Pot",
+      "Aeropress",
+      "Mahlung: ganze Bohne"
+    ],
+    "package_size": [
+      "50g",
+      "100g",
+      "150g",
+      "175g",
+      "200g",
+      "250g",
+      "250 g",
+      "250 grams",
+      "400 g",
+      "750g",
+      "1000g",
+      "1kg",
+      "1 kg",
+      "1 KG",
+      "2 x 250g",
+      "3 x 250g",
+      "4 x 250g",
+      "6 x 250g",
+      "3kg",
+      "5kg",
+      "1 box (6 sachets)",
+      "3 boxes (18 sachets)"
+    ],
+    "certification_or_attribute": [
+      "Bio",
+      "Bio-Kaffee",
+      "Fairtrade Kaffee",
+      "biologisch angebaut",
+      "Direkt",
+      "Ökologisch",
+      "Hochwertig",
+      "Solidarisch",
+      "Transparent",
+      "Direkthandel",
+      "Cup of Excellence",
+      "Prämierter Kaffee",
+      "Regionaler Kaffee"
+    ]
+  },
+  "italian_aggregate_hints": {
+    "origin_or_region": [
+      "Brasile",
+      "Brazil",
+      "Colombia",
+      "Guatemala",
+      "Honduras",
+      "Indonesia",
+      "Panama",
+      "Kenya",
+      "Etiopia",
+      "Ethiopia",
+      "Costa Rica",
+      "Peru",
+      "India",
+      "Burundi",
+      "Rwanda",
+      "Tanzania",
+      "Messico",
+      "Mexico",
+      "Central America",
+      "South America",
+      "Africa",
+      "Brasile Cerrado Mineiro"
+    ],
+    "roast_or_brew_intent": [
+      "Espresso",
+      "Filtro",
+      "Moka",
+      "French press",
+      "Cold Brew",
+      "Caffè filtro",
+      "Caffè espresso",
+      "Caffè americano",
+      "Caffè Turco",
+      "Caffettiera Napoletana",
+      "Moka e tazzine",
+      "Home brewing",
+      "V60"
+    ],
+    "roast_level": [
+      "Chiara",
+      "Medio chiara",
+      "Media",
+      "Medio scura",
+      "Scura"
+    ],
+    "process": [
+      "lavato",
+      "Lavato",
+      "washed",
+      "natural",
+      "naturale",
+      "anaerobic",
+      "Anaerobic Natural",
+      "decaffeinato",
+      "decaf"
+    ],
+    "variety": [
+      "Arabica",
+      "Robusta",
+      "Bourbon",
+      "Pacamara",
+      "Catuai",
+      "Catuaí",
+      "Caturra",
+      "Geisha",
+      "Gesha",
+      "Typica",
+      "Sidra"
+    ],
+    "caffeine": [
+      "Decaf",
+      "DECAF",
+      "Dek",
+      "Decaffeinato",
+      "decaffeinato",
+      "Caffè decaffeinato",
+      "Deca 0,0",
+      "Miscela VERDE DEK",
+      "Cumbres, Decaffeinated"
+    ],
+    "profile_or_flavor_family": [
+      "Floreale",
+      "floreale",
+      "Fruttato",
+      "fruttato",
+      "Agrumato",
+      "agrumato",
+      "Citric",
+      "Cacao",
+      "Cioccolato",
+      "Cioccolato fondente",
+      "cioccolato",
+      "Nocciolato",
+      "nocciola",
+      "Frutta secca",
+      "Caramellato",
+      "caramello",
+      "caramel",
+      "Spezie",
+      "spezie",
+      "Legnoso",
+      "Tabacco",
+      "Cereali tostati",
+      "Biscotto",
+      "Ginseng",
+      "Vaniglia",
+      "Orzo",
+      "miele",
+      "dolce",
+      "Intenso e cremoso",
+      "Equilibrato e corposo",
+      "Dolce e raffinato"
+    ],
+    "coffee_type": [
+      "Caffè in grani",
+      "Caffè macinato",
+      "Grani",
+      "Macinato",
+      "Capsule",
+      "Capsule compatibili",
+      "Capsule A Modo Mio",
+      "Capsule Iperespresso",
+      "Cialde",
+      "Cialde E.S.E.",
+      "Cialde Compostabili",
+      "Tablì",
+      "Espresso Point",
+      "Caffè solubile",
+      "Orzo e Ginseng",
+      "American Coffee",
+      "Specialty Coffee",
+      "single origin",
+      "miscela caffè",
+      "Blend",
+      "Kit Degustazione",
+      "Abbonamento caffè"
+    ],
+    "brew_method_or_preparation": [
+      "Moka",
+      "French press",
+      "Filtro",
+      "Macinato Filtro",
+      "Macinato French Press",
+      "Macinato Moka",
+      "Macinato Espresso",
+      "Espresso",
+      "Iperespresso",
+      "X▪CAPS",
+      "CoffeeB",
+      "Nespresso",
+      "Dolce Gusto",
+      "A Modo Mio",
+      "Lavazza Blue",
+      "Lavazza Espresso Point",
+      "Caffitaly",
+      "Bialetti"
+    ],
+    "grind": [
+      "Grani",
+      "Macinato",
+      "Macinato Espresso",
+      "Macinato Filtro",
+      "Macinato French Press",
+      "Macinato Moka"
+    ],
+    "package_size": [
+      "10",
+      "12",
+      "16",
+      "30",
+      "36",
+      "50",
+      "60",
+      "80",
+      "90",
+      "100",
+      "150",
+      "180 g",
+      "200 g",
+      "250 g",
+      "250g",
+      "250 grammi",
+      "500 g",
+      "1000 g",
+      "1 Kg",
+      "1 kg",
+      "1kg",
+      "60 pz",
+      "100 pz"
+    ],
+    "certification_or_attribute": [
+      "Bio",
+      "Organic",
+      "Organic & fair trade coffee",
+      "Fair trade",
+      "I nostri caffè certificati",
+      "Cup of Excellence",
+      "reserve collection",
+      "Premium Rarities",
+      "Women in Coffee",
+      "Filiera Corta",
+      "specialty coffee",
+      "Caffèlab Specialty Coffees"
+    ]
+  },
+  "french_aggregate_hints": {
+    "origin_or_region": [
+      "Afrique",
+      "Amérique Centrale",
+      "Amérique du Nord",
+      "Amérique du Sud",
+      "Asie de l'Est",
+      "Asie du Sud-Est",
+      "Océanie",
+      "Assemblage",
+      "Bolivie",
+      "Brésil",
+      "Burundi",
+      "Chine",
+      "Colombie",
+      "Congo",
+      "Costa Rica",
+      "Ethiopie",
+      "Éthiopie",
+      "Ethiopie / Laos / Mexique",
+      "Guatemala",
+      "Honduras",
+      "Inde",
+      "Jamaique",
+      "Jamaïque",
+      "Kenya",
+      "Laos",
+      "Madagascar",
+      "Mexique",
+      "Mix produits",
+      "Myanmar",
+      "Myanmar / Laos",
+      "Nicaragua",
+      "Papouasie",
+      "Pérou",
+      "Rwanda",
+      "Salvador",
+      "Zimbabwe",
+      "Caranavi, La Paz",
+      "Chiapas Highland / Aldama",
+      "Konki Yeti",
+      "La Mikava",
+      "Santander / Altos Del Bijao Estate",
+      "Valle Del Cauca / Granja la Esperanza"
+    ],
+    "roast_or_brew_intent": [
+      "Expresso",
+      "Méthodes douces",
+      "Uniroast",
+      "Slow Coffee",
+      "Cold Brew",
+      "Cafetière italienne",
+      "Cafetière à filtration",
+      "Cafetière à piston",
+      "Café italien",
+      "Espresso",
+      "Filtre",
+      "Grains",
+      "Italienne",
+      "Piston",
+      "AeroPress",
+      "Chemex",
+      "Hario V60",
+      "Origami",
+      "NextLevel Pulsar"
+    ],
+    "roast_level_or_intensity": [
+      "n°2/5 : Doux",
+      "n°3/5 : Équilibré",
+      "n°4/5 : Fort",
+      "n°5/5 : Très fort",
+      "Doux (2/5)",
+      "Décaféiné (2,5/5)",
+      "Equilibré (3/5)",
+      "Corsé (5/5)"
+    ],
+    "process": [
+      "Lavé",
+      "Nature",
+      "Nature Anaérobique",
+      "Semi washed Anaerobic 20 heures",
+      "Décaféiné"
+    ],
+    "variety": [
+      "Arabica",
+      "Blue Mountain",
+      "Bourbon",
+      "Bourbon Pointu",
+      "Catimor",
+      "Catuai",
+      "Caturra",
+      "Geisha",
+      "Heirloom",
+      "Hybrid",
+      "Java",
+      "Maragogype",
+      "Marsellesa",
+      "Moka",
+      "Moka Heirloom",
+      "Multi variétés",
+      "Mundo Novo",
+      "Robusta",
+      "Starmaya",
+      "Typica"
+    ],
+    "caffeine": [
+      "Décaféiné",
+      "Décaféiné (2,5/5)",
+      "Café Décaféiné",
+      "Café grain décaféiné"
+    ],
+    "profile_or_flavor_family": [
+      "Acidulé",
+      "Chocolat",
+      "Complexe",
+      "Elégant",
+      "Epicé",
+      "Fin",
+      "Floral",
+      "Fruité",
+      "Gourmand",
+      "Grillé",
+      "Suave",
+      "les Boisés",
+      "les Floraux",
+      "les Fruités",
+      "les Gourmands",
+      "les Épicés"
+    ],
+    "coffee_type": [
+      "Café soluble et lyophilisé instantané",
+      "Cafés bio &/ou équitable en dosettes",
+      "Cafés en grains",
+      "Cafés moulus",
+      "Dosettes café",
+      "Café de spécialité",
+      "Café de spécialité (100% arabica)",
+      "Pure origine",
+      "Assemblage",
+      "Assemblage Maison",
+      "Classique",
+      "Edition limitée",
+      "Exception",
+      "Plantation",
+      "Stick",
+      "Tous nos cafés"
+    ],
+    "grind": [
+      "Espresso",
+      "Filtre",
+      "Grains",
+      "Italienne",
+      "Piston"
+    ],
+    "package_size": [
+      "1000",
+      "125",
+      "150g",
+      "200",
+      "200g",
+      "220",
+      "250",
+      "250g",
+      "480",
+      "500",
+      "1kg",
+      "2kg",
+      "20cl",
+      "100 doses",
+      "128 doses",
+      "144 doses",
+      "16 doses",
+      "160 doses",
+      "20 doses",
+      "80 doses",
+      "Pack 6 x 20cl",
+      "Pack 12 x 20cl",
+      "Pack 24 x 20cl",
+      "Sachet 150g",
+      "Sachet 250g"
+    ],
+    "certification_or_attribute": [
+      "Bio",
+      "Commerce Equitable",
+      "Café Biologique",
+      "Café Cœur de Forêt",
+      "Café Médaillé",
+      "Café transporté à la voile",
+      "Premium et Micro-lot",
+      "Terroir",
+      "Agroforesterie",
+      "Agroforesterie complexe, certifié biologique",
+      "Café de forêt, certifiée biologique",
+      "Conventionnelle",
+      "Recurrent",
+      "Abonnement café"
+    ]
+  },
+  "uk_aggregate_hints": {
+    "origin_or_region": [
+      "Costa Rica",
+      "Guatemala",
+      "Colombia",
+      "Burundi",
+      "Brazil",
+      "Uganda",
+      "Kenya",
+      "Peru",
+      "Dominican Republic",
+      "El Salvador",
+      "Madagascar",
+      "Tanzania",
+      "Thailand",
+      "Papua New Guinea",
+      "Indonesia",
+      "Ethiopia",
+      "Honduras",
+      "Sumatra",
+      "Mexico",
+      "Rwanda",
+      "India",
+      "Myanmar",
+      "China",
+      "Congo",
+      "Nicaragua"
+    ],
+    "roast_or_brew_intent": [
+      "Filter",
+      "Espresso",
+      "Decaf",
+      "V60",
+      "Medium",
+      "Dark",
+      "espresso",
+      "filter",
+      "Pods",
+      "Capsules",
+      "Cold Brew",
+      "Ground",
+      "Beans",
+      "Whole Bean",
+      "Aeropress",
+      "AeroPress",
+      "Chemex",
+      "French Press",
+      "Light",
+      "style-espresso",
+      "style-filter",
+      "Single Origin Filter",
+      "Single Origin Espresso",
+      "Espresso at home",
+      "Filters"
+    ],
+    "roast_level_or_intensity": [
+      "Whole Bean",
+      "Ground for Filter (Coarse)",
+      "Ground for Espresso (Fine)",
+      "Ground for AeroPress (Medium)",
+      "Whole Beans",
+      "Ground for Filter",
+      "Ground for Espresso",
+      "Ground for Aeropress",
+      "Ground for AeroPress",
+      "Espresso",
+      "Filter",
+      "Signature",
+      "Fudge",
+      "Decaf",
+      "Cold Brew Blend Nº9",
+      "Dark",
+      "Milk",
+      "White",
+      "V60 01 / AeroPress",
+      "V60 02 / Clever Dripper",
+      "French Press",
+      "Moccamaster / Chemex",
+      "Stovetop Moka Pot",
+      "V60 01 / AeroPress / Steepshot"
+    ],
+    "process": [
+      "Decaf",
+      "Washed",
+      "Natural",
+      "Honey",
+      "Sugarcane",
+      "Swiss Water",
+      "Fermented",
+      "Anaerobic",
+      "Carbonic maceration",
+      "Experimental"
+    ],
+    "variety": [
+      "Arabica",
+      "Robusta",
+      "Bourbon",
+      "Java",
+      "Pink Bourbon",
+      "Caturra",
+      "Catimor",
+      "Gesha",
+      "Red Bourbon",
+      "Castillo",
+      "Sidra"
+    ],
+    "caffeine": [
+      "Decaf",
+      "decaf",
+      "Sugarcane Decaf",
+      "Decaffeinated"
+    ],
+    "profile_or_flavor_family": [
+      "Caramel",
+      "Chocolate & Caramel",
+      "Dark",
+      "Citrus & Floral",
+      "Light",
+      "Medium",
+      "Chocolate",
+      "Taste Dark-Chocolate Black-Cherry Roasted-Hazelnut",
+      "Taste Blackberry Apple Maple-Syrup",
+      "Taste Caramel Nutmeg Dark-Chocolate",
+      "Taste Hazelnut Butter-Candy Milk-Chocolate",
+      "Taste Milk-Chocolate Pecan Glace-Cherry",
+      "Taste Chocolate Malt Spices",
+      "Taste Chocolate-Digestive Hazelnut Molasses",
+      "Floral",
+      "Taste Turkish-Delight Sweet-Vermouth Lychee",
+      "Taste Pomegranate Brown-Sugar Chocolate",
+      "Taste Brown-Sugar Chocolate Biscuit",
+      "Taste Malt Brown-Sugar Chocolate-Orange",
+      "taste caramel vanilla molasses",
+      "taste latte caramel-latte",
+      "Taste Big-Chocolate",
+      "taste Caramel Almond Chocolate",
+      "Berry",
+      "dark chocolate",
+      "taste Dark-Chocolate Toasted-Nuts Victory",
+      "Taste Chocolate Spice",
+      "Taste Caramel Almond Chocolate",
+      "Taste Dark-Chocolate Walnut",
+      "Taste Milk Dark-or-White",
+      "Taste Chocolate Earthy Spice",
+      "Taste Chocolate Spice Malt",
+      "taste Milk-Chocolate Hazelnut Caramel",
+      "Taste Chocolate Cedar Smokey Spice",
+      "Taste Dark-Chocolate Toffee Spice",
+      "Taste Chocolate Earthy Hazelnut",
+      "Taste Chocolate Cedar Smoky",
+      "Taste Bittersweet Chocolate Peanut",
+      "Taste Nuts Chocolate"
+    ],
+    "coffee_type": [
+      "Coffee",
+      "Coffee (Cold Brew)",
+      "Coffee (Pods)",
+      "Coffee (Mainstay SO)",
+      "Coffee (Feature)",
+      "Coffee (Decaf)",
+      "Blend",
+      "Single Origin",
+      "Green Coffee",
+      "Coffee Bags",
+      "Pods",
+      "Cold Brew",
+      "cafetiere",
+      "coffee bean blend",
+      "Espresso",
+      "House Blends",
+      "Single Origin Filter",
+      "Single Origin Espresso"
+    ],
+    "grind": [
+      "Whole Bean",
+      "Ground for Filter (Coarse)",
+      "Ground for Espresso (Fine)",
+      "Ground for AeroPress (Medium)",
+      "Whole Beans",
+      "Ground for Filter",
+      "Ground for Espresso",
+      "Ground for Aeropress",
+      "Ground for AeroPress",
+      "Filter",
+      "Cafetiere",
+      "Espresso",
+      "Green",
+      "green",
+      "Cafetiere / Chemex",
+      "Cold Brew",
+      "Whole bean",
+      "V60 01 / AeroPress",
+      "V60 02 / Clever Dripper",
+      "French Press",
+      "Moccamaster / Chemex",
+      "Stovetop Moka Pot",
+      "V60 01 / AeroPress / Steepshot"
+    ],
+    "package_size": [
+      "350g",
+      "1kg",
+      "175g",
+      "2kg",
+      "x2 500ml Pouches",
+      "500ml",
+      "10 Capsules",
+      "20 Capsules",
+      "250g",
+      "4kg",
+      "6kg",
+      "8kg",
+      "10kg",
+      "10 Pods",
+      "50 Pods",
+      "100 Pods",
+      "15 Pyramids",
+      "45 Pyramids",
+      "Small (250g)",
+      "Large (1kg)",
+      "Small (500g)",
+      "500g",
+      "Large(1kg)",
+      "Large (1Kg)",
+      "Single Sack",
+      "Box of 3",
+      "Small (300g)",
+      "3 X 200g Bags",
+      "6 X 200g Bags",
+      "12 X 200g Bags",
+      "3 x 200g Bags",
+      "6 x 200g Bags",
+      "12 x 200g Bags",
+      "200g",
+      "Article - 1kg",
+      "Article - 2kg",
+      "Article - 6kg",
+      "Legacy Espresso - 1kg",
+      "Legacy Espresso - 2kg",
+      "Legacy Espresso - 6kg",
+      "Single Can 250ml",
+      "6 Pack",
+      "60g",
+      "Small",
+      "Large",
+      "Single Can",
+      "8oz",
+      "12oz"
+    ],
+    "certification_or_attribute": [
+      "Rare",
+      "organic"
+    ]
+  },
+  "spanish_aggregate_hints": {
+    "origin_or_region": [
+      "Costa Rica",
+      "Burundi",
+      "Kenia",
+      "Guatemala",
+      "Colombia",
+      "Ethiopia",
+      "Bolivia",
+      "Ecuador",
+      "Brasil",
+      "Brazil",
+      "Mexico",
+      "México",
+      "Ruanda",
+      "Uganda",
+      "Kenya",
+      "Peru",
+      "Perú",
+      "Nicaragua",
+      "Tanzania"
+    ],
+    "roast_or_brew_intent": [
+      "Espresso",
+      "Cold Brew",
+      "Filtro",
+      "Filter",
+      "Omni",
+      "Decaf",
+      "Beans",
+      "cafe en grano",
+      "cafe molido",
+      "Grano",
+      "Molido",
+      "Moka",
+      "V60",
+      "Chemex",
+      "French Press",
+      "Molienda",
+      "Tueste",
+      "espresso",
+      "Filter coffee",
+      "Café en grano",
+      "Italiana",
+      "Café Cold Brew",
+      "Café espresso",
+      "Café filtro",
+      "Café para filtro",
+      "rocket espresso",
+      "Light",
+      "Medium"
+    ],
+    "roast_level_or_intensity": [
+      "Tueste de Espresso",
+      "Tueste de Filtro",
+      "Light",
+      "Medium"
+    ],
+    "process": [
+      "Washed",
+      "Natural",
+      "Experimental",
+      "Decaf",
+      "Fermented",
+      "Sugarcane",
+      "Thermal shock",
+      "Anaerobic",
+      "Honey"
+    ],
+    "variety": [
+      "Parainema",
+      "Pacamara",
+      "Bourbon",
+      "Caturra",
+      "Catimor",
+      "Chiroso",
+      "Geisha",
+      "Gesha",
+      "Sidra",
+      "Red Bourbon",
+      "Castillo",
+      "Ruiru 11",
+      "Catuaí",
+      "Catuai",
+      "Batian",
+      "SL28",
+      "SL34",
+      "JARC",
+      "Moka",
+      "Typica Mejorado",
+      "Mejorado",
+      "Robusta",
+      "Typica",
+      "Papayo",
+      "Yellow Bourbon",
+      "Pink Bourbon",
+      "Mundo Novo",
+      "Tabi"
+    ],
+    "caffeine": [
+      "Decaf",
+      "decaf",
+      "Café descafeinado",
+      "Descafeinado",
+      "Descafeinado Sugarcane"
+    ],
+    "profile_or_flavor_family": [
+      "Citric",
+      "Sweet",
+      "afrutado",
+      "Floral",
+      "Frutal",
+      "Jugoso",
+      "Light",
+      "Acaramelado",
+      "Medium"
+    ],
+    "coffee_type": [
+      "Café",
+      "Coffee",
+      "cafe en grano",
+      "cafe molido",
+      "Filter coffee",
+      "Café Cold Brew",
+      "Café de competición",
+      "Café de especialidad",
+      "Café espresso",
+      "Café filtro",
+      "Café para filtro",
+      "Ver todos los cafés",
+      "Café Colombia",
+      "Café descafeinado",
+      "Café en grano",
+      "Blend",
+      "Descafeinado",
+      "Descafeinado Sugarcane",
+      "specialty coffee association"
+    ],
+    "grind": [
+      "Café en Grano",
+      "Cold Brew",
+      "Moccamaster",
+      "Aeropress",
+      "French Press",
+      "V60",
+      "Moka/Italiana/Oroley",
+      "Espresso",
+      "Máquina Espresso",
+      "Café en grano",
+      "Molido émbolo",
+      "Molido AeroPress",
+      "Molido V60",
+      "Molido Chemex",
+      "Molido moka italiana",
+      "Molido espresso",
+      "Molido Cold Brew",
+      "Molido Espresso",
+      "Molido Moka italiana",
+      "Molido V60 / Orea / Kalita",
+      "Molido Máquinas de filtro",
+      "Molido Émbolo",
+      "Molido V60 /Orea / Kalita",
+      "Molido Máquina de filtro",
+      "Molido Máquinas de Filtro",
+      "Grano",
+      "Molido para Espresso",
+      "Molido para Filtro",
+      "Molido para Italiana o Moca",
+      "Molido para Moccamaster",
+      "Molido para French Press",
+      "Molido para Aeropress",
+      "Molido para Cold Brew",
+      "Molido italiana o moka",
+      "Molido V60 / Chemex / Kalita o similar",
+      "Molido French Press / Cold Brew",
+      "En grano",
+      "Molido Moka o Italiana",
+      "Molido V60 - Chemex - Kalita - Similar",
+      "Molido French Press",
+      "Molido filtro (V60 / Chemex / Kalita...)",
+      "Molido Filtro (V60 / Chemex / Kalita...)",
+      "Molido French Press - Cold Brew",
+      "Molido Aeropress",
+      "Molido para espresso",
+      "Molido para italiana o moka",
+      "Molido para aeropress",
+      "Molido para filtro (V60-Chemex-Kalita-similar)",
+      "Molido para french press",
+      "Molido para cold brew",
+      "Molido para moka o italiana",
+      "Molido para filtro (V60-Chemex-Kalita...)",
+      "Molido Moka - Italiana"
+    ],
+    "package_size": [
+      "250gr",
+      "1kg",
+      "3kg",
+      "2kg",
+      "100gr",
+      "500gr",
+      "250GR.",
+      "1KG. Ahorra hasta un 20%"
+    ],
+    "certification_or_attribute": [
+      "limited",
+      "Café de especialidad",
+      "specialty coffee association"
+    ]
+  },
+  "danish_aggregate_hints": {
+    "origin_or_region": [
+      "Colombia",
+      "Bolivia",
+      "Brazil",
+      "Peru",
+      "Honduras",
+      "Ecuador",
+      "Costa Rica",
+      "Guatemala",
+      "Ethiopia",
+      "Panama",
+      "China",
+      "Indonesia",
+      "Mexico",
+      "Kenya"
+    ],
+    "roast_or_brew_intent": [
+      "Filter",
+      "Espresso",
+      "Medium",
+      "Dark",
+      "espresso",
+      "filter",
+      "Ground",
+      "Decaf",
+      "Beans",
+      "Light",
+      "kaffebønner",
+      "Espresso Beans",
+      "Filter Beans",
+      "Espresso Coffee Beans",
+      "Omni"
+    ],
+    "roast_level_or_intensity": [
+      "Terra",
+      "Luna",
+      "Terra + Luna",
+      "Filter",
+      "Espresso",
+      "250g",
+      "1kg",
+      "125g",
+      "Omni"
+    ],
+    "process": [
+      "Washed",
+      "Natural",
+      "Fermented",
+      "Honey",
+      "Decaf",
+      "Swiss Water",
+      "Carbonic maceration",
+      "Experimental"
+    ],
+    "variety": [
+      "Gesha",
+      "Pink Bourbon",
+      "Sudan Rume",
+      "Parainema",
+      "Bourbon",
+      "Typica",
+      "Geisha",
+      "Yellow Geisha",
+      "Heirloom",
+      "Pacamara",
+      "Castillo",
+      "Caturra",
+      "Catuai",
+      "SL28",
+      "Mundo Novo",
+      "Ruiru 11",
+      "Chiroso",
+      "Batian"
+    ],
+    "caffeine": [
+      "Decaf"
+    ],
+    "profile_or_flavor_family": [
+      "Round and sweet"
+    ],
+    "coffee_type": [
+      "Økologisk kaffe",
+      "blend",
+      "Coffee",
+      "Steeped",
+      "COFFEE",
+      "Coffee Bundle",
+      "Espresso Beans",
+      "Filter Beans",
+      "Limited Coffee beans",
+      "Espresso Coffee Beans",
+      "Limited Coffee",
+      "Coffee beans",
+      "Coffee subscription"
+    ],
+    "package_size": [
+      "200g",
+      "1kg",
+      "250g",
+      "100g",
+      "Retail bundle (six units)",
+      "Single unit",
+      "1 kg",
+      "2 kg",
+      "2 x 250g",
+      "4 x 250g",
+      "125g",
+      "280 ml",
+      "500 ml",
+      "Ceramic / Glass / Hybrid Brewers",
+      "Plastic Brewer",
+      "Filter",
+      "Espresso",
+      "Sustainable Profile",
+      "500g",
+      "1kg - Decaf",
+      "1 x 125g April Filter",
+      "2 x 125g April Filter",
+      "1 x 250g April Filter",
+      "1 x 250g April Espresso",
+      "1 x 250g April Filter + 1 x 250g April Espresso",
+      "2 x 250g April Filter",
+      "2 x 250g April Espresso",
+      "3 x 250g April Filter",
+      "3 x 250g April Espresso",
+      "4 x 250g April Filter",
+      "4 x 250g April Espresso",
+      "2 x 250g April Filter + 2 x 250g April Espresso",
+      "3 x 250g April Filter + 3 x 250g April Espresso",
+      "5 x 250g April  Filter",
+      "5 x 250g April Espresso",
+      "6 x 250g April Filter",
+      "1 x 1kg April Espresso",
+      "1 x 1kg April Filter",
+      "2 x 250g omni",
+      "1 x 1000g omni",
+      "1000g"
+    ],
+    "certification_or_attribute": [
+      "Økologisk kaffe",
+      "Rare",
+      "Limited Coffee beans",
+      "Limited Coffee",
+      "organic"
+    ]
+  },
+  "norwegian_aggregate_hints": {
+    "origin_or_region": [
+      "Colombia",
+      "Ethiopia",
+      "Honduras",
+      "Uganda",
+      "Kenya",
+      "Peru",
+      "Costa Rica",
+      "Guatemala",
+      "Etiopia",
+      "Brasil",
+      "India"
+    ],
+    "roast_or_brew_intent": [
+      "Filter",
+      "Espresso",
+      "Dark",
+      "Whole Bean",
+      "Decaf",
+      "Aeropress",
+      "AeroPress",
+      "V60",
+      "Chemex",
+      "French Press",
+      "Lysbrent",
+      "Mørkbrent",
+      "kaffebønner",
+      "kaldbrygg",
+      "kaldbrygge kaffe",
+      "filter",
+      "espressokaffebønner",
+      "håndbrygg",
+      "kaffebryggere",
+      "espresso",
+      "espressoblanding",
+      "espressobønner",
+      "Bryggevekt",
+      "filterkaffe",
+      "kaffebrygging",
+      "Filterpapir",
+      "Flatbunnet filter",
+      "håndbrygger"
+    ],
+    "roast_level_or_intensity": [
+      "Fresh & Fruity",
+      "Rich & Sweet",
+      "Surprise Me",
+      "Filter Roast",
+      "Espresso Roast",
+      "Light Roast",
+      "Filter",
+      "Espresso"
+    ],
+    "process": [
+      "Honey",
+      "Natural",
+      "Washed",
+      "Fermented",
+      "Experimental",
+      "Decaf"
+    ],
+    "variety": [
+      "Pacamara",
+      "Castillo",
+      "Bourbon",
+      "Geisha",
+      "Pink Bourbon",
+      "Heirloom",
+      "Ruiru 11",
+      "Batian",
+      "SL28",
+      "SL34",
+      "Red Bourbon",
+      "Caturra",
+      "Typica"
+    ],
+    "caffeine": [
+      "decaf",
+      "kaffe uten koffein",
+      "koffeinfri kaffe",
+      "Decaf"
+    ],
+    "coffee_type": [
+      "Coffee",
+      "Råkaffe",
+      "iskaffe",
+      "kaldbrygg",
+      "kaldbrygge kaffe",
+      "sommerkaffe",
+      "kaffebønner",
+      "espressokaffebønner",
+      "kenyansk kaffe",
+      "ettermiddagskaffe",
+      "gravidvennlig kaffe",
+      "kaffe uten koffein",
+      "koffeinfri kaffe",
+      "Lysbrent Kaffe",
+      "spesialkaffe",
+      "økologisk kaffe",
+      "månedens kaffe",
+      "håndbrygg",
+      "kaffebønner beholder",
+      "kaffekvern tilbehør",
+      "reiseutstyr kaffe",
+      "kaffetermometer",
+      "kaffebryggere",
+      "kaffemaskiner",
+      "kaffetrakter",
+      "verdens beste kaffe",
+      "grønn kaffe",
+      "råkaffe",
+      "Bryggevekt",
+      "filterkaffe",
+      "kaffebrygging",
+      "kaffedosering",
+      "kaffekvern",
+      "Ren kopp kaffe",
+      "kaffedessert",
+      "kaffegave",
+      "kaffesirup",
+      "sirup til kaffe",
+      "smaksatt kaffe",
+      "kaffebeholder",
+      "håndbrygger",
+      "kaffe design",
+      "julekaffe"
+    ],
+    "grind": [
+      "Whole Bean",
+      "Filter Ground",
+      "French Press",
+      "Mokkapot",
+      "Other (specify at checkout)",
+      "Other (Specify at checkout)"
+    ],
+    "package_size": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "1 bag",
+      "2 bags",
+      "3 bags",
+      "4 bags",
+      "5 bags",
+      "6 bags",
+      "18g",
+      "20g",
+      "250g",
+      "1kg",
+      "480ml",
+      "0,7L",
+      "1,2L",
+      "0,4L"
+    ],
+    "certification_or_attribute": [
+      "økologisk",
+      "økologisk kaffe",
+      "økologisk te"
+    ]
+  },
+  "finnish_aggregate_hints": {
+    "origin_or_region": [
+      "Colombia",
+      "Ecuador",
+      "Etiopia",
+      "Ruanda",
+      "Kenia",
+      "Costa Rica",
+      "Guatemala",
+      "Indonesia",
+      "Honduras",
+      "Tansania",
+      "Burundi",
+      "Sumatra",
+      "Uganda",
+      "Peru",
+      "Ethiopia",
+      "Brazil",
+      "Rwanda"
+    ],
+    "roast_or_brew_intent": [
+      "Espresso",
+      "Decaf",
+      "Suodatinkahvi",
+      "Tumma suodatinkahvi",
+      "V60",
+      "Tummapaahto",
+      "Aeropress",
+      "AeroPress",
+      "Chemex",
+      "Dark",
+      "tumma paahto",
+      "paahtoaste",
+      "espresso",
+      "Light",
+      "Medium"
+    ],
+    "roast_level_or_intensity": [
+      "Tumma",
+      "Tosi tumma"
+    ],
+    "process": [
+      "Natural",
+      "Washed",
+      "Anaerobic",
+      "Fermented",
+      "Decaf",
+      "Sugarcane",
+      "Koji"
+    ],
+    "variety": [
+      "Pink Bourbon",
+      "Heirloom",
+      "Landrace",
+      "Ruiru 11",
+      "Bourbon",
+      "Geisha",
+      "Batian",
+      "SL-28",
+      "SL-34",
+      "Java",
+      "Yellow Bourbon",
+      "Maracaturra",
+      "Maragogype",
+      "Mundo Novo",
+      "Castillo",
+      "Ombligon",
+      "Ombligón",
+      "Arabica",
+      "Robusta",
+      "Caturra",
+      "Catimor",
+      "Typica",
+      "Catuai",
+      "Gesha",
+      "Mokka",
+      "SL28",
+      "SL34",
+      "JARC",
+      "Red Bourbon"
+    ],
+    "caffeine": [
+      "Decaf"
+    ],
+    "profile_or_flavor_family": [
+      "medium",
+      "dark",
+      "light"
+    ],
+    "coffee_type": [
+      "Suodatinkahvi",
+      "Espresso",
+      "Kofeiinitonkahvi",
+      "Kahvit",
+      "kahvit",
+      "Coffee Bags"
+    ],
+    "grind": [
+      "Papu",
+      "Jauhettu suodatinkeittimelle",
+      "Jauhettu mutteripannulle",
+      "Suodatinjauhettuna",
+      "Papuina",
+      "Suodatinjauhettu",
+      "Suodatinjauhatus",
+      "Pressopannujauhatus",
+      "Mutteripannujauhatus",
+      "Espressojauhatus",
+      "Hienojauhatus HJ",
+      "Puolikarkeajauhatus PKJ",
+      "Hienojauhatus (HJ)",
+      "Puolikarkeajauhatus (PKJ)"
+    ],
+    "package_size": [
+      "225g",
+      "1kg",
+      "2x 225g",
+      "4x 225g",
+      "3x 225g",
+      "220 g",
+      "300g",
+      "220g",
+      "500g",
+      "1000g",
+      "35-37",
+      "38-40",
+      "41-43",
+      "44-46",
+      "2x220g",
+      "500 g",
+      "100 g",
+      "200 g",
+      "3x220 g = 660 g",
+      "2 laatikkoa (6 x 220g)",
+      "200g",
+      "600g",
+      "1000 g",
+      "250g"
+    ]
+  },
+  "swedish_aggregate_hints": {
+    "origin_or_region": [
+      "El Salvador",
+      "Guatemala",
+      "Nicaragua",
+      "Colombia",
+      "Honduras",
+      "Burundi",
+      "Brazil",
+      "Uganda",
+      "Kenya",
+      "Peru",
+      "Costa Rica",
+      "Ethiopia",
+      "Bolivia",
+      "Hawaii",
+      "Yemen"
+    ],
+    "roast_or_brew_intent": [
+      "Filter",
+      "Espresso",
+      "Omni",
+      "Pods",
+      "Decaf",
+      "Ground",
+      "Hela bönor",
+      "Bryggkaffe",
+      "Dark",
+      "ljusrost",
+      "mörkrost",
+      "mellanrost",
+      "bryggmalet",
+      "Beans",
+      "Light",
+      "Medium",
+      "French Press"
+    ],
+    "process": [
+      "Natural",
+      "Washed",
+      "Honey",
+      "Decaf",
+      "Fermented",
+      "Experimental",
+      "Lactic",
+      "Anaerobic",
+      "Sugarcane"
+    ],
+    "variety": [
+      "Pink Bourbon",
+      "Red Bourbon",
+      "Mundo Novo",
+      "Pacamara",
+      "Arabica",
+      "Bourbon",
+      "Caturra",
+      "Typica",
+      "Catuai",
+      "Catuaí",
+      "Gesha",
+      "Java",
+      "SL28",
+      "Geisha"
+    ],
+    "caffeine": [
+      "decaf",
+      "Decaf"
+    ],
+    "coffee_type": [
+      "Kaffe",
+      "Espresso",
+      "Bryggkaffe",
+      "Hela bönor",
+      "Single Origin",
+      "Single origin",
+      "bryggmalet",
+      "Coffee",
+      "Specialkaffe",
+      "House Coffee"
+    ],
+    "package_size": [
+      "250 g",
+      "Sample Pack",
+      "100-pack",
+      "4 x 250 g Hela Bönor",
+      "Hela bönor, 500 g",
+      "Hela bönor, 250 g",
+      "Bryggmalet, 250 g",
+      "500 g",
+      "80 g‚ lösvikt",
+      "3 x 500 g Hela Bönor",
+      "3 x 500 g Bryggmalet",
+      "Whole Beans - 250g",
+      "Whole Beans -  250g",
+      "Whole Beans - 1000g",
+      "Ground for Filter/Bryggmalet - 250g",
+      "Ground for Filter/Bryggmalet - 1000g",
+      "Green Beans/Orostat - 1000g",
+      "Ground for Filter - 250g",
+      "Ground for Filter - 1000g",
+      "250g",
+      "1kg",
+      "1000g",
+      "2x250g",
+      "2x 250g Wholebean",
+      "3x 250g Wholebean",
+      "4x 250g Wholebean",
+      "2x 1kg Wholebean"
+    ],
+    "certification_or_attribute": [
+      "Fairtrade & Ekologiskt",
+      "organic",
+      "exclusive",
+      "Specialkaffe"
+    ]
+  },
+  "not_scraped": [
+    {
+      "name": "Blue Bottle Coffee",
+      "attempted_feed": "https://bluebottlecoffee.com/collections/coffee/products.json?limit=250",
+      "status": "403 from public Shopify-style endpoint"
+    },
+    {
+      "name": "Intelligentsia Coffee",
+      "attempted_feed": "https://www.intelligentsia.com/collections/coffee/products.json?limit=250",
+      "status": "network approval timed out before data was retrieved"
+    },
+    {
+      "name": "Doubleshot",
+      "attempted_feed": "https://www.doubleshot.cz/products.json?limit=250",
+      "status": "homepage HTML returned instead of a product JSON feed; attempted category URLs returned 404"
+    },
+    {
+      "name": "Dos Mundos",
+      "attempted_feed": "https://www.dosmundos.cz/kava/",
+      "status": "coffee listing URL returned 404; root page was only a static contact/logo page"
+    },
+    {
+      "name": "Coffee Circle product feed",
+      "attempted_feed": "https://www.coffeecircle.com/products.json?limit=250",
+      "status": "returned a short non-JSON/not-found response; root navigation was scraped instead"
+    },
+    {
+      "name": "Röststätte Berlin product feed",
+      "attempted_feed": "https://www.roeststaette.com/collections/kaffee/products.json?limit=250",
+      "status": "returned HTML rather than product JSON; category navigation was scraped instead"
+    },
+    {
+      "name": "Ditta Artigianale collection feed",
+      "attempted_feed": "https://dittaartigianale.it/collections/caffe/products.json?limit=250",
+      "status": "returned empty product list; root Shopify product feed was scraped instead"
+    },
+    {
+      "name": "Gardelli Shopify-style feed",
+      "attempted_feed": "https://shop.gardellicoffee.com/collections/coffee/products.json?limit=250",
+      "status": "returned HTML/404 because the site is PrestaShop; actual /14-coffees category was scraped instead"
+    },
+    {
+      "name": "Caffè Corsini product feed",
+      "attempted_feed": "https://www.caffecorsini.com/collections/caffe/products.json?limit=250",
+      "status": "returned empty product list; collection navigation was scraped instead"
+    },
+    {
+      "name": "MaxiCoffee",
+      "attempted_feed": "https://www.maxicoffee.com/cafe-grain-c-3_70.html",
+      "status": "coffee category returned a country-unavailable page from the current fetch location; no filter values extracted"
+    },
+    {
+      "name": "Lomi",
+      "attempted_feed": "https://lomi.coffee/products.json?limit=250",
+      "status": "returned a JavaScript redirect to https://lomi.cafe instead of product JSON"
+    },
+    {
+      "name": "Kawa Coffee",
+      "attempted_feed": "https://shop.kawa.coffee/products.json?limit=250",
+      "status": "returned SeedProd/maintenance HTML instead of product JSON"
+    },
+    {
+      "name": "Belleville Brûlerie",
+      "attempted_feed": "https://www.bellevillebrulerie.com/products.json?limit=250",
+      "status": "DNS resolution failed for the attempted domain; no values extracted"
+    },
+    {
+      "name": "Toma Café",
+      "attempted_feed": "https://toma.cafe/products.json?limit=250",
+      "status": "returned application/HTML shell instead of product JSON"
+    },
+    {
+      "name": "Supreme Roastworks",
+      "attempted_feed": "https://supremeroastworks.no/products.json?limit=250",
+      "status": "returned HTML instead of product JSON"
+    },
+    {
+      "name": "Solberg & Hansen",
+      "attempted_feed": "https://solbergoghansen.no/products.json?limit=250",
+      "status": "connection timed out during feed fetch"
+    },
+    {
+      "name": "Jacu Coffee",
+      "attempted_feed": "https://jacu.no/products.json?limit=250",
+      "status": "returned 404 HTML instead of product JSON"
+    },
+    {
+      "name": "Langøra Kaffe",
+      "attempted_feed": "https://langorakaffe.no/products.json?limit=250",
+      "status": "returned Squarespace HTML instead of product JSON"
+    },
+    {
+      "name": "Slurp",
+      "attempted_feed": "https://slurp.coffee/products.json?limit=250",
+      "status": "returned a non-JSON URL/body response"
+    },
+    {
+      "name": "Helsingin Kahvipaahtimo",
+      "attempted_feed": "https://www.helsinginkahvipaahtimo.fi/products.json?limit=250",
+      "status": "returned storefront HTML instead of product JSON"
+    },
+    {
+      "name": "Mokkamestarit",
+      "attempted_feed": "https://mokkamestarit.fi/products.json?limit=250",
+      "status": "returned storefront HTML instead of product JSON"
+    },
+    {
+      "name": "Record Coffee",
+      "attempted_feed": "https://www.recordcoffee.fi/products.json?limit=250",
+      "status": "returned WordPress error HTML instead of product JSON"
+    },
+    {
+      "name": "Gringo Nordic",
+      "attempted_feed": "https://www.gringonordic.se/products.json?limit=250",
+      "status": "returned WordPress/storefront HTML instead of product JSON"
+    }
+  ]
+}

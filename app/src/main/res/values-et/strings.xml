@@ -280,16 +280,14 @@
     <string name="notif_rating_title">Kuidas su kohv oli?</string>
     <string name="format_notif_rating_title">Kuidas su %1$s kohv oli?</string>
     <string name="notif_rating_body">Puuduta emojit, et hinnata, või ava rohkema jaoks rakendus.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Anna hinnang 1 tärni 5-st</string>
-    <string name="cd_notif_rating_2">Anna hinnang 2 tärni 5-st</string>
-    <string name="cd_notif_rating_3">Anna hinnang 3 tärni 5-st</string>
-    <string name="cd_notif_rating_4">Anna hinnang 4 tärni 5-st</string>
-    <string name="cd_notif_rating_5">Anna hinnang 5 tärni 5-st</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Hinda halvaks</string>
+    <string name="cd_notif_rating_2">Hinda keskmiseks</string>
+    <string name="cd_notif_rating_3">Hinda heaks</string>
+    <string name="cd_notif_rating_4">Hinda suurepäraseks</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Paki analüüsimine</string>
@@ -613,10 +611,16 @@
     <string name="grind_medium_coarse">Keskmiselt jäme</string>
     <string name="grind_coarse">Jäme</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Suurepärane</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Halb</string>
+    <string name="rating_meh">Nii ja naa</string>
     <string name="rating_good">Hea</string>
-    <string name="rating_not_great">Pole eriti hea</string>
+    <string name="rating_awesome">Suurepärane</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Hinda halvaks</string>
+    <string name="cd_rate_meh">Hinda keskmiseks</string>
+    <string name="cd_rate_good">Hinda heaks</string>
+    <string name="cd_rate_awesome">Hinda suurepäraseks</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Liiga mõru</string>

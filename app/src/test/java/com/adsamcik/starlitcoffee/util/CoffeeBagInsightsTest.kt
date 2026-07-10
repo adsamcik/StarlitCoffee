@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.util
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -85,7 +86,7 @@ class CoffeeBagInsightsTest {
         )
 
         assertEquals(listOf("Citrus", "Berry", "Floral"), snapshot.topChips.take(3))
-        assertEquals(4.25f, snapshot.averageRating ?: 0f, 0.01f)
+        assertEquals(mapOf(BrewRating.AWESOME to 2), snapshot.ratingCounts)
     }
 
     // --- Grind intelligence ---

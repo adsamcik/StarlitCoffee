@@ -87,6 +87,28 @@ interface LlmInferenceProvider {
         LlmExtractionResult.Unavailable("Combine pass not supported by this provider")
 
     /**
+     * Whether this provider can run the post-translation **refine** pass via
+     * [refineBagFields]. Default `false`. Like combine it is text-only, so it is
+     * NOT limited by the multimodal-inference budget. Should be cheap/non-blocking.
+     */
+    fun supportsRefine(): Boolean = false
+
+    /**
+     * Post-translation refinement: given the current canonical-English value per
+     * field and a short list of close known values from the curated vocabulary
+     * ([LlmRefineRequest.suggestionsByField]), the model keeps its value or adopts
+     * a suggestion that is a cleaner canonical form of the SAME thing. Suggestions
+     * are advisory — the model MAY or MAY NOT use them. Returns the chosen values
+     * as [BagFieldCandidate]s that fold back into the consensus engine.
+     *
+     * Honours the same threading and cancellation contracts as [extractBagFields].
+     * Default returns [LlmExtractionResult.Unavailable]; the orchestration only
+     * calls this when [supportsRefine] is true.
+     */
+    suspend fun refineBagFields(request: LlmRefineRequest): LlmExtractionResult =
+        LlmExtractionResult.Unavailable("Refine pass not supported by this provider")
+
+    /**
      * Whether the LLM provider is configured and available.
      * If false, callers should skip LLM enrichment gracefully.
      *

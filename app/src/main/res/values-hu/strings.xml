@@ -280,16 +280,14 @@
     <string name="notif_rating_title">Milyen lett a kávéja?</string>
     <string name="format_notif_rating_title">Milyen lett a(z) %1$s kávéja?</string>
     <string name="notif_rating_body">Koppintson egy emojira az értékeléshez, vagy nyissa meg az alkalmazást a továbbiakért.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Értékelés: 5-ből 1 csillag</string>
-    <string name="cd_notif_rating_2">Értékelés: 5-ből 2 csillag</string>
-    <string name="cd_notif_rating_3">Értékelés: 5-ből 3 csillag</string>
-    <string name="cd_notif_rating_4">Értékelés: 5-ből 4 csillag</string>
-    <string name="cd_notif_rating_5">Értékelés: 5-ből 5 csillag</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Értékelés: rossz</string>
+    <string name="cd_notif_rating_2">Értékelés: közepes</string>
+    <string name="cd_notif_rating_3">Értékelés: jó</string>
+    <string name="cd_notif_rating_4">Értékelés: szuper</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Zacskó elemzése</string>
@@ -613,10 +611,16 @@
     <string name="grind_medium_coarse">Közepesen durva</string>
     <string name="grind_coarse">Durva</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Kiváló</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Rossz</string>
+    <string name="rating_meh">Így-úgy</string>
     <string name="rating_good">Jó</string>
-    <string name="rating_not_great">Nem túl jó</string>
+    <string name="rating_awesome">Szuper</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Értékelés: rossz</string>
+    <string name="cd_rate_meh">Értékelés: közepes</string>
+    <string name="cd_rate_good">Értékelés: jó</string>
+    <string name="cd_rate_awesome">Értékelés: szuper</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Túl keserű</string>

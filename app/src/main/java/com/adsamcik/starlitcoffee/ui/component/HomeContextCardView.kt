@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.HomeContextCard
 import com.adsamcik.starlitcoffee.util.FreshnessPhase
 import java.text.SimpleDateFormat
@@ -270,10 +271,10 @@ private fun LastBrewSummaryCard(
     }
 }
 
-private fun ratingLabel(rating: Float?): String = when {
-    rating == null -> "unrated"
-    rating >= 4.5f -> "amazing"
-    rating >= 3.5f -> "good"
-    rating >= 2.5f -> "okay"
-    else -> "not great"
+private fun ratingLabel(rating: Float?): String = when (BrewRating.fromStoredValue(rating)) {
+    null -> "unrated"
+    BrewRating.AWESOME -> "awesome"
+    BrewRating.GOOD -> "good"
+    BrewRating.MEH -> "meh"
+    BrewRating.BAD -> "not great"
 }

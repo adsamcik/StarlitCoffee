@@ -249,8 +249,9 @@ sealed class HomeContextCard {
 
             val avgRating = recentRated.mapNotNull { it.rating }.average()
 
-            // If recent brews are consistently good (3.5+), suggest exploration twists
-            if (avgRating >= 3.5) {
+            // If recent brews are consistently good (avg >= Good tier), suggest
+            // exploration twists.
+            if (avgRating >= BrewRating.GOOD.score) {
                 return pickExplorationTwist(recentRated)
             }
 
@@ -314,11 +315,7 @@ sealed class HomeContextCard {
                 }
             }
 
-            val emoji = when {
-                lastRated.rating!! >= 4.5f -> "🔥"
-                lastRated.rating >= 3.0f -> "👍"
-                else -> "👎"
-            }
+            val emoji = BrewRating.fromStoredValue(lastRated.rating)?.emoji ?: ""
 
             return LastBrewSummary(
                 brew = lastRated,

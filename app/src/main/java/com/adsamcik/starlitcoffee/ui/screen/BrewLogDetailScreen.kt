@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
@@ -58,7 +59,7 @@ import com.adsamcik.starlitcoffee.ui.component.shareBrewCard
 import com.adsamcik.starlitcoffee.ui.util.displayNameRes
 import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.ui.component.FlavorTagPicker
-import com.adsamcik.starlitcoffee.ui.component.HalfStarRatingRow
+import com.adsamcik.starlitcoffee.ui.component.BrewRatingRow
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -360,9 +361,9 @@ fun BrewLogDetailScreen(
                     .semantics { heading() },
             )
 
-            HalfStarRatingRow(
-                rating = rating,
-                onRatingChange = { rating = it },
+            BrewRatingRow(
+                selected = BrewRating.fromStoredValue(rating),
+                onSelect = { rating = it.storedValue },
                 modifier = Modifier.padding(start = 8.dp),
             )
 

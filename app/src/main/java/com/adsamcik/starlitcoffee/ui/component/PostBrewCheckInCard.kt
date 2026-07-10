@@ -9,13 +9,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalButton
@@ -31,11 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
-import com.adsamcik.starlitcoffee.data.model.QuickRating
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.TasteIssue
 import com.adsamcik.starlitcoffee.ui.util.labelRes
 
@@ -43,7 +39,7 @@ import com.adsamcik.starlitcoffee.ui.util.labelRes
 @Composable
 fun PostBrewCheckInCard(
     brew: BrewLogEntity,
-    onQuickRate: (QuickRating) -> Unit,
+    onQuickRate: (BrewRating) -> Unit,
     onIssueRate: (TasteIssue) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -83,30 +79,17 @@ fun PostBrewCheckInCard(
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    QuickRating.entries.forEach { rating ->
-                        FilledTonalButton(
-                            onClick = {
-                                if (rating == QuickRating.NOT_GREAT) {
-                                    showIssueFollowUp = true
-                                } else {
-                                    onQuickRate(rating)
-                                }
-                            },
-                            modifier = Modifier.weight(1f),
-                            shape = MaterialTheme.shapes.medium,
-                        ) {
-                            Text(
-                                text = "${rating.emoji} ${stringResource(rating.labelRes())}",
-                                style = MaterialTheme.typography.labelLarge,
-                                maxLines = 1,
-                            )
+                BrewRatingRow(
+                    selected = null,
+                    onSelect = { rating ->
+                        if (rating.triggersIssueFollowUp) {
+                            showIssueFollowUp = true
+                        } else {
+                            onQuickRate(rating)
                         }
-                    }
-                }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
 
             AnimatedVisibility(

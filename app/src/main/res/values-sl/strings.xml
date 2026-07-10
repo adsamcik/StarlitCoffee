@@ -284,16 +284,14 @@
     <string name="notif_rating_title">Kakšna je bila vaša kava?</string>
     <string name="format_notif_rating_title">Kakšna je bila vaša %1$s priprava?</string>
     <string name="notif_rating_body">Tapnite emoji za oceno ali odprite aplikacijo za več.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Ocenite z 1 od 5 zvezdic</string>
-    <string name="cd_notif_rating_2">Ocenite z 2 od 5 zvezdic</string>
-    <string name="cd_notif_rating_3">Ocenite s 3 od 5 zvezdic</string>
-    <string name="cd_notif_rating_4">Ocenite s 4 od 5 zvezdic</string>
-    <string name="cd_notif_rating_5">Ocenite s 5 od 5 zvezdic</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Ocenite kot slabo</string>
+    <string name="cd_notif_rating_2">Ocenite kot povprečno</string>
+    <string name="cd_notif_rating_3">Ocenite kot dobro</string>
+    <string name="cd_notif_rating_4">Ocenite kot odlično</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analiziranje vaše vrečke</string>
@@ -617,10 +615,16 @@
     <string name="grind_medium_coarse">Srednje grobo</string>
     <string name="grind_coarse">Grobo</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Odlično</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Slabo</string>
+    <string name="rating_meh">Tako-tako</string>
     <string name="rating_good">Dobro</string>
-    <string name="rating_not_great">Ne najbolje</string>
+    <string name="rating_awesome">Odlično</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Ocenite kot slabo</string>
+    <string name="cd_rate_meh">Ocenite kot povprečno</string>
+    <string name="cd_rate_good">Ocenite kot dobro</string>
+    <string name="cd_rate_awesome">Ocenite kot odlično</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Pregrenko</string>

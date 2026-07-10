@@ -280,16 +280,14 @@
     <string name="notif_rating_title">Millainen kahvisi oli?</string>
     <string name="format_notif_rating_title">Millainen %1$s-kahvisi oli?</string>
     <string name="notif_rating_body">Napauta emojia arvioidaksesi tai avaa sovellus saadaksesi lisää.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Arvioi 1/5 tähteä</string>
-    <string name="cd_notif_rating_2">Arvioi 2/5 tähteä</string>
-    <string name="cd_notif_rating_3">Arvioi 3/5 tähteä</string>
-    <string name="cd_notif_rating_4">Arvioi 4/5 tähteä</string>
-    <string name="cd_notif_rating_5">Arvioi 5/5 tähteä</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Arvioi huonoksi</string>
+    <string name="cd_notif_rating_2">Arvioi keskinkertaiseksi</string>
+    <string name="cd_notif_rating_3">Arvioi hyväksi</string>
+    <string name="cd_notif_rating_4">Arvioi mahtavaksi</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analysoidaan pussia</string>
@@ -613,10 +611,16 @@
     <string name="grind_medium_coarse">Karkeahko</string>
     <string name="grind_coarse">Karkea</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Erinomainen</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Huono</string>
+    <string name="rating_meh">Ihan ok</string>
     <string name="rating_good">Hyvä</string>
-    <string name="rating_not_great">Ei kovin hyvä</string>
+    <string name="rating_awesome">Mahtava</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Arvioi huonoksi</string>
+    <string name="cd_rate_meh">Arvioi keskinkertaiseksi</string>
+    <string name="cd_rate_good">Arvioi hyväksi</string>
+    <string name="cd_rate_awesome">Arvioi mahtavaksi</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Liian karvas</string>

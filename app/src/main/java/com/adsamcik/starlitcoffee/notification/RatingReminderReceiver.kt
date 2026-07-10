@@ -140,13 +140,13 @@ class RatingReminderReceiver : BroadcastReceiver() {
         private const val TAG = "RatingReminderRecv"
         private const val NOTIFICATION_ID_BASE = 10_000
 
-        // Maps custom view button ids to the rating value they record (1..5).
+        // Maps custom view button ids to the rating value they record (1..4 =
+        // the BrewRating tier score: 1 Bad, 2 Meh, 3 Good, 4 Awesome).
         private val EMOJI_BUTTONS: List<Pair<Int, Int>> = listOf(
             R.id.notif_rate_1 to 1,
             R.id.notif_rate_2 to 2,
             R.id.notif_rate_3 to 3,
             R.id.notif_rate_4 to 4,
-            R.id.notif_rate_5 to 5,
         )
 
         fun notificationIdFor(brewLogId: Long): Int =

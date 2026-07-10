@@ -273,16 +273,14 @@
     <string name="notif_rating_title">Jak vám káva chutnala?</string>
     <string name="format_notif_rating_title">Jak vám chutnala příprava — %1$s?</string>
     <string name="notif_rating_body">Klepnutím na emoji ohodnoťte přípravu, nebo otevřete aplikaci pro detail.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Ohodnotit 1 z 5 hvězd</string>
-    <string name="cd_notif_rating_2">Ohodnotit 2 z 5 hvězd</string>
-    <string name="cd_notif_rating_3">Ohodnotit 3 z 5 hvězd</string>
-    <string name="cd_notif_rating_4">Ohodnotit 4 z 5 hvězd</string>
-    <string name="cd_notif_rating_5">Ohodnotit 5 z 5 hvězd</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Ohodnotit jako špatné</string>
+    <string name="cd_notif_rating_2">Ohodnotit jako nic moc</string>
+    <string name="cd_notif_rating_3">Ohodnotit jako dobré</string>
+    <string name="cd_notif_rating_4">Ohodnotit jako skvělé</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analýza balení</string>
@@ -644,10 +642,16 @@
     <string name="grind_medium_coarse">Středně hrubé</string>
     <string name="grind_coarse">Hrubé</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Výborné</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Špatné</string>
+    <string name="rating_meh">Nic moc</string>
     <string name="rating_good">Dobré</string>
-    <string name="rating_not_great">Nebylo to ono</string>
+    <string name="rating_awesome">Skvělé</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Ohodnotit jako špatné</string>
+    <string name="cd_rate_meh">Ohodnotit jako nic moc</string>
+    <string name="cd_rate_good">Ohodnotit jako dobré</string>
+    <string name="cd_rate_awesome">Ohodnotit jako skvělé</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Příliš hořká</string>

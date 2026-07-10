@@ -280,16 +280,14 @@
     <string name="notif_rating_title">How was your brew?</string>
     <string name="format_notif_rating_title">How was your %1$s brew?</string>
     <string name="notif_rating_body">Tap an emoji to rate it, or open the app for more.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Rate 1 of 5 stars</string>
-    <string name="cd_notif_rating_2">Rate 2 of 5 stars</string>
-    <string name="cd_notif_rating_3">Rate 3 of 5 stars</string>
-    <string name="cd_notif_rating_4">Rate 4 of 5 stars</string>
-    <string name="cd_notif_rating_5">Rate 5 of 5 stars</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Rate as bad</string>
+    <string name="cd_notif_rating_2">Rate as meh</string>
+    <string name="cd_notif_rating_3">Rate as good</string>
+    <string name="cd_notif_rating_4">Rate as awesome</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analyzing your bag</string>
@@ -613,10 +611,16 @@
     <string name="grind_medium_coarse">Medium Coarse</string>
     <string name="grind_coarse">Coarse</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Great</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Bad</string>
+    <string name="rating_meh">Meh</string>
     <string name="rating_good">Good</string>
-    <string name="rating_not_great">Not great</string>
+    <string name="rating_awesome">Awesome</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Rate as bad</string>
+    <string name="cd_rate_meh">Rate as meh</string>
+    <string name="cd_rate_good">Rate as good</string>
+    <string name="cd_rate_awesome">Rate as awesome</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Too bitter</string>

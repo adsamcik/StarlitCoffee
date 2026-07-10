@@ -280,16 +280,14 @@
     <string name="notif_rating_title">Hoe was je bereiding?</string>
     <string name="format_notif_rating_title">Hoe was je %1$s-bereiding?</string>
     <string name="notif_rating_body">Tik op een emoji om te beoordelen, of open de app voor meer.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Beoordeel met 1 van 5 sterren</string>
-    <string name="cd_notif_rating_2">Beoordeel met 2 van 5 sterren</string>
-    <string name="cd_notif_rating_3">Beoordeel met 3 van 5 sterren</string>
-    <string name="cd_notif_rating_4">Beoordeel met 4 van 5 sterren</string>
-    <string name="cd_notif_rating_5">Beoordeel met 5 van 5 sterren</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Beoordeel als slecht</string>
+    <string name="cd_notif_rating_2">Beoordeel als matig</string>
+    <string name="cd_notif_rating_3">Beoordeel als goed</string>
+    <string name="cd_notif_rating_4">Beoordeel als geweldig</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Je zak analyseren</string>
@@ -612,10 +610,16 @@
     <string name="grind_medium_coarse">Middelgrof</string>
     <string name="grind_coarse">Grof</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Geweldig</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Slecht</string>
+    <string name="rating_meh">Gaat wel</string>
     <string name="rating_good">Goed</string>
-    <string name="rating_not_great">Niet geweldig</string>
+    <string name="rating_awesome">Geweldig</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Beoordeel als slecht</string>
+    <string name="cd_rate_meh">Beoordeel als matig</string>
+    <string name="cd_rate_good">Beoordeel als goed</string>
+    <string name="cd_rate_awesome">Beoordeel als geweldig</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Te bitter</string>

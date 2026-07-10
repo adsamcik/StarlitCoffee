@@ -21,6 +21,7 @@ import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
 import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.HomeContextCard
 import com.adsamcik.starlitcoffee.data.model.InventoryAlert
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.data.model.GrinderDataProvider
 import com.adsamcik.starlitcoffee.data.model.InputMode
@@ -834,14 +835,14 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     fun quickRateBrewLog(
         logId: Long,
-        rating: Float,
-        tasteFeedback: TasteFeedback?,
+        rating: BrewRating,
+        tasteFeedback: TasteFeedback? = rating.tasteFeedback,
     ) {
         val repository = brewLogRepository ?: return
         viewModelScope.launch {
             repository.updateFeedback(
                 logId = logId,
-                rating = rating,
+                rating = rating.storedValue,
                 notes = null,
                 tasteFeedback = tasteFeedback?.name,
                 flavorTags = emptyList(),

@@ -277,16 +277,14 @@
     <string name="notif_rating_title">这次冲煮怎么样？</string>
     <string name="format_notif_rating_title">你的%1$s冲煮怎么样？</string>
     <string name="notif_rating_body">点按表情评分，或打开应用查看更多。</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">评为5星中的1星</string>
-    <string name="cd_notif_rating_2">评为5星中的2星</string>
-    <string name="cd_notif_rating_3">评为5星中的3星</string>
-    <string name="cd_notif_rating_4">评为5星中的4星</string>
-    <string name="cd_notif_rating_5">评为5星中的5星</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">评为差</string>
+    <string name="cd_notif_rating_2">评为一般</string>
+    <string name="cd_notif_rating_3">评为不错</string>
+    <string name="cd_notif_rating_4">评为很棒</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">正在分析咖啡袋</string>
@@ -609,10 +607,16 @@
     <string name="grind_medium_coarse">中粗</string>
     <string name="grind_coarse">粗</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">很棒</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">差</string>
+    <string name="rating_meh">一般</string>
     <string name="rating_good">不错</string>
-    <string name="rating_not_great">不太好</string>
+    <string name="rating_awesome">很棒</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">评为差</string>
+    <string name="cd_rate_meh">评为一般</string>
+    <string name="cd_rate_good">评为不错</string>
+    <string name="cd_rate_awesome">评为很棒</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">太苦</string>

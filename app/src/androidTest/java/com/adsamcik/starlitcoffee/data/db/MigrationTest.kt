@@ -30,11 +30,11 @@ class MigrationTest {
      * drift (a forgotten column/index) that would crash on app upgrade.
      */
     @Test
-    fun migrateAll10To15_matchesExportedSchema() {
+    fun migrateAll10To16_matchesExportedSchema() {
         helper.createDatabase(MIGRATION_TEST_DB, 10).close()
         helper.runMigrationsAndValidate(
             MIGRATION_TEST_DB,
-            15,
+            16,
             true,
             *AppDatabase.ALL_MIGRATIONS,
         ).close()
@@ -167,6 +167,37 @@ class MigrationTest {
             assertEquals("Night Shift", cursor.getString(0))
             assertEquals(1, cursor.getInt(1))
             assertEquals(null, cursor.getString(2))
+            cursor.close()
+        }
+    }
+
+    @Test
+    fun migrate15to16_normalizesLegacyRatingsToTiers() {
+        withDatabase(
+            name = "starlit-test-db-v16",
+            version = 15,
+            createSchema = { createVersion15BrewLogsRatingSchema() },
+        ) { db ->
+            db.execSQL("INSERT INTO brew_logs (id, rating) VALUES (1, 5.0)")   // -> 4 Awesome
+            db.execSQL("INSERT INTO brew_logs (id, rating) VALUES (2, 4.5)")   // -> 4 Awesome
+            db.execSQL("INSERT INTO brew_logs (id, rating) VALUES (3, 3.5)")   // -> 3 Good
+            db.execSQL("INSERT INTO brew_logs (id, rating) VALUES (4, 3.0)")   // -> 3 Good
+            db.execSQL("INSERT INTO brew_logs (id, rating) VALUES (5, 2.0)")   // -> 2 Meh
+            db.execSQL("INSERT INTO brew_logs (id, rating) VALUES (6, 1.5)")   // -> 1 Bad
+            db.execSQL("INSERT INTO brew_logs (id, rating) VALUES (7, NULL)")  // stays unrated
+
+            AppDatabase.MIGRATION_15_16.migrate(db)
+
+            val expected = mapOf(1 to 4.0, 2 to 4.0, 3 to 3.0, 4 to 3.0, 5 to 2.0, 6 to 1.0)
+            val cursor = db.query("SELECT id, rating FROM brew_logs ORDER BY id")
+            while (cursor.moveToNext()) {
+                val id = cursor.getInt(0)
+                if (id == 7) {
+                    assertTrue("Unrated brew must stay NULL", cursor.isNull(1))
+                } else {
+                    assertEquals("Rating for id=$id", expected.getValue(id), cursor.getDouble(1), 0.001)
+                }
+            }
             cursor.close()
         }
     }
@@ -304,6 +335,17 @@ class MigrationTest {
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 name TEXT NOT NULL,
                 isDecaf INTEGER NOT NULL DEFAULT 0
+            )
+            """.trimIndent(),
+        )
+    }
+
+    private fun SupportSQLiteDatabase.createVersion15BrewLogsRatingSchema() {
+        execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS brew_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                rating REAL
             )
             """.trimIndent(),
         )

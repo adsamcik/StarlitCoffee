@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -24,8 +23,11 @@ import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
+import com.adsamcik.starlitcoffee.data.model.BrewRating
+import com.adsamcik.starlitcoffee.ui.util.labelRes
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -40,12 +42,7 @@ fun ShareableBrewCard(
 ) {
     val locale = LocalLocale.current.platformLocale
     val dateFormat = SimpleDateFormat("MMM d, yyyy", locale)
-    val ratingEmoji = when {
-        brew.rating == null -> ""
-        brew.rating >= 4.5f -> "🔥"
-        brew.rating >= 3.0f -> "👍"
-        else -> "☕"
-    }
+    val brewRating = BrewRating.fromStoredValue(brew.rating)
     val methodName = brew.method.lowercase().replaceFirstChar { it.uppercase() }
     val filterLabel = when (brew.filterType) {
         "PAPER" -> "Paper"
@@ -63,16 +60,13 @@ fun ShareableBrewCard(
         Column(
             modifier = Modifier.padding(24.dp),
         ) {
-            // Header: emoji + rating
-            if (brew.rating != null && brew.rating > 0f) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = ratingEmoji,
-                        style = MaterialTheme.typography.headlineMedium,
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    StarRatingRow(rating = brew.rating, starSize = 20.dp)
-                }
+            // Header: rating face + label
+            if (brewRating != null) {
+                BrewRatingBadge(
+                    rating = brewRating,
+                    showLabel = true,
+                    emojiSize = 28.sp,
+                )
                 Spacer(modifier = Modifier.height(12.dp))
             }
 
@@ -196,15 +190,8 @@ fun shareBrewCard(
     val methodName = brew.method.lowercase().replaceFirstChar { it.uppercase() }
     val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
     val dateStr = dateFormat.format(Date(brew.createdAt))
-    val ratingEmoji = when {
-        brew.rating == null -> ""
-        brew.rating >= 4.5f -> "🔥"
-        brew.rating >= 3.0f -> "👍"
-        else -> "☕"
-    }
-    val stars = brew.rating?.let { r ->
-        "★".repeat(r.toInt()) + if (r % 1 >= 0.5f) "½" else ""
-    } ?: ""
+    val brewRating = BrewRating.fromStoredValue(brew.rating)
+    val ratingEmoji = brewRating?.emoji ?: ""
     val filterLabel = when (brew.filterType) {
         "PAPER" -> "Paper"
         "METAL_19K" -> "19K Metal"
@@ -222,8 +209,8 @@ fun shareBrewCard(
         append("☕ ${"%.0f".format(brew.doseG)}g  💧 ${"%.0f".format(brew.waterG)}g  📐 1:${"%.0f".format(brew.ratio)}")
         if (filterLabel != null) append("  🔽 $filterLabel")
         appendLine()
-        if (stars.isNotEmpty()) {
-            appendLine("$stars (${"%.1f".format(brew.rating)})")
+        if (brewRating != null) {
+            appendLine(context.getString(brewRating.labelRes()))
         }
         if (flavorTags.isNotEmpty()) {
             appendLine(flavorTags.take(4).joinToString(" · "))

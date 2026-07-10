@@ -282,16 +282,14 @@
     <string name="notif_rating_title">Cum a fost prepararea?</string>
     <string name="format_notif_rating_title">Cum a fost prepararea cu %1$s?</string>
     <string name="notif_rating_body">Atingeți un emoji ca să o evaluați sau deschideți aplicația pentru mai multe opțiuni.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Evaluați cu 1 din 5 stele</string>
-    <string name="cd_notif_rating_2">Evaluați cu 2 din 5 stele</string>
-    <string name="cd_notif_rating_3">Evaluați cu 3 din 5 stele</string>
-    <string name="cd_notif_rating_4">Evaluați cu 4 din 5 stele</string>
-    <string name="cd_notif_rating_5">Evaluați cu 5 din 5 stele</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Evaluați ca slabă</string>
+    <string name="cd_notif_rating_2">Evaluați ca medie</string>
+    <string name="cd_notif_rating_3">Evaluați ca bună</string>
+    <string name="cd_notif_rating_4">Evaluați ca excelentă</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analizăm pachetul dumneavoastră</string>
@@ -615,10 +613,16 @@
     <string name="grind_medium_coarse">Mediu-grosieră</string>
     <string name="grind_coarse">Grosieră</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Excelentă</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Slabă</string>
+    <string name="rating_meh">Așa și așa</string>
     <string name="rating_good">Bună</string>
-    <string name="rating_not_great">Nu prea bună</string>
+    <string name="rating_awesome">Excelentă</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Evaluați ca slabă</string>
+    <string name="cd_rate_meh">Evaluați ca medie</string>
+    <string name="cd_rate_good">Evaluați ca bună</string>
+    <string name="cd_rate_awesome">Evaluați ca excelentă</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Prea amară</string>

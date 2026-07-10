@@ -280,16 +280,14 @@
     <string name="notif_rating_title">Hur blev bryggningen?</string>
     <string name="format_notif_rating_title">Hur blev din %1$s-bryggning?</string>
     <string name="notif_rating_body">Tryck på en emoji för att betygsätta, eller öppna appen för mer.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Ge 1 av 5 stjärnor</string>
-    <string name="cd_notif_rating_2">Ge 2 av 5 stjärnor</string>
-    <string name="cd_notif_rating_3">Ge 3 av 5 stjärnor</string>
-    <string name="cd_notif_rating_4">Ge 4 av 5 stjärnor</string>
-    <string name="cd_notif_rating_5">Ge 5 av 5 stjärnor</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Betygsätt som dålig</string>
+    <string name="cd_notif_rating_2">Betygsätt som medelmåttig</string>
+    <string name="cd_notif_rating_3">Betygsätt som bra</string>
+    <string name="cd_notif_rating_4">Betygsätt som fantastisk</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analyserar din påse</string>
@@ -613,10 +611,16 @@
     <string name="grind_medium_coarse">Medelgrov</string>
     <string name="grind_coarse">Grov</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Jättebra</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Dålig</string>
+    <string name="rating_meh">Sådär</string>
     <string name="rating_good">Bra</string>
-    <string name="rating_not_great">Inte så bra</string>
+    <string name="rating_awesome">Fantastisk</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Betygsätt som dålig</string>
+    <string name="cd_rate_meh">Betygsätt som medelmåttig</string>
+    <string name="cd_rate_good">Betygsätt som bra</string>
+    <string name="cd_rate_awesome">Betygsätt som fantastisk</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">För bitter</string>

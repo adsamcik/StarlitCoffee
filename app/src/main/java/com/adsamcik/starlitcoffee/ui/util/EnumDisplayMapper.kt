@@ -7,7 +7,7 @@ import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.model.StrengthPreset
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
-import com.adsamcik.starlitcoffee.data.model.QuickRating
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.TasteIssue
 import com.adsamcik.starlitcoffee.data.model.CoffeeBagStatus
 import com.adsamcik.starlitcoffee.data.model.DecafProcess
@@ -119,13 +119,23 @@ fun GrindDescriptor.displayNameRes(): Int = when (this) {
     GrindDescriptor.COARSE -> R.string.grind_coarse
 }
 
-// --- QuickRating ---
+// --- BrewRating ---
 
 @StringRes
-fun QuickRating.labelRes(): Int = when (this) {
-    QuickRating.GREAT -> R.string.rating_great
-    QuickRating.GOOD -> R.string.rating_good
-    QuickRating.NOT_GREAT -> R.string.rating_not_great
+fun BrewRating.labelRes(): Int = when (this) {
+    BrewRating.BAD -> R.string.rating_bad
+    BrewRating.MEH -> R.string.rating_meh
+    BrewRating.GOOD -> R.string.rating_good
+    BrewRating.AWESOME -> R.string.rating_awesome
+}
+
+/** Content description for the tappable rating face (e.g. "Rate as good"). */
+@StringRes
+fun BrewRating.selectContentDescriptionRes(): Int = when (this) {
+    BrewRating.BAD -> R.string.cd_rate_bad
+    BrewRating.MEH -> R.string.cd_rate_meh
+    BrewRating.GOOD -> R.string.cd_rate_good
+    BrewRating.AWESOME -> R.string.cd_rate_awesome
 }
 
 // --- TasteIssue ---

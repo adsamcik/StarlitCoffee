@@ -26,7 +26,7 @@ class RatingActionReceiver : BroadcastReceiver() {
         if (intent.action != ACTION_QUICK_RATE) return
         val brewLogId = intent.getLongExtra(EXTRA_BREW_LOG_ID, -1L)
         val ratingValue = intent.getIntExtra(EXTRA_RATING_VALUE, -1)
-        if (brewLogId <= 0L || ratingValue !in 1..5) {
+        if (brewLogId <= 0L || ratingValue !in 1..4) {
             Log.w(TAG, "Ignoring quick-rate broadcast with invalid payload: id=$brewLogId rating=$ratingValue")
             return
         }

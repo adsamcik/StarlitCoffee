@@ -282,16 +282,14 @@
     <string name="notif_rating_title">Kakva je bila vaša kava?</string>
     <string name="format_notif_rating_title">Kakva je bila vaša %1$s kava?</string>
     <string name="notif_rating_body">Dodirnite emoji za ocjenu ili otvorite aplikaciju za više.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Ocijenite s 1 od 5 zvjezdica</string>
-    <string name="cd_notif_rating_2">Ocijenite s 2 od 5 zvjezdica</string>
-    <string name="cd_notif_rating_3">Ocijenite s 3 od 5 zvjezdica</string>
-    <string name="cd_notif_rating_4">Ocijenite s 4 od 5 zvjezdica</string>
-    <string name="cd_notif_rating_5">Ocijenite s 5 od 5 zvjezdica</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Ocijenite kao loše</string>
+    <string name="cd_notif_rating_2">Ocijenite kao osrednje</string>
+    <string name="cd_notif_rating_3">Ocijenite kao dobro</string>
+    <string name="cd_notif_rating_4">Ocijenite kao sjajno</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analiza vaše vrećice</string>
@@ -615,10 +613,16 @@
     <string name="grind_medium_coarse">Srednje grubo</string>
     <string name="grind_coarse">Grubo</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Sjajno</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Loše</string>
+    <string name="rating_meh">Osrednje</string>
     <string name="rating_good">Dobro</string>
-    <string name="rating_not_great">Nije sjajno</string>
+    <string name="rating_awesome">Sjajno</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Ocijenite kao loše</string>
+    <string name="cd_rate_meh">Ocijenite kao osrednje</string>
+    <string name="cd_rate_good">Ocijenite kao dobro</string>
+    <string name="cd_rate_awesome">Ocijenite kao sjajno</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Pregorko</string>

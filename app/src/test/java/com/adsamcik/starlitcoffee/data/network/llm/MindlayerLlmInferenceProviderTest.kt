@@ -671,6 +671,28 @@ class MindlayerLlmInferenceProviderTest {
             prompt.contains("Reference vocabulary"))
     }
 
+    @Test
+    fun `buildRefinePrompt lists current values and suggestions per field`() {
+        val request = LlmRefineRequest(
+            fieldsNeeded = setOf("processType", "origin"),
+            currentFields = mapOf("processType" to "wet processed", "origin" to "Columbia"),
+            suggestionsByField = mapOf(
+                "processType" to listOf("Washed", "Semi-Washed"),
+                "origin" to listOf("Colombia"),
+            ),
+        )
+
+        val prompt = MindlayerLlmInferenceProvider.buildRefinePrompt(request)
+
+        assertTrue("Prompt should show the process current value",
+            prompt.contains("process: current=\"wet processed\""))
+        assertTrue("Prompt should list the process suggestions",
+            prompt.contains("close known values: Washed, Semi-Washed"))
+        assertTrue("Prompt should show the origin current value",
+            prompt.contains("origin: current=\"Columbia\""))
+        assertTrue("Prompt should list the origin suggestion", prompt.contains("Colombia"))
+    }
+
     // ==================== 14-field extended schema ====================
 
     @Test
@@ -1209,5 +1231,27 @@ class MindlayerLlmInferenceProviderTest {
         assertTrue("Should pass prior step values", prompt.contains("roaster: Acme"))
         assertTrue("Should ground with known roasters", prompt.contains("Known roasters: Acme, Onyx"))
         assertTrue("Should end with JSON instruction", prompt.contains("Respond with JSON only"))
+    }
+
+    // ==================== buildTranslatePrompt ====================
+
+    @Test
+    fun `buildTranslatePrompt injects glossary hint for a hard localized term`() {
+        val ocr = "Chuťové tóny: angrešt, borůvky"
+        val prompt = MindlayerLlmInferenceProvider.buildTranslatePrompt(ocr)
+
+        assertTrue("keeps the normalize instruction", prompt.contains("Normalize this coffee bag OCR text"))
+        assertTrue("adds the glossary section", prompt.contains("commonly mistranslated"))
+        assertTrue("maps the hard term", prompt.contains("angrešt = gooseberry"))
+        assertTrue("still embeds the raw OCR", prompt.contains(ocr))
+    }
+
+    @Test
+    fun `buildTranslatePrompt omits the glossary section for plain english`() {
+        val prompt = MindlayerLlmInferenceProvider.buildTranslatePrompt("Ethiopia Washed, blueberry, dark chocolate")
+
+        assertFalse("no glossary section", prompt.contains("commonly mistranslated"))
+        assertFalse("no mapping arrow", prompt.contains(" = "))
+        assertTrue("still wraps the OCR", prompt.contains("\"\"\""))
     }
 }

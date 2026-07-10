@@ -280,16 +280,14 @@
     <string name="notif_rating_title">Hvordan var dit bryg?</string>
     <string name="format_notif_rating_title">Hvordan var dit %1$s-bryg?</string>
     <string name="notif_rating_body">Tryk på en emoji for at bedømme det, eller åbn appen for mere.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Bedøm med 1 ud af 5 stjerner</string>
-    <string name="cd_notif_rating_2">Bedøm med 2 ud af 5 stjerner</string>
-    <string name="cd_notif_rating_3">Bedøm med 3 ud af 5 stjerner</string>
-    <string name="cd_notif_rating_4">Bedøm med 4 ud af 5 stjerner</string>
-    <string name="cd_notif_rating_5">Bedøm med 5 ud af 5 stjerner</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Bedøm som dårlig</string>
+    <string name="cd_notif_rating_2">Bedøm som nogenlunde</string>
+    <string name="cd_notif_rating_3">Bedøm som god</string>
+    <string name="cd_notif_rating_4">Bedøm som fantastisk</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analyserer din pose</string>
@@ -612,10 +610,16 @@
     <string name="grind_medium_coarse">Mellemgrov</string>
     <string name="grind_coarse">Grov</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Fantastisk</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Dårlig</string>
+    <string name="rating_meh">Nogenlunde</string>
     <string name="rating_good">God</string>
-    <string name="rating_not_great">Ikke god</string>
+    <string name="rating_awesome">Fantastisk</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Bedøm som dårlig</string>
+    <string name="cd_rate_meh">Bedøm som nogenlunde</string>
+    <string name="cd_rate_good">Bedøm som god</string>
+    <string name="cd_rate_awesome">Bedøm som fantastisk</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">For bitter</string>

@@ -282,16 +282,14 @@
     <string name="notif_rating_title">Kā izdevās Jūsu kafija?</string>
     <string name="format_notif_rating_title">Kā izdevās Jūsu %1$s kafija?</string>
     <string name="notif_rating_body">Pieskarieties emocijzīmei, lai novērtētu, vai atveriet lietotni, lai skatītu vairāk.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Novērtēt ar 1 no 5 zvaigznēm</string>
-    <string name="cd_notif_rating_2">Novērtēt ar 2 no 5 zvaigznēm</string>
-    <string name="cd_notif_rating_3">Novērtēt ar 3 no 5 zvaigznēm</string>
-    <string name="cd_notif_rating_4">Novērtēt ar 4 no 5 zvaigznēm</string>
-    <string name="cd_notif_rating_5">Novērtēt ar 5 no 5 zvaigznēm</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Novērtēt kā sliktu</string>
+    <string name="cd_notif_rating_2">Novērtēt kā viduvēju</string>
+    <string name="cd_notif_rating_3">Novērtēt kā labu</string>
+    <string name="cd_notif_rating_4">Novērtēt kā lielisku</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analizējam Jūsu iepakojumu</string>
@@ -615,10 +613,16 @@
     <string name="grind_medium_coarse">Vidēji rupjš</string>
     <string name="grind_coarse">Rupjš</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Lieliski</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Slikti</string>
+    <string name="rating_meh">Viduvēji</string>
     <string name="rating_good">Labi</string>
-    <string name="rating_not_great">Ne pārāk labi</string>
+    <string name="rating_awesome">Lieliski</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Novērtēt kā sliktu</string>
+    <string name="cd_rate_meh">Novērtēt kā viduvēju</string>
+    <string name="cd_rate_good">Novērtēt kā labu</string>
+    <string name="cd_rate_awesome">Novērtēt kā lielisku</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Pārāk rūgta</string>

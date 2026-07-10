@@ -280,16 +280,14 @@
     <string name="notif_rating_title">Como ficou a sua preparação?</string>
     <string name="format_notif_rating_title">Como ficou a sua preparação de %1$s?</string>
     <string name="notif_rating_body">Toque num emoji para avaliar, ou abra a app para mais opções.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Avaliar com 1 de 5 estrelas</string>
-    <string name="cd_notif_rating_2">Avaliar com 2 de 5 estrelas</string>
-    <string name="cd_notif_rating_3">Avaliar com 3 de 5 estrelas</string>
-    <string name="cd_notif_rating_4">Avaliar com 4 de 5 estrelas</string>
-    <string name="cd_notif_rating_5">Avaliar com 5 de 5 estrelas</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Avaliar como mau</string>
+    <string name="cd_notif_rating_2">Avaliar como razoável</string>
+    <string name="cd_notif_rating_3">Avaliar como bom</string>
+    <string name="cd_notif_rating_4">Avaliar como incrível</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">A analisar a sua embalagem</string>
@@ -613,10 +611,16 @@
     <string name="grind_medium_coarse">Média-grossa</string>
     <string name="grind_coarse">Grossa</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Ótimo</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Mau</string>
+    <string name="rating_meh">Assim-assim</string>
     <string name="rating_good">Bom</string>
-    <string name="rating_not_great">Menos bom</string>
+    <string name="rating_awesome">Incrível</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Avaliar como mau</string>
+    <string name="cd_rate_meh">Avaliar como razoável</string>
+    <string name="cd_rate_good">Avaliar como bom</string>
+    <string name="cd_rate_awesome">Avaliar como incrível</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Demasiado amargo</string>

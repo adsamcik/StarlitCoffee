@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.CoffeeBagStatus
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
@@ -224,7 +225,7 @@ fun BagDetailSheet(
                         }
                     }
 
-                    if (sensorySnapshot.topChips.isNotEmpty() || sensorySnapshot.averageRating != null) {
+                    if (sensorySnapshot.topChips.isNotEmpty() || sensorySnapshot.totalRatings > 0) {
                         ElevatedCard(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -246,9 +247,9 @@ fun BagDetailSheet(
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     modifier = Modifier.padding(top = 4.dp),
                                 )
-                                sensorySnapshot.averageRating?.let { averageRating ->
+                                if (sensorySnapshot.totalRatings > 0) {
                                     Text(
-                                        text = "Average bag rating: ${"%.1f".format(Locale.US, averageRating)} stars",
+                                        text = CoffeeBagInsights.formatRatingDistribution(sensorySnapshot.ratingCounts),
                                         style = MaterialTheme.typography.labelMedium,
                                         color = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.padding(top = 8.dp),
@@ -462,9 +463,10 @@ fun BagDetailSheet(
 
                     // Stats summary
                     item {
-                        val avgRating = brewLogs.mapNotNull { it.rating }.let { ratings ->
-                            if (ratings.isNotEmpty()) ratings.average().toFloat() else null
-                        }
+                        val ratingCounts = brewLogs
+                            .mapNotNull { BrewRating.fromStoredValue(it.rating) }
+                            .groupingBy { it }
+                            .eachCount()
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -476,9 +478,9 @@ fun BagDetailSheet(
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
-                            if (avgRating != null) {
+                            if (ratingCounts.isNotEmpty()) {
                                 Text(
-                                    text = "⭐ ${"%.1f".format(avgRating)} avg",
+                                    text = CoffeeBagInsights.formatRatingDistribution(ratingCounts),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.primary,
                                 )
@@ -528,9 +530,9 @@ fun BagDetailSheet(
                                         )
                                     }
                                 }
-                                log.rating?.let { rating ->
+                                BrewRating.fromStoredValue(log.rating)?.let { tier ->
                                     Text(
-                                        text = "⭐ $rating",
+                                        text = tier.emoji,
                                         style = MaterialTheme.typography.labelLarge,
                                         color = MaterialTheme.colorScheme.primary,
                                     )

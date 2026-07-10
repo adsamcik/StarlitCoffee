@@ -280,16 +280,14 @@
     <string name="notif_rating_title">Πώς ήταν η παρασκευή σας;</string>
     <string name="format_notif_rating_title">Πώς ήταν η παρασκευή %1$s;</string>
     <string name="notif_rating_body">Πατήστε ένα emoji για να την αξιολογήσετε ή ανοίξτε την εφαρμογή για περισσότερα.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Αξιολόγηση 1 από 5 αστέρια</string>
-    <string name="cd_notif_rating_2">Αξιολόγηση 2 από 5 αστέρια</string>
-    <string name="cd_notif_rating_3">Αξιολόγηση 3 από 5 αστέρια</string>
-    <string name="cd_notif_rating_4">Αξιολόγηση 4 από 5 αστέρια</string>
-    <string name="cd_notif_rating_5">Αξιολόγηση 5 από 5 αστέρια</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Αξιολόγηση ως κακό</string>
+    <string name="cd_notif_rating_2">Αξιολόγηση ως μέτριο</string>
+    <string name="cd_notif_rating_3">Αξιολόγηση ως καλό</string>
+    <string name="cd_notif_rating_4">Αξιολόγηση ως τέλειο</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Ανάλυση της συσκευασίας σας</string>
@@ -613,10 +611,16 @@
     <string name="grind_medium_coarse">Μεσαίο-χοντρό</string>
     <string name="grind_coarse">Χοντρό</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Εξαιρετικό</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Κακό</string>
+    <string name="rating_meh">Έτσι κι έτσι</string>
     <string name="rating_good">Καλό</string>
-    <string name="rating_not_great">Όχι τόσο καλό</string>
+    <string name="rating_awesome">Τέλειο</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Αξιολόγηση ως κακό</string>
+    <string name="cd_rate_meh">Αξιολόγηση ως μέτριο</string>
+    <string name="cd_rate_good">Αξιολόγηση ως καλό</string>
+    <string name="cd_rate_awesome">Αξιολόγηση ως τέλειο</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Πολύ πικρό</string>

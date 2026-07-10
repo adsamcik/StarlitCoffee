@@ -284,16 +284,14 @@
     <string name="notif_rating_title">Aká bola vaša príprava?</string>
     <string name="format_notif_rating_title">Aká bola vaša príprava %1$s?</string>
     <string name="notif_rating_body">Klepnutím na emoji ju ohodnotíte alebo otvorte aplikáciu pre viac možností.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Ohodnotiť 1 z 5 hviezdičiek</string>
-    <string name="cd_notif_rating_2">Ohodnotiť 2 z 5 hviezdičiek</string>
-    <string name="cd_notif_rating_3">Ohodnotiť 3 z 5 hviezdičiek</string>
-    <string name="cd_notif_rating_4">Ohodnotiť 4 z 5 hviezdičiek</string>
-    <string name="cd_notif_rating_5">Ohodnotiť 5 z 5 hviezdičiek</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Ohodnotiť ako zlé</string>
+    <string name="cd_notif_rating_2">Ohodnotiť ako nič moc</string>
+    <string name="cd_notif_rating_3">Ohodnotiť ako dobré</string>
+    <string name="cd_notif_rating_4">Ohodnotiť ako skvelé</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analýza balenia</string>
@@ -616,10 +614,16 @@
     <string name="grind_medium_coarse">Stredne hrubé</string>
     <string name="grind_coarse">Hrubé</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Výborné</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Zlé</string>
+    <string name="rating_meh">Nič moc</string>
     <string name="rating_good">Dobré</string>
-    <string name="rating_not_great">Nebolo to ono</string>
+    <string name="rating_awesome">Skvelé</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Ohodnotiť ako zlé</string>
+    <string name="cd_rate_meh">Ohodnotiť ako nič moc</string>
+    <string name="cd_rate_good">Ohodnotiť ako dobré</string>
+    <string name="cd_rate_awesome">Ohodnotiť ako skvelé</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Príliš horká</string>

@@ -1,0 +1,1826 @@
+{
+  "version": 1,
+  "description": "Multilingual translate-eval seed. Source terms pulled verbatim from docs/coffee-filter-vocabulary.json scraped storefront vocabulary; English targets curated. A few canonical fruit/roast terms not in the scrape are marked provenance=supplement. tastingNotes is the sharp translation signal (the scorer gives no cross-language credit there).",
+  "chunkSize": 5,
+  "languages": [
+    {
+      "lang": "cs",
+      "name": "Czech",
+      "labels": {
+        "notes": "Chuťové tóny",
+        "process": "Zpracování",
+        "roast": "Pražení",
+        "origin": "Původ"
+      },
+      "sampleName": "Jitřenka",
+      "sampleRoaster": "Polární Pražírna",
+      "tastingNotes": [
+        {
+          "src": "Ananas",
+          "en": [
+            "pineapple"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Angrešt",
+          "en": [
+            "gooseberry"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Banán",
+          "en": [
+            "banana"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Bergamot",
+          "en": [
+            "bergamot"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Bezový květ",
+          "en": [
+            "elderflower"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Borůvky",
+          "en": [
+            "blueberry",
+            "blueberries"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Broskev",
+          "en": [
+            "peach"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Bílá čokoláda",
+          "en": [
+            "white chocolate"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Citrusy",
+          "en": [
+            "citrus"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Cukrová třtina",
+          "en": [
+            "sugarcane",
+            "sugar cane",
+            "cane sugar"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Earl Grey",
+          "en": [
+            "earl grey"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Fialky",
+          "en": [
+            "violet",
+            "violets"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Granátové jablko",
+          "en": [
+            "pomegranate"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Grapefruit",
+          "en": [
+            "grapefruit"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Guava",
+          "en": [
+            "guava"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Heřmánek",
+          "en": [
+            "chamomile"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Hnědý cukr",
+          "en": [
+            "brown sugar"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Hořká čokoláda",
+          "en": [
+            "dark chocolate",
+            "bitter chocolate"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Hrozno",
+          "en": [
+            "grape",
+            "grapes"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Hruška",
+          "en": [
+            "pear"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Ibišek",
+          "en": [
+            "hibiscus"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Jablko",
+          "en": [
+            "apple"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Jahoda",
+          "en": [
+            "strawberry"
+          ],
+          "loanword": false
+        }
+      ],
+      "process": [
+        {
+          "src": "Anaerobní",
+          "en": [
+            "anaerobic"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Medové",
+          "en": [
+            "honey"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Promyté",
+          "en": [
+            "washed"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Suché",
+          "en": [
+            "natural"
+          ],
+          "loanword": false
+        }
+      ],
+      "roastLevel": [
+        {
+          "src": "Světlé až středně světlé",
+          "en": [
+            "light",
+            "medium-light"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Střední",
+          "en": [
+            "medium"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Střední až středně tmavé",
+          "en": [
+            "medium-dark",
+            "dark"
+          ],
+          "loanword": false
+        }
+      ],
+      "origin": [
+        {
+          "src": "Brazílie",
+          "en": [
+            "brazil"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Etiopie",
+          "en": [
+            "ethiopia"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Indie",
+          "en": [
+            "india"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Indonésie",
+          "en": [
+            "indonesia"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Keňa",
+          "en": [
+            "kenya"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Kolumbie",
+          "en": [
+            "colombia"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Kostarika",
+          "en": [
+            "costa rica"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Mexiko",
+          "en": [
+            "mexico"
+          ],
+          "loanword": false
+        }
+      ]
+    },
+    {
+      "lang": "it",
+      "name": "Italian",
+      "labels": {
+        "notes": "Note di degustazione",
+        "process": "Processo",
+        "roast": "Tostatura",
+        "origin": "Origine"
+      },
+      "sampleName": "Luna Chiara",
+      "sampleRoaster": "Officina Alba",
+      "tastingNotes": [
+        {
+          "src": "Floreale",
+          "en": [
+            "floral"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Fruttato",
+          "en": [
+            "fruity"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Agrumato",
+          "en": [
+            "citrus",
+            "citrusy"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Cacao",
+          "en": [
+            "cocoa"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Cioccolato",
+          "en": [
+            "chocolate"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Cioccolato fondente",
+          "en": [
+            "dark chocolate"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Nocciolato",
+          "en": [
+            "hazelnut"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "nocciola",
+          "en": [
+            "hazelnut"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Frutta secca",
+          "en": [
+            "dried fruit",
+            "nuts"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Caramellato",
+          "en": [
+            "caramel",
+            "caramelized"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "caramello",
+          "en": [
+            "caramel"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Spezie",
+          "en": [
+            "spice",
+            "spices"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Legnoso",
+          "en": [
+            "woody",
+            "wood"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Tabacco",
+          "en": [
+            "tobacco"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Cereali tostati",
+          "en": [
+            "toasted cereal",
+            "toasted grain",
+            "cereal"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Biscotto",
+          "en": [
+            "biscuit",
+            "cookie"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Ginseng",
+          "en": [
+            "ginseng"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Vaniglia",
+          "en": [
+            "vanilla"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Orzo",
+          "en": [
+            "barley"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "miele",
+          "en": [
+            "honey"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "dolce",
+          "en": [
+            "sweet"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Intenso e cremoso",
+          "en": [
+            "intense",
+            "creamy"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Equilibrato e corposo",
+          "en": [
+            "balanced",
+            "full body",
+            "full-bodied"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Dolce e raffinato",
+          "en": [
+            "sweet",
+            "refined"
+          ],
+          "loanword": false
+        }
+      ],
+      "process": [
+        {
+          "src": "lavato",
+          "en": [
+            "washed"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "naturale",
+          "en": [
+            "natural"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "anaerobic",
+          "en": [
+            "anaerobic"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "decaffeinato",
+          "en": [
+            "decaf",
+            "decaffeinated"
+          ],
+          "loanword": false
+        }
+      ],
+      "roastLevel": [
+        {
+          "src": "Chiara",
+          "en": [
+            "light"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Medio chiara",
+          "en": [
+            "medium-light"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Media",
+          "en": [
+            "medium"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Medio scura",
+          "en": [
+            "medium-dark"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Scura",
+          "en": [
+            "dark"
+          ],
+          "loanword": false
+        }
+      ],
+      "origin": [
+        {
+          "src": "Brasile",
+          "en": [
+            "brazil"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Colombia",
+          "en": [
+            "colombia"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Etiopia",
+          "en": [
+            "ethiopia"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "India",
+          "en": [
+            "india"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Messico",
+          "en": [
+            "mexico"
+          ],
+          "loanword": false
+        }
+      ]
+    },
+    {
+      "lang": "fr",
+      "name": "French",
+      "labels": {
+        "notes": "Notes de dégustation",
+        "process": "Process",
+        "roast": "Torréfaction",
+        "origin": "Origine"
+      },
+      "sampleName": "Rive Claire",
+      "sampleRoaster": "Brûlerie du Port",
+      "tastingNotes": [
+        {
+          "src": "Acidulé",
+          "en": [
+            "tangy",
+            "tart",
+            "bright"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Chocolat",
+          "en": [
+            "chocolate"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Complexe",
+          "en": [
+            "complex"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Elégant",
+          "en": [
+            "elegant"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Epicé",
+          "en": [
+            "spiced",
+            "spicy",
+            "spice"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Floral",
+          "en": [
+            "floral"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Fruité",
+          "en": [
+            "fruity"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Grillé",
+          "en": [
+            "toasted",
+            "roasted"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Suave",
+          "en": [
+            "smooth",
+            "mellow"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "les Boisés",
+          "en": [
+            "woody"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "les Floraux",
+          "en": [
+            "floral"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "les Fruités",
+          "en": [
+            "fruity"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "les Épicés",
+          "en": [
+            "spiced",
+            "spicy"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "prune",
+          "en": [
+            "plum"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "mandarine",
+          "en": [
+            "mandarin"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "mûre",
+          "en": [
+            "blackberry"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "myrtille",
+          "en": [
+            "blueberry",
+            "blueberries"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "noisette",
+          "en": [
+            "hazelnut"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "amande",
+          "en": [
+            "almond"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "pêche",
+          "en": [
+            "peach"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "abricot",
+          "en": [
+            "apricot"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "cassis",
+          "en": [
+            "blackcurrant",
+            "black currant"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "pamplemousse",
+          "en": [
+            "grapefruit"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "miel",
+          "en": [
+            "honey"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "process": [
+        {
+          "src": "Lavé",
+          "en": [
+            "washed"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Nature",
+          "en": [
+            "natural"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Nature Anaérobique",
+          "en": [
+            "natural",
+            "anaerobic"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Décaféiné",
+          "en": [
+            "decaf",
+            "decaffeinated"
+          ],
+          "loanword": false
+        }
+      ],
+      "roastLevel": [
+        {
+          "src": "clair",
+          "en": [
+            "light"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "moyen",
+          "en": [
+            "medium"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "foncé",
+          "en": [
+            "dark"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "origin": [
+        {
+          "src": "Brésil",
+          "en": [
+            "brazil"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Colombie",
+          "en": [
+            "colombia"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Ethiopie",
+          "en": [
+            "ethiopia"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Inde",
+          "en": [
+            "india"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Jamaique",
+          "en": [
+            "jamaica"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Mexique",
+          "en": [
+            "mexico"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Pérou",
+          "en": [
+            "peru"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Salvador",
+          "en": [
+            "salvador",
+            "el salvador"
+          ],
+          "loanword": true
+        }
+      ]
+    },
+    {
+      "lang": "de",
+      "name": "German",
+      "labels": {
+        "notes": "Aromen",
+        "process": "Aufbereitung",
+        "roast": "Röstung",
+        "origin": "Herkunft"
+      },
+      "sampleName": "Abendhafen",
+      "sampleRoaster": "Signalwerk Rösterei",
+      "tastingNotes": [
+        {
+          "src": "Säurearm",
+          "en": [
+            "low acid",
+            "low acidity",
+            "mild"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Kräftig & intensiv",
+          "en": [
+            "strong",
+            "intense"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Schokoladig",
+          "en": [
+            "chocolate",
+            "chocolatey"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Nussig",
+          "en": [
+            "nutty",
+            "nut"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Fruchtig",
+          "en": [
+            "fruity"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Zitrus",
+          "en": [
+            "citrus"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Beeren",
+          "en": [
+            "berry",
+            "berries"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Tropisch",
+          "en": [
+            "tropical"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Honig",
+          "en": [
+            "honey"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Karamell",
+          "en": [
+            "caramel"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Schokolade",
+          "en": [
+            "chocolate"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Haselnuss",
+          "en": [
+            "hazelnut"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "dunkle Schokolade",
+          "en": [
+            "dark chocolate"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "süß",
+          "en": [
+            "sweet"
+          ],
+          "loanword": false
+        }
+      ],
+      "process": [
+        {
+          "src": "washed",
+          "en": [
+            "washed"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "natural",
+          "en": [
+            "natural"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "honey",
+          "en": [
+            "honey"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "gewaschen",
+          "en": [
+            "washed"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "roastLevel": [
+        {
+          "src": "hell",
+          "en": [
+            "light"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "dunkel",
+          "en": [
+            "dark"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Helle Espressos",
+          "en": [
+            "light",
+            "espresso"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Dunkle Espressos",
+          "en": [
+            "dark",
+            "espresso"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Helle Filterröstungen",
+          "en": [
+            "light",
+            "filter"
+          ],
+          "loanword": false
+        }
+      ],
+      "origin": [
+        {
+          "src": "Äthiopien",
+          "en": [
+            "ethiopia"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Brasilien",
+          "en": [
+            "brazil"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Kolumbien",
+          "en": [
+            "colombia"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Kenia",
+          "en": [
+            "kenya"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Ruanda",
+          "en": [
+            "rwanda"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Indonesien",
+          "en": [
+            "indonesia"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Bolivien",
+          "en": [
+            "bolivia"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Mexiko",
+          "en": [
+            "mexico"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Indien",
+          "en": [
+            "india"
+          ],
+          "loanword": false
+        }
+      ]
+    },
+    {
+      "lang": "es",
+      "name": "Spanish",
+      "labels": {
+        "notes": "Notas de cata",
+        "process": "Proceso",
+        "roast": "Tueste",
+        "origin": "Origen"
+      },
+      "sampleName": "Ensayo Tarde",
+      "sampleRoaster": "Tostadero Sur",
+      "tastingNotes": [
+        {
+          "src": "Citric",
+          "en": [
+            "citrus"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Sweet",
+          "en": [
+            "sweet"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "afrutado",
+          "en": [
+            "fruity"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Floral",
+          "en": [
+            "floral"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Frutal",
+          "en": [
+            "fruity"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Jugoso",
+          "en": [
+            "juicy"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Acaramelado",
+          "en": [
+            "caramel",
+            "caramelized"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "fresa",
+          "en": [
+            "strawberry"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "manzana",
+          "en": [
+            "apple"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "melocotón",
+          "en": [
+            "peach"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "durazno",
+          "en": [
+            "peach"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "panela",
+          "en": [
+            "raw sugar",
+            "brown sugar",
+            "unrefined sugar"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "miel",
+          "en": [
+            "honey"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "almendra",
+          "en": [
+            "almond"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "avellana",
+          "en": [
+            "hazelnut"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "cacao",
+          "en": [
+            "cocoa"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "cítrico",
+          "en": [
+            "citrus"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "process": [
+        {
+          "src": "Washed",
+          "en": [
+            "washed"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Natural",
+          "en": [
+            "natural"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Honey",
+          "en": [
+            "honey"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "lavado",
+          "en": [
+            "washed"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "miel",
+          "en": [
+            "honey"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "roastLevel": [
+        {
+          "src": "claro",
+          "en": [
+            "light"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "medio",
+          "en": [
+            "medium"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "oscuro",
+          "en": [
+            "dark"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "origin": [
+        {
+          "src": "Kenia",
+          "en": [
+            "kenya"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Colombia",
+          "en": [
+            "colombia"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Brasil",
+          "en": [
+            "brazil"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Mexico",
+          "en": [
+            "mexico"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Ruanda",
+          "en": [
+            "rwanda"
+          ],
+          "loanword": false
+        },
+        {
+          "src": "Peru",
+          "en": [
+            "peru"
+          ],
+          "loanword": true
+        }
+      ]
+    },
+    {
+      "lang": "da",
+      "name": "Danish",
+      "labels": {
+        "notes": "Smagsnoter",
+        "process": "Proces",
+        "roast": "Ristning",
+        "origin": "Oprindelse"
+      },
+      "sampleName": "Havblik",
+      "sampleRoaster": "Skur Risteri",
+      "tastingNotes": [
+        {
+          "src": "solbær",
+          "en": [
+            "blackcurrant",
+            "black currant"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "kirsebær",
+          "en": [
+            "cherry"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "mørk chokolade",
+          "en": [
+            "dark chocolate"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "hyldeblomst",
+          "en": [
+            "elderflower"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "process": [
+        {
+          "src": "Washed",
+          "en": [
+            "washed"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Natural",
+          "en": [
+            "natural"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Fermented",
+          "en": [
+            "fermented"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Honey",
+          "en": [
+            "honey"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Decaf",
+          "en": [
+            "decaf"
+          ],
+          "loanword": true
+        }
+      ],
+      "roastLevel": [
+        {
+          "src": "lys",
+          "en": [
+            "light"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "mørk",
+          "en": [
+            "dark"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "origin": []
+    },
+    {
+      "lang": "sv",
+      "name": "Swedish",
+      "labels": {
+        "notes": "Smaknoter",
+        "process": "Process",
+        "roast": "Rostning",
+        "origin": "Ursprung"
+      },
+      "sampleName": "Regnfika",
+      "sampleRoaster": "Loppis Rosteri",
+      "tastingNotes": [
+        {
+          "src": "blåbär",
+          "en": [
+            "blueberry",
+            "blueberries"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "hallon",
+          "en": [
+            "raspberry"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "mörk choklad",
+          "en": [
+            "dark chocolate"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "krusbär",
+          "en": [
+            "gooseberry"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "process": [
+        {
+          "src": "Natural",
+          "en": [
+            "natural"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Washed",
+          "en": [
+            "washed"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Honey",
+          "en": [
+            "honey"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Anaerobic",
+          "en": [
+            "anaerobic"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Sugarcane",
+          "en": [
+            "sugarcane"
+          ],
+          "loanword": true
+        }
+      ],
+      "roastLevel": [
+        {
+          "src": "ljus",
+          "en": [
+            "light"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "mörk",
+          "en": [
+            "dark"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "origin": []
+    },
+    {
+      "lang": "nb",
+      "name": "Norwegian",
+      "labels": {
+        "notes": "Smaksnotater",
+        "process": "Prosess",
+        "roast": "Brenning",
+        "origin": "Opprinnelse"
+      },
+      "sampleName": "Bryggekant",
+      "sampleRoaster": "Kaikanten Brenneri",
+      "tastingNotes": [
+        {
+          "src": "bringebær",
+          "en": [
+            "raspberry"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "solbær",
+          "en": [
+            "blackcurrant",
+            "black currant"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "mørk sjokolade",
+          "en": [
+            "dark chocolate"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "process": [
+        {
+          "src": "Honey",
+          "en": [
+            "honey"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Natural",
+          "en": [
+            "natural"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Washed",
+          "en": [
+            "washed"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Fermented",
+          "en": [
+            "fermented"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Decaf",
+          "en": [
+            "decaf"
+          ],
+          "loanword": true
+        }
+      ],
+      "roastLevel": [
+        {
+          "src": "lys",
+          "en": [
+            "light"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "mørk",
+          "en": [
+            "dark"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "origin": []
+    },
+    {
+      "lang": "fi",
+      "name": "Finnish",
+      "labels": {
+        "notes": "Makuvivahteet",
+        "process": "Käsittely",
+        "roast": "Paahto",
+        "origin": "Alkuperä"
+      },
+      "sampleName": "Löylyhetki",
+      "sampleRoaster": "Saunan Paahtimo",
+      "tastingNotes": [
+        {
+          "src": "mustikka",
+          "en": [
+            "blueberry",
+            "blueberries"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "mustaherukka",
+          "en": [
+            "blackcurrant",
+            "black currant"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "vadelma",
+          "en": [
+            "raspberry"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "tumma suklaa",
+          "en": [
+            "dark chocolate"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "process": [
+        {
+          "src": "Natural",
+          "en": [
+            "natural"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Washed",
+          "en": [
+            "washed"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Anaerobic",
+          "en": [
+            "anaerobic"
+          ],
+          "loanword": true
+        },
+        {
+          "src": "Koji",
+          "en": [
+            "koji"
+          ],
+          "loanword": true
+        }
+      ],
+      "roastLevel": [
+        {
+          "src": "vaalea",
+          "en": [
+            "light"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        },
+        {
+          "src": "tumma",
+          "en": [
+            "dark"
+          ],
+          "loanword": false,
+          "provenance": "supplement"
+        }
+      ],
+      "origin": []
+    }
+  ]
+}

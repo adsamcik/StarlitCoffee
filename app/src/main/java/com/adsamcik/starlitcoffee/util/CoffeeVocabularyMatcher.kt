@@ -41,9 +41,16 @@ object CoffeeVocabularyMatcher {
     /** Default number of candidate values surfaced per field. */
     const val DEFAULT_MAX_PER_FIELD = 8
 
+    /** Default number of close candidates offered per field to the refinement LLM pass. */
+    const val DEFAULT_MAX_SUGGESTIONS = 5
+
     private const val SCORE_PHRASE = 3
     private const val SCORE_TOKEN = 2
     private const val SCORE_FUZZY = 1
+
+    /** Lowest similarity (0..1) for a value to count as "matches somewhat" in [suggest]. */
+    private const val SUGGEST_SIMILARITY_FLOOR = 0.5
+    private const val CONTAINMENT_SIMILARITY = 0.9
 
     /** Shortest term considered for exact whole-token matching. */
     private const val MIN_TOKEN_LEN = 3
@@ -105,6 +112,49 @@ object CoffeeVocabularyMatcher {
             roastLevels = union(boost.roastLevels, base.roastLevels),
             tastingNotes = union(boost.tastingNotes, base.tastingNotes),
         )
+
+    /**
+     * Given a single already-English field [value], returns up to [maxSuggestions]
+     * close canonical values from [entries] ("matches somewhat"), ranked by
+     * similarity. Unlike [match] (which scans an OCR blob for whole-token/phrase
+     * hits), this compares one short value against each entry's terms using an
+     * edit-distance similarity plus containment, so spelling/canonical variants
+     * ("wet processed" → "Washed" via its alias, "gesha" → "Geisha") float to the
+     * top. Advisory only: the caller hands these to the LLM, which may or may not
+     * adopt one. Runs on the LLM's already-translated English output, so it needs
+     * no multilingual vocabulary.
+     */
+    fun suggest(
+        value: String,
+        entries: List<CoffeeVocabularyEntry>,
+        maxSuggestions: Int = DEFAULT_MAX_SUGGESTIONS,
+    ): List<String> {
+        val normalizedValue = CoffeeMetadataNormalizer.normalizeSearch(value)
+        if (normalizedValue.isBlank() || maxSuggestions <= 0) return emptyList()
+        val scored = ArrayList<Pair<String, Double>>()
+        for (entry in entries) {
+            val score = entry.allTerms
+                .asSequence()
+                .map { CoffeeMetadataNormalizer.normalizeSearch(it) }
+                .filter { it.isNotBlank() }
+                .maxOfOrNull { similarity(normalizedValue, it) }
+                ?: 0.0
+            if (score >= SUGGEST_SIMILARITY_FLOOR) scored.add(entry.value to score)
+        }
+        return scored
+            .sortedWith(compareByDescending<Pair<String, Double>> { it.second }.thenBy { it.first })
+            .take(maxSuggestions)
+            .map { it.first }
+    }
+
+    private fun similarity(a: String, b: String): Double {
+        if (a == b) return 1.0
+        val maxLength = maxOf(a.length, b.length)
+        if (maxLength == 0) return 0.0
+        val editSimilarity = 1.0 - FuzzyMatcher.levenshteinDistance(a, b).toDouble() / maxLength
+        val containment = if (a.contains(b) || b.contains(a)) CONTAINMENT_SIMILARITY else 0.0
+        return maxOf(editSimilarity, containment)
+    }
 
     // --- Index construction (once per vocabulary) ---
 

@@ -196,4 +196,39 @@ class CoffeeVocabularyMatcherTest {
 
         assertEquals(first, second)
     }
+
+    // --- suggest() (post-translation candidate suggestions) ---
+
+    @Test
+    fun `suggest returns close canonical for a spelling variant`() {
+        val suggestions = CoffeeVocabularyMatcher.suggest("Ethiopa", vocabulary.origins)
+
+        assertTrue(suggestions.contains("Ethiopia"))
+    }
+
+    @Test
+    fun `suggest matches via alias and ranks it first`() {
+        val suggestions = CoffeeVocabularyMatcher.suggest("Gesha", vocabulary.varieties)
+
+        assertEquals("Geisha", suggestions.first())
+    }
+
+    @Test
+    fun `suggest returns empty for an unrelated value`() {
+        assertTrue(CoffeeVocabularyMatcher.suggest("xylophone", vocabulary.origins).isEmpty())
+    }
+
+    @Test
+    fun `suggest returns empty for blank value or non-positive max`() {
+        assertTrue(CoffeeVocabularyMatcher.suggest("   ", vocabulary.origins).isEmpty())
+        assertTrue(CoffeeVocabularyMatcher.suggest("Ethiopia", vocabulary.origins, maxSuggestions = 0).isEmpty())
+    }
+
+    @Test
+    fun `suggest ranks an exact match first and respects the cap`() {
+        val suggestions = CoffeeVocabularyMatcher.suggest("Colombia", vocabulary.origins, maxSuggestions = 2)
+
+        assertEquals("Colombia", suggestions.first())
+        assertTrue(suggestions.size <= 2)
+    }
 }

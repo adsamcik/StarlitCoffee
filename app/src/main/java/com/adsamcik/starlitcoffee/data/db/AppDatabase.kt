@@ -35,7 +35,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
         UserBarcodeStemEntity::class,
         CupPresetEntity::class,
     ],
-    version = 15,
+    version = 16,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -147,6 +147,31 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * Rating scale rework: the app moved from a continuous 0-5 star rating
+         * to a discrete 4-tier scale (1=Bad, 2=Meh, 3=Good, 4=Awesome). This
+         * is a data-only migration (the `rating REAL` column is unchanged) that
+         * normalizes any existing continuous values into the new tiers so old
+         * and new ratings share one interpretation. Thresholds mirror the app's
+         * previous emoji buckets (>=4.5 was "amazing", >=3.0 "good").
+         */
+        internal val MIGRATION_15_16 = object : Migration(15, 16) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    UPDATE brew_logs SET rating = CASE
+                        WHEN rating >= 4.5 THEN 4.0
+                        WHEN rating >= 3.0 THEN 3.0
+                        WHEN rating >= 2.0 THEN 2.0
+                        WHEN rating > 0 THEN 1.0
+                        ELSE rating
+                    END
+                    WHERE rating IS NOT NULL
+                    """.trimIndent(),
+                )
+            }
+        }
+
         // Single source of truth for the migration set, shared by the
         // production builder and MigrationTest so the two cannot drift.
         internal val ALL_MIGRATIONS: Array<Migration> = arrayOf(
@@ -160,6 +185,7 @@ abstract class AppDatabase : RoomDatabase() {
             MIGRATION_12_13,
             MIGRATION_13_14,
             MIGRATION_14_15,
+            MIGRATION_15_16,
         )
 
         /**

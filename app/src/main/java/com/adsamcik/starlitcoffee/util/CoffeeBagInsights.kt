@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.util
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import java.util.Locale
 
@@ -77,10 +78,19 @@ data class GrindInsight(
 data class SensorySnapshot(
     val topChips: List<String>,
     val bagNoteChips: List<String>,
-    val averageRating: Float?,
+    val ratingCounts: Map<BrewRating, Int>,
     val summary: String,
     val totalTaggedBrews: Int,
-)
+) {
+    val totalRatings: Int get() = ratingCounts.values.sum()
+
+    /** Most frequent tier; ties break toward the higher tier. */
+    val dominantRating: BrewRating?
+        get() = ratingCounts.entries
+            .maxWithOrNull(
+                compareBy<Map.Entry<BrewRating, Int>> { it.value }.thenBy { it.key.score },
+            )?.key
+}
 
 data class RankedBagSuggestion(
     val bag: CoffeeBagEntity,
@@ -173,23 +183,31 @@ object CoffeeBagInsights {
 
         val bagNoteChips = parseTastingNotes(CoffeeMetadataNormalizer.bagDisplayTastingNotes(bag))
         val topChips = (topDescriptorChips + bagNoteChips).distinct().take(6)
-        val ratings = brewLogs.mapNotNull { it.rating }
-        val averageRating = ratings.takeIf { it.isNotEmpty() }?.average()?.toFloat()
+        val ratingCounts = brewLogs
+            .mapNotNull { BrewRating.fromStoredValue(it.rating) }
+            .groupingBy { it }
+            .eachCount()
 
         val summary = when {
             topChips.isNotEmpty() -> topChips.take(3).joinToString(" • ")
-            averageRating != null -> "Average cup: ${"%.1f".format(Locale.US, averageRating)} stars"
+            ratingCounts.isNotEmpty() -> formatRatingDistribution(ratingCounts)
             else -> "No sensory notes yet"
         }
 
         return SensorySnapshot(
             topChips = topChips,
             bagNoteChips = bagNoteChips,
-            averageRating = averageRating,
+            ratingCounts = ratingCounts,
             summary = summary,
             totalTaggedBrews = flavorTags.filter { it.brewLogId in brewIds }.map { it.brewLogId }.distinct().size,
         )
     }
+
+    /** Renders a rating distribution as "😋×4 · 😀×2", best tier first. */
+    fun formatRatingDistribution(counts: Map<BrewRating, Int>): String =
+        BrewRating.ordered.asReversed()
+            .filter { (counts[it] ?: 0) > 0 }
+            .joinToString(" · ") { "${it.emoji}×${counts.getValue(it)}" }
 
     fun buildGrindInsight(
         bag: CoffeeBagEntity,
@@ -225,7 +243,7 @@ object CoffeeBagInsights {
 
         val summary = when {
             bestLog?.grindSetting != null && bestLog.rating != null ->
-                "Best so far: ${bestLog.grindSetting} (${bestLog.rating} stars)"
+                "Best so far: ${bestLog.grindSetting} (${BrewRating.fromStoredValue(bestLog.rating)?.emoji ?: ""})"
 
             lastGrind != null -> "Last used: $lastGrind"
             else -> "No grind history yet"

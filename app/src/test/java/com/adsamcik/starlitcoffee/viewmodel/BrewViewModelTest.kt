@@ -8,6 +8,7 @@ import com.adsamcik.starlitcoffee.testutil.FakeFlavorTagDao
 import com.adsamcik.starlitcoffee.testutil.FakeRecipeDao
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
 import com.adsamcik.starlitcoffee.data.model.InputMode
@@ -1885,13 +1886,12 @@ class BrewViewModelTest {
 
         vm.quickRateBrewLog(
             logId = unrated!!.id,
-            rating = 5f,
-            tasteFeedback = TasteFeedback.BALANCED,
+            rating = BrewRating.AWESOME,
         )
 
         assertNull(vm.lastUnratedBrew.value)
         val log = vm.brewLogs.value.first()
-        assertEquals(5f, log.rating)
+        assertEquals(BrewRating.AWESOME.storedValue, log.rating)
         assertEquals("BALANCED", log.tasteFeedback)
     }
 
@@ -1905,12 +1905,12 @@ class BrewViewModelTest {
 
         vm.quickRateBrewLog(
             logId = unrated.id,
-            rating = 2f,
+            rating = BrewRating.BAD,
             tasteFeedback = TasteFeedback.TOO_BITTER,
         )
 
         val log = vm.brewLogs.value.first()
-        assertEquals(2f, log.rating)
+        assertEquals(BrewRating.BAD.storedValue, log.rating)
         assertEquals("TOO_BITTER", log.tasteFeedback)
         assertNull(vm.lastUnratedBrew.value)
     }

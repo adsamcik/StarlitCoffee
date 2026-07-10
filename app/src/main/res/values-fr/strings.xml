@@ -280,16 +280,14 @@
     <string name="notif_rating_title">Comment était votre préparation ?</string>
     <string name="format_notif_rating_title">Comment était votre préparation %1$s ?</string>
     <string name="notif_rating_body">Touchez un emoji pour la noter, ou ouvrez l\'app pour en savoir plus.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Noter 1 étoile sur 5</string>
-    <string name="cd_notif_rating_2">Noter 2 étoiles sur 5</string>
-    <string name="cd_notif_rating_3">Noter 3 étoiles sur 5</string>
-    <string name="cd_notif_rating_4">Noter 4 étoiles sur 5</string>
-    <string name="cd_notif_rating_5">Noter 5 étoiles sur 5</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Noter comme mauvais</string>
+    <string name="cd_notif_rating_2">Noter comme moyen</string>
+    <string name="cd_notif_rating_3">Noter comme bon</string>
+    <string name="cd_notif_rating_4">Noter comme excellent</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analyse de votre paquet</string>
@@ -613,10 +611,16 @@
     <string name="grind_medium_coarse">Moyennement grossière</string>
     <string name="grind_coarse">Grossière</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Excellent</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Mauvais</string>
+    <string name="rating_meh">Bof</string>
     <string name="rating_good">Bon</string>
-    <string name="rating_not_great">Pas terrible</string>
+    <string name="rating_awesome">Excellent</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Noter comme mauvais</string>
+    <string name="cd_rate_meh">Noter comme moyen</string>
+    <string name="cd_rate_good">Noter comme bon</string>
+    <string name="cd_rate_awesome">Noter comme excellent</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Trop amer</string>

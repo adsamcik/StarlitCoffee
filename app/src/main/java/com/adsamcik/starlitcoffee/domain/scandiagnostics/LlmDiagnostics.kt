@@ -21,7 +21,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LlmPassDiagnostic(
     val timestampMs: Long,
-    /** TRANSLATE, TEXT, VISION, or COMBINE. */
+    /** TRANSLATE, TEXT, VISION, COMBINE, or REFINE. */
     val pass: String,
     /** SUCCESS, TIMEOUT, ERROR, or UNAVAILABLE. */
     val status: String,
@@ -38,7 +38,7 @@ data class LlmPassDiagnostic(
     val errorMessage: String?,
 ) {
     enum class Status { SUCCESS, TIMEOUT, ERROR, UNAVAILABLE }
-    enum class Pass { TRANSLATE, TEXT, VISION, COMBINE }
+    enum class Pass { TRANSLATE, TEXT, VISION, COMBINE, REFINE }
 
     companion object {
         /** Max characters of model output retained in [outputSample]. */

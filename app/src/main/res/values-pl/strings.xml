@@ -284,16 +284,14 @@
     <string name="notif_rating_title">Jak wyszło parzenie?</string>
     <string name="format_notif_rating_title">Jak wyszło parzenie %1$s?</string>
     <string name="notif_rating_body">Dotknij emoji, aby ocenić, albo otwórz aplikację po więcej.</string>
-    <string name="notif_rating_emoji_1">😩</string>
-    <string name="notif_rating_emoji_2">😕</string>
-    <string name="notif_rating_emoji_3">🙂</string>
-    <string name="notif_rating_emoji_4">😀</string>
-    <string name="notif_rating_emoji_5">🤩</string>
-    <string name="cd_notif_rating_1">Oceń 1 z 5 gwiazdek</string>
-    <string name="cd_notif_rating_2">Oceń 2 z 5 gwiazdek</string>
-    <string name="cd_notif_rating_3">Oceń 3 z 5 gwiazdek</string>
-    <string name="cd_notif_rating_4">Oceń 4 z 5 gwiazdek</string>
-    <string name="cd_notif_rating_5">Oceń 5 z 5 gwiazdek</string>
+    <string name="notif_rating_emoji_1">☹️</string>
+    <string name="notif_rating_emoji_2">😐</string>
+    <string name="notif_rating_emoji_3">😀</string>
+    <string name="notif_rating_emoji_4">😋</string>
+    <string name="cd_notif_rating_1">Oceń jako słabe</string>
+    <string name="cd_notif_rating_2">Oceń jako przeciętne</string>
+    <string name="cd_notif_rating_3">Oceń jako dobre</string>
+    <string name="cd_notif_rating_4">Oceń jako świetne</string>
 
     <!-- Bag analysis screen + notification -->
     <string name="screen_analyzing_bag_title">Analiza opakowania</string>
@@ -616,10 +614,16 @@
     <string name="grind_medium_coarse">Średnio grube</string>
     <string name="grind_coarse">Grube</string>
 
-    <!-- Enum: QuickRating -->
-    <string name="rating_great">Świetnie</string>
-    <string name="rating_good">Dobrze</string>
-    <string name="rating_not_great">Nie najlepiej</string>
+    <!-- Enum: BrewRating -->
+    <string name="rating_bad">Słabe</string>
+    <string name="rating_meh">Takie sobie</string>
+    <string name="rating_good">Dobre</string>
+    <string name="rating_awesome">Świetne</string>
+    <!-- Rating face content descriptions -->
+    <string name="cd_rate_bad">Oceń jako słabe</string>
+    <string name="cd_rate_meh">Oceń jako przeciętne</string>
+    <string name="cd_rate_good">Oceń jako dobre</string>
+    <string name="cd_rate_awesome">Oceń jako świetne</string>
 
     <!-- Enum: TasteIssue -->
     <string name="taste_issue_too_bitter">Zbyt gorzka</string>
