@@ -65,9 +65,19 @@ class MindlayerOcrService(
      */
     constructor(context: Context) : this(Mindlayer.shared(context.applicationContext))
 
-    @Volatile
-    private var capabilityChecked: Boolean = false
-
+    /**
+     * Only the *positive* outcome is cached — once the service has advertised
+     * [ServiceCapabilities.FEATURE_OCR_IMAGE_ONESHOT] it won't stop supporting
+     * it, so further checks can short-circuit. A negative result must NOT be
+     * cached: OCR engine warm-up (PaddleOCR model load, GPU->CPU fallback,
+     * etc.) can take a few seconds after the client binds, so the very first
+     * check can easily race a still-initializing engine. Mindlayer's own SDK
+     * hit and fixed the identical bug at its layer (`MindlayerImpl.Bug #6` —
+     * a lifetime-of-instance capability cache that pinned an early `false`
+     * forever); permanently caching the negative result here would silently
+     * reintroduce that same bug one layer up, disabling OCR for the rest of
+     * the process even after the service becomes ready.
+     */
     @Volatile
     private var capabilityAvailable: Boolean = false
 
@@ -118,13 +128,13 @@ class MindlayerOcrService(
     }
 
     private suspend fun ensureCapability(): Boolean {
-        if (capabilityChecked) return capabilityAvailable
+        if (capabilityAvailable) return true
         @Suppress("TooGenericExceptionCaught")
         return try {
             val caps = mindlayer.awaitConnected(Duration.INFINITE)
-            capabilityAvailable = caps.supports(ServiceCapabilities.FEATURE_OCR_IMAGE_ONESHOT)
-            capabilityChecked = true
-            capabilityAvailable
+            val supported = caps.supports(ServiceCapabilities.FEATURE_OCR_IMAGE_ONESHOT)
+            if (supported) capabilityAvailable = true
+            supported
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
