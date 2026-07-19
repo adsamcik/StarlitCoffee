@@ -1,0 +1,75 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Prague"
+    open-pull-requests-limit: 5
+    # Version updates wait for upstream Android tooling releases to settle.
+    # Dependabot security updates bypass this cooldown.
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 7
+    groups:
+      androidx-compose:
+        applies-to: version-updates
+        patterns:
+          - "androidx.compose*:*"
+          - "androidx.activity:activity-compose"
+          - "androidx.navigation:navigation-compose"
+          - "androidx.lifecycle:lifecycle-*-compose"
+        update-types:
+          - "minor"
+          - "patch"
+      androidx-room:
+        applies-to: version-updates
+        patterns:
+          - "androidx.room:*"
+        update-types:
+          - "minor"
+          - "patch"
+      androidx-camerax:
+        applies-to: version-updates
+        patterns:
+          - "androidx.camera:*"
+        update-types:
+          - "minor"
+          - "patch"
+      # Kotlin plugins and KSP must stay compatible with each other.
+      kotlin-and-ksp:
+        applies-to: version-updates
+        patterns:
+          - "org.jetbrains.kotlin.plugin.*"
+          - "com.google.devtools.ksp"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      # Mindlayer is in a cross-repository GitHub Packages Maven feed; Dependabot
+      # uses separate secrets, so the release workflow credentials are not enough.
+      - dependency-name: "com.adsamcik.mindlayer:sdk"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "09:00"
+      timezone: "Europe/Prague"
+    open-pull-requests-limit: 3
+    # Keep routine Action bumps predictable; security updates bypass cooldown.
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions-non-major:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
