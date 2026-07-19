@@ -1,8 +1,10 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
+import com.adsamcik.starlitcoffee.util.BagPhotoReviewUris
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
@@ -14,6 +16,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 /**
  * Phase of the guided bag-scan flow. A single nav route hosts both the camera
@@ -26,6 +29,7 @@ enum class BagScanPhase { CAPTURING, REVIEWING }
 data class CapturedBagPhoto(val uri: String)
 
 data class BagScanUiState(
+    val sessionId: String,
     val phase: BagScanPhase = BagScanPhase.CAPTURING,
     val photos: List<CapturedBagPhoto> = emptyList(),
 ) {
@@ -55,9 +59,11 @@ data class BagScanUiState(
  * re-extracts over the accumulated photos. Extraction therefore begins right
  * after the first photo and refines as more are added.
  */
-class BagScanCaptureViewModel : ViewModel() {
+class BagScanCaptureViewModel(
+    private val savedStateHandle: SavedStateHandle,
+) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(BagScanUiState())
+    private val _uiState = MutableStateFlow(restoreState())
     val uiState: StateFlow<BagScanUiState> = _uiState.asStateFlow()
 
     private val _extractionRequests = MutableSharedFlow<String>(
@@ -69,22 +75,33 @@ class BagScanCaptureViewModel : ViewModel() {
     private var debounceJob: Job? = null
     private var lastRequestedCsv: String? = null
 
+    init {
+        if (_uiState.value.hasPhotos) scheduleExtraction()
+    }
+
     /** Append a freshly captured photo and (debounced) re-trigger extraction. */
     fun addPhoto(uri: String) {
-        _uiState.update { it.copy(photos = it.photos + CapturedBagPhoto(uri)) }
+        updateState { it.copy(photos = it.photos + CapturedBagPhoto(uri)) }
         scheduleExtraction()
     }
 
     /** Remove a captured photo (user deleted a thumbnail) and re-extract. */
     fun removePhoto(uri: String) {
-        _uiState.update { state -> state.copy(photos = state.photos.filterNot { it.uri == uri }) }
-        scheduleExtraction()
+        val hadPhotos = _uiState.value.hasPhotos
+        updateState { state -> state.copy(photos = state.photos.filterNot { it.uri == uri }) }
+        if (hadPhotos && !_uiState.value.hasPhotos) {
+            debounceJob?.cancel()
+            lastRequestedCsv = ""
+            viewModelScope.launch { _extractionRequests.emit("") }
+        } else {
+            scheduleExtraction()
+        }
     }
 
-    private fun scheduleExtraction() {
+    private fun scheduleExtraction(emitEmpty: Boolean = false) {
         debounceJob?.cancel()
         val csv = _uiState.value.photosCsv()
-        if (csv.isBlank()) {
+        if (csv.isBlank() && !emitEmpty) {
             lastRequestedCsv = null
             return
         }
@@ -102,9 +119,9 @@ class BagScanCaptureViewModel : ViewModel() {
      */
     fun finishCapturing() {
         debounceJob?.cancel()
-        _uiState.update { it.copy(phase = BagScanPhase.REVIEWING) }
+        updateState { it.copy(phase = BagScanPhase.REVIEWING) }
         val csv = _uiState.value.photosCsv()
-        if (csv.isNotBlank() && csv != lastRequestedCsv) {
+        if ((csv.isNotBlank() || lastRequestedCsv != null) && csv != lastRequestedCsv) {
             lastRequestedCsv = csv
             viewModelScope.launch { _extractionRequests.emit(csv) }
         }
@@ -112,7 +129,22 @@ class BagScanCaptureViewModel : ViewModel() {
 
     /** User tapped "Scan more photos" from the review screen. */
     fun backToCapture() {
-        _uiState.update { it.copy(phase = BagScanPhase.CAPTURING) }
+        updateState { it.copy(phase = BagScanPhase.CAPTURING) }
+    }
+
+    fun resumeReview(sessionId: String, photoUrisCsv: String?) {
+        if (sessionId.isBlank()) return
+        debounceJob?.cancel()
+        debounceJob = null
+        val photos = BagPhotoReviewUris.parse(photoUrisCsv).map(::CapturedBagPhoto)
+        lastRequestedCsv = photos.joinToString(",") { it.uri }.takeIf(String::isNotBlank)
+        updateState {
+            BagScanUiState(
+                sessionId = sessionId,
+                phase = BagScanPhase.REVIEWING,
+                photos = photos,
+            )
+        }
     }
 
     /** Discard the whole session (clears photos; caller cancels extraction). */
@@ -120,10 +152,33 @@ class BagScanCaptureViewModel : ViewModel() {
         debounceJob?.cancel()
         debounceJob = null
         lastRequestedCsv = null
-        _uiState.value = BagScanUiState()
+        updateState { BagScanUiState(sessionId = UUID.randomUUID().toString()) }
+    }
+
+    private fun updateState(transform: (BagScanUiState) -> BagScanUiState) {
+        _uiState.update(transform)
+        val state = _uiState.value
+        savedStateHandle[KEY_SESSION_ID] = state.sessionId
+        savedStateHandle[KEY_PHASE] = state.phase.name
+        savedStateHandle[KEY_PHOTO_URIS] = ArrayList(state.photos.map(CapturedBagPhoto::uri))
+    }
+
+    private fun restoreState(): BagScanUiState {
+        val sessionId = savedStateHandle.get<String>(KEY_SESSION_ID)
+            ?: UUID.randomUUID().toString().also { savedStateHandle[KEY_SESSION_ID] = it }
+        val phase = savedStateHandle.get<String>(KEY_PHASE)
+            ?.let { saved -> BagScanPhase.entries.firstOrNull { it.name == saved } }
+            ?: BagScanPhase.CAPTURING
+        val photos = savedStateHandle.get<ArrayList<String>>(KEY_PHOTO_URIS)
+            .orEmpty()
+            .map(::CapturedBagPhoto)
+        return BagScanUiState(sessionId = sessionId, phase = phase, photos = photos)
     }
 
     private companion object {
         const val EXTRACTION_DEBOUNCE_MS = 900L
+        const val KEY_SESSION_ID = "session_id"
+        const val KEY_PHASE = "phase"
+        const val KEY_PHOTO_URIS = "photo_uris"
     }
 }

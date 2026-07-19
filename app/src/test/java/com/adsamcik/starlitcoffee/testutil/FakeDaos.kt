@@ -95,12 +95,17 @@ internal class FakeBrewLogDao : BrewLogDao {
     }
 }
 
-internal class FakeCoffeeBagDao : CoffeeBagDao {
+internal class FakeCoffeeBagDao(
+    private val allBagsFlowOverride: Flow<List<CoffeeBagEntity>>? = null,
+) : CoffeeBagDao {
     private val bags = mutableListOf<CoffeeBagEntity>()
     private val flow = MutableStateFlow<List<CoffeeBagEntity>>(emptyList())
     private var nextId = 1L
 
     override suspend fun insert(bag: CoffeeBagEntity): Long {
+        if (bag.scanSessionId != null && bags.any { it.scanSessionId == bag.scanSessionId }) {
+            return -1L
+        }
         val id = nextId++
         bags.add(bag.copy(id = id))
         flow.value = bags.toList()
@@ -124,11 +129,14 @@ internal class FakeCoffeeBagDao : CoffeeBagDao {
         list.filter { it.status != "FINISHED" }
     }
 
-    override fun getAll(): Flow<List<CoffeeBagEntity>> = flow
+    override fun getAll(): Flow<List<CoffeeBagEntity>> = allBagsFlowOverride ?: flow
 
     override fun getById(id: Long): Flow<CoffeeBagEntity?> = flow.map { list -> list.find { it.id == id } }
 
     override suspend fun findByBarcode(barcode: String): CoffeeBagEntity? = bags.find { it.barcode == barcode }
+
+    override suspend fun findByScanSessionId(scanSessionId: String): CoffeeBagEntity? =
+        bags.find { it.scanSessionId == scanSessionId }
 
     override suspend fun findNextSealed(name: String, roaster: String?): CoffeeBagEntity? =
         bags.find { it.name == name && it.roaster == roaster && it.status == "SEALED" }

@@ -422,6 +422,36 @@ object CoffeeMetadataNormalizer {
         }
     }
 
+    fun exactCanonicalKey(
+        fieldName: String,
+        rawValue: String?,
+        locale: Locale = Locale.getDefault(),
+    ): String? {
+        val normalized = normalizeField(fieldName, rawValue, locale) ?: return null
+        return normalized.canonicalKey.takeIf {
+            normalized.matchStrategy == CoffeeMetadataMatchStrategy.EXACT_ALIAS
+        }
+    }
+
+    fun equivalentValues(
+        fieldName: String,
+        first: String?,
+        second: String?,
+        locale: Locale = Locale.getDefault(),
+    ): Boolean {
+        val cleanFirst = first?.trim()?.takeIf(String::isNotBlank)
+        val cleanSecond = second?.trim()?.takeIf(String::isNotBlank)
+        if (cleanFirst == null || cleanSecond == null) return cleanFirst == cleanSecond
+
+        val firstCanonical = exactCanonicalKey(fieldName, cleanFirst, locale)
+        val secondCanonical = exactCanonicalKey(fieldName, cleanSecond, locale)
+        return if (firstCanonical != null && secondCanonical != null) {
+            firstCanonical == secondCanonical
+        } else {
+            normalizeSearch(cleanFirst) == normalizeSearch(cleanSecond)
+        }
+    }
+
     fun normalizeBagMetadata(
         origin: String?,
         region: String?,
@@ -431,10 +461,15 @@ object CoffeeMetadataNormalizer {
         tastingNotes: String?,
         locale: Locale = Locale.getDefault(),
     ): NormalizedCoffeeBagMetadata {
-        val normalizedOrigin = normalizeField(MetadataFieldType.ORIGIN.fieldName, origin, locale)
+        val explicitOrigin = origin?.trim()?.takeIf(String::isNotBlank)
+        val normalizedOrigin = normalizeField(MetadataFieldType.ORIGIN.fieldName, explicitOrigin, locale)
         val normalizedRegion = normalizeField(MetadataFieldType.REGION.fieldName, region, locale)
         val inferredOriginId = normalizedOrigin?.canonicalKey
-            ?: normalizedRegion?.relatedCanonicalKeys?.get(MetadataFieldType.ORIGIN.fieldName)
+            ?: if (explicitOrigin == null) {
+                normalizedRegion?.relatedCanonicalKeys?.get(MetadataFieldType.ORIGIN.fieldName)
+            } else {
+                null
+            }
         val inferredOriginValue = normalizedOrigin?.value ?: inferredOriginId?.let { displayOrigin(it, origin, locale) }
 
         val normalizedRoast = normalizeField(MetadataFieldType.ROAST_LEVEL.fieldName, roastLevel, locale)
@@ -508,12 +543,36 @@ object CoffeeMetadataNormalizer {
             locale = locale,
         )
 
-        val originId = bag.originId ?: normalized.originId
-        val regionId = bag.regionId ?: normalized.regionId
-        val roastLevelIds = bag.roastLevelIds ?: normalized.roastLevelIds
-        val processTypeId = bag.processTypeId ?: normalized.processTypeId
-        val varietyIds = bag.varietyIds ?: normalized.varietyIds
-        val tasteNoteIds = bag.tasteNoteIds ?: normalized.tasteNoteIds
+        val originId = validatedStoredCanonicalKey(
+            MetadataFieldType.ORIGIN,
+            bag.originId,
+            bag.origin,
+        ) ?: normalized.originId
+        val regionId = validatedStoredCanonicalKey(
+            MetadataFieldType.REGION,
+            bag.regionId,
+            bag.region,
+        ) ?: normalized.regionId
+        val roastLevelIds = validatedStoredCanonicalKey(
+            MetadataFieldType.ROAST_LEVEL,
+            bag.roastLevelIds,
+            bag.roastLevel,
+        ) ?: normalized.roastLevelIds
+        val processTypeId = validatedStoredCanonicalKey(
+            MetadataFieldType.PROCESS_TYPE,
+            bag.processTypeId,
+            bag.processType,
+        ) ?: normalized.processTypeId
+        val varietyIds = validatedStoredCanonicalKey(
+            MetadataFieldType.VARIETY,
+            bag.varietyIds,
+            bag.variety,
+        ) ?: normalized.varietyIds
+        val tasteNoteIds = validatedStoredCanonicalKey(
+            MetadataFieldType.TASTE_NOTE,
+            bag.tasteNoteIds,
+            bag.tastingNotes,
+        ) ?: normalized.tasteNoteIds
 
         return NormalizedCoffeeBagMetadata(
             origin = displayOrigin(originId, bag.origin ?: normalized.origin, locale),
@@ -899,21 +958,22 @@ object CoffeeMetadataNormalizer {
         val entry = findBestEntry(fieldType, rawValue)
         if (entry == null) {
             return NormalizedCoffeeField(
-                value = prettifyRawValue(rawValue, locale),
+                value = rawValue,
                 rawValue = rawValue,
             )
         }
-        val strategy = if (entry.normalizedAliases.contains(normalizeSearch(rawValue))) {
+        val isExactAlias = entry.normalizedAliases.contains(normalizeSearch(rawValue))
+        val strategy = if (isExactAlias) {
             CoffeeMetadataMatchStrategy.EXACT_ALIAS
         } else {
             CoffeeMetadataMatchStrategy.CONTAINS_ALIAS
         }
         return NormalizedCoffeeField(
-            value = localizeEntry(entry, locale),
+            value = if (isExactAlias) localizeEntry(entry, locale) else rawValue,
             rawValue = rawValue,
-            canonicalKey = entry.id,
+            canonicalKey = entry.id.takeIf { isExactAlias },
             matchStrategy = strategy,
-            relatedCanonicalKeys = entry.relatedCanonicalKeys,
+            relatedCanonicalKeys = entry.relatedCanonicalKeys.takeIf { isExactAlias }.orEmpty(),
         )
     }
 
@@ -938,21 +998,23 @@ object CoffeeMetadataNormalizer {
 
         val matchedIds = mutableListOf<String>()
         val displayTokens = mutableListOf<String>()
-        var strategy: CoffeeMetadataMatchStrategy = CoffeeMetadataMatchStrategy.RAW_FALLBACK
+        var matchedAny = false
+        var allTokensExact = true
 
         tokens.forEach { token ->
             val entry = findBestEntry(fieldType, token)
             if (entry == null) {
-                displayTokens += prettifyRawValue(token, locale)
+                allTokensExact = false
+                displayTokens += token
             } else {
-                matchedIds += entry.id
-                displayTokens += localizeEntry(entry, locale)
-                if (strategy == CoffeeMetadataMatchStrategy.RAW_FALLBACK) {
-                    strategy = if (entry.normalizedAliases.contains(normalizeSearch(token))) {
-                        CoffeeMetadataMatchStrategy.EXACT_ALIAS
-                    } else {
-                        CoffeeMetadataMatchStrategy.CONTAINS_ALIAS
-                    }
+                matchedAny = true
+                val isExactAlias = entry.normalizedAliases.contains(normalizeSearch(token))
+                if (isExactAlias) {
+                    matchedIds += entry.id
+                    displayTokens += localizeEntry(entry, locale)
+                } else {
+                    allTokensExact = false
+                    displayTokens += token
                 }
             }
         }
@@ -961,13 +1023,17 @@ object CoffeeMetadataNormalizer {
             .distinct()
             .sorted()
             .joinToString(",")
-            .takeIf { it.isNotBlank() }
+            .takeIf { allTokensExact && it.isNotBlank() }
 
         return NormalizedCoffeeField(
             value = displayTokens.distinct().joinToString(", "),
             rawValue = rawValue,
             canonicalKey = canonicalKey,
-            matchStrategy = strategy,
+            matchStrategy = when {
+                allTokensExact && matchedAny -> CoffeeMetadataMatchStrategy.EXACT_ALIAS
+                matchedAny -> CoffeeMetadataMatchStrategy.CONTAINS_ALIAS
+                else -> CoffeeMetadataMatchStrategy.RAW_FALLBACK
+            },
         )
     }
 
@@ -999,8 +1065,11 @@ object CoffeeMetadataNormalizer {
             ?.takeIf { it.isNotBlank() }
             ?.let { entriesByFieldAndId[fieldType]?.get(it) }
         return when {
-            entry != null -> localizeEntry(entry, locale)
-            cleanFallback != null -> prettifyRawValue(cleanFallback, locale)
+            entry != null && (
+                cleanFallback == null ||
+                    entry.normalizedAliases.contains(normalizeSearch(cleanFallback))
+                ) -> localizeEntry(entry, locale)
+            cleanFallback != null -> cleanFallback
             else -> null
         }
     }
@@ -1014,17 +1083,47 @@ object CoffeeMetadataNormalizer {
         val ids = parseCanonicalIds(canonicalIds)
         val cleanFallback = fallbackRaw?.trim()?.takeIf { it.isNotBlank() }
         if (ids.isEmpty()) {
-            return cleanFallback?.let { prettifyRawValue(it, locale) }
+            return cleanFallback
         }
-        val fallbackTokenCount = tokenizeValue(cleanFallback).size
-        if (cleanFallback != null && fallbackTokenCount > ids.size) {
-            return prettifyRawValue(cleanFallback, locale)
+        val exactFallbackIds = exactCanonicalIds(fieldType, cleanFallback)
+        if (cleanFallback != null && exactFallbackIds != ids.toSet()) {
+            return cleanFallback
         }
         val localized = ids
             .mapNotNull { entriesByFieldAndId[fieldType]?.get(it) }
             .map { localizeEntry(it, locale) }
             .distinct()
         return localized.joinToString(", ").takeIf { it.isNotBlank() } ?: cleanFallback
+    }
+
+    private fun validatedStoredCanonicalKey(
+        fieldType: MetadataFieldType,
+        storedCanonicalKey: String?,
+        rawValue: String?,
+    ): String? {
+        val storedIds = parseCanonicalIds(storedCanonicalKey).toSet()
+        if (storedIds.isEmpty()) return null
+        val cleanRaw = rawValue?.trim()?.takeIf(String::isNotBlank) ?: return storedCanonicalKey
+        val exactIds = exactCanonicalIds(fieldType, cleanRaw)
+        return storedCanonicalKey.takeIf { exactIds == storedIds }
+    }
+
+    private fun exactCanonicalIds(
+        fieldType: MetadataFieldType,
+        rawValue: String?,
+    ): Set<String> {
+        val cleanRaw = rawValue?.trim()?.takeIf(String::isNotBlank) ?: return emptySet()
+        val tokens = if (fieldType.multiValue) tokenizeValue(cleanRaw) else listOf(cleanRaw)
+        if (tokens.isEmpty()) return emptySet()
+        val ids = tokens.map { token ->
+            val normalizedToken = normalizeSearch(token)
+            entriesByField[fieldType]
+                .orEmpty()
+                .firstOrNull { normalizedToken in it.normalizedAliases }
+                ?.id
+                ?: return emptySet()
+        }
+        return ids.toSet()
     }
 
     private fun localizeEntry(entry: CanonicalEntry, locale: Locale): String =

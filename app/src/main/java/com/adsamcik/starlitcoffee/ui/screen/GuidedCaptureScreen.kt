@@ -77,9 +77,11 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.component.BagThumbnail
+import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
 import com.adsamcik.starlitcoffee.util.BagCaptureQualityAnalyzer
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
+import com.adsamcik.starlitcoffee.util.PhotoStoragePolicy
 import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.viewmodel.BagScanCaptureViewModel
 import java.util.concurrent.Executors
@@ -99,6 +101,7 @@ private const val MOTION_STEADY = 7f
 private const val MOTION_MOVED = 16f
 private const val BURST_COUNT = 3
 private const val PREVIEW_GRID_WIDTH = 160
+private const val SHARPNESS_MAX_LONG_EDGE_PX = 512
 
 /**
  * Guided bag-scan capture screen. The user centers the bag inside a framing
@@ -197,6 +200,7 @@ fun GuidedCaptureScreen(
     }
 
     var showDiscardDialog by remember { mutableStateOf(false) }
+    var photoPendingRemoval by remember { mutableStateOf<String?>(null) }
     fun handleBack() {
         if (state.hasPhotos) showDiscardDialog = true else onBack()
     }
@@ -218,6 +222,19 @@ fun GuidedCaptureScreen(
                     Text(stringResource(R.string.action_keep_scanning))
                 }
             },
+        )
+    }
+
+    photoPendingRemoval?.let { uri ->
+        DestructiveActionDialog(
+            titleRes = R.string.cd_remove_photo,
+            confirmLabelRes = R.string.cd_remove_photo,
+            onConfirm = {
+                captureViewModel.removePhoto(uri)
+                ScanPhotoStorage.deleteStagedCapture(context.applicationContext, uri)
+                photoPendingRemoval = null
+            },
+            onDismiss = { photoPendingRemoval = null },
         )
     }
 
@@ -264,10 +281,7 @@ fun GuidedCaptureScreen(
             autoEnabled = autoEnabled,
             onToggleAuto = { autoEnabled = !autoEnabled },
             onCapture = { triggerCapture(fromAuto = false) },
-            onRemovePhoto = { uri ->
-                captureViewModel.removePhoto(uri)
-                ScanPhotoStorage.deleteCapture(uri)
-            },
+            onRemovePhoto = { uri -> photoPendingRemoval = uri },
             onSkip = { captureViewModel.finishCapturing() },
             onFinished = { captureViewModel.finishCapturing() },
             modifier = Modifier.align(Alignment.BottomCenter),
@@ -600,9 +614,23 @@ private suspend fun captureOnce(
 
 private fun scoreSharpness(jpeg: ByteArray): Float {
     return try {
-        val opts = BitmapFactory.Options().apply { inSampleSize = 4 }
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeByteArray(jpeg, 0, jpeg.size, bounds)
+        val sourceLongEdge = maxOf(bounds.outWidth, bounds.outHeight)
+        if (sourceLongEdge <= 0) return 0f
+        val opts = BitmapFactory.Options().apply {
+            inSampleSize = PhotoStoragePolicy.boundedDecodeSampleSize(
+                sourceLongEdgePx = sourceLongEdge,
+                maxLongEdgePx = SHARPNESS_MAX_LONG_EDGE_PX,
+            )
+            inPreferredConfig = android.graphics.Bitmap.Config.RGB_565
+        }
         val bitmap = BitmapFactory.decodeByteArray(jpeg, 0, jpeg.size, opts) ?: return 0f
-        BagCaptureQualityAnalyzer.analyzeBitmap(bitmap).blurScore
+        try {
+            BagCaptureQualityAnalyzer.analyzeBitmap(bitmap).blurScore
+        } finally {
+            if (!bitmap.isRecycled) bitmap.recycle()
+        }
     } catch (_: Exception) {
         0f
     }

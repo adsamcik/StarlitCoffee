@@ -28,6 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.util.BagPhotoReviewUris
+import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.DateParser
 import com.adsamcik.starlitcoffee.util.WeightParser
 import java.text.SimpleDateFormat
@@ -50,14 +52,16 @@ data class FieldDelta(
 fun buildFieldDeltas(
     bag: CoffeeBagEntity,
     resolvedFields: Map<String, String>,
+    reviewedPhotoUris: String? = null,
+    locale: Locale = Locale.getDefault(),
 ): List<FieldDelta> {
-    val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
+    val dateFormat = SimpleDateFormat("MMM d, yyyy", locale)
     val deltas = mutableListOf<FieldDelta>()
 
     fun check(label: String, fieldKey: String, currentValue: String?) {
         val scanned = resolvedFields[fieldKey]?.trim()?.takeIf { it.isNotBlank() } ?: return
         val current = currentValue?.trim()?.takeIf { it.isNotBlank() }
-        if (current == null || !current.equals(scanned, ignoreCase = true)) {
+        if (!CoffeeMetadataNormalizer.equivalentValues(fieldKey, current, scanned, locale)) {
             deltas.add(FieldDelta(label, current ?: "—", scanned))
         }
     }
@@ -73,11 +77,23 @@ fun buildFieldDeltas(
     check("Farm", "farm", bag.farm)
     check("Altitude", "altitude", bag.altitude)
 
-    // Weight: compare parsed grams
+    resolvedFields["isDecaf"]?.let(::parseScannedDecaf)?.let { scannedDecaf ->
+        if (scannedDecaf != bag.isDecaf) {
+            deltas.add(
+                FieldDelta(
+                    label = "Decaf",
+                    oldValue = if (bag.isDecaf) "Yes" else "No",
+                    newValue = if (scannedDecaf) "Yes" else "No",
+                ),
+            )
+        }
+    }
+
+    // Package weight is the bag's baseline, not its remaining inventory.
     resolvedFields["weight"]?.let { scannedWeight ->
         val parsedG = WeightParser.parseToGrams(scannedWeight)
         if (parsedG != null) {
-            val currentG = bag.weightG ?: bag.initialWeightG
+            val currentG = bag.initialWeightG ?: bag.weightG
             if (currentG == null || kotlin.math.abs(currentG - parsedG) > 0.5f) {
                 deltas.add(FieldDelta(
                     "Weight",
@@ -93,7 +109,7 @@ fun buildFieldDeltas(
         val parsedMs = DateParser.parse(scannedDate)
         if (parsedMs != null) {
             val currentMs = bag.roastDate
-            if (currentMs == null || kotlin.math.abs(currentMs - parsedMs) > 86_400_000L) {
+            if (currentMs == null || dateFormat.format(Date(currentMs)) != dateFormat.format(Date(parsedMs))) {
                 deltas.add(FieldDelta(
                     "Roast date",
                     currentMs?.let { dateFormat.format(Date(it)) } ?: "—",
@@ -108,7 +124,7 @@ fun buildFieldDeltas(
         val parsedMs = DateParser.parse(scannedDate)
         if (parsedMs != null) {
             val currentMs = bag.expiryDate
-            if (currentMs == null || kotlin.math.abs(currentMs - parsedMs) > 86_400_000L) {
+            if (currentMs == null || dateFormat.format(Date(currentMs)) != dateFormat.format(Date(parsedMs))) {
                 deltas.add(FieldDelta(
                     "Expiry date",
                     currentMs?.let { dateFormat.format(Date(it)) } ?: "—",
@@ -116,6 +132,18 @@ fun buildFieldDeltas(
                 ))
             }
         }
+    }
+
+    val reviewedPhotoCount = BagPhotoReviewUris.parse(reviewedPhotoUris).size
+    if (reviewedPhotoCount > 0) {
+        val savedPhotoCount = BagPhotoReviewUris.parse(bag.photoUris ?: bag.photoUri).size
+        deltas.add(
+            FieldDelta(
+                label = "Photos",
+                oldValue = if (savedPhotoCount == 0) "None" else "$savedPhotoCount saved",
+                newValue = "$reviewedPhotoCount reviewed",
+            ),
+        )
     }
 
     return deltas
@@ -159,9 +187,15 @@ fun applyDeltaToBag(
     resolvedFields["altitude"]?.trim()?.takeIf { it.isNotBlank() }?.let {
         updated = updated.copy(altitude = it)
     }
+    resolvedFields["isDecaf"]?.let(::parseScannedDecaf)?.let { scannedDecaf ->
+        updated = updated.copy(
+            isDecaf = scannedDecaf,
+            decafProcess = updated.decafProcess?.takeIf { scannedDecaf },
+        )
+    }
     resolvedFields["weight"]?.let { w ->
         WeightParser.parseToGrams(w)?.let { g ->
-            updated = updated.copy(weightG = g, initialWeightG = g)
+            updated = updated.copy(initialWeightG = g)
         }
     }
     resolvedFields["roastDate"]?.let { d ->
@@ -173,18 +207,26 @@ fun applyDeltaToBag(
     return updated
 }
 
+internal fun parseScannedDecaf(rawValue: String): Boolean? = when (rawValue.trim().lowercase()) {
+    "true", "yes", "1", "y", "decaf", "decaffeinated", "bezkofeinová", "bezkofeinova" -> true
+    "false", "no", "0", "n", "regular", "caffeinated" -> false
+    else -> null
+}
+
 @Composable
 fun RescanDeltaDialog(
     bag: CoffeeBagEntity,
     resolvedFields: Map<String, String>,
+    reviewedPhotoUris: String? = null,
+    isUpdating: Boolean = false,
     onUpdateBag: (CoffeeBagEntity) -> Unit,
     onNewBag: (Map<String, String>) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val deltas = buildFieldDeltas(bag, resolvedFields)
+    val deltas = buildFieldDeltas(bag, resolvedFields, reviewedPhotoUris)
 
     AlertDialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = { if (!isUpdating) onDismiss() },
         title = {
             Text(
                 text = if (deltas.isEmpty()) "No changes found" else "Rescan results",
@@ -252,13 +294,14 @@ fun RescanDeltaDialog(
         },
         confirmButton = {
             if (deltas.isNotEmpty()) {
-                TextButton(onClick = {
-                    onUpdateBag(applyDeltaToBag(bag, resolvedFields))
-                }) {
+                TextButton(
+                    onClick = { onUpdateBag(applyDeltaToBag(bag, resolvedFields)) },
+                    enabled = !isUpdating,
+                ) {
                     Text(stringResource(R.string.action_update_bag))
                 }
             } else {
-                TextButton(onClick = onDismiss) {
+                TextButton(onClick = onDismiss, enabled = !isUpdating) {
                     Text("OK")
                 }
             }
@@ -266,10 +309,10 @@ fun RescanDeltaDialog(
         dismissButton = {
             if (deltas.isNotEmpty()) {
                 Row {
-                    TextButton(onClick = { onNewBag(resolvedFields) }) {
+                    TextButton(onClick = { onNewBag(resolvedFields) }, enabled = !isUpdating) {
                         Text(stringResource(R.string.action_new_bag))
                     }
-                    TextButton(onClick = onDismiss) {
+                    TextButton(onClick = onDismiss, enabled = !isUpdating) {
                         Text(stringResource(R.string.action_cancel))
                     }
                 }

@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.navigation
 
 import android.app.Application
+import android.widget.Toast
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
@@ -41,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination
@@ -56,6 +58,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.data.work.BagReviewContext
 import com.adsamcik.starlitcoffee.notification.DeepLinkBus
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.screen.BagInventoryScreen
@@ -73,6 +76,9 @@ import com.adsamcik.starlitcoffee.ui.screen.GuidedScanFlow
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
+import com.adsamcik.starlitcoffee.ui.component.MindlayerStartupConnectionPrompt
+import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerInstalled
+import com.adsamcik.starlitcoffee.util.MindlayerInstallLink
 import com.adsamcik.starlitcoffee.ui.screen.SavedRecipesScreen
 import com.adsamcik.starlitcoffee.ui.screen.ScanAddBagReview
 import com.adsamcik.starlitcoffee.ui.screen.ScanRescanReview
@@ -80,7 +86,18 @@ import com.adsamcik.starlitcoffee.ui.screen.SettingsScreen
 import com.adsamcik.starlitcoffee.viewmodel.BagScanCaptureViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModelFactory
+import com.adsamcik.starlitcoffee.viewmodel.BrewLogFeedbackViewModel
+import com.adsamcik.starlitcoffee.viewmodel.BrewLogFeedbackViewModelFactory
+import com.adsamcik.starlitcoffee.viewmodel.BrewLogListViewModel
+import com.adsamcik.starlitcoffee.viewmodel.BrewLogListViewModelFactory
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
+import com.adsamcik.starlitcoffee.viewmodel.CupPresetEditorViewModel
+import com.adsamcik.starlitcoffee.viewmodel.CupPresetEditorViewModelFactory
+import com.adsamcik.starlitcoffee.viewmodel.AndroidDiagnosticHistoryClearer
+import com.adsamcik.starlitcoffee.viewmodel.OnboardingViewModel
+import com.adsamcik.starlitcoffee.viewmodel.OnboardingViewModelFactory
+import com.adsamcik.starlitcoffee.viewmodel.SettingsViewModel
+import com.adsamcik.starlitcoffee.viewmodel.SettingsViewModelFactory
 import androidx.annotation.StringRes
 import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
@@ -134,6 +151,7 @@ private val NullableFilterTypeStateSaver: Saver<MutableState<FilterType?>, Strin
 fun StarlitNavHost() {
     val navController = rememberNavController()
     val context = LocalContext.current.applicationContext
+    val couldNotOpenAppStore = stringResource(R.string.msg_could_not_open_app_store)
     val database = remember { AppDatabase.getInstance(context) }
     val userPreferencesRepository = remember { UserPreferencesRepository(context) }
     val cupPresetRepository = remember { CupPresetRepository(database.cupPresetDao()) }
@@ -145,6 +163,10 @@ fun StarlitNavHost() {
     }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    val currentRescanBagId = navBackStackEntry
+        ?.takeIf { it.destination.hasRoute(RescanBag::class) }
+        ?.toRoute<RescanBag>()
+        ?.bagId
 
     val userPrefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = null,
@@ -180,6 +202,7 @@ fun StarlitNavHost() {
         Box(modifier = Modifier.fillMaxSize())
         return
     }
+    val mindlayerInstalled = rememberMindlayerInstalled()
 
     val startDestination: Any = if (prefs.onboardingCompleted) CalculatorBrew else OnboardingMethods
     val snackbarHostState = remember { SnackbarHostState() }
@@ -196,17 +219,57 @@ fun StarlitNavHost() {
         }
     }
 
-    // Notification deep link → analyzed coffee-bag form. The BrewViewModel holds
-    // the result that finished in the background; navigate to the bag inventory
-    // and promote it so the screen's bagPhotoResult observer opens the form.
+    // Notification deep link → the matching analyzed coffee-bag review.
     val pendingBagAnalysis by DeepLinkBus.pendingBagAnalysis.collectAsStateWithLifecycle()
+    val pendingScanReview by brewViewModel.pendingScanReview.collectAsStateWithLifecycle()
+    val foregroundScanReview by brewViewModel.bagPhotoResult.collectAsStateWithLifecycle()
+    var routedBagReviewKey by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(pendingBagAnalysis) {
-        if (pendingBagAnalysis && prefs.onboardingCompleted) {
-            // Recover the completed result from WorkManager's persisted output
-            // (durable across the CLEAR_TOP Activity recreation), then show the
-            // inventory so its dedicated review channel opens the form.
-            brewViewModel.openLastBagExtractionResult()
-            navController.navigate(BagInventory) { launchSingleTop = true }
+        val request = pendingBagAnalysis
+        if (request != null && prefs.onboardingCompleted) {
+            brewViewModel.openBagExtractionResult(request.workId, request.reviewContext)
+        }
+    }
+    LaunchedEffect(
+        pendingBagAnalysis,
+        pendingScanReview,
+        foregroundScanReview,
+        prefs.onboardingCompleted,
+        currentRescanBagId,
+    ) {
+        if (!prefs.onboardingCompleted) return@LaunchedEffect
+        val request = pendingBagAnalysis
+        val review = if (request != null) {
+            pendingScanReview?.takeIf { it.workId == request.workId }
+        } else {
+            listOfNotNull(pendingScanReview, foregroundScanReview)
+                .firstOrNull {
+                    bagReviewDestination(it.reviewContext) is BagReviewDestination.Rescan
+                }
+        } ?: return@LaunchedEffect
+        val reviewKey = review.workId ?: "${review.sessionId}:${review.generationId}"
+        val destination = bagReviewDestination(review.reviewContext)
+        val navigationPlan = bagReviewNavigationPlan(
+            destination = destination,
+            requiresInventoryBackStack = request != null || review.requiresInventoryBackStack,
+        )
+        val alreadyShowingRescan = shouldSuppressBagReviewNavigation(
+            hasExplicitRequest = request != null,
+            currentRescanBagId = currentRescanBagId,
+            destination = destination,
+        )
+        if (routedBagReviewKey != reviewKey) {
+            routedBagReviewKey = reviewKey
+            when {
+                alreadyShowingRescan -> Unit
+                else -> navigationPlan.routes.forEach { route ->
+                    navController.navigate(route) {
+                        launchSingleTop = true
+                    }
+                }
+            }
+        }
+        if (request != null) {
             DeepLinkBus.consumeBagAnalysisReady()
         }
     }
@@ -228,7 +291,7 @@ fun StarlitNavHost() {
                 NavigationBar {
                     bottomNavItems.forEach { item ->
                         NavigationBarItem(
-                            selected = currentDestination?.hasRoute(item.route::class) == true,
+                            selected = currentDestination.hasRoute(item.route::class),
                             onClick = { onSelectTopLevel(item.route) },
                             icon = {
                                 val label = stringResource(item.labelRes)
@@ -295,11 +358,32 @@ fun StarlitNavHost() {
                         },
                     )
                 }
-                composable<OnboardingPersonalize> {
+                composable<OnboardingPersonalize> { backStackEntry ->
+                    val onboardingViewModel: OnboardingViewModel = viewModel(
+                        viewModelStoreOwner = backStackEntry,
+                        factory = remember(userPreferencesRepository) {
+                            OnboardingViewModelFactory(userPreferencesRepository)
+                        },
+                    )
+                    val onboardingState by onboardingViewModel.uiState.collectAsStateWithLifecycle()
+                    LaunchedEffect(onboardingState.completedSubmission) {
+                        val submission = onboardingState.completedSubmission
+                            ?: return@LaunchedEffect
+                        brewViewModel.setMethod(submission.defaultMethod)
+                        submission.filterType?.let(brewViewModel::setFilterType)
+                        submission.grinderId?.let(brewViewModel::setGrinder)
+                        onboardingViewModel.consumeCompletion()
+                        navController.navigate(CalculatorBrew) {
+                            popUpTo(0) { inclusive = true }
+                        }
+                    }
                     OnboardingPersonalizeScreen(
                         selectedMethods = onboardingMethods.value,
                         initialFilter = onboardingFilter.value,
                         initialGrinder = onboardingGrinder.value,
+                        showMindlayerRecommendation = !mindlayerInstalled,
+                        isSubmitting = onboardingState.isSubmitting,
+                        submitFailed = onboardingState.failure,
                         onBack = {
                             // Save personalize state before going back
                             navController.popBackStack()
@@ -308,22 +392,22 @@ fun StarlitNavHost() {
                             onboardingFilter.value = filter
                             onboardingGrinder.value = grinder
                         },
+                        onOpenMindlayerPlayStore = {
+                            if (!MindlayerInstallLink.open(context)) {
+                                Toast.makeText(
+                                    context,
+                                    couldNotOpenAppStore,
+                                    Toast.LENGTH_LONG,
+                                ).show()
+                            }
+                        },
                         onFinish = { filterType, grinderId ->
-                            scope.launch {
-                                userPreferencesRepository.completeOnboarding(
-                                    enabledMethods = onboardingMethods.value,
-                                    defaultMethod = onboardingDefault.value,
-                                    defaultFilterType = filterType,
-                                    selectedGrinderId = grinderId,
-                                )
-                            }
-                            brewViewModel.setMethod(onboardingDefault.value)
-                            if (filterType != null) brewViewModel.setFilterType(filterType)
-                            if (grinderId != null) brewViewModel.setGrinder(grinderId)
-
-                            navController.navigate(CalculatorBrew) {
-                                popUpTo(0) { inclusive = true }
-                            }
+                            onboardingViewModel.complete(
+                                enabledMethods = onboardingMethods.value,
+                                defaultMethod = onboardingDefault.value,
+                                filterType = filterType,
+                                grinderId = grinderId,
+                            )
                         },
                     )
                 }
@@ -404,6 +488,7 @@ fun StarlitNavHost() {
                                 if (result == SnackbarResult.ActionPerformed) {
                                     navController.navigate(BrewLogList)
                                 }
+
                             }
                         },
                     )
@@ -417,14 +502,20 @@ fun StarlitNavHost() {
                 }
                 composable<BagInventory> { backStackEntry ->
                     val capturedPhotos by backStackEntry.savedStateHandle
-                        .getStateFlow<String?>("captured_photos", null)
+                        .getStateFlow<String?>(CAPTURED_PHOTOS_RESULT_KEY, null)
                         .collectAsStateWithLifecycle()
                     val scanFields by backStackEntry.savedStateHandle
-                        .getStateFlow<HashMap<String, String>?>("scan_fields", null)
+                        .getStateFlow<HashMap<String, String>?>(SCAN_FIELDS_RESULT_KEY, null)
                         .collectAsStateWithLifecycle()
                     val scannedBarcode by backStackEntry.savedStateHandle
-                        .getStateFlow<String?>("scanned_barcode", null)
+                        .getStateFlow<String?>(SCANNED_BARCODE_RESULT_KEY, null)
                         .collectAsStateWithLifecycle()
+                    val scanDraftTransferEncoded by backStackEntry.savedStateHandle
+                        .getStateFlow<String?>(SCAN_DRAFT_TRANSFER_RESULT_KEY, null)
+                        .collectAsStateWithLifecycle()
+                    val scanDraftTransfer = remember(scanDraftTransferEncoded) {
+                        ScanDraftTransferCodec.decode(scanDraftTransferEncoded)
+                    }
                     BagInventoryScreen(
                         brewViewModel = brewViewModel,
                         onNavigateToCamera = { navController.navigate(GuidedScan) },
@@ -446,11 +537,39 @@ fun StarlitNavHost() {
                         capturedPhotosResult = capturedPhotos,
                         scanFieldsResult = scanFields,
                         scannedBarcodeResult = scannedBarcode,
+                        scanDraftTransferResult = scanDraftTransfer,
+                        onCapturedPhotosResultConsumed = {
+                            backStackEntry.savedStateHandle
+                                .consumeOneShotResult<String>(CAPTURED_PHOTOS_RESULT_KEY)
+                        },
+                        onScanFieldsResultConsumed = {
+                            backStackEntry.savedStateHandle
+                                .consumeOneShotResult<HashMap<String, String>>(SCAN_FIELDS_RESULT_KEY)
+                        },
+                        onScannedBarcodeResultConsumed = {
+                            backStackEntry.savedStateHandle
+                                .consumeOneShotResult<String>(SCANNED_BARCODE_RESULT_KEY)
+                        },
+                        onScanDraftTransferResultConsumed = {
+                            backStackEntry.savedStateHandle
+                                .consumeOneShotResult<String>(SCAN_DRAFT_TRANSFER_RESULT_KEY)
+                        },
                     )
                 }
-                composable<BrewLogList> {
+                composable<BrewLogList> { backStackEntry ->
+                    val operationViewModel: BrewLogListViewModel = viewModel(
+                        viewModelStoreOwner = backStackEntry,
+                        factory = remember(brewViewModel) {
+                            BrewLogListViewModelFactory(brewViewModel)
+                        },
+                    )
+                    val feedbackViewModelFactory = remember(brewViewModel) {
+                        BrewLogFeedbackViewModelFactory(brewViewModel)
+                    }
                     BrewLogScreen(
                         brewViewModel = brewViewModel,
+                        operationViewModel = operationViewModel,
+                        feedbackViewModelFactory = feedbackViewModelFactory,
                         onBack = null,
                         onNavigateToDetail = { logId ->
                             navController.navigate(BrewLogDetail(logId = logId))
@@ -464,9 +583,19 @@ fun StarlitNavHost() {
                         onNavigateToSettings = { navController.navigate(Settings) },
                     )
                 }
-                composable<Settings> {
+                composable<Settings> { backStackEntry ->
+                    val settingsViewModel: SettingsViewModel = viewModel(
+                        viewModelStoreOwner = backStackEntry,
+                        factory = remember(userPreferencesRepository, cupPresetRepository, context) {
+                            SettingsViewModelFactory(
+                                preferences = userPreferencesRepository,
+                                cupPresetResetter = cupPresetRepository,
+                                diagnosticHistoryClearer = AndroidDiagnosticHistoryClearer(context),
+                            )
+                        },
+                    )
                     SettingsScreen(
-                        userPreferencesRepository = userPreferencesRepository,
+                        viewModel = settingsViewModel,
                         cupPresetRepository = cupPresetRepository,
                         onNavigateToBloomAnimationSettings = {
                             navController.navigate(BloomAnimationSettings)
@@ -480,30 +609,55 @@ fun StarlitNavHost() {
                         onBack = { navController.popBackStack() },
                     )
                 }
-                composable<BloomAnimationSettings> {
+                composable<BloomAnimationSettings> { backStackEntry ->
+                    val settingsViewModel: SettingsViewModel = viewModel(
+                        viewModelStoreOwner = backStackEntry,
+                        factory = remember(userPreferencesRepository) {
+                            SettingsViewModelFactory(userPreferencesRepository)
+                        },
+                    )
                     BloomAnimationSettingsScreen(
-                        userPreferencesRepository = userPreferencesRepository,
+                        viewModel = settingsViewModel,
                         onBack = { navController.popBackStack() },
                     )
                 }
-                composable<DisplaySettings> {
+                composable<DisplaySettings> { backStackEntry ->
+                    val settingsViewModel: SettingsViewModel = viewModel(
+                        viewModelStoreOwner = backStackEntry,
+                        factory = remember(userPreferencesRepository) {
+                            SettingsViewModelFactory(userPreferencesRepository)
+                        },
+                    )
                     DisplaySettingsScreen(
-                        userPreferencesRepository = userPreferencesRepository,
+                        viewModel = settingsViewModel,
                         onBack = { navController.popBackStack() },
                     )
                 }
                 composable<CupPresetEditor> { backStackEntry ->
                     val route = backStackEntry.toRoute<CupPresetEditor>()
+                    val editorViewModel: CupPresetEditorViewModel = viewModel(
+                        viewModelStoreOwner = backStackEntry,
+                        factory = remember(cupPresetRepository) {
+                            CupPresetEditorViewModelFactory(cupPresetRepository)
+                        },
+                    )
                     CupPresetEditorScreen(
-                        cupPresetRepository = cupPresetRepository,
+                        viewModel = editorViewModel,
                         presetId = route.presetId,
                         onBack = { navController.popBackStack() },
                     )
                 }
                 composable<BrewLogDetail> { backStackEntry ->
                     val route = backStackEntry.toRoute<BrewLogDetail>()
+                    val feedbackViewModel: BrewLogFeedbackViewModel = viewModel(
+                        viewModelStoreOwner = backStackEntry,
+                        factory = remember(brewViewModel) {
+                            BrewLogFeedbackViewModelFactory(brewViewModel)
+                        },
+                    )
                     BrewLogDetailScreen(
                         brewViewModel = brewViewModel,
+                        feedbackViewModel = feedbackViewModel,
                         logId = route.logId,
                         onBack = { navController.popBackStack() },
                     )
@@ -514,7 +668,7 @@ fun StarlitNavHost() {
                         onBarcodeScanned = { barcode ->
                             navController.previousBackStackEntry
                                 ?.savedStateHandle
-                                ?.set("scanned_barcode", barcode)
+                                ?.set(SCANNED_BARCODE_RESULT_KEY, barcode)
                             navController.popBackStack()
                         },
                     )
@@ -526,6 +680,7 @@ fun StarlitNavHost() {
                         captureViewModel = captureViewModel,
                         brewViewModel = brewViewModel,
                         onExit = { navController.popBackStack() },
+                        reviewContext = BagReviewContext.addNew(),
                     ) { data, callbacks ->
                         ScanAddBagReview(
                             brewViewModel = brewViewModel,
@@ -538,14 +693,25 @@ fun StarlitNavHost() {
                 composable<RescanBag> { backStackEntry ->
                     val route = backStackEntry.toRoute<RescanBag>()
                     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
-                    val originalBag = remember(bags, route.bagId) {
-                        bags.find { it.id == route.bagId }
-                    }
-
-                    if (originalBag == null) {
-                        // Bag was deleted while navigating — go back
-                        navController.popBackStack()
+                    val inventoryLoaded by brewViewModel.isCoffeeBagInventoryLoaded
+                        .collectAsStateWithLifecycle()
+                    val targetStatus = rescanTargetStatus(
+                        inventoryLoaded = inventoryLoaded,
+                        availableBagIds = bags.map { it.id },
+                        targetBagId = route.bagId,
+                    )
+                    if (targetStatus == RescanTargetStatus.LOADING) {
+                        Box(modifier = Modifier.fillMaxSize())
                         return@composable
+                    }
+                    if (targetStatus == RescanTargetStatus.MISSING) {
+                        LaunchedEffect(route.bagId) {
+                            navController.popBackStack()
+                        }
+                        return@composable
+                    }
+                    val originalBag = remember(bags, route.bagId) {
+                        checkNotNull(bags.find { it.id == route.bagId })
                     }
 
                     val captureViewModel: BagScanCaptureViewModel = viewModel()
@@ -553,22 +719,30 @@ fun StarlitNavHost() {
                         captureViewModel = captureViewModel,
                         brewViewModel = brewViewModel,
                         onExit = { navController.popBackStack() },
+                        reviewContext = BagReviewContext.rescan(route.bagId),
                     ) { data, callbacks ->
                         ScanRescanReview(
                             brewViewModel = brewViewModel,
                             bag = originalBag,
                             data = data,
                             callbacks = callbacks,
-                            onNewBag = { fields ->
-                                // Fork into a new bag — hand fields to BagInventory's AddBagSheet.
-                                navController.getBackStackEntry(BagInventory)
-                                    .savedStateHandle
-                                    .set("scan_fields", HashMap(fields))
+                            onNewBag = { transfer ->
+                                val inventoryEntry = navController.previousBackStackEntry
+                                check(
+                                    inventoryEntry?.destination?.hasRoute(BagInventory::class) == true,
+                                ) {
+                                    "BagInventory must be directly beneath RescanBag"
+                                }
+                                inventoryEntry.savedStateHandle.set(
+                                    SCAN_DRAFT_TRANSFER_RESULT_KEY,
+                                    ScanDraftTransferCodec.encode(transfer),
+                                )
                             },
                         )
                     }
                 }
             }
+            MindlayerStartupConnectionPrompt(isMindlayerInstalled = mindlayerInstalled)
         }
     }
 }

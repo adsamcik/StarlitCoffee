@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -71,10 +73,15 @@ import com.adsamcik.starlitcoffee.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.platform.LocalUriHandler
@@ -96,19 +103,26 @@ import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
+import com.adsamcik.starlitcoffee.util.BagPhotoReviewUris
 import com.adsamcik.starlitcoffee.util.BagReviewSeverity
+import com.adsamcik.starlitcoffee.util.CoffeeFilterVocabularyLoader
+import com.adsamcik.starlitcoffee.util.CoffeeInputSuggestion
+import com.adsamcik.starlitcoffee.util.CoffeeInputSuggestionEngine
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
+import com.adsamcik.starlitcoffee.util.CoffeeVocabularyEntry
 import com.adsamcik.starlitcoffee.util.DateParser
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.ThumbnailLoader
-import com.adsamcik.starlitcoffee.util.WeightParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.URL
 
 private const val QR_METADATA_FIELD_COUNT = 13
+
+private fun CoffeeVocabularyEntry.toInputSuggestion(): CoffeeInputSuggestion =
+    CoffeeInputSuggestion(value = value, aliases = aliases)
 
 // QrCoffeeMetadata is a flat data class of primitives. Save it as a list so the QR-explored
 // metadata survives rotation / dark-mode / process death. The data class is not Parcelable
@@ -171,6 +185,7 @@ fun AddBagSheet(
     reviewHints: List<BagPhotoReviewHint> = emptyList(),
     llmStatus: LlmEnrichmentStatus = LlmEnrichmentStatus.NOT_RUN,
     isProcessing: Boolean = false,
+    isSaving: Boolean = false,
     existingBags: List<CoffeeBagEntity> = emptyList(),
     bagToEdit: CoffeeBagEntity? = null,
     onDismiss: () -> Unit,
@@ -179,6 +194,8 @@ fun AddBagSheet(
         roaster: String?,
         origin: String?,
         region: String?,
+        farm: String?,
+        altitude: String?,
         roastLevel: String?,
         barcode: String?,
         weightG: Float?,
@@ -199,7 +216,12 @@ fun AddBagSheet(
     onScanMorePhotos: (() -> Unit)? = null,
 ) {
     val uriHandler = LocalUriHandler.current
+    val focusManager = LocalFocusManager.current
+    val correctionContext = LocalContext.current
     val locale = LocalLocale.current.platformLocale
+    val vocabulary = remember(correctionContext) {
+        CoffeeFilterVocabularyLoader.getInstance(correctionContext)
+    }
     val localizedExistingMetadata = remember(existingBags, locale) {
         existingBags.associateWith { bag -> CoffeeMetadataNormalizer.resolveBagMetadata(bag, locale) }
     }
@@ -219,6 +241,12 @@ fun AddBagSheet(
     val recentRegions = remember(localizedExistingMetadata) {
         localizedExistingMetadata.values.mapNotNull { it.region }.distinct().take(10)
     }
+    val recentFarms = remember(existingBags) {
+        existingBags.mapNotNull { it.farm }.distinct().take(10)
+    }
+    val recentAltitudes = remember(existingBags) {
+        existingBags.mapNotNull { it.altitude }.distinct().take(10)
+    }
     val recentVarieties = remember(localizedExistingMetadata) {
         localizedExistingMetadata.values.mapNotNull { it.variety }
             .flatMap { it.split(",").map { part -> part.trim() } }
@@ -232,56 +260,224 @@ fun AddBagSheet(
             .flatMap { it.split(",").map { part -> part.trim() } }
             .filter { it.isNotBlank() }.distinct().take(10)
     }
+    val recentTastingNotes = remember(localizedExistingMetadata) {
+        localizedExistingMetadata.values.mapNotNull { it.tastingNotes }
+            .flatMap { it.split(",").map { part -> part.trim() } }
+            .filter { it.isNotBlank() }.distinct().take(12)
+    }
+    val nameSuggestions = remember(recentNames) {
+        CoffeeInputSuggestionEngine.merge(recentNames, emptyList())
+    }
+    val roasterSuggestions = remember(recentRoasters) {
+        CoffeeInputSuggestionEngine.merge(recentRoasters, emptyList())
+    }
+    val farmSuggestions = remember(recentFarms) {
+        CoffeeInputSuggestionEngine.merge(recentFarms, emptyList())
+    }
+    val altitudeSuggestions = remember(recentAltitudes) {
+        CoffeeInputSuggestionEngine.merge(recentAltitudes, emptyList())
+    }
+    val originSuggestions = remember(recentOrigins, vocabulary, locale) {
+        CoffeeInputSuggestionEngine.merge(
+            recentValues = recentOrigins,
+            libraryValues = CoffeeOrigin.Known.entries.map { origin ->
+                val displayName = CoffeeMetadataNormalizer.displayOrigin(
+                    origin.name,
+                    origin.displayName,
+                    locale,
+                ) ?: origin.displayName
+                CoffeeInputSuggestion(
+                    value = displayName,
+                    aliases = origin.searchAliases + origin.displayName,
+                )
+            } + vocabulary.origins.map { it.toInputSuggestion() },
+        )
+    }
+    val roastLevelSuggestions = remember(recentRoastLevels, vocabulary, locale) {
+        CoffeeInputSuggestionEngine.merge(
+            recentValues = recentRoastLevels,
+            libraryValues = CoffeeRoastLevel.Known.entries.map { level ->
+                val displayName = CoffeeMetadataNormalizer.displayRoastLevels(
+                    level.name,
+                    level.displayName,
+                    locale,
+                ) ?: level.displayName
+                CoffeeInputSuggestion(
+                    value = displayName,
+                    aliases = level.searchAliases + level.displayName,
+                )
+            } + vocabulary.roastLevels.map { it.toInputSuggestion() },
+        )
+    }
+    val varietySuggestions = remember(recentVarieties, vocabulary, locale) {
+        CoffeeInputSuggestionEngine.merge(
+            recentValues = recentVarieties,
+            libraryValues = CoffeeVariety.Known.entries.map { varietyEntry ->
+                val displayName = CoffeeMetadataNormalizer.displayVarieties(
+                    varietyEntry.name,
+                    varietyEntry.displayName,
+                    locale,
+                ) ?: varietyEntry.displayName
+                CoffeeInputSuggestion(
+                    value = displayName,
+                    aliases = varietyEntry.searchAliases + varietyEntry.displayName,
+                )
+            } + vocabulary.varieties.map { it.toInputSuggestion() },
+        )
+    }
+    val processSuggestions = remember(recentProcesses, vocabulary, locale) {
+        CoffeeInputSuggestionEngine.merge(
+            recentValues = recentProcesses,
+            libraryValues = CoffeeProcessType.Known.entries.map { process ->
+                val displayName = CoffeeMetadataNormalizer.displayProcessType(
+                    process.name,
+                    process.displayName,
+                    locale,
+                ) ?: process.displayName
+                CoffeeInputSuggestion(
+                    value = displayName,
+                    aliases = process.searchAliases + process.displayName,
+                )
+            } + vocabulary.processTypes.map { it.toInputSuggestion() },
+        )
+    }
+    val tastingNoteSuggestions = remember(recentTastingNotes, vocabulary) {
+        CoffeeInputSuggestionEngine.merge(
+            recentValues = recentTastingNotes,
+            libraryValues = vocabulary.tastingNotes.map { it.toInputSuggestion() },
+        )
+    }
 
     val isEditMode = bagToEdit != null
-    val correctionContext = LocalContext.current
     val correctionScope = rememberCoroutineScope()
-    var name by rememberSaveable(ocrPrefill, initialName, bagToEdit) {
-        mutableStateOf(bagToEdit?.name ?: ocrPrefill?.name ?: initialName ?: "")
+    val initialForm = remember(ocrPrefill, initialName, initialRoaster, initialBarcode, bagToEdit, editBagMetadata) {
+        BagFormSnapshot(
+            name = bagToEdit?.name ?: ocrPrefill?.name ?: initialName ?: "",
+            roaster = bagToEdit?.roaster ?: ocrPrefill?.roaster ?: initialRoaster ?: "",
+            originCountry = editBagMetadata?.origin ?: ocrPrefill?.origin ?: "",
+            originRegion = editBagMetadata?.region ?: ocrPrefill?.region ?: "",
+            farm = bagToEdit?.farm ?: ocrPrefill?.farm ?: "",
+            altitude = bagToEdit?.altitude ?: ocrPrefill?.altitude ?: "",
+            roastLevel = editBagMetadata?.roastLevel ?: ocrPrefill?.roastLevel ?: "",
+            variety = editBagMetadata?.variety ?: ocrPrefill?.variety ?: "",
+            processType = editBagMetadata?.processType ?: ocrPrefill?.processType ?: "",
+            tastingNotes = editBagMetadata?.tastingNotes ?: ocrPrefill?.tastingNotes ?: "",
+            barcode = bagToEdit?.barcode ?: initialBarcode.orEmpty(),
+            weight = bagToEdit?.weightG?.let { "%.0f".format(it) } ?: ocrPrefill?.weight ?: "",
+            notes = bagToEdit?.notes ?: "",
+            isDecaf = bagToEdit?.isDecaf ?: ocrPrefill?.isDecaf ?: false,
+            decafProcess = bagToEdit?.decafProcess,
+            roastDateMillis = bagToEdit?.roastDate ?: ocrPrefill?.roastDate?.let { DateParser.parse(it) },
+            expiryDateMillis = bagToEdit?.expiryDate ?: ocrPrefill?.expiryDate?.let { DateParser.parse(it) },
+        )
     }
-    var roaster by rememberSaveable(ocrPrefill, initialRoaster, bagToEdit) {
-        mutableStateOf(bagToEdit?.roaster ?: ocrPrefill?.roaster ?: initialRoaster ?: "")
+    var name by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.name)
     }
-    var originCountry by rememberSaveable(ocrPrefill, editBagMetadata) {
-        mutableStateOf(editBagMetadata?.origin ?: ocrPrefill?.origin ?: "")
+    var roaster by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.roaster)
     }
-    var originRegion by rememberSaveable(ocrPrefill, editBagMetadata) {
-        mutableStateOf(editBagMetadata?.region ?: ocrPrefill?.region ?: "")
+    var originCountry by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.originCountry)
     }
-    var roastLevel by rememberSaveable(ocrPrefill, editBagMetadata) {
-        mutableStateOf(editBagMetadata?.roastLevel ?: ocrPrefill?.roastLevel ?: "")
+    var originRegion by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.originRegion)
     }
-    var variety by rememberSaveable(ocrPrefill, editBagMetadata) {
-        mutableStateOf(editBagMetadata?.variety ?: ocrPrefill?.variety ?: "")
+    var farm by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.farm)
     }
-    var processType by rememberSaveable(ocrPrefill, editBagMetadata) {
-        mutableStateOf(editBagMetadata?.processType ?: ocrPrefill?.processType ?: "")
+    var altitude by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.altitude)
     }
-    var tastingNotes by rememberSaveable(ocrPrefill, editBagMetadata) {
-        mutableStateOf(editBagMetadata?.tastingNotes ?: ocrPrefill?.tastingNotes ?: "")
+    var roastLevel by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.roastLevel)
     }
-    var barcode by rememberSaveable(initialBarcode, bagToEdit) {
-        mutableStateOf(bagToEdit?.barcode ?: initialBarcode.orEmpty())
+    var variety by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.variety)
     }
-    var weight by rememberSaveable(ocrPrefill, bagToEdit) {
-        mutableStateOf(bagToEdit?.weightG?.let { "%.0f".format(it) } ?: ocrPrefill?.weight ?: "")
+    var processType by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.processType)
     }
-    var notes by rememberSaveable(bagToEdit) { mutableStateOf(bagToEdit?.notes ?: "") }
-    var isDecaf by rememberSaveable(ocrPrefill, bagToEdit) {
-        mutableStateOf(bagToEdit?.isDecaf ?: ocrPrefill?.isDecaf ?: false)
+    var tastingNotes by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.tastingNotes)
+    }
+    var barcode by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.barcode)
+    }
+    var weight by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.weight)
+    }
+    var notes by rememberSaveable(bagToEdit) { mutableStateOf(initialForm.notes) }
+    var isDecaf by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.isDecaf)
     }
     var decafProcess by rememberSaveable(bagToEdit) {
-        mutableStateOf(bagToEdit?.decafProcess)
+        mutableStateOf(initialForm.decafProcess)
     }
-    var roastDateMillis by rememberSaveable(ocrPrefill, bagToEdit) {
-        mutableStateOf(bagToEdit?.roastDate ?: ocrPrefill?.roastDate?.let { DateParser.parse(it) })
+    var roastDateMillis by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.roastDateMillis)
     }
-    var expiryDateMillis by rememberSaveable(ocrPrefill, bagToEdit) {
-        mutableStateOf(bagToEdit?.expiryDate ?: ocrPrefill?.expiryDate?.let { DateParser.parse(it) })
+    var expiryDateMillis by rememberSaveable(bagToEdit) {
+        mutableStateOf(initialForm.expiryDateMillis)
     }
-    var showMoreDetails by rememberSaveable(isProcessing, bagToEdit) { mutableStateOf(isEditMode || !isProcessing) }
+    val regionSuggestions = remember(
+        originCountry,
+        recentRegions,
+        localizedExistingMetadata,
+        vocabulary,
+        locale,
+    ) {
+        val canonicalOrigin = CoffeeInputSuggestionEngine.resolveCanonicalOrigin(
+            input = originCountry,
+            vocabularyOrigins = vocabulary.origins,
+            locale = locale,
+        )
+        val recentForOrigin = if (canonicalOrigin == null) {
+            recentRegions
+        } else {
+            localizedExistingMetadata
+                .filter { (bag, _) ->
+                    CoffeeInputSuggestionEngine.resolveCanonicalOrigin(
+                        input = bag.origin.orEmpty(),
+                        vocabularyOrigins = vocabulary.origins,
+                        locale = locale,
+                    )?.equals(canonicalOrigin, ignoreCase = true) == true
+                }
+                .mapNotNull { (_, metadata) -> metadata.region }
+                .distinct()
+        }
+        val knownRegions = if (canonicalOrigin == null) {
+            CoffeeRegion.Known.entries.toList()
+        } else {
+            CoffeeRegion.Known.entries.filter { region ->
+                region.countries.any { it.equals(canonicalOrigin, ignoreCase = true) }
+            }
+        }
+        val vocabularyRegions = if (canonicalOrigin == null) {
+            vocabulary.regions
+        } else {
+            vocabulary.regions.filter {
+                it.country == null || it.country.equals(canonicalOrigin, ignoreCase = true)
+            }
+        }
+        CoffeeInputSuggestionEngine.merge(
+            recentValues = recentForOrigin,
+            libraryValues = knownRegions.map { region ->
+                val displayName = CoffeeMetadataNormalizer.displayRegion(
+                    region.name,
+                    region.displayName,
+                    locale,
+                ) ?: region.displayName
+                CoffeeInputSuggestion(
+                    value = displayName,
+                    aliases = region.searchAliases + region.displayName,
+                )
+            } + vocabularyRegions.map { it.toInputSuggestion() },
+        )
+    }
+    var showMoreDetails by rememberSaveable(bagToEdit) { mutableStateOf(isEditMode || !isProcessing) }
     var selectedEvidenceField by rememberSaveable(fieldEvidence) { mutableStateOf(fieldEvidence.keys.firstOrNull()) }
-    var snapApproveMode by rememberSaveable(ocrPrefill, isProcessing, bagToEdit) {
+    var snapApproveMode by rememberSaveable(bagToEdit) {
         mutableStateOf(ocrPrefill != null && !isProcessing && bagToEdit == null)
     }
     var pendingScrollField by rememberSaveable { mutableStateOf<String?>(null) }
@@ -293,7 +489,71 @@ fun AddBagSheet(
     var qrExploredMetadata by rememberSaveable(stateSaver = QrCoffeeMetadataSaver) {
         mutableStateOf<QrCoffeeMetadata?>(null)
     }
+    var pendingDiscardAction by remember { mutableStateOf<(() -> Unit)?>(null) }
     val listState = rememberLazyListState()
+    val weightValidation = remember(weight) { validateBagWeightInput(weight) }
+    val currentForm = BagFormSnapshot(
+        name = name,
+        roaster = roaster,
+        originCountry = originCountry,
+        originRegion = originRegion,
+        farm = farm,
+        altitude = altitude,
+        roastLevel = roastLevel,
+        variety = variety,
+        processType = processType,
+        tastingNotes = tastingNotes,
+        barcode = barcode,
+        weight = weight,
+        notes = notes,
+        isDecaf = isDecaf,
+        decafProcess = decafProcess,
+        roastDateMillis = roastDateMillis,
+        expiryDateMillis = expiryDateMillis,
+    )
+    var previousEnrichmentForm by remember(bagToEdit) { mutableStateOf(initialForm) }
+    LaunchedEffect(initialForm, isEditMode, isSaving) {
+        if (isEditMode || isSaving) return@LaunchedEffect
+        val merged = mergeBagFormEnrichment(
+            current = currentForm,
+            previousEnrichment = previousEnrichmentForm,
+            incomingEnrichment = initialForm,
+        )
+        name = merged.name
+        roaster = merged.roaster
+        originCountry = merged.originCountry
+        originRegion = merged.originRegion
+        farm = merged.farm
+        altitude = merged.altitude
+        roastLevel = merged.roastLevel
+        variety = merged.variety
+        processType = merged.processType
+        tastingNotes = merged.tastingNotes
+        barcode = merged.barcode
+        weight = merged.weight
+        isDecaf = merged.isDecaf
+        roastDateMillis = merged.roastDateMillis
+        expiryDateMillis = merged.expiryDateMillis
+        previousEnrichmentForm = initialForm
+    }
+    val confirmDismiss = shouldConfirmBagDismiss(
+        isEditMode = isEditMode,
+        initial = initialForm,
+        current = currentForm,
+        hasCapturedPhotos = !capturedPhotoUris.isNullOrBlank(),
+        hasTraceabilityData = !traceabilityUrl.isNullOrBlank() || qrExploredMetadata != null,
+    )
+    fun requestPotentiallyDestructiveAction(action: () -> Unit) {
+        if (confirmDismiss) pendingDiscardAction = action else action()
+    }
+    fun requestDismiss() = requestPotentiallyDestructiveAction(onDismiss)
+
+    LaunchedEffect(isSaving) {
+        if (isSaving) {
+            focusManager.clearFocus(force = true)
+            pendingDiscardAction = null
+        }
+    }
 
     LaunchedEffect(fieldEvidence) {
         if (selectedEvidenceField == null || selectedEvidenceField !in fieldEvidence) {
@@ -305,6 +565,8 @@ fun AddBagSheet(
         form = SnapApproveFormState(
             origin = originCountry,
             region = originRegion,
+            farm = farm,
+            altitude = altitude,
             roastLevel = roastLevel,
             variety = variety,
             processType = processType,
@@ -356,7 +618,9 @@ fun AddBagSheet(
     }
 
     Dialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = {
+            if (!isSaving) requestDismiss()
+        },
         // Full-screen create/edit task (Material full-screen dialog). Unlike the
         // previous bottom sheet it cannot be swipe- or tap-outside-dismissed; an
         // intentional back press still closes it via the BackHandler below.
@@ -367,14 +631,38 @@ fun AddBagSheet(
             decorFitsSystemWindows = false,
         ),
     ) {
-        BackHandler { onDismiss() }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
-                .navigationBarsPadding()
-                .imePadding(),
-        ) {
+        if (pendingDiscardAction != null) {
+            DestructiveActionDialog(
+                titleRes = R.string.dialog_discard_changes_title,
+                messageRes = R.string.msg_discard_changes_body,
+                confirmLabelRes = R.string.action_discard,
+                onConfirm = {
+                    val action = pendingDiscardAction
+                    pendingDiscardAction = null
+                    action?.invoke()
+                },
+                onDismiss = { pendingDiscardAction = null },
+            )
+        }
+        BackHandler {
+            if (!isSaving) requestDismiss()
+        }
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.surface)
+                    .navigationBarsPadding()
+                    .imePadding()
+                    .focusProperties { canFocus = !isSaving }
+                    .then(
+                        if (isSaving) {
+                            Modifier.clearAndSetSemantics { disabled() }
+                        } else {
+                            Modifier
+                        },
+                    ),
+            ) {
             TopAppBar(
                 title = {
                     Text(
@@ -387,7 +675,7 @@ fun AddBagSheet(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onDismiss) {
+                    IconButton(onClick = ::requestDismiss, enabled = !isSaving) {
                         Icon(
                             Icons.Default.Close,
                             contentDescription = stringResource(R.string.action_close),
@@ -396,7 +684,10 @@ fun AddBagSheet(
                 },
                 actions = {
                     if (onScanMorePhotos != null) {
-                        IconButton(onClick = onScanMorePhotos) {
+                        IconButton(
+                            onClick = { requestPotentiallyDestructiveAction(onScanMorePhotos) },
+                            enabled = !isSaving,
+                        ) {
                             Icon(
                                 Icons.Filled.CameraAlt,
                                 contentDescription = stringResource(R.string.guided_scan_scan_more),
@@ -417,6 +708,7 @@ fun AddBagSheet(
                     if (isProcessing && !isEditMode) {
                         ProcessingStatusCard()
                     } else {
+                        CapturedPhotoReviewStrip(capturedPhotoUris)
                         if (reviewHints.isNotEmpty()) {
                             ReviewHintsCard(reviewHints = reviewHints)
                         }
@@ -482,11 +774,12 @@ fun AddBagSheet(
                 } else if (snapApproveMode) {
                     item {
                         SnapApproveSection(
-                            capturedPhotoUris = capturedPhotoUris,
                             name = name,
                             onNameChange = { name = it },
+                            nameSuggestions = nameSuggestions,
                             roaster = roaster,
                             onRoasterChange = { roaster = it },
+                            roasterSuggestions = roasterSuggestions,
                             confidentFields = confidentDetectedFields,
                             reviewFields = reviewDetectedFields,
                             hasMissingDetails = hasMissingDetails,
@@ -520,7 +813,10 @@ fun AddBagSheet(
                                 singleLine = true,
                                 trailingIcon = if (onScanBarcode != null) {
                                     {
-                                        IconButton(onClick = { onScanBarcode() }) {
+                                        IconButton(
+                                            onClick = { requestPotentiallyDestructiveAction(onScanBarcode) },
+                                            enabled = !isSaving,
+                                        ) {
                                             Icon(
                                                 Icons.Filled.CameraAlt,
                                                 contentDescription = stringResource(R.string.action_scan_barcode),
@@ -542,7 +838,10 @@ fun AddBagSheet(
                                 shape = MaterialTheme.shapes.small,
                                 singleLine = true,
                                 trailingIcon = {
-                                    IconButton(onClick = { onScanBarcode() }) {
+                                    IconButton(
+                                        onClick = { requestPotentiallyDestructiveAction(onScanBarcode) },
+                                        enabled = !isSaving,
+                                    ) {
                                         Icon(
                                             Icons.Filled.CameraAlt,
                                             contentDescription = stringResource(R.string.action_scan_barcode),
@@ -560,7 +859,8 @@ fun AddBagSheet(
                             value = name,
                             onValueChange = { name = it },
                             label = stringResource(R.string.label_name_required),
-                            suggestions = recentNames,
+                            suggestions = nameSuggestions,
+                            enabled = !isSaving,
                             modifier = Modifier.padding(bottom = 4.dp),
                             onFocusChanged = { focused ->
                                 if (focused) selectedEvidenceField = "name"
@@ -576,7 +876,8 @@ fun AddBagSheet(
                             value = roaster,
                             onValueChange = { roaster = it },
                             label = stringResource(R.string.label_roaster),
-                            suggestions = recentRoasters,
+                            suggestions = roasterSuggestions,
+                            enabled = !isSaving,
                             modifier = Modifier.padding(bottom = 4.dp),
                             onFocusChanged = { focused ->
                                 if (focused) selectedEvidenceField = "roaster"
@@ -588,21 +889,16 @@ fun AddBagSheet(
                         )
                     }
                     item {
-                        FieldChipPicker(
-                            label = stringResource(R.string.label_origin),
-                            knownValues = CoffeeOrigin.known,
-                            selectedValue = originCountry,
+                        SuggestingTextField(
+                            value = originCountry,
                             onValueChange = { originCountry = it },
-                            displayName = {
-                                when (it) {
-                                    is CoffeeOrigin.Known ->
-                                        CoffeeMetadataNormalizer.displayOrigin(it.name, it.displayName, locale) ?: it.displayName
-                                    is CoffeeOrigin.Other -> it.displayName
-                                }
-                            },
-                            recentValues = recentOrigins,
+                            label = stringResource(R.string.label_origin),
+                            suggestions = originSuggestions,
+                            enabled = !isSaving,
                             modifier = Modifier.padding(bottom = 4.dp),
-                            onInteraction = { selectedEvidenceField = "origin" },
+                            onFocusChanged = { focused ->
+                                if (focused) selectedEvidenceField = "origin"
+                            },
                         )
                         FieldEvidenceAssist(
                             evidence = fieldEvidence["origin"],
@@ -610,24 +906,16 @@ fun AddBagSheet(
                         )
                     }
                     item {
-                        val filteredRegions = if (originCountry.isNotBlank()) {
-                            CoffeeMetadataNormalizer.regionsForOrigin(originCountry, locale).ifEmpty {
-                                CoffeeRegion.Known.entries.toList()
-                            }
-                        } else {
-                            CoffeeRegion.Known.entries.toList()
-                        }
-                        FieldChipPicker(
-                            label = if (originCountry.isNotBlank()) "Region ($originCountry)" else "Region",
-                            knownValues = filteredRegions,
-                            selectedValue = originRegion,
+                        SuggestingTextField(
+                            value = originRegion,
                             onValueChange = { originRegion = it },
-                            displayName = {
-                                CoffeeMetadataNormalizer.displayRegion(it.name, it.displayName, locale) ?: it.displayName
-                            },
-                            recentValues = recentRegions,
+                            label = stringResource(R.string.label_region),
+                            suggestions = regionSuggestions,
+                            enabled = !isSaving,
                             modifier = Modifier.padding(bottom = 4.dp),
-                            onInteraction = { selectedEvidenceField = "region" },
+                            onFocusChanged = { focused ->
+                                if (focused) selectedEvidenceField = "region"
+                            },
                         )
                         FieldEvidenceAssist(
                             evidence = fieldEvidence["region"],
@@ -641,6 +929,15 @@ fun AddBagSheet(
                             label = { Text(stringResource(R.string.label_weight_grams)) },
                             shape = MaterialTheme.shapes.small,
                             singleLine = true,
+                            enabled = !isSaving,
+                            isError = !weightValidation.isValid,
+                            supportingText = if (!weightValidation.isValid) {
+                                {
+                                    Text(stringResource(R.string.msg_invalid_weight))
+                                }
+                            } else {
+                                null
+                            },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             suffix = { Text("g") },
                             modifier = Modifier
@@ -657,6 +954,7 @@ fun AddBagSheet(
                             listOf("250", "500", "1000").forEach { preset ->
                                 FilterChip(
                                     selected = weight == preset,
+                                    enabled = !isSaving,
                                     onClick = {
                                         selectedEvidenceField = "weight"
                                         weight = preset
@@ -743,23 +1041,17 @@ fun AddBagSheet(
 
                     if (showMoreDetails) {
                         item {
-                            FieldChipPicker(
-                                label = stringResource(R.string.label_roast_level),
-                                knownValues = CoffeeRoastLevel.known,
-                                selectedValue = roastLevel,
+                            SuggestingTextField(
+                                value = roastLevel,
                                 onValueChange = { roastLevel = it },
-                                displayName = {
-                                    when (it) {
-                                        is CoffeeRoastLevel.Known ->
-                                            CoffeeMetadataNormalizer.displayRoastLevels(it.name, it.displayName, locale)
-                                                ?: it.displayName
-                                        is CoffeeRoastLevel.Other -> it.displayName
-                                    }
-                                },
-                                recentValues = recentRoastLevels,
-                                multiSelect = true,
+                                label = stringResource(R.string.label_roast_level),
+                                suggestions = roastLevelSuggestions,
+                                enabled = !isSaving,
+                                multiValue = true,
                                 modifier = Modifier.padding(bottom = 4.dp),
-                                onInteraction = { selectedEvidenceField = "roastLevel" },
+                                onFocusChanged = { focused ->
+                                    if (focused) selectedEvidenceField = "roastLevel"
+                                },
                             )
                             FieldEvidenceAssist(
                                 evidence = fieldEvidence["roastLevel"],
@@ -767,23 +1059,17 @@ fun AddBagSheet(
                             )
                         }
                         item {
-                            FieldChipPicker(
-                                label = stringResource(R.string.label_variety),
-                                knownValues = CoffeeVariety.known,
-                                selectedValue = variety,
+                            SuggestingTextField(
+                                value = variety,
                                 onValueChange = { variety = it },
-                                displayName = {
-                                    when (it) {
-                                        is CoffeeVariety.Known ->
-                                            CoffeeMetadataNormalizer.displayVarieties(it.name, it.displayName, locale)
-                                                ?: it.displayName
-                                        is CoffeeVariety.Other -> it.displayName
-                                    }
-                                },
-                                recentValues = recentVarieties,
-                                multiSelect = true,
+                                label = stringResource(R.string.label_variety),
+                                suggestions = varietySuggestions,
+                                multiValue = true,
+                                enabled = !isSaving,
                                 modifier = Modifier.padding(bottom = 4.dp),
-                                onInteraction = { selectedEvidenceField = "variety" },
+                                onFocusChanged = { focused ->
+                                    if (focused) selectedEvidenceField = "variety"
+                                },
                             )
                             FieldEvidenceAssist(
                                 evidence = fieldEvidence["variety"],
@@ -791,22 +1077,50 @@ fun AddBagSheet(
                             )
                         }
                         item {
-                            FieldChipPicker(
-                                label = stringResource(R.string.label_process),
-                                knownValues = CoffeeProcessType.known,
-                                selectedValue = processType,
-                                onValueChange = { processType = it },
-                                displayName = {
-                                    when (it) {
-                                        is CoffeeProcessType.Known ->
-                                            CoffeeMetadataNormalizer.displayProcessType(it.name, it.displayName, locale)
-                                                ?: it.displayName
-                                        is CoffeeProcessType.Other -> it.displayName
-                                    }
-                                },
-                                recentValues = recentProcesses,
+                            SuggestingTextField(
+                                value = farm,
+                                onValueChange = { farm = it },
+                                label = stringResource(R.string.label_farm),
+                                suggestions = farmSuggestions,
+                                enabled = !isSaving,
                                 modifier = Modifier.padding(bottom = 4.dp),
-                                onInteraction = { selectedEvidenceField = "processType" },
+                                onFocusChanged = { focused ->
+                                    if (focused) selectedEvidenceField = "farm"
+                                },
+                            )
+                            FieldEvidenceAssist(
+                                evidence = fieldEvidence["farm"],
+                                onClick = { selectedEvidenceField = "farm" },
+                            )
+                        }
+                        item {
+                            SuggestingTextField(
+                                value = altitude,
+                                onValueChange = { altitude = it },
+                                label = stringResource(R.string.label_altitude),
+                                suggestions = altitudeSuggestions,
+                                enabled = !isSaving,
+                                modifier = Modifier.padding(bottom = 4.dp),
+                                onFocusChanged = { focused ->
+                                    if (focused) selectedEvidenceField = "altitude"
+                                },
+                            )
+                            FieldEvidenceAssist(
+                                evidence = fieldEvidence["altitude"],
+                                onClick = { selectedEvidenceField = "altitude" },
+                            )
+                        }
+                        item {
+                            SuggestingTextField(
+                                value = processType,
+                                onValueChange = { processType = it },
+                                label = stringResource(R.string.label_process),
+                                suggestions = processSuggestions,
+                                enabled = !isSaving,
+                                modifier = Modifier.padding(bottom = 4.dp),
+                                onFocusChanged = { focused ->
+                                    if (focused) selectedEvidenceField = "processType"
+                                },
                             )
                             FieldEvidenceAssist(
                                 evidence = fieldEvidence["processType"],
@@ -814,18 +1128,17 @@ fun AddBagSheet(
                             )
                         }
                         item {
-                            OutlinedTextField(
+                            SuggestingTextField(
                                 value = tastingNotes,
                                 onValueChange = { tastingNotes = it },
-                                label = { Text(stringResource(R.string.label_tasting_notes)) },
-                                shape = MaterialTheme.shapes.small,
-                                singleLine = true,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 4.dp)
-                                    .onFocusChanged {
-                                        if (it.isFocused) selectedEvidenceField = "tastingNotes"
-                                    },
+                                label = stringResource(R.string.label_tasting_notes),
+                                suggestions = tastingNoteSuggestions,
+                                multiValue = true,
+                                enabled = !isSaving,
+                                modifier = Modifier.padding(bottom = 4.dp),
+                                onFocusChanged = { focused ->
+                                    if (focused) selectedEvidenceField = "tastingNotes"
+                                },
                             )
                             FieldEvidenceAssist(
                                 evidence = fieldEvidence["tastingNotes"],
@@ -983,7 +1296,7 @@ fun AddBagSheet(
                 }
             }
 
-            Button(
+                Button(
                 onClick = {
                     if (name.isNotBlank()) {
                         if (ocrPrefill != null) {
@@ -996,6 +1309,8 @@ fun AddBagSheet(
                                 "roaster" to prefill.roaster,
                                 "origin" to prefill.origin,
                                 "region" to prefill.region,
+                                "farm" to prefill.farm,
+                                "altitude" to prefill.altitude,
                                 "variety" to prefill.variety,
                                 "processType" to prefill.processType,
                                 "roastLevel" to prefill.roastLevel,
@@ -1006,6 +1321,8 @@ fun AddBagSheet(
                                 "roaster" to roaster,
                                 "origin" to originCountry,
                                 "region" to originRegion,
+                                "farm" to farm,
+                                "altitude" to altitude,
                                 "variety" to variety,
                                 "processType" to processType,
                                 "roastLevel" to roastLevel,
@@ -1020,15 +1337,16 @@ fun AddBagSheet(
                             correctionScope.launch { ScanCorrectionLog.record(appContext, corrections) }
                         }
                         if (bagToEdit != null && onEdit != null) {
-                            onEdit(
-                                bagToEdit.copy(
+                            val editedBag = applyValidatedBagWeight(
+                                bag = bagToEdit.copy(
                                     name = name,
                                     roaster = roaster.takeIf { it.isNotBlank() },
                                     origin = originCountry.takeIf { it.isNotBlank() },
                                     region = originRegion.takeIf { it.isNotBlank() },
+                                    farm = farm.takeIf { it.isNotBlank() },
+                                    altitude = altitude.takeIf { it.isNotBlank() },
                                     roastLevel = roastLevel.takeIf { it.isNotBlank() },
                                     barcode = barcode.takeIf { it.isNotBlank() },
-                                    weightG = WeightParser.parseToGrams(weight) ?: bagToEdit.weightG,
                                     notes = notes.takeIf { it.isNotBlank() },
                                     variety = variety.takeIf { it.isNotBlank() },
                                     processType = processType.takeIf { it.isNotBlank() },
@@ -1038,6 +1356,10 @@ fun AddBagSheet(
                                     roastDate = roastDateMillis,
                                     expiryDate = expiryDateMillis,
                                 ),
+                                validation = weightValidation,
+                            ) ?: return@Button
+                            onEdit(
+                                editedBag,
                             )
                         } else {
                             onSave(
@@ -1045,9 +1367,11 @@ fun AddBagSheet(
                                 roaster.takeIf { it.isNotBlank() },
                                 originCountry.takeIf { it.isNotBlank() },
                                 originRegion.takeIf { it.isNotBlank() },
+                                farm.takeIf { it.isNotBlank() },
+                                altitude.takeIf { it.isNotBlank() },
                                 roastLevel.takeIf { it.isNotBlank() },
                                 barcode.takeIf { it.isNotBlank() },
-                                WeightParser.parseToGrams(weight),
+                                weightValidation.valueGrams,
                                 notes.takeIf { it.isNotBlank() },
                                 variety.takeIf { it.isNotBlank() },
                                 processType.takeIf { it.isNotBlank() },
@@ -1062,7 +1386,11 @@ fun AddBagSheet(
                 },
                 colors = saveButtonColors,
                 shape = MaterialTheme.shapes.large,
-                enabled = name.isNotBlank() && !isProcessing,
+                enabled = name.isNotBlank() &&
+                    weightValidation.isValid &&
+                    !isExploringQr &&
+                    !isProcessing &&
+                    !isSaving,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
@@ -1070,6 +1398,21 @@ fun AddBagSheet(
                     .height(56.dp),
             ) {
                 Text(saveButtonLabel, style = MaterialTheme.typography.labelLarge)
+            }
+            }
+            if (isSaving) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .pointerInput(Unit) {
+                            awaitPointerEventScope {
+                                while (true) {
+                                    awaitPointerEvent().changes.forEach { it.consume() }
+                                }
+                            }
+                        }
+                        .clearAndSetSemantics { disabled() },
+                )
             }
         }
     }
@@ -1107,6 +1450,8 @@ private val SNAP_APPROVE_EMOJI_MAP = mapOf(
 private data class SnapApproveFormState(
     val origin: String,
     val region: String,
+    val farm: String,
+    val altitude: String,
     val roastLevel: String,
     val variety: String,
     val processType: String,
@@ -1124,6 +1469,8 @@ private fun buildSnapApproveFieldItems(
 ): List<SnapApproveFieldItem> = listOfNotNull(
     snapApproveFieldItem("origin", form.origin, fieldEvidence, fieldConfidence),
     snapApproveFieldItem("region", form.region, fieldEvidence, fieldConfidence),
+    snapApproveFieldItem("farm", form.farm, fieldEvidence, fieldConfidence),
+    snapApproveFieldItem("altitude", form.altitude, fieldEvidence, fieldConfidence),
     snapApproveFieldItem("processType", form.processType, fieldEvidence, fieldConfidence),
     snapApproveFieldItem("variety", form.variety, fieldEvidence, fieldConfidence),
     snapApproveFieldItem("roastLevel", form.roastLevel, fieldEvidence, fieldConfidence),
@@ -1178,6 +1525,8 @@ private fun resolvedFieldConfidence(
 private fun fieldNeedsOptionalSection(fieldName: String): Boolean = fieldName in setOf(
     "roastLevel",
     "variety",
+    "farm",
+    "altitude",
     "processType",
     "tastingNotes",
     "expiryDate",
@@ -1198,6 +1547,8 @@ private fun fullFormIndexForField(
                 listOf(
                     "roastLevel",
                     "variety",
+                    "farm",
+                    "altitude",
                     "processType",
                     "tastingNotes",
                     "expiryDate",
@@ -1212,12 +1563,46 @@ private fun fullFormIndexForField(
 }
 
 @Composable
+private fun CapturedPhotoReviewStrip(capturedPhotoUris: String?) {
+    val photoUris = remember(capturedPhotoUris) {
+        BagPhotoReviewUris.parse(capturedPhotoUris)
+    }
+    if (photoUris.isEmpty()) return
+
+    var fullScreenPhotoUri by remember(capturedPhotoUris) { mutableStateOf<String?>(null) }
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
+    ) {
+        items(items = photoUris, key = { it }) { uri ->
+            BagThumbnail(
+                uri = uri,
+                modifier = Modifier
+                    .size(168.dp)
+                    .clickable { fullScreenPhotoUri = uri },
+                downsampleTarget = 168.dp,
+                shape = MaterialTheme.shapes.medium,
+                contentDescription = stringResource(R.string.cd_captured_bag_photo),
+            )
+        }
+    }
+    fullScreenPhotoUri?.let { uri ->
+        FullScreenImageViewer(uri = uri) {
+            fullScreenPhotoUri = null
+        }
+    }
+}
+
+@Composable
 private fun SnapApproveSection(
-    capturedPhotoUris: String?,
     name: String,
     onNameChange: (String) -> Unit,
+    nameSuggestions: List<CoffeeInputSuggestion>,
     roaster: String,
     onRoasterChange: (String) -> Unit,
+    roasterSuggestions: List<CoffeeInputSuggestion>,
     confidentFields: List<SnapApproveFieldItem>,
     reviewFields: List<SnapApproveFieldItem>,
     hasMissingDetails: Boolean,
@@ -1229,45 +1614,22 @@ private fun SnapApproveSection(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier.padding(bottom = 12.dp),
     ) {
-        capturedPhotoUris
-            ?.split(",")
-            ?.firstOrNull()
-            ?.trim()
-            ?.takeIf { it.isNotBlank() }
-            ?.let { uri ->
-                BagThumbnail(
-                    uri = uri,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(168.dp),
-                    downsampleTarget = 168.dp,
-                    shape = MaterialTheme.shapes.medium,
-                    contentDescription = stringResource(R.string.cd_captured_bag_photo),
-                )
-            }
-
         ElevatedCard(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                OutlinedTextField(
+                SuggestingTextField(
                     value = name,
                     onValueChange = onNameChange,
-                    singleLine = true,
-                    placeholder = { Text("Bag name") },
-                    textStyle = MaterialTheme.typography.titleLarge,
-                    shape = MaterialTheme.shapes.medium,
-                    modifier = Modifier.fillMaxWidth(),
+                    label = stringResource(R.string.label_name_required),
+                    suggestions = nameSuggestions,
                 )
-                OutlinedTextField(
+                SuggestingTextField(
                     value = roaster,
                     onValueChange = onRoasterChange,
-                    singleLine = true,
-                    placeholder = { Text("Roaster") },
-                    textStyle = MaterialTheme.typography.bodyLarge,
-                    shape = MaterialTheme.shapes.medium,
-                    modifier = Modifier.fillMaxWidth(),
+                    label = stringResource(R.string.label_roaster),
+                    suggestions = roasterSuggestions,
                 )
             }
         }

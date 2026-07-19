@@ -10,6 +10,7 @@ data class KnownFieldValues(
     val roastLevels: List<String> = emptyList(),
     val tastingNotes: List<String> = emptyList(),
     val farms: List<String> = emptyList(),
+    val altitudes: List<String> = emptyList(),
 ) {
     companion object {
         val EMPTY = KnownFieldValues()

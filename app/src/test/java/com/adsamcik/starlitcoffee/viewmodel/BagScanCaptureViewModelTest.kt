@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.adsamcik.starlitcoffee.util.BagCaptureSide
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +31,7 @@ class BagScanCaptureViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(mainDispatcher)
-        viewModel = BagScanCaptureViewModel()
+        viewModel = BagScanCaptureViewModel(SavedStateHandle())
     }
 
     @After
@@ -47,6 +48,7 @@ class BagScanCaptureViewModelTest {
         assertTrue(state.photos.isEmpty())
         assertEquals(BagCaptureSide.FRONT, state.nextSide)
         assertEquals(false, state.hasPhotos)
+        assertTrue(state.sessionId.isNotBlank())
     }
 
     @Test
@@ -68,6 +70,34 @@ class BagScanCaptureViewModelTest {
     }
 
     @Test
+    fun `removing the final photo emits an empty generation`() = runTest(mainDispatcher) {
+        val received = mutableListOf<String>()
+        backgroundScope.launch { viewModel.extractionRequests.collect { received += it } }
+
+        viewModel.addPhoto("uri-a")
+        advanceTimeBy(pastDebounce)
+        viewModel.removePhoto("uri-a")
+        advanceTimeBy(pastDebounce)
+        advanceUntilIdle()
+
+        assertEquals(listOf("uri-a", ""), received)
+    }
+
+    @Test
+    fun `finishing immediately after final removal preserves empty generation`() = runTest(mainDispatcher) {
+        val received = mutableListOf<String>()
+        backgroundScope.launch { viewModel.extractionRequests.collect { received += it } }
+
+        viewModel.addPhoto("uri-a")
+        advanceTimeBy(pastDebounce)
+        viewModel.removePhoto("uri-a")
+        viewModel.finishCapturing()
+        advanceUntilIdle()
+
+        assertEquals(listOf("uri-a", ""), received)
+    }
+
+    @Test
     fun `finishCapturing switches to reviewing phase`() {
         viewModel.addPhoto("uri-a")
         viewModel.finishCapturing()
@@ -83,12 +113,44 @@ class BagScanCaptureViewModelTest {
 
     @Test
     fun `reset clears photos and phase`() {
+        val originalSessionId = viewModel.uiState.value.sessionId
         viewModel.addPhoto("uri-a")
         viewModel.finishCapturing()
         viewModel.reset()
         val state = viewModel.uiState.value
         assertEquals(BagScanPhase.CAPTURING, state.phase)
         assertTrue(state.photos.isEmpty())
+        assertTrue(state.sessionId != originalSessionId)
+    }
+
+    @Test
+    fun `saved state restores session phase and photos`() {
+        val handle = SavedStateHandle()
+        val original = BagScanCaptureViewModel(handle)
+        original.addPhoto("uri-a")
+        original.finishCapturing()
+
+        val restored = BagScanCaptureViewModel(handle).uiState.value
+
+        assertEquals(original.uiState.value.sessionId, restored.sessionId)
+        assertEquals(BagScanPhase.REVIEWING, restored.phase)
+        assertEquals(listOf("uri-a"), restored.photos.map { it.uri })
+    }
+
+    @Test
+    fun `background review restores session photos and reviewing phase`() {
+        viewModel.resumeReview(
+            sessionId = "rescan-session",
+            photoUrisCsv = "file:///front.jpg,file:///back.jpg",
+        )
+
+        val state = viewModel.uiState.value
+        assertEquals("rescan-session", state.sessionId)
+        assertEquals(BagScanPhase.REVIEWING, state.phase)
+        assertEquals(
+            listOf("file:///front.jpg", "file:///back.jpg"),
+            state.photos.map { it.uri },
+        )
     }
 
     // --- Debounced extraction requests ---

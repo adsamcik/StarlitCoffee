@@ -44,6 +44,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,33 +57,64 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.navigation.ScanDraftTransfer
 import com.adsamcik.starlitcoffee.StarlitCoffeeApp
+import com.adsamcik.starlitcoffee.data.work.isAddNewBagReview
 import com.adsamcik.starlitcoffee.ui.component.AddBagSheet
-import com.adsamcik.starlitcoffee.ui.component.BagAnalysisProgressScreen
-import com.adsamcik.starlitcoffee.ui.component.ConsentOutcome
-import com.adsamcik.starlitcoffee.ui.component.messageRes
-import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerConsentFlow
+import com.adsamcik.starlitcoffee.ui.component.BagAnalysisPreviewCard
 import com.adsamcik.starlitcoffee.ui.component.BagCard
 import com.adsamcik.starlitcoffee.ui.component.BagDetailSheet
+import com.adsamcik.starlitcoffee.ui.component.ConsentOutcome
+import com.adsamcik.starlitcoffee.ui.component.DecafFilter
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
+import com.adsamcik.starlitcoffee.ui.component.ScannedBagSaveResult
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
+import com.adsamcik.starlitcoffee.ui.component.messageRes
+import com.adsamcik.starlitcoffee.ui.component.normalizedForCounts
+import com.adsamcik.starlitcoffee.ui.component.persistScannedBag
+import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerConsentFlow
+import com.adsamcik.starlitcoffee.ui.component.shouldApplyBagResultToDraft
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
+import com.adsamcik.starlitcoffee.util.BagPhotoRect
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
+import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.util.ScanFieldSupport
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import java.text.SimpleDateFormat
 import java.util.HashMap
 import java.util.Locale
+import java.util.UUID
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import androidx.core.net.toUri
-
-private const val TAG = "BagInventoryScreen"
+import kotlinx.coroutines.withContext
 
 // Longest-side pixel target for the focused square thumbnail baked at save time.
 // Comfortably covers the 68.dp list-card slot on high-density screens.
 private const val THUMBNAIL_TARGET_PX = 512
+
+private val bagPhotoRectSaver: Saver<BagPhotoRect?, ArrayList<Float>> = Saver(
+    save = { focus ->
+        focus?.let {
+            arrayListOf(
+                it.leftFraction,
+                it.topFraction,
+                it.rightFraction,
+                it.bottomFraction,
+            )
+        }
+    },
+    restore = { values ->
+        BagPhotoRect(
+            leftFraction = values[0],
+            topFraction = values[1],
+            rightFraction = values[2],
+            bottomFraction = values[3],
+        )
+    },
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,11 +128,18 @@ fun BagInventoryScreen(
     capturedPhotosResult: String? = null,
     scanFieldsResult: HashMap<String, String>? = null,
     scannedBarcodeResult: String? = null,
+    scanDraftTransferResult: ScanDraftTransfer? = null,
+    onCapturedPhotosResultConsumed: () -> Unit = {},
+    onScanFieldsResultConsumed: () -> Unit = {},
+    onScannedBarcodeResultConsumed: () -> Unit = {},
+    onScanDraftTransferResultConsumed: () -> Unit = {},
 ){
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
     val flavorTags by brewViewModel.flavorTags.collectAsStateWithLifecycle()
     val knownFieldValues by brewViewModel.knownFieldValues.collectAsStateWithLifecycle()
+    val bagAnalysisPreview by brewViewModel.bagAnalysisPreview.collectAsStateWithLifecycle()
+    val bagPhotoRetryResult by brewViewModel.bagPhotoRetryResult.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
 
     val rankedBags = remember(bags, allBrewLogs, flavorTags) {
@@ -113,39 +154,67 @@ fun BagInventoryScreen(
         .firstOrNull { it.bag.status == "OPEN" }
         ?.bag?.id
 
-    var decafFilter by remember { mutableStateOf(com.adsamcik.starlitcoffee.ui.component.DecafFilter.ALL) }
+    var decafFilter by remember { mutableStateOf(DecafFilter.ALL) }
     val decafCounts = remember(bags) {
         mapOf(
-            com.adsamcik.starlitcoffee.ui.component.DecafFilter.ALL to bags.size,
-            com.adsamcik.starlitcoffee.ui.component.DecafFilter.REGULAR to bags.count { !it.isDecaf },
-            com.adsamcik.starlitcoffee.ui.component.DecafFilter.DECAF to bags.count { it.isDecaf },
+            DecafFilter.ALL to bags.size,
+            DecafFilter.REGULAR to bags.count { !it.isDecaf },
+            DecafFilter.DECAF to bags.count { it.isDecaf },
         )
     }
-    val filteredRankedBags = remember(rankedBags, decafFilter) {
-        rankedBags.filter { decafFilter.matches(it.bag.isDecaf) }
+    val effectiveDecafFilter = normalizeInventoryDecafFilter(
+        selected = decafFilter,
+        regularCount = decafCounts[DecafFilter.REGULAR] ?: 0,
+        decafCount = decafCounts[DecafFilter.DECAF] ?: 0,
+    )
+    val filteredRankedBags = remember(rankedBags, effectiveDecafFilter) {
+        rankedBags.filter { effectiveDecafFilter.matches(it.bag.isDecaf) }
+    }
+    LaunchedEffect(effectiveDecafFilter) {
+        if (decafFilter != effectiveDecafFilter) decafFilter = effectiveDecafFilter
     }
 
-    var showAddSheet by remember { mutableStateOf(false) }
-    var selectedBag by remember { mutableStateOf<CoffeeBagEntity?>(null) }
-    var editBag by remember { mutableStateOf<CoffeeBagEntity?>(null) }
+    var showAddSheet by rememberSaveable { mutableStateOf(false) }
+    var selectedBagId by remember { mutableStateOf<Long?>(null) }
+    val selectedBag = remember(selectedBagId, bags) {
+        selectedInventoryBag(bags, selectedBagId)
+    }
+    LaunchedEffect(selectedBagId, selectedBag) {
+        if (selectedBagId != null && selectedBag == null) selectedBagId = null
+    }
+    var editBagId by rememberSaveable { mutableStateOf<Long?>(null) }
+    val editBag = remember(editBagId, bags) {
+        editBagId?.let { id -> bags.find { it.id == id } }
+    }
     var ocrPrefill by remember { mutableStateOf<com.adsamcik.starlitcoffee.util.OcrFieldExtractor.OcrExtractionResult?>(null) }
-    var capturedPhotoUris by remember { mutableStateOf<String?>(null) }
-    var detectedBarcode by remember { mutableStateOf<String?>(null) }
-    var detectedQrUrl by remember { mutableStateOf<String?>(null) }
-    var offLookupName by remember { mutableStateOf<String?>(null) }
-    var offLookupRoaster by remember { mutableStateOf<String?>(null) }
+    var capturedPhotoUris by rememberSaveable { mutableStateOf<String?>(null) }
+    var detectedBarcode by rememberSaveable { mutableStateOf<String?>(null) }
+    var detectedQrUrl by rememberSaveable { mutableStateOf<String?>(null) }
+    var offLookupName by rememberSaveable { mutableStateOf<String?>(null) }
+    var offLookupRoaster by rememberSaveable { mutableStateOf<String?>(null) }
     var fieldEvidence by remember { mutableStateOf<Map<String, BagFieldEvidence>>(emptyMap()) }
     var reviewHints by remember { mutableStateOf<List<BagPhotoReviewHint>>(emptyList()) }
     var llmStatus by remember { mutableStateOf(LlmEnrichmentStatus.NOT_RUN) }
-    var thumbnailFocus by remember {
-        mutableStateOf<com.adsamcik.starlitcoffee.util.BagPhotoRect?>(null)
+    var thumbnailFocus by rememberSaveable(stateSaver = bagPhotoRectSaver) {
+        mutableStateOf<BagPhotoRect?>(null)
     }
     var isProcessingScan by remember { mutableStateOf(false) }
+    var isSavingBag by remember { mutableStateOf(false) }
+    var isUpdatingBag by remember { mutableStateOf(false) }
+    var isDeletingBag by remember { mutableStateOf(false) }
     var showRetakeDialog by remember { mutableStateOf(false) }
-    var lastProcessedPhotos by remember { mutableStateOf<String?>(null) }
     var fabExpanded by remember { mutableStateOf(false) }
+    var bagDraftSessionId by rememberSaveable { mutableStateOf(UUID.randomUUID().toString()) }
+    var bagDraftGenerationId by rememberSaveable { mutableStateOf<String?>(null) }
     val context = LocalContext.current
+    val couldNotReadLabel = stringResource(R.string.msg_could_not_read_label)
+    val couldNotSaveBag = stringResource(R.string.msg_could_not_save_bag)
+    val bagSaved = stringResource(R.string.msg_bag_saved)
+    val consentMessages = ConsentOutcome.entries.associateWith { outcome ->
+        stringResource(outcome.messageRes())
+    }
     val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     // Photo picker launcher for "From photo" option. Uses
     // PickMultipleVisualMedia(maxItems = 2) so the user can pick front + back
@@ -154,7 +223,9 @@ fun BagInventoryScreen(
     // emitBagPhotoResult.combinedOcrText), it just needs the consumer UI to
     // surface that capability. Index 0 of the returned list is treated as
     // the FRONT photo, index 1 as the BACK; the pipeline tags them that
-    // way and the LLM prompt knows the OCR text may span both sides.
+    // way and the LLM prompt knows the OCR text may span both sides. Picker
+    // access is temporary, so import the images before scheduling the durable
+    // WorkManager pipeline.
     //
     // maxItems is the documented mechanism (Android 13+). Lower API levels
     // see the system picker's own default cap; on those devices the user
@@ -165,20 +236,42 @@ fun BagInventoryScreen(
     ) { uris ->
         if (uris.isNotEmpty()) {
             fabExpanded = false
-            val photosCsv = uris.joinToString(",") { it.toString() }
-            showAddSheet = true
-            isProcessingScan = true
-            capturedPhotoUris = photosCsv
-            ocrPrefill = null
-            detectedBarcode = null
-            detectedQrUrl = null
-            offLookupName = null
-            offLookupRoaster = null
-            fieldEvidence = emptyMap()
-            reviewHints = emptyList()
-            llmStatus = LlmEnrichmentStatus.NOT_RUN
-            thumbnailFocus = null
-            brewViewModel.processNewBagPhotos(photosCsv, knownFieldValues)
+            coroutineScope.launch {
+                val cachedUris = withContext(Dispatchers.IO) {
+                    ScanPhotoStorage.copyPhotosToCache(
+                        context = context.applicationContext,
+                        sourceUris = uris.map { it.toString() },
+                    )
+                }
+                if (cachedUris == null) {
+                    Toast.makeText(
+                        context,
+                        couldNotReadLabel,
+                        Toast.LENGTH_LONG,
+                    ).show()
+                    return@launch
+                }
+
+                val photosCsv = cachedUris.joinToString(",")
+                showAddSheet = false
+                isProcessingScan = false
+                capturedPhotoUris = photosCsv
+                ocrPrefill = null
+                detectedBarcode = null
+                detectedQrUrl = null
+                offLookupName = null
+                offLookupRoaster = null
+                fieldEvidence = emptyMap()
+                reviewHints = emptyList()
+                llmStatus = LlmEnrichmentStatus.NOT_RUN
+                thumbnailFocus = null
+                brewViewModel.processNewBagPhotos(
+                    photosCsv = photosCsv,
+                    knownFieldValues = knownFieldValues,
+                    deliverInBackground = true,
+                    sessionId = bagDraftSessionId,
+                )
+            }
         }
     }
 
@@ -187,8 +280,15 @@ fun BagInventoryScreen(
 
     // Observe bag photo processing results from ViewModel
     val bagPhotoResult by brewViewModel.bagPhotoResult.collectAsStateWithLifecycle()
-    LaunchedEffect(bagPhotoResult) {
-        val result = bagPhotoResult ?: return@LaunchedEffect
+    LaunchedEffect(bagPhotoResult, showAddSheet, bagDraftSessionId) {
+        val sessionResult = bagPhotoResult ?: return@LaunchedEffect
+        if (!isAddNewBagReview(sessionResult.reviewContext)) return@LaunchedEffect
+        if (!shouldApplyBagResultToDraft(showAddSheet, bagDraftSessionId, sessionResult.sessionId)) {
+            return@LaunchedEffect
+        }
+        bagDraftSessionId = sessionResult.sessionId
+        bagDraftGenerationId = sessionResult.generationId.takeIf(String::isNotBlank)
+        val result = sessionResult.result
         ocrPrefill = result.ocrPrefill
         capturedPhotoUris = result.capturedPhotoUris
         detectedBarcode = result.detectedBarcode
@@ -206,7 +306,26 @@ fun BagInventoryScreen(
         // while the inventory is showing — e.g. process-death recovery delivers a
         // completed scan to bagPhotoResult on relaunch.
         showAddSheet = true
-        brewViewModel.clearBagPhotoResult()
+    }
+
+    LaunchedEffect(bagPhotoRetryResult, bagDraftSessionId) {
+        val sessionResult = bagPhotoRetryResult ?: return@LaunchedEffect
+        if (!isAddNewBagReview(sessionResult.reviewContext)) return@LaunchedEffect
+        if (sessionResult.sessionId != bagDraftSessionId) return@LaunchedEffect
+        bagDraftGenerationId = sessionResult.generationId.takeIf(String::isNotBlank)
+            ?: bagDraftGenerationId
+        val result = sessionResult.result
+        ocrPrefill = result.ocrPrefill ?: ocrPrefill
+        capturedPhotoUris = result.capturedPhotoUris ?: capturedPhotoUris
+        detectedBarcode = result.detectedBarcode ?: detectedBarcode
+        detectedQrUrl = result.detectedQrUrl ?: detectedQrUrl
+        offLookupName = result.offLookupName ?: offLookupName
+        offLookupRoaster = result.offLookupRoaster ?: offLookupRoaster
+        fieldEvidence = result.fieldEvidence.ifEmpty { fieldEvidence }
+        reviewHints = result.reviewHints.ifEmpty { reviewHints }
+        llmStatus = result.llmStatus
+        thumbnailFocus = result.thumbnailFocus ?: thumbnailFocus
+        isProcessingScan = false
     }
 
     // Notification deep-link recovery: the "bag analysis complete" notification
@@ -214,8 +333,15 @@ fun BagInventoryScreen(
     // prefilled review form regardless of navigation timing (a freshly shown
     // BagInventory still sees the replayed value), then consume it.
     val pendingScanReview by brewViewModel.pendingScanReview.collectAsStateWithLifecycle()
-    LaunchedEffect(pendingScanReview) {
-        val result = pendingScanReview ?: return@LaunchedEffect
+    LaunchedEffect(pendingScanReview, showAddSheet, bagDraftSessionId) {
+        val sessionResult = pendingScanReview ?: return@LaunchedEffect
+        if (!isAddNewBagReview(sessionResult.reviewContext)) return@LaunchedEffect
+        if (!shouldApplyBagResultToDraft(showAddSheet, bagDraftSessionId, sessionResult.sessionId)) {
+            return@LaunchedEffect
+        }
+        bagDraftSessionId = sessionResult.sessionId
+        bagDraftGenerationId = sessionResult.generationId.takeIf(String::isNotBlank)
+        val result = sessionResult.result
         ocrPrefill = result.ocrPrefill
         capturedPhotoUris = result.capturedPhotoUris
         detectedBarcode = result.detectedBarcode
@@ -229,13 +355,12 @@ fun BagInventoryScreen(
         isProcessingScan = false
         showRetakeDialog = false
         showAddSheet = true
-        brewViewModel.consumePendingScanReview()
+        brewViewModel.acknowledgePendingScanReviewOpened(sessionResult.sessionId)
     }
 
     LaunchedEffect(capturedPhotos) {
         val photos = capturedPhotos ?: return@LaunchedEffect
-        if (photos == lastProcessedPhotos) return@LaunchedEffect
-        lastProcessedPhotos = photos
+        onCapturedPhotosResultConsumed()
 
         // User skipped camera → open empty form
         if (photos == "skipped") {
@@ -247,8 +372,8 @@ fun BagInventoryScreen(
             return@LaunchedEffect
         }
 
-        showAddSheet = true
-        isProcessingScan = true
+        showAddSheet = false
+        isProcessingScan = false
         capturedPhotoUris = photos
         ocrPrefill = null
         detectedBarcode = null
@@ -260,15 +385,18 @@ fun BagInventoryScreen(
         llmStatus = LlmEnrichmentStatus.NOT_RUN
         thumbnailFocus = null
 
-        brewViewModel.processNewBagPhotos(photos, knownFieldValues)
+        brewViewModel.processNewBagPhotos(
+            photosCsv = photos,
+            knownFieldValues = knownFieldValues,
+            deliverInBackground = true,
+            sessionId = bagDraftSessionId,
+        )
     }
 
     // Handle resolved scan fields from LiveScan "Review First"
-    var lastProcessedScanFields by remember { mutableStateOf<Map<String, String>?>(null) }
     LaunchedEffect(scanFieldsResult) {
         val fields = scanFieldsResult ?: return@LaunchedEffect
-        if (fields == lastProcessedScanFields) return@LaunchedEffect
-        lastProcessedScanFields = fields
+        onScanFieldsResultConsumed()
 
         ocrPrefill = ScanFieldSupport.buildPrefill(fields)
         fieldEvidence = ScanFieldSupport.buildFieldEvidence(fields)
@@ -287,6 +415,7 @@ fun BagInventoryScreen(
     // Handle barcode scanned from dedicated BarcodeScannerScreen
     LaunchedEffect(scannedBarcodeResult) {
         val barcode = scannedBarcodeResult ?: return@LaunchedEffect
+        onScannedBarcodeResultConsumed()
         detectedBarcode = barcode
         ocrPrefill = null
         fieldEvidence = emptyMap()
@@ -306,6 +435,26 @@ fun BagInventoryScreen(
             }
         }
 
+        showAddSheet = true
+    }
+
+    LaunchedEffect(scanDraftTransferResult?.eventId) {
+        val transfer = scanDraftTransferResult ?: return@LaunchedEffect
+        onScanDraftTransferResultConsumed()
+        bagDraftSessionId = transfer.scanSessionId
+        bagDraftGenerationId = transfer.generationId
+        ocrPrefill = ScanFieldSupport.buildPrefill(transfer.fields)
+        fieldEvidence = ScanFieldSupport.buildFieldEvidence(transfer.fields)
+        capturedPhotoUris = transfer.capturedPhotoUris
+        detectedBarcode = transfer.detectedBarcode
+        detectedQrUrl = transfer.detectedQrUrl
+        offLookupName = null
+        offLookupRoaster = null
+        reviewHints = emptyList()
+        llmStatus = LlmEnrichmentStatus.NOT_RUN
+        thumbnailFocus = transfer.thumbnailFocus?.toBagPhotoRect()
+        isProcessingScan = false
+        showRetakeDialog = false
         showAddSheet = true
     }
 
@@ -343,6 +492,7 @@ fun BagInventoryScreen(
                             SmallFloatingActionButton(
                                 onClick = {
                                     fabExpanded = false
+                                    bagDraftSessionId = UUID.randomUUID().toString()
                                     photoPickerLauncher.launch(
                                         PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
                                     )
@@ -371,6 +521,7 @@ fun BagInventoryScreen(
                             SmallFloatingActionButton(
                                 onClick = {
                                     fabExpanded = false
+                                    bagDraftSessionId = UUID.randomUUID().toString()
                                     onNavigateToCamera()
                                 },
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -397,6 +548,7 @@ fun BagInventoryScreen(
                             SmallFloatingActionButton(
                                 onClick = {
                                     fabExpanded = false
+                                    bagDraftSessionId = UUID.randomUUID().toString()
                                     onNavigateToBarcode()
                                 },
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -423,6 +575,7 @@ fun BagInventoryScreen(
                             SmallFloatingActionButton(
                                 onClick = {
                                     fabExpanded = false
+                                    bagDraftSessionId = UUID.randomUUID().toString()
                                     // Reset any preflight scan state so the sheet opens blank
                                     detectedBarcode = null
                                     detectedQrUrl = null
@@ -467,7 +620,7 @@ fun BagInventoryScreen(
         ) {
             ScreenTopBar(title = stringResource(R.string.label_your_beans), onBack = onBack)
 
-            if (bags.isEmpty()) {
+            if (bags.isEmpty() && bagAnalysisPreview == null) {
                 EmptyStateBox(
                     icon = Icons.Filled.ShoppingBag,
                     message = stringResource(R.string.msg_no_beans_yet),
@@ -485,6 +638,14 @@ fun BagInventoryScreen(
                     bottom = 88.dp,
                 ),
             ) {
+                bagAnalysisPreview?.let { preview ->
+                    item(key = "bag_analysis_preview") {
+                        BagAnalysisPreviewCard(
+                            result = preview.result,
+                            progress = preview.progress,
+                        )
+                    }
+                }
                 item {
                     Column(
                         modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
@@ -503,11 +664,11 @@ fun BagInventoryScreen(
                         )
                     }
                 }
-                if (decafCounts[com.adsamcik.starlitcoffee.ui.component.DecafFilter.DECAF]!! > 0 &&
-                    decafCounts[com.adsamcik.starlitcoffee.ui.component.DecafFilter.REGULAR]!! > 0) {
+                if (decafCounts[DecafFilter.DECAF]!! > 0 &&
+                    decafCounts[DecafFilter.REGULAR]!! > 0) {
                     item {
                         com.adsamcik.starlitcoffee.ui.component.DecafFilterChipRow(
-                            selected = decafFilter,
+                            selected = effectiveDecafFilter,
                             counts = decafCounts,
                             onSelected = { decafFilter = it },
                             modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
@@ -532,7 +693,7 @@ fun BagInventoryScreen(
                     BagCard(
                         bag = bag,
                         dateFormat = dateFormat,
-                        onTap = { selectedBag = bag },
+                        onTap = { selectedBagId = bag.id },
                         modifier = Modifier.animateItem(),
                         isRecommended = bag.id == topRecommendedId,
                         brewsRemaining = brewsRemaining,
@@ -542,8 +703,6 @@ fun BagInventoryScreen(
         }
         }
     }
-
-    val coroutineScope = androidx.compose.runtime.rememberCoroutineScope()
 
     // First-run AI authorization. When the bag-photo LLM enrichment comes back
     // UNAVAILABLE — typically because Mindlayer is installed but the user has
@@ -555,31 +714,15 @@ fun BagInventoryScreen(
         when (outcome) {
             ConsentOutcome.GRANTED, ConsentOutcome.ALREADY_APPROVED -> coroutineScope.launch {
                 (context.applicationContext as? StarlitCoffeeApp)?.reconnectMindlayer()
-                brewViewModel.retryBagPhotoLlm()
+                isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
             }
-            else -> Toast.makeText(
-                context,
-                context.getString(outcome.messageRes()),
-                Toast.LENGTH_LONG,
-            ).show()
+            else -> Toast.makeText(context, consentMessages.getValue(outcome), Toast.LENGTH_LONG).show()
         }
     }
 
     // Add bag sheet
     val brewNowLabel = stringResource(R.string.action_brew_now)
-    if (showAddSheet && isProcessingScan) {
-        // Dedicated analyzing screen shown while the AI extraction runs on a
-        // freshly captured photo. The user can skip the AI (settle with the
-        // OCR/barcode results) or send it to the background and be notified.
-        BagAnalysisProgressScreen(
-            onSkip = { brewViewModel.skipBagPhotoLlm() },
-            onRunInBackground = {
-                brewViewModel.continueBagAnalysisInBackground()
-                showAddSheet = false
-                isProcessingScan = false
-            },
-        )
-    } else if (showAddSheet) {
+    if (showAddSheet) {
         AddBagSheet(
             initialBarcode = detectedBarcode,
             ocrPrefill = ocrPrefill,
@@ -591,19 +734,31 @@ fun BagInventoryScreen(
             reviewHints = reviewHints,
             llmStatus = llmStatus,
             isProcessing = isProcessingScan,
+            isSaving = isSavingBag,
             existingBags = bags,
             onScanBarcode = {
+                val discardedPhotoUris = capturedPhotoUris
                 showAddSheet = false
+                brewViewModel.completeBagPhotoReview(bagDraftSessionId)
+                brewViewModel.cancelBagPhotoProcessing(bagDraftSessionId)
+                coroutineScope.launch(Dispatchers.IO) {
+                    ScanPhotoStorage.deleteStagedCaptures(
+                        context.applicationContext,
+                        discardedPhotoUris,
+                    )
+                }
                 onNavigateToBarcode()
             },
             onExploreQrUrl = { url, callback ->
                 brewViewModel.exploreApprovedQrLink(url, callback)
             },
             onRetryLlmEnrichment = {
-                brewViewModel.retryBagPhotoLlm()
+                isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
             },
             onEnableAi = aiConsentFlow.request,
             onDismiss = {
+                val discardedPhotoUris = capturedPhotoUris
+                val discardedSessionId = bagDraftSessionId
                 showAddSheet = false
                 isProcessingScan = false
                 showRetakeDialog = false
@@ -616,12 +771,23 @@ fun BagInventoryScreen(
                 fieldEvidence = emptyMap()
                 reviewHints = emptyList()
                 llmStatus = LlmEnrichmentStatus.NOT_RUN
+                bagDraftGenerationId = null
+                bagDraftSessionId = UUID.randomUUID().toString()
+                brewViewModel.completeBagPhotoReview(discardedSessionId)
+                coroutineScope.launch(Dispatchers.IO) {
+                    ScanPhotoStorage.deleteStagedCaptures(
+                        context.applicationContext,
+                        discardedPhotoUris,
+                    )
+                }
             },
-            onSave = {
+            onSave = save@{
                 name,
                 roaster,
                 origin,
                 region,
+                farm,
+                altitude,
                 roastLevel,
                 barcode,
                 weightG,
@@ -634,77 +800,87 @@ fun BagInventoryScreen(
                 roastDateMillis,
                 expiryDateMillis,
                 ->
+                val saveSessionId = bagDraftSessionId
+                if (isSavingBag || !brewViewModel.beginScannedBagSave(saveSessionId)) return@save
+                isSavingBag = true
                 val rawPhotoUris = capturedPhotoUris
                 val qrUrl = detectedQrUrl
                 val scanFocus = thumbnailFocus
-                showAddSheet = false
-                isProcessingScan = false
-                showRetakeDialog = false
-                ocrPrefill = null
-                capturedPhotoUris = null
-                detectedBarcode = null
-                detectedQrUrl = null
-                fieldEvidence = emptyMap()
-                reviewHints = emptyList()
-                llmStatus = LlmEnrichmentStatus.NOT_RUN
-                thumbnailFocus = null
 
                 // Copy photos to permanent storage on background thread
                 coroutineScope.launch {
-                    val permanentUris = rawPhotoUris?.let { uris ->
-                        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                            copyPhotosToPermanentStorage(context, uris)
-                        }
-                    }
-                    val frontPhotoUri = permanentUris?.split(",")?.firstOrNull()
-                    // Crop a focused square thumbnail around the label region the
-                    // scan detected; fall back to the full front photo otherwise.
-                    val thumbnailUri = if (frontPhotoUri != null && scanFocus != null) {
-                        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                            com.adsamcik.starlitcoffee.util.BagThumbnailWriter.createFocusedThumbnail(
+                    try {
+                        when (
+                            val saveResult = persistScannedBag(
                                 context = context,
-                                sourceUri = frontPhotoUri,
-                                focus = scanFocus,
-                                targetSizePx = THUMBNAIL_TARGET_PX,
-                            )
+                                brewViewModel = brewViewModel,
+                                rawPhotoUris = rawPhotoUris,
+                                scanSessionId = saveSessionId,
+                                thumbnailFocus = scanFocus,
+                                thumbnailTargetPx = THUMBNAIL_TARGET_PX,
+                            ) { photoUri, photoUris ->
+                                BrewViewModel.CoffeeBagInput(
+                                    name = name,
+                                    roaster = roaster,
+                                    origin = origin,
+                                    region = region,
+                                    farm = farm,
+                                    altitude = altitude,
+                                    roastLevel = roastLevel,
+                                    barcode = barcode,
+                                    weightG = weightG,
+                                    notes = notes,
+                                    variety = variety,
+                                    processType = processType,
+                                    tastingNotes = tastingNotes,
+                                    isDecaf = isDecaf,
+                                    decafProcess = decafProcess,
+                                    roastDate = roastDateMillis,
+                                    expiryDate = expiryDateMillis,
+                                    photoUri = photoUri,
+                                    photoUris = photoUris,
+                                    traceabilityUrl = qrUrl,
+                                )
+                            }
+                        ) {
+                        ScannedBagSaveResult.PhotoCopyFailed -> {
+                            Toast.makeText(context, couldNotReadLabel, Toast.LENGTH_LONG).show()
                         }
-                    } else {
-                        null
-                    }
-                    brewViewModel.addCoffeeBag(
-                        input = BrewViewModel.CoffeeBagInput(
-                            name = name,
-                            roaster = roaster,
-                            origin = origin,
-                            region = region,
-                            roastLevel = roastLevel,
-                            barcode = barcode,
-                            weightG = weightG,
-                            notes = notes,
-                            variety = variety,
-                            processType = processType,
-                            tastingNotes = tastingNotes,
-                            isDecaf = isDecaf,
-                            decafProcess = decafProcess,
-                            roastDate = roastDateMillis,
-                            expiryDate = expiryDateMillis,
-                            photoUri = thumbnailUri ?: frontPhotoUri,
-                            photoUris = permanentUris,
-                            traceabilityUrl = qrUrl,
-                        ),
-                        onBagAdded = { newBagId ->
+                        is ScannedBagSaveResult.Failed -> {
+                            Log.e("BagInventoryScreen", "Failed to save coffee bag", saveResult.error)
+                            Toast.makeText(context, couldNotSaveBag, Toast.LENGTH_LONG).show()
+                        }
+                        is ScannedBagSaveResult.Saved -> {
+                            brewViewModel.completeBagPhotoReview(saveSessionId)
+                            showAddSheet = false
+                            isProcessingScan = false
+                            showRetakeDialog = false
+                            ocrPrefill = null
+                            capturedPhotoUris = null
+                            detectedBarcode = null
+                            detectedQrUrl = null
+                            fieldEvidence = emptyMap()
+                            reviewHints = emptyList()
+                            llmStatus = LlmEnrichmentStatus.NOT_RUN
+                            thumbnailFocus = null
+                            bagDraftGenerationId = null
+                            bagDraftSessionId = UUID.randomUUID().toString()
                             coroutineScope.launch {
                                 val result = snackbarHostState.showSnackbar(
-                                    message = "Bag saved — brew with it now?",
+                                    message = bagSaved,
                                     actionLabel = brewNowLabel,
                                     duration = SnackbarDuration.Short,
                                 )
                                 if (result == SnackbarResult.ActionPerformed) {
-                                    onNavigateToBrewWithBag(newBagId)
+                                    onNavigateToBrewWithBag(saveResult.bagId)
                                 }
                             }
-                        },
-                    )
+                        }
+                        }
+                    } finally {
+                        brewViewModel.finishScannedBagSave(saveSessionId)
+                        isSavingBag = false
+                    }
                 }
             },
         )
@@ -723,6 +899,7 @@ fun BagInventoryScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
+                        val discardedPhotoUris = capturedPhotoUris
                         showRetakeDialog = false
                         showAddSheet = false
                         isProcessingScan = false
@@ -735,6 +912,14 @@ fun BagInventoryScreen(
                         detectedQrUrl = null
                         offLookupName = null
                         offLookupRoaster = null
+                        brewViewModel.completeBagPhotoReview(bagDraftSessionId)
+                        brewViewModel.cancelBagPhotoProcessing(bagDraftSessionId)
+                        coroutineScope.launch(Dispatchers.IO) {
+                            ScanPhotoStorage.deleteStagedCaptures(
+                                context.applicationContext,
+                                discardedPhotoUris,
+                            )
+                        }
                         onNavigateToCamera()
                     },
                 ) {
@@ -760,28 +945,48 @@ fun BagInventoryScreen(
             brewLogs = bagBrewLogs,
             flavorTags = bagFlavorTags,
             dateFormat = dateFormat,
-            onDismiss = { selectedBag = null },
+            onDismiss = { selectedBagId = null },
             onStatusChange = { status ->
                 brewViewModel.updateBagStatus(bag.id, status.name)
-                selectedBag = bag.copy(status = status.name)
             },
+            isDeleting = isDeletingBag,
             onDelete = {
-                brewViewModel.deleteCoffeeBag(bag)
-                selectedBag = null
+                if (!isDeletingBag) {
+                    isDeletingBag = true
+                    coroutineScope.launch {
+                        try {
+                            check(brewViewModel.deleteCoffeeBagAndWait(bag)) {
+                                "Coffee bag repository is unavailable"
+                            }
+                            selectedBagId = null
+                        } catch (error: CancellationException) {
+                            throw error
+                        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                            Log.e("BagInventoryScreen", "Failed to delete coffee bag", error)
+                            Toast.makeText(
+                                context,
+                                R.string.msg_could_not_delete,
+                                Toast.LENGTH_LONG,
+                            ).show()
+                        } finally {
+                            isDeletingBag = false
+                        }
+                    }
+                }
             },
             onEdit = {
-                selectedBag = null
-                editBag = bag
+                selectedBagId = null
+                editBagId = bag.id
             },
             onRescan = {
-                selectedBag = null
+                selectedBagId = null
                 onNavigateToRescan(bag.id)
             },
             onWeightAdjust = { bagId, weight ->
                 brewViewModel.adjustBagWeight(bagId, weight)
             },
             onSelectForBrewing = {
-                selectedBag = null
+                selectedBagId = null
                 onNavigateToBrewWithBag(bag.id)
             },
         )
@@ -792,51 +997,39 @@ fun BagInventoryScreen(
         AddBagSheet(
             bagToEdit = bag,
             existingBags = bags,
-            onDismiss = { editBag = null },
-            onSave = { _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ -> },
+            isSaving = isUpdatingBag,
+            onDismiss = { editBagId = null },
+            onSave = { _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ -> },
             onEdit = { updatedBag ->
-                brewViewModel.updateCoffeeBag(updatedBag)
-                editBag = null
+                if (isUpdatingBag) return@AddBagSheet
+                isUpdatingBag = true
+                coroutineScope.launch {
+                    try {
+                        check(brewViewModel.updateCoffeeBagAndWait(updatedBag)) {
+                            "Coffee bag repository is unavailable"
+                        }
+                        editBagId = null
+                    } catch (error: CancellationException) {
+                        throw error
+                    } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                        Log.e("BagInventoryScreen", "Failed to update coffee bag", error)
+                        Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
+                    } finally {
+                        isUpdatingBag = false
+                    }
+                }
             },
         )
     }
 }
 
-/**
- * Copies photos from cache to permanent storage (filesDir/bag_photos/).
- * Returns comma-separated permanent URI strings.
- */
-private fun copyPhotosToPermanentStorage(
-    context: android.content.Context,
-    cacheUris: String,
-): String {
-    val bagPhotosDir = java.io.File(context.filesDir, "bag_photos").apply { mkdirs() }
-    return cacheUris.split(",")
-        .map { it.trim() }
-        .filter { it.isNotBlank() }
-        .mapIndexedNotNull { index, uriStr ->
-            try {
-                val uri = uriStr.toUri()
-                val destFile = java.io.File(
-                    bagPhotosDir,
-                    "bag_${System.currentTimeMillis()}_$index.jpg",
-                )
-                // openInputStream resolves BOTH file:// (camera capture) and
-                // content:// (gallery picker / SAF) URIs. The previous
-                // File(uri.path).copyTo() silently dropped every gallery photo
-                // because a content URI has no real filesystem path — that is
-                // why picked photos were never attached to the saved bag.
-                context.contentResolver.openInputStream(uri)?.use { input ->
-                    destFile.outputStream().use { output -> input.copyTo(output) }
-                } ?: run {
-                    Log.w(TAG, "Could not open photo stream for $uriStr")
-                    return@mapIndexedNotNull null
-                }
-                destFile.toUri().toString()
-            } catch (e: Exception) {
-                Log.w(TAG, "Failed to copy photo to permanent storage", e)
-                null
-            }
-        }
-        .joinToString(",")
-}
+internal fun selectedInventoryBag(
+    bags: List<CoffeeBagEntity>,
+    selectedBagId: Long?,
+): CoffeeBagEntity? = selectedBagId?.let { id -> bags.find { it.id == id } }
+
+internal fun normalizeInventoryDecafFilter(
+    selected: DecafFilter,
+    regularCount: Int,
+    decafCount: Int,
+): DecafFilter = selected.normalizedForCounts(regularCount, decafCount)

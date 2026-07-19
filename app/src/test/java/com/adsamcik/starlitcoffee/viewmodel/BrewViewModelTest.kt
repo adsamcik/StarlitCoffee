@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.testutil.FakeBrewLogDao
 import com.adsamcik.starlitcoffee.testutil.FakeCoffeeBagDao
@@ -17,10 +18,13 @@ import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
+import com.adsamcik.starlitcoffee.notification.RatingReminders
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -30,6 +34,8 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.util.Locale
+import kotlin.time.Duration
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BrewViewModelTest {
@@ -40,6 +46,30 @@ class BrewViewModelTest {
     fun setup() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         viewModel = BrewViewModel()
+    }
+
+    @Test
+    fun `only one scanned bag save can own a session at a time`() {
+        assertTrue(viewModel.beginScannedBagSave("scan-1"))
+        assertFalse(viewModel.beginScannedBagSave("scan-1"))
+
+        viewModel.finishScannedBagSave("scan-1")
+
+        assertTrue(viewModel.beginScannedBagSave("scan-1"))
+    }
+
+    @Test
+    fun `scanned bag insert is idempotent for a durable session`() = runTest {
+        val vm = createPersistenceViewModel()
+        val input = BrewViewModel.CoffeeBagInput(name = "Recovered scan")
+
+        val first = vm.addScannedCoffeeBagAndAwait(input, scanSessionId = "scan-1")
+        val second = vm.addScannedCoffeeBagAndAwait(input, scanSessionId = "scan-1")
+
+        assertTrue(first.wasInserted)
+        assertFalse(second.wasInserted)
+        assertEquals(first.bagId, second.bagId)
+        assertEquals(1, vm.coffeeBags.value.size)
     }
 
     @After
@@ -1300,7 +1330,55 @@ class BrewViewModelTest {
         assertEquals("PULSAR", remainingLogs.first().method)
     }
 
+    @Test
+    fun `deleteBrewLog cancels its alarm and visible rating reminder`() {
+        val reminders = RecordingRatingReminders()
+        val persistenceViewModel = createPersistenceViewModel(reminders)
+        persistenceViewModel.logBrew()
+        val log = persistenceViewModel.brewLogs.value.first()
+
+        persistenceViewModel.deleteBrewLog(log)
+
+        assertEquals(listOf(log.id), reminders.cancelledLogIds)
+    }
+
+    @Test
+    fun `successful rating cancels its alarm and visible reminder`() = runTest {
+        val reminders = RecordingRatingReminders()
+        val persistenceViewModel = createPersistenceViewModel(reminders)
+        persistenceViewModel.logBrew()
+        val log = persistenceViewModel.brewLogs.value.first()
+
+        assertTrue(
+            persistenceViewModel.updateBrewLogFeedbackAndWait(
+                logId = log.id,
+                rating = 4f,
+                notes = null,
+                tasteFeedback = null,
+                descriptors = emptyList(),
+            ),
+        )
+
+        assertEquals(listOf(log.id), reminders.cancelledLogIds)
+    }
+
     // --- Coffee Bag ---
+
+    @Test
+    fun `coffee bag inventory is loaded only after repository emits`() = runTest {
+        val repositoryFlow = MutableSharedFlow<List<CoffeeBagEntity>>(replay = 1)
+        val vm = BrewViewModel(
+            coffeeBagRepository = CoffeeBagRepository(
+                FakeCoffeeBagDao(allBagsFlowOverride = repositoryFlow),
+            ),
+        )
+
+        assertFalse(vm.isCoffeeBagInventoryLoaded.value)
+
+        repositoryFlow.emit(emptyList())
+
+        assertTrue(vm.isCoffeeBagInventoryLoaded.value)
+    }
 
     @Test
     fun `addCoffeeBag stores bag in coffeeBags flow`() {
@@ -1314,6 +1392,32 @@ class BrewViewModelTest {
     }
 
     @Test
+    fun `addCoffeeBagAndAwait returns only after persistence succeeds`() = runTest {
+        val persistenceViewModel = createPersistenceViewModel()
+
+        val newBagId = persistenceViewModel.addCoffeeBagAndAwait(
+            BrewViewModel.CoffeeBagInput(name = "Awaited bag"),
+        )
+
+        assertTrue(newBagId > 0)
+        assertEquals("Awaited bag", persistenceViewModel.coffeeBags.value.single().name)
+    }
+
+    @Test
+    fun `addCoffeeBagAndAwait reports unavailable repository`() = runTest {
+        var failure: IllegalStateException? = null
+
+        try {
+            viewModel.addCoffeeBagAndAwait(BrewViewModel.CoffeeBagInput(name = "Unsaved bag"))
+        } catch (error: IllegalStateException) {
+            failure = error
+        }
+
+        assertNotNull(failure)
+        assertTrue(viewModel.coffeeBags.value.isEmpty())
+    }
+
+    @Test
     fun `addCoffeeBag with all fields stores all fields`() {
         val persistenceViewModel = createPersistenceViewModel()
 
@@ -1322,6 +1426,9 @@ class BrewViewModelTest {
                 name = "Guatemala Huehue",
                 roaster = "Local Roaster",
                 origin = "Guatemala",
+                region = "Huehuetenango",
+                farm = "El Injerto",
+                altitude = "1,900 masl",
                 roastLevel = "Medium",
                 processType = "Washed",
                 roastDate = 1_700_000_000_000L,
@@ -1341,6 +1448,9 @@ class BrewViewModelTest {
         assertEquals("Guatemala Huehue", bag.name)
         assertEquals("Local Roaster", bag.roaster)
         assertEquals("Guatemala", bag.origin)
+        assertEquals("Huehuetenango", bag.region)
+        assertEquals("El Injerto", bag.farm)
+        assertEquals("1,900 masl", bag.altitude)
         assertEquals("Medium", bag.roastLevel)
         assertEquals("Washed", bag.processType)
         assertEquals(1_700_000_000_000L, bag.roastDate)
@@ -1582,6 +1692,27 @@ class BrewViewModelTest {
         assertEquals("GEISHA", bag.varietyIds)
         assertEquals("Lesní jahoda, Zelený čaj", bag.tastingNotes)
         assertEquals("green_tea,wild_strawberry", bag.tasteNoteIds)
+    }
+
+    @Test
+    fun `known field values include normalized deduplicated tasting notes from saved bags`() {
+        val values = buildKnownFieldValues(
+            bags = listOf(
+                com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity(
+                    name = "First",
+                    tastingNotes = "Blueberry, Citrus",
+                    tasteNoteIds = "blueberry,citrus",
+                ),
+                com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity(
+                    name = "Second",
+                    tastingNotes = "blueberry",
+                    tasteNoteIds = "blueberry",
+                ),
+            ),
+            locale = Locale.ENGLISH,
+        )
+
+        assertEquals(listOf("blueberry", "citrus"), values.tastingNotes)
     }
 
     @Test
@@ -1836,7 +1967,9 @@ class BrewViewModelTest {
         }
     }
 
-    private fun createPersistenceViewModel(): BrewViewModel {
+    private fun createPersistenceViewModel(
+        ratingReminders: RatingReminders? = null,
+    ): BrewViewModel {
         val recipeRepository = RecipeRepository(FakeRecipeDao())
         val brewLogRepository = BrewLogRepository(null, FakeBrewLogDao(), FakeFlavorTagDao())
         val coffeeBagRepository = CoffeeBagRepository(FakeCoffeeBagDao())
@@ -1844,7 +1977,22 @@ class BrewViewModelTest {
             recipeRepository = recipeRepository,
             brewLogRepository = brewLogRepository,
             coffeeBagRepository = coffeeBagRepository,
+            ratingReminderScheduler = ratingReminders,
         )
+    }
+
+    private class RecordingRatingReminders : RatingReminders {
+        val cancelledLogIds = mutableListOf<Long>()
+
+        override fun scheduleReminder(
+            brewLogId: Long,
+            methodLabel: String?,
+            delay: Duration,
+        ) = Unit
+
+        override fun cancelReminder(brewLogId: Long) {
+            cancelledLogIds += brewLogId
+        }
     }
 
     // --- Post-Brew Check-In ---

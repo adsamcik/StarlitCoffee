@@ -180,14 +180,103 @@ class CoffeeMetadataNormalizerTest {
     }
 
     @Test
-    fun `displayTastingNotes keeps prettified raw fallback when canonical ids are incomplete`() {
+    fun `displayTastingNotes keeps raw fallback when canonical ids are incomplete`() {
         val localized = CoffeeMetadataNormalizer.displayTastingNotes(
             tasteNoteIds = "wild_strawberry",
             fallbackRaw = "lesní jahoda, dragon fruit",
             locale = Locale.ENGLISH,
         )
 
-        assertEquals("Lesní jahoda, Dragon fruit", localized)
+        assertEquals("lesní jahoda, dragon fruit", localized)
+    }
+
+    @Test
+    fun `rich single values never collapse to contained canonical ids`() {
+        val process = CoffeeMetadataNormalizer.normalizeField(
+            "processType",
+            "Anaerobic Natural",
+            Locale.forLanguageTag("cs"),
+        )
+        val origin = CoffeeMetadataNormalizer.normalizeField(
+            "origin",
+            "Ethiopia / Kenya",
+            Locale.forLanguageTag("es"),
+        )
+
+        assertEquals("Anaerobic Natural", process?.value)
+        assertNull(process?.canonicalKey)
+        assertEquals("Ethiopia / Kenya", origin?.value)
+        assertNull(origin?.canonicalKey)
+    }
+
+    @Test
+    fun `rich values survive save display and edit localization round trip`() {
+        val saved = CoffeeMetadataNormalizer.applyToBagEntity(
+            bag = CoffeeBagEntity(name = "Custom lot"),
+            origin = "Ethiopia / Kenya",
+            region = "Guji + Nyeri",
+            roastLevel = "Nordic Light",
+            processType = "Anaerobic Natural",
+            variety = "Gesha Experimental Lot",
+            tastingNotes = "Blueberry compote, custom sparkle",
+            locale = Locale.ENGLISH,
+        )
+        val displayed = CoffeeMetadataNormalizer.resolveBagMetadata(
+            saved,
+            locale = Locale.forLanguageTag("cs"),
+        )
+
+        assertEquals("Ethiopia / Kenya", saved.origin)
+        assertNull(saved.originId)
+        assertEquals("Anaerobic Natural", saved.processType)
+        assertNull(saved.processTypeId)
+        assertEquals("Gesha Experimental Lot", saved.variety)
+        assertNull(saved.varietyIds)
+        assertEquals("Ethiopia / Kenya", displayed.origin)
+        assertEquals("Guji + Nyeri", displayed.region)
+        assertEquals("Nordic Light", displayed.roastLevel)
+        assertEquals("Anaerobic Natural", displayed.processType)
+        assertEquals("Gesha Experimental Lot", displayed.variety)
+        assertEquals("Blueberry compote, custom sparkle", displayed.tastingNotes)
+    }
+
+    @Test
+    fun `stale canonical ids cannot replace richer raw values`() {
+        val resolved = CoffeeMetadataNormalizer.resolveBagMetadata(
+            CoffeeBagEntity(
+                name = "Legacy rich lot",
+                origin = "Ethiopia / Kenya",
+                originId = "ETHIOPIA",
+                processType = "Anaerobic Natural",
+                processTypeId = "NATURAL",
+            ),
+            locale = Locale.forLanguageTag("cs"),
+        )
+
+        assertEquals("Ethiopia / Kenya", resolved.origin)
+        assertNull(resolved.originId)
+        assertEquals("Anaerobic Natural", resolved.processType)
+        assertNull(resolved.processTypeId)
+    }
+
+    @Test
+    fun `exact localized aliases compare by canonical identity`() {
+        assertTrue(
+            CoffeeMetadataNormalizer.equivalentValues(
+                fieldName = "processType",
+                first = "Washed",
+                second = "Lavado",
+                locale = Locale.forLanguageTag("es"),
+            ),
+        )
+        assertFalse(
+            CoffeeMetadataNormalizer.equivalentValues(
+                fieldName = "processType",
+                first = "Anaerobic Natural",
+                second = "Natural",
+                locale = Locale.ENGLISH,
+            ),
+        )
     }
 
     @Test

@@ -68,12 +68,14 @@ fun BagDetailSheet(
     onDismiss: () -> Unit,
     onStatusChange: (CoffeeBagStatus) -> Unit,
     onDelete: () -> Unit,
+    isDeleting: Boolean = false,
     onEdit: () -> Unit,
     onRescan: () -> Unit = {},
     onWeightAdjust: (Long, Float) -> Unit = { _, _ -> },
     onSelectForBrewing: (() -> Unit)? = null,
 ){
     var statusMenuExpanded by remember { mutableStateOf(false) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
     val localizedMetadata = CoffeeMetadataNormalizer.resolveBagMetadata(bag)
     val freshness = remember(bag.roastDate) {
         CoffeeBagInsights.freshnessInsight(bag.roastDate)
@@ -92,14 +94,24 @@ fun BagDetailSheet(
         )
     }
 
+    if (showDeleteDialog) {
+        DestructiveActionDialog(
+            titleRes = R.string.action_delete,
+            confirmLabelRes = R.string.action_delete,
+            onConfirm = onDelete,
+            onDismiss = { if (!isDeleting) showDeleteDialog = false },
+            enabled = !isDeleting,
+        )
+    }
+
     ModalBottomSheet(
-        onDismissRequest = onDismiss,
+        onDismissRequest = { if (!isDeleting) onDismiss() },
         sheetState = rememberBottomSheetState(
             initialValue = SheetValue.Hidden,
             enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded),
         ),
     ) {
-        BackHandler { onDismiss() }
+        BackHandler { if (!isDeleting) onDismiss() }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -588,11 +600,11 @@ fun BagDetailSheet(
             }
 
             TextButton(
-                onClick = onDelete,
+                onClick = { showDeleteDialog = true },
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
-                    "Delete Bag",
+                    stringResource(R.string.action_delete),
                     color = MaterialTheme.colorScheme.error,
                 )
             }

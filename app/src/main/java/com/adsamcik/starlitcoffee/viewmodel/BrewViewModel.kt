@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
@@ -47,7 +48,11 @@ import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.data.work.BagExtractionScheduler
+import com.adsamcik.starlitcoffee.data.work.BagExtractionResultStore
 import com.adsamcik.starlitcoffee.data.work.BagExtractionWorker
+import com.adsamcik.starlitcoffee.data.work.BagReviewContext
+import com.adsamcik.starlitcoffee.data.work.BagReviewQueue
+import com.adsamcik.starlitcoffee.data.work.decodeBagReviewContext
 import com.adsamcik.starlitcoffee.data.work.decodeBagExtractionResult
 import com.adsamcik.starlitcoffee.data.work.encodeToJson
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
@@ -57,14 +62,18 @@ import com.adsamcik.starlitcoffee.notification.RatingReminders
 import com.adsamcik.starlitcoffee.scan.BagPhotoExtractor
 import com.adsamcik.starlitcoffee.scan.OffLookupSummary
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
+import com.adsamcik.starlitcoffee.util.BagPhotoOwnership
 import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
 import com.adsamcik.starlitcoffee.util.BarcodeInsights
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.InventoryAlertEngine
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
+import com.adsamcik.starlitcoffee.util.PendingBagPhotoDeletion
 import com.adsamcik.starlitcoffee.util.ScanProgress
+import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.util.ScanStage
+import com.adsamcik.starlitcoffee.util.commitDeletionWithDeferredCleanup
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -80,9 +89,12 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.withTimeout
 import java.util.Locale
+import java.util.UUID
 
 sealed class GrindResult {
     data class Generic(val descriptor: GrindDescriptor) : GrindResult()
@@ -91,6 +103,20 @@ sealed class GrindResult {
         val grinder: Grinder,
     ) : GrindResult()
 }
+
+data class BagAnalysisPreview(
+    val result: BagPhotoProcessingResult,
+    val progress: ScanProgress?,
+)
+
+data class BagPhotoSessionResult(
+    val sessionId: String,
+    val result: BagPhotoProcessingResult,
+    val workId: String? = null,
+    val generationId: String = "",
+    val reviewContext: BagReviewContext? = null,
+    val requiresInventoryBackStack: Boolean = false,
+)
 
 data class BrewUiState(
     val method: BrewMethod = BrewMethod.PULSAR,
@@ -225,6 +251,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     val flavorTags: StateFlow<List<FlavorTagEntity>> = _flavorTags.asStateFlow()
     private val _coffeeBags = MutableStateFlow(emptyList<CoffeeBagEntity>())
     val coffeeBags: StateFlow<List<CoffeeBagEntity>> = _coffeeBags.asStateFlow()
+    private val _isCoffeeBagInventoryLoaded = MutableStateFlow(false)
+    val isCoffeeBagInventoryLoaded: StateFlow<Boolean> =
+        _isCoffeeBagInventoryLoaded.asStateFlow()
     private val _knownFieldValues = MutableStateFlow(KnownFieldValues.EMPTY)
     val knownFieldValues: StateFlow<KnownFieldValues> = _knownFieldValues.asStateFlow()
     private val _selectedBagId = MutableStateFlow<Long?>(null)
@@ -235,9 +264,12 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     val lastUnratedBrew: StateFlow<BrewLogEntity?> = _lastUnratedBrew.asStateFlow()
     private val _homeContextCard = MutableStateFlow<HomeContextCard?>(null)
     val homeContextCard: StateFlow<HomeContextCard?> = _homeContextCard.asStateFlow()
-    private val _bagPhotoResult = MutableStateFlow<BagPhotoProcessingResult?>(null)
-    val bagPhotoResult: StateFlow<BagPhotoProcessingResult?> = _bagPhotoResult.asStateFlow()
-    private var bagPhotoLlmRetryContext: BagPhotoLlmRetryContext? = null
+    private val _bagPhotoResult = MutableStateFlow<BagPhotoSessionResult?>(null)
+    val bagPhotoResult: StateFlow<BagPhotoSessionResult?> = _bagPhotoResult.asStateFlow()
+    private val _bagPhotoRetryResult = MutableStateFlow<BagPhotoSessionResult?>(null)
+    val bagPhotoRetryResult: StateFlow<BagPhotoSessionResult?> = _bagPhotoRetryResult.asStateFlow()
+    private val bagPhotoLlmRetryContexts = mutableMapOf<String, BagPhotoLlmRetryContext>()
+    private var bagPhotoRetrySessionId: String? = null
 
     // Live per-stage progress of the in-flight bag-photo extraction, surfaced to
     // the analyzing screen as a determinate bar. Null when no pass is running.
@@ -245,14 +277,16 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     // RUNNING progress data (background path).
     private val _bagPhotoProgress = MutableStateFlow<ScanProgress?>(null)
     val bagPhotoProgress: StateFlow<ScanProgress?> = _bagPhotoProgress.asStateFlow()
+    private val _bagAnalysisPreview = MutableStateFlow<BagAnalysisPreview?>(null)
+    val bagAnalysisPreview: StateFlow<BagAnalysisPreview?> = _bagAnalysisPreview.asStateFlow()
 
     // Holds a bag-photo result that finished while the user had sent the AI
     // extraction to the background. It is NOT pushed into [bagPhotoResult] (which
     // would auto-open the form); instead a notification is posted and the nav
     // host promotes this into the foreground when the user taps it. Process-
     // scoped: a result has no value once the app process dies.
-    private val _completedBackgroundResult = MutableStateFlow<BagPhotoProcessingResult?>(null)
-    val completedBackgroundResult: StateFlow<BagPhotoProcessingResult?> =
+    private val _completedBackgroundResult = MutableStateFlow<BagPhotoSessionResult?>(null)
+    val completedBackgroundResult: StateFlow<BagPhotoSessionResult?> =
         _completedBackgroundResult.asStateFlow()
 
     // Dedicated one-shot channel for the "open the analyzed bag form" intent fired
@@ -260,8 +294,8 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     // [bagPhotoResult] so the notification's navigate→promote timing (and a stale
     // BagInventory instance) can't race/consume the result before the freshly
     // shown screen collects it. Consumed by BagInventory via consumePendingScanReview.
-    private val _pendingScanReview = MutableStateFlow<BagPhotoProcessingResult?>(null)
-    val pendingScanReview: StateFlow<BagPhotoProcessingResult?> = _pendingScanReview.asStateFlow()
+    private val _pendingScanReview = MutableStateFlow<BagPhotoSessionResult?>(null)
+    val pendingScanReview: StateFlow<BagPhotoSessionResult?> = _pendingScanReview.asStateFlow()
 
     // Set when the user taps "Skip AI" on the analyzing screen. Checked before
     // the LLM phase starts and used to cancel an in-flight enrichment so the
@@ -274,6 +308,21 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     // auto-opening the form.
     @Volatile
     private var bagAnalysisBackgrounded = false
+    private var activeBagExtractionWorkId: String? = null
+    private var activeBagExtractionSessionId: String? = null
+    private var activeBagExtractionGenerationId: String? = null
+    private var activeBagExtractionReviewContext: BagReviewContext? = null
+    private val bagExtractionWorkIdsBySession = mutableMapOf<String, String>()
+    private val bagExtractionGenerationsBySession = mutableMapOf<String, String>()
+    private var pendingBagReviewLoaderJob: Job? = null
+    private var retainedForegroundReviewLoaderJob: Job? = null
+    private val activeScannedBagSaves = mutableSetOf<String>()
+    private var suppressRetainedForegroundLoading = false
+    private val bagReviewQueueListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == BagReviewQueue.KEY_PENDING_REVIEW_WORK_IDS) {
+            loadNextPendingBagReview()
+        }
+    }
 
     // The in-flight LLM enrichment, exposed so "Skip AI" can cancel just this
     // phase without tearing down the surrounding OCR pipeline.
@@ -284,6 +333,8 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     // one is captured (debounced by the capture flow); cancelling the prior run
     // here keeps only the latest, most-complete pass alive.
     private var bagPhotoProcessJob: Job? = null
+    private val cancelledBagPhotoProcessJobs = mutableSetOf<Job>()
+    private var bagExtractionObserverJob: Job? = null
     private val _inventoryAlerts = MutableStateFlow(emptyList<InventoryAlert>())
     val inventoryAlerts: StateFlow<List<InventoryAlert>> = _inventoryAlerts.asStateFlow()
 
@@ -316,6 +367,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         viewModelScope.launch {
             coffeeBagRepository?.getAllBags()?.collect { bags ->
                 _coffeeBags.value = bags
+                _isCoffeeBagInventoryLoaded.value = true
                 loadKnownFieldValues()
                 refreshHomeContextCard()
                 refreshInventoryAlerts()
@@ -325,8 +377,62 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         recalculate()
         applyUserDefaults()
         refreshLastUnrated()
-        if (useWorkManager) observeBagExtractionWork()
+        reconcilePendingScannedBagSaves()
+        if (useWorkManager) {
+            val app = requireNotNull(application)
+            BagReviewQueue.preferences(app)
+                .registerOnSharedPreferenceChangeListener(bagReviewQueueListener)
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    BagExtractionScheduler.reconcilePersistedState(app)
+                }
+                BagExtractionScheduler.activeWorkId(app)?.let { workId ->
+                    val workInfo = withContext(Dispatchers.IO) {
+                        BagExtractionScheduler.workInfoFlow(app, workId).first()
+                    }
+                    if (BagExtractionScheduler.activeWorkId(app) != workId) {
+                        return@let
+                    }
+                    val sessionId = BagExtractionScheduler.sessionIdForWork(app, workId)
+                        ?: bagExtractionSessionId(workId)
+                        ?: workInfo?.tags
+                            ?.firstOrNull { it.startsWith(BagExtractionScheduler.SESSION_TAG_PREFIX) }
+                            ?.removePrefix(BagExtractionScheduler.SESSION_TAG_PREFIX)
+                        ?: workId
+                    val generationId = BagExtractionScheduler.generationIdForWork(app, workId)
+                        ?: workInfo?.tags
+                            ?.firstOrNull {
+                                it.startsWith(BagExtractionScheduler.GENERATION_TAG_PREFIX)
+                            }
+                            ?.removePrefix(BagExtractionScheduler.GENERATION_TAG_PREFIX)
+                        ?: workId
+                    val reviewContext = BagExtractionScheduler.reviewContextForWork(app, workId)
+                    rememberBagExtractionSession(workId, sessionId)
+                    rememberLatestGenerationIfMissing(sessionId, generationId)
+                    restoreActiveBagExtraction(workId, sessionId, generationId, reviewContext)
+                }
+                loadNextPendingBagReview()
+                loadRetainedForegroundReview()
+            }
+        }
     }
+
+    override fun onCleared() {
+        application?.let { app ->
+            BagReviewQueue.preferences(app)
+                .unregisterOnSharedPreferenceChangeListener(bagReviewQueueListener)
+        }
+        super.onCleared()
+    }
+
+    private fun CoffeeBagEntity.toPhotoOwnership(): BagPhotoOwnership =
+        BagPhotoOwnership(
+            bagId = id,
+            sessionId = scanSessionId,
+            photoUrisCsv = listOfNotNull(photoUris, photoUri)
+                .joinToString(",")
+                .takeIf(String::isNotBlank),
+        )
 
     private fun applyUserDefaults() {
         viewModelScope.launch {
@@ -538,10 +644,14 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         // single-inference cap (MAX_INFERENCE_MS), so a legitimately long run
         // isn't aborted client-side. Mirrors BagPhotoExtractor.
         private const val BAG_PHOTO_LLM_TIMEOUT_MS = 390_000L
+        private const val BAG_EXTRACTION_DEEP_LINK_TIMEOUT_MS = 15_000L
         private const val LLM_MAX_ATTEMPTS = 3
         private const val LLM_RETRY_BACKOFF_MS = 600L
         private const val BAG_SCAN_PREFS = "bag_scan"
         private const val KEY_LAST_CONSUMED_WORK_ID = "lastConsumedWorkId"
+        private const val KEY_WORK_SESSION_PREFIX = "workSession:"
+        private const val IN_MEMORY_WORK_ID = "in-memory"
+        private const val DEFAULT_BAG_PHOTO_SESSION_ID = "default-bag-photo-session"
     }
 
     fun requestFeedbackSnackbar() {
@@ -591,10 +701,15 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     fun deleteRecipe(entity: SavedRecipeEntity) {
-        val repository = recipeRepository ?: return
         viewModelScope.launch {
-            repository.deleteRecipe(entity)
+            deleteRecipeAndWait(entity)
         }
+    }
+
+    suspend fun deleteRecipeAndWait(entity: SavedRecipeEntity): Boolean {
+        val repository = recipeRepository ?: return false
+        repository.deleteRecipe(entity)
+        return true
     }
 
     fun loadRecipe(entity: SavedRecipeEntity) {
@@ -733,6 +848,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         scheduler.scheduleReminder(brewLogId = brewLogId, methodLabel = method.displayName)
     }
 
+    private fun cancelRatingReminder(brewLogId: Long) {
+        ratingReminderScheduler?.cancelReminder(brewLogId)
+    }
+
     fun saveBrewWithRating(
         rating: Float,
         descriptors: List<String>,
@@ -742,6 +861,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val logId = lastLoggedBrewId ?: return
         viewModelScope.launch {
             repository.updateRating(logId, rating, notes.takeIf { it.isNotBlank() })
+            cancelRatingReminder(logId)
             if (descriptors.isNotEmpty()) {
                 val tags = descriptors.map { descriptor ->
                     FlavorTagEntity(brewLogId = logId, descriptor = descriptor)
@@ -761,6 +881,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val repository = brewLogRepository ?: return
         viewModelScope.launch {
             repository.updateRating(logId, rating, notes.takeIf { it.isNotBlank() })
+            cancelRatingReminder(logId)
             if (descriptors.isNotEmpty()) {
                 val tags = descriptors.map { descriptor ->
                     FlavorTagEntity(brewLogId = logId, descriptor = descriptor)
@@ -847,6 +968,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 tasteFeedback = tasteFeedback?.name,
                 flavorTags = emptyList(),
             )
+            cancelRatingReminder(logId)
             refreshLastUnrated()
         }
     }
@@ -872,10 +994,16 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     fun deleteBrewLog(entity: BrewLogEntity) {
-        val repository = brewLogRepository ?: return
         viewModelScope.launch {
-            repository.deleteLog(entity)
+            deleteBrewLogAndWait(entity)
         }
+    }
+
+    suspend fun deleteBrewLogAndWait(entity: BrewLogEntity): Boolean {
+        val repository = brewLogRepository ?: return false
+        repository.deleteLog(entity)
+        cancelRatingReminder(entity.id)
+        return true
     }
 
     fun getFlavorTagsForLog(logId: Long): Flow<List<FlavorTagEntity>> {
@@ -899,19 +1027,33 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         tasteFeedback: String?,
         descriptors: List<String>,
     ) {
-        val repository = brewLogRepository ?: return
         viewModelScope.launch {
-            val tags = descriptors.map { descriptor ->
-                FlavorTagEntity(brewLogId = logId, descriptor = descriptor)
-            }
-            repository.updateFeedback(
-                logId = logId,
-                rating = rating,
-                notes = notes?.takeIf { it.isNotBlank() },
-                tasteFeedback = tasteFeedback,
-                flavorTags = tags,
-            )
+            updateBrewLogFeedbackAndWait(logId, rating, notes, tasteFeedback, descriptors)
         }
+    }
+
+    suspend fun updateBrewLogFeedbackAndWait(
+        logId: Long,
+        rating: Float?,
+        notes: String?,
+        tasteFeedback: String?,
+        descriptors: List<String>,
+    ): Boolean {
+        val repository = brewLogRepository ?: return false
+        val tags = descriptors.map { descriptor ->
+            FlavorTagEntity(brewLogId = logId, descriptor = descriptor)
+        }
+        repository.updateFeedback(
+            logId = logId,
+            rating = rating,
+            notes = notes?.takeIf { it.isNotBlank() },
+            tasteFeedback = tasteFeedback,
+            flavorTags = tags,
+        )
+        if (rating != null) {
+            cancelRatingReminder(logId)
+        }
+        return true
     }
 
     /**
@@ -925,6 +1067,8 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val roaster: String? = null,
         val origin: String? = null,
         val region: String? = null,
+        val farm: String? = null,
+        val altitude: String? = null,
         val roastLevel: String? = null,
         val processType: String? = null,
         val variety: String? = null,
@@ -942,91 +1086,252 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val photoUri: String? = null,
         val photoUris: String? = null,
         val traceabilityUrl: String? = null,
+        val scanSessionId: String? = null,
         val status: String = "SEALED",
+    )
+
+    data class ScannedBagInsertResult(
+        val bagId: Long,
+        val wasInserted: Boolean,
     )
 
     fun addCoffeeBag(input: CoffeeBagInput, onBagAdded: ((Long) -> Unit)? = null) {
         val repository = coffeeBagRepository ?: return
-        val normalizedBarcode = BarcodeInsights.normalizeBarcode(input.barcode)
-            ?: input.barcode?.trim()?.takeIf { it.isNotBlank() }
-        val locale = Locale.getDefault()
         viewModelScope.launch {
-            val entity = CoffeeMetadataNormalizer.applyToBagEntity(
-                CoffeeBagEntity(
-                    name = input.name,
-                    roaster = input.roaster,
-                    origin = input.origin,
-                    region = input.region,
-                    roastLevel = input.roastLevel,
-                    processType = input.processType,
-                    variety = input.variety,
-                    tastingNotes = input.tastingNotes,
-                    roastDate = input.roastDate,
-                    expiryDate = input.expiryDate,
-                    openedDate = input.openedDate,
-                    barcode = normalizedBarcode,
-                    weightG = input.weightG,
-                    initialWeightG = input.weightG,
-                    priceAmount = input.priceAmount,
-                    priceCurrency = input.priceCurrency,
-                    notes = input.notes,
-                    isDecaf = input.isDecaf,
-                    decafProcess = input.decafProcess?.takeIf { input.isDecaf },
-                    photoUri = input.photoUri,
-                    photoUris = input.photoUris,
-                    traceabilityUrl = input.traceabilityUrl,
-                    status = input.status,
-                ),
-                origin = input.origin,
-                region = input.region,
-                roastLevel = input.roastLevel,
-                processType = input.processType,
-                variety = input.variety,
-                tastingNotes = input.tastingNotes,
-                locale = locale,
-            )
-            val newId = repository.insertBag(entity)
-
-            // Learn barcode→roaster mapping for future scans
-            val stemDao = userBarcodeStemDao
-            if (stemDao != null && normalizedBarcode != null && input.roaster != null) {
-                BarcodeInsights.learnStem(normalizedBarcode, input.roaster, stemDao)
-            }
-
-            loadKnownFieldValues()
-            bagPhotoLlmRetryContext = null
+            val newId = insertCoffeeBag(input, repository).bagId
             onBagAdded?.invoke(newId)
         }
     }
 
-    fun updateCoffeeBag(entity: CoffeeBagEntity) {
+    suspend fun addCoffeeBagAndAwait(input: CoffeeBagInput): Long {
+        val repository = checkNotNull(coffeeBagRepository) {
+            "Coffee bag repository is unavailable"
+        }
+        return insertCoffeeBag(input, repository).bagId
+    }
+
+    suspend fun addScannedCoffeeBagAndAwait(
+        input: CoffeeBagInput,
+        scanSessionId: String,
+    ): ScannedBagInsertResult {
+        val repository = checkNotNull(coffeeBagRepository) {
+            "Coffee bag repository is unavailable"
+        }
+        return insertCoffeeBag(input.copy(scanSessionId = scanSessionId), repository)
+    }
+
+    suspend fun findScannedCoffeeBagId(scanSessionId: String): Long? =
+        coffeeBagRepository?.findByScanSessionId(scanSessionId)?.id
+
+    suspend fun findCoffeeBagById(id: Long): CoffeeBagEntity? =
+        coffeeBagRepository?.getBagById(id)?.first()
+
+    @Synchronized
+    fun beginScannedBagSave(scanSessionId: String): Boolean =
+        activeScannedBagSaves.add(scanSessionId)
+
+    @Synchronized
+    fun finishScannedBagSave(scanSessionId: String) {
+        activeScannedBagSaves.remove(scanSessionId)
+    }
+
+    private fun reconcilePendingScannedBagSaves() {
+        val app = application ?: return
         val repository = coffeeBagRepository ?: return
-        val normalizedBarcode = BarcodeInsights.normalizeBarcode(entity.barcode)
-            ?: entity.barcode?.trim()?.takeIf { it.isNotBlank() }
-        val locale = Locale.getDefault()
-        viewModelScope.launch {
-            repository.updateBag(
-                CoffeeMetadataNormalizer.applyToBagEntity(
-                    bag = entity.copy(barcode = normalizedBarcode),
-                    origin = entity.origin,
-                    region = entity.region,
-                    roastLevel = entity.roastLevel,
-                    processType = entity.processType,
-                    variety = entity.variety,
-                    tastingNotes = entity.tastingNotes,
-                    locale = locale,
-                ),
+        viewModelScope.launch(Dispatchers.IO) {
+            ScanPhotoStorage.recoverInterruptedPermanentReplacements(app)
+            ScanPhotoStorage.reconcilePendingBagPhotoDeletions(app) { bagId ->
+                repository.getBagById(bagId).first()?.toPhotoOwnership()
+            }
+            val protectedBeforeReconciliation = if (useWorkManager) {
+                BagExtractionScheduler.reconcilePersistedState(app)
+            } else {
+                emptySet()
+            }
+            val protectedStagedUris = protectedBeforeReconciliation + if (useWorkManager) {
+                BagExtractionScheduler.protectedStagedPhotoUris(app)
+            } else {
+                emptySet()
+            }
+            ScanPhotoStorage.deleteExpiredStagedCaptures(
+                context = app,
+                protectedStagedUris = protectedStagedUris,
             )
-            loadKnownFieldValues()
+            ScanPhotoStorage.pendingSaveSessions(app).forEach { sessionId ->
+                if (!beginScannedBagSave(sessionId)) return@forEach
+                try {
+                    val currentOwner = runCatching {
+                        repository.findByScanSessionId(sessionId)
+                    }.onFailure { error ->
+                        Log.w(
+                            "BrewViewModel",
+                            "Could not verify pending scan-photo ownership; journal retained",
+                            error,
+                        )
+                    }.getOrElse {
+                        return@forEach
+                    }
+                    if (currentOwner != null ||
+                        ScanPhotoStorage.deletePermanentPhotosForSession(app, sessionId)
+                    ) {
+                        ScanPhotoStorage.clearPendingSave(app, sessionId)
+                    } else {
+                        Log.w(
+                            "BrewViewModel",
+                            "Could not durably remove unowned scan photos; journal retained",
+                        )
+                    }
+                } finally {
+                    finishScannedBagSave(sessionId)
+                }
+            }
         }
     }
 
-    fun deleteCoffeeBag(entity: CoffeeBagEntity) {
-        val repository = coffeeBagRepository ?: return
-        viewModelScope.launch {
-            repository.deleteBag(entity)
-            loadKnownFieldValues()
+    private suspend fun insertCoffeeBag(
+        input: CoffeeBagInput,
+        repository: CoffeeBagRepository,
+    ): ScannedBagInsertResult {
+        val normalizedBarcode = BarcodeInsights.normalizeBarcode(input.barcode)
+            ?: input.barcode?.trim()?.takeIf { it.isNotBlank() }
+        val locale = Locale.getDefault()
+        val entity = CoffeeMetadataNormalizer.applyToBagEntity(
+            CoffeeBagEntity(
+                name = input.name,
+                roaster = input.roaster,
+                origin = input.origin,
+                region = input.region,
+                farm = input.farm,
+                altitude = input.altitude,
+                roastLevel = input.roastLevel,
+                processType = input.processType,
+                variety = input.variety,
+                tastingNotes = input.tastingNotes,
+                roastDate = input.roastDate,
+                expiryDate = input.expiryDate,
+                openedDate = input.openedDate,
+                barcode = normalizedBarcode,
+                weightG = input.weightG,
+                initialWeightG = input.weightG,
+                priceAmount = input.priceAmount,
+                priceCurrency = input.priceCurrency,
+                notes = input.notes,
+                isDecaf = input.isDecaf,
+                decafProcess = input.decafProcess?.takeIf { input.isDecaf },
+                photoUri = input.photoUri,
+                photoUris = input.photoUris,
+                traceabilityUrl = input.traceabilityUrl,
+                scanSessionId = input.scanSessionId,
+                status = input.status,
+            ),
+            origin = input.origin,
+            region = input.region,
+            roastLevel = input.roastLevel,
+            processType = input.processType,
+            variety = input.variety,
+            tastingNotes = input.tastingNotes,
+            locale = locale,
+        )
+        val newId = repository.insertBag(entity)
+        val insertResult = if (newId == -1L && input.scanSessionId != null) {
+            val existing = checkNotNull(repository.findByScanSessionId(input.scanSessionId)) {
+                "Scan-session insert was ignored without an existing coffee bag"
+            }
+            ScannedBagInsertResult(bagId = existing.id, wasInserted = false)
+        } else {
+            check(newId != -1L) { "Coffee bag insert was ignored" }
+            ScannedBagInsertResult(bagId = newId, wasInserted = true)
         }
+
+        // Learn barcode→roaster mapping for future scans
+        val stemDao = userBarcodeStemDao
+        if (insertResult.wasInserted && stemDao != null && normalizedBarcode != null && input.roaster != null) {
+            viewModelScope.launch {
+                try {
+                    BarcodeInsights.learnStem(normalizedBarcode, input.roaster, stemDao)
+                } catch (error: CancellationException) {
+                    throw error
+                } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                    Log.w("BrewViewModel", "Failed to learn barcode stem after saving bag", error)
+                }
+            }
+        }
+        if (insertResult.wasInserted) loadKnownFieldValues()
+        return insertResult
+    }
+
+    fun updateCoffeeBag(entity: CoffeeBagEntity) {
+        viewModelScope.launch {
+            updateCoffeeBagAndWait(entity)
+        }
+    }
+
+    suspend fun updateCoffeeBagAndWait(entity: CoffeeBagEntity): Boolean {
+        val repository = coffeeBagRepository ?: return false
+        val normalizedBarcode = BarcodeInsights.normalizeBarcode(entity.barcode)
+            ?: entity.barcode?.trim()?.takeIf { it.isNotBlank() }
+        val locale = Locale.getDefault()
+        repository.updateBag(
+            CoffeeMetadataNormalizer.applyToBagEntity(
+                bag = entity.copy(barcode = normalizedBarcode),
+                origin = entity.origin,
+                region = entity.region,
+                roastLevel = entity.roastLevel,
+                processType = entity.processType,
+                variety = entity.variety,
+                tastingNotes = entity.tastingNotes,
+                locale = locale,
+            ),
+        )
+        loadKnownFieldValues()
+        return true
+    }
+
+    fun deleteCoffeeBag(entity: CoffeeBagEntity) {
+        viewModelScope.launch {
+            deleteCoffeeBagAndWait(entity)
+        }
+    }
+
+    suspend fun deleteCoffeeBagAndWait(entity: CoffeeBagEntity): Boolean {
+        val repository = coffeeBagRepository ?: return false
+        val app = application
+        val deletion = PendingBagPhotoDeletion(
+            deletionId = entity.id.toString(),
+            bagId = entity.id,
+            sessionId = entity.scanSessionId,
+            photoUrisCsv = listOfNotNull(entity.photoUris, entity.photoUri)
+                .joinToString(",")
+                .takeIf(String::isNotBlank),
+        )
+        return commitDeletionWithDeferredCleanup(
+            markCleanupPending = {
+                app?.let { ScanPhotoStorage.markBagPhotoDeletionPending(it, deletion) }
+            },
+            deleteRecord = {
+                repository.deleteBag(entity)
+                loadKnownFieldValues()
+            },
+            cleanupPhotos = {
+                app == null || ScanPhotoStorage.deleteUnreferencedPermanentBagPhotos(
+                    context = app,
+                    deletion = deletion,
+                    currentOwnership = repository.getBagById(entity.id).first()?.toPhotoOwnership(),
+                )
+            },
+            clearCleanupPending = {
+                app?.let {
+                    ScanPhotoStorage.clearPendingBagPhotoDeletion(it, deletion.deletionId)
+                }
+            },
+            onCleanupFailure = { error ->
+                Log.w(
+                    "BrewViewModel",
+                    "Coffee bag photo cleanup deferred; journal retained for retry",
+                    error,
+                )
+            },
+        )
     }
 
     fun updateBagStatus(bagId: Long, status: String) {
@@ -1076,60 +1381,221 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     fun processNewBagPhotos(
         photosCsv: String,
         knownFieldValues: KnownFieldValues = _knownFieldValues.value,
+        deliverInBackground: Boolean = false,
+        sessionId: String = DEFAULT_BAG_PHOTO_SESSION_ID,
+        reviewContext: BagReviewContext = BagReviewContext.addNew(),
     ) {
+        val generationId = startNewBagExtractionGeneration(sessionId)
         bagPhotoSkipRequested = false
-        bagAnalysisBackgrounded = false
+        bagAnalysisBackgrounded = deliverInBackground
         _bagPhotoProgress.value = null
 
         val photoUriList = photosCsv.split(",").map(String::trim).filter(String::isNotBlank)
-        bagPhotoProcessJob?.cancel()
+        cancelBagPhotoProcessJob()
         bagPhotoLlmDeferred?.cancel()
         bagPhotoLlmDeferred = null
+        if (_bagPhotoResult.value?.sessionId == sessionId) {
+            _bagPhotoResult.value = null
+        }
+        if (_bagPhotoRetryResult.value?.sessionId == sessionId) {
+            _bagPhotoRetryResult.value = null
+        }
         if (photoUriList.isEmpty()) {
-            bagPhotoLlmRetryContext = null
-            if (useWorkManager) BagExtractionScheduler.cancel(requireNotNull(application))
-            _bagPhotoResult.value = BagPhotoProcessingResult(capturedPhotoUris = photosCsv)
+            bagPhotoLlmRetryContexts.remove(sessionId)
+            _bagPhotoResult.value = BagPhotoSessionResult(
+                sessionId = sessionId,
+                result = BagPhotoProcessingResult(capturedPhotoUris = photosCsv),
+                generationId = generationId,
+                reviewContext = reviewContext,
+                requiresInventoryBackStack = deliverInBackground,
+            )
             return
         }
+        _bagAnalysisPreview.value = BagAnalysisPreview(
+            result = BagPhotoProcessingResult(capturedPhotoUris = photosCsv),
+            progress = null,
+        )
 
         val retryContext = BagPhotoLlmRetryContext(
+            sessionId = sessionId,
+            generationId = generationId,
             photosCsv = photosCsv,
             photoUriList = photoUriList,
             knownFieldValues = knownFieldValues,
+            reviewContext = reviewContext,
         )
-        bagPhotoLlmRetryContext = retryContext
+        bagPhotoLlmRetryContexts[sessionId] = retryContext
         if (useWorkManager) {
-            enqueueBagExtraction(retryContext, runLlm = true)
+            enqueueBagExtraction(
+                context = retryContext,
+                runLlm = true,
+                notifyOnCompletion = deliverInBackground,
+            )
             return
         }
+        activeBagExtractionSessionId = sessionId
+        activeBagExtractionGenerationId = generationId
+        activeBagExtractionReviewContext = reviewContext
         runBagPhotoProcessingInViewModel(retryContext, runLlm = !bagPhotoSkipRequested)
     }
 
-    private fun enqueueBagExtraction(context: BagPhotoLlmRetryContext, runLlm: Boolean) {
-        BagExtractionScheduler.enqueue(
-            context = requireNotNull(application),
-            photoUrisCsv = context.photosCsv,
-            knownValuesJson = context.knownFieldValues.encodeToJson(),
-            runLlm = runLlm,
-        )
+    private fun startNewBagExtractionGeneration(sessionId: String): String {
+        val app = application
+        val previousWorkId = if (app != null && useWorkManager) {
+            BagExtractionScheduler.workIdForSession(app, sessionId)
+                ?: bagExtractionWorkIdsBySession[sessionId]
+        } else {
+            bagExtractionWorkIdsBySession[sessionId]
+        }
+        if (previousWorkId != null) {
+            if (app != null && useWorkManager) {
+                BagExtractionScheduler.cancel(app, previousWorkId)
+                markBagExtractionReviewAccepted(previousWorkId)
+            } else {
+                forgetBagExtractionSession(previousWorkId)
+            }
+            bagExtractionWorkIdsBySession.remove(sessionId, previousWorkId)
+        }
+        if (activeBagExtractionSessionId == sessionId) {
+            cancelBagPhotoProcessJob()
+            bagExtractionObserverJob?.cancel()
+            bagPhotoLlmDeferred?.cancel()
+            bagPhotoProcessJob = null
+            bagExtractionObserverJob = null
+            bagPhotoLlmDeferred = null
+            activeBagExtractionWorkId = null
+            activeBagExtractionSessionId = null
+            activeBagExtractionGenerationId = null
+            activeBagExtractionReviewContext = null
+        }
+        val generationId = UUID.randomUUID().toString()
+        rememberLatestBagExtractionGeneration(sessionId, generationId)
+        return generationId
+    }
+
+    private fun rememberLatestBagExtractionGeneration(sessionId: String, generationId: String) {
+        bagExtractionGenerationsBySession[sessionId] = generationId
+        application?.takeIf { useWorkManager }?.let { app ->
+            BagExtractionScheduler.rememberLatestGeneration(app, sessionId, generationId)
+        }
+    }
+
+    private fun isLatestBagExtractionGeneration(sessionId: String, generationId: String): Boolean {
+        val app = application
+        return if (app != null && useWorkManager) {
+            BagExtractionScheduler.isLatestGeneration(app, sessionId, generationId)
+        } else {
+            bagExtractionGenerationsBySession[sessionId] == generationId
+        }
+    }
+
+    private fun restoreActiveBagExtraction(
+        workId: String,
+        sessionId: String,
+        generationId: String,
+        reviewContext: BagReviewContext?,
+    ) {
+        activeBagExtractionWorkId = workId
+        activeBagExtractionSessionId = sessionId
+        activeBagExtractionGenerationId = generationId
+        activeBagExtractionReviewContext = reviewContext
+        bagExtractionWorkIdsBySession[sessionId] = workId
+        bagExtractionGenerationsBySession[sessionId] = generationId
+        observeBagExtractionWork(workId, sessionId, generationId)
+    }
+
+    private fun enqueueBagExtraction(
+        context: BagPhotoLlmRetryContext,
+        runLlm: Boolean,
+        notifyOnCompletion: Boolean = false,
+    ) {
+        val app = requireNotNull(application)
+        val previousWorkId = activeBagExtractionWorkId
+        if (previousWorkId != null) {
+            if (activeBagExtractionSessionId == context.sessionId) {
+                BagExtractionScheduler.cancel(app, previousWorkId)
+            } else {
+                BagExtractionScheduler.requestCompletionNotification(
+                    app,
+                    previousWorkId,
+                )
+            }
+        }
+        activeBagExtractionSessionId = context.sessionId
+        activeBagExtractionGenerationId = context.generationId
+        activeBagExtractionReviewContext = context.reviewContext
+        viewModelScope.launch {
+            try {
+                val workId = BagExtractionScheduler.enqueue(
+                    context = app,
+                    photoUrisCsv = context.photosCsv,
+                    knownValuesJson = context.knownFieldValues.encodeToJson(),
+                    runLlm = runLlm,
+                    sessionId = context.sessionId,
+                    generationId = context.generationId,
+                    reviewContext = context.reviewContext,
+                    notifyOnCompletion = notifyOnCompletion,
+                )
+                if (!isLatestBagExtractionGeneration(context.sessionId, context.generationId)) {
+                    BagExtractionScheduler.cancel(app, workId)
+                    return@launch
+                }
+                activeBagExtractionWorkId = workId
+                activeBagExtractionSessionId = context.sessionId
+                activeBagExtractionGenerationId = context.generationId
+                activeBagExtractionReviewContext = context.reviewContext
+                bagExtractionWorkIdsBySession[context.sessionId] = workId
+                rememberBagExtractionSession(workId, context.sessionId)
+                observeBagExtractionWork(workId, context.sessionId, context.generationId)
+            } catch (error: CancellationException) {
+                throw error
+            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                Log.e("BrewViewModel", "Could not enqueue bag extraction", error)
+                if (isLatestBagExtractionGeneration(context.sessionId, context.generationId)) {
+                    deliverBagPhotoFailure(
+                        workId = IN_MEMORY_WORK_ID,
+                        result = BagPhotoProcessingResult(
+                            capturedPhotoUris = context.photosCsv,
+                            llmStatus = LlmEnrichmentStatus.UNAVAILABLE,
+                        ),
+                        sessionId = context.sessionId,
+                        generationId = context.generationId,
+                        reviewContext = context.reviewContext,
+                    )
+                }
+            }
+        }
     }
 
     private fun runBagPhotoProcessingInViewModel(
         context: BagPhotoLlmRetryContext,
         runLlm: Boolean,
     ) {
-        bagPhotoProcessJob?.cancel()
+        cancelBagPhotoProcessJob()
+        activeBagExtractionSessionId = context.sessionId
+        activeBagExtractionGenerationId = context.generationId
+        activeBagExtractionReviewContext = context.reviewContext
         bagPhotoProcessJob = viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 runCancellableLlmEnrichment(
                     photoUris = context.photoUriList,
                     knownFieldValues = context.knownFieldValues,
                     runLlm = runLlm,
-                    onProgress = { progress -> _bagPhotoProgress.value = progress },
+                    onProgress = ::updateBagPhotoProgress,
+                    onPartialResult = { partialResult ->
+                        updateBagAnalysisPreview(
+                            partialResult.copy(capturedPhotoUris = context.photosCsv),
+                        )
+                    },
                 )
             }
-            bagPhotoLlmRetryContext = context
-            deliverBagPhotoResult(result.copy(capturedPhotoUris = context.photosCsv))
+            bagPhotoLlmRetryContexts[context.sessionId] = context
+            deliverBagPhotoResult(
+                result = result.copy(capturedPhotoUris = context.photosCsv),
+                sessionId = context.sessionId,
+                generationId = context.generationId,
+                reviewContext = context.reviewContext,
+            )
         }
     }
 
@@ -1140,14 +1606,179 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
      * [completedBackgroundResult] and a notification is posted instead, so the
      * form opens only when the user taps it.
      */
-    private fun deliverBagPhotoResult(result: BagPhotoProcessingResult) {
+    private fun deliverBagPhotoResult(
+        result: BagPhotoProcessingResult,
+        workId: String = IN_MEMORY_WORK_ID,
+        sessionId: String = activeBagExtractionSessionId ?: workId,
+        generationId: String = activeBagExtractionGenerationId ?: workId,
+        reviewContext: BagReviewContext? = activeBagExtractionReviewContext,
+    ) {
+        if (!isLatestBagExtractionGeneration(sessionId, generationId)) {
+            if (workId != IN_MEMORY_WORK_ID) markBagExtractionReviewAccepted(workId)
+            return
+        }
+        restoreBagPhotoRetryContext(result, sessionId, generationId, reviewContext)
+        if (bagPhotoRetrySessionId == sessionId) {
+            completeBagPhotoRetry(result, sessionId, generationId, workId, reviewContext)
+            return
+        }
         _bagPhotoProgress.value = null
-        if (bagAnalysisBackgrounded) {
+        _bagAnalysisPreview.value = null
+        val managedApp = application?.takeIf {
+            useWorkManager && workId != IN_MEMORY_WORK_ID
+        }
+        val completionNotificationRequested = managedApp?.let {
+            BagExtractionScheduler.isCompletionNotificationRequested(it, workId)
+        } ?: false
+        if (bagAnalysisBackgrounded || completionNotificationRequested) {
             bagAnalysisBackgrounded = false
-            _completedBackgroundResult.value = result
-            bagAnalysisNotifier.notifyComplete(result.fieldEvidence["name"]?.value)
+            when (
+                postBagAnalysisNotification(managedApp, workId) {
+                    bagAnalysisNotifier.notifyComplete(
+                        workId,
+                        result.fieldEvidence["name"]?.value,
+                        reviewContext,
+                    )
+                }
+            ) {
+                NotificationPostResult.POSTED, NotificationPostResult.CLAIMED_BY_OTHER -> {
+                    _completedBackgroundResult.value = BagPhotoSessionResult(
+                        sessionId = sessionId,
+                        result = result,
+                        workId = workId,
+                        generationId = generationId,
+                        reviewContext = reviewContext,
+                        requiresInventoryBackStack = true,
+                    )
+                }
+                NotificationPostResult.UNAVAILABLE -> {
+                // A user-disabled notification channel cannot be overridden.
+                // Keep the completed review reachable in-app instead of hiding it.
+                    if (managedApp != null) {
+                        enqueuePendingBagReview(workId, reviewContext)
+                        loadNextPendingBagReview()
+                    } else {
+                        _bagPhotoResult.value = BagPhotoSessionResult(
+                            sessionId = sessionId,
+                            result = result,
+                            workId = workId,
+                            generationId = generationId,
+                            reviewContext = reviewContext,
+                            requiresInventoryBackStack = true,
+                        )
+                    }
+                }
+            }
         } else {
-            _bagPhotoResult.value = result
+            _bagPhotoResult.value = BagPhotoSessionResult(
+                sessionId = sessionId,
+                result = result,
+                workId = workId,
+                generationId = generationId,
+                reviewContext = reviewContext,
+            )
+        }
+    }
+
+    private fun deliverBagPhotoFailure(
+        workId: String,
+        result: BagPhotoProcessingResult = BagPhotoProcessingResult(
+            capturedPhotoUris = _bagAnalysisPreview.value?.result?.capturedPhotoUris,
+            llmStatus = LlmEnrichmentStatus.UNAVAILABLE,
+        ),
+        sessionId: String = activeBagExtractionSessionId ?: workId,
+        generationId: String = activeBagExtractionGenerationId ?: workId,
+        reviewContext: BagReviewContext? = activeBagExtractionReviewContext,
+    ) {
+        if (!isLatestBagExtractionGeneration(sessionId, generationId)) {
+            if (workId != IN_MEMORY_WORK_ID) markBagExtractionReviewAccepted(workId)
+            return
+        }
+        val resolvedResult = if (result.capturedPhotoUris == null) {
+            result.copy(capturedPhotoUris = bagPhotoLlmRetryContexts[sessionId]?.photosCsv)
+        } else {
+            result
+        }
+        restoreBagPhotoRetryContext(resolvedResult, sessionId, generationId, reviewContext)
+        if (bagPhotoRetrySessionId == sessionId) {
+            completeBagPhotoRetry(resolvedResult, sessionId, generationId, workId, reviewContext)
+            return
+        }
+        _bagPhotoProgress.value = null
+        _bagAnalysisPreview.value = null
+        val app = application
+        val completionNotificationRequested = app != null &&
+            BagExtractionScheduler.isCompletionNotificationRequested(app, workId)
+        if (bagAnalysisBackgrounded || completionNotificationRequested) {
+            bagAnalysisBackgrounded = false
+            when (
+                postBagAnalysisNotification(app, workId) {
+                    bagAnalysisNotifier.notifyFailed(workId, reviewContext)
+                }
+            ) {
+                NotificationPostResult.POSTED, NotificationPostResult.CLAIMED_BY_OTHER -> {
+                    _completedBackgroundResult.value = BagPhotoSessionResult(
+                        sessionId = sessionId,
+                        result = resolvedResult,
+                        workId = workId,
+                        generationId = generationId,
+                        reviewContext = reviewContext,
+                        requiresInventoryBackStack = true,
+                    )
+                }
+                NotificationPostResult.UNAVAILABLE -> {
+                    if (app != null && workId != IN_MEMORY_WORK_ID) {
+                        enqueuePendingBagReview(workId, reviewContext)
+                        loadNextPendingBagReview()
+                    } else {
+                        _bagPhotoResult.value = BagPhotoSessionResult(
+                            sessionId = sessionId,
+                            result = resolvedResult,
+                            workId = workId,
+                            generationId = generationId,
+                            reviewContext = reviewContext,
+                            requiresInventoryBackStack = true,
+                        )
+                    }
+                }
+            }
+        } else {
+            _bagPhotoResult.value = BagPhotoSessionResult(
+                sessionId = sessionId,
+                result = resolvedResult,
+                workId = workId,
+                generationId = generationId,
+                reviewContext = reviewContext,
+            )
+        }
+    }
+
+    private enum class NotificationPostResult {
+        POSTED,
+        CLAIMED_BY_OTHER,
+        UNAVAILABLE,
+    }
+
+    private fun postBagAnalysisNotification(
+        app: Application?,
+        workId: String,
+        post: () -> Boolean,
+    ): NotificationPostResult {
+        if (app == null || workId == IN_MEMORY_WORK_ID) {
+            return if (post()) NotificationPostResult.POSTED else NotificationPostResult.UNAVAILABLE
+        }
+        if (BagExtractionScheduler.isCompletionNotificationDelivered(app, workId)) {
+            return NotificationPostResult.POSTED
+        }
+        if (!BagExtractionScheduler.claimCompletionNotificationDelivery(app, workId)) {
+            return NotificationPostResult.CLAIMED_BY_OTHER
+        }
+        return if (post()) {
+            BagExtractionScheduler.markCompletionNotificationDelivered(app, workId)
+            NotificationPostResult.POSTED
+        } else {
+            BagExtractionScheduler.releaseCompletionNotificationClaim(app, workId)
+            NotificationPostResult.UNAVAILABLE
         }
     }
 
@@ -1161,11 +1792,13 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         knownFieldValues: KnownFieldValues,
         runLlm: Boolean,
         onProgress: (ScanProgress) -> Unit = {},
+        onPartialResult: (BagPhotoProcessingResult) -> Unit = {},
     ): BagPhotoProcessingResult = bagPhotoExtractor.extract(
         photoUris = photoUris,
         knownFieldValues = knownFieldValues,
         runLlm = runLlm,
         onProgress = onProgress,
+        onPartialResult = onPartialResult,
     )
 
     @VisibleForTesting
@@ -1199,16 +1832,18 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
-    fun retryBagPhotoLlm() {
-        val context = bagPhotoLlmRetryContext ?: return
+    fun retryBagPhotoLlm(
+        sessionId: String = activeBagExtractionSessionId ?: DEFAULT_BAG_PHOTO_SESSION_ID,
+    ): Boolean {
+        val previousContext = bagPhotoLlmRetryContexts[sessionId] ?: return false
+        val context = previousContext.copy(
+            generationId = startNewBagExtractionGeneration(sessionId),
+        )
+        bagPhotoLlmRetryContexts[sessionId] = context
         bagPhotoSkipRequested = false
-        _bagPhotoResult.update { current ->
-            current?.copy(llmStatus = LlmEnrichmentStatus.NOT_RUN) ?: BagPhotoProcessingResult(
-                capturedPhotoUris = context.photosCsv,
-                llmStatus = LlmEnrichmentStatus.NOT_RUN,
-            )
-        }
-        bagPhotoProcessJob?.cancel()
+        bagPhotoRetrySessionId = sessionId
+        _bagPhotoRetryResult.value = null
+        cancelBagPhotoProcessJob()
         bagPhotoLlmDeferred?.cancel()
         bagPhotoLlmDeferred = null
         if (useWorkManager) {
@@ -1216,6 +1851,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         } else {
             runBagPhotoProcessingInViewModel(context, runLlm = true)
         }
+        return true
     }
 
     fun processNewBagPhotos(
@@ -1240,24 +1876,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             val bags = repository.getAllBags().first()
-            val locale = Locale.getDefault()
-            val resolvedMetadata = bags.map { bag -> CoffeeMetadataNormalizer.resolveBagMetadata(bag, locale) }
-            _knownFieldValues.value = KnownFieldValues(
-                names = bags.map { it.name }.sanitizeKnownValues(),
-                roasters = bags.mapNotNull { it.roaster }.sanitizeKnownValues(),
-                origins = resolvedMetadata.mapNotNull { it.origin }.sanitizeKnownValues(),
-                regions = resolvedMetadata.mapNotNull { it.region }.sanitizeKnownValues(),
-                varieties = resolvedMetadata
-                    .mapNotNull { it.variety }
-                    .flatMap(::splitMetadataValues)
-                    .sanitizeKnownValues(),
-                processTypes = resolvedMetadata.mapNotNull { it.processType }.sanitizeKnownValues(),
-                roastLevels = resolvedMetadata
-                    .mapNotNull { it.roastLevel }
-                    .flatMap(::splitMetadataValues)
-                    .sanitizeKnownValues(),
-                farms = bags.mapNotNull { it.farm }.sanitizeKnownValues(),
-            )
+            _knownFieldValues.value = buildKnownFieldValues(bags, Locale.getDefault())
         }
     }
 
@@ -1278,21 +1897,101 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
-    private fun splitMetadataValues(values: String): List<String> = values
-        .split(",")
-        .map(String::trim)
-        .filter(String::isNotBlank)
-
     private data class BagPhotoLlmRetryContext(
+        val sessionId: String,
+        val generationId: String,
         val photosCsv: String,
         val photoUriList: List<String>,
         val knownFieldValues: KnownFieldValues,
+        val reviewContext: BagReviewContext?,
     )
 
-    fun clearBagPhotoResult() {
-        bagPhotoLlmRetryContext = null
+    fun consumeBagPhotoResult(sessionId: String) {
+        val consumed = _bagPhotoResult.value?.takeIf { it.sessionId == sessionId }
+        if (consumed != null) {
+            _bagPhotoProgress.value = null
+            _bagAnalysisPreview.value = null
+            _bagPhotoResult.value = null
+            consumed.workId?.let(::markBagExtractionReviewAccepted)
+        }
+    }
+
+    fun consumeBagPhotoRetryResult(sessionId: String) {
+        val consumed = _bagPhotoRetryResult.value?.takeIf { it.sessionId == sessionId }
+        if (consumed != null) {
+            _bagPhotoRetryResult.value = null
+            consumed.workId?.let(::markBagExtractionReviewAccepted)
+        }
+    }
+
+    fun completeBagPhotoReview(sessionId: String) {
+        suppressRetainedForegroundLoading = true
+        retainedForegroundReviewLoaderJob?.cancel()
+        retainedForegroundReviewLoaderJob = null
+        try {
+            consumeBagPhotoResult(sessionId)
+            consumeBagPhotoRetryResult(sessionId)
+            consumePendingScanReview(sessionId)
+            releasePendingBagReviews(sessionId)
+            releaseRetainedForegroundReviews(sessionId)
+            cancelBagPhotoRetry(sessionId)
+            bagPhotoLlmRetryContexts.remove(sessionId)
+        } finally {
+            suppressRetainedForegroundLoading = false
+            loadRetainedForegroundReview()
+        }
+    }
+
+    private fun cancelBagPhotoProcessJob() {
+        val job = bagPhotoProcessJob ?: return
+        synchronized(cancelledBagPhotoProcessJobs) {
+            cancelledBagPhotoProcessJobs += job
+        }
+        job.invokeOnCompletion {
+            synchronized(cancelledBagPhotoProcessJobs) {
+                cancelledBagPhotoProcessJobs -= job
+            }
+        }
+        job.cancel()
+    }
+
+    internal suspend fun awaitCancelledBagPhotoProcessing() {
+        val jobs = synchronized(cancelledBagPhotoProcessJobs) {
+            cancelledBagPhotoProcessJobs.toList()
+        }
+        jobs.joinAll()
+    }
+
+    fun cancelBagPhotoRetry(sessionId: String? = null) {
+        val targetSessionId = sessionId ?: bagPhotoRetrySessionId
+        if (bagPhotoRetrySessionId != null && bagPhotoRetrySessionId != targetSessionId) return
+        val ownsActiveWork = activeBagExtractionSessionId == targetSessionId
+        if (bagPhotoRetrySessionId == targetSessionId && ownsActiveWork) {
+            cancelBagPhotoProcessJob()
+            bagPhotoProcessJob = null
+            bagExtractionObserverJob?.cancel()
+            bagExtractionObserverJob = null
+            bagPhotoLlmDeferred?.cancel()
+            bagPhotoLlmDeferred = null
+            activeBagExtractionWorkId = null
+            activeBagExtractionSessionId = null
+            activeBagExtractionGenerationId = null
+            activeBagExtractionReviewContext = null
+        }
+        if (useWorkManager) {
+            targetSessionId?.let { sessionId ->
+                BagExtractionScheduler.cancelSession(requireNotNull(application), sessionId)
+            }
+        }
+        targetSessionId?.let(bagExtractionWorkIdsBySession::remove)
+        targetSessionId?.let(bagExtractionGenerationsBySession::remove)
+        bagPhotoRetrySessionId = null
+        targetSessionId?.let(bagPhotoLlmRetryContexts::remove)
+        if (_bagPhotoRetryResult.value?.sessionId == targetSessionId) {
+            _bagPhotoRetryResult.value = null
+        }
         _bagPhotoProgress.value = null
-        _bagPhotoResult.value = null
+        _bagAnalysisPreview.value = null
     }
 
     /**
@@ -1300,15 +1999,42 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
      * the guided scan flow when the user discards the session so a stale pass
      * can't land in [bagPhotoResult] after the user has left.
      */
-    fun cancelBagPhotoProcessing() {
-        bagPhotoProcessJob?.cancel()
-        bagPhotoProcessJob = null
-        bagPhotoLlmDeferred?.cancel()
-        bagPhotoLlmDeferred = null
-        if (useWorkManager) BagExtractionScheduler.cancel(requireNotNull(application))
-        bagPhotoLlmRetryContext = null
+    fun cancelBagPhotoProcessing(sessionId: String? = null) {
+        val targetSessionId = sessionId ?: activeBagExtractionSessionId
+        val ownsActiveWork = targetSessionId != null && activeBagExtractionSessionId == targetSessionId
+        if (ownsActiveWork) {
+            cancelBagPhotoProcessJob()
+            bagPhotoProcessJob = null
+            bagExtractionObserverJob?.cancel()
+            bagExtractionObserverJob = null
+            bagPhotoLlmDeferred?.cancel()
+            bagPhotoLlmDeferred = null
+        }
+        if (useWorkManager) {
+            targetSessionId?.let { sessionId ->
+                BagExtractionScheduler.cancelSession(requireNotNull(application), sessionId)
+            }
+        }
+        if (ownsActiveWork) {
+            activeBagExtractionWorkId = null
+            activeBagExtractionSessionId = null
+            activeBagExtractionGenerationId = null
+            activeBagExtractionReviewContext = null
+        }
+        targetSessionId?.let(bagExtractionWorkIdsBySession::remove)
+        targetSessionId?.let(bagExtractionGenerationsBySession::remove)
+        if (bagPhotoRetrySessionId == targetSessionId) {
+            bagPhotoRetrySessionId = null
+        }
+        targetSessionId?.let(bagPhotoLlmRetryContexts::remove)
+        if (_bagPhotoRetryResult.value?.sessionId == targetSessionId) {
+            _bagPhotoRetryResult.value = null
+        }
         _bagPhotoProgress.value = null
-        _bagPhotoResult.value = null
+        _bagAnalysisPreview.value = null
+        if (_bagPhotoResult.value?.sessionId == targetSessionId) {
+            _bagPhotoResult.value = null
+        }
     }
 
     /**
@@ -1320,8 +2046,13 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     fun skipBagPhotoLlm() {
         bagPhotoSkipRequested = true
         bagPhotoLlmDeferred?.cancel()
-        val context = bagPhotoLlmRetryContext ?: return
-        bagPhotoProcessJob?.cancel()
+        val sessionId = activeBagExtractionSessionId ?: return
+        val previousContext = bagPhotoLlmRetryContexts[sessionId] ?: return
+        val context = previousContext.copy(
+            generationId = startNewBagExtractionGeneration(sessionId),
+        )
+        bagPhotoLlmRetryContexts[sessionId] = context
+        cancelBagPhotoProcessJob()
         bagPhotoLlmDeferred = null
         if (useWorkManager) {
             enqueueBagExtraction(context, runLlm = false)
@@ -1330,14 +2061,23 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
-    private fun observeBagExtractionWork() {
+    private fun observeBagExtractionWork(
+        workId: String,
+        sessionId: String,
+        generationId: String,
+    ) {
         val app = application ?: return
-        viewModelScope.launch {
-            BagExtractionScheduler.workInfoFlow(app).collect { workInfo ->
+        bagExtractionObserverJob?.cancel()
+        bagExtractionObserverJob = viewModelScope.launch {
+            BagExtractionScheduler.workInfoFlow(app, workId).collect { workInfo ->
                 when (workInfo?.state) {
                     WorkInfo.State.ENQUEUED, WorkInfo.State.RUNNING -> updateBagExtractionProgress(workInfo)
-                    WorkInfo.State.SUCCEEDED -> handleSucceededBagExtraction(workInfo)
-                    WorkInfo.State.FAILED -> handleFailedBagExtraction(workInfo)
+                    WorkInfo.State.SUCCEEDED -> {
+                        handleSucceededBagExtraction(workInfo, sessionId, generationId)
+                    }
+                    WorkInfo.State.FAILED -> {
+                        handleFailedBagExtraction(workInfo, sessionId, generationId)
+                    }
                     else -> Unit
                 }
             }
@@ -1345,34 +2085,116 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     private fun updateBagExtractionProgress(workInfo: WorkInfo) {
+        workInfo.progress.getString(BagExtractionWorker.KEY_PROGRESS_PREVIEW_JSON)
+            ?.takeIf(String::isNotBlank)
+            ?.let { previewJson ->
+                try {
+                    updateBagAnalysisPreview(decodeBagExtractionResult(previewJson))
+                } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                    Log.w("BrewViewModel", "Failed to decode bag extraction preview", error)
+                }
+            }
         val stageName = workInfo.progress.getString(BagExtractionWorker.KEY_PROGRESS_STAGE) ?: return
         val stage = runCatching { ScanStage.valueOf(stageName) }.getOrNull() ?: return
-        _bagPhotoProgress.value = ScanProgress(
+        updateBagPhotoProgress(
+            ScanProgress(
             stage = stage,
             stepIndex = workInfo.progress.getInt(BagExtractionWorker.KEY_PROGRESS_INDEX, 0),
             stepCount = workInfo.progress.getInt(BagExtractionWorker.KEY_PROGRESS_COUNT, 0),
+            ),
         )
     }
 
-    private fun handleSucceededBagExtraction(workInfo: WorkInfo) {
-        val workId = workInfo.id.toString()
-        if (isBagExtractionWorkConsumed(workId)) return
-        val json = workInfo.outputData.getString(BagExtractionWorker.KEY_RESULT_JSON)
-        if (json.isNullOrBlank()) return
-        try {
-            deliverBagPhotoResult(decodeBagExtractionResult(json))
-        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
-            Log.e("BrewViewModel", "Failed to decode bag extraction result", error)
-            deliverBagPhotoResult(BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE))
+    private fun updateBagPhotoProgress(progress: ScanProgress) {
+        _bagPhotoProgress.value = progress
+        _bagAnalysisPreview.update { preview ->
+            preview?.copy(progress = progress)
         }
-        markBagExtractionWorkConsumed(workId)
     }
 
-    private fun handleFailedBagExtraction(workInfo: WorkInfo) {
+    private fun updateBagAnalysisPreview(result: BagPhotoProcessingResult) {
+        _bagAnalysisPreview.update { preview ->
+            BagAnalysisPreview(
+                result = result,
+                progress = preview?.progress,
+            )
+        }
+    }
+
+    private fun handleSucceededBagExtraction(
+        workInfo: WorkInfo,
+        sessionId: String,
+        generationId: String,
+    ) {
         val workId = workInfo.id.toString()
         if (isBagExtractionWorkConsumed(workId)) return
-        deliverBagPhotoResult(BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE))
-        markBagExtractionWorkConsumed(workId)
+        val reviewContext = bagExtractionReviewContext(workId, workInfo)
+        retainForegroundReviewIfNeeded(workId, reviewContext)
+        try {
+            deliverBagPhotoResult(
+                result = decodeCompletedBagExtraction(workInfo),
+                workId = workId,
+                sessionId = sessionId,
+                generationId = generationId,
+                reviewContext = reviewContext,
+            )
+        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            Log.e("BrewViewModel", "Failed to decode bag extraction result", error)
+            deliverBagPhotoFailure(
+                workId = workId,
+                sessionId = sessionId,
+                generationId = generationId,
+                reviewContext = reviewContext,
+            )
+        }
+        clearTerminalActiveWork(workId, sessionId)
+    }
+
+    private fun handleFailedBagExtraction(
+        workInfo: WorkInfo,
+        sessionId: String,
+        generationId: String,
+    ) {
+        val workId = workInfo.id.toString()
+        if (isBagExtractionWorkConsumed(workId)) return
+        val reviewContext = bagExtractionReviewContext(workId, workInfo)
+        retainForegroundReviewIfNeeded(workId, reviewContext)
+        deliverBagPhotoFailure(
+            workId = workId,
+            result = decodeCompletedBagExtraction(workInfo),
+            sessionId = sessionId,
+            generationId = generationId,
+            reviewContext = reviewContext,
+        )
+        clearTerminalActiveWork(workId, sessionId)
+    }
+
+    private fun clearTerminalActiveWork(workId: String, sessionId: String) {
+        if (activeBagExtractionWorkId != workId) return
+        application?.let { app ->
+            BagExtractionScheduler.cancel(app, workId, cancelWork = false)
+        }
+
+        bagExtractionObserverJob?.cancel()
+        bagExtractionObserverJob = null
+        activeBagExtractionWorkId = null
+        if (activeBagExtractionSessionId == sessionId) {
+            activeBagExtractionSessionId = null
+            activeBagExtractionGenerationId = null
+            activeBagExtractionReviewContext = null
+        }
+    }
+
+    private fun retainForegroundReviewIfNeeded(
+        workId: String,
+        reviewContext: BagReviewContext?,
+    ) {
+        val app = application ?: return
+        val backgroundDeliveryRequested = bagAnalysisBackgrounded ||
+            BagExtractionScheduler.isCompletionNotificationRequested(app, workId)
+        if (!backgroundDeliveryRequested) {
+            BagReviewQueue.retainForeground(app, workId, reviewContext)
+        }
     }
 
     private fun isBagExtractionWorkConsumed(workId: String): Boolean =
@@ -1388,13 +2210,77 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             ?.apply()
     }
 
+    private fun markBagExtractionReviewAccepted(workId: String) {
+        if (workId == IN_MEMORY_WORK_ID) return
+        bagExtractionSessionId(workId)?.let { sessionId ->
+            bagExtractionWorkIdsBySession.remove(sessionId, workId)
+        }
+        application?.let { app ->
+            BagExtractionScheduler.consumeCompletionNotificationRequest(app, workId)
+            BagReviewQueue.removeEverywhere(app, workId)
+        }
+        forgetBagExtractionSession(workId)
+        markBagExtractionWorkConsumed(workId)
+        if (!suppressRetainedForegroundLoading) {
+            loadRetainedForegroundReview()
+        }
+    }
+
+    private fun releaseRetainedForegroundReviews(sessionId: String) {
+        val app = application ?: return
+        BagReviewQueue.retainedForeground(app)
+            .filter { workId -> bagExtractionSessionId(workId) == sessionId }
+            .forEach(::markBagExtractionReviewAccepted)
+    }
+
     /**
      * "Continue in background" on the analyzing screen: the in-flight enrichment
      * keeps running; when it completes the result is delivered through a
      * notification ([deliverBagPhotoResult]) instead of auto-opening the form.
      */
     fun continueBagAnalysisInBackground() {
+        if (!useWorkManager) {
+            bagAnalysisBackgrounded = true
+            return
+        }
+
+        val app = requireNotNull(application)
+        val workId = activeBagExtractionWorkId ?: return
+        val sessionId = activeBagExtractionSessionId ?: workId
+        val generationId = activeBagExtractionGenerationId ?: workId
+        val reviewContext = activeBagExtractionReviewContext
         bagAnalysisBackgrounded = true
+        BagExtractionScheduler.requestCompletionNotification(app, workId)
+        viewModelScope.launch {
+            val workInfo = withContext(Dispatchers.IO) {
+                BagExtractionScheduler.workInfoFlow(app, workId).first()
+            }
+            when (workInfo?.state) {
+                WorkInfo.State.SUCCEEDED -> {
+                    // The observer may have consumed a just-finished result before
+                    // the user tapped "Continue in background". Re-route it now.
+                    _bagPhotoResult.value = null
+                    deliverBagPhotoResult(
+                        result = decodeCompletedBagExtraction(workInfo),
+                        workId = workId,
+                        sessionId = sessionId,
+                        generationId = generationId,
+                        reviewContext = reviewContext ?: bagExtractionReviewContext(workId, workInfo),
+                    )
+                }
+                WorkInfo.State.FAILED -> {
+                    _bagPhotoResult.value = null
+                    deliverBagPhotoFailure(
+                        workId = workId,
+                        result = decodeCompletedBagExtraction(workInfo),
+                        sessionId = sessionId,
+                        generationId = generationId,
+                        reviewContext = reviewContext ?: bagExtractionReviewContext(workId, workInfo),
+                    )
+                }
+                else -> Unit
+            }
+        }
     }
 
     /**
@@ -1409,9 +2295,33 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         _pendingScanReview.value = pending
     }
 
-    /** Clears the review-open intent once BagInventory has shown the form. */
-    fun consumePendingScanReview() {
+    fun promotePendingScanReviewToForeground(sessionId: String): Boolean {
+        val pending = _pendingScanReview.value?.takeIf { it.sessionId == sessionId } ?: return false
         _pendingScanReview.value = null
+        _bagPhotoResult.value = pending
+        return true
+    }
+
+    /** Clears the review-open intent once BagInventory has shown the form. */
+    fun consumePendingScanReview(sessionId: String) {
+        val consumed = _pendingScanReview.value?.takeIf { it.sessionId == sessionId }
+        if (consumed != null) {
+            _pendingScanReview.value = null
+        }
+
+        if (application == null) return
+        val workId = consumed?.workId ?: return
+        if (workId in pendingBagReviewWorkIds()) {
+            removePendingBagReview(workId)
+            markBagExtractionReviewAccepted(workId)
+            loadNextPendingBagReview()
+        }
+    }
+
+    fun acknowledgePendingScanReviewOpened(sessionId: String) {
+        if (_pendingScanReview.value?.sessionId == sessionId) {
+            _pendingScanReview.value = null
+        }
     }
 
     /**
@@ -1423,31 +2333,276 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
      * process death. Falls back to the in-memory promote when WorkManager isn't
      * in use (e.g. unit tests with no Application).
      */
-    fun openLastBagExtractionResult() {
+    fun openBagExtractionResult(
+        workId: String,
+        fallbackReviewContext: BagReviewContext? = null,
+    ) {
         val app = application
         if (app == null || !useWorkManager) {
             promoteBackgroundResultToForeground()
             return
         }
-        viewModelScope.launch {
-            val workInfo = withContext(Dispatchers.IO) { BagExtractionScheduler.currentWorkInfo(app) }
-            if (workInfo?.state != WorkInfo.State.SUCCEEDED) {
-                promoteBackgroundResultToForeground()
-                return@launch
-            }
-            val json = workInfo.outputData.getString(BagExtractionWorker.KEY_RESULT_JSON)
-            if (json.isNullOrBlank()) {
-                promoteBackgroundResultToForeground()
-                return@launch
-            }
-            _completedBackgroundResult.value = null
-            _pendingScanReview.value = try {
-                decodeBagExtractionResult(json)
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
-                Log.e("BrewViewModel", "Failed to decode deep-link bag result", error)
-                BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE)
+        if (!BagExtractionScheduler.isValidWorkId(workId)) {
+            Log.w("BrewViewModel", "Ignoring invalid bag-analysis work ID")
+            return
+        }
+        pendingBagReviewLoaderJob?.cancel()
+        _pendingScanReview.value = null
+        BagReviewQueue.prioritize(app, workId, fallbackReviewContext)
+        loadNextPendingBagReview()
+    }
+
+    private fun loadNextPendingBagReview() {
+        if (_pendingScanReview.value != null) return
+        if (pendingBagReviewLoaderJob?.isActive == true) return
+        val app = application ?: return
+        val pendingWorkIds = pendingBagReviewWorkIds()
+        pendingWorkIds
+            .filterNot(BagExtractionScheduler::isValidWorkId)
+            .forEach(::removePendingBagReview)
+        val workId = pendingWorkIds.firstOrNull(BagExtractionScheduler::isValidWorkId) ?: return
+        pendingBagReviewLoaderJob = viewModelScope.launch {
+            try {
+                val workInfo = withContext(Dispatchers.IO) {
+                    if (BagExtractionResultStore.read(app, workId) != null) {
+                        BagExtractionScheduler.workInfoFlow(app, workId).first()
+                    } else {
+                        withTimeoutOrNull(BAG_EXTRACTION_DEEP_LINK_TIMEOUT_MS) {
+                            BagExtractionScheduler.workInfoFlow(app, workId)
+                                .first { it?.state?.isFinished == true }
+                        }
+                    }
+                }
+                if (_pendingScanReview.value != null ||
+                    pendingBagReviewWorkIds().firstOrNull() != workId
+                ) {
+                    return@launch
+                }
+                _completedBackgroundResult.value = null
+                val result = decodeCompletedBagExtraction(workId, workInfo)
+                val sessionId = bagExtractionSessionId(workId)
+                    ?: workInfo?.tags
+                        ?.firstOrNull { it.startsWith(BagExtractionScheduler.SESSION_TAG_PREFIX) }
+                        ?.removePrefix(BagExtractionScheduler.SESSION_TAG_PREFIX)
+                    ?: workId
+                val generationId = bagExtractionGenerationId(workId, workInfo)
+                val reviewContext = bagExtractionReviewContext(workId, workInfo)
+                rememberLatestGenerationIfMissing(sessionId, generationId)
+                if (!isLatestBagExtractionGeneration(sessionId, generationId)) {
+                    removePendingBagReview(workId)
+                    markBagExtractionReviewAccepted(workId)
+                    return@launch
+                }
+                rememberBagExtractionSession(workId, sessionId)
+                restoreBagPhotoRetryContext(result, sessionId, generationId, reviewContext)
+                _pendingScanReview.value = BagPhotoSessionResult(
+                    sessionId = sessionId,
+                    result = result,
+                    workId = workId,
+                    generationId = generationId,
+                    reviewContext = reviewContext,
+                    requiresInventoryBackStack = true,
+                )
+            } finally {
+                pendingBagReviewLoaderJob = null
+                if (_pendingScanReview.value == null) {
+                    loadNextPendingBagReview()
+                }
             }
         }
+    }
+
+    private fun loadRetainedForegroundReview() {
+        if (_bagPhotoResult.value != null || _bagPhotoRetryResult.value != null) return
+        if (retainedForegroundReviewLoaderJob?.isActive == true) return
+        val app = application ?: return
+        val workId = BagReviewQueue.retainedForeground(app).lastOrNull() ?: return
+        retainedForegroundReviewLoaderJob = viewModelScope.launch {
+            try {
+                val workInfo = withContext(Dispatchers.IO) {
+                    if (BagExtractionResultStore.read(app, workId) != null) {
+                        BagExtractionScheduler.workInfoFlow(app, workId).first()
+                    } else {
+                        withTimeoutOrNull(BAG_EXTRACTION_DEEP_LINK_TIMEOUT_MS) {
+                            BagExtractionScheduler.workInfoFlow(app, workId)
+                                .first { it?.state?.isFinished == true }
+                        }
+                    }
+                }
+                if (_bagPhotoResult.value != null ||
+                    _bagPhotoRetryResult.value != null ||
+                    BagReviewQueue.retainedForeground(app).lastOrNull() != workId
+                ) {
+                    return@launch
+                }
+                val result = decodeCompletedBagExtraction(workId, workInfo)
+                val sessionId = bagExtractionSessionId(workId)
+                    ?: workInfo?.tags
+                        ?.firstOrNull { it.startsWith(BagExtractionScheduler.SESSION_TAG_PREFIX) }
+                        ?.removePrefix(BagExtractionScheduler.SESSION_TAG_PREFIX)
+                    ?: workId
+                val generationId = bagExtractionGenerationId(workId, workInfo)
+                val reviewContext = bagExtractionReviewContext(workId, workInfo)
+                rememberLatestGenerationIfMissing(sessionId, generationId)
+                if (!isLatestBagExtractionGeneration(sessionId, generationId)) {
+                    BagReviewQueue.releaseForeground(app, workId)
+                    markBagExtractionReviewAccepted(workId)
+                    return@launch
+                }
+                rememberBagExtractionSession(workId, sessionId)
+                restoreBagPhotoRetryContext(result, sessionId, generationId, reviewContext)
+                _bagPhotoResult.value = BagPhotoSessionResult(
+                    sessionId = sessionId,
+                    result = result,
+                    workId = workId,
+                    generationId = generationId,
+                    reviewContext = reviewContext,
+                    requiresInventoryBackStack = true,
+                )
+            } finally {
+                retainedForegroundReviewLoaderJob = null
+            }
+        }
+    }
+
+    private fun enqueuePendingBagReview(
+        workId: String,
+        reviewContext: BagReviewContext?,
+    ) {
+        application?.let { BagReviewQueue.enqueue(it, workId, reviewContext) }
+    }
+
+    private fun removePendingBagReview(workId: String) {
+        application?.let { BagReviewQueue.remove(it, workId) }
+    }
+
+    private fun releasePendingBagReviews(sessionId: String) {
+        pendingBagReviewWorkIds()
+            .filter { workId -> bagExtractionSessionId(workId) == sessionId }
+            .forEach { workId ->
+                removePendingBagReview(workId)
+                markBagExtractionReviewAccepted(workId)
+            }
+    }
+
+    private fun pendingBagReviewWorkIds(): List<String> =
+        application?.let(BagReviewQueue::list).orEmpty()
+
+    private fun rememberBagExtractionSession(workId: String, sessionId: String) {
+        application
+            ?.getSharedPreferences(BAG_SCAN_PREFS, Context.MODE_PRIVATE)
+            ?.edit()
+            ?.putString("$KEY_WORK_SESSION_PREFIX$workId", sessionId)
+            ?.apply()
+    }
+
+    private fun bagExtractionSessionId(workId: String): String? =
+        application?.let { app ->
+            BagExtractionScheduler.sessionIdForWork(app, workId)
+                ?: app.getSharedPreferences(BAG_SCAN_PREFS, Context.MODE_PRIVATE)
+                    .getString("$KEY_WORK_SESSION_PREFIX$workId", null)
+        }
+
+    private fun forgetBagExtractionSession(workId: String) {
+        application
+            ?.getSharedPreferences(BAG_SCAN_PREFS, Context.MODE_PRIVATE)
+            ?.edit()
+            ?.remove("$KEY_WORK_SESSION_PREFIX$workId")
+            ?.apply()
+    }
+
+    private fun bagExtractionGenerationId(workId: String, workInfo: WorkInfo?): String =
+        application
+            ?.let { app -> BagExtractionScheduler.generationIdForWork(app, workId) }
+            ?: workInfo?.tags
+                ?.firstOrNull { it.startsWith(BagExtractionScheduler.GENERATION_TAG_PREFIX) }
+                ?.removePrefix(BagExtractionScheduler.GENERATION_TAG_PREFIX)
+            ?: workId
+
+    private fun bagExtractionReviewContext(
+        workId: String,
+        workInfo: WorkInfo?,
+    ): BagReviewContext? {
+        val app = application
+        return app?.let { BagExtractionResultStore.read(it, workId)?.reviewContext }
+            ?: app?.let { BagReviewQueue.reviewContext(it, workId) }
+            ?: app?.let { BagExtractionScheduler.reviewContextForWork(it, workId) }
+            ?: decodeBagReviewContext(
+                workInfo?.outputData?.getString(BagExtractionWorker.KEY_REVIEW_CONTEXT_JSON),
+            )
+    }
+
+    private fun rememberLatestGenerationIfMissing(sessionId: String, generationId: String) {
+        val app = application
+        if (app != null && useWorkManager) {
+            if (BagExtractionScheduler.latestGenerationId(app, sessionId) == null) {
+                rememberLatestBagExtractionGeneration(sessionId, generationId)
+            }
+        } else if (bagExtractionGenerationsBySession[sessionId] == null) {
+            bagExtractionGenerationsBySession[sessionId] = generationId
+        }
+    }
+
+    private fun decodeCompletedBagExtraction(workInfo: WorkInfo): BagPhotoProcessingResult {
+        return decodeCompletedBagExtraction(workInfo.id.toString(), workInfo)
+    }
+
+    private fun decodeCompletedBagExtraction(
+        workId: String,
+        workInfo: WorkInfo?,
+    ): BagPhotoProcessingResult {
+        val json = application
+            ?.let { app -> BagExtractionResultStore.read(app, workId)?.resultJson }
+            ?: workInfo?.outputData?.getString(BagExtractionWorker.KEY_RESULT_JSON)
+        if (json.isNullOrBlank()) {
+            return BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE)
+        }
+
+        return try {
+            decodeBagExtractionResult(json)
+        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            Log.e("BrewViewModel", "Failed to decode deep-link bag result", error)
+            BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE)
+        }
+    }
+
+    private fun restoreBagPhotoRetryContext(
+        result: BagPhotoProcessingResult,
+        sessionId: String = activeBagExtractionSessionId ?: DEFAULT_BAG_PHOTO_SESSION_ID,
+        generationId: String = activeBagExtractionGenerationId ?: sessionId,
+        reviewContext: BagReviewContext? = activeBagExtractionReviewContext,
+    ) {
+        val photosCsv = result.capturedPhotoUris?.takeIf(String::isNotBlank) ?: return
+        bagPhotoLlmRetryContexts[sessionId] = BagPhotoLlmRetryContext(
+            sessionId = sessionId,
+            generationId = generationId,
+            photosCsv = photosCsv,
+            photoUriList = photosCsv.split(",").map(String::trim).filter(String::isNotBlank),
+            knownFieldValues = _knownFieldValues.value,
+            reviewContext = reviewContext,
+        )
+    }
+
+    private fun completeBagPhotoRetry(
+        result: BagPhotoProcessingResult,
+        sessionId: String,
+        generationId: String,
+        workId: String,
+        reviewContext: BagReviewContext?,
+    ) {
+        bagPhotoRetrySessionId = null
+        _bagPhotoProgress.value = null
+        _bagAnalysisPreview.value = null
+        if (_bagPhotoResult.value?.sessionId == sessionId) {
+            _bagPhotoResult.value = null
+        }
+        _bagPhotoRetryResult.value = BagPhotoSessionResult(
+            sessionId = sessionId,
+            result = result,
+            workId = workId,
+            generationId = generationId,
+            reviewContext = reviewContext,
+        )
     }
 
     fun resetBrew() {
@@ -1544,3 +2699,39 @@ private fun List<String>.sanitizeKnownValues(): List<String> = this
     .filter { it.isNotEmpty() }
     .distinct()
     .sorted()
+
+private fun splitMetadataValues(values: String): List<String> = values
+    .split(",")
+    .map(String::trim)
+    .filter(String::isNotBlank)
+
+internal fun buildKnownFieldValues(
+    bags: List<CoffeeBagEntity>,
+    locale: Locale,
+): KnownFieldValues {
+    val resolvedMetadata = bags.map { bag ->
+        CoffeeMetadataNormalizer.resolveBagMetadata(bag, locale)
+    }
+    return KnownFieldValues(
+        names = bags.map { it.name }.sanitizeKnownValues(),
+        roasters = bags.mapNotNull { it.roaster }.sanitizeKnownValues(),
+        origins = resolvedMetadata.mapNotNull { it.origin }.sanitizeKnownValues(),
+        regions = resolvedMetadata.mapNotNull { it.region }.sanitizeKnownValues(),
+        varieties = resolvedMetadata
+            .mapNotNull { it.variety }
+            .flatMap(::splitMetadataValues)
+            .sanitizeKnownValues(),
+        processTypes = resolvedMetadata.mapNotNull { it.processType }.sanitizeKnownValues(),
+        roastLevels = resolvedMetadata
+            .mapNotNull { it.roastLevel }
+            .flatMap(::splitMetadataValues)
+            .sanitizeKnownValues(),
+        tastingNotes = resolvedMetadata
+            .mapNotNull { it.tastingNotes }
+            .flatMap(::splitMetadataValues)
+            .map { it.lowercase(Locale.ROOT) }
+            .sanitizeKnownValues(),
+        farms = bags.mapNotNull { it.farm }.sanitizeKnownValues(),
+        altitudes = bags.mapNotNull { it.altitude }.sanitizeKnownValues(),
+    )
+}
