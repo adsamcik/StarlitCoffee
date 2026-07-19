@@ -47,6 +47,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
+import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
 
 private val EnabledMethodsSetSaver: Saver<MutableState<Set<BrewMethod>>, ArrayList<String>> = Saver(
     save = { state -> ArrayList(state.value.map { it.name }) },
@@ -186,7 +187,7 @@ fun OnboardingMethodsScreen(
                             )
                             Spacer(modifier = Modifier.height(6.dp))
                             Text(
-                                text = method.displayName,
+                                text = method.localizedDisplayName(),
                                 style = MaterialTheme.typography.titleSmall,
                             )
                         }

@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
 /**
@@ -23,20 +24,23 @@ fun DecafFilterChipRow(
     counts: Map<DecafFilter, Int>,
     onSelected: (DecafFilter) -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        DecafFilter.values().forEach { filter ->
+        DecafFilter.entries.forEach { filter ->
             val count = counts[filter] ?: 0
+            val label = stringResource(filter.labelRes)
             FilterChip(
                 selected = selected == filter,
                 onClick = { onSelected(filter) },
+                enabled = enabled,
                 modifier = Modifier.testTag("decaf_filter_${filter.name}"),
                 label = {
                     Text(
-                        text = "${filter.label} ($count)",
+                        text = "$label ($count)",
                         style = MaterialTheme.typography.labelLarge,
                     )
                 },

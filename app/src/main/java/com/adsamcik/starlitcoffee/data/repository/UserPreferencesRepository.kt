@@ -52,7 +52,50 @@ data class UserPreferences(
     val scanCorrectionLoggingEnabled: Boolean = false,
 )
 
-class UserPreferencesRepository(private val context: Context) {
+data class MethodSelection(
+    val enabledMethods: Set<BrewMethod>,
+    val defaultMethod: BrewMethod,
+)
+
+internal fun normalizeMethodSelection(
+    enabledMethods: Set<BrewMethod>,
+    requestedDefault: BrewMethod,
+): MethodSelection {
+    val normalizedMethods = enabledMethods.ifEmpty { setOf(BrewMethod.PULSAR) }
+    val normalizedDefault = requestedDefault.takeIf(normalizedMethods::contains)
+        ?: BrewMethod.entries.first { normalizedMethods.contains(it) }
+    return MethodSelection(normalizedMethods, normalizedDefault)
+}
+
+// This is the single DataStore boundary for all settings surfaces; keeping the
+// atomic write API together prevents screens from rebuilding partial updates.
+@Suppress("TooManyFunctions")
+interface UserPreferencesStore {
+    val userPreferences: Flow<UserPreferences>
+
+    suspend fun completeOnboarding(
+        enabledMethods: Set<BrewMethod>,
+        defaultMethod: BrewMethod,
+        defaultFilterType: FilterType?,
+        selectedGrinderId: String?,
+    )
+
+    suspend fun updateMethodSelection(enabledMethods: Set<BrewMethod>, defaultMethod: BrewMethod)
+    suspend fun updateDefaultFilterType(filterType: FilterType?)
+    suspend fun updateSelectedGrinder(grinderId: String?)
+    suspend fun updateSkipMethodSelection(enabled: Boolean)
+    suspend fun updateShowBrewingInstructions(enabled: Boolean)
+    suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>)
+    suspend fun updateRatingReminderEnabled(enabled: Boolean)
+    suspend fun updateScanCorrectionLoggingEnabled(enabled: Boolean)
+    suspend fun updateDimModeEnabled(enabled: Boolean)
+    suspend fun updateDimModeTrueBlack(enabled: Boolean)
+    suspend fun updateDimModeReduceBrightness(enabled: Boolean)
+    suspend fun updateDimModeFullscreen(enabled: Boolean)
+    suspend fun updateDimModeForceDarkInLight(enabled: Boolean)
+}
+
+class UserPreferencesRepository(private val context: Context) : UserPreferencesStore {
 
     private object Keys {
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
@@ -76,7 +119,7 @@ class UserPreferencesRepository(private val context: Context) {
         val SCAN_CORRECTION_LOGGING_ENABLED = booleanPreferencesKey("scan_correction_logging_enabled")
     }
 
-    val userPreferences: Flow<UserPreferences> = context.dataStore.data
+    override val userPreferences: Flow<UserPreferences> = context.dataStore.data
         .catch { exception ->
             // DataStore surfaces read failures (e.g. corrupt prefs file) as
             // IOException. Recover by emitting defaults instead of terminating
@@ -89,17 +132,21 @@ class UserPreferencesRepository(private val context: Context) {
             }
         }
         .map { prefs ->
+            val enabledMethods = prefs[Keys.ENABLED_METHODS]
+                ?.mapNotNull { name -> BrewMethod.entries.find { it.name == name } }
+                ?.toSet()
+                ?: BrewMethod.entries.toSet()
+            val requestedDefault = prefs[Keys.DEFAULT_METHOD]
+                ?.let { name -> BrewMethod.entries.find { it.name == name } }
+                ?: BrewMethod.PULSAR
+            val methodSelection = normalizeMethodSelection(enabledMethods, requestedDefault)
             UserPreferences(
                 onboardingCompleted = prefs[Keys.ONBOARDING_COMPLETED] ?: false,
-                enabledMethods = prefs[Keys.ENABLED_METHODS]
-                    ?.mapNotNull { name -> BrewMethod.entries.find { it.name == name } }
-                    ?.toSet()
-                    ?: BrewMethod.entries.toSet(),
-                defaultMethod = prefs[Keys.DEFAULT_METHOD]
-                    ?.let { name -> BrewMethod.entries.find { it.name == name } }
-                    ?: BrewMethod.PULSAR,
+                enabledMethods = methodSelection.enabledMethods,
+                defaultMethod = methodSelection.defaultMethod,
                 defaultFilterType = prefs[Keys.DEFAULT_FILTER_TYPE]
-                    ?.let { name -> FilterType.entries.find { it.name == name } },
+                    ?.let { name -> FilterType.entries.find { it.name == name } }
+                    ?.takeIf { methodSelection.enabledMethods.contains(BrewMethod.PULSAR) },
                 selectedGrinderId = prefs[Keys.SELECTED_GRINDER_ID],
                 qrLinkExplorerEnabled = prefs[Keys.QR_LINK_EXPLORER_ENABLED] ?: false,
                 lastUsedRatio = prefs[Keys.LAST_USED_RATIO] ?: 17f,
@@ -123,17 +170,20 @@ class UserPreferencesRepository(private val context: Context) {
         }
         .distinctUntilChanged()
 
-    suspend fun completeOnboarding(
+    override suspend fun completeOnboarding(
         enabledMethods: Set<BrewMethod>,
         defaultMethod: BrewMethod,
         defaultFilterType: FilterType?,
         selectedGrinderId: String?,
     ) {
+        val methodSelection = normalizeMethodSelection(enabledMethods, defaultMethod)
         context.dataStore.edit { prefs ->
             prefs[Keys.ONBOARDING_COMPLETED] = true
-            prefs[Keys.ENABLED_METHODS] = enabledMethods.map { it.name }.toSet()
-            prefs[Keys.DEFAULT_METHOD] = defaultMethod.name
-            if (defaultFilterType != null) {
+            prefs[Keys.ENABLED_METHODS] = methodSelection.enabledMethods.map { it.name }.toSet()
+            prefs[Keys.DEFAULT_METHOD] = methodSelection.defaultMethod.name
+            if (defaultFilterType != null &&
+                methodSelection.enabledMethods.contains(BrewMethod.PULSAR)
+            ) {
                 prefs[Keys.DEFAULT_FILTER_TYPE] = defaultFilterType.name
             } else {
                 prefs.remove(Keys.DEFAULT_FILTER_TYPE)
@@ -146,19 +196,20 @@ class UserPreferencesRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateEnabledMethods(methods: Set<BrewMethod>) {
+    override suspend fun updateMethodSelection(
+        enabledMethods: Set<BrewMethod>,
+        defaultMethod: BrewMethod,
+    ) {
+        val methodSelection = normalizeMethodSelection(enabledMethods, defaultMethod)
         context.dataStore.edit { prefs ->
-            prefs[Keys.ENABLED_METHODS] = methods.map { it.name }.toSet()
+            writeMethodSelection(prefs, methodSelection)
+            if (!methodSelection.enabledMethods.contains(BrewMethod.PULSAR)) {
+                prefs.remove(Keys.DEFAULT_FILTER_TYPE)
+            }
         }
     }
 
-    suspend fun updateDefaultMethod(method: BrewMethod) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.DEFAULT_METHOD] = method.name
-        }
-    }
-
-    suspend fun updateDefaultFilterType(filterType: FilterType?) {
+    override suspend fun updateDefaultFilterType(filterType: FilterType?) {
         context.dataStore.edit { prefs ->
             if (filterType != null) {
                 prefs[Keys.DEFAULT_FILTER_TYPE] = filterType.name
@@ -168,7 +219,7 @@ class UserPreferencesRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateSelectedGrinder(grinderId: String?) {
+    override suspend fun updateSelectedGrinder(grinderId: String?) {
         context.dataStore.edit { prefs ->
             if (grinderId != null) {
                 prefs[Keys.SELECTED_GRINDER_ID] = grinderId
@@ -196,49 +247,49 @@ class UserPreferencesRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateSkipMethodSelection(enabled: Boolean) {
+    override suspend fun updateSkipMethodSelection(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.SKIP_METHOD_SELECTION] = enabled
         }
     }
 
-    suspend fun updateDimModeEnabled(enabled: Boolean) {
+    override suspend fun updateDimModeEnabled(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.DIM_MODE_ENABLED] = enabled
         }
     }
 
-    suspend fun updateDimModeTrueBlack(enabled: Boolean) {
+    override suspend fun updateDimModeTrueBlack(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.DIM_MODE_TRUE_BLACK] = enabled
         }
     }
 
-    suspend fun updateDimModeReduceBrightness(enabled: Boolean) {
+    override suspend fun updateDimModeReduceBrightness(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.DIM_MODE_REDUCE_BRIGHTNESS] = enabled
         }
     }
 
-    suspend fun updateDimModeFullscreen(enabled: Boolean) {
+    override suspend fun updateDimModeFullscreen(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.DIM_MODE_FULLSCREEN] = enabled
         }
     }
 
-    suspend fun updateDimModeForceDarkInLight(enabled: Boolean) {
+    override suspend fun updateDimModeForceDarkInLight(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.DIM_MODE_FORCE_DARK_IN_LIGHT] = enabled
         }
     }
 
-    suspend fun updateShowBrewingInstructions(enabled: Boolean) {
+    override suspend fun updateShowBrewingInstructions(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.SHOW_BREWING_INSTRUCTIONS] = enabled
         }
     }
 
-    suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) {
+    override suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) {
         context.dataStore.edit { prefs ->
             val persistedWeights = weights
                 .mapValues { (_, weight) -> weight.coerceIn(0, 2) }
@@ -254,13 +305,13 @@ class UserPreferencesRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateRatingReminderEnabled(enabled: Boolean) {
+    override suspend fun updateRatingReminderEnabled(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.RATING_REMINDER_ENABLED] = enabled
         }
     }
 
-    suspend fun updateScanCorrectionLoggingEnabled(enabled: Boolean) {
+    override suspend fun updateScanCorrectionLoggingEnabled(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.SCAN_CORRECTION_LOGGING_ENABLED] = enabled
         }
@@ -323,5 +374,13 @@ class UserPreferencesRepository(private val context: Context) {
             if (count <= 0) return@mapNotNull null
             id to count
         }.toMap()
+    }
+
+    private fun writeMethodSelection(
+        prefs: androidx.datastore.preferences.core.MutablePreferences,
+        selection: MethodSelection,
+    ) {
+        prefs[Keys.ENABLED_METHODS] = selection.enabledMethods.map { it.name }.toSet()
+        prefs[Keys.DEFAULT_METHOD] = selection.defaultMethod.name
     }
 }

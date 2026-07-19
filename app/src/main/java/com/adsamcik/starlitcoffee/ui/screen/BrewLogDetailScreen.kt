@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,12 +37,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
@@ -58,9 +61,16 @@ import com.adsamcik.starlitcoffee.ui.component.DetailRow
 import com.adsamcik.starlitcoffee.ui.component.shareBrewCard
 import com.adsamcik.starlitcoffee.ui.util.displayNameRes
 import com.adsamcik.starlitcoffee.ui.util.emoji
+import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
 import com.adsamcik.starlitcoffee.ui.component.FlavorTagPicker
 import com.adsamcik.starlitcoffee.ui.component.BrewRatingRow
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
+import com.adsamcik.starlitcoffee.viewmodel.BrewLogFeedbackSubmission
+import com.adsamcik.starlitcoffee.viewmodel.BrewLogFeedbackSaveTarget
+import com.adsamcik.starlitcoffee.viewmodel.BrewLogFeedbackViewModel
+import com.adsamcik.starlitcoffee.viewmodel.requiresFollowUpFeedbackSave
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -80,15 +90,24 @@ private val FlavorDescriptorSetSaver: Saver<MutableState<Set<FlavorDescriptor>>,
 @Composable
 fun BrewLogDetailScreen(
     brewViewModel: BrewViewModel,
+    feedbackViewModel: BrewLogFeedbackViewModel,
     logId: Long,
     onBack: () -> Unit,
+    selectionRequestLogId: Long? = null,
+    onSelectionReady: (Long) -> Unit = {},
+    onSelectionSaveFailed: (Long) -> Unit = {},
 ){
     val context = LocalContext.current
+    val resources = LocalResources.current
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy · h:mm a", Locale.getDefault()) }
     var log by remember { mutableStateOf<BrewLogEntity?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var showSavedConfirmation by remember { mutableStateOf(false) }
+    var isDeleting by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    val feedbackState by feedbackViewModel.uiState.collectAsStateWithLifecycle()
+    val isSaving = feedbackState.isSaving
 
     // Editable state — survives rotation, dark-mode toggle, multi-window resize, process death.
     var rating by rememberSaveable { mutableFloatStateOf(0f) }
@@ -115,21 +134,69 @@ fun BrewLogDetailScreen(
 
     // Persist any unsaved feedback before leaving the screen so users don't
     // lose ratings/notes when they navigate back without tapping Save.
-    val saveAndExit: () -> Unit = saveAndExit@{
-        val entity = log
-        if (hasChanges && entity != null) {
-            brewViewModel.updateBrewLogFeedback(
-                logId = logId,
-                rating = rating.takeIf { it > 0f },
-                notes = notes,
-                tasteFeedback = entity.tasteFeedback,
-                descriptors = selectedDescriptors.map { it.displayName },
-            )
+    val currentSubmission = BrewLogFeedbackSubmission(
+        logId = logId,
+        rating = rating.takeIf { it > 0f },
+        notes = notes,
+        tasteFeedback = log?.tasteFeedback,
+        descriptors = selectedDescriptors.map { it.displayName }.toSet(),
+    )
+    val completeTarget: (BrewLogFeedbackSaveTarget) -> Unit = { target ->
+        when (target) {
+            BrewLogFeedbackSaveTarget.Stay -> Unit
+            BrewLogFeedbackSaveTarget.Back -> onBack()
+            is BrewLogFeedbackSaveTarget.SelectLog -> onSelectionReady(target.logId)
         }
-        onBack()
+    }
+    val saveChanges: (BrewLogFeedbackSaveTarget) -> Unit = saveChanges@{ target ->
+        if (!hasChanges || log == null) {
+            if (!isSaving) completeTarget(target)
+            return@saveChanges
+        }
+        feedbackViewModel.save(currentSubmission, target)
+    }
+    val saveAndExit = { saveChanges(BrewLogFeedbackSaveTarget.Back) }
+    val isSelectionSavePending = selectionRequestLogId != null
+
+    BackHandler {
+        if (!isLoading && !isDeleting && !isSelectionSavePending) saveAndExit()
     }
 
-    BackHandler(enabled = !isLoading) { saveAndExit() }
+    LaunchedEffect(selectionRequestLogId, isLoading, isDeleting, log) {
+        val requestedLogId = selectionRequestLogId ?: return@LaunchedEffect
+        if (!isLoading && !isDeleting) {
+            saveChanges(BrewLogFeedbackSaveTarget.SelectLog(requestedLogId))
+        }
+    }
+
+    LaunchedEffect(feedbackState.completion) {
+        val completion = feedbackState.completion ?: return@LaunchedEffect
+        val persisted = completion.submission
+        initialRating = persisted.rating ?: 0f
+        initialDescriptors = FlavorDescriptor.entries.filterTo(mutableSetOf()) {
+            persisted.descriptors.contains(it.displayName)
+        }
+        initialNotes = persisted.notes
+        showSavedConfirmation = true
+        feedbackViewModel.consumeCompletion()
+
+        if (completion.target != BrewLogFeedbackSaveTarget.Stay) {
+            if (requiresFollowUpFeedbackSave(persisted, currentSubmission)) {
+                feedbackViewModel.save(currentSubmission, completion.target)
+            } else {
+                completeTarget(completion.target)
+            }
+        }
+    }
+
+    LaunchedEffect(feedbackState.failure) {
+        val failedTarget = feedbackState.failure ?: return@LaunchedEffect
+        if (failedTarget is BrewLogFeedbackSaveTarget.SelectLog) {
+            onSelectionSaveFailed(failedTarget.logId)
+        }
+        Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
+        feedbackViewModel.consumeFailure()
+    }
 
     // Load log entity
     LaunchedEffect(logId) {
@@ -154,6 +221,11 @@ fun BrewLogDetailScreen(
     val flavorTags by brewViewModel.getFlavorTagsForLog(logId).collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
+    val localizedFlavorTags = flavorTags.map { tag ->
+        FlavorDescriptor.entries.find { it.displayName == tag.descriptor }
+            ?.let { resources.getString(it.displayNameRes()) }
+            ?: tag.descriptor
+    }
 
     // Sync initial flavor tags once loaded
     LaunchedEffect(flavorTags) {
@@ -175,20 +247,45 @@ fun BrewLogDetailScreen(
 
     if (showDeleteDialog) {
         AlertDialog(
-            onDismissRequest = { showDeleteDialog = false },
+            onDismissRequest = { if (!isDeleting) showDeleteDialog = false },
             title = { Text(stringResource(R.string.dialog_delete_brew_title)) },
             text = { Text(stringResource(R.string.dialog_delete_brew_message)) },
             confirmButton = {
-                TextButton(onClick = {
-                    log?.let { brewViewModel.deleteBrewLog(it) }
-                    showDeleteDialog = false
-                    onBack()
-                }) {
+                TextButton(
+                    enabled = !isDeleting,
+                    onClick = {
+                        val entity = log ?: return@TextButton
+                        isDeleting = true
+                        scope.launch {
+                            try {
+                                check(brewViewModel.deleteBrewLogAndWait(entity)) {
+                                    "Brew log repository is unavailable"
+                                }
+                                showDeleteDialog = false
+                                onBack()
+                            } catch (error: CancellationException) {
+                                throw error
+                            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                                Log.e(TAG, "Failed to delete brew log", error)
+                                Toast.makeText(
+                                    context,
+                                    R.string.msg_could_not_delete,
+                                    Toast.LENGTH_LONG,
+                                ).show()
+                            } finally {
+                                isDeleting = false
+                            }
+                        }
+                    },
+                ) {
                     Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDeleteDialog = false }) {
+                TextButton(
+                    enabled = !isDeleting,
+                    onClick = { showDeleteDialog = false },
+                ) {
                     Text(stringResource(R.string.action_cancel))
                 }
             },
@@ -200,7 +297,10 @@ fun BrewLogDetailScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.screen_brew_details_title)) },
                 navigationIcon = {
-                    IconButton(onClick = saveAndExit) {
+                    IconButton(
+                        onClick = saveAndExit,
+                        enabled = !isDeleting && !isSelectionSavePending,
+                    ) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.action_back),
@@ -216,8 +316,7 @@ fun BrewLogDetailScreen(
                                     bag.name + (bag.roaster?.let { " · $it" } ?: "")
                                 }
                             }
-                            val tags = flavorTags.map { it.descriptor }
-                            shareBrewCard(context, entity, bagName, tags)
+                            shareBrewCard(context, entity, bagName, localizedFlavorTags)
                         },
                     ) {
                         Icon(
@@ -225,7 +324,11 @@ fun BrewLogDetailScreen(
                             contentDescription = stringResource(R.string.action_share_brew),
                         )
                     }
-                    IconButton(onClick = { showDeleteDialog = true }, modifier = Modifier.testTag("delete_brew_log_button")) {
+                    IconButton(
+                        onClick = { showDeleteDialog = true },
+                        enabled = !isSaving && !isDeleting,
+                        modifier = Modifier.testTag("delete_brew_log_button"),
+                    ) {
                         Icon(
                             Icons.Filled.Delete,
                             contentDescription = stringResource(R.string.action_delete),
@@ -277,9 +380,13 @@ fun BrewLogDetailScreen(
             // --- Brew Info ---
             val decafSuffix = stringResource(R.string.label_decaf_suffix)
             val unitGrams = stringResource(R.string.unit_grams)
+            val methodLabel = runCatching { com.adsamcik.starlitcoffee.data.model.BrewMethod.valueOf(entity.method) }
+                .getOrNull()
+                ?.localizedDisplayName()
+                ?: entity.method
             Text(
                 text = buildString {
-                    append(entity.method.lowercase().replaceFirstChar { it.uppercase() })
+                    append(methodLabel)
                     if (entity.isDecaf) append(decafSuffix)
                 },
                 style = MaterialTheme.typography.headlineMedium,
@@ -331,7 +438,7 @@ fun BrewLogDetailScreen(
 
                     if (entity.filterType != null) {
                         val filterDisplayName = FilterType.entries
-                            .find { it.name == entity.filterType }?.displayName
+                            .find { it.name == entity.filterType }?.localizedDisplayName()
                             ?: entity.filterType
                         DetailRow(stringResource(R.string.label_filter), filterDisplayName)
                     }
@@ -418,19 +525,9 @@ fun BrewLogDetailScreen(
             if (hasChanges) {
                 FilledTonalButton(
                     onClick = {
-                        brewViewModel.updateBrewLogFeedback(
-                            logId = logId,
-                            rating = rating.takeIf { it > 0f },
-                            notes = notes,
-                            tasteFeedback = entity.tasteFeedback,
-                            descriptors = selectedDescriptors.map { it.displayName },
-                        )
-                        // Update local initial state to reflect saved state
-                        initialRating = rating
-                        initialDescriptors = selectedDescriptors
-                        initialNotes = notes
-                        showSavedConfirmation = true
+                        saveChanges(BrewLogFeedbackSaveTarget.Stay)
                     },
+                    enabled = !isSaving,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp)

@@ -9,10 +9,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
+import com.adsamcik.starlitcoffee.ui.util.displayNameRes
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -32,7 +34,7 @@ fun FlavorTagPicker(
                 selected = selected,
                 onClick = { onTagToggle(descriptor) },
                 label = {
-                    Text("${descriptor.emoji} ${descriptor.displayName}")
+                    Text("${descriptor.emoji} ${stringResource(descriptor.displayNameRes())}")
                 },
                 shape = MaterialTheme.shapes.large,
                 colors = FilterChipDefaults.filterChipColors(

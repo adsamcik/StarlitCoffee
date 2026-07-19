@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import com.adsamcik.starlitcoffee.data.db.entity.CupPresetEntity
 import kotlinx.coroutines.flow.Flow
@@ -31,4 +32,10 @@ interface CupPresetDao {
 
     @Query("DELETE FROM cup_presets")
     suspend fun deleteAll()
+
+    @Transaction
+    suspend fun replaceAll(presets: List<CupPresetEntity>) {
+        deleteAll()
+        insertAll(presets)
+    }
 }

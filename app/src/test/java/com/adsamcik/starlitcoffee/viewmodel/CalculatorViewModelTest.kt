@@ -304,5 +304,9 @@ class CalculatorViewModelTest {
         override suspend fun deleteAll() {
             data.value = emptyList()
         }
+
+        override suspend fun replaceAll(presets: List<CupPresetEntity>) {
+            data.value = presets
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,8 +17,9 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,13 +30,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
-import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetFinalFramePreview
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetOption
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetOptions
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
-import kotlinx.coroutines.launch
+import com.adsamcik.starlitcoffee.viewmodel.SettingsFailure
+import com.adsamcik.starlitcoffee.viewmodel.SettingsOperation
+import com.adsamcik.starlitcoffee.viewmodel.SettingsViewModel
 
 private val SettingsScreenHorizontalPadding = 16.dp
 private val SettingsScreenTopPadding = 24.dp
@@ -46,13 +50,24 @@ private val BloomPreviewSize = 64.dp
 
 @Composable
 fun BloomAnimationSettingsScreen(
-    userPreferencesRepository: UserPreferencesRepository,
+    viewModel: SettingsViewModel,
     onBack: () -> Unit,
 ) {
-    val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
+    val prefs by viewModel.userPreferences.collectAsStateWithLifecycle(
         initialValue = UserPreferences(),
     )
-    val scope = rememberCoroutineScope()
+    val operationState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val isBusy = operationState.operation != SettingsOperation.IDLE
+    val requestBack = { if (!isBusy) onBack() }
+
+    BackHandler(onBack = requestBack)
+    LaunchedEffect(operationState.failure) {
+        if (operationState.failure == SettingsFailure.SAVE) {
+            Toast.makeText(context, R.string.msg_settings_save_failed, Toast.LENGTH_LONG).show()
+            viewModel.consumeFailure()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -62,7 +77,7 @@ fun BloomAnimationSettingsScreen(
     ) {
         ScreenTopBar(
             title = stringResource(R.string.screen_bloom_animation_settings_title),
-            onBack = onBack,
+            onBack = requestBack,
         )
 
         LazyColumn(
@@ -92,12 +107,11 @@ fun BloomAnimationSettingsScreen(
                         val nextWeight = nextBloomSpritesheetWeight(
                             prefs.bloomSpritesheetWeights[option.id] ?: 1,
                         )
-                        scope.launch {
-                            userPreferencesRepository.updateBloomSpritesheetWeights(
-                                prefs.bloomSpritesheetWeights + (option.id to nextWeight),
-                            )
-                        }
+                        viewModel.updateBloomSpritesheetWeights(
+                            prefs.bloomSpritesheetWeights + (option.id to nextWeight),
+                        )
                     },
+                    enabled = !isBusy,
                 )
             }
         }
@@ -109,6 +123,7 @@ private fun BloomSpritesheetRow(
     option: BloomSpritesheetOption,
     weight: Int,
     onCycleWeight: () -> Unit,
+    enabled: Boolean,
 ) {
     val label = stringResource(option.labelRes)
     val stateLabel = bloomSpritesheetWeightLabel(weight)
@@ -151,6 +166,7 @@ private fun BloomSpritesheetRow(
             }
             Button(
                 onClick = onCycleWeight,
+                enabled = enabled,
                 colors = primaryActionButtonColors(),
                 modifier = Modifier.semantics {
                     this.contentDescription = contentDescription

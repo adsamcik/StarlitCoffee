@@ -30,6 +30,7 @@ fun SwipeToDismissCard(
     LaunchedEffect(dismissState.currentValue) {
         if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
             onDismiss()
+            dismissState.reset()
         }
     }
 

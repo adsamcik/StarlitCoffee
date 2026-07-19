@@ -26,6 +26,7 @@ fun ScreenTopBar(
     title: String,
     modifier: Modifier = Modifier,
     onBack: (() -> Unit)? = null,
+    backEnabled: Boolean = true,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     Row(
@@ -33,7 +34,11 @@ fun ScreenTopBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (onBack != null) {
-            IconButton(onClick = onBack, modifier = Modifier.testTag("back_button")) {
+            IconButton(
+                onClick = onBack,
+                enabled = backEnabled,
+                modifier = Modifier.testTag("back_button"),
+            ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.action_back),

@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,8 @@ import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
+import com.adsamcik.starlitcoffee.ui.util.localizedCupProfile
+import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
 
 private val NullableFilterTypeSaver: Saver<MutableState<FilterType?>, String> = Saver(
     save = { it.value?.name ?: "" },
@@ -60,8 +63,12 @@ fun OnboardingPersonalizeScreen(
     selectedMethods: Set<BrewMethod>,
     initialFilter: FilterType? = null,
     initialGrinder: String? = null,
+    showMindlayerRecommendation: Boolean = false,
+    isSubmitting: Boolean = false,
+    submitFailed: Boolean = false,
     onBack: () -> Unit,
     onSelectionChanged: (FilterType?, String?) -> Unit = { _, _ -> },
+    onOpenMindlayerPlayStore: () -> Unit = {},
     onFinish: (
         filterType: FilterType?,
         grinderId: String?,
@@ -74,6 +81,15 @@ fun OnboardingPersonalizeScreen(
     val context = LocalContext.current
 
     val showFilterSection = selectedMethods.contains(BrewMethod.PULSAR)
+    val effectiveFilter = filterType.value.takeIf { showFilterSection }
+    val requestBack = {
+        if (!isSubmitting) {
+            onSelectionChanged(effectiveFilter, selectedGrinderId.value)
+            onBack()
+        }
+    }
+
+    BackHandler(onBack = requestBack)
 
     Column(
         modifier = Modifier
@@ -82,10 +98,7 @@ fun OnboardingPersonalizeScreen(
     ) {
         ScreenTopBar(
             title = stringResource(R.string.screen_personalize_title),
-            onBack = {
-                onSelectionChanged(filterType.value, selectedGrinderId.value)
-                onBack()
-            },
+            onBack = requestBack,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -118,6 +131,7 @@ fun OnboardingPersonalizeScreen(
                             FilterType.entries.forEach { filter ->
                                 FilterChip(
                                     selected = filterType.value == filter,
+                                    enabled = !isSubmitting,
                                     onClick = {
                                         filterType.value = if (filterType.value == filter) {
                                             null
@@ -125,7 +139,7 @@ fun OnboardingPersonalizeScreen(
                                             filter
                                         }
                                     },
-                                    label = { Text(filter.displayName) },
+                                    label = { Text(filter.localizedDisplayName()) },
                                     leadingIcon = if (filterType.value == filter) {
                                         { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
                                     } else {
@@ -136,11 +150,38 @@ fun OnboardingPersonalizeScreen(
                         }
                         if (filterType.value != null) {
                             Text(
-                                text = filterType.value!!.cupProfile,
+                                text = filterType.value!!.localizedCupProfile(),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.padding(top = 4.dp),
                             )
+                        }
+                    }
+
+                }
+            }
+
+            if (showMindlayerRecommendation) {
+                ElevatedCard(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = stringResource(R.string.label_ai_service),
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = stringResource(R.string.msg_mindlayer_install_recommendation),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Button(
+                            onClick = onOpenMindlayerPlayStore,
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            Text(stringResource(R.string.action_mindlayer_google_play))
                         }
                     }
                 }
@@ -167,6 +208,7 @@ fun OnboardingPersonalizeScreen(
                     ) {
                         FilterChip(
                             selected = selectedGrinderId.value == null,
+                            enabled = !isSubmitting,
                             onClick = { selectedGrinderId.value = null },
                             label = { Text(stringResource(R.string.label_no_grinder)) },
                             leadingIcon = if (selectedGrinderId.value == null) {
@@ -179,6 +221,7 @@ fun OnboardingPersonalizeScreen(
                             val isGrinderSelected = selectedGrinderId.value == grinder.id
                             FilterChip(
                                 selected = isGrinderSelected,
+                                enabled = !isSubmitting,
                                 onClick = {
                                     selectedGrinderId.value = if (isGrinderSelected) {
                                         null
@@ -208,21 +251,33 @@ fun OnboardingPersonalizeScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        if (submitFailed) {
+            Text(
+                text = stringResource(R.string.msg_onboarding_save_failed),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(bottom = 8.dp),
+            )
+        }
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            TextButton(onClick = {
-                onFinish(null, null)
-            }, modifier = Modifier.testTag("onboarding_skip_button")) {
+            TextButton(
+                onClick = { onFinish(null, null) },
+                enabled = !isSubmitting,
+                modifier = Modifier.testTag("onboarding_skip_button"),
+            ) {
                 Text(stringResource(R.string.action_skip))
             }
             Spacer(modifier = Modifier.width(8.dp))
             Button(
                 onClick = {
-                    onFinish(filterType.value, selectedGrinderId.value)
+                    onFinish(effectiveFilter, selectedGrinderId.value)
                 },
+                enabled = !isSubmitting,
                 colors = primaryActionButtonColors(),
                 modifier = Modifier.testTag("onboarding_finish_button"),
             ) {

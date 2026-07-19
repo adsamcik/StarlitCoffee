@@ -6,7 +6,11 @@ import com.adsamcik.starlitcoffee.data.model.CupPreset
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class CupPresetRepository(private val dao: CupPresetDao) {
+fun interface CupPresetResetter {
+    suspend fun resetToDefaults()
+}
+
+class CupPresetRepository(private val dao: CupPresetDao) : CupPresetResetter {
 
     val presets: Flow<List<CupPreset>> = dao.getAll().map { entities ->
         entities.map { it.toDomain() }
@@ -39,9 +43,8 @@ class CupPresetRepository(private val dao: CupPresetDao) {
         dao.delete(preset.toEntity())
     }
 
-    suspend fun resetToDefaults() {
-        dao.deleteAll()
-        seedDefaultsIfEmpty()
+    override suspend fun resetToDefaults() {
+        dao.replaceAll(defaultPresetEntities())
     }
 
     companion object {
@@ -53,6 +56,19 @@ class CupPresetRepository(private val dao: CupPresetDao) {
             CupPreset(name = "Travel", iconName = "travel", doseG = 25f, waterMl = 425f, colorHex = "#2E8B57"),
         )
     }
+
+    private fun defaultPresetEntities(): List<CupPresetEntity> =
+        defaultPresets.mapIndexed { index, preset ->
+            CupPresetEntity(
+                name = preset.name,
+                iconName = preset.iconName,
+                doseG = preset.doseG,
+                waterMl = preset.waterMl,
+                sortOrder = index,
+                isDefault = true,
+                colorHex = preset.colorHex,
+            )
+        }
 }
 
 private fun CupPresetEntity.toDomain() = CupPreset(

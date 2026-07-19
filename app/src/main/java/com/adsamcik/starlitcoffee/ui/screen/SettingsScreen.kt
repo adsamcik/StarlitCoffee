@@ -1,5 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,7 +43,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -50,6 +51,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -61,7 +63,6 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
-import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.SettingsGroup
 import com.adsamcik.starlitcoffee.ui.component.SettingsNavigationRow
@@ -70,6 +71,7 @@ import com.adsamcik.starlitcoffee.ui.component.SettingsSectionHeader
 import com.adsamcik.starlitcoffee.ui.component.SettingsSelectorBlock
 import com.adsamcik.starlitcoffee.ui.component.SettingsSwitchRow
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
+import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
 import com.adsamcik.starlitcoffee.BuildConfig
 import android.Manifest
 import android.content.Intent
@@ -83,10 +85,15 @@ import androidx.core.content.ContextCompat
 import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
 import com.adsamcik.starlitcoffee.scan.observability.ScanLlmDiagnosticsStore
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
+import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.ui.component.MindlayerSettingsCard
 import com.adsamcik.starlitcoffee.ui.component.ScanHistoryDialog
 import com.adsamcik.starlitcoffee.ui.component.formatSessionForShare
-import kotlinx.coroutines.launch
+import com.adsamcik.starlitcoffee.viewmodel.SettingsCompletion
+import com.adsamcik.starlitcoffee.viewmodel.SettingsFailure
+import com.adsamcik.starlitcoffee.viewmodel.SettingsOperation
+import com.adsamcik.starlitcoffee.viewmodel.SettingsUiState
+import com.adsamcik.starlitcoffee.viewmodel.SettingsViewModel
 
 private val checkIcon: @Composable () -> Unit = {
     Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize))
@@ -95,19 +102,58 @@ private val checkIcon: @Composable () -> Unit = {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SettingsScreen(
-    userPreferencesRepository: UserPreferencesRepository,
+    viewModel: SettingsViewModel,
     cupPresetRepository: CupPresetRepository,
     onNavigateToBloomAnimationSettings: () -> Unit,
     onNavigateToDisplaySettings: () -> Unit,
     onNavigateToCupPresetEditor: (presetId: Long?) -> Unit,
     onBack: () -> Unit,
 ){
-    val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
+    val prefs by viewModel.userPreferences.collectAsStateWithLifecycle(
         initialValue = com.adsamcik.starlitcoffee.data.repository.UserPreferences(),
     )
     val cupPresets by cupPresetRepository.presets.collectAsStateWithLifecycle(initialValue = emptyList())
-    val scope = rememberCoroutineScope()
+    val operationState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    var showResetPresetsDialog by rememberSaveable { mutableStateOf(false) }
+    val isBusy = operationState.operation != SettingsOperation.IDLE
+    val isResettingPresets = operationState.operation == SettingsOperation.RESETTING_CUP_PRESETS
+    val requestBack = { if (!isBusy) onBack() }
+
+    BackHandler(onBack = requestBack)
+
+    LaunchedEffect(operationState.completion) {
+        if (operationState.completion == SettingsCompletion.CUP_PRESETS_RESET) {
+            showResetPresetsDialog = false
+            viewModel.consumeCompletion()
+        }
+    }
+    LaunchedEffect(operationState.failure) {
+        if (operationState.failure == SettingsFailure.SAVE) {
+            Toast.makeText(context, R.string.msg_settings_save_failed, Toast.LENGTH_LONG).show()
+            viewModel.consumeFailure()
+        }
+    }
+
+    if (showResetPresetsDialog) {
+        DestructiveActionDialog(
+            titleRes = R.string.action_reset_defaults,
+            confirmLabelRes = R.string.action_reset_defaults,
+            messageRes = if (operationState.failure == SettingsFailure.RESET_CUP_PRESETS) {
+                R.string.msg_cup_preset_reset_failed
+            } else {
+                R.string.msg_reset_cup_presets
+            },
+            enabled = !isResettingPresets,
+            onConfirm = viewModel::resetCupPresets,
+            onDismiss = {
+                showResetPresetsDialog = false
+                if (operationState.failure == SettingsFailure.RESET_CUP_PRESETS) {
+                    viewModel.consumeFailure()
+                }
+            },
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -116,7 +162,7 @@ fun SettingsScreen(
     ) {
         ScreenTopBar(
             title = stringResource(R.string.screen_settings_title),
-            onBack = onBack,
+            onBack = requestBack,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -145,7 +191,10 @@ fun SettingsScreen(
                         )
                         Row {
                             IconButton(
-                                onClick = { onNavigateToCupPresetEditor(null) },
+                                onClick = {
+                                    if (!isBusy) onNavigateToCupPresetEditor(null)
+                                },
+                                enabled = !isBusy,
                                 modifier = Modifier.size(48.dp),
                             ) {
                                 Icon(
@@ -155,7 +204,8 @@ fun SettingsScreen(
                                 )
                             }
                             IconButton(
-                                onClick = { scope.launch { cupPresetRepository.resetToDefaults() } },
+                                onClick = { showResetPresetsDialog = true },
+                                enabled = !isBusy,
                                 modifier = Modifier.size(48.dp),
                             ) {
                                 Icon(
@@ -176,7 +226,9 @@ fun SettingsScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { onNavigateToCupPresetEditor(preset.id) }
+                                .clickable(enabled = !isBusy) {
+                                    onNavigateToCupPresetEditor(preset.id)
+                                }
                                 .padding(vertical = 4.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalAlignment = Alignment.CenterVertically,
@@ -208,13 +260,14 @@ fun SettingsScreen(
                                     style = MaterialTheme.typography.bodyLarge,
                                 )
                                 Text(
-                                    text = "${preset.waterMl.toInt()} ml",
+                                    text = "${preset.waterMl.toInt()} ${stringResource(R.string.unit_ml)}",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
                             IconButton(
                                 onClick = { onNavigateToCupPresetEditor(preset.id) },
+                                enabled = !isBusy,
                                 modifier = Modifier.size(48.dp),
                             ) {
                                 Icon(
@@ -243,6 +296,7 @@ fun SettingsScreen(
                             val enabled = prefs.enabledMethods.contains(method)
                             FilterChip(
                                 selected = enabled,
+                                enabled = !isBusy,
                                 onClick = {
                                     val newSet = if (enabled) {
                                         if (prefs.enabledMethods.size > 1) {
@@ -253,14 +307,9 @@ fun SettingsScreen(
                                     } else {
                                         prefs.enabledMethods + method
                                     }
-                                    scope.launch {
-                                        userPreferencesRepository.updateEnabledMethods(newSet)
-                                        if (!newSet.contains(prefs.defaultMethod)) {
-                                            userPreferencesRepository.updateDefaultMethod(newSet.first())
-                                        }
-                                    }
+                                    viewModel.updateMethodSelection(newSet, prefs.defaultMethod)
                                 },
-                                label = { Text(method.displayName) },
+                                label = { Text(method.localizedDisplayName()) },
                                 leadingIcon = if (enabled) checkIcon else null,
                             )
                         }
@@ -276,12 +325,11 @@ fun SettingsScreen(
                             val isDefault = prefs.defaultMethod == method
                             FilterChip(
                                 selected = isDefault,
+                                enabled = !isBusy,
                                 onClick = {
-                                    scope.launch {
-                                        userPreferencesRepository.updateDefaultMethod(method)
-                                    }
+                                    viewModel.updateDefaultMethod(prefs.enabledMethods, method)
                                 },
-                                label = { Text(method.displayName) },
+                                label = { Text(method.localizedDisplayName()) },
                                 leadingIcon = if (isDefault) checkIcon else null,
                             )
                         }
@@ -297,11 +345,8 @@ fun SettingsScreen(
                     ) {
                         FilterChip(
                             selected = prefs.defaultFilterType == null,
-                            onClick = {
-                                scope.launch {
-                                    userPreferencesRepository.updateDefaultFilterType(null)
-                                }
-                            },
+                            enabled = !isBusy,
+                            onClick = { viewModel.updateDefaultFilterType(null) },
                             label = { Text(stringResource(R.string.label_none)) },
                             leadingIcon = if (prefs.defaultFilterType == null) checkIcon else null,
                         )
@@ -309,12 +354,9 @@ fun SettingsScreen(
                             val isFilterSelected = prefs.defaultFilterType == filter
                             FilterChip(
                                 selected = isFilterSelected,
-                                onClick = {
-                                    scope.launch {
-                                        userPreferencesRepository.updateDefaultFilterType(filter)
-                                    }
-                                },
-                                label = { Text(filter.displayName) },
+                                enabled = !isBusy,
+                                onClick = { viewModel.updateDefaultFilterType(filter) },
+                                label = { Text(filter.localizedDisplayName()) },
                                 leadingIcon = if (isFilterSelected) checkIcon else null,
                             )
                         }
@@ -328,11 +370,8 @@ fun SettingsScreen(
                     ) {
                         FilterChip(
                             selected = prefs.selectedGrinderId == null,
-                            onClick = {
-                                scope.launch {
-                                    userPreferencesRepository.updateSelectedGrinder(null)
-                                }
-                            },
+                            enabled = !isBusy,
+                            onClick = { viewModel.updateSelectedGrinder(null) },
                             label = { Text(stringResource(R.string.label_no_grinder)) },
                             leadingIcon = if (prefs.selectedGrinderId == null) checkIcon else null,
                         )
@@ -340,11 +379,8 @@ fun SettingsScreen(
                             val isGrinderSelected = prefs.selectedGrinderId == grinder.id
                             FilterChip(
                                 selected = isGrinderSelected,
-                                onClick = {
-                                    scope.launch {
-                                        userPreferencesRepository.updateSelectedGrinder(grinder.id)
-                                    }
-                                },
+                                enabled = !isBusy,
+                                onClick = { viewModel.updateSelectedGrinder(grinder.id) },
                                 label = {
                                     val label = if (grinder.brand == grinder.model) {
                                         grinder.model
@@ -366,22 +402,16 @@ fun SettingsScreen(
                     title = stringResource(R.string.label_quick_brew),
                     summary = stringResource(R.string.msg_quick_brew_hint),
                     checked = prefs.skipMethodSelection,
-                    onCheckedChange = { enabled ->
-                        scope.launch {
-                            userPreferencesRepository.updateSkipMethodSelection(enabled)
-                        }
-                    },
+                    enabled = !isBusy,
+                    onCheckedChange = viewModel::updateSkipMethodSelection,
                 )
                 SettingsRowDivider()
                 SettingsSwitchRow(
                     title = stringResource(R.string.label_show_brewing_instructions),
                     summary = stringResource(R.string.msg_show_brewing_instructions_hint),
                     checked = prefs.showBrewingInstructions,
-                    onCheckedChange = { enabled ->
-                        scope.launch {
-                            userPreferencesRepository.updateShowBrewingInstructions(enabled)
-                        }
-                    },
+                    enabled = !isBusy,
+                    onCheckedChange = viewModel::updateShowBrewingInstructions,
                 )
             }
 
@@ -391,13 +421,13 @@ fun SettingsScreen(
                 SettingsNavigationRow(
                     title = stringResource(R.string.label_display_dim_settings),
                     summary = stringResource(R.string.msg_display_dim_settings_subtitle),
-                    onClick = onNavigateToDisplaySettings,
+                    onClick = { if (!isBusy) onNavigateToDisplaySettings() },
                 )
                 SettingsRowDivider()
                 SettingsNavigationRow(
                     title = stringResource(R.string.label_bloom_animation_settings),
                     summary = stringResource(R.string.msg_bloom_animation_settings_subtitle),
-                    onClick = onNavigateToBloomAnimationSettings,
+                    onClick = { if (!isBusy) onNavigateToBloomAnimationSettings() },
                 )
             }
 
@@ -406,34 +436,27 @@ fun SettingsScreen(
             SettingsGroup {
                 RatingReminderRow(
                     enabled = prefs.ratingReminderEnabled,
-                    onEnabledChange = { enabled ->
-                        scope.launch {
-                            userPreferencesRepository.updateRatingReminderEnabled(enabled)
-                        }
-                    },
+                    operationEnabled = !isBusy,
+                    onEnabledChange = viewModel::updateRatingReminderEnabled,
                 )
             }
+
+            MindlayerSettingsCard(showDiagnostics = BuildConfig.DEBUG)
 
             // ---------- Developer (debug only) ----------
             if (BuildConfig.DEBUG) {
                 SettingsSectionHeader(stringResource(R.string.label_settings_section_developer))
-                MindlayerSettingsCard()
-                ScanDebugCard()
+                ScanDebugCard(viewModel = viewModel, operationState = operationState)
                 // Phase 3 — opt-in, on-device capture of model-vs-user field
                 // corrections, used to measure extraction quality on real bags.
                 // Debug-only + default off: the flag never activates in release,
                 // so there is no release-time data-collection surface.
                 SettingsSwitchRow(
-                    title = "Log scan corrections (on-device)",
-                    summary = "Record what the AI extracted vs. what you saved, on this " +
-                        "device only, to measure extraction quality on real bags. Nothing " +
-                        "is uploaded.",
+                    title = stringResource(R.string.label_log_scan_corrections),
+                    summary = stringResource(R.string.msg_log_scan_corrections),
                     checked = prefs.scanCorrectionLoggingEnabled,
-                    onCheckedChange = { enabled ->
-                        scope.launch {
-                            userPreferencesRepository.updateScanCorrectionLoggingEnabled(enabled)
-                        }
-                    },
+                    enabled = !isBusy,
+                    onCheckedChange = viewModel::updateScanCorrectionLoggingEnabled,
                 )
             }
         }
@@ -441,11 +464,47 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun ScanDebugCard() {
+private fun ScanDebugCard(
+    viewModel: SettingsViewModel,
+    operationState: SettingsUiState,
+) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     var sessions by remember { mutableStateOf(ScanSessionRingBuffer.getAll(context)) }
     var llmPasses by remember { mutableStateOf(ScanLlmDiagnosticsStore.getAll(context)) }
-    var showHistory by remember { mutableStateOf(false) }
+    var showHistory by rememberSaveable { mutableStateOf(false) }
+    var showClearDialog by rememberSaveable { mutableStateOf(false) }
+    val isClearing = operationState.operation == SettingsOperation.CLEARING_DIAGNOSTICS
+    val operationsEnabled = operationState.operation == SettingsOperation.IDLE
+
+    LaunchedEffect(operationState.completion) {
+        if (operationState.completion == SettingsCompletion.DIAGNOSTICS_CLEARED) {
+            sessions = emptyList()
+            llmPasses = emptyList()
+            showClearDialog = false
+            viewModel.consumeCompletion()
+        }
+    }
+
+    if (showClearDialog) {
+        DestructiveActionDialog(
+            titleRes = R.string.action_clear,
+            confirmLabelRes = R.string.action_clear,
+            messageRes = if (operationState.failure == SettingsFailure.CLEAR_DIAGNOSTICS) {
+                R.string.msg_diagnostic_clear_failed
+            } else {
+                R.string.msg_clear_diagnostics
+            },
+            enabled = !isClearing,
+            onConfirm = viewModel::clearDiagnostics,
+            onDismiss = {
+                showClearDialog = false
+                if (operationState.failure == SettingsFailure.CLEAR_DIAGNOSTICS) {
+                    viewModel.consumeFailure()
+                }
+            },
+        )
+    }
 
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -455,25 +514,33 @@ private fun ScanDebugCard() {
                 modifier = Modifier.semantics { heading() },
             )
             Text(
-                text = "${sessions.size} sessions · ${llmPasses.size} LLM passes stored",
+                text = stringResource(
+                    R.string.format_scan_debug_counts,
+                    sessions.size,
+                    llmPasses.size,
+                ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(modifier = Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilledTonalButton(onClick = { showHistory = true }, modifier = Modifier.weight(1f)) {
+                FilledTonalButton(
+                    onClick = { showHistory = true },
+                    enabled = operationsEnabled,
+                    modifier = Modifier.weight(1f),
+                ) {
                     Text(stringResource(R.string.action_view_history))
                 }
-                FilledTonalButton(onClick = { ScanBugReporter.shareReport(context) }, modifier = Modifier.weight(1f)) {
+                FilledTonalButton(
+                    onClick = { ScanBugReporter.shareReport(context) },
+                    enabled = operationsEnabled,
+                    modifier = Modifier.weight(1f),
+                ) {
                     Text(stringResource(R.string.action_share_report))
                 }
                 FilledTonalButton(
-                    onClick = {
-                        ScanSessionRingBuffer.clear(context)
-                        ScanLlmDiagnosticsStore.clear(context)
-                        sessions = emptyList()
-                        llmPasses = emptyList()
-                    },
+                    onClick = { showClearDialog = true },
+                    enabled = operationsEnabled,
                     modifier = Modifier.weight(1f),
                 ) {
                     Text(stringResource(R.string.action_clear))
@@ -490,12 +557,18 @@ private fun ScanDebugCard() {
                 val text = formatSessionForShare(session)
                 val intent = Intent(Intent.ACTION_SEND).apply {
                     type = "text/plain"
-                    putExtra(Intent.EXTRA_SUBJECT, "Scan Session: ${session.sessionId}")
+                    putExtra(
+                        Intent.EXTRA_SUBJECT,
+                        resources.getString(R.string.format_scan_session_subject, session.sessionId),
+                    )
                     putExtra(Intent.EXTRA_TEXT, text)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
                 context.startActivity(
-                    Intent.createChooser(intent, "Share Scan Session")
+                    Intent.createChooser(
+                        intent,
+                        resources.getString(R.string.action_share_scan_session),
+                    )
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                 )
             },
@@ -513,6 +586,7 @@ private fun ScanDebugCard() {
 @Composable
 private fun RatingReminderRow(
     enabled: Boolean,
+    operationEnabled: Boolean,
     onEnabledChange: (Boolean) -> Unit,
 ) {
     val context = LocalContext.current
@@ -548,6 +622,7 @@ private fun RatingReminderRow(
         title = stringResource(R.string.label_rating_reminder),
         summary = stringResource(R.string.msg_rating_reminder_hint),
         checked = enabled,
+        enabled = operationEnabled,
         onCheckedChange = { wantEnabled ->
             if (wantEnabled && !hasPostNotifications) {
                 // Defer the persisted toggle to the permission result.

@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -36,6 +37,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -50,22 +52,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.BrewRating
+import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.component.ChipEmphasis
+import com.adsamcik.starlitcoffee.ui.component.DecafFilter
+import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.ui.component.InsightChip
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.BrewRatingBadge
 import com.adsamcik.starlitcoffee.ui.component.SwipeToDismissCard
+import com.adsamcik.starlitcoffee.ui.component.normalizedForCounts
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.component.iconForMethod
 import com.adsamcik.starlitcoffee.ui.util.emoji
+import com.adsamcik.starlitcoffee.ui.util.displayNameRes
+import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
+import com.adsamcik.starlitcoffee.viewmodel.BrewLogFeedbackViewModel
+import com.adsamcik.starlitcoffee.viewmodel.BrewLogFeedbackViewModelFactory
+import com.adsamcik.starlitcoffee.viewmodel.BrewLogListViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -77,40 +89,91 @@ private const val TAG = "BrewLogScreen"
 private const val BrewLogListPaneWeight = 0.42f
 private const val BrewLogDetailPaneWeight = 0.58f
 
+internal data class BrewLogSelectionState(
+    val selectedLogId: Long? = null,
+    val pendingLogId: Long? = null,
+) {
+    val isSavingBeforeSelection: Boolean get() = pendingLogId != null
+}
+
+internal fun requestBrewLogSelection(
+    state: BrewLogSelectionState,
+    requestedLogId: Long,
+): BrewLogSelectionState = when {
+    state.pendingLogId != null || state.selectedLogId == requestedLogId -> state
+    state.selectedLogId == null -> state.copy(selectedLogId = requestedLogId)
+    else -> state.copy(pendingLogId = requestedLogId)
+}
+
+internal fun completeBrewLogSelection(
+    state: BrewLogSelectionState,
+    saveSucceeded: Boolean,
+): BrewLogSelectionState {
+    val pendingLogId = state.pendingLogId ?: return state
+    return if (saveSucceeded) {
+        BrewLogSelectionState(selectedLogId = pendingLogId)
+    } else {
+        state.copy(pendingLogId = null)
+    }
+}
+
+internal fun normalizeBrewLogDecafFilter(
+    selected: DecafFilter,
+    regularCount: Int,
+    decafCount: Int,
+): DecafFilter = selected.normalizedForCounts(regularCount, decafCount)
+
 @Composable
 fun BrewLogScreen(
     brewViewModel: BrewViewModel,
+    operationViewModel: BrewLogListViewModel,
+    feedbackViewModelFactory: BrewLogFeedbackViewModelFactory,
     onNavigateToDetail: (Long) -> Unit,
     onBack: (() -> Unit)? = null,
 ){
     val logs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val flavorTags by brewViewModel.flavorTags.collectAsStateWithLifecycle()
+    val deleteState by operationViewModel.uiState.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy · h:mm a", Locale.getDefault()) }
 
     val tagsByLog = remember(flavorTags) {
         flavorTags.groupBy { it.brewLogId }
     }
 
-    var decafFilter by remember { mutableStateOf(com.adsamcik.starlitcoffee.ui.component.DecafFilter.ALL) }
+    var decafFilter by remember { mutableStateOf(DecafFilter.ALL) }
     val decafCounts = remember(logs) {
         mapOf(
-            com.adsamcik.starlitcoffee.ui.component.DecafFilter.ALL to logs.size,
-            com.adsamcik.starlitcoffee.ui.component.DecafFilter.REGULAR to logs.count { !it.isDecaf },
-            com.adsamcik.starlitcoffee.ui.component.DecafFilter.DECAF to logs.count { it.isDecaf },
+            DecafFilter.ALL to logs.size,
+            DecafFilter.REGULAR to logs.count { !it.isDecaf },
+            DecafFilter.DECAF to logs.count { it.isDecaf },
         )
     }
-    val showDecafFilter = (decafCounts[com.adsamcik.starlitcoffee.ui.component.DecafFilter.DECAF] ?: 0) > 0 &&
-        (decafCounts[com.adsamcik.starlitcoffee.ui.component.DecafFilter.REGULAR] ?: 0) > 0
-    val filteredLogs = remember(logs, decafFilter) {
-        logs.filter { decafFilter.matches(it.isDecaf) }
+    val effectiveDecafFilter = normalizeBrewLogDecafFilter(
+        selected = decafFilter,
+        regularCount = decafCounts[DecafFilter.REGULAR] ?: 0,
+        decafCount = decafCounts[DecafFilter.DECAF] ?: 0,
+    )
+    val showDecafFilter = (decafCounts[DecafFilter.DECAF] ?: 0) > 0 &&
+        (decafCounts[DecafFilter.REGULAR] ?: 0) > 0
+    val filteredLogs = remember(logs, effectiveDecafFilter) {
+        logs.filter { effectiveDecafFilter.matches(it.isDecaf) }
     }
 
     var selectedLogId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var pendingSelectionLogId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var pendingDeleteId by rememberSaveable { mutableStateOf<Long?>(null) }
+    val pendingDelete = pendingDeleteId?.let { id -> logs.find { it.id == id } }
+    val isDeleting = deleteState.deletingLogId != null
+    val isSavingBeforeSelection = pendingSelectionLogId != null
     // Expanded windows (large tablets, desktop) show the log list and the
     // selected entry side by side; compact / medium keep the navigate-to-detail
     // flow. The detail route still exists for notification deep links.
     val listDetail = LocalWindowWidthClass.current.isExpanded
+
+    LaunchedEffect(effectiveDecafFilter) {
+        if (decafFilter != effectiveDecafFilter) decafFilter = effectiveDecafFilter
+    }
 
     val logList: @Composable (Modifier, (Long) -> Unit) -> Unit = { listModifier, onTapLog ->
         LazyColumn(
@@ -121,9 +184,10 @@ fun BrewLogScreen(
             if (showDecafFilter) {
                 item {
                     com.adsamcik.starlitcoffee.ui.component.DecafFilterChipRow(
-                        selected = decafFilter,
+                        selected = effectiveDecafFilter,
                         counts = decafCounts,
                         onSelected = { decafFilter = it },
+                        enabled = !isSavingBeforeSelection,
                         modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
                     )
                 }
@@ -142,14 +206,44 @@ fun BrewLogScreen(
                     flavorTags = logTags,
                     dateFormat = dateFormat,
                     selected = listDetail && log.id == selectedLogId,
+                    enabled = !listDetail || !isSavingBeforeSelection,
                     onTap = { onTapLog(log.id) },
                     onDelete = {
-                        if (selectedLogId == log.id) selectedLogId = null
-                        brewViewModel.deleteBrewLog(log)
+                        if (!isDeleting && !isSavingBeforeSelection) pendingDeleteId = log.id
                     },
                 )
             }
         }
+    }
+
+    LaunchedEffect(deleteState.deletedLogId) {
+        val deletedId = deleteState.deletedLogId ?: return@LaunchedEffect
+        if (selectedLogId == deletedId) selectedLogId = null
+        if (pendingSelectionLogId == deletedId) pendingSelectionLogId = null
+        pendingDeleteId = null
+        operationViewModel.consumeResult()
+    }
+
+    BackHandler(enabled = isDeleting) {}
+
+    pendingDelete?.let { log ->
+        DestructiveActionDialog(
+            titleRes = R.string.dialog_delete_brew_title,
+            confirmLabelRes = R.string.action_delete,
+            messageRes = if (deleteState.failedLogId == log.id) {
+                R.string.msg_could_not_delete
+            } else {
+                R.string.dialog_delete_brew_message
+            },
+            enabled = !isDeleting,
+            onConfirm = {
+                operationViewModel.delete(log)
+            },
+            onDismiss = {
+                pendingDeleteId = null
+                operationViewModel.consumeResult()
+            },
+        )
     }
 
     Scaffold { innerPadding ->
@@ -162,7 +256,8 @@ fun BrewLogScreen(
             // below (there is no back button on the Log tab to inset it).
             ScreenTopBar(
                 title = stringResource(R.string.screen_brew_log_title),
-                onBack = onBack,
+                onBack = onBack?.let { back -> { if (!isDeleting && !isSavingBeforeSelection) back() } },
+                backEnabled = !isDeleting && !isSavingBeforeSelection,
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
@@ -179,7 +274,14 @@ fun BrewLogScreen(
                         Modifier
                             .weight(BrewLogListPaneWeight)
                             .fillMaxHeight(),
-                    ) { id -> selectedLogId = id }
+                    ) { id ->
+                        val next = requestBrewLogSelection(
+                            state = BrewLogSelectionState(selectedLogId, pendingSelectionLogId),
+                            requestedLogId = id,
+                        )
+                        selectedLogId = next.selectedLogId
+                        pendingSelectionLogId = next.pendingLogId
+                    }
                     VerticalDivider()
                     Box(
                         modifier = Modifier
@@ -197,10 +299,42 @@ fun BrewLogScreen(
                             // Re-key on the selected id so the detail screen's
                             // internal remembered state resets when switching logs.
                             key(sel) {
+                                val feedbackViewModel: BrewLogFeedbackViewModel = viewModel(
+                                    key = "brew-log-feedback-$sel",
+                                    factory = feedbackViewModelFactory,
+                                )
                                 BrewLogDetailScreen(
                                     brewViewModel = brewViewModel,
+                                    feedbackViewModel = feedbackViewModel,
                                     logId = sel,
                                     onBack = { selectedLogId = null },
+                                    selectionRequestLogId = pendingSelectionLogId,
+                                    onSelectionReady = { requestedId ->
+                                        if (pendingSelectionLogId == requestedId) {
+                                            val next = completeBrewLogSelection(
+                                                state = BrewLogSelectionState(
+                                                    selectedLogId,
+                                                    pendingSelectionLogId,
+                                                ),
+                                                saveSucceeded = true,
+                                            )
+                                            selectedLogId = next.selectedLogId
+                                            pendingSelectionLogId = next.pendingLogId
+                                        }
+                                    },
+                                    onSelectionSaveFailed = { requestedId ->
+                                        if (pendingSelectionLogId == requestedId) {
+                                            val next = completeBrewLogSelection(
+                                                state = BrewLogSelectionState(
+                                                    selectedLogId,
+                                                    pendingSelectionLogId,
+                                                ),
+                                                saveSucceeded = false,
+                                            )
+                                            selectedLogId = next.selectedLogId
+                                            pendingSelectionLogId = next.pendingLogId
+                                        }
+                                    },
                                 )
                             }
                         }
@@ -223,6 +357,7 @@ private fun BrewLogCard(
     onTap: () -> Unit,
     onDelete: () -> Unit,
     selected: Boolean = false,
+    enabled: Boolean = true,
 ) {
     val feedbackEmoji = log.tasteFeedback?.let { name ->
         try {
@@ -239,12 +374,13 @@ private fun BrewLogCard(
     val brewMethod = remember(log.method) {
         runCatching { BrewMethod.valueOf(log.method) }.getOrNull()
     }
-    val methodLabel = brewMethod?.displayName
+    val methodLabel = brewMethod?.localizedDisplayName()
         ?: log.method.lowercase().replaceFirstChar { it.uppercase() }
 
     SwipeToDismissCard(onDismiss = onDelete) {
         ElevatedCard(
             onClick = onTap,
+            enabled = enabled,
             shape = MaterialTheme.shapes.large,
             colors = CardDefaults.elevatedCardColors(
                 containerColor = if (isUnrated) {
@@ -293,6 +429,7 @@ private fun BrewLogCard(
                 ) {
                     FilledTonalButton(
                         onClick = onTap,
+                        enabled = enabled,
                         shape = MaterialTheme.shapes.medium,
                         modifier = Modifier.fillMaxWidth(),
                     ) {
@@ -312,8 +449,12 @@ private fun BrewLogCard(
                         verticalArrangement = Arrangement.spacedBy(6.dp),
                     ) {
                         flavorTags.forEach { tag ->
+                            val descriptor = FlavorDescriptor.entries.find {
+                                it.displayName == tag.descriptor
+                            }
                             InsightChip(
-                                label = tag.descriptor,
+                                label = descriptor?.let { stringResource(it.displayNameRes()) }
+                                    ?: tag.descriptor,
                                 emphasis = ChipEmphasis.WARNING,
                             )
                         }
@@ -466,9 +607,9 @@ private fun ratingAccent(rating: Float?): RatingAccent {
 
 private const val NOTES_PREVIEW_CHARS = 80
 
-private fun formatFilterType(filterType: String): String = when (filterType) {
-    "PAPER" -> "Paper"
-    "METAL_19K" -> "19K"
-    "METAL_40K" -> "40K"
-    else -> filterType
-}
+@Composable
+private fun formatFilterType(filterType: String): String =
+    runCatching { com.adsamcik.starlitcoffee.data.model.FilterType.valueOf(filterType) }
+        .getOrNull()
+        ?.localizedDisplayName()
+        ?: filterType
