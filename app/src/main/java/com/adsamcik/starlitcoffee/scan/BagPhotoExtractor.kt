@@ -54,6 +54,7 @@ import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.NormalizedCoffeeField
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
+import com.adsamcik.starlitcoffee.util.PhotoStoragePolicy
 import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
 import com.adsamcik.starlitcoffee.viewmodel.BagVisionPlanner
@@ -106,10 +107,14 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
     private val vocabularyProvider: () -> CoffeeFilterVocabulary? = {
         appContext?.let { CoffeeFilterVocabularyLoader.getInstance(it) }
     },
+    private val barcodeScannerFactory: () -> BarcodeScanner = {
+        BarcodeScanning.getClient()
+    },
 ) {
     private var currentKnownValues: KnownFieldValues = KnownFieldValues.EMPTY
 
     private companion object {
+        private const val MAX_BAG_PHOTO_DECODE_LONG_EDGE_PX = 2048
         private const val BAG_PHOTO_TAG = "BagPhotoProcessing"
         // Outer safety-net cap around the whole text/combine LLM call (permit
         // acquisition + provider inference). Kept above the provider's inner
@@ -175,6 +180,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         knownFieldValues: KnownFieldValues,
         runLlm: Boolean = true,
         onProgress: (ScanProgress) -> Unit = {},
+        onPartialResult: (BagPhotoProcessingResult) -> Unit = {},
     ): BagPhotoProcessingResult {
         currentKnownValues = knownFieldValues
         if (photoUris.isEmpty()) {
@@ -182,14 +188,17 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         }
 
         val reporter = ScanProgressReporter(planProgressStages(runLlm), onProgress)
-        val barcodeScanner = BarcodeScanning.getClient()
+        var barcodeScanner: BarcodeScanner? = null
+        val barcodeScannerProvider = {
+            barcodeScanner ?: barcodeScannerFactory().also { barcodeScanner = it }
+        }
         return try {
             reporter.report(ScanStage.OCR)
             val processedPhotos = photoUris.mapIndexedNotNull { index, uriStr ->
                 processBagPhoto(
                     uriStr = uriStr,
                     side = if (index == 0) BagCaptureSide.FRONT else BagCaptureSide.BACK,
-                    barcodeScanner = barcodeScanner,
+                    barcodeScannerProvider = barcodeScannerProvider,
                 )
             }
             emitBagPhotoResult(
@@ -197,9 +206,10 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 processedPhotos = processedPhotos,
                 runLlm = runLlm,
                 reporter = reporter,
+                onPartialResult = onPartialResult,
             )
         } finally {
-            barcodeScanner.close()
+            barcodeScanner?.close()
         }
     }
 
@@ -231,6 +241,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         processedPhotos: List<ProcessedBagPhoto>,
         runLlm: Boolean,
         reporter: ScanProgressReporter,
+        onPartialResult: (BagPhotoProcessingResult) -> Unit,
     ): BagPhotoProcessingResult {
         reporter.report(ScanStage.BARCODE_LOOKUP)
         val photoAnalyses = processedPhotos.map { photo ->
@@ -245,6 +256,19 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         val allCandidates = processedPhotos
             .flatMap { photo -> buildFieldCandidates(photo) }
             .toMutableList()
+        val ocrFieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
+        onPartialResult(
+            BagPhotoProcessingResult(
+                ocrPrefill = ocrFieldEvidence
+                    .takeIf { it.isNotEmpty() }
+                    ?.let(BagPhotoScanSupport::buildPrefill),
+                capturedPhotoUris = photoUriList.joinToString(","),
+                fieldEvidence = ocrFieldEvidence,
+                photoAnalyses = photoAnalyses,
+                llmStatus = LlmEnrichmentStatus.NOT_RUN,
+                thumbnailFocus = computeThumbnailFocus(processedPhotos),
+            ),
+        )
         val rawDetectedQrUrl = processedPhotos.firstNotNullOfOrNull { it.detectedQrUrl }
         val detectedBarcode = resolveDetectedBarcode(processedPhotos, combinedOcrText, allCandidates)
 
@@ -263,6 +287,23 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         val offSummary = addOpenFoodFactsCandidates(allCandidates, detectedBarcode)
         val qrEnrichment = buildQrLinkEnrichment(rawDetectedQrUrl)
         allCandidates += qrEnrichment.candidates
+        onPartialResult(
+            buildBagPhotoProcessingResult(
+                photoUriList = photoUriList,
+                processedPhotos = processedPhotos,
+                photoAnalyses = photoAnalyses,
+                detectedBarcode = detectedBarcode,
+                qrEnrichment = qrEnrichment,
+                offSummary = offSummary,
+                matchedBagByBarcode = matchedBagByBarcode,
+                allCandidates = allCandidates,
+                llmStatus = if (runLlm && !llmProvider.isAvailable()) {
+                    LlmEnrichmentStatus.UNAVAILABLE
+                } else {
+                    LlmEnrichmentStatus.NOT_RUN
+                },
+            ),
+        )
 
         val llmOutcome = runLlmEnrichmentStages(
             photoUriList = photoUriList,
@@ -274,6 +315,30 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         )
 
         reporter.report(ScanStage.FINALIZING)
+        return buildBagPhotoProcessingResult(
+            photoUriList = photoUriList,
+            processedPhotos = processedPhotos,
+            photoAnalyses = photoAnalyses,
+            detectedBarcode = detectedBarcode,
+            qrEnrichment = qrEnrichment,
+            offSummary = offSummary,
+            matchedBagByBarcode = matchedBagByBarcode,
+            allCandidates = allCandidates,
+            llmStatus = llmOutcome.status,
+        )
+    }
+
+    private fun buildBagPhotoProcessingResult(
+        photoUriList: List<String>,
+        processedPhotos: List<ProcessedBagPhoto>,
+        photoAnalyses: List<BagPhotoAnalysis>,
+        detectedBarcode: String?,
+        qrEnrichment: QrLinkEnrichment,
+        offSummary: OffLookupSummary,
+        matchedBagByBarcode: CoffeeBagEntity?,
+        allCandidates: List<BagFieldCandidate>,
+        llmStatus: LlmEnrichmentStatus,
+    ): BagPhotoProcessingResult {
         val fieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
         val reviewHints = BagPhotoScanSupport.buildReviewHints(
             photoAnalyses = photoAnalyses,
@@ -283,7 +348,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 matchedBag = matchedBagByBarcode,
                 observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode),
             ) + qrEnrichment.reviewHints,
-            scanServiceUnavailable = llmOutcome.status == LlmEnrichmentStatus.UNAVAILABLE,
+            scanServiceUnavailable = llmStatus == LlmEnrichmentStatus.UNAVAILABLE,
         )
         val ocrPrefill = fieldEvidence.takeIf { it.isNotEmpty() }?.let(BagPhotoScanSupport::buildPrefill)
 
@@ -297,7 +362,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             fieldEvidence = fieldEvidence,
             photoAnalyses = photoAnalyses,
             reviewHints = reviewHints,
-            llmStatus = llmOutcome.status,
+            llmStatus = llmStatus,
             thumbnailFocus = computeThumbnailFocus(processedPhotos),
         )
     }
@@ -480,32 +545,38 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
     private suspend fun processBagPhoto(
         uriStr: String,
         side: BagCaptureSide,
-        barcodeScanner: BarcodeScanner,
+        barcodeScannerProvider: () -> BarcodeScanner,
     ): ProcessedBagPhoto? {
+        var bitmap: Bitmap? = null
+        var alignedBitmap: Bitmap? = null
+        var enhancedBitmap: Bitmap? = null
         return try {
-            val bitmap = decodeBagPhotoBitmap(uriStr) ?: return null
+            val sourceBitmap = decodeBagPhotoBitmap(uriStr) ?: return null
+            bitmap = sourceBitmap
 
-            val originalText = recognizeText(bitmap)
-            val alignedBitmap = if (originalText != null && originalText.blocks.isNotEmpty()) {
+            val originalText = recognizeText(sourceBitmap)
+            val aligned = if (originalText != null && originalText.blocks.isNotEmpty()) {
                 val alignment = ImagePreprocessor.computeAlignment(originalText.blocks)
-                ImagePreprocessor.applyAlignment(bitmap, alignment)
+                ImagePreprocessor.applyAlignment(sourceBitmap, alignment)
             } else {
-                bitmap
+                sourceBitmap
             }
-            val alignedText = recognizeText(alignedBitmap)
-            val enhancedBitmap = ImagePreprocessor.preprocessForOcr(alignedBitmap)
-            val enhancedText = recognizeText(enhancedBitmap)
+            alignedBitmap = aligned
+            val alignedText = recognizeText(aligned)
+            val enhanced = ImagePreprocessor.preprocessForOcr(aligned)
+            enhancedBitmap = enhanced
+            val enhancedText = recognizeText(enhanced)
 
             val passes = listOfNotNull(
-                buildScanPass("original", bitmap, originalText),
-                buildScanPass("aligned", alignedBitmap, alignedText),
-                buildScanPass("enhanced", enhancedBitmap, enhancedText),
+                buildScanPass("original", sourceBitmap, originalText),
+                buildScanPass("aligned", aligned, alignedText),
+                buildScanPass("enhanced", enhanced, enhancedText),
             )
 
             val mergedText = passes.joinToString("\n") { it.fullText }.trim()
             val textBlockCount = passes.maxOfOrNull { it.blocks.size } ?: 0
             val quality = BagCaptureQualityAnalyzer.analyzeBitmap(
-                bitmap = bitmap,
+                bitmap = sourceBitmap,
                 textBlockCount = textBlockCount,
                 textDetected = textBlockCount > 0,
             )
@@ -513,7 +584,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             val ocrBarcode = mergedText.takeIf { it.isNotBlank() }
                 ?.let { OcrFieldExtractor.extractBarcodeFromText(it) }
             val detection = detectBarcodeAndQrUrl(
-                scannedCodes = scanBarcodes(barcodeScanner, bitmap),
+                scannedCodes = scanBarcodes(barcodeScannerProvider(), sourceBitmap),
                 ocrBarcode = ocrBarcode,
             )
 
@@ -531,6 +602,15 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         } catch (e: Exception) {
             Log.w(BAG_PHOTO_TAG, "Failed to process bag photo for OCR and barcode extraction", e)
             null
+        } catch (error: OutOfMemoryError) {
+            Log.e(BAG_PHOTO_TAG, "Insufficient memory to process bag photo", error)
+            null
+        } finally {
+            listOfNotNull(enhancedBitmap, alignedBitmap, bitmap)
+                .distinctBy(System::identityHashCode)
+                .forEach { processedBitmap ->
+                    if (!processedBitmap.isRecycled) processedBitmap.recycle()
+                }
         }
     }
 
@@ -571,13 +651,41 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 Log.w(BAG_PHOTO_TAG, "Failed to read content URI EXIF orientation", e)
                 null
             } ?: ExifInterface.ORIENTATION_NORMAL
+            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            resolver.openInputStream(uri)?.use { input -> BitmapFactory.decodeStream(input, null, bounds) }
+            val sourceLongEdge = maxOf(bounds.outWidth, bounds.outHeight)
+            if (sourceLongEdge <= 0) return null
+            val options = BitmapFactory.Options().apply {
+                inSampleSize = PhotoStoragePolicy.boundedDecodeSampleSize(
+                    sourceLongEdgePx = sourceLongEdge,
+                    maxLongEdgePx = MAX_BAG_PHOTO_DECODE_LONG_EDGE_PX,
+                )
+                inPreferredConfig = Bitmap.Config.ARGB_8888
+            }
             resolver.openInputStream(uri)?.use { input ->
-                BitmapFactory.decodeStream(input)
-            }?.let { bitmap -> ImagePreprocessor.applyExifOrientation(bitmap, orientation) }
+                BitmapFactory.decodeStream(input, null, options)
+            }?.let { rawBitmap ->
+                ImagePreprocessor.applyExifOrientation(rawBitmap, orientation).also { oriented ->
+                    if (oriented !== rawBitmap && !rawBitmap.isRecycled) rawBitmap.recycle()
+                }
+            }
         } else {
             val file = java.io.File(uri.path ?: uriStr)
-            val rawBitmap = BitmapFactory.decodeFile(file.absolutePath) ?: return null
-            ImagePreprocessor.applyExifRotation(rawBitmap, file.absolutePath)
+            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            BitmapFactory.decodeFile(file.absolutePath, bounds)
+            val sourceLongEdge = maxOf(bounds.outWidth, bounds.outHeight)
+            if (sourceLongEdge <= 0) return null
+            val options = BitmapFactory.Options().apply {
+                inSampleSize = PhotoStoragePolicy.boundedDecodeSampleSize(
+                    sourceLongEdgePx = sourceLongEdge,
+                    maxLongEdgePx = MAX_BAG_PHOTO_DECODE_LONG_EDGE_PX,
+                )
+                inPreferredConfig = Bitmap.Config.ARGB_8888
+            }
+            val rawBitmap = BitmapFactory.decodeFile(file.absolutePath, options) ?: return null
+            ImagePreprocessor.applyExifRotation(rawBitmap, file.absolutePath).also { oriented ->
+                if (oriented !== rawBitmap && !rawBitmap.isRecycled) rawBitmap.recycle()
+            }
         }
     }
 

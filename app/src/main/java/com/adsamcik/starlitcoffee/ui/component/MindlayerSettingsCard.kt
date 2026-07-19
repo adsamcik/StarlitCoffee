@@ -16,6 +16,7 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +38,7 @@ import com.adsamcik.starlitcoffee.StarlitCoffeeApp
 import com.adsamcik.starlitcoffee.scan.observability.ConnectionStatus
 import com.adsamcik.starlitcoffee.scan.observability.ConnectionTestResult
 import com.adsamcik.starlitcoffee.scan.observability.MindlayerConnectionTester
+import com.adsamcik.starlitcoffee.util.MindlayerInstallLink
 import kotlinx.coroutines.launch
 
 private val connectedColor = Color(0xFF4CAF50)
@@ -45,37 +47,51 @@ private val disconnectedColor = Color(0xFF9E9E9E)
 private val errorColor = Color(0xFFF44336)
 
 @Composable
-fun MindlayerSettingsCard() {
+fun MindlayerSettingsCard(showDiagnostics: Boolean) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val mindlayerInstalled = rememberMindlayerInstalled()
+    val couldNotOpenAppStore = stringResource(R.string.msg_could_not_open_app_store)
+    val consentGrantedMessage = stringResource(R.string.consent_granted)
+    val consentUnavailableMessage = stringResource(R.string.consent_still_unavailable)
+    val consentMessages = ConsentOutcome.entries.associateWith { outcome ->
+        stringResource(outcome.messageRes())
+    }
     var result by remember { mutableStateOf<ConnectionTestResult?>(null) }
     var isLoading by remember { mutableStateOf(false) }
 
     val consent = rememberMindlayerConsentFlow { outcome ->
         when (outcome) {
             ConsentOutcome.GRANTED, ConsentOutcome.ALREADY_APPROVED -> scope.launch {
-                val app = context.applicationContext as? StarlitCoffeeApp
-                val ok = app?.reconnectMindlayer() ?: false
-                Toast.makeText(
-                    context,
-                    context.getString(
-                        if (ok) R.string.consent_granted else R.string.consent_still_unavailable,
-                    ),
-                    Toast.LENGTH_SHORT,
-                ).show()
                 isLoading = true
-                result = MindlayerConnectionTester.testConnection(context)
-                isLoading = false
+                try {
+                    val app = context.applicationContext as? StarlitCoffeeApp
+                    val ok = app?.reconnectMindlayer() ?: false
+                    Toast.makeText(
+                        context,
+                        if (ok) consentGrantedMessage else consentUnavailableMessage,
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                    if (showDiagnostics) {
+                        result = MindlayerConnectionTester.testConnection(context)
+                    }
+                } finally {
+                    isLoading = false
+                }
             }
-            else -> Toast.makeText(context, context.getString(outcome.messageRes()), Toast.LENGTH_LONG).show()
+            else -> Toast.makeText(context, consentMessages.getValue(outcome), Toast.LENGTH_LONG).show()
         }
     }
 
-    // Auto-test connection on first composition
-    androidx.compose.runtime.LaunchedEffect(Unit) {
-        isLoading = true
-        result = MindlayerConnectionTester.testConnection(context)
-        isLoading = false
+    LaunchedEffect(showDiagnostics) {
+        if (showDiagnostics) {
+            isLoading = true
+            try {
+                result = MindlayerConnectionTester.testConnection(context)
+            } finally {
+                isLoading = false
+            }
+        }
     }
 
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
@@ -88,137 +104,167 @@ fun MindlayerSettingsCard() {
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Status row
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                val (dotColor, statusText) = when (result?.status) {
-                    ConnectionStatus.CONNECTED -> connectedColor to "Connected"
-                    ConnectionStatus.CONNECTING -> connectingColor to "Connecting…"
-                    ConnectionStatus.INITIALIZING -> connectingColor to "Initializing…"
-                    ConnectionStatus.DISCONNECTED -> disconnectedColor to "Disconnected"
-                    ConnectionStatus.ERROR -> errorColor to "Error"
-                    null -> disconnectedColor to "Not tested"
-                }
-                Spacer(
-                    modifier = Modifier
-                        .size(10.dp)
-                        .clip(CircleShape)
-                        .background(dotColor),
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "Status: $statusText",
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            }
-
-            // Engine info
-            result?.engineInfo?.let { info ->
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Backend: ${info.backend}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Text(
-                    text = "Init time: ${"%.1f".format(info.initTimeSeconds)}s",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Text(
-                    text = "Decode speed: ${"%.1f".format(info.decodeToksPerSec)} tok/s",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Consent — grant Mindlayer access so the AI service can be used.
-            FilledTonalButton(
-                onClick = consent.request,
-                enabled = !consent.inProgress && !isLoading,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    stringResource(
-                        if (consent.inProgress) R.string.consent_requesting else R.string.action_enable_ai,
-                    ),
-                )
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Buttons
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilledTonalButton(
-                    onClick = {
-                        isLoading = true
-                        scope.launch {
-                            result = MindlayerConnectionTester.testConnection(context)
-                            isLoading = false
-                        }
-                    },
-                    enabled = !isLoading,
-                ) {
-                    Text(stringResource(R.string.action_test_connection))
-                }
-                FilledTonalButton(
-                    onClick = {
-                        isLoading = true
-                        scope.launch {
-                            result = MindlayerConnectionTester.runTestPrompt(context)
-                            isLoading = false
-                        }
-                    },
-                    enabled = !isLoading,
-                ) {
-                    Text(stringResource(R.string.action_run_test_prompt))
-                }
-            }
-
-            // Loading indicator
-            if (isLoading) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    LoadingIndicator(modifier = Modifier.size(16.dp))
+            if (showDiagnostics) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    val (dotColor, statusText) = when (result?.status) {
+                        ConnectionStatus.CONNECTED -> connectedColor to "Connected"
+                        ConnectionStatus.CONNECTING -> connectingColor to "Connecting…"
+                        ConnectionStatus.INITIALIZING -> connectingColor to "Initializing…"
+                        ConnectionStatus.DISCONNECTED -> disconnectedColor to "Disconnected"
+                        ConnectionStatus.ERROR -> errorColor to "Error"
+                        null -> disconnectedColor to "Not tested"
+                    }
+                    Spacer(
+                        modifier = Modifier
+                            .size(10.dp)
+                            .clip(CircleShape)
+                            .background(dotColor),
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = stringResource(R.string.label_testing),
+                        text = "Status: $statusText",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+
+                result?.engineInfo?.let { info ->
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Backend: ${info.backend}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text(
+                        text = "Init time: ${"%.1f".format(info.initTimeSeconds)}s",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text(
+                        text = "Decode speed: ${"%.1f".format(info.decodeToksPerSec)} tok/s",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
 
-            // Test result
-            result?.testResult?.let { test ->
-                Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(12.dp))
+
+            if (mindlayerInstalled) {
+                FilledTonalButton(
+                    onClick = consent.request,
+                    enabled = !consent.inProgress && !isLoading,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(
+                        stringResource(
+                            if (consent.inProgress || isLoading) {
+                                R.string.consent_requesting
+                            } else {
+                                R.string.action_enable_ai
+                            },
+                        ),
+                    )
+                }
+            } else {
                 Text(
-                    text = "Prompt: \"${test.prompt}\"",
+                    text = stringResource(R.string.msg_mindlayer_install_recommendation),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                Text(
-                    text = "Response: \"${test.response}\"",
-                    style = MaterialTheme.typography.bodySmall,
-                )
-                Text(
-                    text = "Latency: ${test.latencyMs}ms | Tokens: ${test.tokenCount}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+                FilledTonalButton(
+                    onClick = {
+                        if (!MindlayerInstallLink.open(context)) {
+                            Toast.makeText(
+                                context,
+                                couldNotOpenAppStore,
+                                Toast.LENGTH_LONG,
+                            ).show()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(stringResource(R.string.action_mindlayer_google_play))
+                }
             }
 
-            // Error message
-            result?.errorMessage?.let { error ->
+            if (showDiagnostics) {
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "⚠ $error",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = errorColor,
-                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilledTonalButton(
+                        onClick = {
+                            isLoading = true
+                            scope.launch {
+                                try {
+                                    result = MindlayerConnectionTester.testConnection(context)
+                                } finally {
+                                    isLoading = false
+                                }
+                            }
+                        },
+                        enabled = !isLoading,
+                    ) {
+                        Text(stringResource(R.string.action_test_connection))
+                    }
+                    FilledTonalButton(
+                        onClick = {
+                            isLoading = true
+                            scope.launch {
+                                try {
+                                    result = MindlayerConnectionTester.runTestPrompt(context)
+                                } finally {
+                                    isLoading = false
+                                }
+                            }
+                        },
+                        enabled = !isLoading,
+                    ) {
+                        Text(stringResource(R.string.action_run_test_prompt))
+                    }
+                }
+
+                if (isLoading) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        LoadingIndicator(modifier = Modifier.size(16.dp))
+                        Text(
+                            text = stringResource(R.string.label_testing),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+
+                result?.testResult?.let { test ->
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = "Prompt: \"${test.prompt}\"",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text(
+                        text = "Response: \"${test.response}\"",
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                    Text(
+                        text = "Latency: ${test.latencyMs}ms | Tokens: ${test.tokenCount}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+
+                result?.errorMessage?.let { error ->
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "⚠ $error",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = errorColor,
+                    )
+                }
             }
         }
     }

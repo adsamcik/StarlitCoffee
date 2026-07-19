@@ -45,6 +45,7 @@ import com.adsamcik.starlitcoffee.R
 import androidx.core.content.ContextCompat
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.Executors
 
 private const val TAG = "BarcodeScannerScreen"
@@ -110,12 +111,11 @@ private fun BarcodeCamera(
     val lifecycleOwner = LocalLifecycleOwner.current
     var hasDetected by remember { mutableStateOf(false) }
 
-    // Background executor for image analysis + ML Kit listener callbacks.
-    // Running on Main caused frame analysis (and `imageProxy.close()`) to
-    // contend with UI rendering, which produced visible camera-preview hitches
-    // whenever the main thread was busy.
+    // Background executor for CameraX image analysis. ML Kit completion callbacks
+    // stay on Main so disposal never dispatches them onto this shut-down executor.
     val analysisExecutor = remember { Executors.newSingleThreadExecutor() }
     val mainExecutor = remember(context) { ContextCompat.getMainExecutor(context) }
+    val lifecyclePolicy = remember { BarcodeCameraLifecyclePolicy() }
     // Holds CameraX + ML Kit references so onDispose can tear down in the
     // correct order. CameraX is bound to a lifecycle but unbinds lazily;
     // shutting down the analysis executor before clearing the analyzer leads
@@ -124,6 +124,7 @@ private fun BarcodeCamera(
     val cameraResources = remember { BarcodeCameraResources() }
     DisposableEffect(analysisExecutor) {
         onDispose {
+            lifecyclePolicy.dispose()
             cameraResources.release()
             analysisExecutor.shutdown()
         }
@@ -138,6 +139,7 @@ private fun BarcodeCamera(
                     analysisExecutor = analysisExecutor,
                     mainExecutor = mainExecutor,
                     resources = cameraResources,
+                    lifecyclePolicy = lifecyclePolicy,
                     hasDetected = { hasDetected },
                     onBarcodeDetected = { barcode ->
                         if (!hasDetected) {
@@ -178,31 +180,53 @@ private fun BarcodeCamera(
 private fun analyzeBarcode(
     imageProxy: ImageProxy,
     hasDetected: Boolean,
-    listenerExecutor: java.util.concurrent.Executor,
     mainExecutor: java.util.concurrent.Executor,
     onDetected: (String) -> Unit,
     scanner: com.google.mlkit.vision.barcode.BarcodeScanner,
+    lifecyclePolicy: BarcodeCameraLifecyclePolicy,
 ) {
     val mediaImage = imageProxy.image
-    if (mediaImage != null && !hasDetected) {
+    if (mediaImage != null && !hasDetected && lifecyclePolicy.isActive) {
         val inputImage = InputImage.fromMediaImage(
             mediaImage,
             imageProxy.imageInfo.rotationDegrees,
         )
-        scanner.process(inputImage)
-            // Listener callbacks run on the analyzer's background executor so
-            // ML Kit work and `imageProxy.close()` never touch Main. We only
-            // hop to the main executor for the actual Compose state write
-            // (via `onDetected`) which navigates / flips `hasDetected`.
-            .addOnSuccessListener(listenerExecutor) { barcodes ->
-                val value = barcodes.firstOrNull()?.rawValue ?: return@addOnSuccessListener
-                mainExecutor.execute { onDetected(value) }
-            }
-            .addOnCompleteListener(listenerExecutor) {
-                imageProxy.close()
-            }
+        try {
+            scanner.process(inputImage)
+                // The analysis executor is shut down during disposal. Keep ML Kit
+                // completion callbacks on Main so an in-flight task can still close
+                // its ImageProxy without dispatching onto that shut-down executor.
+                .addOnSuccessListener(mainExecutor) { barcodes ->
+                    if (!lifecyclePolicy.isActive) return@addOnSuccessListener
+                    val value = barcodes.firstOrNull()?.rawValue ?: return@addOnSuccessListener
+                    onDetected(value)
+                }
+                .addOnCompleteListener(mainExecutor) {
+                    imageProxy.close()
+                }
+        } catch (error: Exception) {
+            Log.w(TAG, "Failed to process barcode frame", error)
+            imageProxy.close()
+        }
     } else {
         imageProxy.close()
+    }
+}
+
+internal class BarcodeCameraLifecyclePolicy {
+    private val disposed = AtomicBoolean(false)
+
+    val isActive: Boolean
+        get() = !disposed.get()
+
+    fun dispose() {
+        disposed.set(true)
+    }
+
+    fun continueOrRelease(release: () -> Unit): Boolean {
+        if (isActive) return true
+        release()
+        return false
     }
 }
 
@@ -216,14 +240,23 @@ private fun analyzeBarcode(
  * resources) leaked.
  */
 private class BarcodeCameraResources {
-    @Volatile
-    var cameraProvider: ProcessCameraProvider? = null
+    private var released = false
+    private var cameraProvider: ProcessCameraProvider? = null
+    private var imageAnalysis: ImageAnalysis? = null
+    private var scanner: com.google.mlkit.vision.barcode.BarcodeScanner? = null
 
-    @Volatile
-    var imageAnalysis: ImageAnalysis? = null
-
-    @Volatile
-    var scanner: com.google.mlkit.vision.barcode.BarcodeScanner? = null
+    @Synchronized
+    fun install(
+        cameraProvider: ProcessCameraProvider,
+        imageAnalysis: ImageAnalysis,
+        scanner: com.google.mlkit.vision.barcode.BarcodeScanner,
+    ): Boolean {
+        if (released) return false
+        this.cameraProvider = cameraProvider
+        this.imageAnalysis = imageAnalysis
+        this.scanner = scanner
+        return true
+    }
 
     /**
      * Tear down resources in the correct order: stop CameraX from dispatching
@@ -233,13 +266,39 @@ private class BarcodeCameraResources {
      * via the cleared analyzer, and no new ones will arrive.
      */
     fun release() {
-        imageAnalysis?.clearAnalyzer()
-        cameraProvider?.unbindAll()
-        scanner?.close()
-        imageAnalysis = null
-        cameraProvider = null
-        scanner = null
+        val snapshot = synchronized(this) {
+            released = true
+            CameraResourceSnapshot(cameraProvider, imageAnalysis, scanner).also {
+                imageAnalysis = null
+                cameraProvider = null
+                scanner = null
+            }
+        }
+        releaseCameraResources(
+            cameraProvider = snapshot.cameraProvider,
+            imageAnalysis = snapshot.imageAnalysis,
+            scanner = snapshot.scanner,
+        )
     }
+}
+
+private data class CameraResourceSnapshot(
+    val cameraProvider: ProcessCameraProvider?,
+    val imageAnalysis: ImageAnalysis?,
+    val scanner: com.google.mlkit.vision.barcode.BarcodeScanner?,
+)
+
+private fun releaseCameraResources(
+    cameraProvider: ProcessCameraProvider?,
+    imageAnalysis: ImageAnalysis?,
+    scanner: com.google.mlkit.vision.barcode.BarcodeScanner?,
+) {
+    runCatching { imageAnalysis?.clearAnalyzer() }
+        .onFailure { Log.w(TAG, "Failed to clear barcode analyzer", it) }
+    runCatching { cameraProvider?.unbindAll() }
+        .onFailure { Log.w(TAG, "Failed to unbind barcode camera", it) }
+    runCatching { scanner?.close() }
+        .onFailure { Log.w(TAG, "Failed to close barcode scanner", it) }
 }
 
 /**
@@ -254,6 +313,7 @@ private fun createPreviewView(
     analysisExecutor: java.util.concurrent.Executor,
     mainExecutor: java.util.concurrent.Executor,
     resources: BarcodeCameraResources,
+    lifecyclePolicy: BarcodeCameraLifecyclePolicy,
     hasDetected: () -> Boolean,
     onBarcodeDetected: (String) -> Unit,
 ): PreviewView {
@@ -263,32 +323,61 @@ private fun createPreviewView(
     val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
     cameraProviderFuture.addListener(
         {
+            if (!lifecyclePolicy.isActive) return@addListener
             val cameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().build().also {
                 it.surfaceProvider = previewView.surfaceProvider
             }
+            if (!lifecyclePolicy.continueOrRelease { cameraProvider.unbindAll() }) {
+                return@addListener
+            }
             val barcodeScanner = BarcodeScanning.getClient()
+            if (!lifecyclePolicy.continueOrRelease {
+                    releaseCameraResources(cameraProvider, null, barcodeScanner)
+                }
+            ) {
+                return@addListener
+            }
             val analysis = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build()
-                .also { imageAnalysis ->
+            if (!lifecyclePolicy.continueOrRelease {
+                    releaseCameraResources(cameraProvider, analysis, barcodeScanner)
+                }
+            ) {
+                return@addListener
+            }
+            try {
+                analysis.also { imageAnalysis ->
                     imageAnalysis.setAnalyzer(analysisExecutor) { imageProxy ->
+                        if (!lifecyclePolicy.isActive) {
+                            imageProxy.close()
+                            return@setAnalyzer
+                        }
                         analyzeBarcode(
                             imageProxy = imageProxy,
                             hasDetected = hasDetected(),
-                            listenerExecutor = analysisExecutor,
                             mainExecutor = mainExecutor,
                             onDetected = onBarcodeDetected,
                             scanner = barcodeScanner,
+                            lifecyclePolicy = lifecyclePolicy,
                         )
                     }
                 }
-            // Publish references for orderly teardown by DisposableEffect.
-            // Set BEFORE bindToLifecycle so a dispose racing this listener
-            // already has a chance to unbind whatever is wired up.
-            resources.cameraProvider = cameraProvider
-            resources.imageAnalysis = analysis
-            resources.scanner = barcodeScanner
+            } catch (error: Exception) {
+                releaseCameraResources(cameraProvider, analysis, barcodeScanner)
+                if (lifecyclePolicy.isActive) {
+                    Log.w(TAG, "Failed to install barcode analyzer", error)
+                }
+                return@addListener
+            }
+            if (!resources.install(cameraProvider, analysis, barcodeScanner)) {
+                releaseCameraResources(cameraProvider, analysis, barcodeScanner)
+                return@addListener
+            }
+            if (!lifecyclePolicy.continueOrRelease(resources::release)) {
+                return@addListener
+            }
             // Boundary catch: `bindToLifecycle` can raise IllegalState,
             // CameraInfoUnavailable, or various initialization errors that
             // the user can't act on — graceful degradation (no scanner) is
@@ -296,13 +385,20 @@ private fun createPreviewView(
             @Suppress("TooGenericExceptionCaught")
             try {
                 cameraProvider.unbindAll()
+                if (!lifecyclePolicy.continueOrRelease(resources::release)) {
+                    return@addListener
+                }
                 cameraProvider.bindToLifecycle(
                     lifecycleOwner,
                     CameraSelector.DEFAULT_BACK_CAMERA,
                     preview,
                     analysis,
                 )
+                if (!lifecyclePolicy.isActive) {
+                    resources.release()
+                }
             } catch (e: Exception) {
+                resources.release()
                 Log.w(TAG, "Failed to bind camera for barcode scanning", e)
             }
         },

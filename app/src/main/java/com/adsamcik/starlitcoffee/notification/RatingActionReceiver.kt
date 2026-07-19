@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.core.app.NotificationManagerCompat
 import com.adsamcik.starlitcoffee.data.db.AppDatabase
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import kotlinx.coroutines.CoroutineScope
@@ -34,9 +33,9 @@ class RatingActionReceiver : BroadcastReceiver() {
         val pending = goAsync()
         scope.launch {
             try {
-                applyRating(appContext, brewLogId, ratingValue.toFloat())
-                NotificationManagerCompat.from(appContext)
-                    .cancel(RatingReminderReceiver.notificationIdFor(brewLogId))
+                if (applyRating(appContext, brewLogId, ratingValue.toFloat())) {
+                    RatingReminderScheduler(appContext).cancelReminder(brewLogId)
+                }
             } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
                 Log.e(TAG, "Failed to apply quick rating $ratingValue for brew $brewLogId", error)
             } finally {
@@ -45,7 +44,7 @@ class RatingActionReceiver : BroadcastReceiver() {
         }
     }
 
-    private suspend fun applyRating(context: Context, brewLogId: Long, rating: Float) {
+    private suspend fun applyRating(context: Context, brewLogId: Long, rating: Float): Boolean {
         val database = AppDatabase.getInstance(context)
         val repository = BrewLogRepository(
             database = database,
@@ -54,11 +53,12 @@ class RatingActionReceiver : BroadcastReceiver() {
         )
         val existing = repository.getLogById(brewLogId) ?: run {
             Log.w(TAG, "Brew log $brewLogId no longer exists — skipping quick rating")
-            return
+            return false
         }
         // Preserve any freeform notes the user may have already written; only
         // overwrite the rating itself.
         repository.updateRating(brewLogId, rating, existing.freeformNotes)
+        return true
     }
 
     companion object {

@@ -15,6 +15,13 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.adsamcik.starlitcoffee.MainActivity
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.data.db.AppDatabase
+import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
+import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 /**
  * Receives the scheduled alarm broadcast and posts the rating-reminder
@@ -32,13 +39,37 @@ class RatingReminderReceiver : BroadcastReceiver() {
             Log.w(TAG, "Reminder fired without a valid brew log id — skipping")
             return
         }
-        if (!hasPostNotificationPermission(context)) {
-            Log.w(TAG, "POST_NOTIFICATIONS not granted — cannot post rating reminder for $brewLogId")
-            return
-        }
+        val appContext = context.applicationContext
         val methodLabel = intent.getStringExtra(RatingReminderScheduler.EXTRA_METHOD_LABEL)
-        NotificationChannels.ensureRatingReminderChannel(context)
-        postNotification(context, brewLogId, methodLabel)
+        val pending = goAsync()
+        scope.launch {
+            try {
+                if (!hasPostNotificationPermission(appContext)) {
+                    Log.w(TAG, "POST_NOTIFICATIONS not granted — cannot post rating reminder for $brewLogId")
+                    return@launch
+                }
+                NotificationChannels.ensureRatingReminderChannel(appContext)
+                val log = loadBrewLog(appContext, brewLogId)
+                if (!shouldPostRatingReminder(log)) {
+                    RatingReminderScheduler(appContext).cancelReminder(brewLogId)
+                    return@launch
+                }
+                postNotification(appContext, brewLogId, methodLabel)
+            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                Log.e(TAG, "Failed to validate rating reminder for $brewLogId", error)
+            } finally {
+                pending.finish()
+            }
+        }
+    }
+
+    private suspend fun loadBrewLog(context: Context, brewLogId: Long): BrewLogEntity? {
+        val database = AppDatabase.getInstance(context)
+        return BrewLogRepository(
+            database = database,
+            brewLogDao = database.brewLogDao(),
+            flavorTagDao = database.flavorTagDao(),
+        ).getLogById(brewLogId)
     }
 
     @SuppressLint("MissingPermission")
@@ -55,7 +86,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
             context,
             brewLogId.toRequestCode(),
             contentIntent,
-            pendingIntentFlags(mutable = false),
+            immutablePendingIntentFlags(),
         )
 
         val customView = buildRatingRemoteViews(context, brewLogId, title, body)
@@ -68,6 +99,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
             .setCustomBigContentView(customView)
             .setContentIntent(contentPendingIntent)
             .setAutoCancel(true)
+            .setTimeoutAfter(RATING_NOTIFICATION_TIMEOUT_MILLIS)
             .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
@@ -104,7 +136,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
                 context,
                 quickRateRequestCode(brewLogId, ratingValue),
                 intent,
-                pendingIntentFlags(mutable = false),
+                immutablePendingIntentFlags(),
             )
             views.setOnClickPendingIntent(viewId, pendingIntent)
         }
@@ -119,14 +151,8 @@ class RatingReminderReceiver : BroadcastReceiver() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun pendingIntentFlags(mutable: Boolean): Int {
-        val base = PendingIntent.FLAG_UPDATE_CURRENT
-        return if (mutable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            base or PendingIntent.FLAG_MUTABLE
-        } else {
-            base or PendingIntent.FLAG_IMMUTABLE
-        }
-    }
+    private fun immutablePendingIntentFlags(): Int =
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
 
     private fun Long.toRequestCode(): Int = (this and 0x7FFFFFFFL).toInt()
 
@@ -139,6 +165,8 @@ class RatingReminderReceiver : BroadcastReceiver() {
     companion object {
         private const val TAG = "RatingReminderRecv"
         private const val NOTIFICATION_ID_BASE = 10_000
+        internal const val RATING_NOTIFICATION_TIMEOUT_MILLIS = 24L * 60L * 60L * 1_000L
+        private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
         // Maps custom view button ids to the rating value they record (1..4 =
         // the BrewRating tier score: 1 Bad, 2 Meh, 3 Good, 4 Awesome).
@@ -153,3 +181,6 @@ class RatingReminderReceiver : BroadcastReceiver() {
             NOTIFICATION_ID_BASE + ((brewLogId and 0x7FFFFFFFL).toInt())
     }
 }
+
+internal fun shouldPostRatingReminder(log: BrewLogEntity?): Boolean =
+    log != null && log.rating == null

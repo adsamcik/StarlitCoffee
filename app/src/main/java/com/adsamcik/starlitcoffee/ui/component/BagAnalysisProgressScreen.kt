@@ -11,11 +11,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,19 +32,8 @@ import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
 
 /**
- * Full-screen "Analyzing your bag" screen shown while the AI extraction runs on
- * a freshly captured coffee-bag photo. Because extraction can take a while, the
- * user can either [onSkip] it (settle with the OCR/barcode results) or send it
- * to the background with [onRunInBackground] (a notification fires when done).
- *
- * When [progress] is non-null the screen shows a determinate per-stage bar and
- * a stage label so the wait is legible; otherwise it falls back to an
- * indeterminate spinner (the pass hasn't reported a stage yet).
- *
- * Like [AddBagSheet] this is a Material full-screen dialog that cannot be
- * swipe- or tap-outside-dismissed; an intentional back press is treated as
- * "continue in background" (the non-destructive default — analysis keeps
- * running and the user is notified).
+ * Full-screen progress for a guided camera scan. Inventory/gallery scans instead
+ * continue in the notification-backed background flow immediately.
  */
 @Composable
 fun BagAnalysisProgressScreen(

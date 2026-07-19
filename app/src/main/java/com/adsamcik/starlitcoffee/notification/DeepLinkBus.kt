@@ -3,6 +3,12 @@ package com.adsamcik.starlitcoffee.notification
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import com.adsamcik.starlitcoffee.data.work.BagReviewContext
+
+data class BagAnalysisDeepLink(
+    val workId: String,
+    val reviewContext: BagReviewContext? = null,
+)
 
 /**
  * Single-app-process bus for notification deep links. Notifications and the
@@ -20,12 +26,10 @@ object DeepLinkBus {
     val pendingBrewLogId: StateFlow<Long?> = _pendingBrewLogId.asStateFlow()
 
     // Set when the user taps a "bag analysis complete" notification. The nav
-    // host pops it, navigates to the bag inventory, promotes the background
-    // result the BrewViewModel is holding into the foreground form, and clears
-    // this flag so a recompose doesn't re-trigger navigation. No payload is
-    // needed: the analyzed result lives in the (process-scoped) BrewViewModel.
-    private val _pendingBagAnalysis = MutableStateFlow(false)
-    val pendingBagAnalysis: StateFlow<Boolean> = _pendingBagAnalysis.asStateFlow()
+    // host pops it, navigates to the bag inventory, recovers that exact
+    // WorkManager result, and clears the id so a recompose doesn't re-trigger.
+    private val _pendingBagAnalysis = MutableStateFlow<BagAnalysisDeepLink?>(null)
+    val pendingBagAnalysis: StateFlow<BagAnalysisDeepLink?> = _pendingBagAnalysis.asStateFlow()
 
     fun postBrewLogDetail(brewLogId: Long) {
         if (brewLogId <= 0L) return
@@ -36,11 +40,15 @@ object DeepLinkBus {
         _pendingBrewLogId.value = null
     }
 
-    fun postBagAnalysisReady() {
-        _pendingBagAnalysis.value = true
+    fun postBagAnalysisReady(
+        workId: String,
+        reviewContext: BagReviewContext? = null,
+    ) {
+        if (workId.isBlank()) return
+        _pendingBagAnalysis.value = BagAnalysisDeepLink(workId, reviewContext)
     }
 
     fun consumeBagAnalysisReady() {
-        _pendingBagAnalysis.value = false
+        _pendingBagAnalysis.value = null
     }
 }

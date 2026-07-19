@@ -5,6 +5,8 @@ import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
+import com.adsamcik.starlitcoffee.util.KnownFieldValues
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -62,6 +64,27 @@ class BagPhotoExtractorProgressTest {
             ),
             plan,
         )
+    }
+
+    @Test
+    fun `invalid photos do not initialize ML Kit barcode scanning`() = runTest {
+        var scannerCreations = 0
+        val extractor = BagPhotoExtractor(
+            appContext = null,
+            llmProvider = StubProvider(available = false, vision = false),
+            barcodeScannerFactory = {
+                scannerCreations++
+                error("Barcode scanner should not be created before a photo decodes")
+            },
+        )
+
+        extractor.extract(
+            photoUris = listOf("file:///missing-photo.jpg"),
+            knownFieldValues = KnownFieldValues.EMPTY,
+            runLlm = false,
+        )
+
+        assertEquals(0, scannerCreations)
     }
 
     @Test

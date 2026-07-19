@@ -41,10 +41,11 @@ object ScanSessionRingBuffer {
         }
     }
 
-    fun clear(context: Context) {
+    fun clear(context: Context): Boolean =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit { remove(KEY_SESSIONS) }
-    }
+            .edit()
+            .remove(KEY_SESSIONS)
+            .commit()
 
     fun getForReport(context: Context, count: Int = 5): String {
         val sessions = getAll(context).take(count)

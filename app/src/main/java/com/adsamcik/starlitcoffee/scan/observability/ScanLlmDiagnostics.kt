@@ -48,10 +48,11 @@ object ScanLlmDiagnosticsStore {
         }
     }
 
-    fun clear(context: Context) {
+    fun clear(context: Context): Boolean =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit { remove(KEY_PASSES) }
-    }
+            .edit()
+            .remove(KEY_PASSES)
+            .commit()
 
     fun getForReport(context: Context, count: Int = 15): String {
         val passes = getAll(context).take(count)

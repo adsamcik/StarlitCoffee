@@ -4,8 +4,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.util.Log
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
@@ -47,15 +47,15 @@ class RatingReminderScheduler(private val context: Context) : RatingReminders {
     }
 
     override fun cancelReminder(brewLogId: Long) {
-        val alarmManager = context.getSystemService<AlarmManager>() ?: return
-        val pendingIntent = buildPendingIntent(brewLogId, methodLabel = null, mutable = false)
-        alarmManager.cancel(pendingIntent)
+        val pendingIntent = buildPendingIntent(brewLogId, methodLabel = null)
+        context.getSystemService<AlarmManager>()?.cancel(pendingIntent)
+        NotificationManagerCompat.from(context)
+            .cancel(RatingReminderReceiver.notificationIdFor(brewLogId))
     }
 
     private fun buildPendingIntent(
         brewLogId: Long,
         methodLabel: String?,
-        mutable: Boolean = true,
     ): PendingIntent {
         val intent = Intent(context, RatingReminderReceiver::class.java).apply {
             action = ACTION_RATING_REMINDER
@@ -64,16 +64,11 @@ class RatingReminderScheduler(private val context: Context) : RatingReminders {
         }
         // requestCode keyed by brew-log id ensures distinct PendingIntents per
         // brew; FLAG_UPDATE_CURRENT lets a reschedule for the same brew win.
-        val flags = if (mutable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
-        } else {
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        }
         return PendingIntent.getBroadcast(
             context,
             brewLogId.toRequestCode(),
             intent,
-            flags,
+            ratingReminderPendingIntentFlags(),
         )
     }
 
@@ -88,3 +83,5 @@ class RatingReminderScheduler(private val context: Context) : RatingReminders {
     }
 }
 
+internal fun ratingReminderPendingIntentFlags(): Int =
+    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
