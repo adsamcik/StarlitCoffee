@@ -11,6 +11,7 @@ import androidx.room.PrimaryKey
         Index("originId"),
         Index("regionId"),
         Index("processTypeId"),
+        Index(value = ["scanSessionId"], unique = true),
     ]
 )
 data class CoffeeBagEntity(
@@ -43,6 +44,7 @@ data class CoffeeBagEntity(
     val photoUri: String? = null,
     val photoUris: String? = null,
     val traceabilityUrl: String? = null,
+    val scanSessionId: String? = null,
     val grindSetting: String? = null,
     val expiryDate: Long? = null,
     val isDecaf: Boolean = false,

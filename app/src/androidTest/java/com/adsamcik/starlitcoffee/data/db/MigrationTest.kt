@@ -30,14 +30,40 @@ class MigrationTest {
      * drift (a forgotten column/index) that would crash on app upgrade.
      */
     @Test
-    fun migrateAll10To16_matchesExportedSchema() {
+    fun migrateAll10To17_matchesExportedSchema() {
         helper.createDatabase(MIGRATION_TEST_DB, 10).close()
         helper.runMigrationsAndValidate(
             MIGRATION_TEST_DB,
-            16,
+            17,
             true,
             *AppDatabase.ALL_MIGRATIONS,
         ).close()
+    }
+
+    @Test
+    fun migrate16to17_addsUniqueScanSessionWithoutDroppingBags() {
+        helper.createDatabase("starlit-test-db-v17", 16).apply {
+            execSQL(
+                """
+                INSERT INTO coffee_bags (id, name, isDecaf, status, createdAt)
+                VALUES (1, 'Existing bag', 0, 'SEALED', 1735689600000)
+                """.trimIndent(),
+            )
+            close()
+        }
+
+        helper.runMigrationsAndValidate(
+            "starlit-test-db-v17",
+            17,
+            true,
+            AppDatabase.MIGRATION_16_17,
+        ).use { db ->
+            val cursor = db.query("SELECT name, scanSessionId FROM coffee_bags WHERE id = 1")
+            assertTrue(cursor.moveToFirst())
+            assertEquals("Existing bag", cursor.getString(0))
+            assertTrue(cursor.isNull(1))
+            cursor.close()
+        }
     }
 
     @Test

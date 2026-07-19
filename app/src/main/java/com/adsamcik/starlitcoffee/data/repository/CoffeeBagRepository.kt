@@ -21,6 +21,9 @@ class CoffeeBagRepository(
 
     suspend fun findByBarcode(barcode: String): CoffeeBagEntity? = coffeeBagDao.findByBarcode(barcode)
 
+    suspend fun findByScanSessionId(scanSessionId: String): CoffeeBagEntity? =
+        coffeeBagDao.findByScanSessionId(scanSessionId)
+
     suspend fun findNextSealed(name: String, roaster: String?): CoffeeBagEntity? =
         coffeeBagDao.findNextSealed(name, roaster)
 

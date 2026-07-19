@@ -35,6 +35,7 @@ import androidx.core.net.toUri
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.util.ThumbnailLoader
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.withContext
 
 private const val MAX_IMAGE_DECODE_PX = 2048
@@ -59,9 +60,16 @@ fun FullScreenImageViewer(
         ),
     ) {
         val bitmap by produceState<Bitmap?>(initialValue = null, key1 = uri) {
-            value = withContext(Dispatchers.IO) {
-                val path = uri.toUri().path ?: return@withContext null
-                ThumbnailLoader.loadThumbnail(path, MAX_IMAGE_DECODE_PX)
+            var ownedBitmap: Bitmap? = null
+            try {
+                ownedBitmap = withContext(Dispatchers.IO) {
+                    val path = uri.toUri().path ?: return@withContext null
+                    ThumbnailLoader.loadThumbnail(path, MAX_IMAGE_DECODE_PX)
+                }
+                value = ownedBitmap
+                awaitCancellation()
+            } finally {
+                ownedBitmap?.takeIf { !it.isRecycled }?.recycle()
             }
         }
 

@@ -35,7 +35,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
         UserBarcodeStemEntity::class,
         CupPresetEntity::class,
     ],
-    version = 16,
+    version = 17,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -172,6 +172,16 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_16_17 = object : Migration(16, 17) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE coffee_bags ADD COLUMN scanSessionId TEXT")
+                db.execSQL(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS " +
+                        "index_coffee_bags_scanSessionId ON coffee_bags(scanSessionId)",
+                )
+            }
+        }
+
         // Single source of truth for the migration set, shared by the
         // production builder and MigrationTest so the two cannot drift.
         internal val ALL_MIGRATIONS: Array<Migration> = arrayOf(
@@ -186,6 +196,7 @@ abstract class AppDatabase : RoomDatabase() {
             MIGRATION_13_14,
             MIGRATION_14_15,
             MIGRATION_15_16,
+            MIGRATION_16_17,
         )
 
         /**

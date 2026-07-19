@@ -5,18 +5,15 @@ import android.graphics.Bitmap
 import android.util.Log
 import androidx.core.net.toUri
 import java.io.File
-import java.io.FileOutputStream
 
 /**
- * Renders a focused, square thumbnail JPEG for a coffee bag by cropping the
+ * Renders a focused, square WebP thumbnail for a coffee bag by cropping the
  * front photo to the label region the scan detected (see [BagThumbnailFocus]).
- * The full-resolution photos stay untouched in the bag's `photoUris`; this only
- * produces the small `photoUri` the list card displays.
+ * This produces the small `photoUri` the list card displays.
  */
 object BagThumbnailWriter {
 
     private const val TAG = "BagThumbnailWriter"
-    private const val JPEG_QUALITY = 90
     private const val MAX_DECODE_PX = 2048
 
     /**
@@ -32,9 +29,10 @@ object BagThumbnailWriter {
         sourceUri: String,
         focus: BagPhotoRect,
         targetSizePx: Int,
+        storageKey: String,
     ): String? {
         return try {
-            val path = sourceUri.toUri().path ?: return null
+            val source = ScanPhotoStorage.resolvePermanentPhoto(context, sourceUri) ?: return null
 
             // Decode at enough resolution that the (possibly small) crop still
             // has roughly targetSizePx on its short side, capped so a 12 MP
@@ -45,23 +43,35 @@ object BagThumbnailWriter {
                 .toInt()
                 .coerceIn(targetSizePx, MAX_DECODE_PX)
 
-            val bitmap = ThumbnailLoader.loadThumbnail(path, decodeTarget) ?: return null
-            val crop = BagThumbnailFocus.squareCrop(focus, bitmap.width, bitmap.height)
+            val bitmap = ThumbnailLoader.loadThumbnail(source.path, decodeTarget) ?: return null
+            try {
+                val crop = BagThumbnailFocus.squareCrop(focus, bitmap.width, bitmap.height)
 
-            val left = (bitmap.width * crop.leftFraction).toInt().coerceIn(0, bitmap.width - 1)
-            val top = (bitmap.height * crop.topFraction).toInt().coerceIn(0, bitmap.height - 1)
-            val right = (bitmap.width * crop.rightFraction).toInt().coerceIn(left + 1, bitmap.width)
-            val bottom = (bitmap.height * crop.bottomFraction).toInt().coerceIn(top + 1, bitmap.height)
-            val cropped = Bitmap.createBitmap(bitmap, left, top, right - left, bottom - top)
+                val left = (bitmap.width * crop.leftFraction).toInt().coerceIn(0, bitmap.width - 1)
+                val top = (bitmap.height * crop.topFraction).toInt().coerceIn(0, bitmap.height - 1)
+                val right = (bitmap.width * crop.rightFraction).toInt().coerceIn(left + 1, bitmap.width)
+                val bottom = (bitmap.height * crop.bottomFraction).toInt().coerceIn(top + 1, bitmap.height)
+                val cropped = Bitmap.createBitmap(bitmap, left, top, right - left, bottom - top)
 
-            val dir = File(context.filesDir, "bag_photos").apply { mkdirs() }
-            val outFile = File(dir, "thumb_${System.currentTimeMillis()}.jpg")
-            FileOutputStream(outFile).use { output ->
-                cropped.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, output)
+                val dir = File(context.filesDir, "bag_photos").apply { mkdirs() }
+                val outFile = File(dir, ScanPhotoStorage.focusedThumbnailFileName(storageKey))
+                ScanPhotoStorage.writeOptimizedWebp(
+                    source = cropped,
+                    destination = outFile,
+                    maxLongEdgePx = targetSizePx.coerceAtMost(
+                        PhotoStoragePolicy.THUMBNAIL_MAX_LONG_EDGE_PX,
+                    ),
+                    quality = PhotoStoragePolicy.THUMBNAIL_WEBP_QUALITY,
+                )
+                outFile.toUri().toString()
+            } finally {
+                if (!bitmap.isRecycled) bitmap.recycle()
             }
-            outFile.toUri().toString()
         } catch (e: Exception) {
             Log.w(TAG, "Failed to create focused thumbnail", e)
+            null
+        } catch (error: OutOfMemoryError) {
+            Log.e(TAG, "Insufficient memory to create focused thumbnail", error)
             null
         }
     }

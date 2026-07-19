@@ -7,6 +7,9 @@
   rationale behind each exclusion.
 -->
 <full-backup-content>
-    <exclude domain="file" path="bag_photos/" />
-    <exclude domain="sharedpref" path="scan_session_history.xml" />
+    <include domain="database" path="starlit_coffee.db" />
+    <include domain="database" path="starlit_coffee.db-journal" />
+    <include domain="database" path="starlit_coffee.db-shm" />
+    <include domain="database" path="starlit_coffee.db-wal" />
+    <include domain="file" path="datastore/user_preferences.preferences_pb" />
 </full-backup-content>

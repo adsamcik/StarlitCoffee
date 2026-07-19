@@ -4,22 +4,28 @@
 
   Strategy:
     - cloud-backup (Google Drive Auto Backup, 25 MB/app cap, E2E encrypted on Android 9+):
-        Keep the brew database and user preferences so settings/brew history survive
-        a reinstall. Exclude bag photos (large JPEGs that blow the quota and may
-        incidentally capture surroundings) and scan-session telemetry (diagnostic
-        data not meaningful to restore).
+        Keep only the Room brew database and DataStore user preferences so settings
+        and brew history survive a reinstall. Exclude bag photos (large image files
+        that blow the quota and may incidentally capture surroundings), pending-work
+        delivery state, and scan diagnostics that are not meaningful to restore.
     - device-transfer (D2D when moving to a new device, no quota):
         Keep the same exclusions for scan telemetry and bag photos; the database
-        and preferences carry the user's actual data and that's what we want
-        to migrate. (Photos can be re-imported on the new device.)
+        and preferences carry the user's actual data and that's what we want to
+        migrate. Photos can be re-imported on the new device.
 -->
 <data-extraction-rules>
     <cloud-backup>
-        <exclude domain="file" path="bag_photos/" />
-        <exclude domain="sharedpref" path="scan_session_history.xml" />
+        <include domain="database" path="starlit_coffee.db" />
+        <include domain="database" path="starlit_coffee.db-journal" />
+        <include domain="database" path="starlit_coffee.db-shm" />
+        <include domain="database" path="starlit_coffee.db-wal" />
+        <include domain="file" path="datastore/user_preferences.preferences_pb" />
     </cloud-backup>
     <device-transfer>
-        <exclude domain="file" path="bag_photos/" />
-        <exclude domain="sharedpref" path="scan_session_history.xml" />
+        <include domain="database" path="starlit_coffee.db" />
+        <include domain="database" path="starlit_coffee.db-journal" />
+        <include domain="database" path="starlit_coffee.db-shm" />
+        <include domain="database" path="starlit_coffee.db-wal" />
+        <include domain="file" path="datastore/user_preferences.preferences_pb" />
     </device-transfer>
 </data-extraction-rules>

@@ -2,9 +2,9 @@ package com.adsamcik.starlitcoffee.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.core.net.toUri
 import android.util.Log
 import android.util.LruCache
+import androidx.core.net.toUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
@@ -106,7 +106,7 @@ object ThumbnailLoader {
 
     private fun loadThumbnailCached(filePath: String, targetSizePx: Int): Bitmap? {
         val sampleSize = computeSampleSize(filePath, targetSizePx)
-        val key = CacheKey(filePath, sampleSize)
+        val key = CacheKey(filePath, targetSizePx)
         cache.get(key)?.let { return it }
         val decoded = decodeAndRotate(filePath, targetSizePx, sampleSize) ?: return null
         cache.put(key, decoded)
@@ -130,7 +130,25 @@ object ThumbnailLoader {
                 inPreferredConfig = Bitmap.Config.ARGB_8888
             }
             val raw = BitmapFactory.decodeFile(filePath, opts) ?: return null
-            ImagePreprocessor.applyExifRotation(raw, filePath)
+            val oriented = ImagePreprocessor.applyExifRotation(raw, filePath)
+            if (oriented !== raw && !raw.isRecycled) raw.recycle()
+
+            val target = PhotoStoragePolicy.scaledDimensions(
+                width = oriented.width,
+                height = oriented.height,
+                maxLongEdgePx = targetSizePx,
+            )
+            val resized = Bitmap.createScaledBitmap(
+                oriented,
+                target.width,
+                target.height,
+                true,
+            )
+            if (resized !== oriented && !oriented.isRecycled) oriented.recycle()
+            resized
+        } catch (error: OutOfMemoryError) {
+            Log.w(TAG, "Insufficient memory to load thumbnail for $filePath", error)
+            null
         } catch (e: Exception) {
             Log.w(TAG, "Failed to load thumbnail for $filePath", e)
             null
@@ -155,5 +173,5 @@ object ThumbnailLoader {
         return sample
     }
 
-    private data class CacheKey(val filePath: String, val sampleSize: Int)
+    private data class CacheKey(val filePath: String, val targetSizePx: Int)
 }
