@@ -25,7 +25,9 @@
     <string name="label_strength">Sterkte</string>
     <string name="label_grind">Maling</string>
     <string name="label_filter">Filter</string>
-<string name="label_decaf">Cafeïnevrij</string>
+<string name="label_all">Alles</string>
+    <string name="label_regular">Normaal</string>
+    <string name="label_decaf">Cafeïnevrij</string>
     <string name="label_decaf_suffix"> · Cafeïnevrij</string>
     <string name="label_loading">Laden…</string>
     <string name="label_none">Geen</string>
@@ -300,6 +302,8 @@
     <string name="notif_scan_progress_title">Etiket van de zak lezen…</string>
     <string name="notif_bag_analysis_title">Zakanalyse voltooid</string>
     <string name="notif_bag_analysis_body">Tik om de gevonden details te bekijken.</string>
+    <string name="notif_bag_analysis_failed_title">Zakanalyse mislukt</string>
+    <string name="notif_bag_analysis_failed_body">Tik om te controleren en gegevens handmatig toe te voegen.</string>
     <string name="scan_stage_ocr">Etiket lezen…</string>
     <string name="scan_stage_barcode">Barcode opzoeken…</string>
     <string name="scan_stage_llm">Details interpreteren…</string>
@@ -401,10 +405,14 @@
     <string name="label_name">Naam</string>
     <string name="label_roaster">Branderij</string>
     <string name="label_origin">Herkomst</string>
+    <string name="label_region">Regio</string>
+    <string name="label_farm">Boerderij</string>
+    <string name="label_altitude">Hoogte</string>
 <string name="label_barcode_ean">Barcode / EAN</string>
     <string name="action_scan_barcode">Barcode scannen</string>
     <string name="label_name_required">Naam *</string>
     <string name="label_weight_grams">Gewicht (g)</string>
+    <string name="msg_invalid_weight">Voer een geldig gewicht in.</string>
     <string name="label_roast_date">Branddatum</string>
     <string name="label_roast_level">Branding</string>
     <string name="label_variety">Variëteit</string>
@@ -457,6 +465,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI-service (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Mindlayer verbinden</string>
+    <string name="action_mindlayer_google_play">Download Mindlayer via Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer is geïnstalleerd. Wil je het verbinden voor privé-AI op je apparaat?</string>
+    <string name="msg_mindlayer_install_recommendation">Installeer Mindlayer via Google Play om koffiezaketiketten te lezen met privé-AI op je apparaat. Dit kan later in Instellingen.</string>
     <string name="action_test_connection">Verbinding testen</string>
     <string name="action_run_test_prompt">Testprompt uitvoeren</string>
     <string name="label_testing">Testen…</string>
@@ -529,6 +541,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Scan weggooien?</string>
     <string name="msg_discard_scan_body">Je hebt gedetecteerde velden die nog niet zijn opgeslagen.</string>
+    <string name="dialog_discard_changes_title">Wijzigingen weggooien?</string>
+    <string name="msg_discard_changes_body">Niet-opgeslagen wijzigingen gaan verloren.</string>
     <string name="action_discard">Weggooien</string>
     <string name="action_keep_scanning">Doorgaan met scannen</string>
     <string name="msg_camera_permission_required">Cameratoestemming vereist</string>
@@ -690,4 +704,20 @@
     <string name="scan_warn_lighting">Verbeter de belichting</string>
     <string name="cd_remove_photo">Foto verwijderen</string>
     <string name="msg_bag_saved">Zak opgeslagen</string>
+    <string name="msg_could_not_save_bag">De zak kon niet worden opgeslagen</string>
+    <string name="msg_could_not_open_app_store">De appwinkel kon niet worden geopend.</string>
+    <string name="msg_could_not_save_changes">Wijzigingen konden niet worden opgeslagen</string>
+    <string name="msg_could_not_delete">Verwijderen mislukt. Probeer het opnieuw.</string>
+    <string name="dialog_delete_cup_preset_message">Dit kopprofiel verwijderen?</string>
+    <string name="msg_onboarding_save_failed">Je instellingen konden niet worden opgeslagen. Probeer het opnieuw.</string>
+    <string name="msg_settings_save_failed">Deze instelling kon niet worden opgeslagen. Probeer het opnieuw.</string>
+    <string name="msg_cup_preset_reset_failed">De kopprofielen konden niet worden hersteld. Probeer het opnieuw.</string>
+    <string name="msg_reset_cup_presets">Alle kopprofielen vervangen door de standaardprofielen?</string>
+    <string name="msg_diagnostic_clear_failed">Niet alle diagnostische gegevens konden worden gewist. Probeer het opnieuw.</string>
+    <string name="msg_clear_diagnostics">Alle opgeslagen scansessies en LLM-rondes wissen?</string>
+    <string name="label_log_scan_corrections">Scancorrecties loggen (op het apparaat)</string>
+    <string name="msg_log_scan_corrections">Legt alleen op dit apparaat vast wat de AI extraheerde en wat je opsloeg. Er wordt niets geüpload.</string>
+    <string name="format_scan_debug_counts">Sessies: %1$d · LLM-rondes: %2$d</string>
+    <string name="format_scan_session_subject">Scansessie: %1$s</string>
+    <string name="action_share_scan_session">Scansessie delen</string>
 </resources>

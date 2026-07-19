@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Pressopannu</item><item>AeroPress</item>
+        <item>Espresso</item><item>Mokkapannu</item><item>Kylmäuute</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Paperi</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Puhdas, kirkas ja herkkä</item><item>Täyteläinen, voimakas ja runsas</item>
+        <item>Tasapainoinen kirkkaus ja täyteläisyys</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Muki</item>
+        <item>Matkamuki</item><item>Mukaan otettava muki</item><item>Latte-lasi</item><item>Karahvi</item>
+        <item>Pressopannu</item><item>Vedenkeitin</item><item>Lasipurkki</item><item>Kulho</item>
+        <item>Kaksiseinäinen espressokuppi</item><item>Kaksiseinäinen juomalasi</item><item>Kaksiseinäinen muki</item>
+        <item>Korkea latte-lasi</item><item>Aromikuppi</item><item>Pallomainen latte-kuppi</item>
+        <item>Nokallinen espressokannu</item><item>Pistekarahvi</item><item>Kannellinen kannu</item>
+        <item>Mehiläispesäkannu</item><item>Baristakannu</item><item>Kulmikaskannu</item>
+        <item>Fasetoitu cortado-lasi</item><item>Keraaminen latte-kulho</item>
+        <item>Termokarahvi</item><item>Kaksiseinäinen pressopannu</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Oletus</item><item>Ruskea</item><item>Suklaa</item><item>Peru</item>
+        <item>Teräksensininen</item><item>Merenvihreä</item><item>Violetti</item><item>Karmiininpunainen</item>
+        <item>Oranssi</item><item>Liuske</item>
+    </string-array>
+</resources>

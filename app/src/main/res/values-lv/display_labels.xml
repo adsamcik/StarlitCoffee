@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Franču prese</item><item>AeroPress</item>
+        <item>Espreso</item><item>Moka kanna</item><item>Aukstā ekstrakcija</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Papīra</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Tīrs, spilgts un maigs</item><item>Pilnmiesīgs, izteiksmīgs un biezs</item><item>Līdzsvarots dzidrums un pilnīgums</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espreso</item><item>Kortado</item><item>Kapučīno</item><item>Krūze</item>
+        <item>Ceļojumu krūze</item><item>Līdzņemšanas krūze</item><item>Latte glāze</item><item>Karafe</item>
+        <item>Franču prese</item><item>Tējkanna</item><item>Stikla burka</item><item>Bļoda</item>
+        <item>Dubultsienu espreso tasīte</item><item>Dubultsienu glāze</item><item>Dubultsienu krūze</item>
+        <item>Augsta latte glāze</item><item>Aromātu tasīte</item><item>Sfēriska latte tasīte</item>
+        <item>Espreso kanniņa ar snīpi</item><item>Punktota karafe</item><item>Kanniņa ar vāku</item>
+        <item>Bišu stropa kanniņa</item><item>Baristas kanniņa</item><item>Stūraina kanniņa</item>
+        <item>Slīpēta kortado glāze</item><item>Keramikas latte bļoda</item>
+        <item>Termokarafe</item><item>Dubultsienu prese</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Noklusējuma</item><item>Brūna</item><item>Šokolādes</item><item>Peru</item>
+        <item>Tērauda zila</item><item>Jūras zaļa</item><item>Violeta</item><item>Karmīnsarkana</item>
+        <item>Oranža</item><item>Šīfera</item>
+    </string-array>
+</resources>

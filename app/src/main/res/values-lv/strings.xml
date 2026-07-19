@@ -25,7 +25,9 @@
     <string name="label_strength">Stiprums</string>
     <string name="label_grind">Malums</string>
     <string name="label_filter">Filtrs</string>
-<string name="label_decaf">Decaf</string>
+<string name="label_all">Visi</string>
+    <string name="label_regular">Parastā</string>
+    <string name="label_decaf">Decaf</string>
     <string name="label_decaf_suffix"> · Decaf</string>
     <string name="label_loading">Notiek ielāde…</string>
     <string name="label_none">Nav</string>
@@ -302,6 +304,8 @@
     <string name="notif_scan_progress_title">Lasām iepakojuma etiķeti…</string>
     <string name="notif_bag_analysis_title">Iepakojuma analīze pabeigta</string>
     <string name="notif_bag_analysis_body">Pieskarieties, lai pārskatītu atrasto informāciju.</string>
+    <string name="notif_bag_analysis_failed_title">Iepakojuma analīze neizdevās</string>
+    <string name="notif_bag_analysis_failed_body">Pieskarieties, lai pārskatītu un pievienotu datus manuāli.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Lasām etiķeti…</string>
     <string name="scan_stage_barcode">Meklējam svītrkodu…</string>
@@ -404,10 +408,14 @@
     <string name="label_name">Nosaukums</string>
     <string name="label_roaster">Grauzdētava</string>
     <string name="label_origin">Izcelsme</string>
+    <string name="label_region">Reģions</string>
+    <string name="label_farm">Saimniecība</string>
+    <string name="label_altitude">Augstums</string>
 <string name="label_barcode_ean">Svītrkods / EAN</string>
     <string name="action_scan_barcode">Skenēt svītrkodu</string>
     <string name="label_name_required">Nosaukums *</string>
     <string name="label_weight_grams">Svars (g)</string>
+    <string name="msg_invalid_weight">Ievadiet derīgu svaru.</string>
     <string name="label_roast_date">Grauzdēšanas datums</string>
     <string name="label_roast_level">Grauzdējuma pakāpe</string>
     <string name="label_variety">Šķirne</string>
@@ -460,6 +468,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI pakalpojums (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Savienot Mindlayer</string>
+    <string name="action_mindlayer_google_play">Iegūstiet Mindlayer no Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer ir instalēts. Vai vēlaties to savienot privātam ierīcē darbojošam MI?</string>
+    <string name="msg_mindlayer_install_recommendation">Instalējiet Mindlayer no Google Play, lai lasītu kafijas iepakojumu etiķetes ar privātu ierīcē darbojošos MI. To varat izdarīt vēlāk iestatījumos.</string>
     <string name="action_test_connection">Pārbaudīt savienojumu</string>
     <string name="action_run_test_prompt">Palaist testa vaicājumu</string>
     <string name="label_testing">Notiek testēšana…</string>
@@ -532,6 +544,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Atmest skenējumu?</string>
     <string name="msg_discard_scan_body">Ir atrasti lauki, kas vēl nav saglabāti.</string>
+    <string name="dialog_discard_changes_title">Atmest izmaiņas?</string>
+    <string name="msg_discard_changes_body">Nesaglabātās izmaiņas tiks zaudētas.</string>
     <string name="action_discard">Atmest</string>
     <string name="action_keep_scanning">Turpināt skenēšanu</string>
     <string name="msg_camera_permission_required">Nepieciešama kameras atļauja</string>
@@ -693,4 +707,20 @@
     <string name="scan_warn_lighting">Uzlabojiet apgaismojumu</string>
     <string name="cd_remove_photo">Noņemt fotoattēlu</string>
     <string name="msg_bag_saved">Iepakojums saglabāts</string>
+    <string name="msg_could_not_save_bag">Neizdevās saglabāt iepakojumu</string>
+    <string name="msg_could_not_open_app_store">Neizdevās atvērt lietotņu veikalu.</string>
+    <string name="msg_could_not_save_changes">Neizdevās saglabāt izmaiņas</string>
+    <string name="msg_could_not_delete">Neizdevās izdzēst. Mēģiniet vēlreiz.</string>
+    <string name="dialog_delete_cup_preset_message">Vai dzēst šo tases profilu?</string>
+    <string name="msg_onboarding_save_failed">Neizdevās saglabāt iestatījumus. Mēģiniet vēlreiz.</string>
+    <string name="msg_settings_save_failed">Neizdevās saglabāt šo iestatījumu. Mēģiniet vēlreiz.</string>
+    <string name="msg_cup_preset_reset_failed">Neizdevās atiestatīt tašu profilus. Mēģiniet vēlreiz.</string>
+    <string name="msg_reset_cup_presets">Vai aizstāt visus tašu profilus ar noklusējuma profiliem?</string>
+    <string name="msg_diagnostic_clear_failed">Neizdevās notīrīt visus diagnostikas datus. Mēģiniet vēlreiz.</string>
+    <string name="msg_clear_diagnostics">Vai notīrīt visas saglabātās skenēšanas sesijas un LLM gājienus?</string>
+    <string name="label_log_scan_corrections">Reģistrēt skenēšanas labojumus (ierīcē)</string>
+    <string name="msg_log_scan_corrections">Tikai šajā ierīcē reģistrē AI iegūto un jūsu saglabāto. Nekas netiek augšupielādēts.</string>
+    <string name="format_scan_debug_counts">Sesijas: %1$d · LLM gājieni: %2$d</string>
+    <string name="format_scan_session_subject">Skenēšanas sesija: %1$s</string>
+    <string name="action_share_scan_session">Kopīgot skenēšanas sesiju</string>
 </resources>

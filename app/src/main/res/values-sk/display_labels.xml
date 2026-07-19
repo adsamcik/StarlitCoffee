@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>French press</item><item>AeroPress</item>
+        <item>Espresso</item><item>Moka kanvička</item><item>Cold brew</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Papierový</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Čistý, jasný a jemný</item><item>Plný, výrazný a hutný</item><item>Vyvážená čistota a plnosť</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Hrnček</item>
+        <item>Cestovný hrnček</item><item>Pohár so sebou</item><item>Pohár na latte</item><item>Karafa</item>
+        <item>French press</item><item>Kanvica</item><item>Zaváraninový pohár</item><item>Miska</item>
+        <item>Dvojstenná šálka na espresso</item><item>Dvojstenný pohár</item><item>Dvojstenný hrnček</item>
+        <item>Vysoký pohár na latte</item><item>Degustačná šálka</item><item>Guľatá šálka na latte</item>
+        <item>Kanvička na espresso s výlevkou</item><item>Bodkovaná karafa</item><item>Kanvička s viečkom</item>
+        <item>Kanvička v tvare úľa</item><item>Baristická kanvička</item><item>Hranatá kanvička</item>
+        <item>Fasetovaný pohár na cortado</item><item>Keramická miska na latte</item>
+        <item>Termokarafa</item><item>Dvojstenný French press</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Predvolené</item><item>Hnedá</item><item>Čokoládová</item><item>Peru</item>
+        <item>Oceľovomodrá</item><item>Morská zelená</item><item>Fialová</item><item>Karmínová</item>
+        <item>Oranžová</item><item>Bridlicová</item>
+    </string-array>
+</resources>

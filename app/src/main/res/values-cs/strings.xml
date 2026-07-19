@@ -46,7 +46,9 @@
     <string name="label_strength">Síla</string>
     <string name="label_grind">Mletí</string>
     <string name="label_filter">Filtr</string>
-<string name="label_decaf">Bez kofeinu</string>
+<string name="label_all">Vše</string>
+    <string name="label_regular">Běžná</string>
+    <string name="label_decaf">Bez kofeinu</string>
     <string name="label_decaf_suffix"> · Bez kofeinu</string>
     <string name="label_loading">Načítání…</string>
     <string name="label_none">Žádný</string>
@@ -293,6 +295,8 @@
     <string name="notif_scan_progress_title">Čtu etiketu balení…</string>
     <string name="notif_bag_analysis_title">Analýza balení dokončena</string>
     <string name="notif_bag_analysis_body">Klepnutím zkontrolujete zjištěné údaje.</string>
+    <string name="notif_bag_analysis_failed_title">Analýza balení se nezdařila</string>
+    <string name="notif_bag_analysis_failed_body">Klepnutím výsledek zkontrolujete a doplníte údaje ručně.</string>
     <string name="format_notif_bag_analysis_body">Klepnutím zkontrolujete %1$s.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Čtu etiketu…</string>
@@ -433,10 +437,14 @@
     <string name="label_name">Název</string>
     <string name="label_roaster">Pražírna</string>
     <string name="label_origin">Původ</string>
+    <string name="label_region">Region</string>
+    <string name="label_farm">Farma</string>
+    <string name="label_altitude">Nadmořská výška</string>
 <string name="label_barcode_ean">Čárový kód / EAN</string>
     <string name="action_scan_barcode">Naskenovat čárový kód</string>
     <string name="label_name_required">Název *</string>
     <string name="label_weight_grams">Hmotnost (g)</string>
+    <string name="msg_invalid_weight">Zadejte platnou hmotnost.</string>
     <string name="label_roast_date">Datum pražení</string>
     <string name="label_roast_level">Stupeň pražení</string>
     <string name="label_variety">Odrůda</string>
@@ -489,6 +497,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Služba AI (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Připojit Mindlayer</string>
+    <string name="action_mindlayer_google_play">Získat Mindlayer z Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer je nainstalovaný. Chcete jej připojit pro soukromou AI přímo v zařízení?</string>
+    <string name="msg_mindlayer_install_recommendation">Nainstalujte Mindlayer z Google Play pro čtení etiket balení kávy pomocí soukromé AI přímo v zařízení. Můžete to udělat později v Nastavení.</string>
     <string name="action_test_connection">Otestovat připojení</string>
     <string name="action_run_test_prompt">Spustit testovací prompt</string>
     <string name="label_testing">Testování…</string>
@@ -561,6 +573,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Zahodit skenování?</string>
     <string name="msg_discard_scan_body">Máte zjištěná pole, která nebyla uložena.</string>
+    <string name="dialog_discard_changes_title">Zahodit změny?</string>
+    <string name="msg_discard_changes_body">Neuložené změny budou ztraceny.</string>
     <string name="action_discard">Zahodit</string>
     <string name="action_keep_scanning">Pokračovat ve skenování</string>
     <string name="msg_camera_permission_required">Vyžadováno oprávnění kamery</string>
@@ -722,4 +736,20 @@
     <string name="scan_warn_lighting">Zlepšete osvětlení</string>
     <string name="cd_remove_photo">Odebrat fotku</string>
     <string name="msg_bag_saved">Balení uloženo</string>
+    <string name="msg_could_not_save_bag">Balení se nepodařilo uložit</string>
+    <string name="msg_could_not_open_app_store">Obchod s aplikacemi se nepodařilo otevřít.</string>
+    <string name="msg_could_not_save_changes">Změny se nepodařilo uložit</string>
+    <string name="msg_could_not_delete">Položku se nepodařilo odstranit. Zkuste to znovu.</string>
+    <string name="dialog_delete_cup_preset_message">Smazat tento profil šálku?</string>
+    <string name="msg_onboarding_save_failed">Nastavení se nepodařilo uložit. Zkuste to znovu.</string>
+    <string name="msg_settings_save_failed">Toto nastavení se nepodařilo uložit. Zkuste to znovu.</string>
+    <string name="msg_cup_preset_reset_failed">Profily šálků se nepodařilo obnovit. Zkuste to znovu.</string>
+    <string name="msg_reset_cup_presets">Nahradit všechny profily šálků výchozími?</string>
+    <string name="msg_diagnostic_clear_failed">Nepodařilo se vymazat všechna diagnostická data. Zkuste to znovu.</string>
+    <string name="msg_clear_diagnostics">Vymazat všechny uložené relace skenování a průchody LLM?</string>
+    <string name="label_log_scan_corrections">Zaznamenávat opravy skenování (v zařízení)</string>
+    <string name="msg_log_scan_corrections">Pouze v tomto zařízení zaznamená, co AI rozpoznala a co jste uložili. Nic se neodesílá.</string>
+    <string name="format_scan_debug_counts">Relace: %1$d · Průchody LLM: %2$d</string>
+    <string name="format_scan_session_subject">Relace skenování: %1$s</string>
+    <string name="action_share_scan_session">Sdílet relaci skenování</string>
 </resources>

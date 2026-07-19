@@ -25,6 +25,8 @@
     <string name="label_strength">Stiprumas</string>
     <string name="label_grind">Malimas</string>
     <string name="label_filter">Filtras</string>
+    <string name="label_all">Visi</string>
+    <string name="label_regular">Įprasta</string>
     <string name="label_decaf">Be kofeino</string>
     <string name="label_decaf_suffix"> · Be kofeino</string>
     <string name="label_loading">Įkeliama…</string>
@@ -50,6 +52,7 @@
     <plurals name="format_selected">
         <item quantity="one">%1$d pasirinkta</item>
         <item quantity="few">%1$d pasirinkta</item>
+        <item quantity="many">%1$d pasirinkta</item>
         <item quantity="other">%1$d pasirinkta</item>
     </plurals>
 
@@ -94,6 +97,7 @@
     <plurals name="format_coffee_dose_cd">
         <item quantity="one">Kavos dozė: %1$d gramas</item>
         <item quantity="few">Kavos dozė: %1$d gramai</item>
+        <item quantity="many">Kavos dozė: %1$d gramų</item>
         <item quantity="other">Kavos dozė: %1$d gramų</item>
     </plurals>
     <string name="label_decrease">Sumažinti %1$s</string>
@@ -302,6 +306,8 @@
     <string name="notif_scan_progress_title">Skaitoma pakuotės etiketė…</string>
     <string name="notif_bag_analysis_title">Pakuotės analizė baigta</string>
     <string name="notif_bag_analysis_body">Bakstelėkite, kad peržiūrėtumėte rastą informaciją.</string>
+    <string name="notif_bag_analysis_failed_title">Pakuotės analizė nepavyko</string>
+    <string name="notif_bag_analysis_failed_body">Bakstelėkite, kad peržiūrėtumėte ir pridėtumėte duomenis rankiniu būdu.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Skaitoma etiketė…</string>
     <string name="scan_stage_barcode">Ieškoma brūkšninio kodo…</string>
@@ -404,10 +410,14 @@
     <string name="label_name">Pavadinimas</string>
     <string name="label_roaster">Skrudykla</string>
     <string name="label_origin">Kilmė</string>
+    <string name="label_region">Regionas</string>
+    <string name="label_farm">Ūkis</string>
+    <string name="label_altitude">Aukštis</string>
     <string name="label_barcode_ean">Brūkšninis kodas / EAN</string>
     <string name="action_scan_barcode">Nuskaityti brūkšninį kodą</string>
     <string name="label_name_required">Pavadinimas *</string>
     <string name="label_weight_grams">Svoris (g)</string>
+    <string name="msg_invalid_weight">Įveskite tinkamą svorį.</string>
     <string name="label_roast_date">Skrudinimo data</string>
     <string name="label_roast_level">Skrudinimo laipsnis</string>
     <string name="label_variety">Veislė</string>
@@ -460,6 +470,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">DI paslauga (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Prijungti Mindlayer</string>
+    <string name="action_mindlayer_google_play">Gaukite Mindlayer iš Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer įdiegtas. Ar norite jį prijungti privačiam įrenginyje veikiančiam DI?</string>
+    <string name="msg_mindlayer_install_recommendation">Įdiekite Mindlayer iš Google Play, kad galėtumėte skaityti kavos pakuočių etiketes naudodami privatų įrenginyje veikiantį DI. Tai galite padaryti vėliau nustatymuose.</string>
     <string name="action_test_connection">Tikrinti ryšį</string>
     <string name="action_run_test_prompt">Paleisti bandomąją užklausą</string>
     <string name="label_testing">Tikrinama…</string>
@@ -532,6 +546,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Atmesti nuskaitymą?</string>
     <string name="msg_discard_scan_body">Yra aptiktų laukų, kurie nebuvo išsaugoti.</string>
+    <string name="dialog_discard_changes_title">Atmesti pakeitimus?</string>
+    <string name="msg_discard_changes_body">Neišsaugoti pakeitimai bus prarasti.</string>
     <string name="action_discard">Atmesti</string>
     <string name="action_keep_scanning">Tęsti nuskaitymą</string>
     <string name="msg_camera_permission_required">Reikalingas kameros leidimas</string>
@@ -693,4 +709,20 @@
     <string name="scan_warn_lighting">Pagerinkite apšvietimą</string>
     <string name="cd_remove_photo">Pašalinti nuotrauką</string>
     <string name="msg_bag_saved">Pakuotė išsaugota</string>
+    <string name="msg_could_not_save_bag">Nepavyko išsaugoti pakuotės</string>
+    <string name="msg_could_not_open_app_store">Nepavyko atidaryti programėlių parduotuvės.</string>
+    <string name="msg_could_not_save_changes">Nepavyko išsaugoti pakeitimų</string>
+    <string name="msg_could_not_delete">Nepavyko ištrinti. Bandykite dar kartą.</string>
+    <string name="dialog_delete_cup_preset_message">Ištrinti šį puodelio profilį?</string>
+    <string name="msg_onboarding_save_failed">Nepavyko išsaugoti sąrankos. Bandykite dar kartą.</string>
+    <string name="msg_settings_save_failed">Nepavyko išsaugoti šio nustatymo. Bandykite dar kartą.</string>
+    <string name="msg_cup_preset_reset_failed">Nepavyko atkurti puodelių profilių. Bandykite dar kartą.</string>
+    <string name="msg_reset_cup_presets">Pakeisti visus puodelių profilius numatytaisiais?</string>
+    <string name="msg_diagnostic_clear_failed">Nepavyko išvalyti visų diagnostikos duomenų. Bandykite dar kartą.</string>
+    <string name="msg_clear_diagnostics">Išvalyti visas išsaugotas nuskaitymo sesijas ir LLM bandymus?</string>
+    <string name="label_log_scan_corrections">Registruoti nuskaitymo pataisas (įrenginyje)</string>
+    <string name="msg_log_scan_corrections">Tik šiame įrenginyje įrašo, ką išgavo AI ir ką išsaugojote. Niekas neįkeliama.</string>
+    <string name="format_scan_debug_counts">Sesijos: %1$d · LLM bandymai: %2$d</string>
+    <string name="format_scan_session_subject">Nuskaitymo sesija: %1$s</string>
+    <string name="action_share_scan_session">Bendrinti nuskaitymo sesiją</string>
 </resources>

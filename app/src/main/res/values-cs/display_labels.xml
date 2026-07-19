@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>French press</item><item>AeroPress</item>
+        <item>Espresso</item><item>Moka konvička</item><item>Cold brew</item>
+    </string-array>
+    <string-array name="filter_type_names">
+        <item>Papírový</item><item>19K</item><item>40K</item>
+    </string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Čistý, jasný a jemný šálek</item>
+        <item>Plný, výrazný a hutný šálek</item>
+        <item>Vyvážená čistota a plnost</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Hrnek</item>
+        <item>Cestovní hrnek</item><item>Kelímek s sebou</item><item>Sklenice na latte</item><item>Karafa</item>
+        <item>French press</item><item>Konvice</item><item>Zavařovací sklenice</item><item>Miska</item>
+        <item>Dvoustěnný šálek na espresso</item><item>Dvoustěnný tumbler</item><item>Dvoustěnný hrnek</item>
+        <item>Vysoká sklenice na latte</item><item>Degustační šálek</item><item>Kulatý šálek na latte</item>
+        <item>Konvička na espresso s hubičkou</item><item>Tečkovaná karafa</item><item>Konvička s víčkem</item>
+        <item>Konvička ve tvaru úlu</item><item>Baristická konvička</item><item>Hranatá konvička</item>
+        <item>Fasetovaná sklenice na cortado</item><item>Keramická miska na latte</item>
+        <item>Termokarafa</item><item>Dvoustěnný french press</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Výchozí</item><item>Hnědá</item><item>Čokoládová</item><item>Peru</item>
+        <item>Ocelově modrá</item><item>Mořská zelená</item><item>Fialová</item><item>Karmínová</item>
+        <item>Oranžová</item><item>Břidlicová</item>
+    </string-array>
+</resources>

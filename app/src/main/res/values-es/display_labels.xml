@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Prensa francesa</item><item>AeroPress</item>
+        <item>Espresso</item><item>Cafetera moka</item><item>Café en frío</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Papel</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Limpio, brillante y delicado</item><item>Con cuerpo, intenso y denso</item>
+        <item>Claridad y cuerpo equilibrados</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Capuchino</item><item>Taza</item>
+        <item>Taza de viaje</item><item>Vaso para llevar</item><item>Vaso de latte</item><item>Jarra</item>
+        <item>Prensa francesa</item><item>Hervidor</item><item>Tarro de cristal</item><item>Cuenco</item>
+        <item>Taza de espresso de doble pared</item><item>Vaso de doble pared</item><item>Taza de doble pared</item>
+        <item>Vaso alto de latte</item><item>Taza de aromas</item><item>Taza esférica de latte</item>
+        <item>Jarra de espresso con pico</item><item>Jarra de puntos</item><item>Jarra con tapa</item>
+        <item>Jarra de colmena</item><item>Jarra barista</item><item>Jarra angular</item>
+        <item>Vaso facetado de cortado</item><item>Cuenco cerámico de latte</item>
+        <item>Jarra térmica</item><item>Prensa de doble pared</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Predeterminado</item><item>Marrón</item><item>Chocolate</item><item>Perú</item>
+        <item>Azul acero</item><item>Verde mar</item><item>Morado</item><item>Carmesí</item>
+        <item>Naranja</item><item>Pizarra</item>
+    </string-array>
+</resources>

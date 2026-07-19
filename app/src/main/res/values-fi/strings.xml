@@ -25,7 +25,9 @@
     <string name="label_strength">Vahvuus</string>
     <string name="label_grind">Jauhatus</string>
     <string name="label_filter">Suodatin</string>
-<string name="label_decaf">Kofeiiniton</string>
+<string name="label_all">Kaikki</string>
+    <string name="label_regular">Tavallinen</string>
+    <string name="label_decaf">Kofeiiniton</string>
     <string name="label_decaf_suffix"> · Kofeiiniton</string>
     <string name="label_loading">Ladataan…</string>
     <string name="label_none">Ei mitään</string>
@@ -300,6 +302,8 @@
     <string name="notif_scan_progress_title">Luetaan pussin etikettiä…</string>
     <string name="notif_bag_analysis_title">Pussin analysointi valmis</string>
     <string name="notif_bag_analysis_body">Napauta tarkistaaksesi löydetyt tiedot.</string>
+    <string name="notif_bag_analysis_failed_title">Pussin analysointi epäonnistui</string>
+    <string name="notif_bag_analysis_failed_body">Napauta tarkistaaksesi ja lisätäksesi tiedot käsin.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Luetaan etikettiä…</string>
     <string name="scan_stage_barcode">Haetaan viivakoodia…</string>
@@ -402,10 +406,14 @@
     <string name="label_name">Nimi</string>
     <string name="label_roaster">Paahtimo</string>
     <string name="label_origin">Alkuperä</string>
+    <string name="label_region">Alue</string>
+    <string name="label_farm">Tila</string>
+    <string name="label_altitude">Korkeus</string>
 <string name="label_barcode_ean">Viivakoodi / EAN</string>
     <string name="action_scan_barcode">Skannaa viivakoodi</string>
     <string name="label_name_required">Nimi *</string>
     <string name="label_weight_grams">Paino (g)</string>
+    <string name="msg_invalid_weight">Anna kelvollinen paino.</string>
     <string name="label_roast_date">Paahtopäivä</string>
     <string name="label_roast_level">Paahtoaste</string>
     <string name="label_variety">Lajike</string>
@@ -458,6 +466,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Tekoälypalvelu (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Yhdistä Mindlayer</string>
+    <string name="action_mindlayer_google_play">Hanki Mindlayer Google Playsta</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer on asennettu. Haluatko yhdistää sen yksityiseen laitteessa toimivaan tekoälyyn?</string>
+    <string name="msg_mindlayer_install_recommendation">Asenna Mindlayer Google Playsta, jotta voit lukea kahvipakkausten etiketit yksityisellä laitteessa toimivalla tekoälyllä. Voit tehdä tämän myöhemmin Asetuksissa.</string>
     <string name="action_test_connection">Testaa yhteys</string>
     <string name="action_run_test_prompt">Suorita testikehote</string>
     <string name="label_testing">Testataan…</string>
@@ -530,6 +542,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Hylätäänkö skannaus?</string>
     <string name="msg_discard_scan_body">Sinulla on tunnistettuja kenttiä, joita ei ole tallennettu.</string>
+    <string name="dialog_discard_changes_title">Hylätäänkö muutokset?</string>
+    <string name="msg_discard_changes_body">Tallentamattomat muutokset menetetään.</string>
     <string name="action_discard">Hylkää</string>
     <string name="action_keep_scanning">Jatka skannausta</string>
     <string name="msg_camera_permission_required">Kameran käyttöoikeus vaaditaan</string>
@@ -691,4 +705,20 @@
     <string name="scan_warn_lighting">Paranna valaistusta</string>
     <string name="cd_remove_photo">Poista kuva</string>
     <string name="msg_bag_saved">Pussi tallennettu</string>
+    <string name="msg_could_not_save_bag">Pussin tallentaminen epäonnistui</string>
+    <string name="msg_could_not_open_app_store">Sovelluskauppaa ei voitu avata.</string>
+    <string name="msg_could_not_save_changes">Muutoksia ei voitu tallentaa</string>
+    <string name="msg_could_not_delete">Poistaminen epäonnistui. Yritä uudelleen.</string>
+    <string name="dialog_delete_cup_preset_message">Poistetaanko tämä kuppiprofiili?</string>
+    <string name="msg_onboarding_save_failed">Asetuksia ei voitu tallentaa. Yritä uudelleen.</string>
+    <string name="msg_settings_save_failed">Tätä asetusta ei voitu tallentaa. Yritä uudelleen.</string>
+    <string name="msg_cup_preset_reset_failed">Kuppiprofiileja ei voitu palauttaa. Yritä uudelleen.</string>
+    <string name="msg_reset_cup_presets">Korvataanko kaikki kuppiprofiilit oletuksilla?</string>
+    <string name="msg_diagnostic_clear_failed">Kaikkia diagnostiikkatietoja ei voitu tyhjentää. Yritä uudelleen.</string>
+    <string name="msg_clear_diagnostics">Tyhjennetäänkö kaikki tallennetut skannausistunnot ja LLM-ajot?</string>
+    <string name="label_log_scan_corrections">Kirjaa skannauskorjaukset (laitteessa)</string>
+    <string name="msg_log_scan_corrections">Tallentaa vain tähän laitteeseen, mitä tekoäly poimi ja mitä tallensit. Mitään ei lähetetä.</string>
+    <string name="format_scan_debug_counts">Istuntoja: %1$d · LLM-ajoja: %2$d</string>
+    <string name="format_scan_session_subject">Skannausistunto: %1$s</string>
+    <string name="action_share_scan_session">Jaa skannausistunto</string>
 </resources>

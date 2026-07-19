@@ -25,7 +25,9 @@
     <string name="label_strength">Intensité</string>
     <string name="label_grind">Mouture</string>
     <string name="label_filter">Filtre</string>
-<string name="label_decaf">Déca</string>
+<string name="label_all">Tous</string>
+    <string name="label_regular">Classique</string>
+    <string name="label_decaf">Déca</string>
     <string name="label_decaf_suffix"> · Déca</string>
     <string name="label_loading">Chargement…</string>
     <string name="label_none">Aucun</string>
@@ -300,6 +302,8 @@
     <string name="notif_scan_progress_title">Lecture de l’étiquette du paquet…</string>
     <string name="notif_bag_analysis_title">Analyse du paquet terminée</string>
     <string name="notif_bag_analysis_body">Touchez pour vérifier les détails trouvés.</string>
+    <string name="notif_bag_analysis_failed_title">Échec de l’analyse du paquet</string>
+    <string name="notif_bag_analysis_failed_body">Touchez pour vérifier et ajouter les informations manuellement.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Lecture de l’étiquette…</string>
     <string name="scan_stage_barcode">Recherche du code-barres…</string>
@@ -402,10 +406,14 @@
     <string name="label_name">Nom</string>
     <string name="label_roaster">Torréfacteur</string>
     <string name="label_origin">Origine</string>
+    <string name="label_region">Région</string>
+    <string name="label_farm">Ferme</string>
+    <string name="label_altitude">Altitude</string>
 <string name="label_barcode_ean">Code-barres / EAN</string>
     <string name="action_scan_barcode">Scanner le code-barres</string>
     <string name="label_name_required">Nom *</string>
     <string name="label_weight_grams">Poids (g)</string>
+    <string name="msg_invalid_weight">Saisissez un poids valide.</string>
     <string name="label_roast_date">Date de torréfaction</string>
     <string name="label_roast_level">Torréfaction</string>
     <string name="label_variety">Variété</string>
@@ -458,6 +466,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Service IA (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Connecter Mindlayer</string>
+    <string name="action_mindlayer_google_play">Télécharger Mindlayer sur Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer est installé. Voulez-vous le connecter pour utiliser une IA privée sur l’appareil ?</string>
+    <string name="msg_mindlayer_install_recommendation">Installez Mindlayer depuis Google Play pour lire les étiquettes des paquets de café avec une IA privée sur l’appareil. Vous pourrez le faire plus tard dans Paramètres.</string>
     <string name="action_test_connection">Tester la connexion</string>
     <string name="action_run_test_prompt">Lancer le prompt de test</string>
     <string name="label_testing">Test…</string>
@@ -530,6 +542,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Abandonner le scan ?</string>
     <string name="msg_discard_scan_body">Vous avez des champs détectés qui n\'ont pas été enregistrés.</string>
+    <string name="dialog_discard_changes_title">Abandonner les modifications ?</string>
+    <string name="msg_discard_changes_body">Vos modifications non enregistrées seront perdues.</string>
     <string name="action_discard">Abandonner</string>
     <string name="action_keep_scanning">Continuer le scan</string>
     <string name="msg_camera_permission_required">Autorisation de la caméra requise</string>
@@ -691,4 +705,20 @@
     <string name="scan_warn_lighting">Améliorez l\'éclairage</string>
     <string name="cd_remove_photo">Retirer la photo</string>
     <string name="msg_bag_saved">Sachet enregistré</string>
+    <string name="msg_could_not_save_bag">Impossible d’enregistrer le sachet</string>
+    <string name="msg_could_not_open_app_store">Impossible d’ouvrir la boutique d’applications.</string>
+    <string name="msg_could_not_save_changes">Impossible d’enregistrer les modifications</string>
+    <string name="msg_could_not_delete">Impossible de supprimer. Réessayez.</string>
+    <string name="dialog_delete_cup_preset_message">Supprimer ce profil de tasse ?</string>
+    <string name="msg_onboarding_save_failed">Impossible d’enregistrer votre configuration. Réessayez.</string>
+    <string name="msg_settings_save_failed">Impossible d’enregistrer ce réglage. Réessayez.</string>
+    <string name="msg_cup_preset_reset_failed">Impossible de réinitialiser les profils de tasse. Réessayez.</string>
+    <string name="msg_reset_cup_presets">Remplacer tous les profils de tasse par ceux par défaut ?</string>
+    <string name="msg_diagnostic_clear_failed">Impossible d’effacer tous les diagnostics. Réessayez.</string>
+    <string name="msg_clear_diagnostics">Effacer toutes les sessions d’analyse et tous les passages LLM enregistrés ?</string>
+    <string name="label_log_scan_corrections">Journaliser les corrections d’analyse (sur l’appareil)</string>
+    <string name="msg_log_scan_corrections">Enregistre uniquement sur cet appareil ce que l’IA a extrait et ce que vous avez sauvegardé. Rien n’est envoyé.</string>
+    <string name="format_scan_debug_counts">Sessions : %1$d · Passages LLM : %2$d</string>
+    <string name="format_scan_session_subject">Session d’analyse : %1$s</string>
+    <string name="action_share_scan_session">Partager la session d’analyse</string>
 </resources>

@@ -25,7 +25,9 @@
     <string name="label_strength">Stärke</string>
     <string name="label_grind">Mahlung</string>
     <string name="label_filter">Filter</string>
-<string name="label_decaf">Decaf</string>
+<string name="label_all">Alle</string>
+    <string name="label_regular">Normal</string>
+    <string name="label_decaf">Decaf</string>
     <string name="label_decaf_suffix"> · Decaf</string>
     <string name="label_loading">Wird geladen…</string>
     <string name="label_none">Keine</string>
@@ -300,6 +302,8 @@
     <string name="notif_scan_progress_title">Etikett der Tüte wird gelesen…</string>
     <string name="notif_bag_analysis_title">Tütenanalyse abgeschlossen</string>
     <string name="notif_bag_analysis_body">Tippen Sie, um die gefundenen Details zu prüfen.</string>
+    <string name="notif_bag_analysis_failed_title">Tütenanalyse fehlgeschlagen</string>
+    <string name="notif_bag_analysis_failed_body">Tippen Sie, um die Angaben zu prüfen und manuell zu ergänzen.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Etikett wird gelesen…</string>
     <string name="scan_stage_barcode">Barcode wird nachgeschlagen…</string>
@@ -402,10 +406,14 @@
     <string name="label_name">Name</string>
     <string name="label_roaster">Rösterei</string>
     <string name="label_origin">Herkunft</string>
+    <string name="label_region">Region</string>
+    <string name="label_farm">Farm</string>
+    <string name="label_altitude">Höhenlage</string>
 <string name="label_barcode_ean">Barcode / EAN</string>
     <string name="action_scan_barcode">Barcode scannen</string>
     <string name="label_name_required">Name *</string>
     <string name="label_weight_grams">Gewicht (g)</string>
+    <string name="msg_invalid_weight">Gib ein gültiges Gewicht ein.</string>
     <string name="label_roast_date">Röstdatum</string>
     <string name="label_roast_level">Röstgrad</string>
     <string name="label_variety">Varietät</string>
@@ -458,6 +466,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">KI-Dienst (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Mindlayer verbinden</string>
+    <string name="action_mindlayer_google_play">Mindlayer bei Google Play holen</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer ist installiert. Möchtest du es für private KI auf dem Gerät verbinden?</string>
+    <string name="msg_mindlayer_install_recommendation">Installiere Mindlayer über Google Play, um Kaffeebeutel-Etiketten mit privater KI auf dem Gerät zu lesen. Das kannst du später in den Einstellungen tun.</string>
     <string name="action_test_connection">Verbindung testen</string>
     <string name="action_run_test_prompt">Test-Prompt ausführen</string>
     <string name="label_testing">Wird getestet…</string>
@@ -530,6 +542,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Scan verwerfen?</string>
     <string name="msg_discard_scan_body">Es gibt erkannte Felder, die noch nicht gespeichert wurden.</string>
+    <string name="dialog_discard_changes_title">Änderungen verwerfen?</string>
+    <string name="msg_discard_changes_body">Ihre nicht gespeicherten Änderungen gehen verloren.</string>
     <string name="action_discard">Verwerfen</string>
     <string name="action_keep_scanning">Weiterscannen</string>
     <string name="msg_camera_permission_required">Kameraberechtigung erforderlich</string>
@@ -691,4 +705,20 @@
     <string name="scan_warn_lighting">Beleuchtung verbessern</string>
     <string name="cd_remove_photo">Foto entfernen</string>
     <string name="msg_bag_saved">Packung gespeichert</string>
+    <string name="msg_could_not_save_bag">Packung konnte nicht gespeichert werden</string>
+    <string name="msg_could_not_open_app_store">Der App-Store konnte nicht geöffnet werden.</string>
+    <string name="msg_could_not_save_changes">Änderungen konnten nicht gespeichert werden</string>
+    <string name="msg_could_not_delete">Löschen fehlgeschlagen. Bitte versuche es erneut.</string>
+    <string name="dialog_delete_cup_preset_message">Dieses Tassenprofil löschen?</string>
+    <string name="msg_onboarding_save_failed">Die Einrichtung konnte nicht gespeichert werden. Bitte erneut versuchen.</string>
+    <string name="msg_settings_save_failed">Diese Einstellung konnte nicht gespeichert werden. Bitte erneut versuchen.</string>
+    <string name="msg_cup_preset_reset_failed">Die Tassenprofile konnten nicht zurückgesetzt werden. Bitte erneut versuchen.</string>
+    <string name="msg_reset_cup_presets">Alle Tassenprofile durch die Standardwerte ersetzen?</string>
+    <string name="msg_diagnostic_clear_failed">Nicht alle Diagnosedaten konnten gelöscht werden. Bitte erneut versuchen.</string>
+    <string name="msg_clear_diagnostics">Alle gespeicherten Scan-Sitzungen und LLM-Durchläufe löschen?</string>
+    <string name="label_log_scan_corrections">Scan-Korrekturen protokollieren (auf dem Gerät)</string>
+    <string name="msg_log_scan_corrections">Zeichnet nur auf diesem Gerät auf, was die KI erkannt und was du gespeichert hast. Es wird nichts hochgeladen.</string>
+    <string name="format_scan_debug_counts">Sitzungen: %1$d · LLM-Durchläufe: %2$d</string>
+    <string name="format_scan_session_subject">Scan-Sitzung: %1$s</string>
+    <string name="action_share_scan_session">Scan-Sitzung teilen</string>
 </resources>

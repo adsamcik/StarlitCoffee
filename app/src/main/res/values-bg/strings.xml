@@ -25,7 +25,9 @@
     <string name="label_strength">Сила</string>
     <string name="label_grind">Смилане</string>
     <string name="label_filter">Филтър</string>
-<string name="label_decaf">Декаф</string>
+<string name="label_all">Всички</string>
+    <string name="label_regular">Обикновено</string>
+    <string name="label_decaf">Декаф</string>
     <string name="label_decaf_suffix"> · Декаф</string>
     <string name="label_loading">Зареждане…</string>
     <string name="label_none">Няма</string>
@@ -300,6 +302,8 @@
     <string name="notif_scan_progress_title">Четене на етикета на пакета…</string>
     <string name="notif_bag_analysis_title">Анализът на пакета е завършен</string>
     <string name="notif_bag_analysis_body">Докоснете, за да прегледате намерените подробности.</string>
+    <string name="notif_bag_analysis_failed_title">Анализът на пакета е неуспешен</string>
+    <string name="notif_bag_analysis_failed_body">Докоснете, за да прегледате и добавите данните ръчно.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Четене на етикета…</string>
     <string name="scan_stage_barcode">Проверка на баркода…</string>
@@ -402,10 +406,14 @@
     <string name="label_name">Име</string>
     <string name="label_roaster">Пекарна</string>
     <string name="label_origin">Произход</string>
+    <string name="label_region">Регион</string>
+    <string name="label_farm">Ферма</string>
+    <string name="label_altitude">Надморска височина</string>
 <string name="label_barcode_ean">Баркод / EAN</string>
     <string name="action_scan_barcode">Сканирайте баркод</string>
     <string name="label_name_required">Име *</string>
     <string name="label_weight_grams">Тегло (g)</string>
+    <string name="msg_invalid_weight">Въведете валидно тегло.</string>
     <string name="label_roast_date">Дата на изпичане</string>
     <string name="label_roast_level">Степен на изпичане</string>
     <string name="label_variety">Разновидност</string>
@@ -458,6 +466,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">ИИ услуга (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Свързване на Mindlayer</string>
+    <string name="action_mindlayer_google_play">Вземете Mindlayer от Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer е инсталиран. Искате ли да го свържете за личен ИИ на устройството?</string>
+    <string name="msg_mindlayer_install_recommendation">Инсталирайте Mindlayer от Google Play, за да четете етикети на кафени пакети с личен ИИ на устройството. Можете да го направите по-късно в Настройки.</string>
     <string name="action_test_connection">Тествайте връзката</string>
     <string name="action_run_test_prompt">Пуснете тестова подкана</string>
     <string name="label_testing">Тестване…</string>
@@ -530,6 +542,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Да отхвърлите сканирането?</string>
     <string name="msg_discard_scan_body">Имате открити полета, които не са запазени.</string>
+    <string name="dialog_discard_changes_title">Да отхвърлите промените?</string>
+    <string name="msg_discard_changes_body">Незапазените промени ще бъдат загубени.</string>
     <string name="action_discard">Отхвърлете</string>
     <string name="action_keep_scanning">Продължете сканирането</string>
     <string name="msg_camera_permission_required">Необходимо е разрешение за камерата</string>
@@ -691,4 +705,20 @@
     <string name="scan_warn_lighting">Подобрете осветлението</string>
     <string name="cd_remove_photo">Премахнете снимката</string>
     <string name="msg_bag_saved">Пакетът е запазен</string>
+    <string name="msg_could_not_save_bag">Пакетът не можа да бъде запазен</string>
+    <string name="msg_could_not_open_app_store">Магазинът за приложения не можа да бъде отворен.</string>
+    <string name="msg_could_not_save_changes">Промените не можаха да бъдат запазени</string>
+    <string name="msg_could_not_delete">Изтриването не бе успешно. Опитайте отново.</string>
+    <string name="dialog_delete_cup_preset_message">Да се изтрие ли този профил за чаша?</string>
+    <string name="msg_onboarding_save_failed">Настройката не можа да бъде запазена. Опитайте отново.</string>
+    <string name="msg_settings_save_failed">Тази настройка не можа да бъде запазена. Опитайте отново.</string>
+    <string name="msg_cup_preset_reset_failed">Профилите за чаши не можаха да бъдат нулирани. Опитайте отново.</string>
+    <string name="msg_reset_cup_presets">Да се заменят ли всички профили за чаши със стандартните?</string>
+    <string name="msg_diagnostic_clear_failed">Не всички диагностични данни можаха да бъдат изчистени. Опитайте отново.</string>
+    <string name="msg_clear_diagnostics">Да се изчистят ли всички запазени сканирания и LLM преминавания?</string>
+    <string name="label_log_scan_corrections">Запис на корекциите при сканиране (на устройството)</string>
+    <string name="msg_log_scan_corrections">Записва само на това устройство разликите между извлеченото от AI и запазеното от вас. Нищо не се качва.</string>
+    <string name="format_scan_debug_counts">Сесии: %1$d · LLM преминавания: %2$d</string>
+    <string name="format_scan_session_subject">Сесия на сканиране: %1$s</string>
+    <string name="action_share_scan_session">Споделяне на сесията</string>
 </resources>

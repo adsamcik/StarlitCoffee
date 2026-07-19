@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Френска преса</item><item>AeroPress</item>
+        <item>Еспресо</item><item>Мока</item><item>Студено извличане</item>
+    </string-array>
+    <string-array name="filter_type_names">
+        <item>Хартиен</item><item>19K</item><item>40K</item>
+    </string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Чист, ярък и деликатен</item>
+        <item>Плътен, смел и наситен</item>
+        <item>Балансирана чистота и плътност</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Еспресо</item><item>Кортадо</item><item>Капучино</item><item>Чаша</item>
+        <item>Пътна чаша</item><item>Чаша за из път</item><item>Чаша за лате</item><item>Кана</item>
+        <item>Френска преса</item><item>Чайник</item><item>Буркан</item><item>Купа</item>
+        <item>Двустенна чаша за еспресо</item><item>Двустенна термо чаша</item><item>Двустенна чаша</item>
+        <item>Висока чаша за лате</item><item>Чаша за аромат</item><item>Сферична чаша за лате</item>
+        <item>Каничка за еспресо с чучур</item><item>Кана на точки</item><item>Каничка с капак</item>
+        <item>Каничка тип кошер</item><item>Бариста каничка</item><item>Ъглова каничка</item>
+        <item>Фасетирана чаша за кортадо</item><item>Керамична купа за лате</item>
+        <item>Термокана</item><item>Двустенна преса</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>По подразбиране</item><item>Кафяво</item><item>Шоколадово</item><item>Перу</item>
+        <item>Стоманеносиньо</item><item>Морскозелено</item><item>Лилаво</item><item>Малиново</item>
+        <item>Оранжево</item><item>Шистово</item>
+    </string-array>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Γαλλική πρέσα</item><item>AeroPress</item>
+        <item>Εσπρέσο</item><item>Μόκα</item><item>Κρύα εκχύλιση</item>
+    </string-array>
+    <string-array name="filter_type_names">
+        <item>Χάρτινο</item><item>19K</item><item>40K</item>
+    </string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Καθαρό, φωτεινό και λεπτό</item><item>Γεμάτο, έντονο και πυκνό</item><item>Ισορροπημένη καθαρότητα και σώμα</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Εσπρέσο</item><item>Κορτάδο</item><item>Καπουτσίνο</item><item>Κούπα</item>
+        <item>Κούπα ταξιδιού</item><item>Ποτήρι για έξω</item><item>Ποτήρι λάτε</item><item>Καράφα</item>
+        <item>Γαλλική πρέσα</item><item>Βραστήρας</item><item>Γυάλινο βάζο</item><item>Μπολ</item>
+        <item>Διπλότοιχο φλιτζάνι εσπρέσο</item><item>Διπλότοιχο ποτήρι</item><item>Διπλότοιχη κούπα</item>
+        <item>Ψηλό ποτήρι λάτε</item><item>Φλιτζάνι αρώματος</item><item>Σφαιρικό φλιτζάνι λάτε</item>
+        <item>Κανάτα εσπρέσο με στόμιο</item><item>Πουά καράφα</item><item>Κανάτα με καπάκι</item>
+        <item>Κανάτα κυψέλη</item><item>Κανάτα barista</item><item>Γωνιώδης κανάτα</item>
+        <item>Πολυεδρικό ποτήρι κορτάδο</item><item>Κεραμικό μπολ λάτε</item>
+        <item>Θερμική καράφα</item><item>Διπλότοιχη πρέσα</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Προεπιλογή</item><item>Καφέ</item><item>Σοκολατί</item><item>Περού</item>
+        <item>Ατσάλινο μπλε</item><item>Πράσινο της θάλασσας</item><item>Μωβ</item><item>Βυσσινί</item>
+        <item>Πορτοκαλί</item><item>Σχιστόλιθος</item>
+    </string-array>
+</resources>

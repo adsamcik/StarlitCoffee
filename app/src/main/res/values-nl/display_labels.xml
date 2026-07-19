@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>French press</item><item>AeroPress</item>
+        <item>Espresso</item><item>Mokkapot</item><item>Cold brew</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Papier</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Zuiver, helder en verfijnd</item><item>Vol, krachtig en stevig</item><item>Evenwichtige helderheid en body</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Mok</item>
+        <item>Reismok</item><item>Meeneembeker</item><item>Latteglas</item><item>Karaf</item>
+        <item>French press</item><item>Waterkoker</item><item>Weckpot</item><item>Kom</item>
+        <item>Dubbelwandig espressokopje</item><item>Dubbelwandige drinkbeker</item><item>Dubbelwandige mok</item>
+        <item>Hoog latteglas</item><item>Aromakopje</item><item>Bolvormige lattekop</item>
+        <item>Espressokannetje met tuit</item><item>Stippenkaraf</item><item>Kannetje met deksel</item>
+        <item>Bijenkorfkannetje</item><item>Baristakannetje</item><item>Hoekig kannetje</item>
+        <item>Gefacetteerd cortadoglas</item><item>Keramische lattekom</item>
+        <item>Thermoskaraf</item><item>Dubbelwandige French press</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Standaard</item><item>Bruin</item><item>Chocolade</item><item>Peru</item>
+        <item>Staalblauw</item><item>Zeegroen</item><item>Paars</item><item>Karmozijn</item>
+        <item>Oranje</item><item>Leisteen</item>
+    </string-array>
+</resources>

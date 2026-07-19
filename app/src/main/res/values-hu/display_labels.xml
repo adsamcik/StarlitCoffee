@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>French press</item><item>AeroPress</item>
+        <item>Eszpresszó</item><item>Kotyogós</item><item>Hideg áztatás</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Papír</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Tiszta, élénk és finom</item><item>Testes, karakteres és sűrű</item><item>Kiegyensúlyozott tisztaság és testesség</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Eszpresszó</item><item>Cortado</item><item>Cappuccino</item><item>Bögre</item>
+        <item>Utazóbögre</item><item>Elviteles pohár</item><item>Lattepohár</item><item>Kancsó</item>
+        <item>French press</item><item>Vízforraló</item><item>Befőttesüveg</item><item>Tál</item>
+        <item>Duplafalú eszpresszócsésze</item><item>Duplafalú pohár</item><item>Duplafalú bögre</item>
+        <item>Magas lattepohár</item><item>Aromakóstoló csésze</item><item>Gömbölyű lattecsésze</item>
+        <item>Kiöntős eszpresszókancsó</item><item>Pöttyös kancsó</item><item>Fedeles kancsó</item>
+        <item>Méhkas alakú kancsó</item><item>Barista kancsó</item><item>Szögletes kancsó</item>
+        <item>Csiszolt cortadopohár</item><item>Kerámia lattetál</item>
+        <item>Termokancsó</item><item>Duplafalú French press</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Alapértelmezett</item><item>Barna</item><item>Csokoládé</item><item>Peru</item>
+        <item>Acélkék</item><item>Tengerzöld</item><item>Lila</item><item>Kármin</item>
+        <item>Narancs</item><item>Palaszürke</item>
+    </string-array>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Prancūziškas presas</item><item>AeroPress</item>
+        <item>Espresas</item><item>Moka kavinukas</item><item>Šaltasis plikymas</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Popierinis</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Švarus, ryškus ir subtilus</item><item>Sodrus, stiprus ir tirštas</item><item>Subalansuotas skaidrumas ir sodrumas</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresas</item><item>Kortadas</item><item>Kapučinas</item><item>Puodelis</item>
+        <item>Kelioninis puodelis</item><item>Išsinešimo puodelis</item><item>Latės stiklinė</item><item>Grafinas</item>
+        <item>Prancūziškas presas</item><item>Virdulys</item><item>Stiklainis</item><item>Dubenėlis</item>
+        <item>Dvisienis espreso puodelis</item><item>Dvisienė stiklinė</item><item>Dvisienis puodelis</item>
+        <item>Aukšta latės stiklinė</item><item>Aromato ragavimo puodelis</item><item>Apvalus latės puodelis</item>
+        <item>Espreso ąsotėlis su snapeliu</item><item>Taškuotas grafinas</item><item>Ąsotėlis su dangteliu</item>
+        <item>Avilio formos ąsotėlis</item><item>Baristos ąsotėlis</item><item>Kampuotas ąsotėlis</item>
+        <item>Briaunuota kortado stiklinė</item><item>Keraminis latės dubenėlis</item>
+        <item>Terminis grafinas</item><item>Dvisienis presas</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Numatytoji</item><item>Ruda</item><item>Šokoladinė</item><item>Peru</item>
+        <item>Plieno mėlyna</item><item>Jūros žalia</item><item>Violetinė</item><item>Tamsiai raudona</item>
+        <item>Oranžinė</item><item>Skalūno</item>
+    </string-array>
+</resources>

@@ -25,7 +25,9 @@
     <string name="label_strength">浓度</string>
     <string name="label_grind">研磨</string>
     <string name="label_filter">滤纸/滤网</string>
-<string name="label_decaf">低因</string>
+<string name="label_all">全部</string>
+    <string name="label_regular">常规</string>
+    <string name="label_decaf">低因</string>
     <string name="label_decaf_suffix"> · 低因</string>
     <string name="label_loading">加载中…</string>
     <string name="label_none">无</string>
@@ -297,6 +299,8 @@
     <string name="notif_scan_progress_title">正在读取咖啡袋标签…</string>
     <string name="notif_bag_analysis_title">咖啡袋分析完成</string>
     <string name="notif_bag_analysis_body">点按以查看识别到的详情。</string>
+    <string name="notif_bag_analysis_failed_title">咖啡袋分析失败</string>
+    <string name="notif_bag_analysis_failed_body">点按以查看并手动添加详细信息。</string>
     <string name="scan_stage_ocr">正在读取标签…</string>
     <string name="scan_stage_barcode">正在查询条形码…</string>
     <string name="scan_stage_llm">正在解析详情…</string>
@@ -398,10 +402,14 @@
     <string name="label_name">名称</string>
     <string name="label_roaster">烘焙商</string>
     <string name="label_origin">产地</string>
+    <string name="label_region">产区</string>
+    <string name="label_farm">农场</string>
+    <string name="label_altitude">海拔</string>
 <string name="label_barcode_ean">条形码/EAN</string>
     <string name="action_scan_barcode">扫描条形码</string>
     <string name="label_name_required">名称*</string>
     <string name="label_weight_grams">重量（g）</string>
+    <string name="msg_invalid_weight">请输入有效重量。</string>
     <string name="label_roast_date">烘焙日期</string>
     <string name="label_roast_level">烘焙度</string>
     <string name="label_variety">品种</string>
@@ -454,6 +462,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI服务（Mindlayer）</string>
+    <string name="action_connect_mindlayer">连接 Mindlayer</string>
+    <string name="action_mindlayer_google_play">从 Google Play 获取 Mindlayer</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer 已安装。是否要连接它以使用设备端的私密 AI？</string>
+    <string name="msg_mindlayer_install_recommendation">从 Google Play 安装 Mindlayer，即可使用设备端私密 AI 读取咖啡袋标签。您也可以稍后在“设置”中安装。</string>
     <string name="action_test_connection">测试连接</string>
     <string name="action_run_test_prompt">运行测试提示词</string>
     <string name="label_testing">测试中…</string>
@@ -526,6 +538,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">放弃扫描？</string>
     <string name="msg_discard_scan_body">你有已识别但尚未保存的字段。</string>
+    <string name="dialog_discard_changes_title">放弃更改？</string>
+    <string name="msg_discard_changes_body">未保存的更改将丢失。</string>
     <string name="action_discard">放弃</string>
     <string name="action_keep_scanning">继续扫描</string>
     <string name="msg_camera_permission_required">需要相机权限</string>
@@ -687,4 +701,20 @@
     <string name="scan_warn_lighting">改善光线</string>
     <string name="cd_remove_photo">移除照片</string>
     <string name="msg_bag_saved">已保存咖啡袋</string>
+    <string name="msg_could_not_save_bag">无法保存咖啡袋</string>
+    <string name="msg_could_not_open_app_store">无法打开应用商店。</string>
+    <string name="msg_could_not_save_changes">无法保存更改</string>
+    <string name="msg_could_not_delete">无法删除，请重试。</string>
+    <string name="dialog_delete_cup_preset_message">删除此杯量预设？</string>
+    <string name="msg_onboarding_save_failed">无法保存设置，请重试。</string>
+    <string name="msg_settings_save_failed">无法保存此设置，请重试。</string>
+    <string name="msg_cup_preset_reset_failed">无法重置杯量预设，请重试。</string>
+    <string name="msg_reset_cup_presets">用默认值替换所有杯量预设？</string>
+    <string name="msg_diagnostic_clear_failed">无法清除全部诊断数据，请重试。</string>
+    <string name="msg_clear_diagnostics">清除所有已保存的扫描会话和 LLM 处理记录？</string>
+    <string name="label_log_scan_corrections">记录扫描修正（仅限本机）</string>
+    <string name="msg_log_scan_corrections">仅在此设备上记录 AI 提取结果与最终保存内容的差异，不会上传任何数据。</string>
+    <string name="format_scan_debug_counts">会话：%1$d · LLM 处理：%2$d</string>
+    <string name="format_scan_session_subject">扫描会话：%1$s</string>
+    <string name="action_share_scan_session">分享扫描会话</string>
 </resources>

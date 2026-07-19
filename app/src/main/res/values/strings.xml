@@ -25,7 +25,9 @@
     <string name="label_strength">Strength</string>
     <string name="label_grind">Grind</string>
     <string name="label_filter">Filter</string>
-<string name="label_decaf">Decaf</string>
+<string name="label_all">All</string>
+    <string name="label_regular">Regular</string>
+    <string name="label_decaf">Decaf</string>
     <string name="label_decaf_suffix"> · Decaf</string>
     <string name="label_loading">Loading…</string>
     <string name="label_none">None</string>
@@ -300,6 +302,8 @@
     <string name="notif_scan_progress_title">Reading bag label…</string>
     <string name="notif_bag_analysis_title">Bag analysis complete</string>
     <string name="notif_bag_analysis_body">Tap to review the details we found.</string>
+    <string name="notif_bag_analysis_failed_title">Bag analysis failed</string>
+    <string name="notif_bag_analysis_failed_body">Tap to review and add the details manually.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Reading the label…</string>
     <string name="scan_stage_barcode">Looking up the barcode…</string>
@@ -402,10 +406,14 @@
     <string name="label_name">Name</string>
     <string name="label_roaster">Roaster</string>
     <string name="label_origin">Origin</string>
+    <string name="label_region">Region</string>
+    <string name="label_farm">Farm</string>
+    <string name="label_altitude">Altitude</string>
 <string name="label_barcode_ean">Barcode / EAN</string>
     <string name="action_scan_barcode">Scan barcode</string>
     <string name="label_name_required">Name *</string>
     <string name="label_weight_grams">Weight (g)</string>
+    <string name="msg_invalid_weight">Enter a valid weight.</string>
     <string name="label_roast_date">Roast date</string>
     <string name="label_roast_level">Roast level</string>
     <string name="label_variety">Variety</string>
@@ -458,6 +466,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI Service (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Connect Mindlayer</string>
+    <string name="action_mindlayer_google_play">Get Mindlayer on Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer is installed. Would you like to connect it for private, on-device AI?</string>
+    <string name="msg_mindlayer_install_recommendation">Install Mindlayer from Google Play to read bag labels with private, on-device AI. You can do this later in Settings.</string>
     <string name="action_test_connection">Test Connection</string>
     <string name="action_run_test_prompt">Run Test Prompt</string>
     <string name="label_testing">Testing…</string>
@@ -530,6 +542,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Discard scan?</string>
     <string name="msg_discard_scan_body">You have detected fields that haven\'t been saved.</string>
+    <string name="dialog_discard_changes_title">Discard changes?</string>
+    <string name="msg_discard_changes_body">Your unsaved changes will be lost.</string>
     <string name="action_discard">Discard</string>
     <string name="action_keep_scanning">Keep Scanning</string>
     <string name="msg_camera_permission_required">Camera permission required</string>
@@ -691,4 +705,82 @@
     <string name="scan_warn_lighting">Improve lighting</string>
     <string name="cd_remove_photo">Remove photo</string>
     <string name="msg_bag_saved">Bag saved</string>
+    <string name="msg_could_not_save_bag">Could not save bag</string>
+    <string name="msg_could_not_open_app_store">Could not open the app store.</string>
+    <string name="msg_could_not_save_changes">Could not save changes</string>
+    <string name="msg_could_not_delete">Could not delete. Please try again.</string>
+    <string name="dialog_delete_cup_preset_message">Delete this cup preset?</string>
+    <string name="msg_onboarding_save_failed">Could not save your setup. Please try again.</string>
+    <string name="msg_settings_save_failed">Could not save this setting. Please try again.</string>
+    <string name="msg_cup_preset_reset_failed">Could not reset cup presets. Please try again.</string>
+    <string name="msg_reset_cup_presets">Replace all cup presets with the defaults?</string>
+    <string name="msg_diagnostic_clear_failed">Could not clear all diagnostics. Please try again.</string>
+    <string name="msg_clear_diagnostics">Clear all stored scan sessions and LLM passes?</string>
+    <string name="label_log_scan_corrections">Log scan corrections (on-device)</string>
+    <string name="msg_log_scan_corrections">Record what the AI extracted versus what you saved on this device only. Nothing is uploaded.</string>
+    <string name="format_scan_debug_counts">Sessions: %1$d · LLM passes: %2$d</string>
+    <string name="format_scan_session_subject">Scan session: %1$s</string>
+    <string name="action_share_scan_session">Share scan session</string>
+
+    <string-array name="brew_method_names">
+        <item>Pulsar</item>
+        <item>V60</item>
+        <item>French press</item>
+        <item>AeroPress</item>
+        <item>Espresso</item>
+        <item>Moka pot</item>
+        <item>Cold brew</item>
+    </string-array>
+    <string-array name="filter_type_names">
+        <item>Paper</item>
+        <item>19K</item>
+        <item>40K</item>
+    </string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Pure, bright, delicate</item>
+        <item>Full-bodied, bold, chewy</item>
+        <item>Balanced clarity with body</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item>
+        <item>Cortado</item>
+        <item>Cappuccino</item>
+        <item>Mug</item>
+        <item>Travel cup</item>
+        <item>Takeaway cup</item>
+        <item>Latte glass</item>
+        <item>Carafe</item>
+        <item>French press</item>
+        <item>Kettle</item>
+        <item>Mason jar</item>
+        <item>Bowl</item>
+        <item>Double-wall espresso cup</item>
+        <item>Double-wall tumbler</item>
+        <item>Double-wall mug</item>
+        <item>Tall latte glass</item>
+        <item>Aroma taster</item>
+        <item>Spherical latte cup</item>
+        <item>Spouted espresso server</item>
+        <item>Dot carafe</item>
+        <item>Lid server</item>
+        <item>Beehive server</item>
+        <item>Barista server</item>
+        <item>Angular server</item>
+        <item>Faceted cortado glass</item>
+        <item>Ceramic latte bowl</item>
+        <item>Thermal carafe</item>
+        <item>Double-wall press</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Default</item>
+        <item>Brown</item>
+        <item>Chocolate</item>
+        <item>Peru</item>
+        <item>Steel blue</item>
+        <item>Sea green</item>
+        <item>Purple</item>
+        <item>Crimson</item>
+        <item>Orange</item>
+        <item>Slate</item>
+    </string-array>
 </resources>

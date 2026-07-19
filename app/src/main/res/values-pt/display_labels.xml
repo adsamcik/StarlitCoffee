@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Prensa francesa</item><item>AeroPress</item>
+        <item>Espresso</item><item>Cafeteira moka</item><item>Extração a frio</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Papel</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Puro, brilhante e delicado</item><item>Encorpado, intenso e denso</item><item>Clareza e corpo equilibrados</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Caneca</item>
+        <item>Caneca de viagem</item><item>Copo para levar</item><item>Copo de latte</item><item>Jarra</item>
+        <item>Prensa francesa</item><item>Chaleira</item><item>Frasco de vidro</item><item>Taça</item>
+        <item>Chávena de espresso de parede dupla</item><item>Copo de parede dupla</item><item>Caneca de parede dupla</item>
+        <item>Copo alto de latte</item><item>Chávena de aromas</item><item>Chávena esférica de latte</item>
+        <item>Jarro de espresso com bico</item><item>Jarra às pintas</item><item>Jarro com tampa</item>
+        <item>Jarro colmeia</item><item>Jarro de barista</item><item>Jarro angular</item>
+        <item>Copo facetado de cortado</item><item>Taça de latte em cerâmica</item>
+        <item>Jarra térmica</item><item>Prensa de parede dupla</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Predefinido</item><item>Castanho</item><item>Chocolate</item><item>Peru</item>
+        <item>Azul-aço</item><item>Verde-mar</item><item>Roxo</item><item>Carmesim</item>
+        <item>Laranja</item><item>Ardósia</item>
+    </string-array>
+</resources>

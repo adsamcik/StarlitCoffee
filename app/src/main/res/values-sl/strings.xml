@@ -25,6 +25,8 @@
     <string name="label_strength">Jakost</string>
     <string name="label_grind">Mletje</string>
     <string name="label_filter">Filter</string>
+    <string name="label_all">Vse</string>
+    <string name="label_regular">Navadna</string>
     <string name="label_decaf">Brez kofeina</string>
     <string name="label_decaf_suffix"> · Brez kofeina</string>
     <string name="label_loading">Nalaganje…</string>
@@ -304,6 +306,8 @@
     <string name="notif_scan_progress_title">Branje etikete vrečke…</string>
     <string name="notif_bag_analysis_title">Analiza vrečke končana</string>
     <string name="notif_bag_analysis_body">Tapnite za pregled najdenih podrobnosti.</string>
+    <string name="notif_bag_analysis_failed_title">Analiza vrečke ni uspela</string>
+    <string name="notif_bag_analysis_failed_body">Tapnite za pregled in ročni vnos podatkov.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Branje etikete…</string>
     <string name="scan_stage_barcode">Iskanje črtne kode…</string>
@@ -406,10 +410,14 @@
     <string name="label_name">Ime</string>
     <string name="label_roaster">Pražarna</string>
     <string name="label_origin">Poreklo</string>
+    <string name="label_region">Regija</string>
+    <string name="label_farm">Kmetija</string>
+    <string name="label_altitude">Nadmorska višina</string>
     <string name="label_barcode_ean">Črtna koda / EAN</string>
     <string name="action_scan_barcode">Skenirajte črtno kodo</string>
     <string name="label_name_required">Ime *</string>
     <string name="label_weight_grams">Teža (g)</string>
+    <string name="msg_invalid_weight">Vnesite veljavno težo.</string>
     <string name="label_roast_date">Datum praženja</string>
     <string name="label_roast_level">Stopnja praženja</string>
     <string name="label_variety">Sorta</string>
@@ -462,6 +470,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Storitev AI (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Poveži Mindlayer</string>
+    <string name="action_mindlayer_google_play">Prenesite Mindlayer iz Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer je nameščen. Ali ga želite povezati za zasebno umetno inteligenco v napravi?</string>
+    <string name="msg_mindlayer_install_recommendation">Namestite Mindlayer iz Google Play za branje etiket kavnih pakiranj z zasebno umetno inteligenco v napravi. To lahko storite pozneje v Nastavitvah.</string>
     <string name="action_test_connection">Preizkusite povezavo</string>
     <string name="action_run_test_prompt">Zaženite preizkusni poziv</string>
     <string name="label_testing">Preizkušanje…</string>
@@ -534,6 +546,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Zavržete skeniranje?</string>
     <string name="msg_discard_scan_body">Imate zaznana polja, ki še niso bila shranjena.</string>
+    <string name="dialog_discard_changes_title">Zavreči spremembe?</string>
+    <string name="msg_discard_changes_body">Neshranjene spremembe bodo izgubljene.</string>
     <string name="action_discard">Zavrzite</string>
     <string name="action_keep_scanning">Nadaljujte skeniranje</string>
     <string name="msg_camera_permission_required">Potrebno je dovoljenje za kamero</string>
@@ -695,4 +709,20 @@
     <string name="scan_warn_lighting">Izboljšajte osvetlitev</string>
     <string name="cd_remove_photo">Odstranite fotografijo</string>
     <string name="msg_bag_saved">Vrečka shranjena</string>
+    <string name="msg_could_not_save_bag">Vrečke ni bilo mogoče shraniti</string>
+    <string name="msg_could_not_open_app_store">Trgovine z aplikacijami ni bilo mogoče odpreti.</string>
+    <string name="msg_could_not_save_changes">Sprememb ni bilo mogoče shraniti</string>
+    <string name="msg_could_not_delete">Brisanje ni uspelo. Poskusite znova.</string>
+    <string name="dialog_delete_cup_preset_message">Izbrišem ta profil skodelice?</string>
+    <string name="msg_onboarding_save_failed">Nastavitve ni bilo mogoče shraniti. Poskusite znova.</string>
+    <string name="msg_settings_save_failed">Te nastavitve ni bilo mogoče shraniti. Poskusite znova.</string>
+    <string name="msg_cup_preset_reset_failed">Profilov skodelic ni bilo mogoče ponastaviti. Poskusite znova.</string>
+    <string name="msg_reset_cup_presets">Zamenjam vse profile skodelic s privzetimi?</string>
+    <string name="msg_diagnostic_clear_failed">Vseh diagnostičnih podatkov ni bilo mogoče izbrisati. Poskusite znova.</string>
+    <string name="msg_clear_diagnostics">Izbrišem vse shranjene seje skeniranja in prehode LLM?</string>
+    <string name="label_log_scan_corrections">Beleži popravke skeniranja (v napravi)</string>
+    <string name="msg_log_scan_corrections">Samo v tej napravi zabeleži, kaj je izluščila AI in kaj ste shranili. Nič se ne naloži.</string>
+    <string name="format_scan_debug_counts">Seje: %1$d · Prehodi LLM: %2$d</string>
+    <string name="format_scan_session_subject">Seja skeniranja: %1$s</string>
+    <string name="action_share_scan_session">Deli sejo skeniranja</string>
 </resources>

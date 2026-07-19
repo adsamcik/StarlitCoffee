@@ -25,7 +25,9 @@
     <string name="label_strength">Intensidade</string>
     <string name="label_grind">Moagem</string>
     <string name="label_filter">Filtro</string>
-<string name="label_decaf">Descafeinado</string>
+<string name="label_all">Todos</string>
+    <string name="label_regular">Normal</string>
+    <string name="label_decaf">Descafeinado</string>
     <string name="label_decaf_suffix"> · Descafeinado</string>
     <string name="label_loading">A carregar…</string>
     <string name="label_none">Nenhum</string>
@@ -300,6 +302,8 @@
     <string name="notif_scan_progress_title">A ler o rótulo da embalagem…</string>
     <string name="notif_bag_analysis_title">Análise da embalagem concluída</string>
     <string name="notif_bag_analysis_body">Toque para rever os detalhes encontrados.</string>
+    <string name="notif_bag_analysis_failed_title">Falha na análise da embalagem</string>
+    <string name="notif_bag_analysis_failed_body">Toque para rever e adicionar os dados manualmente.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">A ler o rótulo…</string>
     <string name="scan_stage_barcode">A procurar o código de barras…</string>
@@ -402,10 +406,14 @@
     <string name="label_name">Nome</string>
     <string name="label_roaster">Torrefação</string>
     <string name="label_origin">Origem</string>
+    <string name="label_region">Região</string>
+    <string name="label_farm">Fazenda</string>
+    <string name="label_altitude">Altitude</string>
 <string name="label_barcode_ean">Código de barras / EAN</string>
     <string name="action_scan_barcode">Ler código de barras</string>
     <string name="label_name_required">Nome *</string>
     <string name="label_weight_grams">Peso (g)</string>
+    <string name="msg_invalid_weight">Introduza um peso válido.</string>
     <string name="label_roast_date">Data de torra</string>
     <string name="label_roast_level">Grau de torra</string>
     <string name="label_variety">Variedade</string>
@@ -458,6 +466,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Serviço de IA (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Ligar Mindlayer</string>
+    <string name="action_mindlayer_google_play">Obter o Mindlayer no Google Play</string>
+    <string name="msg_mindlayer_connection_offer">O Mindlayer está instalado. Pretende ligá-lo para IA privada no dispositivo?</string>
+    <string name="msg_mindlayer_install_recommendation">Instale o Mindlayer a partir do Google Play para ler rótulos de embalagens de café com IA privada no dispositivo. Pode fazê-lo mais tarde nas Definições.</string>
     <string name="action_test_connection">Testar ligação</string>
     <string name="action_run_test_prompt">Executar prompt de teste</string>
     <string name="label_testing">A testar…</string>
@@ -530,6 +542,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Descartar scan?</string>
     <string name="msg_discard_scan_body">Há campos detetados que ainda não foram guardados.</string>
+    <string name="dialog_discard_changes_title">Descartar alterações?</string>
+    <string name="msg_discard_changes_body">As alterações não guardadas serão perdidas.</string>
     <string name="action_discard">Descartar</string>
     <string name="action_keep_scanning">Continuar a ler</string>
     <string name="msg_camera_permission_required">Permissão da câmara necessária</string>
@@ -691,4 +705,20 @@
     <string name="scan_warn_lighting">Melhore a iluminação</string>
     <string name="cd_remove_photo">Remover foto</string>
     <string name="msg_bag_saved">Embalagem guardada</string>
+    <string name="msg_could_not_save_bag">Não foi possível guardar a embalagem</string>
+    <string name="msg_could_not_open_app_store">Não foi possível abrir a loja de aplicações.</string>
+    <string name="msg_could_not_save_changes">Não foi possível guardar as alterações</string>
+    <string name="msg_could_not_delete">Não foi possível excluir. Tente novamente.</string>
+    <string name="dialog_delete_cup_preset_message">Eliminar este perfil de chávena?</string>
+    <string name="msg_onboarding_save_failed">Não foi possível guardar a configuração. Tente novamente.</string>
+    <string name="msg_settings_save_failed">Não foi possível guardar esta definição. Tente novamente.</string>
+    <string name="msg_cup_preset_reset_failed">Não foi possível repor os perfis de chávena. Tente novamente.</string>
+    <string name="msg_reset_cup_presets">Substituir todos os perfis de chávena pelos predefinidos?</string>
+    <string name="msg_diagnostic_clear_failed">Não foi possível limpar todos os diagnósticos. Tente novamente.</string>
+    <string name="msg_clear_diagnostics">Limpar todas as sessões de leitura e passagens LLM guardadas?</string>
+    <string name="label_log_scan_corrections">Registar correções de leitura (no dispositivo)</string>
+    <string name="msg_log_scan_corrections">Regista apenas neste dispositivo o que a IA extraiu e o que guardou. Nada é enviado.</string>
+    <string name="format_scan_debug_counts">Sessões: %1$d · Passagens LLM: %2$d</string>
+    <string name="format_scan_session_subject">Sessão de leitura: %1$s</string>
+    <string name="action_share_scan_session">Partilhar sessão de leitura</string>
 </resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>French press</item><item>AeroPress</item>
+        <item>Espresso</item><item>Moka</item><item>Estrazione a freddo</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Carta</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Pulito, brillante e delicato</item><item>Corposo, deciso e denso</item><item>Chiarezza e corpo equilibrati</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Tazza</item>
+        <item>Tazza da viaggio</item><item>Bicchiere da asporto</item><item>Bicchiere da latte</item><item>Caraffa</item>
+        <item>French press</item><item>Bollitore</item><item>Barattolo di vetro</item><item>Ciotola</item>
+        <item>Tazzina espresso a doppia parete</item><item>Bicchiere a doppia parete</item><item>Tazza a doppia parete</item>
+        <item>Bicchiere alto da latte</item><item>Tazza da degustazione</item><item>Tazza sferica da latte</item>
+        <item>Server espresso con beccuccio</item><item>Caraffa a pois</item><item>Server con coperchio</item>
+        <item>Server ad alveare</item><item>Server barista</item><item>Server angolare</item>
+        <item>Bicchiere cortado sfaccettato</item><item>Ciotola da latte in ceramica</item>
+        <item>Caraffa termica</item><item>French press a doppia parete</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Predefinito</item><item>Marrone</item><item>Cioccolato</item><item>Perù</item>
+        <item>Blu acciaio</item><item>Verde mare</item><item>Viola</item><item>Cremisi</item>
+        <item>Arancione</item><item>Ardesia</item>
+    </string-array>
+</resources>

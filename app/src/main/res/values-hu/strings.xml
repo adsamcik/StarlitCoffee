@@ -25,6 +25,8 @@
     <string name="label_strength">Erősség</string>
     <string name="label_grind">Őrlés</string>
     <string name="label_filter">Szűrő</string>
+    <string name="label_all">Összes</string>
+    <string name="label_regular">Normál</string>
     <string name="label_decaf">Koffeinmentes</string>
     <string name="label_decaf_suffix"> · Koffeinmentes</string>
     <string name="label_loading">Betöltés…</string>
@@ -300,6 +302,8 @@
     <string name="notif_scan_progress_title">Zacskócímke beolvasása…</string>
     <string name="notif_bag_analysis_title">A zacskóelemzés elkészült</string>
     <string name="notif_bag_analysis_body">Koppintson a talált részletek áttekintéséhez.</string>
+    <string name="notif_bag_analysis_failed_title">A zacskóelemzés sikertelen</string>
+    <string name="notif_bag_analysis_failed_body">Koppintson az ellenőrzéshez és az adatok kézi megadásához.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Címke beolvasása…</string>
     <string name="scan_stage_barcode">Vonalkód keresése…</string>
@@ -402,10 +406,14 @@
     <string name="label_name">Név</string>
     <string name="label_roaster">Pörkölő</string>
     <string name="label_origin">Származás</string>
+    <string name="label_region">Régió</string>
+    <string name="label_farm">Farm</string>
+    <string name="label_altitude">Tengerszint feletti magasság</string>
     <string name="label_barcode_ean">Vonalkód / EAN</string>
     <string name="action_scan_barcode">Vonalkód beolvasása</string>
     <string name="label_name_required">Név *</string>
     <string name="label_weight_grams">Tömeg (g)</string>
+    <string name="msg_invalid_weight">Adjon meg érvényes tömeget.</string>
     <string name="label_roast_date">Pörkölés dátuma</string>
     <string name="label_roast_level">Pörkölési szint</string>
     <string name="label_variety">Fajta</string>
@@ -458,6 +466,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">MI-szolgáltatás (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Mindlayer csatlakoztatása</string>
+    <string name="action_mindlayer_google_play">Mindlayer beszerzése a Google Playről</string>
+    <string name="msg_mindlayer_connection_offer">A Mindlayer telepítve van. Szeretné csatlakoztatni privát, eszközön futó MI-hez?</string>
+    <string name="msg_mindlayer_install_recommendation">Telepítse a Mindlayert a Google Playről, hogy privát, eszközön futó MI-vel olvashassa a kávécsomagok címkéit. Ezt később a Beállításokban is megteheti.</string>
     <string name="action_test_connection">Kapcsolat tesztelése</string>
     <string name="action_run_test_prompt">Tesztkérés futtatása</string>
     <string name="label_testing">Tesztelés…</string>
@@ -530,6 +542,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Elveti a beolvasást?</string>
     <string name="msg_discard_scan_body">Vannak felismert mezők, amelyeket még nem mentett el.</string>
+    <string name="dialog_discard_changes_title">Elveti a módosításokat?</string>
+    <string name="msg_discard_changes_body">A nem mentett módosítások elvesznek.</string>
     <string name="action_discard">Elvetés</string>
     <string name="action_keep_scanning">Beolvasás folytatása</string>
     <string name="msg_camera_permission_required">Kameraengedély szükséges</string>
@@ -691,4 +705,20 @@
     <string name="scan_warn_lighting">Javítsa a megvilágítást</string>
     <string name="cd_remove_photo">Fotó eltávolítása</string>
     <string name="msg_bag_saved">Zacskó mentve</string>
+    <string name="msg_could_not_save_bag">A zacskó mentése nem sikerült</string>
+    <string name="msg_could_not_open_app_store">Az alkalmazásbolt nem nyitható meg.</string>
+    <string name="msg_could_not_save_changes">Nem sikerült menteni a módosításokat</string>
+    <string name="msg_could_not_delete">Nem sikerült törölni. Próbáld újra.</string>
+    <string name="dialog_delete_cup_preset_message">Törli ezt a csészeprofilt?</string>
+    <string name="msg_onboarding_save_failed">A beállításokat nem sikerült menteni. Próbálja újra.</string>
+    <string name="msg_settings_save_failed">Ezt a beállítást nem sikerült menteni. Próbálja újra.</string>
+    <string name="msg_cup_preset_reset_failed">A csészeprofilokat nem sikerült visszaállítani. Próbálja újra.</string>
+    <string name="msg_reset_cup_presets">Minden csészeprofilt lecserél az alapértelmezettekre?</string>
+    <string name="msg_diagnostic_clear_failed">Nem sikerült minden diagnosztikai adatot törölni. Próbálja újra.</string>
+    <string name="msg_clear_diagnostics">Törli az összes mentett beolvasási munkamenetet és LLM-futtatást?</string>
+    <string name="label_log_scan_corrections">Beolvasási javítások naplózása (az eszközön)</string>
+    <string name="msg_log_scan_corrections">Csak ezen az eszközön rögzíti, mit nyert ki az AI és mit mentett. Semmi nem kerül feltöltésre.</string>
+    <string name="format_scan_debug_counts">Munkamenetek: %1$d · LLM-futtatások: %2$d</string>
+    <string name="format_scan_session_subject">Beolvasási munkamenet: %1$s</string>
+    <string name="action_share_scan_session">Beolvasási munkamenet megosztása</string>
 </resources>

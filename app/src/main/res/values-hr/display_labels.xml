@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Francuska preša</item><item>AeroPress</item>
+        <item>Espresso</item><item>Moka lončić</item><item>Hladna ekstrakcija</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Papirnati</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Čist, svijetao i nježan</item><item>Punog tijela, snažan i gust</item>
+        <item>Uravnotežena čistoća i tijelo</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Šalica</item>
+        <item>Putna šalica</item><item>Šalica za van</item><item>Čaša za latte</item><item>Vrč</item>
+        <item>Francuska preša</item><item>Kuhalo</item><item>Staklenka</item><item>Zdjela</item>
+        <item>Dvostruka šalica za espresso</item><item>Dvostruka čaša</item><item>Dvostruka šalica</item>
+        <item>Visoka čaša za latte</item><item>Šalica za aromu</item><item>Kuglasta šalica za latte</item>
+        <item>Vrčić za espresso s izljevom</item><item>Točkasti vrč</item><item>Vrčić s poklopcem</item>
+        <item>Vrčić u obliku košnice</item><item>Barista vrčić</item><item>Kutni vrčić</item>
+        <item>Fasetirana čaša za cortado</item><item>Keramička zdjela za latte</item>
+        <item>Termalni vrč</item><item>Dvostruka francuska preša</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Zadano</item><item>Smeđa</item><item>Čokoladna</item><item>Peru</item>
+        <item>Čeličnoplava</item><item>Morskozelena</item><item>Ljubičasta</item><item>Grimizna</item>
+        <item>Narančasta</item><item>Škriljevac</item>
+    </string-array>
+</resources>

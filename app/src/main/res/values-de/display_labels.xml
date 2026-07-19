@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>French Press</item><item>AeroPress</item>
+        <item>Espresso</item><item>Espressokocher</item><item>Cold Brew</item>
+    </string-array>
+    <string-array name="filter_type_names">
+        <item>Papier</item><item>19K</item><item>40K</item>
+    </string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Klar, lebendig und fein</item><item>Vollmundig, kräftig und dicht</item><item>Ausgewogene Klarheit und Fülle</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Becher</item>
+        <item>Reisebecher</item><item>To-go-Becher</item><item>Latteglas</item><item>Karaffe</item>
+        <item>French Press</item><item>Wasserkessel</item><item>Einmachglas</item><item>Schale</item>
+        <item>Doppelwandige Espressotasse</item><item>Doppelwandiger Trinkbecher</item><item>Doppelwandiger Becher</item>
+        <item>Hohes Latteglas</item><item>Aromatasse</item><item>Kugelförmige Lattetasse</item>
+        <item>Espressokännchen mit Ausguss</item><item>Gepunktete Karaffe</item><item>Kännchen mit Deckel</item>
+        <item>Bienenstock-Kännchen</item><item>Barista-Kännchen</item><item>Eckiges Kännchen</item>
+        <item>Facettiertes Cortadoglas</item><item>Keramische Latte-Schale</item>
+        <item>Thermokaraffe</item><item>Doppelwandige Pressstempelkanne</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Standard</item><item>Braun</item><item>Schokolade</item><item>Peru</item>
+        <item>Stahlblau</item><item>Seegrün</item><item>Violett</item><item>Karminrot</item>
+        <item>Orange</item><item>Schiefer</item>
+    </string-array>
+</resources>

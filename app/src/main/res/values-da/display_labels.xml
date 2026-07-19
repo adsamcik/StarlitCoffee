@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Stempelkande</item><item>AeroPress</item>
+        <item>Espresso</item><item>Mokkakande</item><item>Cold brew</item>
+    </string-array>
+    <string-array name="filter_type_names">
+        <item>Papir</item><item>19K</item><item>40K</item>
+    </string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Ren, lys og delikat</item><item>Fyldig, kraftig og tæt</item><item>Afbalanceret klarhed og fylde</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Krus</item>
+        <item>Rejsekrus</item><item>Takeawaykrus</item><item>Latteglas</item><item>Karaffel</item>
+        <item>Stempelkande</item><item>Kedel</item><item>Henkogningsglas</item><item>Skål</item>
+        <item>Dobbeltvægget espressokop</item><item>Dobbeltvægget tumbler</item><item>Dobbeltvægget krus</item>
+        <item>Højt latteglas</item><item>Aromasmagekop</item><item>Rund lattekop</item>
+        <item>Espressokande med tud</item><item>Prikket karaffel</item><item>Kande med låg</item>
+        <item>Bikubeformet kande</item><item>Baristakande</item><item>Kantet kande</item>
+        <item>Facetteret cortadoglas</item><item>Keramisk latteskål</item>
+        <item>Termokaraffel</item><item>Dobbeltvægget stempelkande</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Standard</item><item>Brun</item><item>Chokolade</item><item>Peru</item>
+        <item>Stålblå</item><item>Havgrøn</item><item>Lilla</item><item>Karmoisin</item>
+        <item>Orange</item><item>Skifer</item>
+    </string-array>
+</resources>

@@ -25,6 +25,8 @@
     <string name="label_strength">Jačina</string>
     <string name="label_grind">Mljevenje</string>
     <string name="label_filter">Filter</string>
+    <string name="label_all">Sve</string>
+    <string name="label_regular">Obična</string>
     <string name="label_decaf">Bez kofeina</string>
     <string name="label_decaf_suffix"> · bez kofeina</string>
     <string name="label_loading">Učitavanje…</string>
@@ -302,6 +304,8 @@
     <string name="notif_scan_progress_title">Čitanje etikete vrećice…</string>
     <string name="notif_bag_analysis_title">Analiza vrećice dovršena</string>
     <string name="notif_bag_analysis_body">Dodirnite za pregled pronađenih pojedinosti.</string>
+    <string name="notif_bag_analysis_failed_title">Analiza vrećice nije uspjela</string>
+    <string name="notif_bag_analysis_failed_body">Dodirnite za pregled i ručni unos podataka.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Čitanje etikete…</string>
     <string name="scan_stage_barcode">Traženje crtičnog koda…</string>
@@ -404,10 +408,14 @@
     <string name="label_name">Naziv</string>
     <string name="label_roaster">Pržionica</string>
     <string name="label_origin">Podrijetlo</string>
+    <string name="label_region">Regija</string>
+    <string name="label_farm">Farma</string>
+    <string name="label_altitude">Nadmorska visina</string>
     <string name="label_barcode_ean">Crtični kod / EAN</string>
     <string name="action_scan_barcode">Skenirajte crtični kod</string>
     <string name="label_name_required">Naziv *</string>
     <string name="label_weight_grams">Težina (g)</string>
+    <string name="msg_invalid_weight">Unesite valjanu težinu.</string>
     <string name="label_roast_date">Datum prženja</string>
     <string name="label_roast_level">Razina prženja</string>
     <string name="label_variety">Sorta</string>
@@ -460,6 +468,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI usluga (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Poveži Mindlayer</string>
+    <string name="action_mindlayer_google_play">Preuzmite Mindlayer na Google Playu</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer je instaliran. Želite li ga povezati za privatni AI na uređaju?</string>
+    <string name="msg_mindlayer_install_recommendation">Instalirajte Mindlayer s Google Playa za čitanje oznaka pakiranja kave uz privatni AI na uređaju. To možete učiniti kasnije u Postavkama.</string>
     <string name="action_test_connection">Testirajte vezu</string>
     <string name="action_run_test_prompt">Pokrenite testni upit</string>
     <string name="label_testing">Testiranje…</string>
@@ -532,6 +544,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Odbaciti skeniranje?</string>
     <string name="msg_discard_scan_body">Imate otkrivena polja koja nisu spremljena.</string>
+    <string name="dialog_discard_changes_title">Odbaciti promjene?</string>
+    <string name="msg_discard_changes_body">Nespremljene promjene bit će izgubljene.</string>
     <string name="action_discard">Odbacite</string>
     <string name="action_keep_scanning">Nastavite skeniranje</string>
     <string name="msg_camera_permission_required">Potrebno je dopuštenje za kameru</string>
@@ -693,4 +707,20 @@
     <string name="scan_warn_lighting">Poboljšajte osvjetljenje</string>
     <string name="cd_remove_photo">Uklonite fotografiju</string>
     <string name="msg_bag_saved">Vrećica spremljena</string>
+    <string name="msg_could_not_save_bag">Vrećicu nije moguće spremiti</string>
+    <string name="msg_could_not_open_app_store">Trgovinu aplikacija nije bilo moguće otvoriti.</string>
+    <string name="msg_could_not_save_changes">Promjene nije bilo moguće spremiti</string>
+    <string name="msg_could_not_delete">Brisanje nije uspjelo. Pokušajte ponovno.</string>
+    <string name="dialog_delete_cup_preset_message">Izbrisati ovaj profil šalice?</string>
+    <string name="msg_onboarding_save_failed">Postavljanje nije spremljeno. Pokušajte ponovno.</string>
+    <string name="msg_settings_save_failed">Ova postavka nije spremljena. Pokušajte ponovno.</string>
+    <string name="msg_cup_preset_reset_failed">Profili šalica nisu vraćeni. Pokušajte ponovno.</string>
+    <string name="msg_reset_cup_presets">Zamijeniti sve profile šalica zadanima?</string>
+    <string name="msg_diagnostic_clear_failed">Nije moguće izbrisati svu dijagnostiku. Pokušajte ponovno.</string>
+    <string name="msg_clear_diagnostics">Izbrisati sve spremljene sesije skeniranja i LLM prolaze?</string>
+    <string name="label_log_scan_corrections">Bilježi ispravke skeniranja (na uređaju)</string>
+    <string name="msg_log_scan_corrections">Samo na ovom uređaju bilježi što je AI izdvojio i što ste spremili. Ništa se ne prenosi.</string>
+    <string name="format_scan_debug_counts">Sesije: %1$d · LLM prolazi: %2$d</string>
+    <string name="format_scan_session_subject">Sesija skeniranja: %1$s</string>
+    <string name="action_share_scan_session">Dijeli sesiju skeniranja</string>
 </resources>

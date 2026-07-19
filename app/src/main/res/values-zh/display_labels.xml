@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>法压壶</item><item>AeroPress</item>
+        <item>意式浓缩</item><item>摩卡壶</item><item>冷萃</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>纸滤</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>纯净、明亮、细腻</item><item>醇厚、浓郁、饱满</item><item>清晰度与醇厚度均衡</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>意式浓缩杯</item><item>科塔朵杯</item><item>卡布奇诺杯</item><item>马克杯</item>
+        <item>旅行杯</item><item>外带杯</item><item>拿铁玻璃杯</item><item>分享壶</item>
+        <item>法压壶</item><item>水壶</item><item>玻璃罐</item><item>碗</item>
+        <item>双层浓缩杯</item><item>双层随行杯</item><item>双层马克杯</item>
+        <item>高拿铁玻璃杯</item><item>闻香杯</item><item>球形拿铁杯</item>
+        <item>带嘴浓缩分享壶</item><item>圆点分享壶</item><item>带盖分享壶</item>
+        <item>蜂巢分享壶</item><item>咖啡师分享壶</item><item>棱角分享壶</item>
+        <item>切面科塔朵杯</item><item>陶瓷拿铁碗</item>
+        <item>保温分享壶</item><item>双层法压壶</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>默认</item><item>棕色</item><item>巧克力色</item><item>秘鲁色</item>
+        <item>钢蓝色</item><item>海绿色</item><item>紫色</item><item>深红色</item>
+        <item>橙色</item><item>石板色</item>
+    </string-array>
+</resources>

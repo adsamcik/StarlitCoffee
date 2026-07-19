@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Presskann</item><item>AeroPress</item>
+        <item>Espresso</item><item>Mokakann</item><item>Külmpruul</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Paber</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Puhas, särav ja õrn</item><item>Täidlane, jõuline ja tihe</item><item>Tasakaalus selgus ja täidlus</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Kruus</item>
+        <item>Reisikruus</item><item>Kaasaostutops</item><item>Latteklaas</item><item>Karahvin</item>
+        <item>Presskann</item><item>Veekeetja</item><item>Klaaspurk</item><item>Kauss</item>
+        <item>Topeltseinaga espressotass</item><item>Topeltseinaga joogitops</item><item>Topeltseinaga kruus</item>
+        <item>Kõrge latteklaas</item><item>Aroomitass</item><item>Ümar lattekruus</item>
+        <item>Tilaga espressokann</item><item>Täpiline karahvin</item><item>Kaanega kann</item>
+        <item>Mesitarukann</item><item>Baristakann</item><item>Nurgeline kann</item>
+        <item>Tahuline cortado-klaas</item><item>Keraamiline lattekauss</item>
+        <item>Termokarahvin</item><item>Topeltseinaga presskann</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Vaikimisi</item><item>Pruun</item><item>Šokolaad</item><item>Peruu</item>
+        <item>Terasinine</item><item>Mereroheline</item><item>Lilla</item><item>Karmiinpunane</item>
+        <item>Oranž</item><item>Kiltkivi</item>
+    </string-array>
+</resources>

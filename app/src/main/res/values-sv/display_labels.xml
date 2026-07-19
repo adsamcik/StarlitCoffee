@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Presskanna</item><item>AeroPress</item>
+        <item>Espresso</item><item>Mokabryggare</item><item>Kallbryggt</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Papper</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Ren, klar och delikat</item><item>Fyllig, kraftig och tät</item><item>Balanserad klarhet och fyllighet</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Mugg</item>
+        <item>Resemugg</item><item>Takeawaymugg</item><item>Latteglas</item><item>Karaff</item>
+        <item>Presskanna</item><item>Vattenkokare</item><item>Glasburk</item><item>Skål</item>
+        <item>Dubbelväggad espressokopp</item><item>Dubbelväggat glas</item><item>Dubbelväggad mugg</item>
+        <item>Högt latteglas</item><item>Aromakopp</item><item>Rund lattekopp</item>
+        <item>Espressokanna med pip</item><item>Prickig karaff</item><item>Kanna med lock</item>
+        <item>Bikakekanna</item><item>Baristakanna</item><item>Vinklad kanna</item>
+        <item>Fasetterat cortadoglas</item><item>Keramisk latteskål</item>
+        <item>Termoskaraff</item><item>Dubbelväggad presskanna</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Standard</item><item>Brun</item><item>Choklad</item><item>Peru</item>
+        <item>Stålblå</item><item>Havsgrön</item><item>Lila</item><item>Karmosinröd</item>
+        <item>Orange</item><item>Skiffer</item>
+    </string-array>
+</resources>

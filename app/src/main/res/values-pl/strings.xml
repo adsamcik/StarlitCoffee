@@ -25,7 +25,9 @@
     <string name="label_strength">Moc</string>
     <string name="label_grind">Mielenie</string>
     <string name="label_filter">Filtr</string>
-<string name="label_decaf">Decaf</string>
+<string name="label_all">Wszystkie</string>
+    <string name="label_regular">Zwykła</string>
+    <string name="label_decaf">Decaf</string>
     <string name="label_decaf_suffix"> · Decaf</string>
     <string name="label_loading">Wczytywanie…</string>
     <string name="label_none">Brak</string>
@@ -304,6 +306,8 @@
     <string name="notif_scan_progress_title">Odczytywanie etykiety opakowania…</string>
     <string name="notif_bag_analysis_title">Analiza opakowania zakończona</string>
     <string name="notif_bag_analysis_body">Dotknij, aby przejrzeć znalezione szczegóły.</string>
+    <string name="notif_bag_analysis_failed_title">Analiza opakowania nie powiodła się</string>
+    <string name="notif_bag_analysis_failed_body">Dotknij, aby sprawdzić i dodać dane ręcznie.</string>
     <string name="scan_stage_ocr">Odczytywanie etykiety…</string>
     <string name="scan_stage_barcode">Sprawdzanie kodu kreskowego…</string>
     <string name="scan_stage_llm">Rozpoznawanie szczegółów…</string>
@@ -405,10 +409,14 @@
     <string name="label_name">Nazwa</string>
     <string name="label_roaster">Palarnia</string>
     <string name="label_origin">Pochodzenie</string>
+    <string name="label_region">Region</string>
+    <string name="label_farm">Farma</string>
+    <string name="label_altitude">Wysokość n.p.m.</string>
 <string name="label_barcode_ean">Kod kreskowy / EAN</string>
     <string name="action_scan_barcode">Zeskanuj kod kreskowy</string>
     <string name="label_name_required">Nazwa *</string>
     <string name="label_weight_grams">Masa (g)</string>
+    <string name="msg_invalid_weight">Wpisz prawidłową masę.</string>
     <string name="label_roast_date">Data palenia</string>
     <string name="label_roast_level">Stopień wypału</string>
     <string name="label_variety">Odmiana</string>
@@ -461,6 +469,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Usługa AI (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Połącz Mindlayer</string>
+    <string name="action_mindlayer_google_play">Pobierz Mindlayer z Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer jest zainstalowany. Czy chcesz go połączyć, aby korzystać z prywatnej AI na urządzeniu?</string>
+    <string name="msg_mindlayer_install_recommendation">Zainstaluj Mindlayer z Google Play, aby odczytywać etykiety opakowań kawy przy użyciu prywatnej AI na urządzeniu. Możesz to zrobić później w Ustawieniach.</string>
     <string name="action_test_connection">Przetestuj połączenie</string>
     <string name="action_run_test_prompt">Uruchom prompt testowy</string>
     <string name="label_testing">Testowanie…</string>
@@ -533,6 +545,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Odrzucić skan?</string>
     <string name="msg_discard_scan_body">Masz wykryte pola, które nie zostały zapisane.</string>
+    <string name="dialog_discard_changes_title">Odrzucić zmiany?</string>
+    <string name="msg_discard_changes_body">Niezapisane zmiany zostaną utracone.</string>
     <string name="action_discard">Odrzuć</string>
     <string name="action_keep_scanning">Skanuj dalej</string>
     <string name="msg_camera_permission_required">Wymagane uprawnienie aparatu</string>
@@ -694,4 +708,20 @@
     <string name="scan_warn_lighting">Popraw oświetlenie</string>
     <string name="cd_remove_photo">Usuń zdjęcie</string>
     <string name="msg_bag_saved">Opakowanie zapisane</string>
+    <string name="msg_could_not_save_bag">Nie udało się zapisać opakowania</string>
+    <string name="msg_could_not_open_app_store">Nie udało się otworzyć sklepu z aplikacjami.</string>
+    <string name="msg_could_not_save_changes">Nie udało się zapisać zmian</string>
+    <string name="msg_could_not_delete">Nie udało się usunąć. Spróbuj ponownie.</string>
+    <string name="dialog_delete_cup_preset_message">Usunąć ten profil filiżanki?</string>
+    <string name="msg_onboarding_save_failed">Nie udało się zapisać konfiguracji. Spróbuj ponownie.</string>
+    <string name="msg_settings_save_failed">Nie udało się zapisać tego ustawienia. Spróbuj ponownie.</string>
+    <string name="msg_cup_preset_reset_failed">Nie udało się zresetować profili filiżanek. Spróbuj ponownie.</string>
+    <string name="msg_reset_cup_presets">Zastąpić wszystkie profile filiżanek domyślnymi?</string>
+    <string name="msg_diagnostic_clear_failed">Nie udało się wyczyścić wszystkich danych diagnostycznych. Spróbuj ponownie.</string>
+    <string name="msg_clear_diagnostics">Wyczyścić wszystkie zapisane sesje skanowania i przebiegi LLM?</string>
+    <string name="label_log_scan_corrections">Rejestruj poprawki skanowania (na urządzeniu)</string>
+    <string name="msg_log_scan_corrections">Tylko na tym urządzeniu zapisuje to, co wyodrębniła AI i co zapisano. Nic nie jest przesyłane.</string>
+    <string name="format_scan_debug_counts">Sesje: %1$d · Przebiegi LLM: %2$d</string>
+    <string name="format_scan_session_subject">Sesja skanowania: %1$s</string>
+    <string name="action_share_scan_session">Udostępnij sesję skanowania</string>
 </resources>

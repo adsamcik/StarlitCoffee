@@ -25,7 +25,9 @@
     <string name="label_strength">Styrka</string>
     <string name="label_grind">Malning</string>
     <string name="label_filter">Filter</string>
-<string name="label_decaf">Decaf</string>
+<string name="label_all">Alla</string>
+    <string name="label_regular">Vanligt</string>
+    <string name="label_decaf">Decaf</string>
     <string name="label_decaf_suffix"> · Decaf</string>
     <string name="label_loading">Läser in…</string>
     <string name="label_none">Ingen</string>
@@ -300,6 +302,8 @@
     <string name="notif_scan_progress_title">Läser påsetikett…</string>
     <string name="notif_bag_analysis_title">Påsanalys klar</string>
     <string name="notif_bag_analysis_body">Tryck för att granska detaljerna vi hittade.</string>
+    <string name="notif_bag_analysis_failed_title">Påsanalysen misslyckades</string>
+    <string name="notif_bag_analysis_failed_body">Tryck för att granska och lägga till uppgifter manuellt.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Läser etiketten…</string>
     <string name="scan_stage_barcode">Slår upp streckkoden…</string>
@@ -402,10 +406,14 @@
     <string name="label_name">Namn</string>
     <string name="label_roaster">Rosteri</string>
     <string name="label_origin">Ursprung</string>
+    <string name="label_region">Region</string>
+    <string name="label_farm">Gård</string>
+    <string name="label_altitude">Höjd</string>
 <string name="label_barcode_ean">Streckkod / EAN</string>
     <string name="action_scan_barcode">Skanna streckkod</string>
     <string name="label_name_required">Namn *</string>
     <string name="label_weight_grams">Vikt (g)</string>
+    <string name="msg_invalid_weight">Ange en giltig vikt.</string>
     <string name="label_roast_date">Rostningsdatum</string>
     <string name="label_roast_level">Rostningsgrad</string>
     <string name="label_variety">Varietet</string>
@@ -458,6 +466,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI-tjänst (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Anslut Mindlayer</string>
+    <string name="action_mindlayer_google_play">Hämta Mindlayer på Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer är installerat. Vill du ansluta det för privat AI på enheten?</string>
+    <string name="msg_mindlayer_install_recommendation">Installera Mindlayer från Google Play för att läsa kaffepåseetiketter med privat AI på enheten. Du kan göra det senare i Inställningar.</string>
     <string name="action_test_connection">Testa anslutning</string>
     <string name="action_run_test_prompt">Kör testprompt</string>
     <string name="label_testing">Testar…</string>
@@ -530,6 +542,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Kasta skanning?</string>
     <string name="msg_discard_scan_body">Du har identifierade fält som inte har sparats.</string>
+    <string name="dialog_discard_changes_title">Kasta ändringar?</string>
+    <string name="msg_discard_changes_body">Dina osparade ändringar går förlorade.</string>
     <string name="action_discard">Kasta</string>
     <string name="action_keep_scanning">Fortsätt skanna</string>
     <string name="msg_camera_permission_required">Kamerabehörighet krävs</string>
@@ -691,4 +705,20 @@
     <string name="scan_warn_lighting">Förbättra belysningen</string>
     <string name="cd_remove_photo">Ta bort foto</string>
     <string name="msg_bag_saved">Påsen sparad</string>
+    <string name="msg_could_not_save_bag">Det gick inte att spara påsen</string>
+    <string name="msg_could_not_open_app_store">Det gick inte att öppna appbutiken.</string>
+    <string name="msg_could_not_save_changes">Det gick inte att spara ändringarna</string>
+    <string name="msg_could_not_delete">Det gick inte att ta bort. Försök igen.</string>
+    <string name="dialog_delete_cup_preset_message">Ta bort den här kopprofilen?</string>
+    <string name="msg_onboarding_save_failed">Inställningen kunde inte sparas. Försök igen.</string>
+    <string name="msg_settings_save_failed">Den här inställningen kunde inte sparas. Försök igen.</string>
+    <string name="msg_cup_preset_reset_failed">Kopprofilerna kunde inte återställas. Försök igen.</string>
+    <string name="msg_reset_cup_presets">Ersätta alla kopprofiler med standardprofilerna?</string>
+    <string name="msg_diagnostic_clear_failed">Alla diagnostikdata kunde inte rensas. Försök igen.</string>
+    <string name="msg_clear_diagnostics">Rensa alla sparade skanningssessioner och LLM-körningar?</string>
+    <string name="label_log_scan_corrections">Logga skanningskorrigeringar (på enheten)</string>
+    <string name="msg_log_scan_corrections">Registrerar endast på den här enheten vad AI extraherade och vad du sparade. Inget laddas upp.</string>
+    <string name="format_scan_debug_counts">Sessioner: %1$d · LLM-körningar: %2$d</string>
+    <string name="format_scan_session_subject">Skanningssession: %1$s</string>
+    <string name="action_share_scan_session">Dela skanningssession</string>
 </resources>

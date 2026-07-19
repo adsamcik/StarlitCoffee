@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Cafetière à piston</item><item>AeroPress</item>
+        <item>Espresso</item><item>Cafetière moka</item><item>Infusion à froid</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Papier</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Pur, vif et délicat</item><item>Corsé, intense et dense</item><item>Clarté et corps équilibrés</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Mug</item>
+        <item>Mug de voyage</item><item>Gobelet à emporter</item><item>Verre à latte</item><item>Carafe</item>
+        <item>Cafetière à piston</item><item>Bouilloire</item><item>Bocal en verre</item><item>Bol</item>
+        <item>Tasse à espresso double paroi</item><item>Gobelet double paroi</item><item>Mug double paroi</item>
+        <item>Grand verre à latte</item><item>Tasse de dégustation</item><item>Tasse à latte sphérique</item>
+        <item>Verseuse à espresso avec bec</item><item>Carafe à pois</item><item>Verseuse avec couvercle</item>
+        <item>Verseuse ruche</item><item>Verseuse barista</item><item>Verseuse angulaire</item>
+        <item>Verre à cortado facetté</item><item>Bol à latte en céramique</item>
+        <item>Carafe isotherme</item><item>Cafetière à piston double paroi</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Par défaut</item><item>Marron</item><item>Chocolat</item><item>Pérou</item>
+        <item>Bleu acier</item><item>Vert marin</item><item>Violet</item><item>Cramoisi</item>
+        <item>Orange</item><item>Ardoise</item>
+    </string-array>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brew_method_names">
+        <item>Pulsar</item><item>V60</item><item>Presă franceză</item><item>AeroPress</item>
+        <item>Espresso</item><item>Espressor moka</item><item>Infuzare la rece</item>
+    </string-array>
+    <string-array name="filter_type_names"><item>Hârtie</item><item>19K</item><item>40K</item></string-array>
+    <string-array name="filter_cup_profiles">
+        <item>Curat, luminos și delicat</item><item>Corpolent, intens și dens</item><item>Claritate și corp echilibrate</item>
+    </string-array>
+    <string-array name="preset_icon_labels">
+        <item>Espresso</item><item>Cortado</item><item>Cappuccino</item><item>Cană</item>
+        <item>Cană de călătorie</item><item>Pahar pentru drum</item><item>Pahar de latte</item><item>Carafă</item>
+        <item>Presă franceză</item><item>Fierbător</item><item>Borcan</item><item>Bol</item>
+        <item>Ceașcă espresso cu perete dublu</item><item>Pahar cu perete dublu</item><item>Cană cu perete dublu</item>
+        <item>Pahar înalt de latte</item><item>Ceașcă pentru arome</item><item>Ceașcă sferică de latte</item>
+        <item>Ulcior espresso cu cioc</item><item>Carafă cu puncte</item><item>Ulcior cu capac</item>
+        <item>Ulcior fagure</item><item>Ulcior barista</item><item>Ulcior unghiular</item>
+        <item>Pahar cortado fațetat</item><item>Bol ceramic pentru latte</item>
+        <item>Carafă termică</item><item>Presă cu perete dublu</item>
+    </string-array>
+    <string-array name="preset_color_labels">
+        <item>Implicit</item><item>Maro</item><item>Ciocolată</item><item>Peru</item>
+        <item>Albastru oțel</item><item>Verde marin</item><item>Mov</item><item>Purpuriu</item>
+        <item>Portocaliu</item><item>Ardezie</item>
+    </string-array>
+</resources>

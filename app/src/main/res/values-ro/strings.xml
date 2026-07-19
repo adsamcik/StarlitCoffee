@@ -25,6 +25,8 @@
     <string name="label_strength">Intensitate</string>
     <string name="label_grind">Măcinare</string>
     <string name="label_filter">Filtru</string>
+    <string name="label_all">Toate</string>
+    <string name="label_regular">Obișnuită</string>
     <string name="label_decaf">Decaf</string>
     <string name="label_decaf_suffix"> · Decaf</string>
     <string name="label_loading">Se încarcă…</string>
@@ -302,6 +304,8 @@
     <string name="notif_scan_progress_title">Se citește eticheta pachetului…</string>
     <string name="notif_bag_analysis_title">Analiza pachetului este gata</string>
     <string name="notif_bag_analysis_body">Atingeți pentru a revizui detaliile găsite.</string>
+    <string name="notif_bag_analysis_failed_title">Analiza pachetului a eșuat</string>
+    <string name="notif_bag_analysis_failed_body">Atingeți pentru a verifica și a adăuga manual detaliile.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Se citește eticheta…</string>
     <string name="scan_stage_barcode">Se caută codul de bare…</string>
@@ -404,10 +408,14 @@
     <string name="label_name">Nume</string>
     <string name="label_roaster">Prăjitorie</string>
     <string name="label_origin">Origine</string>
+    <string name="label_region">Regiune</string>
+    <string name="label_farm">Fermă</string>
+    <string name="label_altitude">Altitudine</string>
     <string name="label_barcode_ean">Cod de bare / EAN</string>
     <string name="action_scan_barcode">Scanați codul de bare</string>
     <string name="label_name_required">Nume *</string>
     <string name="label_weight_grams">Greutate (g)</string>
+    <string name="msg_invalid_weight">Introduceți o greutate validă.</string>
     <string name="label_roast_date">Data prăjirii</string>
     <string name="label_roast_level">Nivel de prăjire</string>
     <string name="label_variety">Varietate</string>
@@ -460,6 +468,10 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Serviciu AI (Mindlayer)</string>
+    <string name="action_connect_mindlayer">Conectați Mindlayer</string>
+    <string name="action_mindlayer_google_play">Obțineți Mindlayer de pe Google Play</string>
+    <string name="msg_mindlayer_connection_offer">Mindlayer este instalat. Doriți să îl conectați pentru IA privată pe dispozitiv?</string>
+    <string name="msg_mindlayer_install_recommendation">Instalați Mindlayer de pe Google Play pentru a citi etichetele pachetelor de cafea cu IA privată pe dispozitiv. Puteți face acest lucru mai târziu în Setări.</string>
     <string name="action_test_connection">Testați conexiunea</string>
     <string name="action_run_test_prompt">Rulați promptul de test</string>
     <string name="label_testing">Se testează…</string>
@@ -532,6 +544,8 @@
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Renunțați la scanare?</string>
     <string name="msg_discard_scan_body">Aveți câmpuri detectate care nu au fost salvate.</string>
+    <string name="dialog_discard_changes_title">Renunțați la modificări?</string>
+    <string name="msg_discard_changes_body">Modificările nesalvate se vor pierde.</string>
     <string name="action_discard">Renunțați</string>
     <string name="action_keep_scanning">Continuați scanarea</string>
     <string name="msg_camera_permission_required">Permisiunea pentru cameră este necesară</string>
@@ -693,4 +707,20 @@
     <string name="scan_warn_lighting">Îmbunătățiți iluminarea</string>
     <string name="cd_remove_photo">Eliminați fotografia</string>
     <string name="msg_bag_saved">Pachet salvat</string>
+    <string name="msg_could_not_save_bag">Pachetul nu a putut fi salvat</string>
+    <string name="msg_could_not_open_app_store">Magazinul de aplicații nu a putut fi deschis.</string>
+    <string name="msg_could_not_save_changes">Modificările nu au putut fi salvate</string>
+    <string name="msg_could_not_delete">Nu s-a putut șterge. Încercați din nou.</string>
+    <string name="dialog_delete_cup_preset_message">Ștergeți acest profil de ceașcă?</string>
+    <string name="msg_onboarding_save_failed">Configurarea nu a putut fi salvată. Încercați din nou.</string>
+    <string name="msg_settings_save_failed">Această setare nu a putut fi salvată. Încercați din nou.</string>
+    <string name="msg_cup_preset_reset_failed">Profilurile de ceașcă nu au putut fi resetate. Încercați din nou.</string>
+    <string name="msg_reset_cup_presets">Înlocuiți toate profilurile de ceașcă cu cele implicite?</string>
+    <string name="msg_diagnostic_clear_failed">Nu au putut fi șterse toate datele de diagnostic. Încercați din nou.</string>
+    <string name="msg_clear_diagnostics">Ștergeți toate sesiunile de scanare și trecerile LLM salvate?</string>
+    <string name="label_log_scan_corrections">Înregistrează corecțiile scanării (pe dispozitiv)</string>
+    <string name="msg_log_scan_corrections">Înregistrează numai pe acest dispozitiv ce a extras AI și ce ați salvat. Nu se încarcă nimic.</string>
+    <string name="format_scan_debug_counts">Sesiuni: %1$d · Treceri LLM: %2$d</string>
+    <string name="format_scan_session_subject">Sesiune de scanare: %1$s</string>
+    <string name="action_share_scan_session">Partajați sesiunea de scanare</string>
 </resources>
