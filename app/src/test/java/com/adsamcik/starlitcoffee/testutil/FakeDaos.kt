@@ -75,6 +75,14 @@ internal class FakeBrewLogDao : BrewLogDao {
         }
     }
 
+    override suspend fun updateCoffeeBag(logId: Long, bagId: Long?) {
+        val index = logs.indexOfFirst { it.id == logId }
+        if (index >= 0) {
+            logs[index] = logs[index].copy(coffeeBagId = bagId)
+            flow.value = logs.toList()
+        }
+    }
+
     override suspend fun getById(logId: Long): BrewLogEntity? {
         return logs.find { it.id == logId }
     }
