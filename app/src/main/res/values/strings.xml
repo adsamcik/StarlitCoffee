@@ -72,6 +72,11 @@
     <string name="format_last_time">Last time: %1$s</string>
     <string name="action_save_as_favorite">Save as Favorite</string>
     <string name="label_select_coffee_bag_title">Select Coffee Bag</string>
+    <string name="label_search_coffee_bags">Search bags</string>
+    <string name="msg_no_matching_coffee_bags">No bags match that search.</string>
+    <string name="label_archived">Archived</string>
+    <string name="format_bag_archive_count">Archive (%1$d)</string>
+    <string name="msg_no_active_bags_yet">No bags ready to brew.</string>
     <string name="msg_no_active_bags">No active bags. Add one in the Your Beans section.</string>
     <string name="action_brew_without_bag">Brew without selecting a bag</string>
     <string name="label_best_now">Best now</string>
@@ -221,6 +226,40 @@
     <string name="desc_bloom_sprite_snowdrop">Delicate white snowdrop bells rise from the cracked bean.</string>
     <string name="label_bloom_sprite_myosotis_sylvatica">Myosotis sylvatica</string>
     <string name="desc_bloom_sprite_myosotis_sylvatica">Tiny blue forget-me-not blossoms with yellow centers unfold from the bean.</string>
+    <string name="label_bloom_sprite_fuchsia_ballerina">Fuchsia ballerina</string>
+    <string name="desc_bloom_sprite_fuchsia_ballerina">Cerise sepals sweep up around a violet hanging skirt.</string>
+    <string name="label_bloom_sprite_magnolia_dawn">Magnolia dawn</string>
+    <string name="desc_bloom_sprite_magnolia_dawn">A fuzzy bud opens into an ivory cup with blush-pink edges.</string>
+    <string name="label_bloom_sprite_iris_origami">Iris origami</string>
+    <string name="desc_bloom_sprite_iris_origami">Folded indigo petals rise and cascade around a golden signal.</string>
+    <string name="label_bloom_sprite_king_protea_sunrise">King protea sunrise</string>
+    <string name="desc_bloom_sprite_king_protea_sunrise">Dusty-pink bracts unfold in rings around a soft crown.</string>
+    <string name="label_bloom_sprite_dahlia_kaleidoscope">Dahlia kaleidoscope</string>
+    <string name="desc_bloom_sprite_dahlia_kaleidoscope">Coral and raspberry petals unfold in a precise layered rosette.</string>
+    <string name="label_bloom_sprite_pincushion_firework">Pincushion firework</string>
+    <string name="desc_bloom_sprite_pincushion_firework">Golden curved styles spring outward from a warm orange center.</string>
+    <string name="label_bloom_sprite_morning_glory_spiral">Morning glory spiral</string>
+    <string name="desc_bloom_sprite_morning_glory_spiral">A curled vine opens into a luminous cobalt trumpet.</string>
+    <string name="label_bloom_sprite_foxglove_chimes">Foxglove chimes</string>
+    <string name="desc_bloom_sprite_foxglove_chimes">Three pink spotted bells open one after another on a green stem.</string>
+    <string name="label_bloom_sprite_cherry_blossom_wish">Cherry blossom wish</string>
+    <string name="desc_bloom_sprite_cherry_blossom_wish">Three shell-pink blossoms open along a delicate coffee-brown branch.</string>
+    <string name="label_bloom_sprite_himalayan_lantern">Himalayan lantern</string>
+    <string name="desc_bloom_sprite_himalayan_lantern">A papery vermilion lantern parts to reveal a warm gold bloom.</string>
+    <string name="label_bloom_sprite_black_bat_flower">Black bat flower</string>
+    <string name="desc_bloom_sprite_black_bat_flower">Dark wine bracts spread into a dramatic winged bloom.</string>
+    <string name="label_bloom_sprite_water_lily_twilight">Water lily at twilight</string>
+    <string name="desc_bloom_sprite_water_lily_twilight">Lilac dusk petals settle around a compact amber center.</string>
+    <string name="label_bloom_sprite_moonphase_magnolia">Moonphase magnolia</string>
+    <string name="desc_bloom_sprite_moonphase_magnolia">An ivory moon-shaped magnolia opens around tiny golden stars.</string>
+    <string name="label_bloom_sprite_crema_chrysanthemum">Crema chrysanthemum</string>
+    <string name="desc_bloom_sprite_crema_chrysanthemum">Cream and caramel foam ribbons curl into a coffee-flower rosette.</string>
+    <string name="label_bloom_sprite_stained_glass_iris">Stained-glass iris</string>
+    <string name="desc_bloom_sprite_stained_glass_iris">Jewel-toned iris panels unfold around an amber heart.</string>
+    <string name="label_bloom_sprite_aurora_anemone">Aurora anemone</string>
+    <string name="desc_bloom_sprite_aurora_anemone">Teal-to-violet petals unfurl around a midnight center.</string>
+    <string name="label_bloom_sprite_constellation_blossom">Constellation blossom</string>
+    <string name="desc_bloom_sprite_constellation_blossom">A pale five-petal bloom reveals tiny gold constellations within.</string>
 
     <!-- Brew Log Screen -->
     <string name="screen_brew_log_title">Brew Log</string>
@@ -277,6 +316,21 @@
     <string name="snackbar_action_view_log">View log</string>
 
     <!-- Rating reminder notification -->
+    <string name="notif_channel_brew_status">Brewing in progress</string>
+    <string name="notif_channel_brew_status_desc">Shows the active brew timer while Starlit Coffee is in the background.</string>
+    <string name="notif_channel_brew_alerts">Brew alerts</string>
+    <string name="notif_channel_brew_alerts_desc">Alerts when bloom finishes or your recipe reaches its target time.</string>
+    <string name="notif_brew_in_progress_title">Brewing in progress</string>
+    <string name="format_notif_brew_in_progress_body">Elapsed %1$s · Tap to return to your timer.</string>
+    <string name="notif_brew_bloom_complete_title">Bloom complete</string>
+    <string name="label_brew_vibration_theme">Brew vibration</string>
+    <string name="msg_brew_vibration_theme_hint">Choose the feel of bloom and brew-time cues. Your phone’s notification settings can still silence them.</string>
+    <string name="label_brew_vibration_soft">Soft</string>
+    <string name="label_brew_vibration_classic">Classic</string>
+    <string name="label_brew_vibration_bold">Bold</string>
+    <string name="notif_brew_bloom_complete_body">Continue pouring when you’re ready.</string>
+    <string name="notif_brew_target_reached_title">Target brew time reached</string>
+    <string name="format_notif_brew_target_reached_body">Your recipe’s %1$s target has been reached. Tap to check the brew.</string>
     <string name="notif_channel_rating_reminder">Brew rating reminders</string>
     <string name="notif_channel_rating_reminder_desc">Gentle nudge ~30 minutes after a brew to rate it while the taste is fresh.</string>
     <string name="notif_rating_title">How was your brew?</string>
@@ -519,14 +573,23 @@
     <string name="label_remaining_weight_grams">Remaining weight (g)</string>
 
     <!-- BagInventoryScreen -->
+    <string name="action_add_coffee">Add coffee</string>
     <string name="action_from_photo">From photo</string>
     <string name="action_scan_label">Scan label</string>
     <string name="action_add_bag_gallery">From gallery</string>
     <string name="action_add_bag_camera">Scan with camera</string>
     <string name="action_add_bag_barcode">Scan barcode</string>
+    <string name="action_read_bag_photos">Read bag photos</string>
+    <string name="action_scan_bag_ai">Scan bag · AI fills details</string>
+    <string name="action_scan_first_bag">Scan my first bag</string>
     <string name="action_add_bag_manual">Add manually</string>
     <string name="msg_no_beans_yet">No beans yet</string>
     <string name="msg_add_coffee_hint">Add your coffee to track freshness and get brew suggestions</string>
+    <string name="msg_scan_first_coffee_hint">Scan the front and back to fill in the details automatically. Photos stay on your device.</string>
+    <string name="dialog_ai_scan_setup_title">Set up private label scanning</string>
+    <string name="msg_ai_scan_setup">Starlit Coffee uses Mindlayer to read coffee labels privately on your device. Install it once, then this scan will continue automatically.</string>
+    <string name="dialog_ai_scan_unsupported_title">Automatic scanning isn\'t supported</string>
+    <string name="msg_ai_scan_unsupported">Automatic label scanning needs Android 12 or newer. You can still add the bag manually or scan its barcode.</string>
     <string name="action_brew_now">Brew now</string>
     <string name="msg_could_not_read_label">Could not read label</string>
     <string name="action_retake_photo">Retake photo</string>

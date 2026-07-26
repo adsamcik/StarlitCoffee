@@ -241,6 +241,108 @@ val BloomSpritesheetOptions = listOf(
         labelRes = R.string.label_bloom_sprite_myosotis_sylvatica,
         descriptionRes = R.string.desc_bloom_sprite_myosotis_sylvatica,
     ),
+    BloomSpritesheetOption(
+        id = "fuchsia_ballerina",
+        drawableRes = R.drawable.bloom_fuchsia_ballerina_spritesheet,
+        labelRes = R.string.label_bloom_sprite_fuchsia_ballerina,
+        descriptionRes = R.string.desc_bloom_sprite_fuchsia_ballerina,
+    ),
+    BloomSpritesheetOption(
+        id = "magnolia_dawn",
+        drawableRes = R.drawable.bloom_magnolia_dawn_spritesheet,
+        labelRes = R.string.label_bloom_sprite_magnolia_dawn,
+        descriptionRes = R.string.desc_bloom_sprite_magnolia_dawn,
+    ),
+    BloomSpritesheetOption(
+        id = "iris_origami",
+        drawableRes = R.drawable.bloom_iris_origami_spritesheet,
+        labelRes = R.string.label_bloom_sprite_iris_origami,
+        descriptionRes = R.string.desc_bloom_sprite_iris_origami,
+    ),
+    BloomSpritesheetOption(
+        id = "king_protea_sunrise",
+        drawableRes = R.drawable.bloom_king_protea_sunrise_spritesheet,
+        labelRes = R.string.label_bloom_sprite_king_protea_sunrise,
+        descriptionRes = R.string.desc_bloom_sprite_king_protea_sunrise,
+    ),
+    BloomSpritesheetOption(
+        id = "dahlia_kaleidoscope",
+        drawableRes = R.drawable.bloom_dahlia_kaleidoscope_spritesheet,
+        labelRes = R.string.label_bloom_sprite_dahlia_kaleidoscope,
+        descriptionRes = R.string.desc_bloom_sprite_dahlia_kaleidoscope,
+    ),
+    BloomSpritesheetOption(
+        id = "pincushion_firework",
+        drawableRes = R.drawable.bloom_pincushion_firework_spritesheet,
+        labelRes = R.string.label_bloom_sprite_pincushion_firework,
+        descriptionRes = R.string.desc_bloom_sprite_pincushion_firework,
+    ),
+    BloomSpritesheetOption(
+        id = "morning_glory_spiral",
+        drawableRes = R.drawable.bloom_morning_glory_spiral_spritesheet,
+        labelRes = R.string.label_bloom_sprite_morning_glory_spiral,
+        descriptionRes = R.string.desc_bloom_sprite_morning_glory_spiral,
+    ),
+    BloomSpritesheetOption(
+        id = "foxglove_chimes",
+        drawableRes = R.drawable.bloom_foxglove_chimes_spritesheet,
+        labelRes = R.string.label_bloom_sprite_foxglove_chimes,
+        descriptionRes = R.string.desc_bloom_sprite_foxglove_chimes,
+    ),
+    BloomSpritesheetOption(
+        id = "cherry_blossom_wish",
+        drawableRes = R.drawable.bloom_cherry_blossom_wish_spritesheet,
+        labelRes = R.string.label_bloom_sprite_cherry_blossom_wish,
+        descriptionRes = R.string.desc_bloom_sprite_cherry_blossom_wish,
+    ),
+    BloomSpritesheetOption(
+        id = "himalayan_lantern",
+        drawableRes = R.drawable.bloom_himalayan_lantern_spritesheet,
+        labelRes = R.string.label_bloom_sprite_himalayan_lantern,
+        descriptionRes = R.string.desc_bloom_sprite_himalayan_lantern,
+    ),
+    BloomSpritesheetOption(
+        id = "black_bat_flower",
+        drawableRes = R.drawable.bloom_black_bat_flower_spritesheet,
+        labelRes = R.string.label_bloom_sprite_black_bat_flower,
+        descriptionRes = R.string.desc_bloom_sprite_black_bat_flower,
+    ),
+    BloomSpritesheetOption(
+        id = "water_lily_twilight",
+        drawableRes = R.drawable.bloom_water_lily_twilight_spritesheet,
+        labelRes = R.string.label_bloom_sprite_water_lily_twilight,
+        descriptionRes = R.string.desc_bloom_sprite_water_lily_twilight,
+    ),
+    BloomSpritesheetOption(
+        id = "moonphase_magnolia",
+        drawableRes = R.drawable.bloom_moonphase_magnolia_spritesheet,
+        labelRes = R.string.label_bloom_sprite_moonphase_magnolia,
+        descriptionRes = R.string.desc_bloom_sprite_moonphase_magnolia,
+    ),
+    BloomSpritesheetOption(
+        id = "crema_chrysanthemum",
+        drawableRes = R.drawable.bloom_crema_chrysanthemum_spritesheet,
+        labelRes = R.string.label_bloom_sprite_crema_chrysanthemum,
+        descriptionRes = R.string.desc_bloom_sprite_crema_chrysanthemum,
+    ),
+    BloomSpritesheetOption(
+        id = "stained_glass_iris",
+        drawableRes = R.drawable.bloom_stained_glass_iris_spritesheet,
+        labelRes = R.string.label_bloom_sprite_stained_glass_iris,
+        descriptionRes = R.string.desc_bloom_sprite_stained_glass_iris,
+    ),
+    BloomSpritesheetOption(
+        id = "aurora_anemone",
+        drawableRes = R.drawable.bloom_aurora_anemone_spritesheet,
+        labelRes = R.string.label_bloom_sprite_aurora_anemone,
+        descriptionRes = R.string.desc_bloom_sprite_aurora_anemone,
+    ),
+    BloomSpritesheetOption(
+        id = "constellation_blossom",
+        drawableRes = R.drawable.bloom_constellation_blossom_spritesheet,
+        labelRes = R.string.label_bloom_sprite_constellation_blossom,
+        descriptionRes = R.string.desc_bloom_sprite_constellation_blossom,
+    ),
 ).also { options ->
     // Guard against the option metadata drifting from the domain ID list:
     // both must be in lockstep so the picker can return any visible flower.

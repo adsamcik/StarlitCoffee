@@ -38,6 +38,23 @@ val BloomSpritesheetIds: List<String> = listOf(
     "queen_of_the_night",
     "snowdrop",
     "myosotis_sylvatica",
+    "fuchsia_ballerina",
+    "magnolia_dawn",
+    "iris_origami",
+    "king_protea_sunrise",
+    "dahlia_kaleidoscope",
+    "pincushion_firework",
+    "morning_glory_spiral",
+    "foxglove_chimes",
+    "cherry_blossom_wish",
+    "himalayan_lantern",
+    "black_bat_flower",
+    "water_lily_twilight",
+    "moonphase_magnolia",
+    "crema_chrysanthemum",
+    "stained_glass_iris",
+    "aurora_anemone",
+    "constellation_blossom",
 )
 
 /**

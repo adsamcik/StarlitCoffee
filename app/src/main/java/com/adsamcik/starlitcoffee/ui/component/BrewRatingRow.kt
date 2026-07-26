@@ -1,9 +1,11 @@
 package com.adsamcik.starlitcoffee.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -24,19 +28,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
+import com.adsamcik.starlitcoffee.ui.util.iconRes
 import com.adsamcik.starlitcoffee.ui.util.labelRes
 import com.adsamcik.starlitcoffee.ui.util.selectContentDescriptionRes
 
 private val RatingFaceTouchTarget = 48.dp
 private val UnselectedFaceAlpha = 0.45f
-private val SelectedFaceSize = 34.sp
-private val UnselectedFaceSize = 28.sp
+private val SelectedFaceSize = 40.dp
+private val UnselectedFaceSize = 34.dp
 
 /**
  * One-tap 4-face rating selector — the single interactive rating control across
- * the app. Each face is its own radio-style target (min 48dp) with a text
- * content description, so it is usable and accessible without relying on emoji
- * glyphs alone. The selected tier is emphasized; the rest are dimmed.
+ * the app. Each custom coffee mark is its own radio-style target (min 48dp) with
+ * a text content description and visible label. The selected tier is emphasized;
+ * the rest are dimmed.
  */
 @Composable
 fun BrewRatingRow(
@@ -67,10 +72,12 @@ fun BrewRatingRow(
                     .padding(vertical = 8.dp, horizontal = 2.dp)
                     .clearAndSetSemantics { contentDescription = faceCd },
             ) {
-                Text(
-                    text = tier.emoji,
-                    fontSize = if (isSelected) SelectedFaceSize else UnselectedFaceSize,
-                    modifier = if (dimmed) Modifier.alpha(UnselectedFaceAlpha) else Modifier,
+                Image(
+                    painter = painterResource(tier.iconRes()),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(if (isSelected) SelectedFaceSize else UnselectedFaceSize)
+                        .then(if (dimmed) Modifier.alpha(UnselectedFaceAlpha) else Modifier),
                 )
                 if (showLabels) {
                     Text(
@@ -92,7 +99,7 @@ fun BrewRatingRow(
 
 /**
  * Read-only single-face badge for a stored rating (list rows, share card,
- * detail header). Renders nothing when [rating] is null (unrated). The emoji
+ * detail header). Renders nothing when [rating] is null (unrated). The artwork
  * carries a text content description so screen readers announce the tier.
  */
 @Composable
@@ -100,19 +107,28 @@ fun BrewRatingBadge(
     rating: BrewRating?,
     modifier: Modifier = Modifier,
     showLabel: Boolean = false,
-    emojiSize: androidx.compose.ui.unit.TextUnit = 20.sp,
+    iconSize: androidx.compose.ui.unit.TextUnit = 20.sp,
 ) {
     rating ?: return
     val label = stringResource(rating.labelRes())
+    val iconSizeDp = with(LocalDensity.current) { iconSize.toDp() }
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        Text(
-            text = rating.emoji,
-            fontSize = emojiSize,
-            modifier = if (showLabel) Modifier else Modifier.clearAndSetSemantics { contentDescription = label },
+        Image(
+            painter = painterResource(rating.iconRes()),
+            contentDescription = null,
+            modifier = Modifier
+                .size(iconSizeDp)
+                .then(
+                    if (showLabel) {
+                        Modifier
+                    } else {
+                        Modifier.clearAndSetSemantics { contentDescription = label }
+                    },
+                ),
         )
         if (showLabel) {
             Text(
@@ -130,14 +146,52 @@ fun BrewRatingBadge(
     ratingValue: Float?,
     modifier: Modifier = Modifier,
     showLabel: Boolean = false,
-    emojiSize: androidx.compose.ui.unit.TextUnit = 20.sp,
+    iconSize: androidx.compose.ui.unit.TextUnit = 20.sp,
 ) {
     BrewRatingBadge(
         rating = BrewRating.fromStoredValue(ratingValue),
         modifier = modifier,
         showLabel = showLabel,
-        emojiSize = emojiSize,
+        iconSize = iconSize,
     )
+}
+
+/** Compact icon-and-count distribution, ordered from best rating to worst. */
+@Composable
+fun BrewRatingDistribution(
+    counts: Map<BrewRating, Int>,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        BrewRating.ordered.asReversed()
+            .filter { counts.getOrDefault(it, 0) > 0 }
+            .forEach { rating ->
+                val count = counts.getValue(rating)
+                val label = stringResource(rating.labelRes())
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(3.dp),
+                    modifier = Modifier.clearAndSetSemantics {
+                        contentDescription = "$label, $count"
+                    },
+                ) {
+                    Image(
+                        painter = painterResource(rating.iconRes()),
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp),
+                    )
+                    Text(
+                        text = "×$count",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
+    }
 }
 
 @Preview(showBackground = true)

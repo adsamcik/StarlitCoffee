@@ -53,6 +53,7 @@ import androidx.core.graphics.toColorInt
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
+import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.stringResource
@@ -439,6 +440,12 @@ fun SettingsScreen(
                     operationEnabled = !isBusy,
                     onEnabledChange = viewModel::updateRatingReminderEnabled,
                 )
+                SettingsRowDivider()
+                BrewVibrationThemeSelector(
+                    selectedTheme = prefs.brewVibrationTheme,
+                    enabled = !isBusy,
+                    onThemeSelected = viewModel::updateBrewVibrationTheme,
+                )
             }
 
             MindlayerSettingsCard(showDiagnostics = BuildConfig.DEBUG)
@@ -668,4 +675,37 @@ private fun RatingReminderRow(
             }
         }
     }
+}
+
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun BrewVibrationThemeSelector(
+    selectedTheme: BrewVibrationTheme,
+    enabled: Boolean,
+    onThemeSelected: (BrewVibrationTheme) -> Unit,
+) {
+    SettingsSelectorBlock(
+        title = stringResource(R.string.label_brew_vibration_theme),
+        summary = stringResource(R.string.msg_brew_vibration_theme_hint),
+    ) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            BrewVibrationTheme.entries.forEach { theme ->
+                FilterChip(
+                    selected = selectedTheme == theme,
+                    onClick = { onThemeSelected(theme) },
+                    enabled = enabled,
+                    label = { Text(vibrationThemeLabel(theme)) },
+                    leadingIcon = if (selectedTheme == theme) checkIcon else null,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun vibrationThemeLabel(theme: BrewVibrationTheme): String = when (theme) {
+    BrewVibrationTheme.SOFT -> stringResource(R.string.label_brew_vibration_soft)
+    BrewVibrationTheme.CLASSIC -> stringResource(R.string.label_brew_vibration_classic)
+    BrewVibrationTheme.BOLD -> stringResource(R.string.label_brew_vibration_bold)
 }

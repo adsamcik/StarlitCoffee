@@ -46,7 +46,6 @@ sealed class HomeContextCard {
     data class LastBrewSummary(
         val brew: BrewLogEntity,
         val bagName: String?,
-        val ratingEmoji: String,
     ) : HomeContextCard()
 
     companion object {
@@ -315,12 +314,9 @@ sealed class HomeContextCard {
                 }
             }
 
-            val emoji = BrewRating.fromStoredValue(lastRated.rating)?.emoji ?: ""
-
             return LastBrewSummary(
                 brew = lastRated,
                 bagName = bagName,
-                ratingEmoji = emoji,
             )
         }
     }

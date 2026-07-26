@@ -99,6 +99,10 @@ class SettingsViewModel(
     fun updateRatingReminderEnabled(enabled: Boolean) {
         persist { preferences.updateRatingReminderEnabled(enabled) }
     }
+    fun updateBrewVibrationTheme(theme: com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme) {
+        persist { preferences.updateBrewVibrationTheme(theme) }
+    }
+
 
     fun updateScanCorrectionLoggingEnabled(enabled: Boolean) {
         persist { preferences.updateScanCorrectionLoggingEnabled(enabled) }

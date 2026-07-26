@@ -18,6 +18,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -53,6 +54,7 @@ fun CoffeeBagSelector(
     modifier: Modifier = Modifier,
 ) {
     var showPicker by remember { mutableStateOf(false) }
+    var query by remember { mutableStateOf("") }
 
     val chipLabel = selectedBag?.let { bag ->
         val decaf = if (bag.isDecaf) stringResource(R.string.label_decaf_suffix) else ""
@@ -61,7 +63,10 @@ fun CoffeeBagSelector(
 
     FilterChip(
         selected = selectedBag != null,
-        onClick = { showPicker = true },
+        onClick = {
+            query = ""
+            showPicker = true
+        },
         label = { Text(text = chipLabel, maxLines = 1) },
         trailingIcon = if (selectedBag != null) {
             {
@@ -80,6 +85,28 @@ fun CoffeeBagSelector(
     )
 
     if (showPicker) {
+        val matchingBags = remember(bags, query) {
+            val normalizedQuery = query.trim().lowercase()
+            bags.asSequence()
+                .filter { bag ->
+                    normalizedQuery.isBlank() || listOfNotNull(
+                        bag.name,
+                        bag.roaster,
+                        bag.origin,
+                        bag.region,
+                    ).any { it.lowercase().contains(normalizedQuery) }
+                }
+                .sortedWith(
+                    compareBy<CoffeeBagEntity> { bagPickerStatusPriority(it) }
+                        .thenByDescending { bag ->
+                            val initial = bag.initialWeightG
+                            if (initial != null && initial > 0f) (bag.weightG ?: 0f) / initial
+                            else bag.weightG ?: -1f
+                        }
+                        .thenBy { it.name.lowercase() },
+                )
+                .toList()
+        }
         ModalBottomSheet(
             onDismissRequest = { showPicker = false },
             sheetState = rememberBottomSheetState(
@@ -97,9 +124,25 @@ fun CoffeeBagSelector(
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(bottom = 16.dp),
                 )
+                OutlinedTextField(
+                    value = query,
+                    onValueChange = { query = it },
+                    label = { Text(stringResource(R.string.label_search_coffee_bags)) },
+                    singleLine = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp),
+                )
                 if (bags.isEmpty()) {
                     Text(
                         text = stringResource(R.string.msg_no_active_bags),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(vertical = 24.dp),
+                    )
+                } else if (matchingBags.isEmpty()) {
+                    Text(
+                        text = stringResource(R.string.msg_no_matching_coffee_bags),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(vertical = 24.dp),
@@ -109,7 +152,7 @@ fun CoffeeBagSelector(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        items(bags, key = { it.id }) { bag ->
+                        items(matchingBags, key = { it.id }) { bag ->
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -139,6 +182,9 @@ fun CoffeeBagSelector(
                                         bag.weightG?.let { w ->
                                             add(stringResource(R.string.format_weight_left, w).trim())
                                         }
+                                        if (bag.status == "FINISHED") {
+                                            add(stringResource(R.string.label_archived))
+                                        }
                                     }
                                     if (subtitleParts.isNotEmpty()) {
                                         Text(
@@ -167,4 +213,12 @@ fun CoffeeBagSelector(
             }
         }
     }
+}
+
+/** Keeps unopened or well-stocked bags at the top, with historical bags last. */
+private fun bagPickerStatusPriority(bag: CoffeeBagEntity): Int = when (bag.status) {
+    "SEALED" -> 0
+    "OPEN" -> 1
+    "FROZEN" -> 2
+    else -> 3
 }

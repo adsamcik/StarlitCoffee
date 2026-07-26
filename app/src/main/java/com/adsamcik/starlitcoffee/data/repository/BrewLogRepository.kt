@@ -43,6 +43,9 @@ class BrewLogRepository(
         if (database != null) database.withTransaction { block() } else block()
     }
 
+    suspend fun updateCoffeeBag(logId: Long, bagId: Long?) =
+        brewLogDao.updateCoffeeBag(logId, bagId)
+
     suspend fun getLogById(logId: Long): BrewLogEntity? = brewLogDao.getById(logId)
 
     suspend fun getLastUnratedLog(): BrewLogEntity? = brewLogDao.getLastUnrated()

@@ -260,10 +260,8 @@ fun BagDetailSheet(
                                     modifier = Modifier.padding(top = 4.dp),
                                 )
                                 if (sensorySnapshot.totalRatings > 0) {
-                                    Text(
-                                        text = CoffeeBagInsights.formatRatingDistribution(sensorySnapshot.ratingCounts),
-                                        style = MaterialTheme.typography.labelMedium,
-                                        color = MaterialTheme.colorScheme.primary,
+                                    BrewRatingDistribution(
+                                        counts = sensorySnapshot.ratingCounts,
                                         modifier = Modifier.padding(top = 8.dp),
                                     )
                                 }
@@ -296,12 +294,20 @@ fun BagDetailSheet(
                                     text = stringResource(R.string.label_grind_intelligence),
                                     style = MaterialTheme.typography.titleMedium,
                                 )
-                                Text(
-                                    text = grindInsight.summary,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                                     modifier = Modifier.padding(top = 4.dp),
-                                )
+                                ) {
+                                    Text(
+                                        text = grindInsight.summary,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                    BrewRating.fromStoredValue(grindInsight.bestRating)?.let { rating ->
+                                        BrewRatingBadge(rating = rating)
+                                    }
+                                }
                                 grindInsight.adjustmentHint?.let { hint ->
                                     Text(
                                         text = hint,
@@ -491,11 +497,7 @@ fun BagDetailSheet(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                             if (ratingCounts.isNotEmpty()) {
-                                Text(
-                                    text = CoffeeBagInsights.formatRatingDistribution(ratingCounts),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.primary,
-                                )
+                                BrewRatingDistribution(counts = ratingCounts)
                             }
                         }
                     }
@@ -543,11 +545,7 @@ fun BagDetailSheet(
                                     }
                                 }
                                 BrewRating.fromStoredValue(log.rating)?.let { tier ->
-                                    Text(
-                                        text = tier.emoji,
-                                        style = MaterialTheme.typography.labelLarge,
-                                        color = MaterialTheme.colorScheme.primary,
-                                    )
+                                    BrewRatingBadge(rating = tier)
                                 }
                             }
                         }

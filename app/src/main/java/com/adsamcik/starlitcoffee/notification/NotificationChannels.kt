@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.core.content.getSystemService
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
 
 /**
  * Notification channel registry. Channels are created lazily on first use
@@ -16,6 +17,36 @@ internal object NotificationChannels {
     const val RATING_REMINDER_ID = "rating_reminder"
     const val BAG_ANALYSIS_ID = "bag_analysis"
     const val BAG_SCAN_PROGRESS_ID = "bag_scan_progress"
+    const val BREW_STATUS_ID = "brew_status"
+
+    fun brewAlertsId(theme: BrewVibrationTheme): String =
+        "brew_alerts_${theme.name.lowercase()}"
+
+    fun ensureBrewChannels(context: Context, theme: BrewVibrationTheme) {
+        val manager = context.getSystemService<NotificationManager>() ?: return
+        if (manager.getNotificationChannel(BREW_STATUS_ID) == null) {
+            NotificationChannel(
+                BREW_STATUS_ID,
+                context.getString(R.string.notif_channel_brew_status),
+                NotificationManager.IMPORTANCE_LOW,
+            ).apply {
+                description = context.getString(R.string.notif_channel_brew_status_desc)
+                setShowBadge(false)
+            }.also(manager::createNotificationChannel)
+        }
+        val alertsId = brewAlertsId(theme)
+        if (manager.getNotificationChannel(alertsId) == null) {
+            NotificationChannel(
+                alertsId,
+                context.getString(R.string.notif_channel_brew_alerts),
+                NotificationManager.IMPORTANCE_HIGH,
+            ).apply {
+                description = context.getString(R.string.notif_channel_brew_alerts_desc)
+                enableVibration(true)
+                vibrationPattern = theme.alertChannelPattern()
+            }.also(manager::createNotificationChannel)
+        }
+    }
 
     fun ensureRatingReminderChannel(context: Context) {
         val manager = context.getSystemService<NotificationManager>() ?: return

@@ -3,10 +3,9 @@
   Custom RemoteViews content for the rating-reminder notification.
 
   RemoteViews supports a small subset of layouts and views; this layout sticks
-  to that subset (LinearLayout + TextView/Button) so it renders consistently
-  across Android 8 (minSdk) and up. The five rating buttons are TextViews so
-  the emoji glyph is the only thing the user sees — no system button chrome
-  to fight with the notification's own background.
+  to that subset (LinearLayout + TextView + ImageView) so it renders consistently
+  across Android 8 (minSdk) and up. The four rating targets use the same custom
+  cup-mark artwork as the app without adding system button chrome.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -38,7 +37,7 @@
         android:orientation="horizontal"
         android:weightSum="4">
 
-        <TextView
+        <ImageView
             android:id="@+id/notif_rate_1"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -46,12 +45,12 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
             android:contentDescription="@string/cd_notif_rating_1"
-            android:text="@string/notif_rating_emoji_1"
-            android:textSize="26sp" />
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/rating_starlit_cup_bad" />
 
-        <TextView
+        <ImageView
             android:id="@+id/notif_rate_2"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -59,12 +58,12 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
             android:contentDescription="@string/cd_notif_rating_2"
-            android:text="@string/notif_rating_emoji_2"
-            android:textSize="26sp" />
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/rating_starlit_cup_meh" />
 
-        <TextView
+        <ImageView
             android:id="@+id/notif_rate_3"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -72,12 +71,12 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
             android:contentDescription="@string/cd_notif_rating_3"
-            android:text="@string/notif_rating_emoji_3"
-            android:textSize="26sp" />
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/rating_starlit_cup_good" />
 
-        <TextView
+        <ImageView
             android:id="@+id/notif_rate_4"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -85,10 +84,10 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
             android:contentDescription="@string/cd_notif_rating_4"
-            android:text="@string/notif_rating_emoji_4"
-            android:textSize="26sp" />
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/rating_starlit_cup_awesome" />
 
     </LinearLayout>
 

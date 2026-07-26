@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.ui.screen
 
 import android.content.Context
 import android.media.AudioManager
+import android.content.ContextWrapper
 import android.media.ToneGenerator
 import android.os.Build
 import android.os.VibrationEffect
@@ -44,6 +45,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -64,7 +66,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.BrewTimingMode
+import com.adsamcik.starlitcoffee.data.model.BrewVibrationEvent
+import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
+import com.adsamcik.starlitcoffee.MainActivity
 import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
 import com.adsamcik.starlitcoffee.ui.component.WarningCard
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
@@ -85,6 +90,7 @@ fun BrewTimerScreen(
     dimModeTrueBlack: Boolean = false,
     dimModeReduceBrightness: Boolean = false,
     dimModeFullscreen: Boolean = false,
+    vibrationTheme: BrewVibrationTheme = BrewVibrationTheme.CLASSIC,
     dimModeForceDarkInLight: Boolean = false,
     showBrewingInstructions: Boolean = true,
     onBack: () -> Unit,
@@ -94,6 +100,17 @@ fun BrewTimerScreen(
     val usesActiveTimer = state.method.timingMode == BrewTimingMode.ACTIVE_TIMER
     val context = LocalContext.current
     val vibrator = remember { getVibrator(context) }
+
+    val activity = context.findActivity() as? MainActivity
+    val isPictureInPicture = activity?.isShowingBrewPictureInPicture == true
+    DisposableEffect(activity, usesActiveTimer, state.timerRunning) {
+        activity?.setBrewPictureInPictureAvailable(usesActiveTimer && state.timerRunning)
+        onDispose { activity?.setBrewPictureInPictureAvailable(false) }
+    }
+    if (isPictureInPicture) {
+        BrewPictureInPictureContent(state)
+        return
+    }
 
     if (usesActiveTimer) {
         // Safety net so a paused or abandoned brew doesn't pin the display on
@@ -169,7 +186,10 @@ fun BrewTimerScreen(
             !bloomActive
         if (isAtMinuteBoundary) {
             vibrator?.vibrate(
-                VibrationEffect.createWaveform(longArrayOf(0, 100, 80, 100), -1),
+                VibrationEffect.createWaveform(
+                    vibrationTheme.patternFor(BrewVibrationEvent.MINUTE),
+                    -1,
+                ),
             )
             playTone(ToneGenerator.TONE_PROP_BEEP, 150)
         }
@@ -180,7 +200,8 @@ fun BrewTimerScreen(
         if (state.bloomFinished && state.timerRunning && state.bloomMarkedAtSeconds != null) {
             vibrator?.vibrate(
                 VibrationEffect.createWaveform(
-                    longArrayOf(0, 300, 120, 300, 120, 500), -1,
+                    vibrationTheme.patternFor(BrewVibrationEvent.BLOOM_COMPLETE),
+                    -1,
                 ),
             )
             repeat(3) {
@@ -195,9 +216,29 @@ fun BrewTimerScreen(
     LaunchedEffect(bloomCountdown) {
         if (bloomActive && bloomCountdown != null && bloomCountdown in 1..3) {
             vibrator?.vibrate(
-                VibrationEffect.createOneShot(60L, VibrationEffect.DEFAULT_AMPLITUDE),
+                VibrationEffect.createWaveform(
+                    vibrationTheme.patternFor(BrewVibrationEvent.BLOOM_WARNING),
+                    -1,
+                ),
             )
             playTone(ToneGenerator.TONE_PROP_BEEP, 80)
+        }
+    }
+
+
+    LaunchedEffect(state.elapsedSeconds, state.timeTargetHighS) {
+        if (usesActiveTimer &&
+            state.timerRunning &&
+            state.timeTargetHighS > 0 &&
+            state.elapsedSeconds == state.timeTargetHighS
+        ) {
+            vibrator?.vibrate(
+                VibrationEffect.createWaveform(
+                    vibrationTheme.patternFor(BrewVibrationEvent.TARGET_REACHED),
+                    -1,
+                ),
+            )
+            playTone(ToneGenerator.TONE_PROP_BEEP2, 250)
         }
     }
 
@@ -835,4 +876,54 @@ private fun formatBrewTime(seconds: Int): String {
     val secs = absSeconds % 60
     val prefix = if (seconds < 0) "-" else ""
     return "$prefix$minutes:%02d".format(secs)
+}
+
+
+@Composable
+private fun BrewPictureInPictureContent(state: BrewUiState) {
+    val bloomActive = state.bloomMarkedAtSeconds != null && !state.bloomFinished
+    val phase = when {
+        bloomActive -> "Bloom"
+        state.timerRunning -> "Brewing"
+        else -> "Paused"
+    }
+    val visibleSeconds = if (bloomActive) state.bloomCountdownSeconds ?: 0 else state.elapsedSeconds
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.surface,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = phase,
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = formatBrewTime(visibleSeconds),
+                style = MaterialTheme.typography.displayMedium,
+                fontWeight = FontWeight.Light,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            if (!bloomActive && state.timeTargetHighS > 0) {
+                Text(
+                    text = "Target ${formatBrewTime(state.timeTargetHighS)}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+    }
+}
+
+private tailrec fun Context.findActivity(): android.app.Activity? = when (this) {
+    is android.app.Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
 }

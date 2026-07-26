@@ -18,6 +18,9 @@ interface BrewLogDao {
     @Query("UPDATE brew_logs SET rating = :rating, freeformNotes = :notes, tasteFeedback = :tasteFeedback WHERE id = :logId")
     suspend fun updateFeedback(logId: Long, rating: Float?, notes: String?, tasteFeedback: String?)
 
+    @Query("UPDATE brew_logs SET coffeeBagId = :bagId WHERE id = :logId")
+    suspend fun updateCoffeeBag(logId: Long, bagId: Long?)
+
     @Query("SELECT * FROM brew_logs WHERE id = :logId")
     suspend fun getById(logId: Long): BrewLogEntity?
 

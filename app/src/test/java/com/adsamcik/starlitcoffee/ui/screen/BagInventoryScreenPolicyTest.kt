@@ -3,7 +3,9 @@ package com.adsamcik.starlitcoffee.ui.screen
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.ui.component.DecafFilter
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class BagInventoryScreenPolicyTest {
@@ -62,4 +64,20 @@ class BagInventoryScreenPolicyTest {
             ),
         )
     }
+
+    @Test
+    fun `AI scan setup is needed only when runtime is unsupported or missing`() {
+        assertFalse(needsAiScanSetup(isSupported = true, isInstalled = true))
+        assertTrue(needsAiScanSetup(isSupported = true, isInstalled = false))
+        assertTrue(needsAiScanSetup(isSupported = false, isInstalled = true))
+    }
+
+    @Test
+    fun `pending scan resumes only after a successful install return`() {
+        assertTrue(shouldResumePendingAiScan(true, true, true))
+        assertFalse(shouldResumePendingAiScan(false, true, true))
+        assertFalse(shouldResumePendingAiScan(true, false, true))
+        assertFalse(shouldResumePendingAiScan(true, true, false))
+    }
+
 }

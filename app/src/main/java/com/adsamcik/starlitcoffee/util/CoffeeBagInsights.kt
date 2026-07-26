@@ -190,7 +190,7 @@ object CoffeeBagInsights {
 
         val summary = when {
             topChips.isNotEmpty() -> topChips.take(3).joinToString(" • ")
-            ratingCounts.isNotEmpty() -> formatRatingDistribution(ratingCounts)
+            ratingCounts.isNotEmpty() -> "${ratingCounts.values.sum()} rated brew${if (ratingCounts.values.sum() == 1) "" else "s"}"
             else -> "No sensory notes yet"
         }
 
@@ -202,12 +202,6 @@ object CoffeeBagInsights {
             totalTaggedBrews = flavorTags.filter { it.brewLogId in brewIds }.map { it.brewLogId }.distinct().size,
         )
     }
-
-    /** Renders a rating distribution as "😋×4 · 😀×2", best tier first. */
-    fun formatRatingDistribution(counts: Map<BrewRating, Int>): String =
-        BrewRating.ordered.asReversed()
-            .filter { (counts[it] ?: 0) > 0 }
-            .joinToString(" · ") { "${it.emoji}×${counts.getValue(it)}" }
 
     fun buildGrindInsight(
         bag: CoffeeBagEntity,
@@ -243,7 +237,7 @@ object CoffeeBagInsights {
 
         val summary = when {
             bestLog?.grindSetting != null && bestLog.rating != null ->
-                "Best so far: ${bestLog.grindSetting} (${BrewRating.fromStoredValue(bestLog.rating)?.emoji ?: ""})"
+                "Best so far: ${bestLog.grindSetting}"
 
             lastGrind != null -> "Last used: $lastGrind"
             else -> "No grind history yet"

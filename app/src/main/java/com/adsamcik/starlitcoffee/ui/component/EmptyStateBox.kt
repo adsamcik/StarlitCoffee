@@ -29,6 +29,7 @@ fun EmptyStateBox(
     message: String,
     modifier: Modifier = Modifier,
     subtitle: String? = null,
+    action: (@Composable () -> Unit)? = null,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
@@ -66,6 +67,10 @@ fun EmptyStateBox(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(horizontal = 48.dp),
                 )
+            }
+            if (action != null) {
+                Spacer(modifier = Modifier.height(24.dp))
+                action()
             }
         }
     }

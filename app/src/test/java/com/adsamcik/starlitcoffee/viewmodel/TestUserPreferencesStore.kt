@@ -32,6 +32,9 @@ internal open class TestUserPreferencesStore(
     override suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) = Unit
     override suspend fun updateRatingReminderEnabled(enabled: Boolean) = Unit
     override suspend fun updateScanCorrectionLoggingEnabled(enabled: Boolean) = Unit
+    override suspend fun updateBrewVibrationTheme(
+        theme: com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme,
+    ) = Unit
     override suspend fun updateDimModeEnabled(enabled: Boolean) = Unit
     override suspend fun updateDimModeTrueBlack(enabled: Boolean) = Unit
     override suspend fun updateDimModeReduceBrightness(enabled: Boolean) = Unit

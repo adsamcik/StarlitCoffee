@@ -20,8 +20,10 @@ object MindlayerAvailability {
             }
         }
 
+    fun isSupported(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
     fun isInstalled(context: Context): Boolean =
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && packageNames.any { packageName ->
+        isSupported() && packageNames.any { packageName ->
         try {
             context.packageManager.getPackageInfo(packageName, 0)
             true

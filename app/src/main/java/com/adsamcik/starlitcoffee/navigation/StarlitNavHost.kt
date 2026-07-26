@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.navigation
 
 import android.app.Application
-import android.widget.Toast
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
@@ -76,9 +75,6 @@ import com.adsamcik.starlitcoffee.ui.screen.GuidedScanFlow
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
-import com.adsamcik.starlitcoffee.ui.component.MindlayerStartupConnectionPrompt
-import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerInstalled
-import com.adsamcik.starlitcoffee.util.MindlayerInstallLink
 import com.adsamcik.starlitcoffee.ui.screen.SavedRecipesScreen
 import com.adsamcik.starlitcoffee.ui.screen.ScanAddBagReview
 import com.adsamcik.starlitcoffee.ui.screen.ScanRescanReview
@@ -151,7 +147,6 @@ private val NullableFilterTypeStateSaver: Saver<MutableState<FilterType?>, Strin
 fun StarlitNavHost() {
     val navController = rememberNavController()
     val context = LocalContext.current.applicationContext
-    val couldNotOpenAppStore = stringResource(R.string.msg_could_not_open_app_store)
     val database = remember { AppDatabase.getInstance(context) }
     val userPreferencesRepository = remember { UserPreferencesRepository(context) }
     val cupPresetRepository = remember { CupPresetRepository(database.cupPresetDao()) }
@@ -202,7 +197,6 @@ fun StarlitNavHost() {
         Box(modifier = Modifier.fillMaxSize())
         return
     }
-    val mindlayerInstalled = rememberMindlayerInstalled()
 
     val startDestination: Any = if (prefs.onboardingCompleted) CalculatorBrew else OnboardingMethods
     val snackbarHostState = remember { SnackbarHostState() }
@@ -381,7 +375,6 @@ fun StarlitNavHost() {
                         selectedMethods = onboardingMethods.value,
                         initialFilter = onboardingFilter.value,
                         initialGrinder = onboardingGrinder.value,
-                        showMindlayerRecommendation = !mindlayerInstalled,
                         isSubmitting = onboardingState.isSubmitting,
                         submitFailed = onboardingState.failure,
                         onBack = {
@@ -391,15 +384,6 @@ fun StarlitNavHost() {
                         onSelectionChanged = { filter, grinder ->
                             onboardingFilter.value = filter
                             onboardingGrinder.value = grinder
-                        },
-                        onOpenMindlayerPlayStore = {
-                            if (!MindlayerInstallLink.open(context)) {
-                                Toast.makeText(
-                                    context,
-                                    couldNotOpenAppStore,
-                                    Toast.LENGTH_LONG,
-                                ).show()
-                            }
                         },
                         onFinish = { filterType, grinderId ->
                             onboardingViewModel.complete(
@@ -470,6 +454,7 @@ fun StarlitNavHost() {
                         dimModeFullscreen = prefs.dimModeFullscreen,
                         dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
                         showBrewingInstructions = prefs.showBrewingInstructions,
+                        vibrationTheme = prefs.brewVibrationTheme,
                         onBack = { navController.popBackStack() },
                         onComplete = {
                             // Save the brew log immediately (without feedback — user rates later)
@@ -742,7 +727,6 @@ fun StarlitNavHost() {
                     }
                 }
             }
-            MindlayerStartupConnectionPrompt(isMindlayerInstalled = mindlayerInstalled)
         }
     }
 }

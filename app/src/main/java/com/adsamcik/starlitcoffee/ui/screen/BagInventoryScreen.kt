@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,9 +27,10 @@ import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -73,12 +75,15 @@ import com.adsamcik.starlitcoffee.ui.component.messageRes
 import com.adsamcik.starlitcoffee.ui.component.normalizedForCounts
 import com.adsamcik.starlitcoffee.ui.component.persistScannedBag
 import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerConsentFlow
+import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerInstalled
 import com.adsamcik.starlitcoffee.ui.component.shouldApplyBagResultToDraft
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagPhotoRect
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
+import com.adsamcik.starlitcoffee.util.MindlayerAvailability
+import com.adsamcik.starlitcoffee.util.MindlayerInstallLink
 import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.util.ScanFieldSupport
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -94,6 +99,8 @@ import kotlinx.coroutines.withContext
 // Longest-side pixel target for the focused square thumbnail baked at save time.
 // Comfortably covers the 68.dp list-card slot on high-density screens.
 private const val THUMBNAIL_TARGET_PX = 512
+
+private enum class AiScanAction { CAMERA, GALLERY }
 
 private val bagPhotoRectSaver: Saver<BagPhotoRect?, ArrayList<Float>> = Saver(
     save = { focus ->
@@ -142,9 +149,11 @@ fun BagInventoryScreen(
     val bagPhotoRetryResult by brewViewModel.bagPhotoRetryResult.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
 
-    val rankedBags = remember(bags, allBrewLogs, flavorTags) {
+    val activeBags = remember(bags) { bags.filter { it.status != "FINISHED" } }
+    val archivedBags = remember(bags) { bags.filter { it.status == "FINISHED" } }
+    val rankedBags = remember(activeBags, allBrewLogs, flavorTags) {
         CoffeeBagInsights.rankBagsForBrew(
-            bags = bags,
+            bags = activeBags,
             brewLogs = allBrewLogs,
             flavorTags = flavorTags,
             targetDoseG = 20f,
@@ -155,11 +164,11 @@ fun BagInventoryScreen(
         ?.bag?.id
 
     var decafFilter by remember { mutableStateOf(DecafFilter.ALL) }
-    val decafCounts = remember(bags) {
+    val decafCounts = remember(activeBags) {
         mapOf(
-            DecafFilter.ALL to bags.size,
-            DecafFilter.REGULAR to bags.count { !it.isDecaf },
-            DecafFilter.DECAF to bags.count { it.isDecaf },
+            DecafFilter.ALL to activeBags.size,
+            DecafFilter.REGULAR to activeBags.count { !it.isDecaf },
+            DecafFilter.DECAF to activeBags.count { it.isDecaf },
         )
     }
     val effectiveDecafFilter = normalizeInventoryDecafFilter(
@@ -175,6 +184,7 @@ fun BagInventoryScreen(
     }
 
     var showAddSheet by rememberSaveable { mutableStateOf(false) }
+    var archiveExpanded by rememberSaveable { mutableStateOf(false) }
     var selectedBagId by remember { mutableStateOf<Long?>(null) }
     val selectedBag = remember(selectedBagId, bags) {
         selectedInventoryBag(bags, selectedBagId)
@@ -204,10 +214,16 @@ fun BagInventoryScreen(
     var isDeletingBag by remember { mutableStateOf(false) }
     var showRetakeDialog by remember { mutableStateOf(false) }
     var fabExpanded by remember { mutableStateOf(false) }
+    var pendingAiScanAction by rememberSaveable { mutableStateOf<String?>(null) }
+    var showAiSetupDialog by rememberSaveable { mutableStateOf(false) }
+    var resumeAiSetupAfterInstall by rememberSaveable { mutableStateOf(false) }
     var bagDraftSessionId by rememberSaveable { mutableStateOf(UUID.randomUUID().toString()) }
     var bagDraftGenerationId by rememberSaveable { mutableStateOf<String?>(null) }
     val context = LocalContext.current
+    val mindlayerInstalled = rememberMindlayerInstalled()
+    val mindlayerSupported = remember { MindlayerAvailability.isSupported() }
     val couldNotReadLabel = stringResource(R.string.msg_could_not_read_label)
+    val couldNotOpenAppStore = stringResource(R.string.msg_could_not_open_app_store)
     val couldNotSaveBag = stringResource(R.string.msg_could_not_save_bag)
     val bagSaved = stringResource(R.string.msg_bag_saved)
     val consentMessages = ConsentOutcome.entries.associateWith { outcome ->
@@ -273,6 +289,115 @@ fun BagInventoryScreen(
                 )
             }
         }
+    }
+
+    fun openManualBagEntry() {
+        fabExpanded = false
+        pendingAiScanAction = null
+        showAiSetupDialog = false
+        resumeAiSetupAfterInstall = false
+        bagDraftSessionId = UUID.randomUUID().toString()
+        detectedBarcode = null
+        detectedQrUrl = null
+        ocrPrefill = null
+        capturedPhotoUris = null
+        offLookupName = null
+        offLookupRoaster = null
+        fieldEvidence = emptyMap()
+        reviewHints = emptyList()
+        llmStatus = LlmEnrichmentStatus.NOT_RUN
+        isProcessingScan = false
+        showAddSheet = true
+    }
+
+    fun launchAiScanAction(action: AiScanAction) {
+        pendingAiScanAction = null
+        showAiSetupDialog = false
+        resumeAiSetupAfterInstall = false
+        bagDraftSessionId = UUID.randomUUID().toString()
+        when (action) {
+            AiScanAction.CAMERA -> onNavigateToCamera()
+            AiScanAction.GALLERY -> photoPickerLauncher.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
+            )
+        }
+    }
+
+    // Consent is requested in context, only after the user chooses a label-reading
+    // action. Already-approved users continue without seeing a consent screen.
+    // The same flow still supports retrying AI enrichment from the review form.
+    val aiConsentFlow = rememberMindlayerConsentFlow { outcome ->
+        when (outcome) {
+            ConsentOutcome.GRANTED, ConsentOutcome.ALREADY_APPROVED -> coroutineScope.launch {
+                val connected = (context.applicationContext as? StarlitCoffeeApp)
+                    ?.reconnectMindlayer() == true
+                val pendingAction = pendingAiScanAction
+                    ?.let { runCatching { AiScanAction.valueOf(it) }.getOrNull() }
+                when {
+                    !connected -> {
+                        pendingAiScanAction = null
+                        Toast.makeText(
+                            context,
+                            R.string.consent_still_unavailable,
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
+                    pendingAction != null -> launchAiScanAction(pendingAction)
+                    else -> isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
+                }
+            }
+            else -> {
+                pendingAiScanAction = null
+                Toast.makeText(
+                    context,
+                    consentMessages.getValue(outcome),
+                    Toast.LENGTH_LONG,
+                ).show()
+            }
+        }
+    }
+
+    fun requestAiScan(action: AiScanAction) {
+        fabExpanded = false
+        pendingAiScanAction = action.name
+        if (!needsAiScanSetup(mindlayerSupported, mindlayerInstalled)) {
+            aiConsentFlow.request()
+        } else {
+            showAiSetupDialog = true
+        }
+    }
+
+    LaunchedEffect(mindlayerInstalled, resumeAiSetupAfterInstall) {
+        if (
+            shouldResumePendingAiScan(
+                isInstalled = mindlayerInstalled,
+                resumeAfterInstall = resumeAiSetupAfterInstall,
+                hasPendingAction = pendingAiScanAction != null,
+            )
+        ) {
+            resumeAiSetupAfterInstall = false
+            aiConsentFlow.request()
+        }
+    }
+
+    if (showAiSetupDialog) {
+        AiScanSetupDialog(
+            isSupported = mindlayerSupported,
+            onDismiss = {
+                showAiSetupDialog = false
+                pendingAiScanAction = null
+            },
+            onInstall = {
+                showAiSetupDialog = false
+                resumeAiSetupAfterInstall = true
+                if (!MindlayerInstallLink.open(context)) {
+                    resumeAiSetupAfterInstall = false
+                    pendingAiScanAction = null
+                    Toast.makeText(context, couldNotOpenAppStore, Toast.LENGTH_LONG).show()
+                }
+            },
+            onManualEntry = ::openManualBagEntry,
+        )
     }
 
     // Handle captured photos result (from CameraCaptureScreen)
@@ -483,20 +608,14 @@ fun BagInventoryScreen(
                                 shape = MaterialTheme.shapes.small,
                             ) {
                                 Text(
-                                    text = stringResource(R.string.action_add_bag_gallery),
+                                    text = stringResource(R.string.action_read_bag_photos),
                                     style = MaterialTheme.typography.labelLarge,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                                 )
                             }
                             SmallFloatingActionButton(
-                                onClick = {
-                                    fabExpanded = false
-                                    bagDraftSessionId = UUID.randomUUID().toString()
-                                    photoPickerLauncher.launch(
-                                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
-                                    )
-                                },
+                                onClick = { requestAiScan(AiScanAction.GALLERY) },
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                 modifier = Modifier.testTag("fab_from_photo"),
                             ) {
@@ -512,18 +631,14 @@ fun BagInventoryScreen(
                                 shape = MaterialTheme.shapes.small,
                             ) {
                                 Text(
-                                    text = stringResource(R.string.action_add_bag_camera),
+                                    text = stringResource(R.string.action_scan_bag_ai),
                                     style = MaterialTheme.typography.labelLarge,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                                 )
                             }
                             SmallFloatingActionButton(
-                                onClick = {
-                                    fabExpanded = false
-                                    bagDraftSessionId = UUID.randomUUID().toString()
-                                    onNavigateToCamera()
-                                },
+                                onClick = { requestAiScan(AiScanAction.CAMERA) },
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                 modifier = Modifier.testTag("fab_scan_label"),
                             ) {
@@ -573,22 +688,7 @@ fun BagInventoryScreen(
                                 )
                             }
                             SmallFloatingActionButton(
-                                onClick = {
-                                    fabExpanded = false
-                                    bagDraftSessionId = UUID.randomUUID().toString()
-                                    // Reset any preflight scan state so the sheet opens blank
-                                    detectedBarcode = null
-                                    detectedQrUrl = null
-                                    ocrPrefill = null
-                                    capturedPhotoUris = null
-                                    offLookupName = null
-                                    offLookupRoaster = null
-                                    fieldEvidence = emptyMap()
-                                    reviewHints = emptyList()
-                                    llmStatus = LlmEnrichmentStatus.NOT_RUN
-                                    isProcessingScan = false
-                                    showAddSheet = true
-                                },
+                                onClick = ::openManualBagEntry,
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                 modifier = Modifier.testTag("fab_add_manual"),
                             ) {
@@ -600,16 +700,25 @@ fun BagInventoryScreen(
                         }
                     }
                 }
-                FloatingActionButton(
+                ExtendedFloatingActionButton(
                     onClick = { fabExpanded = !fabExpanded },
-                    shape = MaterialTheme.shapes.large,
+                    icon = {
+                        Icon(
+                            imageVector = if (fabExpanded) Icons.Filled.Close else Icons.Filled.Add,
+                            contentDescription = stringResource(
+                                if (fabExpanded) R.string.action_close else R.string.action_add_coffee,
+                            ),
+                        )
+                    },
+                    text = {
+                        Text(
+                            stringResource(
+                                if (fabExpanded) R.string.action_close else R.string.action_add_coffee,
+                            ),
+                        )
+                    },
                     modifier = Modifier.testTag("add_bag_fab"),
-                ) {
-                    Icon(
-                        imageVector = if (fabExpanded) Icons.Filled.Close else Icons.Filled.Add,
-                        contentDescription = if (fabExpanded) "Close menu" else "Add Bag",
-                    )
-                }
+                )
             }
         },
     ) { innerPadding ->
@@ -624,8 +733,26 @@ fun BagInventoryScreen(
                 EmptyStateBox(
                     icon = Icons.Filled.ShoppingBag,
                     message = stringResource(R.string.msg_no_beans_yet),
-                    subtitle = stringResource(R.string.msg_add_coffee_hint),
+                    subtitle = stringResource(R.string.msg_scan_first_coffee_hint),
                     modifier = Modifier.fillMaxSize(),
+                    action = {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Button(
+                                onClick = { requestAiScan(AiScanAction.CAMERA) },
+                                modifier = Modifier.testTag("empty_scan_bag"),
+                            ) {
+                                Icon(
+                                    Icons.Filled.CameraAlt,
+                                    contentDescription = null,
+                                    modifier = Modifier.padding(end = 8.dp),
+                                )
+                                Text(stringResource(R.string.action_scan_first_bag))
+                            }
+                            TextButton(onClick = ::openManualBagEntry) {
+                                Text(stringResource(R.string.action_add_bag_manual))
+                            }
+                        }
+                    },
                 )
             } else {
                 LazyColumn(
@@ -699,24 +826,48 @@ fun BagInventoryScreen(
                         brewsRemaining = brewsRemaining,
                     )
                 }
+                if (filteredRankedBags.isEmpty() && archivedBags.isNotEmpty()) {
+                    item(key = "no_active_bags") {
+                        Text(
+                            text = stringResource(R.string.msg_no_active_bags_yet),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 12.dp),
+                        )
+                    }
+                }
+                if (archivedBags.isNotEmpty()) {
+                    item(key = "bag_archive_toggle") {
+                        TextButton(
+                            onClick = { archiveExpanded = !archiveExpanded },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .testTag("bag_archive_toggle"),
+                        ) {
+                            Text(
+                                stringResource(
+                                    R.string.format_bag_archive_count,
+                                    archivedBags.size,
+                                ),
+                            )
+                        }
+                    }
+                    if (archiveExpanded) {
+                        items(
+                            items = archivedBags,
+                            key = { "archived_bag_${it.id}" },
+                        ) { bag ->
+                            BagCard(
+                                bag = bag,
+                                dateFormat = dateFormat,
+                                onTap = { selectedBagId = bag.id },
+                                modifier = Modifier.animateItem(),
+                            )
+                        }
+                    }
+                }
             }
         }
-        }
-    }
-
-    // First-run AI authorization. When the bag-photo LLM enrichment comes back
-    // UNAVAILABLE — typically because Mindlayer is installed but the user has
-    // never granted this app consent — the Add-bag screen offers an explicit
-    // "Enable AI" action wired here. On grant we rebind Mindlayer and re-run the
-    // enrichment so the user doesn't have to retry by hand. requestConsent
-    // also resolves the already-approved / not-installed cases gracefully.
-    val aiConsentFlow = rememberMindlayerConsentFlow { outcome ->
-        when (outcome) {
-            ConsentOutcome.GRANTED, ConsentOutcome.ALREADY_APPROVED -> coroutineScope.launch {
-                (context.applicationContext as? StarlitCoffeeApp)?.reconnectMindlayer()
-                isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
-            }
-            else -> Toast.makeText(context, consentMessages.getValue(outcome), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -1022,6 +1173,71 @@ fun BagInventoryScreen(
         )
     }
 }
+
+@Composable
+private fun AiScanSetupDialog(
+    isSupported: Boolean,
+    onDismiss: () -> Unit,
+    onInstall: () -> Unit,
+    onManualEntry: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = {
+            Icon(
+                imageVector = Icons.Filled.CameraAlt,
+                contentDescription = null,
+            )
+        },
+        title = {
+            Text(
+                stringResource(
+                    if (isSupported) R.string.dialog_ai_scan_setup_title
+                    else R.string.dialog_ai_scan_unsupported_title,
+                ),
+            )
+        },
+        text = {
+            Text(
+                stringResource(
+                    if (isSupported) R.string.msg_ai_scan_setup
+                    else R.string.msg_ai_scan_unsupported,
+                ),
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = if (isSupported) onInstall else onManualEntry) {
+                Text(
+                    stringResource(
+                        if (isSupported) R.string.action_mindlayer_google_play
+                        else R.string.action_add_bag_manual,
+                    ),
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = if (isSupported) onManualEntry else onDismiss) {
+                Text(
+                    stringResource(
+                        if (isSupported) R.string.action_add_bag_manual
+                        else R.string.action_cancel,
+                    ),
+                )
+            }
+        },
+    )
+}
+
+internal fun needsAiScanSetup(
+    isSupported: Boolean,
+    isInstalled: Boolean,
+): Boolean = !isSupported || !isInstalled
+
+internal fun shouldResumePendingAiScan(
+    isInstalled: Boolean,
+    resumeAfterInstall: Boolean,
+    hasPendingAction: Boolean,
+): Boolean = isInstalled && resumeAfterInstall && hasPendingAction
 
 internal fun selectedInventoryBag(
     bags: List<CoffeeBagEntity>,

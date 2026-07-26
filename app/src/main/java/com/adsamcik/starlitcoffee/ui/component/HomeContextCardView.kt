@@ -12,6 +12,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.semantics.heading
@@ -250,12 +251,18 @@ private fun LastBrewSummaryCard(
         Column(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
         ) {
-            Text(
-                text = "${card.ratingEmoji} Last brew was ${ratingLabel(card.brew.rating)}",
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurface,
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.semantics { heading() },
-            )
+            ) {
+                BrewRatingBadge(ratingValue = card.brew.rating)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Last brew was ${ratingLabel(card.brew.rating)}",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
             val details = buildString {
                 append("${"%.0f".format(card.brew.doseG)}g · 1:${"%.0f".format(card.brew.ratio)}")
                 if (card.bagName != null) append(" · ${card.bagName}")

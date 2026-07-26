@@ -63,12 +63,10 @@ fun OnboardingPersonalizeScreen(
     selectedMethods: Set<BrewMethod>,
     initialFilter: FilterType? = null,
     initialGrinder: String? = null,
-    showMindlayerRecommendation: Boolean = false,
     isSubmitting: Boolean = false,
     submitFailed: Boolean = false,
     onBack: () -> Unit,
     onSelectionChanged: (FilterType?, String?) -> Unit = { _, _ -> },
-    onOpenMindlayerPlayStore: () -> Unit = {},
     onFinish: (
         filterType: FilterType?,
         grinderId: String?,
@@ -158,32 +156,6 @@ fun OnboardingPersonalizeScreen(
                         }
                     }
 
-                }
-            }
-
-            if (showMindlayerRecommendation) {
-                ElevatedCard(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = stringResource(R.string.label_ai_service),
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                        Spacer(modifier = Modifier.height(6.dp))
-                        Text(
-                            text = stringResource(R.string.msg_mindlayer_install_recommendation),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Button(
-                            onClick = onOpenMindlayerPlayStore,
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
-                            Text(stringResource(R.string.action_mindlayer_google_play))
-                        }
-                    }
                 }
             }
 

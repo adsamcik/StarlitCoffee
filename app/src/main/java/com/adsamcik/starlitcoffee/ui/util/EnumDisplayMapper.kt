@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.util
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.InputMode
@@ -127,6 +128,15 @@ fun BrewRating.labelRes(): Int = when (this) {
     BrewRating.MEH -> R.string.rating_meh
     BrewRating.GOOD -> R.string.rating_good
     BrewRating.AWESOME -> R.string.rating_awesome
+}
+
+/** Starlit Coffee's cup-mark artwork for this rating tier. */
+@DrawableRes
+fun BrewRating.iconRes(): Int = when (this) {
+    BrewRating.BAD -> R.drawable.rating_starlit_cup_bad
+    BrewRating.MEH -> R.drawable.rating_starlit_cup_meh
+    BrewRating.GOOD -> R.drawable.rating_starlit_cup_good
+    BrewRating.AWESOME -> R.drawable.rating_starlit_cup_awesome
 }
 
 /** Content description for the tappable rating face (e.g. "Rate as good"). */

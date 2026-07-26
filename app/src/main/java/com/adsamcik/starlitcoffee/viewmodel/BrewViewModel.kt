@@ -57,7 +57,9 @@ import com.adsamcik.starlitcoffee.data.work.decodeBagExtractionResult
 import com.adsamcik.starlitcoffee.data.work.encodeToJson
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.notification.BagAnalysisNotifier
+import com.adsamcik.starlitcoffee.notification.BrewSessionNotifier
 import com.adsamcik.starlitcoffee.notification.NoOpBagAnalysisNotifier
+import com.adsamcik.starlitcoffee.notification.NoOpBrewSessionNotifier
 import com.adsamcik.starlitcoffee.notification.RatingReminders
 import com.adsamcik.starlitcoffee.scan.BagPhotoExtractor
 import com.adsamcik.starlitcoffee.scan.OffLookupSummary
@@ -224,6 +226,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     // bag-label extraction to the background. Defaults to a no-op for unit
     // tests; the factory wires the Android-backed notifier in production.
     private val bagAnalysisNotifier: BagAnalysisNotifier = NoOpBagAnalysisNotifier,
+    // Production injects an Android-backed notifier; tests keep this side
+    // effect off by default while the ViewModel remains the state owner.
+    private val brewSessionNotifier: BrewSessionNotifier = NoOpBrewSessionNotifier,
 ) : ViewModel() {
 
     private val llmCache = LlmResultCache()
@@ -342,7 +347,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         scope = viewModelScope,
         nowMs = nowMs,
         state = { _uiState.value },
-        update = { transform -> _uiState.update(transform) },
+        update = { transform ->
+            val next = _uiState.updateAndGet(transform)
+            brewSessionNotifier.onBrewStateChanged(next)
+        },
     )
     private var ratioPresetJob: Job? = null
 
@@ -1018,6 +1026,17 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     suspend fun getBrewLogById(logId: Long): BrewLogEntity? {
         return brewLogRepository?.getLogById(logId)
+    }
+
+    /**
+     * Correct the bag associated with an existing brew without changing inventory.
+     * A completed brew is historical, so reassignment must not consume stock again.
+     */
+    suspend fun updateBrewLogBagAndWait(logId: Long, bagId: Long?): Boolean {
+        val repository = brewLogRepository ?: return false
+        if (bagId != null && _coffeeBags.value.none { it.id == bagId }) return false
+        repository.updateCoffeeBag(logId, bagId)
+        return true
     }
 
     fun updateBrewLogFeedback(

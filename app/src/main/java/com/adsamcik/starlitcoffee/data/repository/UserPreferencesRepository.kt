@@ -11,6 +11,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -45,6 +46,7 @@ data class UserPreferences(
     // asking the user to rate it with 5 emojis. Opt-in because it needs
     // POST_NOTIFICATIONS permission on Android 13+ and not every user wants it.
     val ratingReminderEnabled: Boolean = false,
+    val brewVibrationTheme: BrewVibrationTheme = BrewVibrationTheme.CLASSIC,
     // When true, the bag-scan review screen records, on-device, a diff between
     // what the model extracted and what the user finally saved. This is a
     // privacy-sensitive quality signal (it captures edited label metadata), so
@@ -87,6 +89,7 @@ interface UserPreferencesStore {
     suspend fun updateShowBrewingInstructions(enabled: Boolean)
     suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>)
     suspend fun updateRatingReminderEnabled(enabled: Boolean)
+    suspend fun updateBrewVibrationTheme(theme: BrewVibrationTheme)
     suspend fun updateScanCorrectionLoggingEnabled(enabled: Boolean)
     suspend fun updateDimModeEnabled(enabled: Boolean)
     suspend fun updateDimModeTrueBlack(enabled: Boolean)
@@ -116,6 +119,7 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
         val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
         val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
+        val BREW_VIBRATION_THEME = stringPreferencesKey("brew_vibration_theme")
         val SCAN_CORRECTION_LOGGING_ENABLED = booleanPreferencesKey("scan_correction_logging_enabled")
     }
 
@@ -165,6 +169,9 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
                     prefs[Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS].orEmpty(),
                 ),
                 ratingReminderEnabled = prefs[Keys.RATING_REMINDER_ENABLED] ?: false,
+                brewVibrationTheme = prefs[Keys.BREW_VIBRATION_THEME]
+                    ?.let { name -> BrewVibrationTheme.entries.find { it.name == name } }
+                    ?: BrewVibrationTheme.CLASSIC,
                 scanCorrectionLoggingEnabled = prefs[Keys.SCAN_CORRECTION_LOGGING_ENABLED] ?: false,
             )
         }
@@ -310,6 +317,12 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
             prefs[Keys.RATING_REMINDER_ENABLED] = enabled
         }
     }
+    override suspend fun updateBrewVibrationTheme(theme: BrewVibrationTheme) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.BREW_VIBRATION_THEME] = theme.name
+        }
+    }
+
 
     override suspend fun updateScanCorrectionLoggingEnabled(enabled: Boolean) {
         context.dataStore.edit { prefs ->

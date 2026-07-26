@@ -58,6 +58,7 @@ import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
+import com.adsamcik.starlitcoffee.ui.component.CoffeeBagSelector
 import com.adsamcik.starlitcoffee.ui.component.shareBrewCard
 import com.adsamcik.starlitcoffee.ui.util.displayNameRes
 import com.adsamcik.starlitcoffee.ui.util.emoji
@@ -116,6 +117,7 @@ fun BrewLogDetailScreen(
     }
     var notes by rememberSaveable { mutableStateOf("") }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+    var isUpdatingBag by remember { mutableStateOf(false) }
 
     // Track whether the editable state has been seeded from the loaded entity / flavor tags.
     // Saved across config changes so the entity-load LaunchedEffect doesn't overwrite restored
@@ -413,14 +415,47 @@ fun BrewLogDetailScreen(
                     DetailRow(stringResource(R.string.label_coffee), "${"%.1f".format(entity.doseG)}$unitGrams")
                     DetailRow(stringResource(R.string.label_water), "${"%.0f".format(entity.waterG)}$unitGrams")
 
-                    if (entity.coffeeBagId != null) {
-                        val bagName = bags.find { it.id == entity.coffeeBagId }?.let { bag ->
-                            bag.name + (bag.roaster?.let { " ($it)" } ?: "")
-                        }
-                        if (bagName != null) {
-                            DetailRow(stringResource(R.string.label_coffee_bag), bagName)
-                        }
-                    }
+                    Text(
+                        text = stringResource(R.string.label_coffee_bag),
+                        style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
+                    )
+                    CoffeeBagSelector(
+                        bags = bags,
+                        selectedBag = bags.find { it.id == entity.coffeeBagId },
+                        onSelectBag = { bagId ->
+                            if (isUpdatingBag) return@CoffeeBagSelector
+                            isUpdatingBag = true
+                            scope.launch {
+                                try {
+                                    check(brewViewModel.updateBrewLogBagAndWait(entity.id, bagId))
+                                    log = entity.copy(coffeeBagId = bagId)
+                                } catch (error: CancellationException) {
+                                    throw error
+                                } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                                    Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
+                                } finally {
+                                    isUpdatingBag = false
+                                }
+                            }
+                        },
+                        onClearBag = {
+                            if (isUpdatingBag) return@CoffeeBagSelector
+                            isUpdatingBag = true
+                            scope.launch {
+                                try {
+                                    check(brewViewModel.updateBrewLogBagAndWait(entity.id, null))
+                                    log = entity.copy(coffeeBagId = null)
+                                } catch (error: CancellationException) {
+                                    throw error
+                                } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                                    Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
+                                } finally {
+                                    isUpdatingBag = false
+                                }
+                            }
+                        },
+                    )
 
                     if (entity.brewTimeSeconds != null && entity.brewTimeSeconds > 0) {
                         val min = entity.brewTimeSeconds / 60

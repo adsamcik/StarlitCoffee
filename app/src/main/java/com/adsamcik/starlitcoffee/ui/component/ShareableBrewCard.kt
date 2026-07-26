@@ -65,7 +65,7 @@ fun ShareableBrewCard(
                 BrewRatingBadge(
                     rating = brewRating,
                     showLabel = true,
-                    emojiSize = 28.sp,
+                    iconSize = 28.sp,
                 )
                 Spacer(modifier = Modifier.height(12.dp))
             }
@@ -191,7 +191,6 @@ fun shareBrewCard(
     val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
     val dateStr = dateFormat.format(Date(brew.createdAt))
     val brewRating = BrewRating.fromStoredValue(brew.rating)
-    val ratingEmoji = brewRating?.emoji ?: ""
     val filterLabel = when (brew.filterType) {
         "PAPER" -> "Paper"
         "METAL_19K" -> "19K Metal"
@@ -200,7 +199,6 @@ fun shareBrewCard(
     }
 
     val text = buildString {
-        if (ratingEmoji.isNotEmpty()) append("$ratingEmoji ")
         append("$methodName brew")
         if (brew.isDecaf) append(" · Decaf")
         if (bagName != null) append(" · $bagName")
@@ -224,7 +222,7 @@ fun shareBrewCard(
         putExtra(Intent.EXTRA_TEXT, text)
         putExtra(
             Intent.EXTRA_SUBJECT,
-            "$ratingEmoji My ${if (brew.isDecaf) "decaf " else ""}$methodName brew",
+            "My ${if (brew.isDecaf) "decaf " else ""}$methodName brew",
         )
     }
 

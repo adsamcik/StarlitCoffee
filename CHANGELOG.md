@@ -5,9 +5,19 @@ All notable changes to **Starlit Coffee** are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.4.0] — 2026-07-25
 
 ### Added
+
+- **Brewing companion** — a live brew can now enter a compact,
+  phase-and-timer-only Picture-in-Picture window when the app is minimized.
+- **Background brew alerts** — an ongoing notification keeps the elapsed timer
+  recoverable outside the app, while bloom completion and recipe target time
+  arrive as high-visibility alerts that return directly to the brew.
+- **Brew vibration themes** — Soft, Classic, and Bold haptic personalities now
+  give minute markers, bloom warning/completion, and target-time cues distinct
+  meanings. The selected theme is available in Settings and applies to
+  background alert channels as well as on-screen haptics.
 
 - **Adaptive large-screen layouts (Android 17 / SDK 37)** — on `sw>=600dp` the
   portrait orientation lock is ignored, so the app now adapts to tablets,

@@ -18,14 +18,13 @@ import kotlin.math.roundToInt
  */
 enum class BrewRating(
     val score: Int,
-    val emoji: String,
     val tasteFeedback: TasteFeedback?,
     val triggersIssueFollowUp: Boolean,
 ) {
-    BAD(1, "☹️", null, triggersIssueFollowUp = true),
-    MEH(2, "😐", null, triggersIssueFollowUp = false),
-    GOOD(3, "😀", TasteFeedback.BALANCED, triggersIssueFollowUp = false),
-    AWESOME(4, "😋", TasteFeedback.BALANCED, triggersIssueFollowUp = false),
+    BAD(1, null, triggersIssueFollowUp = true),
+    MEH(2, null, triggersIssueFollowUp = false),
+    GOOD(3, TasteFeedback.BALANCED, triggersIssueFollowUp = false),
+    AWESOME(4, TasteFeedback.BALANCED, triggersIssueFollowUp = false),
     ;
 
     /** Value written to the `rating` column. */
