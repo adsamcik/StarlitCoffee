@@ -260,7 +260,6 @@ shipped in version `1.0.0` (`versionCode = 1`).
   CS grammar polish.
 - **GitHub Pages landing site** under `docs/`.
 - **Bilingual privacy policy** (later consolidated to English only).
-- **Play Store feature graphic** asset.
 - **Play Asset Delivery** wiring for AI model distribution.
 
 ### Added — Engineering

@@ -61,6 +61,10 @@ classes.jar
 # Release build artifacts (signed APK/AAB)
 app/release/
 
+# Private store-submission assets
+app/src/main/playstore/
+app/src/main/ic_launcher-playstore.png
+
 # Local scratch eval output (never committed)
 eval/
 tools/mindlayer_test_output.txt
@@ -78,4 +82,3 @@ __pycache__/
 # app/src/main/res/drawable-nodpi.
 /docs/assets/vessel-icons/
 /tools/bloom-validation/
-
