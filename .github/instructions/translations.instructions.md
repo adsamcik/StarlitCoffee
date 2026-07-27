@@ -1,11 +1,12 @@
 ---
-applyTo: "app/src/main/res/values*/strings.xml"
+applyTo: "app/src/main/res/values*/*.xml"
 description: "How to translate user-facing strings for Starlit Coffee (multi-language)"
 ---
 
 # Translation Guide
 
-Starlit Coffee ships in **23 languages**. English (`values/strings.xml`) is the source of truth; every other locale MUST have an identical `<string>` key set at all times.
+Starlit Coffee ships in **23 languages**. English (`values/`) is the source of truth; every other locale MUST have an identical set of translated `<string>`, `<plurals>`, and `<string-array>` keys across every XML file in its `values-<locale>/` directory.
+This includes split files such as `release_1_4_strings.xml` and future `brewing_guidance.xml` files.
 
 | Language | Locale | Directory |
 |---|---|---|
@@ -49,18 +50,15 @@ The Czech-specific glossary and conventions below remain the canonical worked ex
 
 ## Adding a New String
 
-1. Add the key to `values/strings.xml` (English source) **and to every other `values-<locale>/strings.xml`** in the same logical section (use the `<!-- Section -->` comments). Never leave a locale missing a key.
-2. Verify keys stay aligned across **all** locales (each `Compare-Object` must return nothing):
+1. Add the key to the appropriate English XML file and to the matching XML file in every `values-<locale>/` directory. Never leave a locale missing a key.
+   Put new brew guidance in `brewing_guidance.xml` in every locale rather than scattering it through unrelated files.
+2. Keep the aggregate translated resource set aligned across every XML file, not merely `strings.xml`.
+3. Run the aggregate parity test; it also checks format-placeholder signatures while permitting reordered indexed arguments:
    ```powershell
-   $en = (Select-Xml -Path app\src\main\res\values\strings.xml -XPath "//string").Node.name | Sort-Object
-   foreach ($loc in 'bg','cs','da','de','el','es','et','fi','fr','hr','hu','it','lt','lv','nl','pl','pt','ro','sk','sl','sv','zh') {
-       $tgt = (Select-Xml -Path "app\src\main\res\values-$loc\strings.xml" -XPath "//string").Node.name | Sort-Object
-       $diff = Compare-Object $en $tgt
-       if ($diff) { Write-Host "$loc MISMATCH"; $diff } else { Write-Host "$loc OK" }
-   }
+   .\gradlew.bat testDebugUnitTest --tests "com.adsamcik.starlitcoffee.ui.guidance.AndroidValuesParityVerifierTest"
    ```
-3. For `<plurals>`, use the correct CLDR categories per language: `one`/`other` for bg, da, de, el, es, et, fi, fr, hu, it, nl, pt, sv; `one`/`few`/`other` for hr, lt, ro; `zero`/`one`/`other` for lv; `one`/`two`/`few`/`other` for sl; `one`/`few`/`many`/`other` for cs, pl, sk; `other` only for zh.
-4. Use `snake_case` keys with an affordance prefix:
+4. For `<plurals>`, use the correct CLDR categories per language: `one`/`other` for bg, da, de, el, es, et, fi, fr, hu, it, nl, pt, sv; `one`/`few`/`other` for hr, lt, ro; `zero`/`one`/`other` for lv; `one`/`two`/`few`/`other` for sl; `one`/`few`/`many`/`other` for cs, pl, sk; `other` only for zh.
+5. Use `snake_case` keys with an affordance prefix:
    - `action_*` — button labels, menu actions
    - `label_*` — field labels, section titles
    - `msg_*` — full-sentence microcopy / body text
@@ -157,7 +155,7 @@ If you hit a collision that actually confuses users (two different screens rende
 
 Before committing translation changes:
 
-- [ ] Every `values-<locale>/strings.xml` has the same `<string>` keys as `values/strings.xml` (`Compare-Object` returns nothing for all locales).
+- [ ] The aggregate `AndroidValuesParityVerifierTest` passes for every `values-<locale>/` directory and every string-like XML resource file.
 - [ ] `.\gradlew.bat assembleDebug` passes (no XML syntax errors, no missing references).
 - [ ] New loanwords in Czech are declined properly in mid-sentence contexts.
 - [ ] Button labels are infinitive verbs in CS.
