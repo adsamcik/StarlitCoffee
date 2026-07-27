@@ -14,6 +14,7 @@ import org.opencv.core.Mat
 import org.opencv.core.Point
 import org.opencv.core.Scalar
 import org.opencv.core.Size
+import org.opencv.geometry.Geometry
 import org.opencv.imgproc.CLAHE
 import org.opencv.imgproc.Imgproc
 import kotlin.math.abs
@@ -168,7 +169,7 @@ object ImagePreprocessor {
         Utils.bitmapToMat(bitmap, src)
 
         val center = Point(src.cols() / 2.0, src.rows() / 2.0)
-        val rotMat = Imgproc.getRotationMatrix2D(center, angleDegrees.toDouble(), 1.0)
+        val rotMat = Geometry.getRotationMatrix2D(center, angleDegrees.toDouble(), 1.0)
 
         // Expand canvas to avoid clipping corners
         val cos = abs(rotMat.get(0, 0)[0])
