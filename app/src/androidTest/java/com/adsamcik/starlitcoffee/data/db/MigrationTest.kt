@@ -30,11 +30,11 @@ class MigrationTest {
      * drift (a forgotten column/index) that would crash on app upgrade.
      */
     @Test
-    fun migrateAll10To17_matchesExportedSchema() {
+    fun migrateAll10To18_matchesExportedSchema() {
         helper.createDatabase(MIGRATION_TEST_DB, 10).close()
         helper.runMigrationsAndValidate(
             MIGRATION_TEST_DB,
-            17,
+            18,
             true,
             *AppDatabase.ALL_MIGRATIONS,
         ).close()
@@ -63,6 +63,248 @@ class MigrationTest {
             assertEquals("Existing bag", cursor.getString(0))
             assertTrue(cursor.isNull(1))
             cursor.close()
+        }
+    }
+
+    @Test
+    fun migrate17to18_preservesLegacyRowsAndAddsStableBrewingState() {
+        val databaseName = "starlit-test-db-v18"
+        helper.createDatabase(databaseName, 17).apply {
+            execSQL(
+                """
+                INSERT INTO saved_recipes (
+                    id, coffeeName, roaster, roastLevel, processType, method, ratio, doseG, waterG,
+                    grinderId, grindSetting, filterType, isDecaf, notes, createdAt
+                ) VALUES (
+                    1, 'Yirgacheffe', 'Starlit Roasters', 'LIGHT', 'WASHED', 'V60', 16.0, 15.0, 240.0,
+                    'grinder-1', '18', 'PAPER', 0, 'Legacy V60 recipe', 1735689600000
+                )
+                """.trimIndent(),
+            )
+            execSQL(
+                """
+                INSERT INTO saved_recipes (
+                    id, coffeeName, roaster, roastLevel, processType, method, ratio, doseG, waterG,
+                    grinderId, grindSetting, filterType, isDecaf, notes, createdAt
+                ) VALUES (
+                    2, 'Experimental', NULL, NULL, NULL, 'FUTURE_METHOD', 17.0, 20.0, 340.0,
+                    NULL, NULL, NULL, 1, NULL, 1735689601000
+                )
+                """.trimIndent(),
+            )
+            execSQL(
+                """
+                INSERT INTO brew_logs (
+                    id, recipeId, coffeeBagId, method, doseG, waterG, ratio, grindSetting, filterType,
+                    isDecaf, tasteFeedback, rating, freeformNotes, brewTimeSeconds, createdAt
+                ) VALUES (
+                    1, 1, NULL, 'ESPRESSO', 18.0, 36.0, 2.0, '4', NULL,
+                    0, 'Sweet', 4.0, 'Legacy espresso log', 29, 1735689602000
+                )
+                """.trimIndent(),
+            )
+            execSQL(
+                """
+                INSERT INTO brew_logs (
+                    id, recipeId, coffeeBagId, method, doseG, waterG, ratio, grindSetting, filterType,
+                    isDecaf, tasteFeedback, rating, freeformNotes, brewTimeSeconds, createdAt
+                ) VALUES (
+                    2, NULL, NULL, 'FUTURE_METHOD', 12.0, 200.0, 16.7, NULL, NULL,
+                    0, NULL, NULL, NULL, NULL, 1735689603000
+                )
+                """.trimIndent(),
+            )
+            execSQL(
+                """
+                INSERT INTO ratio_presets (id, methodName, ratio, label, sortOrder)
+                VALUES (1, 'FRENCH_PRESS', 15.0, 'Full body', 0)
+                """.trimIndent(),
+            )
+            execSQL(
+                """
+                INSERT INTO ratio_presets (id, methodName, ratio, label, sortOrder)
+                VALUES (2, 'FUTURE_METHOD', 18.0, 'Unknown legacy method', 1)
+                """.trimIndent(),
+            )
+            close()
+        }
+
+        helper.runMigrationsAndValidate(
+            databaseName,
+            18,
+            true,
+            AppDatabase.MIGRATION_17_18,
+        ).use { db ->
+            db.query(
+                """
+                SELECT method, methodFamilyId, brewerProfileId, snapshotVersion, recipeSnapshotJson
+                FROM saved_recipes WHERE id = 1
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals("V60", cursor.getString(0))
+                assertEquals("manual_gravity", cursor.getString(1))
+                assertEquals("v60_unspecified", cursor.getString(2))
+                assertTrue(cursor.isNull(3))
+                assertTrue(cursor.isNull(4))
+            }
+            db.query(
+                """
+                SELECT method, methodFamilyId, brewerProfileId, snapshotVersion, recipeSnapshotJson
+                FROM saved_recipes WHERE id = 2
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals("FUTURE_METHOD", cursor.getString(0))
+                assertTrue(cursor.isNull(1))
+                assertTrue(cursor.isNull(2))
+                assertTrue(cursor.isNull(3))
+                assertTrue(cursor.isNull(4))
+            }
+
+            db.query(
+                """
+                SELECT method, methodFamilyId, brewerProfileId, snapshotVersion, brewSnapshotJson, sourceSessionId
+                FROM brew_logs WHERE id = 1
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals("ESPRESSO", cursor.getString(0))
+                assertEquals("espresso", cursor.getString(1))
+                assertEquals("espresso_pump_generic", cursor.getString(2))
+                assertTrue(cursor.isNull(3))
+                assertTrue(cursor.isNull(4))
+                assertTrue(cursor.isNull(5))
+            }
+            db.query(
+                """
+                SELECT method, methodFamilyId, brewerProfileId, snapshotVersion, brewSnapshotJson, sourceSessionId
+                FROM brew_logs WHERE id = 2
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals("FUTURE_METHOD", cursor.getString(0))
+                assertTrue(cursor.isNull(1))
+                assertTrue(cursor.isNull(2))
+                assertTrue(cursor.isNull(3))
+                assertTrue(cursor.isNull(4))
+                assertTrue(cursor.isNull(5))
+            }
+
+            db.query(
+                """
+                SELECT methodName, methodFamilyId, brewerProfileId FROM ratio_presets WHERE id = 1
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals("FRENCH_PRESS", cursor.getString(0))
+                assertEquals("full_immersion_press", cursor.getString(1))
+                assertEquals("french_press_generic", cursor.getString(2))
+            }
+            db.query(
+                """
+                SELECT methodName, methodFamilyId, brewerProfileId FROM ratio_presets WHERE id = 2
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals("FUTURE_METHOD", cursor.getString(0))
+                assertTrue(cursor.isNull(1))
+                assertTrue(cursor.isNull(2))
+            }
+
+            val tableNames = mutableSetOf<String>()
+            db.query("SELECT name FROM sqlite_master WHERE type = 'table'").use { cursor ->
+                while (cursor.moveToNext()) {
+                    tableNames += cursor.getString(0)
+                }
+            }
+            assertTrue(tableNames.contains("active_brew_sessions"))
+            assertTrue(tableNames.contains("custom_brewer_profiles"))
+
+            db.execSQL(
+                """
+                INSERT INTO active_brew_sessions (
+                    sessionId, status, recipeSnapshotVersion, recipeSnapshotJson,
+                    compiledPlanSchemaVersion, compiledPlanJson, runtimeSchemaVersion, runtimeJson,
+                    executionContextSchemaVersion, executionContextJson,
+                    currentStageId, currentStageIndex, startedAtWallClockMillis, pausedAtWallClockMillis,
+                    deadlineAtWallClockMillis, scheduledEventToken, notificationStateJson,
+                    lastProcessedEventId, completedLogId, revision, createdAt, updatedAt
+                ) VALUES (
+                    'session-1', 'RUNNING', 1, '{}', 1, '{}', 1, '{}',
+                    1, '{"coffeeBagId":42}', 'bloom', 0, 1735689604000, NULL, 1735689610000, 'work-1', '{}',
+                    'event-1', NULL, 3, 1735689604000, 1735689605000
+                )
+                """.trimIndent(),
+            )
+            db.execSQL(
+                """
+                INSERT INTO active_brew_sessions (
+                    sessionId, status, recipeSnapshotVersion, recipeSnapshotJson,
+                    compiledPlanSchemaVersion, compiledPlanJson, runtimeSchemaVersion, runtimeJson,
+                    revision, createdAt, updatedAt
+                ) VALUES (
+                    'session-no-context', 'PAUSED', 1, '{}', 1, '{}', 1, '{}', 0, 1735689604000, 1735689605000
+                )
+                """.trimIndent(),
+            )
+            db.query(
+                """
+                SELECT executionContextSchemaVersion, executionContextJson, revision
+                FROM active_brew_sessions WHERE sessionId = 'session-no-context'
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertTrue(cursor.isNull(0))
+                assertTrue(cursor.isNull(1))
+                assertEquals(0L, cursor.getLong(2))
+            }
+
+            db.execSQL(
+                """
+                INSERT INTO custom_brewer_profiles (
+                    id, displayName, methodFamilyId, schemaVersion, profileJson, createdAt, updatedAt
+                ) VALUES (
+                    'custom-v60', 'My V60', 'manual_gravity', 1, '{}', 1735689604000, 1735689605000
+                )
+                """.trimIndent(),
+            )
+            db.query(
+                """
+                SELECT status, executionContextSchemaVersion, executionContextJson, currentStageId,
+                    deadlineAtWallClockMillis, revision
+                FROM active_brew_sessions WHERE sessionId = 'session-1'
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals("RUNNING", cursor.getString(0))
+                assertEquals(1, cursor.getInt(1))
+                assertEquals("""{"coffeeBagId":42}""", cursor.getString(2))
+                assertEquals("bloom", cursor.getString(3))
+                assertEquals(1735689610000, cursor.getLong(4))
+                assertEquals(3, cursor.getLong(5))
+            }
+            db.query(
+                """
+                SELECT displayName, methodFamilyId, schemaVersion
+                FROM custom_brewer_profiles WHERE id = 'custom-v60'
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals("My V60", cursor.getString(0))
+                assertEquals("manual_gravity", cursor.getString(1))
+                assertEquals(1, cursor.getInt(2))
+            }
+
+            var sourceSessionIndexIsUnique = false
+            db.query("PRAGMA index_list('brew_logs')").use { cursor ->
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(1) == "index_brew_logs_sourceSessionId") {
+                        sourceSessionIndexIsUnique = cursor.getInt(2) == 1
+                    }
+                }
+            }
+            assertTrue("Expected a unique source-session index for idempotent log writes", sourceSessionIndexIsUnique)
         }
     }
 

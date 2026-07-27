@@ -1,5 +1,7 @@
 package com.adsamcik.starlitcoffee.data.repository
 
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
+import com.adsamcik.starlitcoffee.domain.brewing.CatalogResolution
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.dao.RatioPresetDao
 import com.adsamcik.starlitcoffee.data.db.entity.RatioPresetEntity
@@ -35,11 +37,23 @@ class RatioPresetRepository(private val dao: RatioPresetDao) {
     }
 
     suspend fun savePresetsForMethod(method: BrewMethod, presets: List<RatioPreset>) {
+        val profileId = when (
+            val resolution = BuiltinBrewingCatalog.instance.resolveLegacyMethod(method.name)
+        ) {
+            is CatalogResolution.Known -> resolution.value
+            is CatalogResolution.Unknown -> null
+        }
+        val familyId = profileId?.let { id ->
+            BuiltinBrewingCatalog.instance.findBrewerProfile(id)?.familyId
+        }
+
         dao.deleteByMethod(method.name)
         dao.insertAll(
             presets.mapIndexed { index, preset ->
                 RatioPresetEntity(
                     methodName = method.name,
+                    methodFamilyId = familyId?.value,
+                    brewerProfileId = profileId?.value,
                     ratio = preset.ratio,
                     label = "1:${preset.labelArg}",
                     sortOrder = index,

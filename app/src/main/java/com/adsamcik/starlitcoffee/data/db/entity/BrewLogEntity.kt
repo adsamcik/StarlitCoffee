@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey
     indices = [
         Index("coffeeBagId"),
         Index("recipeId"),
+        Index(value = ["sourceSessionId"], unique = true),
     ]
 )
 data class BrewLogEntity(
@@ -17,6 +18,11 @@ data class BrewLogEntity(
     val recipeId: Long? = null,
     val coffeeBagId: Long? = null,
     val method: String,
+    val methodFamilyId: String? = null,
+    val brewerProfileId: String? = null,
+    val snapshotVersion: Int? = null,
+    val brewSnapshotJson: String? = null,
+    val sourceSessionId: String? = null,
     val doseG: Float,
     val waterG: Float,
     val ratio: Float,

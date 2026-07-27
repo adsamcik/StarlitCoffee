@@ -54,6 +54,18 @@ internal class FakeBrewLogDao : BrewLogDao {
         return id
     }
 
+
+    override suspend fun insertIfSourceSessionIsNew(log: BrewLogEntity): Long {
+        val sourceSessionId = log.sourceSessionId
+        if (sourceSessionId != null && logs.any { it.sourceSessionId == sourceSessionId }) {
+            return -1L
+        }
+        return insert(log)
+    }
+
+    override suspend fun getBySourceSessionId(sourceSessionId: String): BrewLogEntity? =
+        logs.find { it.sourceSessionId == sourceSessionId }
+
     override suspend fun delete(log: BrewLogEntity) {
         logs.removeAll { it.id == log.id }
         flow.value = logs.toList()

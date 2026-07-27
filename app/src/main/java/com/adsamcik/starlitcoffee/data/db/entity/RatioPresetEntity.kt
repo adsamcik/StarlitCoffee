@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 data class RatioPresetEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val methodName: String,
+    val methodFamilyId: String? = null,
+    val brewerProfileId: String? = null,
     val ratio: Float,
     val label: String,
     val sortOrder: Int,

@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.data.db.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +12,12 @@ import kotlinx.coroutines.flow.Flow
 interface BrewLogDao {
     @Insert
     suspend fun insert(log: BrewLogEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertIfSourceSessionIsNew(log: BrewLogEntity): Long
+
+    @Query("SELECT * FROM brew_logs WHERE sourceSessionId = :sourceSessionId")
+    suspend fun getBySourceSessionId(sourceSessionId: String): BrewLogEntity?
 
     @Query("UPDATE brew_logs SET rating = :rating, freeformNotes = :notes WHERE id = :logId")
     suspend fun updateRating(logId: Long, rating: Float, notes: String?)

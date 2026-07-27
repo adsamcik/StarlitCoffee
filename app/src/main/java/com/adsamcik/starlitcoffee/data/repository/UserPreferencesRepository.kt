@@ -10,6 +10,8 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
+import com.adsamcik.starlitcoffee.domain.brewing.CatalogResolution
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
 import com.adsamcik.starlitcoffee.data.model.FilterType
@@ -98,7 +100,7 @@ interface UserPreferencesStore {
     suspend fun updateDimModeForceDarkInLight(enabled: Boolean)
 }
 
-class UserPreferencesRepository(private val context: Context) : UserPreferencesStore {
+class UserPreferencesRepository(private val context: Context) : UserPreferencesStore, BrewingPreferenceStore {
 
     private object Keys {
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
@@ -121,6 +123,11 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
         val BREW_VIBRATION_THEME = stringPreferencesKey("brew_vibration_theme")
         val SCAN_CORRECTION_LOGGING_ENABLED = booleanPreferencesKey("scan_correction_logging_enabled")
+        val ENABLED_BREWER_PROFILE_IDS = stringSetPreferencesKey("enabled_brewer_profile_ids")
+        val DEFAULT_BREWER_PROFILE_ID = stringPreferencesKey("default_brewer_profile_id")
+        val GUIDANCE_BY_METHOD_FAMILY = stringSetPreferencesKey("guidance_by_method_family")
+        val GUIDANCE_BY_BREWER_PROFILE = stringSetPreferencesKey("guidance_by_brewer_profile")
+        val UTILITY_MODULES_BY_METHOD_FAMILY = stringSetPreferencesKey("utility_modules_by_method_family")
     }
 
     override val userPreferences: Flow<UserPreferences> = context.dataStore.data
@@ -177,6 +184,37 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         }
         .distinctUntilChanged()
 
+    override val brewingPreferences: Flow<StableBrewingPreferences> = context.dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+        .map(::readStableBrewingPreferences)
+        .distinctUntilChanged()
+
+    override suspend fun updateBrewingPreferences(preferences: StableBrewingPreferences) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.ENABLED_BREWER_PROFILE_IDS] = preferences.enabledBrewerProfileIds
+            if (preferences.defaultBrewerProfileId == null) {
+                prefs.remove(Keys.DEFAULT_BREWER_PROFILE_ID)
+            } else {
+                prefs[Keys.DEFAULT_BREWER_PROFILE_ID] = preferences.defaultBrewerProfileId
+            }
+            prefs[Keys.GUIDANCE_BY_METHOD_FAMILY] = encodeKeyValueMap(
+                preferences.guidanceByMethodFamilyId,
+            )
+            prefs[Keys.GUIDANCE_BY_BREWER_PROFILE] = encodeKeyValueMap(
+                preferences.guidanceByBrewerProfileId,
+            )
+            prefs[Keys.UTILITY_MODULES_BY_METHOD_FAMILY] = encodeUtilityModules(
+                preferences.utilityModulesByMethodFamilyId,
+            )
+        }
+    }
+
     override suspend fun completeOnboarding(
         enabledMethods: Set<BrewMethod>,
         defaultMethod: BrewMethod,
@@ -188,6 +226,7 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
             prefs[Keys.ONBOARDING_COMPLETED] = true
             prefs[Keys.ENABLED_METHODS] = methodSelection.enabledMethods.map { it.name }.toSet()
             prefs[Keys.DEFAULT_METHOD] = methodSelection.defaultMethod.name
+            writeStableSelection(prefs, methodSelection)
             if (defaultFilterType != null &&
                 methodSelection.enabledMethods.contains(BrewMethod.PULSAR)
             ) {
@@ -395,5 +434,103 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
     ) {
         prefs[Keys.ENABLED_METHODS] = selection.enabledMethods.map { it.name }.toSet()
         prefs[Keys.DEFAULT_METHOD] = selection.defaultMethod.name
+        writeStableSelection(prefs, selection)
     }
+    private fun readStableBrewingPreferences(prefs: Preferences): StableBrewingPreferences {
+        val enabledProfileIds = prefs[Keys.ENABLED_BREWER_PROFILE_IDS]
+            ?: legacyEnabledBrewerProfileIds(prefs)
+        val defaultProfileId = prefs[Keys.DEFAULT_BREWER_PROFILE_ID]
+            ?: legacyDefaultBrewerProfileId(prefs)
+        val guidanceByFamily = prefs[Keys.GUIDANCE_BY_METHOD_FAMILY]
+            ?.let(::parseKeyValueMap)
+            ?: legacyGuidanceByFamily(enabledProfileIds, prefs[Keys.SHOW_BREWING_INSTRUCTIONS] ?: true)
+        return StableBrewingPreferences(
+            enabledBrewerProfileIds = enabledProfileIds,
+            defaultBrewerProfileId = defaultProfileId,
+            guidanceByMethodFamilyId = guidanceByFamily,
+            guidanceByBrewerProfileId = parseKeyValueMap(
+                prefs[Keys.GUIDANCE_BY_BREWER_PROFILE].orEmpty(),
+            ),
+            utilityModulesByMethodFamilyId = parseUtilityModules(
+                prefs[Keys.UTILITY_MODULES_BY_METHOD_FAMILY].orEmpty(),
+            ),
+        )
+    }
+
+    private fun legacyEnabledBrewerProfileIds(prefs: Preferences): Set<String> {
+        val rawMethods = prefs[Keys.ENABLED_METHODS] ?: BrewMethod.entries.map(BrewMethod::name).toSet()
+        return rawMethods.map(::legacyBrewerProfileId).toSet()
+    }
+
+    private fun legacyDefaultBrewerProfileId(prefs: Preferences): String =
+        legacyBrewerProfileId(prefs[Keys.DEFAULT_METHOD] ?: BrewMethod.PULSAR.name)
+
+    private fun legacyBrewerProfileId(rawMethodId: String): String = when (
+        val resolution = BuiltinBrewingCatalog.instance.resolveLegacyMethod(rawMethodId)
+    ) {
+        is CatalogResolution.Known -> resolution.value.value
+        is CatalogResolution.Unknown -> resolution.rawId
+    }
+
+    private fun legacyGuidanceByFamily(
+        profileIds: Set<String>,
+        showInstructions: Boolean,
+    ): Map<String, String> {
+        val level = if (showInstructions) "CONCISE" else "FOCUSED"
+        return profileIds.mapNotNull { profileId ->
+            BuiltinBrewingCatalog.instance.brewerProfiles
+                .find { it.id.value == profileId }
+                ?.familyId
+                ?.value
+        }.associateWith { level }
+    }
+
+    private fun writeStableSelection(
+        prefs: androidx.datastore.preferences.core.MutablePreferences,
+        selection: MethodSelection,
+    ) {
+        val profileIds = selection.enabledMethods.map { method ->
+            legacyBrewerProfileId(method.name)
+        }.toSet()
+        prefs[Keys.ENABLED_BREWER_PROFILE_IDS] = profileIds
+        prefs[Keys.DEFAULT_BREWER_PROFILE_ID] = legacyBrewerProfileId(selection.defaultMethod.name)
+        if (prefs[Keys.GUIDANCE_BY_METHOD_FAMILY] == null) {
+            val guidance = legacyGuidanceByFamily(
+                profileIds = profileIds,
+                showInstructions = prefs[Keys.SHOW_BREWING_INSTRUCTIONS] ?: true,
+            )
+            prefs[Keys.GUIDANCE_BY_METHOD_FAMILY] = encodeKeyValueMap(guidance)
+        }
+    }
+
+    private fun parseKeyValueMap(entries: Set<String>): Map<String, String> = entries.mapNotNull { entry ->
+        val separator = entry.indexOf('=')
+        if (separator <= 0 || separator == entry.lastIndex) return@mapNotNull null
+        val key = entry.substring(0, separator)
+        val value = entry.substring(separator + 1)
+        if (key.isBlank() || value.isBlank()) null else key to value
+    }.toMap()
+
+    private fun encodeKeyValueMap(values: Map<String, String>): Set<String> = values
+        .filter { (key, value) -> key.isNotBlank() && value.isNotBlank() }
+        .map { (key, value) -> "$key=$value" }
+        .toSet()
+
+    private fun parseUtilityModules(entries: Set<String>): Map<String, Set<String>> = entries
+        .mapNotNull { entry ->
+            val separator = entry.indexOf('=')
+            if (separator <= 0 || separator == entry.lastIndex) return@mapNotNull null
+            entry.substring(0, separator) to entry.substring(separator + 1)
+        }
+        .filter { (familyId, moduleId) -> familyId.isNotBlank() && moduleId.isNotBlank() }
+        .groupBy({ it.first }, { it.second })
+        .mapValues { (_, modules) -> modules.toSet() }
+
+    private fun encodeUtilityModules(values: Map<String, Set<String>>): Set<String> = values
+        .flatMap { (familyId, moduleIds) ->
+            moduleIds.filter(String::isNotBlank).map { moduleId -> "$familyId=$moduleId" }
+        }
+        .filter { entry -> entry.indexOf('=') > 0 }
+        .toSet()
+
 }

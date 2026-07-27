@@ -7,17 +7,21 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.adsamcik.starlitcoffee.data.db.dao.ActiveBrewSessionDao
 import com.adsamcik.starlitcoffee.data.db.dao.BrewLogDao
 import com.adsamcik.starlitcoffee.data.db.dao.CoffeeBagDao
+import com.adsamcik.starlitcoffee.data.db.dao.CustomBrewerProfileDao
 import com.adsamcik.starlitcoffee.data.db.dao.FlavorTagDao
 import com.adsamcik.starlitcoffee.data.db.dao.GrinderDao
 import com.adsamcik.starlitcoffee.data.db.dao.RatioPresetDao
 import com.adsamcik.starlitcoffee.data.db.dao.RecipeDao
 import com.adsamcik.starlitcoffee.data.db.dao.CupPresetDao
 import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
+import com.adsamcik.starlitcoffee.data.db.entity.ActiveBrewSessionEntity
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CupPresetEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CustomBrewerProfileEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.GrinderEntity
 import com.adsamcik.starlitcoffee.data.db.entity.RatioPresetEntity
@@ -26,16 +30,18 @@ import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
 
 @Database(
     entities = [
+        ActiveBrewSessionEntity::class,
         SavedRecipeEntity::class,
         CoffeeBagEntity::class,
         BrewLogEntity::class,
+        CustomBrewerProfileEntity::class,
         GrinderEntity::class,
         RatioPresetEntity::class,
         FlavorTagEntity::class,
         UserBarcodeStemEntity::class,
         CupPresetEntity::class,
     ],
-    version = 17,
+    version = 18,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -43,6 +49,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
     abstract fun coffeeBagDao(): CoffeeBagDao
     abstract fun brewLogDao(): BrewLogDao
+    abstract fun activeBrewSessionDao(): ActiveBrewSessionDao
+    abstract fun customBrewerProfileDao(): CustomBrewerProfileDao
     abstract fun grinderDao(): GrinderDao
     abstract fun ratioPresetDao(): RatioPresetDao
     abstract fun flavorTagDao(): FlavorTagDao
@@ -182,6 +190,168 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_17_18 = object : Migration(17, 18) {
+            @Suppress("LongMethod")
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE saved_recipes ADD COLUMN methodFamilyId TEXT")
+                db.execSQL("ALTER TABLE saved_recipes ADD COLUMN brewerProfileId TEXT")
+                db.execSQL("ALTER TABLE saved_recipes ADD COLUMN snapshotVersion INTEGER")
+                db.execSQL("ALTER TABLE saved_recipes ADD COLUMN recipeSnapshotJson TEXT")
+                db.execSQL("ALTER TABLE brew_logs ADD COLUMN methodFamilyId TEXT")
+                db.execSQL("ALTER TABLE brew_logs ADD COLUMN brewerProfileId TEXT")
+                db.execSQL("ALTER TABLE brew_logs ADD COLUMN snapshotVersion INTEGER")
+                db.execSQL("ALTER TABLE brew_logs ADD COLUMN brewSnapshotJson TEXT")
+                db.execSQL("ALTER TABLE brew_logs ADD COLUMN sourceSessionId TEXT")
+                db.execSQL("ALTER TABLE ratio_presets ADD COLUMN methodFamilyId TEXT")
+                db.execSQL("ALTER TABLE ratio_presets ADD COLUMN brewerProfileId TEXT")
+
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS active_brew_sessions (
+                        sessionId TEXT NOT NULL,
+                        status TEXT NOT NULL,
+                        recipeSnapshotVersion INTEGER NOT NULL,
+                        recipeSnapshotJson TEXT NOT NULL,
+                        compiledPlanSchemaVersion INTEGER NOT NULL,
+                        compiledPlanJson TEXT NOT NULL,
+                        runtimeSchemaVersion INTEGER NOT NULL,
+                        runtimeJson TEXT NOT NULL,
+                        executionContextSchemaVersion INTEGER,
+                        executionContextJson TEXT,
+                        currentStageId TEXT,
+                        currentStageIndex INTEGER,
+                        startedAtWallClockMillis INTEGER,
+                        pausedAtWallClockMillis INTEGER,
+                        deadlineAtWallClockMillis INTEGER,
+                        scheduledEventToken TEXT,
+                        notificationStateJson TEXT,
+                        lastProcessedEventId TEXT,
+                        completedLogId INTEGER,
+                        revision INTEGER NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        PRIMARY KEY(sessionId)
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS custom_brewer_profiles (
+                        id TEXT NOT NULL,
+                        displayName TEXT NOT NULL,
+                        methodFamilyId TEXT NOT NULL,
+                        schemaVersion INTEGER NOT NULL,
+                        profileJson TEXT NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        PRIMARY KEY(id)
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS index_brew_logs_sourceSessionId " +
+                        "ON brew_logs(sourceSessionId)",
+                )
+                db.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_active_brew_sessions_status " +
+                        "ON active_brew_sessions(status)",
+                )
+                db.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_active_brew_sessions_updatedAt " +
+                        "ON active_brew_sessions(updatedAt)",
+                )
+                db.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_custom_brewer_profiles_methodFamilyId " +
+                        "ON custom_brewer_profiles(methodFamilyId)",
+                )
+
+                db.execSQL(
+                    """
+                    UPDATE saved_recipes
+                    SET methodFamilyId = CASE method
+                        WHEN 'PULSAR' THEN 'valve_controlled_no_bypass'
+                        WHEN 'V60' THEN 'manual_gravity'
+                        WHEN 'FRENCH_PRESS' THEN 'full_immersion_press'
+                        WHEN 'AEROPRESS' THEN 'chamber_plunger'
+                        WHEN 'ESPRESSO' THEN 'espresso'
+                        WHEN 'MOKA_POT' THEN 'steam_pressure_multichamber'
+                        WHEN 'COLD_BREW' THEN 'cold_immersion'
+                        ELSE NULL
+                    END,
+                    brewerProfileId = CASE method
+                        WHEN 'PULSAR' THEN 'pulsar_standard'
+                        WHEN 'V60' THEN 'v60_unspecified'
+                        WHEN 'FRENCH_PRESS' THEN 'french_press_generic'
+                        WHEN 'AEROPRESS' THEN 'aeropress_standard'
+                        WHEN 'ESPRESSO' THEN 'espresso_pump_generic'
+                        WHEN 'MOKA_POT' THEN 'moka_generic_unspecified'
+                        WHEN 'COLD_BREW' THEN 'cold_immersion_generic'
+                        ELSE NULL
+                    END
+                    WHERE method IN (
+                        'PULSAR', 'V60', 'FRENCH_PRESS', 'AEROPRESS', 'ESPRESSO', 'MOKA_POT', 'COLD_BREW'
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL(
+                    """
+                    UPDATE brew_logs
+                    SET methodFamilyId = CASE method
+                        WHEN 'PULSAR' THEN 'valve_controlled_no_bypass'
+                        WHEN 'V60' THEN 'manual_gravity'
+                        WHEN 'FRENCH_PRESS' THEN 'full_immersion_press'
+                        WHEN 'AEROPRESS' THEN 'chamber_plunger'
+                        WHEN 'ESPRESSO' THEN 'espresso'
+                        WHEN 'MOKA_POT' THEN 'steam_pressure_multichamber'
+                        WHEN 'COLD_BREW' THEN 'cold_immersion'
+                        ELSE NULL
+                    END,
+                    brewerProfileId = CASE method
+                        WHEN 'PULSAR' THEN 'pulsar_standard'
+                        WHEN 'V60' THEN 'v60_unspecified'
+                        WHEN 'FRENCH_PRESS' THEN 'french_press_generic'
+                        WHEN 'AEROPRESS' THEN 'aeropress_standard'
+                        WHEN 'ESPRESSO' THEN 'espresso_pump_generic'
+                        WHEN 'MOKA_POT' THEN 'moka_generic_unspecified'
+                        WHEN 'COLD_BREW' THEN 'cold_immersion_generic'
+                        ELSE NULL
+                    END
+                    WHERE method IN (
+                        'PULSAR', 'V60', 'FRENCH_PRESS', 'AEROPRESS', 'ESPRESSO', 'MOKA_POT', 'COLD_BREW'
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL(
+                    """
+                    UPDATE ratio_presets
+                    SET methodFamilyId = CASE methodName
+                        WHEN 'PULSAR' THEN 'valve_controlled_no_bypass'
+                        WHEN 'V60' THEN 'manual_gravity'
+                        WHEN 'FRENCH_PRESS' THEN 'full_immersion_press'
+                        WHEN 'AEROPRESS' THEN 'chamber_plunger'
+                        WHEN 'ESPRESSO' THEN 'espresso'
+                        WHEN 'MOKA_POT' THEN 'steam_pressure_multichamber'
+                        WHEN 'COLD_BREW' THEN 'cold_immersion'
+                        ELSE NULL
+                    END,
+                    brewerProfileId = CASE methodName
+                        WHEN 'PULSAR' THEN 'pulsar_standard'
+                        WHEN 'V60' THEN 'v60_unspecified'
+                        WHEN 'FRENCH_PRESS' THEN 'french_press_generic'
+                        WHEN 'AEROPRESS' THEN 'aeropress_standard'
+                        WHEN 'ESPRESSO' THEN 'espresso_pump_generic'
+                        WHEN 'MOKA_POT' THEN 'moka_generic_unspecified'
+                        WHEN 'COLD_BREW' THEN 'cold_immersion_generic'
+                        ELSE NULL
+                    END
+                    WHERE methodName IN (
+                        'PULSAR', 'V60', 'FRENCH_PRESS', 'AEROPRESS', 'ESPRESSO', 'MOKA_POT', 'COLD_BREW'
+                    )
+                    """.trimIndent(),
+                )
+            }
+        }
+
         // Single source of truth for the migration set, shared by the
         // production builder and MigrationTest so the two cannot drift.
         internal val ALL_MIGRATIONS: Array<Migration> = arrayOf(
@@ -197,6 +367,7 @@ abstract class AppDatabase : RoomDatabase() {
             MIGRATION_14_15,
             MIGRATION_15_16,
             MIGRATION_16_17,
+            MIGRATION_17_18,
         )
 
         /**

@@ -1,5 +1,9 @@
 package com.adsamcik.starlitcoffee.data.repository
 
+import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewRecordSnapshotV1
+import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewingPersistenceMapper
+import com.adsamcik.starlitcoffee.data.brewing.snapshot.PersistedBrewLogRecord
+import kotlinx.coroutines.flow.map
 import androidx.room.RoomDatabase
 import androidx.room.withTransaction
 import com.adsamcik.starlitcoffee.data.db.dao.BrewLogDao
@@ -14,6 +18,37 @@ class BrewLogRepository(
     private val flavorTagDao: FlavorTagDao,
 ) {
     fun getAllLogs(): Flow<List<BrewLogEntity>> = brewLogDao.getAll()
+
+    fun getAllLogRecords(): Flow<List<PersistedBrewLogRecord>> =
+        brewLogDao.getAll().map { entities -> entities.map(BrewingPersistenceMapper::brewLogRecord) }
+
+    suspend fun insertVersionedLog(
+        legacyFields: BrewLogEntity,
+        snapshot: BrewRecordSnapshotV1,
+    ): Long = brewLogDao.insert(BrewingPersistenceMapper.withBrewRecordSnapshot(legacyFields, snapshot))
+
+    suspend fun insertSessionLog(
+        legacyFields: BrewLogEntity,
+        snapshot: BrewRecordSnapshotV1,
+        sourceSessionId: String,
+    ): SessionLogWriteResult {
+        require(sourceSessionId.isNotBlank()) { "A session-backed log needs a session ID" }
+        val log = BrewingPersistenceMapper.withBrewRecordSnapshot(
+            legacyFields = legacyFields,
+            snapshot = snapshot,
+            sourceSessionId = sourceSessionId,
+        )
+        val write: suspend () -> SessionLogWriteResult = {
+            val insertedId = brewLogDao.insertIfSourceSessionIsNew(log)
+            if (insertedId != -1L) {
+                SessionLogWriteResult(logId = insertedId, wasNew = true)
+            } else {
+                val existing = requireNotNull(brewLogDao.getBySourceSessionId(sourceSessionId))
+                SessionLogWriteResult(logId = existing.id, wasNew = false)
+            }
+        }
+        return if (database != null) database.withTransaction { write() } else write()
+    }
 
     fun getAllFlavorTags(): Flow<List<FlavorTagEntity>> = flavorTagDao.getAll()
 
