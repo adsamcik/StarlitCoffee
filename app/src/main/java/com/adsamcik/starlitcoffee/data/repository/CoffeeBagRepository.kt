@@ -13,6 +13,8 @@ class CoffeeBagRepository(
 
     fun getBagById(id: Long): Flow<CoffeeBagEntity?> = coffeeBagDao.getById(id)
 
+    suspend fun getBagByIdOnce(id: Long): CoffeeBagEntity? = coffeeBagDao.getByIdOnce(id)
+
     suspend fun insertBag(entity: CoffeeBagEntity): Long = coffeeBagDao.insert(entity)
 
     suspend fun updateBag(entity: CoffeeBagEntity) = coffeeBagDao.update(entity)

@@ -24,6 +24,9 @@ class ActiveBrewSessionRepository(
         session: ActiveBrewSessionEntity,
         expectedRevision: Long,
     ): ActiveBrewSessionEntity? {
+        require(session.revision == expectedRevision + 1L) {
+            "A compare-and-set update must advance the entity revision exactly once"
+        }
         val next = session.copy(revision = expectedRevision + 1L)
         val updated = dao.updateIfRevision(
             sessionId = next.sessionId,

@@ -35,6 +35,9 @@ interface CoffeeBagDao {
     @Query("SELECT * FROM coffee_bags WHERE id = :id")
     fun getById(id: Long): Flow<CoffeeBagEntity?>
 
+    @Query("SELECT * FROM coffee_bags WHERE id = :id")
+    suspend fun getByIdOnce(id: Long): CoffeeBagEntity?
+
     @Query("SELECT * FROM coffee_bags WHERE barcode = :barcode LIMIT 1")
     suspend fun findByBarcode(barcode: String): CoffeeBagEntity?
 

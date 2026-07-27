@@ -153,6 +153,8 @@ internal class FakeCoffeeBagDao(
 
     override fun getById(id: Long): Flow<CoffeeBagEntity?> = flow.map { list -> list.find { it.id == id } }
 
+    override suspend fun getByIdOnce(id: Long): CoffeeBagEntity? = bags.find { it.id == id }
+
     override suspend fun findByBarcode(barcode: String): CoffeeBagEntity? = bags.find { it.barcode == barcode }
 
     override suspend fun findByScanSessionId(scanSessionId: String): CoffeeBagEntity? =
