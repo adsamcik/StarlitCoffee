@@ -717,4 +717,66 @@
     <string name="format_scan_debug_counts">会话：%1$d · LLM 处理：%2$d</string>
     <string name="format_scan_session_subject">扫描会话：%1$s</string>
     <string name="action_share_scan_session">分享扫描会话</string>
+
+
+    <!-- P1 Brewer Profile Setup and Durable Guidance -->
+    <string name="heading_brewer_profile_choose">Choose your brewer</string>
+    <string name="msg_brewer_profile_choose_hint">Start with the brewer in front of you. Its defaults stay visible before a session begins.</string>
+    <string name="label_brewer_profile_starting">Starting…</string>
+    <string name="msg_brewer_profile_empty">No supported brewer profiles are available yet.</string>
+    <string name="heading_brewer_profile_starting_defaults">Starting defaults</string>
+    <string name="label_brewer_profile_input_water">Water input</string>
+    <string name="label_brewer_profile_input_reservoir_water">Reservoir water</string>
+    <string name="msg_brewer_profile_input_water">Water added to the brewer</string>
+    <string name="msg_brewer_profile_input_reservoir_water">Water added to the machine reservoir</string>
+    <string name="label_brewer_profile_expected_result">Expected result</string>
+    <string name="label_brewer_profile_output_estimated_beverage_yield">Estimated beverage yield</string>
+    <string name="label_brewer_profile_output_collected_concentrate">Collected concentrate</string>
+    <string name="label_brewer_profile_output_prepared_unfiltered_volume">Prepared unfiltered coffee</string>
+    <string name="msg_brewer_profile_serving_separate">Serving is a separate choice after extraction.</string>
+    <string name="heading_brewer_profile_equipment_check">Equipment check</string>
+    <string name="msg_brewer_profile_capacity_needs_confirmation">Capacity is not preset. Check your brewer’s marked capacity before using these amounts.</string>
+    <string name="format_brewer_profile_capacity_range">Capacity: %1$s to %2$s</string>
+    <string name="format_brewer_profile_capacity_up_to">Capacity: up to %1$s</string>
+    <string name="format_brewer_profile_capacity_from">Capacity: from %1$s</string>
+    <string name="msg_brewer_profile_capacity_configured">Capacity is configured for this brewer.</string>
+    <string name="msg_brewer_profile_filter_compatible">Use a filter compatible with this brewer.</string>
+    <string name="msg_brewer_profile_filter_unfiltered">This profile is intentionally unfiltered.</string>
+    <string name="msg_brewer_profile_filter_confirm">Confirm the required filter before starting.</string>
+    <string name="heading_brewer_profile_hario_switch_style">Hario Switch brew style</string>
+    <string name="msg_brewer_profile_hario_switch_style_hint">Choose the valve behaviour for this brew. Steep and release is the default.</string>
+    <string name="label_brewer_profile_hario_switch_steep_release">Steep &amp; release</string>
+    <string name="label_brewer_profile_hario_switch_manual_gravity">Manual gravity</string>
+    <string name="msg_brewer_profile_temperature_machine_controlled">Managed by the heat source or machine</string>
+    <string name="msg_brewer_profile_brew_time_observed">Finish by observation</string>
+    <string name="msg_brewer_profile_brew_time_machine_controlled">Machine-controlled cycle</string>
+    <string name="format_brewer_profile_mass">%1$s %2$s</string>
+    <string name="label_brewer_profile_clever_style">Clever-style brewer</string>
+    <string name="label_brewer_profile_hario_switch">Hario Switch</string>
+    <string name="label_brewer_profile_valve_release_generic">Generic valve-release brewer</string>
+    <string name="label_brewer_profile_cezve_generic">Cezve / ibrik</string>
+    <string name="label_brewer_profile_automatic_batch_generic">Automatic batch brewer</string>
+    <string name="label_brewer_profile_automatic_single_cup_generic">Podless single-cup brewer</string>
+    <string name="label_brewer_profile_vietnamese_phin">Vietnamese phin</string>
+    <string name="label_brewer_profile_family_steep_and_release">Steep and release</string>
+    <string name="label_brewer_profile_family_heated_unfiltered">Heated unfiltered</string>
+    <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
+    <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
+    <string name="label_guidance">Guidance</string>
+    <string name="action_learn_this_brewer">Learn this brewer</string>
+    <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
+    <string name="action_use_saved_guidance">Use saved guidance</string>
+    <string name="guidance_level_full">Full</string>
+    <string name="guidance_level_concise">Concise</string>
+    <string name="guidance_level_focused">Focused</string>
+    <string name="guidance_level_utilities">Utilities</string>
+    <string name="msg_brew_guidance_unavailable">Guidance is not available for this brew yet.</string>
+    <string name="msg_brew_guidance_asset_pending">The visual guide for this step is still being prepared.</string>
+    <string name="msg_brew_guidance_asset_unavailable">The visual guide for this step is unavailable.</string>
+
+
+
+    <string name="format_brew_guidance_level">Guidance: %1$s</string>
+    <string name="guidance_level_custom">Custom</string>
+
 </resources>

@@ -752,4 +752,66 @@
     <string name="format_scan_debug_counts">Relace: %1$d · Průchody LLM: %2$d</string>
     <string name="format_scan_session_subject">Relace skenování: %1$s</string>
     <string name="action_share_scan_session">Sdílet relaci skenování</string>
+
+
+    <!-- P1 Brewer Profile Setup and Durable Guidance -->
+    <string name="heading_brewer_profile_choose">Vyberte zařízení pro přípravu</string>
+    <string name="msg_brewer_profile_choose_hint">Začněte se zařízením, které máte před sebou. Jeho výchozí hodnoty zůstanou před zahájením přípravy viditelné.</string>
+    <string name="label_brewer_profile_starting">Spouštění…</string>
+    <string name="msg_brewer_profile_empty">Zatím nejsou k dispozici žádné podporované profily zařízení.</string>
+    <string name="heading_brewer_profile_starting_defaults">Výchozí hodnoty</string>
+    <string name="label_brewer_profile_input_water">Vstupní voda</string>
+    <string name="label_brewer_profile_input_reservoir_water">Voda v nádržce</string>
+    <string name="msg_brewer_profile_input_water">Voda přidaná do zařízení pro přípravu</string>
+    <string name="msg_brewer_profile_input_reservoir_water">Voda přidaná do nádržky kávovaru</string>
+    <string name="label_brewer_profile_expected_result">Očekávaný výsledek</string>
+    <string name="label_brewer_profile_output_estimated_beverage_yield">Odhadovaný objem nápoje</string>
+    <string name="label_brewer_profile_output_collected_concentrate">Získaný koncentrát</string>
+    <string name="label_brewer_profile_output_prepared_unfiltered_volume">Připravená nefiltrovaná káva</string>
+    <string name="msg_brewer_profile_serving_separate">Velikost porce se volí zvlášť po extrakci.</string>
+    <string name="heading_brewer_profile_equipment_check">Kontrola vybavení</string>
+    <string name="msg_brewer_profile_capacity_needs_confirmation">Kapacita není přednastavená. Před použitím těchto množství zkontrolujte rysku kapacity na zařízení.</string>
+    <string name="format_brewer_profile_capacity_range">Kapacita: %1$s až %2$s</string>
+    <string name="format_brewer_profile_capacity_up_to">Kapacita: až %1$s</string>
+    <string name="format_brewer_profile_capacity_from">Kapacita: od %1$s</string>
+    <string name="msg_brewer_profile_capacity_configured">Kapacita je pro toto zařízení nastavená.</string>
+    <string name="msg_brewer_profile_filter_compatible">Použijte filtr kompatibilní s tímto zařízením.</string>
+    <string name="msg_brewer_profile_filter_unfiltered">Tento profil je záměrně bez filtru.</string>
+    <string name="msg_brewer_profile_filter_confirm">Před zahájením zkontrolujte požadovaný filtr.</string>
+    <string name="heading_brewer_profile_hario_switch_style">Styl přípravy Hario Switch</string>
+    <string name="msg_brewer_profile_hario_switch_style_hint">Zvolte chování ventilu pro tuto přípravu. Výchozí je louhování a uvolnění.</string>
+    <string name="label_brewer_profile_hario_switch_steep_release">Louhovat a uvolnit</string>
+    <string name="label_brewer_profile_hario_switch_manual_gravity">Manuální překapávání</string>
+    <string name="msg_brewer_profile_temperature_machine_controlled">Řízeno zdrojem tepla nebo kávovarem</string>
+    <string name="msg_brewer_profile_brew_time_observed">Dokončete podle pozorování</string>
+    <string name="msg_brewer_profile_brew_time_machine_controlled">Cyklus řízený kávovarem</string>
+    <string name="format_brewer_profile_mass">%1$s %2$s</string>
+    <string name="label_brewer_profile_clever_style">Dripper typu Clever</string>
+    <string name="label_brewer_profile_hario_switch">Hario Switch</string>
+    <string name="label_brewer_profile_valve_release_generic">Obecný dripper s ventilem</string>
+    <string name="label_brewer_profile_cezve_generic">Cezve / ibrik</string>
+    <string name="label_brewer_profile_automatic_batch_generic">Automatický překapávač</string>
+    <string name="label_brewer_profile_automatic_single_cup_generic">Jednoporcový kávovar bez kapslí</string>
+    <string name="label_brewer_profile_vietnamese_phin">Vietnamský phin</string>
+    <string name="label_brewer_profile_family_steep_and_release">Louhování s následným uvolněním</string>
+    <string name="label_brewer_profile_family_heated_unfiltered">Ohřívaná nefiltrovaná příprava</string>
+    <string name="label_brewer_profile_family_automatic_batch">Automatická dávková příprava</string>
+    <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Koncentrát s omezeným průtokem</string>
+    <string name="label_guidance">Pokyny</string>
+    <string name="action_learn_this_brewer">Naučit se přípravu na tomto zařízení</string>
+    <string name="action_remember_guidance_for_brewer">Zapamatovat pokyny pro toto zařízení</string>
+    <string name="action_use_saved_guidance">Použít uložené pokyny</string>
+    <string name="guidance_level_full">Úplné</string>
+    <string name="guidance_level_concise">Stručné</string>
+    <string name="guidance_level_focused">Zaměřené</string>
+    <string name="guidance_level_utilities">Pouze nástroje</string>
+    <string name="msg_brew_guidance_unavailable">Pokyny pro tuto přípravu zatím nejsou k dispozici.</string>
+    <string name="msg_brew_guidance_asset_pending">Vizuální průvodce pro tento krok se ještě připravuje.</string>
+    <string name="msg_brew_guidance_asset_unavailable">Vizuální průvodce pro tento krok není k dispozici.</string>
+
+
+
+    <string name="format_brew_guidance_level">Pokyny: %1$s</string>
+    <string name="guidance_level_custom">Vlastní</string>
+
 </resources>

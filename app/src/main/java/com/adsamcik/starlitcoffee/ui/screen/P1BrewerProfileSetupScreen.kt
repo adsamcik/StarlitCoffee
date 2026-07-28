@@ -20,6 +20,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -36,6 +37,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.BrewTimeRecommendation
+import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.CapacityRecommendation
 import com.adsamcik.starlitcoffee.domain.brewing.PrimaryOutputQuantity
 import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
@@ -61,6 +63,7 @@ fun P1BrewerProfileSetupScreen(
     onHarioSwitchWorkflowSelected: (HarioSwitchWorkflow) -> Unit,
     onStart: (P1BrewerProfileStartSelection) -> Unit,
     onBack: () -> Unit,
+    onLearn: ((P1BrewerProfileStartSelection) -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -93,12 +96,12 @@ fun P1BrewerProfileSetupScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
-                text = "Choose your brewer",
+                text = stringResource(R.string.heading_brewer_profile_choose),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.semantics { heading() },
             )
             Text(
-                text = "Start with the brewer in front of you. Its defaults stay visible before a session begins.",
+                text = stringResource(R.string.msg_brewer_profile_choose_hint),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -135,10 +138,21 @@ fun P1BrewerProfileSetupScreen(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        text = if (state.isStarting) "Starting…" else {
+                        text = if (state.isStarting) {
+                            stringResource(R.string.label_brewer_profile_starting)
+                        } else {
                             stringResource(R.string.action_start_brewing)
                         },
                     )
+                }
+                onLearn?.let { learn ->
+                    OutlinedButton(
+                        onClick = { learn(selection) },
+                        enabled = !state.isStarting,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text(text = stringResource(R.string.action_learn_this_brewer))
+                    }
                 }
             }
         }
@@ -154,7 +168,7 @@ private fun ProfileSetupEmptyState() {
         modifier = Modifier.fillMaxWidth(),
     ) {
         Text(
-            text = "No supported brewer profiles are available yet.",
+            text = stringResource(R.string.msg_brewer_profile_empty),
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.bodyMedium,
         )
@@ -185,11 +199,11 @@ private fun BrewerProfileOptionCard(
             verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
             Text(
-                text = option.displayName,
+                text = localizedProfileName(option.profileId, option.displayName),
                 style = MaterialTheme.typography.titleMedium,
             )
             Text(
-                text = option.methodFamilyName,
+                text = localizedMethodFamilyName(option.profileId, option.methodFamilyName),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -210,13 +224,16 @@ private fun ProfileDefaultsCard(option: P1BrewerProfileSetupOption) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                text = "Starting defaults",
+                text = stringResource(R.string.heading_brewer_profile_starting_defaults),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.semantics { heading() },
             )
             DefaultsRow(
                 label = stringResource(R.string.label_ratio),
-                value = "1:${formatNumber(option.defaults.ratio.waterPerCoffee)}",
+                value = stringResource(
+                    R.string.format_ratio,
+                    formatNumber(option.defaults.ratio.waterPerCoffee),
+                ),
             )
             DefaultsRow(
                 label = inputLabel(option),
@@ -231,12 +248,12 @@ private fun ProfileDefaultsCard(option: P1BrewerProfileSetupOption) {
                 value = brewTimeLabel(option.defaults.brewTime),
             )
             DefaultsRow(
-                label = "Expected result",
+                label = stringResource(R.string.label_brewer_profile_expected_result),
                 value = outputLabel(option.defaults.quantitySemantics.primaryOutput),
             )
             if (option.defaults.quantitySemantics.servingIsSeparateFromExtraction) {
                 Text(
-                    text = "Serving is a separate choice after extraction.",
+                    text = stringResource(R.string.msg_brewer_profile_serving_separate),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -279,13 +296,13 @@ private fun EquipmentCompatibilityCard(option: P1BrewerProfileSetupOption) {
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
-                text = "Equipment check",
+                text = stringResource(R.string.heading_brewer_profile_equipment_check),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.semantics { heading() },
             )
             when (val capacity = option.defaults.capacity) {
                 CapacityRecommendation.RequiresEquipmentConfiguration -> Text(
-                    text = "Capacity is not preset. Check your brewer’s marked capacity before using these amounts.",
+                    text = stringResource(R.string.msg_brewer_profile_capacity_needs_confirmation),
                     style = MaterialTheme.typography.bodyMedium,
                 )
 
@@ -296,9 +313,13 @@ private fun EquipmentCompatibilityCard(option: P1BrewerProfileSetupOption) {
             }
             Text(
                 text = when {
-                    option.hasCompatibleFilters -> "Use a filter compatible with this brewer."
-                    option.allowsIntentionallyUnfiltered -> "This profile is intentionally unfiltered."
-                    else -> "Confirm the required filter before starting."
+                    option.hasCompatibleFilters -> stringResource(
+                        R.string.msg_brewer_profile_filter_compatible,
+                    )
+                    option.allowsIntentionallyUnfiltered -> stringResource(
+                        R.string.msg_brewer_profile_filter_unfiltered,
+                    )
+                    else -> stringResource(R.string.msg_brewer_profile_filter_confirm)
                 },
                 style = MaterialTheme.typography.bodyMedium,
             )
@@ -317,12 +338,12 @@ private fun HarioSwitchWorkflowPicker(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                text = "Hario Switch brew style",
+                text = stringResource(R.string.heading_brewer_profile_hario_switch_style),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.semantics { heading() },
             )
             Text(
-                text = "Choose the valve behaviour for this brew. Steep and release is the default.",
+                text = stringResource(R.string.msg_brewer_profile_hario_switch_style_hint),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -343,61 +364,127 @@ private fun HarioSwitchWorkflowPicker(
     }
 }
 
+@Composable
 private fun inputLabel(option: P1BrewerProfileSetupOption): String = when (
     option.defaults.quantitySemantics.inputRole
 ) {
-    QuantityRole.BREW_WATER_INPUT -> "Water input"
-    QuantityRole.RESERVOIR_INPUT -> "Reservoir water"
-    else -> "Water input"
+    QuantityRole.BREW_WATER_INPUT -> stringResource(R.string.label_brewer_profile_input_water)
+    QuantityRole.RESERVOIR_INPUT -> stringResource(R.string.label_brewer_profile_input_reservoir_water)
+    else -> stringResource(R.string.label_brewer_profile_input_water)
 }
 
+@Composable
 private fun inputMeaning(option: P1BrewerProfileSetupOption): String = when (
     option.defaults.quantitySemantics.inputRole
 ) {
-    QuantityRole.BREW_WATER_INPUT -> "Water added to the brewer"
-    QuantityRole.RESERVOIR_INPUT -> "Water added to the machine reservoir"
-    else -> "Water added to the brewer"
+    QuantityRole.BREW_WATER_INPUT -> stringResource(R.string.msg_brewer_profile_input_water)
+    QuantityRole.RESERVOIR_INPUT -> stringResource(R.string.msg_brewer_profile_input_reservoir_water)
+    else -> stringResource(R.string.msg_brewer_profile_input_water)
 }
 
+@Composable
 private fun temperatureLabel(recommendation: TemperatureRecommendation): String = when (recommendation) {
     is TemperatureRecommendation.CelsiusRange -> {
         "${recommendation.minimumC}–${recommendation.maximumC} °C"
     }
 
-    TemperatureRecommendation.Unavailable -> "Managed by the heat source or machine"
+    TemperatureRecommendation.Unavailable -> stringResource(
+        R.string.msg_brewer_profile_temperature_machine_controlled,
+    )
 }
 
+@Composable
 private fun brewTimeLabel(recommendation: BrewTimeRecommendation): String = when (recommendation) {
     is BrewTimeRecommendation.SecondsRange -> formatDurationRange(
         minimumSeconds = recommendation.minimumSeconds,
         maximumSeconds = recommendation.maximumSeconds,
     )
 
-    BrewTimeRecommendation.ObservedCompletion -> "Finish by observation"
-    BrewTimeRecommendation.MachineControlled -> "Machine-controlled cycle"
+    BrewTimeRecommendation.ObservedCompletion -> stringResource(
+        R.string.msg_brewer_profile_brew_time_observed,
+    )
+    BrewTimeRecommendation.MachineControlled -> stringResource(
+        R.string.msg_brewer_profile_brew_time_machine_controlled,
+    )
 }
 
+@Composable
 private fun outputLabel(output: PrimaryOutputQuantity): String = when (output) {
-    PrimaryOutputQuantity.ESTIMATED_BEVERAGE_YIELD -> "Estimated beverage yield"
-    PrimaryOutputQuantity.COLLECTED_CONCENTRATE -> "Collected concentrate"
-    PrimaryOutputQuantity.PREPARED_UNFILTERED_VOLUME -> "Prepared unfiltered coffee"
+    PrimaryOutputQuantity.ESTIMATED_BEVERAGE_YIELD -> stringResource(
+        R.string.label_brewer_profile_output_estimated_beverage_yield,
+    )
+    PrimaryOutputQuantity.COLLECTED_CONCENTRATE -> stringResource(
+        R.string.label_brewer_profile_output_collected_concentrate,
+    )
+    PrimaryOutputQuantity.PREPARED_UNFILTERED_VOLUME -> stringResource(
+        R.string.label_brewer_profile_output_prepared_unfiltered_volume,
+    )
 }
 
+@Composable
 private fun capacityDescription(capacity: CapacityRecommendation.ConfirmedRange): String {
     val range = capacity.range
-    val minimum = range.minimumG?.let { "${formatNumber(it)} g" }
-    val maximum = range.maximumG?.let { "${formatNumber(it)} g" }
+    val minimum = range.minimumG?.let { formatMass(it) }
+    val maximum = range.maximumG?.let { formatMass(it) }
     return when {
-        minimum != null && maximum != null -> "Capacity: $minimum to $maximum"
-        maximum != null -> "Capacity: up to $maximum"
-        minimum != null -> "Capacity: from $minimum"
-        else -> "Capacity is configured for this brewer."
+        minimum != null && maximum != null -> stringResource(
+            R.string.format_brewer_profile_capacity_range,
+            minimum,
+            maximum,
+        )
+        maximum != null -> stringResource(R.string.format_brewer_profile_capacity_up_to, maximum)
+        minimum != null -> stringResource(R.string.format_brewer_profile_capacity_from, minimum)
+        else -> stringResource(R.string.msg_brewer_profile_capacity_configured)
     }
 }
 
+@Composable
+private fun formatMass(value: Double): String = stringResource(
+    R.string.format_brewer_profile_mass,
+    formatNumber(value),
+    stringResource(R.string.unit_grams),
+)
+
+@Composable
 private fun workflowLabel(workflow: HarioSwitchWorkflow): String = when (workflow) {
-    HarioSwitchWorkflow.STEEP_AND_RELEASE -> "Steep & release"
-    HarioSwitchWorkflow.MANUAL_GRAVITY -> "Manual gravity"
+    HarioSwitchWorkflow.STEEP_AND_RELEASE -> stringResource(
+        R.string.label_brewer_profile_hario_switch_steep_release,
+    )
+    HarioSwitchWorkflow.MANUAL_GRAVITY -> stringResource(
+        R.string.label_brewer_profile_hario_switch_manual_gravity,
+    )
+}
+
+@Composable
+private fun localizedProfileName(profileId: BrewerProfileId, fallback: String): String = when (profileId.value) {
+    "clever_style" -> stringResource(R.string.label_brewer_profile_clever_style)
+    "hario_switch" -> stringResource(R.string.label_brewer_profile_hario_switch)
+    "valve_release_generic" -> stringResource(R.string.label_brewer_profile_valve_release_generic)
+    "cezve_generic" -> stringResource(R.string.label_brewer_profile_cezve_generic)
+    "automatic_batch_generic" -> stringResource(R.string.label_brewer_profile_automatic_batch_generic)
+    "automatic_single_cup_generic" -> stringResource(
+        R.string.label_brewer_profile_automatic_single_cup_generic,
+    )
+    "vietnamese_phin" -> stringResource(R.string.label_brewer_profile_vietnamese_phin)
+    else -> fallback
+}
+
+@Composable
+private fun localizedMethodFamilyName(profileId: BrewerProfileId, fallback: String): String = when (
+    profileId.value
+) {
+    "clever_style",
+    "hario_switch",
+    "valve_release_generic",
+    -> stringResource(R.string.label_brewer_profile_family_steep_and_release)
+    "cezve_generic" -> stringResource(R.string.label_brewer_profile_family_heated_unfiltered)
+    "automatic_batch_generic",
+    "automatic_single_cup_generic",
+    -> stringResource(R.string.label_brewer_profile_family_automatic_batch)
+    "vietnamese_phin" -> stringResource(
+        R.string.label_brewer_profile_family_restricted_flow_gravity_concentrate,
+    )
+    else -> fallback
 }
 
 private fun formatDurationRange(minimumSeconds: Int, maximumSeconds: Int): String =
