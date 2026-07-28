@@ -1188,6 +1188,129 @@ For every asset record:
   neutral black service, mobile-size legibility, and warning-before-image
   placement before registration or approval.
 
+### `p1-cup-one-hands-off-cycle-imagegen-v3`
+
+- Stable asset ID:
+  `instruction_p1_auto_cupone_20_300_stage_04_instruction_default`
+- Exact scope: `auto_cupone_20_300` / source `stage_04` /
+  `p1_auto_cupone_20_300_stage_04_instruction`; a correctly assembled
+  Cup-One-style brewer runs its automatic transfer hands-free, with clear hot
+  water entering the compact paper holder and dark brewed coffee draining into
+  a stable mug.
+- Evidence: `SRC-CUPONE-MANUAL`. Reverified on 28 July 2026 against the current
+  Cup-One quick guide at
+  <https://support.moccamaster.com/hc/en-us/article_attachments/1500014620701>
+  and user manual at
+  <https://www.moccamaster.eu/pub/media/handleidingen/talen/User_Manual_Cup-One.pdf>.
+  The sources corroborate the installed outlet arm, supported No. 1 paper
+  holder, closed reservoir, hands-off automatic transfer, hot-water caution,
+  and keeping the holder and mug seated during brewing. Timing and completion
+  language remain in Compose text rather than being encoded in the image.
+- Generation mode: new bitmap generation followed by two targeted corrective
+  image edits with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show an accurate unbranded Moccamaster
+  > Cup-One-style single-cup brewer during a normal active automatic cycle,
+  > viewed from an elevated front three-quarter angle. Preserve the distinctive
+  > compact geometry: tall rectangular heating column and clear single-cup
+  > reservoir with its lid closed, a polished model-specific metal outlet arm
+  > fully installed, supported independently by the machine and centered with
+  > a small air gap above the compact Cup-One No. 1 cone paper holder. Show
+  > exactly one correctly seated small No. 1 paper with its coffee safely
+  > contained inside the holder. Keep a broad heat-safe ceramic mug centered
+  > and fully supported beneath the holder. Show the plain unmarked power
+  > control in its physically credible on position with only a subtle non-text
+  > indicator glow, and show one calm narrow coffee stream or a few aligned
+  > drops entering the mug with no overflow, splash, or steam cloud. Leave
+  > generous empty space around the machine and show no hands at all: the only
+  > action is the machine completing its automatic transfer while every
+  > component stays seated. Use a warm-neutral uncluttered counter and
+  > background, semi-flat softly dimensional educational rendering, precise
+  > believable Cup-One geometry, clear silhouettes, restrained materials,
+  > soft light, subtle shadows, and crop-safe mobile-readable framing. Include
+  > no text, letters, numbers, clock, time display, temperature display,
+  > measurement ticks, labels, logos, brand marks, arrows, callouts, panels,
+  > warning icon, decorative objects, detached or misaligned pipe, removed
+  > holder, wrong paper, pod, capsule, carafe, generic showerhead, batch basket,
+  > narrow cup, unstable mug, second machine, overflow, grounds escaping,
+  > blocked outlet, coffee missing the mug, hands, simultaneous on/off states,
+  > or exact liquid level. The final output must be one opaque 1024 x 768 scene
+  > whose only story is a stable hands-off automatic cycle.
+- First corrective edit prompt:
+
+  > Correct the immediately previous active Cup-One cycle illustration while
+  > preserving its 4:3 framing, closed reservoir lid, stable broad mug, calm
+  > coffee flow into the mug, subtle unmarked on-state indicator, no hands,
+  > warm-neutral educational style, and every other safe hands-off detail.
+  > Replace the oversized round V60-like holder and pleated basket paper with
+  > the accurate compact Cup-One-specific brew basket assembly: a small narrow
+  > black wedge/trapezoidal No. 1 cone paper holder with no side handle, mounted
+  > level on a short rigid model-integrated black support bracket from the
+  > machine column. Inside it show exactly one small smooth folded white No. 1
+  > cone paper with two flat sides and a visible folded seam, fitted closely
+  > without round flutes, scallops, accordion pleats, or V60 flare. Keep the
+  > holder mechanically separate from the polished metal outlet arm. Shorten
+  > and raise the outlet arm's downturned end so it stops just above the center
+  > of the open No. 1 paper with a small visible air gap; the arm must not touch,
+  > pierce, carry, or support the paper or holder. A restrained hot-water stream
+  > may enter the paper from that outlet while one narrow coffee stream drains
+  > from the compact holder into the centered mug, with no overflow or splash.
+  > Keep the power indicator on and show no hands or component movement. Do not
+  > add text, numbers, logos, arrows, panels, pod, capsule, carafe, round basket,
+  > large cone, wrong filter, extra holder, removed lid, steam cloud, clutter,
+  > or decorative objects. The only story must remain a stable hands-off
+  > automatic Cup-One cycle with exact compact holder geometry. Preserve opaque
+  > 1024 x 768 output and crop-safe mobile legibility.
+- Final corrective edit prompt:
+
+  > Make one final fluid-state correction to the immediately previous active
+  > Cup-One illustration while preserving its exact compact supported No. 1
+  > wedge holder, folded white paper, separate outlet arm with visible air gap,
+  > closed reservoir, broad centered mug, subtle unmarked on indicator, no
+  > hands, clean background, 4:3 framing, and every other corrected detail.
+  > Change only the two-stage liquid path so it is physically unmistakable:
+  > the narrow stream leaving the metal outlet arm and entering the paper must
+  > be clear translucent hot water, not brown coffee. Inside the No. 1 paper,
+  > show a modest dark wet coffee bed or shallow slurry safely below the paper
+  > rim, with no overflow and no grounds escaping. The narrow stream leaving
+  > the bottom of the holder and entering the mug must remain dark brewed
+  > coffee. Keep the clear upper stream visually distinct from the dark lower
+  > stream through material and context, without labels, arrows, color swatches,
+  > split panels, or text. Do not change the support bracket, paper shape,
+  > holder size, outlet gap, mug position, on state, or hands-off composition.
+  > Add no steam cloud, numbers, logo, clutter, or extra objects. Preserve
+  > opaque 1024 x 768 output and crop-safe mobile legibility.
+- Rejected drafts: the initial render used an oversized round V60-like holder
+  and pleated paper. The first correction fixed the compact No. 1 assembly but
+  showed brown liquid leaving the hot-water outlet and made the paper appear
+  empty. Neither draft was copied into the repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_03Sz71oZM2TNizqklM08OkFw.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_auto_cupone_20_300_stage_04_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 42,120 bytes, exact 4:3.
+- Accessibility target: “The Cup-One runs hands-free with clear water entering
+  its supported No. 1 paper holder and dark coffee draining into a centered
+  mug.” The canonical exact-stage alt text remains “Instructional view of
+  switch on and let the automatic cycle run using the exact brewer profile and
+  filter configuration stated in this recipe; machine switches off after
+  water transfer.” The asset record remains intentionally unregistered until
+  localization and brewer review are complete.
+- Inspection: no text, numbers, logos, arrows, hands, removed components,
+  unstable mug, overflow, pod, carafe, or clutter. The final frame shows the
+  compact supported wedge holder, closely fitted folded paper, independent
+  outlet arm and air gap, closed reservoir, on-state indicator, clear upper
+  water stream, shallow contained slurry, and dark lower coffee stream.
+- Review status: **pending brewer-expert Cup-One geometry and active-cycle
+  review**. Confirm machine silhouette, integrated holder support, No. 1 paper
+  fit, outlet clearance, clear-water/dark-coffee path, on-state legibility,
+  stable mug, mobile-size readability, and warning-before-image placement
+  before registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
