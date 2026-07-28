@@ -63,6 +63,106 @@ For every asset record:
   reviewer confirms the exact paper seating, bottom-actuator/server contact,
   hot-water handling, and canonical stage fit.
 
+### `hario-switch-add-coffee-imagegen-v2`
+
+- Stable asset ID:
+  `instruction_steep_and_release_hario_switch_hario_switch_add_coffee_default`
+- Scope: measured coffee entering a V60 02 paper in a handleless Switch 02
+  glass cone. The valve assembly is outside the frame, so this physical action
+  remains valid across the official immersion, hybrid, and open-gravity plans.
+- Generation mode: new bitmap generation followed by one corrective image edit.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one clean, original, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide in a consistent semi-flat, softly dimensional
+  > educational style. Show measured medium-fine ground coffee being poured
+  > from a small plain ceramic dosing cup into a correctly fitted white V60 02
+  > conical paper filter inside an unbranded Hario Switch 02 glass cone, forming
+  > a visibly level coffee bed. Frame closely around the upper glass cone,
+  > paper, dosing cup, grounds, and stable clear server support. Deliberately
+  > keep the Switch base, steel ball, lever, and valve state outside the frame.
+  > Do not show water, a kettle, agitation, fingers touching grounds, or an
+  > uneven bed. Use a neutral warm-cream counter and background, clear
+  > silhouettes, restrained warm-neutral palette, subtle shadows, diffuse
+  > upper-left light, and mobile-readable composition. No words, letters,
+  > numbers, labels, logos, marks, UI, infographic, arrows, multiple panels,
+  > clutter, extra brewer, Clever-style body, or floating parts.
+- Corrective edit prompt:
+
+  > Preserve the single action, 4:3 composition, hand, dosing cup, falling
+  > grounds, seated white conical paper, warm background, and level coffee bed.
+  > Remove the entire glass handle. Use an unbranded Hario Switch 02-style
+  > handleless glass V60 cone with accurate diagonal ribs and a smooth circular
+  > rim, not a handled V60 dripper or glass cup. End the framing before the
+  > silicone base, steel ball, lever, and valve state become visible; a stable
+  > clear server may remain below. Make the rendering semi-flat and softly
+  > dimensional rather than photorealistic. Keep paper flush to glass. Do not
+  > add water, kettle, valve, lever, logo, text, numbers, measurement marks,
+  > arrows, extra panels, clutter, extra hands, or a handle.
+- Rejected draft: the initial render added a handled glass cone, so it was not
+  copied into the repository or manifest.
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_steep_and_release_hario_switch_hario_switch_add_coffee_default.webp`
+- Delivery: opaque RGB WebP, 1024 × 768 px, 84,364 bytes, exact 4:3.
+- Accessibility: uses the existing `action_brew_add_coffee` resource, present
+  in all 23 supported locales, pending recipe-specific descriptive alt text.
+- Inspection: no handle, valve, lever, text, logo, water, or extra action is
+  shown. The seated cone paper, falling grounds, level bed, stable support, and
+  hand placement remain clear at phone size.
+- Review status: **pending brewer-expert review**. Confirm the handleless glass
+  cone/rib geometry, paper seating, server support, and cross-recipe framing
+  before approval.
+
+### `phin-stable-cup-imagegen-v2`
+
+- Stable asset ID:
+  `instruction_restricted_flow_gravity_concentrate_vietnamese_phin_vietnamese_phin_place_on_stable_cup_default`
+- Scope: empty single-serving phin chamber and integrated perforated base on a
+  broad heat-safe cup, before either gravity-disc or threaded-insert workflow.
+- Generation mode: new bitmap generation followed by one corrective image edit.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one clean, original, text-free 4:3 mobile instructional illustration
+  > in a semi-flat, softly dimensional warm-neutral style. Show an empty,
+  > unbranded single-serving Vietnamese phin centered securely on a broad,
+  > level, heat-safe ceramic cup. Accurately show the perforated support
+  > plate/flange resting with full even contact on the cup rim and the empty
+  > cylindrical metal chamber upright above it. The cup must support the plate
+  > with generous overlap. One hand may steady the cup by its handle or lower
+  > body, not touch the phin. Show no coffee, insert, screw, lid, water, kettle,
+  > steam, milk, ice, drips, pressure, or brewing action. Use an elevated
+  > three-quarter view so the flange, centered chamber, level cup, and stable
+  > footprint are obvious. No words, letters, numbers, labels, logos, marks,
+  > arrows, panels, ticks, clutter, narrow glass, tilted cup, off-center phin,
+  > floating parts, extra hands, or hot-metal contact.
+- Corrective edit prompt:
+
+  > Preserve the centered chamber, broad support flange, cup-rim contact, hand
+  > position, 4:3 framing, and warm educational style. Remove every decorative
+  > object, including plant leaves, vase, tray, and terracotta pot; use a plain
+  > warm-cream wall and uncluttered counter. Make the empty phin's integrated
+  > perforated metal floor clearly visible through the open chamber as a flat
+  > circular base with a regular field of small round perforations. Keep it
+  > empty and upright. Do not add insert, screw, lid, coffee, water, kettle,
+  > steam, drips, milk, text, logo, marks, arrows, panels, extra hands, clutter,
+  > floating parts, or impossible fused geometry.
+- Rejected draft: the initial render hid the perforated floor and added plants,
+  pottery, and a tray, so it was not copied into the repository or manifest.
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_restricted_flow_gravity_concentrate_vietnamese_phin_vietnamese_phin_place_on_stable_cup_default.webp`
+- Delivery: opaque RGB WebP, 1024 × 768 px, 86,592 bytes, exact 4:3.
+- Accessibility: uses the existing `warning_brew_safety_stability` resource,
+  present in all 23 supported locales, pending recipe-specific descriptive alt
+  text.
+- Inspection: the empty perforated floor, upright chamber, full flange overlap,
+  wide stable cup, and hand kept off metal are legible at phone size; the frame
+  contains no decorative objects or second action.
+- Review status: **pending brewer-expert safety review**. Confirm the phin's
+  integrated base/perforation geometry, flange overlap, cup support, and absence
+  of implied pressure before approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.

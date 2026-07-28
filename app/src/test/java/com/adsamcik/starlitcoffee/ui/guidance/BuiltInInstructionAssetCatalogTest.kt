@@ -15,16 +15,25 @@ class BuiltInInstructionAssetCatalogTest {
 
     @Test
     fun `production source validates pending inputs without presenting them`() {
-        val asset = BuiltInInstructionAssetCatalog.catalog.assets.single()
+        val catalog = BuiltInInstructionAssetCatalog.catalog
+        val assets = catalog.assets
 
-        assertEquals(InstructionAssetReviewStatus.PENDING_REVIEW, asset.review.status)
         assertEquals(
-            "instruction_steep_and_release_clever_style_" +
-                "clever_style_insert_and_rinse_filter_default",
-            asset.id.value,
+            setOf(
+                "instruction_steep_and_release_clever_style_" +
+                    "clever_style_insert_and_rinse_filter_default",
+                "instruction_steep_and_release_hario_switch_" +
+                    "hario_switch_add_coffee_default",
+                "instruction_restricted_flow_gravity_concentrate_vietnamese_phin_" +
+                    "vietnamese_phin_place_on_stable_cup_default",
+            ),
+            assets.mapTo(linkedSetOf()) { asset -> asset.id.value },
         )
-        assertEquals(asset.id.value, asset.expectedDrawableResourceName())
-        assertNull(BuiltInInstructionAssetCatalog.catalog.findApprovedAssetForContent(asset.contentId))
+        assets.forEach { asset ->
+            assertEquals(InstructionAssetReviewStatus.PENDING_REVIEW, asset.review.status)
+            assertEquals(asset.id.value, asset.expectedDrawableResourceName())
+            assertNull(catalog.findApprovedAssetForContent(asset.contentId))
+        }
     }
 
     @Test
