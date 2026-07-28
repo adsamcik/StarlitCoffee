@@ -12,6 +12,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
 import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
 import com.adsamcik.starlitcoffee.ui.session.CurrentBrewStagePresentation
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -78,7 +79,7 @@ class DurableBrewSessionGuidanceResolverTest {
                             ),
                         ),
                         utilityContent(),
-                        globalSafetyContent(),
+                        safetyContent(),
                     ),
                 ),
             ),
@@ -89,11 +90,105 @@ class DurableBrewSessionGuidanceResolverTest {
         )
 
         assertEquals(DurableBrewGuidanceAvailability.Available, resolution.availability)
+        assertEquals(GuidancePresentationLevel.UTILITIES_ONLY, resolution.policy?.level)
         assertEquals(listOf(StageContentId("pulsar_live_utility")), resolution.routineContent.map { it.id })
+        assertEquals("Watch the scale.", resolution.routineContent.single().instruction)
+        assertNull(resolution.routineContent.single().explanation)
         assertEquals(
             listOf(StageContentId("pulsar_global_safety")),
             resolution.criticalContent.map { it.id },
         )
+    }
+
+    @Test
+    fun `caller-selected exact and legacy catalogs stay isolated and ordered`() {
+        val exactContent = stageContent(
+            id = StageContentId("exact_recipe_stage"),
+            primaryInstruction = "Follow the selected exact recipe.",
+            conciseInstruction = "Follow exact recipe.",
+        )
+        val legacyContent = stageContent(
+            id = StageContentId("legacy_recipe_stage"),
+            primaryInstruction = "Follow the legacy recipe.",
+            conciseInstruction = "Follow legacy recipe.",
+        )
+        val exactCatalog = BuiltInGuidanceCatalog(listOf(exactContent))
+        val legacyCatalog = BuiltInGuidanceCatalog(listOf(legacyContent))
+
+        val exactResolution = DurableBrewSessionGuidanceResolver(
+            guidanceCatalogs = listOf(exactCatalog),
+        ).resolve(request(stage = stage(contentId = exactContent.id)))
+        val legacyResolution = DurableBrewSessionGuidanceResolver(
+            guidanceCatalogs = listOf(legacyCatalog),
+        ).resolve(request(stage = stage(contentId = legacyContent.id)))
+        val orderedResolution = DurableBrewSessionGuidanceResolver(
+            guidanceCatalogs = listOf(exactCatalog, legacyCatalog),
+        ).resolve(request(stage = stage(contentId = exactContent.id)))
+
+        assertEquals(listOf(exactContent.id), exactResolution.routineContent.map { it.id })
+        assertEquals(listOf(legacyContent.id), legacyResolution.routineContent.map { it.id })
+        assertEquals(
+            listOf(exactContent.id, legacyContent.id),
+            orderedResolution.routineContent.map { it.id },
+        )
+    }
+
+    @Test
+    fun `critical and routine partitions preserve safety-first presentation order`() {
+        val routineFirst = stageContent(id = StageContentId("routine_first"))
+        val criticalFirst = safetyContent(id = StageContentId("critical_first"))
+        val routineSecond = stageContent(id = StageContentId("routine_second"))
+        val criticalSecond = safetyContent(id = StageContentId("critical_second"))
+        val resolver = DurableBrewSessionGuidanceResolver(
+            guidanceCatalogs = listOf(
+                BuiltInGuidanceCatalog(
+                    listOf(routineFirst, criticalFirst, routineSecond, criticalSecond),
+                ),
+            ),
+        )
+
+        val resolution = resolver.resolve(
+            request(stage = stage(contentId = routineFirst.id)),
+        )
+
+        val presentationOrder = resolution.criticalContent + resolution.routineContent
+        assertEquals(DurableBrewGuidanceAvailability.Available, resolution.availability)
+        assertEquals(
+            listOf(criticalFirst.id, criticalSecond.id),
+            resolution.criticalContent.map { it.id },
+        )
+        assertEquals(
+            listOf(routineFirst.id, routineSecond.id),
+            resolution.routineContent.map { it.id },
+        )
+        assertEquals(
+            listOf(criticalFirst.id, criticalSecond.id, routineFirst.id, routineSecond.id),
+            presentationOrder.map { it.id },
+        )
+    }
+
+    @Test
+    fun `no active stage retains only global critical catalog content`() {
+        val globalSafety = safetyContent()
+        val liveSafety = safetyContent(
+            id = StageContentId("live_stage_safety"),
+            placement = BuiltInGuidancePlacement.LIVE_STAGE,
+            stageId = BLOOM_STAGE,
+        )
+        val resolver = DurableBrewSessionGuidanceResolver(
+            guidanceCatalogs = listOf(
+                BuiltInGuidanceCatalog(
+                    listOf(stageContent(), globalSafety, liveSafety),
+                ),
+            ),
+        )
+
+        val resolution = resolver.resolve(request(stage = null))
+
+        assertEquals(DurableBrewGuidanceAvailability.NoActiveStage, resolution.availability)
+        assertTrue(resolution.routineContent.isEmpty())
+        assertEquals(listOf(globalSafety.id), resolution.criticalContent.map { it.id })
+        assertEquals(DurableBrewGuidanceVisualStatus.NotRequested, resolution.visualStatus)
     }
 
     @Test
@@ -211,21 +306,8 @@ class DurableBrewSessionGuidanceResolverTest {
         val assetId = InstructionAssetId(
             "instruction_valve_controlled_no_bypass_pulsar_standard_pulsar_bloom_default",
         )
-        val pendingAsset = InstructionAssetRecord(
-            id = assetId,
-            familyId = FAMILY,
-            profileId = PROFILE,
-            stageId = BLOOM_STAGE,
-            contentId = BLOOM_CONTENT,
-            drawableRes = 1,
-            altTextRes = 2,
-            companionInstructionRes = 3,
-            mandatoryForFullGuidance = true,
-            safetySensitive = false,
-            provenance = InstructionAssetProvenance(
-                promptDocument = "docs/brewing/instruction-assets.md",
-                promptRevision = "v1",
-            ),
+        val pendingAsset = instructionAsset(
+            assetId = assetId,
             review = InstructionAssetReview(InstructionAssetReviewStatus.PENDING_REVIEW),
         )
         val resolver = DurableBrewSessionGuidanceResolver(
@@ -243,8 +325,35 @@ class DurableBrewSessionGuidanceResolverTest {
         assertFalse(resolution.visualStatus is DurableBrewGuidanceVisualStatus.Approved)
     }
 
+    @Test
+    fun `approved matching asset is returned explicitly`() {
+        val assetId = InstructionAssetId(
+            "instruction_valve_controlled_no_bypass_pulsar_standard_pulsar_bloom_default",
+        )
+        val approvedAsset = instructionAsset(
+            assetId = assetId,
+            review = InstructionAssetReview(
+                status = InstructionAssetReviewStatus.APPROVED,
+                reviewer = "Guidance QA",
+                reviewedOn = LocalDate.of(2026, 7, 28),
+            ),
+        )
+        val resolver = DurableBrewSessionGuidanceResolver(
+            instructionAssets = InstructionAssetCatalog(listOf(approvedAsset)),
+        )
+
+        val resolution = resolver.resolve(
+            request(stage = stage(instructionAssetId = assetId)),
+        )
+
+        assertEquals(
+            DurableBrewGuidanceVisualStatus.Approved(approvedAsset),
+            resolution.visualStatus,
+        )
+    }
+
     private fun request(
-        stage: CurrentBrewStagePresentation = stage(),
+        stage: CurrentBrewStagePresentation? = stage(),
         level: GuidancePresentationLevel? = GuidancePresentationLevel.FULL,
         preferences: DurableBrewSessionGuidancePreferences? = null,
     ): DurableBrewSessionGuidanceRequest = DurableBrewSessionGuidanceRequest(
@@ -273,16 +382,21 @@ class DurableBrewSessionGuidanceResolverTest {
     )
 
     private fun stageContent(
-        visibility: GuidanceVisibilityPolicy,
+        visibility: GuidanceVisibilityPolicy = GuidanceVisibilityPolicy(
+            visibleIn = GuidancePresentationLevel.entries.toSet(),
+        ),
+        id: StageContentId = BLOOM_CONTENT,
+        primaryInstruction: String = "Carry out the current stage.",
+        conciseInstruction: String = "Do the current stage.",
     ): BuiltInGuidanceContent = BuiltInGuidanceContent(
-        id = BLOOM_CONTENT,
+        id = id,
         familyId = FAMILY,
         profileId = PROFILE,
         stageId = BLOOM_STAGE,
         placement = BuiltInGuidancePlacement.LIVE_STAGE,
         text = GuidanceTextMetadata(
-            primaryInstruction = "Carry out the current stage.",
-            conciseInstruction = "Do the current stage.",
+            primaryInstruction = primaryInstruction,
+            conciseInstruction = conciseInstruction,
             altText = "A brewer during the current stage.",
         ),
         visibility = visibility,
@@ -303,11 +417,16 @@ class DurableBrewSessionGuidanceResolverTest {
         ),
     )
 
-    private fun globalSafetyContent(): BuiltInGuidanceContent = BuiltInGuidanceContent(
-        id = StageContentId("pulsar_global_safety"),
+    private fun safetyContent(
+        id: StageContentId = StageContentId("pulsar_global_safety"),
+        placement: BuiltInGuidancePlacement = BuiltInGuidancePlacement.GLOBAL_SAFETY,
+        stageId: StageId? = null,
+    ): BuiltInGuidanceContent = BuiltInGuidanceContent(
+        id = id,
         familyId = FAMILY,
         profileId = PROFILE,
-        placement = BuiltInGuidancePlacement.GLOBAL_SAFETY,
+        stageId = stageId,
+        placement = placement,
         text = GuidanceTextMetadata(
             primaryInstruction = "Keep hot liquid stable.",
             warning = "Hot liquid can burn.",
@@ -315,6 +434,27 @@ class DurableBrewSessionGuidanceResolverTest {
         ),
         visibility = GuidanceVisibilityPolicy(visibleIn = emptySet(), alwaysVisible = true),
         safetyCritical = true,
+    )
+
+    private fun instructionAsset(
+        assetId: InstructionAssetId,
+        review: InstructionAssetReview,
+    ): InstructionAssetRecord = InstructionAssetRecord(
+        id = assetId,
+        familyId = FAMILY,
+        profileId = PROFILE,
+        stageId = BLOOM_STAGE,
+        contentId = BLOOM_CONTENT,
+        drawableRes = 1,
+        altTextRes = 2,
+        companionInstructionRes = 3,
+        mandatoryForFullGuidance = true,
+        safetySensitive = false,
+        provenance = InstructionAssetProvenance(
+            promptDocument = "docs/brewing/instruction-assets.md",
+            promptRevision = "v1",
+        ),
+        review = review,
     )
 
     private companion object {

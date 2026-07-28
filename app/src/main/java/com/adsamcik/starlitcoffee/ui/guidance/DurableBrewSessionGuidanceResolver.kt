@@ -165,98 +165,128 @@ class DurableBrewSessionGuidanceResolver(
 
     fun resolve(request: DurableBrewSessionGuidanceRequest): DurableBrewSessionGuidanceResolution {
         val stageSafetyMessages = request.currentStage?.safetyMessages.orEmpty()
-        val methodFamilyId = request.methodFamilyId.toMethodFamilyIdOrNull()
-            ?: return unavailable(
-                availability = DurableBrewGuidanceAvailability.InvalidMethodFamilyId(
-                    request.methodFamilyId,
-                ),
+        return when (val scopeResolution = resolveProfileScope(request)) {
+            is ProfileScopeResolution.Resolved -> resolveForScope(
+                request = request,
+                scope = scopeResolution.scope,
+                stageSafetyMessages = stageSafetyMessages,
+            )
+
+            is ProfileScopeResolution.Unavailable -> unavailable(
+                availability = scopeResolution.availability,
                 stageSafetyMessages = stageSafetyMessages,
                 visualStatus = visualStatus(request.currentStage, null),
+            )
+        }
+    }
+
+    private fun resolveProfileScope(
+        request: DurableBrewSessionGuidanceRequest,
+    ): ProfileScopeResolution {
+        val methodFamilyId = request.methodFamilyId.toMethodFamilyIdOrNull()
+            ?: return ProfileScopeResolution.Unavailable(
+                DurableBrewGuidanceAvailability.InvalidMethodFamilyId(request.methodFamilyId),
             )
         val brewerProfileId = request.brewerProfileId.toBrewerProfileIdOrNull()
-            ?: return unavailable(
-                availability = DurableBrewGuidanceAvailability.InvalidBrewerProfileId(
-                    request.brewerProfileId,
-                ),
-                stageSafetyMessages = stageSafetyMessages,
-                visualStatus = visualStatus(request.currentStage, null),
+            ?: return ProfileScopeResolution.Unavailable(
+                DurableBrewGuidanceAvailability.InvalidBrewerProfileId(request.brewerProfileId),
             )
         val profile = brewingCatalog.findBrewerProfile(brewerProfileId)
-            ?: return unavailable(
-                availability = DurableBrewGuidanceAvailability.UnknownBrewerProfile(brewerProfileId),
-                stageSafetyMessages = stageSafetyMessages,
-                visualStatus = visualStatus(request.currentStage, null),
+            ?: return ProfileScopeResolution.Unavailable(
+                DurableBrewGuidanceAvailability.UnknownBrewerProfile(brewerProfileId),
             )
         if (profile.familyId != methodFamilyId) {
-            return unavailable(
-                availability = DurableBrewGuidanceAvailability.ProfileFamilyMismatch(
+            return ProfileScopeResolution.Unavailable(
+                DurableBrewGuidanceAvailability.ProfileFamilyMismatch(
                     profileId = brewerProfileId,
                     requestedFamilyId = methodFamilyId,
                     catalogueFamilyId = profile.familyId,
                 ),
-                stageSafetyMessages = stageSafetyMessages,
-                visualStatus = visualStatus(request.currentStage, null),
             )
         }
-
-        val policy = GuidancePolicyResolver.resolve(
-            GuidancePolicyContext(
-                methodFamilyId = methodFamilyId,
-                brewerProfileId = brewerProfileId,
-                sessionOverride = request.preferences.sessionOverride,
-                profileOverrides = request.preferences.profileOverrides.toKnownProfileOverrides(),
-                familyPreferences = request.preferences.familyPreferences.toKnownFamilyPreferences(),
-            ),
+        return ProfileScopeResolution.Resolved(
+            ProfileScope(methodFamilyId, brewerProfileId),
         )
-        val scopedContent = allContent.filter { content ->
-            content.familyId == methodFamilyId &&
-                (content.profileId == null || content.profileId == brewerProfileId)
-        }
+    }
+
+    private fun resolveForScope(
+        request: DurableBrewSessionGuidanceRequest,
+        scope: ProfileScope,
+        stageSafetyMessages: List<StageSafetyMessage>,
+    ): DurableBrewSessionGuidanceResolution {
+        val policy = resolvePolicy(scope, request.preferences)
+        val scopedContent = allContent.filter { content -> content.belongsTo(scope) }
         if (scopedContent.isEmpty()) {
             return unavailable(
                 policy = policy,
                 availability = DurableBrewGuidanceAvailability.NoGuidanceCatalogForProfile(
-                    methodFamilyId,
-                    brewerProfileId,
+                    scope.methodFamilyId,
+                    scope.brewerProfileId,
                 ),
                 stageSafetyMessages = stageSafetyMessages,
-                visualStatus = visualStatus(request.currentStage, ProfileScope(methodFamilyId, brewerProfileId)),
+                visualStatus = visualStatus(request.currentStage, scope),
             )
         }
-
         val currentStage = request.currentStage
-            ?: return DurableBrewSessionGuidanceResolution(
+        return if (currentStage == null) {
+            resolveWithoutActiveStage(
                 policy = policy,
-                availability = DurableBrewGuidanceAvailability.NoActiveStage,
-                routineContent = emptyList(),
-                criticalContent = scopedContent
-                    .filter { content ->
-                        content.safetyCritical && content.placement == BuiltInGuidancePlacement.GLOBAL_SAFETY
-                    }
-                    .map { content -> content.toResolvedContent(policy.level) },
+                scopedContent = scopedContent,
                 stageSafetyMessages = stageSafetyMessages,
-                visualStatus = DurableBrewGuidanceVisualStatus.NotRequested,
             )
-
-        val scopedStageContent = scopedContent.filter { content ->
-            content.belongsBeside(currentStage)
+        } else {
+            resolveActiveStage(
+                currentStage = currentStage,
+                scope = scope,
+                policy = policy,
+                scopedContent = scopedContent,
+                stageSafetyMessages = stageSafetyMessages,
+            )
         }
-        val hasPrimaryStageContent = scopedStageContent.any { content ->
-            !content.safetyCritical &&
-                content.placement == BuiltInGuidancePlacement.LIVE_STAGE &&
-                content.matchesPrimaryStageContent(currentStage)
-        }
-        val routineContent = scopedStageContent
-            .filterNot(BuiltInGuidanceContent::safetyCritical)
-            .filter { content -> policy.isVisible(content.visibility, content.safetyCritical) }
-            .map { content -> content.toResolvedContent(policy.level) }
-        val criticalContent = scopedStageContent
-            .filter(BuiltInGuidanceContent::safetyCritical)
-            .map { content -> content.toResolvedContent(policy.level) }
+    }
 
+    private fun resolvePolicy(
+        scope: ProfileScope,
+        preferences: DurableBrewSessionGuidancePreferences,
+    ): ResolvedGuidancePolicy = GuidancePolicyResolver.resolve(
+        GuidancePolicyContext(
+            methodFamilyId = scope.methodFamilyId,
+            brewerProfileId = scope.brewerProfileId,
+            sessionOverride = preferences.sessionOverride,
+            profileOverrides = preferences.profileOverrides.toKnownProfileOverrides(),
+            familyPreferences = preferences.familyPreferences.toKnownFamilyPreferences(),
+        ),
+    )
+
+    private fun resolveWithoutActiveStage(
+        policy: ResolvedGuidancePolicy,
+        scopedContent: List<BuiltInGuidanceContent>,
+        stageSafetyMessages: List<StageSafetyMessage>,
+    ): DurableBrewSessionGuidanceResolution = DurableBrewSessionGuidanceResolution(
+        policy = policy,
+        availability = DurableBrewGuidanceAvailability.NoActiveStage,
+        routineContent = emptyList(),
+        criticalContent = scopedContent
+            .filter { content ->
+                content.safetyCritical &&
+                    content.placement == BuiltInGuidancePlacement.GLOBAL_SAFETY
+            }
+            .map { content -> content.toResolvedContent(policy.level) },
+        stageSafetyMessages = stageSafetyMessages,
+        visualStatus = DurableBrewGuidanceVisualStatus.NotRequested,
+    )
+
+    private fun resolveActiveStage(
+        currentStage: CurrentBrewStagePresentation,
+        scope: ProfileScope,
+        policy: ResolvedGuidancePolicy,
+        scopedContent: List<BuiltInGuidanceContent>,
+        stageSafetyMessages: List<StageSafetyMessage>,
+    ): DurableBrewSessionGuidanceResolution {
+        val content = resolveActiveStageContent(currentStage, policy, scopedContent)
         return DurableBrewSessionGuidanceResolution(
             policy = policy,
-            availability = if (hasPrimaryStageContent) {
+            availability = if (content.hasPrimaryStageContent) {
                 DurableBrewGuidanceAvailability.Available
             } else {
                 DurableBrewGuidanceAvailability.MissingStageContent(
@@ -264,13 +294,37 @@ class DurableBrewSessionGuidanceResolver(
                     contentId = currentStage.contentId,
                 )
             },
-            routineContent = routineContent,
-            criticalContent = criticalContent,
+            routineContent = content.routineContent,
+            criticalContent = content.criticalContent,
             stageSafetyMessages = stageSafetyMessages,
-            visualStatus = visualStatus(
-                currentStage,
-                ProfileScope(methodFamilyId, brewerProfileId),
-            ),
+            visualStatus = visualStatus(currentStage, scope),
+        )
+    }
+
+    private fun resolveActiveStageContent(
+        currentStage: CurrentBrewStagePresentation,
+        policy: ResolvedGuidancePolicy,
+        scopedContent: List<BuiltInGuidanceContent>,
+    ): ResolvedActiveStageContent {
+        val adjacentContent = scopedContent.filter { content ->
+            content.belongsBeside(currentStage)
+        }
+        val hasPrimaryStageContent = adjacentContent.any { content ->
+            !content.safetyCritical &&
+                content.placement == BuiltInGuidancePlacement.LIVE_STAGE &&
+                content.matchesPrimaryStageContent(currentStage)
+        }
+        val (criticalContent, routineCandidates) = adjacentContent.partition { content ->
+            content.safetyCritical
+        }
+        return ResolvedActiveStageContent(
+            hasPrimaryStageContent = hasPrimaryStageContent,
+            criticalContent = criticalContent.map { content ->
+                content.toResolvedContent(policy.level)
+            },
+            routineContent = routineCandidates
+                .filter { content -> policy.isVisible(content.visibility, content.safetyCritical) }
+                .map { content -> content.toResolvedContent(policy.level) },
         )
     }
 
@@ -308,27 +362,36 @@ class DurableBrewSessionGuidanceResolver(
     ): DurableBrewGuidanceVisualStatus {
         if (currentStage == null) return DurableBrewGuidanceVisualStatus.NotRequested
         val assetId = currentStage.instructionAssetId
-        if (assetId == null) {
-            return if (currentStage.requiresIllustration) {
+        return when {
+            assetId == null && currentStage.requiresIllustration ->
                 DurableBrewGuidanceVisualStatus.RequiredAssetIdMissing
-            } else {
-                DurableBrewGuidanceVisualStatus.NotRequested
-            }
-        }
-        val assetCatalog = instructionAssets ?: return DurableBrewGuidanceVisualStatus.ManifestUnavailable(
-            assetId.value,
-        )
-        val asset = assetCatalog.find(assetId)
-            ?: return DurableBrewGuidanceVisualStatus.MissingFromManifest(assetId.value)
-        if (scope == null || !asset.matches(scope, currentStage)) {
-            return DurableBrewGuidanceVisualStatus.ManifestScopeMismatch(assetId.value)
-        }
-        return if (asset.review.isApproved) {
-            DurableBrewGuidanceVisualStatus.Approved(asset)
-        } else {
-            DurableBrewGuidanceVisualStatus.NotApproved(asset)
+
+            assetId == null -> DurableBrewGuidanceVisualStatus.NotRequested
+            instructionAssets == null -> DurableBrewGuidanceVisualStatus.ManifestUnavailable(
+                assetId.value,
+            )
+
+            else -> instructionAssets.find(assetId)
+                ?.toVisualStatus(scope, currentStage)
+                ?: DurableBrewGuidanceVisualStatus.MissingFromManifest(assetId.value)
         }
     }
+
+    private fun InstructionAssetRecord.toVisualStatus(
+        scope: ProfileScope?,
+        currentStage: CurrentBrewStagePresentation,
+    ): DurableBrewGuidanceVisualStatus = when {
+        scope == null || !matches(scope, currentStage) ->
+            DurableBrewGuidanceVisualStatus.ManifestScopeMismatch(id.value)
+
+        review.isApproved -> DurableBrewGuidanceVisualStatus.Approved(this)
+        else -> DurableBrewGuidanceVisualStatus.NotApproved(this)
+    }
+
+    private fun BuiltInGuidanceContent.belongsTo(
+        scope: ProfileScope,
+    ): Boolean = familyId == scope.methodFamilyId &&
+        (profileId == null || profileId == scope.brewerProfileId)
 
     private fun BuiltInGuidanceContent.belongsBeside(
         stage: CurrentBrewStagePresentation,
@@ -405,11 +468,21 @@ class DurableBrewSessionGuidanceResolver(
         stageId == stage.stageId &&
         contentId == stage.contentId
 
-    private fun BrewingCatalog.containsProfile(profileId: BrewerProfileId): Boolean =
-        findBrewerProfile(profileId) != null
+    private data class ResolvedActiveStageContent(
+        val hasPrimaryStageContent: Boolean,
+        val criticalContent: List<ResolvedBrewGuidanceContent>,
+        val routineContent: List<ResolvedBrewGuidanceContent>,
+    )
 
-    private fun BrewingCatalog.containsFamily(familyId: MethodFamilyId): Boolean =
-        findMethodFamily(familyId) != null
+    private sealed interface ProfileScopeResolution {
+        data class Resolved(
+            val scope: ProfileScope,
+        ) : ProfileScopeResolution
+
+        data class Unavailable(
+            val availability: DurableBrewGuidanceAvailability,
+        ) : ProfileScopeResolution
+    }
 
     private data class ProfileScope(
         val methodFamilyId: MethodFamilyId,
