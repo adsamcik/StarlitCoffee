@@ -28,7 +28,6 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanSelections
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanValidationCode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanValidationIssue
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -123,6 +122,14 @@ class BuiltinBrewerSessionStartFactoryTest {
                     capacityOverrideG = 250.0,
                 ),
                 temperatureC = 91,
+                grinderId = "  fellow_ode  ",
+                grindSetting = "  4.2  ",
+                methodLabel = "  Flash V60  ",
+                filterLabel = "  Cone paper  ",
+                isDecaf = true,
+                notes = "  Bright and chilled  ",
+                coffeeBagId = 91L,
+                sourceRecipeId = 27L,
             ),
         )
 
@@ -134,7 +141,18 @@ class BuiltinBrewerSessionStartFactoryTest {
         assertEquals(150.0, requireNotNull(request.recipe.quantities.brewWaterInputG), 0.001)
         assertEquals(70.0, request.recipe.quantities.iceG, 0.001)
         assertEquals(9.375, requireNotNull(request.recipe.ratioValue), 0.001)
+        assertEquals("fellow_ode", request.recipe.grinderId)
+        assertEquals("4.2", request.recipe.grindSetting)
+        assertTrue(request.recipe.isDecaf)
+        assertEquals("Bright and chilled", request.recipe.notes)
+        assertEquals(91L, request.executionContext.coffeeBagId)
+        assertEquals(27L, request.executionContext.sourceRecipeId)
+        assertEquals("Flash V60", request.executionContext.logPresentation.methodLabel)
         assertEquals(150.0, request.executionContext.logPresentation.waterG, 0.001)
+        assertEquals("4.2", request.executionContext.logPresentation.grindLabel)
+        assertEquals("Cone paper", request.executionContext.logPresentation.filterLabel)
+        assertTrue(request.executionContext.logPresentation.isDecaf)
+        assertEquals("Bright and chilled", request.executionContext.logPresentation.notes)
         assertEquals(2, request.recipe.ratioSemantics.size)
         assertEquals(9.375, requireNotNull(request.recipe.ratioSemantics[0].ratioValue), 0.001)
         assertEquals(
@@ -297,6 +315,84 @@ class BuiltinBrewerSessionStartFactoryTest {
                 .issues
                 .map(BuiltinBrewerSessionStartValidationIssue::code),
         )
+    }
+
+    @Test
+    fun `exact validation reports every issue in stable recipe order`() {
+        val definition = requireNotNull(
+            BuiltInP1RecipeCatalog.find(BuiltInRecipeId("switch_official_20_240")),
+        )
+        val input = exactInput(definition)
+        var allocatedIds = 0
+        val result = BuiltinBrewerSessionStartFactory(
+            newUuid = {
+                allocatedIds += 1
+                UUID.fromString("9c4e2984-37b1-44ea-a4f7-9a004a32dd67")
+            },
+        ).create(
+            input.copy(
+                dryCoffeeDoseG = Double.NaN,
+                inputWaterG = -1.0,
+                equipment = input.equipment.copy(
+                    filterSelection = FilterSelection.IntentionallyUnfiltered,
+                ),
+                harioSwitchWorkflow = HarioSwitchWorkflow.MANUAL_GRAVITY,
+                temperatureC = 95,
+            ),
+        )
+
+        val invalid = result as BuiltinBrewerSessionStartResult.InvalidSetup
+        assertEquals(
+            listOf(
+                BuiltinBrewerSessionStartValidationCode.INVALID_DRY_COFFEE_DOSE,
+                BuiltinBrewerSessionStartValidationCode.INVALID_INPUT_WATER,
+                BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_EQUIPMENT_MISMATCH,
+                BuiltinBrewerSessionStartValidationCode
+                    .BUILTIN_RECIPE_TEMPERATURE_NOT_APPLICABLE,
+                BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_WORKFLOW_MISMATCH,
+            ),
+            invalid.issues.map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        assertEquals(0, allocatedIds)
+    }
+
+    @Test
+    fun `legacy validation reports every issue in stable setup order`() {
+        var allocatedIds = 0
+        val result = BuiltinBrewerSessionStartFactory(
+            newUuid = {
+                allocatedIds += 1
+                UUID.fromString("ac4e2984-37b1-44ea-a4f7-9a004a32dd67")
+            },
+        ).create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                dryCoffeeDoseG = Double.NaN,
+                inputWaterG = Double.POSITIVE_INFINITY,
+                equipment = EquipmentConfiguration(
+                    brewerProfileId = BrewerProfileId("hario_switch"),
+                    capacityOverrideG = Double.NaN,
+                ),
+                harioSwitchWorkflow = HarioSwitchWorkflow.MANUAL_GRAVITY,
+                cezveSetup = CezveSessionSetup(foamRiseCycles = 3),
+                temperatureC = 101,
+            ),
+        )
+
+        val invalid = result as BuiltinBrewerSessionStartResult.InvalidSetup
+        assertEquals(
+            listOf(
+                BuiltinBrewerSessionStartValidationCode.INVALID_DRY_COFFEE_DOSE,
+                BuiltinBrewerSessionStartValidationCode.INVALID_INPUT_WATER,
+                BuiltinBrewerSessionStartValidationCode.EQUIPMENT_PROFILE_MISMATCH,
+                BuiltinBrewerSessionStartValidationCode.INVALID_CAPACITY_OVERRIDE,
+                BuiltinBrewerSessionStartValidationCode.INVALID_TEMPERATURE,
+                BuiltinBrewerSessionStartValidationCode.WORKFLOW_NOT_APPLICABLE,
+                BuiltinBrewerSessionStartValidationCode.CEZVE_SETUP_NOT_APPLICABLE,
+            ),
+            invalid.issues.map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        assertEquals(0, allocatedIds)
     }
 
     @Test
