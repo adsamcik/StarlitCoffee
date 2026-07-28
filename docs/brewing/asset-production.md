@@ -239,6 +239,88 @@ For every asset record:
   bonded-filter fit, and post-warning Learn/Live placement before manifest
   registration or approval.
 
+### `p1-clever-release-imagegen-v2`
+
+- Stable asset ID:
+  `instruction_p1_clever_water_first_15_250_stage_05_instruction_default`
+- Exact scope: `clever_water_first_15_250` / source `stage_05` /
+  `p1_clever_water_first_15_250_stage_05_instruction`; the bottom-actuated
+  release onto a broad stable server after immersion.
+- Evidence: `SRC-CLEVER-HOFFMANN` and `SRC-CLEVER-COFFEECHRONICLER`.
+  Reverified on 28 July 2026 against the current Clever distributor product
+  guide at
+  <https://cleverbrewing.coffee/collections/clever-manual-brewers/products/clever-dripper>,
+  which still specifies a standard #4 filter and placing the dripper on a
+  carafe or cup to activate the drain valve.
+- Generation mode: new bitmap generation followed by one corrective image
+  edit with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 scientific-educational
+  > instructional illustration for a mobile coffee-brewing guide. Show an
+  > unbranded translucent Clever-style bottom-actuated steep-and-release
+  > dripper being lowered vertically and seated squarely onto a broad, stable,
+  > heat-safe glass server on a simple warm-neutral counter. The brewer
+  > contains a correctly seated wet wedge-shaped paper filter and brewed coffee
+  > slurry with generous headroom, without implying an exact quantity. Make
+  > the full even server-rim support visibly press the brewer’s small bottom
+  > actuator upward so its outlet is open and one steady vertical coffee stream
+  > has just begun flowing into the server. Use an elevated close three-quarter
+  > view that clearly shows the real actuator-to-server contact beneath the
+  > brewer, the centered support overlap, and the initial flow. One relaxed
+  > hand holds only the brewer’s cool side handle, away from the hot underside;
+  > no second hand. Semi-flat softly dimensional educational rendering,
+  > restrained warm-neutral palette, clear silhouettes, subtle shadows,
+  > uncluttered neutral background, crop-safe mobile-readable composition with
+  > critical geometry away from rounded corners. No text, letters, numbers,
+  > measurement marks, labels, captions, logos, brand marks, UI, arrows, inset,
+  > comparison, split panel, decoration, narrow cup, undersized server,
+  > off-center support, tilted brewer, overflow, fingers under the brewer,
+  > lever, steel ball, tap, Hario Switch base, V60 cone paper, kettle, active
+  > pour, stirring, serving, closed valve, no-flow state, or clutter.
+- Corrective edit prompt:
+
+  > Edit the immediately previous Clever release illustration while
+  > preserving the 4:3 warm-neutral educational style, stable broad server,
+  > one hand on the cool handle, centered brewer, and initial vertical coffee
+  > flow. Correct the brewer identity and release mechanism. Replace the
+  > V60-like ribbed conical body with a smooth translucent Clever-style 500 ml
+  > steep-and-release body: a familiar #4 wedge-dripper silhouette with gently
+  > sloped broad walls, flat handle side, and a correctly seated standard #4
+  > wedge paper whose folded seams sit flush. Keep the brewed slurry lower with
+  > generous headroom. At the underside, clearly show the real small bottom
+  > drain-valve actuator/tab being pushed upward by direct contact with the
+  > server rim; the actuator must visibly compress/open the adjacent outlet as
+  > the single coffee stream begins. Make the rim-to-actuator contact readable
+  > at phone size without a diagram, arrow, label, cutaway panel, or extra hand.
+  > The wide support flange must sit fully and evenly on the server, not float.
+  > Do not show V60 ribs, a cone paper, outlet pipe, long nozzle, Switch lever,
+  > steel ball, tap, undersized cup, off-center support, tilted brewer, fingers
+  > under hot parts, overflow, kettle, stirring, text, numbers, logos, arrows,
+  > inset, split panel, comparison, decoration, or clutter.
+- Rejected draft: the first render used a V60-like vertically ribbed cone and
+  left the actuator hidden behind an outlet-pipe-like shape. It was not copied
+  into the repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_odoQwDbXpF0OELrwPlAiZgXs.png`
+  (opaque RGB PNG, 1448 × 1086 px, 1,956,836 bytes, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_clever_water_first_15_250_stage_05_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 × 768 px, 81,288 bytes, exact 4:3.
+- Accessibility target: “A Clever-style dripper sits squarely on a wide
+  stable server, opening its bottom actuator as coffee begins to drain.” The
+  exact-stage alt-text resource and asset record remain intentionally
+  unregistered until localization and geometry review are complete.
+- Inspection: no text, numbers, logos, extra panel, kettle, second hand, or
+  secondary action. The correction replaces the V60-like body with a smooth
+  #4 wedge-filter silhouette, gives the server generous support overlap, and
+  shows immediate vertical drawdown.
+- Review status: **pending brewer-expert safety and geometry review**. Confirm
+  the exact #4 paper seating, bottom-valve/release-plate relationship,
+  server-rim actuation, stable capacity, hand clearance, and post-warning
+  Learn/Live placement before manifest registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
