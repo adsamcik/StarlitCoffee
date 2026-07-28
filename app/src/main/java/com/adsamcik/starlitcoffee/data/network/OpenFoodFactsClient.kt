@@ -1,11 +1,12 @@
 package com.adsamcik.starlitcoffee.data.network
 
 import android.util.Log
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import java.net.HttpURLConnection
-import java.net.URL
 
 /**
  * Client for Open Food Facts free product lookup API.
@@ -21,35 +22,60 @@ object OpenFoodFactsClient {
         coerceInputValues = true
     }
 
-    fun lookupBarcode(barcode: String): ProductResult? {
+    fun lookupBarcode(barcode: String): ProductResult? = lookupBarcode(
+        barcode = barcode,
+        connectionFactory = { url -> url.openConnection() as HttpURLConnection },
+    )
+
+    internal fun lookupBarcode(
+        barcode: String,
+        connectionFactory: (URL) -> HttpURLConnection,
+    ): ProductResult? {
         return try {
-            val url = URL("$BASE_URL/$barcode.json")
-            val connection = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "GET"
-            connection.setRequestProperty("User-Agent", USER_AGENT)
-            connection.connectTimeout = 5000
-            connection.readTimeout = 5000
+            val connection = connectionFactory(URL("$BASE_URL/$barcode.json"))
+            connection.useAndDisconnect { activeConnection ->
+                activeConnection.requestMethod = "GET"
+                activeConnection.setRequestProperty("User-Agent", USER_AGENT)
+                activeConnection.connectTimeout = 5000
+                activeConnection.readTimeout = 5000
 
-            if (connection.responseCode != 200) return null
+                if (activeConnection.responseCode != HttpURLConnection.HTTP_OK) {
+                    activeConnection.errorStream?.use { }
+                    return@useAndDisconnect null
+                }
 
-            val responseText = connection.inputStream.bufferedReader().use { it.readText() }
-            val response = json.decodeFromString<OffResponse>(responseText)
+                val responseText = activeConnection.inputStream
+                    .bufferedReader()
+                    .use { reader -> reader.readText() }
+                val response = json.decodeFromString<OffResponse>(responseText)
+                val product = response.product
+                    ?.takeIf { response.status == 1 }
+                    ?: return@useAndDisconnect null
 
-            if (response.status != 1 || response.product == null) return null
-
-            val product = response.product
-            ProductResult(
-                name = product.productName?.takeIf { it.isNotBlank() },
-                brand = product.brands?.takeIf { it.isNotBlank() },
-                categories = product.categories?.takeIf { it.isNotBlank() },
-                imageUrl = product.imageUrl?.takeIf { it.isNotBlank() },
-                quantity = product.quantity?.takeIf { it.isNotBlank() },
-                origins = product.origins?.takeIf { it.isNotBlank() },
-                countriesTags = product.countriesTags?.takeIf { it.isNotEmpty() },
-            )
+                ProductResult(
+                    name = product.productName?.takeIf { it.isNotBlank() },
+                    brand = product.brands?.takeIf { it.isNotBlank() },
+                    categories = product.categories?.takeIf { it.isNotBlank() },
+                    imageUrl = product.imageUrl?.takeIf { it.isNotBlank() },
+                    quantity = product.quantity?.takeIf { it.isNotBlank() },
+                    origins = product.origins?.takeIf { it.isNotBlank() },
+                    countriesTags = product.countriesTags?.takeIf { it.isNotEmpty() },
+                )
+            }
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Log.w(TAG, "Failed to fetch product info from OpenFoodFacts", e)
             null
+        }
+    }
+
+    private inline fun <T> HttpURLConnection.useAndDisconnect(
+        block: (HttpURLConnection) -> T,
+    ): T {
+        val connection = this
+        return AutoCloseable { connection.disconnect() }.use {
+            block(connection)
         }
     }
 }
