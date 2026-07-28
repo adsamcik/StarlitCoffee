@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">冲煮</string>
+    <string name="label_current_step">当前步骤</string>
+    <string name="format_brew_stage_progress">第 %1$d 步，共 %2$d 步</string>
+    <string name="label_elapsed">已用时间</string>
+    <string name="label_remaining">剩余时间</string>
+    <string name="format_brew_stage_remaining_time">还剩 %1$s</string>
+    <string name="label_recorded">已记录</string>
+    <string name="label_measured_amount">测得量（g）</string>
+    <string name="action_brew_prepare">准备</string>
+    <string name="action_brew_rinse">冲洗</string>
+    <string name="action_brew_add_coffee">加入咖啡</string>
+    <string name="action_brew_add_water">加水</string>
+    <string name="action_brew_bloom">闷蒸</string>
+    <string name="action_brew_pour">注水</string>
+    <string name="action_brew_agitate">搅拌</string>
+    <string name="action_brew_steep">浸泡</string>
+    <string name="action_brew_release">释放</string>
+    <string name="action_brew_press">压滤</string>
+    <string name="action_brew_heat">加热</string>
+    <string name="action_brew_observe">观察</string>
+    <string name="action_brew_filter">过滤</string>
+    <string name="action_brew_serve">出杯</string>
+    <string name="action_brew_clean_up">清洁</string>
+    <string name="action_brew_custom">继续</string>
+    <string name="action_complete_step">完成步骤</string>
+    <string name="action_mark_observed">标记为已观察到</string>
+    <string name="action_mark_signal_received">标记为已收到信号</string>
+    <string name="action_save_measurement">保存测量值</string>
+    <string name="action_cancel_brew">取消冲煮</string>
+    <string name="msg_brew_session_not_found">此活跃冲煮已不再可用。</string>
+    <string name="msg_brew_session_unavailable">无法安全地打开此已保存的冲煮。它已保持不变。</string>
+    <string name="msg_brew_session_finished">冲煮已保存。</string>
+    <string name="msg_brew_session_finishing">正在保存冲煮…</string>
+    <string name="msg_brew_session_ready">可以开始了。</string>
+    <string name="msg_brew_session_paused">冲煮已暂停。</string>
+    <string name="msg_brew_stage_manual">完成实际操作后，再完成此步骤。</string>
+    <string name="msg_brew_stage_observation">看到预期的物理变化时，标记此步骤。</string>
+    <string name="format_brew_stage_target_grams">目标 %1$.0f 克</string>
+    <string name="format_brew_stage_recorded_grams">已记录 %1$.0f 克</string>
+    <string name="format_brew_stage_remaining_grams">还剩 %1$.0f 克</string>
+    <string name="msg_brew_notification_step_ready">下一步冲煮已准备好。轻点以继续。</string>
+    <string name="msg_brew_notification_step_started">冲煮已进入下一步。轻点以返回。</string>
+    <string name="warning_brew_safety_generic">继续前，请检查冲煮器具和热液体的安全性。</string>
+    <string name="warning_brew_safety_hot_liquid">请小心热液体和蒸汽。</string>
+    <string name="warning_brew_safety_hot_metal">触碰前请让热金属冷却。</string>
+    <string name="warning_brew_safety_overflow">将冲煮器具放在稳定容器上，并防止溢出。</string>
+    <string name="warning_brew_safety_open_flame">切勿让明火或热炉灶无人看管。</string>
+    <string name="warning_brew_safety_stability">继续前，请确保冲煮器具和盛装容器稳定。</string>
+    <string name="warning_brew_safety_food_storage">长时间冷萃时，请保持覆盖，并在需要时冷藏。</string>
+    <string name="cd_brew_session_status">%1$s。%2$s。</string>
+</resources>

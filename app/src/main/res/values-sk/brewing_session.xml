@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Príprava</string>
+    <string name="label_current_step">Aktuálny krok</string>
+    <string name="format_brew_stage_progress">Krok %1$d z %2$d</string>
+    <string name="label_elapsed">Uplynulo</string>
+    <string name="label_remaining">Zostáva</string>
+    <string name="format_brew_stage_remaining_time">Zostáva %1$s</string>
+    <string name="label_recorded">Zaznamenané</string>
+    <string name="label_measured_amount">Namerané množstvo (g)</string>
+    <string name="action_brew_prepare">Pripraviť</string>
+    <string name="action_brew_rinse">Prepláchnuť</string>
+    <string name="action_brew_add_coffee">Pridať kávu</string>
+    <string name="action_brew_add_water">Pridať vodu</string>
+    <string name="action_brew_bloom">Bloom</string>
+    <string name="action_brew_pour">Naliať</string>
+    <string name="action_brew_agitate">Premiešať</string>
+    <string name="action_brew_steep">Lúhovať</string>
+    <string name="action_brew_release">Uvoľniť</string>
+    <string name="action_brew_press">Stlačiť</string>
+    <string name="action_brew_heat">Zahriať</string>
+    <string name="action_brew_observe">Pozorovať</string>
+    <string name="action_brew_filter">Filtrovať</string>
+    <string name="action_brew_serve">Podávať</string>
+    <string name="action_brew_clean_up">Upratať</string>
+    <string name="action_brew_custom">Pokračovať</string>
+    <string name="action_complete_step">Dokončiť krok</string>
+    <string name="action_mark_observed">Označiť ako pozorované</string>
+    <string name="action_mark_signal_received">Označiť prijatý signál</string>
+    <string name="action_save_measurement">Uložiť meranie</string>
+    <string name="action_cancel_brew">Zrušiť prípravu</string>
+    <string name="msg_brew_session_not_found">Táto aktívna príprava už nie je k dispozícii.</string>
+    <string name="msg_brew_session_unavailable">Túto uloženú prípravu nie je možné bezpečne otvoriť. Zostala nezmenená.</string>
+    <string name="msg_brew_session_finished">Príprava uložená.</string>
+    <string name="msg_brew_session_finishing">Ukladanie prípravy…</string>
+    <string name="msg_brew_session_ready">Pripravené na spustenie.</string>
+    <string name="msg_brew_session_paused">Príprava je pozastavená.</string>
+    <string name="msg_brew_stage_manual">Tento krok dokončite, keď je fyzický úkon hotový.</string>
+    <string name="msg_brew_stage_observation">Tento krok označte, keď uvidíte očakávanú fyzickú zmenu.</string>
+    <string name="format_brew_stage_target_grams">Cieľ %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Zaznamenané %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">Zostáva %1$.0f g</string>
+    <string name="msg_brew_notification_step_ready">Ďalší krok prípravy je pripravený. Klepnutím pokračujte.</string>
+    <string name="msg_brew_notification_step_started">Príprava prešla do ďalšieho kroku. Klepnutím sa vráťte.</string>
+    <string name="warning_brew_safety_generic">Pred pokračovaním skontrolujte bezpečnosť zariadenia a horúcej tekutiny.</string>
+    <string name="warning_brew_safety_hot_liquid">Dávajte pozor na horúcu tekutinu a paru.</string>
+    <string name="warning_brew_safety_hot_metal">Pred dotykom nechajte horúci kov vychladnúť.</string>
+    <string name="warning_brew_safety_overflow">Zariadenie držte na stabilnej nádobe a zabráňte pretečeniu.</string>
+    <string name="warning_brew_safety_open_flame">Nikdy nenechávajte otvorený plameň ani horúcu platňu bez dozoru.</string>
+    <string name="warning_brew_safety_stability">Pred pokračovaním udržujte zariadenie a servírovaciu nádobu stabilné.</string>
+    <string name="warning_brew_safety_food_storage">Dlhé studené prípravy majte zakryté a podľa potreby chladené.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

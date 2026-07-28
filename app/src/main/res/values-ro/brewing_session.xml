@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Preparare</string>
+    <string name="label_current_step">Pasul curent</string>
+    <string name="format_brew_stage_progress">Pasul %1$d din %2$d</string>
+    <string name="label_elapsed">Timp scurs</string>
+    <string name="label_remaining">Rămas</string>
+    <string name="format_brew_stage_remaining_time">Au rămas %1$s</string>
+    <string name="label_recorded">Înregistrat</string>
+    <string name="label_measured_amount">Cantitate măsurată (g)</string>
+    <string name="action_brew_prepare">Pregătește</string>
+    <string name="action_brew_rinse">Clătește</string>
+    <string name="action_brew_add_coffee">Adaugă cafea</string>
+    <string name="action_brew_add_water">Adaugă apă</string>
+    <string name="action_brew_bloom">Preinfuzie</string>
+    <string name="action_brew_pour">Toarnă</string>
+    <string name="action_brew_agitate">Agită</string>
+    <string name="action_brew_steep">Infuzează</string>
+    <string name="action_brew_release">Eliberează</string>
+    <string name="action_brew_press">Presează</string>
+    <string name="action_brew_heat">Încălzește</string>
+    <string name="action_brew_observe">Observă</string>
+    <string name="action_brew_filter">Filtrează</string>
+    <string name="action_brew_serve">Servește</string>
+    <string name="action_brew_clean_up">Curăță</string>
+    <string name="action_brew_custom">Continuă</string>
+    <string name="action_complete_step">Finalizează pasul</string>
+    <string name="action_mark_observed">Marchează ca observat</string>
+    <string name="action_mark_signal_received">Marchează semnalul primit</string>
+    <string name="action_save_measurement">Salvează măsurarea</string>
+    <string name="action_cancel_brew">Anulează prepararea</string>
+    <string name="msg_brew_session_not_found">Această preparare activă nu mai este disponibilă.</string>
+    <string name="msg_brew_session_unavailable">Această preparare salvată nu poate fi deschisă în siguranță. A fost lăsată neschimbată.</string>
+    <string name="msg_brew_session_finished">Preparare salvată.</string>
+    <string name="msg_brew_session_finishing">Se salvează prepararea…</string>
+    <string name="msg_brew_session_ready">Gata de pornire.</string>
+    <string name="msg_brew_session_paused">Prepararea este întreruptă.</string>
+    <string name="msg_brew_stage_manual">Finalizează acest pas când acțiunea fizică este gata.</string>
+    <string name="msg_brew_stage_observation">Marchează acest pas când vezi schimbarea fizică așteptată.</string>
+    <string name="format_brew_stage_target_grams">Țintă %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Înregistrat %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">Au rămas %1$.0f g</string>
+    <string name="msg_brew_notification_step_ready">Următorul pas de preparare este gata. Atinge pentru a continua.</string>
+    <string name="msg_brew_notification_step_started">Prepararea a trecut la pasul următor. Atinge pentru a reveni.</string>
+    <string name="warning_brew_safety_generic">Verifică siguranța dispozitivului și a lichidului fierbinte înainte de a continua.</string>
+    <string name="warning_brew_safety_hot_liquid">Fii atent la lichidul fierbinte și la abur.</string>
+    <string name="warning_brew_safety_hot_metal">Lasă metalul fierbinte să se răcească înainte de a-l atinge.</string>
+    <string name="warning_brew_safety_overflow">Ține dispozitivul pe un recipient stabil și previne revărsarea.</string>
+    <string name="warning_brew_safety_open_flame">Nu lăsa niciodată o flacără deschisă sau o plită fierbinte nesupravegheată.</string>
+    <string name="warning_brew_safety_stability">Ține dispozitivul și vasul de servire stabile înainte de a continua.</string>
+    <string name="warning_brew_safety_food_storage">Păstrează preparările reci lungi acoperite și refrigerate când este necesar.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

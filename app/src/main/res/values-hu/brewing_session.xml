@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Főzés</string>
+    <string name="label_current_step">Aktuális lépés</string>
+    <string name="format_brew_stage_progress">Lépés %1$d / %2$d</string>
+    <string name="label_elapsed">Eltelt idő</string>
+    <string name="label_remaining">Hátralévő</string>
+    <string name="format_brew_stage_remaining_time">%1$s van hátra</string>
+    <string name="label_recorded">Rögzítve</string>
+    <string name="label_measured_amount">Mért mennyiség (g)</string>
+    <string name="action_brew_prepare">Készítsd elő</string>
+    <string name="action_brew_rinse">Öblítsd át</string>
+    <string name="action_brew_add_coffee">Adj hozzá kávét</string>
+    <string name="action_brew_add_water">Adj hozzá vizet</string>
+    <string name="action_brew_bloom">Előáztatás</string>
+    <string name="action_brew_pour">Önts</string>
+    <string name="action_brew_agitate">Keverd meg</string>
+    <string name="action_brew_steep">Áztasd</string>
+    <string name="action_brew_release">Engedd ki</string>
+    <string name="action_brew_press">Nyomd le</string>
+    <string name="action_brew_heat">Melegítsd</string>
+    <string name="action_brew_observe">Figyeld</string>
+    <string name="action_brew_filter">Szűrd le</string>
+    <string name="action_brew_serve">Tálald</string>
+    <string name="action_brew_clean_up">Takarítsd el</string>
+    <string name="action_brew_custom">Folytasd</string>
+    <string name="action_complete_step">Lépés befejezése</string>
+    <string name="action_mark_observed">Megfigyeltként jelölés</string>
+    <string name="action_mark_signal_received">Beérkezett jel jelölése</string>
+    <string name="action_save_measurement">Mérés mentése</string>
+    <string name="action_cancel_brew">Főzés megszakítása</string>
+    <string name="msg_brew_session_not_found">Ez az aktív főzés már nem érhető el.</string>
+    <string name="msg_brew_session_unavailable">Ez a mentett főzés nem nyitható meg biztonságosan. Változatlanul maradt.</string>
+    <string name="msg_brew_session_finished">Főzés elmentve.</string>
+    <string name="msg_brew_session_finishing">A főzés mentése…</string>
+    <string name="msg_brew_session_ready">Indításra kész.</string>
+    <string name="msg_brew_session_paused">A főzés szünetel.</string>
+    <string name="msg_brew_stage_manual">Fejezze be ezt a lépést, amikor a fizikai művelet elkészült.</string>
+    <string name="msg_brew_stage_observation">Jelölje ezt a lépést, amikor látja a várt fizikai változást.</string>
+    <string name="format_brew_stage_target_grams">Cél %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Rögzítve %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">%1$.0f g van hátra</string>
+    <string name="msg_brew_notification_step_ready">A következő főzési lépés készen áll. Koppintson a folytatáshoz.</string>
+    <string name="msg_brew_notification_step_started">A főzés a következő lépésre lépett. Koppintson a visszatéréshez.</string>
+    <string name="warning_brew_safety_generic">Folytatás előtt ellenőrizze a készülék és a forró folyadék biztonságát.</string>
+    <string name="warning_brew_safety_hot_liquid">Legyen óvatos a forró folyadékkal és gőzzel.</string>
+    <string name="warning_brew_safety_hot_metal">Érintés előtt hagyja lehűlni a forró fémet.</string>
+    <string name="warning_brew_safety_overflow">Tartsa a készüléket stabil edényen, és előzze meg a túlfolyást.</string>
+    <string name="warning_brew_safety_open_flame">Soha ne hagyjon nyílt lángot vagy forró főzőlapot felügyelet nélkül.</string>
+    <string name="warning_brew_safety_stability">Folytatás előtt tartsa stabilan a készüléket és a tálalóedényt.</string>
+    <string name="warning_brew_safety_food_storage">A hosszú hideg főzeteket tartsa lefedve és szükség esetén hűtőben.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

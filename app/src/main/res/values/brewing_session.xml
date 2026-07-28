@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Brew</string>
+    <string name="label_current_step">Current step</string>
+    <string name="format_brew_stage_progress">Step %1$d of %2$d</string>
+    <string name="label_elapsed">Elapsed</string>
+    <string name="label_remaining">Remaining</string>
+    <string name="format_brew_stage_remaining_time">Remaining %1$s</string>
+    <string name="label_recorded">Recorded</string>
+    <string name="label_measured_amount">Measured amount (g)</string>
+    <string name="action_brew_prepare">Prepare</string>
+    <string name="action_brew_rinse">Rinse</string>
+    <string name="action_brew_add_coffee">Add coffee</string>
+    <string name="action_brew_add_water">Add water</string>
+    <string name="action_brew_bloom">Bloom</string>
+    <string name="action_brew_pour">Pour</string>
+    <string name="action_brew_agitate">Agitate</string>
+    <string name="action_brew_steep">Steep</string>
+    <string name="action_brew_release">Release</string>
+    <string name="action_brew_press">Press</string>
+    <string name="action_brew_heat">Heat</string>
+    <string name="action_brew_observe">Observe</string>
+    <string name="action_brew_filter">Filter</string>
+    <string name="action_brew_serve">Serve</string>
+    <string name="action_brew_clean_up">Clean up</string>
+    <string name="action_brew_custom">Continue</string>
+    <string name="action_complete_step">Complete step</string>
+    <string name="action_mark_observed">Mark observed</string>
+    <string name="action_mark_signal_received">Mark signal received</string>
+    <string name="action_save_measurement">Save measurement</string>
+    <string name="action_cancel_brew">Cancel brew</string>
+    <string name="msg_brew_session_not_found">This active brew is no longer available.</string>
+    <string name="msg_brew_session_unavailable">This saved brew cannot be opened safely. It has been left unchanged.</string>
+    <string name="msg_brew_session_finished">Brew saved.</string>
+    <string name="msg_brew_session_finishing">Saving your brew…</string>
+    <string name="msg_brew_session_ready">Ready to start.</string>
+    <string name="msg_brew_session_paused">Brew paused.</string>
+    <string name="msg_brew_stage_manual">Complete this step when the physical action is done.</string>
+    <string name="msg_brew_stage_observation">Mark this step when you see the expected physical change.</string>
+    <string name="format_brew_stage_target_grams">Target %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Recorded %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">%1$.0f g remaining</string>
+    <string name="msg_brew_notification_step_ready">The next brew step is ready. Tap to continue.</string>
+    <string name="msg_brew_notification_step_started">Your brew has moved to its next step. Tap to return.</string>
+    <string name="warning_brew_safety_generic">Check the brewer and hot-liquid safety before continuing.</string>
+    <string name="warning_brew_safety_hot_liquid">Be careful with hot liquid and steam.</string>
+    <string name="warning_brew_safety_hot_metal">Let hot metal cool before touching it.</string>
+    <string name="warning_brew_safety_overflow">Keep the brewer on a stable vessel and prevent overflow.</string>
+    <string name="warning_brew_safety_open_flame">Never leave an open flame or hot hob unattended.</string>
+    <string name="warning_brew_safety_stability">Keep the brewer and serving vessel stable before continuing.</string>
+    <string name="warning_brew_safety_food_storage">Keep long cold brews covered and refrigerated when required.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

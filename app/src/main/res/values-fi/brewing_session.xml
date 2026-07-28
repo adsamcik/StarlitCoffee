@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Valmista</string>
+    <string name="label_current_step">Nykyinen vaihe</string>
+    <string name="format_brew_stage_progress">Vaihe %1$d / %2$d</string>
+    <string name="label_elapsed">Kulunut</string>
+    <string name="label_remaining">Jäljellä</string>
+    <string name="format_brew_stage_remaining_time">%1$s jäljellä</string>
+    <string name="label_recorded">Tallennettu</string>
+    <string name="label_measured_amount">Mitattu määrä (g)</string>
+    <string name="action_brew_prepare">Valmistele</string>
+    <string name="action_brew_rinse">Huuhtele</string>
+    <string name="action_brew_add_coffee">Lisää kahvi</string>
+    <string name="action_brew_add_water">Lisää vesi</string>
+    <string name="action_brew_bloom">Esikostuta</string>
+    <string name="action_brew_pour">Kaada</string>
+    <string name="action_brew_agitate">Sekoita</string>
+    <string name="action_brew_steep">Uuta</string>
+    <string name="action_brew_release">Vapauta</string>
+    <string name="action_brew_press">Paina</string>
+    <string name="action_brew_heat">Kuumenna</string>
+    <string name="action_brew_observe">Tarkkaile</string>
+    <string name="action_brew_filter">Suodata</string>
+    <string name="action_brew_serve">Tarjoile</string>
+    <string name="action_brew_clean_up">Siivoa</string>
+    <string name="action_brew_custom">Jatka</string>
+    <string name="action_complete_step">Viimeistele vaihe</string>
+    <string name="action_mark_observed">Merkitse havaituksi</string>
+    <string name="action_mark_signal_received">Merkitse signaali vastaanotetuksi</string>
+    <string name="action_save_measurement">Tallenna mittaus</string>
+    <string name="action_cancel_brew">Peruuta valmistus</string>
+    <string name="msg_brew_session_not_found">Tämä aktiivinen valmistus ei ole enää käytettävissä.</string>
+    <string name="msg_brew_session_unavailable">Tätä tallennettua valmistusta ei voi avata turvallisesti. Se on jätetty muuttamatta.</string>
+    <string name="msg_brew_session_finished">Valmistus tallennettu.</string>
+    <string name="msg_brew_session_finishing">Tallennetaan valmistusta…</string>
+    <string name="msg_brew_session_ready">Valmis aloitettavaksi.</string>
+    <string name="msg_brew_session_paused">Valmistus on keskeytetty.</string>
+    <string name="msg_brew_stage_manual">Viimeistele tämä vaihe, kun fyysinen toimenpide on tehty.</string>
+    <string name="msg_brew_stage_observation">Merkitse tämä vaihe, kun näet odotetun fyysisen muutoksen.</string>
+    <string name="format_brew_stage_target_grams">Tavoite %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Tallennettu %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">%1$.0f g jäljellä</string>
+    <string name="msg_brew_notification_step_ready">Seuraava valmistusvaihe on valmis. Jatka napauttamalla.</string>
+    <string name="msg_brew_notification_step_started">Valmistus on siirtynyt seuraavaan vaiheeseen. Palaa napauttamalla.</string>
+    <string name="warning_brew_safety_generic">Tarkista valmistuslaitteen ja kuuman nesteen turvallisuus ennen jatkamista.</string>
+    <string name="warning_brew_safety_hot_liquid">Ole varovainen kuuman nesteen ja höyryn kanssa.</string>
+    <string name="warning_brew_safety_hot_metal">Anna kuuman metallin jäähtyä ennen koskettamista.</string>
+    <string name="warning_brew_safety_overflow">Pidä valmistuslaite vakaalla astialla ja estä ylivuoto.</string>
+    <string name="warning_brew_safety_open_flame">Älä koskaan jätä avotulta tai kuumaa liettä ilman valvontaa.</string>
+    <string name="warning_brew_safety_stability">Pidä valmistuslaite ja tarjoiluastia vakaana ennen jatkamista.</string>
+    <string name="warning_brew_safety_food_storage">Pidä pitkät kylmäuutot peitettyinä ja tarvittaessa jääkaapissa.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

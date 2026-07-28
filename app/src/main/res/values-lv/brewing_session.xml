@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Gatavošana</string>
+    <string name="label_current_step">Pašreizējais solis</string>
+    <string name="format_brew_stage_progress">Solis %1$d no %2$d</string>
+    <string name="label_elapsed">Pagājis</string>
+    <string name="label_remaining">Atlicis</string>
+    <string name="format_brew_stage_remaining_time">Atlicis %1$s</string>
+    <string name="label_recorded">Reģistrēts</string>
+    <string name="label_measured_amount">Izmērītais daudzums (g)</string>
+    <string name="action_brew_prepare">Sagatavot</string>
+    <string name="action_brew_rinse">Izskalot</string>
+    <string name="action_brew_add_coffee">Pievienot kafiju</string>
+    <string name="action_brew_add_water">Pievienot ūdeni</string>
+    <string name="action_brew_bloom">Samitrināt</string>
+    <string name="action_brew_pour">Liet</string>
+    <string name="action_brew_agitate">Maisīt</string>
+    <string name="action_brew_steep">Mērcēt</string>
+    <string name="action_brew_release">Atbrīvot</string>
+    <string name="action_brew_press">Spiest</string>
+    <string name="action_brew_heat">Sildīt</string>
+    <string name="action_brew_observe">Novērot</string>
+    <string name="action_brew_filter">Filtrēt</string>
+    <string name="action_brew_serve">Pasniegt</string>
+    <string name="action_brew_clean_up">Iztīrīt</string>
+    <string name="action_brew_custom">Turpināt</string>
+    <string name="action_complete_step">Pabeigt soli</string>
+    <string name="action_mark_observed">Atzīmēt kā novērotu</string>
+    <string name="action_mark_signal_received">Atzīmēt saņemto signālu</string>
+    <string name="action_save_measurement">Saglabāt mērījumu</string>
+    <string name="action_cancel_brew">Atcelt gatavošanu</string>
+    <string name="msg_brew_session_not_found">Šī aktīvā gatavošana vairs nav pieejama.</string>
+    <string name="msg_brew_session_unavailable">Šo saglabāto gatavošanu nevar droši atvērt. Tā ir atstāta nemainīta.</string>
+    <string name="msg_brew_session_finished">Gatavošana saglabāta.</string>
+    <string name="msg_brew_session_finishing">Gatavošanas saglabāšana…</string>
+    <string name="msg_brew_session_ready">Gatavs sākt.</string>
+    <string name="msg_brew_session_paused">Gatavošana ir apturēta.</string>
+    <string name="msg_brew_stage_manual">Pabeidziet šo soli, kad fiziskā darbība ir veikta.</string>
+    <string name="msg_brew_stage_observation">Atzīmējiet šo soli, kad redzat gaidīto fizisko izmaiņu.</string>
+    <string name="format_brew_stage_target_grams">Mērķis %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Reģistrēts %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">Atlicis %1$.0f g</string>
+    <string name="msg_brew_notification_step_ready">Nākamais gatavošanas solis ir gatavs. Pieskarieties, lai turpinātu.</string>
+    <string name="msg_brew_notification_step_started">Gatavošana ir pārgājusi uz nākamo soli. Pieskarieties, lai atgrieztos.</string>
+    <string name="warning_brew_safety_generic">Pirms turpināšanas pārbaudiet ierīces un karstā šķidruma drošību.</string>
+    <string name="warning_brew_safety_hot_liquid">Esiet uzmanīgi ar karstu šķidrumu un tvaiku.</string>
+    <string name="warning_brew_safety_hot_metal">Pirms pieskaršanās ļaujiet karstajam metālam atdzist.</string>
+    <string name="warning_brew_safety_overflow">Turiet ierīci uz stabila trauka un nepieļaujiet pārplūšanu.</string>
+    <string name="warning_brew_safety_open_flame">Nekad neatstājiet atklātu liesmu vai karstu plīti bez uzraudzības.</string>
+    <string name="warning_brew_safety_stability">Pirms turpināšanas turiet ierīci un pasniegšanas trauku stabili.</string>
+    <string name="warning_brew_safety_food_storage">Garus aukstos pagatavojumus turiet nosegtus un, ja vajadzīgs, ledusskapī.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Bryg</string>
+    <string name="label_current_step">Aktuelt trin</string>
+    <string name="format_brew_stage_progress">Trin %1$d af %2$d</string>
+    <string name="label_elapsed">Forløbet tid</string>
+    <string name="label_remaining">Resterende</string>
+    <string name="format_brew_stage_remaining_time">%1$s tilbage</string>
+    <string name="label_recorded">Registreret</string>
+    <string name="label_measured_amount">Målt mængde (g)</string>
+    <string name="action_brew_prepare">Forbered</string>
+    <string name="action_brew_rinse">Skyl</string>
+    <string name="action_brew_add_coffee">Tilsæt kaffe</string>
+    <string name="action_brew_add_water">Tilsæt vand</string>
+    <string name="action_brew_bloom">Bloom</string>
+    <string name="action_brew_pour">Hæld</string>
+    <string name="action_brew_agitate">Rør rundt</string>
+    <string name="action_brew_steep">Træk</string>
+    <string name="action_brew_release">Frigiv</string>
+    <string name="action_brew_press">Pres</string>
+    <string name="action_brew_heat">Varm</string>
+    <string name="action_brew_observe">Observer</string>
+    <string name="action_brew_filter">Filtrer</string>
+    <string name="action_brew_serve">Servér</string>
+    <string name="action_brew_clean_up">Ryd op</string>
+    <string name="action_brew_custom">Fortsæt</string>
+    <string name="action_complete_step">Fuldfør trin</string>
+    <string name="action_mark_observed">Markér som observeret</string>
+    <string name="action_mark_signal_received">Markér modtaget signal</string>
+    <string name="action_save_measurement">Gem måling</string>
+    <string name="action_cancel_brew">Annuller brygning</string>
+    <string name="msg_brew_session_not_found">Denne aktive brygning er ikke længere tilgængelig.</string>
+    <string name="msg_brew_session_unavailable">Denne gemte brygning kan ikke åbnes sikkert. Den er ikke blevet ændret.</string>
+    <string name="msg_brew_session_finished">Brygning gemt.</string>
+    <string name="msg_brew_session_finishing">Gemmer brygning…</string>
+    <string name="msg_brew_session_ready">Klar til at starte.</string>
+    <string name="msg_brew_session_paused">Brygning sat på pause.</string>
+    <string name="msg_brew_stage_manual">Fuldfør dette trin, når den fysiske handling er udført.</string>
+    <string name="msg_brew_stage_observation">Markér dette trin, når du ser den forventede fysiske ændring.</string>
+    <string name="format_brew_stage_target_grams">Mål %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Registreret %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">%1$.0f g tilbage</string>
+    <string name="msg_brew_notification_step_ready">Det næste bryggetrin er klar. Tryk for at fortsætte.</string>
+    <string name="msg_brew_notification_step_started">Din brygning er gået videre til næste trin. Tryk for at vende tilbage.</string>
+    <string name="warning_brew_safety_generic">Kontrollér bryggeren og sikkerheden med varm væske, før du fortsætter.</string>
+    <string name="warning_brew_safety_hot_liquid">Vær forsigtig med varm væske og damp.</string>
+    <string name="warning_brew_safety_hot_metal">Lad varmt metal køle af, før du rører ved det.</string>
+    <string name="warning_brew_safety_overflow">Placér bryggeren på et stabilt kar, og undgå overløb.</string>
+    <string name="warning_brew_safety_open_flame">Efterlad aldrig åben ild eller en varm kogeplade uden opsyn.</string>
+    <string name="warning_brew_safety_stability">Sørg for, at bryggeren og serveringskarret står stabilt, før du fortsætter.</string>
+    <string name="warning_brew_safety_food_storage">Hold lange kolde bryg tildækkede og på køl, når det er nødvendigt.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

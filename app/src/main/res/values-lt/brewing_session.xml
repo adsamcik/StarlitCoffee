@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Plikyti</string>
+    <string name="label_current_step">Dabartinis žingsnis</string>
+    <string name="format_brew_stage_progress">Žingsnis %1$d iš %2$d</string>
+    <string name="label_elapsed">Praėjo</string>
+    <string name="label_remaining">Liko</string>
+    <string name="format_brew_stage_remaining_time">Liko %1$s</string>
+    <string name="label_recorded">Užfiksuota</string>
+    <string name="label_measured_amount">Išmatuotas kiekis (g)</string>
+    <string name="action_brew_prepare">Paruošti</string>
+    <string name="action_brew_rinse">Išskalauti</string>
+    <string name="action_brew_add_coffee">Įdėti kavos</string>
+    <string name="action_brew_add_water">Įpilti vandens</string>
+    <string name="action_brew_bloom">Sudrėkinti</string>
+    <string name="action_brew_pour">Pilti</string>
+    <string name="action_brew_agitate">Maišyti</string>
+    <string name="action_brew_steep">Mirkyti</string>
+    <string name="action_brew_release">Atlaisvinti</string>
+    <string name="action_brew_press">Spausti</string>
+    <string name="action_brew_heat">Kaitinti</string>
+    <string name="action_brew_observe">Stebėti</string>
+    <string name="action_brew_filter">Filtruoti</string>
+    <string name="action_brew_serve">Patiekti</string>
+    <string name="action_brew_clean_up">Sutvarkyti</string>
+    <string name="action_brew_custom">Tęsti</string>
+    <string name="action_complete_step">Užbaigti žingsnį</string>
+    <string name="action_mark_observed">Pažymėti kaip pastebėtą</string>
+    <string name="action_mark_signal_received">Pažymėti gautą signalą</string>
+    <string name="action_save_measurement">Išsaugoti matavimą</string>
+    <string name="action_cancel_brew">Atšaukti ruošimą</string>
+    <string name="msg_brew_session_not_found">Šis aktyvus ruošimas nebėra pasiekiamas.</string>
+    <string name="msg_brew_session_unavailable">Šio išsaugoto ruošimo negalima saugiai atidaryti. Jis paliktas nepakeistas.</string>
+    <string name="msg_brew_session_finished">Ruošimas išsaugotas.</string>
+    <string name="msg_brew_session_finishing">Išsaugomas ruošimas…</string>
+    <string name="msg_brew_session_ready">Paruošta pradėti.</string>
+    <string name="msg_brew_session_paused">Ruošimas pristabdytas.</string>
+    <string name="msg_brew_stage_manual">Užbaikite šį žingsnį, kai fizinis veiksmas atliktas.</string>
+    <string name="msg_brew_stage_observation">Pažymėkite šį žingsnį, kai pamatysite numatytą fizinį pokytį.</string>
+    <string name="format_brew_stage_target_grams">Tikslas %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Užfiksuota %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">Liko %1$.0f g</string>
+    <string name="msg_brew_notification_step_ready">Kitas ruošimo žingsnis paruoštas. Palieskite, kad tęstumėte.</string>
+    <string name="msg_brew_notification_step_started">Ruošimas perėjo į kitą žingsnį. Palieskite, kad grįžtumėte.</string>
+    <string name="warning_brew_safety_generic">Prieš tęsdami patikrinkite ruošimo įrenginio ir karšto skysčio saugumą.</string>
+    <string name="warning_brew_safety_hot_liquid">Būkite atsargūs su karštu skysčiu ir garais.</string>
+    <string name="warning_brew_safety_hot_metal">Prieš liesdami leiskite karštam metalui atvėsti.</string>
+    <string name="warning_brew_safety_overflow">Laikykite ruošimo įrenginį ant stabilaus indo ir išvenkite perpylimo.</string>
+    <string name="warning_brew_safety_open_flame">Niekada nepalikite atviros liepsnos ar karštos kaitlentės be priežiūros.</string>
+    <string name="warning_brew_safety_stability">Prieš tęsdami stabiliai laikykite ruošimo ir patiekimo indą.</string>
+    <string name="warning_brew_safety_food_storage">Ilgus šaltus ruošimus laikykite uždengtus ir prireikus šaldytuve.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

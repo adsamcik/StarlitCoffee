@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Παρασκευή</string>
+    <string name="label_current_step">Τρέχον βήμα</string>
+    <string name="format_brew_stage_progress">Βήμα %1$d από %2$d</string>
+    <string name="label_elapsed">Χρόνος που πέρασε</string>
+    <string name="label_remaining">Απομένει</string>
+    <string name="format_brew_stage_remaining_time">Απομένει %1$s</string>
+    <string name="label_recorded">Καταγράφηκε</string>
+    <string name="label_measured_amount">Μετρημένη ποσότητα (g)</string>
+    <string name="action_brew_prepare">Προετοίμασε</string>
+    <string name="action_brew_rinse">Ξέπλυνε</string>
+    <string name="action_brew_add_coffee">Πρόσθεσε καφέ</string>
+    <string name="action_brew_add_water">Πρόσθεσε νερό</string>
+    <string name="action_brew_bloom">Bloom</string>
+    <string name="action_brew_pour">Ρίξε</string>
+    <string name="action_brew_agitate">Ανακάτεψε</string>
+    <string name="action_brew_steep">Εκχύλισε</string>
+    <string name="action_brew_release">Απελευθέρωσε</string>
+    <string name="action_brew_press">Πίεσε</string>
+    <string name="action_brew_heat">Ζέστανε</string>
+    <string name="action_brew_observe">Παρατήρησε</string>
+    <string name="action_brew_filter">Φίλτραρε</string>
+    <string name="action_brew_serve">Σέρβιρε</string>
+    <string name="action_brew_clean_up">Καθάρισε</string>
+    <string name="action_brew_custom">Συνέχισε</string>
+    <string name="action_complete_step">Ολοκλήρωση βήματος</string>
+    <string name="action_mark_observed">Επισήμανση ως παρατηρημένου</string>
+    <string name="action_mark_signal_received">Επισήμανση λήψης σήματος</string>
+    <string name="action_save_measurement">Αποθήκευση μέτρησης</string>
+    <string name="action_cancel_brew">Ακύρωση παρασκευής</string>
+    <string name="msg_brew_session_not_found">Αυτή η ενεργή παρασκευή δεν είναι πλέον διαθέσιμη.</string>
+    <string name="msg_brew_session_unavailable">Αυτή η αποθηκευμένη παρασκευή δεν μπορεί να ανοίξει με ασφάλεια. Παρέμεινε χωρίς αλλαγές.</string>
+    <string name="msg_brew_session_finished">Η παρασκευή αποθηκεύτηκε.</string>
+    <string name="msg_brew_session_finishing">Αποθήκευση παρασκευής…</string>
+    <string name="msg_brew_session_ready">Έτοιμο για έναρξη.</string>
+    <string name="msg_brew_session_paused">Η παρασκευή είναι σε παύση.</string>
+    <string name="msg_brew_stage_manual">Ολοκληρώστε αυτό το βήμα όταν ολοκληρωθεί η φυσική ενέργεια.</string>
+    <string name="msg_brew_stage_observation">Σημειώστε αυτό το βήμα όταν δείτε την αναμενόμενη φυσική αλλαγή.</string>
+    <string name="format_brew_stage_target_grams">Στόχος %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Καταγράφηκαν %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">Απομένουν %1$.0f g</string>
+    <string name="msg_brew_notification_step_ready">Το επόμενο βήμα παρασκευής είναι έτοιμο. Πατήστε για να συνεχίσετε.</string>
+    <string name="msg_brew_notification_step_started">Η παρασκευή προχώρησε στο επόμενο βήμα. Πατήστε για να επιστρέψετε.</string>
+    <string name="warning_brew_safety_generic">Ελέγξτε την ασφάλεια της συσκευής και των ζεστών υγρών πριν συνεχίσετε.</string>
+    <string name="warning_brew_safety_hot_liquid">Να είστε προσεκτικοί με ζεστά υγρά και ατμό.</string>
+    <string name="warning_brew_safety_hot_metal">Αφήστε το ζεστό μέταλλο να κρυώσει πριν το αγγίξετε.</string>
+    <string name="warning_brew_safety_overflow">Κρατήστε τη συσκευή σε σταθερό δοχείο και αποφύγετε την υπερχείλιση.</string>
+    <string name="warning_brew_safety_open_flame">Μην αφήνετε ποτέ ανοιχτή φλόγα ή ζεστή εστία χωρίς επίβλεψη.</string>
+    <string name="warning_brew_safety_stability">Κρατήστε σταθερά τη συσκευή και το σκεύος σερβιρίσματος πριν συνεχίσετε.</string>
+    <string name="warning_brew_safety_food_storage">Κρατήστε τις μακρόχρονες κρύες παρασκευές καλυμμένες και στο ψυγείο όταν απαιτείται.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

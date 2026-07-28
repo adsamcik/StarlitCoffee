@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Parzenie</string>
+    <string name="label_current_step">Bieżący krok</string>
+    <string name="format_brew_stage_progress">Krok %1$d z %2$d</string>
+    <string name="label_elapsed">Upłynęło</string>
+    <string name="label_remaining">Pozostało</string>
+    <string name="format_brew_stage_remaining_time">Pozostało %1$s</string>
+    <string name="label_recorded">Zapisano</string>
+    <string name="label_measured_amount">Zmierzona ilość (g)</string>
+    <string name="action_brew_prepare">Przygotuj</string>
+    <string name="action_brew_rinse">Przepłucz</string>
+    <string name="action_brew_add_coffee">Dodaj kawę</string>
+    <string name="action_brew_add_water">Dodaj wodę</string>
+    <string name="action_brew_bloom">Bloom</string>
+    <string name="action_brew_pour">Wlej</string>
+    <string name="action_brew_agitate">Zamieszaj</string>
+    <string name="action_brew_steep">Zaparzaj</string>
+    <string name="action_brew_release">Uwolnij</string>
+    <string name="action_brew_press">Dociśnij</string>
+    <string name="action_brew_heat">Podgrzej</string>
+    <string name="action_brew_observe">Obserwuj</string>
+    <string name="action_brew_filter">Filtruj</string>
+    <string name="action_brew_serve">Podaj</string>
+    <string name="action_brew_clean_up">Posprzątaj</string>
+    <string name="action_brew_custom">Kontynuuj</string>
+    <string name="action_complete_step">Zakończ krok</string>
+    <string name="action_mark_observed">Oznacz jako zaobserwowane</string>
+    <string name="action_mark_signal_received">Oznacz odebrany sygnał</string>
+    <string name="action_save_measurement">Zapisz pomiar</string>
+    <string name="action_cancel_brew">Anuluj parzenie</string>
+    <string name="msg_brew_session_not_found">To aktywne parzenie nie jest już dostępne.</string>
+    <string name="msg_brew_session_unavailable">Tego zapisanego parzenia nie można bezpiecznie otworzyć. Pozostawiono je bez zmian.</string>
+    <string name="msg_brew_session_finished">Parzenie zapisane.</string>
+    <string name="msg_brew_session_finishing">Zapisywanie parzenia…</string>
+    <string name="msg_brew_session_ready">Gotowe do rozpoczęcia.</string>
+    <string name="msg_brew_session_paused">Parzenie wstrzymane.</string>
+    <string name="msg_brew_stage_manual">Zakończ ten krok, gdy fizyczna czynność zostanie wykonana.</string>
+    <string name="msg_brew_stage_observation">Oznacz ten krok, gdy zobaczysz oczekiwaną zmianę fizyczną.</string>
+    <string name="format_brew_stage_target_grams">Cel %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Zapisano %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">Pozostało %1$.0f g</string>
+    <string name="msg_brew_notification_step_ready">Następny krok parzenia jest gotowy. Dotknij, aby kontynuować.</string>
+    <string name="msg_brew_notification_step_started">Parzenie przeszło do następnego kroku. Dotknij, aby wrócić.</string>
+    <string name="warning_brew_safety_generic">Przed kontynuowaniem sprawdź bezpieczeństwo urządzenia i gorącego płynu.</string>
+    <string name="warning_brew_safety_hot_liquid">Zachowaj ostrożność przy gorącym płynie i parze.</string>
+    <string name="warning_brew_safety_hot_metal">Przed dotknięciem pozwól gorącemu metalowi ostygnąć.</string>
+    <string name="warning_brew_safety_overflow">Trzymaj urządzenie na stabilnym naczyniu i zapobiegaj przelewaniu.</string>
+    <string name="warning_brew_safety_open_flame">Nigdy nie zostawiaj otwartego płomienia ani gorącej płyty bez nadzoru.</string>
+    <string name="warning_brew_safety_stability">Przed kontynuowaniem ustabilizuj urządzenie i naczynie do serwowania.</string>
+    <string name="warning_brew_safety_food_storage">Długie zimne napary trzymaj pod przykryciem i w razie potrzeby w lodówce.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

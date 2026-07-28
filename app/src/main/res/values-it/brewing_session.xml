@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Prepara</string>
+    <string name="label_current_step">Passaggio corrente</string>
+    <string name="format_brew_stage_progress">Passaggio %1$d di %2$d</string>
+    <string name="label_elapsed">Trascorso</string>
+    <string name="label_remaining">Rimanente</string>
+    <string name="format_brew_stage_remaining_time">Rimanenti %1$s</string>
+    <string name="label_recorded">Registrato</string>
+    <string name="label_measured_amount">Quantità misurata (g)</string>
+    <string name="action_brew_prepare">Prepara</string>
+    <string name="action_brew_rinse">Sciacqua</string>
+    <string name="action_brew_add_coffee">Aggiungi caffè</string>
+    <string name="action_brew_add_water">Aggiungi acqua</string>
+    <string name="action_brew_bloom">Preinfusione</string>
+    <string name="action_brew_pour">Versa</string>
+    <string name="action_brew_agitate">Mescola</string>
+    <string name="action_brew_steep">Lascia in infusione</string>
+    <string name="action_brew_release">Rilascia</string>
+    <string name="action_brew_press">Premi</string>
+    <string name="action_brew_heat">Scalda</string>
+    <string name="action_brew_observe">Osserva</string>
+    <string name="action_brew_filter">Filtra</string>
+    <string name="action_brew_serve">Servi</string>
+    <string name="action_brew_clean_up">Pulisci</string>
+    <string name="action_brew_custom">Continua</string>
+    <string name="action_complete_step">Completa passaggio</string>
+    <string name="action_mark_observed">Segna come osservato</string>
+    <string name="action_mark_signal_received">Segna segnale ricevuto</string>
+    <string name="action_save_measurement">Salva misurazione</string>
+    <string name="action_cancel_brew">Annulla preparazione</string>
+    <string name="msg_brew_session_not_found">Questa preparazione attiva non è più disponibile.</string>
+    <string name="msg_brew_session_unavailable">Questa preparazione salvata non può essere aperta in sicurezza. È stata lasciata invariata.</string>
+    <string name="msg_brew_session_finished">Preparazione salvata.</string>
+    <string name="msg_brew_session_finishing">Salvataggio della preparazione…</string>
+    <string name="msg_brew_session_ready">Pronta per iniziare.</string>
+    <string name="msg_brew_session_paused">Preparazione in pausa.</string>
+    <string name="msg_brew_stage_manual">Completa questo passaggio quando l’azione fisica è terminata.</string>
+    <string name="msg_brew_stage_observation">Segna questo passaggio quando vedi il cambiamento fisico previsto.</string>
+    <string name="format_brew_stage_target_grams">Obiettivo %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Registrato %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">%1$.0f g rimanenti</string>
+    <string name="msg_brew_notification_step_ready">Il prossimo passaggio di preparazione è pronto. Tocca per continuare.</string>
+    <string name="msg_brew_notification_step_started">La preparazione è passata al passaggio successivo. Tocca per tornare.</string>
+    <string name="warning_brew_safety_generic">Controlla la sicurezza dell’infusore e dei liquidi caldi prima di continuare.</string>
+    <string name="warning_brew_safety_hot_liquid">Fai attenzione ai liquidi caldi e al vapore.</string>
+    <string name="warning_brew_safety_hot_metal">Lascia raffreddare il metallo caldo prima di toccarlo.</string>
+    <string name="warning_brew_safety_overflow">Tieni l’infusore su un recipiente stabile e previeni le fuoriuscite.</string>
+    <string name="warning_brew_safety_open_flame">Non lasciare mai una fiamma libera o un fornello caldo senza sorveglianza.</string>
+    <string name="warning_brew_safety_stability">Tieni stabili l’infusore e il recipiente di servizio prima di continuare.</string>
+    <string name="warning_brew_safety_food_storage">Tieni le preparazioni fredde lunghe coperte e refrigerate quando necessario.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

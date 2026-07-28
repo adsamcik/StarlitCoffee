@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Brygg</string>
+    <string name="label_current_step">Aktuellt steg</string>
+    <string name="format_brew_stage_progress">Steg %1$d av %2$d</string>
+    <string name="label_elapsed">Förfluten tid</string>
+    <string name="label_remaining">Återstående</string>
+    <string name="format_brew_stage_remaining_time">%1$s återstår</string>
+    <string name="label_recorded">Registrerat</string>
+    <string name="label_measured_amount">Uppmätt mängd (g)</string>
+    <string name="action_brew_prepare">Förbered</string>
+    <string name="action_brew_rinse">Skölj</string>
+    <string name="action_brew_add_coffee">Tillsätt kaffe</string>
+    <string name="action_brew_add_water">Tillsätt vatten</string>
+    <string name="action_brew_bloom">Förblötlägg</string>
+    <string name="action_brew_pour">Häll</string>
+    <string name="action_brew_agitate">Rör om</string>
+    <string name="action_brew_steep">Låt dra</string>
+    <string name="action_brew_release">Frigör</string>
+    <string name="action_brew_press">Pressa</string>
+    <string name="action_brew_heat">Värm</string>
+    <string name="action_brew_observe">Observera</string>
+    <string name="action_brew_filter">Filtrera</string>
+    <string name="action_brew_serve">Servera</string>
+    <string name="action_brew_clean_up">Rengör</string>
+    <string name="action_brew_custom">Fortsätt</string>
+    <string name="action_complete_step">Slutför steg</string>
+    <string name="action_mark_observed">Markera som observerat</string>
+    <string name="action_mark_signal_received">Markera mottagen signal</string>
+    <string name="action_save_measurement">Spara mätning</string>
+    <string name="action_cancel_brew">Avbryt bryggning</string>
+    <string name="msg_brew_session_not_found">Den här aktiva bryggningen är inte längre tillgänglig.</string>
+    <string name="msg_brew_session_unavailable">Den här sparade bryggningen kan inte öppnas på ett säkert sätt. Den har lämnats oförändrad.</string>
+    <string name="msg_brew_session_finished">Bryggning sparad.</string>
+    <string name="msg_brew_session_finishing">Sparar bryggning…</string>
+    <string name="msg_brew_session_ready">Klar att starta.</string>
+    <string name="msg_brew_session_paused">Bryggning pausad.</string>
+    <string name="msg_brew_stage_manual">Slutför det här steget när den fysiska handlingen är klar.</string>
+    <string name="msg_brew_stage_observation">Markera det här steget när du ser den förväntade fysiska förändringen.</string>
+    <string name="format_brew_stage_target_grams">Mål %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Registrerat %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">%1$.0f g återstår</string>
+    <string name="msg_brew_notification_step_ready">Nästa bryggsteg är klart. Tryck för att fortsätta.</string>
+    <string name="msg_brew_notification_step_started">Din bryggning har gått vidare till nästa steg. Tryck för att återgå.</string>
+    <string name="warning_brew_safety_generic">Kontrollera bryggarens och den heta vätskans säkerhet innan du fortsätter.</string>
+    <string name="warning_brew_safety_hot_liquid">Var försiktig med het vätska och ånga.</string>
+    <string name="warning_brew_safety_hot_metal">Låt varm metall svalna innan du rör den.</string>
+    <string name="warning_brew_safety_overflow">Håll bryggaren på ett stabilt kärl och förhindra översvämning.</string>
+    <string name="warning_brew_safety_open_flame">Lämna aldrig öppen låga eller varm spishäll utan uppsikt.</string>
+    <string name="warning_brew_safety_stability">Håll bryggaren och serveringskärlet stabila innan du fortsätter.</string>
+    <string name="warning_brew_safety_food_storage">Håll långa kallbryggningar täckta och kylda när det behövs.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

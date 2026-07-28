@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Priprema</string>
+    <string name="label_current_step">Trenutačni korak</string>
+    <string name="format_brew_stage_progress">Korak %1$d od %2$d</string>
+    <string name="label_elapsed">Proteklo</string>
+    <string name="label_remaining">Preostalo</string>
+    <string name="format_brew_stage_remaining_time">Preostalo %1$s</string>
+    <string name="label_recorded">Zabilježeno</string>
+    <string name="label_measured_amount">Izmjerena količina (g)</string>
+    <string name="action_brew_prepare">Pripremi</string>
+    <string name="action_brew_rinse">Isperi</string>
+    <string name="action_brew_add_coffee">Dodaj kavu</string>
+    <string name="action_brew_add_water">Dodaj vodu</string>
+    <string name="action_brew_bloom">Bloom</string>
+    <string name="action_brew_pour">Ulij</string>
+    <string name="action_brew_agitate">Promiješaj</string>
+    <string name="action_brew_steep">Namači</string>
+    <string name="action_brew_release">Otpusti</string>
+    <string name="action_brew_press">Pritisni</string>
+    <string name="action_brew_heat">Zagrij</string>
+    <string name="action_brew_observe">Promatraj</string>
+    <string name="action_brew_filter">Filtriraj</string>
+    <string name="action_brew_serve">Posluži</string>
+    <string name="action_brew_clean_up">Očisti</string>
+    <string name="action_brew_custom">Nastavi</string>
+    <string name="action_complete_step">Dovrši korak</string>
+    <string name="action_mark_observed">Označi kao opaženo</string>
+    <string name="action_mark_signal_received">Označi primljeni signal</string>
+    <string name="action_save_measurement">Spremi mjerenje</string>
+    <string name="action_cancel_brew">Otkaži pripremu</string>
+    <string name="msg_brew_session_not_found">Ova aktivna priprema više nije dostupna.</string>
+    <string name="msg_brew_session_unavailable">Ova spremljena priprema ne može se sigurno otvoriti. Ostavljena je nepromijenjena.</string>
+    <string name="msg_brew_session_finished">Priprema je spremljena.</string>
+    <string name="msg_brew_session_finishing">Spremanje pripreme…</string>
+    <string name="msg_brew_session_ready">Spremno za početak.</string>
+    <string name="msg_brew_session_paused">Priprema je pauzirana.</string>
+    <string name="msg_brew_stage_manual">Dovršite ovaj korak kada je fizička radnja obavljena.</string>
+    <string name="msg_brew_stage_observation">Označite ovaj korak kada vidite očekivanu fizičku promjenu.</string>
+    <string name="format_brew_stage_target_grams">Cilj %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Zabilježeno %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">Preostalo %1$.0f g</string>
+    <string name="msg_brew_notification_step_ready">Sljedeći korak pripreme je spreman. Dodirnite za nastavak.</string>
+    <string name="msg_brew_notification_step_started">Priprema je prešla na sljedeći korak. Dodirnite za povratak.</string>
+    <string name="warning_brew_safety_generic">Prije nastavka provjerite sigurnost uređaja i vruće tekućine.</string>
+    <string name="warning_brew_safety_hot_liquid">Budite oprezni s vrućom tekućinom i parom.</string>
+    <string name="warning_brew_safety_hot_metal">Pustite da se vrući metal ohladi prije dodirivanja.</string>
+    <string name="warning_brew_safety_overflow">Držite uređaj na stabilnoj posudi i spriječite prelijevanje.</string>
+    <string name="warning_brew_safety_open_flame">Nikada ne ostavljajte otvoreni plamen ili vruću ploču bez nadzora.</string>
+    <string name="warning_brew_safety_stability">Držite uređaj i posudu za posluživanje stabilnima prije nastavka.</string>
+    <string name="warning_brew_safety_food_storage">Duge hladne pripreme držite pokrivene i po potrebi u hladnjaku.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

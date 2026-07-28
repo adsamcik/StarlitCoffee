@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Приготвяне</string>
+    <string name="label_current_step">Текуща стъпка</string>
+    <string name="format_brew_stage_progress">Стъпка %1$d от %2$d</string>
+    <string name="label_elapsed">Изминало време</string>
+    <string name="label_remaining">Оставащо време</string>
+    <string name="format_brew_stage_remaining_time">Остава %1$s</string>
+    <string name="label_recorded">Записано</string>
+    <string name="label_measured_amount">Измерено количество (g)</string>
+    <string name="action_brew_prepare">Подготви</string>
+    <string name="action_brew_rinse">Изплакни</string>
+    <string name="action_brew_add_coffee">Добави кафе</string>
+    <string name="action_brew_add_water">Добави вода</string>
+    <string name="action_brew_bloom">Блум</string>
+    <string name="action_brew_pour">Налей</string>
+    <string name="action_brew_agitate">Разбъркай</string>
+    <string name="action_brew_steep">Накисни</string>
+    <string name="action_brew_release">Освободи</string>
+    <string name="action_brew_press">Притисни</string>
+    <string name="action_brew_heat">Загрей</string>
+    <string name="action_brew_observe">Наблюдавай</string>
+    <string name="action_brew_filter">Филтрирай</string>
+    <string name="action_brew_serve">Сервирай</string>
+    <string name="action_brew_clean_up">Почисти</string>
+    <string name="action_brew_custom">Продължи</string>
+    <string name="action_complete_step">Завърши стъпката</string>
+    <string name="action_mark_observed">Отбележи като наблюдавано</string>
+    <string name="action_mark_signal_received">Отбележи получения сигнал</string>
+    <string name="action_save_measurement">Запази измерването</string>
+    <string name="action_cancel_brew">Отмени приготвянето</string>
+    <string name="msg_brew_session_not_found">Това активно приготвяне вече не е налично.</string>
+    <string name="msg_brew_session_unavailable">Тази запазена сесия за приготвяне не може да се отвори безопасно. Оставена е без промяна.</string>
+    <string name="msg_brew_session_finished">Приготвянето е запазено.</string>
+    <string name="msg_brew_session_finishing">Запазване на приготвянето…</string>
+    <string name="msg_brew_session_ready">Готово за започване.</string>
+    <string name="msg_brew_session_paused">Приготвянето е паузирано.</string>
+    <string name="msg_brew_stage_manual">Завършете тази стъпка, когато физическото действие е приключило.</string>
+    <string name="msg_brew_stage_observation">Отбележете тази стъпка, когато видите очакваната физическа промяна.</string>
+    <string name="format_brew_stage_target_grams">Цел %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Записано %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">Остават %1$.0f g</string>
+    <string name="msg_brew_notification_step_ready">Следващата стъпка от приготвянето е готова. Докоснете, за да продължите.</string>
+    <string name="msg_brew_notification_step_started">Приготвянето премина към следващата стъпка. Докоснете, за да се върнете.</string>
+    <string name="warning_brew_safety_generic">Проверете безопасността на уреда и горещата течност, преди да продължите.</string>
+    <string name="warning_brew_safety_hot_liquid">Бъдете внимателни с горещи течности и пара.</string>
+    <string name="warning_brew_safety_hot_metal">Оставете горещия метал да изстине, преди да го докоснете.</string>
+    <string name="warning_brew_safety_overflow">Поставете уреда върху стабилен съд и предотвратете преливане.</string>
+    <string name="warning_brew_safety_open_flame">Никога не оставяйте открит пламък или горещ котлон без надзор.</string>
+    <string name="warning_brew_safety_stability">Дръжте уреда и съда за сервиране стабилни, преди да продължите.</string>
+    <string name="warning_brew_safety_food_storage">Покривайте продължителните студени приготвяния и ги съхранявайте в хладилник, когато е необходимо.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

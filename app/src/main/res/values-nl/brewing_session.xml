@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Zetten</string>
+    <string name="label_current_step">Huidige stap</string>
+    <string name="format_brew_stage_progress">Stap %1$d van %2$d</string>
+    <string name="label_elapsed">Verstreken</string>
+    <string name="label_remaining">Resterend</string>
+    <string name="format_brew_stage_remaining_time">%1$s resterend</string>
+    <string name="label_recorded">Vastgelegd</string>
+    <string name="label_measured_amount">Gemeten hoeveelheid (g)</string>
+    <string name="action_brew_prepare">Voorbereiden</string>
+    <string name="action_brew_rinse">Spoelen</string>
+    <string name="action_brew_add_coffee">Koffie toevoegen</string>
+    <string name="action_brew_add_water">Water toevoegen</string>
+    <string name="action_brew_bloom">Voorweken</string>
+    <string name="action_brew_pour">Schenken</string>
+    <string name="action_brew_agitate">Roeren</string>
+    <string name="action_brew_steep">Laten trekken</string>
+    <string name="action_brew_release">Vrijgeven</string>
+    <string name="action_brew_press">Persen</string>
+    <string name="action_brew_heat">Verwarmen</string>
+    <string name="action_brew_observe">Observeren</string>
+    <string name="action_brew_filter">Filteren</string>
+    <string name="action_brew_serve">Serveren</string>
+    <string name="action_brew_clean_up">Opruimen</string>
+    <string name="action_brew_custom">Doorgaan</string>
+    <string name="action_complete_step">Stap voltooien</string>
+    <string name="action_mark_observed">Markeren als waargenomen</string>
+    <string name="action_mark_signal_received">Ontvangen signaal markeren</string>
+    <string name="action_save_measurement">Meting opslaan</string>
+    <string name="action_cancel_brew">Zetten annuleren</string>
+    <string name="msg_brew_session_not_found">Deze actieve zetbeurt is niet meer beschikbaar.</string>
+    <string name="msg_brew_session_unavailable">Deze opgeslagen zetbeurt kan niet veilig worden geopend. Deze is ongewijzigd gelaten.</string>
+    <string name="msg_brew_session_finished">Zetbeurt opgeslagen.</string>
+    <string name="msg_brew_session_finishing">Zetbeurt opslaan…</string>
+    <string name="msg_brew_session_ready">Klaar om te starten.</string>
+    <string name="msg_brew_session_paused">Zetbeurt gepauzeerd.</string>
+    <string name="msg_brew_stage_manual">Voltooi deze stap wanneer de fysieke handeling klaar is.</string>
+    <string name="msg_brew_stage_observation">Markeer deze stap wanneer u de verwachte fysieke verandering ziet.</string>
+    <string name="format_brew_stage_target_grams">Doel %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Vastgelegd %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">%1$.0f g resterend</string>
+    <string name="msg_brew_notification_step_ready">De volgende zetstap is klaar. Tik om verder te gaan.</string>
+    <string name="msg_brew_notification_step_started">Uw zetbeurt is naar de volgende stap gegaan. Tik om terug te keren.</string>
+    <string name="warning_brew_safety_generic">Controleer de veiligheid van de zetmethode en hete vloeistof voordat u doorgaat.</string>
+    <string name="warning_brew_safety_hot_liquid">Wees voorzichtig met hete vloeistof en stoom.</string>
+    <string name="warning_brew_safety_hot_metal">Laat heet metaal afkoelen voordat u het aanraakt.</string>
+    <string name="warning_brew_safety_overflow">Plaats de zetmethode op een stabiel vat en voorkom overlopen.</string>
+    <string name="warning_brew_safety_open_flame">Laat een open vlam of hete kookplaat nooit onbeheerd achter.</string>
+    <string name="warning_brew_safety_stability">Houd de zetmethode en het serveervat stabiel voordat u doorgaat.</string>
+    <string name="warning_brew_safety_food_storage">Houd lange koude brouwsels afgedekt en koel ze indien nodig.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Preparar</string>
+    <string name="label_current_step">Etapa atual</string>
+    <string name="format_brew_stage_progress">Etapa %1$d de %2$d</string>
+    <string name="label_elapsed">Decorrido</string>
+    <string name="label_remaining">Restante</string>
+    <string name="format_brew_stage_remaining_time">Restam %1$s</string>
+    <string name="label_recorded">Registado</string>
+    <string name="label_measured_amount">Quantidade medida (g)</string>
+    <string name="action_brew_prepare">Preparar</string>
+    <string name="action_brew_rinse">Enxaguar</string>
+    <string name="action_brew_add_coffee">Adicionar café</string>
+    <string name="action_brew_add_water">Adicionar água</string>
+    <string name="action_brew_bloom">Pré-infusão</string>
+    <string name="action_brew_pour">Verter</string>
+    <string name="action_brew_agitate">Agitar</string>
+    <string name="action_brew_steep">Infundir</string>
+    <string name="action_brew_release">Libertar</string>
+    <string name="action_brew_press">Prensar</string>
+    <string name="action_brew_heat">Aquecer</string>
+    <string name="action_brew_observe">Observar</string>
+    <string name="action_brew_filter">Filtrar</string>
+    <string name="action_brew_serve">Servir</string>
+    <string name="action_brew_clean_up">Limpar</string>
+    <string name="action_brew_custom">Continuar</string>
+    <string name="action_complete_step">Concluir etapa</string>
+    <string name="action_mark_observed">Marcar como observado</string>
+    <string name="action_mark_signal_received">Marcar sinal recebido</string>
+    <string name="action_save_measurement">Guardar medição</string>
+    <string name="action_cancel_brew">Cancelar preparação</string>
+    <string name="msg_brew_session_not_found">Esta preparação ativa já não está disponível.</string>
+    <string name="msg_brew_session_unavailable">Esta preparação guardada não pode ser aberta em segurança. Foi deixada inalterada.</string>
+    <string name="msg_brew_session_finished">Preparação guardada.</string>
+    <string name="msg_brew_session_finishing">A guardar a preparação…</string>
+    <string name="msg_brew_session_ready">Pronta para começar.</string>
+    <string name="msg_brew_session_paused">Preparação em pausa.</string>
+    <string name="msg_brew_stage_manual">Conclua esta etapa quando a ação física estiver concluída.</string>
+    <string name="msg_brew_stage_observation">Marque esta etapa quando vir a alteração física esperada.</string>
+    <string name="format_brew_stage_target_grams">Alvo %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Registado %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">Restam %1$.0f g</string>
+    <string name="msg_brew_notification_step_ready">A próxima etapa de preparação está pronta. Toque para continuar.</string>
+    <string name="msg_brew_notification_step_started">A sua preparação passou para a etapa seguinte. Toque para voltar.</string>
+    <string name="warning_brew_safety_generic">Verifique a segurança do equipamento e do líquido quente antes de continuar.</string>
+    <string name="warning_brew_safety_hot_liquid">Tenha cuidado com líquido quente e vapor.</string>
+    <string name="warning_brew_safety_hot_metal">Deixe o metal quente arrefecer antes de lhe tocar.</string>
+    <string name="warning_brew_safety_overflow">Mantenha o equipamento sobre um recipiente estável e evite transbordar.</string>
+    <string name="warning_brew_safety_open_flame">Nunca deixe uma chama aberta ou uma placa quente sem vigilância.</string>
+    <string name="warning_brew_safety_stability">Mantenha o equipamento e o recipiente de serviço estáveis antes de continuar.</string>
+    <string name="warning_brew_safety_food_storage">Mantenha as preparações frias longas tapadas e refrigeradas quando necessário.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>

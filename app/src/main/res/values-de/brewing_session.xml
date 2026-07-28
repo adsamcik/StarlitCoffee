@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Durable brew session. label_target is shared from strings.xml. -->
+    <string name="screen_brew_session_title">Brühen</string>
+    <string name="label_current_step">Aktueller Schritt</string>
+    <string name="format_brew_stage_progress">Schritt %1$d von %2$d</string>
+    <string name="label_elapsed">Verstrichene Zeit</string>
+    <string name="label_remaining">Verbleibend</string>
+    <string name="format_brew_stage_remaining_time">Verbleibend %1$s</string>
+    <string name="label_recorded">Erfasst</string>
+    <string name="label_measured_amount">Gemessene Menge (g)</string>
+    <string name="action_brew_prepare">Vorbereiten</string>
+    <string name="action_brew_rinse">Spülen</string>
+    <string name="action_brew_add_coffee">Kaffee hinzufügen</string>
+    <string name="action_brew_add_water">Wasser hinzufügen</string>
+    <string name="action_brew_bloom">Bloom</string>
+    <string name="action_brew_pour">Eingießen</string>
+    <string name="action_brew_agitate">Umrühren</string>
+    <string name="action_brew_steep">Ziehen lassen</string>
+    <string name="action_brew_release">Freigeben</string>
+    <string name="action_brew_press">Pressen</string>
+    <string name="action_brew_heat">Erhitzen</string>
+    <string name="action_brew_observe">Beobachten</string>
+    <string name="action_brew_filter">Filtern</string>
+    <string name="action_brew_serve">Servieren</string>
+    <string name="action_brew_clean_up">Aufräumen</string>
+    <string name="action_brew_custom">Weiter</string>
+    <string name="action_complete_step">Schritt abschließen</string>
+    <string name="action_mark_observed">Als beobachtet markieren</string>
+    <string name="action_mark_signal_received">Empfangenes Signal markieren</string>
+    <string name="action_save_measurement">Messung speichern</string>
+    <string name="action_cancel_brew">Brühen abbrechen</string>
+    <string name="msg_brew_session_not_found">Dieser aktive Brühvorgang ist nicht mehr verfügbar.</string>
+    <string name="msg_brew_session_unavailable">Dieser gespeicherte Brühvorgang kann nicht sicher geöffnet werden. Er wurde unverändert gelassen.</string>
+    <string name="msg_brew_session_finished">Brühvorgang gespeichert.</string>
+    <string name="msg_brew_session_finishing">Brühvorgang wird gespeichert…</string>
+    <string name="msg_brew_session_ready">Bereit zum Starten.</string>
+    <string name="msg_brew_session_paused">Brühvorgang pausiert.</string>
+    <string name="msg_brew_stage_manual">Schließen Sie diesen Schritt ab, sobald die physische Handlung erledigt ist.</string>
+    <string name="msg_brew_stage_observation">Markieren Sie diesen Schritt, wenn Sie die erwartete physische Veränderung sehen.</string>
+    <string name="format_brew_stage_target_grams">Ziel %1$.0f g</string>
+    <string name="format_brew_stage_recorded_grams">Erfasst %1$.0f g</string>
+    <string name="format_brew_stage_remaining_grams">%1$.0f g verbleibend</string>
+    <string name="msg_brew_notification_step_ready">Der nächste Brühschritt ist bereit. Tippen Sie, um fortzufahren.</string>
+    <string name="msg_brew_notification_step_started">Ihr Brühvorgang ist zum nächsten Schritt übergegangen. Tippen Sie, um zurückzukehren.</string>
+    <string name="warning_brew_safety_generic">Prüfen Sie vor dem Fortfahren die Sicherheit des Brühers und heißer Flüssigkeiten.</string>
+    <string name="warning_brew_safety_hot_liquid">Seien Sie vorsichtig mit heißer Flüssigkeit und Dampf.</string>
+    <string name="warning_brew_safety_hot_metal">Lassen Sie heißes Metall abkühlen, bevor Sie es berühren.</string>
+    <string name="warning_brew_safety_overflow">Stellen Sie den Brüher auf ein stabiles Gefäß und verhindern Sie ein Überlaufen.</string>
+    <string name="warning_brew_safety_open_flame">Lassen Sie offenes Feuer oder eine heiße Kochplatte niemals unbeaufsichtigt.</string>
+    <string name="warning_brew_safety_stability">Sorgen Sie vor dem Fortfahren für einen stabilen Stand von Brüher und Serviergefäß.</string>
+    <string name="warning_brew_safety_food_storage">Halten Sie lange kalte Brühvorgänge abgedeckt und kühlen Sie sie bei Bedarf.</string>
+    <string name="cd_brew_session_status">%1$s. %2$s.</string>
+</resources>
