@@ -18,20 +18,55 @@ import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewTimingMode
 import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.viewmodel.BrewUiState
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import com.adsamcik.starlitcoffee.viewmodel.BrewUiState
 
 /** Keeps an active brew useful when its timer is no longer on screen. */
-interface BrewSessionNotifier {
+interface BrewSessionNotifier : AutoCloseable {
     fun onBrewStateChanged(state: BrewUiState)
+
+    /** Releases owned observers and collection work. Implementations must be idempotent. */
+    override fun close()
 }
 
 object NoOpBrewSessionNotifier : BrewSessionNotifier {
     override fun onBrewStateChanged(state: BrewUiState) = Unit
+
+    override fun close() = Unit
+}
+
+/**
+ * Owns the process-observer registration and preference collection behind one
+ * notifier. Marking the lifetime closed first also makes late lifecycle/state
+ * callbacks harmless while cleanup is in progress.
+ */
+internal class BrewSessionNotifierLifetime(
+    private val unregisterLifecycleObserver: () -> Unit,
+    private val cancelCollectionScope: () -> Unit,
+    private val onClosed: () -> Unit,
+) : AutoCloseable {
+    private val closed = AtomicBoolean(false)
+
+    val isClosed: Boolean
+        get() = closed.get()
+
+    override fun close() {
+        if (!closed.compareAndSet(false, true)) return
+        try {
+            unregisterLifecycleObserver()
+        } finally {
+            try {
+                cancelCollectionScope()
+            } finally {
+                onClosed()
+            }
+        }
+    }
 }
 
 /**
@@ -47,10 +82,20 @@ class AndroidBrewSessionNotifier(context: Context) : BrewSessionNotifier, Defaul
     private var bloomCompletionAlerted = false
     private var targetTimeAlerted = false
     private var lastStatusElapsedSeconds = -1
+    private val processLifecycle = ProcessLifecycleOwner.get().lifecycle
+    private val collectionJob = SupervisorJob()
+    private val lifetime = BrewSessionNotifierLifetime(
+        unregisterLifecycleObserver = { processLifecycle.removeObserver(this) },
+        cancelCollectionScope = collectionJob::cancel,
+        onClosed = {
+            latestState = null
+            clearSession()
+        },
+    )
 
     init {
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-        CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
+        processLifecycle.addObserver(this)
+        CoroutineScope(collectionJob + Dispatchers.Default).launch {
             UserPreferencesRepository(appContext).userPreferences.collect { preferences ->
                 vibrationTheme = preferences.brewVibrationTheme
             }
@@ -58,22 +103,29 @@ class AndroidBrewSessionNotifier(context: Context) : BrewSessionNotifier, Defaul
     }
 
     override fun onStart(owner: LifecycleOwner) {
+        if (lifetime.isClosed) return
         appInForeground = true
         cancelStatus()
     }
 
     override fun onStop(owner: LifecycleOwner) {
+        if (lifetime.isClosed) return
         appInForeground = false
         latestState?.let(::publishForBackground)
     }
 
     override fun onBrewStateChanged(state: BrewUiState) {
+        if (lifetime.isClosed) return
         latestState = state
         if (!isActiveTimer(state)) {
             clearSession()
             return
         }
         if (!appInForeground) publishForBackground(state)
+    }
+
+    override fun close() {
+        lifetime.close()
     }
 
     private fun publishForBackground(state: BrewUiState) {

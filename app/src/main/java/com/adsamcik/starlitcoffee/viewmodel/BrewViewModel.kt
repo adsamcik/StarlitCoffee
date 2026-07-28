@@ -229,7 +229,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     // Production injects an Android-backed notifier; tests keep this side
     // effect off by default while the ViewModel remains the state owner.
     private val brewSessionNotifier: BrewSessionNotifier = NoOpBrewSessionNotifier,
-) : ViewModel() {
+) : ViewModel(brewSessionNotifier) {
 
     private val llmCache = LlmResultCache()
     private val bagPhotoExtractor = BagPhotoExtractor(
