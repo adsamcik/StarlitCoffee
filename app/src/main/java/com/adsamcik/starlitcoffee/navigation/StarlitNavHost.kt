@@ -53,10 +53,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.adsamcik.starlitcoffee.data.db.AppDatabase
+import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionEntityMapper
+import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionRestoreResult
+import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionRuntime
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.data.repository.StableBrewingPreferences
 import com.adsamcik.starlitcoffee.data.work.BagReviewContext
 import com.adsamcik.starlitcoffee.notification.DeepLinkBus
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
@@ -67,7 +71,11 @@ import com.adsamcik.starlitcoffee.ui.screen.BrewLogScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewLogDetailScreen
 import com.adsamcik.starlitcoffee.ui.screen.CalculatorBrewScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
+import com.adsamcik.starlitcoffee.ui.screen.BrewSessionScreen
 import com.adsamcik.starlitcoffee.ui.screen.BloomTimerScreen
+import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferences
+import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
+import com.adsamcik.starlitcoffee.ui.guidance.P1BuiltInGuidanceCatalog
 import com.adsamcik.starlitcoffee.ui.screen.CupPresetEditorScreen
 import com.adsamcik.starlitcoffee.ui.screen.DisplaySettingsScreen
 import com.adsamcik.starlitcoffee.ui.screen.GrindPrepScreen
@@ -99,6 +107,7 @@ import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
 import java.util.HashMap
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CancellationException
 
 private data class BottomNavItem(
     @StringRes val labelRes: Int,
@@ -166,10 +175,20 @@ fun StarlitNavHost() {
     val userPrefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = null,
     )
+    val stableBrewingPreferences by userPreferencesRepository.brewingPreferences.collectAsStateWithLifecycle(
+        initialValue = StableBrewingPreferences(emptySet(), null),
+    )
     val recoverableSessions by remember(database) {
         database.activeBrewSessionDao().observeRecoverable()
     }.collectAsStateWithLifecycle(initialValue = emptyList())
-    val recoverableSessionId = recoverableSessions.firstOrNull()?.sessionId
+    val recoverableSessionId = remember(recoverableSessions) {
+        recoverableSessions.firstOrNull { entity ->
+            val restored = ActiveBrewSessionEntityMapper.restore(entity)
+                as? ActiveBrewSessionRestoreResult.Restored
+            val profileId = restored?.value?.recipe?.brewerProfileId
+            profileId == null || !P1BuiltInGuidanceCatalog.isReleaseGatedProfile(profileId)
+        }?.sessionId
+    }
 
     // Track onboarding state for methods screen → personalize screen
     val onboardingMethods = rememberSaveable(saver = BrewMethodSetStateSaver) {
@@ -204,6 +223,49 @@ fun StarlitNavHost() {
 
     val startDestination: Any = if (prefs.onboardingCompleted) CalculatorBrew else OnboardingMethods
     val snackbarHostState = remember { SnackbarHostState() }
+    val sessionUnavailableMessage = stringResource(R.string.msg_brew_session_unavailable)
+    val durableGuidancePreferences = remember(stableBrewingPreferences) {
+        stableBrewingPreferences.toDurableGuidancePreferences()
+    }
+    val p1BrewerSetupVisible = remember {
+        P1BuiltInGuidanceCatalog.releaseEligibleProfileIds.isNotEmpty()
+    }
+
+    val durableSessionRuntime = remember(context) { BrewSessionRuntime.create(context) }
+    val legacySessionStartFactory = remember {
+        com.adsamcik.starlitcoffee.viewmodel.LegacyBrewSessionStartFactory()
+    }
+    val startDurableSession: () -> Unit = {
+        scope.launch {
+            val start = legacySessionStartFactory.create(
+                state = brewViewModel.uiState.value,
+                selectedCoffeeBagId = brewViewModel.selectedBagId.value,
+                sourceRecipeId = null,
+            )
+            val request = (start as?
+                com.adsamcik.starlitcoffee.viewmodel.LegacyBrewSessionStartResult.Ready
+                )?.request
+            if (request == null) {
+                snackbarHostState.showSnackbar(sessionUnavailableMessage)
+                return@launch
+            }
+            try {
+                when (durableSessionRuntime.coordinator.createOrResume(request)) {
+                    is com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResult.Active,
+                    is com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResult.PendingEffect,
+                    -> navController.navigate(BrewSession(sessionId = request.sessionId.value)) {
+                        launchSingleTop = true
+                    }
+
+                    else -> snackbarHostState.showSnackbar(sessionUnavailableMessage)
+                }
+            } catch (error: CancellationException) {
+                throw error
+            } catch (_: Exception) {
+                snackbarHostState.showSnackbar(sessionUnavailableMessage)
+            }
+        }
+    }
 
     // Notification deep link → BrewLogDetail. The bus is owned by MainActivity;
     // we pop the pending id here, navigate, and clear it so a recompose doesn't
@@ -214,6 +276,18 @@ fun StarlitNavHost() {
         if (id != null && prefs.onboardingCompleted) {
             navController.navigate(BrewLogDetail(logId = id))
             DeepLinkBus.consumeBrewLogDetail()
+        }
+    }
+
+    // Notification deep link → exactly the durable brew session that emitted it.
+    val pendingBrewSessionId by DeepLinkBus.pendingBrewSessionId.collectAsStateWithLifecycle()
+    LaunchedEffect(pendingBrewSessionId, prefs.onboardingCompleted) {
+        val id = pendingBrewSessionId
+        if (!id.isNullOrBlank() && prefs.onboardingCompleted) {
+            navController.navigate(BrewSession(sessionId = id)) {
+                launchSingleTop = true
+            }
+            DeepLinkBus.consumeBrewSession()
         }
     }
 
@@ -408,11 +482,13 @@ fun StarlitNavHost() {
                         userPreferencesRepository = userPreferencesRepository,
                         onNavigateToBrew = {
                             brewViewModel.startNewBrewSession()
-                            // Quick Brew preference jumps past the grind/prep
-                            // checkpoint and lands directly in the timer. Default
-                            // flow keeps GrindPrep as the pre-flight checkpoint.
-                            val target: Any = if (prefs.skipMethodSelection) BrewTimer else GrindPrep
-                            navController.navigate(target)
+                            // Quick Brew begins the same durable session immediately;
+                            // the default flow keeps GrindPrep as its pre-flight checkpoint.
+                            if (prefs.skipMethodSelection) {
+                                startDurableSession()
+                            } else {
+                                navController.navigate(GrindPrep)
+                            }
                         },
                         recoverableSessionId = recoverableSessionId,
                         onResumeSession = { sessionId ->
@@ -420,8 +496,77 @@ fun StarlitNavHost() {
                                 launchSingleTop = true
                             }
                         },
+                        showBrewerSetup = p1BrewerSetupVisible,
+                        onNavigateToBrewerSetup = {
+                            navController.navigate(BrewerProfileSetup) {
+                                launchSingleTop = true
+                            }
+                        },
                     )
                 }
+                p1BrewingRoutes(
+                    navController = navController,
+                    brewViewModel = brewViewModel,
+                    durableSessionRuntime = durableSessionRuntime,
+                    guidancePreferences = durableGuidancePreferences,
+                    snackbarHostState = snackbarHostState,
+                    unavailableMessage = sessionUnavailableMessage,
+                )
+
+                composable<BrewSession> { backStackEntry ->
+                    val route = backStackEntry.toRoute<BrewSession>()
+                    val sessionFlow = remember(route.sessionId) {
+                        database.activeBrewSessionDao().observeById(route.sessionId)
+                    }
+                    BrewSessionScreen(
+                        sessionId = route.sessionId,
+                        sessionFlow = sessionFlow,
+                        onDispatch = { event ->
+                            durableSessionRuntime.coordinator.dispatch(
+                                com.adsamcik.starlitcoffee.domain.brewing.session.SessionId(
+                                    route.sessionId,
+                                ),
+                                event,
+                            )
+                        },
+                        onBack = {
+                            navController.navigate(CalculatorBrew) {
+                                popUpTo(CalculatorBrew) { inclusive = false }
+                                launchSingleTop = true
+                            }
+                        },
+                        guidancePreferences = durableGuidancePreferences,
+                        onRememberGuidanceForProfile = { profileId, level ->
+                            userPreferencesRepository.updateGuidanceForBrewerProfile(
+                                profileId = profileId,
+                                guidanceLevel = level.name,
+                            )
+                        },
+                        dimModeEnabled = prefs.dimModeEnabled,
+                        dimModeTrueBlack = prefs.dimModeTrueBlack,
+                        dimModeReduceBrightness = prefs.dimModeReduceBrightness,
+                        dimModeFullscreen = prefs.dimModeFullscreen,
+                        dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
+                        vibrationTheme = prefs.brewVibrationTheme,
+                        onScreenForegrounded = {
+                            durableSessionRuntime.clearBackgroundStatus(
+                                com.adsamcik.starlitcoffee.domain.brewing.session.SessionId(
+                                    route.sessionId,
+                                ),
+                            )
+                        },
+                        onScreenBackgrounded = {
+                            scope.launch {
+                                durableSessionRuntime.publishBackgroundStatus(
+                                    com.adsamcik.starlitcoffee.domain.brewing.session.SessionId(
+                                        route.sessionId,
+                                    ),
+                                )
+                            }
+                        },
+                    )
+                }
+
                 composable<GrindPrep> {
                     GrindPrepScreen(
                         brewViewModel = brewViewModel,
@@ -431,7 +576,7 @@ fun StarlitNavHost() {
                         dimModeFullscreen = prefs.dimModeFullscreen,
                         dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
                         showBrewingInstructions = prefs.showBrewingInstructions,
-                        onNavigateToBrew = { navController.navigate(BrewTimer) },
+                        onNavigateToBrew = startDurableSession,
                         onBack = { navController.popBackStack() },
                     )
                 }
@@ -765,3 +910,15 @@ private fun StarlitNavigationRail(
         }
     }
 }
+
+private fun StableBrewingPreferences.toDurableGuidancePreferences():
+    DurableBrewSessionGuidancePreferences = DurableBrewSessionGuidancePreferences(
+        profileOverrides = guidanceByBrewerProfileId.toGuidanceLevels(),
+        familyPreferences = guidanceByMethodFamilyId.toGuidanceLevels(),
+    )
+
+private fun Map<String, String>.toGuidanceLevels(): Map<String, GuidancePresentationLevel> =
+    mapNotNull { (id, rawLevel) ->
+        GuidancePresentationLevel.entries.firstOrNull { level -> level.name == rawLevel }
+            ?.let { level -> id to level }
+    }.toMap()

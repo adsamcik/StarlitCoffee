@@ -76,7 +76,7 @@ data class LearnGuidanceCatalogResolution(
 class LearnGuidanceCatalogResolver(
     private val brewingCatalog: BrewingCatalog = BuiltinBrewingCatalog.instance,
     guidanceCatalogs: List<BuiltInGuidanceCatalog> = listOf(
-        PulsarBuiltInGuidanceCatalog.catalog,
+        LegacyBuiltInGuidanceCatalog.catalog,
         P1BuiltInGuidanceCatalog.catalog,
     ),
 ) {
@@ -141,7 +141,7 @@ class LearnGuidanceCatalogResolver(
                 LearnGuidanceCatalogAvailability.Available
             },
             content = planSelection.content
-                .filter { content -> policy.isVisible(content) }
+                .filter { content -> policy.isVisible(content.visibility, content.safetyCritical) }
                 .map { content -> content.toLearnContent(policy.level) },
         )
     }

@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.navigation
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,6 +17,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewerEquipmentDefaults
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileSetupStateFactory
+import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferences
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogRequest
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogResolver
@@ -42,12 +44,20 @@ fun NavGraphBuilder.p1BrewingRoutes(
     snackbarHostState: SnackbarHostState,
     unavailableMessage: String,
 ) {
-    composable<BrewerProfileSetup> {
+    composable<BrewerProfileSetup> setupRoute@{
+        if (P1BuiltInGuidanceCatalog.releaseEligibleProfileIds.isEmpty()) {
+            LaunchedEffect(Unit) { navController.popBackStack() }
+            return@setupRoute
+        }
         val destinationScope = rememberCoroutineScope()
         val sessionStartFactory = remember { BuiltinBrewerSessionStartFactory() }
         val equipmentDefaults = remember { BuiltinBrewerEquipmentDefaults() }
         var setupState by remember {
-            mutableStateOf(P1BrewerProfileSetupStateFactory.create())
+            mutableStateOf(
+                P1BrewerProfileSetupStateFactory.create(
+                    visibleProfileIds = P1BuiltInGuidanceCatalog.releaseEligibleProfileIds,
+                ),
+            )
         }
 
         P1BrewerProfileSetupScreen(
@@ -135,8 +145,15 @@ fun NavGraphBuilder.p1BrewingRoutes(
         )
     }
 
-    composable<LearnBrewer> { backStackEntry ->
+    composable<LearnBrewer> learnRoute@{ backStackEntry ->
         val route = backStackEntry.toRoute<LearnBrewer>()
+        if (P1BuiltInGuidanceCatalog.releaseEligibleProfileIds.none { profile ->
+                profile.value == route.brewerProfileId
+            }
+        ) {
+            LaunchedEffect(route.brewerProfileId) { navController.popBackStack() }
+            return@learnRoute
+        }
         val profile = remember(route.brewerProfileId) {
             runCatching { BrewerProfileId(route.brewerProfileId) }
                 .getOrNull()
@@ -164,6 +181,7 @@ fun NavGraphBuilder.p1BrewingRoutes(
                 asset.profileId.value == route.brewerProfileId
             },
             onBack = { navController.popBackStack() },
+            instructionAssets = BuiltInInstructionAssetCatalog.catalog,
         )
     }
 }

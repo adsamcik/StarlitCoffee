@@ -11,6 +11,18 @@ object CalculatorBrew
 object BrewTimer
 
 @Serializable
+data class BrewSession(val sessionId: String)
+
+@Serializable
+object BrewerProfileSetup
+
+@Serializable
+data class LearnBrewer(
+    val brewerProfileId: String,
+    val harioSwitchWorkflow: String? = null,
+)
+
+@Serializable
 object GrindPrep
 
 @Serializable

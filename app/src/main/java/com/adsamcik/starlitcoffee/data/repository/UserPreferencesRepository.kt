@@ -215,6 +215,23 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         }
     }
 
+    /**
+     * Persists one explicit live-brew guidance choice without rewriting the
+     * rest of the stable profile/family maps. Unknown values already stored
+     * by a newer app remain untouched.
+     */
+    suspend fun updateGuidanceForBrewerProfile(
+        profileId: String,
+        guidanceLevel: String,
+    ) {
+        context.dataStore.edit { prefs ->
+            val existing = parseKeyValueMap(prefs[Keys.GUIDANCE_BY_BREWER_PROFILE].orEmpty())
+            prefs[Keys.GUIDANCE_BY_BREWER_PROFILE] = encodeKeyValueMap(
+                existing + (profileId to guidanceLevel),
+            )
+        }
+    }
+
     override suspend fun completeOnboarding(
         enabledMethods: Set<BrewMethod>,
         defaultMethod: BrewMethod,

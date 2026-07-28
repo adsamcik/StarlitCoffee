@@ -140,9 +140,11 @@ object P1BrewerProfileSetupStateFactory {
     fun create(
         catalog: BrewingCatalog = BuiltinBrewingCatalog.instance,
         selectedProfileId: BrewerProfileId? = null,
+        visibleProfileIds: Set<BrewerProfileId>? = null,
     ): P1BrewerProfileSetupUiState {
-        val supportedIds = BuiltinBrewerStagePlanFactory.supportedBrewerProfileIds
-            .intersect(BuiltinBrewerProfileRecipeDefaults.supportedProfileIds)
+        val supportedIds = (BuiltinBrewerStagePlanFactory.supportedBrewerProfileIds
+            .intersect(BuiltinBrewerProfileRecipeDefaults.supportedProfileIds))
+            .let { supported -> visibleProfileIds?.let(supported::intersect) ?: supported }
         val profilesById = catalog.brewerProfiles.associateBy { it.id }
         val orderedIds = DISPLAY_ORDER.filter { it in supportedIds } +
             (supportedIds - DISPLAY_ORDER.toSet()).sortedBy(BrewerProfileId::value)

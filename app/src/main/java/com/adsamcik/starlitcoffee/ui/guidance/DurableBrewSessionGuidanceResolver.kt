@@ -144,14 +144,14 @@ data class DurableBrewSessionGuidanceResolution(
  * catalogue. It is intentionally Android- and persistence-free: callers pass
  * restored recipe identifiers and the existing presentation-stage value.
  *
- * The default source only contains the reviewed Pulsar curriculum. Other
+ * The default source covers all migrated legacy curriculums. Other
  * built-in profiles therefore return a named unavailable state until their own
  * content is supplied; this is intentional, rather than a fallback to Pulsar
  * or a superficially similar brewer.
  */
 class DurableBrewSessionGuidanceResolver(
     private val brewingCatalog: BrewingCatalog = BuiltinBrewingCatalog.instance,
-    guidanceCatalogs: List<BuiltInGuidanceCatalog> = listOf(PulsarBuiltInGuidanceCatalog.catalog),
+    guidanceCatalogs: List<BuiltInGuidanceCatalog> = listOf(LegacyBuiltInGuidanceCatalog.catalog),
     private val instructionAssets: InstructionAssetCatalog? = null,
 ) {
     private val allContent = guidanceCatalogs
@@ -243,7 +243,7 @@ class DurableBrewSessionGuidanceResolver(
         }
         val routineContent = scopedStageContent
             .filterNot(BuiltInGuidanceContent::safetyCritical)
-            .filter { content -> policy.isVisible(content) }
+            .filter { content -> policy.isVisible(content.visibility, content.safetyCritical) }
             .map { content -> content.toResolvedContent(policy.level) }
         val criticalContent = scopedStageContent
             .filter(BuiltInGuidanceContent::safetyCritical)
@@ -286,14 +286,14 @@ class DurableBrewSessionGuidanceResolver(
     private fun Map<String, GuidancePresentationLevel>.toKnownProfileOverrides():
         Map<BrewerProfileId, GuidancePresentationLevel> = mapNotNull { (rawId, level) ->
         rawId.toBrewerProfileIdOrNull()
-            ?.takeIf(brewingCatalog::containsProfile)
+            ?.takeIf { profileId -> brewingCatalog.findBrewerProfile(profileId) != null }
             ?.let { profileId -> profileId to level }
     }.toMap()
 
     private fun Map<String, GuidancePresentationLevel>.toKnownFamilyPreferences():
         Map<MethodFamilyId, GuidancePresentationLevel> = mapNotNull { (rawId, level) ->
         rawId.toMethodFamilyIdOrNull()
-            ?.takeIf(brewingCatalog::containsFamily)
+            ?.takeIf { familyId -> brewingCatalog.findMethodFamily(familyId) != null }
             ?.let { familyId -> familyId to level }
     }.toMap()
 

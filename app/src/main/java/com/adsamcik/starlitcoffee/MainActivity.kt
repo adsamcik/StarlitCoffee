@@ -65,6 +65,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /** Requests the platform alert permission when a durable brew begins. */
+    fun requestBrewNotificationPermission() {
+        requestBrewNotificationPermissionIfNeeded()
+    }
+
     private fun requestBrewNotificationPermissionIfNeeded() {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.TIRAMISU ||
             notificationPermissionRequested ||
@@ -114,6 +119,14 @@ class MainActivity : ComponentActivity() {
             // original intent) doesn't re-trigger navigation.
             intent.removeExtra(EXTRA_BREW_LOG_ID)
         }
+        val brewSessionId = intent.getStringExtra(EXTRA_BREW_SESSION_ID)
+        if (!brewSessionId.isNullOrBlank()) {
+            DeepLinkBus.postBrewSession(brewSessionId)
+            // The original intent can be delivered again after configuration
+            // changes, so consume this one-shot navigation request here.
+            intent.removeExtra(EXTRA_BREW_SESSION_ID)
+        }
+
         if (intent.getBooleanExtra(EXTRA_OPEN_BAG_ANALYSIS, false)) {
             val workId = intent.getStringExtra(EXTRA_BAG_ANALYSIS_WORK_ID)
             if (!workId.isNullOrBlank()) {
@@ -130,6 +143,7 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         const val EXTRA_BREW_LOG_ID = "starlit.extra.BREW_LOG_ID"
+        const val EXTRA_BREW_SESSION_ID = "starlit.extra.BREW_SESSION_ID"
         const val EXTRA_OPEN_BAG_ANALYSIS = "starlit.extra.OPEN_BAG_ANALYSIS"
         const val EXTRA_BAG_ANALYSIS_WORK_ID = "starlit.extra.BAG_ANALYSIS_WORK_ID"
         private const val REQUEST_BREW_NOTIFICATION_PERMISSION = 4_201
@@ -142,6 +156,17 @@ class MainActivity : ComponentActivity() {
                     Intent.FLAG_ACTIVITY_SINGLE_TOP,
             )
         }
+
+        /** Builds an intent that returns to one exact durable brew session. */
+        fun buildBrewSessionIntent(context: Context, sessionId: String): Intent =
+            Intent(context, MainActivity::class.java).apply {
+                putExtra(EXTRA_BREW_SESSION_ID, sessionId)
+                addFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                        Intent.FLAG_ACTIVITY_SINGLE_TOP,
+                )
+            }
 
         /**
          * Builds an [Intent] that launches the app and deep-links to the brew

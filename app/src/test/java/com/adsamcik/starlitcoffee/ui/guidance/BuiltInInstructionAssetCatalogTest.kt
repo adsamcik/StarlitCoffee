@@ -61,6 +61,7 @@ class BuiltInInstructionAssetCatalogTest {
         profileId = profileId,
         stageId = STAGE,
         contentId = CONTENT,
+        variant = variant,
         drawableRes = R.drawable.vessel_icon_mug,
         altTextRes = R.string.app_name,
         companionInstructionRes = R.string.instruction_pour_total,

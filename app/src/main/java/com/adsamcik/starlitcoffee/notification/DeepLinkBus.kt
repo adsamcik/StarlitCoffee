@@ -24,6 +24,8 @@ data class BagAnalysisDeepLink(
 object DeepLinkBus {
     private val _pendingBrewLogId = MutableStateFlow<Long?>(null)
     val pendingBrewLogId: StateFlow<Long?> = _pendingBrewLogId.asStateFlow()
+    private val _pendingBrewSessionId = MutableStateFlow<String?>(null)
+    val pendingBrewSessionId: StateFlow<String?> = _pendingBrewSessionId.asStateFlow()
 
     // Set when the user taps a "bag analysis complete" notification. The nav
     // host pops it, navigates to the bag inventory, recovers that exact
@@ -38,6 +40,15 @@ object DeepLinkBus {
 
     fun consumeBrewLogDetail() {
         _pendingBrewLogId.value = null
+    }
+
+    fun postBrewSession(sessionId: String) {
+        if (sessionId.isBlank()) return
+        _pendingBrewSessionId.value = sessionId
+    }
+
+    fun consumeBrewSession() {
+        _pendingBrewSessionId.value = null
     }
 
     fun postBagAnalysisReady(

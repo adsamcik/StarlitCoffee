@@ -87,16 +87,16 @@ class LearnGuidanceCatalogResolverTest {
     fun `known profile without curriculum remains unavailable instead of falling back`() {
         val resolution = LearnGuidanceCatalogResolver().resolve(
             request(
-                methodFamilyId = "full_immersion_press",
-                brewerProfileId = "french_press_generic",
+                methodFamilyId = "manual_gravity",
+                brewerProfileId = "v60_01",
                 level = GuidancePresentationLevel.FULL,
             ),
         )
 
         assertEquals(
             LearnGuidanceCatalogAvailability.NoGuidanceCatalogForProfile(
-                MethodFamilyId("full_immersion_press"),
-                BrewerProfileId("french_press_generic"),
+                MethodFamilyId("manual_gravity"),
+                BrewerProfileId("v60_01"),
             ),
             resolution.availability,
         )

@@ -439,7 +439,7 @@ object ActiveBrewSessionPresentationMapper {
     ): BrewSessionActionAvailability {
         val activeStage = currentStage?.runStatus == StageRunStatus.ACTIVE
         val canOperate = runtime.status in ACTIVE_SESSION_STATUSES && activeStage
-        val canManualAdvance = canOperate && currentStage?.completion?.allowsManualAdvance() == true
+        val canManualAdvance = canOperate && currentStage.completion.allowsManualAdvance()
         return BrewSessionActionAvailability(
             canStart = runtime.status == BrewSessionStatus.READY &&
                 currentStage?.runStatus == StageRunStatus.PENDING,

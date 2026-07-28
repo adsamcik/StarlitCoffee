@@ -84,8 +84,56 @@ object P1BuiltInGuidanceCatalog {
             .mapNotNull { entry -> entry.content.profileId }
             .toSet()
 
+    /**
+     * Profiles are exposed only when every mandatory planned slot has an exact,
+     * approved record in the packaged instruction-asset manifest. The plan
+     * status is planning evidence; the reviewed manifest is the release
+     * authority.
+     */
+    val releaseEligibleProfileIds: Set<BrewerProfileId>
+        get() = releaseEligibleProfileIds(BuiltInInstructionAssetCatalog.catalog)
+
+    /**
+     * Testable fail-closed release gate for a supplied reviewed asset catalog.
+     * This lets approved artwork unlock only its exact family/profile/stage
+     * slot, never a nearby brewer or similarly named instruction.
+     */
+    fun releaseEligibleProfileIds(
+        instructionAssets: InstructionAssetCatalog,
+    ): Set<BrewerProfileId> = supportedProfileIds.filterTo(linkedSetOf()) { profileId ->
+        val mandatoryAssets = plannedVisualAssets.filter { asset ->
+            asset.profileId == profileId && asset.mandatoryForFullGuidance
+        }
+        mandatoryAssets.isNotEmpty() && mandatoryAssets.all { plannedAsset ->
+            instructionAssets.find(plannedAsset.id)?.isApprovedFor(plannedAsset) == true
+        }
+    }
+
+    /**
+     * True only for a persisted P1 profile whose approved visual curriculum is
+     * absent.
+     */
+    fun isReleaseGatedProfile(
+        rawProfileId: String,
+        instructionAssets: InstructionAssetCatalog = BuiltInInstructionAssetCatalog.catalog,
+    ): Boolean {
+        val profileId = runCatching { BrewerProfileId(rawProfileId) }.getOrNull() ?: return false
+        return profileId in supportedProfileIds &&
+            profileId !in releaseEligibleProfileIds(instructionAssets)
+    }
+
     fun plannedVisualAssetFor(contentId: StageContentId): P1PlannedInstructionAsset? =
         plannedVisualAssets.find { asset -> asset.contentId == contentId }
+
+    private fun InstructionAssetRecord.isApprovedFor(
+        plannedAsset: P1PlannedInstructionAsset,
+    ): Boolean = review.isApproved &&
+        mandatoryForFullGuidance &&
+        id == plannedAsset.id &&
+        familyId == plannedAsset.familyId &&
+        profileId == plannedAsset.profileId &&
+        stageId == plannedAsset.stageId &&
+        contentId == plannedAsset.contentId
 
     private fun buildEntries(): List<P1GuidanceCatalogEntry> {
         val sourceStages = sourceStages()
