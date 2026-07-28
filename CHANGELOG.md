@@ -5,6 +5,39 @@ All notable changes to **Starlit Coffee** are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Durable staged brewing** — active brews now use an ordered, method-aware
+  stage plan that can be restored after the app or process leaves the foreground.
+- **Learn and live guidance foundation** — the same brewer-profile content can
+  support a standalone learning flow and concise, stage-specific guidance while
+  brewing.
+- **Background continuation for bounded stages** — timed stage transitions can
+  surface a direct-return alert when the relevant brew is not open on screen.
+
+### Changed
+
+- **Existing brewer curricula** now resolve through the shared profile and
+  guidance catalogue rather than falling back to a generic brewer experience.
+- **Active-brew Picture-in-Picture** is limited to bounded timed stages and
+  presents a compact current-action timer.
+
+### Fixed
+
+- Automatic stage deadlines are reconciled through the persisted session state
+  when the brew screen becomes active again, so a completed foreground countdown
+  does not wait for a separate recovery path.
+
+### Release status
+
+- **P1 brewer profiles remain unavailable.** Their required instructional
+  illustrations are not yet packaged and physically reviewed. The profiles stay
+  release-gated until local optimized assets, manifest and accessibility records,
+  and review sign-off provide complete visual coverage; no placeholders are
+  presented as finished brewing guidance.
+
 ## [1.4.0] — 2026-07-25
 
 ### Added

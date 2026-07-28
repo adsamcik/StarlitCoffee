@@ -7,6 +7,20 @@ mechanical specifications, manufacturer recipes, professional guidance, product
 defaults, and deliberately limited inferences. It does not copy manuals into the
 application or turn a named-product recipe into a universal rule.
 
+## Current implementation status
+
+- The shared profile, equipment, ordered-stage, durable-session, and guidance
+  foundations are under release validation. Evidence in this ledger still
+  limits what individual profiles may claim or prefill.
+- P1 curriculum records identify their planned instructional assets as
+  `NOT_PRODUCED`; P1 profiles are intentionally release-gated rather than shown
+  with incomplete visual teaching.
+- A generated or listed asset is not evidence of completion. A profile remains
+  gated until its local optimized asset, manifest entry, alternative text, and
+  physical accuracy review have all been recorded.
+- Locale-key coverage for UI text does not by itself constitute review of every
+  instructional translation or culturally specific preparation claim.
+
 ## How to use this ledger
 
 - A record supports only the stated profile, claim, and use in the product.
