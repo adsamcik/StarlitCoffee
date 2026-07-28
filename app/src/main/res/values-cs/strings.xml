@@ -814,4 +814,24 @@
     <string name="format_brew_guidance_level">Pokyny: %1$s</string>
     <string name="guidance_level_custom">Vlastní</string>
 
+
+    <!-- P1 capacity and Cezve safety -->
+    <string name="heading_brewer_profile_capacity">Kapacita zařízení</string>
+    <string name="msg_brewer_profile_capacity_hint">Zadejte kapacitu vyznačenou na používaném zařízení. Relace se nespustí, pokud ji množství vody překročí.</string>
+    <string name="label_brewer_profile_capacity_grams">Kapacita (g)</string>
+    <string name="msg_brewer_profile_capacity_required">Chcete-li pokračovat, zadejte kladnou kapacitu v gramech.</string>
+    <string name="heading_brewer_profile_cezve_choices">Volby pro cezve</string>
+    <string name="msg_brewer_profile_cezve_choices_hint">Zvolte, zda přidat cukr a kolikrát nechat pěnu vystoupat.</string>
+    <string name="label_brewer_profile_cezve_sugar">Volitelný cukr</string>
+    <string name="label_brewer_profile_cezve_without_sugar">Bez cukru</string>
+    <string name="label_brewer_profile_cezve_with_sugar">Přidat cukr</string>
+    <string name="label_brewer_profile_cezve_foam_rises">Vzestupy pěny</string>
+    <string name="label_brewer_profile_cezve_one_foam_rise">1 vzestup</string>
+    <string name="label_brewer_profile_cezve_two_foam_rises">2 vzestupy</string>
+    <string name="heading_brewer_profile_cezve_heat_source">Zdroj tepla</string>
+    <string name="msg_brewer_profile_cezve_heat_source_hint">Vyberte skutečný zdroj tepla. Zůstane součástí bezpečnostního záznamu přípravy.</string>
+    <string name="label_brewer_profile_cezve_heat_hob">Varná deska</string>
+    <string name="label_brewer_profile_cezve_heat_open_flame">Otevřený plamen</string>
+    <string name="label_brewer_profile_cezve_heat_portable_heater">Přenosný ohřívač</string>
+    <string name="msg_brewer_profile_cezve_heat_source_required">Chcete-li pokračovat, vyberte zdroj tepla.</string>
 </resources>

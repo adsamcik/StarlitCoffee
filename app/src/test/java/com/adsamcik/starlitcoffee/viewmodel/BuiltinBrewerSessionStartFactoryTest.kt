@@ -30,6 +30,7 @@ class BuiltinBrewerSessionStartFactoryTest {
                 equipment = EquipmentConfiguration(
                     brewerProfileId = BrewerProfileId("clever_style"),
                     filterSelection = paperFilter("cone_paper"),
+                    capacityOverrideG = 400.0,
                 ),
                 temperatureC = 93,
                 grinderId = "fellow_ode",
@@ -88,6 +89,7 @@ class BuiltinBrewerSessionStartFactoryTest {
                 equipment = EquipmentConfiguration(
                     brewerProfileId = BrewerProfileId("automatic_batch_generic"),
                     filterSelection = paperFilter("cone_paper"),
+                    capacityOverrideG = 400.0,
                 ),
             ),
         )
@@ -119,6 +121,10 @@ class BuiltinBrewerSessionStartFactoryTest {
             BuiltinBrewerSessionStartInput(
                 brewerProfileId = BrewerProfileId("hario_switch"),
                 dryCoffeeDoseG = 20.0,
+                equipment = EquipmentConfiguration(
+                    brewerProfileId = BrewerProfileId("hario_switch"),
+                    capacityOverrideG = 400.0,
+                ),
             ),
         )
 
@@ -133,6 +139,10 @@ class BuiltinBrewerSessionStartFactoryTest {
             BuiltinBrewerSessionStartInput(
                 brewerProfileId = BrewerProfileId("hario_switch"),
                 dryCoffeeDoseG = 20.0,
+                equipment = EquipmentConfiguration(
+                    brewerProfileId = BrewerProfileId("hario_switch"),
+                    capacityOverrideG = 400.0,
+                ),
                 harioSwitchWorkflow = HarioSwitchWorkflow.MANUAL_GRAVITY,
             ),
         )
@@ -160,6 +170,7 @@ class BuiltinBrewerSessionStartFactoryTest {
                 equipment = EquipmentConfiguration(
                     brewerProfileId = BrewerProfileId("cezve_generic"),
                     filterSelection = FilterSelection.IntentionallyUnfiltered,
+                    capacityOverrideG = 120.0,
                     heatSource = HeatSourceClass.HOB,
                 ),
                 cezveSetup = CezveSessionSetup(includeSugar = true, foamRiseCycles = 2),
@@ -171,6 +182,8 @@ class BuiltinBrewerSessionStartFactoryTest {
         val stageIds = request.stagePlan.stages.map { stage -> stage.definition.id.value }
 
         assertEquals(80.0, requireNotNull(request.recipe.quantities.brewWaterInputG), 0.001)
+        assertEquals(120.0, requireNotNull(request.recipe.equipment.capacityOverrideG), 0.001)
+        assertEquals(HeatSourceClass.HOB.name, request.recipe.equipment.heatSource)
         assertEquals("PREPARED_UNFILTERED_VOLUME", request.recipe.outputModel.kind)
         assertTrue(stageIds.contains("cezve_generic_add_sugar_before_heating"))
         assertEquals(2, stageIds.count { id -> id == "cezve_generic_apply_gentle_heat" })
@@ -188,6 +201,7 @@ class BuiltinBrewerSessionStartFactoryTest {
                 equipment = EquipmentConfiguration(
                     brewerProfileId = BrewerProfileId("vietnamese_phin"),
                     filterSelection = paperFilter("phin_metal"),
+                    capacityOverrideG = 120.0,
                 ),
             ),
         )
@@ -248,6 +262,12 @@ class BuiltinBrewerSessionStartFactoryTest {
             BuiltinBrewerSessionStartInput(
                 brewerProfileId = BrewerProfileId("cezve_generic"),
                 dryCoffeeDoseG = 8.0,
+                equipment = EquipmentConfiguration(
+                    brewerProfileId = BrewerProfileId("cezve_generic"),
+                    capacityOverrideG = 120.0,
+                    filterSelection = FilterSelection.IntentionallyUnfiltered,
+                    heatSource = HeatSourceClass.HOB,
+                ),
                 cezveSetup = CezveSessionSetup(foamRiseCycles = 3),
             ),
         )
@@ -258,6 +278,7 @@ class BuiltinBrewerSessionStartFactoryTest {
                 equipment = EquipmentConfiguration(
                     brewerProfileId = BrewerProfileId("clever_style"),
                     filterSelection = FilterSelection.IntentionallyUnfiltered,
+                    capacityOverrideG = 400.0,
                 ),
             ),
         )
@@ -277,6 +298,73 @@ class BuiltinBrewerSessionStartFactoryTest {
     }
 
     @Test
+    fun `P1 capacity and Cezve heat safety are validated before persistence`() {
+        val missingCapacity = factory().create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                dryCoffeeDoseG = 20.0,
+                equipment = EquipmentConfiguration(BrewerProfileId("clever_style")),
+            ),
+        )
+        val invalidCapacity = factory().create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                dryCoffeeDoseG = 20.0,
+                equipment = EquipmentConfiguration(
+                    brewerProfileId = BrewerProfileId("clever_style"),
+                    capacityOverrideG = Double.NaN,
+                ),
+            ),
+        )
+        val defaultWaterExceedsCapacity = factory().create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                dryCoffeeDoseG = 20.0,
+                equipment = EquipmentConfiguration(
+                    brewerProfileId = BrewerProfileId("clever_style"),
+                    capacityOverrideG = 319.0,
+                ),
+            ),
+        )
+        val cezveWithoutHeat = factory().create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("cezve_generic"),
+                dryCoffeeDoseG = 8.0,
+                equipment = EquipmentConfiguration(
+                    brewerProfileId = BrewerProfileId("cezve_generic"),
+                    capacityOverrideG = 120.0,
+                    filterSelection = FilterSelection.IntentionallyUnfiltered,
+                ),
+            ),
+        )
+
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.MISSING_EQUIPMENT_CAPACITY),
+            (missingCapacity as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.INVALID_CAPACITY_OVERRIDE),
+            (invalidCapacity as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.INPUT_WATER_EXCEEDS_EQUIPMENT_CAPACITY),
+            (defaultWaterExceedsCapacity as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.CEZVE_HEAT_SOURCE_REQUIRED),
+            (cezveWithoutHeat as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+    }
+
+    @Test
     fun `compiler failures return inspectable invalid stage plans`() {
         val factory = BuiltinBrewerSessionStartFactory(
             compileStagePlan = { _, _ ->
@@ -290,6 +378,10 @@ class BuiltinBrewerSessionStartFactoryTest {
             BuiltinBrewerSessionStartInput(
                 brewerProfileId = BrewerProfileId("clever_style"),
                 dryCoffeeDoseG = 20.0,
+                equipment = EquipmentConfiguration(
+                    brewerProfileId = BrewerProfileId("clever_style"),
+                    capacityOverrideG = 400.0,
+                ),
             ),
         )
 

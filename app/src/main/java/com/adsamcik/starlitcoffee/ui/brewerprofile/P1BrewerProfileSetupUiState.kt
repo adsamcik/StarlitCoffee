@@ -1,12 +1,14 @@
 package com.adsamcik.starlitcoffee.ui.brewerprofile
 
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
+import com.adsamcik.starlitcoffee.domain.brewing.HeatSourceClass
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileRecipeDefaults
 import com.adsamcik.starlitcoffee.domain.brewing.BrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewerProfileRecipeDefaults
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.session.BuiltinBrewerStagePlanFactory
 import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
+import com.adsamcik.starlitcoffee.viewmodel.CezveSessionSetup
 
 /**
  * A selectable P1 profile with only the data needed by the setup surface.
@@ -31,7 +33,10 @@ data class P1BrewerProfileSetupOption(
 /** The immutable choice passed to the durable P1-session starter. */
 data class P1BrewerProfileStartSelection(
     val brewerProfileId: BrewerProfileId,
+    val equipmentCapacityG: Double,
     val harioSwitchWorkflow: HarioSwitchWorkflow?,
+    val cezveSetup: CezveSessionSetup?,
+    val heatSource: HeatSourceClass,
 )
 
 /**
@@ -46,18 +51,45 @@ data class P1BrewerProfileSetupUiState(
     val profiles: List<P1BrewerProfileSetupOption>,
     val selectedProfileId: BrewerProfileId? = null,
     val harioSwitchWorkflow: HarioSwitchWorkflow = HarioSwitchWorkflow.STEEP_AND_RELEASE,
+    val capacityInputByProfile: Map<BrewerProfileId, String> = emptyMap(),
+    val cezveSetup: CezveSessionSetup = CezveSessionSetup(),
+    val cezveHeatSource: HeatSourceClass = HeatSourceClass.NONE,
     val isStarting: Boolean = false,
 ) {
     val selectedProfile: P1BrewerProfileSetupOption?
         get() = profiles.firstOrNull { it.profileId == selectedProfileId }
 
+    /** Capacity stays scoped to the physical brewer the user selected. */
+    val selectedEquipmentCapacityInput: String
+        get() = selectedProfileId?.let { capacityInputByProfile[it] }.orEmpty()
+
+    val selectedEquipmentCapacityG: Double?
+        get() = selectedEquipmentCapacityInput.trim().replace(",", ".").toDoubleOrNull()?.takeIf { capacity ->
+            capacity.isFinite() && capacity > 0.0
+        }
+
+    val requiresCezveSetup: Boolean
+        get() = selectedProfile?.profileId == CEZVE_GENERIC_PROFILE_ID
+
+    val hasRequiredCezveHeatSource: Boolean
+        get() = !requiresCezveSetup || cezveHeatSource != HeatSourceClass.NONE
+
     val startSelection: P1BrewerProfileStartSelection?
         get() = selectedProfile?.let { option ->
+            val capacityG = selectedEquipmentCapacityG ?: return@let null
+            if (option.profileId == CEZVE_GENERIC_PROFILE_ID && !hasRequiredCezveHeatSource) {
+                return@let null
+            }
             P1BrewerProfileStartSelection(
                 brewerProfileId = option.profileId,
+                equipmentCapacityG = capacityG,
                 harioSwitchWorkflow = harioSwitchWorkflow.takeIf {
                     option.requiresHarioSwitchWorkflow
                 },
+                cezveSetup = cezveSetup.takeIf { option.profileId == CEZVE_GENERIC_PROFILE_ID },
+                heatSource = cezveHeatSource.takeIf {
+                    option.profileId == CEZVE_GENERIC_PROFILE_ID
+                } ?: HeatSourceClass.NONE,
             )
         }
 
@@ -76,6 +108,28 @@ data class P1BrewerProfileSetupUiState(
     } else {
         this
     }
+
+    fun updateEquipmentCapacity(rawCapacity: String): P1BrewerProfileSetupUiState {
+        val profileId = selectedProfileId ?: return this
+        return copy(capacityInputByProfile = capacityInputByProfile + (profileId to rawCapacity))
+    }
+
+    fun selectCezveSugar(includeSugar: Boolean): P1BrewerProfileSetupUiState =
+        if (requiresCezveSetup) copy(cezveSetup = cezveSetup.copy(includeSugar = includeSugar)) else this
+
+    fun selectCezveFoamRiseCycles(cycles: Int): P1BrewerProfileSetupUiState =
+        if (requiresCezveSetup && cycles in MIN_CEZVE_FOAM_RISE_CYCLES..MAX_CEZVE_FOAM_RISE_CYCLES) {
+            copy(cezveSetup = cezveSetup.copy(foamRiseCycles = cycles))
+        } else {
+            this
+        }
+
+    fun selectCezveHeatSource(heatSource: HeatSourceClass): P1BrewerProfileSetupUiState =
+        if (requiresCezveSetup && heatSource != HeatSourceClass.NONE) {
+            copy(cezveHeatSource = heatSource)
+        } else {
+            this
+        }
 
     fun withStarting(isStarting: Boolean): P1BrewerProfileSetupUiState = copy(isStarting = isStarting)
 }
@@ -125,3 +179,6 @@ object P1BrewerProfileSetupStateFactory {
 }
 
 private val HARIO_SWITCH_PROFILE_ID = BrewerProfileId("hario_switch")
+private val CEZVE_GENERIC_PROFILE_ID = BrewerProfileId("cezve_generic")
+private const val MIN_CEZVE_FOAM_RISE_CYCLES = 1
+private const val MAX_CEZVE_FOAM_RISE_CYCLES = 2

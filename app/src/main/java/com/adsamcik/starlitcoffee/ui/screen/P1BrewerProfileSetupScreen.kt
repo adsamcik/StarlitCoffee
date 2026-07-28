@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,8 +22,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -34,11 +37,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.BrewTimeRecommendation
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.CapacityRecommendation
+import com.adsamcik.starlitcoffee.domain.brewing.HeatSourceClass
 import com.adsamcik.starlitcoffee.domain.brewing.PrimaryOutputQuantity
 import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
 import com.adsamcik.starlitcoffee.domain.brewing.TemperatureRecommendation
@@ -46,6 +51,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileSetupOption
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileSetupUiState
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileStartSelection
+import com.adsamcik.starlitcoffee.viewmodel.CezveSessionSetup
 import java.util.Locale
 
 /**
@@ -61,6 +67,10 @@ fun P1BrewerProfileSetupScreen(
     state: P1BrewerProfileSetupUiState,
     onProfileSelected: (com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId) -> Unit,
     onHarioSwitchWorkflowSelected: (HarioSwitchWorkflow) -> Unit,
+    onEquipmentCapacityChanged: (String) -> Unit,
+    onCezveSugarSelected: (Boolean) -> Unit,
+    onCezveFoamRiseCyclesSelected: (Int) -> Unit,
+    onCezveHeatSourceSelected: (HeatSourceClass) -> Unit,
     onStart: (P1BrewerProfileStartSelection) -> Unit,
     onBack: () -> Unit,
     onLearn: ((P1BrewerProfileStartSelection) -> Unit)? = null,
@@ -77,7 +87,7 @@ fun P1BrewerProfileSetupScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = onBack, enabled = !state.isStarting) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.action_back),
@@ -122,18 +132,30 @@ fun P1BrewerProfileSetupScreen(
                 Spacer(modifier = Modifier.height(4.dp))
                 ProfileDefaultsCard(selected)
                 EquipmentCompatibilityCard(selected)
+                EquipmentCapacityCard(
+                    capacityInput = state.selectedEquipmentCapacityInput,
+                    capacityIsValid = state.selectedEquipmentCapacityG != null,
+                    onCapacityChanged = onEquipmentCapacityChanged,
+                )
                 if (selected.requiresHarioSwitchWorkflow) {
                     HarioSwitchWorkflowPicker(
                         selectedWorkflow = state.harioSwitchWorkflow,
                         onSelected = onHarioSwitchWorkflowSelected,
                     )
                 }
-            }
+                if (state.requiresCezveSetup) {
+                    CezveSetupCard(
+                        setup = state.cezveSetup,
+                        selectedHeatSource = state.cezveHeatSource,
+                        onSugarSelected = onCezveSugarSelected,
+                        onFoamRiseCyclesSelected = onCezveFoamRiseCyclesSelected,
+                        onHeatSourceSelected = onCezveHeatSourceSelected,
+                    )
+                }
 
-            state.startSelection?.let { selection ->
                 Spacer(modifier = Modifier.height(4.dp))
                 Button(
-                    onClick = { onStart(selection) },
+                    onClick = { state.startSelection?.let(onStart) },
                     enabled = state.canStart,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
@@ -145,13 +167,15 @@ fun P1BrewerProfileSetupScreen(
                         },
                     )
                 }
-                onLearn?.let { learn ->
-                    OutlinedButton(
-                        onClick = { learn(selection) },
-                        enabled = !state.isStarting,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text(text = stringResource(R.string.action_learn_this_brewer))
+                state.startSelection?.let { selection ->
+                    onLearn?.let { learn ->
+                        OutlinedButton(
+                            onClick = { learn(selection) },
+                            enabled = !state.isStarting,
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            Text(text = stringResource(R.string.action_learn_this_brewer))
+                        }
                     }
                 }
             }
@@ -326,6 +350,170 @@ private fun EquipmentCompatibilityCard(option: P1BrewerProfileSetupOption) {
         }
     }
 }
+
+@Composable
+private fun EquipmentCapacityCard(
+    capacityInput: String,
+    capacityIsValid: Boolean,
+    onCapacityChanged: (String) -> Unit,
+) {
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+        ),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.heading_brewer_profile_capacity),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.semantics { heading() },
+            )
+            Text(
+                text = stringResource(R.string.msg_brewer_profile_capacity_hint),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            OutlinedTextField(
+                value = capacityInput,
+                onValueChange = onCapacityChanged,
+                label = { Text(stringResource(R.string.label_brewer_profile_capacity_grams)) },
+                isError = capacityInput.isNotBlank() && !capacityIsValid,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            if (!capacityIsValid) {
+                Text(
+                    text = stringResource(R.string.msg_brewer_profile_capacity_required),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun CezveSetupCard(
+    setup: CezveSessionSetup,
+    selectedHeatSource: HeatSourceClass,
+    onSugarSelected: (Boolean) -> Unit,
+    onFoamRiseCyclesSelected: (Int) -> Unit,
+    onHeatSourceSelected: (HeatSourceClass) -> Unit,
+) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.heading_brewer_profile_cezve_choices),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.semantics { heading() },
+            )
+            Text(
+                text = stringResource(R.string.msg_brewer_profile_cezve_choices_hint),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = stringResource(R.string.label_brewer_profile_cezve_sugar),
+                style = MaterialTheme.typography.labelLarge,
+            )
+            SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                listOf(false, true).forEachIndexed { index, includeSugar ->
+                    SegmentedButton(
+                        selected = setup.includeSugar == includeSugar,
+                        onClick = { onSugarSelected(includeSugar) },
+                        shape = SegmentedButtonDefaults.itemShape(index = index, count = 2),
+                        label = { Text(cezveSugarLabel(includeSugar), maxLines = 2) },
+                    )
+                }
+            }
+            Text(
+                text = stringResource(R.string.label_brewer_profile_cezve_foam_rises),
+                style = MaterialTheme.typography.labelLarge,
+            )
+            SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                listOf(1, 2).forEachIndexed { index, cycles ->
+                    SegmentedButton(
+                        selected = setup.foamRiseCycles == cycles,
+                        onClick = { onFoamRiseCyclesSelected(cycles) },
+                        shape = SegmentedButtonDefaults.itemShape(index = index, count = 2),
+                        label = { Text(cezveFoamRiseLabel(cycles)) },
+                    )
+                }
+            }
+            Text(
+                text = stringResource(R.string.heading_brewer_profile_cezve_heat_source),
+                style = MaterialTheme.typography.labelLarge,
+            )
+            Text(
+                text = stringResource(R.string.msg_brewer_profile_cezve_heat_source_hint),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            CEZVE_HEAT_SOURCES.forEach { heatSource ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onHeatSourceSelected(heatSource) },
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    RadioButton(
+                        selected = selectedHeatSource == heatSource,
+                        onClick = null,
+                    )
+                    Text(
+                        text = cezveHeatSourceLabel(heatSource),
+                        modifier = Modifier.padding(start = 8.dp),
+                    )
+                }
+            }
+            if (selectedHeatSource == HeatSourceClass.NONE) {
+                Text(
+                    text = stringResource(R.string.msg_brewer_profile_cezve_heat_source_required),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun cezveSugarLabel(includeSugar: Boolean): String = if (includeSugar) {
+    stringResource(R.string.label_brewer_profile_cezve_with_sugar)
+} else {
+    stringResource(R.string.label_brewer_profile_cezve_without_sugar)
+}
+
+@Composable
+private fun cezveFoamRiseLabel(cycles: Int): String = when (cycles) {
+    1 -> stringResource(R.string.label_brewer_profile_cezve_one_foam_rise)
+    2 -> stringResource(R.string.label_brewer_profile_cezve_two_foam_rises)
+    else -> cycles.toString()
+}
+
+@Composable
+private fun cezveHeatSourceLabel(heatSource: HeatSourceClass): String = when (heatSource) {
+    HeatSourceClass.HOB -> stringResource(R.string.label_brewer_profile_cezve_heat_hob)
+    HeatSourceClass.OPEN_FLAME -> stringResource(R.string.label_brewer_profile_cezve_heat_open_flame)
+    HeatSourceClass.PORTABLE_HEATER -> stringResource(
+        R.string.label_brewer_profile_cezve_heat_portable_heater,
+    )
+    HeatSourceClass.NONE, HeatSourceClass.ELECTRIC_MACHINE -> ""
+}
+
+private val CEZVE_HEAT_SOURCES = listOf(
+    HeatSourceClass.HOB,
+    HeatSourceClass.OPEN_FLAME,
+    HeatSourceClass.PORTABLE_HEATER,
+)
 
 @Composable
 private fun HarioSwitchWorkflowPicker(

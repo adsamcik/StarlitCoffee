@@ -786,4 +786,24 @@
     <string name="format_brew_guidance_level">Guidance: %1$s</string>
     <string name="guidance_level_custom">Custom</string>
 
+
+    <!-- P1 capacity and Cezve safety -->
+    <string name="heading_brewer_profile_capacity">Brewer capacity</string>
+    <string name="msg_brewer_profile_capacity_hint">Enter the capacity marked on the brewer you are using. The session will not start if its water amount exceeds it.</string>
+    <string name="label_brewer_profile_capacity_grams">Capacity (g)</string>
+    <string name="msg_brewer_profile_capacity_required">Enter a positive capacity in grams to continue.</string>
+    <string name="heading_brewer_profile_cezve_choices">Cezve choices</string>
+    <string name="msg_brewer_profile_cezve_choices_hint">Choose whether to add sugar and how many times to let the foam rise.</string>
+    <string name="label_brewer_profile_cezve_sugar">Optional sugar</string>
+    <string name="label_brewer_profile_cezve_without_sugar">No sugar</string>
+    <string name="label_brewer_profile_cezve_with_sugar">Add sugar</string>
+    <string name="label_brewer_profile_cezve_foam_rises">Foam rises</string>
+    <string name="label_brewer_profile_cezve_one_foam_rise">1 rise</string>
+    <string name="label_brewer_profile_cezve_two_foam_rises">2 rises</string>
+    <string name="heading_brewer_profile_cezve_heat_source">Heat source</string>
+    <string name="msg_brewer_profile_cezve_heat_source_hint">Select the actual heat source. It remains part of this brew’s safety record.</string>
+    <string name="label_brewer_profile_cezve_heat_hob">Hob</string>
+    <string name="label_brewer_profile_cezve_heat_open_flame">Open flame</string>
+    <string name="label_brewer_profile_cezve_heat_portable_heater">Portable heater</string>
+    <string name="msg_brewer_profile_cezve_heat_source_required">Select a heat source to continue.</string>
 </resources>

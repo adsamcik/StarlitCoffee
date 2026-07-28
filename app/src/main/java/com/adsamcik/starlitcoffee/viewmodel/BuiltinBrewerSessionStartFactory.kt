@@ -23,6 +23,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.EquipmentCompatibilityIssue
 import com.adsamcik.starlitcoffee.domain.brewing.EquipmentCompatibilityResult
 import com.adsamcik.starlitcoffee.domain.brewing.EquipmentCompatibilityValidator
 import com.adsamcik.starlitcoffee.domain.brewing.EquipmentConfiguration
+import com.adsamcik.starlitcoffee.domain.brewing.HeatSourceClass
 import com.adsamcik.starlitcoffee.domain.brewing.FilterSelection
 import com.adsamcik.starlitcoffee.domain.brewing.OutputModel
 import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
@@ -86,13 +87,16 @@ enum class BuiltinBrewerSessionStartUnavailableReason {
 enum class BuiltinBrewerSessionStartValidationCode {
     INVALID_DRY_COFFEE_DOSE,
     INVALID_INPUT_WATER,
+    MISSING_EQUIPMENT_CAPACITY,
     INVALID_CAPACITY_OVERRIDE,
+    INPUT_WATER_EXCEEDS_EQUIPMENT_CAPACITY,
     INVALID_TEMPERATURE,
     EQUIPMENT_PROFILE_MISMATCH,
     HARIO_SWITCH_WORKFLOW_REQUIRED,
     WORKFLOW_NOT_APPLICABLE,
     CEZVE_SETUP_NOT_APPLICABLE,
     INVALID_CEZVE_FOAM_RISE_CYCLES,
+    CEZVE_HEAT_SOURCE_REQUIRED,
     INCOMPATIBLE_EQUIPMENT,
 }
 
@@ -162,7 +166,7 @@ class BuiltinBrewerSessionStartFactory(
             )
         }
 
-        val setupIssues = validateSetup(input)
+        val setupIssues = validateSetup(input, defaults)
         if (setupIssues.isNotEmpty()) {
             return BuiltinBrewerSessionStartResult.InvalidSetup(input.brewerProfileId, setupIssues)
         }
@@ -251,13 +255,24 @@ class BuiltinBrewerSessionStartFactory(
 
     private fun validateSetup(
         input: BuiltinBrewerSessionStartInput,
+        defaults: BrewerProfileRecipeDefaults,
     ): List<BuiltinBrewerSessionStartValidationIssue> = buildList {
-        if (!input.dryCoffeeDoseG.isFinite() || input.dryCoffeeDoseG <= 0.0) {
+        val hasValidDryCoffeeDose = input.dryCoffeeDoseG.isFinite() && input.dryCoffeeDoseG > 0.0
+        if (!hasValidDryCoffeeDose) {
             add(BuiltinBrewerSessionStartValidationIssue(
                 BuiltinBrewerSessionStartValidationCode.INVALID_DRY_COFFEE_DOSE,
             ))
         }
-        if (input.inputWaterG != null && (!input.inputWaterG.isFinite() || input.inputWaterG <= 0.0)) {
+
+        val resolvedInputWaterG = input.inputWaterG ?: if (hasValidDryCoffeeDose) {
+            input.dryCoffeeDoseG * defaults.ratio.waterPerCoffee
+        } else {
+            null
+        }
+        val hasValidInputWater = resolvedInputWaterG == null || (
+            resolvedInputWaterG.isFinite() && resolvedInputWaterG > 0.0
+        )
+        if (!hasValidInputWater) {
             add(BuiltinBrewerSessionStartValidationIssue(
                 BuiltinBrewerSessionStartValidationCode.INVALID_INPUT_WATER,
             ))
@@ -267,11 +282,37 @@ class BuiltinBrewerSessionStartFactory(
                 BuiltinBrewerSessionStartValidationCode.EQUIPMENT_PROFILE_MISMATCH,
             ))
         }
-        if (input.equipment.capacityOverrideG?.isFinite() == false) {
+
+        val capacityG = input.equipment.capacityOverrideG
+        val requiresExplicitCapacity =
+            input.brewerProfileId in BuiltinBrewerStagePlanFactory.supportedBrewerProfileIds
+        val hasValidEquipmentCapacity = when {
+            capacityG == null -> {
+                if (requiresExplicitCapacity) {
+                    add(BuiltinBrewerSessionStartValidationIssue(
+                        BuiltinBrewerSessionStartValidationCode.MISSING_EQUIPMENT_CAPACITY,
+                    ))
+                }
+                false
+            }
+            !capacityG.isFinite() || capacityG <= 0.0 -> {
+                add(BuiltinBrewerSessionStartValidationIssue(
+                    BuiltinBrewerSessionStartValidationCode.INVALID_CAPACITY_OVERRIDE,
+                ))
+                false
+            }
+            else -> true
+        }
+        if (
+            requiresExplicitCapacity && hasValidEquipmentCapacity &&
+                resolvedInputWaterG != null && hasValidInputWater &&
+                resolvedInputWaterG > requireNotNull(capacityG)
+        ) {
             add(BuiltinBrewerSessionStartValidationIssue(
-                BuiltinBrewerSessionStartValidationCode.INVALID_CAPACITY_OVERRIDE,
+                BuiltinBrewerSessionStartValidationCode.INPUT_WATER_EXCEEDS_EQUIPMENT_CAPACITY,
             ))
         }
+
         if (input.temperatureC != null && input.temperatureC !in 0..100) {
             add(BuiltinBrewerSessionStartValidationIssue(
                 BuiltinBrewerSessionStartValidationCode.INVALID_TEMPERATURE,
@@ -300,6 +341,11 @@ class BuiltinBrewerSessionStartFactory(
             if (cycles !in MIN_CEZVE_FOAM_RISE_CYCLES..MAX_CEZVE_FOAM_RISE_CYCLES) {
                 add(BuiltinBrewerSessionStartValidationIssue(
                     BuiltinBrewerSessionStartValidationCode.INVALID_CEZVE_FOAM_RISE_CYCLES,
+                ))
+            }
+            if (input.equipment.heatSource == HeatSourceClass.NONE) {
+                add(BuiltinBrewerSessionStartValidationIssue(
+                    BuiltinBrewerSessionStartValidationCode.CEZVE_HEAT_SOURCE_REQUIRED,
                 ))
             }
         }
