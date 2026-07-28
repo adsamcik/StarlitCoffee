@@ -1,17 +1,22 @@
 # P1 exact-stage illustration production queue — batch 03
 
-Status: prompt-ready research documentation; no images generated, no assets
-registered, and no manifest or app-code changes
+Status: all six candidate images generated and production-logged as
+`PENDING_REVIEW`; no assets registered or approved, and no manifest or app-code
+changes
 
 Prepared: 28 July 2026
+Production completed: 28 July 2026
 
 ## Scope and source authority
 
 This queue selects the next six highest-value exact-stage illustrations after
 batches 01 and 02. It contains four `safety-critical` stages and two
 `mandatory` stages whose geometry prevents common novice errors. Every
-selection is canonically `NOT_PRODUCED`, has exact executable guidance, and has
-no unresolved hard equipment blocker.
+selection was canonically `NOT_PRODUCED` when queued, has exact executable
+guidance, and has no unresolved hard equipment blocker. Each now has a local
+candidate drawable and production-log record, but remains canonically
+uncovered until expert review, localization, manifest registration, and
+approval all pass.
 
 Canonical source:
 
@@ -152,12 +157,12 @@ text.
 
 | Rank | Recipe / source stage | Visual priority | Novice error prevented | Generation disposition |
 | ---: | --- | --- | --- | --- |
-| 1 | `auto_cupone_20_300` / `stage_04` | `safety-critical` | Pulling the mug or basket from a live hot automatic cycle | Prompt-ready; `NONE-BOUNDED` |
-| 2 | `phin_screw_18_120` / `stage_01` | `safety-critical` | Balancing a metal phin on a narrow cup or starting with an uneven bed | Prompt-ready; `NONE-PHIN-MECHANISM` |
-| 3 | `phin_screw_18_120` / `stage_05` | `safety-critical` | Squeezing, forcefully adjusting, or touching a hot phin instead of observing normal slow drips | Prompt-ready; `NONE-PHIN-MECHANISM` |
-| 4 | `switch_official_20_240` / `stage_01` | `safety-critical` | Beginning immersion with an open or still-dripping valve | Prompt-ready; `NONE-BOUNDED` |
-| 5 | `v60_official_15_250` / `stage_01` | `mandatory` | Wrong-size, unfolded, buckled, or unrinsed V60 paper and retained rinse water | Prompt-ready; `NONE-BOUNDED` |
-| 6 | `clever_water_first_15_250` / `stage_01` | `mandatory` | Leaving the bottom actuator open or placing the brewer on an actuating server during the closed setup | Prompt-ready; `NONE-BOUNDED` |
+| 1 | `auto_cupone_20_300` / `stage_04` | `safety-critical` | Pulling the mug or basket from a live hot automatic cycle | Candidate produced; `PENDING_REVIEW`; `NONE-BOUNDED` |
+| 2 | `phin_screw_18_120` / `stage_01` | `safety-critical` | Balancing a metal phin on a narrow cup or starting with an uneven bed | Candidate produced; `PENDING_REVIEW`; `NONE-PHIN-MECHANISM` |
+| 3 | `phin_screw_18_120` / `stage_05` | `safety-critical` | Squeezing, forcefully adjusting, or touching a hot phin instead of observing normal slow drips | Candidate produced; `PENDING_REVIEW`; `NONE-PHIN-MECHANISM` |
+| 4 | `switch_official_20_240` / `stage_01` | `safety-critical` | Beginning immersion with an open or still-dripping valve | Candidate produced; `PENDING_REVIEW`; `NONE-BOUNDED` |
+| 5 | `v60_official_15_250` / `stage_01` | `mandatory` | Wrong-size, unfolded, buckled, or unrinsed V60 paper and retained rinse water | Candidate produced; `PENDING_REVIEW`; `NONE-BOUNDED` |
+| 6 | `clever_water_first_15_250` / `stage_01` | `mandatory` | Leaving the bottom actuator open or placing the brewer on an actuating server during the closed setup | Candidate produced; `PENDING_REVIEW`; `NONE-BOUNDED` |
 
 ## 1. Cup-One hands-off automatic cycle
 
@@ -738,9 +743,9 @@ This queue is valid only while all of these remain true:
   the queue is revalidated.
 - No evidence-page image is copied, downloaded into the repository, traced, or
   used as a style reference.
-- No bitmap is generated, registered, or described as approved by this
-  documentation step. Later produced assets remain `PENDING_REVIEW` until
-  expert geometry, safety, accessibility, localization, and placement review
-  all pass.
+- All six generated bitmaps have a production-log record and validated local
+  WebP payload. They remain intentionally unregistered and are not described
+  as approved. Each stays `PENDING_REVIEW` until expert geometry, safety,
+  accessibility, localization, and placement review all pass.
 - Learn and Live Brew placement must be rechecked at asset-review time so
   instruction and available critical warning text still precede the image.
