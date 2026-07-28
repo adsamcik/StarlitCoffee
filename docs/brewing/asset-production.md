@@ -1117,6 +1117,77 @@ For every asset record:
   mobile-size stability cues, and warning-before-image placement before
   registration or approval.
 
+### `p1-gravity-phin-hot-removal-imagegen-v1`
+
+- Stable asset ID:
+  `instruction_p1_phin_gravity_14_118_stage_07_instruction_default`
+- Exact scope: `phin_gravity_14_118` / source `stage_07` /
+  `p1_phin_gravity_14_118_stage_07_instruction`; a dry insulated grip moves
+  the drained hot gravity phin from the finished cup onto its matching inverted
+  lid used as a stable heat-safe coaster.
+- Evidence: `SRC-NGUYEN-PHIN`. Reverified on 28 July 2026 against Nguyen
+  Coffee Supply's current traditional phin guide at
+  <https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin>
+  and current construction guide at
+  <https://nguyencoffeesupply.com/blogs/news/what-is-the-vietnamese-phin-filter>.
+  The current sources continue to identify the loose gravity press, hot metal
+  brewer, and use of the lid as a post-brew coaster while leaving black, iced,
+  milk, and condensed-milk service as separate choices.
+- Generation mode: new bitmap generation with the built-in image generator;
+  no corrective edit was needed before pending-review delivery.
+- Generated: 28 July 2026.
+- Final prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for
+  > a mobile coffee-brewing guide. Show an accurate unbranded single-serving
+  > Vietnamese gravity-insert phin immediately after drainage beside a broad
+  > stable heat-safe ceramic cup containing finished black coffee concentrate.
+  > Use a close elevated three-quarter view. A calm hand protected by a small
+  > dry folded heat-resistant cloth grips the hot solid-walled metal chamber
+  > securely, with no bare skin touching the chamber, loose insert, wide filter
+  > plate, underside, or lid. Show the drained phin moving only a very short
+  > controlled distance away from the cup and just above its own matching metal
+  > lid, which is inverted with its shallow concave drip-catching side facing
+  > upward and resting flat and stable on the counter as a heat-safe coaster.
+  > Keep the loose perforated gravity press safely contained inside the drained
+  > chamber, with no screw post or threaded mechanism. Make the dry insulated
+  > grip, hot phin, stable cup, short movement, and correctly oriented resting
+  > lid immediately legible. Keep the black concentrate untouched so the image
+  > does not privilege milk, ice, or dilution. Use a warm-neutral uncluttered
+  > counter and background, semi-flat softly dimensional educational
+  > rendering, precise believable metal geometry, clear silhouettes,
+  > restrained materials, subtle shadows, generous crop-safe breathing room,
+  > and mobile-readable framing. Include no text, letters, numbers,
+  > measurement marks, labels, logos, brand marks, arrows, callouts, panels,
+  > warning icon, symbolic steam, decorative objects, bare fingers on hot
+  > metal, wet cloth, tongs, implausible handle, long carry, tipping, spill,
+  > phin remaining on the cup as the final state, phin directly on bare
+  > counter, screw post, threaded insert, pressure mechanism, paper filter,
+  > moka pot, espresso basket, multiple serving options, milk, condensed-milk
+  > jar, ice, dilution water, or tasting scene. The final output must be one
+  > opaque 1024 x 768 scene whose only story is safe hot-phin removal onto its
+  > lid-coaster.
+- Generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_MUwtpKjWLJarU57AH8yLolOb.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_phin_gravity_14_118_stage_07_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 110,596 bytes, exact 4:3.
+- Accessibility target: “A dry folded cloth protects the hand while the
+  drained hot gravity phin is moved from the black coffee cup onto its inverted
+  lid-coaster.” The canonical exact-stage alt text and asset record remain
+  intentionally unregistered until localization and phin-mechanism review are
+  complete.
+- Inspection: no text, numbers, logos, arrows, service additions, spill,
+  long carry, bare hot-metal contact, wet cloth, screw mechanism, or clutter.
+  The final frame shows an insulated side grip, contained loose press, stable
+  black-coffee cup, short placement path, and concave-side-up matching lid.
+- Review status: **pending brewer-expert hot-handling and phin-mechanism
+  review**. Confirm gravity-insert proportions, safe cloth grip, containment of
+  the loose press, filter-plate clearance, lid orientation and stability,
+  neutral black service, mobile-size legibility, and warning-before-image
+  placement before registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
