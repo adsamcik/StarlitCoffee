@@ -1311,6 +1311,90 @@ For every asset record:
   stable mug, mobile-size readability, and warning-before-image placement
   before registration or approval.
 
+### `p1-screw-phin-stable-dry-bed-imagegen-v1`
+
+- Stable asset ID:
+  `instruction_p1_phin_screw_18_120_stage_01_instruction_default`
+- Exact scope: `phin_screw_18_120` / source `stage_01` /
+  `p1_phin_screw_18_120_stage_01_instruction`; a screw-insert phin is centered
+  on a broad stable cup with a low level dry bed around its central threaded
+  post, while the matching threaded insert remains separate on the lid.
+- Evidence: `SRC-TRUNGNGUYEN-PHIN` and `SRC-GOURMETKAVA-PHIN`. Reverified on
+  28 July 2026 against the current Trung Nguyen brewing information at
+  <https://trung-nguyen-coffee.co.uk/page_brewing.php> and GourmetKava's
+  current traditional-phin guide at
+  <https://www.gourmetkava.cz/en/blog/making-coffee/preparation-of--vietnamese-coffee>.
+  These sources corroborate stable cup support, a level coffee bed, and the
+  screw/press mechanism used gently rather than as pressure brewing. The exact
+  source dose and later adjustment guidance remain in Compose text.
+- Generation mode: new bitmap generation with the built-in image generator;
+  no corrective edit was needed before pending-review delivery.
+- Generated: 28 July 2026.
+- Final prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show one coherent setup state from an elevated
+  > front three-quarter close view: an accurate unbranded single-serving
+  > Vietnamese screw-insert phin with a compact cylindrical brushed-metal
+  > chamber, a smooth solid vertical sidewall, an integrated flat perforated
+  > brewing bottom, a wide horizontal support plate, and one unmistakable
+  > central threaded post rising vertically from the center. Center the phin
+  > securely and level on a broad, low, stable heat-safe ceramic cup; the cup
+  > rim must continuously support the phin plate all around with generous
+  > overlap, and the cup base must rest fully on the counter. Inside the
+  > chamber, show a modest level dry coffee bed around the central threaded
+  > post, sitting in the lower third to half with ample empty headroom, no
+  > mound, compression, moisture, or grounds on the rim. Place the matching
+  > perforated screw-insert component separately on the phin's matching metal
+  > lid beside the cup, ready for the next stage: it must be a flat round
+  > perforated metal plate with a clearly visible raised central internally
+  > threaded hub that visibly corresponds to the chamber's threaded post, yet
+  > is not installed, not tightened, and not touching the coffee. Arrange the
+  > separate insert at a slight readable angle on the lid so its threaded hub
+  > and perforations are evident while the assembly remains physically
+  > credible and uncluttered. Make screw-phin identity, broad cup stability,
+  > continuous rim support, level chamber, low level dry bed, central threaded
+  > post, and separate matching threaded insert instantly understandable at
+  > mobile size without relying on text. Use a warm-neutral empty counter and
+  > soft plain background, semi-flat softly dimensional educational rendering,
+  > precise believable metal geometry, restrained warm gray and coffee-brown
+  > palette, clear silhouettes, soft light, subtle shadows, generous crop-safe
+  > breathing room, and no decorative objects. Include no text, letters,
+  > numbers, readable scale, measurement marks, labels, logos, brand marks,
+  > arrows, callouts, panels, warning symbols, cutaways, exploded diagram,
+  > second brewer, narrow or unstable cup, unsupported plate, tilted chamber,
+  > loose unthreaded gravity disc, spring, plunger, tamper, paper filter, moka
+  > pot, espresso basket, sidewall holes, transparent wall, installed insert,
+  > hand, force, water, kettle, steam, liquid, drips, wet bed, exact dose,
+  > overflow, spilled grounds, or clutter. The final output must be one opaque
+  > 1024 x 768 scene whose only story is a stable screw-insert phin with a level
+  > dry bed and its matching threaded insert clearly separate for the next
+  > step.
+- Generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_jTHuRAThIK0k1U0GEHNKVyJC.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_phin_screw_18_120_stage_01_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 90,410 bytes, exact 4:3.
+- Accessibility target: “A screw-insert phin rests level across a broad cup,
+  with a low even dry bed around its threaded post and the matching threaded
+  insert separate on the lid.” The canonical exact-stage alt text remains
+  “Instructional view of stabilise the phin on the cup and add 18 g level
+  coffee using the exact brewer profile and filter configuration stated in
+  this recipe; bed level.” The asset record remains intentionally unregistered
+  until localization and phin-mechanism review are complete.
+- Inspection: no text, numbers, logos, arrows, water, steam, installed press,
+  sidewall perforations, loose gravity disc, narrow cup, unsupported plate,
+  unstable stance, exact quantity, or clutter. The final frame clearly shows a
+  smooth solid chamber, external threads on the central post, a low level dry
+  bed with headroom, broad continuous cup-rim support, and a separate
+  perforated insert whose internally threaded hub visibly matches the post.
+- Review status: **pending brewer-expert screw-phin mechanism and stability
+  review**. Confirm 120–150 ml chamber proportions, integrated support plate,
+  credible post/hub thread relationship, bottom-perforation interpretation,
+  insert identity, cup-rim overlap, dry-bed depth, mobile-size legibility, and
+  warning-before-image placement before registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
