@@ -1761,6 +1761,127 @@ For every asset record:
   mobile-size legibility, and instruction-before-image placement before
   registration or approval.
 
+### `p1-clever-closed-off-server-rinse-imagegen-v2`
+
+- Stable asset ID:
+  `instruction_p1_clever_water_first_15_250_stage_01_instruction_default`
+- Exact scope: `clever_water_first_15_250` / source `stage_01` /
+  `p1_clever_water_first_15_250_stage_01_instruction`; a rinsed wedge paper
+  remains seated in a Clever-style brewer held safely by its handle, fully
+  clear of every server while the recessed actuator stays relaxed and dry.
+- Evidence: `SRC-CLEVER-HOFFMANN`. Reverified on 28 July 2026 against James
+  Hoffmann's canonical technique video at
+  <https://www.youtube.com/watch?v=RpOdennxP24> and the current Clever product
+  instructions at
+  <https://cleverbrewing.coffee/collections/clever-manual-brewers/products/clever-dripper>.
+  The manufacturer/distributor guidance corroborates the folded flush wedge
+  paper, rinse and discarded water, and bottom valve that opens only when the
+  brewer is placed on a cup or carafe.
+- Generation mode: new bitmap generation followed by one targeted corrective
+  image edit with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show one coherent completed rinse state from a
+  > close elevated front three-quarter angle: an accurate unbranded translucent
+  > Clever-style bottom-actuated steep-and-release dripper held level a short
+  > distance above a dry neutral counter. Preserve distinctive Clever geometry:
+  > a tall translucent trapezoidal/wedge-shaped brewer body with sloped walls,
+  > one sturdy cool side handle, outer support feet around the base, a recessed
+  > central drain outlet, and the real springless bottom actuator that opens
+  > only when the brewer is placed on a suitable cup or server. Show exactly one
+  > correctly folded wedge/#4-style white paper seated flush against both
+  > sloped walls, with its crimped seam folded neatly and a restrained uniformly
+  > wet translucent sheen from rinsing. The paper is empty: no coffee grounds,
+  > retained rinse pool, or brown liquid. One calm adult hand grips only the
+  > outer side handle, with fingers and thumb entirely away from the brewer
+  > body, underside, actuator, outlet, and paper. Hold the dripper level several
+  > centimeters above the counter so a clear dry air gap is visible beneath the
+  > entire base; it must be unmistakably off every cup, mug, carafe, server,
+  > stand, and scale. Use the elevated viewing angle to expose the underside
+  > edge and show the recessed bottom actuator fully relaxed and unpressed in
+  > its normally closed position, with the outlet shut and absolutely no
+  > droplet or stream beneath it. Show no kettle and no receiving vessel. Make
+  > the wet seated wedge paper, handle-only grip, off-server clearance, visible
+  > outer feet, unpressed recessed actuator, dry closed outlet, and complete
+  > absence of flow immediately legible at mobile size. Use a warm-neutral empty
+  > counter and plain soft background, semi-flat softly dimensional educational
+  > rendering, precise believable translucent plastic and valve geometry,
+  > restrained clear/charcoal/white palette, clear silhouettes, soft light,
+  > subtle shadows, generous crop-safe breathing room, and no decorative
+  > objects. Include no text, letters, numbers, measurement marks, labels,
+  > logos, brand marks, arrows, callouts, panels, warning symbols, cutaways,
+  > magnified inset, comparison, cup, mug, carafe, server, stand, scale, surface
+  > touching the actuator, pressed actuator, open valve, open outlet, drip,
+  > stream, retained water, active rinse pour, kettle, coffee grounds, slurry,
+  > bloom, serving liquid, overflow, hot-part contact, hand under the outlet,
+  > second hand, second brewer, Hario Switch lever or steel ball, tap, generic
+  > valve, standard V60 cone, handleless glass cone, manual drain control, V60
+  > paper, Wave paper, basket paper, No. 1 paper, cloth, reusable metal filter,
+  > wrong-size, torn, doubled, buckled or floating paper, or clutter. The final
+  > output must be one opaque 1024 x 768 scene whose only story is a rinsed
+  > Clever-style dripper held safely by its handle, fully off-server with its
+  > normally closed bottom actuator unpressed and no new drip.
+- Corrective edit prompt:
+
+  > Correct the immediately previous off-server Clever rinse illustration while
+  > preserving its safe handle-only hand grip, level hovering position, visible
+  > dry air gap over the counter, no receiving vessel, no flow, translucent
+  > material, unpressed central bottom mechanism, warm-neutral text-free style,
+  > 4:3 framing, and every other clean safety detail. Replace the incorrect
+  > round V60-like cone and conical paper with accurate Clever-style wedge
+  > geometry. The brewer body must have a rounded-rectangular or elongated oval
+  > top opening, two broad nearly planar sloped front/back walls, two narrower
+  > side walls, and a tapered trapezoidal wedge profile leading to the bottom
+  > outlet—not a rotationally symmetric circular cone. Keep one sturdy
+  > integrated side handle. Replace the conical filter with exactly one folded
+  > #4/Melitta-style wedge paper: two broad flat paper faces meeting along narrow
+  > side gussets, one neatly folded crimped side seam, a straight-to-gently-
+  > curved upper edge matching the elongated opening, and a flat narrow lower
+  > fold seated close to the wedge bottom. The wet white paper must lie flush to
+  > the broad walls, remain empty, and show no water pool or coffee. Keep the
+  > distinct outer support base and feet, but make the normally closed actuator
+  > mechanically credible: a small central recessed contact button and outlet
+  > contained above the lowest plane of the outer feet, visibly relaxed and not
+  > touching the counter or the hand. Show no separate V60 flange, spiral ribs,
+  > circular cone, Switch ball/lever, or generic tap. Preserve the hand entirely
+  > on the cool handle with fingers away from the body and underside. Keep the
+  > whole base several centimeters above the counter, outlet dry, no drop, no
+  > kettle, no cup/server/stand/scale, no text, logo, arrow, panel, cutaway, or
+  > clutter. The only story must be an accurate wedge-bodied Clever dripper with
+  > one wet folded #4 paper held safely off-server while its recessed bottom
+  > actuator remains unpressed and closed. Preserve opaque 1024 x 768 output and
+  > crop-safe mobile legibility.
+- Rejected draft: the initial render correctly showed the handle-only grip,
+  air gap, feet, and unpressed outlet, but its rotationally symmetric cone and
+  conical paper read as a V60 rather than a Clever wedge brewer. That draft was
+  not copied into the repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_6Nkw4txTus0gMrlyP6HwyBXr.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_clever_water_first_15_250_stage_01_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 113,646 bytes, exact 4:3.
+- Accessibility target: “A hand holds the rinsed wedge-bodied Clever only by
+  its handle above the counter, with the recessed actuator unpressed and no
+  drip.” The canonical exact-stage alt text remains “Instructional view of
+  insert and rinse the wedge paper, then confirm the valve is closed using the
+  exact brewer profile and filter configuration stated in this recipe; no
+  dripping after rinse is discarded.” The asset record remains intentionally
+  unregistered until localization and Clever-mechanism review are complete.
+- Inspection: no text, numbers, logos, arrows, cup, server, scale, kettle,
+  coffee, retained water, flow, contact under the brewer, Switch/V60 mechanism,
+  second hand, cutaway, or clutter. The final frame shows a rounded-rectangular
+  wedge body, broad planar walls, one wet folded #4 paper and visible seam, a
+  safe handle-only grip, clear air beneath the outer feet, and a small recessed
+  actuator above the foot plane with a dry outlet.
+- Review status: **pending brewer-expert Clever body, paper, and actuator
+  review**. Confirm wedge profile, #4 paper fold and wet fit, safe handle grip,
+  outer-foot geometry, recessed normally closed actuator, outlet clearance,
+  no-flow readability, mobile-size distinction from V60 and Switch assets,
+  and instruction-before-image placement before registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
