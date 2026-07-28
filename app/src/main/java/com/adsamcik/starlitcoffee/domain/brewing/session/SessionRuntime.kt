@@ -220,6 +220,17 @@ interface LongSessionScheduler {
     )
 }
 
+/**
+ * Cancels every deferred prompt for a terminal session. Adapters must make
+ * this safe to repeat because cancellation can be replayed after recovery.
+ */
+interface LongSessionWorkCanceller {
+    fun cancelAllForSession(
+        sessionId: SessionId,
+        effectId: SessionEffectId,
+    )
+}
+
 sealed interface SessionEvent {
     val eventId: SessionEventId?
 

@@ -7,6 +7,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.adsamcik.starlitcoffee.domain.brewing.session.LongSessionScheduler
+import com.adsamcik.starlitcoffee.domain.brewing.session.LongSessionWorkCanceller
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionEffectId
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
@@ -128,7 +129,7 @@ class WorkManagerLongSessionScheduler(
     private val workManager: WorkManager,
     private val workerClass: Class<out ListenableWorker>,
     private val nowWallClockMillis: () -> Long = System::currentTimeMillis,
-) : LongSessionScheduler {
+) : LongSessionScheduler, LongSessionWorkCanceller {
 
     override fun schedule(
         sessionId: SessionId,
@@ -158,5 +159,9 @@ class WorkManagerLongSessionScheduler(
         effectId: SessionEffectId,
     ) {
         workManager.cancelUniqueWork(LongSessionWork.uniqueWorkName(sessionId, scheduleToken))
+    }
+
+    override fun cancelAllForSession(sessionId: SessionId, effectId: SessionEffectId) {
+        workManager.cancelAllWorkByTag(LongSessionWork.sessionTag(sessionId))
     }
 }
