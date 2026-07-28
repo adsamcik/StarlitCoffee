@@ -47,9 +47,9 @@ class RatioPresetRepository(private val dao: RatioPresetDao) {
             BuiltinBrewingCatalog.instance.findBrewerProfile(id)?.familyId
         }
 
-        dao.deleteByMethod(method.name)
-        dao.insertAll(
-            presets.mapIndexed { index, preset ->
+        dao.replaceForMethod(
+            methodName = method.name,
+            presets = presets.mapIndexed { index, preset ->
                 RatioPresetEntity(
                     methodName = method.name,
                     methodFamilyId = familyId?.value,
