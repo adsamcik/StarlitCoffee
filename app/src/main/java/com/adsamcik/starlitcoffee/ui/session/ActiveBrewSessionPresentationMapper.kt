@@ -4,6 +4,7 @@ import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionRestoreR
 import com.adsamcik.starlitcoffee.data.brewing.session.RestoredActiveBrewSession
 import com.adsamcik.starlitcoffee.data.brewing.session.SessionStorageDocument
 import com.adsamcik.starlitcoffee.domain.brewing.InstructionAssetId
+import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
@@ -12,11 +13,15 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.SessionRuntimeState
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageActuals
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageCompletionMode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageMassReference
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageReferenceTargets
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageMarkerId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageObservationId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageRunStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTimeReference
 
 /**
  * Resource-free state for the durable-brew screen.
@@ -110,9 +115,40 @@ data class CurrentBrewStagePresentation(
     val completion: BrewStageCompletionPresentation,
     /** Render outside guidance-density filtering. */
     val safetyMessages: List<StageSafetyMessage>,
+    /** Informational values only; [completion] remains the sole stage trigger. */
+    val referenceCues: List<BrewStageReferenceCuePresentation> = emptyList(),
 ) {
     val stageId: StageId
         get() = stageInstanceId.sourceStageId
+}
+
+/**
+ * Typed, localized-at-render-time reference information for the current stage.
+ * These values intentionally have no completion state or action affordance.
+ */
+sealed interface BrewStageReferenceCuePresentation {
+    val qualifier: StageTargetQualifier
+
+    data class Time(
+        val reference: StageTimeReference,
+        override val qualifier: StageTargetQualifier,
+        val minimumMillis: Long,
+        val maximumMillis: Long,
+    ) : BrewStageReferenceCuePresentation
+
+    data class Mass(
+        val role: QuantityRole,
+        val reference: StageMassReference,
+        override val qualifier: StageTargetQualifier,
+        val minimumGrams: Double,
+        val maximumGrams: Double,
+    ) : BrewStageReferenceCuePresentation
+
+    data class Temperature(
+        override val qualifier: StageTargetQualifier,
+        val minimumC: Double,
+        val maximumC: Double,
+    ) : BrewStageReferenceCuePresentation
 }
 
 sealed interface BrewStageCompletionPresentation {
@@ -293,6 +329,9 @@ object ActiveBrewSessionPresentationMapper {
                     elapsedActiveMillis = elapsed,
                 ),
                 safetyMessages = safetyMessages,
+                referenceCues = referenceCuePresentations(
+                    currentStage.definition.referenceTargets,
+                ),
             )
         } else {
             null
@@ -327,6 +366,41 @@ object ActiveBrewSessionPresentationMapper {
                 safetyMessages = safetyMessages,
             ),
         )
+    }
+
+    private fun referenceCuePresentations(
+        targets: StageReferenceTargets,
+    ): List<BrewStageReferenceCuePresentation> = buildList {
+        targets.timeTargets.forEach { target ->
+            add(
+                BrewStageReferenceCuePresentation.Time(
+                    reference = target.reference,
+                    qualifier = target.qualifier,
+                    minimumMillis = target.minimumMillis,
+                    maximumMillis = target.maximumMillis,
+                ),
+            )
+        }
+        targets.massTargets.forEach { target ->
+            add(
+                BrewStageReferenceCuePresentation.Mass(
+                    role = target.role,
+                    reference = target.reference,
+                    qualifier = target.qualifier,
+                    minimumGrams = target.minimumGrams,
+                    maximumGrams = target.maximumGrams,
+                ),
+            )
+        }
+        targets.temperatureTarget?.let { target ->
+            add(
+                BrewStageReferenceCuePresentation.Temperature(
+                    qualifier = target.qualifier,
+                    minimumC = target.minimumC,
+                    maximumC = target.maximumC,
+                ),
+            )
+        }
     }
 
     private fun runtimeIssue(runtime: SessionRuntimeState): SessionRuntimePresentationIssue? = when {

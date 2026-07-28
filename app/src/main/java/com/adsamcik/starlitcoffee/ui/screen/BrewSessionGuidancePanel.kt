@@ -71,8 +71,6 @@ fun BrewSessionGuidancePanel(
                 modifier = Modifier.semantics { heading() },
             )
 
-            approvedVisual?.let { approved -> ApprovedInstructionAssetImage(approved.asset) }
-
             resolution.policy?.let { policy ->
                 GuidanceLevelControl(
                     selectedLevel = policy.level,
@@ -95,6 +93,10 @@ fun BrewSessionGuidancePanel(
             // Production/review state is intentionally not user-facing. Missing or
             // unapproved art fails closed while the localized instruction remains.
             visibleContent.forEach { content -> GuidanceContent(content) }
+
+            // The visual reinforces the instruction and any safety copy instead
+            // of making users interpret an unexplained image first.
+            approvedVisual?.let { approved -> ApprovedInstructionAssetImage(approved.asset) }
         }
     }
 }

@@ -143,11 +143,11 @@ private fun LearnGuidanceCard(
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
             )
-            visualAsset?.let { asset -> ApprovedInstructionAssetImage(asset) }
             Text(
                 text = content.instruction,
                 style = MaterialTheme.typography.titleMedium,
             )
+            visualAsset?.let { asset -> ApprovedInstructionAssetImage(asset) }
             content.warning?.let { warning ->
                 LearnGuidanceWarning(
                     warning = warning,

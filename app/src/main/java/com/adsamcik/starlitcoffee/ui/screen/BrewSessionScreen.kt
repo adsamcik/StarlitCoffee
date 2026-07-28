@@ -589,6 +589,12 @@ private fun BrewSessionContent(
             )
         }
         BrewSessionSafety(presentation.safetyMessages)
+        stage?.let { current ->
+            BrewSessionReferenceCues(
+                sessionKey = presentation.sessionId,
+                cues = current.referenceCues,
+            )
+        }
         guidanceResolution?.let { guidance ->
             BrewSessionGuidancePanel(
                 resolution = guidance,

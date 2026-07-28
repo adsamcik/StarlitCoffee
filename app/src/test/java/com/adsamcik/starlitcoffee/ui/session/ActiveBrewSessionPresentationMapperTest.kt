@@ -9,6 +9,7 @@ import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewRecipeSnapshotV1
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.EquipmentConfigurationSnapshotV1
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.OutputModelSnapshotV1
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.RatioDefinitionSnapshotV1
+import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.StagePlanId
@@ -25,9 +26,17 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.SessionRuntimeState
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageActualValue
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageCompletionMode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageMassReference
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageMassTarget
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageReferenceTargets
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageRunStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetId
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTemperatureTarget
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTimeReference
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTimeTarget
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -191,6 +200,78 @@ class ActiveBrewSessionPresentationMapperTest {
     }
 
     @Test
+    fun `reference cues preserve source semantics without becoming completion triggers`() {
+        val referenceTargets = StageReferenceTargets(
+            timeTargets = listOf(
+                StageTimeTarget(
+                    id = StageTargetId("brew_deadline"),
+                    reference = StageTimeReference.BREW_ELAPSED_AT_COMPLETION,
+                    qualifier = StageTargetQualifier.NO_LATER_THAN,
+                    minimumMillis = 0L,
+                    maximumMillis = 120_000L,
+                ),
+            ),
+            massTargets = listOf(
+                StageMassTarget(
+                    id = StageTargetId("bypass_water"),
+                    role = QuantityRole.BYPASS_WATER,
+                    reference = StageMassReference.RECIPE_TOTAL,
+                    qualifier = StageTargetQualifier.APPROXIMATE,
+                    minimumGrams = 80.0,
+                ),
+            ),
+            temperatureTarget = StageTemperatureTarget(
+                qualifier = StageTargetQualifier.APPROXIMATE,
+                minimumC = 92.0,
+                maximumC = 96.0,
+            ),
+        )
+        val running = startedRuntime(
+            plan = plan(
+                stage(
+                    id = "pour",
+                    action = BrewStageAction.POUR,
+                    contentId = "pour_instruction",
+                    completion = StageCompletionMode.Manual,
+                    referenceTargets = referenceTargets,
+                ),
+            ),
+            sessionId = "reference-session",
+            startedAt = 1_000L,
+        )
+
+        val presentation = ActiveBrewSessionPresentationMapper.map(running)
+            as ActiveBrewSessionPresentation.Available
+        val stage = presentation.currentStage!!
+
+        assertEquals(BrewStageCompletionPresentation.Manual, stage.completion)
+        assertEquals(
+            listOf(
+                BrewStageReferenceCuePresentation.Time(
+                    reference = StageTimeReference.BREW_ELAPSED_AT_COMPLETION,
+                    qualifier = StageTargetQualifier.NO_LATER_THAN,
+                    minimumMillis = 0L,
+                    maximumMillis = 120_000L,
+                ),
+                BrewStageReferenceCuePresentation.Mass(
+                    role = QuantityRole.BYPASS_WATER,
+                    reference = StageMassReference.RECIPE_TOTAL,
+                    qualifier = StageTargetQualifier.APPROXIMATE,
+                    minimumGrams = 80.0,
+                    maximumGrams = 80.0,
+                ),
+                BrewStageReferenceCuePresentation.Temperature(
+                    qualifier = StageTargetQualifier.APPROXIMATE,
+                    minimumC = 92.0,
+                    maximumC = 96.0,
+                ),
+            ),
+            stage.referenceCues,
+        )
+        assertTrue(presentation.actions.canManualAdvance)
+    }
+
+    @Test
     fun `unknown or malformed session data stays unavailable without a fallback`() {
         val unsupported = ActiveBrewSessionPresentationMapper.map(
             ActiveBrewSessionRestoreResult.UnsupportedRecipe(
@@ -253,6 +334,7 @@ class ActiveBrewSessionPresentationMapperTest {
         completion: StageCompletionMode,
         isSkippable: Boolean = false,
         safety: List<StageSafetyMessage> = emptyList(),
+        referenceTargets: StageReferenceTargets = StageReferenceTargets(),
     ): CompiledBrewStage {
         val stageId = StageId(id)
         return CompiledBrewStage(
@@ -263,6 +345,7 @@ class ActiveBrewSessionPresentationMapperTest {
                 contentId = StageContentId(contentId),
                 safetyMessages = safety,
                 completionMode = completion,
+                referenceTargets = referenceTargets,
                 isSkippable = isSkippable,
             ),
         )
