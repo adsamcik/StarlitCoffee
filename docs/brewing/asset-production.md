@@ -1395,6 +1395,155 @@ For every asset record:
   insert identity, cup-rim overlap, dry-bed depth, mobile-size legibility, and
   warning-before-image placement before registration or approval.
 
+### `p1-screw-phin-undisturbed-drip-imagegen-v3`
+
+- Stable asset ID:
+  `instruction_p1_phin_screw_18_120_stage_05_instruction_default`
+- Exact scope: `phin_screw_18_120` / source `stage_05` /
+  `p1_phin_screw_18_120_stage_05_instruction`; a covered screw-insert phin
+  stays fully supported and untouched while separated slow drops enter a broad
+  transparent heat-safe cup.
+- Evidence: `SRC-NGUYEN-PHIN` and `SRC-GOURMETKAVA-PHIN`. Reverified on
+  28 July 2026 against Nguyen Coffee Supply's current stalled-flow guidance at
+  <https://nguyencoffeesupply.com/blogs/news/why-wont-my-phin-filter-drip>
+  and GourmetKava's current traditional-phin guide at
+  <https://www.gourmetkava.cz/en/blog/making-coffee/preparation-of--vietnamese-coffee>.
+  The sources corroborate slow gravity dripping, gentle screw/press handling,
+  clear perforations, and avoiding force. Source-only timing windows and the
+  exceptional stalled-flow decision remain in Compose text.
+- Generation mode: new bitmap generation followed by two targeted corrective
+  image edits with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show one coherent safe observation state: an
+  > accurate unbranded single-serving Vietnamese screw-insert phin midway
+  > through normal gravity drainage, viewed from a close elevated front
+  > three-quarter angle. Use a compact cylindrical brushed-metal chamber with a
+  > smooth solid sidewall, an integrated wide horizontal support plate,
+  > proportions matching a small 120–150 ml screw phin, and a matching metal
+  > lid correctly seated flat on top. The threaded retaining insert is already
+  > lightly engaged inside beneath the lid and remains entirely contained and
+  > undisturbed; do not expose or manipulate it, and include no loose
+  > gravity-disc cues. Center the wide phin plate level across a broad, stable,
+  > heat-safe ceramic cup whose rim supports the plate continuously with
+  > generous overlap; the cup base rests fully on an uncluttered counter. Keep
+  > the phin outlet close above the cup interior with a safe short drop
+  > distance. Show a short vertical sequence of exactly three visually
+  > well-separated dark brewed-coffee droplets between the phin outlet and the
+  > cup, making a slow active drip cadence unmistakable: discrete drops, not a
+  > continuous stream and not a complete stall. The coffee in the cup should
+  > be calm, with only a tiny restrained ripple below the falling drops, no
+  > splash and no exact level emphasis. Leave all hands completely outside the
+  > frame so the hot lidded phin is visibly untouched and patient observation
+  > is the entire action. Make stable support, full cup-rim overlap, seated lid,
+  > separated slow drops, heat-safe distance, and hands-off patience
+  > immediately readable at mobile size. Use a warm-neutral empty counter and
+  > plain soft background, semi-flat softly dimensional educational rendering,
+  > precise believable metal geometry, restrained warm gray and dark coffee
+  > palette, clear silhouettes, soft light, subtle shadows, generous crop-safe
+  > breathing room, and no decorative objects. Include no text, letters,
+  > numbers, clock, timer, measurement marks, labels, logos, brand marks,
+  > arrows, callouts, panels, warning symbols, comparison, cutaway, inset, hand,
+  > finger, tool, squeeze, press, twist, loosening, lifting, shaking, tapping,
+  > tilting, removed lid, exposed insert, loose unthreaded disc, spring, plunger,
+  > tamper, moka pot, espresso basket, paper filter, plastic dripper, sidewall
+  > holes, narrow or unstable cup, unsupported or off-center plate, long drop
+  > distance, continuous stream, spray, overflow, spill, no-flow stall, sealed
+  > pressure, bulging lid, steam jet, exact beverage level, second brewer,
+  > serving additions, or clutter. The final output must be one opaque
+  > 1024 x 768 scene whose only story is a stable covered screw phin draining in
+  > slow separated drops without intervention.
+- First corrective edit prompt:
+
+  > Correct the immediately previous screw-phin slow-drip illustration while
+  > preserving its single lidded solid-wall metal chamber, broad stable ceramic
+  > cup, hands-free composition, slow separated dark droplets, warm-neutral
+  > clean educational style, 4:3 framing, and every other safe detail. Fix the
+  > support geometry so the brewer cannot read as floating: raise and widen the
+  > cup mouth so the entire top rim visibly meets and physically contacts the
+  > underside of the phin's wide horizontal support plate, with clear contact
+  > points on both left and right sides and generous continuous overlap around
+  > the cup. There must be no air gap between the cup rim and support plate, no
+  > hovering plate, no hidden stand, and no contact only at the central outlet.
+  > Keep the phin level and centered, and keep the cup base fully planted on the
+  > counter. Preserve a short open space only inside the cup, between the small
+  > central drain outlet beneath the supported plate and the coffee surface,
+  > where several clearly separated dark droplets fall vertically; do not make
+  > a continuous stream and do not arrange the drops as a symbolic count. Lower
+  > and de-emphasize the finished coffee surface so it is only a shallow calm
+  > pool visible inside the cup, without suggesting an exact beverage level,
+  > and retain only a tiny restrained ripple beneath the drip path. Keep the
+  > seated metal lid, untouched hot chamber, no hands, no intervention, no
+  > exposed insert, no sidewall holes, no steam, no splash, no text, no numbers,
+  > no clock, no logo, no arrows, no panels, and no clutter. Do not change to a
+  > narrow cup, add a handle, remove the lid, expose or manipulate the screw, or
+  > introduce a loose gravity disc. The only visual story must be a fully
+  > supported, centered, covered screw phin draining slowly into a stable cup
+  > without intervention. Preserve opaque 1024 x 768 output and crop-safe
+  > mobile legibility.
+- Final corrective edit prompt:
+
+  > Correct the immediately previous screw-phin slow-drip illustration again,
+  > preserving the centered level lidded metal phin, solid sidewall, broad
+  > support plate, no hands, slow natural dark droplets, warm-neutral text-free
+  > educational style, 4:3 framing, and every other safe detail. The current
+  > opaque ceramic cup incorrectly looks cut open or transparent only in one
+  > patch. Replace it with one physically coherent broad, stable, heat-safe
+  > clear borosilicate glass cup whose entire wall is transparently rendered,
+  > with a thick continuous circular rim and a wide planted base. The cup must
+  > not have a cutout, window, missing wall, opaque front panel, or floating
+  > liquid. Seat the phin's wide support plate directly on that glass rim: the
+  > underside of the plate must visibly touch the rim at both left and right
+  > edges with generous overlap and no air gap, so the full brewer weight is
+  > clearly supported. Through the naturally transparent glass wall, show a
+  > shallow calm pool of dark coffee at the bottom and only a few irregularly
+  > spaced individual coffee droplets falling from the small central outlet
+  > into it. Keep the droplets naturally varied and separated in a short active
+  > sequence, not a perfectly regular bead chain, not a continuous stream, not
+  > a symbolic count, and not a stall. Keep the outlet-to-liquid distance
+  > modest, the glass stable, and the coffee surface understated with only a
+  > tiny ripple. The covered phin remains untouched; do not expose or manipulate
+  > its internal screw insert. Add no handle if it would weaken the support
+  > silhouette. Include no text, digits, clock, logo, arrow, panel, warning
+  > icon, opaque-wall cutaway, impossible floating pool, narrow glass,
+  > unsupported plate, steam, splash, spill, exact level marking, sidewall
+  > holes, removed lid, hand, loose disc, intervention, or clutter. The only
+  > story must be a fully supported covered screw phin draining slowly through
+  > a transparent stable cup without intervention. Preserve opaque overall
+  > canvas output at 1024 x 768 and crop-safe mobile legibility.
+- Rejected drafts: the initial render left an apparent air gap between the cup
+  rim and support plate, so the hot brewer read as floating. The first edit
+  closed that gap but created an impossible opaque cup with a window-like
+  cutaway and visible floating liquid. Neither draft was copied into the
+  repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_kyMUvUElzoiU17pxOgsSf27F.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_phin_screw_18_120_stage_05_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 74,962 bytes, exact 4:3.
+- Accessibility target: “A covered screw-insert phin rests fully on a broad
+  clear glass while separated slow coffee drops fall without anyone touching
+  the hot brewer.” The canonical exact-stage alt text remains “Instructional
+  view of monitor first drip and total window using the exact brewer profile
+  and filter configuration stated in this recipe; steady slow drips complete.”
+  The asset record remains intentionally unregistered until localization and
+  phin-mechanism review are complete.
+- Inspection: no text, numbers, logos, arrows, hands, intervention, exposed
+  insert, loose gravity disc, sidewall holes, steam, continuous stream, stall,
+  splash, spill, narrow support, cutaway, or clutter. The final frame shows a
+  coherent transparent cup, direct rim-to-plate contact, a planted wide base,
+  shallow calm coffee, a short sequence of separated drops, a seated lid, and
+  an undisturbed solid-wall chamber.
+- Review status: **pending brewer-expert screw-phin mechanism, support, and
+  drip-state review**. Confirm 120–150 ml proportions, concealed screw-insert
+  continuity with stage 01, plate/rim contact, heat-safe glass stability,
+  natural slow-drip readability, beverage-level neutrality, mobile-size
+  legibility, and warning-before-image placement before registration or
+  approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
