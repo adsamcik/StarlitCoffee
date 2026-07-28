@@ -5,12 +5,14 @@ import com.adsamcik.starlitcoffee.domain.brewing.BrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.MethodFamilyId
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
+import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
 
 /** Input for a Learn surface backed by the same profile-scoped content as live Brew. */
 data class LearnGuidanceCatalogRequest(
     val methodFamilyId: String,
     val brewerProfileId: String,
     val preferences: DurableBrewSessionGuidancePreferences = DurableBrewSessionGuidancePreferences(),
+    val harioSwitchWorkflow: HarioSwitchWorkflow? = null,
 )
 
 sealed interface LearnGuidanceCatalogAvailability {
@@ -38,6 +40,10 @@ sealed interface LearnGuidanceCatalogAvailability {
         val methodFamilyId: MethodFamilyId,
         val brewerProfileId: BrewerProfileId,
     ) : LearnGuidanceCatalogAvailability
+    data class HarioSwitchWorkflowRequired(
+        val profileId: BrewerProfileId,
+    ) : LearnGuidanceCatalogAvailability
+
 }
 
 /**
@@ -122,10 +128,19 @@ class LearnGuidanceCatalogResolver(
                 content = emptyList(),
             )
         }
+        val planSelection = P1LearnContentSelector.select(
+            content = scopedContent,
+            profileId = brewerProfileId,
+            harioSwitchWorkflow = request.harioSwitchWorkflow,
+        )
         return LearnGuidanceCatalogResolution(
             policy = policy,
-            availability = LearnGuidanceCatalogAvailability.Available,
-            content = scopedContent
+            availability = if (planSelection.requiresHarioSwitchWorkflow) {
+                LearnGuidanceCatalogAvailability.HarioSwitchWorkflowRequired(brewerProfileId)
+            } else {
+                LearnGuidanceCatalogAvailability.Available
+            },
+            content = planSelection.content
                 .filter { content -> policy.isVisible(content) }
                 .map { content -> content.toLearnContent(policy.level) },
         )

@@ -198,7 +198,7 @@ object P1BuiltInGuidanceCatalog {
                 }
                 duplicates.first()
             }
-        return sources.sortedBy { source -> source.definition.contentId.value }
+        return sources
     }
 
     private fun sourcePlans(): List<P1SourcePlan> = listOf(
@@ -275,8 +275,8 @@ object P1BuiltInGuidanceCatalog {
         val primaryInstruction: String,
         val conciseInstruction: String,
         val explanation: String? = null,
-        val tip: String? = null,
         val altText: String,
+        val tip: String? = null,
     )
 
     private data class P1SafetyCopy(
