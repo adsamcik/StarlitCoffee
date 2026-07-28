@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
+import com.adsamcik.starlitcoffee.domain.brewing.BasketProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
 import com.adsamcik.starlitcoffee.domain.brewing.EquipmentConfiguration
@@ -7,7 +8,15 @@ import com.adsamcik.starlitcoffee.domain.brewing.FilterProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.FilterSelection
 import com.adsamcik.starlitcoffee.domain.brewing.FilterStackEntry
 import com.adsamcik.starlitcoffee.domain.brewing.HeatSourceClass
+import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
+import com.adsamcik.starlitcoffee.domain.brewing.StageId
+import com.adsamcik.starlitcoffee.domain.brewing.StagePlanId
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageDefinition
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStagePlan
 import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageCompletionMode
+import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanNode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanCompileResult
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanValidationCode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanValidationIssue
@@ -21,24 +30,23 @@ import java.util.UUID
 class BuiltinBrewerSessionStartFactoryTest {
 
     @Test
-    fun `creates an immutable Clever session with profile defaults and caller input`() {
+    fun `legacy Clever start remains unchanged without an exact recipe ID`() {
         val sessionId = UUID.fromString("1c4e2984-37b1-44ea-a4f7-9a004a32dd67")
         val result = factory(sessionId).create(
             BuiltinBrewerSessionStartInput(
                 brewerProfileId = BrewerProfileId("clever_style"),
-                builtInRecipeId = BuiltInRecipeId("clever_water_first_15_250"),
                 dryCoffeeDoseG = 20.0,
                 inputWaterG = 340.0,
                 equipment = EquipmentConfiguration(
                     brewerProfileId = BrewerProfileId("clever_style"),
-                    filterSelection = paperFilter("cone_paper"),
+                    filterSelection = paperFilter("wedge_paper"),
                     capacityOverrideG = 400.0,
                 ),
                 temperatureC = 93,
                 grinderId = "fellow_ode",
                 grindSetting = "5.0",
                 methodLabel = "My Clever",
-                filterLabel = "Cone paper",
+                filterLabel = "Wedge paper",
                 isDecaf = true,
                 notes = "  Sweet and round  ",
                 coffeeBagId = 81L,
@@ -52,10 +60,11 @@ class BuiltinBrewerSessionStartFactoryTest {
         assertEquals(sessionId.toString(), request.sessionId.value)
         assertEquals("steep_and_release", request.recipe.methodFamilyId)
         assertEquals("clever_style", request.recipe.brewerProfileId)
-        assertEquals("clever_water_first_15_250", request.recipe.builtInRecipeId)
+        assertNull(request.recipe.builtInRecipeId)
+        assertNull(request.recipe.sourceMetadata)
         assertEquals("clever_style", request.recipe.equipment.brewerProfileId)
         assertEquals("STACK", request.recipe.equipment.filterSelection.mode)
-        assertEquals("cone_paper", request.recipe.equipment.filterSelection.entries.single().filterProfileId)
+        assertEquals("wedge_paper", request.recipe.equipment.filterSelection.entries.single().filterProfileId)
         assertEquals(20.0, request.recipe.quantities.dryCoffeeDoseG, 0.001)
         assertEquals(340.0, requireNotNull(request.recipe.quantities.brewWaterInputG), 0.001)
         assertNull(request.recipe.quantities.reservoirInputG)
@@ -77,10 +86,326 @@ class BuiltinBrewerSessionStartFactoryTest {
         assertEquals(12L, request.executionContext.sourceRecipeId)
         assertEquals("My Clever", request.executionContext.logPresentation.methodLabel)
         assertEquals(340.0, request.executionContext.logPresentation.waterG, 0.001)
-        assertEquals("Cone paper", request.executionContext.logPresentation.filterLabel)
+        assertEquals("Wedge paper", request.executionContext.logPresentation.filterLabel)
         assertTrue(request.executionContext.logPresentation.isDecaf)
         assertEquals("Sweet and round", request.executionContext.logPresentation.notes)
         assertTrue(ready.equipmentCompatibility.issues.isEmpty())
+    }
+
+    @Test
+    fun `exact flash recipe defaults source input and preserves all source metadata`() {
+        val recipeId = BuiltInRecipeId("v60_kurasu_flash_16_150_70")
+        val result = exactFactory(
+            recipeId = recipeId,
+            actions = listOf(
+                BrewStageAction.PREPARE,
+                BrewStageAction.ADD_COFFEE,
+                BrewStageAction.ADD_WATER,
+                BrewStageAction.POUR,
+                BrewStageAction.OBSERVE,
+                BrewStageAction.SERVE,
+            ),
+        ).create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("v60_unspecified"),
+                builtInRecipeId = recipeId,
+                dryCoffeeDoseG = 16.0,
+                equipment = EquipmentConfiguration(
+                    brewerProfileId = BrewerProfileId("v60_unspecified"),
+                    filterSelection = paperFilter("cone_paper"),
+                ),
+                temperatureC = 91,
+            ),
+        )
+
+        val request = (result as BuiltinBrewerSessionStartResult.Ready).request
+        val metadata = requireNotNull(request.recipe.sourceMetadata)
+
+        assertEquals("builtin_recipe_v60_kurasu_flash_16_150_70", request.stagePlan.id.value)
+        assertEquals(16.0, request.recipe.quantities.dryCoffeeDoseG, 0.001)
+        assertEquals(150.0, requireNotNull(request.recipe.quantities.brewWaterInputG), 0.001)
+        assertEquals(70.0, request.recipe.quantities.iceG, 0.001)
+        assertEquals(9.375, requireNotNull(request.recipe.ratioValue), 0.001)
+        assertEquals(150.0, request.executionContext.logPresentation.waterG, 0.001)
+        assertEquals(2, request.recipe.ratioSemantics.size)
+        assertEquals(9.375, requireNotNull(request.recipe.ratioSemantics[0].ratioValue), 0.001)
+        assertEquals(
+            listOf("BREW_WATER_INPUT", "ICE"),
+            request.recipe.ratioSemantics[1].includedDenominatorRoles,
+        )
+        assertEquals("USER_EXACT", requireNotNull(request.recipe.temperatureSemantics).basis)
+        assertEquals("DRAWDOWN_AND_BREW_ICE_MELT", request.recipe.completionSemantics)
+        assertEquals("1.0.0", metadata.sourceSchemaVersion)
+        assertEquals(
+            "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+            metadata.sourceSha256,
+        )
+        assertEquals(recipeId.value, metadata.exactRecipeApproachId)
+        assertEquals(6, metadata.orderedStageCount)
+    }
+
+    @Test
+    fun `exact IDs resolve without fallback and require their exact app profile`() {
+        val factory = factory()
+        val unknown = factory.create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                builtInRecipeId = BuiltInRecipeId("future_exact_recipe"),
+                dryCoffeeDoseG = 15.0,
+            ),
+        )
+        val profileMismatch = factory.create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("hario_switch"),
+                builtInRecipeId = BuiltInRecipeId("clever_coffee_first_15_250"),
+                dryCoffeeDoseG = 15.0,
+            ),
+        )
+
+        assertEquals(
+            BuiltinBrewerSessionStartUnavailableReason.UNKNOWN_BUILTIN_RECIPE,
+            (unknown as BuiltinBrewerSessionStartResult.Unavailable).reason,
+        )
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_PROFILE_MISMATCH),
+            (profileMismatch as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+    }
+
+    @Test
+    fun `exact source quantities equipment and temperature reject nearby substitutions`() {
+        val recipeId = BuiltInRecipeId("clever_coffee_first_15_250")
+        val exactEquipment = EquipmentConfiguration(
+            brewerProfileId = BrewerProfileId("clever_style"),
+            filterSelection = paperFilter("wedge_paper"),
+            capacityOverrideG = 400.0,
+        )
+        val factory = factory()
+        val doseMismatch = factory.create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                builtInRecipeId = recipeId,
+                dryCoffeeDoseG = 16.0,
+                inputWaterG = 250.0,
+                equipment = exactEquipment,
+                temperatureC = 95,
+            ),
+        )
+        val inputMismatch = factory.create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                builtInRecipeId = recipeId,
+                dryCoffeeDoseG = 15.0,
+                inputWaterG = 251.0,
+                equipment = exactEquipment,
+                temperatureC = 95,
+            ),
+        )
+        val equipmentMismatch = factory.create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                builtInRecipeId = recipeId,
+                dryCoffeeDoseG = 15.0,
+                inputWaterG = 250.0,
+                equipment = exactEquipment.copy(filterSelection = paperFilter("cone_paper")),
+                temperatureC = 95,
+            ),
+        )
+        val temperatureMismatch = factory.create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                builtInRecipeId = recipeId,
+                dryCoffeeDoseG = 15.0,
+                inputWaterG = 250.0,
+                equipment = exactEquipment,
+                temperatureC = 94,
+            ),
+        )
+
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_DOSE_MISMATCH),
+            (doseMismatch as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_INPUT_MISMATCH),
+            (inputMismatch as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_EQUIPMENT_MISMATCH),
+            (equipmentMismatch as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_TEMPERATURE_MISMATCH),
+            (temperatureMismatch as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+    }
+
+    @Test
+    fun `Cup-One requires measured reservoir input while retaining unresolved source ratio`() {
+        val recipeId = BuiltInRecipeId("auto_cupone_20_300")
+        val factory = exactFactory(
+            recipeId = recipeId,
+            actions = listOf(
+                BrewStageAction.PREPARE,
+                BrewStageAction.ADD_COFFEE,
+                BrewStageAction.ADD_WATER,
+                BrewStageAction.OBSERVE,
+                BrewStageAction.FILTER,
+                BrewStageAction.SERVE,
+            ),
+        )
+        val input = BuiltinBrewerSessionStartInput(
+            brewerProfileId = BrewerProfileId("automatic_single_cup_generic"),
+            builtInRecipeId = recipeId,
+            dryCoffeeDoseG = 20.0,
+            equipment = EquipmentConfiguration(
+                brewerProfileId = BrewerProfileId("automatic_single_cup_generic"),
+                filterSelection = paperFilter("number_one_paper"),
+                basketId = BasketProfileId("automatic_number_one_basket"),
+                capacityOverrideG = 350.0,
+            ),
+            temperatureC = 94,
+        )
+
+        val missingInput = factory.create(input)
+        val suppliedInput = factory.create(input.copy(inputWaterG = 300.0))
+
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_INPUT_REQUIRED),
+            (missingInput as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        val request = (suppliedInput as BuiltinBrewerSessionStartResult.Ready).request
+        assertEquals(300.0, requireNotNull(request.recipe.quantities.reservoirInputG), 0.001)
+        assertNull(request.recipe.quantities.brewWaterInputG)
+        assertEquals("RESERVOIR_INPUT", request.recipe.ratioDefinition.denominator)
+        assertEquals(15.0, requireNotNull(request.recipe.ratioValue), 0.001)
+        assertEquals(300.0, request.executionContext.logPresentation.waterG, 0.001)
+        assertEquals(1, request.recipe.ratioSemantics.size)
+        assertNull(request.recipe.ratioSemantics.single().ratioValue)
+        assertEquals(
+            "MACHINE_CONTROLLED_REPORTED_RANGE",
+            requireNotNull(request.recipe.temperatureSemantics).basis,
+        )
+        assertTrue(requireNotNull(request.recipe.sourceMetadata).unresolvedFields.contains("beverage_output"))
+    }
+
+    @Test
+    fun `exact recipes reject generic plans and contradictory canonical workflow order`() {
+        val coffeeFirstId = BuiltInRecipeId("clever_coffee_first_15_250")
+        val waterFirstId = BuiltInRecipeId("clever_water_first_15_250")
+        val equipment = EquipmentConfiguration(
+            brewerProfileId = BrewerProfileId("clever_style"),
+            filterSelection = paperFilter("wedge_paper"),
+            capacityOverrideG = 400.0,
+        )
+        val genericPlan = factory().create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                builtInRecipeId = coffeeFirstId,
+                dryCoffeeDoseG = 15.0,
+                equipment = equipment,
+                temperatureC = 95,
+            ),
+        )
+        val wrongOrder = exactFactory(
+            recipeId = waterFirstId,
+            actions = listOf(
+                BrewStageAction.PREPARE,
+                BrewStageAction.ADD_COFFEE,
+                BrewStageAction.ADD_WATER,
+                BrewStageAction.STEEP,
+                BrewStageAction.RELEASE,
+                BrewStageAction.SERVE,
+            ),
+        ).create(
+            BuiltinBrewerSessionStartInput(
+                brewerProfileId = BrewerProfileId("clever_style"),
+                builtInRecipeId = waterFirstId,
+                dryCoffeeDoseG = 15.0,
+                equipment = equipment,
+                temperatureC = 96,
+            ),
+        )
+
+        assertEquals(
+            BuiltinBrewerSessionStartUnavailableReason.BUILTIN_RECIPE_STAGE_PLAN_MISMATCH,
+            (genericPlan as BuiltinBrewerSessionStartResult.Unavailable).reason,
+        )
+        assertEquals(
+            BuiltinBrewerSessionStartUnavailableReason.BUILTIN_RECIPE_STAGE_PLAN_MISMATCH,
+            (wrongOrder as BuiltinBrewerSessionStartResult.Unavailable).reason,
+        )
+    }
+
+    @Test
+    fun `exact Switch infers supported workflow without inventing unspecified temperature`() {
+        val recipeId = BuiltInRecipeId("switch_official_20_240")
+        var observedWorkflow: HarioSwitchWorkflow? = null
+        val plan = exactPlan(
+            recipeId = recipeId,
+            actions = listOf(
+                BrewStageAction.PREPARE,
+                BrewStageAction.ADD_COFFEE,
+                BrewStageAction.ADD_WATER,
+                BrewStageAction.STEEP,
+                BrewStageAction.RELEASE,
+            ),
+        )
+        val factory = BuiltinBrewerSessionStartFactory(
+            stagePlanFor = { _, workflow ->
+                observedWorkflow = workflow
+                plan
+            },
+            newUuid = { UUID.fromString("6c4e2984-37b1-44ea-a4f7-9a004a32dd67") },
+        )
+        val baseInput = BuiltinBrewerSessionStartInput(
+            brewerProfileId = BrewerProfileId("hario_switch"),
+            builtInRecipeId = recipeId,
+            dryCoffeeDoseG = 20.0,
+            equipment = EquipmentConfiguration(
+                brewerProfileId = BrewerProfileId("hario_switch"),
+                filterSelection = paperFilter("cone_paper"),
+                capacityOverrideG = 400.0,
+            ),
+        )
+
+        val inferred = factory.create(baseInput)
+        val workflowMismatch = factory.create(
+            baseInput.copy(harioSwitchWorkflow = HarioSwitchWorkflow.MANUAL_GRAVITY),
+        )
+        val inventedTemperature = factory.create(baseInput.copy(temperatureC = 95))
+
+        val request = (inferred as BuiltinBrewerSessionStartResult.Ready).request
+        assertEquals(HarioSwitchWorkflow.STEEP_AND_RELEASE, observedWorkflow)
+        assertEquals(240.0, requireNotNull(request.recipe.quantities.brewWaterInputG), 0.001)
+        assertNull(request.recipe.temperatureC)
+        assertEquals("HOT_UNSPECIFIED", requireNotNull(request.recipe.temperatureSemantics).basis)
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_WORKFLOW_MISMATCH),
+            (workflowMismatch as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        assertEquals(
+            listOf(
+                BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_TEMPERATURE_NOT_APPLICABLE,
+            ),
+            (inventedTemperature as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
     }
 
     @Test
@@ -395,6 +720,37 @@ class BuiltinBrewerSessionStartFactoryTest {
             invalid.issues,
         )
     }
+
+    private fun exactFactory(
+        recipeId: BuiltInRecipeId,
+        actions: List<BrewStageAction>,
+        sessionId: UUID = UUID.fromString("7c4e2984-37b1-44ea-a4f7-9a004a32dd67"),
+    ): BuiltinBrewerSessionStartFactory {
+        val plan = exactPlan(recipeId, actions)
+        return BuiltinBrewerSessionStartFactory(
+            stagePlanFor = { _, _ -> plan },
+            newUuid = { sessionId },
+        )
+    }
+
+    private fun exactPlan(
+        recipeId: BuiltInRecipeId,
+        actions: List<BrewStageAction>,
+    ): BrewStagePlan = BrewStagePlan(
+        id = StagePlanId("builtin_recipe_${recipeId.value}"),
+        version = 1,
+        nodes = actions.mapIndexed { index, action ->
+            val stageId = "${recipeId.value}_stage_${index + 1}"
+            StagePlanNode.Stage(
+                BrewStageDefinition(
+                    id = StageId(stageId),
+                    action = action,
+                    contentId = StageContentId(stageId),
+                    completionMode = StageCompletionMode.Manual,
+                ),
+            )
+        },
+    )
 
     private fun factory(sessionId: UUID = UUID.fromString("5c4e2984-37b1-44ea-a4f7-9a004a32dd67")):
         BuiltinBrewerSessionStartFactory = BuiltinBrewerSessionStartFactory(newUuid = { sessionId })
