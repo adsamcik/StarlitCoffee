@@ -761,6 +761,103 @@ For every asset record:
   readability, and post-warning Learn/Live placement before manifest
   registration or approval.
 
+### `p1-cup-one-unplugged-outlet-cleaning-imagegen-v2`
+
+- Stable asset ID:
+  `instruction_p1_auto_cupone_20_300_stage_06_instruction_default`
+- Exact scope: `auto_cupone_20_300` / source `stage_06` /
+  `p1_auto_cupone_20_300_stage_06_instruction`; the cooled detached holder is
+  empty and brushed through its tiny outlet while the brewer is unplugged and
+  kept completely dry.
+- Evidence: `SRC-CUPONE-MANUAL`. Reverified on 28 July 2026 against the
+  current official Cup-One quick guide at
+  <https://support.moccamaster.com/hc/en-us/article_attachments/1500014620701>
+  and user manual at
+  <https://www.moccamaster.eu/pub/media/handleidingen/talen/User_Manual_Cup-One.pdf>.
+  The current guidance requires cleaning the brew basket with a mild detergent
+  and a supplied-style tool through the drip hole to prevent overflow; its
+  electrical safeguards require unplugging and cooling before cleaning and
+  prohibit immersing the cord, plug, or brewer.
+- Generation mode: new bitmap generation followed by one targeted corrective
+  image edit with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for
+  > a mobile coffee-brewing guide. Show an accurate unbranded Moccamaster
+  > Cup-One-style single-cup brewer switched off on a completely dry counter,
+  > with its power cord and plug clearly disconnected from the wall and the
+  > loose plug resting visibly beside the machine, far from water. In the
+  > foreground, show the cooled detached compact Cup-One cone brew
+  > basket/filter holder completely empty of paper, coffee grounds, and
+  > residue. One calm hand supports only the cool holder while the other gently
+  > passes a slim plain supplied-style cleaning tool straight through the
+  > model-specific single tiny bottom drip hole so the open tool path is
+  > unmistakable. Use the same credible compact holder geometry: narrow
+  > cone/wedge interior, small exterior bottom outlet, no large round batch
+  > basket. Keep the holder, slim tool path, disconnected plug, and entirely
+  > dry cleaning context legible in one coherent elevated three-quarter view.
+  > Use a warm-neutral uncluttered counter and background, semi-flat softly
+  > dimensional educational rendering, clear silhouettes, restrained
+  > materials, subtle shadows, generous crop-safe breathing room, and
+  > mobile-readable framing. Include no text, letters, numbers, labels, logos,
+  > brand marks, arrows, callouts, panels, sink, basin, bucket, water, rinse,
+  > spray, immersion, dripping, wet counter, detergent foam, paper, grounds,
+  > active brewing, steam, glowing control, fingers near live electrical parts,
+  > bottle brush, knife, drill, carafe, second machine, exploded view, or
+  > decorative objects. Do not show the plug in an outlet. Do not show the tool
+  > touching any electrical component. The final image must be one opaque
+  > 1024 x 768 scene whose only story is safe unplugged dry outlet cleaning.
+- Corrective edit prompt:
+
+  > Correct the immediately previous Cup-One dry-cleaning illustration while
+  > preserving its 4:3 composition, dry counter, clearly disconnected loose
+  > plug, switched-off unlit machine, two calm hands, slim cleaning tool,
+  > warm-neutral educational style, and absence of water or residue. Remove the
+  > second black brew basket/filter holder currently attached beneath the
+  > machine outlet; the model must have only one holder in the entire scene,
+  > the detached compact holder in the hands. Leave only an empty
+  > model-integrated support bracket and the separate metal outlet arm on the
+  > machine, with no duplicate cone, basket, or chamber. Correct the detached
+  > holder's bottom geometry: replace the oversized round nozzle and gaping
+  > opening with one small model-specific exterior bottom drip outlet
+  > containing a single tiny hole only slightly wider than the slim cleaning
+  > tool. The tool must pass straight through that tiny hole and emerge just a
+  > short visible distance below it, proving the path is clear; no large
+  > collar, pipe, funnel, or invented second hole. Keep the compact No. 1
+  > cone/wedge holder completely empty and dry, with no paper, grounds, liquid,
+  > or residue. Keep the unplugged cord and plug clearly visible and separated
+  > from any wall socket or water. Do not add text, numbers, logos, arrows,
+  > panels, sink, basin, spray, immersion, wet surface, foam, active brewing,
+  > steam, glow, carafe, second holder, or decorative clutter. The only story
+  > must be safe unplugged dry cleaning of one detached holder's single tiny
+  > drip hole. Preserve opaque 1024 x 768 output and mobile-readable crop-safe
+  > framing.
+- Rejected draft: the initial render correctly showed a loose plug and dry
+  tool path, but retained a second holder on the machine and enlarged the
+  detached holder's drip hole into a broad nozzle. Those contradictions made
+  the model-specific maintenance state ambiguous. The draft was not copied
+  into the repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_4IeUwQLJ1CINNXJQvWnk8YZy.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_auto_cupone_20_300_stage_06_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 49,834 bytes, exact 4:3.
+- Accessibility target: “A slim tool clears the empty Cup-One holder's tiny
+  drip hole on a dry counter beside the visibly unplugged brewer.” The
+  canonical exact-stage alt text and asset record remain intentionally
+  unregistered until localization and equipment review are complete.
+- Inspection: no text, numbers, logos, paper, grounds, liquid, wet surface,
+  steam, glow, plugged-in connection, immersion, duplicate holder, or
+  decorative object. The final frame shows the loose plug, one detached empty
+  holder, and a slim tool traversing one small exterior outlet.
+- Review status: **pending brewer-expert electrical-safety and equipment
+  review**. Confirm Cup-One silhouette and empty bracket, holder proportions,
+  outlet size and tool path, credible cooled dry state, unmistakably unplugged
+  context, mobile-size readability, and post-warning Learn/Live placement
+  before manifest registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
