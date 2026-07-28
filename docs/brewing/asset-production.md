@@ -2460,6 +2460,103 @@ For every asset record:
   mobile-size safety readability before the Learn warning, and
   instruction-before-image placement before registration or approval.
 
+### `p1-clever-water-first-retained-fill-imagegen-v1`
+
+- Stable asset ID:
+  `instruction_p1_clever_water_first_15_250_stage_02_instruction_default`
+- Exact scope: `clever_water_first_15_250` / source `stage_02` /
+  `p1_clever_water_first_15_250_stage_02_instruction`; clear hot water enters
+  the correctly paper-lined Clever before coffee while its off-server bottom
+  valve remains closed and dry.
+- Evidence: `SRC-CLEVER-HOFFMANN`. Reverified on 28 July 2026 against the
+  canonical library record and the current Clever brewer product description
+  at <https://cleverbrewing.coffee/collections/clever-manual-brewers/products/clever-dripper>.
+  The unusual water-first ordering, exact quantity, temperature, and timing
+  remain in Compose text rather than the bitmap.
+- Generation mode: new bitmap generation with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show one coherent water-first retained-fill
+  > action from a close elevated front three-quarter angle: an accurate
+  > unbranded translucent Clever-style bottom-actuated steep-and-release
+  > dripper standing level on its own outer support feet on a low-profile flat
+  > coffee scale whose display is turned away and unreadable. Preserve true
+  > Clever wedge geometry: a rounded-rectangular or elongated oval top opening,
+  > two broad nearly planar sloped front/back walls, narrower side walls, a
+  > tapered trapezoidal body, one sturdy integrated side handle, a distinct
+  > outer support base with feet, and a small central recessed contact
+  > actuator/outlet above the lowest foot plane. Show exactly one correctly
+  > folded rinsed white #4/Melitta-style wedge paper seated flush to the broad
+  > walls, with two flat paper faces, narrow side gussets, a visible folded
+  > crimped seam, and a flat narrow lower fold. The paper contains clear hot
+  > water only—absolutely no coffee grounds, brown tint, slurry, or particles.
+  > One adult hand safely grips only the handle of a matte gooseneck kettle and
+  > pours one thin calm stream into the center of the paper-lined brewer while
+  > a transparent retained pool naturally accumulates inside. Keep the water
+  > clear with only gentle glasslike reflections and a restrained surface
+  > ripple beneath the stream; do not imply an exact fill line. Keep the brewer
+  > off every cup, mug, carafe, server, and actuating stand. Make the outer feet
+  > visibly bear all weight on the scale while the central actuator remains
+  > fully relaxed, recessed, and separated from the scale by a clear dry air
+  > gap. Show the outlet closed and absolutely no drop, stream, wet trail, or
+  > vessel below it. Make wedge-bodied Clever identity, correct wet #4 paper,
+  > clear water before coffee, safe kettle grip, retained pool, outer-foot
+  > support, unpressed recessed actuator, dry outlet, and complete absence of
+  > drainage immediately legible at mobile size. Use a warm-neutral empty
+  > counter and soft plain background, semi-flat softly dimensional
+  > educational rendering, precise believable translucent
+  > plastic/paper/kettle/valve geometry, restrained clear/white/charcoal
+  > palette, clear silhouettes, soft light, subtle shadows, generous crop-safe
+  > breathing room, and no decorative objects. Include no text, letters,
+  > numbers, readable scale, timer, temperature display, measurement marks,
+  > labels, logos, brand marks, arrows, callouts, panels, warning symbols,
+  > comparison, cutaway, inset, coffee grounds, brown liquid, bloom, crust,
+  > spoon, stirring, cup, mug, carafe, server, actuating stand, pressed
+  > actuator, open valve, drainage, drop below the outlet, escaping water,
+  > overflow, splash, skin contact with hot water, hand under the outlet, Hario
+  > Switch lever or ball, standard round V60 cone, handleless glass cone, tap,
+  > manual drain control, V60 paper, Wave paper, basket paper, No. 1 paper,
+  > cloth, reusable metal filter, wrong-size, torn, doubled, buckled or floating
+  > paper, exact liquid height, second brewer, or clutter. The final output must
+  > be one opaque 1024×768 scene whose only story is clear water being added
+  > before coffee and retained in a closed off-server Clever dripper.
+- Correction disposition: a geometry-only edit was requested to strengthen
+  the rounded-rectangular wedge silhouette and #4 paper faces while preserving
+  the especially clear support-feet, recessed-actuator, air-gap, and retained-
+  water state. The editor could not read its local source because the runtime's
+  filesystem sandbox helper was unavailable, so it produced no derivative.
+  The technically valid base is retained only as a pending review candidate;
+  this limitation is not treated as approval.
+- Generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_GAH0bA5EsGnAeRDtsZfnltGS.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_clever_water_first_15_250_stage_02_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 78,672 bytes, exact 4:3.
+- Accessibility target: “Clear water pours into a paper-lined Clever before
+  coffee while its outer feet keep the recessed valve closed above a dry
+  scale.” The canonical exact-stage alt text remains “Instructional view of
+  add 250 g water before adding coffee using the exact brewer profile and
+  filter configuration stated in this recipe; water is retained.” The asset
+  record remains intentionally unregistered until localization and Clever-
+  geometry review are complete.
+- Inspection: no text, numbers, readable scale, coffee grounds, brown liquid,
+  cup, server, pressed actuator, drainage, escaping water, unsafe grip, second
+  brewer, or clutter. The frame clearly shows clear water being poured before
+  coffee, a fitted white paper, a retained transparent pool, outer support
+  feet planted on a blank scale, a central actuator separated by a dry air
+  gap, and no flow below it. The body and paper read as wedge-like at mobile
+  size, but their precise broad-wall/side-gusset geometry remains the explicit
+  expert-review focus.
+- Review status: **pending brewer-expert Clever body, #4 paper, actuator, and
+  retained-state review**. Confirm unmistakable non-V60 wedge geometry,
+  rounded-rectangular opening, broad planar walls, side gussets and folded
+  seam, clear water with no coffee, outer-foot load path, relaxed actuator and
+  dry air gap, closed outlet, mobile-size water-first readability, and
+  instruction-before-image placement before registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
