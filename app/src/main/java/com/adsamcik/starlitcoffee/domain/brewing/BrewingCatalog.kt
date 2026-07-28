@@ -97,6 +97,21 @@ object BuiltinBrewingCatalog {
             FilterProfile(FilterProfileId("cone_paper"), FilterMedium.PAPER, FilterGeometry.CONE),
             FilterProfile(FilterProfileId("wave_paper"), FilterMedium.PAPER, FilterGeometry.WAVE),
             FilterProfile(FilterProfileId("wedge_paper"), FilterMedium.PAPER, FilterGeometry.WEDGE),
+            FilterProfile(
+                id = FilterProfileId("flat_basket_paper"),
+                medium = FilterMedium.PAPER,
+                geometry = FilterGeometry.BASKET,
+                disposable = true,
+                evidenceConfidence = EvidenceConfidence.HIGH,
+            ),
+            FilterProfile(
+                id = FilterProfileId("number_one_paper"),
+                medium = FilterMedium.PAPER,
+                geometry = FilterGeometry.WEDGE,
+                size = "#1",
+                disposable = true,
+                evidenceConfidence = EvidenceConfidence.HIGH,
+            ),
             FilterProfile(FilterProfileId("aeropress_paper"), FilterMedium.PAPER, FilterGeometry.DISC),
             FilterProfile(FilterProfileId("aeropress_metal"), FilterMedium.METAL, FilterGeometry.DISC),
             FilterProfile(FilterProfileId("espresso_paper_disc"), FilterMedium.PAPER, FilterGeometry.DISC),
@@ -116,6 +131,9 @@ object BuiltinBrewingCatalog {
         basketProfiles = listOf(
             BasketProfile(BasketProfileId("espresso_generic_single"), pressurised = null, geometry = "single"),
             BasketProfile(BasketProfileId("espresso_generic_double"), pressurised = null, geometry = "double"),
+            BasketProfile(BasketProfileId("automatic_cone_basket"), geometry = "cone"),
+            BasketProfile(BasketProfileId("automatic_flat_basket"), geometry = "flat"),
+            BasketProfile(BasketProfileId("automatic_number_one_basket"), geometry = "wedge_number_one"),
         ),
         brewerProfiles = listOf(
             profile(
@@ -147,8 +165,24 @@ object BuiltinBrewingCatalog {
             profile("hario_switch", "steep_and_release", "Hario Switch", OutputModel.BrewWaterMinusRetention(2.0), setOf("cone_paper"), safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_GLASS, SafetyTag.OVERFLOW)),
             profile("valve_release_generic", "steep_and_release", "Generic valve-release brewer", OutputModel.BrewWaterMinusRetention(2.0), setOf("cone_paper"), safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.OVERFLOW)),
             profile("cezve_generic", "heated_unfiltered", "Cezve / ibrik", OutputModel.PreparedUnfilteredVolume, allowsUnfiltered = true, safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_METAL, SafetyTag.OPEN_FLAME)),
-            profile("automatic_batch_generic", "automatic_batch", "Automatic batch brewer", OutputModel.ReservoirToEstimatedOutput(), setOf("cone_paper", "wave_paper"), safety = setOf(SafetyTag.HOT_LIQUID)),
-            profile("automatic_single_cup_generic", "automatic_batch", "Podless single-cup brewer", OutputModel.ReservoirToEstimatedOutput(), setOf("cone_paper"), safety = setOf(SafetyTag.HOT_LIQUID)),
+            profile(
+                "automatic_batch_generic",
+                "automatic_batch",
+                "Automatic batch brewer",
+                OutputModel.ReservoirToEstimatedOutput(),
+                setOf("cone_paper", "flat_basket_paper", "wave_paper"),
+                baskets = setOf("automatic_cone_basket", "automatic_flat_basket"),
+                safety = setOf(SafetyTag.HOT_LIQUID),
+            ),
+            profile(
+                "automatic_single_cup_generic",
+                "automatic_batch",
+                "Podless single-cup brewer",
+                OutputModel.ReservoirToEstimatedOutput(),
+                setOf("cone_paper", "number_one_paper"),
+                baskets = setOf("automatic_number_one_basket"),
+                safety = setOf(SafetyTag.HOT_LIQUID),
+            ),
             profile("vietnamese_phin", "restricted_flow_gravity_concentrate", "Vietnamese phin", OutputModel.CollectedConcentrate(0.0), setOf("phin_metal"), accessories = setOf("phin_screw_insert"), safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_METAL)),
         ),
         methodAliases = mapOf(
