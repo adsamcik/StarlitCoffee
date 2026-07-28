@@ -4,12 +4,8 @@ import com.adsamcik.starlitcoffee.data.brewing.session.BrewLogPresentationContex
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionStartRequest
 import com.adsamcik.starlitcoffee.data.brewing.session.SessionExecutionContextSnapshotV1
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.BuiltInP1RecipeSnapshotMapper
-import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewQuantitiesSnapshotV1
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewRecipeSnapshotV1
-import com.adsamcik.starlitcoffee.data.brewing.snapshot.EquipmentConfigurationSnapshotV1
-import com.adsamcik.starlitcoffee.data.brewing.snapshot.FilterSelectionSnapshotV1
-import com.adsamcik.starlitcoffee.data.brewing.snapshot.FilterStackEntrySnapshotV1
-import com.adsamcik.starlitcoffee.data.brewing.snapshot.OutputModelSnapshotV1
+import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewingSnapshotValueMapper
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.RatioDefinitionSnapshotV1
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.RecipeTechniqueSnapshotV1
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfile
@@ -27,9 +23,8 @@ import com.adsamcik.starlitcoffee.domain.brewing.EquipmentCompatibilityIssue
 import com.adsamcik.starlitcoffee.domain.brewing.EquipmentCompatibilityResult
 import com.adsamcik.starlitcoffee.domain.brewing.EquipmentCompatibilityValidator
 import com.adsamcik.starlitcoffee.domain.brewing.EquipmentConfiguration
-import com.adsamcik.starlitcoffee.domain.brewing.HeatSourceClass
 import com.adsamcik.starlitcoffee.domain.brewing.FilterSelection
-import com.adsamcik.starlitcoffee.domain.brewing.OutputModel
+import com.adsamcik.starlitcoffee.domain.brewing.HeatSourceClass
 import com.adsamcik.starlitcoffee.domain.brewing.P1TemperatureBasis
 import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
 import com.adsamcik.starlitcoffee.domain.brewing.RatioDefinition
@@ -283,8 +278,8 @@ class BuiltinBrewerSessionStartFactory(
             methodFamilyId = profile.familyId.value,
             brewerProfileId = profile.id.value,
             builtInRecipeId = builtInRecipe?.id?.value,
-            equipment = effectiveInput.equipment.toSnapshot(),
-            quantities = quantities.toSnapshot(),
+            equipment = BrewingSnapshotValueMapper.equipment(effectiveInput.equipment),
+            quantities = BrewingSnapshotValueMapper.quantities(quantities),
             ratioDefinition = RatioDefinitionSnapshotV1(
                 numerator = ratioDefinition.numerator.name,
                 denominator = ratioDefinition.denominator.name,
@@ -298,7 +293,7 @@ class BuiltinBrewerSessionStartFactory(
             ),
             isDecaf = effectiveInput.isDecaf,
             notes = effectiveInput.notes.normalizedOrNull(),
-            outputModel = defaults.quantitySemantics.outputModel.toSnapshot(),
+            outputModel = BrewingSnapshotValueMapper.outputModel(defaults.quantitySemantics.outputModel),
         )
         val recipe = builtInRecipe?.let { definition ->
             BuiltInP1RecipeSnapshotMapper.enrich(baseRecipe, definition)
@@ -715,77 +710,6 @@ class BuiltinBrewerSessionStartFactory(
         }
     }
 
-    private fun EquipmentConfiguration.toSnapshot(): EquipmentConfigurationSnapshotV1 =
-        EquipmentConfigurationSnapshotV1(
-            brewerProfileId = brewerProfileId.value,
-            capacityOverrideG = capacityOverrideG,
-            filterSelection = filterSelection.toSnapshot(),
-            accessoryIds = accessoryIds.map { it.value }.sorted(),
-            basketId = basketId?.value,
-            heatSource = heatSource.name,
-        )
-
-    private fun FilterSelection.toSnapshot(): FilterSelectionSnapshotV1 = when (this) {
-        FilterSelection.Unspecified -> FilterSelectionSnapshotV1(mode = FILTER_UNSPECIFIED)
-        FilterSelection.IntentionallyUnfiltered -> {
-            FilterSelectionSnapshotV1(mode = FILTER_INTENTIONALLY_UNFILTERED)
-        }
-
-        is FilterSelection.Stack -> FilterSelectionSnapshotV1(
-            mode = FILTER_STACK,
-            entries = entries.sortedBy { entry -> entry.position }.map { entry ->
-                FilterStackEntrySnapshotV1(
-                    filterProfileId = entry.filterProfileId.value,
-                    position = entry.position,
-                    role = entry.role.name,
-                )
-            },
-        )
-    }
-
-    private fun BrewQuantities.toSnapshot(): BrewQuantitiesSnapshotV1 = BrewQuantitiesSnapshotV1(
-        dryCoffeeDoseG = dryCoffeeDoseG,
-        brewWaterInputG = brewWaterInputG,
-        reservoirInputG = reservoirInputG,
-        targetBeverageYieldG = targetBeverageYieldG,
-        targetConcentrateYieldG = targetConcentrateYieldG,
-        finalServedBeverageG = finalServedBeverageG,
-        iceG = iceG,
-        bypassWaterG = bypassWaterG,
-        dilutionWaterG = dilutionWaterG,
-        measuredOutputG = measuredOutputG,
-    )
-
-    private fun OutputModel.toSnapshot(): OutputModelSnapshotV1 = when (this) {
-        is OutputModel.BrewWaterMinusRetention -> OutputModelSnapshotV1(
-            kind = OUTPUT_BREW_WATER_MINUS_RETENTION,
-            retainedWaterGPerCoffeeG = retainedWaterGPerCoffeeG,
-        )
-
-        OutputModel.DirectTargetBeverageYield -> OutputModelSnapshotV1(
-            kind = OUTPUT_DIRECT_TARGET_BEVERAGE_YIELD,
-        )
-
-        is OutputModel.CollectedConcentrate -> OutputModelSnapshotV1(
-            kind = OUTPUT_COLLECTED_CONCENTRATE,
-            retainedWaterGPerCoffeeG = retainedWaterGPerCoffeeG,
-        )
-
-        OutputModel.PreparedUnfilteredVolume -> OutputModelSnapshotV1(
-            kind = OUTPUT_PREPARED_UNFILTERED_VOLUME,
-        )
-
-        is OutputModel.ReservoirToEstimatedOutput -> OutputModelSnapshotV1(
-            kind = OUTPUT_RESERVOIR_TO_ESTIMATED_OUTPUT,
-            internalRetentionG = internalRetentionG,
-        )
-
-        OutputModel.UserMeasuredOutput -> OutputModelSnapshotV1(kind = OUTPUT_USER_MEASURED_OUTPUT)
-        OutputModel.NoMeaningfulBeverageYield -> {
-            OutputModelSnapshotV1(kind = OUTPUT_NO_MEANINGFUL_BEVERAGE_YIELD)
-        }
-    }
-
     private fun FilterSelection.logLabel(): String? = when (this) {
         FilterSelection.Unspecified -> null
         FilterSelection.IntentionallyUnfiltered -> FILTER_INTENTIONALLY_UNFILTERED
@@ -844,16 +768,6 @@ class BuiltinBrewerSessionStartFactory(
         const val MIN_CEZVE_FOAM_RISE_CYCLES = 1
         const val MAX_CEZVE_FOAM_RISE_CYCLES = 2
 
-        const val FILTER_UNSPECIFIED = "UNSPECIFIED"
         const val FILTER_INTENTIONALLY_UNFILTERED = "INTENTIONALLY_UNFILTERED"
-        const val FILTER_STACK = "STACK"
-
-        const val OUTPUT_BREW_WATER_MINUS_RETENTION = "BREW_WATER_MINUS_RETENTION"
-        const val OUTPUT_DIRECT_TARGET_BEVERAGE_YIELD = "DIRECT_TARGET_BEVERAGE_YIELD"
-        const val OUTPUT_COLLECTED_CONCENTRATE = "COLLECTED_CONCENTRATE"
-        const val OUTPUT_PREPARED_UNFILTERED_VOLUME = "PREPARED_UNFILTERED_VOLUME"
-        const val OUTPUT_RESERVOIR_TO_ESTIMATED_OUTPUT = "RESERVOIR_TO_ESTIMATED_OUTPUT"
-        const val OUTPUT_USER_MEASURED_OUTPUT = "USER_MEASURED_OUTPUT"
-        const val OUTPUT_NO_MEANINGFUL_BEVERAGE_YIELD = "NO_MEANINGFUL_BEVERAGE_YIELD"
     }
 }
