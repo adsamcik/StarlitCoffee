@@ -91,8 +91,91 @@ class SessionReducerTest {
         )
 
         assertEquals(0, nonMatching.state.currentStageIndex)
+        assertTrue(
+            StageObservationId("last_drip") in
+                nonMatching.state.stageProgress[0].actuals.observations,
+        )
         assertEquals(1, matching.state.currentStageIndex)
         assertEquals(StageCompletionKind.OBSERVED, matching.state.stageProgress[0].completionKind)
+    }
+
+    @Test
+    fun `measurements reject unusable values and preserve ordered final effects`() {
+        val state = session(stage("pour", StageCompletionMode.AddedAmount(10.0)))
+        val started = reduce(state, SessionEvent.Start(), monotonic = 0L, wall = 1_000L)
+
+        val invalid = reduce(
+            started.state,
+            SessionEvent.RecordActual(StageActualValue.AddedAmount(Double.NaN)),
+            monotonic = 1L,
+            wall = 1_001L,
+        )
+        assertTrue(invalid.wasIgnored)
+        assertEquals(started.state, invalid.state)
+        assertTrue(invalid.effects.isEmpty())
+
+        val mismatched = reduce(
+            started.state,
+            SessionEvent.RecordActual(StageActualValue.BeverageYield(100.0)),
+            monotonic = 2L,
+            wall = 1_002L,
+        )
+        assertEquals(0, mismatched.state.currentStageIndex)
+        assertEquals(100.0, mismatched.state.stageProgress[0].actuals.beverageYieldGrams)
+        assertEquals(null, mismatched.state.stageProgress[0].actuals.addedAmountGrams)
+
+        val belowTarget = reduce(
+            mismatched.state,
+            SessionEvent.RecordActual(StageActualValue.AddedAmount(9.9)),
+            monotonic = 3L,
+            wall = 1_003L,
+        )
+        assertEquals(0, belowTarget.state.currentStageIndex)
+        assertEquals(null, belowTarget.state.stageProgress[0].completionKind)
+
+        val completed = reduce(
+            belowTarget.state,
+            SessionEvent.RecordActual(StageActualValue.AddedAmount(10.0)),
+            monotonic = 4L,
+            wall = 1_004L,
+        )
+
+        assertEquals(BrewSessionStatus.COMPLETED, completed.state.status)
+        assertEquals(StageCompletionKind.MEASURED, completed.state.stageProgress[0].completionKind)
+        assertEquals(100.0, completed.state.stageProgress[0].actuals.beverageYieldGrams)
+        assertEquals(10.0, completed.state.stageProgress[0].actuals.addedAmountGrams)
+        assertEquals(3, completed.effects.size)
+        assertTrue(completed.effects[0] is SessionEffect.PersistRuntime)
+        assertTrue(completed.effects[1] is PendingSessionEffect.StageAlert)
+        assertTrue(completed.effects[2] is PendingSessionEffect.FinalizeBrewLog)
+    }
+
+    @Test
+    fun `matching marker can complete a paused stage without scheduling the next deadline`() {
+        val markerId = StageMarkerId("release_complete")
+        val state = session(
+            stage("release", StageCompletionMode.ExternalMarker(markerId)),
+            stage("drawdown", StageCompletionMode.Countdown(30_000L)),
+        )
+        val started = reduce(state, SessionEvent.Start(), monotonic = 0L, wall = 1_000L)
+        val paused = reduce(started.state, SessionEvent.Pause(), monotonic = 0L, wall = 1_001L)
+
+        val marked = reduce(
+            paused.state,
+            SessionEvent.RecordMarker(markerId),
+            monotonic = 1L,
+            wall = 1_002L,
+        )
+
+        assertEquals(BrewSessionStatus.PAUSED, marked.state.status)
+        assertEquals(1, marked.state.currentStageIndex)
+        assertEquals(StageCompletionKind.EXTERNAL_MARKER, marked.state.stageProgress[0].completionKind)
+        assertTrue(markerId in marked.state.stageProgress[0].actuals.markers)
+        assertEquals(StageRunStatus.ACTIVE, marked.state.stageProgress[1].status)
+        assertEquals(null, marked.state.activeClockAnchor)
+        assertFalse(
+            marked.state.pendingEffects.any { it is PendingSessionEffect.ScheduleStageDeadline },
+        )
     }
 
     @Test

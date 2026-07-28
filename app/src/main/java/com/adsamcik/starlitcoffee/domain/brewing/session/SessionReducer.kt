@@ -6,9 +6,22 @@ package com.adsamcik.starlitcoffee.domain.brewing.session
  * then deliver its durable outbox in order.
  */
 object SessionReducer {
+    fun reduce(
+        state: SessionRuntimeState,
+        event: SessionEvent,
+        now: SessionClockReading,
+    ): SessionTransition = SessionTransitionReducer().reduce(state, event, now)
+}
 
-    private const val MAX_RETAINED_EVENT_IDS = 128
-    private const val MAX_RETAINED_EFFECT_IDS = 256
+private const val MAX_RETAINED_EVENT_IDS = 128
+private const val MAX_RETAINED_EFFECT_IDS = 256
+
+/**
+ * Transition implementation kept behind [SessionReducer]'s stable facade.
+ * Stage lookup and pure progression rules live at file scope so each event
+ * handler describes only its transition and effect ordering.
+ */
+private class SessionTransitionReducer {
 
     fun reduce(
         state: SessionRuntimeState,
@@ -207,23 +220,19 @@ object SessionReducer {
         value: StageActualValue,
         now: SessionClockReading,
     ): Reduction? {
-        if (state.status !in setOf(BrewSessionStatus.RUNNING, BrewSessionStatus.PAUSED)) return null
-        if (!value.isUsable()) return null
-        val currentIndex = state.currentStageIndex ?: return null
-        val currentStage = state.currentStage ?: return null
-        val currentProgress = state.stageProgress.getOrNull(currentIndex) ?: return null
-        if (currentProgress.status != StageRunStatus.ACTIVE) return null
+        if (!state.acceptsStageInput() || !value.isUsable()) return null
+        val active = activeStageWithProgress(state) ?: return null
 
-        val updatedActuals = currentProgress.actuals.with(value)
+        val updatedActuals = active.progress.actuals.with(value)
         var working = state.copy(
             stageProgress = state.stageProgress.replaceAt(
-                currentIndex,
-                currentProgress.copy(actuals = updatedActuals),
+                active.index,
+                active.progress.copy(actuals = updatedActuals),
             ),
             updatedAtWallClockMillis = now.wallClockMillis,
         )
         val effects = mutableListOf<PendingSessionEffect>()
-        if (currentStage.definition.completionMode.isSatisfiedBy(updatedActuals)) {
+        if (active.stage.definition.completionMode.isSatisfiedBy(updatedActuals)) {
             working = completeCurrentStage(working, StageCompletionKind.MEASURED, now, effects)
         }
         return completeAutomaticStages(working, now, effects)
@@ -260,22 +269,19 @@ object SessionReducer {
         completes: (StageCompletionMode) -> Boolean,
         completionKind: StageCompletionKind,
     ): Reduction? {
-        if (state.status !in setOf(BrewSessionStatus.RUNNING, BrewSessionStatus.PAUSED)) return null
-        val currentIndex = state.currentStageIndex ?: return null
-        val currentStage = state.currentStage ?: return null
-        val progress = state.stageProgress.getOrNull(currentIndex) ?: return null
-        if (progress.status != StageRunStatus.ACTIVE) return null
+        if (!state.acceptsStageInput()) return null
+        val active = activeStageWithProgress(state) ?: return null
 
-        val actuals = updateActuals(progress.actuals)
+        val actuals = updateActuals(active.progress.actuals)
         var working = state.copy(
             stageProgress = state.stageProgress.replaceAt(
-                currentIndex,
-                progress.copy(actuals = actuals),
+                active.index,
+                active.progress.copy(actuals = actuals),
             ),
             updatedAtWallClockMillis = now.wallClockMillis,
         )
         val effects = mutableListOf<PendingSessionEffect>()
-        if (completes(currentStage.definition.completionMode)) {
+        if (completes(active.stage.definition.completionMode)) {
             working = completeCurrentStage(working, completionKind, now, effects)
         }
         return completeAutomaticStages(working, now, effects)
@@ -359,16 +365,10 @@ object SessionReducer {
         effects: MutableList<PendingSessionEffect>,
     ): Reduction {
         var working = initial
-        while (working.status == BrewSessionStatus.RUNNING) {
-            val current = currentStageWithProgress(working) ?: break
-            val (stage, progress) = current
-            val automatic = when (val mode = stage.definition.completionMode) {
-                StageCompletionMode.Immediate -> true
-                is StageCompletionMode.Countdown -> progress.elapsedActiveMillis >= mode.durationMillis
-                is StageCompletionMode.ElapsedRange -> progress.elapsedActiveMillis >= mode.maximumMillis
-                else -> false
-            }
-            if (!automatic) break
+        while (
+            working.status == BrewSessionStatus.RUNNING &&
+            activeStageWithProgress(working)?.isAutomaticCompletionDue() == true
+        ) {
             working = completeCurrentStage(working, StageCompletionKind.AUTOMATIC, now, effects)
         }
         return Reduction(working, effects)
@@ -419,10 +419,8 @@ object SessionReducer {
         now: SessionClockReading,
         effects: MutableList<PendingSessionEffect>,
     ): SessionRuntimeState {
-        val index = state.currentStageIndex ?: return state
-        val stage = state.stagePlan.stages.getOrNull(index) ?: return state
-        val progress = state.stageProgress.getOrNull(index) ?: return state
-        if (progress.status != StageRunStatus.ACTIVE) return state
+        val active = activeStageWithProgress(state) ?: return state
+        val (index, stage, progress) = active
 
         cancelDeadline(state, stage, "stage_complete", effects)
         if (stage.definition.alertPolicy.alertOnCompletion) {
@@ -452,21 +450,21 @@ object SessionReducer {
             updatedAtWallClockMillis = now.wallClockMillis,
         )
         val nextIndex = index + 1
-        if (nextIndex >= working.stagePlan.stages.size) {
+        return if (nextIndex >= working.stagePlan.stages.size) {
             effects += PendingSessionEffect.FinalizeBrewLog(
                 effectId = effectId(working, "finalize_brew_log"),
                 sessionId = working.sessionId,
             )
-            return working.copy(
+            working.copy(
                 status = BrewSessionStatus.COMPLETED,
                 currentStageIndex = null,
                 endedAtWallClockMillis = now.wallClockMillis,
                 activeClockAnchor = null,
             )
+        } else {
+            working = working.copy(currentStageIndex = nextIndex)
+            activateCurrentStage(working, now, effects)
         }
-
-        working = working.copy(currentStageIndex = nextIndex)
-        return activateCurrentStage(working, now, effects)
     }
 
     private fun scheduleDeadline(
@@ -506,15 +504,6 @@ object SessionReducer {
         )
     }
 
-    private fun currentStageWithProgress(
-        state: SessionRuntimeState,
-    ): Pair<CompiledBrewStage, StageRuntimeProgress>? {
-        val index = state.currentStageIndex ?: return null
-        val stage = state.stagePlan.stages.getOrNull(index) ?: return null
-        val progress = state.stageProgress.getOrNull(index) ?: return null
-        return stage to progress
-    }
-
     private fun persistTransition(
         previous: SessionRuntimeState,
         reduction: Reduction,
@@ -548,37 +537,6 @@ object SessionReducer {
         return if (newEffects.isEmpty()) state else state.copy(pendingEffects = state.pendingEffects + newEffects)
     }
 
-    private fun StageActuals.with(value: StageActualValue): StageActuals = when (value) {
-        is StageActualValue.AddedAmount -> copy(addedAmountGrams = value.grams)
-        is StageActualValue.BeverageYield -> copy(beverageYieldGrams = value.grams)
-        is StageActualValue.CumulativeAmount -> copy(cumulativeAmountGrams = value.grams)
-    }
-
-    private fun StageActualValue.isUsable(): Boolean = when (this) {
-        is StageActualValue.AddedAmount -> grams.isFinite() && grams >= 0.0
-        is StageActualValue.BeverageYield -> grams.isFinite() && grams >= 0.0
-        is StageActualValue.CumulativeAmount -> grams.isFinite() && grams >= 0.0
-    }
-
-    private fun StageCompletionMode.isSatisfiedBy(actuals: StageActuals): Boolean = when (this) {
-        is StageCompletionMode.AddedAmount -> (actuals.addedAmountGrams ?: 0.0) >= targetGrams
-        is StageCompletionMode.BeverageYield -> (actuals.beverageYieldGrams ?: 0.0) >= targetGrams
-        is StageCompletionMode.CumulativeAmount -> (actuals.cumulativeAmountGrams ?: 0.0) >= targetGrams
-        else -> false
-    }
-
-    private fun StageCompletionMode.allowsManualAdvance(elapsedMillis: Long): Boolean = when (this) {
-        StageCompletionMode.Manual -> true
-        is StageCompletionMode.ElapsedRange -> elapsedMillis >= minimumMillis
-        else -> false
-    }
-
-    private fun StageCompletionMode.deadlineDurationMillis(): Long? = when (this) {
-        is StageCompletionMode.Countdown -> durationMillis
-        is StageCompletionMode.ElapsedRange -> maximumMillis
-        else -> null
-    }
-
     private fun List<StageRuntimeProgress>.replaceAt(
         index: Int,
         value: StageRuntimeProgress,
@@ -590,12 +548,6 @@ object SessionReducer {
     private fun deadlineToken(state: SessionRuntimeState, stage: CompiledBrewStage): String =
         "${state.sessionId.value}:${stage.instanceId.persistentKey}:deadline"
 
-    private fun saturatingAdd(left: Long, right: Long): Long = when {
-        right <= 0L -> left
-        left > Long.MAX_VALUE - right -> Long.MAX_VALUE
-        else -> left + right
-    }
-
     private enum class TimeAdvanceSource {
         MONOTONIC,
         WALL_RESTORE,
@@ -606,4 +558,76 @@ object SessionReducer {
         val state: SessionRuntimeState,
         val effects: List<PendingSessionEffect> = emptyList(),
     )
+}
+
+private data class ActiveStage(
+    val index: Int,
+    val stage: CompiledBrewStage,
+    val progress: StageRuntimeProgress,
+)
+
+private fun currentStageWithProgress(
+    state: SessionRuntimeState,
+): Pair<CompiledBrewStage, StageRuntimeProgress>? {
+    val index = state.currentStageIndex ?: return null
+    val stage = state.stagePlan.stages.getOrNull(index) ?: return null
+    val progress = state.stageProgress.getOrNull(index) ?: return null
+    return stage to progress
+}
+
+private fun activeStageWithProgress(state: SessionRuntimeState): ActiveStage? {
+    val index = state.currentStageIndex ?: return null
+    val stage = state.stagePlan.stages.getOrNull(index) ?: return null
+    val progress = state.stageProgress.getOrNull(index) ?: return null
+    return progress.takeIf { it.status == StageRunStatus.ACTIVE }?.let {
+        ActiveStage(index, stage, it)
+    }
+}
+
+private fun SessionRuntimeState.acceptsStageInput(): Boolean =
+    status == BrewSessionStatus.RUNNING || status == BrewSessionStatus.PAUSED
+
+private fun ActiveStage.isAutomaticCompletionDue(): Boolean =
+    when (val mode = stage.definition.completionMode) {
+        StageCompletionMode.Immediate -> true
+        is StageCompletionMode.Countdown -> progress.elapsedActiveMillis >= mode.durationMillis
+        is StageCompletionMode.ElapsedRange -> progress.elapsedActiveMillis >= mode.maximumMillis
+        else -> false
+    }
+
+private fun StageActuals.with(value: StageActualValue): StageActuals = when (value) {
+    is StageActualValue.AddedAmount -> copy(addedAmountGrams = value.grams)
+    is StageActualValue.BeverageYield -> copy(beverageYieldGrams = value.grams)
+    is StageActualValue.CumulativeAmount -> copy(cumulativeAmountGrams = value.grams)
+}
+
+private fun StageActualValue.isUsable(): Boolean = when (this) {
+    is StageActualValue.AddedAmount -> grams.isFinite() && grams >= 0.0
+    is StageActualValue.BeverageYield -> grams.isFinite() && grams >= 0.0
+    is StageActualValue.CumulativeAmount -> grams.isFinite() && grams >= 0.0
+}
+
+private fun StageCompletionMode.isSatisfiedBy(actuals: StageActuals): Boolean = when (this) {
+    is StageCompletionMode.AddedAmount -> (actuals.addedAmountGrams ?: 0.0) >= targetGrams
+    is StageCompletionMode.BeverageYield -> (actuals.beverageYieldGrams ?: 0.0) >= targetGrams
+    is StageCompletionMode.CumulativeAmount -> (actuals.cumulativeAmountGrams ?: 0.0) >= targetGrams
+    else -> false
+}
+
+private fun StageCompletionMode.allowsManualAdvance(elapsedMillis: Long): Boolean = when (this) {
+    StageCompletionMode.Manual -> true
+    is StageCompletionMode.ElapsedRange -> elapsedMillis >= minimumMillis
+    else -> false
+}
+
+private fun StageCompletionMode.deadlineDurationMillis(): Long? = when (this) {
+    is StageCompletionMode.Countdown -> durationMillis
+    is StageCompletionMode.ElapsedRange -> maximumMillis
+    else -> null
+}
+
+private fun saturatingAdd(left: Long, right: Long): Long = when {
+    right <= 0L -> left
+    left > Long.MAX_VALUE - right -> Long.MAX_VALUE
+    else -> left + right
 }
