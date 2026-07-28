@@ -163,6 +163,82 @@ For every asset record:
   integrated base/perforation geometry, flange overlap, cup support, and absence
   of implied pressure before approval.
 
+### `p1-chemex-filter-air-channel-imagegen-v2`
+
+- Stable asset ID:
+  `instruction_p1_chemex_42_700_stage_01_instruction_default`
+- Exact scope: `chemex_42_700` / source `stage_01` /
+  `p1_chemex_42_700_stage_01_instruction`; six-cup hourglass carafe and
+  bonded filter, before coffee or water is added.
+- Evidence: `SRC-CHEMEX-FAQ`. Reverified on 28 July 2026 against the current
+  official Chemex FAQ at <https://chemexcoffeemaker.com/pages/faq>, which
+  still identifies three filter leaves on the spout as the protection against
+  collapse into the air channel.
+- Generation mode: new bitmap generation followed by one corrective image
+  edit with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 scientific-educational
+  > instructional illustration for a mobile coffee-brewing guide. Use an
+  > elevated three-quarter close view of the upper half of an unbranded
+  > six-cup Chemex-style hourglass borosilicate glass carafe, stable on a
+  > simple warm-neutral counter. Make the pouring spout and its open air
+  > channel unmistakably visible. Show one correctly folded thick bonded paper
+  > filter seated in the carafe: the visibly thicker three-layer side lies
+  > over the pouring spout, while exactly one paper layer lies on the opposite
+  > side. Preserve a clearly visible open passage between the folded paper and
+  > the spout so the filter cannot collapse into and seal the air channel. A
+  > relaxed hand may gently steady the dry filter at the rim without hiding
+  > the fold, layer asymmetry, or spout. Keep the carafe empty and focus on
+  > this single correct setup state. Semi-flat softly dimensional educational
+  > rendering, restrained warm-neutral palette, clear silhouettes, subtle
+  > shadows, uncluttered neutral background, crop-safe composition readable at
+  > 300–400 dp, all critical geometry away from rounded corners. No text,
+  > letters, numbers, measurement marks, labels, captions, logos, brand marks,
+  > UI, arrows, inset, split panel, comparison, kettle, coffee grounds, water,
+  > active pour, steam, serving action, second filter, metal filter, V60 cone,
+  > decorative objects, clutter, sealed spout, or single-layer side over the
+  > spout.
+- Corrective edit prompt:
+
+  > Edit the immediately previous Chemex instructional illustration while
+  > preserving its clean 4:3 warm-neutral semi-flat style, elevated close
+  > camera, empty stable six-cup hourglass carafe, and absence of text or
+  > clutter. Correct the critical filter geometry so it is unambiguous: rotate
+  > and reseat the folded bonded paper filter around the vertical axis so the
+  > visibly thick three-layer bundle is directly against and centered over the
+  > inside wall of the pouring spout, with three distinct stacked paper edges
+  > readable immediately behind the spout. Put exactly one paper layer on the
+  > opposite rear side. Show a clear narrow open air passage running between
+  > the three-layer bundle and the spout groove, so neither paper nor fold
+  > seals the channel. Do not let the broad single sheet cross or cover the
+  > spout. Keep the relaxed hand only at the far rim and do not hide the three
+  > paper edges, spout, or open channel. No other objects, coffee, water,
+  > kettle, steam, text, numbers, labels, logos, arrows, inset, split panel,
+  > comparison, or decoration.
+- Rejected draft: the first render offset the visible three-layer edge from
+  the spout enough that the broad single sheet could be read as covering the
+  air channel. It was not copied into the repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_AjIWZRF6721moi7VoFiKR7OI.png`
+  (opaque RGB PNG, 1448 × 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_chemex_42_700_stage_01_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 × 768 px, 71,828 bytes, exact 4:3.
+- Accessibility target: “A folded bonded filter sits in a six-cup Chemex with
+  its three-layer side over the spout and the air channel visibly open.” The
+  exact-stage alt-text resource and asset record remain intentionally
+  unregistered until localization and geometry review are complete.
+- Inspection: no text, numbers, logos, extra panels, liquid, coffee, kettle,
+  or secondary action. The corrected frame puts three distinct paper edges at
+  the spout, keeps the single layer opposite, and remains readable at phone
+  size.
+- Review status: **pending brewer-expert safety and geometry review**. Confirm
+  the layer count, fold orientation, visible air passage, correct six-cup
+  bonded-filter fit, and post-warning Learn/Live placement before manifest
+  registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
