@@ -9,6 +9,9 @@ import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import com.adsamcik.starlitcoffee.data.work.LongBrewCompletionWorker
 import com.adsamcik.starlitcoffee.data.work.WorkManagerLongSessionScheduler
 import com.adsamcik.starlitcoffee.domain.brewing.session.ClockedSessionEngine
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
+import com.adsamcik.starlitcoffee.domain.brewing.session.LongSessionScheduler
+import com.adsamcik.starlitcoffee.domain.brewing.session.SessionEffectId
 import com.adsamcik.starlitcoffee.domain.brewing.session.MonotonicClock
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionId
 import com.adsamcik.starlitcoffee.domain.brewing.session.WallClock
@@ -23,6 +26,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.WallClock
 class BrewSessionRuntime private constructor(
     val coordinator: BrewSessionCoordinator,
     private val sessionRepository: ActiveBrewSessionRepository,
+    private val scheduler: LongSessionScheduler,
 ) {
     /**
      * Reads only indexed scheduling metadata. The worker intentionally does
@@ -39,6 +43,37 @@ class BrewSessionRuntime private constructor(
                 dueAtWallClockMillis = entity.deadlineAtWallClockMillis,
             )
         }
+
+    /** Replays durable work and restores the current deadline prompt after startup. */
+    suspend fun reconcileRecoverableSessions(): List<BrewSessionOperationResult> {
+        val results = coordinator.reconcileRecoverableSessions()
+        for (result in results) {
+            val active = result as? BrewSessionOperationResult.Active ?: continue
+            enqueuePersistedDeadline(active.session)
+        }
+        return results
+    }
+
+    private suspend fun enqueuePersistedDeadline(session: ActiveBrewSession) {
+        if (session.runtime.status != BrewSessionStatus.RUNNING) return
+        val stage = session.runtime.currentStage ?: return
+        val deadline = scheduledDeadline(session.runtime.sessionId) ?: return
+        val token = deadline.scheduleToken ?: return
+        val dueAt = deadline.dueAtWallClockMillis ?: return
+        if (
+            deadline.status != BrewSessionStatus.RUNNING.name ||
+                deadline.stageInstanceKey != stage.instanceId.persistentKey
+        ) return
+        scheduler.schedule(
+            sessionId = session.runtime.sessionId,
+            stageInstanceId = stage.instanceId,
+            scheduleToken = token,
+            dueAtWallClockMillis = dueAt,
+            effectId = SessionEffectId(
+                "${session.runtime.sessionId.value}:startup_schedule:$token",
+            ),
+        )
+    }
 
     companion object {
         /** Builds the production runtime from the process-wide Room and WorkManager instances. */
@@ -87,6 +122,7 @@ class BrewSessionRuntime private constructor(
                     effectHandler = effectHandler,
                 ),
                 sessionRepository = repository,
+                scheduler = scheduler,
             )
         }
     }

@@ -4,6 +4,7 @@ import android.app.Application
 import android.graphics.Bitmap
 import android.util.Log
 import com.adsamcik.mindlayer.sdk.Mindlayer
+import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionRuntime
 import com.adsamcik.starlitcoffee.data.network.llm.LlmCombineRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
 import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
@@ -74,6 +75,16 @@ class StarlitCoffeeApp : Application() {
         super.onCreate()
         warmupScope.launch {
             BagExtractionScheduler.reconcilePersistedState(applicationContext)
+        }
+
+        warmupScope.launch {
+            try {
+                BrewSessionRuntime.create(applicationContext).reconcileRecoverableSessions()
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Exception) {
+                Log.w(TAG, "Durable brew-session recovery failed", error)
+            }
         }
         if (!MindlayerAvailability.isInstalled(this)) {
             Log.i(TAG, "Mindlayer is not installed; skipping connection warmup")
