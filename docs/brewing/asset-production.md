@@ -927,6 +927,98 @@ For every asset record:
   seated ball and sealed outlet, absence of drawdown, safe kettle clearance,
   and mobile-size legibility before manifest registration or approval.
 
+### `p1-switch-gravity-open-rinse-imagegen-v2`
+
+- Stable asset ID:
+  `instruction_p1_switch_gravity_15_250_stage_01_instruction_default`
+- Exact scope: `switch_gravity_15_250` / source `stage_01` /
+  `p1_switch_gravity_15_250_stage_01_instruction`; clean V60 02 paper is
+  rinsed while the Switch 02 valve remains open and rinse water drains freely.
+- Evidence: `SRC-HARIO-SWITCH` and `SRC-HARIO-V60-OFFICIAL`. Reverified on
+  28 July 2026 against HARIO Europe's current Switch product page at
+  <https://www.hario-europe.com/products/v60-immersion-dripper-switch> and
+  Hario UK's current V60 guide at
+  <https://www.hario.co.uk/pages/brew-guides-v60-intermediate>. The current
+  sources corroborate the V60 02 paper, silicone base, ball-valve release
+  mechanism, full-paper rinse, and complete drainage before adding coffee.
+- Generation mode: new bitmap generation followed by one targeted corrective
+  image edit with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for
+  > a mobile coffee-brewing guide. Use a close elevated three-quarter view of
+  > an accurate unbranded Hario Switch 02-style brewer centered over a stable
+  > heat-safe glass waste server. Show the handleless ribbed clear-glass V60
+  > 02 cone, exactly one correctly seated clean white V60 02 paper, a dark
+  > silicone base, the real side lever, and the stainless-steel ball valve
+  > visible through the central lower mechanism. Keep the lever in its
+  > physically credible open position throughout and show the steel ball
+  > lifted clearly away from the outlet. A plain gooseneck kettle sends one
+  > gentle narrow rinse stream around the empty paper wall while clear rinse
+  > water drains freely in one visible vertical stream into the server. Show no
+  > retained pool above the valve. Keep the kettle hand safely away from hot
+  > glass and metal. Make the open lever-and-ball geometry, wet clean paper,
+  > and free clear drainage the only visual story. Use a warm-neutral
+  > uncluttered counter and background, semi-flat softly dimensional
+  > educational rendering, precise believable mechanism geometry, clear
+  > silhouettes, restrained materials, subtle shadows, generous crop-safe
+  > breathing room, and mobile-readable framing. Include no text, letters,
+  > numbers, measurement marks, labels, logos, brand marks, arrows, callouts,
+  > panels, cutaway, inset, decorative objects, coffee grounds, coffee-colored
+  > liquid, slurry, bloom, closed lever, seated or blocking ball, retained
+  > water, absent flow, Clever actuator, tap, generic V60-only base, glass
+  > handle, other filter type, hand moving the lever, hot-part contact,
+  > overflow, splash, or serving action. Do not omit or misalign the Switch
+  > lever, steel ball, silicone base, V60 02 cone, or seated paper. The final
+  > output must be one opaque 1024 x 768 scene with free drainage plainly
+  > visible.
+- Corrective edit prompt:
+
+  > Correct the immediately previous Switch 02 rinse illustration while
+  > preserving its clean white V60 02 paper, clear rinse stream from the
+  > kettle, continuous clear drain stream into the stable glass waste server,
+  > warm-neutral 4:3 educational style, text-free composition, and every other
+  > clean detail. The valve state is currently ambiguous because the steel ball
+  > reads as seated. Make the open mechanism physically explicit: move the
+  > outer end of the real side switch/lever into its depressed release position
+  > and show its linkage lifting the stainless-steel ball upward, with a clearly
+  > visible air gap between the bottom of the ball and the central outlet seat.
+  > The ball must float above rather than touch or plug the hole. Align the
+  > uninterrupted clear drainage stream directly beneath that now-open central
+  > outlet. Keep no retained water pool above the valve. Preserve the
+  > handleless ribbed glass V60 02 cone, dark silicone base, single clean paper,
+  > no grounds, no coffee-colored liquid, and no hand touching the switch. Do
+  > not add arrows, cutaway panels, labels, text, numbers, logos, extra
+  > mechanisms, Clever actuator, closed lever, seated ball, blocked outlet,
+  > absent flow, clutter, or decorative objects. The only story must be the
+  > Switch held open throughout a clean-paper rinse, with ball visibly raised
+  > and water draining freely. Preserve opaque 1024 x 768 output and crop-safe
+  > mobile legibility.
+- Rejected draft: the initial render clearly showed clean-paper rinsing and
+  free drainage, but the steel ball still appeared seated against the outlet,
+  contradicting the visible drain stream. It was not copied into the
+  repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_fMYjfQjFxI2YUgkIteyM7zj2.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_switch_gravity_15_250_stage_01_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 66,124 bytes, exact 4:3.
+- Accessibility target: “Clear water rinses a clean V60 02 paper while the
+  depressed Switch lever holds the steel ball above the outlet and water
+  drains freely.” The canonical exact-stage alt text and asset record remain
+  intentionally unregistered until localization and mechanism review are
+  complete.
+- Inspection: no text, numbers, logos, grounds, coffee-colored liquid,
+  retained pool, secondary panel, hot-part contact, or clutter. The final
+  frame shows the lever angled into release, the ball raised relative to the
+  outlet, and a continuous clear stream entering the waste server.
+- Review status: **pending brewer-expert mechanism review**. Confirm exact
+  Switch 02 proportions, V60 02 paper fit, depressed/open lever direction,
+  ball-to-seat gap, free-drain alignment, safe kettle clearance, and immediate
+  distinction from the retained-phase asset before registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.

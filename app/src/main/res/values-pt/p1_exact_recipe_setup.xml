@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Configuração de receitas P1 exatas. -->
+    <string name="heading_exact_recipe_choose">Escolha uma receita exata</string>
+    <string name="msg_exact_recipe_choose_hint">Escolha uma receita completa de uma única fonte. As quantidades e as etapas nunca são combinadas entre receitas.</string>
+    <string name="msg_exact_recipe_single_compatible">Esta é a única receita completa proveniente de uma única fonte para este preparador, por isso é selecionada automaticamente.</string>
+    <string name="heading_exact_recipe_details">Quantidades da receita</string>
+    <string name="action_learn_this_recipe">Conhecer esta receita</string>
+    <string name="label_exact_recipe_brew_water">água de preparação</string>
+    <string name="label_exact_recipe_reservoir_water">água do reservatório</string>
+    <string name="label_exact_recipe_brew_ice">Gelo da preparação</string>
+    <string name="label_exact_recipe_combined_ratio">Rácio combinado</string>
+    <string name="label_exact_recipe_unresolved">Não especificado pela fonte</string>
+    <string name="label_exact_recipe_unavailable">Indisponível</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · café seco : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Cerca de %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Começar a %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Intervalo indicado pela máquina: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Água quente; sem temperatura exata indicada</string>
+    <string name="label_exact_recipe_machine_controlled">Controlado pela máquina</string>
+    <string name="label_exact_recipe_cold_observed">Início a frio; termine ao observar a espuma</string>
+
+    <string name="format_exact_recipe_time_approximate">Cerca de %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Intervalo inicial: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Cerca de %1$s; termine com base no que observar</string>
+    <string name="label_exact_recipe_time_geometry">Termine quando o escoamento acabar; o tempo depende da geometria do preparador</string>
+    <string name="label_exact_recipe_time_observed">Termine com base no que observar, não com um temporizador fixo</string>
+    <string name="label_exact_recipe_time_machine">Ciclo específico da máquina</string>
+
+    <string name="heading_exact_recipe_equipment">Equipamento exato</string>
+    <string name="msg_exact_recipe_equipment_single">Use esta configuração completa de filtro, cesto e acessórios.</string>
+    <string name="msg_exact_recipe_equipment_choose">Escolha uma configuração completa. As opções de filtro e cesto mantêm-se emparelhadas.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Intencionalmente sem filtro</string>
+    <string name="label_exact_equipment_cone_paper">Filtro de papel cónico</string>
+    <string name="label_exact_equipment_wave_paper">Filtro de papel Wave 185</string>
+    <string name="label_exact_equipment_wedge_paper">Filtro de papel em cunha</string>
+    <string name="label_exact_equipment_chemex_paper">Filtro de papel Bonded para seis chávenas</string>
+    <string name="label_exact_equipment_flat_basket_paper">Filtro de papel para cesto plano</string>
+    <string name="label_exact_equipment_number_one_paper">Filtro de papel n.º 1</string>
+    <string name="label_exact_equipment_phin_metal">Filtro metálico para phin</string>
+    <string name="label_exact_equipment_cone_basket">Cesto cónico</string>
+    <string name="label_exact_equipment_flat_basket">Cesto plano</string>
+    <string name="label_exact_equipment_number_one_basket">Cesto n.º 1 para uma chávena</string>
+    <string name="label_exact_equipment_phin_screw_insert">Prensa roscada para phin</string>
+    <string name="format_exact_recipe_capacity_too_small">A capacidade deve ser de pelo menos %1$s para esta receita.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">O açúcar é opcional. A receita selecionada determina o número de subidas da espuma.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Wave 185 de fundo plano</string>
+    <string name="label_brewer_profile_wedge">Dripper em cunha</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Preparador de jarro com filtro de papel grosso</string>
+    <string name="label_brewer_profile_conical">Dripper cónico genérico</string>
+    <string name="label_brewer_profile_family_manual_gravity">Gravidade manual</string>
+
+    <string name="recipe_p1_v60_official_15_250">Receita oficial da Hario · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Preparação flash da Kurasu · 16 g / 150 g + 70 g de gelo</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Vertido pulsado em cunha · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Jarro de seis chávenas · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Cónico de baixa agitação · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, água primeiro · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, café primeiro · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Receita oficial Hario Switch · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Switch híbrido de Ole Bøen · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch aberto por gravidade · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Café turco, uma subida de espuma · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, duas subidas controladas · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Preparação automática em jarro · 30 g / 500 g de água do reservatório</string>
+    <string name="recipe_p1_auto_batch_1000_60">Preparação automática em jarro · 60 g / 1 000 g de água do reservatório</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / reservatório cheio até à marca</string>
+    <string name="recipe_p1_phin_gravity_14_118">Phin por gravidade · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Phin com prensa roscada · 18 g / 120 g</string>
+</resources>

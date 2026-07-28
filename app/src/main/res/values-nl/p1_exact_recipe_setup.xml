@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Instelling voor exacte P1-recepten. -->
+    <string name="heading_exact_recipe_choose">Kies een exact recept</string>
+    <string name="msg_exact_recipe_choose_hint">Kies één volledig bronrecept. Hoeveelheden en stappen worden nooit tussen recepten gecombineerd.</string>
+    <string name="msg_exact_recipe_single_compatible">Dit is het enige volledige bronrecept voor dit zetapparaat en wordt daarom automatisch geselecteerd.</string>
+    <string name="heading_exact_recipe_details">Recepthoeveelheden</string>
+    <string name="action_learn_this_recipe">Leer dit recept kennen</string>
+    <string name="label_exact_recipe_brew_water">zetwater</string>
+    <string name="label_exact_recipe_reservoir_water">reservoirwater</string>
+    <string name="label_exact_recipe_brew_ice">IJs voor het zetten</string>
+    <string name="label_exact_recipe_combined_ratio">Gecombineerde verhouding</string>
+    <string name="label_exact_recipe_unresolved">Niet opgegeven door de bron</string>
+    <string name="label_exact_recipe_unavailable">Niet beschikbaar</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · droge koffie : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Ongeveer %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Begin bij %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Door de machine gemeld bereik: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Heet water; geen exacte temperatuur opgegeven</string>
+    <string name="label_exact_recipe_machine_controlled">Door de machine geregeld</string>
+    <string name="label_exact_recipe_cold_observed">Koude start; beëindig door het schuim te observeren</string>
+
+    <string name="format_exact_recipe_time_approximate">Ongeveer %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Startbereik: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Ongeveer %1$s; beëindig op basis van wat je ziet</string>
+    <string name="label_exact_recipe_time_geometry">Beëindig wanneer het doorlopen klaar is; de tijd hangt af van de geometrie van het zetapparaat</string>
+    <string name="label_exact_recipe_time_observed">Beëindig op basis van wat je ziet, niet met een vaste timer</string>
+    <string name="label_exact_recipe_time_machine">Machinespecifieke cyclus</string>
+
+    <string name="heading_exact_recipe_equipment">Exacte uitrusting</string>
+    <string name="msg_exact_recipe_equipment_single">Gebruik deze volledige configuratie van filter, mand en accessoire.</string>
+    <string name="msg_exact_recipe_equipment_choose">Kies één volledige configuratie. Filter- en mandopties blijven gekoppeld.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Bewust ongefilterd</string>
+    <string name="label_exact_equipment_cone_paper">Conisch papieren filter</string>
+    <string name="label_exact_equipment_wave_paper">Wave 185-papierfilter</string>
+    <string name="label_exact_equipment_wedge_paper">Wigvormig papierfilter</string>
+    <string name="label_exact_equipment_chemex_paper">Bonded-papierfilter voor zes koppen</string>
+    <string name="label_exact_equipment_flat_basket_paper">Papieren filter voor vlakke filtermand</string>
+    <string name="label_exact_equipment_number_one_paper">Papieren filter nr. 1</string>
+    <string name="label_exact_equipment_phin_metal">Metalen phin-filter</string>
+    <string name="label_exact_equipment_cone_basket">Conische filtermand</string>
+    <string name="label_exact_equipment_flat_basket">Vlakke filtermand</string>
+    <string name="label_exact_equipment_number_one_basket">Filtermand nr. 1 voor één kop</string>
+    <string name="label_exact_equipment_phin_screw_insert">Schroefinzet voor phin</string>
+    <string name="format_exact_recipe_capacity_too_small">Voor dit recept moet de capaciteit minimaal %1$s zijn.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Suiker is optioneel. Het gekozen recept bepaalt het aantal keren dat het schuim opkomt.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Wave 185 met vlakke bodem</string>
+    <string name="label_brewer_profile_wedge">Wigvormige dripper</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Karafzetter met dik papierfilter</string>
+    <string name="label_brewer_profile_conical">Generieke conische dripper</string>
+    <string name="label_brewer_profile_family_manual_gravity">Handmatig zetten op zwaartekracht</string>
+
+    <string name="recipe_p1_v60_official_15_250">Officieel Hario-recept · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu flash brew · 16 g / 150 g + 70 g ijs</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Wigvormige pulsschenking · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Karaf voor zes koppen · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Conisch, weinig agitatie · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, water eerst · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, koffie eerst · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Officieel Hario Switch-recept · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Hybride Switch van Ole Bøen · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch open op zwaartekracht · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Turkse koffie, één keer opkomend schuim · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, twee beheerste schuimstijgingen · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Automatische batchbereiding · 30 g / 500 g reservoirwater</string>
+    <string name="recipe_p1_auto_batch_1000_60">Automatische batchbereiding · 60 g / 1.000 g reservoirwater</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / reservoir gevuld tot de markering</string>
+    <string name="recipe_p1_phin_gravity_14_118">Phin op zwaartekracht · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Phin met schroefinzet · 18 g / 120 g</string>
+</resources>

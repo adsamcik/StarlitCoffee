@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Einrichtung genauer P1-Rezepte. -->
+    <string name="heading_exact_recipe_choose">Ein genaues Rezept auswählen</string>
+    <string name="msg_exact_recipe_choose_hint">Wählen Sie ein vollständiges Rezept aus einer einzigen Quelle. Mengen und Schritte werden nie zwischen Rezepten vermischt.</string>
+    <string name="msg_exact_recipe_single_compatible">Dies ist das einzige vollständige Rezept aus einer einzigen Quelle für diesen Brüher und wird daher automatisch ausgewählt.</string>
+    <string name="heading_exact_recipe_details">Rezeptmengen</string>
+    <string name="action_learn_this_recipe">Dieses Rezept kennenlernen</string>
+    <string name="label_exact_recipe_brew_water">Brühwasser</string>
+    <string name="label_exact_recipe_reservoir_water">Reservoirwasser</string>
+    <string name="label_exact_recipe_brew_ice">Eis für die Zubereitung</string>
+    <string name="label_exact_recipe_combined_ratio">Gesamtverhältnis</string>
+    <string name="label_exact_recipe_unresolved">Von der Quelle nicht angegeben</string>
+    <string name="label_exact_recipe_unavailable">Nicht verfügbar</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · trockener Kaffee : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Etwa %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Start bei %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Von der Maschine gemeldeter Bereich: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Heißes Wasser; keine genaue Temperatur angegeben</string>
+    <string name="label_exact_recipe_machine_controlled">Von der Maschine gesteuert</string>
+    <string name="label_exact_recipe_cold_observed">Kalt starten; anhand des Schaums beenden</string>
+
+    <string name="format_exact_recipe_time_approximate">Etwa %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Startbereich: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Etwa %1$s; nach Sichtprüfung beenden</string>
+    <string name="label_exact_recipe_time_geometry">Am Ende des Durchlaufs beenden; die Dauer hängt von der Geometrie des Brühers ab</string>
+    <string name="label_exact_recipe_time_observed">Nach Sichtprüfung beenden, nicht nach einem festen Timer</string>
+    <string name="label_exact_recipe_time_machine">Maschinenspezifischer Zyklus</string>
+
+    <string name="heading_exact_recipe_equipment">Genaue Ausstattung</string>
+    <string name="msg_exact_recipe_equipment_single">Verwenden Sie diese vollständige Konfiguration aus Filter, Korb und Zubehör.</string>
+    <string name="msg_exact_recipe_equipment_choose">Wählen Sie eine vollständige Konfiguration. Filter- und Korboptionen bleiben miteinander gekoppelt.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Absichtlich ungefiltert</string>
+    <string name="label_exact_equipment_cone_paper">Konischer Papierfilter</string>
+    <string name="label_exact_equipment_wave_paper">Wave-185-Papierfilter</string>
+    <string name="label_exact_equipment_wedge_paper">Keilförmiger Papierfilter</string>
+    <string name="label_exact_equipment_chemex_paper">Bonded-Papierfilter für sechs Tassen</string>
+    <string name="label_exact_equipment_flat_basket_paper">Papierfilter für Flachboden-Korb</string>
+    <string name="label_exact_equipment_number_one_paper">Papierfilter Nr. 1</string>
+    <string name="label_exact_equipment_phin_metal">Phin-Metallfilter</string>
+    <string name="label_exact_equipment_cone_basket">Konischer Filterkorb</string>
+    <string name="label_exact_equipment_flat_basket">Flacher Filterkorb</string>
+    <string name="label_exact_equipment_number_one_basket">Filterkorb Nr. 1 für eine Tasse</string>
+    <string name="label_exact_equipment_phin_screw_insert">Phin-Schraubeinsatz</string>
+    <string name="format_exact_recipe_capacity_too_small">Für dieses Rezept ist eine Kapazität von mindestens %1$s erforderlich.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Zucker ist optional. Die Anzahl der Schaumaufstiege wird durch das ausgewählte Rezept festgelegt.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Wave 185 mit flachem Boden</string>
+    <string name="label_brewer_profile_wedge">Keilförmiger Dripper</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Karaffenbrüher mit dickem Papierfilter</string>
+    <string name="label_brewer_profile_conical">Allgemeiner konischer Dripper</string>
+    <string name="label_brewer_profile_family_manual_gravity">Manuelle Schwerkraftfiltration</string>
+
+    <string name="recipe_p1_v60_official_15_250">Offizielles Hario-Rezept · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu-Flash-Brew · 16 g / 150 g + 70 g Eis</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Wedge-Pulsaufguss · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Karaffe für sechs Tassen · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Konischer Dripper mit geringer Bewegung · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, Wasser zuerst · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, Kaffee zuerst · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Offizielles Hario-Switch-Rezept · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Ole Bøen Switch, Hybrid · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch, offen mit Schwerkraft · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Türkischer Kaffee, ein Schaumaufstieg · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, zwei kontrollierte Schaumaufstiege · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Automatische Kannenbrühung · 30 g / 500 g Reservoirwasser</string>
+    <string name="recipe_p1_auto_batch_1000_60">Automatische Kannenbrühung · 60 g / 1.000 g Reservoirwasser</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / volles, markiertes Reservoir</string>
+    <string name="recipe_p1_phin_gravity_14_118">Phin mit Schwerkraft · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Phin mit Schraubeinsatz · 18 g / 120 g</string>
+</resources>
