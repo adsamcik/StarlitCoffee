@@ -82,6 +82,7 @@ internal object ActiveBrewSessionTestFixtures {
 internal class FakeActiveBrewSessionDao : ActiveBrewSessionDao {
     private val sessions = linkedMapOf<String, ActiveBrewSessionEntity>()
     private val flows = mutableMapOf<String, MutableStateFlow<ActiveBrewSessionEntity?>>()
+    private val recoverableSessionsFlow = MutableStateFlow<List<ActiveBrewSessionEntity>>(emptyList())
 
     val operations = mutableListOf<String>()
 
@@ -91,6 +92,7 @@ internal class FakeActiveBrewSessionDao : ActiveBrewSessionDao {
         check(session.sessionId !in sessions) { "Duplicate test session ${session.sessionId}" }
         sessions[session.sessionId] = session
         flowFor(session.sessionId).value = session
+        publishRecoverableSessions()
         operations += "insert:${session.revision}"
         return 1L
     }
@@ -149,16 +151,16 @@ internal class FakeActiveBrewSessionDao : ActiveBrewSessionDao {
         )
         sessions[sessionId] = next
         flowFor(sessionId).value = next
+        publishRecoverableSessions()
         operations += "cas:$expectedRevision->$nextRevision"
         return 1
     }
 
     override suspend fun getById(sessionId: String): ActiveBrewSessionEntity? = sessions[sessionId]
 
-    override suspend fun getRecoverable(): List<ActiveBrewSessionEntity> = sessions.values.filter { session ->
-        session.status in setOf("READY", "RUNNING", "PAUSED") ||
-            (session.status == "COMPLETED" && session.completedLogId == null)
-    }
+    override suspend fun getRecoverable(): List<ActiveBrewSessionEntity> = recoverableSessions()
+
+    override fun observeRecoverable(): Flow<List<ActiveBrewSessionEntity>> = recoverableSessionsFlow
 
     override fun observeById(sessionId: String): Flow<ActiveBrewSessionEntity?> = flowFor(sessionId)
 
@@ -169,8 +171,20 @@ internal class FakeActiveBrewSessionDao : ActiveBrewSessionDao {
     override suspend fun deleteById(sessionId: String) {
         sessions.remove(sessionId)
         flowFor(sessionId).value = null
+        publishRecoverableSessions()
     }
 
     private fun flowFor(sessionId: String): MutableStateFlow<ActiveBrewSessionEntity?> =
         flows.getOrPut(sessionId) { MutableStateFlow(sessions[sessionId]) }
+
+    private fun recoverableSessions(): List<ActiveBrewSessionEntity> = sessions.values
+        .filter { session ->
+            session.status in setOf("READY", "RUNNING", "PAUSED") ||
+                (session.status == "COMPLETED" && session.completedLogId == null)
+        }
+        .sortedByDescending(ActiveBrewSessionEntity::updatedAt)
+
+    private fun publishRecoverableSessions() {
+        recoverableSessionsFlow.value = recoverableSessions()
+    }
 }

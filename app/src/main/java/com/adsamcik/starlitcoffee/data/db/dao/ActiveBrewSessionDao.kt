@@ -79,6 +79,16 @@ interface ActiveBrewSessionDao {
     )
     suspend fun getRecoverable(): List<ActiveBrewSessionEntity>
 
+    /**
+     * Keeps the calculator's contextual resume action in sync with durable
+     * sessions that can still progress or still need their completion logged.
+     */
+    @Query(
+        "SELECT * FROM active_brew_sessions WHERE status IN ('READY', 'RUNNING', 'PAUSED') " +
+            "OR (status = 'COMPLETED' AND completedLogId IS NULL) ORDER BY updatedAt DESC",
+    )
+    fun observeRecoverable(): Flow<List<ActiveBrewSessionEntity>>
+
     @Query("SELECT * FROM active_brew_sessions WHERE sessionId = :sessionId")
     fun observeById(sessionId: String): Flow<ActiveBrewSessionEntity?>
 

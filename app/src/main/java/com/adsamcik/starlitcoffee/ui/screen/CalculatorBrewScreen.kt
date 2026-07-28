@@ -102,6 +102,8 @@ fun CalculatorBrewScreen(
     brewViewModel: BrewViewModel,
     userPreferencesRepository: UserPreferencesRepository,
     onNavigateToBrew: () -> Unit,
+    recoverableSessionId: String?,
+    onResumeSession: (String) -> Unit,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
     val brewState by brewViewModel.uiState.collectAsStateWithLifecycle()
@@ -255,6 +257,8 @@ fun CalculatorBrewScreen(
             onFilterChange = { brewViewModel.setFilterType(it) },
             onGrinderChange = { brewViewModel.setGrinder(it) },
             onRatioChange = { calculatorViewModel.setRatio(it) },
+            recoverableSessionId = recoverableSessionId,
+            onResumeSession = onResumeSession,
         )
     }
 
@@ -678,6 +682,8 @@ private fun BrewSettingsPillBar(
     onFilterChange: (FilterType?) -> Unit,
     onGrinderChange: (String?) -> Unit,
     onRatioChange: (Float) -> Unit,
+    recoverableSessionId: String?,
+    onResumeSession: (String) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -697,6 +703,13 @@ private fun BrewSettingsPillBar(
                         onClick = { onMethodChange(method) },
                     )
                 },
+            )
+        }
+
+        recoverableSessionId?.let { sessionId ->
+            AssistChip(
+                onClick = { onResumeSession(sessionId) },
+                label = { Text(stringResource(R.string.action_resume)) },
             )
         }
 

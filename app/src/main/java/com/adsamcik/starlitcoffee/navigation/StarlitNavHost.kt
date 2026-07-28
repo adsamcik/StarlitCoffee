@@ -166,6 +166,10 @@ fun StarlitNavHost() {
     val userPrefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = null,
     )
+    val recoverableSessions by remember(database) {
+        database.activeBrewSessionDao().observeRecoverable()
+    }.collectAsStateWithLifecycle(initialValue = emptyList())
+    val recoverableSessionId = recoverableSessions.firstOrNull()?.sessionId
 
     // Track onboarding state for methods screen → personalize screen
     val onboardingMethods = rememberSaveable(saver = BrewMethodSetStateSaver) {
@@ -409,6 +413,12 @@ fun StarlitNavHost() {
                             // flow keeps GrindPrep as the pre-flight checkpoint.
                             val target: Any = if (prefs.skipMethodSelection) BrewTimer else GrindPrep
                             navController.navigate(target)
+                        },
+                        recoverableSessionId = recoverableSessionId,
+                        onResumeSession = { sessionId ->
+                            navController.navigate(BrewSession(sessionId = sessionId)) {
+                                launchSingleTop = true
+                            }
                         },
                     )
                 }
