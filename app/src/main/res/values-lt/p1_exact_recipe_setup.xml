@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_exact_recipe_choose">Pasirinkite tikslų receptą</string>
+    <string name="msg_exact_recipe_choose_hint">Pasirinkite vieną išsamų receptą iš vieno šaltinio. Skirtingų receptų kiekiai ir žingsniai niekada nemaišomi.</string>
+    <string name="msg_exact_recipe_single_compatible">Tai vienintelis išsamus vieno šaltinio receptas šiam ruošimo įrenginiui, todėl jis pasirenkamas automatiškai.</string>
+    <string name="heading_exact_recipe_details">Recepto kiekiai</string>
+    <string name="action_learn_this_recipe">Susipažinti su šiuo receptu</string>
+    <string name="label_exact_recipe_brew_water">plikymo vanduo</string>
+    <string name="label_exact_recipe_reservoir_water">rezervuaro vanduo</string>
+    <string name="label_exact_recipe_brew_ice">Plikymui skirtas ledas</string>
+    <string name="label_exact_recipe_combined_ratio">Bendras santykis</string>
+    <string name="label_exact_recipe_unresolved">Šaltinyje nenurodyta</string>
+    <string name="label_exact_recipe_unavailable">Neprieinama</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · sausa kava : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Apie %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Pradėkite nuo %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Aparato rodomas intervalas: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Karštas vanduo; tiksli temperatūra nenurodyta</string>
+    <string name="label_exact_recipe_machine_controlled">Valdo aparatas</string>
+    <string name="label_exact_recipe_cold_observed">Pradėkite šaltai; baikite stebėdami putas</string>
+
+    <string name="format_exact_recipe_time_approximate">Apie %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Pradinis intervalas: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Apie %1$s; baikite stebėdami</string>
+    <string name="label_exact_recipe_time_geometry">Baikite, kai vanduo nutekės; trukmė priklauso nuo ruošimo įrenginio geometrijos</string>
+    <string name="label_exact_recipe_time_observed">Baikite stebėdami, o ne pagal fiksuotą laikmatį</string>
+    <string name="label_exact_recipe_time_machine">Konkrečiam aparatui būdingas ciklas</string>
+
+    <string name="heading_exact_recipe_equipment">Tiksli įranga</string>
+    <string name="msg_exact_recipe_equipment_single">Naudokite visą šį filtro, krepšelio ir priedų derinį.</string>
+    <string name="msg_exact_recipe_equipment_choose">Pasirinkite vieną pilną įrangos derinį. Filtro ir krepšelio variantai lieka suporuoti.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Sąmoningai be filtro</string>
+    <string name="label_exact_equipment_cone_paper">Kūginis popierinis filtras</string>
+    <string name="label_exact_equipment_wave_paper">Wave 185 popierinis filtras</string>
+    <string name="label_exact_equipment_wedge_paper">Pleišto formos popierinis filtras</string>
+    <string name="label_exact_equipment_chemex_paper">Bonded popierinis filtras šešiems puodeliams</string>
+    <string name="label_exact_equipment_flat_basket_paper">Popierinis filtras plokščiam krepšeliui</string>
+    <string name="label_exact_equipment_number_one_paper">Popierinis filtras Nr. 1</string>
+    <string name="label_exact_equipment_phin_metal">Metalinis phin filtras</string>
+    <string name="label_exact_equipment_cone_basket">Kūginis filtro krepšelis</string>
+    <string name="label_exact_equipment_flat_basket">Plokščias filtro krepšelis</string>
+    <string name="label_exact_equipment_number_one_basket">Nr. 1 krepšelis vienam puodeliui</string>
+    <string name="label_exact_equipment_phin_screw_insert">Įsukamas phin įdėklas</string>
+    <string name="format_exact_recipe_capacity_too_small">Šiam receptui talpa turi būti bent %1$s.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Cukrus neprivalomas. Pasirinktas receptas nustato putų pakilimų skaičių.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Wave 185 plokščiu dugnu</string>
+    <string name="label_brewer_profile_wedge">Pleišto formos driperis</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Kavos ruošimo įrenginys su grafinu ir storu popieriniu filtru</string>
+    <string name="label_brewer_profile_conical">Universalus kūginis driperis</string>
+    <string name="label_brewer_profile_family_manual_gravity">Rankinis gravitacinis plikymas</string>
+
+    <string name="recipe_p1_v60_official_15_250">Oficialus Hario receptas · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu flash brew · 16 g / 150 g + 70 g ledo</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Pleišto formos driperis, vanduo pilamas pulsais · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Šešių puodelių grafinas · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Kūginis, mažai maišomas · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, pirmiausia vanduo · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, pirmiausia kava · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Oficialus Hario Switch receptas · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Ole Bøen Switch hibridas · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch, atviras gravitacinis tekėjimas · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Turkiška kava, vienas putų pakilimas · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, du kontroliuojami putų pakilimai · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Automatinis ruošimas grafine · 30 g / 500 g rezervuaro vandens</string>
+    <string name="recipe_p1_auto_batch_1000_60">Automatinis ruošimas grafine · 60 g / 1 000 g rezervuaro vandens</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / rezervuaras pripildytas iki žymos</string>
+    <string name="recipe_p1_phin_gravity_14_118">Gravitacinis phin · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Phin su įsukamu įdėklu · 18 g / 120 g</string>
+</resources>

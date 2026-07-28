@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_exact_recipe_choose">Izvēlieties precīzu recepti</string>
+    <string name="msg_exact_recipe_choose_hint">Izvēlieties vienu pilnīgu recepti no viena avota. Daudzumi un darbības nekad netiek apvienoti no dažādām receptēm.</string>
+    <string name="msg_exact_recipe_single_compatible">Šī ir vienīgā pilnīgā viena avota recepte šai ierīcei, tāpēc tā tiek atlasīta automātiski.</string>
+    <string name="heading_exact_recipe_details">Receptes daudzumi</string>
+    <string name="action_learn_this_recipe">Iepazīt šo recepti</string>
+    <string name="label_exact_recipe_brew_water">pagatavošanas ūdens</string>
+    <string name="label_exact_recipe_reservoir_water">tvertnes ūdens</string>
+    <string name="label_exact_recipe_brew_ice">Pagatavošanai paredzētais ledus</string>
+    <string name="label_exact_recipe_combined_ratio">Kopējā attiecība</string>
+    <string name="label_exact_recipe_unresolved">Avotā nav norādīts</string>
+    <string name="label_exact_recipe_unavailable">Nav pieejams</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · sausa kafija : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Aptuveni %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Sāciet ar %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Iekārtas norādītais diapazons: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Karsts ūdens; precīza temperatūra nav norādīta</string>
+    <string name="label_exact_recipe_machine_controlled">Kontrolē iekārta</string>
+    <string name="label_exact_recipe_cold_observed">Sāciet auksti; pabeidziet, vērojot putas</string>
+
+    <string name="format_exact_recipe_time_approximate">Aptuveni %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Sākuma diapazons: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Aptuveni %1$s; pabeidziet, vadoties pēc novērojumiem</string>
+    <string name="label_exact_recipe_time_geometry">Pabeidziet, kad ūdens ir iztecējis; laiks ir atkarīgs no ierīces ģeometrijas</string>
+    <string name="label_exact_recipe_time_observed">Pabeidziet, vadoties pēc novērojumiem, nevis fiksēta taimera</string>
+    <string name="label_exact_recipe_time_machine">Iekārtai specifisks cikls</string>
+
+    <string name="heading_exact_recipe_equipment">Precīzs aprīkojums</string>
+    <string name="msg_exact_recipe_equipment_single">Izmantojiet šo pilnīgo filtra, groza un piederumu konfigurāciju.</string>
+    <string name="msg_exact_recipe_equipment_choose">Izvēlieties vienu pilnīgu konfigurāciju. Filtra un groza varianti paliek savienoti pārī.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Apzināti nefiltrēts</string>
+    <string name="label_exact_equipment_cone_paper">Konisks papīra filtrs</string>
+    <string name="label_exact_equipment_wave_paper">Wave 185 papīra filtrs</string>
+    <string name="label_exact_equipment_wedge_paper">Ķīļveida papīra filtrs</string>
+    <string name="label_exact_equipment_chemex_paper">Bonded papīra filtrs sešām tasēm</string>
+    <string name="label_exact_equipment_flat_basket_paper">Papīra filtrs plakanam grozam</string>
+    <string name="label_exact_equipment_number_one_paper">Papīra filtrs Nr. 1</string>
+    <string name="label_exact_equipment_phin_metal">Phin metāla filtrs</string>
+    <string name="label_exact_equipment_cone_basket">Konisks filtra grozs</string>
+    <string name="label_exact_equipment_flat_basket">Plakans filtra grozs</string>
+    <string name="label_exact_equipment_number_one_basket">Nr. 1 vienas tases grozs</string>
+    <string name="label_exact_equipment_phin_screw_insert">Phin skrūvējams ieliktnis</string>
+    <string name="format_exact_recipe_capacity_too_small">Šai receptei tilpumam jābūt vismaz %1$s.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Cukurs nav obligāts. Izvēlētā recepte nosaka putu pacelšanās reižu skaitu.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Wave 185 ar plakanu pamatni</string>
+    <string name="label_brewer_profile_wedge">Ķīļveida driperis</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Kafijas pagatavošanas ierīce ar karafi un biezu papīra filtru</string>
+    <string name="label_brewer_profile_conical">Universāls konisks driperis</string>
+    <string name="label_brewer_profile_family_manual_gravity">Manuāla gravitācijas pagatavošana</string>
+
+    <string name="recipe_p1_v60_official_15_250">Hario oficiālā recepte · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu flash brew · 16 g / 150 g + 70 g ledus</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Ķīļveida driperis, liešana ar impulsiem · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Sešu tasīšu karafe · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Konisks, ar minimālu maisīšanu · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, vispirms ūdens · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, vispirms kafija · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Hario Switch oficiālā recepte · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Ole Bøen Switch hibrīds · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch, atvērta gravitācijas plūsma · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Turku kafija, viena putu pacelšanās · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, divas kontrolētas putu pacelšanās · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Automātiska pagatavošana karafē · 30 g / 500 g tvertnes ūdens</string>
+    <string name="recipe_p1_auto_batch_1000_60">Automātiska pagatavošana karafē · 60 g / 1 000 g tvertnes ūdens</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / tvertne piepildīta līdz atzīmei</string>
+    <string name="recipe_p1_phin_gravity_14_118">Gravitācijas phin · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Phin ar skrūvējamu ieliktni · 18 g / 120 g</string>
+</resources>

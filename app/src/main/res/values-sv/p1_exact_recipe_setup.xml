@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Inställning för exakta P1-recept. -->
+    <string name="heading_exact_recipe_choose">Välj ett exakt recept</string>
+    <string name="msg_exact_recipe_choose_hint">Välj ett komplett recept från en enda källa. Mängder och steg blandas aldrig mellan recept.</string>
+    <string name="msg_exact_recipe_single_compatible">Det här är det enda kompletta receptet från en enda källa för den här bryggaren, så det väljs automatiskt.</string>
+    <string name="heading_exact_recipe_details">Receptmängder</string>
+    <string name="action_learn_this_recipe">Lär dig det här receptet</string>
+    <string name="label_exact_recipe_brew_water">bryggvatten</string>
+    <string name="label_exact_recipe_reservoir_water">behållarvatten</string>
+    <string name="label_exact_recipe_brew_ice">Is för bryggningen</string>
+    <string name="label_exact_recipe_combined_ratio">Kombinerat förhållande</string>
+    <string name="label_exact_recipe_unresolved">Inte angivet av källan</string>
+    <string name="label_exact_recipe_unavailable">Inte tillgängligt</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · torrt kaffe : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Cirka %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Börja vid %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Maskinens angivna intervall: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Varmt vatten; ingen exakt temperatur angiven</string>
+    <string name="label_exact_recipe_machine_controlled">Styrs av maskinen</string>
+    <string name="label_exact_recipe_cold_observed">Kall start; avsluta genom att observera skummet</string>
+
+    <string name="format_exact_recipe_time_approximate">Cirka %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Startintervall: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Cirka %1$s; avsluta utifrån det du ser</string>
+    <string name="label_exact_recipe_time_geometry">Avsluta när allt vatten har runnit igenom; tiden beror på bryggarens geometri</string>
+    <string name="label_exact_recipe_time_observed">Avsluta utifrån det du ser, inte efter en fast timer</string>
+    <string name="label_exact_recipe_time_machine">Maskinspecifik cykel</string>
+
+    <string name="heading_exact_recipe_equipment">Exakt utrustning</string>
+    <string name="msg_exact_recipe_equipment_single">Använd den här kompletta konfigurationen av filter, korg och tillbehör.</string>
+    <string name="msg_exact_recipe_equipment_choose">Välj en komplett konfiguration. Filter- och korgalternativ hålls ihop.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Avsiktligt ofiltrerat</string>
+    <string name="label_exact_equipment_cone_paper">Koniskt pappersfilter</string>
+    <string name="label_exact_equipment_wave_paper">Wave 185-pappersfilter</string>
+    <string name="label_exact_equipment_wedge_paper">Kilformat pappersfilter</string>
+    <string name="label_exact_equipment_chemex_paper">Bonded-pappersfilter för sex koppar</string>
+    <string name="label_exact_equipment_flat_basket_paper">Pappersfilter för platt filterkorg</string>
+    <string name="label_exact_equipment_number_one_paper">Pappersfilter nr 1</string>
+    <string name="label_exact_equipment_phin_metal">Metallfilter för phin</string>
+    <string name="label_exact_equipment_cone_basket">Konisk filterkorg</string>
+    <string name="label_exact_equipment_flat_basket">Platt filterkorg</string>
+    <string name="label_exact_equipment_number_one_basket">Filterkorg nr 1 för en kopp</string>
+    <string name="label_exact_equipment_phin_screw_insert">Nedskruvbar insats för phin</string>
+    <string name="format_exact_recipe_capacity_too_small">Kapaciteten måste vara minst %1$s för det här receptet.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Socker är valfritt. Det valda receptet bestämmer hur många gånger skummet ska höjas.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Wave 185 med platt botten</string>
+    <string name="label_brewer_profile_wedge">Kilformad dripper</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Kannbryggare med tjockt pappersfilter</string>
+    <string name="label_brewer_profile_conical">Generisk konisk dripper</string>
+    <string name="label_brewer_profile_family_manual_gravity">Manuell gravitationsbryggning</string>
+
+    <string name="recipe_p1_v60_official_15_250">Officiellt Hario-recept · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu flash brew · 16 g / 150 g + 70 g is</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Kilformad pulshällning · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Kanna för sex koppar · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Konisk, minimal omrörning · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, vatten först · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, kaffe först · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Officiellt Hario Switch-recept · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Ole Bøen Switch-hybrid · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch, öppet gravitationsflöde · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Turkiskt kaffe, skummet höjs en gång · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, två kontrollerade skumhöjningar · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Automatisk kannbryggning · 30 g / 500 g behållarvatten</string>
+    <string name="recipe_p1_auto_batch_1000_60">Automatisk kannbryggning · 60 g / 1 000 g behållarvatten</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / behållare fylld till markeringen</string>
+    <string name="recipe_p1_phin_gravity_14_118">Phin med gravitationsflöde · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Phin med skruvinsats · 18 g / 120 g</string>
+</resources>

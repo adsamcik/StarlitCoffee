@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tarkkojen P1-reseptien määritys. -->
+    <string name="heading_exact_recipe_choose">Valitse tarkka resepti</string>
+    <string name="msg_exact_recipe_choose_hint">Valitse yksi täydellinen, yhteen lähteeseen perustuva resepti. Määriä ja vaiheita ei koskaan yhdistetä eri resepteistä.</string>
+    <string name="msg_exact_recipe_single_compatible">Tämä on tämän valmistuslaitteen ainoa täydellinen, yhteen lähteeseen perustuva resepti, joten se valitaan automaattisesti.</string>
+    <string name="heading_exact_recipe_details">Reseptin määrät</string>
+    <string name="action_learn_this_recipe">Tutustu tähän reseptiin</string>
+    <string name="label_exact_recipe_brew_water">uuttovesi</string>
+    <string name="label_exact_recipe_reservoir_water">säiliövesi</string>
+    <string name="label_exact_recipe_brew_ice">Uuttoon käytettävä jää</string>
+    <string name="label_exact_recipe_combined_ratio">Yhdistetty suhde</string>
+    <string name="label_exact_recipe_unresolved">Lähde ei määritä</string>
+    <string name="label_exact_recipe_unavailable">Ei saatavilla</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · kuiva kahvi : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Noin %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Aloita lämpötilassa %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Koneen ilmoittama alue: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Kuuma vesi; tarkkaa lämpötilaa ei ole annettu</string>
+    <string name="label_exact_recipe_machine_controlled">Koneen ohjaama</string>
+    <string name="label_exact_recipe_cold_observed">Aloita kylmänä; lopeta vaahtoa tarkkailemalla</string>
+
+    <string name="format_exact_recipe_time_approximate">Noin %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Aloitusalue: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Noin %1$s; lopeta havaintojen perusteella</string>
+    <string name="label_exact_recipe_time_geometry">Lopeta, kun vesi on valunut läpi; aika riippuu valmistuslaitteen geometriasta</string>
+    <string name="label_exact_recipe_time_observed">Lopeta havaintojen perusteella, älä kiinteän ajastimen mukaan</string>
+    <string name="label_exact_recipe_time_machine">Konekohtainen ohjelma</string>
+
+    <string name="heading_exact_recipe_equipment">Tarkka varustus</string>
+    <string name="msg_exact_recipe_equipment_single">Käytä tätä suodattimen, suodatinkorin ja lisävarusteiden täydellistä kokoonpanoa.</string>
+    <string name="msg_exact_recipe_equipment_choose">Valitse yksi täydellinen kokoonpano. Suodatin- ja korivaihtoehdot pysyvät pareina.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Tarkoituksella suodattamaton</string>
+    <string name="label_exact_equipment_cone_paper">Kartiomainen paperisuodatin</string>
+    <string name="label_exact_equipment_wave_paper">Wave 185 -paperisuodatin</string>
+    <string name="label_exact_equipment_wedge_paper">Kiilamainen paperisuodatin</string>
+    <string name="label_exact_equipment_chemex_paper">Bonded-paperisuodatin kuudelle kupille</string>
+    <string name="label_exact_equipment_flat_basket_paper">Tasapohjaisen korin paperisuodatin</string>
+    <string name="label_exact_equipment_number_one_paper">Paperisuodatin nro 1</string>
+    <string name="label_exact_equipment_phin_metal">Phinin metallisuodatin</string>
+    <string name="label_exact_equipment_cone_basket">Kartiomainen suodatinkori</string>
+    <string name="label_exact_equipment_flat_basket">Tasapohjainen suodatinkori</string>
+    <string name="label_exact_equipment_number_one_basket">Suodatinkori nro 1 yhdelle kupille</string>
+    <string name="label_exact_equipment_phin_screw_insert">Phinin kierrettävä sisäosa</string>
+    <string name="format_exact_recipe_capacity_too_small">Tilavuuden on oltava tätä reseptiä varten vähintään %1$s.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Sokeri on valinnainen. Valittu resepti määrittää vaahdon nousukertojen määrän.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Tasapohjainen Wave 185</string>
+    <string name="label_brewer_profile_wedge">Kiilamainen suodatinsuppilo</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Kannukahvinkeitin paksulla paperisuodattimella</string>
+    <string name="label_brewer_profile_conical">Yleismallinen kartiomainen suodatinsuppilo</string>
+    <string name="label_brewer_profile_family_manual_gravity">Manuaalinen painovoimauutto</string>
+
+    <string name="recipe_p1_v60_official_15_250">Harion virallinen resepti · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu flash brew · 16 g / 150 g + 70 g jäätä</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Kiilasuodatin, pulssikaadot · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Kuuden kupin kannu · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Kartiomainen, vähäinen sekoitus · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, vesi ensin · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, kahvi ensin · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Harion virallinen Switch-resepti · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Ole Bøenin Switch-hybridi · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch, avoin painovoimauutto · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Turkkilainen kahvi, yksi vaahdon nousu · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, kaksi hallittua vaahdon nousua · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Automaattinen kannuvalmistus · 30 g / 500 g säiliövettä</string>
+    <string name="recipe_p1_auto_batch_1000_60">Automaattinen kannuvalmistus · 60 g / 1 000 g säiliövettä</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / säiliö täytetty merkkiin asti</string>
+    <string name="recipe_p1_phin_gravity_14_118">Painovoimainen phin · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Phin kierrettävällä sisäosalla · 18 g / 120 g</string>
+</resources>

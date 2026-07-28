@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_exact_recipe_choose">Vali täpne retsept</string>
+    <string name="msg_exact_recipe_choose_hint">Vali üks täielik, ühel allikal põhinev retsept. Koguseid ja samme ei segata kunagi eri retseptide vahel.</string>
+    <string name="msg_exact_recipe_single_compatible">See on selle valmistusseadme ainus täielik, ühel allikal põhinev retsept, seega valitakse see automaatselt.</string>
+    <string name="heading_exact_recipe_details">Retsepti kogused</string>
+    <string name="action_learn_this_recipe">Tutvu selle retseptiga</string>
+    <string name="label_exact_recipe_brew_water">tõmbevesi</string>
+    <string name="label_exact_recipe_reservoir_water">mahutivesi</string>
+    <string name="label_exact_recipe_brew_ice">Tõmbeks kasutatav jää</string>
+    <string name="label_exact_recipe_combined_ratio">Koondsuhe</string>
+    <string name="label_exact_recipe_unresolved">Allikas pole määranud</string>
+    <string name="label_exact_recipe_unavailable">Pole saadaval</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · kuiv kohv : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Umbes %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Alusta temperatuuril %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Masina näidatud vahemik: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Kuum vesi; täpset temperatuuri pole antud</string>
+    <string name="label_exact_recipe_machine_controlled">Masina juhitav</string>
+    <string name="label_exact_recipe_cold_observed">Alusta külmalt; lõpeta vahtu jälgides</string>
+
+    <string name="format_exact_recipe_time_approximate">Umbes %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Algusvahemik: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Umbes %1$s; lõpeta vaatluse põhjal</string>
+    <string name="label_exact_recipe_time_geometry">Lõpeta, kui vesi on läbi voolanud; aeg sõltub valmistusseadme geomeetriast</string>
+    <string name="label_exact_recipe_time_observed">Lõpeta vaatluse põhjal, mitte kindla taimeri järgi</string>
+    <string name="label_exact_recipe_time_machine">Masinapõhine tsükkel</string>
+
+    <string name="heading_exact_recipe_equipment">Täpne varustus</string>
+    <string name="msg_exact_recipe_equipment_single">Kasuta seda täielikku filtri, korvi ja tarvikute kombinatsiooni.</string>
+    <string name="msg_exact_recipe_equipment_choose">Vali üks täielik kombinatsioon. Filtri- ja korvivalikud jäävad paarikaupa kokku.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Taotluslikult filtreerimata</string>
+    <string name="label_exact_equipment_cone_paper">Kooniline paberfilter</string>
+    <string name="label_exact_equipment_wave_paper">Wave 185 paberfilter</string>
+    <string name="label_exact_equipment_wedge_paper">Kiilukujuline paberfilter</string>
+    <string name="label_exact_equipment_chemex_paper">Bonded-paberfilter kuuele tassile</string>
+    <string name="label_exact_equipment_flat_basket_paper">Lameda korvi paberfilter</string>
+    <string name="label_exact_equipment_number_one_paper">Paberfilter nr 1</string>
+    <string name="label_exact_equipment_phin_metal">Phini metallfilter</string>
+    <string name="label_exact_equipment_cone_basket">Kooniline filtrikorv</string>
+    <string name="label_exact_equipment_flat_basket">Lame filtrikorv</string>
+    <string name="label_exact_equipment_number_one_basket">Ühe tassi filtrikorv nr 1</string>
+    <string name="label_exact_equipment_phin_screw_insert">Phini keeratav sisetükk</string>
+    <string name="format_exact_recipe_capacity_too_small">Selle retsepti jaoks peab maht olema vähemalt %1$s.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Suhkur on valikuline. Valitud retsept määrab vahu kerkimiste arvu.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Lameda põhjaga Wave 185</string>
+    <string name="label_brewer_profile_wedge">Kiilukujuline filterlehter</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Paksu paberfiltriga kannukohvivalmistaja</string>
+    <string name="label_brewer_profile_conical">Üldine kooniline filterlehter</string>
+    <string name="label_brewer_profile_family_manual_gravity">Käsitsi gravitatsiooniga valmistamine</string>
+
+    <string name="recipe_p1_v60_official_15_250">Hario ametlik retsept · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu flash brew · 16 g / 150 g + 70 g jääd</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Kiilufilter, pulseeriv valamine · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Kuue tassi kann · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Kooniline, vähese segamisega · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, vesi esmalt · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, kohv esmalt · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Hario Switchi ametlik retsept · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Ole Bøeni Switchi hübriid · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch, avatud gravitatsioonivooluga · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Türgi kohv, üks vahu kerkimine · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, kaks kontrollitud vahu kerkimist · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Automaatne kannuvalmistus · 30 g / 500 g mahutivett</string>
+    <string name="recipe_p1_auto_batch_1000_60">Automaatne kannuvalmistus · 60 g / 1 000 g mahutivett</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / märgini täidetud mahuti</string>
+    <string name="recipe_p1_phin_gravity_14_118">Gravitatsiooniga phin · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Keeratava sisetükiga phin · 18 g / 120 g</string>
+</resources>
