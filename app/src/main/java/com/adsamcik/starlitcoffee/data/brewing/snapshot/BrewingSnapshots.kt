@@ -24,7 +24,13 @@ data class BrewRecipeSnapshotV1(
     val quantities: BrewQuantitiesSnapshotV1,
     val ratioDefinition: RatioDefinitionSnapshotV1,
     val ratioValue: Double? = null,
+    /** All source ratios, including composite inputs such as hot water plus brew ice. */
+    val ratioSemantics: List<RatioSemanticsSnapshotV1> = emptyList(),
     val temperatureC: Int? = null,
+    val temperatureSemantics: TemperatureSemanticsSnapshotV1? = null,
+    val expectedTimeSemantics: ExpectedTimeSemanticsSnapshotV1? = null,
+    val completionSemantics: String? = null,
+    val sourceMetadata: RecipeSourceMetadataSnapshotV1? = null,
     val grinderId: String? = null,
     val grindSetting: String? = null,
     val technique: RecipeTechniqueSnapshotV1 = RecipeTechniqueSnapshotV1(),
@@ -80,6 +86,47 @@ data class BrewQuantitiesSnapshotV1(
 data class RatioDefinitionSnapshotV1(
     val numerator: String,
     val denominator: String,
+)
+
+/** A self-describing ratio retained independently from the current built-in catalog. */
+@Serializable
+data class RatioSemanticsSnapshotV1(
+    val numerator: String,
+    val denominator: String,
+    val ratioValue: Double? = null,
+    val includedDenominatorRoles: List<String> = listOf(denominator),
+)
+
+/** Preserves whether a temperature was exact, ranged, machine-owned, or unresolved. */
+@Serializable
+data class TemperatureSemanticsSnapshotV1(
+    val basis: String,
+    val minimumC: Double? = null,
+    val maximumC: Double? = null,
+)
+
+/** Preserves whether time is a target, observation window, or machine-owned value. */
+@Serializable
+data class ExpectedTimeSemanticsSnapshotV1(
+    val basis: String,
+    val minimumSeconds: Int? = null,
+    val maximumSeconds: Int? = null,
+)
+
+/** Immutable provenance for one source-faithful built-in recipe. */
+@Serializable
+data class RecipeSourceMetadataSnapshotV1(
+    val sourceSchemaVersion: String,
+    val sourceSha256: String,
+    val sourceReviewedOnIso8601: String,
+    val sourceMethodFamilyId: String,
+    val sourceBrewerProfileId: String,
+    val exactRecipeApproachId: String,
+    val evidenceClass: String,
+    val confidence: String,
+    val sourceIds: List<String>,
+    val unresolvedFields: List<String>,
+    val orderedStageCount: Int,
 )
 
 @Serializable
