@@ -18,6 +18,8 @@ data class BrewRecipeSnapshotV1(
     val schemaVersion: Int = SCHEMA_VERSION,
     val methodFamilyId: String,
     val brewerProfileId: String,
+    /** Stable built-in/library recipe identity; absent for legacy or custom recipes. */
+    val builtInRecipeId: String? = null,
     val equipment: EquipmentConfigurationSnapshotV1,
     val quantities: BrewQuantitiesSnapshotV1,
     val ratioDefinition: RatioDefinitionSnapshotV1,

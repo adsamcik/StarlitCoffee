@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
 import com.adsamcik.starlitcoffee.domain.brewing.EquipmentConfiguration
 import com.adsamcik.starlitcoffee.domain.brewing.FilterProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.FilterSelection
@@ -25,6 +26,7 @@ class BuiltinBrewerSessionStartFactoryTest {
         val result = factory(sessionId).create(
             BuiltinBrewerSessionStartInput(
                 brewerProfileId = BrewerProfileId("clever_style"),
+                builtInRecipeId = BuiltInRecipeId("clever_water_first_15_250"),
                 dryCoffeeDoseG = 20.0,
                 inputWaterG = 340.0,
                 equipment = EquipmentConfiguration(
@@ -50,6 +52,7 @@ class BuiltinBrewerSessionStartFactoryTest {
         assertEquals(sessionId.toString(), request.sessionId.value)
         assertEquals("steep_and_release", request.recipe.methodFamilyId)
         assertEquals("clever_style", request.recipe.brewerProfileId)
+        assertEquals("clever_water_first_15_250", request.recipe.builtInRecipeId)
         assertEquals("clever_style", request.recipe.equipment.brewerProfileId)
         assertEquals("STACK", request.recipe.equipment.filterSelection.mode)
         assertEquals("cone_paper", request.recipe.equipment.filterSelection.entries.single().filterProfileId)

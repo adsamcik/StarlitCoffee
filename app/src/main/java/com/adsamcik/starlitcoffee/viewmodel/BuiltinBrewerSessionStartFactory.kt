@@ -16,6 +16,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileRecipeDefaults
 import com.adsamcik.starlitcoffee.domain.brewing.BrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.BrewQuantities
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewerProfileRecipeDefaults
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.CompatibilitySeverity
@@ -61,6 +62,7 @@ data class CezveSessionSetup(
  */
 data class BuiltinBrewerSessionStartInput(
     val brewerProfileId: BrewerProfileId,
+    val builtInRecipeId: BuiltInRecipeId? = null,
     val dryCoffeeDoseG: Double,
     val inputWaterG: Double? = null,
     val equipment: EquipmentConfiguration = EquipmentConfiguration(brewerProfileId),
@@ -201,6 +203,7 @@ class BuiltinBrewerSessionStartFactory(
         val recipe = BrewRecipeSnapshotV1(
             methodFamilyId = profile.familyId.value,
             brewerProfileId = profile.id.value,
+            builtInRecipeId = input.builtInRecipeId?.value,
             equipment = input.equipment.toSnapshot(),
             quantities = quantities.toSnapshot(),
             ratioDefinition = RatioDefinitionSnapshotV1(

@@ -50,6 +50,21 @@ value class RecipeVariantId(val value: String) {
     }
 }
 
+/**
+ * Stable identity for one source-faithful recipe shipped with the app.
+ *
+ * This is intentionally distinct from a user's saved-recipe database row and
+ * from [StagePlanId]. Several recipes can share a brewer profile or reusable
+ * stage-plan structure while retaining different quantities, equipment, and
+ * evidence provenance.
+ */
+@JvmInline
+value class BuiltInRecipeId(val value: String) {
+    init {
+        requireStableId(value)
+    }
+}
+
 @JvmInline
 value class StagePlanId(val value: String) {
     init {
