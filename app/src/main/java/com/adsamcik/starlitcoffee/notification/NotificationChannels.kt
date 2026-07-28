@@ -22,18 +22,22 @@ internal object NotificationChannels {
     fun brewAlertsId(theme: BrewVibrationTheme): String =
         "brew_alerts_${theme.name.lowercase()}"
 
+    fun ensureBrewStatusChannel(context: Context) {
+        val manager = context.getSystemService<NotificationManager>() ?: return
+        if (manager.getNotificationChannel(BREW_STATUS_ID) != null) return
+        NotificationChannel(
+            BREW_STATUS_ID,
+            context.getString(R.string.notif_channel_brew_status),
+            NotificationManager.IMPORTANCE_LOW,
+        ).apply {
+            description = context.getString(R.string.notif_channel_brew_status_desc)
+            setShowBadge(false)
+        }.also(manager::createNotificationChannel)
+    }
+
     fun ensureBrewChannels(context: Context, theme: BrewVibrationTheme) {
         val manager = context.getSystemService<NotificationManager>() ?: return
-        if (manager.getNotificationChannel(BREW_STATUS_ID) == null) {
-            NotificationChannel(
-                BREW_STATUS_ID,
-                context.getString(R.string.notif_channel_brew_status),
-                NotificationManager.IMPORTANCE_LOW,
-            ).apply {
-                description = context.getString(R.string.notif_channel_brew_status_desc)
-                setShowBadge(false)
-            }.also(manager::createNotificationChannel)
-        }
+        ensureBrewStatusChannel(context)
         val alertsId = brewAlertsId(theme)
         if (manager.getNotificationChannel(alertsId) == null) {
             NotificationChannel(
