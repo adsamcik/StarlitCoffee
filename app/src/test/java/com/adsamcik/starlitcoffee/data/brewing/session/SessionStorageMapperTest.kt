@@ -75,6 +75,65 @@ class SessionStorageMapperTest {
     }
 
     @Test
+    fun `versioned plan and runtime mappers round trip without schema drift`() {
+        val state = sampleState()
+
+        val planSnapshot = CompiledStagePlanSnapshotMapperV1.toSnapshot(state.stagePlan)
+        val restoredPlan = CompiledStagePlanSnapshotMapperV1.toDomain(planSnapshot)
+        val runtimeSnapshot = SessionRuntimeSnapshotMapperV1.toSnapshot(state)
+        val restoredRuntime = SessionRuntimeSnapshotMapperV1.toDomain(runtimeSnapshot, restoredPlan)
+
+        assertEquals(CompiledStagePlanSnapshotV1.SCHEMA_VERSION, planSnapshot.schemaVersion)
+        assertEquals(SessionRuntimeSnapshotV1.SCHEMA_VERSION, runtimeSnapshot.schemaVersion)
+        assertEquals(state.stagePlan, restoredPlan)
+        assertEquals(state, restoredRuntime)
+    }
+
+    @Test
+    fun `set backed actuals serialize deterministically while ID histories retain chronology`() {
+        val state = sampleState().withFirstStageActualSetOrder(
+            observations = listOf(
+                StageObservationId("z_observation"),
+                StageObservationId("a_observation"),
+            ),
+            markers = listOf(
+                StageMarkerId("z_marker"),
+                StageMarkerId("a_marker"),
+            ),
+        ).copy(
+            processedEventIds = listOf(SessionEventId("z_event"), SessionEventId("a_event")),
+            acknowledgedEffectIds = listOf(SessionEffectId("z_effect"), SessionEffectId("a_effect")),
+        )
+        val stateWithReverseSetInsertion = state.withFirstStageActualSetOrder(
+            observations = listOf(
+                StageObservationId("a_observation"),
+                StageObservationId("z_observation"),
+            ),
+            markers = listOf(
+                StageMarkerId("a_marker"),
+                StageMarkerId("z_marker"),
+            ),
+        )
+
+        val runtimeSnapshot = SessionRuntimeSnapshotMapperV1.toSnapshot(state)
+
+        assertEquals(
+            listOf("a_observation", "z_observation"),
+            runtimeSnapshot.stageProgress[0].actuals.observationIds,
+        )
+        assertEquals(
+            listOf("a_marker", "z_marker"),
+            runtimeSnapshot.stageProgress[0].actuals.markerIds,
+        )
+        assertEquals(listOf("z_event", "a_event"), runtimeSnapshot.processedEventIds)
+        assertEquals(listOf("z_effect", "a_effect"), runtimeSnapshot.acknowledgedEffectIds)
+        assertEquals(
+            SessionStorageMapper.encode(state, sampleContext()).runtimeJson,
+            SessionStorageMapper.encode(stateWithReverseSetInsertion, sampleContext()).runtimeJson,
+        )
+    }
+
+    @Test
     fun `pre-reference-target V1 plan restores with empty source cues`() {
         val legacyPlanJson =
             """
@@ -291,6 +350,24 @@ class SessionStorageMapperTest {
 
         assertTrue(decoded is com.adsamcik.starlitcoffee.data.brewing.snapshot.SnapshotDecodeResult.Invalid)
     }
+
+    private fun SessionRuntimeState.withFirstStageActualSetOrder(
+        observations: List<StageObservationId>,
+        markers: List<StageMarkerId>,
+    ): SessionRuntimeState = copy(
+        stageProgress = stageProgress.mapIndexed { index, progress ->
+            if (index == 0) {
+                progress.copy(
+                    actuals = progress.actuals.copy(
+                        observations = observations.toCollection(linkedSetOf()),
+                        markers = markers.toCollection(linkedSetOf()),
+                    ),
+                )
+            } else {
+                progress
+            }
+        },
+    )
 
     private fun sampleState(): SessionRuntimeState {
         val sessionId = SessionId("session-storage-1")
