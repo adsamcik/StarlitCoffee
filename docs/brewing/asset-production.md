@@ -2200,6 +2200,143 @@ For every asset record:
   water, server stability, mobile-size distinction from a crater or bloom, and
   instruction-before-image placement before registration or approval.
 
+### `p1-gravity-phin-loose-disc-rest-imagegen-v3`
+
+- Stable asset ID:
+  `instruction_p1_phin_gravity_14_118_stage_02_instruction_default`
+- Exact scope: `phin_gravity_14_118` / source `stage_02` /
+  `p1_phin_gravity_14_118_stage_02_instruction`; one unthreaded perforated
+  gravity disc rests flat on a visible level dry bed inside a complete
+  solid-wall phin, with no hand or compression cue.
+- Evidence: `SRC-NGUYEN-PHIN`. Reverified on 28 July 2026 against Nguyen
+  Coffee Supply's current traditional phin guide at
+  <https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin>
+  and phin anatomy guide at
+  <https://nguyencoffeesupply.com/blogs/news/what-is-the-vietnamese-phin-filter>.
+  The current expert/producer guidance corroborates the loose gravity press,
+  level bed, and dropping the insert on top without a screw mechanism. Recipe
+  quantities and temperature remain in Compose text.
+- Generation mode: new bitmap generation followed by two targeted corrective
+  image edits with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show one coherent completed placement state
+  > from a close elevated front three-quarter angle: an accurate unbranded
+  > single-serving Vietnamese gravity-insert phin centered level and securely
+  > supported on a broad, low, stable heat-safe ceramic cup. Preserve
+  > gravity-phin geometry: a compact cylindrical brushed-metal chamber with a
+  > continuous smooth solid vertical sidewall, an integrated flat perforated
+  > brewing bottom hidden beneath the dry coffee, and a wide horizontal
+  > filter/support plate whose underside visibly contacts the cup rim
+  > continuously with generous overlap on both sides. Inside the chamber show a
+  > low, level, loose dry coffee bed. Rest exactly one matching loose
+  > gravity-press insert directly and lightly on top of that bed: a flat round
+  > perforated metal disc without threads, screw hub, spring, or plunger, sized
+  > to fit closely inside the chamber and lying perfectly horizontal. Give the
+  > disc only one small low central lifting tab or loop that is plainly a
+  > handle, not a threaded post. Keep generous visible empty headroom above the
+  > installed disc and show a narrow natural edge gap only as required for the
+  > disc to fit; the disc must not be tilted, wedged, floating, buried, or
+  > compressing the bed. Leave every hand, finger, tool, and weight outside the
+  > frame so no downward force is implied. Keep the matching metal lid separate
+  > and flat on the counter beside the cup if it helps clarify the complete set,
+  > but do not place any extra disc on it. Make broad cup stability, continuous
+  > rim support, solid chamber wall, loose flat perforated disc, low lifting
+  > tab, uncompressed bed, abundant headroom, and absence of force immediately
+  > legible at mobile size. Use a warm-neutral empty counter and soft plain
+  > background, semi-flat softly dimensional educational rendering, precise
+  > believable brushed-metal geometry, restrained silver/cream/coffee-brown
+  > palette, clear silhouettes, soft light, subtle shadows, generous crop-safe
+  > breathing room, and no decorative objects. Include no text, letters,
+  > numbers, measurement marks, labels, logos, brand marks, arrows, callouts,
+  > panels, warning symbols, comparison, cutaway, magnified inset, hand, finger,
+  > spoon, tamper, weight, pressing, twisting, tightening, screw, central
+  > threaded post, internally threaded hub, latch, spring, plunger, piston,
+  > espresso basket, paper filter, moka funnel, pressure seal, sidewall holes,
+  > transparent chamber, tilted or undersized disc, second disc, high or mounded
+  > bed, deep compression, water, wet bed, kettle, bloom, steam, drip, overflow,
+  > narrow or unstable cup, partial support, off-center phin, second brewer, or
+  > clutter. The final output must be one opaque 1024 x 768 scene whose only
+  > story is a loose unthreaded gravity disc resting flat and gently on a level
+  > dry bed in a fully supported phin.
+- First corrective edit prompt:
+
+  > Refine the immediately previous gravity-phin disc illustration while
+  > preserving its exact solid-wall brushed-metal chamber, broad cup and
+  > continuous support overlap, flat perforated unthreaded insert with low
+  > U-shaped lifting tab, separate matching lid, no hands, no water,
+  > warm-neutral text-free style, 4:3 framing, and every other safe detail.
+  > Correct only the disc-to-bed contact readability. Reduce the loose disc
+  > diameter by only the tiny realistic clearance needed to slide freely inside
+  > the chamber, and reveal a very narrow continuous crescent or halo of dry
+  > loose coffee granules around its outer edge, especially along the far and
+  > side edges visible from the elevated angle. The grounds ring must be level
+  > with the underside of the disc and should make clear that the disc lies
+  > directly and lightly on a low level bed beneath it; there must be no air
+  > gap, shadow gap, support ledge, suspension, floating, or buried insert. Keep
+  > the disc perfectly horizontal, low in the chamber with generous empty
+  > headroom, and uncompressed—no dent, pressed ring, compacted edge, mound, or
+  > force cue. Keep the disc close-fitting, not obviously undersized. Preserve
+  > the smooth solid sidewall, centered level phin, full cup-rim support, low
+  > lifting tab, separate lid, and absence of screw threads or extra parts. Add
+  > no hand, tamper, text, number, arrow, cutaway, water, kettle, steam, sidewall
+  > holes, second disc, or clutter. The only story must be a loose gravity disc
+  > visibly resting flat and gently on a level dry coffee bed. Preserve opaque
+  > 1024 x 768 output and crop-safe mobile legibility.
+- Final corrective edit prompt:
+
+  > Make one final structural correction to the immediately previous
+  > gravity-phin illustration while preserving its level perforated loose disc,
+  > low U-shaped tab, narrow visible dry-coffee halo at the far and side edges,
+  > broad stable cup support, separate lid, no hands, no water, clean style, and
+  > 4:3 framing. Restore the metal chamber to a physically complete
+  > uninterrupted cylinder: the upper rim must be one level continuous circle
+  > at the same height all the way around, and the entire front sidewall must
+  > rise fully from the support plate to that rim. Remove the invented deep
+  > front scoop, notch, lowered wall, window, cutaway, or missing metal. Do not
+  > lower any part of the chamber wall to expose the insert. The elevated
+  > viewing angle alone may reveal the disc, low lifting tab, and a very narrow
+  > coffee crescent along the far/back and side perimeter inside the intact
+  > cylinder. Keep the disc close-fitting, perfectly horizontal, directly
+  > resting on the level dry bed with no air gap, and low enough to leave
+  > generous headroom. Preserve smooth solid sidewalls with no perforations,
+  > full cup-rim contact, no threads, no pressure mechanism, and the separate
+  > matching lid. Add no hand, text, arrow, transparent wall, cutaway, second
+  > disc, water, or clutter. The only story must be a complete solid-wall
+  > gravity phin whose loose unthreaded disc rests gently on a visible level dry
+  > bed. Preserve opaque 1024 x 768 output and crop-safe mobile legibility.
+- Rejected drafts: the initial render hid the dry bed completely beneath the
+  disc, so contact was ambiguous. The first edit revealed the bed but invented
+  a deep front scoop in the chamber wall, effectively creating a prohibited
+  cutaway. Neither draft was copied into the repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_a0webCpiilcHlmrSLEyJJsHI.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_phin_gravity_14_118_stage_02_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 88,594 bytes, exact 4:3.
+- Accessibility target: “A loose perforated gravity disc rests flat on a
+  visible level dry bed inside a complete solid-wall phin supported by a broad
+  cup.” The canonical exact-stage alt text remains “Instructional view of set
+  the gravity press disc gently on the bed using the exact brewer profile and
+  filter configuration stated in this recipe; insert lies flat.” The asset
+  record remains intentionally unregistered until localization and phin-
+  mechanism review are complete.
+- Inspection: no text, numbers, logos, arrows, hands, pressure, screw threads,
+  sidewall perforations, missing wall, cutaway, water, wet bed, unstable cup,
+  second disc, wrong filter, or clutter. The final frame shows an intact solid
+  cylindrical chamber, full support overlap, a close-fitting horizontal
+  perforated disc with low U-tab, a narrow far-edge coffee crescent, generous
+  headroom, separate lid, and broad planted cup.
+- Review status: **pending brewer-expert gravity-phin mechanism, bed contact,
+  and stability review**. Confirm loose-disc identity and fit, coffee halo as
+  real contact rather than suspension, solid chamber wall, integrated support
+  plate, cup-rim overlap, bed compression neutrality, headroom, mobile-size
+  readability before the Learn warning, and instruction-before-image placement
+  before registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
