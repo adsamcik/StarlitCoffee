@@ -1,19 +1,24 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,15 +32,21 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -51,6 +62,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileSetupOption
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileSetupUiState
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileStartSelection
+import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.viewmodel.CezveSessionSetup
 import java.util.Locale
 
@@ -76,6 +88,11 @@ fun P1BrewerProfileSetupScreen(
     onLearn: ((P1BrewerProfileStartSelection) -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
+    val selectedProfile = state.selectedProfile
+    var advancedOptionsExpanded by rememberSaveable(selectedProfile?.profileId?.value) {
+        mutableStateOf(false)
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -96,30 +113,49 @@ fun P1BrewerProfileSetupScreen(
                 },
             )
         },
+        bottomBar = {
+            if (selectedProfile != null) {
+                P1BrewerProfileActionBar(
+                    state = state,
+                    onStart = onStart,
+                )
+            }
+        },
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp, vertical = 16.dp),
+                .padding(innerPadding),
+            contentPadding = PaddingValues(
+                horizontal = 20.dp,
+                vertical = 16.dp,
+            ),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text(
-                text = stringResource(R.string.heading_brewer_profile_choose),
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.semantics { heading() },
-            )
-            Text(
-                text = stringResource(R.string.msg_brewer_profile_choose_hint),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            item(key = "profile-introduction") {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        text = stringResource(R.string.heading_brewer_profile_choose),
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.semantics { heading() },
+                    )
+                    Text(
+                        text = stringResource(R.string.msg_brewer_profile_choose_hint),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
 
             if (state.profiles.isEmpty()) {
-                ProfileSetupEmptyState()
+                item(key = "profile-empty") {
+                    ProfileSetupEmptyState()
+                }
             } else {
-                state.profiles.forEach { option ->
+                items(
+                    items = state.profiles,
+                    key = { option -> option.profileId.value },
+                ) { option ->
                     BrewerProfileOptionCard(
                         option = option,
                         selected = option.profileId == state.selectedProfileId,
@@ -128,56 +164,96 @@ fun P1BrewerProfileSetupScreen(
                 }
             }
 
-            state.selectedProfile?.let { selected ->
-                Spacer(modifier = Modifier.height(4.dp))
-                ProfileDefaultsCard(selected)
-                EquipmentCompatibilityCard(selected)
-                EquipmentCapacityCard(
-                    capacityInput = state.selectedEquipmentCapacityInput,
-                    capacityIsValid = state.selectedEquipmentCapacityG != null,
-                    onCapacityChanged = onEquipmentCapacityChanged,
-                )
-                if (selected.requiresHarioSwitchWorkflow) {
-                    HarioSwitchWorkflowPicker(
-                        selectedWorkflow = state.harioSwitchWorkflow,
-                        onSelected = onHarioSwitchWorkflowSelected,
-                    )
+            selectedProfile?.let { selected ->
+                item(key = "profile-defaults:${selected.profileId.value}") {
+                    ProfileDefaultsCard(selected)
                 }
+
+                if (selected.requiresHarioSwitchWorkflow || state.requiresCezveSetup) {
+                    item(key = "profile-options:${selected.profileId.value}") {
+                        ContextualProfileOptionsCard(
+                            selected = selected,
+                            state = state,
+                            expanded = advancedOptionsExpanded,
+                            onExpandedChange = { advancedOptionsExpanded = !advancedOptionsExpanded },
+                            onHarioSwitchWorkflowSelected = onHarioSwitchWorkflowSelected,
+                            onSugarSelected = onCezveSugarSelected,
+                            onFoamRiseCyclesSelected = onCezveFoamRiseCyclesSelected,
+                        )
+                    }
+                }
+
+                item(key = "profile-equipment:${selected.profileId.value}") {
+                    EquipmentCompatibilityCard(selected)
+                }
+
                 if (state.requiresCezveSetup) {
-                    CezveSetupCard(
-                        setup = state.cezveSetup,
-                        selectedHeatSource = state.cezveHeatSource,
-                        onSugarSelected = onCezveSugarSelected,
-                        onFoamRiseCyclesSelected = onCezveFoamRiseCyclesSelected,
-                        onHeatSourceSelected = onCezveHeatSourceSelected,
+                    item(key = "profile-heat-source:${selected.profileId.value}") {
+                        CezveHeatSourceCard(
+                            selectedHeatSource = state.cezveHeatSource,
+                            onHeatSourceSelected = onCezveHeatSourceSelected,
+                        )
+                    }
+                }
+
+                item(key = "profile-capacity:${selected.profileId.value}") {
+                    EquipmentCapacityCard(
+                        capacityInput = state.selectedEquipmentCapacityInput,
+                        capacityIsValid = state.selectedEquipmentCapacityG != null,
+                        onCapacityChanged = onEquipmentCapacityChanged,
                     )
                 }
 
-                Spacer(modifier = Modifier.height(4.dp))
-                Button(
-                    onClick = { state.startSelection?.let(onStart) },
-                    enabled = state.canStart,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        text = if (state.isStarting) {
-                            stringResource(R.string.label_brewer_profile_starting)
-                        } else {
-                            stringResource(R.string.action_start_brewing)
-                        },
-                    )
-                }
                 state.startSelection?.let { selection ->
                     onLearn?.let { learn ->
-                        OutlinedButton(
-                            onClick = { learn(selection) },
-                            enabled = !state.isStarting,
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
-                            Text(text = stringResource(R.string.action_learn_this_brewer))
+                        item(key = "profile-learn:${selected.profileId.value}") {
+                            OutlinedButton(
+                                onClick = { learn(selection) },
+                                enabled = !state.isStarting,
+                                modifier = Modifier.fillMaxWidth(),
+                            ) {
+                                Text(text = stringResource(R.string.action_learn_this_brewer))
+                            }
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun P1BrewerProfileActionBar(
+    state: P1BrewerProfileSetupUiState,
+    onStart: (P1BrewerProfileStartSelection) -> Unit,
+) {
+    Surface(
+        color = MaterialTheme.colorScheme.surface,
+        shadowElevation = 6.dp,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+        ) {
+            Button(
+                onClick = { state.startSelection?.let(onStart) },
+                enabled = state.canStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp),
+                shape = MaterialTheme.shapes.extraLarge,
+                colors = primaryActionButtonColors(),
+            ) {
+                Text(
+                    text = if (state.isStarting) {
+                        stringResource(R.string.label_brewer_profile_starting)
+                    } else {
+                        stringResource(R.string.action_start_brewing)
+                    },
+                    style = MaterialTheme.typography.titleMedium,
+                )
             }
         }
     }
@@ -215,8 +291,11 @@ private fun BrewerProfileOptionCard(
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .semantics { this.selected = selected }
-            .clickable(onClick = onClick),
+            .selectable(
+                selected = selected,
+                onClick = onClick,
+                role = Role.RadioButton,
+            ),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -398,80 +477,156 @@ private fun EquipmentCapacityCard(
 }
 
 @Composable
-private fun CezveSetupCard(
-    setup: CezveSessionSetup,
-    selectedHeatSource: HeatSourceClass,
+private fun ContextualProfileOptionsCard(
+    selected: P1BrewerProfileSetupOption,
+    state: P1BrewerProfileSetupUiState,
+    expanded: Boolean,
+    onExpandedChange: () -> Unit,
+    onHarioSwitchWorkflowSelected: (HarioSwitchWorkflow) -> Unit,
     onSugarSelected: (Boolean) -> Unit,
     onFoamRiseCyclesSelected: (Int) -> Unit,
+) {
+    val title = if (selected.requiresHarioSwitchWorkflow) {
+        stringResource(R.string.heading_brewer_profile_hario_switch_style)
+    } else {
+        stringResource(R.string.heading_brewer_profile_cezve_choices)
+    }
+    val disclosureDescription = stringResource(
+        if (expanded) R.string.cd_collapse_advanced else R.string.cd_expand_advanced,
+    )
+
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column {
+            TextButton(
+                onClick = onExpandedChange,
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp),
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .weight(1f)
+                        .semantics { heading() },
+                )
+                Icon(
+                    imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                    contentDescription = disclosureDescription,
+                )
+            }
+            AnimatedVisibility(visible = expanded) {
+                Column(
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    if (selected.requiresHarioSwitchWorkflow) {
+                        HarioSwitchWorkflowPicker(
+                            selectedWorkflow = state.harioSwitchWorkflow,
+                            onSelected = onHarioSwitchWorkflowSelected,
+                        )
+                    } else {
+                        CezveChoicePicker(
+                            setup = state.cezveSetup,
+                            onSugarSelected = onSugarSelected,
+                            onFoamRiseCyclesSelected = onFoamRiseCyclesSelected,
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CezveChoicePicker(
+    setup: CezveSessionSetup,
+    onSugarSelected: (Boolean) -> Unit,
+    onFoamRiseCyclesSelected: (Int) -> Unit,
+) {
+    Text(
+        text = stringResource(R.string.msg_brewer_profile_cezve_choices_hint),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+    Text(
+        text = stringResource(R.string.label_brewer_profile_cezve_sugar),
+        style = MaterialTheme.typography.labelLarge,
+    )
+    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+        listOf(false, true).forEachIndexed { index, includeSugar ->
+            SegmentedButton(
+                selected = setup.includeSugar == includeSugar,
+                onClick = { onSugarSelected(includeSugar) },
+                shape = SegmentedButtonDefaults.itemShape(index = index, count = 2),
+                label = { Text(cezveSugarLabel(includeSugar), maxLines = 2) },
+            )
+        }
+    }
+    Text(
+        text = stringResource(R.string.label_brewer_profile_cezve_foam_rises),
+        style = MaterialTheme.typography.labelLarge,
+    )
+    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+        listOf(1, 2).forEachIndexed { index, cycles ->
+            SegmentedButton(
+                selected = setup.foamRiseCycles == cycles,
+                onClick = { onFoamRiseCyclesSelected(cycles) },
+                shape = SegmentedButtonDefaults.itemShape(index = index, count = 2),
+                label = { Text(cezveFoamRiseLabel(cycles)) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun CezveHeatSourceCard(
+    selectedHeatSource: HeatSourceClass,
     onHeatSourceSelected: (HeatSourceClass) -> Unit,
 ) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+        ),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                text = stringResource(R.string.heading_brewer_profile_cezve_choices),
+                text = stringResource(R.string.heading_brewer_profile_cezve_heat_source),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.semantics { heading() },
-            )
-            Text(
-                text = stringResource(R.string.msg_brewer_profile_cezve_choices_hint),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Text(
-                text = stringResource(R.string.label_brewer_profile_cezve_sugar),
-                style = MaterialTheme.typography.labelLarge,
-            )
-            SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                listOf(false, true).forEachIndexed { index, includeSugar ->
-                    SegmentedButton(
-                        selected = setup.includeSugar == includeSugar,
-                        onClick = { onSugarSelected(includeSugar) },
-                        shape = SegmentedButtonDefaults.itemShape(index = index, count = 2),
-                        label = { Text(cezveSugarLabel(includeSugar), maxLines = 2) },
-                    )
-                }
-            }
-            Text(
-                text = stringResource(R.string.label_brewer_profile_cezve_foam_rises),
-                style = MaterialTheme.typography.labelLarge,
-            )
-            SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                listOf(1, 2).forEachIndexed { index, cycles ->
-                    SegmentedButton(
-                        selected = setup.foamRiseCycles == cycles,
-                        onClick = { onFoamRiseCyclesSelected(cycles) },
-                        shape = SegmentedButtonDefaults.itemShape(index = index, count = 2),
-                        label = { Text(cezveFoamRiseLabel(cycles)) },
-                    )
-                }
-            }
-            Text(
-                text = stringResource(R.string.heading_brewer_profile_cezve_heat_source),
-                style = MaterialTheme.typography.labelLarge,
             )
             Text(
                 text = stringResource(R.string.msg_brewer_profile_cezve_heat_source_hint),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            CEZVE_HEAT_SOURCES.forEach { heatSource ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onHeatSourceSelected(heatSource) },
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    RadioButton(
-                        selected = selectedHeatSource == heatSource,
-                        onClick = null,
-                    )
-                    Text(
-                        text = cezveHeatSourceLabel(heatSource),
-                        modifier = Modifier.padding(start = 8.dp),
-                    )
+            Column(modifier = Modifier.selectableGroup()) {
+                CEZVE_HEAT_SOURCES.forEach { heatSource ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp)
+                            .selectable(
+                                selected = selectedHeatSource == heatSource,
+                                onClick = { onHeatSourceSelected(heatSource) },
+                                role = Role.RadioButton,
+                            ),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(
+                            selected = selectedHeatSource == heatSource,
+                            onClick = null,
+                        )
+                        Text(
+                            text = cezveHeatSourceLabel(heatSource),
+                            modifier = Modifier.padding(start = 8.dp),
+                        )
+                    }
                 }
             }
             if (selectedHeatSource == HeatSourceClass.NONE) {
@@ -520,34 +675,22 @@ private fun HarioSwitchWorkflowPicker(
     selectedWorkflow: HarioSwitchWorkflow,
     onSelected: (HarioSwitchWorkflow) -> Unit,
 ) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.heading_brewer_profile_hario_switch_style),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.semantics { heading() },
+    Text(
+        text = stringResource(R.string.msg_brewer_profile_hario_switch_style_hint),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+        HarioSwitchWorkflow.entries.forEachIndexed { index, workflow ->
+            SegmentedButton(
+                selected = workflow == selectedWorkflow,
+                onClick = { onSelected(workflow) },
+                shape = SegmentedButtonDefaults.itemShape(
+                    index = index,
+                    count = HarioSwitchWorkflow.entries.size,
+                ),
+                label = { Text(workflowLabel(workflow), maxLines = 2) },
             )
-            Text(
-                text = stringResource(R.string.msg_brewer_profile_hario_switch_style_hint),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                HarioSwitchWorkflow.entries.forEachIndexed { index, workflow ->
-                    SegmentedButton(
-                        selected = workflow == selectedWorkflow,
-                        onClick = { onSelected(workflow) },
-                        shape = SegmentedButtonDefaults.itemShape(
-                            index = index,
-                            count = HarioSwitchWorkflow.entries.size,
-                        ),
-                        label = { Text(workflowLabel(workflow), maxLines = 2) },
-                    )
-                }
-            }
         }
     }
 }
