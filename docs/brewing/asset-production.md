@@ -1677,6 +1677,90 @@ For every asset record:
   Switch assets, and instruction-before-image placement before registration or
   approval.
 
+### `p1-v60-official-rinse-complete-imagegen-v1`
+
+- Stable asset ID:
+  `instruction_p1_v60_official_15_250_stage_01_instruction_default`
+- Exact scope: `v60_official_15_250` / source `stage_01` /
+  `p1_v60_official_15_250_stage_01_instruction`; one folded V60 02 paper is
+  fully wet and seated against standard spiral ribs while the preheated server
+  below is empty after discarded rinse water.
+- Evidence: `SRC-HARIO-V60-OFFICIAL`. Reverified on 28 July 2026 against Hario
+  UK's current intermediate guide at
+  <https://www.hario.co.uk/pages/brew-guides-v60-intermediate> and beginner
+  guide at
+  <https://www.hario.co.uk/pages/how-to-brew-coffee-with-hario-v60-coffee-dripper>.
+  The current first-party guidance corroborates folding the V60 paper seam,
+  seating the paper in the cone, rinsing with hot water, preheating the server,
+  and discarding the rinse water before coffee is added.
+- Generation mode: new bitmap generation with the built-in image generator;
+  no corrective edit was needed before pending-review delivery.
+- Generated: 28 July 2026.
+- Final prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show one coherent completed rinse state from a
+  > close elevated front three-quarter angle: an accurate unbranded standard
+  > transparent V60 02-style conical dripper centered level and securely
+  > supported on a stable clear heat-safe glass server. Preserve standard V60
+  > 02 geometry only: a clear handle-bearing cone with one large central outlet,
+  > a broad circular support flange, and continuous curved spiral ribs running
+  > up the inner wall. Show exactly one correctly sized smooth white conical V60
+  > 02 paper fully seated to the bottom point and lying flush against the spiral
+  > ribs. Make one factory-crimped side seam physically unmistakable on the
+  > viewer-left front side: it has been folded neatly over itself into a narrow
+  > doubled-paper strip that follows the conical wall from upper rim toward the
+  > bottom point, without adding a printed line or second filter. The paper has
+  > already been rinsed and is uniformly wet, shown by a restrained translucent
+  > sheen and subtly darker damp fibers, yet contains no retained water pool,
+  > coffee, grounds, or slurry. The empty server below has no rinse water; only
+  > a very faint natural haze at the upper interior may suggest preheating
+  > without becoming a steam plume. Show a dry outlet with no droplet or active
+  > flow. Show no kettle and no hands. Make standard spiral-rib geometry, the
+  > single folded seam, smooth rib contact, uniformly wet paper, empty preheated
+  > server, stable support, and completed no-flow state immediately legible at
+  > mobile size. Use a warm-neutral empty counter and soft plain background,
+  > semi-flat softly dimensional educational rendering, precise believable
+  > glass and paper geometry, restrained clear-glass/white/warm-gray palette,
+  > clear silhouettes, soft light, subtle shadows, generous crop-safe breathing
+  > room, and no decorative objects. Include no text, letters, numbers,
+  > measurement marks, labels, logos, brand marks, arrows, callouts, panels,
+  > warning symbols, comparison, magnified inset, cutaway, unfolded seam,
+  > horizontal folded band, reversed, doubled, torn, buckled, floating,
+  > collapsed, oversized, undersized, off-center or pleated basket paper, Wave,
+  > wedge, No. 1, cloth, reusable metal, NEO, Suiren, Switch silicone base,
+  > steel ball, lever, Clever actuator, valve, retained rinse water, active
+  > dripping, kettle pour, coffee grounds, brown liquid, bloom, serving beverage,
+  > overflow, splash, steam plume, unstable server, second brewer, or clutter.
+  > The final output must be one opaque 1024 x 768 scene whose only story is a
+  > standard V60 02 with one neatly folded, fully wet paper above an emptied
+  > preheated server after rinsing is complete.
+- Generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_u8lWPcaWE9MsPA5n9un4adAh.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_v60_official_15_250_stage_01_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 95,574 bytes, exact 4:3.
+- Accessibility target: “A wet folded V60 02 paper lies smoothly against the
+  spiral ribs above an empty preheated server after the rinse water is
+  discarded.” The canonical exact-stage alt text remains “Instructional view
+  of insert and rinse the v60 02 paper using the exact brewer profile and
+  filter configuration stated in this recipe; paper is fully wet and server
+  preheated.” The asset record remains intentionally unregistered until
+  localization and V60-geometry review are complete.
+- Inspection: no text, numbers, logos, arrows, hands, kettle, coffee, retained
+  water, active flow, Switch/Clever mechanism, wrong paper, unstable support,
+  cutaway, or clutter. The final frame shows standard V60 02 spiral ribs, one
+  smooth damp conical paper with a doubled folded seam at viewer-left, a level
+  clear handle-bearing dripper and support flange, and a stable visibly empty
+  glass server.
+- Review status: **pending brewer-expert standard-V60 paper, support, and rinse
+  review**. Confirm V60 02 proportions, spiral ribs and central outlet,
+  dripper/server interface, seam fold, wet-paper fit, lack of retained water,
+  empty-server readability, material neutrality for the selected profile,
+  mobile-size legibility, and instruction-before-image placement before
+  registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
