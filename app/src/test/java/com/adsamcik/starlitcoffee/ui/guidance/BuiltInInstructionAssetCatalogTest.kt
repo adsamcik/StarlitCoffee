@@ -9,14 +9,22 @@ import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class BuiltInInstructionAssetCatalogTest {
 
     @Test
-    fun `production source starts empty until reviewed local records exist`() {
-        assertTrue(BuiltInInstructionAssetCatalog.catalog.assets.isEmpty())
+    fun `production source validates pending inputs without presenting them`() {
+        val asset = BuiltInInstructionAssetCatalog.catalog.assets.single()
+
+        assertEquals(InstructionAssetReviewStatus.PENDING_REVIEW, asset.review.status)
+        assertEquals(
+            "instruction_steep_and_release_clever_style_" +
+                "clever_style_insert_and_rinse_filter_default",
+            asset.id.value,
+        )
+        assertEquals(asset.id.value, asset.expectedDrawableResourceName())
+        assertNull(BuiltInInstructionAssetCatalog.catalog.findApprovedAssetForContent(asset.contentId))
     }
 
     @Test
