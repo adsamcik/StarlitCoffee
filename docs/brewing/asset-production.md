@@ -607,6 +607,68 @@ For every asset record:
   machine-off state, mug clearance, and post-warning Learn/Live placement
   before manifest registration or approval.
 
+### `p1-wave-185-rinse-imagegen-v1`
+
+- Stable asset ID:
+  `instruction_p1_wave185_ozone_25_400_stage_01_instruction_default`
+- Exact scope: `wave185_ozone_25_400` / source `stage_01` /
+  `p1_wave185_ozone_25_400_stage_01_instruction`; gently rinsing the correct
+  185 paper while its flat bottom stays level and its pleats remain open.
+- Evidence: `SRC-KALITA-OZONE`. Reverified on 28 July 2026 against Ozone
+  Coffee's current Kalita Wave guide at
+  <https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide>, which continues to
+  specify the Wave 185, its flat-bottom dripper, its required crimped paper,
+  and a thorough hot-water rinse before coffee is added.
+- Generation mode: new bitmap generation with the built-in image generator;
+  no corrective edit was needed before pending-review delivery.
+- Generated: 28 July 2026.
+- Final prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for
+  > a mobile coffee-brewing guide, composed to remain legible at roughly 320
+  > dp wide. Use an elevated close three-quarter view of an unbranded
+  > stainless-steel Kalita Wave 185-style flat-bottom dripper centered securely
+  > on a broad stable heat-safe glass server. Show the correct large white
+  > Wave 185 paper centered inside: a visibly level circular flat bottom, tall
+  > evenly spaced accordion/crimp pleats all around, and every pleat remaining
+  > open with a small air space from the metal wall rather than flattened
+  > against it. A plain gooseneck kettle enters only from an upper corner and
+  > releases one narrow gentle stream onto the inner paper wall, moving no
+  > paper. The paper is visibly wet where rinsed, while a light clear drainage
+  > stream leaves the flat three-hole base into the server. Keep the kettle
+  > spout and any hand well clear of the paper. Make the Wave 185's broad
+  > flat-bottom geometry, open crimped pleats, centered level paper, gentle
+  > wetting, and drainage unmistakable in one crop-safe frame. Use a
+  > warm-neutral uncluttered counter and background, semi-flat softly
+  > dimensional educational rendering, precise believable geometry, clear
+  > silhouettes, restrained materials, soft natural light, and subtle shadows.
+  > Show no coffee grounds. Do not depict a V60 cone paper, wedge paper,
+  > generic basket paper, Wave 155 proportions, metal reusable filter,
+  > flattened or crushed pleats, folded-over rim, pleats glued to the walls,
+  > finger pressure, kettle touching the filter, tilted or floating paper,
+  > off-center flat bottom, unstable server, overflow, excessive spray, second
+  > dripper, text, letters, numbers, labels, logos, arrows, callouts, diagrams,
+  > multiple panels, borders, or decorative clutter.
+- Generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_TD1v5gzxfWFh902wMOgXZTIt.png`
+  (opaque RGB PNG, 1448 × 1086 px, 2,184,148 bytes, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_wave185_ozone_25_400_stage_01_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 × 768 px, 85,670 bytes, exact 4:3.
+- Accessibility target: “A gentle kettle stream rinses a centered Wave 185
+  paper while its flat bottom stays level and the wet pleats remain open.” The
+  exact-stage alt-text resource and asset record remain intentionally
+  unregistered until localization and filter review are complete.
+- Inspection: no text, numbers, logos, extra panel, grounds, touching, or
+  secondary action. The close crop makes the level flat paper bottom and open
+  wet accordion pleats dominant, preserves clear kettle clearance, and shows
+  a light rinse-water drain into a broad stable server.
+- Review status: **pending brewer-expert filter and geometry review**. Confirm
+  the Wave 185 proportions, crimp count and spacing, paper-to-wall clearance,
+  level flat-bottom seating, rinse-stream placement, drainage, and
+  post-instruction Learn/Live placement before manifest registration or
+  approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
