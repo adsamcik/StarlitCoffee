@@ -5,6 +5,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.BrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.MethodFamilyId
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
+import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
 
 /** Input for a Learn surface backed by the same profile-scoped content as live Brew. */
@@ -13,6 +14,7 @@ data class LearnGuidanceCatalogRequest(
     val brewerProfileId: String,
     val preferences: DurableBrewSessionGuidancePreferences = DurableBrewSessionGuidancePreferences(),
     val harioSwitchWorkflow: HarioSwitchWorkflow? = null,
+    val exactStageOrder: List<StageId>? = null,
 )
 
 sealed interface LearnGuidanceCatalogAvailability {
@@ -43,6 +45,9 @@ sealed interface LearnGuidanceCatalogAvailability {
     data class HarioSwitchWorkflowRequired(
         val profileId: BrewerProfileId,
     ) : LearnGuidanceCatalogAvailability
+    data class ExactStageOrderMismatch(
+        val profileId: BrewerProfileId,
+    ) : LearnGuidanceCatalogAvailability
 
 }
 
@@ -55,9 +60,14 @@ data class ResolvedLearnGuidanceContent(
     val id: StageContentId,
     val placement: BuiltInGuidancePlacement,
     val instruction: String,
+    val target: String?,
+    val completionCue: String?,
     val explanation: String?,
     val tip: String?,
+    val nextAction: String?,
+    val controlRequirements: List<GuidanceOperationalCue>,
     val warning: String?,
+    val utilities: List<GuidanceOperationalCue>,
     val altText: String,
     val safetyCritical: Boolean,
 )
@@ -128,11 +138,19 @@ class LearnGuidanceCatalogResolver(
                 content = emptyList(),
             )
         }
-        val planSelection = P1LearnContentSelector.select(
-            content = scopedContent,
-            profileId = brewerProfileId,
-            harioSwitchWorkflow = request.harioSwitchWorkflow,
-        )
+        val exactStageOrder = request.exactStageOrder
+        val planSelection = if (exactStageOrder == null) {
+            P1LearnContentSelector.select(
+                content = scopedContent,
+                profileId = brewerProfileId,
+                harioSwitchWorkflow = request.harioSwitchWorkflow,
+            )
+        } else {
+            selectExactContent(scopedContent, exactStageOrder)
+                ?: return unavailable(
+                    LearnGuidanceCatalogAvailability.ExactStageOrderMismatch(brewerProfileId),
+                )
+        }
         return LearnGuidanceCatalogResolution(
             policy = policy,
             availability = if (planSelection.requiresHarioSwitchWorkflow) {
@@ -143,6 +161,32 @@ class LearnGuidanceCatalogResolver(
             content = planSelection.content
                 .filter { content -> policy.isVisible(content.visibility, content.safetyCritical) }
                 .map { content -> content.toLearnContent(policy.level) },
+        )
+    }
+
+    private fun selectExactContent(
+        scopedContent: List<BuiltInGuidanceContent>,
+        exactStageOrder: List<StageId>,
+    ): P1LearnContentSelection? {
+        val orderByStage = exactStageOrder.withIndex().associate { (index, stageId) ->
+            stageId to index
+        }
+        val liveContent = scopedContent.filter { content ->
+            content.placement == BuiltInGuidancePlacement.LIVE_STAGE
+        }
+        val hasExactStageSet = listOf(
+            exactStageOrder.isNotEmpty(),
+            orderByStage.size == exactStageOrder.size,
+            liveContent.size == exactStageOrder.size,
+            liveContent.all { content -> content.stageId in orderByStage },
+        ).all { requirement -> requirement }
+        if (!hasExactStageSet) return null
+
+        return P1LearnContentSelection(
+            content = scopedContent.sortedBy { content ->
+                content.stageId?.let(orderByStage::get)
+            },
+            requiresHarioSwitchWorkflow = false,
         )
     }
 
@@ -171,6 +215,23 @@ class LearnGuidanceCatalogResolver(
     private fun BuiltInGuidanceContent.toLearnContent(
         level: GuidancePresentationLevel,
     ): ResolvedLearnGuidanceContent {
+        authoredPresentations[level]?.let { authored ->
+            return ResolvedLearnGuidanceContent(
+                id = id,
+                placement = placement,
+                instruction = authored.instruction.orEmpty(),
+                target = authored.target,
+                completionCue = authored.completionCue,
+                explanation = authored.explanation,
+                tip = authored.practicalTip,
+                nextAction = authored.nextAction,
+                controlRequirements = authored.controlRequirements,
+                warning = authored.warning ?: text.warning,
+                utilities = authored.utilities,
+                altText = authored.accessibleAltText,
+                safetyCritical = safetyCritical,
+            )
+        }
         val showSupportingCopy = level in setOf(
             GuidancePresentationLevel.FULL,
             GuidancePresentationLevel.CUSTOM,
@@ -188,9 +249,14 @@ class LearnGuidanceCatalogResolver(
             } else {
                 text.primaryInstruction
             },
+            target = null,
+            completionCue = null,
             explanation = text.explanation.takeIf { showSupportingCopy },
             tip = text.tip.takeIf { showSupportingCopy },
+            nextAction = null,
+            controlRequirements = emptyList(),
             warning = text.warning,
+            utilities = emptyList(),
             altText = text.altText,
             safetyCritical = safetyCritical,
         )

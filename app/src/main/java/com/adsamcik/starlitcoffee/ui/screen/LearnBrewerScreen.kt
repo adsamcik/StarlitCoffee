@@ -143,16 +143,27 @@ private fun LearnGuidanceCard(
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
             )
-            Text(
-                text = content.instruction,
-                style = MaterialTheme.typography.titleMedium,
-            )
-            visualAsset?.let { asset -> ApprovedInstructionAssetImage(asset) }
-            content.warning?.let { warning ->
+            content.instruction.takeIf(String::isNotBlank)?.let { instruction ->
+                Text(
+                    text = instruction,
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
+            if (content.safetyCritical) content.warning?.let { warning ->
                 LearnGuidanceWarning(
                     warning = warning,
-                    safetyCritical = content.safetyCritical,
+                    safetyCritical = true,
                 )
+            }
+            visualAsset?.let { asset -> ApprovedInstructionAssetImage(asset) }
+            if (!content.safetyCritical) content.warning?.let { warning ->
+                LearnGuidanceWarning(warning = warning, safetyCritical = false)
+            }
+            content.target?.let { target ->
+                LearnGuidanceDetail(target)
+            }
+            content.completionCue?.let { cue ->
+                LearnGuidanceDetail(cue)
             }
             content.explanation?.let { explanation ->
                 Text(
@@ -168,8 +179,26 @@ private fun LearnGuidanceCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
+            content.nextAction?.let { nextAction ->
+                LearnGuidanceDetail(nextAction)
+            }
+            content.controlRequirements.forEach { cue ->
+                LearnGuidanceDetail(cue.fallbackLabel)
+            }
+            content.utilities.forEach { utility ->
+                LearnGuidanceDetail(utility.fallbackLabel)
+            }
         }
     }
+}
+
+@Composable
+private fun LearnGuidanceDetail(value: String) {
+    Text(
+        text = value,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
 }
 
 @Composable

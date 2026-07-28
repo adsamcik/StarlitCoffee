@@ -63,8 +63,9 @@ data class P1ExactGuidancePresentation(
     val explanation: String?,
     val practicalTip: String?,
     val nextAction: String?,
+    val controlRequirements: List<GuidanceOperationalCue>,
     val warning: String?,
-    val utilities: List<String>,
+    val utilities: List<GuidanceOperationalCue>,
     val accessibleAltText: String,
 )
 
@@ -111,8 +112,9 @@ data class P1ExactStageGuidance(
             explanation = full.conciseExplanation,
             practicalTip = full.optionalPracticalTip,
             nextAction = null,
+            controlRequirements = emptyList(),
             warning = warning,
-            utilities = utilitiesOnly,
+            utilities = emptyList(),
             accessibleAltText = full.accessibleAltText,
         )
 
@@ -124,8 +126,9 @@ data class P1ExactStageGuidance(
             explanation = null,
             practicalTip = null,
             nextAction = null,
+            controlRequirements = emptyList(),
             warning = warning,
-            utilities = utilitiesOnly,
+            utilities = emptyList(),
             accessibleAltText = full.accessibleAltText,
         )
 
@@ -137,8 +140,9 @@ data class P1ExactStageGuidance(
             explanation = null,
             practicalTip = null,
             nextAction = focused.nextAction,
+            controlRequirements = operationalCues,
             warning = warning,
-            utilities = utilitiesOnly,
+            utilities = emptyList(),
             accessibleAltText = full.accessibleAltText,
         )
 
@@ -150,11 +154,15 @@ data class P1ExactStageGuidance(
             explanation = null,
             practicalTip = null,
             nextAction = null,
+            controlRequirements = emptyList(),
             warning = warning,
-            utilities = utilitiesOnly,
+            utilities = operationalCues,
             accessibleAltText = full.accessibleAltText,
         )
     }
+
+    private val operationalCues: List<GuidanceOperationalCue>
+        get() = utilitiesOnly.map(GuidanceOperationalCue::requireFromStableId)
 
     /** Compatibility adapter for the existing shared Learn/live catalogue. */
     fun toBuiltInGuidanceContent(): BuiltInGuidanceContent = BuiltInGuidanceContent(
@@ -176,7 +184,24 @@ data class P1ExactStageGuidance(
             alwaysVisible = isAuthoredCriticalWarning,
         ),
         safetyCritical = isAuthoredCriticalWarning,
+        authoredPresentations = GuidancePresentationLevel.entries.associateWith { level ->
+            presentation(level).toAuthoredPresentation()
+        },
     )
+
+    private fun P1ExactGuidancePresentation.toAuthoredPresentation() =
+        AuthoredGuidancePresentation(
+            instruction = instruction,
+            target = target,
+            completionCue = completionCue,
+            explanation = explanation,
+            practicalTip = practicalTip,
+            nextAction = nextAction,
+            controlRequirements = controlRequirements,
+            warning = warning,
+            utilities = utilities,
+            accessibleAltText = accessibleAltText,
+        )
 
     private val isAuthoredCriticalWarning: Boolean
         get() = requiresSafetyCriticalExpertReview && warning != null
@@ -419,6 +444,9 @@ private fun P1ExactStageDto.toDomain(
     }
     require(utilitiesOnly.all { utility -> utility.matches(STABLE_UTILITY_ID) }) {
         "Utility IDs must use lower snake case for ${recipeId.value}/$stageId"
+    }
+    require(utilitiesOnly.all { utility -> GuidanceOperationalCue.fromStableId(utility) != null }) {
+        "Unknown operational cue for ${recipeId.value}/$stageId"
     }
     require(focused.timerOrStageControlRequirement == utilitiesOnly.joinToString()) {
         "Focused controls differ from utilities-only guidance for ${recipeId.value}/$stageId"

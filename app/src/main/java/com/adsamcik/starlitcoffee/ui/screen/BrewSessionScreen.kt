@@ -65,6 +65,8 @@ import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionEntityMa
 import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionRestoreResult
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResult
 import com.adsamcik.starlitcoffee.data.db.entity.ActiveBrewSessionEntity
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionEvent
@@ -88,6 +90,7 @@ import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResoluti
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolver
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.P1BuiltInGuidanceCatalog
+import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
 import com.adsamcik.starlitcoffee.ui.guidance.LegacyBuiltInGuidanceCatalog
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
@@ -114,6 +117,7 @@ fun BrewSessionScreen(
     onDispatch: suspend (SessionEvent) -> BrewSessionOperationResult,
     onBack: () -> Unit,
     guidancePreferences: DurableBrewSessionGuidancePreferences,
+    exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
     onRememberGuidanceForProfile: suspend (String, GuidancePresentationLevel) -> Unit,
     dimModeEnabled: Boolean = true,
     dimModeTrueBlack: Boolean = false,
@@ -140,25 +144,27 @@ fun BrewSessionScreen(
     val currentOnScreenForegrounded by rememberUpdatedState(onScreenForegrounded)
     val currentOnScreenBackgrounded by rememberUpdatedState(onScreenBackgrounded)
     val dimController = rememberDimModeController(featureEnabled = dimModeEnabled)
-    val guidanceResolver = remember {
-        DurableBrewSessionGuidanceResolver(
-            guidanceCatalogs = listOf(
-                LegacyBuiltInGuidanceCatalog.catalog,
-                P1BuiltInGuidanceCatalog.catalog,
-            ),
-            instructionAssets = BuiltInInstructionAssetCatalog.catalog,
-        )
-    }
 
     val restored = remember(entity) { entity?.let(ActiveBrewSessionEntityMapper::restore) }
     val presentation = remember(restored, nowWallClockMillis) {
         restored?.let { ActiveBrewSessionPresentationMapper.map(it, nowWallClockMillis) }
     }
     val restoredSession = (restored as? ActiveBrewSessionRestoreResult.Restored)?.value
-    val isReleaseGatedP1Session = restoredSession?.recipe?.brewerProfileId?.let { profileId ->
-        P1BuiltInGuidanceCatalog.isReleaseGatedProfile(profileId)
+    val persistedRecipe = restoredSession?.recipe
+    val exactRecipeId = remember(persistedRecipe?.builtInRecipeId) {
+        persistedRecipe?.builtInRecipeId?.let { rawRecipeId ->
+            runCatching { BuiltInRecipeId(rawRecipeId) }
+                .getOrNull()
+                ?.takeIf { recipeId -> BuiltInP1RecipeCatalog.find(recipeId) != null }
+        }
+    }
+    val isReleaseGatedExactSession = persistedRecipe?.let { recipe ->
+        exactRecipeReleaseGate.shouldGatePersistedSession(
+            rawRecipeId = recipe.builtInRecipeId,
+            rawBrewerProfileId = recipe.brewerProfileId,
+        )
     } ?: false
-    if (isReleaseGatedP1Session) {
+    if (isReleaseGatedExactSession) {
         BackHandler(onBack = onBack)
         BrewSessionUnavailable(
             hasSession = true,
@@ -167,6 +173,17 @@ fun BrewSessionScreen(
         )
         return
     }
+    val guidanceResolver = remember(exactRecipeId, exactRecipeReleaseGate) {
+        val guidanceCatalogs = exactRecipeId
+            ?.let(exactRecipeReleaseGate::catalogFor)
+            ?.let(::listOf)
+            ?: listOf(LegacyBuiltInGuidanceCatalog.catalog, P1BuiltInGuidanceCatalog.catalog)
+        DurableBrewSessionGuidanceResolver(
+            guidanceCatalogs = guidanceCatalogs,
+            instructionAssets = BuiltInInstructionAssetCatalog.catalog,
+        )
+    }
+
     val guidanceResolution = remember(
         restoredSession?.recipe,
         presentation,

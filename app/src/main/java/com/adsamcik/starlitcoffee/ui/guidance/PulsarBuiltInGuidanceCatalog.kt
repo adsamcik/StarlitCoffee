@@ -55,6 +55,64 @@ data class GuidanceTextMetadata(
     }
 }
 
+/** Closed set of operational cues authored by the exact source library. */
+enum class GuidanceOperationalCue(
+    val stableId: String,
+    val fallbackLabel: String,
+) {
+    BEVERAGE_YIELD_TARGET("beverage_yield_target", "Beverage yield target"),
+    COUNTDOWN_OR_TIMESTAMP("countdown_or_timestamp", "Countdown or timestamp"),
+    CUMULATIVE_WATER_TARGET("cumulative_water_target", "Cumulative water target"),
+    CURRENT_POUR_TARGET("current_pour_target", "Current pour target"),
+    ELAPSED_TIMER("elapsed_timer", "Elapsed timer"),
+    HEAT_STATE("heat_state", "Heat state"),
+    STAGE_ADVANCE("stage_advance", "Next-stage control"),
+    VALVE_STATE("valve_state", "Valve state"),
+    ;
+
+    companion object {
+        private val byStableId = entries.associateBy(GuidanceOperationalCue::stableId)
+
+        fun fromStableId(stableId: String): GuidanceOperationalCue? = byStableId[stableId]
+
+        fun requireFromStableId(stableId: String): GuidanceOperationalCue =
+            requireNotNull(fromStableId(stableId)) {
+                "Unknown exact guidance operational cue: $stableId"
+            }
+    }
+}
+
+/**
+ * One fully authored guidance density.
+ *
+ * Exact recipes use this instead of deriving focused and utilities-only views
+ * from the full paragraph. Legacy catalogues leave the map empty and retain
+ * their established compact-copy behavior.
+ */
+data class AuthoredGuidancePresentation(
+    val instruction: String?,
+    val target: String?,
+    val completionCue: String?,
+    val explanation: String?,
+    val practicalTip: String?,
+    val nextAction: String?,
+    val controlRequirements: List<GuidanceOperationalCue>,
+    val warning: String?,
+    val utilities: List<GuidanceOperationalCue>,
+    val accessibleAltText: String,
+) {
+    init {
+        require(accessibleAltText.isNotBlank()) {
+            "Authored guidance needs meaningful alt text"
+        }
+        val controlsAreUnique = controlRequirements.distinct().size == controlRequirements.size
+        val utilitiesAreUnique = utilities.distinct().size == utilities.size
+        require(controlsAreUnique && utilitiesAreUnique) {
+            "Authored operational cues cannot contain duplicates"
+        }
+    }
+}
+
 /**
  * A resource-independent content record for built-in methods.
  *
@@ -72,6 +130,8 @@ data class BuiltInGuidanceContent(
     val text: GuidanceTextMetadata,
     override val visibility: GuidanceVisibilityPolicy = GuidanceVisibilityPolicy(),
     override val safetyCritical: Boolean = false,
+    val authoredPresentations: Map<GuidancePresentationLevel, AuthoredGuidancePresentation> =
+        emptyMap(),
 ) : GuidanceVisibilityItem {
     init {
         require(placement != BuiltInGuidancePlacement.LIVE_STAGE || stageId != null) {
@@ -82,6 +142,12 @@ data class BuiltInGuidanceContent(
         }
         require(!safetyCritical || visibility.alwaysVisible) {
             "Safety-critical guidance must remain visible at every guidance level"
+        }
+        require(
+            authoredPresentations.isEmpty() ||
+                authoredPresentations.keys == GuidancePresentationLevel.entries.toSet(),
+        ) {
+            "Authored guidance must cover every presentation level"
         }
     }
 }

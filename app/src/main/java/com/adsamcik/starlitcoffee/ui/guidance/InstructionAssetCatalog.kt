@@ -52,6 +52,12 @@ value class InstructionAssetVariant(val value: String) {
     }
 }
 
+/** Keeps legacy scoped resource names and canonical exact-stage IDs explicit. */
+enum class InstructionAssetNamingConvention {
+    SCOPED_SLOT,
+    EXACT_CONTENT_ID,
+}
+
 enum class InstructionAssetReviewStatus {
     DRAFT,
     PENDING_REVIEW,
@@ -142,6 +148,7 @@ data class InstructionAssetRecord(
     val stageId: StageId? = null,
     val contentId: StageContentId,
     val variant: InstructionAssetVariant = InstructionAssetVariant.DEFAULT,
+    val namingConvention: InstructionAssetNamingConvention = InstructionAssetNamingConvention.SCOPED_SLOT,
     @param:DrawableRes val drawableRes: Int,
     @param:StringRes val altTextRes: Int,
     @param:StringRes val companionInstructionRes: Int,
@@ -163,15 +170,20 @@ data class InstructionAssetRecord(
         }
     }
 
-    fun expectedDrawableResourceName(): String = buildString {
-        append("instruction_")
-        append(familyId.value)
-        append('_')
-        append(profileId?.value ?: FAMILY_DEFAULT_PROFILE_SEGMENT)
-        append('_')
-        append(contentId.value)
-        append('_')
-        append(variant.value)
+    fun expectedDrawableResourceName(): String = when (namingConvention) {
+        InstructionAssetNamingConvention.SCOPED_SLOT -> buildString {
+            append("instruction_")
+            append(familyId.value)
+            append('_')
+            append(profileId?.value ?: FAMILY_DEFAULT_PROFILE_SEGMENT)
+            append('_')
+            append(contentId.value)
+            append('_')
+            append(variant.value)
+        }
+
+        InstructionAssetNamingConvention.EXACT_CONTENT_ID ->
+            "instruction_${contentId.value}_${variant.value}"
     }
 
     companion object {

@@ -73,9 +73,11 @@ import com.adsamcik.starlitcoffee.ui.screen.CalculatorBrewScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewSessionScreen
 import com.adsamcik.starlitcoffee.ui.screen.BloomTimerScreen
+import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
+import com.adsamcik.starlitcoffee.ui.guidance.BuiltInP1ExactGuidanceLoader
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferences
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
-import com.adsamcik.starlitcoffee.ui.guidance.P1BuiltInGuidanceCatalog
+import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
 import com.adsamcik.starlitcoffee.ui.screen.CupPresetEditorScreen
 import com.adsamcik.starlitcoffee.ui.screen.DisplaySettingsScreen
 import com.adsamcik.starlitcoffee.ui.screen.GrindPrepScreen
@@ -181,12 +183,24 @@ fun StarlitNavHost() {
     val recoverableSessions by remember(database) {
         database.activeBrewSessionDao().observeRecoverable()
     }.collectAsStateWithLifecycle(initialValue = emptyList())
-    val recoverableSessionId = remember(recoverableSessions) {
+    val exactGuidanceLoadResult = remember(context) {
+        BuiltInP1ExactGuidanceLoader.getInstance(context)
+    }
+    val exactRecipeReleaseGate = remember(exactGuidanceLoadResult) {
+        P1ExactRecipeReleaseGate(
+            guidanceLoadResult = exactGuidanceLoadResult,
+            instructionAssets = BuiltInInstructionAssetCatalog.catalog,
+        )
+    }
+    val recoverableSessionId = remember(recoverableSessions, exactRecipeReleaseGate) {
         recoverableSessions.firstOrNull { entity ->
             val restored = ActiveBrewSessionEntityMapper.restore(entity)
                 as? ActiveBrewSessionRestoreResult.Restored
-            val profileId = restored?.value?.recipe?.brewerProfileId
-            profileId == null || !P1BuiltInGuidanceCatalog.isReleaseGatedProfile(profileId)
+            val recipe = restored?.value?.recipe
+            recipe == null || !exactRecipeReleaseGate.shouldGatePersistedSession(
+                rawRecipeId = recipe.builtInRecipeId,
+                rawBrewerProfileId = recipe.brewerProfileId,
+            )
         }?.sessionId
     }
 
@@ -227,8 +241,8 @@ fun StarlitNavHost() {
     val durableGuidancePreferences = remember(stableBrewingPreferences) {
         stableBrewingPreferences.toDurableGuidancePreferences()
     }
-    val p1BrewerSetupVisible = remember {
-        P1BuiltInGuidanceCatalog.releaseEligibleProfileIds.isNotEmpty()
+    val p1BrewerSetupVisible = remember(exactRecipeReleaseGate) {
+        exactRecipeReleaseGate.eligibleRecipeIds.isNotEmpty()
     }
 
     val durableSessionRuntime = remember(context) { BrewSessionRuntime.create(context) }
@@ -511,6 +525,7 @@ fun StarlitNavHost() {
                     guidancePreferences = durableGuidancePreferences,
                     snackbarHostState = snackbarHostState,
                     unavailableMessage = sessionUnavailableMessage,
+                    exactRecipeReleaseGate = exactRecipeReleaseGate,
                 )
 
                 composable<BrewSession> { backStackEntry ->
@@ -536,6 +551,7 @@ fun StarlitNavHost() {
                             }
                         },
                         guidancePreferences = durableGuidancePreferences,
+                        exactRecipeReleaseGate = exactRecipeReleaseGate,
                         onRememberGuidanceForProfile = { profileId, level ->
                             userPreferencesRepository.updateGuidanceForBrewerProfile(
                                 profileId = profileId,

@@ -82,11 +82,145 @@ class P1ExactGuidanceCatalogTest {
             assertEquals(stage.focused.nextAction, focused.nextAction)
             assertNull(utilities.instruction)
             assertNull(utilities.target)
-            assertEquals(stage.utilitiesOnly, utilities.utilities)
+            assertEquals(
+                stage.utilitiesOnly.map(GuidanceOperationalCue::requireFromStableId),
+                utilities.utilities,
+            )
             assertEquals(stage.full.imperativeInstruction, custom.instruction)
             assertTrue(stage.full.textFreeIllustrationBrief.isNotBlank())
             assertTrue(stage.full.accessibleAltText.isNotBlank())
             assertEquals(stage.full.accessibleAltText, full.accessibleAltText)
+        }
+    }
+
+    @Test
+    fun `the exact source uses only the closed set of typed operational cues`() {
+        val declaredCueIds = GuidanceOperationalCue.entries
+            .mapTo(linkedSetOf()) { cue -> cue.stableId }
+        val sourceCueIds = catalog.stages
+            .flatMap(P1ExactStageGuidance::utilitiesOnly)
+            .toSet()
+
+        assertEquals(
+            setOf(
+                "beverage_yield_target",
+                "countdown_or_timestamp",
+                "cumulative_water_target",
+                "current_pour_target",
+                "elapsed_timer",
+                "heat_state",
+                "stage_advance",
+                "valve_state",
+            ),
+            declaredCueIds,
+        )
+        assertEquals(declaredCueIds, sourceCueIds)
+        assertNull(GuidanceOperationalCue.fromStableId("unknown_control"))
+
+        catalog.stages.forEach { stage ->
+            val expected = stage.utilitiesOnly.map(GuidanceOperationalCue::requireFromStableId)
+            val focused = stage.presentation(GuidancePresentationLevel.FOCUSED)
+            val utilities = stage.presentation(GuidancePresentationLevel.UTILITIES_ONLY)
+
+            assertEquals(expected, focused.controlRequirements)
+            assertTrue(focused.utilities.isEmpty())
+            assertTrue(utilities.controlRequirements.isEmpty())
+            assertEquals(expected, utilities.utilities)
+        }
+    }
+
+    @Test
+    fun `Learn resolves only the selected exact recipe without same-profile mixing`() {
+        val selectedRecipeId = BuiltInRecipeId("clever_water_first_15_250")
+        val siblingRecipeId = BuiltInRecipeId("clever_coffee_first_15_250")
+        val selectedRecipe = requireNotNull(catalog.findRecipe(selectedRecipeId))
+        val siblingContentIds = requireNotNull(catalog.findRecipe(siblingRecipeId))
+            .stages
+            .mapTo(linkedSetOf()) { stage -> stage.contentId }
+        val resolver = LearnGuidanceCatalogResolver(
+            guidanceCatalogs = listOf(requireNotNull(catalog.forRecipe(selectedRecipeId))),
+        )
+
+        val resolution = resolver.resolve(
+            LearnGuidanceCatalogRequest(
+                methodFamilyId = selectedRecipe.methodFamilyId.value,
+                brewerProfileId = selectedRecipe.brewerProfileId.value,
+                preferences = DurableBrewSessionGuidancePreferences(
+                    sessionOverride = GuidancePresentationLevel.FULL,
+                ),
+                exactStageOrder = selectedRecipe.stages.map { stage -> stage.stageId },
+            ),
+        )
+
+        assertEquals(LearnGuidanceCatalogAvailability.Available, resolution.availability)
+        assertEquals(
+            selectedRecipe.stages.map { stage -> stage.contentId },
+            resolution.content.map { content -> content.id },
+        )
+        assertTrue(resolution.content.none { content -> content.id in siblingContentIds })
+    }
+
+    @Test
+    fun `Learn and live Brew preserve every authored exact density field`() {
+        val recipeId = BuiltInRecipeId("clever_coffee_first_15_250")
+        val recipe = requireNotNull(catalog.findRecipe(recipeId))
+        val stage = recipe.stages[1]
+        val currentStage = planStage(stage).toCurrentPresentation()
+        val recipeCatalog = requireNotNull(catalog.forRecipe(recipeId))
+        val learnResolver = LearnGuidanceCatalogResolver(
+            guidanceCatalogs = listOf(recipeCatalog),
+        )
+        val liveResolver = DurableBrewSessionGuidanceResolver(
+            guidanceCatalogs = listOf(recipeCatalog),
+        )
+        assertTrue(stage.warning?.isNotBlank() == true)
+
+        GuidancePresentationLevel.entries.forEach { level ->
+            val expected = stage.presentation(level)
+            val preferences = DurableBrewSessionGuidancePreferences(sessionOverride = level)
+            val learnResolution = learnResolver.resolve(
+                LearnGuidanceCatalogRequest(
+                    methodFamilyId = recipe.methodFamilyId.value,
+                    brewerProfileId = recipe.brewerProfileId.value,
+                    preferences = preferences,
+                    exactStageOrder = recipe.stages.map { recipeStage -> recipeStage.stageId },
+                ),
+            )
+            val liveResolution = liveResolver.resolve(
+                DurableBrewSessionGuidanceRequest(
+                    methodFamilyId = recipe.methodFamilyId.value,
+                    brewerProfileId = recipe.brewerProfileId.value,
+                    currentStage = currentStage,
+                    preferences = preferences,
+                ),
+            )
+            val learnContent = learnResolution.content.single { content ->
+                content.id == stage.contentId
+            }
+            val liveContent = liveResolution.routineContent.single { content ->
+                content.id == stage.contentId
+            }
+
+            assertEquals(LearnGuidanceCatalogAvailability.Available, learnResolution.availability)
+            assertEquals(DurableBrewGuidanceAvailability.Available, liveResolution.availability)
+            assertEquals(expected.instruction.orEmpty(), learnContent.instruction)
+            assertEquals(expected.target, learnContent.target)
+            assertEquals(expected.completionCue, learnContent.completionCue)
+            assertEquals(expected.explanation, learnContent.explanation)
+            assertEquals(expected.practicalTip, learnContent.tip)
+            assertEquals(expected.nextAction, learnContent.nextAction)
+            assertEquals(expected.controlRequirements, learnContent.controlRequirements)
+            assertEquals(expected.utilities, learnContent.utilities)
+            assertEquals(expected.warning, learnContent.warning)
+            assertEquals(expected.instruction.orEmpty(), liveContent.instruction)
+            assertEquals(expected.target, liveContent.target)
+            assertEquals(expected.completionCue, liveContent.completionCue)
+            assertEquals(expected.explanation, liveContent.explanation)
+            assertEquals(expected.practicalTip, liveContent.tip)
+            assertEquals(expected.nextAction, liveContent.nextAction)
+            assertEquals(expected.controlRequirements, liveContent.controlRequirements)
+            assertEquals(expected.utilities, liveContent.utilities)
+            assertEquals(expected.warning, liveContent.warning)
         }
     }
 
@@ -178,6 +312,18 @@ class P1ExactGuidanceCatalogTest {
             phin.warning,
         )
         assertEquals(listOf("elapsed_timer", "stage_advance"), phin.utilitiesOnly)
+    }
+
+    @Test
+    fun `unknown operational cue in the source fails closed`() {
+        val corrupted = encodedAsset.replaceFirst(
+            "\"elapsed_timer\"",
+            "\"unknown_control\"",
+        )
+
+        assertThrows(IllegalArgumentException::class.java) {
+            BuiltInP1ExactGuidanceCatalog.decode(corrupted)
+        }
     }
 
     @Test

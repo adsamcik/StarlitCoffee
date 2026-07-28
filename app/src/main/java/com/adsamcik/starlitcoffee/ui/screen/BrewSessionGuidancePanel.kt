@@ -146,10 +146,18 @@ private fun GuidanceLevelControl(
 @Composable
 private fun GuidanceContent(content: ResolvedBrewGuidanceContent) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Text(
-            text = content.instruction,
-            style = MaterialTheme.typography.bodyLarge,
-        )
+        content.instruction.takeIf(String::isNotBlank)?.let { instruction ->
+            Text(
+                text = instruction,
+                style = MaterialTheme.typography.bodyLarge,
+            )
+        }
+        content.target?.let { target ->
+            GuidanceDetail(target)
+        }
+        content.completionCue?.let { cue ->
+            GuidanceDetail(cue)
+        }
         content.explanation?.let { explanation ->
             Text(
                 text = explanation,
@@ -164,6 +172,12 @@ private fun GuidanceContent(content: ResolvedBrewGuidanceContent) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+        content.nextAction?.let { nextAction ->
+            GuidanceDetail(nextAction)
+        }
+        content.controlRequirements.forEach { cue ->
+            GuidanceDetail(cue.fallbackLabel)
+        }
         content.warning?.let { warning ->
             Text(
                 text = warning,
@@ -175,7 +189,19 @@ private fun GuidanceContent(content: ResolvedBrewGuidanceContent) {
                 },
             )
         }
+        content.utilities.forEach { utility ->
+            GuidanceDetail(utility.fallbackLabel)
+        }
     }
+}
+
+@Composable
+private fun GuidanceDetail(value: String) {
+    Text(
+        text = value,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
 }
 
 @Composable

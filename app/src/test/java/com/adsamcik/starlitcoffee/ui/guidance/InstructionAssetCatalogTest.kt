@@ -40,6 +40,28 @@ class InstructionAssetCatalogTest {
     }
 
     @Test
+    fun `exact stage assets use their canonical content ID naming convention`() {
+        val contentId = StageContentId("p1_chemex_42_700_stage_01_instruction")
+        val asset = approvedAsset(
+            id = InstructionAssetId("instruction_${contentId.value}_default"),
+            contentId = contentId,
+            namingConvention = InstructionAssetNamingConvention.EXACT_CONTENT_ID,
+        )
+
+        assertEquals(
+            "instruction_p1_chemex_42_700_stage_01_instruction_default",
+            asset.expectedDrawableResourceName(),
+        )
+        assertThrows(IllegalArgumentException::class.java) {
+            approvedAsset(
+                id = asset.id,
+                contentId = contentId,
+                namingConvention = InstructionAssetNamingConvention.SCOPED_SLOT,
+            )
+        }
+    }
+
+    @Test
     fun `catalog marks unreviewed mandatory and safety assets as incomplete`() {
         val mandatory = approvedAsset(
             review = InstructionAssetReview(InstructionAssetReviewStatus.DRAFT),
@@ -135,6 +157,8 @@ class InstructionAssetCatalogTest {
         id: InstructionAssetId = ASSET_ID,
         profileId: BrewerProfileId? = PROFILE,
         contentId: StageContentId = CONTENT,
+        namingConvention: InstructionAssetNamingConvention =
+            InstructionAssetNamingConvention.SCOPED_SLOT,
         drawableRes: Int = R.drawable.vessel_icon_mug,
         mandatoryForFullGuidance: Boolean = true,
         safetySensitive: Boolean = false,
@@ -145,6 +169,7 @@ class InstructionAssetCatalogTest {
         profileId = profileId,
         stageId = STAGE,
         contentId = contentId,
+        namingConvention = namingConvention,
         drawableRes = drawableRes,
         altTextRes = R.string.app_name,
         companionInstructionRes = R.string.instruction_pour_total,

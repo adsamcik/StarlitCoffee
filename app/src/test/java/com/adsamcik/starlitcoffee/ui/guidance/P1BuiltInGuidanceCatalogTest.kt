@@ -1,6 +1,5 @@
 package com.adsamcik.starlitcoffee.ui.guidance
 
-import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
@@ -14,7 +13,6 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StageRunStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
 import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
 import com.adsamcik.starlitcoffee.ui.session.CurrentBrewStagePresentation
-import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -93,11 +91,6 @@ class P1BuiltInGuidanceCatalogTest {
     }
 
     @Test
-    fun `unproduced P1 visuals keep every profile behind the release gate`() {
-        assertTrue(P1BuiltInGuidanceCatalog.releaseEligibleProfileIds.isEmpty())
-    }
-
-    @Test
     fun `resolver accepts P1 beside Pulsar without borrowing Pulsar content`() {
         val resolver = DurableBrewSessionGuidanceResolver(
             guidanceCatalogs = listOf(
@@ -153,57 +146,6 @@ class P1BuiltInGuidanceCatalogTest {
         assertTrue(allGenericValveCopy.contains("do not infer a specific release motion or fixed drawdown plan"))
     }
 
-    @Test
-    fun `P1 profiles require exact approved assets for every mandatory planned slot`() {
-        val profileId = BrewerProfileId("clever_style")
-        val requiredAssets = P1BuiltInGuidanceCatalog.plannedVisualAssets
-            .filter { asset -> asset.profileId == profileId && asset.mandatoryForFullGuidance }
-        val approvedCatalog = InstructionAssetCatalog(requiredAssets.map { asset -> asset.toRecord() })
-        val incompleteCatalog = InstructionAssetCatalog(
-            requiredAssets.drop(1).map { asset -> asset.toRecord() },
-        )
-        val pendingCatalog = InstructionAssetCatalog(
-            requiredAssets.map { asset ->
-                asset.toRecord(
-                    review = InstructionAssetReview(InstructionAssetReviewStatus.PENDING_REVIEW),
-                )
-            },
-        )
-
-        assertTrue(profileId in P1BuiltInGuidanceCatalog.releaseEligibleProfileIds(approvedCatalog))
-        assertFalse(profileId in P1BuiltInGuidanceCatalog.releaseEligibleProfileIds(incompleteCatalog))
-        assertFalse(profileId in P1BuiltInGuidanceCatalog.releaseEligibleProfileIds(pendingCatalog))
-    }
-
-    private fun P1PlannedInstructionAsset.toRecord(
-        review: InstructionAssetReview = InstructionAssetReview(
-            status = InstructionAssetReviewStatus.APPROVED,
-            reviewer = "QA",
-            reviewedOn = LocalDate.of(2026, 7, 27),
-        ),
-    ): InstructionAssetRecord = InstructionAssetRecord(
-        id = id,
-        familyId = familyId,
-        profileId = profileId,
-        stageId = stageId,
-        contentId = contentId,
-        drawableRes = R.drawable.vessel_icon_mug,
-        altTextRes = R.string.app_name,
-        companionInstructionRes = R.string.instruction_pour_total,
-        mandatoryForFullGuidance = mandatoryForFullGuidance,
-        safetySensitive = false,
-        provenance = InstructionAssetProvenance(
-            promptDocument = "docs/brewing/asset-production.md",
-            promptRevision = "test-v1",
-        ),
-        review = review,
-    )
-
-    @Test
-    fun `persisted unreviewed P1 sessions stay release-gated while legacy profiles remain available`() {
-        assertTrue(P1BuiltInGuidanceCatalog.isReleaseGatedProfile("cezve_generic"))
-        assertFalse(P1BuiltInGuidanceCatalog.isReleaseGatedProfile("pulsar"))
-    }
 
     private fun sourceStages(): List<BrewStageDefinition> = sourcePlans()
         .flatMap { plan -> collectStages(plan.nodes) }

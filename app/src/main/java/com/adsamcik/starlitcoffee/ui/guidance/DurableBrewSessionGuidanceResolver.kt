@@ -42,9 +42,14 @@ data class ResolvedBrewGuidanceContent(
     val id: StageContentId,
     val placement: BuiltInGuidancePlacement,
     val instruction: String,
+    val target: String?,
+    val completionCue: String?,
     val explanation: String?,
     val tip: String?,
+    val nextAction: String?,
+    val controlRequirements: List<GuidanceOperationalCue>,
     val warning: String?,
+    val utilities: List<GuidanceOperationalCue>,
     val altText: String,
     val safetyCritical: Boolean,
 )
@@ -345,6 +350,23 @@ class DurableBrewSessionGuidanceResolver(
     private fun BuiltInGuidanceContent.toResolvedContent(
         level: GuidancePresentationLevel,
     ): ResolvedBrewGuidanceContent {
+        authoredPresentations[level]?.let { authored ->
+            return ResolvedBrewGuidanceContent(
+                id = id,
+                placement = placement,
+                instruction = authored.instruction.orEmpty(),
+                target = authored.target,
+                completionCue = authored.completionCue,
+                explanation = authored.explanation,
+                tip = authored.practicalTip,
+                nextAction = authored.nextAction,
+                controlRequirements = authored.controlRequirements,
+                warning = authored.warning ?: text.warning,
+                utilities = authored.utilities,
+                altText = authored.accessibleAltText,
+                safetyCritical = safetyCritical,
+            )
+        }
         val showSupportingCopy = level in setOf(
             GuidancePresentationLevel.FULL,
             GuidancePresentationLevel.CUSTOM,
@@ -362,9 +384,14 @@ class DurableBrewSessionGuidanceResolver(
             } else {
                 text.primaryInstruction
             },
+            target = null,
+            completionCue = null,
             explanation = text.explanation.takeIf { showSupportingCopy },
             tip = text.tip.takeIf { showSupportingCopy },
+            nextAction = null,
+            controlRequirements = emptyList(),
             warning = text.warning,
+            utilities = emptyList(),
             altText = text.altText,
             safetyCritical = safetyCritical,
         )

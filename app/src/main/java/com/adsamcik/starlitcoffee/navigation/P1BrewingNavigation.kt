@@ -13,12 +13,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResult
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionRuntime
-import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
-import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
-import com.adsamcik.starlitcoffee.domain.brewing.session.BuiltInP1ExactStagePlanCatalog
-import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileSetupStateFactory
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileStartSelection
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1ExactRecipeStartInputFactory
@@ -28,7 +24,7 @@ import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferences
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogRequest
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogResolver
-import com.adsamcik.starlitcoffee.ui.guidance.P1BuiltInGuidanceCatalog
+import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
 import com.adsamcik.starlitcoffee.ui.screen.LearnBrewerScreen
 import com.adsamcik.starlitcoffee.ui.screen.P1BrewerProfileSetupScreen
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -45,6 +41,7 @@ fun NavGraphBuilder.p1BrewingRoutes(
     guidancePreferences: DurableBrewSessionGuidancePreferences,
     snackbarHostState: SnackbarHostState,
     unavailableMessage: String,
+    exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
 ) {
     p1BrewerSetupRoute(
         navController = navController,
@@ -52,10 +49,12 @@ fun NavGraphBuilder.p1BrewingRoutes(
         durableSessionRuntime = durableSessionRuntime,
         snackbarHostState = snackbarHostState,
         unavailableMessage = unavailableMessage,
+        exactRecipeReleaseGate = exactRecipeReleaseGate,
     )
     p1LearnBrewerRoute(
         navController = navController,
         guidancePreferences = guidancePreferences,
+        exactRecipeReleaseGate = exactRecipeReleaseGate,
     )
 }
 
@@ -65,19 +64,20 @@ private fun NavGraphBuilder.p1BrewerSetupRoute(
     durableSessionRuntime: BrewSessionRuntime,
     snackbarHostState: SnackbarHostState,
     unavailableMessage: String,
+    exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
 ) {
     composable<BrewerProfileSetup> setupRoute@{
-        val releaseEligibleProfileIds = P1BuiltInGuidanceCatalog.releaseEligibleProfileIds
-        if (releaseEligibleProfileIds.isEmpty()) {
+        val eligibleRecipeIds = exactRecipeReleaseGate.eligibleRecipeIds
+        if (eligibleRecipeIds.isEmpty()) {
             LaunchedEffect(Unit) { navController.popBackStack() }
             return@setupRoute
         }
         val destinationScope = rememberCoroutineScope()
         val sessionStartFactory = remember { BuiltinBrewerSessionStartFactory() }
-        var setupState by remember {
+        var setupState by remember(eligibleRecipeIds) {
             mutableStateOf(
                 P1BrewerProfileSetupStateFactory.create(
-                    visibleProfileIds = releaseEligibleProfileIds,
+                    executableRecipeIds = eligibleRecipeIds,
                 ),
             )
         }
@@ -91,7 +91,7 @@ private fun NavGraphBuilder.p1BrewerSetupRoute(
             onCezveSugarSelected = { setupState = setupState.selectCezveSugar(it) },
             onCezveHeatSourceSelected = { setupState = setupState.selectCezveHeatSource(it) },
             onStart = { selection ->
-                if (!setupState.isStarting) {
+                if (!setupState.isStarting && exactRecipeReleaseGate.isEligible(selection.builtInRecipeId)) {
                     setupState = setupState.withStarting(true)
                     destinationScope.launch {
                         try {
@@ -153,12 +153,12 @@ private suspend fun createOrResumeExactSession(
 private fun P1BrewerProfileStartSelection.learnRoute(): LearnBrewer = LearnBrewer(
     brewerProfileId = brewerProfileId.value,
     builtInRecipeId = builtInRecipeId.value,
-    harioSwitchWorkflow = harioSwitchWorkflow?.name,
 )
 
 private fun NavGraphBuilder.p1LearnBrewerRoute(
     navController: NavHostController,
     guidancePreferences: DurableBrewSessionGuidancePreferences,
+    exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
 ) {
     composable<LearnBrewer> learnRoute@{ backStackEntry ->
         val route = backStackEntry.toRoute<LearnBrewer>()
@@ -166,38 +166,43 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
             route.builtInRecipeId?.let { rawId -> runCatching { BuiltInRecipeId(rawId) }.getOrNull() }
         }
         val recipe = remember(recipeId) { recipeId?.let(BuiltInP1RecipeCatalog::find) }
+        val exactGuidance = remember(recipeId, exactRecipeReleaseGate) {
+            recipeId?.let(exactRecipeReleaseGate::guidanceFor)
+        }
+        val recipeGuidanceCatalog = remember(recipeId, exactRecipeReleaseGate) {
+            recipeId?.let(exactRecipeReleaseGate::catalogFor)
+        }
         val routeIsReleaseEligible = recipe != null &&
-            recipe.brewerProfileId.value == route.brewerProfileId &&
-            recipe.brewerProfileId in P1BuiltInGuidanceCatalog.releaseEligibleProfileIds &&
-            BuiltInP1ExactStagePlanCatalog.find(recipe.id) != null
+            exactGuidance != null &&
+            recipeGuidanceCatalog != null &&
+            recipe.brewerProfileId.value == route.brewerProfileId
         if (!routeIsReleaseEligible) {
             LaunchedEffect(route) { navController.popBackStack() }
             return@learnRoute
         }
-        val profile = remember(recipe) {
-            BuiltinBrewingCatalog.instance.findBrewerProfile(requireNotNull(recipe).brewerProfileId)
+        val exactRecipe = requireNotNull(recipe)
+        val exactRecipeGuidance = requireNotNull(exactGuidance)
+        val resolver = remember(recipeGuidanceCatalog) {
+            LearnGuidanceCatalogResolver(
+                guidanceCatalogs = listOf(requireNotNull(recipeGuidanceCatalog)),
+            )
         }
-        val resolver = remember { LearnGuidanceCatalogResolver() }
-        val harioSwitchWorkflow = remember(route.harioSwitchWorkflow) {
-            route.harioSwitchWorkflow?.let { rawWorkflow ->
-                HarioSwitchWorkflow.entries.firstOrNull { workflow -> workflow.name == rawWorkflow }
-            }
+        val exactStageOrder = remember(exactRecipeGuidance) {
+            exactRecipeGuidance.stages.map { stage -> stage.stageId }
         }
-        val resolution = remember(route, guidancePreferences, profile) {
+        val resolution = remember(route, guidancePreferences, resolver, exactStageOrder) {
             resolver.resolve(
                 LearnGuidanceCatalogRequest(
-                    methodFamilyId = profile?.familyId?.value.orEmpty(),
+                    methodFamilyId = exactRecipe.methodFamilyId.value,
                     brewerProfileId = route.brewerProfileId,
-                    harioSwitchWorkflow = harioSwitchWorkflow,
                     preferences = guidancePreferences,
+                    exactStageOrder = exactStageOrder,
                 ),
             )
         }
         LearnBrewerScreen(
             resolution = resolution,
-            hasPendingVisualAssets = P1BuiltInGuidanceCatalog.plannedVisualAssets.any { asset ->
-                asset.profileId.value == route.brewerProfileId
-            },
+            hasPendingVisualAssets = false,
             onBack = { navController.popBackStack() },
             instructionAssets = BuiltInInstructionAssetCatalog.catalog,
         )
