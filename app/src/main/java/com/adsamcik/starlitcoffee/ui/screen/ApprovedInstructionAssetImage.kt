@@ -19,9 +19,9 @@ import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetRecord
  * produce no visual output.
  *
  * The manifest requires a 4:3 source composition. Reserving the same 4:3
- * viewport keeps the safe crop region stable while [ContentScale.Crop] fills
- * the available card width. The asset's localized alt text remains the sole
- * accessibility description for the illustration.
+ * viewport while using [ContentScale.Fit] keeps the complete instructional
+ * geometry visible even if a source has unexpected edge content. The asset's
+ * localized alt text remains the sole accessibility description.
  */
 @Composable
 fun ApprovedInstructionAssetImage(
@@ -40,6 +40,6 @@ fun ApprovedInstructionAssetImage(
                     InstructionAssetGeometry.ASPECT_HEIGHT,
             )
             .clip(MaterialTheme.shapes.medium),
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.Fit,
     )
 }

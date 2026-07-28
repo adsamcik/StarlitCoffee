@@ -2,13 +2,17 @@ package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,9 +20,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -28,7 +34,6 @@ import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetRecord
-import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetReviewStatus
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogAvailability
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogResolution
 import com.adsamcik.starlitcoffee.ui.guidance.ResolvedLearnGuidanceContent
@@ -38,6 +43,7 @@ import com.adsamcik.starlitcoffee.ui.guidance.findApprovedAssetForContent
  * A timer-free view of the same profile-scoped curriculum used by a durable
  * session. It does not create, resume, or mutate any brew state.
  */
+@Suppress("UNUSED_PARAMETER")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LearnBrewerScreen(
@@ -68,46 +74,42 @@ fun LearnBrewerScreen(
             )
         },
     ) { innerPadding ->
-        Column(
-            modifier = modifier
+        LazyColumn(
+            modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+                .padding(innerPadding),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             resolution.policy?.let { policy ->
-                Text(
-                    text = stringResource(
-                        R.string.format_brew_guidance_level,
-                        policy.level.label(),
-                    ),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                )
+                item(key = "guidance_policy") {
+                    Text(
+                        text = stringResource(
+                            R.string.format_brew_guidance_level,
+                            policy.level.label(),
+                        ),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
             }
             if (resolution.availability !is LearnGuidanceCatalogAvailability.Available) {
-                Text(
-                    text = stringResource(R.string.msg_brew_guidance_unavailable),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
+                item(key = "guidance_unavailable") {
+                    Text(
+                        text = stringResource(R.string.msg_brew_guidance_unavailable),
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                }
             }
-            if (hasPendingVisualAssets) {
-                Text(
-                    text = stringResource(R.string.msg_brew_guidance_asset_pending),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            resolution.content.forEach { content ->
-                val matchingVisualAssets = instructionAssets
-                    ?.assets
-                    ?.filter { asset -> asset.contentId == content.id }
-                    .orEmpty()
+            itemsIndexed(
+                items = resolution.content,
+                key = { _, content -> content.id.value },
+            ) { index, content ->
                 LearnGuidanceCard(
                     content = content,
+                    stepNumber = index + 1,
+                    totalSteps = resolution.content.size,
                     visualAsset = instructionAssets?.findApprovedAssetForContent(content.id),
-                    matchingVisualAssets = matchingVisualAssets,
                 )
             }
         }
@@ -117,32 +119,41 @@ fun LearnBrewerScreen(
 @Composable
 private fun LearnGuidanceCard(
     content: ResolvedLearnGuidanceContent,
+    stepNumber: Int,
+    totalSteps: Int,
     visualAsset: InstructionAssetRecord?,
-    matchingVisualAssets: List<InstructionAssetRecord>,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = if (content.safetyCritical) {
-                MaterialTheme.colorScheme.errorContainer
-            } else {
-                MaterialTheme.colorScheme.surfaceVariant
-            },
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
         ),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
-                text = content.instruction,
-                style = MaterialTheme.typography.bodyLarge,
+                text = stringResource(
+                    R.string.format_scan_stage_step,
+                    stepNumber,
+                    totalSteps,
+                ),
+                modifier = Modifier.semantics { heading() },
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
             )
             visualAsset?.let { asset -> ApprovedInstructionAssetImage(asset) }
-            LearnGuidanceVisualStatus(
-                visualAsset = visualAsset,
-                matchingVisualAssets = matchingVisualAssets,
+            Text(
+                text = content.instruction,
+                style = MaterialTheme.typography.titleMedium,
             )
+            content.warning?.let { warning ->
+                LearnGuidanceWarning(
+                    warning = warning,
+                    safetyCritical = content.safetyCritical,
+                )
+            }
             content.explanation?.let { explanation ->
                 Text(
                     text = explanation,
@@ -157,42 +168,55 @@ private fun LearnGuidanceCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            content.warning?.let { warning ->
-                Text(
-                    text = warning,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = if (content.safetyCritical) {
-                        MaterialTheme.colorScheme.onErrorContainer
-                    } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant
-                    },
-                )
-            }
         }
     }
 }
 
 @Composable
-private fun LearnGuidanceVisualStatus(
-    visualAsset: InstructionAssetRecord?,
-    matchingVisualAssets: List<InstructionAssetRecord>,
+private fun LearnGuidanceWarning(
+    warning: String,
+    safetyCritical: Boolean,
 ) {
-    if (visualAsset != null || matchingVisualAssets.isEmpty()) return
-
-    val awaitingReview = matchingVisualAssets.any { asset ->
-        asset.review.status == InstructionAssetReviewStatus.DRAFT ||
-            asset.review.status == InstructionAssetReviewStatus.PENDING_REVIEW
-    }
-    val message = if (awaitingReview) {
-        R.string.msg_brew_guidance_asset_pending
+    val containerColor = if (safetyCritical) {
+        MaterialTheme.colorScheme.errorContainer
     } else {
-        R.string.msg_brew_guidance_asset_unavailable
+        MaterialTheme.colorScheme.tertiaryContainer
     }
-    Text(
-        text = stringResource(message),
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-    )
+    val contentColor = if (safetyCritical) {
+        MaterialTheme.colorScheme.onErrorContainer
+    } else {
+        MaterialTheme.colorScheme.onTertiaryContainer
+    }
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .semantics(mergeDescendants = true) {},
+        shape = MaterialTheme.shapes.small,
+        color = containerColor,
+        contentColor = contentColor,
+    ) {
+        Row(
+            modifier = Modifier.padding(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.Top,
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.WarningAmber,
+                contentDescription = null,
+                modifier = Modifier.size(20.dp),
+            )
+            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                Text(
+                    text = stringResource(R.string.label_warning),
+                    style = MaterialTheme.typography.labelLarge,
+                )
+                Text(
+                    text = warning,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+        }
+    }
 }
 
 @Composable
