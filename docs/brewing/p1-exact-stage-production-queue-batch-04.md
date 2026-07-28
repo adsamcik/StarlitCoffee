@@ -1,9 +1,11 @@
 # P1 exact-stage illustration production queue — batch 04
 
-Status: research-only, prompt-ready documentation; no images generated, no
-assets registered, and no manifest or app-code changes
+Status: all six candidate images generated and production-logged as
+`PENDING_REVIEW`; no assets registered or approved, and no manifest or app-code
+changes
 
 Prepared: 28 July 2026
+Production completed: 28 July 2026
 
 ## Scope and source authority
 
@@ -13,10 +15,11 @@ whose mechanic is not already reserved exactly, followed by five `mandatory`
 stages that prevent common novice errors through distinct equipment or action
 geometry.
 
-Every selected row is canonically `NOT_PRODUCED`, has executable exact-stage
-guidance, and has no unresolved hard equipment blocker. Proposed bitmap names
-are deterministic identifiers only. Nothing in this document means that an
-image exists, has passed review, is registered, or is approved.
+Every selected row was canonically `NOT_PRODUCED` when queued, has executable
+exact-stage guidance, and has no unresolved hard equipment blocker. Each now
+has a local candidate drawable and production-log record, but remains
+canonically uncovered until expert review, localization, manifest registration,
+and approval all pass.
 
 Canonical source:
 
@@ -39,11 +42,12 @@ The canonical JSON was reconciled against:
 - current exact-stage files in `drawable-nodpi`
 - batch-01, batch-02, and batch-03 production queues
 
-Every exact asset ID reserved by batches 01–03 was excluded, regardless of
-whether concurrent production has created a file since this research pass
-started. Existing produced batch artwork remains `PENDING_REVIEW` unless and
-until its own expert review and manifest-registration work explicitly changes
-that state. File presence and a production-log entry are not release coverage.
+Every exact asset ID reserved by batches 01–03 was excluded when this batch was
+selected. All six batch-04 IDs now have produced local WebP candidates and
+production-log records. Artwork across all four batches remains
+`PENDING_REVIEW` unless and until its own expert review, localization, manifest
+registration, and approval work explicitly changes that state. File presence
+and a production-log entry are not release coverage.
 
 ## Selection boundary
 
@@ -135,11 +139,11 @@ state, or safety warning.
 - Do not copy, trace, download, or imitate a photograph or illustration from
   any evidence page. Linked sources were used only to verify equipment and
   procedural facts.
-- After later generation, optimize an opaque lossless or visually lossless
-  WebP for `drawable-nodpi`, target no more than 300 KB, and verify exact
-  dimensions, 4:3 ratio, mobile-size legibility, absence of embedded text, and
-  canonical accessibility metadata before manifest review.
-- Any later generated bitmap starts and remains `PENDING_REVIEW`. Generation,
+- Each generated candidate was optimized as an opaque WebP for
+  `drawable-nodpi`, kept below 300 KB, and verified for exact dimensions, 4:3
+  ratio, static RGB encoding, and absence of embedded text before manifest
+  review.
+- Every generated bitmap starts and remains `PENDING_REVIEW`. Generation,
   optimization, or file placement does not authorize registration.
 
 ## Current source re-verification
@@ -166,14 +170,14 @@ independently matched on the current product instructions.
 
 ## Batch order
 
-| Rank | Recipe / source stage | Visual priority | Novice error prevented | Research disposition |
+| Rank | Recipe / source stage | Visual priority | Novice error prevented | Generation disposition |
 | ---: | --- | --- | --- | --- |
-| 1 | `switch_ole_boen_hybrid_16_5_240` / `stage_01` | `safety-critical` | Opening the valve or draining the low first bloom instead of retaining it | Prompt-ready; not generated; `NONE-BOUNDED` |
-| 2 | `v60_official_15_250` / `stage_04` | `mandatory` | Pouring down the paper wall, flooding the cone, or losing the intended gentle bed-focused path | Prompt-ready; not generated; `NONE-BOUNDED` |
-| 3 | `v60_rao_20_330` / `stage_01` | `mandatory` | Digging a deep crater instead of a shallow central nest in a plastic V60 | Prompt-ready; not generated; `NONE-BOUNDED` |
-| 4 | `phin_gravity_14_118` / `stage_02` | `mandatory` | Tamping or forcefully compressing a loose gravity disc and stalling flow | Prompt-ready; not generated; `NONE-PHIN-MECHANISM` |
-| 5 | `auto_cupone_20_300` / `stage_05` | `mandatory` | Pulling the mug early or reaching toward a hot outlet while residual coffee still drips | Prompt-ready; not generated; `NONE-BOUNDED` |
-| 6 | `clever_water_first_15_250` / `stage_02` | `mandatory` | Adding coffee first, actuating the valve, or letting the initial water drain | Prompt-ready; not generated; `NONE-BOUNDED` |
+| 1 | `switch_ole_boen_hybrid_16_5_240` / `stage_01` | `safety-critical` | Opening the valve or draining the low first bloom instead of retaining it | Candidate produced; `PENDING_REVIEW`; `NONE-BOUNDED` |
+| 2 | `v60_official_15_250` / `stage_04` | `mandatory` | Pouring down the paper wall, flooding the cone, or losing the intended gentle bed-focused path | Candidate produced; `PENDING_REVIEW`; `NONE-BOUNDED` |
+| 3 | `v60_rao_20_330` / `stage_01` | `mandatory` | Digging a deep crater instead of a shallow central nest in a plastic V60 | Candidate produced; `PENDING_REVIEW`; `NONE-BOUNDED` |
+| 4 | `phin_gravity_14_118` / `stage_02` | `mandatory` | Tamping or forcefully compressing a loose gravity disc and stalling flow | Candidate produced; `PENDING_REVIEW`; `NONE-PHIN-MECHANISM` |
+| 5 | `auto_cupone_20_300` / `stage_05` | `mandatory` | Pulling the mug early or reaching toward a hot outlet while residual coffee still drips | Candidate produced; `PENDING_REVIEW`; `NONE-BOUNDED` |
+| 6 | `clever_water_first_15_250` / `stage_02` | `mandatory` | Adding coffee first, actuating the valve, or letting the initial water drain | Candidate produced; `PENDING_REVIEW`; `NONE-BOUNDED` |
 
 ## 1. Switch retained first bloom
 
@@ -752,9 +756,9 @@ This queue is valid only while all of these remain true:
 - Each blocker remains `NONE-BOUNDED` or `NONE-PHIN-MECHANISM`; no selection
   silently crosses a generic-cone, V60-variant, wedge-variant, phin-mechanism,
   cezve-hardware, or automatic-batch-hardware blocker.
-- None of the six proposed IDs collides with an existing
-  `drawable-nodpi` filename, instruction-asset record, production-log entry,
-  or asset ID reserved by batch 01, 02, or 03.
+- Each of the six local drawables uses its matching stable ID and has one
+  production-log record. None collides with an asset reserved by batches
+  01–03 or with a registered `InstructionAssetRecord`.
 - The Switch first bloom remains visually distinct from the batch-02 retained
   final pour; closed-valve similarity alone is not reusable exact coverage.
 - The Rao plastic-V60 nest and official V60 pour remain distinct from the
@@ -775,10 +779,10 @@ This queue is valid only while all of these remain true:
   the queue is revalidated.
 - No evidence-page image is copied, downloaded into the repository, traced, or
   used as a style reference.
-- No bitmap is generated, registered, or described as approved by this
-  documentation step. Any later produced asset remains `PENDING_REVIEW` until
-  expert geometry, safety, accessibility, localization, and placement review
-  all pass.
+- All six generated bitmaps have a production-log record and validated local
+  WebP payload. They remain intentionally unregistered and are not described
+  as approved. Each stays `PENDING_REVIEW` until expert geometry, safety,
+  accessibility, localization, and placement review all pass.
 - Learn and Live Brew placement must be rechecked at asset-review time,
   especially the three mandatory stages whose routine warning follows the
   image in Learn.
