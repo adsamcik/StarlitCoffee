@@ -28,15 +28,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,37 +51,37 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
-import com.adsamcik.starlitcoffee.domain.brewing.BrewTimeRecommendation
+import com.adsamcik.starlitcoffee.domain.brewing.AccessoryProfileId
+import com.adsamcik.starlitcoffee.domain.brewing.BasketProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
-import com.adsamcik.starlitcoffee.domain.brewing.CapacityRecommendation
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeDefinition
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
+import com.adsamcik.starlitcoffee.domain.brewing.FilterProfileId
+import com.adsamcik.starlitcoffee.domain.brewing.FilterSelection
 import com.adsamcik.starlitcoffee.domain.brewing.HeatSourceClass
-import com.adsamcik.starlitcoffee.domain.brewing.PrimaryOutputQuantity
+import com.adsamcik.starlitcoffee.domain.brewing.P1EquipmentOption
+import com.adsamcik.starlitcoffee.domain.brewing.P1TemperatureBasis
+import com.adsamcik.starlitcoffee.domain.brewing.P1TemperatureSemantics
+import com.adsamcik.starlitcoffee.domain.brewing.P1TimeBasis
+import com.adsamcik.starlitcoffee.domain.brewing.P1TimeSemantics
 import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
-import com.adsamcik.starlitcoffee.domain.brewing.TemperatureRecommendation
-import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileSetupOption
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileSetupUiState
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileStartSelection
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
-import com.adsamcik.starlitcoffee.viewmodel.CezveSessionSetup
+import java.text.NumberFormat
 import java.util.Locale
 
-/**
- * Selection-first setup for the P1 durable brewer profiles.
- *
- * Callers retain the state and construct a recipe snapshot after [onStart]
- * fires. The screen never infers capacity, equipment configuration, or a
- * stage plan for an unknown profile.
- */
+/** Physical brewer → exact recipe → exact equipment → capacity setup for durable P1 sessions. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun P1BrewerProfileSetupScreen(
     state: P1BrewerProfileSetupUiState,
-    onProfileSelected: (com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId) -> Unit,
-    onHarioSwitchWorkflowSelected: (HarioSwitchWorkflow) -> Unit,
+    onProfileSelected: (BrewerProfileId) -> Unit,
+    onRecipeSelected: (BuiltInRecipeId) -> Unit,
+    onEquipmentOptionSelected: (Int) -> Unit,
     onEquipmentCapacityChanged: (String) -> Unit,
     onCezveSugarSelected: (Boolean) -> Unit,
-    onCezveFoamRiseCyclesSelected: (Int) -> Unit,
     onCezveHeatSourceSelected: (HeatSourceClass) -> Unit,
     onStart: (P1BrewerProfileStartSelection) -> Unit,
     onBack: () -> Unit,
@@ -89,7 +89,8 @@ fun P1BrewerProfileSetupScreen(
     modifier: Modifier = Modifier,
 ) {
     val selectedProfile = state.selectedProfile
-    var advancedOptionsExpanded by rememberSaveable(selectedProfile?.profileId?.value) {
+    val selectedRecipe = state.selectedRecipe
+    var optionalChoicesExpanded by rememberSaveable(selectedProfile?.profileId?.value) {
         mutableStateOf(false)
     }
 
@@ -115,10 +116,7 @@ fun P1BrewerProfileSetupScreen(
         },
         bottomBar = {
             if (selectedProfile != null) {
-                P1BrewerProfileActionBar(
-                    state = state,
-                    onStart = onStart,
-                )
+                P1BrewerProfileActionBar(state = state, onStart = onStart)
             }
         },
     ) { innerPadding ->
@@ -126,36 +124,20 @@ fun P1BrewerProfileSetupScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            contentPadding = PaddingValues(
-                horizontal = 20.dp,
-                vertical = 16.dp,
-            ),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item(key = "profile-introduction") {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(
-                        text = stringResource(R.string.heading_brewer_profile_choose),
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.semantics { heading() },
-                    )
-                    Text(
-                        text = stringResource(R.string.msg_brewer_profile_choose_hint),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+                SetupSectionIntroduction(
+                    title = stringResource(R.string.heading_brewer_profile_choose),
+                    hint = stringResource(R.string.msg_brewer_profile_choose_hint),
+                )
             }
 
             if (state.profiles.isEmpty()) {
-                item(key = "profile-empty") {
-                    ProfileSetupEmptyState()
-                }
+                item(key = "profile-empty") { ProfileSetupEmptyState() }
             } else {
-                items(
-                    items = state.profiles,
-                    key = { option -> option.profileId.value },
-                ) { option ->
+                items(state.profiles, key = { option -> option.profileId.value }) { option ->
                     BrewerProfileOptionCard(
                         option = option,
                         selected = option.profileId == state.selectedProfileId,
@@ -164,55 +146,68 @@ fun P1BrewerProfileSetupScreen(
                 }
             }
 
-            selectedProfile?.let { selected ->
-                item(key = "profile-defaults:${selected.profileId.value}") {
-                    ProfileDefaultsCard(selected)
-                }
-
-                if (selected.requiresHarioSwitchWorkflow || state.requiresCezveSetup) {
-                    item(key = "profile-options:${selected.profileId.value}") {
-                        ContextualProfileOptionsCard(
-                            selected = selected,
-                            state = state,
-                            expanded = advancedOptionsExpanded,
-                            onExpandedChange = { advancedOptionsExpanded = !advancedOptionsExpanded },
-                            onHarioSwitchWorkflowSelected = onHarioSwitchWorkflowSelected,
-                            onSugarSelected = onCezveSugarSelected,
-                            onFoamRiseCyclesSelected = onCezveFoamRiseCyclesSelected,
-                        )
-                    }
-                }
-
-                item(key = "profile-equipment:${selected.profileId.value}") {
-                    EquipmentCompatibilityCard(selected)
-                }
-
-                if (state.requiresCezveSetup) {
-                    item(key = "profile-heat-source:${selected.profileId.value}") {
-                        CezveHeatSourceCard(
-                            selectedHeatSource = state.cezveHeatSource,
-                            onHeatSourceSelected = onCezveHeatSourceSelected,
-                        )
-                    }
-                }
-
-                item(key = "profile-capacity:${selected.profileId.value}") {
-                    EquipmentCapacityCard(
-                        capacityInput = state.selectedEquipmentCapacityInput,
-                        capacityIsValid = state.selectedEquipmentCapacityG != null,
-                        onCapacityChanged = onEquipmentCapacityChanged,
+            selectedProfile?.let { profile ->
+                item(key = "profile-recipes:${profile.profileId.value}") {
+                    ExactRecipeSelectionCard(
+                        profile = profile,
+                        selectedRecipeId = selectedRecipe?.id,
+                        onRecipeSelected = onRecipeSelected,
                     )
                 }
 
-                state.startSelection?.let { selection ->
-                    onLearn?.let { learn ->
-                        item(key = "profile-learn:${selected.profileId.value}") {
-                            OutlinedButton(
-                                onClick = { learn(selection) },
-                                enabled = !state.isStarting,
-                                modifier = Modifier.fillMaxWidth(),
-                            ) {
-                                Text(text = stringResource(R.string.action_learn_this_brewer))
+                selectedRecipe?.let { recipe ->
+                    item(key = "recipe-details:${recipe.id.value}") {
+                        ExactRecipeDetailsCard(recipe)
+                    }
+
+                    if (state.requiresCezveSetup) {
+                        item(key = "recipe-options:${recipe.id.value}") {
+                            CezveOptionalChoicesCard(
+                                includeSugar = state.includeCezveSugar,
+                                expanded = optionalChoicesExpanded,
+                                onExpandedChange = { optionalChoicesExpanded = !optionalChoicesExpanded },
+                                onSugarSelected = onCezveSugarSelected,
+                            )
+                        }
+                    }
+
+                    item(key = "recipe-equipment:${recipe.id.value}") {
+                        ExactEquipmentCard(
+                            recipe = recipe,
+                            selectedOption = state.selectedEquipmentOption,
+                            onOptionSelected = onEquipmentOptionSelected,
+                        )
+                    }
+
+                    if (state.requiresCezveSetup) {
+                        item(key = "profile-heat-source:${profile.profileId.value}") {
+                            CezveHeatSourceCard(
+                                selectedHeatSource = state.cezveHeatSource,
+                                onHeatSourceSelected = onCezveHeatSourceSelected,
+                            )
+                        }
+                    }
+
+                    item(key = "profile-capacity:${profile.profileId.value}") {
+                        EquipmentCapacityCard(
+                            capacityInput = state.selectedEquipmentCapacityInput,
+                            capacityIsValid = state.selectedEquipmentCapacityG != null,
+                            capacitySupportsRecipe = state.capacitySupportsSelectedRecipe,
+                            requiredInputG = state.selectedRecipeInputG,
+                            onCapacityChanged = onEquipmentCapacityChanged,
+                        )
+                    }
+
+                    state.startSelection?.let { selection ->
+                        onLearn?.let { learn ->
+                            item(key = "profile-learn:${recipe.id.value}") {
+                                OutlinedButton(
+                                    onClick = { learn(selection) },
+                                    enabled = !state.isStarting,
+                                    modifier = Modifier.fillMaxWidth(),
+                                ) {
+                                    Text(text = stringResource(R.string.action_learn_this_recipe))
+                                }
                             }
                         }
                     }
@@ -223,38 +218,46 @@ fun P1BrewerProfileSetupScreen(
 }
 
 @Composable
+private fun SetupSectionIntroduction(title: String, hint: String) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.semantics { heading() },
+        )
+        Text(
+            text = hint,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+@Composable
 private fun P1BrewerProfileActionBar(
     state: P1BrewerProfileSetupUiState,
     onStart: (P1BrewerProfileStartSelection) -> Unit,
 ) {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        shadowElevation = 6.dp,
-    ) {
-        Column(
+    Surface(color = MaterialTheme.colorScheme.surface, shadowElevation = 6.dp) {
+        Button(
+            onClick = { state.startSelection?.let(onStart) },
+            enabled = state.canStart,
             modifier = Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
-                .padding(horizontal = 20.dp, vertical = 12.dp),
+                .padding(horizontal = 20.dp, vertical = 12.dp)
+                .heightIn(min = 56.dp),
+            shape = MaterialTheme.shapes.extraLarge,
+            colors = primaryActionButtonColors(),
         ) {
-            Button(
-                onClick = { state.startSelection?.let(onStart) },
-                enabled = state.canStart,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 56.dp),
-                shape = MaterialTheme.shapes.extraLarge,
-                colors = primaryActionButtonColors(),
-            ) {
-                Text(
-                    text = if (state.isStarting) {
-                        stringResource(R.string.label_brewer_profile_starting)
-                    } else {
-                        stringResource(R.string.action_start_brewing)
-                    },
-                    style = MaterialTheme.typography.titleMedium,
-                )
-            }
+            Text(
+                text = if (state.isStarting) {
+                    stringResource(R.string.label_brewer_profile_starting)
+                } else {
+                    stringResource(R.string.action_start_brewing)
+                },
+                style = MaterialTheme.typography.titleMedium,
+            )
         }
     }
 }
@@ -262,9 +265,7 @@ private fun P1BrewerProfileActionBar(
 @Composable
 private fun ProfileSetupEmptyState() {
     Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         modifier = Modifier.fillMaxWidth(),
     ) {
         Text(
@@ -291,72 +292,23 @@ private fun BrewerProfileOptionCard(
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .selectable(
-                selected = selected,
-                onClick = onClick,
-                role = Role.RadioButton,
-            ),
+            .selectable(selected = selected, onClick = onClick, role = Role.RadioButton),
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                text = localizedProfileName(option.profileId, option.displayName),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Text(
-                text = localizedMethodFamilyName(option.profileId, option.methodFamilyName),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-    }
-}
-
-@Composable
-private fun ProfileDefaultsCard(option: P1BrewerProfileSetupOption) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.heading_brewer_profile_starting_defaults),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.semantics { heading() },
-            )
-            DefaultsRow(
-                label = stringResource(R.string.label_ratio),
-                value = stringResource(
-                    R.string.format_ratio,
-                    formatNumber(option.defaults.ratio.waterPerCoffee),
-                ),
-            )
-            DefaultsRow(
-                label = inputLabel(option),
-                value = inputMeaning(option),
-            )
-            DefaultsRow(
-                label = stringResource(R.string.label_temperature),
-                value = temperatureLabel(option.defaults.temperature),
-            )
-            DefaultsRow(
-                label = stringResource(R.string.label_brew_time),
-                value = brewTimeLabel(option.defaults.brewTime),
-            )
-            DefaultsRow(
-                label = stringResource(R.string.label_brewer_profile_expected_result),
-                value = outputLabel(option.defaults.quantitySemantics.primaryOutput),
-            )
-            if (option.defaults.quantitySemantics.servingIsSeparateFromExtraction) {
+            RadioButton(selected = selected, onClick = null)
+            Column(
+                modifier = Modifier.padding(start = 10.dp),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
                 Text(
-                    text = stringResource(R.string.msg_brewer_profile_serving_separate),
+                    text = localizedProfileName(option.profileId, option.displayName),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Text(
+                    text = localizedMethodFamilyName(option.profileId, option.methodFamilyName),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -366,7 +318,109 @@ private fun ProfileDefaultsCard(option: P1BrewerProfileSetupOption) {
 }
 
 @Composable
-private fun DefaultsRow(label: String, value: String) {
+private fun ExactRecipeSelectionCard(
+    profile: P1BrewerProfileSetupOption,
+    selectedRecipeId: BuiltInRecipeId?,
+    onRecipeSelected: (BuiltInRecipeId) -> Unit,
+) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.heading_exact_recipe_choose),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.semantics { heading() },
+            )
+            Text(
+                text = if (profile.recipes.size == 1) {
+                    stringResource(R.string.msg_exact_recipe_single_compatible)
+                } else {
+                    stringResource(R.string.msg_exact_recipe_choose_hint)
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Column(modifier = Modifier.selectableGroup()) {
+                profile.recipes.forEach { recipe ->
+                    val selected = recipe.id == selectedRecipeId
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 52.dp)
+                            .selectable(
+                                selected = selected,
+                                onClick = { onRecipeSelected(recipe.id) },
+                                enabled = profile.recipes.size > 1,
+                                role = Role.RadioButton,
+                            ),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(selected = selected, onClick = null)
+                        Text(
+                            text = exactRecipeName(recipe.id),
+                            modifier = Modifier.padding(start = 8.dp),
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ExactRecipeDetailsCard(recipe: BuiltInP1RecipeDefinition) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.heading_exact_recipe_details),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.semantics { heading() },
+            )
+            DetailsRow(stringResource(R.string.label_coffee), formatMass(recipe.quantities.dryCoffeeDoseG))
+            recipe.quantities.brewWaterInputG?.let { input ->
+                DetailsRow(stringResource(R.string.label_brewer_profile_input_water), formatMass(input))
+            }
+            recipe.quantities.reservoirInputG?.let { input ->
+                DetailsRow(stringResource(R.string.label_brewer_profile_input_reservoir_water), formatMass(input))
+            }
+            if (recipe.quantities.iceG > 0.0) {
+                DetailsRow(stringResource(R.string.label_exact_recipe_brew_ice), formatMass(recipe.quantities.iceG))
+            }
+            recipe.ratios.forEachIndexed { index, ratio ->
+                DetailsRow(
+                    label = if (index == 0) {
+                        stringResource(R.string.label_ratio)
+                    } else {
+                        stringResource(R.string.label_exact_recipe_combined_ratio)
+                    },
+                    value = stringResource(
+                        R.string.format_exact_recipe_ratio,
+                        ratio.ratioValue?.let(::formatNumber)
+                            ?: stringResource(R.string.label_exact_recipe_unresolved),
+                        ratioDenominatorLabel(ratio.includedDenominatorRoles),
+                    ),
+                )
+            }
+            DetailsRow(
+                stringResource(R.string.label_temperature),
+                temperatureLabel(recipe.temperature),
+            )
+            DetailsRow(stringResource(R.string.label_brew_time), timeLabel(recipe.expectedTime))
+        }
+    }
+}
+
+@Composable
+private fun DetailsRow(label: String, value: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -378,54 +432,62 @@ private fun DefaultsRow(label: String, value: String) {
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        Text(
-            text = value,
-            modifier = Modifier.weight(0.62f),
-            style = MaterialTheme.typography.bodyMedium,
-        )
+        Text(text = value, modifier = Modifier.weight(0.62f), style = MaterialTheme.typography.bodyMedium)
     }
 }
 
 @Composable
-private fun EquipmentCompatibilityCard(option: P1BrewerProfileSetupOption) {
+private fun ExactEquipmentCard(
+    recipe: BuiltInP1RecipeDefinition,
+    selectedOption: P1EquipmentOption?,
+    onOptionSelected: (Int) -> Unit,
+) {
     Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-        ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
         modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                text = stringResource(R.string.heading_brewer_profile_equipment_check),
+                text = stringResource(R.string.heading_exact_recipe_equipment),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.semantics { heading() },
             )
-            when (val capacity = option.defaults.capacity) {
-                CapacityRecommendation.RequiresEquipmentConfiguration -> Text(
-                    text = stringResource(R.string.msg_brewer_profile_capacity_needs_confirmation),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-
-                is CapacityRecommendation.ConfirmedRange -> Text(
-                    text = capacityDescription(capacity),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            }
             Text(
-                text = when {
-                    option.hasCompatibleFilters -> stringResource(
-                        R.string.msg_brewer_profile_filter_compatible,
-                    )
-                    option.allowsIntentionallyUnfiltered -> stringResource(
-                        R.string.msg_brewer_profile_filter_unfiltered,
-                    )
-                    else -> stringResource(R.string.msg_brewer_profile_filter_confirm)
+                text = if (recipe.equipmentOptions.size == 1) {
+                    stringResource(R.string.msg_exact_recipe_equipment_single)
+                } else {
+                    stringResource(R.string.msg_exact_recipe_equipment_choose)
                 },
                 style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
             )
+            Column(modifier = Modifier.selectableGroup()) {
+                recipe.equipmentOptions.forEachIndexed { index, option ->
+                    val selected = option == selectedOption
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 52.dp)
+                            .selectable(
+                                selected = selected,
+                                onClick = { onOptionSelected(index) },
+                                enabled = recipe.equipmentOptions.size > 1,
+                                role = Role.RadioButton,
+                            ),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(selected = selected, onClick = null)
+                        Text(
+                            text = equipmentOptionLabel(option),
+                            modifier = Modifier.padding(start = 8.dp),
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -434,12 +496,12 @@ private fun EquipmentCompatibilityCard(option: P1BrewerProfileSetupOption) {
 private fun EquipmentCapacityCard(
     capacityInput: String,
     capacityIsValid: Boolean,
+    capacitySupportsRecipe: Boolean,
+    requiredInputG: Double?,
     onCapacityChanged: (String) -> Unit,
 ) {
     Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-        ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
         modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
@@ -454,20 +516,28 @@ private fun EquipmentCapacityCard(
             Text(
                 text = stringResource(R.string.msg_brewer_profile_capacity_hint),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
             )
             OutlinedTextField(
                 value = capacityInput,
                 onValueChange = onCapacityChanged,
                 label = { Text(stringResource(R.string.label_brewer_profile_capacity_grams)) },
-                isError = capacityInput.isNotBlank() && !capacityIsValid,
+                isError = capacityInput.isNotBlank() && (!capacityIsValid || !capacitySupportsRecipe),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
-            if (!capacityIsValid) {
-                Text(
+            when {
+                !capacityIsValid -> Text(
                     text = stringResource(R.string.msg_brewer_profile_capacity_required),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+                !capacitySupportsRecipe && requiredInputG != null -> Text(
+                    text = stringResource(
+                        R.string.format_exact_recipe_capacity_too_small,
+                        formatMass(requiredInputG),
+                    ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.error,
                 )
@@ -477,43 +547,29 @@ private fun EquipmentCapacityCard(
 }
 
 @Composable
-private fun ContextualProfileOptionsCard(
-    selected: P1BrewerProfileSetupOption,
-    state: P1BrewerProfileSetupUiState,
+private fun CezveOptionalChoicesCard(
+    includeSugar: Boolean,
     expanded: Boolean,
     onExpandedChange: () -> Unit,
-    onHarioSwitchWorkflowSelected: (HarioSwitchWorkflow) -> Unit,
     onSugarSelected: (Boolean) -> Unit,
-    onFoamRiseCyclesSelected: (Int) -> Unit,
 ) {
-    val title = if (selected.requiresHarioSwitchWorkflow) {
-        stringResource(R.string.heading_brewer_profile_hario_switch_style)
-    } else {
-        stringResource(R.string.heading_brewer_profile_cezve_choices)
-    }
-    val disclosureDescription = stringResource(
-        if (expanded) R.string.cd_collapse_advanced else R.string.cd_expand_advanced,
-    )
-
     Card(modifier = Modifier.fillMaxWidth()) {
         Column {
             TextButton(
                 onClick = onExpandedChange,
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 56.dp),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
             ) {
                 Text(
-                    text = title,
+                    text = stringResource(R.string.heading_brewer_profile_cezve_choices),
                     style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier
-                        .weight(1f)
-                        .semantics { heading() },
+                    modifier = Modifier.weight(1f).semantics { heading() },
                 )
                 Icon(
                     imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                    contentDescription = disclosureDescription,
+                    contentDescription = stringResource(
+                        if (expanded) R.string.cd_collapse_advanced else R.string.cd_expand_advanced,
+                    ),
                 )
             }
             AnimatedVisibility(visible = expanded) {
@@ -521,61 +577,37 @@ private fun ContextualProfileOptionsCard(
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    if (selected.requiresHarioSwitchWorkflow) {
-                        HarioSwitchWorkflowPicker(
-                            selectedWorkflow = state.harioSwitchWorkflow,
-                            onSelected = onHarioSwitchWorkflowSelected,
-                        )
-                    } else {
-                        CezveChoicePicker(
-                            setup = state.cezveSetup,
-                            onSugarSelected = onSugarSelected,
-                            onFoamRiseCyclesSelected = onFoamRiseCyclesSelected,
-                        )
+                    Text(
+                        text = stringResource(R.string.msg_exact_recipe_cezve_choices_hint),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text(
+                        text = stringResource(R.string.label_brewer_profile_cezve_sugar),
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                        listOf(false, true).forEachIndexed { index, choice ->
+                            SegmentedButton(
+                                selected = includeSugar == choice,
+                                onClick = { onSugarSelected(choice) },
+                                shape = SegmentedButtonDefaults.itemShape(index = index, count = 2),
+                                label = {
+                                    Text(
+                                        stringResource(
+                                            if (choice) {
+                                                R.string.label_brewer_profile_cezve_with_sugar
+                                            } else {
+                                                R.string.label_brewer_profile_cezve_without_sugar
+                                            },
+                                        ),
+                                    )
+                                },
+                            )
+                        }
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun CezveChoicePicker(
-    setup: CezveSessionSetup,
-    onSugarSelected: (Boolean) -> Unit,
-    onFoamRiseCyclesSelected: (Int) -> Unit,
-) {
-    Text(
-        text = stringResource(R.string.msg_brewer_profile_cezve_choices_hint),
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-    )
-    Text(
-        text = stringResource(R.string.label_brewer_profile_cezve_sugar),
-        style = MaterialTheme.typography.labelLarge,
-    )
-    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-        listOf(false, true).forEachIndexed { index, includeSugar ->
-            SegmentedButton(
-                selected = setup.includeSugar == includeSugar,
-                onClick = { onSugarSelected(includeSugar) },
-                shape = SegmentedButtonDefaults.itemShape(index = index, count = 2),
-                label = { Text(cezveSugarLabel(includeSugar), maxLines = 2) },
-            )
-        }
-    }
-    Text(
-        text = stringResource(R.string.label_brewer_profile_cezve_foam_rises),
-        style = MaterialTheme.typography.labelLarge,
-    )
-    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-        listOf(1, 2).forEachIndexed { index, cycles ->
-            SegmentedButton(
-                selected = setup.foamRiseCycles == cycles,
-                onClick = { onFoamRiseCyclesSelected(cycles) },
-                shape = SegmentedButtonDefaults.itemShape(index = index, count = 2),
-                label = { Text(cezveFoamRiseLabel(cycles)) },
-            )
         }
     }
 }
@@ -586,9 +618,7 @@ private fun CezveHeatSourceCard(
     onHeatSourceSelected: (HeatSourceClass) -> Unit,
 ) {
     Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-        ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
         modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
@@ -603,7 +633,7 @@ private fun CezveHeatSourceCard(
             Text(
                 text = stringResource(R.string.msg_brewer_profile_cezve_heat_source_hint),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
             )
             Column(modifier = Modifier.selectableGroup()) {
                 CEZVE_HEAT_SOURCES.forEach { heatSource ->
@@ -618,14 +648,8 @@ private fun CezveHeatSourceCard(
                             ),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        RadioButton(
-                            selected = selectedHeatSource == heatSource,
-                            onClick = null,
-                        )
-                        Text(
-                            text = cezveHeatSourceLabel(heatSource),
-                            modifier = Modifier.padding(start = 8.dp),
-                        )
+                        RadioButton(selected = selectedHeatSource == heatSource, onClick = null)
+                        Text(text = heatSourceLabel(heatSource), modifier = Modifier.padding(start = 8.dp))
                     }
                 }
             }
@@ -641,132 +665,183 @@ private fun CezveHeatSourceCard(
 }
 
 @Composable
-private fun cezveSugarLabel(includeSugar: Boolean): String = if (includeSugar) {
-    stringResource(R.string.label_brewer_profile_cezve_with_sugar)
-} else {
-    stringResource(R.string.label_brewer_profile_cezve_without_sugar)
-}
-
-@Composable
-private fun cezveFoamRiseLabel(cycles: Int): String = when (cycles) {
-    1 -> stringResource(R.string.label_brewer_profile_cezve_one_foam_rise)
-    2 -> stringResource(R.string.label_brewer_profile_cezve_two_foam_rises)
-    else -> cycles.toString()
-}
-
-@Composable
-private fun cezveHeatSourceLabel(heatSource: HeatSourceClass): String = when (heatSource) {
-    HeatSourceClass.HOB -> stringResource(R.string.label_brewer_profile_cezve_heat_hob)
-    HeatSourceClass.OPEN_FLAME -> stringResource(R.string.label_brewer_profile_cezve_heat_open_flame)
-    HeatSourceClass.PORTABLE_HEATER -> stringResource(
-        R.string.label_brewer_profile_cezve_heat_portable_heater,
-    )
-    HeatSourceClass.NONE, HeatSourceClass.ELECTRIC_MACHINE -> ""
-}
-
-private val CEZVE_HEAT_SOURCES = listOf(
-    HeatSourceClass.HOB,
-    HeatSourceClass.OPEN_FLAME,
-    HeatSourceClass.PORTABLE_HEATER,
+private fun exactRecipeName(id: BuiltInRecipeId): String = stringResource(
+    EXACT_RECIPE_NAME_RESOURCES[id.value] ?: R.string.label_exact_recipe_unavailable,
 )
 
 @Composable
-private fun HarioSwitchWorkflowPicker(
-    selectedWorkflow: HarioSwitchWorkflow,
-    onSelected: (HarioSwitchWorkflow) -> Unit,
-) {
-    Text(
-        text = stringResource(R.string.msg_brewer_profile_hario_switch_style_hint),
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
+private fun temperatureLabel(temperature: P1TemperatureSemantics): String = when (temperature.basis) {
+    P1TemperatureBasis.USER_EXACT -> stringResource(
+        R.string.format_exact_recipe_temperature,
+        formatNumber(requireNotNull(temperature.minimumC)),
     )
-    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-        HarioSwitchWorkflow.entries.forEachIndexed { index, workflow ->
-            SegmentedButton(
-                selected = workflow == selectedWorkflow,
-                onClick = { onSelected(workflow) },
-                shape = SegmentedButtonDefaults.itemShape(
-                    index = index,
-                    count = HarioSwitchWorkflow.entries.size,
-                ),
-                label = { Text(workflowLabel(workflow), maxLines = 2) },
-            )
+    P1TemperatureBasis.USER_RANGE -> temperatureRangeLabel(temperature, R.string.format_exact_recipe_temperature_range)
+    P1TemperatureBasis.USER_APPROXIMATE_RANGE -> temperatureRangeLabel(
+        temperature,
+        R.string.format_exact_recipe_temperature_approximate_range,
+    )
+    P1TemperatureBasis.USER_STARTING_RANGE -> temperatureRangeLabel(
+        temperature,
+        R.string.format_exact_recipe_temperature_starting_range,
+    )
+    P1TemperatureBasis.HOT_UNSPECIFIED -> stringResource(R.string.label_exact_recipe_hot_unspecified)
+    P1TemperatureBasis.MACHINE_CONTROLLED -> stringResource(R.string.label_exact_recipe_machine_controlled)
+    P1TemperatureBasis.MACHINE_CONTROLLED_REPORTED_RANGE -> temperatureRangeLabel(
+        temperature,
+        R.string.format_exact_recipe_temperature_machine_range,
+    )
+    P1TemperatureBasis.COLD_START_OBSERVATION_CONTROLLED -> stringResource(
+        R.string.label_exact_recipe_cold_observed,
+    )
+}
+
+@Composable
+private fun temperatureRangeLabel(temperature: P1TemperatureSemantics, resourceId: Int): String =
+    stringResource(
+        resourceId,
+        formatNumber(requireNotNull(temperature.minimumC)),
+        formatNumber(requireNotNull(temperature.maximumC)),
+    )
+
+@Composable
+private fun timeLabel(time: P1TimeSemantics): String = when (time.basis) {
+    P1TimeBasis.APPROXIMATE -> stringResource(
+        R.string.format_exact_recipe_time_approximate,
+        formatDuration(requireNotNull(time.minimumSeconds)),
+    )
+    P1TimeBasis.RANGE -> stringResource(
+        R.string.format_exact_recipe_time_range,
+        formatDuration(requireNotNull(time.minimumSeconds)),
+        formatDuration(requireNotNull(time.maximumSeconds)),
+    )
+    P1TimeBasis.PRACTICAL_STARTING_RANGE -> stringResource(
+        R.string.format_exact_recipe_time_starting_range,
+        formatDuration(requireNotNull(time.minimumSeconds)),
+        formatDuration(requireNotNull(time.maximumSeconds)),
+    )
+    P1TimeBasis.APPROXIMATE_WITH_OBSERVATION -> stringResource(
+        R.string.format_exact_recipe_time_approximate_observed,
+        formatDuration(requireNotNull(time.minimumSeconds)),
+    )
+    P1TimeBasis.GEOMETRY_DEPENDENT -> stringResource(R.string.label_exact_recipe_time_geometry)
+    P1TimeBasis.OBSERVATION_DEPENDENT -> stringResource(R.string.label_exact_recipe_time_observed)
+    P1TimeBasis.MACHINE_SPECIFIC -> stringResource(R.string.label_exact_recipe_time_machine)
+}
+
+@Composable
+private fun ratioDenominatorLabel(roles: Set<QuantityRole>): String {
+    val labels = mutableListOf<String>()
+    for (role in roles.sortedBy(QuantityRole::ordinal)) {
+        labels += when (role) {
+            QuantityRole.BREW_WATER_INPUT -> stringResource(R.string.label_exact_recipe_brew_water)
+            QuantityRole.RESERVOIR_INPUT -> stringResource(R.string.label_exact_recipe_reservoir_water)
+            QuantityRole.ICE -> stringResource(R.string.label_exact_recipe_brew_ice)
+            else -> stringResource(R.string.label_exact_recipe_unresolved)
         }
     }
+    return labels.joinToString(stringResource(R.string.separator_exact_recipe_quantity_roles))
 }
 
 @Composable
-private fun inputLabel(option: P1BrewerProfileSetupOption): String = when (
-    option.defaults.quantitySemantics.inputRole
-) {
-    QuantityRole.BREW_WATER_INPUT -> stringResource(R.string.label_brewer_profile_input_water)
-    QuantityRole.RESERVOIR_INPUT -> stringResource(R.string.label_brewer_profile_input_reservoir_water)
-    else -> stringResource(R.string.label_brewer_profile_input_water)
-}
-
-@Composable
-private fun inputMeaning(option: P1BrewerProfileSetupOption): String = when (
-    option.defaults.quantitySemantics.inputRole
-) {
-    QuantityRole.BREW_WATER_INPUT -> stringResource(R.string.msg_brewer_profile_input_water)
-    QuantityRole.RESERVOIR_INPUT -> stringResource(R.string.msg_brewer_profile_input_reservoir_water)
-    else -> stringResource(R.string.msg_brewer_profile_input_water)
-}
-
-@Composable
-private fun temperatureLabel(recommendation: TemperatureRecommendation): String = when (recommendation) {
-    is TemperatureRecommendation.CelsiusRange -> {
-        "${recommendation.minimumC}–${recommendation.maximumC} °C"
+private fun equipmentOptionLabel(option: P1EquipmentOption): String {
+    val parts = mutableListOf(filterSelectionLabel(option.filterSelection))
+    option.basketId?.let { basketId -> parts += basketLabel(basketId) }
+    for (accessoryId in option.accessoryIds.sortedBy { it.value }) {
+        parts += accessoryLabel(accessoryId)
     }
-
-    TemperatureRecommendation.Unavailable -> stringResource(
-        R.string.msg_brewer_profile_temperature_machine_controlled,
-    )
+    return parts.joinToString(stringResource(R.string.separator_exact_recipe_equipment_parts))
 }
 
 @Composable
-private fun brewTimeLabel(recommendation: BrewTimeRecommendation): String = when (recommendation) {
-    is BrewTimeRecommendation.SecondsRange -> formatDurationRange(
-        minimumSeconds = recommendation.minimumSeconds,
-        maximumSeconds = recommendation.maximumSeconds,
-    )
-
-    BrewTimeRecommendation.ObservedCompletion -> stringResource(
-        R.string.msg_brewer_profile_brew_time_observed,
-    )
-    BrewTimeRecommendation.MachineControlled -> stringResource(
-        R.string.msg_brewer_profile_brew_time_machine_controlled,
-    )
-}
-
-@Composable
-private fun outputLabel(output: PrimaryOutputQuantity): String = when (output) {
-    PrimaryOutputQuantity.ESTIMATED_BEVERAGE_YIELD -> stringResource(
-        R.string.label_brewer_profile_output_estimated_beverage_yield,
-    )
-    PrimaryOutputQuantity.COLLECTED_CONCENTRATE -> stringResource(
-        R.string.label_brewer_profile_output_collected_concentrate,
-    )
-    PrimaryOutputQuantity.PREPARED_UNFILTERED_VOLUME -> stringResource(
-        R.string.label_brewer_profile_output_prepared_unfiltered_volume,
-    )
-}
-
-@Composable
-private fun capacityDescription(capacity: CapacityRecommendation.ConfirmedRange): String {
-    val range = capacity.range
-    val minimum = range.minimumG?.let { formatMass(it) }
-    val maximum = range.maximumG?.let { formatMass(it) }
-    return when {
-        minimum != null && maximum != null -> stringResource(
-            R.string.format_brewer_profile_capacity_range,
-            minimum,
-            maximum,
-        )
-        maximum != null -> stringResource(R.string.format_brewer_profile_capacity_up_to, maximum)
-        minimum != null -> stringResource(R.string.format_brewer_profile_capacity_from, minimum)
-        else -> stringResource(R.string.msg_brewer_profile_capacity_configured)
+private fun filterSelectionLabel(selection: FilterSelection): String = when (selection) {
+    FilterSelection.IntentionallyUnfiltered -> stringResource(R.string.label_exact_equipment_unfiltered)
+    FilterSelection.Unspecified -> stringResource(R.string.label_exact_recipe_unavailable)
+    is FilterSelection.Stack -> {
+        val labels = mutableListOf<String>()
+        for (entry in selection.entries.sortedBy { it.position }) {
+            labels += filterLabel(entry.filterProfileId)
+        }
+        labels.joinToString(stringResource(R.string.separator_exact_recipe_equipment_parts))
     }
+}
+
+@Composable
+private fun filterLabel(id: FilterProfileId): String = stringResource(
+    when (id.value) {
+        "cone_paper" -> R.string.label_exact_equipment_cone_paper
+        "wave_paper" -> R.string.label_exact_equipment_wave_paper
+        "wedge_paper" -> R.string.label_exact_equipment_wedge_paper
+        "chemex_six_cup_bonded_paper" -> R.string.label_exact_equipment_chemex_paper
+        "flat_basket_paper" -> R.string.label_exact_equipment_flat_basket_paper
+        "number_one_paper" -> R.string.label_exact_equipment_number_one_paper
+        "phin_metal" -> R.string.label_exact_equipment_phin_metal
+        else -> R.string.label_exact_recipe_unavailable
+    },
+)
+
+@Composable
+private fun basketLabel(id: BasketProfileId): String = stringResource(
+    when (id.value) {
+        "automatic_cone_basket" -> R.string.label_exact_equipment_cone_basket
+        "automatic_flat_basket" -> R.string.label_exact_equipment_flat_basket
+        "automatic_number_one_basket" -> R.string.label_exact_equipment_number_one_basket
+        else -> R.string.label_exact_recipe_unavailable
+    },
+)
+
+@Composable
+private fun accessoryLabel(id: AccessoryProfileId): String = stringResource(
+    when (id.value) {
+        "phin_screw_insert" -> R.string.label_exact_equipment_phin_screw_insert
+        else -> R.string.label_exact_recipe_unavailable
+    },
+)
+
+@Composable
+private fun localizedProfileName(profileId: BrewerProfileId, fallback: String): String = when (profileId.value) {
+    "v60_02" -> stringResource(R.string.label_brewer_profile_v60_02)
+    "v60_unspecified" -> stringResource(R.string.label_brewer_profile_v60)
+    "manual_wave_185" -> stringResource(R.string.label_brewer_profile_wave_185)
+    "manual_wedge_generic" -> stringResource(R.string.label_brewer_profile_wedge)
+    "manual_thick_paper_carafe" -> stringResource(R.string.label_brewer_profile_thick_paper_carafe)
+    "manual_conical_generic" -> stringResource(R.string.label_brewer_profile_conical)
+    "clever_style" -> stringResource(R.string.label_brewer_profile_clever_style)
+    "hario_switch" -> stringResource(R.string.label_brewer_profile_hario_switch)
+    "cezve_generic" -> stringResource(R.string.label_brewer_profile_cezve_generic)
+    "automatic_batch_generic" -> stringResource(R.string.label_brewer_profile_automatic_batch_generic)
+    "automatic_single_cup_generic" -> stringResource(R.string.label_brewer_profile_automatic_single_cup_generic)
+    "vietnamese_phin" -> stringResource(R.string.label_brewer_profile_vietnamese_phin)
+    else -> fallback
+}
+
+@Composable
+private fun localizedMethodFamilyName(profileId: BrewerProfileId, fallback: String): String = when (profileId.value) {
+    "v60_02",
+    "v60_unspecified",
+    "manual_wave_185",
+    "manual_wedge_generic",
+    "manual_thick_paper_carafe",
+    "manual_conical_generic",
+    -> stringResource(R.string.label_brewer_profile_family_manual_gravity)
+    "clever_style", "hario_switch" -> stringResource(R.string.label_brewer_profile_family_steep_and_release)
+    "cezve_generic" -> stringResource(R.string.label_brewer_profile_family_heated_unfiltered)
+    "automatic_batch_generic", "automatic_single_cup_generic" -> stringResource(
+        R.string.label_brewer_profile_family_automatic_batch,
+    )
+    "vietnamese_phin" -> stringResource(
+        R.string.label_brewer_profile_family_restricted_flow_gravity_concentrate,
+    )
+    else -> fallback
+}
+
+@Composable
+private fun heatSourceLabel(heatSource: HeatSourceClass): String = when (heatSource) {
+    HeatSourceClass.HOB -> stringResource(R.string.label_brewer_profile_cezve_heat_hob)
+    HeatSourceClass.OPEN_FLAME -> stringResource(R.string.label_brewer_profile_cezve_heat_open_flame)
+    HeatSourceClass.PORTABLE_HEATER -> stringResource(R.string.label_brewer_profile_cezve_heat_portable_heater)
+    HeatSourceClass.NONE, HeatSourceClass.ELECTRIC_MACHINE -> stringResource(
+        R.string.label_exact_recipe_unavailable,
+    )
 }
 
 @Composable
@@ -776,59 +851,44 @@ private fun formatMass(value: Double): String = stringResource(
     stringResource(R.string.unit_grams),
 )
 
-@Composable
-private fun workflowLabel(workflow: HarioSwitchWorkflow): String = when (workflow) {
-    HarioSwitchWorkflow.STEEP_AND_RELEASE -> stringResource(
-        R.string.label_brewer_profile_hario_switch_steep_release,
-    )
-    HarioSwitchWorkflow.MANUAL_GRAVITY -> stringResource(
-        R.string.label_brewer_profile_hario_switch_manual_gravity,
-    )
-}
-
-@Composable
-private fun localizedProfileName(profileId: BrewerProfileId, fallback: String): String = when (profileId.value) {
-    "clever_style" -> stringResource(R.string.label_brewer_profile_clever_style)
-    "hario_switch" -> stringResource(R.string.label_brewer_profile_hario_switch)
-    "valve_release_generic" -> stringResource(R.string.label_brewer_profile_valve_release_generic)
-    "cezve_generic" -> stringResource(R.string.label_brewer_profile_cezve_generic)
-    "automatic_batch_generic" -> stringResource(R.string.label_brewer_profile_automatic_batch_generic)
-    "automatic_single_cup_generic" -> stringResource(
-        R.string.label_brewer_profile_automatic_single_cup_generic,
-    )
-    "vietnamese_phin" -> stringResource(R.string.label_brewer_profile_vietnamese_phin)
-    else -> fallback
-}
-
-@Composable
-private fun localizedMethodFamilyName(profileId: BrewerProfileId, fallback: String): String = when (
-    profileId.value
-) {
-    "clever_style",
-    "hario_switch",
-    "valve_release_generic",
-    -> stringResource(R.string.label_brewer_profile_family_steep_and_release)
-    "cezve_generic" -> stringResource(R.string.label_brewer_profile_family_heated_unfiltered)
-    "automatic_batch_generic",
-    "automatic_single_cup_generic",
-    -> stringResource(R.string.label_brewer_profile_family_automatic_batch)
-    "vietnamese_phin" -> stringResource(
-        R.string.label_brewer_profile_family_restricted_flow_gravity_concentrate,
-    )
-    else -> fallback
-}
-
-private fun formatDurationRange(minimumSeconds: Int, maximumSeconds: Int): String =
-    "${formatDuration(minimumSeconds)}–${formatDuration(maximumSeconds)}"
-
 private fun formatDuration(seconds: Int): String = "%d:%02d".format(
     Locale.getDefault(),
     seconds / 60,
     seconds % 60,
 )
 
-private fun formatNumber(value: Double): String = if (value % 1.0 == 0.0) {
-    value.toInt().toString()
-} else {
-    "%.1f".format(Locale.getDefault(), value)
+private fun formatNumber(value: Double): String = NumberFormat.getNumberInstance(Locale.getDefault()).run {
+    isGroupingUsed = false
+    minimumFractionDigits = 0
+    maximumFractionDigits = 3
+    format(value)
 }
+
+private val EXACT_RECIPE_NAME_RESOURCES = mapOf(
+    "v60_official_15_250" to R.string.recipe_p1_v60_official_15_250,
+    "v60_rao_20_330" to R.string.recipe_p1_v60_rao_20_330,
+    "v60_kasuya_4_6_20_300" to R.string.recipe_p1_v60_kasuya_4_6_20_300,
+    "v60_kurasu_flash_16_150_70" to R.string.recipe_p1_v60_kurasu_flash_16_150_70,
+    "wave185_ozone_25_400" to R.string.recipe_p1_wave185_ozone_25_400,
+    "wedge_pulse_23_5_400" to R.string.recipe_p1_wedge_pulse_23_5_400,
+    "chemex_42_700" to R.string.recipe_p1_chemex_42_700,
+    "generic_conical_low_agitation_20_320" to R.string.recipe_p1_generic_conical_20_320,
+    "clever_water_first_15_250" to R.string.recipe_p1_clever_water_first_15_250,
+    "clever_coffee_first_15_250" to R.string.recipe_p1_clever_coffee_first_15_250,
+    "switch_official_20_240" to R.string.recipe_p1_switch_official_20_240,
+    "switch_ole_boen_hybrid_16_5_240" to R.string.recipe_p1_switch_hybrid_16_5_240,
+    "switch_gravity_15_250" to R.string.recipe_p1_switch_gravity_15_250,
+    "cezve_turkish_single_rise_6_65" to R.string.recipe_p1_cezve_single_rise_6_65,
+    "cezve_bounded_repeated_rise_12_130" to R.string.recipe_p1_cezve_repeated_rise_12_130,
+    "auto_batch_500_30" to R.string.recipe_p1_auto_batch_500_30,
+    "auto_batch_1000_60" to R.string.recipe_p1_auto_batch_1000_60,
+    "auto_cupone_20_300" to R.string.recipe_p1_auto_cupone_20_300,
+    "phin_gravity_14_118" to R.string.recipe_p1_phin_gravity_14_118,
+    "phin_screw_18_120" to R.string.recipe_p1_phin_screw_18_120,
+)
+
+private val CEZVE_HEAT_SOURCES = listOf(
+    HeatSourceClass.HOB,
+    HeatSourceClass.OPEN_FLAME,
+    HeatSourceClass.PORTABLE_HEATER,
+)

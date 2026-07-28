@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Exact P1 recipe setup. Other locales intentionally fall back to English while release-gated. -->
+    <string name="heading_exact_recipe_choose">Choose an exact recipe</string>
+    <string name="msg_exact_recipe_choose_hint">Choose one complete source recipe. Amounts and steps are never mixed between recipes.</string>
+    <string name="msg_exact_recipe_single_compatible">This is the only complete source recipe for this brewer, so it is selected automatically.</string>
+    <string name="heading_exact_recipe_details">Recipe amounts</string>
+    <string name="action_learn_this_recipe">Learn this recipe</string>
+    <string name="label_exact_recipe_brew_water">brew water</string>
+    <string name="label_exact_recipe_reservoir_water">reservoir water</string>
+    <string name="label_exact_recipe_brew_ice">Brew ice</string>
+    <string name="label_exact_recipe_combined_ratio">Combined ratio</string>
+    <string name="label_exact_recipe_unresolved">Not specified by the source</string>
+    <string name="label_exact_recipe_unavailable">Unavailable</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · dry coffee : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">About %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Start at %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Machine-reported range: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Hot water; no exact temperature supplied</string>
+    <string name="label_exact_recipe_machine_controlled">Controlled by the machine</string>
+    <string name="label_exact_recipe_cold_observed">Cold start; finish by observing the foam</string>
+
+    <string name="format_exact_recipe_time_approximate">About %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Starting range: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">About %1$s; finish by observation</string>
+    <string name="label_exact_recipe_time_geometry">Finish by drawdown; timing depends on brewer geometry</string>
+    <string name="label_exact_recipe_time_observed">Finish by observation, not a fixed timer</string>
+    <string name="label_exact_recipe_time_machine">Machine-specific cycle</string>
+
+    <string name="heading_exact_recipe_equipment">Exact equipment</string>
+    <string name="msg_exact_recipe_equipment_single">Use this complete filter, basket, and accessory configuration.</string>
+    <string name="msg_exact_recipe_equipment_choose">Choose one complete configuration. Filter and basket options stay paired.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Intentionally unfiltered</string>
+    <string name="label_exact_equipment_cone_paper">Conical paper filter</string>
+    <string name="label_exact_equipment_wave_paper">Wave 185 paper filter</string>
+    <string name="label_exact_equipment_wedge_paper">Wedge paper filter</string>
+    <string name="label_exact_equipment_chemex_paper">Six-cup bonded paper filter</string>
+    <string name="label_exact_equipment_flat_basket_paper">Flat-basket paper filter</string>
+    <string name="label_exact_equipment_number_one_paper">#1 paper filter</string>
+    <string name="label_exact_equipment_phin_metal">Phin metal filter</string>
+    <string name="label_exact_equipment_cone_basket">Cone basket</string>
+    <string name="label_exact_equipment_flat_basket">Flat basket</string>
+    <string name="label_exact_equipment_number_one_basket">#1 single-cup basket</string>
+    <string name="label_exact_equipment_phin_screw_insert">Screw-down phin insert</string>
+    <string name="format_exact_recipe_capacity_too_small">Capacity must be at least %1$s for this recipe.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Sugar is optional. The selected recipe owns the number of foam rises.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Flat-bottom Wave 185</string>
+    <string name="label_brewer_profile_wedge">Wedge dripper</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Thick-paper carafe brewer</string>
+    <string name="label_brewer_profile_conical">Generic conical dripper</string>
+    <string name="label_brewer_profile_family_manual_gravity">Manual gravity</string>
+
+    <string name="recipe_p1_v60_official_15_250">Hario official · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu flash brew · 16 g / 150 g + 70 g ice</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Wedge pulse · 23.5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Six-cup carafe · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Low-agitation conical · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever water-first · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever coffee-first · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Hario Switch official · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Ole Bøen Switch hybrid · 16.5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch open-gravity · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Turkish coffee, single rise · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, two bounded rises · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Automatic batch · 30 g / 500 g reservoir</string>
+    <string name="recipe_p1_auto_batch_1000_60">Automatic batch · 60 g / 1,000 g reservoir</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / full marked reservoir</string>
+    <string name="recipe_p1_phin_gravity_14_118">Gravity phin · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Screw-insert phin · 18 g / 120 g</string>
+</resources>

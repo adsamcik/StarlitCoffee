@@ -19,6 +19,7 @@ object BrewerProfileSetup
 @Serializable
 data class LearnBrewer(
     val brewerProfileId: String,
+    val builtInRecipeId: String? = null,
     val harioSwitchWorkflow: String? = null,
 )
 
