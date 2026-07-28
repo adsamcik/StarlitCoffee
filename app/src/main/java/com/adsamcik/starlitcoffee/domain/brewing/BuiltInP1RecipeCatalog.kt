@@ -351,7 +351,7 @@ object BuiltInP1RecipeCatalog {
             confidence = P1SourceConfidence.MEDIUM_HIGH,
             sources = setOf("SRC-CHEMEX-FAQ", "SRC-SCHMIEDER-FLOW"),
             stageCount = 7,
-            equipment = listOf(singleFilterOption("cone_paper")),
+            equipment = listOf(singleFilterOption("chemex_six_cup_bonded_paper")),
             beverageOutputUnresolved = true,
         ),
         recipe(

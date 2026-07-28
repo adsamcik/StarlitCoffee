@@ -12,6 +12,7 @@ class BuiltInP1RecipeCatalogTest {
 
     private val recipes = BuiltInP1RecipeCatalog.recipes
     private val equipmentCatalog = BuiltinBrewingCatalog.instance
+    private val compatibilityValidator = EquipmentCompatibilityValidator(equipmentCatalog)
 
     @Test
     fun `catalog has the twenty unique mandatory source recipes`() {
@@ -57,6 +58,19 @@ class BuiltInP1RecipeCatalogTest {
                         equipmentCatalog.findAccessoryProfile(accessoryId),
                     )
                 }
+
+                val compatibility = compatibilityValidator.validate(
+                    EquipmentConfiguration(
+                        brewerProfileId = recipe.brewerProfileId,
+                        filterSelection = option.filterSelection,
+                        accessoryIds = option.accessoryIds,
+                        basketId = option.basketId,
+                    ),
+                )
+                assertTrue(
+                    "${recipe.id.value} has blocking equipment issues: ${compatibility.issues}",
+                    compatibility.canStart,
+                )
             }
         }
     }
@@ -64,6 +78,17 @@ class BuiltInP1RecipeCatalogTest {
     @Test
     fun `generic valve release has no invented exact recipe`() {
         assertFalse(recipes.any { it.brewerProfileId == BrewerProfileId("valve_release_generic") })
+    }
+
+    @Test
+    fun `source specific papers do not collapse into generic cone paper`() {
+        listOf("clever_water_first_15_250", "clever_coffee_first_15_250").forEach { id ->
+            assertEquals("wedge_paper", recipe(id).equipmentOptions.single().singleFilterId())
+        }
+        assertEquals(
+            "chemex_six_cup_bonded_paper",
+            recipe("chemex_42_700").equipmentOptions.single().singleFilterId(),
+        )
     }
 
     @Test
