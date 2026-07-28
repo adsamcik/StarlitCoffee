@@ -1544,6 +1544,139 @@ For every asset record:
   legibility, and warning-before-image placement before registration or
   approval.
 
+### `p1-switch-official-post-rinse-closed-imagegen-v3`
+
+- Stable asset ID:
+  `instruction_p1_switch_official_20_240_stage_01_instruction_default`
+- Exact scope: `switch_official_20_240` / source `stage_01` /
+  `p1_switch_official_20_240_stage_01_instruction`; a rinsed V60 02 paper
+  remains seated in an empty official Switch while its lever is closed, its
+  steel ball blocks the outlet, and the emptied server receives no new flow.
+- Evidence: `SRC-HARIO-SWITCH`. Reverified on 28 July 2026 against HARIO
+  Europe's current Switch 02/03 product page at
+  <https://www.hario-europe.com/products/v60-immersion-dripper-switch>.
+  The current first-party page corroborates the heatproof-glass cone, silicone
+  base, resin switch, stainless-steel blocking ball, V60 paper, and button-led
+  release relationship. The canonical global page currently rejects automated
+  retrieval; the canonical source record remains authoritative for the exact
+  post-rinse order and completion cue.
+- Generation mode: new bitmap generation followed by two targeted corrective
+  image edits with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show one coherent completed preparation state
+  > from a close elevated front three-quarter angle: an accurate unbranded
+  > Hario Switch 02-style steep-and-release brewer centered securely on a
+  > stable empty heat-safe glass server. Preserve the distinctive mechanism and
+  > silhouette: a handleless ribbed clear-glass V60 02 cone, exactly one
+  > correctly folded and fully seated clean white V60 02 paper following the
+  > cone ribs with a subtle wet sheen, a thick dark silicone base, the real
+  > short side switch lever, a small stainless-steel ball, the circular outlet
+  > seat, and the central drain opening. Depict the state after rinse water has
+  > completely drained and been discarded and the valve has then been closed.
+  > Show the side switch in the physically credible closed position and the
+  > steel ball resting firmly and concentrically on its outlet seat, blocking
+  > the central opening by direct contact. Make the ball-to-seat relationship
+  > visible through the clear lower glass and open viewing angle without a
+  > cutaway, diagram, or exploded parts. The wet paper must contain no pool, no
+  > grounds, and no coffee. The glass server below must be visibly empty and dry
+  > enough to read as having been emptied after preheating; show no retained
+  > liquid, droplet, stream, splash, or condensation trail below the outlet.
+  > Show no kettle and no hands. Make correctly seated wet paper, folded seam,
+  > closed lever, seated blocking ball, empty server, and complete absence of
+  > new flow immediately legible at mobile size. Use a warm-neutral empty
+  > counter and soft plain background, semi-flat softly dimensional educational
+  > rendering, precise believable Switch geometry, restrained
+  > glass/charcoal/silver palette, clear silhouettes, soft light, subtle
+  > shadows, generous crop-safe breathing room, and no decorative objects.
+  > Include no text, letters, numbers, measurement marks, labels, logos, brand
+  > marks, arrows, callouts, panels, warning symbols, cutaways, magnified insets,
+  > comparison, coffee grounds, brown liquid, slurry, bloom, retained rinse
+  > pool, kettle, pouring, stirring, serving, hand, finger, open lever, depressed
+  > release control, lifted ball, open outlet, droplet, stream, liquid in the
+  > server, Clever actuator, generic V60 base, glass handle, tap, clamp, bottom
+  > server actuator, wedge paper, Wave paper, basket paper, cloth, reusable
+  > metal filter, wrong-size cone, misaligned paper, second brewer, or clutter.
+  > The final output must be one opaque 1024 x 768 scene whose only story is an
+  > accurately closed, post-rinse Switch 02 above an empty server with no new
+  > flow.
+- First corrective edit prompt:
+
+  > Refine the immediately previous post-rinse Switch 02 illustration while
+  > preserving its exact 4:3 framing, handleless ribbed clear-glass cone, dark
+  > silicone base, side switch, seated stainless ball, empty glass server, no
+  > flow, no coffee, no kettle, no hands, and clean warm-neutral educational
+  > style. Correct only the paper and mechanism legibility. Make the single
+  > white V60 02 paper visibly wet from the completed rinse through a restrained
+  > translucent sheen and slightly darker damp fibers along the lower cone,
+  > while keeping it empty with no retained water pool. Show one physically
+  > credible folded factory seam as a narrow doubled strip running down one
+  > side of the conical paper, tucked flush against the glass ribs; the paper
+  > must remain smooth, correctly sized, centered, and fully seated, not
+  > floating, pleated like a basket, buckled, doubled, or extending implausibly
+  > above the cone. Keep the stainless-steel ball visibly centered in direct
+  > contact with its circular outlet seat, and keep the real short side switch
+  > in the closed state; do not lift the ball, depress the release, add a drip,
+  > or open the outlet. Preserve the visibly empty server and completely dry air
+  > gap below the drain. Do not add labels, text, digits, arrows, cutaways,
+  > comparison panels, water, grounds, brown liquid, steam, splash, hand, tool,
+  > logo, generic lever, Clever mechanism, or clutter. The only story must
+  > remain a rinsed, correctly folded V60 paper in a closed post-rinse Switch
+  > above an empty server with no new flow. Preserve opaque 1024 x 768 output and
+  > crop-safe mobile legibility.
+- Final corrective edit prompt:
+
+  > Make one final, tightly scoped paper-seam correction to the immediately
+  > previous closed post-rinse Switch illustration. Preserve the entire brewer,
+  > ball seated on its outlet seat, closed side switch, dark silicone base,
+  > empty server, no flow, no coffee, no hands, lighting, 4:3 framing, and all
+  > other geometry exactly as shown. Change only the single wet white V60 02
+  > paper: add one unmistakable but subtle factory seam fold on the viewer-left
+  > front side, rendered as a narrow doubled-paper strip that begins at the
+  > upper paper rim and runs diagonally downward along the cone wall toward the
+  > bottom point, flush against the glass ribs. The seam must be a physical
+  > overlap in the paper silhouette with a faint doubled edge, not a printed
+  > line, decorative pattern, arrow, crack, label, second filter, or horizontal
+  > band. Remove the broad horizontal doubled band currently reading around the
+  > paper's upper rim; keep only a normal thin paper edge at the top plus the one
+  > diagonal folded seam. Keep the paper wet-looking, smooth, correctly sized,
+  > centered, fully seated, empty, and free of retained water. Do not change or
+  > add any lever, ball, outlet, liquid, server content, text, number, logo,
+  > panel, callout, hand, kettle, grounds, or clutter. Preserve opaque
+  > 1024 x 768 output and crop-safe mobile legibility.
+- Rejected drafts: the initial render did not make the folded paper seam or wet
+  post-rinse state legible enough at mobile size. The first edit strengthened
+  the damp paper but produced a broad doubled band around the upper rim rather
+  than one folded factory seam. Neither draft was copied into the repository
+  or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_Gww98DkmNdeSAijFZiLeL663.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_switch_official_20_240_stage_01_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 96,844 bytes, exact 4:3.
+- Accessibility target: “A wet folded V60 02 paper sits in the closed Switch,
+  with the steel ball seated and the empty server receiving no new drip.” The
+  canonical exact-stage alt text remains “Instructional view of insert and
+  rinse the v60 02 paper, then close the switch using the exact brewer profile
+  and filter configuration stated in this recipe; rinse drained before closure
+  and no new dripping occurs.” The asset record remains intentionally
+  unregistered until localization and Switch-mechanism review are complete.
+- Inspection: no text, numbers, logos, arrows, hands, kettle, coffee, retained
+  rinse pool, drip, stream, server liquid, open valve, lifted ball, generic
+  valve, wrong filter, cutaway, or clutter. The final frame shows one seated
+  damp V60 paper with a visible doubled seam at viewer-left, a handleless
+  ribbed-glass cone, the steel ball centered on its seat, a short closed-state
+  side switch, and a stable visibly empty server.
+- Review status: **pending brewer-expert Switch mechanism and post-rinse
+  review**. Confirm Switch 02 proportions, closed-lever direction, direct
+  ball-to-seat contact, outlet sealing, seam fold and wet-paper fit, empty
+  server, no-flow readability, mobile-size distinction from all open/retained
+  Switch assets, and instruction-before-image placement before registration or
+  approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
