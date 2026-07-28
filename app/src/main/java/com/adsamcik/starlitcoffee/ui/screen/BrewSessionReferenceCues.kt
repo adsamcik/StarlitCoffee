@@ -183,15 +183,18 @@ private fun BrewStageReferenceCuePresentation.content(): ReferenceCueContent = w
         ),
     )
 
-    is BrewStageReferenceCuePresentation.Temperature -> ReferenceCueContent(
-        icon = Icons.Filled.Thermostat,
-        label = stringResource(R.string.label_temperature),
-        value = qualifier.formatValue(
+    is BrewStageReferenceCuePresentation.Temperature -> {
+        val formattedValue = qualifier.formatValue(
             minimum = formatReferenceNumber(minimumC),
             maximum = formatReferenceNumber(maximumC),
             hasDistinctMaximum = minimumC != maximumC,
-        ),
-    )
+        )
+        ReferenceCueContent(
+            icon = Icons.Filled.Thermostat,
+            label = stringResource(R.string.label_temperature),
+            value = "$formattedValue °C",
+        )
+    }
 }
 
 @Composable

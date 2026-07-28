@@ -49,7 +49,7 @@ class BrewSessionReferenceCuesTest {
         val approximateTemperature = context.getString(
             R.string.format_brew_reference_approximate,
             temperatureRange,
-        )
+        ) + " °C"
         val startingTimeRange = context.getString(
             R.string.format_brew_reference_starting_point,
             context.getString(
