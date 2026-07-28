@@ -1882,6 +1882,128 @@ For every asset record:
   no-flow readability, mobile-size distinction from V60 and Switch assets,
   and instruction-before-image placement before registration or approval.
 
+### `p1-switch-ole-boen-first-bloom-imagegen-v2`
+
+- Stable asset ID:
+  `instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default`
+- Exact scope: `switch_ole_boen_hybrid_16_5_240` / source `stage_01` /
+  `p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction`; the first low,
+  granular coffee bloom remains retained above a centrally seated Switch ball
+  while the server below stays empty.
+- Evidence: `SRC-KURASU-SWITCH`. Reverified on 28 July 2026 against the current
+  first-party HARIO Europe Ole Kristian Bøen recipe at
+  <https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe>
+  and Switch product page at
+  <https://www.hario-europe.com/products/v60-immersion-dripper-switch>.
+  The first-party pages corroborate Switch 02, the closed first bloom, V60
+  paper, glass cone, silicone base, stainless ball, and button-release
+  mechanism. Exact mass, time, and temperature remain in Compose text rather
+  than the bitmap.
+- Generation mode: new bitmap generation followed by one targeted corrective
+  image edit with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show one coherent very-early retained-bloom
+  > state from a close elevated front three-quarter angle: an accurate
+  > unbranded Hario Switch 02-style brewer centered securely on a stable empty
+  > heat-safe clear-glass server. Preserve the distinctive mechanism and
+  > silhouette: a handleless ribbed clear-glass V60 02 cone, exactly one
+  > correctly folded rinsed white V60 02 paper seated flush against the ribs, a
+  > thick dark silicone base, the real short side switch lever, a small
+  > stainless-steel ball, its circular outlet seat, and the central drain
+  > opening. The valve is closed: show the side switch in the physically
+  > credible closed position and the steel ball resting firmly and
+  > concentrically on its outlet seat by direct contact. Inside the paper, show
+  > a modest low bed of freshly wetted coffee that is uniformly dark and gently
+  > swollen from the first small bloom, with a soft domed texture and fine
+  > trapped-gas sheen but no dry islands, deep crater, active stirring, or high
+  > standing pool. Keep the retained bloom shallow in the lower portion of the
+  > cone with abundant empty headroom, clearly much lower than a final retained
+  > pour. Show no kettle, stream, or hand; the small pour has just finished.
+  > Through the lower glass and open angle, keep the seated ball and closed
+  > mechanism readable without a cutaway. Beneath the outlet show a completely
+  > dry air gap: no drop, stream, splash, or coffee in the server, which remains
+  > visibly empty. Make the low evenly wet swollen bloom, closed lever, seated
+  > ball, abundant headroom, empty server, and complete absence of drainage
+  > immediately legible at mobile size. Use a warm-neutral empty counter and
+  > soft plain background, semi-flat softly dimensional educational rendering,
+  > precise believable Switch/glass/paper geometry, restrained
+  > glass/charcoal/silver/coffee-brown palette, clear silhouettes, soft light,
+  > subtle shadows, generous crop-safe breathing room, and no decorative
+  > objects. Include no text, letters, numbers, clock, timer, temperature
+  > display, scale display, measurement marks, labels, logos, brand marks,
+  > arrows, callouts, panels, warning symbols, comparison, inset, cutaway, open
+  > lever, depressed release, lifted ball, open outlet, dripping, liquid or
+  > coffee in the server, deep flooded slurry, nearly full cone, high retained
+  > volume, dry grounds, deep crater, drained bed, kettle, ongoing pour,
+  > stirrer, agitation, hand, glass handle, Clever actuator, standard non-Switch
+  > base, tap, clamp, wedge paper, Wave paper, basket paper, cloth, reusable
+  > metal filter, wrong-size, doubled, collapsed or missing paper, second
+  > brewer, or clutter. The final output must be one opaque 1024 x 768 scene
+  > whose only story is the first shallow coffee bloom retained safely in a
+  > closed Switch above an empty server.
+- Corrective edit prompt:
+
+  > Correct the immediately previous shallow retained-bloom Switch illustration
+  > while preserving its accurate handleless ribbed glass V60 cone, one white
+  > V60 02 paper, dark silicone base, empty stable glass server, no flow, no
+  > hands, no kettle, warm-neutral educational style, 4:3 framing, and abundant
+  > empty headroom. Fix exactly two physical errors. First, replace the smooth
+  > oversized cake-like coffee dome with a plausible very-early bloom: a much
+  > lower, modest bed in the bottom of the paper with visible individual wet
+  > coffee granules, an irregular gently rounded surface, a few tiny natural
+  > gas bubbles, and only a restrained moist sheen. It must be uniformly wetted
+  > with no dry islands but must not resemble a muffin, sponge, solid molded
+  > puck, deep slurry, standing water pool, high liquid level, or final retained
+  > pour. Keep the wet bed low enough that most of the paper-lined cone remains
+  > empty and visible above it. Second, remove the invented stainless ball and
+  > socket from the front exterior of the silicone base. Place exactly one small
+  > stainless-steel ball on the brewer's central vertical axis inside the clear
+  > lower glass throat directly beneath the paper tip, seated concentrically in
+  > direct contact with the circular outlet seat. The ball must block the true
+  > central drain opening; it must not sit in front of the cone, outside the
+  > liquid path, in a decorative recess, or beside the lever. Keep the real
+  > short dark switch lever on the viewer-right side in the closed position;
+  > its internal cam may remain hidden inside the silicone base. Through the
+  > clear lower glass, make central ball-to-seat contact visible without a
+  > cutaway or exploded diagram. Keep the server completely empty and the air
+  > below the outlet dry, with no drop or stream. Add no text, digits, clock,
+  > scale, arrows, panels, kettle, hand, stirring, open lever, lifted ball,
+  > second ball, coffee in the server, wrong filter, generic valve, or clutter.
+  > The only story must be a low granular first bloom retained by one centrally
+  > seated ball in a closed Switch. Preserve opaque 1024 x 768 output and
+  > crop-safe mobile legibility.
+- Rejected draft: the initial render made the bloom look like a smooth molded
+  cake and made the central ball/seat relationship read as a decorative front
+  socket. That draft was not copied into the repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_xEWHIklZj3WcSQAl13jhERk1.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 95,746 bytes, exact 4:3.
+- Accessibility target: “A low granular first bloom is retained above the
+  closed Switch ball while the clear server below remains empty.” The
+  canonical exact-stage alt text remains “Instructional view of close the
+  switch and bloom with 50 g using the exact brewer profile and filter
+  configuration stated in this recipe; bloom retained until 0:40.” The asset
+  record remains intentionally unregistered until localization and
+  Switch-mechanism review are complete.
+- Inspection: no text, numbers, clock, scale, logos, arrows, hands, kettle,
+  active pour, high slurry, dry islands, drainage, server liquid, second ball,
+  wrong filter, cutaway, or clutter. The final frame shows one wet granular
+  shallow bed with broad headroom, one rinsed V60 02 paper, a central seated
+  stainless ball, a short closed-state side lever, a dry outlet, and a stable
+  empty server.
+- Review status: **pending brewer-expert Switch mechanism and first-bloom
+  review**. Confirm Switch 02 proportions, closed-lever direction, true
+  central ball/seat relationship, granular uniformly wet bloom depth, absence
+  of drainage, empty server, distinction from the high retained final pour,
+  mobile-size legibility, and instruction-before-image placement before
+  registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
