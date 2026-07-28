@@ -1,5 +1,9 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.v2.createComposeRule
@@ -66,6 +70,47 @@ class P1BrewerProfileSetupScreenTest {
 
         composeRule.onNodeWithText(optionsTitle).performScrollTo().performClick()
         composeRule.onNodeWithText(sugarLabel).performScrollTo().assertIsDisplayed()
+    }
+
+    @Test
+    fun selectingBrewerRevealsTheExactRecipeStep() {
+        val harioSwitch = BrewerProfileId("hario_switch")
+        val cezve = BrewerProfileId("cezve_generic")
+        val initial = P1BrewerProfileSetupStateFactory.create(
+            visibleProfileIds = setOf(harioSwitch, cezve),
+        )
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val harioSwitchLabel = context.getString(R.string.label_brewer_profile_hario_switch)
+        val recipeHeading = context.getString(R.string.heading_exact_recipe_choose)
+
+        composeRule.setContent {
+            var state by remember { mutableStateOf(initial) }
+            StarlitCoffeeTheme(dynamicColor = false) {
+                P1BrewerProfileSetupScreen(
+                    state = state,
+                    onProfileSelected = { profileId -> state = state.selectProfile(profileId) },
+                    onRecipeSelected = { recipeId -> state = state.selectRecipe(recipeId) },
+                    onEquipmentOptionSelected = { index ->
+                        state = state.selectEquipmentOption(index)
+                    },
+                    onEquipmentCapacityChanged = { capacity ->
+                        state = state.updateEquipmentCapacity(capacity)
+                    },
+                    onCezveSugarSelected = { includeSugar ->
+                        state = state.selectCezveSugar(includeSugar)
+                    },
+                    onCezveHeatSourceSelected = { heatSource ->
+                        state = state.selectCezveHeatSource(heatSource)
+                    },
+                    onStart = {},
+                    onBack = {},
+                )
+            }
+        }
+
+        composeRule.onNodeWithText(harioSwitchLabel).performClick()
+        composeRule.waitForIdle()
+        composeRule.onNodeWithText(recipeHeading).assertIsDisplayed()
     }
 
     private fun setScreen(state: P1BrewerProfileSetupUiState) {

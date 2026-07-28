@@ -5,13 +5,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardOptions
@@ -25,6 +29,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -38,6 +44,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -90,8 +97,22 @@ fun P1BrewerProfileSetupScreen(
 ) {
     val selectedProfile = state.selectedProfile
     val selectedRecipe = state.selectedRecipe
+    val listState = rememberLazyListState()
     var optionalChoicesExpanded by rememberSaveable(selectedProfile?.profileId?.value) {
         mutableStateOf(false)
+    }
+    var revealSelectedProfile by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(
+        selectedProfile?.profileId,
+        revealSelectedProfile,
+        state.profiles.size,
+    ) {
+        if (selectedProfile != null && revealSelectedProfile) {
+            val recipeSectionIndex = 1 + state.profiles.size
+            listState.animateScrollToItem(recipeSectionIndex)
+            revealSelectedProfile = false
+        }
     }
 
     Scaffold(
@@ -121,6 +142,7 @@ fun P1BrewerProfileSetupScreen(
         },
     ) { innerPadding ->
         LazyColumn(
+            state = listState,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
@@ -141,7 +163,10 @@ fun P1BrewerProfileSetupScreen(
                     BrewerProfileOptionCard(
                         option = option,
                         selected = option.profileId == state.selectedProfileId,
-                        onClick = { onProfileSelected(option.profileId) },
+                        onClick = {
+                            revealSelectedProfile = true
+                            onProfileSelected(option.profileId)
+                        },
                     )
                 }
             }
@@ -238,10 +263,13 @@ private fun P1BrewerProfileActionBar(
     state: P1BrewerProfileSetupUiState,
     onStart: (P1BrewerProfileStartSelection) -> Unit,
 ) {
-    Surface(color = MaterialTheme.colorScheme.surface, shadowElevation = 6.dp) {
+    Surface(
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 3.dp,
+    ) {
         Button(
             onClick = { state.startSelection?.let(onStart) },
-            enabled = state.canStart,
+            enabled = state.canStart && !state.isStarting,
             modifier = Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
@@ -250,6 +278,13 @@ private fun P1BrewerProfileActionBar(
             shape = MaterialTheme.shapes.extraLarge,
             colors = primaryActionButtonColors(),
         ) {
+            if (state.isStarting) {
+                LoadingIndicator(
+                    modifier = Modifier.size(20.dp),
+                    color = LocalContentColor.current,
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+            }
             Text(
                 text = if (state.isStarting) {
                     stringResource(R.string.label_brewer_profile_starting)
@@ -290,6 +325,14 @@ private fun BrewerProfileOptionCard(
                 MaterialTheme.colorScheme.surface
             },
         ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = if (selected) 3.dp else 0.dp,
+        ),
+        shape = if (selected) {
+            MaterialTheme.shapes.extraLarge
+        } else {
+            MaterialTheme.shapes.large
+        },
         modifier = Modifier
             .fillMaxWidth()
             .selectable(selected = selected, onClick = onClick, role = Role.RadioButton),
