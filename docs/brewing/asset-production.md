@@ -858,6 +858,75 @@ For every asset record:
   context, mobile-size readability, and post-warning Learn/Live placement
   before manifest registration or approval.
 
+### `p1-switch-ole-boen-retained-pour-imagegen-v1`
+
+- Stable asset ID:
+  `instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default`
+- Exact scope: `switch_ole_boen_hybrid_16_5_240` / source `stage_03` /
+  `p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction`; the Switch 02
+  valve is closed before the final pour and the added water remains retained
+  with no drawdown.
+- Evidence: canonical `SRC-KURASU-SWITCH` plus `SRC-HARIO-SWITCH` for hardware
+  geometry. Reverified on 28 July 2026 against HARIO Europe's current Switch
+  product page at
+  <https://www.hario-europe.com/products/v60-immersion-dripper-switch> and its
+  current Ole Kristian Bøen recipe at
+  <https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe>.
+  The current pages corroborate the V60 02 paper, silicone base,
+  stainless-steel ball valve, closing before the final circular pour, and a
+  retained phase before later release.
+- Generation mode: new bitmap generation with the built-in image generator;
+  no corrective edit was needed before pending-review delivery.
+- Generated: 28 July 2026.
+- Final prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for
+  > a mobile coffee-brewing guide. Use a close elevated three-quarter view of
+  > an accurate unbranded Hario Switch 02-style brewer centered over a stable
+  > heat-safe glass server on a coffee scale whose display is blank or fully
+  > out of frame. Show the handleless ribbed clear-glass V60 02 cone, one
+  > correctly seated V60 02 paper, a dark silicone base, the real side lever,
+  > and the stainless-steel ball valve visible through the central lower glass
+  > and silicone opening. Put the lever in its physically credible closed
+  > position and show the steel ball seated firmly over the outlet. A plain
+  > gooseneck kettle pours one controlled narrow circular stream into the dark
+  > coffee slurry while liquid is visibly retained above the closed valve.
+  > Show absolutely no stream, drip, or liquid below the brewer and keep the
+  > server beneath empty or nearly empty from this retained phase. Keep one
+  > safe kettle hand away from hot glass, metal, and slurry. Make the closed
+  > lever-and-ball mechanism, retained liquid, circular pour, and absence of
+  > drawdown the only visual story. Use a warm-neutral uncluttered counter and
+  > background, semi-flat softly dimensional educational rendering, precise
+  > believable mechanism geometry, clear silhouettes, restrained materials,
+  > subtle shadows, generous crop-safe breathing room, and mobile-readable
+  > framing. Include no text, letters, numbers, scale reading, measurement
+  > ticks, thermometer, labels, logos, brand marks, arrows, callouts, panels,
+  > cutaway, inset, decorative objects, Clever actuator, tap, clamp, glass
+  > handle, generic V60-only base, stirring, serving, overflow, splash, or
+  > hands touching hot parts. Do not omit or misalign the lever, steel ball,
+  > silicone base, V60 02 cone, or seated paper. Do not show the ball lifted,
+  > valve open, outlet open, drainage, or stream below. The final output must
+  > be one opaque 1024 x 768 scene.
+- Generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_iF8m72QHN1Dn8OiaLeVsrGKK.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 75,956 bytes, exact 4:3.
+- Accessibility target: “A controlled final pour enters the Switch while its
+  steel ball stays seated, the liquid remains retained, and nothing drains
+  into the server.” The canonical exact-stage alt text and asset record remain
+  intentionally unregistered until localization and mechanism review are
+  complete.
+- Inspection: no text, numbers, logos, scale reading, thermometer, arrows,
+  secondary panel, drain stream, hot-part contact, or decorative object. The
+  final frame makes the full retained slurry and empty server dominant while
+  exposing the seated ball and adjacent lever in one view.
+- Review status: **pending brewer-expert mechanism review**. Confirm exact
+  Switch 02 proportions, V60 02 paper fit, credible closed lever direction,
+  seated ball and sealed outlet, absence of drawdown, safe kettle clearance,
+  and mobile-size legibility before manifest registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
