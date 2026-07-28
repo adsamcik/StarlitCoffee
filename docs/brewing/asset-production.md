@@ -2087,6 +2087,119 @@ For every asset record:
   level, mobile-size readability before the Learn warning, and
   instruction-before-image placement before registration or approval.
 
+### `p1-v60-rao-shallow-nest-imagegen-v2`
+
+- Stable asset ID:
+  `instruction_p1_v60_rao_20_330_stage_01_instruction_default`
+- Exact scope: `v60_rao_20_330` / source `stage_01` /
+  `p1_v60_rao_20_330_stage_01_instruction`; a rinsed paper in a lightweight
+  plastic V60 02 holds a broadly level dry bed with one wide, shallow central
+  nest and coffee still covering the cone point.
+- Evidence: `SRC-HARIO-RAO-V60`. Reverified on 28 July 2026 against Hario UK's
+  current Scott Rao recipe and interview at
+  <https://www.hario.co.uk/blogs/hario-ambassadors/hario-v60-recipe-interview-with-hario-ambassador-scott-rao>.
+  The original practitioner guidance on the manufacturer site corroborates a
+  plastic V60, rinsed paper, dry coffee, and the central bird's-nest
+  preparation. Recipe quantities and temperature remain in Compose text.
+- Generation mode: new bitmap generation followed by one targeted corrective
+  image edit with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show one coherent completed dry-bed preparation
+  > state from a close elevated near-top front three-quarter angle: an accurate
+  > unbranded plastic V60 02-style conical dripper centered level and securely
+  > supported on a stable clear heat-safe glass server. Make the brewer
+  > unmistakably lightweight molded plastic rather than glass, ceramic, or
+  > metal: use a thin translucent smoke-clear plastic wall, molded handle and
+  > support flange, slightly softened injection-molded edges, one large central
+  > outlet, and standard continuous curved spiral ribs visible through the
+  > body. Show exactly one correctly sized rinsed white V60 02 paper seated
+  > smoothly to the cone point and flush against the ribs; only its exposed
+  > upper paper band has a subtle damp translucent sheen, with no retained rinse
+  > water, droplet, or pool. Inside the paper show a dry, loose, evenly
+  > distributed coffee bed whose broad outer surface is level from edge to edge.
+  > At the precise center, form one wide, shallow, smooth nest: a gentle
+  > saucer-like dimple with gradual low shoulders and a softly rounded bottom,
+  > only a small fraction below the surrounding bed. Keep a continuous visible
+  > layer of coffee covering the cone point at the dimple bottom. Make the
+  > depression broad and understated, never a hole or funnel. Use a near-top
+  > angle and gentle side lighting so the shallow depth is readable through
+  > soft natural shading rather than contour lines or arrows. Show no hand,
+  > finger, spoon, tool, kettle, active brewing, or scale. Make thin
+  > molded-plastic identity, standard spiral ribs, correctly seated rinsed
+  > paper, level dry outer bed, and one broad shallow central nest immediately
+  > legible at mobile size. Use a warm-neutral empty counter and soft plain
+  > background, semi-flat softly dimensional educational rendering, precise
+  > believable V60/paper/coffee geometry, restrained
+  > smoke-clear/white/coffee-brown palette, clear silhouettes, soft light,
+  > subtle shadows, generous crop-safe breathing room, and no decorative
+  > objects. Include no text, letters, numbers, measurement marks, labels,
+  > logos, brand marks, arrows, callouts, panels, warning symbols, comparison,
+  > cutaway, contour lines, magnified inset, deep crater, narrow bore, funnel,
+  > tunnel, volcano rim, exposed paper at the bottom, sharply excavated hole,
+  > multiple depressions, mounded or tilted outer bed, clumps, compression, wet
+  > grounds, slurry, bloom, retained water, kettle, pouring, spinning, stirring,
+  > finger, tool, ceramic, heavy glass, metal, Switch base/lever/ball, NEO,
+  > Suiren, Wave, wedge, basket, wrong-size paper, second brewer, or clutter.
+  > The final output must be one opaque 1024 x 768 scene whose only story is a
+  > rinsed paper in a plastic V60 02 holding a broadly level dry bed with one
+  > deliberately shallow central nest.
+- Corrective edit prompt:
+
+  > Correct the immediately previous plastic-V60 dry-bed illustration while
+  > preserving its clear lightweight molded-plastic V60 02 body, handle, spiral
+  > ribs, one white rinsed paper, empty stable glass server, elevated near-top
+  > framing, no hand or tool, warm-neutral text-free educational style, and
+  > every other clean detail. Fix only the coffee-bed geometry. The current
+  > grounds form a high donut mound with a deep crater; replace that with a much
+  > lower, broadly horizontal dry bed sitting in the lower portion of the paper
+  > so abundant clean paper wall remains visible above it. The entire outer bed
+  > from the paper boundary toward the center must be flat, loose, evenly
+  > distributed, and level, with no raised rim, ring mound, volcano shoulder,
+  > tilted slope, clump, or compressed wall. At the exact center make only one
+  > very shallow, wide saucer-like nest: a subtle smooth indentation with
+  > gradual shoulders that merge almost imperceptibly into the level plane,
+  > only slightly lower than the surrounding surface. Keep loose coffee visibly
+  > covering the entire dimple bottom and cone point; show no hole, bore, dark
+  > tunnel, exposed paper, sharp edge, or deep shadow. Use fine natural shading
+  > and granular texture to make the slight depression readable without
+  > contour lines. Do not change the plastic material, paper fit, server
+  > support, perspective, or clean environment. Add no text, digits, arrow,
+  > cutaway, hand, spoon, water, wet grounds, scale, kettle, or clutter. The only
+  > story must be a low level dry bed in a plastic V60 with one deliberately
+  > shallow central nest, not a crater. Preserve opaque 1024 x 768 output and
+  > crop-safe mobile legibility.
+- Rejected draft: the initial render made the dry bed a high ring-shaped mound
+  around a deep dark crater. That contradicted the bounded shallow completion
+  cue and would teach the exact novice error this stage prevents. The draft was
+  not copied into the repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_Co9IpysuaMR3G0IZBqDE5HOn.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_v60_rao_20_330_stage_01_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 140,864 bytes, exact 4:3.
+- Accessibility target: “A rinsed paper in a thin molded-plastic V60 holds a
+  level dry bed with one wide, shallow central nest.” The canonical exact-stage
+  alt text remains “Instructional view of rinse the paper and prepare a shallow
+  nest in the coffee bed using the exact brewer profile and filter
+  configuration stated in this recipe; paper is seated and nest is shallow,
+  not a deep crater.” The asset record remains intentionally unregistered until
+  localization and plastic-V60 geometry review are complete.
+- Inspection: no text, numbers, logos, arrows, hand, tool, water, wet grounds,
+  exposed paper, deep bore, volcano ring, non-plastic brewer, wrong filter,
+  Switch mechanism, cutaway, or clutter. The final frame shows a thin clear
+  molded-plastic cone and handle, standard spiral ribs, one seated damp paper,
+  a lower dry granular bed with broadly level outer surface, one gentle central
+  saucer, and a stable empty server.
+- Review status: **pending brewer-expert plastic-V60 material and shallow-nest
+  review**. Confirm plastic identity, V60 02 proportions, rinsed-paper fit,
+  level outer bed, dimple depth and width, covered cone point, lack of retained
+  water, server stability, mobile-size distinction from a crater or bloom, and
+  instruction-before-image placement before registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
