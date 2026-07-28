@@ -364,7 +364,7 @@ class DurableBrewSessionGuidanceResolver(
             },
             explanation = text.explanation.takeIf { showSupportingCopy },
             tip = text.tip.takeIf { showSupportingCopy },
-            warning = text.warning.takeIf { safetyCritical || showSupportingCopy },
+            warning = text.warning,
             altText = text.altText,
             safetyCritical = safetyCritical,
         )
