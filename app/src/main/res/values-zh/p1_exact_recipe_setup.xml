@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 精确 P1 配方设置。 -->
+    <string name="heading_exact_recipe_choose">选择精确配方</string>
+    <string name="msg_exact_recipe_choose_hint">选择一份完整的来源配方。不同配方的用量和步骤绝不会混用。</string>
+    <string name="msg_exact_recipe_single_compatible">这是该冲煮器唯一完整的来源配方，因此会自动选中。</string>
+    <string name="heading_exact_recipe_details">配方用量</string>
+    <string name="action_learn_this_recipe">了解此配方</string>
+    <string name="label_exact_recipe_brew_water">冲煮用水</string>
+    <string name="label_exact_recipe_reservoir_water">水箱用水</string>
+    <string name="label_exact_recipe_brew_ice">冲煮用冰</string>
+    <string name="label_exact_recipe_combined_ratio">综合比例</string>
+    <string name="label_exact_recipe_unresolved">来源未注明</string>
+    <string name="label_exact_recipe_unavailable">不可用</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · 干咖啡粉量 : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">约 %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">从 %1$s–%2$s °C 开始</string>
+    <string name="format_exact_recipe_temperature_machine_range">机器显示范围：%1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">热水；来源未提供精确温度</string>
+    <string name="label_exact_recipe_machine_controlled">由机器控制</string>
+    <string name="label_exact_recipe_cold_observed">冷水起始；根据泡沫状态结束</string>
+
+    <string name="format_exact_recipe_time_approximate">约 %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">起始范围：%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">约 %1$s；根据观察结果结束</string>
+    <string name="label_exact_recipe_time_geometry">滤完后结束；时间取决于冲煮器的结构</string>
+    <string name="label_exact_recipe_time_observed">根据观察结果结束，不要使用固定计时</string>
+    <string name="label_exact_recipe_time_machine">机器专属周期</string>
+
+    <string name="heading_exact_recipe_equipment">精确器具配置</string>
+    <string name="msg_exact_recipe_equipment_single">使用这套完整的滤纸/滤网、滤篮和配件组合。</string>
+    <string name="msg_exact_recipe_equipment_choose">选择一套完整组合。滤纸/滤网与滤篮选项始终配套。</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">有意不进行过滤</string>
+    <string name="label_exact_equipment_cone_paper">锥形滤纸</string>
+    <string name="label_exact_equipment_wave_paper">Wave 185 滤纸</string>
+    <string name="label_exact_equipment_wedge_paper">楔形滤纸</string>
+    <string name="label_exact_equipment_chemex_paper">六杯份黏合滤纸</string>
+    <string name="label_exact_equipment_flat_basket_paper">平底滤篮滤纸</string>
+    <string name="label_exact_equipment_number_one_paper">1 号滤纸</string>
+    <string name="label_exact_equipment_phin_metal">Phin 金属滤网</string>
+    <string name="label_exact_equipment_cone_basket">锥形滤篮</string>
+    <string name="label_exact_equipment_flat_basket">平底滤篮</string>
+    <string name="label_exact_equipment_number_one_basket">1 号单杯滤篮</string>
+    <string name="label_exact_equipment_phin_screw_insert">Phin 旋压内芯</string>
+    <string name="format_exact_recipe_capacity_too_small">此配方要求容量至少为 %1$s。</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">糖可选。泡沫上升次数由所选配方决定。</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">平底 Wave 185</string>
+    <string name="label_brewer_profile_wedge">楔形滤杯</string>
+    <string name="label_brewer_profile_thick_paper_carafe">厚滤纸咖啡壶</string>
+    <string name="label_brewer_profile_conical">通用锥形滤杯</string>
+    <string name="label_brewer_profile_family_manual_gravity">手动重力滴滤</string>
+
+    <string name="recipe_p1_v60_official_15_250">Hario 官方配方 · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu 闪萃 · 16 g / 150 g + 70 g 冰块</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">楔形滤杯脉冲注水 · 23.5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">六杯份咖啡壶 · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">低扰动锥形滤杯 · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever 先加水 · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever 先加咖啡 · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Hario Switch 官方配方 · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Ole Bøen Switch 混合式 · 16.5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch 阀门开启重力滴滤 · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">土耳其咖啡，一次泡沫上升 · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve，两次受控泡沫上升 · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">自动批量滴滤 · 30 g / 500 g 水箱用水</string>
+    <string name="recipe_p1_auto_batch_1000_60">自动批量滴滤 · 60 g / 1,000 g 水箱用水</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / 水箱加满至标线</string>
+    <string name="recipe_p1_phin_gravity_14_118">重力 Phin · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">旋压内芯 Phin · 18 g / 120 g</string>
+</resources>

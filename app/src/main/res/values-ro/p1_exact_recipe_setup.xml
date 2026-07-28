@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Configurarea rețetelor P1 exacte. -->
+    <string name="heading_exact_recipe_choose">Alegeți o rețetă exactă</string>
+    <string name="msg_exact_recipe_choose_hint">Alegeți o singură rețetă completă dintr-o singură sursă. Cantitățile și pașii nu sunt niciodată combinați între rețete.</string>
+    <string name="msg_exact_recipe_single_compatible">Aceasta este singura rețetă completă dintr-o singură sursă pentru acest dispozitiv, așa că este selectată automat.</string>
+    <string name="heading_exact_recipe_details">Cantitățile rețetei</string>
+    <string name="action_learn_this_recipe">Descoperiți această rețetă</string>
+    <string name="label_exact_recipe_brew_water">apă pentru preparare</string>
+    <string name="label_exact_recipe_reservoir_water">apă din rezervor</string>
+    <string name="label_exact_recipe_brew_ice">Gheață pentru preparare</string>
+    <string name="label_exact_recipe_combined_ratio">Raport combinat</string>
+    <string name="label_exact_recipe_unresolved">Nespecificat de sursă</string>
+    <string name="label_exact_recipe_unavailable">Indisponibil</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · doză de cafea uscată : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Aproximativ %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Începeți la %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Interval raportat de aparat: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Apă fierbinte; nu este indicată o temperatură exactă</string>
+    <string name="label_exact_recipe_machine_controlled">Controlat de aparat</string>
+    <string name="label_exact_recipe_cold_observed">Pornire la rece; finalizați observând spuma</string>
+
+    <string name="format_exact_recipe_time_approximate">Aproximativ %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Interval inițial: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Aproximativ %1$s; finalizați pe baza observației</string>
+    <string name="label_exact_recipe_time_geometry">Finalizați după scurgerea completă; timpul depinde de geometria dispozitivului</string>
+    <string name="label_exact_recipe_time_observed">Finalizați pe baza observației, nu cu un cronometru fix</string>
+    <string name="label_exact_recipe_time_machine">Ciclu specific aparatului</string>
+
+    <string name="heading_exact_recipe_equipment">Echipament exact</string>
+    <string name="msg_exact_recipe_equipment_single">Folosiți această configurație completă de filtru, coș și accesorii.</string>
+    <string name="msg_exact_recipe_equipment_choose">Alegeți o singură configurație completă. Opțiunile de filtru și coș rămân asociate.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Intenționat nefiltrat</string>
+    <string name="label_exact_equipment_cone_paper">Filtru de hârtie conic</string>
+    <string name="label_exact_equipment_wave_paper">Filtru de hârtie Wave 185</string>
+    <string name="label_exact_equipment_wedge_paper">Filtru de hârtie în formă de pană</string>
+    <string name="label_exact_equipment_chemex_paper">Filtru din hârtie lipită pentru șase cești</string>
+    <string name="label_exact_equipment_flat_basket_paper">Filtru de hârtie pentru coș plat</string>
+    <string name="label_exact_equipment_number_one_paper">Filtru de hârtie nr. 1</string>
+    <string name="label_exact_equipment_phin_metal">Filtru metalic phin</string>
+    <string name="label_exact_equipment_cone_basket">Coș conic</string>
+    <string name="label_exact_equipment_flat_basket">Coș plat</string>
+    <string name="label_exact_equipment_number_one_basket">Coș nr. 1 pentru o ceașcă</string>
+    <string name="label_exact_equipment_phin_screw_insert">Presă filetată pentru phin</string>
+    <string name="format_exact_recipe_capacity_too_small">Pentru această rețetă, capacitatea trebuie să fie de cel puțin %1$s.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Zahărul este opțional. Rețeta selectată stabilește numărul de ridicări ale spumei.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Wave 185 cu bază plată</string>
+    <string name="label_brewer_profile_wedge">Dripper în formă de pană</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Dispozitiv cu carafă și filtru de hârtie gros</string>
+    <string name="label_brewer_profile_conical">Dripper conic generic</string>
+    <string name="label_brewer_profile_family_manual_gravity">Preparare gravitațională manuală</string>
+
+    <string name="recipe_p1_v60_official_15_250">Rețetă oficială Hario · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu, preparare răcită rapid · 16 g / 150 g + 70 g de gheață</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Turnare în pulsuri cu dripper în formă de pană · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Carafă pentru șase cești · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Dripper conic cu agitare redusă · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, mai întâi apa · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, mai întâi cafeaua · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Rețetă oficială Hario Switch · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Switch hibrid Ole Bøen · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch cu flux gravitațional deschis · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Cafea turcească, o ridicare a spumei · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, două ridicări controlate ale spumei · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Preparare automată în lot · 30 g / 500 g de apă din rezervor</string>
+    <string name="recipe_p1_auto_batch_1000_60">Preparare automată în lot · 60 g / 1.000 g de apă din rezervor</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / rezervor plin până la marcaj</string>
+    <string name="recipe_p1_phin_gravity_14_118">Phin gravitațional · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Phin cu presă filetată · 18 g / 120 g</string>
+</resources>

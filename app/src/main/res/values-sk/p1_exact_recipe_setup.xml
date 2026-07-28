@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nastavenie presných receptov P1. -->
+    <string name="heading_exact_recipe_choose">Vyberte presný recept</string>
+    <string name="msg_exact_recipe_choose_hint">Vyberte jeden kompletný recept z jedného zdroja. Množstvá a kroky sa medzi receptami nikdy nekombinujú.</string>
+    <string name="msg_exact_recipe_single_compatible">Toto je jediný kompletný recept z jedného zdroja pre toto zariadenie, preto sa vyberie automaticky.</string>
+    <string name="heading_exact_recipe_details">Množstvá v recepte</string>
+    <string name="action_learn_this_recipe">Spoznajte tento recept</string>
+    <string name="label_exact_recipe_brew_water">voda na prípravu</string>
+    <string name="label_exact_recipe_reservoir_water">voda v zásobníku</string>
+    <string name="label_exact_recipe_brew_ice">Ľad na prípravu</string>
+    <string name="label_exact_recipe_combined_ratio">Kombinovaný pomer</string>
+    <string name="label_exact_recipe_unresolved">Zdroj neuvádza</string>
+    <string name="label_exact_recipe_unavailable">Nedostupné</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · suchá dávka kávy : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Približne %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Začnite pri %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Rozsah uvádzaný zariadením: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Horúca voda; presná teplota nie je uvedená</string>
+    <string name="label_exact_recipe_machine_controlled">Riadené zariadením</string>
+    <string name="label_exact_recipe_cold_observed">Začiatok za studena; dokončite podľa pozorovania peny</string>
+
+    <string name="format_exact_recipe_time_approximate">Približne %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Počiatočný rozsah: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Približne %1$s; dokončite podľa pozorovania</string>
+    <string name="label_exact_recipe_time_geometry">Dokončite po úplnom pretečení; čas závisí od geometrie zariadenia</string>
+    <string name="label_exact_recipe_time_observed">Dokončite podľa pozorovania, nie podľa pevného časovača</string>
+    <string name="label_exact_recipe_time_machine">Cyklus špecifický pre zariadenie</string>
+
+    <string name="heading_exact_recipe_equipment">Presné vybavenie</string>
+    <string name="msg_exact_recipe_equipment_single">Použite túto kompletnú konfiguráciu filtra, košíka a príslušenstva.</string>
+    <string name="msg_exact_recipe_equipment_choose">Vyberte jednu kompletnú konfiguráciu. Možnosti filtra a košíka zostanú spárované.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Zámerne nefiltrované</string>
+    <string name="label_exact_equipment_cone_paper">Kužeľový papierový filter</string>
+    <string name="label_exact_equipment_wave_paper">Papierový filter Wave 185</string>
+    <string name="label_exact_equipment_wedge_paper">Klinový papierový filter</string>
+    <string name="label_exact_equipment_chemex_paper">Lepený papierový filter na šesť šálok</string>
+    <string name="label_exact_equipment_flat_basket_paper">Papierový filter do plochého košíka</string>
+    <string name="label_exact_equipment_number_one_paper">Papierový filter č. 1</string>
+    <string name="label_exact_equipment_phin_metal">Kovový filter phin</string>
+    <string name="label_exact_equipment_cone_basket">Kužeľový košík</string>
+    <string name="label_exact_equipment_flat_basket">Plochý košík</string>
+    <string name="label_exact_equipment_number_one_basket">Košík č. 1 na jednu šálku</string>
+    <string name="label_exact_equipment_phin_screw_insert">Skrutkovacia vložka phin</string>
+    <string name="format_exact_recipe_capacity_too_small">Kapacita musí byť pre tento recept aspoň %1$s.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Cukor je voliteľný. Vybraný recept určuje počet vystúpení peny.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Wave 185 s plochým dnom</string>
+    <string name="label_brewer_profile_wedge">Klinový dripper</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Karafový kávovar s hrubým papierovým filtrom</string>
+    <string name="label_brewer_profile_conical">Všeobecný kužeľový dripper</string>
+    <string name="label_brewer_profile_family_manual_gravity">Ručná gravitačná príprava</string>
+
+    <string name="recipe_p1_v60_official_15_250">Oficiálny recept Hario · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu, rýchlo chladená príprava · 16 g / 150 g + 70 g ľadu</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Pulzné zalievanie s klinovým dripperom · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Karafa na šesť šálok · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Kužeľový dripper s miernym premiešavaním · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, najprv voda · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, najprv káva · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Oficiálny recept Hario Switch · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Hybridný Switch Oleho Bøena · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch s otvoreným gravitačným prietokom · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Turecká káva, jedno vystúpenie peny · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, dve kontrolované vystúpenia peny · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Automatická dávková príprava · 30 g / 500 g vody v zásobníku</string>
+    <string name="recipe_p1_auto_batch_1000_60">Automatická dávková príprava · 60 g / 1 000 g vody v zásobníku</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / zásobník naplnený po značku</string>
+    <string name="recipe_p1_phin_gravity_14_118">Gravitačný phin · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Phin so skrutkovacou vložkou · 18 g / 120 g</string>
+</resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Настройка на точни P1 рецепти. -->
+    <string name="heading_exact_recipe_choose">Изберете точна рецепта</string>
+    <string name="msg_exact_recipe_choose_hint">Изберете една пълна рецепта от един източник. Количествата и стъпките никога не се смесват между рецепти.</string>
+    <string name="msg_exact_recipe_single_compatible">Това е единствената пълна рецепта от един източник за този уред, затова се избира автоматично.</string>
+    <string name="heading_exact_recipe_details">Количества по рецептата</string>
+    <string name="action_learn_this_recipe">Запознайте се с тази рецепта</string>
+    <string name="label_exact_recipe_brew_water">вода за приготвяне</string>
+    <string name="label_exact_recipe_reservoir_water">вода в резервоара</string>
+    <string name="label_exact_recipe_brew_ice">Лед за приготвяне</string>
+    <string name="label_exact_recipe_combined_ratio">Комбинирано съотношение</string>
+    <string name="label_exact_recipe_unresolved">Не е посочено от източника</string>
+    <string name="label_exact_recipe_unavailable">Не е налично</string>
+    <string name="format_exact_recipe_ratio">1:%1$s · суха доза кафе : %2$s</string>
+    <string name="separator_exact_recipe_quantity_roles"> + </string>
+
+    <string name="format_exact_recipe_temperature">%1$s °C</string>
+    <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_approximate_range">Около %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_starting_range">Започнете при %1$s–%2$s °C</string>
+    <string name="format_exact_recipe_temperature_machine_range">Посочен от машината диапазон: %1$s–%2$s °C</string>
+    <string name="label_exact_recipe_hot_unspecified">Гореща вода; не е посочена точна температура</string>
+    <string name="label_exact_recipe_machine_controlled">Управлява се от машината</string>
+    <string name="label_exact_recipe_cold_observed">Студен старт; завършете според наблюдението на пяната</string>
+
+    <string name="format_exact_recipe_time_approximate">Около %1$s</string>
+    <string name="format_exact_recipe_time_range">%1$s–%2$s</string>
+    <string name="format_exact_recipe_time_starting_range">Начален диапазон: %1$s–%2$s</string>
+    <string name="format_exact_recipe_time_approximate_observed">Около %1$s; завършете според наблюдението</string>
+    <string name="label_exact_recipe_time_geometry">Завършете след пълното оттичане; времето зависи от геометрията на уреда</string>
+    <string name="label_exact_recipe_time_observed">Завършете според наблюдението, а не по фиксиран таймер</string>
+    <string name="label_exact_recipe_time_machine">Специфичен за машината цикъл</string>
+
+    <string name="heading_exact_recipe_equipment">Точно оборудване</string>
+    <string name="msg_exact_recipe_equipment_single">Използвайте тази пълна конфигурация от филтър, кошница и аксесоари.</string>
+    <string name="msg_exact_recipe_equipment_choose">Изберете една пълна конфигурация. Вариантите за филтър и кошница остават сдвоени.</string>
+    <string name="separator_exact_recipe_equipment_parts"> · </string>
+    <string name="label_exact_equipment_unfiltered">Преднамерено нефилтрирано</string>
+    <string name="label_exact_equipment_cone_paper">Конусен хартиен филтър</string>
+    <string name="label_exact_equipment_wave_paper">Хартиен филтър Wave 185</string>
+    <string name="label_exact_equipment_wedge_paper">Клиновиден хартиен филтър</string>
+    <string name="label_exact_equipment_chemex_paper">Слепен хартиен филтър за шест чаши</string>
+    <string name="label_exact_equipment_flat_basket_paper">Хартиен филтър за плоска кошница</string>
+    <string name="label_exact_equipment_number_one_paper">Хартиен филтър №1</string>
+    <string name="label_exact_equipment_phin_metal">Метален филтър за phin</string>
+    <string name="label_exact_equipment_cone_basket">Конусна кошница</string>
+    <string name="label_exact_equipment_flat_basket">Плоска кошница</string>
+    <string name="label_exact_equipment_number_one_basket">Кошница №1 за една чаша</string>
+    <string name="label_exact_equipment_phin_screw_insert">Винтова вложка за phin</string>
+    <string name="format_exact_recipe_capacity_too_small">За тази рецепта е необходим капацитет поне %1$s.</string>
+    <string name="msg_exact_recipe_cezve_choices_hint">Захарта е по избор. Избраната рецепта определя броя на повдиганията на пяната.</string>
+
+    <string name="label_brewer_profile_v60_02">V60 02</string>
+    <string name="label_brewer_profile_v60">V60</string>
+    <string name="label_brewer_profile_wave_185">Wave 185 с плоско дъно</string>
+    <string name="label_brewer_profile_wedge">Клиновиден дрипър</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Уред с кана и дебел хартиен филтър</string>
+    <string name="label_brewer_profile_conical">Обикновен конусен дрипър</string>
+    <string name="label_brewer_profile_family_manual_gravity">Ръчно гравитационно приготвяне</string>
+
+    <string name="recipe_p1_v60_official_15_250">Официална рецепта на Hario · 15 g / 250 g</string>
+    <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
+    <string name="recipe_p1_v60_kasuya_4_6_20_300">Tetsu Kasuya 4:6 · 20 g / 300 g</string>
+    <string name="recipe_p1_v60_kurasu_flash_16_150_70">Kurasu, бързо охладено приготвяне · 16 g / 150 g + 70 g лед</string>
+    <string name="recipe_p1_wave185_ozone_25_400">Ozone Wave 185 · 25 g / 400 g</string>
+    <string name="recipe_p1_wedge_pulse_23_5_400">Пулсово наливане с клиновиден дрипър · 23,5 g / 400 g</string>
+    <string name="recipe_p1_chemex_42_700">Кана за шест чаши · 42 g / 700 g</string>
+    <string name="recipe_p1_generic_conical_20_320">Конусен дрипър с леко разбъркване · 20 g / 320 g</string>
+    <string name="recipe_p1_clever_water_first_15_250">Clever, първо водата · 15 g / 250 g</string>
+    <string name="recipe_p1_clever_coffee_first_15_250">Clever, първо кафето · 15 g / 250 g</string>
+    <string name="recipe_p1_switch_official_20_240">Официална рецепта на Hario Switch · 20 g / 240 g</string>
+    <string name="recipe_p1_switch_hybrid_16_5_240">Хибриден Switch на Ole Bøen · 16,5 g / 240 g</string>
+    <string name="recipe_p1_switch_gravity_15_250">Switch, отворен гравитационен режим · 15 g / 250 g</string>
+    <string name="recipe_p1_cezve_single_rise_6_65">Турско кафе, едно повдигане на пяната · 6 g / 65 g</string>
+    <string name="recipe_p1_cezve_repeated_rise_12_130">Cezve, две контролирани повдигания на пяната · 12 g / 130 g</string>
+    <string name="recipe_p1_auto_batch_500_30">Автоматично приготвяне на кана · 30 g / 500 g вода в резервоара</string>
+    <string name="recipe_p1_auto_batch_1000_60">Автоматично приготвяне на кана · 60 g / 1 000 g вода в резервоара</string>
+    <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / резервоар, напълнен до маркировката</string>
+    <string name="recipe_p1_phin_gravity_14_118">Гравитационен phin · 14 g / 118 g</string>
+    <string name="recipe_p1_phin_screw_18_120">Phin с винтова вложка · 18 g / 120 g</string>
+</resources>
