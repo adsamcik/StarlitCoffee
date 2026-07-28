@@ -229,6 +229,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     // Production injects an Android-backed notifier; tests keep this side
     // effect off by default while the ViewModel remains the state owner.
     private val brewSessionNotifier: BrewSessionNotifier = NoOpBrewSessionNotifier,
+    // Production shares the application-owned startup pass across every consumer. The fallback
+    // keeps direct construction with a plain Application functional in tests and previews.
+    private val bagExtractionStartupRecovery: (suspend () -> Set<String>)? = null,
 ) : ViewModel(brewSessionNotifier) {
 
     private val llmCache = LlmResultCache()
@@ -392,7 +395,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 .registerOnSharedPreferenceChangeListener(bagReviewQueueListener)
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
-                    BagExtractionScheduler.reconcilePersistedState(app)
+                    awaitBagExtractionStartupRecovery(app)
                 }
                 BagExtractionScheduler.activeWorkId(app)?.let { workId ->
                     val workInfo = withContext(Dispatchers.IO) {
@@ -1163,7 +1166,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 repository.getBagById(bagId).first()?.toPhotoOwnership()
             }
             val protectedBeforeReconciliation = if (useWorkManager) {
-                BagExtractionScheduler.reconcilePersistedState(app)
+                awaitBagExtractionStartupRecovery(app)
             } else {
                 emptySet()
             }
@@ -1206,6 +1209,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             }
         }
     }
+
+    private suspend fun awaitBagExtractionStartupRecovery(app: Application): Set<String> =
+        bagExtractionStartupRecovery?.invoke()
+            ?: BagExtractionScheduler.reconcilePersistedState(app)
 
     private suspend fun insertCoffeeBag(
         input: CoffeeBagInput,

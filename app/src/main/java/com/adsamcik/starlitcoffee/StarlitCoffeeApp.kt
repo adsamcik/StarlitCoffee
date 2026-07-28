@@ -16,6 +16,7 @@ import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.RecognizedText
 import com.adsamcik.starlitcoffee.data.work.BagExtractionScheduler
+import com.adsamcik.starlitcoffee.data.work.BagExtractionStartupRecovery
 import com.adsamcik.starlitcoffee.scan.observability.PersistentLlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.util.MindlayerAvailability
 import kotlinx.coroutines.CancellationException
@@ -43,6 +44,10 @@ class StarlitCoffeeApp : Application() {
      * dies; nothing here should hold cancellable long-lived resources.
      */
     private val warmupScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    private val bagExtractionStartupRecovery = BagExtractionStartupRecovery(warmupScope) {
+        BagExtractionScheduler.reconcilePersistedState(applicationContext)
+    }
 
     /** Single-flights consent-triggered reconnects from multiple UI entry points. */
     private val reconnectMutex = Mutex()
@@ -74,7 +79,7 @@ class StarlitCoffeeApp : Application() {
     override fun onCreate() {
         super.onCreate()
         warmupScope.launch {
-            BagExtractionScheduler.reconcilePersistedState(applicationContext)
+            awaitBagExtractionStartupRecovery()
         }
 
         warmupScope.launch {
@@ -103,6 +108,10 @@ class StarlitCoffeeApp : Application() {
             getOrCreateMindlayerServices()
         }
     }
+
+    /** Shares the application-owned startup reconciliation with dependent UI initialization. */
+    internal suspend fun awaitBagExtractionStartupRecovery(): Set<String> =
+        bagExtractionStartupRecovery.await()
 
     /**
      * Called only by emulated process environments. Real devices normally kill

@@ -26,8 +26,9 @@ class BrewViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BrewViewModel::class.java)) {
             val database = AppDatabase.getInstance(application)
-            val llm = (application as? StarlitCoffeeApp)?.llmProvider ?: StubLlmInferenceProvider()
-            val ocr = (application as? StarlitCoffeeApp)?.ocrService
+            val starlitCoffeeApp = application as? StarlitCoffeeApp
+            val llm = starlitCoffeeApp?.llmProvider ?: StubLlmInferenceProvider()
+            val ocr = starlitCoffeeApp?.ocrService
             return BrewViewModel(
                 application = application,
                 recipeRepository = RecipeRepository(database.recipeDao()),
@@ -43,6 +44,9 @@ class BrewViewModelFactory(
                 transactionRunner = TransactionRunner.room(database),
                 brewSessionNotifier = AndroidBrewSessionNotifier(application),
                 bagAnalysisNotifier = AndroidBagAnalysisNotifier(application),
+                bagExtractionStartupRecovery = starlitCoffeeApp?.let { app ->
+                    app::awaitBagExtractionStartupRecovery
+                },
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
