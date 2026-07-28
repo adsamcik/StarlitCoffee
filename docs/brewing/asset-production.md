@@ -423,6 +423,70 @@ For every asset record:
   silicone-base proportions, paper fit, hand clearance, and post-warning
   Learn/Live placement before manifest registration or approval.
 
+### `p1-phin-screw-insert-imagegen-v1`
+
+- Stable asset ID:
+  `instruction_p1_phin_screw_18_120_stage_02_instruction_default`
+- Exact scope: `phin_screw_18_120` / source `stage_02` /
+  `p1_phin_screw_18_120_stage_02_instruction`; lightly engaging the level
+  threaded insert without compressing the dry coffee bed.
+- Evidence: `SRC-GOURMETKAVA-PHIN` and `SRC-TRUNGNGUYEN-PHIN`. Reverified on
+  28 July 2026 against GourmetKava's current preparation guide at
+  <https://www.gourmetkava.cz/en/blog/making-coffee/preparation-of--vietnamese-coffee>,
+  which continues to distinguish a gently screwed internal plate, room for
+  the coffee to swell after pre-wetting, and gravity rather than pressure.
+- Generation mode: new bitmap generation with the built-in image generator;
+  no corrective edit was needed before pending-review delivery.
+- Generated: 28 July 2026.
+- Final prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for
+  > a mobile coffee-brewing guide, composed to remain clear at roughly 320 dp
+  > wide. Show an elevated close three-quarter view looking into an unbranded
+  > single-serving Vietnamese screw-insert phin with a realistic approximately
+  > 120–150 ml chamber, centered securely on a broad stable heat-safe ceramic
+  > cup. Inside the dry metal chamber, show a level bed of ground coffee above
+  > the integrated perforated base. Accurately show a slender threaded central
+  > post and a matching circular perforated screw insert aligned perfectly
+  > level. Relaxed fingertips lightly turn only the insert's small cool upper
+  > control just enough for the threads to engage and for the disc to rest
+  > gently on the coffee bed. The coffee remains loose and visibly
+  > uncompressed, with generous empty headroom above it for swelling. Make the
+  > gentle fingertip posture, level perforated disc, visible central thread
+  > engagement, dry chamber, and stable cup support unmistakable in one
+  > crop-safe view. Use a warm-neutral uncluttered background and counter,
+  > semi-flat softly dimensional educational rendering, precise believable
+  > geometry, clear silhouettes, restrained materials, soft natural light,
+  > and subtle shadows. No water, kettle, heat, steam, lid, drips, milk, ice,
+  > serving action, or second brewer. Do not depict a loose gravity disc,
+  > unthreaded plate, spring, plunger, tamper, paper filter, sealed pressure
+  > chamber, espresso mechanism, forceful palm pressure, white knuckles,
+  > tools, hard compression, compacted puck, deeply driven disc, narrow or
+  > unstable cup, off-center base, tilted chamber, impossible thread geometry,
+  > or touching hot metal. Absolutely no words, letters, numbers, labels,
+  > logos, arrows, callouts, diagrams, multiple panels, borders, or decorative
+  > clutter.
+- Generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_4zFPSw44cwFgOu4sYwzeIyJ7.png`
+  (opaque RGB PNG, 1448 × 1086 px, 2,059,862 bytes, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_phin_screw_18_120_stage_02_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 × 768 px, 74,788 bytes, exact 4:3.
+- Accessibility target: “Relaxed fingertips lightly engage the level threaded
+  insert of a screw-insert phin without compressing the coffee bed.” The
+  exact-stage alt-text resource and asset record remain intentionally
+  unregistered until localization and mechanism review are complete.
+- Inspection: no text, numbers, logos, extra panel, water, heat, lid, tamper,
+  or secondary action. The dry frame clearly separates this screw-insert
+  recipe from a loose gravity-disc phin, keeps the disc level, shows gentle
+  fingertip-only engagement, leaves the bed visibly loose, and preserves
+  swelling headroom above it.
+- Review status: **pending brewer-expert safety and mechanism review**. Confirm
+  credible 120–150 ml proportions, fixed-post/threaded-insert geometry, light
+  engagement without implied pressure, dry-bed headroom, stable cup support,
+  and post-warning Learn/Live placement before manifest registration or
+  approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
