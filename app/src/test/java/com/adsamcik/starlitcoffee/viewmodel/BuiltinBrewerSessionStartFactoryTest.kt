@@ -2,22 +2,29 @@ package com.adsamcik.starlitcoffee.viewmodel
 
 import com.adsamcik.starlitcoffee.domain.brewing.BasketProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeDefinition
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
 import com.adsamcik.starlitcoffee.domain.brewing.EquipmentConfiguration
 import com.adsamcik.starlitcoffee.domain.brewing.FilterProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.FilterSelection
 import com.adsamcik.starlitcoffee.domain.brewing.FilterStackEntry
 import com.adsamcik.starlitcoffee.domain.brewing.HeatSourceClass
+import com.adsamcik.starlitcoffee.domain.brewing.P1TemperatureBasis
+import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.StagePlanId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageDefinition
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStagePlan
+import com.adsamcik.starlitcoffee.domain.brewing.session.BuiltInP1ExactStagePlanCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageCompletionMode
-import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanNode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanCompileResult
+import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanCompiler
+import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanNode
+import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanSelections
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanValidationCode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanValidationIssue
 import org.junit.Assert.assertEquals
@@ -113,6 +120,7 @@ class BuiltinBrewerSessionStartFactoryTest {
                 equipment = EquipmentConfiguration(
                     brewerProfileId = BrewerProfileId("v60_unspecified"),
                     filterSelection = paperFilter("cone_paper"),
+                    capacityOverrideG = 250.0,
                 ),
                 temperatureC = 91,
             ),
@@ -142,6 +150,47 @@ class BuiltinBrewerSessionStartFactoryTest {
         )
         assertEquals(recipeId.value, metadata.exactRecipeApproachId)
         assertEquals(6, metadata.orderedStageCount)
+    }
+
+    @Test
+    fun `all twenty canonical recipes start with their exact ordered stage identity`() {
+        var genericPlanLookups = 0
+        val factory = BuiltinBrewerSessionStartFactory(
+            stagePlanFor = { _, _ ->
+                genericPlanLookups += 1
+                null
+            },
+            newUuid = { UUID.fromString("8c4e2984-37b1-44ea-a4f7-9a004a32dd67") },
+        )
+
+        assertEquals(20, BuiltInP1RecipeCatalog.recipes.size)
+        assertEquals(
+            BuiltInP1RecipeCatalog.recipes.mapTo(linkedSetOf(), BuiltInP1RecipeDefinition::id),
+            BuiltInP1ExactStagePlanCatalog.recipeIds,
+        )
+        BuiltInP1RecipeCatalog.recipes.forEach { definition ->
+            val result = factory.create(exactInput(definition))
+            assertTrue(
+                "${definition.id.value} did not reach a ready exact session: $result",
+                result is BuiltinBrewerSessionStartResult.Ready,
+            )
+            val request = (result as BuiltinBrewerSessionStartResult.Ready).request
+            assertEquals(definition.id.value, request.recipe.builtInRecipeId)
+            assertEquals("builtin_recipe_${definition.id.value}", request.stagePlan.id.value)
+            assertEquals(definition.orderedStageCount, request.stagePlan.stages.size)
+            request.stagePlan.stages.forEachIndexed { index, stage ->
+                val stageNumber = (index + 1).toString().padStart(2, '0')
+                val expectedIdentity = "p1_${definition.id.value}_stage_$stageNumber"
+                assertEquals(expectedIdentity, stage.definition.id.value)
+                assertEquals("${expectedIdentity}_instruction", stage.definition.contentId.value)
+            }
+        }
+
+        assertEquals(
+            "Exact recipe starts must never consult the generic profile-plan provider",
+            0,
+            genericPlanLookups,
+        )
     }
 
     @Test
@@ -302,57 +351,50 @@ class BuiltinBrewerSessionStartFactoryTest {
     }
 
     @Test
-    fun `exact recipes reject generic plans and contradictory canonical workflow order`() {
+    fun `missing or mismatched exact plans fail closed without generic fallback`() {
         val coffeeFirstId = BuiltInRecipeId("clever_coffee_first_15_250")
         val waterFirstId = BuiltInRecipeId("clever_water_first_15_250")
-        val equipment = EquipmentConfiguration(
-            brewerProfileId = BrewerProfileId("clever_style"),
-            filterSelection = paperFilter("wedge_paper"),
-            capacityOverrideG = 400.0,
-        )
-        val genericPlan = factory().create(
-            BuiltinBrewerSessionStartInput(
-                brewerProfileId = BrewerProfileId("clever_style"),
-                builtInRecipeId = coffeeFirstId,
-                dryCoffeeDoseG = 15.0,
-                equipment = equipment,
-                temperatureC = 95,
-            ),
-        )
-        val wrongOrder = exactFactory(
-            recipeId = waterFirstId,
-            actions = listOf(
-                BrewStageAction.PREPARE,
-                BrewStageAction.ADD_COFFEE,
-                BrewStageAction.ADD_WATER,
-                BrewStageAction.STEEP,
-                BrewStageAction.RELEASE,
-                BrewStageAction.SERVE,
-            ),
+        var genericPlanLookups = 0
+        val missingExactPlan = BuiltinBrewerSessionStartFactory(
+            stagePlanFor = { _, _ ->
+                genericPlanLookups += 1
+                exactPlan(
+                    recipeId = coffeeFirstId,
+                    actions = List(6) { BrewStageAction.OBSERVE },
+                )
+            },
+            exactStagePlanFor = { null },
         ).create(
-            BuiltinBrewerSessionStartInput(
-                brewerProfileId = BrewerProfileId("clever_style"),
-                builtInRecipeId = waterFirstId,
-                dryCoffeeDoseG = 15.0,
-                equipment = equipment,
-                temperatureC = 96,
-            ),
+            exactInput(requireNotNull(BuiltInP1RecipeCatalog.find(coffeeFirstId))),
+        )
+        val mismatchedIdentity = BuiltinBrewerSessionStartFactory(
+            exactStagePlanFor = {
+                exactPlan(
+                    recipeId = waterFirstId,
+                    actions = List(6) { BrewStageAction.OBSERVE },
+                    mismatchedContentIndex = 2,
+                )
+            },
+        ).create(
+            exactInput(requireNotNull(BuiltInP1RecipeCatalog.find(waterFirstId))),
         )
 
         assertEquals(
-            BuiltinBrewerSessionStartUnavailableReason.BUILTIN_RECIPE_STAGE_PLAN_MISMATCH,
-            (genericPlan as BuiltinBrewerSessionStartResult.Unavailable).reason,
+            BuiltinBrewerSessionStartUnavailableReason.NO_BUILTIN_STAGE_PLAN,
+            (missingExactPlan as BuiltinBrewerSessionStartResult.Unavailable).reason,
         )
+        assertEquals(0, genericPlanLookups)
         assertEquals(
             BuiltinBrewerSessionStartUnavailableReason.BUILTIN_RECIPE_STAGE_PLAN_MISMATCH,
-            (wrongOrder as BuiltinBrewerSessionStartResult.Unavailable).reason,
+            (mismatchedIdentity as BuiltinBrewerSessionStartResult.Unavailable).reason,
         )
     }
 
     @Test
-    fun `exact Switch infers supported workflow without inventing unspecified temperature`() {
+    fun `exact Switch accepts null recipe-owned workflow without using generic routing`() {
         val recipeId = BuiltInRecipeId("switch_official_20_240")
-        var observedWorkflow: HarioSwitchWorkflow? = null
+        var observedExactRecipeId: BuiltInRecipeId? = null
+        var genericPlanLookups = 0
         val plan = exactPlan(
             recipeId = recipeId,
             actions = listOf(
@@ -364,8 +406,12 @@ class BuiltinBrewerSessionStartFactoryTest {
             ),
         )
         val factory = BuiltinBrewerSessionStartFactory(
-            stagePlanFor = { _, workflow ->
-                observedWorkflow = workflow
+            stagePlanFor = { _, _ ->
+                genericPlanLookups += 1
+                null
+            },
+            exactStagePlanFor = { exactRecipeId ->
+                observedExactRecipeId = exactRecipeId
                 plan
             },
             newUuid = { UUID.fromString("6c4e2984-37b1-44ea-a4f7-9a004a32dd67") },
@@ -388,7 +434,8 @@ class BuiltinBrewerSessionStartFactoryTest {
         val inventedTemperature = factory.create(baseInput.copy(temperatureC = 95))
 
         val request = (inferred as BuiltinBrewerSessionStartResult.Ready).request
-        assertEquals(HarioSwitchWorkflow.STEEP_AND_RELEASE, observedWorkflow)
+        assertEquals(recipeId, observedExactRecipeId)
+        assertEquals(0, genericPlanLookups)
         assertEquals(240.0, requireNotNull(request.recipe.quantities.brewWaterInputG), 0.001)
         assertNull(request.recipe.temperatureC)
         assertEquals("HOT_UNSPECIFIED", requireNotNull(request.recipe.temperatureSemantics).basis)
@@ -406,6 +453,43 @@ class BuiltinBrewerSessionStartFactoryTest {
                 .issues
                 .map(BuiltinBrewerSessionStartValidationIssue::code),
         )
+    }
+
+    @Test
+    fun `exact hybrid Switch starts with null generic workflow`() {
+        val definition = requireNotNull(
+            BuiltInP1RecipeCatalog.find(BuiltInRecipeId("switch_ole_boen_hybrid_16_5_240")),
+        )
+        val input = exactInput(definition)
+
+        assertNull(input.harioSwitchWorkflow)
+        val request = (factory().create(input) as BuiltinBrewerSessionStartResult.Ready).request
+        assertEquals(
+            "builtin_recipe_switch_ole_boen_hybrid_16_5_240",
+            request.stagePlan.id.value,
+        )
+        assertEquals(definition.orderedStageCount, request.stagePlan.stages.size)
+    }
+
+    @Test
+    fun `exact Cezve plan ignores legacy sugar and repeat compiler selections`() {
+        val definition = requireNotNull(
+            BuiltInP1RecipeCatalog.find(BuiltInRecipeId("cezve_bounded_repeated_rise_12_130")),
+        )
+        var observedSelections: StagePlanSelections? = null
+        val factory = BuiltinBrewerSessionStartFactory(
+            compileStagePlan = { plan, selections ->
+                observedSelections = selections
+                StagePlanCompiler.compile(plan, selections)
+            },
+        )
+        val input = exactInput(definition).copy(
+            cezveSetup = CezveSessionSetup(includeSugar = true, foamRiseCycles = 2),
+        )
+
+        val request = (factory.create(input) as BuiltinBrewerSessionStartResult.Ready).request
+        assertEquals(StagePlanSelections(), observedSelections)
+        assertEquals(6, request.stagePlan.stages.size)
     }
 
     @Test
@@ -634,6 +718,13 @@ class BuiltinBrewerSessionStartFactoryTest {
                 equipment = EquipmentConfiguration(BrewerProfileId("clever_style")),
             ),
         )
+        val exactDefinition = requireNotNull(
+            BuiltInP1RecipeCatalog.find(BuiltInRecipeId("v60_official_15_250")),
+        )
+        val exactMissingCapacityInput = exactInput(exactDefinition).let { input ->
+            input.copy(equipment = input.equipment.copy(capacityOverrideG = null))
+        }
+        val exactMissingCapacity = factory().create(exactMissingCapacityInput)
         val invalidCapacity = factory().create(
             BuiltinBrewerSessionStartInput(
                 brewerProfileId = BrewerProfileId("clever_style"),
@@ -669,6 +760,12 @@ class BuiltinBrewerSessionStartFactoryTest {
         assertEquals(
             listOf(BuiltinBrewerSessionStartValidationCode.MISSING_EQUIPMENT_CAPACITY),
             (missingCapacity as BuiltinBrewerSessionStartResult.InvalidSetup)
+                .issues
+                .map(BuiltinBrewerSessionStartValidationIssue::code),
+        )
+        assertEquals(
+            listOf(BuiltinBrewerSessionStartValidationCode.MISSING_EQUIPMENT_CAPACITY),
+            (exactMissingCapacity as BuiltinBrewerSessionStartResult.InvalidSetup)
                 .issues
                 .map(BuiltinBrewerSessionStartValidationIssue::code),
         )
@@ -721,6 +818,41 @@ class BuiltinBrewerSessionStartFactoryTest {
         )
     }
 
+    private fun exactInput(definition: BuiltInP1RecipeDefinition): BuiltinBrewerSessionStartInput {
+        val inputRole = definition.ratios.first().definition.denominator
+        require(inputRole == QuantityRole.BREW_WATER_INPUT || inputRole == QuantityRole.RESERVOIR_INPUT)
+        val inputG = definition.quantities.valueFor(inputRole) ?: when (definition.id.value) {
+            "auto_cupone_20_300" -> 300.0
+            else -> error("Only Cup-One retains an unresolved source reservoir input")
+        }
+        val equipmentOption = definition.equipmentOptions.first()
+        val userTemperatureC = if (definition.temperature.basis == P1TemperatureBasis.USER_EXACT) {
+            requireNotNull(definition.temperature.minimumC).toInt()
+        } else {
+            null
+        }
+        return BuiltinBrewerSessionStartInput(
+            brewerProfileId = definition.brewerProfileId,
+            builtInRecipeId = definition.id,
+            dryCoffeeDoseG = definition.quantities.dryCoffeeDoseG,
+            inputWaterG = inputG,
+            equipment = EquipmentConfiguration(
+                brewerProfileId = definition.brewerProfileId,
+                filterSelection = equipmentOption.filterSelection,
+                capacityOverrideG = inputG + 100.0,
+                basketId = equipmentOption.basketId,
+                accessoryIds = equipmentOption.accessoryIds,
+                heatSource = if (definition.brewerProfileId.value == "cezve_generic") {
+                    HeatSourceClass.HOB
+                } else {
+                    HeatSourceClass.NONE
+                },
+            ),
+            harioSwitchWorkflow = null,
+            temperatureC = userTemperatureC,
+        )
+    }
+
     private fun exactFactory(
         recipeId: BuiltInRecipeId,
         actions: List<BrewStageAction>,
@@ -728,7 +860,7 @@ class BuiltinBrewerSessionStartFactoryTest {
     ): BuiltinBrewerSessionStartFactory {
         val plan = exactPlan(recipeId, actions)
         return BuiltinBrewerSessionStartFactory(
-            stagePlanFor = { _, _ -> plan },
+            exactStagePlanFor = { plan },
             newUuid = { sessionId },
         )
     }
@@ -736,16 +868,23 @@ class BuiltinBrewerSessionStartFactoryTest {
     private fun exactPlan(
         recipeId: BuiltInRecipeId,
         actions: List<BrewStageAction>,
+        mismatchedContentIndex: Int? = null,
     ): BrewStagePlan = BrewStagePlan(
         id = StagePlanId("builtin_recipe_${recipeId.value}"),
         version = 1,
         nodes = actions.mapIndexed { index, action ->
-            val stageId = "${recipeId.value}_stage_${index + 1}"
+            val stageNumber = (index + 1).toString().padStart(2, '0')
+            val stageId = "p1_${recipeId.value}_stage_$stageNumber"
+            val contentId = if (index == mismatchedContentIndex) {
+                "p1_mismatched_stage_instruction"
+            } else {
+                "${stageId}_instruction"
+            }
             StagePlanNode.Stage(
                 BrewStageDefinition(
                     id = StageId(stageId),
                     action = action,
-                    contentId = StageContentId(stageId),
+                    contentId = StageContentId(contentId),
                     completionMode = StageCompletionMode.Manual,
                 ),
             )

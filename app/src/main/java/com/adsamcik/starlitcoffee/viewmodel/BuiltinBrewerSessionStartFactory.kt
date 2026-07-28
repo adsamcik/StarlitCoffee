@@ -28,14 +28,16 @@ import com.adsamcik.starlitcoffee.domain.brewing.HeatSourceClass
 import com.adsamcik.starlitcoffee.domain.brewing.P1TemperatureBasis
 import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
 import com.adsamcik.starlitcoffee.domain.brewing.RatioDefinition
-import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageDefinition
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStagePlan
+import com.adsamcik.starlitcoffee.domain.brewing.session.BuiltInP1ExactStagePlanCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.session.CompiledStagePlan
 import com.adsamcik.starlitcoffee.domain.brewing.session.HarioSwitchWorkflow
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageConditionId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanCompileResult
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanCompiler
+import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanNode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanSelections
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanValidationIssue
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageRepeatId
@@ -154,10 +156,10 @@ sealed interface BuiltinBrewerSessionStartResult {
  * profile. It owns the profile/default/plan boundary but performs no I/O,
  * navigation, persistence, or clock access.
  *
- * Hario Switch has no implicit workflow: callers must explicitly choose its
- * immersion-release or manual-gravity plan. Other profiles reject that choice
- * instead of ignoring it. Cezve's two bounded plan decisions are likewise
- * validated before compilation.
+ * Legacy Hario Switch starts must explicitly choose a generic workflow. Exact
+ * recipes instead resolve only through their recipe-owned stage plan, so a
+ * missing exact plan can never fall back to a plausible generic one. Exact
+ * plans compile without legacy Hario or Cezve branch selections.
  */
 class BuiltinBrewerSessionStartFactory(
     private val catalog: BrewingCatalog = BuiltinBrewingCatalog.instance,
@@ -167,6 +169,8 @@ class BuiltinBrewerSessionStartFactory(
         BuiltinBrewerProfileRecipeDefaults::find,
     private val stagePlanFor: (BrewerProfileId, HarioSwitchWorkflow?) -> BrewStagePlan? =
         BuiltinBrewerStagePlanFactory::create,
+    private val exactStagePlanFor: (BuiltInRecipeId) -> BrewStagePlan? =
+        BuiltInP1ExactStagePlanCatalog::find,
     private val compileStagePlan: (BrewStagePlan, StagePlanSelections) -> StagePlanCompileResult =
         { plan, selections -> StagePlanCompiler.compile(plan, selections) },
     private val newUuid: () -> UUID = UUID::randomUUID,
@@ -228,7 +232,11 @@ class BuiltinBrewerSessionStartFactory(
         }
         val effectiveInput = exactRecipe?.input ?: input
 
-        val setupIssues = validateSetup(effectiveInput, defaults)
+        val setupIssues = validateSetup(
+            input = effectiveInput,
+            defaults = defaults,
+            isExactRecipe = builtInRecipe != null,
+        )
         if (setupIssues.isNotEmpty()) {
             return BuiltinBrewerSessionStartResult.InvalidSetup(input.brewerProfileId, setupIssues)
         }
@@ -249,15 +257,23 @@ class BuiltinBrewerSessionStartFactory(
             )
         }
 
-        val sourcePlan = stagePlanFor(profile.id, effectiveInput.harioSwitchWorkflow)
-            ?: return unavailable(input, BuiltinBrewerSessionStartUnavailableReason.NO_BUILTIN_STAGE_PLAN)
-        if (builtInRecipe != null && sourcePlan.id.value != exactStagePlanId(builtInRecipe)) {
+        val sourcePlan = if (builtInRecipe == null) {
+            stagePlanFor(profile.id, effectiveInput.harioSwitchWorkflow)
+        } else {
+            exactStagePlanFor(builtInRecipe.id)
+        } ?: return unavailable(input, BuiltinBrewerSessionStartUnavailableReason.NO_BUILTIN_STAGE_PLAN)
+        if (builtInRecipe != null && !sourcePlanMatchesExactRecipe(sourcePlan, builtInRecipe)) {
             return unavailable(
                 input,
                 BuiltinBrewerSessionStartUnavailableReason.BUILTIN_RECIPE_STAGE_PLAN_MISMATCH,
             )
         }
-        val compiledPlan = when (val result = compileStagePlan(sourcePlan, selectionsFor(effectiveInput))) {
+        val selections = if (builtInRecipe == null) {
+            selectionsFor(effectiveInput)
+        } else {
+            StagePlanSelections()
+        }
+        val compiledPlan = when (val result = compileStagePlan(sourcePlan, selections)) {
             is StagePlanCompileResult.Compiled -> result.value
             is StagePlanCompileResult.Invalid -> {
                 return BuiltinBrewerSessionStartResult.InvalidStagePlan(profile.id, result.issues)
@@ -346,11 +362,6 @@ class BuiltinBrewerSessionStartFactory(
         input: BuiltinBrewerSessionStartInput,
         definition: BuiltInP1RecipeDefinition,
     ): ExactRecipeResolution {
-        if (definition.id == SWITCH_HYBRID_RECIPE) {
-            return ExactRecipeResolution.Unavailable(
-                BuiltinBrewerSessionStartUnavailableReason.BUILTIN_RECIPE_WORKFLOW_UNSUPPORTED,
-            )
-        }
         if (
             (definition.brewerProfileId == HARIO_SWITCH && definition.id !in HARIO_SWITCH_RECIPE_IDS) ||
                 (definition.brewerProfileId == CEZVE_GENERIC && definition.id !in CEZVE_RECIPE_IDS)
@@ -404,7 +415,7 @@ class BuiltinBrewerSessionStartFactory(
         exactTemperatureIssue(input.temperatureC, definition)?.let { issue ->
             issues.addIssue(issue)
         }
-        val effectiveInput = applyExactWorkflow(input, definition, issues)
+        validateExactWorkflow(input, definition, issues)
         if (issues.isNotEmpty()) return ExactRecipeResolution.Invalid(issues)
 
         val primaryInputG = requireNotNull(resolvedInputG)
@@ -415,7 +426,7 @@ class BuiltinBrewerSessionStartFactory(
         val ratioValue = primaryRatio.ratioValue
             ?: primaryInputG / definition.quantities.dryCoffeeDoseG
         return ExactRecipeResolution.Resolved(
-            input = effectiveInput.copy(inputWaterG = primaryInputG),
+            input = input.copy(inputWaterG = primaryInputG),
             quantities = quantities,
             ratioDefinition = primaryRatio.definition,
             ratioValue = ratioValue,
@@ -511,75 +522,64 @@ class BuiltinBrewerSessionStartFactory(
         }
     }
 
-    private fun applyExactWorkflow(
+    private fun validateExactWorkflow(
         input: BuiltinBrewerSessionStartInput,
         definition: BuiltInP1RecipeDefinition,
         issues: MutableList<BuiltinBrewerSessionStartValidationIssue>,
-    ): BuiltinBrewerSessionStartInput = when (definition.id) {
-        SWITCH_OFFICIAL_RECIPE -> input.withHarioSwitchWorkflow(
-            expected = HarioSwitchWorkflow.STEEP_AND_RELEASE,
-            issues = issues,
-        )
-        SWITCH_GRAVITY_RECIPE -> input.withHarioSwitchWorkflow(
-            expected = HarioSwitchWorkflow.MANUAL_GRAVITY,
-            issues = issues,
-        )
-        CEZVE_SINGLE_RISE_RECIPE -> input.withCezveRiseCycles(expected = 1, issues = issues)
-        CEZVE_REPEATED_RISE_RECIPE -> input.withCezveRiseCycles(expected = 2, issues = issues)
-        else -> input
-    }
-
-    private fun BuiltinBrewerSessionStartInput.withHarioSwitchWorkflow(
-        expected: HarioSwitchWorkflow,
-        issues: MutableList<BuiltinBrewerSessionStartValidationIssue>,
-    ): BuiltinBrewerSessionStartInput {
-        if (harioSwitchWorkflow != null && harioSwitchWorkflow != expected) {
+    ) {
+        val expectedHarioWorkflow = when (definition.id) {
+            SWITCH_OFFICIAL_RECIPE -> HarioSwitchWorkflow.STEEP_AND_RELEASE
+            SWITCH_GRAVITY_RECIPE -> HarioSwitchWorkflow.MANUAL_GRAVITY
+            else -> null
+        }
+        if (
+            definition.brewerProfileId == HARIO_SWITCH &&
+                input.harioSwitchWorkflow != null &&
+                input.harioSwitchWorkflow != expectedHarioWorkflow
+        ) {
             issues.addIssue(BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_WORKFLOW_MISMATCH)
         }
-        return copy(harioSwitchWorkflow = expected)
-    }
 
-    private fun BuiltinBrewerSessionStartInput.withCezveRiseCycles(
-        expected: Int,
-        issues: MutableList<BuiltinBrewerSessionStartValidationIssue>,
-    ): BuiltinBrewerSessionStartInput {
-        if (cezveSetup != null && cezveSetup.foamRiseCycles != expected) {
+        val expectedRiseCycles = when (definition.id) {
+            CEZVE_SINGLE_RISE_RECIPE -> 1
+            CEZVE_REPEATED_RISE_RECIPE -> 2
+            else -> null
+        }
+        if (
+            expectedRiseCycles != null &&
+                input.cezveSetup?.foamRiseCycles?.let { it != expectedRiseCycles } == true
+        ) {
             issues.addIssue(BuiltinBrewerSessionStartValidationCode.BUILTIN_RECIPE_WORKFLOW_MISMATCH)
         }
-        return copy(
-            cezveSetup = (cezveSetup ?: CezveSessionSetup()).copy(foamRiseCycles = expected),
-        )
     }
+
+    private fun sourcePlanMatchesExactRecipe(
+        plan: BrewStagePlan,
+        definition: BuiltInP1RecipeDefinition,
+    ): Boolean = plan.id.value == exactStagePlanId(definition) &&
+        plan.version == EXACT_STAGE_PLAN_VERSION &&
+        plan.nodes.size == definition.orderedStageCount &&
+        plan.nodes.withIndex().all { (index, node) ->
+            node is StagePlanNode.Stage && node.definition.hasExactIdentity(definition, index)
+        }
 
     private fun compiledPlanMatchesExactRecipe(
         plan: CompiledStagePlan,
         definition: BuiltInP1RecipeDefinition,
-    ): Boolean {
-        if (plan.stages.size != definition.orderedStageCount) return false
-        val actions = plan.stages.map { stage -> stage.definition.action }
-        return when (definition.id) {
-            CLEVER_WATER_FIRST_RECIPE -> actions.precedes(
-                first = BrewStageAction.ADD_WATER,
-                second = BrewStageAction.ADD_COFFEE,
-            )
-            CLEVER_COFFEE_FIRST_RECIPE -> actions.precedes(
-                first = BrewStageAction.ADD_COFFEE,
-                second = BrewStageAction.ADD_WATER,
-            )
-            SWITCH_OFFICIAL_RECIPE ->
-                BrewStageAction.RELEASE in actions && BrewStageAction.POUR !in actions
-            SWITCH_GRAVITY_RECIPE ->
-                BrewStageAction.POUR in actions && BrewStageAction.RELEASE !in actions
-            SWITCH_HYBRID_RECIPE -> false
-            else -> true
+    ): Boolean = plan.id.value == exactStagePlanId(definition) &&
+        plan.version == EXACT_STAGE_PLAN_VERSION &&
+        plan.stages.size == definition.orderedStageCount &&
+        plan.stages.withIndex().all { (index, stage) ->
+            stage.definition.hasExactIdentity(definition, index)
         }
-    }
 
-    private fun List<BrewStageAction>.precedes(
-        first: BrewStageAction,
-        second: BrewStageAction,
-    ): Boolean = indexOf(first).let { firstIndex ->
-        firstIndex >= 0 && firstIndex < indexOf(second)
+    private fun BrewStageDefinition.hasExactIdentity(
+        definition: BuiltInP1RecipeDefinition,
+        index: Int,
+    ): Boolean {
+        val sourceStageId = "stage_${(index + 1).toString().padStart(2, '0')}"
+        val identity = "p1_${definition.id.value}_$sourceStageId"
+        return id.value == identity && contentId.value == "${identity}_instruction"
     }
 
     private fun exactStagePlanId(definition: BuiltInP1RecipeDefinition): String =
@@ -588,6 +588,7 @@ class BuiltinBrewerSessionStartFactory(
     private fun validateSetup(
         input: BuiltinBrewerSessionStartInput,
         defaults: BrewerProfileRecipeDefaults,
+        isExactRecipe: Boolean,
     ): List<BuiltinBrewerSessionStartValidationIssue> = buildList {
         val hasValidDryCoffeeDose = input.dryCoffeeDoseG.isFinite() && input.dryCoffeeDoseG > 0.0
         if (!hasValidDryCoffeeDose) {
@@ -616,7 +617,7 @@ class BuiltinBrewerSessionStartFactory(
         }
 
         val capacityG = input.equipment.capacityOverrideG
-        val requiresExplicitCapacity =
+        val requiresExplicitCapacity = isExactRecipe ||
             input.brewerProfileId in BuiltinBrewerStagePlanFactory.supportedBrewerProfileIds
         val hasValidEquipmentCapacity = when {
             capacityG == null -> {
@@ -651,7 +652,7 @@ class BuiltinBrewerSessionStartFactory(
             ))
         }
         when (input.brewerProfileId) {
-            HARIO_SWITCH -> if (input.harioSwitchWorkflow == null) {
+            HARIO_SWITCH -> if (!isExactRecipe && input.harioSwitchWorkflow == null) {
                 add(BuiltinBrewerSessionStartValidationIssue(
                     BuiltinBrewerSessionStartValidationCode.HARIO_SWITCH_WORKFLOW_REQUIRED,
                 ))
@@ -738,12 +739,11 @@ class BuiltinBrewerSessionStartFactory(
 
     private companion object {
         const val EXACT_RECIPE_PLAN_ID_PREFIX = "builtin_recipe_"
+        const val EXACT_STAGE_PLAN_VERSION = 1
         const val EXACT_QUANTITY_TOLERANCE = 1e-6
 
         val HARIO_SWITCH = BrewerProfileId("hario_switch")
         val CEZVE_GENERIC = BrewerProfileId("cezve_generic")
-        val CLEVER_WATER_FIRST_RECIPE = BuiltInRecipeId("clever_water_first_15_250")
-        val CLEVER_COFFEE_FIRST_RECIPE = BuiltInRecipeId("clever_coffee_first_15_250")
         val SWITCH_OFFICIAL_RECIPE = BuiltInRecipeId("switch_official_20_240")
         val SWITCH_HYBRID_RECIPE = BuiltInRecipeId("switch_ole_boen_hybrid_16_5_240")
         val SWITCH_GRAVITY_RECIPE = BuiltInRecipeId("switch_gravity_15_250")
