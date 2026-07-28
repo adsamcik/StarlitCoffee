@@ -2004,6 +2004,89 @@ For every asset record:
   mobile-size legibility, and instruction-before-image placement before
   registration or approval.
 
+### `p1-v60-official-small-circle-pour-imagegen-v1`
+
+- Stable asset ID:
+  `instruction_p1_v60_official_15_250_stage_04_instruction_default`
+- Exact scope: `v60_official_15_250` / source `stage_04` /
+  `p1_v60_official_15_250_stage_04_instruction`; a single low gooseneck stream
+  stays within the center-to-mid coffee bed while a broad clean paper band
+  remains untouched around the standard V60 02.
+- Evidence: `SRC-HARIO-V60-OFFICIAL`. Reverified on 28 July 2026 against Hario
+  UK's current intermediate V60 guide at
+  <https://www.hario.co.uk/pages/brew-guides-v60-intermediate>.
+  The current first-party guide corroborates V60 02 and 02 paper, a slow
+  small-circle pour, the cumulative target, and the water-temperature range.
+  Numeric quantity, temperature, and scale completion remain in Compose text.
+- Generation mode: new bitmap generation with the built-in image generator;
+  no corrective edit was needed before pending-review delivery.
+- Generated: 28 July 2026.
+- Final prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for a
+  > mobile coffee-brewing guide. Show one coherent gentle final-pour action from
+  > an elevated near-top front three-quarter angle: an accurate unbranded
+  > standard transparent V60 02-style conical dripper with continuous curved
+  > spiral ribs, one correctly folded and fully seated rinsed white V60 02
+  > paper, centered level on a stable clear heat-safe glass server and a
+  > low-profile coffee scale whose display is turned away and unreadable. Make
+  > the inside boundary unmistakable: a pale clean paper wall forms a broad
+  > visible ring around a smaller dark coffee bed and calm brown slurry. One
+  > adult hand safely grips only the handle of a matte gooseneck kettle outside
+  > the hot-water path. The narrow gooseneck tip hovers low but safely above the
+  > cone and produces one thin, calm, nearly vertical stream onto the
+  > center-to-mid region of the dark coffee bed, well inside its boundary and
+  > visibly far from every exposed paper wall. Imply a compact controlled
+  > small-circle pour only through natural physical cues: position the stream
+  > slightly off center within the middle of the bed and show a subtle small
+  > circular wetting/ripple pattern contained entirely on the coffee surface,
+  > without any drawn path or arrow. Keep the slurry level modest and calm, the
+  > clean paper ring exposed, the stream low-energy, and the
+  > server/dripper/scale stable. Make the bed-versus-paper boundary, stream
+  > wholly over coffee, compact circle, gentle pour, safe kettle grip, and lack
+  > of flooding immediately legible at mobile size. Use a warm-neutral empty
+  > counter and soft plain background, semi-flat softly dimensional educational
+  > rendering, precise believable V60/glass/paper/kettle geometry, restrained
+  > clear-glass/white/charcoal/coffee-brown palette, clear silhouettes, soft
+  > light, subtle shadows, generous crop-safe breathing room, and no decorative
+  > objects. Include no text, letters, numbers, readable scale, temperature
+  > display, measurement marks, labels, logos, brand marks, arrows, drawn
+  > spiral, dotted path, callouts, panels, warning symbols, comparison, inset,
+  > cutaway, stream touching or running down the paper wall, extreme-perimeter
+  > pour, wide sweeping circle, high turbulent stream, splash, flood, overflow,
+  > dry grounds, violently spinning slurry, multiple streams, kettle spout
+  > buried in slurry, hand touching glass or paper, tilted dripper, unstable
+  > server, exact liquid level, Switch base/lever/ball, Clever actuator, Wave,
+  > wedge, basket, cloth, reusable metal, wrong-size, doubled, buckled or
+  > collapsed paper, second brewer, or clutter. The final output must be one
+  > opaque 1024 x 768 scene whose only story is a low gentle small-circle pour
+  > kept entirely over the coffee bed and away from the V60 paper wall.
+- Generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_4aH3DzA1KvmbdujlJJrPWxPn.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_v60_official_15_250_stage_04_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 84,150 bytes, exact 4:3.
+- Accessibility target: “A thin gooseneck stream lands inside the V60 coffee
+  bed while a clean paper band remains visible and untouched around it.” The
+  canonical exact-stage alt text remains “Instructional view of pour slowly in
+  small circles to 250 g using the exact brewer profile and filter
+  configuration stated in this recipe; scale reads 250 g.” The asset record
+  remains intentionally unregistered until localization and V60 pour-path
+  review are complete.
+- Inspection: no text, numbers, readable scale, logos, arrows, drawn path,
+  paper-wall pour, flooding, splash, dry grounds, unstable setup, hot-glass
+  contact, wrong filter, Switch/Clever mechanism, cutaway, or clutter. The
+  final frame shows one low thin stream just off center, a restrained circular
+  surface ripple fully within a dark bed, a broad pale paper boundary, standard
+  spiral ribs, a safe kettle grip, a stable server, and an unreadable scale.
+- Review status: **pending brewer-expert standard-V60 pour-path and fluid-state
+  review**. Confirm V60 02 proportions, folded paper fit, clear bed/paper
+  boundary, compact circle cue, stream position and energy, lack of wall
+  contact or flooding, server/scale stability, natural non-quantified beverage
+  level, mobile-size readability before the Learn warning, and
+  instruction-before-image placement before registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
