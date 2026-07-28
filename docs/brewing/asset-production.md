@@ -672,5 +672,10 @@ For every asset record:
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
+Run `python tools/verify_instruction_assets.py` after every asset batch. It
+fails on a malformed Android resource name, non-WebP content, a size other than
+1024 × 768, a non-RGB or animated payload, or an encoded size above 300,000
+bytes.
+
 No asset is release-complete until the manifest and automated validation pass and
 the physical review is signed off.
