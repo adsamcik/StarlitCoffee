@@ -49,9 +49,10 @@ fun BrewSessionGuidancePanel(
     val visibleContent = remember(resolution.routineContent, resolution.criticalContent) {
         (resolution.criticalContent + resolution.routineContent).distinctBy(ResolvedBrewGuidanceContent::id)
     }
+    val approvedVisual = resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved
     val shouldRender = resolution.policy != null ||
         visibleContent.isNotEmpty() ||
-        resolution.visualStatus !is DurableBrewGuidanceVisualStatus.NotRequested
+        approvedVisual != null
     if (!shouldRender) return
 
     Card(
@@ -69,6 +70,8 @@ fun BrewSessionGuidancePanel(
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.semantics { heading() },
             )
+
+            approvedVisual?.let { approved -> ApprovedInstructionAssetImage(approved.asset) }
 
             resolution.policy?.let { policy ->
                 GuidanceLevelControl(
@@ -89,12 +92,9 @@ fun BrewSessionGuidancePanel(
                 )
             }
 
+            // Production/review state is intentionally not user-facing. Missing or
+            // unapproved art fails closed while the localized instruction remains.
             visibleContent.forEach { content -> GuidanceContent(content) }
-            (resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved)
-                ?.let { approved ->
-                    ApprovedInstructionAssetImage(approved.asset)
-                }
-            GuidanceVisualStatus(resolution.visualStatus)
         }
     }
 }
@@ -173,31 +173,6 @@ private fun GuidanceContent(content: ResolvedBrewGuidanceContent) {
                 },
             )
         }
-    }
-}
-
-@Composable
-private fun GuidanceVisualStatus(status: DurableBrewGuidanceVisualStatus) {
-    val message = when (status) {
-        DurableBrewGuidanceVisualStatus.NotRequested -> null
-        DurableBrewGuidanceVisualStatus.RequiredAssetIdMissing,
-        is DurableBrewGuidanceVisualStatus.ManifestUnavailable,
-        is DurableBrewGuidanceVisualStatus.MissingFromManifest,
-        is DurableBrewGuidanceVisualStatus.ManifestScopeMismatch,
-        -> stringResource(R.string.msg_brew_guidance_asset_unavailable)
-
-        is DurableBrewGuidanceVisualStatus.NotApproved -> {
-            stringResource(R.string.msg_brew_guidance_asset_pending)
-        }
-
-        is DurableBrewGuidanceVisualStatus.Approved -> null
-    }
-    if (message != null) {
-        Text(
-            text = message,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
     }
 }
 
