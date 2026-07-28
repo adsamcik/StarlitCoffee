@@ -487,6 +487,126 @@ For every asset record:
   and post-warning Learn/Live placement before manifest registration or
   approval.
 
+### `p1-cup-one-setup-imagegen-v3`
+
+- Stable asset ID:
+  `instruction_p1_auto_cupone_20_300_stage_03_instruction_default`
+- Exact scope: `auto_cupone_20_300` / source `stage_03` /
+  `p1_auto_cupone_20_300_stage_03_instruction`; fresh cold reservoir input,
+  installed outlet pipe, #1 paper holder, and stable mug before power-on.
+- Evidence: `SRC-CUPONE-MANUAL`. Reverified on 28 July 2026 against the
+  current official Cup-One manual at
+  <https://www.moccamaster.eu/pub/media/handleidingen/talen/User_Manual_Cup-One.pdf>,
+  Moccamaster USA's May 2026 Cup-One brew-guide listing at
+  <https://support.moccamaster.com/hc/en-us/articles/1500009438902-Cup-One>,
+  and the current official product page at
+  <https://us.moccamaster.com/products/cup-one>. The current product guidance
+  continues to identify the 0.33 L single-cup body, #1 paper, outlet arm over
+  the brew basket, removable cup support, and fresh tap, filtered, or bottled
+  reservoir water.
+- Generation mode: new bitmap generation followed by two targeted corrective
+  image edits with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for
+  > a mobile coffee-brewing guide, readable at roughly 320 dp wide. Show an
+  > accurate unbranded Moccamaster Cup-One-style single-cup drip brewer in one
+  > stable pre-cycle setup, viewed from an elevated front three-quarter angle.
+  > Preserve the distinctive compact machine geometry: a tall rectangular
+  > metal heating column, a clear single-cup water reservoir beside it with its
+  > lid open, a correctly installed polished metal outlet arm/pipe extending
+  > from the column and centered directly over the small black Cup-One filter
+  > holder, and a broad stable heat-safe ceramic mug centered below on the
+  > machine's support. One relaxed hand pours fresh cold clear water from a
+  > plain small pitcher into only the open reservoir, stopping exactly at a
+  > subtle molded fill ridge with no printed marking or number. The outlet arm
+  > is fully seated in its socket and its end is directly above the center of
+  > one correctly seated small white #1 wedge paper filter inside the holder.
+  > Keep the holder level and attached, the mug broad and fully supported, and
+  > the power switch visibly unlit so the machine is clearly off. Show no
+  > coffee grounds in this setup stage. Compose the reservoir opening,
+  > qualitative water level, installed outlet arm, paper-lined holder, and mug
+  > support clearly in a single crop-safe frame, with no secondary action. Use
+  > a warm-neutral uncluttered background and counter, semi-flat softly
+  > dimensional educational rendering, precise believable product geometry,
+  > clear silhouettes, restrained materials, soft natural light, and subtle
+  > shadows. Do not omit, remove, tilt, disconnect, or point the outlet pipe
+  > away from the filter holder. Do not pour into the basket, paper, mug, or
+  > outlet pipe. No overfilled reservoir, printed measurements, active brew
+  > flow, drips, steam, glowing switch, moving parts, hot-part handling,
+  > removed basket, moving cup, pod or capsule machine, carafe batch brewer,
+  > generic showerhead, #2 cone or basket paper, narrow or unstable mug,
+  > spilled grounds, extra tools, text, letters, numbers, labels, logos, brand
+  > marks, arrows, callouts, diagrams, multiple panels, borders, or decorative
+  > clutter.
+- First corrective edit prompt:
+
+  > Edit the immediately previous Cup-One setup illustration while preserving
+  > its 4:3 framing, cold-water pour into the clear reservoir, installed
+  > centered metal outlet arm, stable broad mug, machine-off state,
+  > warm-neutral semi-flat educational rendering, and clear pre-cycle
+  > composition. Replace the oversized round handled cone basket with a
+  > compact model-specific Cup-One #1 filter holder: a small narrow black
+  > wedge/trapezoidal holder with no side handle, seated directly below the
+  > outlet arm, containing exactly one small white folded #1 wedge paper whose
+  > two flat sides and folded seam fit closely without flaring like a V60 cone
+  > or round basket. Keep the polished outlet pipe fully seated in the machine
+  > and center its downturned end directly over the small paper holder. Remove
+  > the printed O or any symbol from the power rocker; it must be a plain dark
+  > unlit control with no mark. Remove the plant, pots, jars, chair, and all
+  > decorative background objects so only the brewer, pitcher, hand, and
+  > stable mug remain on a simple uncluttered counter. Make the reservoir's
+  > current water surface meet a subtle molded horizontal fill ridge with no
+  > writing, number, tick marks, or printed graphic; the pouring stream may be
+  > just ending at that level, with no overflow. Do not alter the broad fully
+  > supported mug or add active coffee flow, steam, grounds, glow, hot-part
+  > contact, labels, text, numbers, logos, arrows, inset, extra panel, or
+  > clutter.
+- Final corrective edit prompt:
+
+  > Make one final precise mechanical correction to the immediately previous
+  > Cup-One pre-cycle illustration while preserving the 4:3 framing, compact
+  > #1 wedge paper and holder, cold-water pour, stable broad mug, unmarked
+  > unlit switch, clean background, warm-neutral educational style, and every
+  > other corrected detail. The small black filter holder must not appear to
+  > float or hang from the metal outlet pipe. Add a short rigid model-integrated
+  > black support bracket or slide rail from the machine column to the back of
+  > the holder, clearly holding the holder level and stable. Keep the holder
+  > separate from the polished outlet arm. Raise or shorten the outlet arm's
+  > downturned end so it stops just above the center of the open #1 paper with
+  > a small visible air gap; it must not touch, pierce, or carry the paper or
+  > holder. Add one subtle transparent molded horizontal fill ridge on the
+  > reservoir exactly at the current water surface, with no text, number,
+  > ticks, icon, or printing. Do not change the machine-off state or add flow,
+  > steam, grounds, labels, logo, arrow, inset, extra panel, decorative object,
+  > or clutter.
+- Rejected drafts: the initial render used an oversized round handled holder,
+  a printed power-control symbol, and decorative background objects. The first
+  edit corrected the compact #1 paper/holder and noise but left the holder
+  visually unsupported and the outlet pipe touching the paper. Neither draft
+  was copied into the repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_IVaYQbahuIN4Hh617nDU9C3N.png`
+  (opaque RGB PNG, 1448 × 1086 px, 1,998,431 bytes, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_auto_cupone_20_300_stage_03_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 × 768 px, 59,040 bytes, exact 4:3.
+- Accessibility target: “Fresh cold water is poured to the Cup-One reservoir
+  mark while the outlet pipe is centered over the #1 paper holder and a stable
+  mug.” The exact-stage alt-text resource and asset record remain intentionally
+  unregistered until localization and equipment review are complete.
+- Inspection: no text, numbers, logos, extra panel, grounds, hot flow, steam,
+  glow, hot-part contact, or decorative object. The final frame shows the
+  reservoir water meeting a qualitative molded ridge, the installed outlet
+  pipe ending above rather than supporting the paper, the compact #1 holder
+  fixed on a separate machine bracket, and the mug centered on a broad base.
+- Review status: **pending brewer-expert safety and equipment review**. Confirm
+  the exact Cup-One reservoir/column proportions, outlet-arm socket and
+  clearance, holder bracket, #1 paper fit, water-level interpretation,
+  machine-off state, mug clearance, and post-warning Learn/Live placement
+  before manifest registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
