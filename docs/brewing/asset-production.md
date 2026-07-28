@@ -321,6 +321,108 @@ For every asset record:
   server-rim actuation, stable capacity, hand clearance, and post-warning
   Learn/Live placement before manifest registration or approval.
 
+### `p1-switch-release-imagegen-v3`
+
+- Stable asset ID:
+  `instruction_p1_switch_official_20_240_stage_04_instruction_default`
+- Exact scope: `switch_official_20_240` / source `stage_04` /
+  `p1_switch_official_20_240_stage_04_instruction`; opening the Switch 02
+  trigger and steel-ball valve over a stable server.
+- Evidence: `SRC-HARIO-SWITCH`. Reverified on 28 July 2026 against Hario’s
+  current official product guidance at
+  <https://www.hario-usa.com/products/switch-immersion-dripper>, which still
+  identifies the glass 02 cone, standard 02 paper, silicone base, trigger,
+  stainless-steel ball, and trigger-initiated drawdown.
+- Generation mode: new bitmap generation followed by two targeted corrective
+  image edits with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 scientific-educational
+  > instructional illustration for a mobile coffee-brewing guide. Use a close
+  > elevated three-quarter view of an unbranded Hario Switch 02-style brewer
+  > centered over a broad stable heat-safe glass server: a handleless ribbed
+  > borosilicate V60 02 glass cone, correctly seated white V60 02 paper, intact
+  > dark silicone base, clear plastic trigger lever, and stainless-steel
+  > stopper ball. The brewer contains brewed coffee slurry with generous
+  > headroom and no implied exact quantity. Show one relaxed fingertip
+  > contacting only the cool outer trigger tab and flipping it into the
+  > documented open position. Make the mechanism physically coherent and
+  > readable at phone size: use a subtle educationally translucent view
+  > through the small front portion of the silicone base so the stainless-steel
+  > ball is visibly lifted from the outlet, while one vertical coffee stream
+  > has just begun draining into the centered server. Keep the hand clearly
+  > away from hot glass, liquid, metal ball, and underside. Semi-flat softly
+  > dimensional educational rendering, restrained warm-neutral palette, clear
+  > silhouettes, subtle shadows, uncluttered counter/background, crop-safe
+  > framing with all critical geometry away from rounded corners. No text,
+  > letters, numbers, measurement marks, labels, captions, logos, brand marks,
+  > UI, arrows, inset, split panel, comparison, glass handle, Clever body,
+  > server-rim actuator, tap, generic valve, closed ball, closed lever, no-flow
+  > state, fingers on hot parts, undersized or unstable server, kettle, active
+  > pour, stirring, serving, overflow, decoration, or clutter.
+- First corrective edit prompt:
+
+  > Edit the immediately previous Hario Switch 02 release illustration while
+  > preserving its clean 4:3 warm-neutral educational style, stable centered
+  > server, fingertip on only the cool clear trigger, and single initial coffee
+  > stream. Correct three exact mechanical details. First, show the
+  > stainless-steel stopper ball unmistakably open: the trigger’s inner lifting
+  > fork must physically raise the ball several millimetres above the circular
+  > outlet seat, with a clear visible air gap all around between ball and seat
+  > and coffee passing through that open gap into the central outlet. Do not
+  > leave the ball touching or sealing the seat. Second, replace the vertical
+  > straight ribs with the characteristic curved diagonal spiral ribs of a
+  > handleless glass V60 02 cone. Third, replace the scalloped/crimped paper rim
+  > with one correctly seated smooth white V60 02 conical paper, its seam/tab
+  > plausible and its rim not wavy. Keep the intact dark silicone Switch base
+  > and transparent educational window around only the lever-ball-seat
+  > relationship. Keep the hand away from glass, coffee, metal, and underside.
+  > No Clever actuator, handle, tap, closed valve, impossible floating ball,
+  > extra mechanism, text, numbers, logos, arrows, labels, inset, split panel,
+  > comparison, kettle, stirring, overflow, decoration, or clutter.
+- Final corrective edit prompt:
+
+  > Make one final precise mechanical edit to the immediately previous Switch
+  > illustration; preserve every other corrected detail, 4:3 framing,
+  > warm-neutral semi-flat style, diagonal V60 glass ribs, smooth seated V60 02
+  > paper, fingertip on the cool clear trigger, stable server, and coffee
+  > stream. Remove the invented vertical stem above the stainless-steel ball.
+  > Move the ball visibly upward so its lowest point is clearly separated from
+  > the black circular outlet seat below by a large clean gap approximately one
+  > quarter of the ball diameter. Show the inner end of the clear trigger as a
+  > physically connected lifting fork/ramp directly under one side of the ball,
+  > supporting it in this raised open position. The circular outlet seat must
+  > remain centered below the raised ball, and coffee must pass visibly through
+  > the open gap around the seat before exiting as the single stream. The ball
+  > must not touch the seat, float without support, attach to an upper rod, or
+  > block the outlet. Do not change or add anything else. No text, numbers,
+  > logos, arrows, labels, inset, extra panel, or clutter.
+- Rejected drafts: the initial render left the steel ball visually seated while
+  coffee flowed and used straight glass ribs plus a crimped paper rim. The
+  first edit corrected the cone and paper but retained an invented upper stem
+  and an ambiguous ball/seat gap. Neither draft was copied into the repository
+  or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_PVSSv7fepwMHE5DIHSSXtm3T.png`
+  (opaque RGB PNG, 1448 × 1086 px, 2,164,880 bytes, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_switch_official_20_240_stage_04_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 × 768 px, 90,364 bytes, exact 4:3.
+- Accessibility target: “A fingertip moves the Switch lever open while the
+  steel-ball valve lifts and coffee starts draining into a stable server.” The
+  exact-stage alt-text resource and asset record remain intentionally
+  unregistered until localization and geometry review are complete.
+- Inspection: no text, numbers, logos, extra panel, kettle, hot-part contact,
+  or secondary action. The final pass shows the handleless spiral-ribbed 02
+  glass cone, smooth 02 paper, fingertip on the external trigger, a visible
+  gap between the raised ball and centered outlet seat, and immediate vertical
+  drawdown.
+- Review status: **pending brewer-expert safety and mechanism review**. Confirm
+  the exact trigger/lifting-fork relationship, steel-ball travel and seat,
+  silicone-base proportions, paper fit, hand clearance, and post-warning
+  Learn/Live placement before manifest registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
