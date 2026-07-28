@@ -136,13 +136,22 @@ class HierarchicalOcrService(
     ): RecognizedText? {
         val bbox = block.boundingBox ?: return null
         val crop = cropAndMaybeUpscale(bitmap, bbox) ?: return null
-        return delegate.recognize(crop)
+        return try {
+            delegate.recognize(crop)
+        } finally {
+            crop.recycleIfOwned(bitmap)
+        }
     }
 
     /**
      * Crops [bitmap] to [bbox] with padding, then upscales when the smaller
      * dimension is below [TARGET_MIN_DIMENSION_PX] so the detector + recognizer
      * see the text region at higher relative resolution.
+     *
+     * The input is borrowed and never recycled. A returned bitmap that is
+     * distinct from [bitmap] is owned by the caller. Android may return the
+     * input itself for a full-frame crop, so callers must use identity rather
+     * than assuming every successful crop is owned.
      */
     internal fun cropAndMaybeUpscale(bitmap: Bitmap, bbox: Rect): Bitmap? {
         val padX = max(1, (bbox.width() * CROP_PADDING_FRACTION).toInt())
@@ -174,13 +183,27 @@ class HierarchicalOcrService(
         )
         val newW = (cropW * scale).toInt().coerceAtLeast(MIN_CROP_DIMENSION_PX)
         val newH = (cropH * scale).toInt().coerceAtLeast(MIN_CROP_DIMENSION_PX)
+        var scaledCrop: Bitmap? = null
+        var returningBaseCrop = false
         return try {
-            Bitmap.createScaledBitmap(baseCrop, newW, newH, /* filter = */ true)
+            Bitmap.createScaledBitmap(baseCrop, newW, newH, /* filter = */ true).also {
+                scaledCrop = it
+            }
         } catch (_: IllegalArgumentException) {
+            returningBaseCrop = true
             baseCrop
         } catch (_: OutOfMemoryError) {
+            returningBaseCrop = true
             baseCrop
+        } finally {
+            if (!returningBaseCrop && scaledCrop !== baseCrop) {
+                baseCrop.recycleIfOwned(bitmap)
+            }
         }
+    }
+
+    private fun Bitmap.recycleIfOwned(source: Bitmap) {
+        if (this !== source && !isRecycled) recycle()
     }
 
     companion object {

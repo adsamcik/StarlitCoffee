@@ -22,6 +22,12 @@ interface OcrService {
     /**
      * Recognise text in [bitmap]. Returns `null` when OCR is unavailable or
      * the call failed before producing a result.
+     *
+     * [bitmap] is borrowed for the duration of this call. Ownership remains
+     * with the caller: implementations must neither recycle it nor retain it
+     * after this suspend function returns or throws. Implementations own any
+     * intermediate bitmaps they allocate and must recycle them on success,
+     * failure, and cancellation.
      */
     suspend fun recognize(bitmap: Bitmap): RecognizedText?
 }
