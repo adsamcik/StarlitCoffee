@@ -1,9 +1,11 @@
 package com.adsamcik.starlitcoffee.domain.brewing.session
 
+import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.StagePlanId
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -91,6 +93,154 @@ class StagePlanCompilerTest {
 
         val invalid = result as StagePlanCompileResult.Invalid
         assertTrue(invalid.issues.any { it.code == StagePlanValidationCode.EMPTY_COMPILED_PLAN })
+    }
+
+    @Test
+    fun `reference targets preserve distinct cues and reject ambiguous duplicates`() {
+        assertThrows(IllegalArgumentException::class.java) {
+            StageReferenceTargets(
+                timeTargets = listOf(
+                    StageTimeTarget(
+                        id = StageTargetId("drip_complete"),
+                        reference = StageTimeReference.BREW_ELAPSED_AT_COMPLETION,
+                        qualifier = StageTargetQualifier.APPROXIMATE,
+                        minimumMillis = 30_000L,
+                    ),
+                    StageTimeTarget(
+                        id = StageTargetId("drip_complete"),
+                        reference = StageTimeReference.BREW_ELAPSED_AT_COMPLETION,
+                        qualifier = StageTargetQualifier.RANGE,
+                        minimumMillis = 40_000L,
+                        maximumMillis = 50_000L,
+                    ),
+                ),
+            )
+        }
+        val distinctDripCues = StageReferenceTargets(
+            timeTargets = listOf(
+                StageTimeTarget(
+                    id = StageTargetId("first_drip"),
+                    reference = StageTimeReference.BREW_ELAPSED_AT_COMPLETION,
+                    qualifier = StageTargetQualifier.NO_LATER_THAN,
+                    minimumMillis = 0L,
+                    maximumMillis = 120_000L,
+                ),
+                StageTimeTarget(
+                    id = StageTargetId("drip_complete"),
+                    reference = StageTimeReference.BREW_ELAPSED_AT_COMPLETION,
+                    qualifier = StageTargetQualifier.RANGE,
+                    minimumMillis = 300_000L,
+                    maximumMillis = 480_000L,
+                ),
+            ),
+        )
+
+        assertEquals(
+            listOf("first_drip", "drip_complete"),
+            distinctDripCues.timeTargets.map { target -> target.id.value },
+        )
+
+        assertThrows(IllegalArgumentException::class.java) {
+            StageReferenceTargets(
+                massTargets = listOf(
+                    StageMassTarget(
+                        id = StageTargetId("cumulative_water"),
+                        role = QuantityRole.BREW_WATER_INPUT,
+                        reference = StageMassReference.BREW_CUMULATIVE,
+                        qualifier = StageTargetQualifier.EXACT,
+                        minimumGrams = 100.0,
+                    ),
+                    StageMassTarget(
+                        id = StageTargetId("cumulative_water"),
+                        role = QuantityRole.BREW_WATER_INPUT,
+                        reference = StageMassReference.BREW_CUMULATIVE,
+                        qualifier = StageTargetQualifier.EXACT,
+                        minimumGrams = 200.0,
+                    ),
+                ),
+            )
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            StageTimeTarget(
+                id = StageTargetId("stage_duration"),
+                reference = StageTimeReference.STAGE_DURATION,
+                qualifier = StageTargetQualifier.EXACT,
+                minimumMillis = 30_000L,
+                maximumMillis = 45_000L,
+            )
+        }
+    }
+
+    @Test
+    fun `validator rejects a completion trigger outside its reference target`() {
+        val pour = stage(
+            id = "pour",
+            completion = StageCompletionMode.CumulativeAmount(100.0),
+        ).copy(
+            referenceTargets = StageReferenceTargets(
+                massTargets = listOf(
+                    StageMassTarget(
+                        id = StageTargetId("cumulative_water"),
+                        role = QuantityRole.BREW_WATER_INPUT,
+                        reference = StageMassReference.BREW_CUMULATIVE,
+                        qualifier = StageTargetQualifier.EXACT,
+                        minimumGrams = 200.0,
+                    ),
+                ),
+            ),
+        )
+        val plan = BrewStagePlan(
+            id = StagePlanId("contradictory_target_plan"),
+            version = 1,
+            nodes = listOf(StagePlanNode.Stage(pour)),
+        )
+
+        val result = StagePlanValidator.validate(plan)
+
+        assertTrue(result.issues.any { issue ->
+            issue.code == StagePlanValidationCode.INVALID_COMPLETION_TARGET
+        })
+    }
+
+    @Test
+    fun `elapsed completion and reference ranges use inclusive overlap boundaries`() {
+        fun timedStage(referenceStartMillis: Long): BrewStageDefinition = stage(
+            id = "drawdown",
+            completion = StageCompletionMode.ElapsedRange(
+                minimumMillis = 30_000L,
+                maximumMillis = 45_000L,
+            ),
+        ).copy(
+            referenceTargets = StageReferenceTargets(
+                timeTargets = listOf(
+                    StageTimeTarget(
+                        id = StageTargetId("drawdown_duration"),
+                        reference = StageTimeReference.STAGE_DURATION,
+                        qualifier = StageTargetQualifier.RANGE,
+                        minimumMillis = referenceStartMillis,
+                        maximumMillis = 60_000L,
+                    ),
+                ),
+            ),
+        )
+
+        fun validate(referenceStartMillis: Long): StagePlanValidationResult =
+            StagePlanValidator.validate(
+                BrewStagePlan(
+                    id = StagePlanId("drawdown_$referenceStartMillis"),
+                    version = 1,
+                    nodes = listOf(
+                        StagePlanNode.Stage(timedStage(referenceStartMillis)),
+                    ),
+                ),
+            )
+
+        assertTrue(validate(45_000L).isValid)
+        assertTrue(
+            validate(45_001L).issues.any { issue ->
+                issue.code == StagePlanValidationCode.INVALID_COMPLETION_TARGET
+            },
+        )
     }
 
     private fun stage(

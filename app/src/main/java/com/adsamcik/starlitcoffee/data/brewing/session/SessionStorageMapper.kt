@@ -240,6 +240,7 @@ object SessionStorageMapper {
         },
         requiredEquipmentStateId = equipmentRequirement?.requiredState?.value,
         completion = completionMode.toSnapshot(),
+        referenceTargets = StageReferenceTargetsSnapshotMapper.toSnapshot(referenceTargets),
         alertPolicy = StageAlertPolicySnapshotV1(
             alertOnStart = alertPolicy.alertOnStart,
             alertOnCompletion = alertPolicy.alertOnCompletion,
@@ -412,6 +413,7 @@ object SessionStorageMapper {
             StageEquipmentRequirement(StageEquipmentStateId(stateId))
         },
         completionMode = completion.toDomain(),
+        referenceTargets = StageReferenceTargetsSnapshotMapper.toDomain(referenceTargets),
         alertPolicy = StageAlertPolicy(
             alertOnStart = alertPolicy.alertOnStart,
             alertOnCompletion = alertPolicy.alertOnCompletion,

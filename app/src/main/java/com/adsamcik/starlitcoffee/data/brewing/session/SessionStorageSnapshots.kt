@@ -49,6 +49,7 @@ data class BrewStageDefinitionSnapshotV1(
     val safetyMessages: List<StageSafetyMessageSnapshotV1> = emptyList(),
     val requiredEquipmentStateId: String? = null,
     val completion: StageCompletionModeSnapshotV1,
+    val referenceTargets: StageReferenceTargetsSnapshotV1 = StageReferenceTargetsSnapshotV1(),
     val alertPolicy: StageAlertPolicySnapshotV1 = StageAlertPolicySnapshotV1(),
     val isSkippable: Boolean = false,
 )
@@ -93,6 +94,41 @@ data class StageCompletionModeSnapshotV1(
         const val EXTERNAL_MARKER = "EXTERNAL_MARKER"
     }
 }
+
+@Serializable
+data class StageReferenceTargetsSnapshotV1(
+    val timeTargets: List<StageTimeTargetSnapshotV1> = emptyList(),
+    val massTargets: List<StageMassTargetSnapshotV1> = emptyList(),
+    val temperatureTarget: StageTemperatureTargetSnapshotV1? = null,
+)
+
+@Serializable
+data class StageTimeTargetSnapshotV1(
+    val id: String? = null,
+    val reference: String,
+    val qualifier: String,
+    val minimumMillis: Long,
+    val maximumMillis: Long,
+)
+
+@Serializable
+data class StageMassTargetSnapshotV1(
+    val id: String? = null,
+    val role: String? = null,
+    val reference: String? = null,
+    /** Legacy pre-role discriminator retained for tolerant V1 restoration. */
+    val kind: String? = null,
+    val qualifier: String,
+    val minimumGrams: Double,
+    val maximumGrams: Double,
+)
+
+@Serializable
+data class StageTemperatureTargetSnapshotV1(
+    val qualifier: String,
+    val minimumC: Double,
+    val maximumC: Double,
+)
 
 /** Runtime-only fields stored separately from the immutable compiled plan. */
 @Serializable

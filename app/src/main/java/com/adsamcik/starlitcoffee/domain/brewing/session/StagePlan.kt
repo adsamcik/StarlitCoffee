@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.domain.brewing.session
 
 import com.adsamcik.starlitcoffee.domain.brewing.InstructionAssetId
+import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.StagePlanId
@@ -126,10 +127,118 @@ data class StageAlertPolicy(
     val scheduleDeadline: Boolean = true,
 )
 
+/** How literally a source target should be interpreted by guidance and utilities. */
+enum class StageTargetQualifier {
+    EXACT,
+    APPROXIMATE,
+    RANGE,
+    NO_LATER_THAN,
+    NO_EARLIER_THAN,
+    STARTING_POINT,
+}
+
+/** Stable identity of one source cue when a stage exposes several reference targets. */
+@JvmInline
+value class StageTargetId(val value: String) {
+    init {
+        requireStagePlanIdentifier(value, "Stage target IDs")
+    }
+}
+
+/** Time targets can describe the current stage or the complete brew clock. */
+enum class StageTimeReference {
+    STAGE_DURATION,
+    BREW_ELAPSED_AT_START,
+    BREW_ELAPSED_AT_COMPLETION,
+}
+
+data class StageTimeTarget(
+    val reference: StageTimeReference,
+    val id: StageTargetId,
+    val qualifier: StageTargetQualifier,
+    val minimumMillis: Long,
+    val maximumMillis: Long = minimumMillis,
+) {
+    init {
+        require(minimumMillis >= 0L) { "Time-target minimum cannot be negative" }
+        require(maximumMillis >= minimumMillis) { "Time-target maximum cannot precede minimum" }
+        if (qualifier == StageTargetQualifier.EXACT) {
+            require(minimumMillis == maximumMillis) { "An exact time target must have one value" }
+        }
+    }
+}
+
+enum class StageMassReference {
+    STAGE_ADDED,
+    BREW_CUMULATIVE,
+    RECIPE_TOTAL,
+}
+
+data class StageMassTarget(
+    val id: StageTargetId,
+    val role: QuantityRole,
+    val reference: StageMassReference,
+    val qualifier: StageTargetQualifier,
+    val minimumGrams: Double,
+    val maximumGrams: Double = minimumGrams,
+) {
+    init {
+        require(minimumGrams.isFinite() && minimumGrams > 0.0) {
+            "Mass-target minimum must be positive and finite"
+        }
+        require(maximumGrams.isFinite() && maximumGrams >= minimumGrams) {
+            "Mass-target maximum cannot precede minimum"
+        }
+        if (qualifier == StageTargetQualifier.EXACT) {
+            require(minimumGrams == maximumGrams) { "An exact mass target must have one value" }
+        }
+    }
+}
+
+data class StageTemperatureTarget(
+    val qualifier: StageTargetQualifier,
+    val minimumC: Double,
+    val maximumC: Double = minimumC,
+) {
+    init {
+        require(minimumC.isFinite() && minimumC in 0.0..100.0) {
+            "Temperature-target minimum is invalid"
+        }
+        require(maximumC.isFinite() && maximumC in minimumC..100.0) {
+            "Temperature-target maximum cannot precede minimum"
+        }
+        if (qualifier == StageTargetQualifier.EXACT) {
+            require(minimumC == maximumC) { "An exact temperature target must have one value" }
+        }
+    }
+}
+
 /**
- * A completion rule has all of its target data in one immutable value. This
- * prevents a stage from carrying a timer target which is accidentally read as
- * a mass target by a renderer or reducer.
+ * Source reference values shown alongside, but independent from, the single
+ * completion trigger. A pour can therefore retain both its mass target and a
+ * total-elapsed cue without asking the reducer to guess which value advances
+ * the stage.
+ */
+data class StageReferenceTargets(
+    val timeTargets: List<StageTimeTarget> = emptyList(),
+    val massTargets: List<StageMassTarget> = emptyList(),
+    val temperatureTarget: StageTemperatureTarget? = null,
+) {
+    init {
+        require(timeTargets.map(StageTimeTarget::id).distinct().size == timeTargets.size) {
+            "A stage cannot define two reference targets with the same stable ID"
+        }
+        require(massTargets.map(StageMassTarget::id).distinct().size == massTargets.size) {
+            "A stage cannot define two mass targets with the same stable ID"
+        }
+    }
+}
+
+/**
+ * A completion rule has all data for its single trigger in one immutable
+ * value. Additional source reference targets stay in [StageReferenceTargets],
+ * preventing a timer cue from being interpreted as a mass trigger by a
+ * renderer or reducer.
  */
 sealed interface StageCompletionMode {
     data object Manual : StageCompletionMode
@@ -169,6 +278,7 @@ data class BrewStageDefinition(
     val safetyMessages: List<StageSafetyMessage> = emptyList(),
     val equipmentRequirement: StageEquipmentRequirement? = null,
     val completionMode: StageCompletionMode,
+    val referenceTargets: StageReferenceTargets = StageReferenceTargets(),
     val alertPolicy: StageAlertPolicy = StageAlertPolicy(),
     val isSkippable: Boolean = false,
 )
@@ -273,66 +383,14 @@ object StagePlanValidator {
         context: StagePlanValidationContext = StagePlanValidationContext(),
     ): StagePlanValidationResult {
         val issues = mutableListOf<StagePlanValidationIssue>()
-        val seenStages = mutableSetOf<StageId>()
         val seenRepeats = mutableSetOf<StageRepeatId>()
+        val stageValidation = StageDefinitionValidationPass(context, issues)
 
         if (plan.version <= 0) {
             issues += StagePlanValidationIssue(StagePlanValidationCode.INVALID_PLAN_VERSION, "plan")
         }
         if (plan.nodes.isEmpty()) {
             issues += StagePlanValidationIssue(StagePlanValidationCode.EMPTY_PLAN, "plan")
-        }
-
-        fun validateStage(
-            stage: BrewStageDefinition,
-            path: String,
-            isConditionallyVisible: Boolean,
-        ) {
-            if (!seenStages.add(stage.id)) {
-                issues += StagePlanValidationIssue(StagePlanValidationCode.DUPLICATE_STAGE_ID, path)
-            }
-            if (context.knownContentIds?.contains(stage.contentId) == false) {
-                issues += StagePlanValidationIssue(StagePlanValidationCode.UNKNOWN_CONTENT, path)
-            }
-            if (stage.requiresIllustration && stage.instructionAssetId == null) {
-                issues += StagePlanValidationIssue(
-                    StagePlanValidationCode.MISSING_INSTRUCTION_ASSET,
-                    path,
-                )
-            }
-            if (
-                stage.instructionAssetId != null &&
-                context.knownInstructionAssetIds?.contains(stage.instructionAssetId) == false
-            ) {
-                issues += StagePlanValidationIssue(
-                    StagePlanValidationCode.UNKNOWN_INSTRUCTION_ASSET,
-                    path,
-                )
-            }
-            if (
-                stage.equipmentRequirement != null &&
-                context.availableEquipmentStates?.contains(stage.equipmentRequirement.requiredState) == false
-            ) {
-                issues += StagePlanValidationIssue(
-                    StagePlanValidationCode.INCOMPATIBLE_EQUIPMENT_STATE,
-                    path,
-                )
-            }
-            if (
-                isConditionallyVisible &&
-                stage.safetyMessages.any { it.severity == StageSafetySeverity.CRITICAL }
-            ) {
-                issues += StagePlanValidationIssue(
-                    StagePlanValidationCode.HIDDEN_CRITICAL_SAFETY,
-                    path,
-                )
-            }
-            if (!stage.completionMode.isValid()) {
-                issues += StagePlanValidationIssue(
-                    StagePlanValidationCode.INVALID_COMPLETION_TARGET,
-                    path,
-                )
-            }
         }
 
         fun validateNodes(
@@ -343,7 +401,7 @@ object StagePlanValidator {
             nodes.forEachIndexed { index, node ->
                 val nodePath = "$path/$index"
                 when (node) {
-                    is StagePlanNode.Stage -> validateStage(
+                    is StagePlanNode.Stage -> stageValidation.validate(
                         stage = node.definition,
                         path = nodePath,
                         isConditionallyVisible = isConditionallyVisible,
@@ -393,6 +451,80 @@ object StagePlanValidator {
         validateNodes(plan.nodes, "plan", isConditionallyVisible = false)
         return StagePlanValidationResult(issues)
     }
+}
+
+private class StageDefinitionValidationPass(
+    private val context: StagePlanValidationContext,
+    private val issues: MutableList<StagePlanValidationIssue>,
+) {
+    private val seenStages = mutableSetOf<StageId>()
+
+    fun validate(
+        stage: BrewStageDefinition,
+        path: String,
+        isConditionallyVisible: Boolean,
+    ) {
+        if (!seenStages.add(stage.id)) {
+            issues += StagePlanValidationIssue(StagePlanValidationCode.DUPLICATE_STAGE_ID, path)
+        }
+        if (context.knownContentIds?.contains(stage.contentId) == false) {
+            issues += StagePlanValidationIssue(StagePlanValidationCode.UNKNOWN_CONTENT, path)
+        }
+        if (stage.requiresIllustration && stage.instructionAssetId == null) {
+            issues += StagePlanValidationIssue(
+                StagePlanValidationCode.MISSING_INSTRUCTION_ASSET,
+                path,
+            )
+        }
+        if (
+            stage.instructionAssetId != null &&
+            context.knownInstructionAssetIds?.contains(stage.instructionAssetId) == false
+        ) {
+            issues += StagePlanValidationIssue(
+                StagePlanValidationCode.UNKNOWN_INSTRUCTION_ASSET,
+                path,
+            )
+        }
+        if (
+            stage.equipmentRequirement != null &&
+            context.availableEquipmentStates?.contains(
+                stage.equipmentRequirement.requiredState,
+            ) == false
+        ) {
+            issues += StagePlanValidationIssue(
+                StagePlanValidationCode.INCOMPATIBLE_EQUIPMENT_STATE,
+                path,
+            )
+        }
+        if (
+            isConditionallyVisible &&
+            stage.safetyMessages.any { it.severity == StageSafetySeverity.CRITICAL }
+        ) {
+            issues += StagePlanValidationIssue(
+                StagePlanValidationCode.HIDDEN_CRITICAL_SAFETY,
+                path,
+            )
+        }
+        if (
+            !StageCompletionContractValidator.isValid(
+                stage.completionMode,
+                stage.referenceTargets,
+            )
+        ) {
+            issues += StagePlanValidationIssue(
+                StagePlanValidationCode.INVALID_COMPLETION_TARGET,
+                path,
+            )
+        }
+    }
+}
+
+private object StageCompletionContractValidator {
+
+    fun isValid(
+        completionMode: StageCompletionMode,
+        targets: StageReferenceTargets,
+    ): Boolean = completionMode.isValid() && completionMode.isConsistentWith(targets)
 
     private fun StageCompletionMode.isValid(): Boolean = when (this) {
         StageCompletionMode.Immediate,
@@ -411,6 +543,57 @@ object StagePlanValidator {
         is StageCompletionMode.ObservedEvent,
         -> true
     }
+
+    private fun StageCompletionMode.isConsistentWith(
+        targets: StageReferenceTargets,
+    ): Boolean = when (this) {
+        is StageCompletionMode.Countdown -> targets.timeTargetsFor(StageTimeReference.STAGE_DURATION)
+            .let { candidates -> candidates.isEmpty() || candidates.any { it.contains(durationMillis) } }
+
+        is StageCompletionMode.ElapsedRange -> targets.timeTargetsFor(StageTimeReference.STAGE_DURATION)
+            .let { candidates ->
+                candidates.isEmpty() || candidates.any { it.overlaps(minimumMillis, maximumMillis) }
+            }
+
+        is StageCompletionMode.AddedAmount -> targets.massTargetsFor(
+            role = QuantityRole.BREW_WATER_INPUT,
+            reference = StageMassReference.STAGE_ADDED,
+        ).let { candidates -> candidates.isEmpty() || candidates.any { it.contains(targetGrams) } }
+
+        is StageCompletionMode.CumulativeAmount -> targets.massTargetsFor(
+            role = QuantityRole.BREW_WATER_INPUT,
+            reference = StageMassReference.BREW_CUMULATIVE,
+        ).let { candidates -> candidates.isEmpty() || candidates.any { it.contains(targetGrams) } }
+
+        is StageCompletionMode.BeverageYield -> targets.massTargetsFor(
+            role = QuantityRole.BEVERAGE_YIELD,
+            reference = StageMassReference.RECIPE_TOTAL,
+        ).let { candidates -> candidates.isEmpty() || candidates.any { it.contains(targetGrams) } }
+
+        StageCompletionMode.Immediate,
+        StageCompletionMode.Manual,
+        is StageCompletionMode.ExternalMarker,
+        is StageCompletionMode.ObservedEvent,
+        -> true
+    }
+
+    private fun StageReferenceTargets.timeTargetsFor(reference: StageTimeReference): List<StageTimeTarget> =
+        timeTargets.filter { target -> target.reference == reference }
+
+    private fun StageReferenceTargets.massTargetsFor(
+        role: QuantityRole,
+        reference: StageMassReference,
+    ): List<StageMassTarget> = massTargets.filter { target ->
+        target.role == role && target.reference == reference
+    }
+
+    private fun StageTimeTarget.contains(value: Long): Boolean = value in minimumMillis..maximumMillis
+
+    private fun StageTimeTarget.overlaps(minimum: Long, maximum: Long): Boolean =
+        minimum <= maximumMillis && maximum >= minimumMillis
+
+    private fun StageMassTarget.contains(value: Double): Boolean =
+        value >= minimumGrams && value <= maximumGrams
 }
 
 /** Expands bounded branches into the sequence persisted with a brew session. */

@@ -1,6 +1,8 @@
 package com.adsamcik.starlitcoffee.data.brewing.session
 
+import com.adsamcik.starlitcoffee.data.brewing.snapshot.SnapshotDecodeResult
 import com.adsamcik.starlitcoffee.domain.brewing.InstructionAssetId
+import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.StagePlanId
@@ -26,12 +28,21 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StageEquipmentRequireme
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageEquipmentStateId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageMarkerId
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageMassReference
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageMassTarget
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageObservationId
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageReferenceTargets
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageRunStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageRuntimeProgress
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetId
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTemperatureTarget
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTimeReference
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTimeTarget
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -52,11 +63,104 @@ class SessionStorageMapperTest {
         assertEquals(state, restored.value.state)
         assertEquals(context, restored.value.executionContext)
         assertTrue(documents.compiledPlanJson.contains("\"kind\":\"COUNTDOWN\""))
+        assertTrue(documents.compiledPlanJson.contains("\"reference\":\"STAGE_DURATION\""))
+        assertTrue(documents.compiledPlanJson.contains("\"role\":\"BREW_WATER_INPUT\""))
+        assertTrue(documents.compiledPlanJson.contains("\"reference\":\"BREW_CUMULATIVE\""))
+        assertTrue(documents.compiledPlanJson.contains("\"minimumC\":92.0"))
         assertTrue(documents.runtimeJson.contains("\"kind\":\"STAGE_ALERT\""))
         assertTrue(documents.runtimeJson.contains("\"kind\":\"SCHEDULE_STAGE_DEADLINE\""))
         assertTrue(documents.runtimeJson.contains("\"kind\":\"CANCEL_STAGE_DEADLINE\""))
         assertTrue(documents.runtimeJson.contains("\"kind\":\"FINALIZE_BREW_LOG\""))
         assertTrue(documents.runtimeJson.contains("\"kind\":\"CANCEL_SESSION_WORK\""))
+    }
+
+    @Test
+    fun `pre-reference-target V1 plan restores with empty source cues`() {
+        val legacyPlanJson =
+            """
+            {
+              "schemaVersion": 1,
+              "stagePlanId": "legacy_plan",
+              "stagePlanVersion": 1,
+              "stages": [
+                {
+                  "instance": {
+                    "sourceStageId": "legacy_stage",
+                    "occurrence": 1
+                  },
+                  "definition": {
+                    "stageId": "legacy_stage",
+                    "action": "CUSTOM",
+                    "contentId": "legacy_content",
+                    "completion": { "kind": "MANUAL" }
+                  }
+                }
+              ]
+            }
+            """.trimIndent()
+        val decodedPlan = (
+            SessionStorageSnapshotCodec.decodeCompiledPlan(legacyPlanJson)
+                as SnapshotDecodeResult.Decoded
+            ).value
+        val restored = SessionStorageMapper.restore(
+            SessionStorageSnapshots(
+                compiledPlan = decodedPlan,
+                runtime = SessionRuntimeSnapshotV1(
+                    sessionId = "legacy_session",
+                    status = BrewSessionStatus.READY.name,
+                    currentStageIndex = 0,
+                    stageProgress = listOf(
+                        StageRuntimeProgressSnapshotV1(status = StageRunStatus.PENDING.name),
+                    ),
+                ),
+                executionContext = sampleContext(),
+            ),
+        ) as SessionStorageRestoreResult.Restored
+
+        assertEquals(
+            StageReferenceTargets(),
+            restored.value.state.stagePlan.stages.single().definition.referenceTargets,
+        )
+    }
+
+    @Test
+    fun `legacy mass discriminators restore every supported quantity semantic`() {
+        fun legacyTarget(kind: String) = StageMassTargetSnapshotV1(
+            kind = kind,
+            qualifier = StageTargetQualifier.EXACT.name,
+            minimumGrams = 100.0,
+            maximumGrams = 100.0,
+        )
+
+        val restored = StageReferenceTargetsSnapshotMapper.toDomain(
+            StageReferenceTargetsSnapshotV1(
+                massTargets = listOf(
+                    legacyTarget("ADDED_WATER"),
+                    legacyTarget("CUMULATIVE_WATER"),
+                    legacyTarget("BEVERAGE_YIELD"),
+                ),
+            ),
+        )
+
+        assertEquals(
+            listOf(
+                QuantityRole.BREW_WATER_INPUT to StageMassReference.STAGE_ADDED,
+                QuantityRole.BREW_WATER_INPUT to StageMassReference.BREW_CUMULATIVE,
+                QuantityRole.BEVERAGE_YIELD to StageMassReference.RECIPE_TOTAL,
+            ),
+            restored.massTargets.map { target -> target.role to target.reference },
+        )
+        assertThrows(IllegalArgumentException::class.java) {
+            StageReferenceTargetsSnapshotMapper.toDomain(
+                StageReferenceTargetsSnapshotV1(
+                    massTargets = listOf(
+                        legacyTarget("ADDED_WATER").copy(
+                            role = QuantityRole.BREW_WATER_INPUT.name,
+                        ),
+                    ),
+                ),
+            )
+        }
     }
 
     @Test
@@ -79,7 +183,11 @@ class SessionStorageMapperTest {
         val snapshots = SessionStorageMapper.snapshot(sampleState(), sampleContext())
         val invalidPlan = snapshots.compiledPlan.copy(
             stages = snapshots.compiledPlan.stages.map { stage ->
-                stage.copy(definition = stage.definition.copy(completion = stage.definition.completion.copy(kind = "FUTURE_MODE")))
+                stage.copy(
+                    definition = stage.definition.copy(
+                        completion = stage.definition.completion.copy(kind = "FUTURE_MODE"),
+                    ),
+                )
             },
         )
         val invalidPlanJson = SessionStorageSnapshotCodec.encodeCompiledPlan(invalidPlan)
@@ -93,6 +201,88 @@ class SessionStorageMapperTest {
         assertEquals(SessionStorageDocument.COMPILED_PLAN, restored.document)
         assertTrue(restored.reason.contains("Unknown stage completion discriminator"))
         assertEquals(invalidPlanJson, restored.rawJson)
+    }
+
+    @Test
+    fun `unknown reference target discriminator is invalid with its raw document retained`() {
+        val snapshots = SessionStorageMapper.snapshot(sampleState(), sampleContext())
+        val invalidPlan = snapshots.compiledPlan.copy(
+            stages = snapshots.compiledPlan.stages.mapIndexed { index, stage ->
+                if (index != 0) {
+                    stage
+                } else {
+                    stage.copy(
+                        definition = stage.definition.copy(
+                            referenceTargets = stage.definition.referenceTargets.copy(
+                                timeTargets = stage.definition.referenceTargets.timeTargets.map { target ->
+                                    target.copy(reference = "FUTURE_CLOCK")
+                                },
+                            ),
+                        ),
+                    )
+                }
+            },
+        )
+        val invalidPlanJson = SessionStorageSnapshotCodec.encodeCompiledPlan(invalidPlan)
+
+        val restored = SessionStorageMapper.decodeAndRestore(
+            compiledPlanJson = invalidPlanJson,
+            runtimeJson = SessionStorageSnapshotCodec.encodeRuntime(snapshots.runtime),
+            executionContextJson = SessionStorageSnapshotCodec.encodeExecutionContext(snapshots.executionContext),
+        ) as SessionStorageRestoreResult.InvalidDocument
+
+        assertEquals(SessionStorageDocument.COMPILED_PLAN, restored.document)
+        assertTrue(restored.reason.contains("Unknown time reference"))
+        assertEquals(invalidPlanJson, restored.rawJson)
+    }
+
+    @Test
+    fun `reference targets without cue IDs receive deterministic legacy identities`() {
+        val snapshots = SessionStorageMapper.snapshot(sampleState(), sampleContext())
+        val legacyPlan = snapshots.compiledPlan.copy(
+            stages = snapshots.compiledPlan.stages.map { stage ->
+                stage.copy(
+                    definition = stage.definition.copy(
+                        referenceTargets = stage.definition.referenceTargets.copy(
+                            timeTargets = stage.definition.referenceTargets.timeTargets.map { target ->
+                                target.copy(id = null)
+                            },
+                            massTargets = stage.definition.referenceTargets.massTargets
+                                .mapIndexed { index, target ->
+                                    target.copy(
+                                        id = null,
+                                        role = null,
+                                        reference = null,
+                                        kind = listOf("ADDED_WATER", "CUMULATIVE_WATER")[index],
+                                    )
+                                },
+                        ),
+                    ),
+                )
+            },
+        )
+
+        val restored = SessionStorageMapper.restore(
+            snapshots.copy(compiledPlan = legacyPlan),
+        ) as SessionStorageRestoreResult.Restored
+
+        assertEquals(
+            listOf(
+                "stage_duration_1",
+                "brew_elapsed_at_start_2",
+                "brew_elapsed_at_completion_3",
+            ),
+            restored.value.state.stagePlan.stages.first().definition.referenceTargets.timeTargets
+                .map { target -> target.id.value },
+        )
+        assertEquals(
+            listOf(
+                "brew_water_input_stage_added_1",
+                "brew_water_input_brew_cumulative_2",
+            ),
+            restored.value.state.stagePlan.stages.first().definition.referenceTargets.massTargets
+                .map { target -> target.id.value },
+        )
     }
 
     @Test
@@ -117,6 +307,50 @@ class SessionStorageMapperTest {
                 ),
                 equipmentRequirement = StageEquipmentRequirement(StageEquipmentStateId("filter_rinsed")),
                 completionMode = StageCompletionMode.Countdown(30_000L),
+                referenceTargets = StageReferenceTargets(
+                    timeTargets = listOf(
+                        StageTimeTarget(
+                            id = StageTargetId("bloom_duration"),
+                            reference = StageTimeReference.STAGE_DURATION,
+                            qualifier = StageTargetQualifier.APPROXIMATE,
+                            minimumMillis = 30_000L,
+                        ),
+                        StageTimeTarget(
+                            id = StageTargetId("bloom_start"),
+                            reference = StageTimeReference.BREW_ELAPSED_AT_START,
+                            qualifier = StageTargetQualifier.EXACT,
+                            minimumMillis = 0L,
+                        ),
+                        StageTimeTarget(
+                            id = StageTargetId("bloom_complete"),
+                            reference = StageTimeReference.BREW_ELAPSED_AT_COMPLETION,
+                            qualifier = StageTargetQualifier.RANGE,
+                            minimumMillis = 30_000L,
+                            maximumMillis = 45_000L,
+                        ),
+                    ),
+                    massTargets = listOf(
+                        StageMassTarget(
+                            id = StageTargetId("bloom_added_water"),
+                            role = QuantityRole.BREW_WATER_INPUT,
+                            reference = StageMassReference.STAGE_ADDED,
+                            qualifier = StageTargetQualifier.EXACT,
+                            minimumGrams = 60.0,
+                        ),
+                        StageMassTarget(
+                            id = StageTargetId("bloom_cumulative_water"),
+                            role = QuantityRole.BREW_WATER_INPUT,
+                            reference = StageMassReference.BREW_CUMULATIVE,
+                            qualifier = StageTargetQualifier.EXACT,
+                            minimumGrams = 60.0,
+                        ),
+                    ),
+                    temperatureTarget = StageTemperatureTarget(
+                        qualifier = StageTargetQualifier.RANGE,
+                        minimumC = 92.0,
+                        maximumC = 96.0,
+                    ),
+                ),
                 alertPolicy = StageAlertPolicy(alertOnStart = true, alertOnCompletion = true),
             ),
         )

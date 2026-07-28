@@ -15,6 +15,16 @@ Plans contain typed actions, targets, content IDs, completion modes, alert
 policies, safety messages, and bounded optional/repeated sections. A compiler
 expands the bounded portions into a deterministic executable sequence.
 
+Each stage has exactly one completion trigger. Source reference values are
+stored separately as typed time, water-mass, beverage-yield, and temperature
+targets with exact, approximate, range, deadline, or starting-point semantics.
+Each reference target has a stable cue ID, allowing first-flow and final-flow
+cues to share one brew clock without collapsing into one averaged target.
+This allows a pour to retain both a cumulative-water target and an elapsed-time
+cue without making the reducer guess which value advances the stage. Compiled
+sessions persist both contracts so an in-progress brew does not change when the
+built-in catalogue evolves.
+
 A pure session reducer receives events such as start, pause, timer reconcile,
 manual advance, observed event, actual-value entry, cancel, and finish. It
 returns next runtime state plus idempotent effects. Consequential state is
