@@ -669,6 +669,98 @@ For every asset record:
   post-instruction Learn/Live placement before manifest registration or
   approval.
 
+### `p1-cup-one-paper-and-outlet-imagegen-v2`
+
+- Stable asset ID:
+  `instruction_p1_auto_cupone_20_300_stage_01_instruction_default`
+- Exact scope: `auto_cupone_20_300` / source `stage_01` /
+  `p1_auto_cupone_20_300_stage_01_instruction`; one correctly seated No. 1
+  cone paper and a visibly unobstructed model-specific drip hole while the
+  brewer remains off.
+- Evidence: `SRC-CUPONE-MANUAL`. Reverified on 28 July 2026 against the
+  current official Cup-One quick guide at
+  <https://support.moccamaster.com/hc/en-us/article_attachments/1500014620701>,
+  the current Cup-One user manual at
+  <https://www.moccamaster.eu/pub/media/handleidingen/talen/User_Manual_Cup-One.pdf>,
+  and Moccamaster USA's current product page at
+  <https://us.moccamaster.com/products/cup-one>. These sources continue to
+  require one No. 1 cone paper and identify the small drip hole as a cleaning
+  and overflow-prevention point.
+- Generation mode: new bitmap generation followed by one targeted corrective
+  image edit with the built-in image generator.
+- Generated: 28 July 2026.
+- Base prompt:
+
+  > Create one original, clean, text-free 4:3 instructional illustration for
+  > a mobile coffee-brewing guide. Use a close elevated three-quarter view of
+  > the detached brew basket/filter holder from an accurate unbranded
+  > Moccamaster Cup-One-style single-cup brewer. Show exactly one correctly
+  > shaped No. 1 cone paper fully opened and seated smoothly inside the dry
+  > holder. Angle the supported holder just enough that its model-specific
+  > single tiny bottom drip hole is clearly visible and completely
+  > unobstructed, while the paper seating remains easy to read. Keep the
+  > switched-off brewer in the soft background with no illuminated control,
+  > hot liquid, or steam. Show one calm hand supporting only the cool holder
+  > without covering the paper rim or outlet. Make the seated paper and clear
+  > tiny hole the only visual story. Use a warm-neutral uncluttered counter and
+  > background, semi-flat softly dimensional educational rendering, clear
+  > silhouettes, subtle shadows, and crop-safe mobile-readable framing with
+  > generous breathing room. Include no text, letters, numbers, labels, logos,
+  > brand marks, arrows, callouts, panels, measurement marks, decorative
+  > objects, grounds, water, active brewing, steam, overflow, glowing controls,
+  > extra paper filters, pods, reusable filters, sink, carafe, second holder,
+  > cutaway, magnified inset, or exploded view. Do not block, fill, cover, omit,
+  > or enlarge the tiny bottom hole and do not invent multiple holes. Do not
+  > place the paper outside the holder or hide the outlet with the hand. The
+  > final image must be exactly one coherent scene, opaque, 1024 x 768, and
+  > readable at mobile size.
+- Corrective edit prompt:
+
+  > Correct the existing illustration while preserving its clean warm-neutral
+  > 4:3 educational style and single coherent scene. The current white paper
+  > is wrong: it looks like a round fluted basket filter and exposes an
+  > impossible black floor through its bottom. Replace the holder with the
+  > accurate compact Cup-One-style cone brew basket geometry and replace the
+  > paper with exactly one small No. 1 cone paper: smooth folded paper with a
+  > clear conical/wedge profile and seam, fully opened and seated against the
+  > basket walls, not round, not scalloped, not pleated, not a flat-bottom
+  > basket filter. Keep the paper completely intact with no cutout or opening
+  > through its bottom. Tilt the detached holder in the supporting hand so both
+  > the seated paper above and the exterior underside of the holder below are
+  > legible; show the model-specific single tiny drip hole on the exterior
+  > bottom outlet, visibly clear and unobstructed. The hole must be outside and
+  > below the intact paper, not drawn as a large round plate inside the paper.
+  > Keep the supporting fingers away from both the paper rim and the outlet.
+  > Keep the unbranded Cup-One-style brewer switched off in the soft
+  > background, with no lit control, water, grounds, steam, pod, carafe, extra
+  > filter, text, letters, numbers, logo, arrow, inset, split view, or clutter.
+  > Make the small No. 1 cone paper and one clear exterior drip hole the only
+  > visual story. Preserve opaque 1024 x 768 output and mobile-readable
+  > crop-safe framing.
+- Rejected draft: the initial render substituted a round pleated basket paper
+  and exposed a large black inner floor through an impossible opening in the
+  paper. It therefore taught the wrong filter type and geometry. That draft
+  was not copied into the repository or manifest.
+- Corrected generated master:
+  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_UuGUUXQWn2hWJ6HIXEyPb8aD.png`
+  (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
+- Final drawable:
+  `app/src/main/res/drawable-nodpi/instruction_p1_auto_cupone_20_300_stage_01_instruction_default.webp`
+- Delivery: opaque RGB WebP, 1024 x 768 px, 42,348 bytes, exact 4:3.
+- Accessibility target: “A single No. 1 cone paper is seated in the dry
+  Cup-One holder while its tiny exterior drip hole remains visibly clear.”
+  The canonical exact-stage alt text and asset record remain intentionally
+  unregistered until localization and equipment review are complete.
+- Inspection: no text, numbers, logos, extra panel, grounds, liquid, steam,
+  glow, active brewing, or decorative object. The final frame shows one intact
+  smooth folded cone paper, one clear exterior bottom outlet, an unobstructed
+  hand position, and a switched-off brewer in the background.
+- Review status: **pending brewer-expert safety and equipment review**. Confirm
+  compact Cup-One holder proportions, exact No. 1 paper fit and seam, exterior
+  outlet location and size, machine-off context, hand clearance, mobile-size
+  readability, and post-warning Learn/Live placement before manifest
+  registration or approval.
+
 ## Delivery gate
 
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
