@@ -96,6 +96,9 @@ class P1BrewerProfileSetupScreenTest {
                     onEquipmentCapacityChanged = { capacity ->
                         state = state.updateEquipmentCapacity(capacity)
                     },
+                    onMeasuredReservoirInputChanged = { input ->
+                        state = state.updateMeasuredReservoirInput(input)
+                    },
                     onCezveSugarSelected = { includeSugar ->
                         state = state.selectCezveSugar(includeSugar)
                     },
@@ -122,6 +125,7 @@ class P1BrewerProfileSetupScreenTest {
                     onRecipeSelected = {},
                     onEquipmentOptionSelected = {},
                     onEquipmentCapacityChanged = {},
+                    onMeasuredReservoirInputChanged = {},
                     onCezveSugarSelected = {},
                     onCezveHeatSourceSelected = {},
                     onStart = {},

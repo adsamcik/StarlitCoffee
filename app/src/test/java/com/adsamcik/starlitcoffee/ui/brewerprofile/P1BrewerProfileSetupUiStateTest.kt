@@ -14,7 +14,7 @@ import org.junit.Test
 class P1BrewerProfileSetupUiStateTest {
 
     @Test
-    fun `factory groups only complete recipes with executable exact plans`() {
+    fun `factory groups every executable recipe with an actionable setup input`() {
         val state = P1BrewerProfileSetupStateFactory.create()
 
         assertEquals(
@@ -29,13 +29,14 @@ class P1BrewerProfileSetupUiStateTest {
                 "hario_switch",
                 "cezve_generic",
                 "automatic_batch_generic",
+                "automatic_single_cup_generic",
                 "vietnamese_phin",
             ),
             state.profiles.map { it.profileId.value },
         )
-        assertEquals(19, state.profiles.sumOf { it.recipes.size })
+        assertEquals(20, state.profiles.sumOf { it.recipes.size })
         assertTrue(
-            state.profiles.flatMap { it.recipes }.none { recipe ->
+            state.profiles.flatMap { it.recipes }.any { recipe ->
                 recipe.id == BuiltInRecipeId("auto_cupone_20_300")
             },
         )
@@ -73,6 +74,8 @@ class P1BrewerProfileSetupUiStateTest {
         assertEquals(BuiltInRecipeId("wave185_ozone_25_400"), state.selectedRecipe?.id)
         assertEquals(state.selectedRecipe?.equipmentOptions?.single(), state.selectedEquipmentOption)
         assertTrue(state.canStart)
+        assertFalse(state.requiresMeasuredReservoirInput)
+        assertNull(state.startSelection?.measuredReservoirInputG)
     }
 
     @Test
@@ -120,6 +123,41 @@ class P1BrewerProfileSetupUiStateTest {
         assertFalse(tooSmall.canStart)
         assertTrue(sufficient.capacitySupportsSelectedRecipe)
         assertTrue(sufficient.canStart)
+    }
+
+    @Test
+    fun `unresolved reservoir input requires a separate measured value and never reuses capacity`() {
+        val initial = selected("automatic_single_cup_generic")
+            .updateEquipmentCapacity("350")
+
+        assertEquals(BuiltInRecipeId("auto_cupone_20_300"), initial.selectedRecipe?.id)
+        assertTrue(initial.requiresMeasuredReservoirInput)
+        assertNull(initial.selectedRecipeInputG)
+        assertNull(initial.selectedMeasuredReservoirInputG)
+        assertFalse(initial.canStart)
+
+        val invalid = initial.updateMeasuredReservoirInput("0")
+        assertNull(invalid.selectedMeasuredReservoirInputG)
+        assertFalse(invalid.canStart)
+
+        val exceedsCapacity = initial.updateMeasuredReservoirInput("351")
+        assertEquals(351.0, exceedsCapacity.selectedMeasuredReservoirInputG ?: 0.0, 0.001)
+        assertFalse(exceedsCapacity.capacitySupportsSelectedRecipe)
+        assertFalse(exceedsCapacity.canStart)
+
+        val ready = initial.updateMeasuredReservoirInput("300")
+        assertEquals(300.0, ready.selectedRecipeInputG ?: 0.0, 0.001)
+        assertEquals(300.0, ready.startSelection?.measuredReservoirInputG ?: 0.0, 0.001)
+        assertTrue(ready.capacitySupportsSelectedRecipe)
+        assertTrue(ready.canStart)
+    }
+
+    @Test
+    fun `resolved recipe ignores measured reservoir updates`() {
+        val resolved = selected("manual_wave_185").updateEquipmentCapacity("500")
+
+        assertEquals(resolved, resolved.updateMeasuredReservoirInput("123"))
+        assertEquals(400.0, resolved.selectedRecipeInputG ?: 0.0, 0.001)
     }
 
     @Test

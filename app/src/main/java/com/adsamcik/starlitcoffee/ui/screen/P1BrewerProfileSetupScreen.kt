@@ -88,6 +88,7 @@ fun P1BrewerProfileSetupScreen(
     onRecipeSelected: (BuiltInRecipeId) -> Unit,
     onEquipmentOptionSelected: (Int) -> Unit,
     onEquipmentCapacityChanged: (String) -> Unit,
+    onMeasuredReservoirInputChanged: (String) -> Unit,
     onCezveSugarSelected: (Boolean) -> Unit,
     onCezveHeatSourceSelected: (HeatSourceClass) -> Unit,
     onStart: (P1BrewerProfileStartSelection) -> Unit,
@@ -183,6 +184,16 @@ fun P1BrewerProfileSetupScreen(
                 selectedRecipe?.let { recipe ->
                     item(key = "recipe-details:${recipe.id.value}") {
                         ExactRecipeDetailsCard(recipe)
+                    }
+
+                    if (state.requiresMeasuredReservoirInput) {
+                        item(key = "recipe-measured-reservoir:${recipe.id.value}") {
+                            MeasuredReservoirInputCard(
+                                input = state.selectedMeasuredReservoirInput,
+                                inputIsValid = state.selectedMeasuredReservoirInputG != null,
+                                onInputChanged = onMeasuredReservoirInputChanged,
+                            )
+                        }
                     }
 
                     if (state.requiresCezveSetup) {
@@ -476,6 +487,44 @@ private fun DetailsRow(label: String, value: String) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Text(text = value, modifier = Modifier.weight(0.62f), style = MaterialTheme.typography.bodyMedium)
+    }
+}
+
+@Composable
+private fun MeasuredReservoirInputCard(
+    input: String,
+    inputIsValid: Boolean,
+    onInputChanged: (String) -> Unit,
+) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.label_brewer_profile_input_reservoir_water),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.semantics { heading() },
+            )
+            Text(
+                text = stringResource(R.string.msg_brewer_profile_input_reservoir_water),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
+            )
+            OutlinedTextField(
+                value = input,
+                onValueChange = onInputChanged,
+                label = { Text(stringResource(R.string.label_measured_amount)) },
+                suffix = { Text(stringResource(R.string.unit_grams)) },
+                isError = input.isNotBlank() && !inputIsValid,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
     }
 }
 

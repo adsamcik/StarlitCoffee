@@ -32,6 +32,8 @@ data class P1BrewerProfileStartSelection(
     val builtInRecipeId: BuiltInRecipeId,
     val equipmentOption: P1EquipmentOption,
     val equipmentCapacityG: Double,
+    /** User measurement only; never a replacement for a resolved source quantity. */
+    val measuredReservoirInputG: Double? = null,
     val harioSwitchWorkflow: HarioSwitchWorkflow?,
     val cezveSetup: CezveSessionSetup?,
     val heatSource: HeatSourceClass,
@@ -51,6 +53,7 @@ data class P1BrewerProfileSetupUiState(
     val selectedRecipeIdByProfile: Map<BrewerProfileId, BuiltInRecipeId> = emptyMap(),
     val selectedEquipmentOptionIndexByRecipe: Map<BuiltInRecipeId, Int> = emptyMap(),
     val capacityInputByProfile: Map<BrewerProfileId, String> = emptyMap(),
+    val measuredReservoirInputByRecipe: Map<BuiltInRecipeId, String> = emptyMap(),
     val includeCezveSugar: Boolean = false,
     val cezveHeatSource: HeatSourceClass = HeatSourceClass.NONE,
     val isStarting: Boolean = false,
@@ -83,8 +86,22 @@ data class P1BrewerProfileSetupUiState(
         get() = selectedEquipmentCapacityInput.trim().replace(",", ".").toDoubleOrNull()
             ?.takeIf { capacity -> capacity.isFinite() && capacity > 0.0 }
 
+    val requiresMeasuredReservoirInput: Boolean
+        get() = selectedRecipe?.let { recipe ->
+            recipe.primaryInputRole() == QuantityRole.RESERVOIR_INPUT &&
+                recipe.canonicalPrimaryInputG() == null
+        } == true
+
+    val selectedMeasuredReservoirInput: String
+        get() = selectedRecipe?.id?.let { measuredReservoirInputByRecipe[it] }.orEmpty()
+
+    val selectedMeasuredReservoirInputG: Double?
+        get() = selectedMeasuredReservoirInput.trim().replace(",", ".").toDoubleOrNull()
+            ?.takeIf { input -> input.isFinite() && input > 0.0 }
+
     val selectedRecipeInputG: Double?
         get() = selectedRecipe?.canonicalPrimaryInputG()
+            ?: selectedMeasuredReservoirInputG.takeIf { requiresMeasuredReservoirInput }
 
     val capacitySupportsSelectedRecipe: Boolean
         get() = selectedEquipmentCapacityG?.let { capacity ->
@@ -109,6 +126,8 @@ data class P1BrewerProfileSetupUiState(
                 builtInRecipeId = recipe.id,
                 equipmentOption = equipmentOption,
                 equipmentCapacityG = capacityG,
+                measuredReservoirInputG = selectedMeasuredReservoirInputG
+                    .takeIf { requiresMeasuredReservoirInput },
                 harioSwitchWorkflow = recipe.harioSwitchWorkflow(),
                 cezveSetup = recipe.cezveSetup(includeCezveSugar),
                 heatSource = cezveHeatSource.takeIf { requiresCezveSetup }
@@ -147,6 +166,15 @@ data class P1BrewerProfileSetupUiState(
         return copy(capacityInputByProfile = capacityInputByProfile + (profileId to rawCapacity))
     }
 
+    fun updateMeasuredReservoirInput(rawInput: String): P1BrewerProfileSetupUiState {
+        val recipe = selectedRecipe ?: return this
+        if (!requiresMeasuredReservoirInput) return this
+        return copy(
+            measuredReservoirInputByRecipe = measuredReservoirInputByRecipe +
+                (recipe.id to rawInput),
+        )
+    }
+
     fun selectCezveSugar(includeSugar: Boolean): P1BrewerProfileSetupUiState =
         if (requiresCezveSetup) copy(includeCezveSugar = includeSugar) else this
 
@@ -172,7 +200,7 @@ object P1BrewerProfileSetupStateFactory {
         val executableRecipesByProfile = BuiltInP1RecipeCatalog.recipes
             .asSequence()
             .filter { recipe -> recipe.id in executableRecipeIds }
-            .filter(BuiltInP1RecipeDefinition::isCompleteForSetup)
+            .filter(BuiltInP1RecipeDefinition::isActionableForSetup)
             .groupBy(BuiltInP1RecipeDefinition::brewerProfileId)
         val supportedIds = executableRecipesByProfile.keys
             .intersect(BuiltinBrewerProfileRecipeDefaults.supportedProfileIds)
@@ -218,18 +246,23 @@ object P1BrewerProfileSetupStateFactory {
     )
 }
 
-private fun BuiltInP1RecipeDefinition.isCompleteForSetup(): Boolean {
+private fun BuiltInP1RecipeDefinition.isActionableForSetup(): Boolean {
     val primaryRatio = ratios.firstOrNull() ?: return false
     val inputG = quantities.valueFor(primaryRatio.definition.denominator)
+    val hasUsableInput = inputG?.let { value -> value.isFinite() && value > 0.0 }
+        ?: (primaryRatio.definition.denominator == QuantityRole.RESERVOIR_INPUT)
     return primaryRatio.definition.numerator == QuantityRole.DRY_COFFEE_DOSE &&
         primaryRatio.definition.denominator in PRIMARY_INPUT_ROLES &&
-        inputG != null && inputG.isFinite() && inputG > 0.0 &&
+        hasUsableInput &&
         quantities.dryCoffeeDoseG.isFinite() && quantities.dryCoffeeDoseG > 0.0 &&
         equipmentOptions.isNotEmpty()
 }
 
 private fun BuiltInP1RecipeDefinition.canonicalPrimaryInputG(): Double? =
     ratios.firstOrNull()?.definition?.denominator?.let(quantities::valueFor)
+
+private fun BuiltInP1RecipeDefinition.primaryInputRole(): QuantityRole? =
+    ratios.firstOrNull()?.definition?.denominator
 
 private fun BuiltInP1RecipeDefinition.harioSwitchWorkflow(): HarioSwitchWorkflow? = when (id) {
     SWITCH_OFFICIAL_RECIPE -> HarioSwitchWorkflow.STEEP_AND_RELEASE

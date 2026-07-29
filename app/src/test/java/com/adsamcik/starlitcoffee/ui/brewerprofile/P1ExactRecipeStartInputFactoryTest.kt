@@ -16,6 +16,7 @@ class P1ExactRecipeStartInputFactoryTest {
     @Test
     fun `exact source amounts and single temperature replace calculator defaults`() {
         val selection = selection("v60_02", "v60_rao_20_330", capacityG = 400.0)
+            .copy(measuredReservoirInputG = 123.0)
         val result = P1ExactRecipeStartInputFactory.create(
             selection = selection,
             metadata = P1ExactRecipeStartMetadata(
@@ -83,14 +84,14 @@ class P1ExactRecipeStartInputFactoryTest {
     }
 
     @Test
-    fun `missing source input and missing exact plan fail closed`() {
-        val incompleteRecipe = requireNotNull(
+    fun `unresolved reservoir requires a valid measured input while missing plan fails closed`() {
+        val unresolvedRecipe = requireNotNull(
             BuiltInP1RecipeCatalog.find(BuiltInRecipeId("auto_cupone_20_300")),
         )
-        val incompleteSelection = P1BrewerProfileStartSelection(
-            brewerProfileId = incompleteRecipe.brewerProfileId,
-            builtInRecipeId = incompleteRecipe.id,
-            equipmentOption = incompleteRecipe.equipmentOptions.single(),
+        val unresolvedSelection = P1BrewerProfileStartSelection(
+            brewerProfileId = unresolvedRecipe.brewerProfileId,
+            builtInRecipeId = unresolvedRecipe.id,
+            equipmentOption = unresolvedRecipe.equipmentOptions.single(),
             equipmentCapacityG = 300.0,
             harioSwitchWorkflow = null,
             cezveSetup = null,
@@ -99,8 +100,22 @@ class P1ExactRecipeStartInputFactoryTest {
 
         assertSame(
             P1ExactRecipeStartInputResult.Unavailable,
-            P1ExactRecipeStartInputFactory.create(incompleteSelection),
+            P1ExactRecipeStartInputFactory.create(unresolvedSelection),
         )
+        assertSame(
+            P1ExactRecipeStartInputResult.Unavailable,
+            P1ExactRecipeStartInputFactory.create(
+                unresolvedSelection.copy(measuredReservoirInputG = Double.NaN),
+            ),
+        )
+
+        val measured = P1ExactRecipeStartInputFactory.create(
+            unresolvedSelection.copy(measuredReservoirInputG = 300.0),
+        ) as P1ExactRecipeStartInputResult.Ready
+        assertEquals(300.0, requireNotNull(measured.input.inputWaterG), 0.001)
+        assertNull(unresolvedRecipe.quantities.reservoirInputG)
+        assertNull(unresolvedRecipe.ratios.single().ratioValue)
+
         assertSame(
             P1ExactRecipeStartInputResult.Unavailable,
             P1ExactRecipeStartInputFactory.create(

@@ -88,6 +88,9 @@ private fun NavGraphBuilder.p1BrewerSetupRoute(
             onRecipeSelected = { setupState = setupState.selectRecipe(it) },
             onEquipmentOptionSelected = { setupState = setupState.selectEquipmentOption(it) },
             onEquipmentCapacityChanged = { setupState = setupState.updateEquipmentCapacity(it) },
+            onMeasuredReservoirInputChanged = {
+                setupState = setupState.updateMeasuredReservoirInput(it)
+            },
             onCezveSugarSelected = { setupState = setupState.selectCezveSugar(it) },
             onCezveHeatSourceSelected = { setupState = setupState.selectCezveHeatSource(it) },
             onStart = { selection ->

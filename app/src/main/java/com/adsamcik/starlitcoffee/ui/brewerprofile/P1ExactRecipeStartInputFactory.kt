@@ -47,9 +47,19 @@ object P1ExactRecipeStartInputFactory {
         ) {
             return P1ExactRecipeStartInputResult.Unavailable
         }
-        val canonicalInputG = recipe.quantities.valueFor(primaryRatio.definition.denominator)
-            ?.takeIf { value -> value.isFinite() && value > 0.0 }
-            ?: return P1ExactRecipeStartInputResult.Unavailable
+        val sourceInputG = recipe.quantities.valueFor(primaryRatio.definition.denominator)
+        val primaryInputG = when {
+            sourceInputG != null -> sourceInputG
+                .takeIf { value -> value.isFinite() && value > 0.0 }
+                ?: return P1ExactRecipeStartInputResult.Unavailable
+
+            primaryRatio.definition.denominator == QuantityRole.RESERVOIR_INPUT ->
+                selection.measuredReservoirInputG
+                    ?.takeIf { value -> value.isFinite() && value > 0.0 }
+                    ?: return P1ExactRecipeStartInputResult.Unavailable
+
+            else -> return P1ExactRecipeStartInputResult.Unavailable
+        }
         val canonicalDoseG = recipe.quantities.dryCoffeeDoseG
             .takeIf { value -> value.isFinite() && value > 0.0 }
             ?: return P1ExactRecipeStartInputResult.Unavailable
@@ -66,7 +76,7 @@ object P1ExactRecipeStartInputFactory {
                 brewerProfileId = selection.brewerProfileId,
                 builtInRecipeId = selection.builtInRecipeId,
                 dryCoffeeDoseG = canonicalDoseG,
-                inputWaterG = canonicalInputG,
+                inputWaterG = primaryInputG,
                 equipment = equipment,
                 harioSwitchWorkflow = selection.harioSwitchWorkflow,
                 cezveSetup = selection.cezveSetup,
