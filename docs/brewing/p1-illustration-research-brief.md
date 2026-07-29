@@ -1,6 +1,7 @@
 # P1 instructional illustration research brief
 
-Status: research and generation specification, not artwork approval
+Status: superseded legacy generic/default concept research, preserved for
+provenance; not the current exact-stage release gate or artwork approval
 
 Catalog inspected: `P1BuiltInGuidanceCatalog` and
 `BuiltinBrewerStagePlanFactory` on 28 July 2026
@@ -8,6 +9,22 @@ Catalog inspected: `P1BuiltInGuidanceCatalog` and
 Canonical brewing evidence inspected:
 `coffee_brewing_library_2026-07-27.json`, Volumes 1–4,
 `source_register.csv`, `coverage_matrix.csv`, and `validation_report.md`
+
+## Supersession notice
+
+This document preserves the earlier profile-level generic/default asset
+inventory and its equipment, safety, cultural, and visual-geometry research. Its
+68-slot table is historical concept-planning provenance, not the current P1
+release contract.
+
+The current release authority is the recipe-and-source-stage-scoped
+[P1 exact-stage implementation matrix](p1-exact-stage-matrix.md) together with
+`BuiltInP1ExactStagePlanCatalog`. That contract contains 114 ordered stages, of
+which **81 require exact illustrations**: 53 `mandatory` and 28
+`safety-critical`. Current asset production and approval must use those exact
+stage/content/asset identities. Nothing in the preserved 68-slot inventory may
+be counted as exact-stage release coverage merely because its generic action or
+brewer profile appears similar.
 
 ## Evidence precedence and identity rules
 
@@ -57,9 +74,10 @@ that hierarchy. In particular:
 | `vietnamese_phin` | `phin_gravity_14_118` | `single_serving_gravity_phin_with_loose_drop_in_press_disc`; integrated perforated base; loose gravity disc; stable heat-safe cup; lid | Original creator; high |
 | `vietnamese_phin` | `phin_screw_18_120` | `single_serving_screw_insert_phin_of_approximately_120_150_ml_chamber_capacity`; threaded insert engaged lightly; stable heat-safe cup; lid | Battle-tested; medium |
 
-## Scope and exact count
+## Legacy generic/default scope and historical count
 
-The current P1 release gate requires **68 mandatory default illustrations**:
+The superseded profile-level inventory defined **68 mandatory default
+illustrations**:
 
 | Method family | Brewer profile | Assets |
 | --- | --- | ---: |
@@ -72,14 +90,18 @@ The current P1 release gate requires **68 mandatory default illustrations**:
 | `restricted_flow_gravity_concentrate` | `vietnamese_phin` | 12 |
 |  | **Total** | **68** |
 
-Every row below maps one exact `InstructionAssetId` to a source stage. For P1,
-the stage ID and content ID are identical. Safety cards, global-safety cards,
-and utility cards have text but no separate planned visual slot.
+Within this preserved legacy inventory, every row below maps one scoped default
+`InstructionAssetId` to a source stage. Its identity language reflects the
+pre-exact model and does not define the current exact-stage release IDs. Safety
+cards, global-safety cards, and utility cards have text but no separate planned
+visual slot.
 
 The original master brief contains 129 minimum-curriculum action bullets across
 Pulsar, legacy methods, and P1 methods. Those bullets are a broader product
-minimum, not 129 current drawable contracts. Only the 68 P1 slots below have
-stable current asset IDs and participate in the P1 release gate.
+minimum. At the time of this research, the 68 P1 slots below were treated as
+the profile-level drawable contracts. They are retained for provenance and
+concept-risk research but no longer participate in the current exact-stage
+release gate.
 
 ## In-app placement and delivery contract
 

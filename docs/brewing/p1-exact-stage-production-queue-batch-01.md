@@ -1,9 +1,11 @@
 # P1 exact-stage illustration production queue — batch 01
 
-Status: prompt-ready documentation; no images generated and no app assets
-registered
+Status: all six candidate images generated and production-logged as
+`PENDING_REVIEW`; no assets registered or approved, and no manifest or app-code
+changes
 
 Prepared: 28 July 2026
+Production completed: 28 July 2026
 
 ## Scope and source authority
 
@@ -12,6 +14,11 @@ This batch selects six high-value, mechanically distinct visuals from the
 `docs/brewing/p1-exact-stage-matrix.md`. Five are canonically
 `safety-critical`; the Kalita Wave stage is `mandatory` because filter-pleat
 geometry is difficult to communicate reliably with text alone.
+
+Every selected row was canonically `NOT_PRODUCED` when queued. Each now has a
+local candidate drawable and production-log record, but remains canonically
+uncovered until expert review, localization, manifest registration, and approval
+all pass.
 
 Canonical source:
 
@@ -567,15 +574,20 @@ The batch is valid only while all of these remain true:
 
 - Six recipe/source-stage pairs, `StageId` values, `StageContentId` values, and
   proposed asset IDs are unique and match the exact-stage matrix.
-- Each selected stage is canonically `mandatory` or `safety-critical`, has at
-  least one evidence ID, and has no hard variant/equipment blocker.
-- None of the six proposed IDs collides with the built-in asset catalog,
-  current drawable filenames, or the three `PENDING_REVIEW` IDs.
+- Each selected stage was canonically `mandatory` or `safety-critical` when
+  queued, has at least one evidence ID, and has no hard variant/equipment
+  blocker.
+- Each of the six local drawables uses its matching stable ID and has one
+  production-log record. None collides with the three pre-existing generic
+  `PENDING_REVIEW` IDs or a registered `InstructionAssetRecord`.
 - No prompt substitutes a different filter, valve, actuator, brewer size,
   machine model, or phin mechanism.
 - Cross-recipe reuse requires mechanics that truly match, a distinct exact
   content/asset ID, and an independent evidence and geometry review.
-- No bitmap is generated, registered, or described as approved by this
-  documentation step.
-- The Learn/Live placement-order mismatch is resolved before any queued asset
-  is approved for release.
+- All six generated bitmaps have a production-log record and validated local
+  WebP payload. They remain intentionally unregistered and are not described as
+  approved. Each stays `PENDING_REVIEW` until expert geometry, safety,
+  accessibility, localization, and placement review all pass.
+- The historical Learn/Live placement-order mismatch recorded above was
+  subsequently resolved. The final order must still be reverified on both
+  surfaces at asset-review time before any candidate is registered or approved.

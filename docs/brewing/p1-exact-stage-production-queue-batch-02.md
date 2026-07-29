@@ -1,17 +1,21 @@
 # P1 exact-stage illustration production queue — batch 02
 
-Status: prompt-ready documentation; no images generated and no app assets
-registered
+Status: all six candidate images generated and production-logged as
+`PENDING_REVIEW`; no assets registered or approved, and no manifest or app-code
+changes
 
 Prepared: 28 July 2026
+Production completed: 28 July 2026
 
 ## Scope and source authority
 
 This queue is the next coherent six-illustration batch after
-`p1-exact-stage-production-queue-batch-01.md`. All six stages are canonically
-`safety-critical`, remain `NOT_PRODUCED`, have exact executable guidance, and
-have no unresolved equipment-variant blocker. The batch deliberately covers
-six different user-visible mechanics:
+`p1-exact-stage-production-queue-batch-01.md`. All six stages were canonically
+`safety-critical` and `NOT_PRODUCED` when queued, have exact executable
+guidance, and have no unresolved equipment-variant blocker. Each now has a local
+candidate drawable and production-log record, but remains canonically uncovered
+until expert review, localization, manifest registration, and approval all
+pass. The batch deliberately covers six different user-visible mechanics:
 
 1. Cup-One filter-holder outlet inspection and paper seating.
 2. Cup-One dry, unplugged outlet cleaning.
@@ -667,11 +671,13 @@ The queue is valid only while all of these remain true:
   runtime exact-guidance catalog.
 - The six `StageId` values, six `StageContentId` values, and six proposed asset
   IDs are internally unique and follow the exact deterministic naming rule.
-- Each selected matrix row is `safety-critical`, `NOT_PRODUCED`,
-  `P1-STAGE-CARD`, evidence-backed, and free of a hard equipment blocker.
-- None of the proposed IDs collides with an existing `drawable-nodpi`
-  filename, built-in instruction asset record, asset-production log entry, or
-  batch-01 exact asset.
+- Each selected matrix row was `safety-critical`, `NOT_PRODUCED`, and
+  `P1-STAGE-CARD` when queued, remains evidence-backed, and is free of a hard
+  equipment blocker.
+- Each of the six local drawables uses its matching stable ID and has one
+  production-log record. None collides with a batch-01 exact asset, the
+  pre-existing generic phin candidate, or a registered
+  `InstructionAssetRecord`.
 - The pending generic phin stable-cup candidate remains partial generic
   coverage and is not promoted or renamed as this exact composite stage.
 - No prompt substitutes another paper size, machine, outlet, valve/actuator,
@@ -683,8 +689,10 @@ The queue is valid only while all of these remain true:
   accessibility record changes and the queue is revalidated with it.
 - No source image is copied, downloaded into the repository, traced, or used
   as a style reference.
-- No bitmap is generated, registered, or described as approved by this
-  documentation step.
-- Learn's safety-critical warning must render before the image, and the final
-  ordering must be reverified on both Learn and Live Brew, before any queued
-  asset is approved for release.
+- All six generated bitmaps have a production-log record and validated local
+  WebP payload. They remain intentionally unregistered and are not described as
+  approved. Each stays `PENDING_REVIEW` until expert geometry, safety,
+  accessibility, localization, and placement review all pass.
+- The safety-critical ordering change described above was subsequently
+  resolved. The final order must still be reverified on both Learn and Live Brew
+  at asset-review time before any candidate is registered or approved.
