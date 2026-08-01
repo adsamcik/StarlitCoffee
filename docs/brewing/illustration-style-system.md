@@ -527,3 +527,121 @@ accessibility, and placement review accept it.
 **Candidate may advance to formal product, brewer-mechanics, accessibility, and
 placement review only.** It is not approved, registered, rendered by the app,
 or counted as exact-stage coverage.
+
+## Visual master 05 - Screw-insert Phin light engagement
+
+### 1. Visual ID / title
+
+`instruction_p1_phin_screw_18_120_stage_02_instruction_default` - screw-insert
+Phin light engagement. Current review candidate: `vector_v3.webp`.
+
+### 2. User learning objective
+
+Teach that the threaded insert rests lightly and level on the coffee bed. It is
+gravity brewing, not tamping or a pressure system.
+
+### 3. Exact brewing moment
+
+`p1_phin_screw_18_120_stage_02`: after the Phin is stably seated on its cup
+with level dry coffee and before any water. The insert is level, its threads are
+engaged without hard compression, and the bed can still swell.
+
+### 4. Sources consulted
+
+- Canonical exact-stage record:
+  `app/src/main/assets/p1_exact_guidance_2026_07_27.json`.
+- `SRC-TRUNGNGUYEN-PHIN`, `SRC-GOURMETKAVA-PHIN`, and `SRC-NGUYEN-PHIN`
+  in the supplied source register.
+- [Trung Nguyen Coffee brewing information](https://trung-nguyen-coffee.co.uk/page_brewing.php).
+- [GourmetKava's Vietnamese coffee preparation guide](https://www.gourmetkava.cz/en/blog/making-coffee/preparation-of--vietnamese-coffee).
+
+The source record and web guides were rechecked on 2026-08-01.
+
+### 5. Reference images selected
+
+Product and assembly views on the cited guides informed the cup-supported metal
+chamber, retaining insert, and gentle screw engagement. They are research
+references only and are not copied into this asset.
+
+### 6. Confirmed mechanics
+
+- This is the screw-insert profile, materially distinct from the loose
+  gravity-disc Phin already documented in Visual master 03.
+- The perforated insert rests level on loose dry coffee; its threads are
+  engaged lightly, not compressed into a puck.
+- Water, bloom, lid, heat, and dripping have not begun. There is headroom for
+  later swelling.
+- The cup fully supports the Phin. The critical warning remains app text:
+  do not overtighten or convert this gravity brewer into a pressure vessel.
+
+### 7. Assumptions / uncertainty
+
+Exact threads, control shape, and disc hole pattern vary by Phin. The art uses
+an unbranded neutral metal form and only a short externally visible threaded
+stem. It does not claim this screw arrangement is universal to all Phins.
+
+### 8. Mechanical specification
+
+Show one compact upright metal chamber with a broad support flange level on a
+wide ceramic cup. Inside, show a loose level dry coffee bed, a level round
+perforated insert resting gently on it, and a short central threaded stem with
+a small cool top control. A small relaxed fingertip pinch touches that control
+lightly. Show clear headroom. Do not show water, pressure, lid, steam, or flow.
+
+### 9. Chosen visual approach and viewpoint
+
+A centered elevated near-top three-quarter exterior view exposes the level
+insert, light touch, dry bed, and broad cup support in a single mobile-readable
+state without an invented cutaway.
+
+### 10. Style notes for this image
+
+Use the house flat 2D editorial-vector language: warm cream background, clean
+deep-espresso outlines, simple matte metal planes, only sparse dry-ground
+marks, rounded credible forms, no text, and generous negative space. It sits
+above concise stage copy in the app.
+
+### 11. Image-generation prompt
+
+"Flat, text-free 2D mobile coffee-app instruction illustration: an unbranded
+single-serving screw-insert Vietnamese Phin centered on a broad heat-safe cup,
+elevated near-top three-quarter view. Show loose level dry coffee, a level
+round perforated insert gently resting on it, short central thread contours,
+and a small relaxed fingertip pinch touching the top control lightly. Keep
+headroom, gravity-only mechanics, warm cream background, matte metal fills, and
+crisp espresso outlines. No water, lid, drip, heat, tamper, pressure vessel,
+loose gravity disc, cutaway, labels, arrows, photorealism, 3D, or clutter."
+
+### 12. Candidate artifacts
+
+All are opaque static RGB WebP at 1024 by 768 and remain outside
+`drawable-nodpi`.
+
+- `vector_v1.webp` - 62,162 bytes; SHA-256
+  `755a28177645c2a166d9de217179c05ba992687e8f1d1cffbdc3006935a82b62`.
+- `vector_v2.webp` - 58,660 bytes; SHA-256
+  `0b7d6481f96b6ae227abbbd997e68e0420687a8692276f4cac334ed333439d0b`.
+- `vector_v3.webp` - 60,968 bytes; SHA-256
+  `e363a170c80ad4d86861badc904c2344ff152d5a36bfbeeb1e6d30d29ea3a493`.
+
+### 13. Rejected versions
+
+`v1` had an unnecessarily large hand and noisier coffee texture. `v2`
+quietened the surface but left a visible gap between the fingers and control,
+so the light-engagement action was unclear. Both remain for an auditable
+iteration trail.
+
+### 14. Current v3 accuracy review
+
+`v3` shows light fingertip contact, a level perforated insert, a short thread
+segment, loose dry coffee, clear headroom, and full cup support. It avoids water
+and all pressure cues. The hand is intentionally minimal; it conveys gentle
+engagement without adding a comparison or force cue. It remains a review
+candidate until product, brewer-mechanics, accessibility, and placement review
+accept it.
+
+### 15. Final state
+
+**Candidate may advance to formal product, brewer-mechanics, accessibility, and
+placement review only.** It is not approved, registered, rendered by the app,
+or counted as exact-stage coverage.
