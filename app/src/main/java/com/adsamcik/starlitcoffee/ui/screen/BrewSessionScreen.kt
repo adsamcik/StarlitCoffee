@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -76,8 +77,10 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StageActualValue
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
 import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
+import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentation
 import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentationMapper
+import com.adsamcik.starlitcoffee.ui.session.BrewSessionActionAvailability
 import com.adsamcik.starlitcoffee.ui.session.BrewSessionLiveRegion
 import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
 import com.adsamcik.starlitcoffee.ui.session.CurrentBrewStagePresentation
@@ -250,6 +253,7 @@ fun BrewSessionScreen(
         ?.let(::shouldOfferPictureInPicture)
         ?: false
     val availablePresentation = presentation as? ActiveBrewSessionPresentation.Available
+    val stickyPrimaryAction = availablePresentation?.actions?.let(::primaryBrewSessionAction)
     if (shouldOfferPictureInPicture && !isPictureInPicture) {
         KeepScreenOn(
             timeoutMillis = keepScreenOnTimeoutMillis((MAX_PICTURE_IN_PICTURE_STAGE_MILLIS / MILLIS_PER_SECOND).toInt()),
@@ -353,6 +357,15 @@ fun BrewSessionScreen(
         forceDarkInLight = dimModeForceDarkInLight,
     ) {
     Scaffold(
+        bottomBar = {
+            if (availablePresentation != null && stickyPrimaryAction != null) {
+                BrewSessionPrimaryActionBar(
+                    action = stickyPrimaryAction,
+                    isDispatching = dispatching,
+                    onDispatch = dispatch,
+                )
+            }
+        },
         topBar = {
             TopAppBar(
                 title = {
@@ -620,7 +633,7 @@ private fun BrewSessionContent(
                 onRememberForBrewer = onRememberGuidanceForProfile,
             )
         }
-        BrewSessionControls(
+        BrewSessionSecondaryControls(
             presentation = presentation,
             isDispatching = isDispatching,
             onDispatch = onDispatch,
@@ -839,36 +852,95 @@ private fun BrewSessionSafety(messages: List<StageSafetyMessage>) {
     }
 }
 
+internal enum class BrewSessionPrimaryAction {
+    START,
+    PAUSE,
+    RESUME,
+}
+
+internal fun primaryBrewSessionAction(
+    actions: BrewSessionActionAvailability,
+): BrewSessionPrimaryAction? = when {
+    actions.canStart -> BrewSessionPrimaryAction.START
+    actions.canPause -> BrewSessionPrimaryAction.PAUSE
+    actions.canResume -> BrewSessionPrimaryAction.RESUME
+    else -> null
+}
+
 @Composable
-private fun BrewSessionControls(
+private fun BrewSessionPrimaryActionBar(
+    action: BrewSessionPrimaryAction,
+    isDispatching: Boolean,
+    onDispatch: (SessionEvent) -> Unit,
+) {
+    val labelRes = when (action) {
+        BrewSessionPrimaryAction.START -> R.string.action_start_brewing
+        BrewSessionPrimaryAction.PAUSE -> R.string.action_pause
+        BrewSessionPrimaryAction.RESUME -> R.string.action_resume
+    }
+    val onClick = {
+        onDispatch(
+            when (action) {
+                BrewSessionPrimaryAction.START -> SessionEvent.Start(newEventId())
+                BrewSessionPrimaryAction.PAUSE -> SessionEvent.Pause(newEventId())
+                BrewSessionPrimaryAction.RESUME -> SessionEvent.Resume(newEventId())
+            },
+        )
+    }
+    val buttonModifier = Modifier
+        .fillMaxWidth()
+        .navigationBarsPadding()
+        .padding(horizontal = 20.dp, vertical = 12.dp)
+        .height(56.dp)
+
+    Surface(
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 3.dp,
+    ) {
+        if (action == BrewSessionPrimaryAction.PAUSE) {
+            OutlinedButton(
+                enabled = !isDispatching,
+                onClick = onClick,
+                modifier = buttonModifier,
+                shape = MaterialTheme.shapes.extraLarge,
+            ) {
+                Text(
+                    text = stringResource(labelRes),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+        } else {
+            Button(
+                enabled = !isDispatching,
+                onClick = onClick,
+                modifier = buttonModifier,
+                shape = MaterialTheme.shapes.extraLarge,
+                colors = primaryActionButtonColors(),
+            ) {
+                Text(
+                    text = stringResource(labelRes),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun BrewSessionSecondaryControls(
     presentation: ActiveBrewSessionPresentation.Available,
     isDispatching: Boolean,
     onDispatch: (SessionEvent) -> Unit,
     onCancelRequest: () -> Unit,
 ) {
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        when {
-            presentation.actions.canStart -> Button(
-                enabled = !isDispatching,
-                onClick = { onDispatch(SessionEvent.Start(newEventId())) },
-            ) {
-                Text(stringResource(R.string.action_start_brewing))
-            }
+    if (!presentation.actions.canSkip && !presentation.actions.canCancel) return
 
-            presentation.actions.canPause -> OutlinedButton(
-                enabled = !isDispatching,
-                onClick = { onDispatch(SessionEvent.Pause(newEventId())) },
-            ) {
-                Text(stringResource(R.string.action_pause))
-            }
-
-            presentation.actions.canResume -> Button(
-                enabled = !isDispatching,
-                onClick = { onDispatch(SessionEvent.Resume(newEventId())) },
-            ) {
-                Text(stringResource(R.string.action_resume))
-            }
-        }
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
         if (presentation.actions.canSkip) {
             TextButton(
                 enabled = !isDispatching,
@@ -877,13 +949,13 @@ private fun BrewSessionControls(
                 Text(stringResource(R.string.action_skip))
             }
         }
-    }
-    if (presentation.actions.canCancel) {
-        OutlinedButton(
-            enabled = !isDispatching,
-            onClick = onCancelRequest,
-        ) {
-            Text(stringResource(R.string.action_cancel_brew))
+        if (presentation.actions.canCancel) {
+            OutlinedButton(
+                enabled = !isDispatching,
+                onClick = onCancelRequest,
+            ) {
+                Text(stringResource(R.string.action_cancel_brew))
+            }
         }
     }
 }
