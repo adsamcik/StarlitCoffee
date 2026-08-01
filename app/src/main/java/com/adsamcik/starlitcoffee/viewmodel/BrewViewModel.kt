@@ -34,11 +34,8 @@ import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.data.network.QrLinkExploreResult
 import com.adsamcik.starlitcoffee.data.network.QrLinkMetadataExplorer
 import com.adsamcik.starlitcoffee.data.network.SafeQrLinkMetadataExplorer
-import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionRequest
-import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
-import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmCallGate
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
@@ -80,8 +77,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -664,14 +659,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     private companion object {
-        // Outer safety-net cap around the text/combine LLM call. Above the
-        // provider's inner generation timeout and the Mindlayer service's 5-min
-        // single-inference cap (MAX_INFERENCE_MS), so a legitimately long run
-        // isn't aborted client-side. Mirrors BagPhotoExtractor.
-        private const val BAG_PHOTO_LLM_TIMEOUT_MS = 390_000L
         private const val BAG_EXTRACTION_DEEP_LINK_TIMEOUT_MS = 15_000L
-        private const val LLM_MAX_ATTEMPTS = 3
-        private const val LLM_RETRY_BACKOFF_MS = 600L
         private const val BAG_SCAN_PREFS = "bag_scan"
         private const val KEY_LAST_CONSUMED_WORK_ID = "lastConsumedWorkId"
         private const val KEY_WORK_SESSION_PREFIX = "workSession:"
@@ -1831,37 +1819,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         onProgress = onProgress,
         onPartialResult = onPartialResult,
     )
-
-    @VisibleForTesting
-    internal suspend fun runLlmExtractionWithRetry(
-        request: LlmExtractionRequest,
-    ): LlmExtractionResult {
-        var attempt = 1
-        while (true) {
-            val result = try {
-                MindlayerLlmCallGate.withPermit {
-                    withTimeout(BAG_PHOTO_LLM_TIMEOUT_MS) {
-                        llmProvider.extractBagFields(request)
-                    }
-                }
-            } catch (_: TimeoutCancellationException) {
-                LlmExtractionResult.Failed(
-                    "Brew photo LLM enrichment timed out after ${BAG_PHOTO_LLM_TIMEOUT_MS / 1000}s",
-                    retryable = true,
-                )
-            } catch (e: CancellationException) {
-                throw e
-            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
-                LlmExtractionResult.Failed("Brew photo LLM enrichment threw: ${e.message}", retryable = true)
-            }
-
-            if (result !is LlmExtractionResult.Failed || !result.retryable || attempt >= LLM_MAX_ATTEMPTS) {
-                return result
-            }
-            delay(LLM_RETRY_BACKOFF_MS * attempt)
-            attempt++
-        }
-    }
 
     fun retryBagPhotoLlm(
         sessionId: String = activeBagExtractionSessionId ?: DEFAULT_BAG_PHOTO_SESSION_ID,
