@@ -685,3 +685,16 @@ recipe-stage coverage.
   `7f55cf47dbe66cade4df088595c37fdee99f9497a1848199be688a6b41c7cedf`.
 - Screw-insert Phin v6: RGB 1024 × 768 WebP, 42,382 bytes, SHA-256
   `0972bd1fadb8a437587be18dc74295a8beb633d44d8ff0802e23633ce2b9f529`.
+
+### Reproducible generation record
+
+The current candidate source of truth is
+[illustration-generation-manifest.json](illustration-generation-manifest.json).
+It maps every retained candidate to its preserved raw PNG, verbatim prompt,
+exact encoder settings, and SHA-256 values. The companion
+[illustration-generation-workflow.md](illustration-generation-workflow.md)
+defines the next-version process and
+[flat-instruction-candidates-2026-08-01.md](../../prompts/brewing/flat-instruction-candidates-2026-08-01.md)
+contains the full recorded prompts. Re-run
+tools/rebuild_instruction_illustration_candidates.py --check before relying
+on a candidate lineage.

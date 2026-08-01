@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-08-01",
+  "purpose": "Reproduce the current review-candidate WebPs and preserve the exact generation inputs for future adjustment.",
+  "stage_data": {
+    "path": "app/src/main/assets/p1_exact_guidance_2026_07_27.json",
+    "sha256": "4811810d2b6e2e4739bb507a95e0e427c170efcd0d0d795c2f417a6012a48228"
+  },
+  "generator": {
+    "provider": "OpenAI",
+    "surface": "Codex built-in image generator",
+    "tool_call": "tools.image_gen__imagegen",
+    "model_or_build": "not exposed by the tool",
+    "seed": "not exposed by the tool",
+    "replay_note": "Prompt replay is stochastic. Preserve and use the raw master for exact candidate rebuilds and future edits."
+  },
+  "candidate_contract": {
+    "raw_format": "opaque RGB PNG, 1448x1086",
+    "candidate_format": "opaque RGB WebP, 1024x768",
+    "candidate_location": "docs/brewing/illustration-candidates",
+    "raw_master_location": "docs/brewing/illustration-raw-masters",
+    "review_status": "PENDING_REVIEW"
+  },
+  "candidates": [
+    {
+      "asset_id": "instruction_p1_chemex_42_700_stage_01_instruction_default",
+      "stage": {
+        "recipe_id": "chemex_42_700",
+        "stage_number": 1,
+        "instruction": "Place the folded filter with three layers over the spout."
+      },
+      "candidate": {
+        "path": "docs/brewing/illustration-candidates/instruction_p1_chemex_42_700_stage_01_instruction_default/vector_v2.webp",
+        "revision": "v2",
+        "sha256": "59575e1a4ee6b169bf893f6b202c48ab4eea6f01110aba5cfe60c788921c4cb9"
+      },
+      "raw_master": {
+        "path": "docs/brewing/illustration-raw-masters/exec-d25f9a7c-8f81-48aa-88fe-0040113ce011.png",
+        "original_cache_path": "C:/Users/adam-/.codex/generated_images/019fa48e-1d5d-7560-b0de-f39fa2e8b914/exec-d25f9a7c-8f81-48aa-88fe-0040113ce011.png",
+        "raw_file_timestamp_utc": "2026-08-01T10:46:14.6448159Z",
+        "sha256": "711f2a9e5867068013f3d2db3fb5c4a389034cdbbeea8f33493902405b540504",
+        "bytes": 1285069,
+        "mode": "RGB",
+        "dimensions": [
+          1448,
+          1086
+        ]
+      },
+      "prompt": {
+        "record": "prompts/brewing/flat-instruction-candidates-2026-08-01.md#chemex-v2",
+        "source_session_item": "2026-08-01 session transcript item [64]",
+        "request_type": "new",
+        "num_last_images_to_include": 0,
+        "input_references": []
+      },
+      "conversion": {
+        "tool": "Pillow",
+        "pillow_version": "12.1.1",
+        "operation": "convert RGB; resize 1448x1086 to 1024x768 with LANCZOS; save WebP",
+        "webp_quality": 95,
+        "webp_method": 6,
+        "byte_exact_verified": true
+      }
+    },
+    {
+      "asset_id": "instruction_p1_switch_official_20_240_stage_04_instruction_default",
+      "stage": {
+        "recipe_id": "switch_official_20_240",
+        "stage_number": 4,
+        "instruction": "Move the lever to open the valve."
+      },
+      "candidate": {
+        "path": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_04_instruction_default/vector_v4.webp",
+        "revision": "v4",
+        "sha256": "d803d1d6202356094133d99050a4c775882eac332d11e3d5e2a665678dbff265"
+      },
+      "raw_master": {
+        "path": "docs/brewing/illustration-raw-masters/exec-59746fbe-2dfc-4274-a0bd-8ab559b12998.png",
+        "original_cache_path": "C:/Users/adam-/.codex/generated_images/019fa48e-1d5d-7560-b0de-f39fa2e8b914/exec-59746fbe-2dfc-4274-a0bd-8ab559b12998.png",
+        "raw_file_timestamp_utc": "2026-08-01T12:02:15.4534463Z",
+        "sha256": "0d04d4b662759693fb6a47120956638b99845f0ea6437489bf8453a58aae2a0a",
+        "bytes": 1369216,
+        "mode": "RGB",
+        "dimensions": [
+          1448,
+          1086
+        ]
+      },
+      "prompt": {
+        "record": "prompts/brewing/flat-instruction-candidates-2026-08-01.md#switch-v4",
+        "source_session_item": "2026-08-01 session transcript item [424]",
+        "request_type": "edit",
+        "num_last_images_to_include": 1,
+        "input_references": [
+          "The tool received the immediately preceding image by conversation context; its raw identifier was not exposed in the recorded call. Use this retained raw master for future edits."
+        ]
+      },
+      "conversion": {
+        "tool": "Pillow",
+        "pillow_version": "12.1.1",
+        "operation": "convert RGB; resize 1448x1086 to 1024x768 with LANCZOS; save WebP",
+        "webp_quality": 95,
+        "webp_method": 6,
+        "byte_exact_verified": true
+      }
+    },
+    {
+      "asset_id": "instruction_p1_phin_gravity_14_118_stage_01_instruction_default",
+      "stage": {
+        "recipe_id": "phin_gravity_14_118",
+        "stage_number": 1,
+        "instruction": "Place the Phin securely on a heat-safe cup and add 14g level coffee."
+      },
+      "candidate": {
+        "path": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_01_instruction_default/vector_v5.webp",
+        "revision": "v5",
+        "sha256": "32e1623e0fd6444c370cd6268467c33a5f6c4352ea3781fbe411120eb40ff3f7"
+      },
+      "raw_master": {
+        "path": "docs/brewing/illustration-raw-masters/exec-137f8942-d4c2-44d9-aae2-01044953de16.png",
+        "original_cache_path": "C:/Users/adam-/.codex/generated_images/019fa48e-1d5d-7560-b0de-f39fa2e8b914/exec-137f8942-d4c2-44d9-aae2-01044953de16.png",
+        "raw_file_timestamp_utc": "2026-08-01T14:18:28.2157887Z",
+        "sha256": "19c555e924b740179d1de47dbf06c795674a1f9925aa6432090ff591e8381e7c",
+        "bytes": 1032538,
+        "mode": "RGB",
+        "dimensions": [
+          1448,
+          1086
+        ]
+      },
+      "prompt": {
+        "record": "prompts/brewing/flat-instruction-candidates-2026-08-01.md#gravity-phin-v5",
+        "source_session_item": "2026-08-01 session transcript item [324]",
+        "request_type": "edit",
+        "num_last_images_to_include": 1,
+        "input_references": [
+          "The immediately preceding v4 gravity-Phin draft was supplied by conversation context; use this retained v5 raw master for future edits."
+        ]
+      },
+      "conversion": {
+        "tool": "Pillow",
+        "pillow_version": "12.1.1",
+        "operation": "convert RGB; resize 1448x1086 to 1024x768 with LANCZOS; save WebP",
+        "webp_quality": 94,
+        "webp_method": 6,
+        "byte_exact_verified": true
+      }
+    },
+    {
+      "asset_id": "instruction_p1_clever_water_first_15_250_stage_05_instruction_default",
+      "stage": {
+        "recipe_id": "clever_water_first_15_250",
+        "stage_number": 5,
+        "instruction": "Place the Clever on the server to release."
+      },
+      "candidate": {
+        "path": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_05_instruction_default/vector_v4.webp",
+        "revision": "v4",
+        "sha256": "e37511846283574af52955434aad9f527d4eff8e395b26961b2020000c783f85"
+      },
+      "raw_master": {
+        "path": "docs/brewing/illustration-raw-masters/exec-8613e35b-a953-45f2-82ca-3263f8ffcc85.png",
+        "original_cache_path": "C:/Users/adam-/.codex/generated_images/019fa48e-1d5d-7560-b0de-f39fa2e8b914/exec-8613e35b-a953-45f2-82ca-3263f8ffcc85.png",
+        "raw_file_timestamp_utc": "2026-08-01T14:19:37.4913844Z",
+        "sha256": "b0bc412332d9bf429812e8e2528925a460e945b75769e1f4e82d1c9326319108",
+        "bytes": 1121552,
+        "mode": "RGB",
+        "dimensions": [
+          1448,
+          1086
+        ]
+      },
+      "prompt": {
+        "record": "prompts/brewing/flat-instruction-candidates-2026-08-01.md#clever-v4",
+        "source_session_item": "2026-08-01 session transcript item [326]",
+        "request_type": "new",
+        "num_last_images_to_include": 0,
+        "input_references": []
+      },
+      "conversion": {
+        "tool": "Pillow",
+        "pillow_version": "12.1.1",
+        "operation": "convert RGB; resize 1448x1086 to 1024x768 with LANCZOS; save WebP",
+        "webp_quality": 94,
+        "webp_method": 6,
+        "byte_exact_verified": true
+      }
+    },
+    {
+      "asset_id": "instruction_p1_phin_screw_18_120_stage_02_instruction_default",
+      "stage": {
+        "recipe_id": "phin_screw_18_120",
+        "stage_number": 2,
+        "instruction": "Engage the screw insert lightly."
+      },
+      "candidate": {
+        "path": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_02_instruction_default/vector_v6.webp",
+        "revision": "v6",
+        "sha256": "0972bd1fadb8a437587be18dc74295a8beb633d44d8ff0802e23633ce2b9f529"
+      },
+      "raw_master": {
+        "path": "docs/brewing/illustration-raw-masters/exec-d0fe2020-1883-4c6b-9a2e-0fbff2db7412.png",
+        "original_cache_path": "C:/Users/adam-/.codex/generated_images/019fa48e-1d5d-7560-b0de-f39fa2e8b914/exec-d0fe2020-1883-4c6b-9a2e-0fbff2db7412.png",
+        "raw_file_timestamp_utc": "2026-08-01T14:23:49.2209494Z",
+        "sha256": "7f57694996176177fed60feec7055cf9386382827fc1a86f5f1333e91742236e",
+        "bytes": 1034381,
+        "mode": "RGB",
+        "dimensions": [
+          1448,
+          1086
+        ]
+      },
+      "prompt": {
+        "record": "prompts/brewing/flat-instruction-candidates-2026-08-01.md#screw-phin-v6",
+        "source_session_item": "2026-08-01 session transcript item [334]",
+        "request_type": "new",
+        "num_last_images_to_include": 0,
+        "input_references": []
+      },
+      "conversion": {
+        "tool": "Pillow",
+        "pillow_version": "12.1.1",
+        "operation": "convert RGB; resize 1448x1086 to 1024x768 with LANCZOS; save WebP",
+        "webp_quality": 94,
+        "webp_method": 6,
+        "byte_exact_verified": true
+      }
+    }
+  ]
+}

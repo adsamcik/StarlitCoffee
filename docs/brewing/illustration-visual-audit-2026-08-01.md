@@ -47,7 +47,7 @@ exact-stage coverage.
 | `exec-9663ac7c-bb1d-4556-a9cb-8aec733f5b1a.png` | Switch draft showing a hand beside hot glass. | Reject. |
 | `exec-68c5c747-f141-4e38-9e89-7415e5f09f2a.png` | Switch draft with an ambiguous control. | Reject. |
 | `exec-4d7dadb4-ba45-48bb-acbc-c5f76d0fcf0e.png` | Switch draft showing a hand beside hot glass. | Reject. |
-| `exec-59746fbe-2dfc-4274-a0bd-8ab559b12998.png` | Switch draft with unclear valve mechanics. | Reject. |
+| `exec-59746fbe-2dfc-4274-a0bd-8ab559b12998.png` | Switch v4 source; the retained candidate's paper, raised ball, linkage, and drawdown are reviewed through its WebP derivative. | Keep only through the v4 WebP review candidate. |
 | `exec-7787a0e2-5119-4786-b366-cd17eaaaa025.png` | Early steep-and-release draft; paper and actuator are unclear. | Reject. |
 | `exec-7f7bf2f7-d7c2-4ef2-b3c9-2bc6046038b8.png` | Clever v1 source. | Reject / superseded. |
 | `exec-bdcf5093-1497-4128-8f12-45e99ad1cb99.png` | Clever v2 source. | Reject / superseded. |
