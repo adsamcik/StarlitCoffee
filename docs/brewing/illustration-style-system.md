@@ -180,3 +180,120 @@ unsealed channel, and the one-layer side remains visibly thinner.
 **Candidate only — pending product-direction, brewer-mechanics, accessibility,
 and placement review.** It is deliberately outside shipping resources and does
 not count as exact-stage coverage.
+
+## Visual master 02 — Hario Switch open-valve drawdown
+
+### 1. Visual ID / title
+
+`instruction_p1_switch_official_20_240_stage_04_instruction_default` — Hario
+Switch open-valve drawdown, `vector_v4`. Versions `v1` through `v3` remain
+rejected provenance only.
+
+### 2. User learning objective
+
+Show that moving the Switch lever opens its valve and starts drawdown into the
+server; it must not read as a generic pour-over or a front-facing tap.
+
+### 3. Exact moment
+
+`p1_switch_official_20_240_stage_04`: the brew has steeped, the user moves the
+cool control, the ball lifts from its seat, and the first coffee begins to
+leave the brewer.
+
+### 4. Sources consulted
+
+- Canonical P1 exact-stage matrix and source register.
+- Hario [V60 Immersion Dripper Switch](https://www.hario-usa.com/products/switch-immersion-dripper)
+  and [European product page](https://www.hario-europe.com/collections/03-size/products/v60-immersion-dripper-switch),
+  rechecked 1 August 2026.
+
+### 5. Reference basis
+
+The official sources establish the V60/immersion hybrid, glass bowl, silicone
+base/switch, stainless-steel ball, compatible V60 02 filter, and a switch
+action that starts drawdown. They constrain mechanics and equipment only; no
+source artwork is copied, traced, or used as a visual-style reference.
+
+### 6. Confirmed mechanics
+
+- The 02-size V60 paper cone sits inside a ribbed heatproof-glass dripper.
+- Moving the side switch opens the bottom valve.
+- The opening state is a lifted stainless ball above its circular seat, not a
+  faucet or side spout.
+- Coffee drains vertically into a stable server after the valve opens.
+- The user contact shown is only with the cool silicone control.
+
+### 7. Assumptions / uncertainty
+
+The partial base cutaway is an explanatory abstraction, not a manufacturer
+cross-section. Its linkage arrangement is used solely to make the documented
+switch-to-ball opening state visible. The subtle paper seam is not a required
+mechanical cue and has not been independently verified.
+
+### 8. Mechanical specification
+
+Show a pale-blue ribbed outer glass dripper around a distinct smooth pale V60
+paper cone containing wet slurry. In the base cutaway, a translucent side
+trigger connects to a central lifting fork/shaft and a stainless ball held
+above a circular seat; a visible annular gap feeds one central coffee stream
+to a server with only a shallow initial pool.
+
+### 9. Viewpoint
+
+Elevated three-quarter view, with a restrained partial cross-section through
+the silicone base. The filter, trigger, valve opening, and receiving server
+remain readable at 300 dp without labels or arrows.
+
+### 10. Style notes
+
+Use the shared warm-cream, flat 2D editorial system: crisp espresso outlines,
+pale glass and paper, restrained amber/brown slurry, and no texture,
+photorealism, text, logos, decorative props, or app chrome.
+
+### 11. Current v4 image-generation prompt
+
+Create a clean flat 2D vector editorial in-app coffee illustration of the
+exact moment a Hario Switch-style V60 immersion dripper opens for drawdown.
+Show the smooth pale 02 V60 paper cone holding brown wet slurry inside a
+separate pale-blue ribbed glass bowl. Use a clear partial cutaway of the
+silicone base: a fingertip touches only the cool side trigger, the trigger
+links to a central lifting shaft, and a stainless ball is visibly raised above
+its circular seat so a single dark stream begins to fall into a stable server
+with a shallow pool. Plain warm cream 4:3 artboard, crisp dark espresso
+outlines, sparse flat shading. No text, arrows, labels, logos, kettle, steam,
+countertop, generic cone, faucet, photorealism, 3D rendering, gradients, or
+texture.
+
+### 12. Candidate artifacts
+
+All files are opaque static RGB WebP at 1024 by 768 and remain outside
+`drawable-nodpi`.
+
+- `vector_v1.webp` — 44,214 bytes; SHA-256
+  `b439f3ef53514d63921c1d1364060d87133ae90dec157314857f4a055743de28`.
+- `vector_v2.webp` — 68,086 bytes; SHA-256
+  `62670eaa9d9b31b6cd47880254c834db8993e8c087dd7b3b21aae971c81c5386`.
+- `vector_v3.webp` — 75,876 bytes; SHA-256
+  `ca853652d48e6a7b06cebc61ace3a01439d28cf738b30ee8859ff174e9494380`.
+- `vector_v4.webp` — 72,560 bytes; SHA-256
+  `d803d1d6202356094133d99050a4c775882eac332d11e3d5e2a665678dbff265`.
+
+### 13. Rejected versions
+
+`v1` used misleading straight ribs, a scalloped paper shape, and a
+front-tap-like valve. `v2` and `v3` failed to show a recognisable paper filter.
+They are retained to make the final candidate's iterative review traceable.
+
+### 14. Current v4 accuracy review
+
+At mobile scale, `v4` clearly separates the smooth paper cone from the ribbed
+glass, shows the trigger-to-lifting linkage, a ball visibly above its seat, an
+open annular gap, and a central drawdown stream. It is text-free, quiet, and
+does not suggest hot-glass contact. The filter seam is deliberately subtle;
+that is non-blocking because the paper itself is unmistakable.
+
+### 15. Final state
+
+**Candidate may advance to formal product, brewer-mechanics, accessibility,
+and placement review only.** It is not approved, registered, rendered by the
+app, or counted as exact-stage coverage.
