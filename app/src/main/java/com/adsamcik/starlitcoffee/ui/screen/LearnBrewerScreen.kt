@@ -143,6 +143,9 @@ private fun LearnGuidanceCard(
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
             )
+            // The illustration introduces the stage; the concise action immediately
+            // below it confirms what the learner should do.
+            visualAsset?.let { asset -> ApprovedInstructionAssetImage(asset) }
             content.instruction.takeIf(String::isNotBlank)?.let { instruction ->
                 Text(
                     text = instruction,
@@ -155,7 +158,6 @@ private fun LearnGuidanceCard(
                     safetyCritical = true,
                 )
             }
-            visualAsset?.let { asset -> ApprovedInstructionAssetImage(asset) }
             if (!content.safetyCritical) content.warning?.let { warning ->
                 LearnGuidanceWarning(warning = warning, safetyCritical = false)
             }
