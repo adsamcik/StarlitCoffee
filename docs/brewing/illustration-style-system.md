@@ -297,3 +297,114 @@ that is non-blocking because the paper itself is unmistakable.
 **Candidate may advance to formal product, brewer-mechanics, accessibility,
 and placement review only.** It is not approved, registered, rendered by the
 app, or counted as exact-stage coverage.
+
+## Visual master 03 - Gravity Phin stable setup
+
+### 1. Visual ID / title
+
+`instruction_p1_phin_gravity_14_118_stage_01_instruction_default` - gravity
+Phin stable setup. Current review candidate: `vector_v3.webp`.
+
+### 2. User learning objective
+
+Teach that the traditional gravity Phin must sit fully and securely on a wide,
+heat-safe cup before brewing starts, with a level bed of dry coffee.
+
+### 3. Exact brewing moment
+
+`p1_phin_gravity_14_118_stage_01`: the empty gravity Phin is on the cup and
+14 g of level coffee has been added, before water, the loose press disc, or lid.
+
+### 4. Sources consulted
+
+- Canonical exact-stage record:
+  `app/src/main/assets/p1_exact_guidance_2026_07_27.json`.
+- `SRC-NGUYEN-PHIN`, `SRC-TRUNGNGUYEN-PHIN`, and `SRC-GOURMETKAVA-PHIN` in
+  the supplied source register.
+- [Trung Nguyen Coffee brewing information](https://trung-nguyen-coffee.co.uk/page_brewing.php).
+- [GourmetKava's Vietnamese coffee preparation guide](https://www.gourmetkava.cz/en/blog/making-coffee/preparation-of--vietnamese-coffee).
+
+The web sources and supplied record were rechecked on 2026-08-01.
+
+### 5. Reference images selected
+
+Product photos and assembly views on the cited guides were used for geometry,
+base-to-cup support, and the gravity-only setup. They are research references,
+not copied image material.
+
+### 6. Confirmed mechanics
+
+- This is the loose-drop-in press-disc gravity profile, not a screw-insert one.
+- The chamber rests directly on the cup; gravity will later move water through
+  the perforated base.
+- The coffee is level and dry. The press disc and lid are absent; no water,
+  brewed coffee, or drainage exists at this stage.
+- The cup fully supports the base; stable Phin and level bed are the cue.
+
+### 7. Assumptions / uncertainty
+
+The object is neutral and unbranded. Its small base perforations are not
+directly visible in this exterior three-quarter view, though the canonical stage
+requires them to be clear. Review must decide if that cue needs a later detail
+view without making this setup image noisy.
+
+### 8. Mechanical specification
+
+Show a compact upright metal chamber with a shallow continuous flange seated
+symmetrically on a broad cup rim and a visible level dry-coffee bed. Hide the
+uninstalled disc and lid. Do not show a screw, linkage, cutaway, water, slurry,
+bubbles, stream, or filled receiving cup.
+
+### 9. Chosen visual approach and viewpoint
+
+A centered elevated three-quarter exterior view makes the support relationship
+and level bed legible at phone size in one simple state.
+
+### 10. Style notes for this image
+
+Use the house 2D editorial-vector language: warm cream background, charcoal
+outlines, restrained warm-metal planes, friendly credible contours, sparse
+ground texture, no text, and generous negative space. It sits above concise
+stage copy in the app.
+
+### 11. Image-generation prompt
+
+"Clean, text-free 2D coffee-app instructional illustration on a warm cream
+background: compact traditional Vietnamese gravity Phin in elevated
+three-quarter view, shallow metal support fully seated on the broad rim of a
+plain heat-safe cup, visible level bed of dry brown coffee in the open chamber.
+Use crisp charcoal outlines, warm muted metal shading, rounded friendly vector
+forms, and generous breathing room. No press disc, lid, screw insert, cutaway,
+water, brewed coffee, flow, arrows, labels, branding, countertop, photorealism,
+3D rendering, noisy texture, or generic cone dripper."
+
+### 12. Candidate artifacts
+
+All are opaque static RGB WebP at 1024 by 768 and remain outside
+`drawable-nodpi`.
+
+- `vector_v1.webp` - 80,290 bytes; SHA-256
+  `83bdbd362a499638f93ae4d7bdb0d5b9649ecc735f246fe31619efc11720957d`.
+- `vector_v2.webp` - 59,518 bytes; SHA-256
+  `eaa7533e817de87ef2a9ab3a18a3d3b77889cf7971e8c1edfd5d450e9aec748f`.
+- `vector_v3.webp` - 48,372 bytes; SHA-256
+  `5f8653a9e3479f7bd70a68731e51e567bfbe21515cceb73bbb448adddd118684`.
+
+### 13. Rejected versions
+
+`v1` was too tall and noisy, with overemphasized outer-hole texture. `v2`
+invented a large cutaway-like bridge/linkage that a gravity Phin does not have.
+Both are retained for an auditable iteration trail.
+
+### 14. Current v3 accuracy review
+
+`v3` plainly shows the compact open chamber, level dry grounds, and stable
+flange-to-cup-rim relationship. It is quiet, text-free, and appropriate for an
+image-above-copy layout. Its exterior view intentionally does not expose the
+perforations, so it is a review candidate rather than a completed asset.
+
+### 15. Final state
+
+**Candidate may advance to formal product, brewer-mechanics, accessibility, and
+placement review only.** It is not approved, registered, rendered by the app,
+or counted as exact-stage coverage.
