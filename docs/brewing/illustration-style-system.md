@@ -408,3 +408,122 @@ perforations, so it is a review candidate rather than a completed asset.
 **Candidate may advance to formal product, brewer-mechanics, accessibility, and
 placement review only.** It is not approved, registered, rendered by the app,
 or counted as exact-stage coverage.
+
+## Visual master 04 - Clever water-first release
+
+### 1. Visual ID / title
+
+`instruction_p1_clever_water_first_15_250_stage_05_instruction_default` -
+Clever water-first release. Current review candidate: `vector_v3.webp`.
+
+### 2. User learning objective
+
+Teach that a Clever-style steep-and-release brewer starts draining only after it is
+placed level on a stable, sufficiently large server.
+
+### 3. Exact brewing moment
+
+`p1_clever_water_first_15_250_stage_05`: after the water-first steep and
+gentle stir, the brewer is seated on the server. The bottom actuator is open and
+the first flow begins. The stage copy below the image is "Place the Clever on
+the server to release."
+
+### 4. Sources consulted
+
+- Canonical exact-stage record:
+  `app/src/main/assets/p1_exact_guidance_2026_07_27.json`.
+- `SRC-CLEVER-HOFFMANN` and `SRC-CLEVER-COFFEECHRONICLER` in the supplied
+  source register.
+- [Clever Brewers product and brew guide](https://cleverbrewing.coffee/collections/clever-manual-brewers/products/clever-dripper).
+- [James Hoffmann's Clever technique](https://www.youtube.com/watch?v=RpOdennxP24).
+- [Coffee Chronicler's Clever guide](https://coffeechronicler.com/clever-dripper-recipe/).
+
+The source record and product guide were rechecked on 2026-08-01.
+
+### 5. Reference images selected
+
+Product and workflow views on the cited Clever guide informed the tapered,
+handled plastic body, #4 paper compatibility, and server-actuated release. They
+are research references only and are not copied into this asset.
+
+### 6. Confirmed mechanics
+
+- This recipe uses the `clever_style_bottom_actuated_dripper` profile and a
+  wedge paper filter, not a V60 or Hario Switch.
+- The Brewer is placed on the server to depress its bottom actuator; the stage
+  state is open and flow begins immediately.
+- The server must be stable and large enough. This is safety-critical guidance.
+- The illustration shows a wet filter and slurry after immersion, with one
+  initial coffee stream; it does not imply an exact drawdown volume or time.
+
+### 7. Assumptions / uncertainty
+
+Clever body and lower-valve details vary by revision. The illustration therefore
+uses an unbranded, simplified transparent silhouette and only the externally
+observable rim-to-actuator contact. It does not invent a cutaway, linkage, or
+internal ball mechanism.
+
+### 8. Mechanical specification
+
+Show a tapered handled Clever-style chamber with a visibly seated wet white #4
+flat-bottom wedge filter around a calm brown slurry. Its broad base rests evenly
+on a broad stable glass server rim. Show a small centered underside actuator at
+that contact and one narrow vertical coffee stream entering an almost-empty
+server. Do not show a hand, overflow, tilt, secondary stream, or a closed valve.
+
+### 9. Chosen visual approach and viewpoint
+
+A centered elevated three-quarter view, biased enough toward the base to retain
+the support overlap and first stream, teaches actuation and safe placement in
+one quiet mobile-readable state.
+
+### 10. Style notes for this image
+
+Use the house clean 2D editorial-vector language: warm cream background,
+uniform deep-espresso outlines, flat pale translucent-plastic and paper fills,
+restrained broad shading, no text, and generous negative space. It appears
+above the concise stage copy rather than duplicating it in the image.
+
+### 11. Image-generation prompt
+
+"Flat, text-free 2D mobile coffee-app instruction illustration: unbranded
+Clever-style steep-and-release dripper, fully level on a wide stable glass
+server. Show a smooth tapered handled chamber, a wet white #4 flat-bottom
+trapezoid wedge filter, calm dark slurry, broad even support, visible underside
+actuator contact, and one first vertical coffee stream into an almost-empty
+server. Centered elevated three-quarter view, warm cream background, crisp
+espresso outlines, flat warm neutral fills. No V60 ribs or cone paper, Switch
+lever or ball, generic tap, cutaway, labels, arrows, photorealism, texture,
+countertop, kettle, hand, scale, narrow mug, tilt, overflow, or no-flow state."
+
+### 12. Candidate artifacts
+
+All are opaque static RGB WebP at 1024 by 768 and remain outside
+`drawable-nodpi`.
+
+- `vector_v1.webp` - 96,080 bytes; SHA-256
+  `164deeea05ee392f9798d583bdb7a271ab57325eb449b1f74d3f409539ad92ce`.
+- `vector_v2.webp` - 44,306 bytes; SHA-256
+  `8005660b07d9bea4135a49ece26fe9a200eaf61e77c06988a6ec4340a6932bc7`.
+- `vector_v3.webp` - 50,940 bytes; SHA-256
+  `3f21f63beb587fa5969d98a1968ed38df58f08cd6d18454945c50c8621c293c7`.
+
+### 13. Rejected versions
+
+`v1` was too rendered and visually generic, with realistic glass/coffee
+texture and weak filter clarity. `v2` corrected the flat in-app style but
+omitted the visible #4 wedge paper. Both remain for an auditable iteration trail.
+
+### 14. Current v3 accuracy review
+
+`v3` preserves the flat 2D style, shows a visible wedge paper, broad stable
+support, exterior actuator contact, and exactly one beginning flow stream. The
+lower contact is intentionally diagrammatic rather than an invented internal
+mechanism. It remains a review candidate until product, brewer-mechanics,
+accessibility, and placement review accept it.
+
+### 15. Final state
+
+**Candidate may advance to formal product, brewer-mechanics, accessibility, and
+placement review only.** It is not approved, registered, rendered by the app,
+or counted as exact-stage coverage.
