@@ -645,3 +645,43 @@ accept it.
 **Candidate may advance to formal product, brewer-mechanics, accessibility, and
 placement review only.** It is not approved, registered, rendered by the app,
 or counted as exact-stage coverage.
+
+## Visual audit update — 2026-08-01
+
+This addendum supersedes the `current review candidate` and `Current v…`
+accuracy-review status in Visual masters 03–05. Every candidate was opened
+individually at a phone-scale audit size. All remain external review candidates;
+none is registered in `drawable-nodpi`, rendered by the app, or counted as
+recipe-stage coverage.
+
+### Current review candidates after visual verification
+
+| Exact stage | Candidate | Visual result |
+| --- | --- | --- |
+| `chemex_42_700` stage 01 — place the three-layer filter over the spout | `vector_v2.webp` | Keep. The stepped three-layer side, single opposite layer, and unsealed spout channel are the dominant reading. |
+| `switch_official_20_240` stage 04 — open the valve | `vector_v4.webp` | Keep. The paper cone, lifted ball, open seat, lever linkage, and first drawdown stream are all visible without showing a hand near hot glass. |
+| `phin_gravity_14_118` stage 01 — secure Phin and add level coffee | `vector_v5.webp` | Keep. The short open chamber, dry level bed, broad flange, and stable cup support are clear; no lid, press, water, or false perforation claim appears. |
+| `clever_water_first_15_250` stage 05 — place on server to release | `vector_v4.webp` | Keep. It visibly shows the #4 wedge paper, broad server support, underside actuator contact, and exactly one initial stream. |
+| `phin_screw_18_120` stage 02 — engage the insert lightly | `vector_v6.webp` | Keep. It shows the post-engagement state—level perforated insert, short visible thread, dry bed, headroom, and no hand or downward-pressure cue. |
+
+### Rejected additions
+
+- Gravity Phin `vector_v4.webp` is more rendered and less compact than v5; it
+  does not improve the stable-support cue.
+- Screw-insert Phin `vector_v4.webp` shows an oversized hand, while v5 reads as
+  a downward poke. Both risk suggesting pressing or overtightening.
+
+### Verified delivery details
+
+- Gravity Phin v4: RGB 1024 × 768 WebP, 45,218 bytes, SHA-256
+  `2e96d51bff94ca3406bda31dc0687722bfda0c49e745ca8645441cda4f7e2e4a`.
+- Gravity Phin v5: RGB 1024 × 768 WebP, 32,258 bytes, SHA-256
+  `32e1623e0fd6444c370cd6268467c33a5f6c4352ea3781fbe411120eb40ff3f7`.
+- Clever v4: RGB 1024 × 768 WebP, 45,546 bytes, SHA-256
+  `e37511846283574af52955434aad9f527d4eff8e395b26961b2020000c783f85`.
+- Screw-insert Phin v4: RGB 1024 × 768 WebP, 61,106 bytes, SHA-256
+  `d814e0abb3fae65477bd6590f9202e2b693321c530034526eb088fdbd94dccfc`.
+- Screw-insert Phin v5: RGB 1024 × 768 WebP, 48,420 bytes, SHA-256
+  `7f55cf47dbe66cade4df088595c37fdee99f9497a1848199be688a6b41c7cedf`.
+- Screw-insert Phin v6: RGB 1024 × 768 WebP, 42,382 bytes, SHA-256
+  `0972bd1fadb8a437587be18dc74295a8beb633d44d8ff0802e23633ce2b9f529`.
