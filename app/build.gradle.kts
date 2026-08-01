@@ -334,7 +334,6 @@ dependencies {
     // AndroidX
     implementation(libs.core.ktx)
     implementation(libs.activity.compose)
-    implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.process)
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.lifecycle.viewmodel.compose)
@@ -389,7 +388,6 @@ dependencies {
     testImplementation(libs.coroutines.test)
     androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.junit.ext)
-    androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
