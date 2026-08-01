@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.CardDefaults
@@ -127,7 +128,7 @@ fun BrewPreviewCard(
                             )
                             IconButton(
                                 onClick = { showRetentionInfo = true },
-                                modifier = Modifier.size(24.dp),
+                                modifier = Modifier.sizeIn(minWidth = 48.dp, minHeight = 48.dp),
                             ) {
                                 Icon(
                                     Icons.Outlined.Info,
