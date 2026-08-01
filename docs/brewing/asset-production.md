@@ -1,16 +1,25 @@
 # Instruction asset production workflow
 
+> **Product-direction reset — 1 August 2026.** The 27 prior semi-real or
+> realistically rendered candidates are rejected for this app surface. They
+> remain in the repository only as unapproved technical/provenance candidates
+> until a documented archive pass; none may be registered, promoted, or used as
+> a style reference. Replacement work follows the clean 2D editorial system in
+> `illustration-style-system.md` and is staged outside `drawable-nodpi` until
+> product, brewer-mechanics, accessibility, and placement review pass.
+
 ## Prompt template
 
 > A clean text-free instructional illustration showing [one exact brewing
 > action] using [brewer profile and equipment]. The equipment geometry, filter
 > placement, liquid level, hand placement and flow direction must be physically
-> accurate. Show only the objects necessary to understand this action on a
-> neutral uncluttered countertop. Consistent semi-flat educational illustration
-> style, softly dimensional, clear silhouettes, subtle shadows, high readability
-> at mobile size, restrained warm-neutral palette, 4:3 composition, crop-safe
-> center. No words, no letters, no numbers, no labels, no logos, no recipe card,
-> no infographic, no multiple panels, no decorative kitchen clutter.
+> accurate. Show only the objects necessary to understand this action on a plain
+> warm-cream artboard. Use the clean 2D vector-like editorial system: crisp
+> continuous outlines, simple geometric forms, restrained flat colour, one or
+> two shade planes, high readability at mobile size, 4:3 composition, and a
+> crop-safe centre. No realism, material texture, product shine, countertop,
+> words, letters, numbers, labels, logos, recipe card, infographic, arrows,
+> multiple panels, or decorative clutter.
 
 Add profile-specific negative constraints, for example “do not tamp moka coffee”
 or “do not show an unstable inverted AeroPress.”
@@ -19,7 +28,8 @@ or “do not show an unstable inverted AeroPress.”
 
 For every asset record:
 
-- Stable asset ID, method family, brewer profile, stage/content ID, and variant.
+- Stable asset ID, method family, brewer profile, stage/content ID, and variant;
+  candidates remain outside `drawable-nodpi` until every review gate passes.
 - Exact prompt, source document, revision, generation date, and review status.
 - Drawable path, pixel dimensions, encoded size, and 4:3 validation result.
 - Alt-text resource and reviewer notes about equipment/safety accuracy.
