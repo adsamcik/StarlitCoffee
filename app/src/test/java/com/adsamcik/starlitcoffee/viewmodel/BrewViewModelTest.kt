@@ -12,6 +12,7 @@ import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
+import com.adsamcik.starlitcoffee.data.model.HomeContextCard
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
@@ -1389,6 +1390,40 @@ class BrewViewModelTest {
         val bags = persistenceViewModel.coffeeBags.value
         assertEquals(1, bags.size)
         assertEquals("Kenya AA", bags.first().name)
+    }
+
+    @Test
+    fun `selectBag immediately refreshes selected bag home context`() {
+        val vm = createPersistenceViewModel()
+        val now = System.currentTimeMillis()
+        vm.addCoffeeBag(
+            BrewViewModel.CoffeeBagInput(
+                name = "Freshly roasted",
+                roastDate = now - 86_400_000L,
+            ),
+        )
+        vm.addCoffeeBag(
+            BrewViewModel.CoffeeBagInput(
+                name = "Mellowing",
+                roastDate = now - (30L * 86_400_000L),
+            ),
+        )
+
+        val freshBag = vm.coffeeBags.value.single { it.name == "Freshly roasted" }
+        val mellowingBag = vm.coffeeBags.value.single { it.name == "Mellowing" }
+        vm.selectBag(freshBag.id)
+
+        assertEquals(
+            "Freshly roasted",
+            (vm.homeContextCard.value as? HomeContextCard.BagAgeWisdom)?.bagName,
+        )
+
+        vm.selectBag(mellowingBag.id)
+
+        assertEquals(
+            "Mellowing",
+            (vm.homeContextCard.value as? HomeContextCard.BagAgeWisdom)?.bagName,
+        )
     }
 
     @Test

@@ -84,10 +84,13 @@ import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
@@ -270,8 +273,21 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         private set
     private val _lastUnratedBrew = MutableStateFlow<BrewLogEntity?>(null)
     val lastUnratedBrew: StateFlow<BrewLogEntity?> = _lastUnratedBrew.asStateFlow()
-    private val _homeContextCard = MutableStateFlow<HomeContextCard?>(null)
-    val homeContextCard: StateFlow<HomeContextCard?> = _homeContextCard.asStateFlow()
+    val homeContextCard: StateFlow<HomeContextCard?> = combine(
+        _coffeeBags,
+        _brewLogs,
+        _selectedBagId,
+    ) { bags, brewLogs, selectedBagId ->
+        HomeContextCard.resolve(
+            bags = bags,
+            brewLogs = brewLogs,
+            selectedBagId = selectedBagId,
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = null,
+    )
     private val _bagPhotoResult = MutableStateFlow<BagPhotoSessionResult?>(null)
     val bagPhotoResult: StateFlow<BagPhotoSessionResult?> = _bagPhotoResult.asStateFlow()
     private val _bagPhotoRetryResult = MutableStateFlow<BagPhotoSessionResult?>(null)
@@ -366,7 +382,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         viewModelScope.launch {
             brewLogRepository?.getAllLogs()?.collect { logs ->
                 _brewLogs.value = logs
-                refreshHomeContextCard()
                 refreshInventoryAlerts()
             }
         }
@@ -380,7 +395,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 _coffeeBags.value = bags
                 _isCoffeeBagInventoryLoaded.value = true
                 loadKnownFieldValues()
-                refreshHomeContextCard()
                 refreshInventoryAlerts()
             }
         }
@@ -946,16 +960,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     fun refreshLastUnrated() {
         viewModelScope.launch {
             _lastUnratedBrew.value = brewLogRepository?.getLastUnratedLog()
-            refreshHomeContextCard()
         }
-    }
-
-    fun refreshHomeContextCard() {
-        _homeContextCard.value = HomeContextCard.resolve(
-            bags = _coffeeBags.value,
-            brewLogs = _brewLogs.value,
-            selectedBagId = _selectedBagId.value,
-        )
     }
 
     fun refreshInventoryAlerts() {
