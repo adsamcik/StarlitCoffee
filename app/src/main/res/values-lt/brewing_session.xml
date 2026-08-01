@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Prieš tęsdami stabiliai laikykite ruošimo ir patiekimo indą.</string>
     <string name="warning_brew_safety_food_storage">Ilgus šaltus ruošimus laikykite uždengtus ir prireikus šaldytuve.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Kritinė sauga</string>
+    <string name="label_brew_safety_warning">Saugos įspėjimas</string>
+    <string name="label_brew_safety_note">Saugos pastaba</string>
 </resources>

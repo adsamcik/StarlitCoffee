@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Sorgen Sie vor dem Fortfahren für einen stabilen Stand von Brüher und Serviergefäß.</string>
     <string name="warning_brew_safety_food_storage">Halten Sie lange kalte Brühvorgänge abgedeckt und kühlen Sie sie bei Bedarf.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Kritische Sicherheit</string>
+    <string name="label_brew_safety_warning">Sicherheitswarnung</string>
+    <string name="label_brew_safety_note">Sicherheitshinweis</string>
 </resources>

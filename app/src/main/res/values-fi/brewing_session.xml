@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Pidä valmistuslaite ja tarjoiluastia vakaana ennen jatkamista.</string>
     <string name="warning_brew_safety_food_storage">Pidä pitkät kylmäuutot peitettyinä ja tarvittaessa jääkaapissa.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Kriittinen turvallisuus</string>
+    <string name="label_brew_safety_warning">Turvallisuusvaroitus</string>
+    <string name="label_brew_safety_note">Turvallisuushuomautus</string>
 </resources>

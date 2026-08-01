@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Mantenga estable el equipo y el recipiente de servicio antes de continuar.</string>
     <string name="warning_brew_safety_food_storage">Mantenga las preparaciones frías largas tapadas y refrigeradas cuando sea necesario.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Seguridad crítica</string>
+    <string name="label_brew_safety_warning">Advertencia de seguridad</string>
+    <string name="label_brew_safety_note">Nota de seguridad</string>
 </resources>

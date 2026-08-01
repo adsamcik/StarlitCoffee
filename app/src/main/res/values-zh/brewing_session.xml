@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">继续前，请确保冲煮器具和盛装容器稳定。</string>
     <string name="warning_brew_safety_food_storage">长时间冷萃时，请保持覆盖，并在需要时冷藏。</string>
     <string name="cd_brew_session_status">%1$s。%2$s。</string>
+    <string name="label_brew_safety_critical">关键安全</string>
+    <string name="label_brew_safety_warning">安全警告</string>
+    <string name="label_brew_safety_note">安全提示</string>
 </resources>

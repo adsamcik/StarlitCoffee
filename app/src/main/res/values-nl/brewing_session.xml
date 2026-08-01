@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Houd de zetmethode en het serveervat stabiel voordat u doorgaat.</string>
     <string name="warning_brew_safety_food_storage">Houd lange koude brouwsels afgedekt en koel ze indien nodig.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Kritieke veiligheid</string>
+    <string name="label_brew_safety_warning">Veiligheidswaarschuwing</string>
+    <string name="label_brew_safety_note">Veiligheidsopmerking</string>
 </resources>

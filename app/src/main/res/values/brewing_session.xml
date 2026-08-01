@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Keep the brewer and serving vessel stable before continuing.</string>
     <string name="warning_brew_safety_food_storage">Keep long cold brews covered and refrigerated when required.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Critical safety</string>
+    <string name="label_brew_safety_warning">Safety warning</string>
+    <string name="label_brew_safety_note">Safety note</string>
 </resources>

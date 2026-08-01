@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Tieni stabili l’infusore e il recipiente di servizio prima di continuare.</string>
     <string name="warning_brew_safety_food_storage">Tieni le preparazioni fredde lunghe coperte e refrigerate quando necessario.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Sicurezza critica</string>
+    <string name="label_brew_safety_warning">Avviso di sicurezza</string>
+    <string name="label_brew_safety_note">Nota di sicurezza</string>
 </resources>

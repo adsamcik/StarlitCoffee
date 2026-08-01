@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Pirms turpināšanas turiet ierīci un pasniegšanas trauku stabili.</string>
     <string name="warning_brew_safety_food_storage">Garus aukstos pagatavojumus turiet nosegtus un, ja vajadzīgs, ledusskapī.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Kritiska drošība</string>
+    <string name="label_brew_safety_warning">Drošības brīdinājums</string>
+    <string name="label_brew_safety_note">Drošības piezīme</string>
 </resources>

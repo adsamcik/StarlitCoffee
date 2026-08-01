@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Držite uređaj i posudu za posluživanje stabilnima prije nastavka.</string>
     <string name="warning_brew_safety_food_storage">Duge hladne pripreme držite pokrivene i po potrebi u hladnjaku.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Kritična sigurnost</string>
+    <string name="label_brew_safety_warning">Sigurnosno upozorenje</string>
+    <string name="label_brew_safety_note">Sigurnosna napomena</string>
 </resources>

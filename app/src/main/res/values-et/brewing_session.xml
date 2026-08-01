@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Hoia valmistaja ja serveerimisnõu enne jätkamist stabiilsena.</string>
     <string name="warning_brew_safety_food_storage">Hoia pikad külmpruulid kaetuna ja vajadusel külmikus.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Kriitiline ohutus</string>
+    <string name="label_brew_safety_warning">Ohutushoiatus</string>
+    <string name="label_brew_safety_note">Ohutusmärkus</string>
 </resources>

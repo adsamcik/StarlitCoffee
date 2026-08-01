@@ -18,6 +18,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -837,19 +840,65 @@ private fun ActualValueControl(
 @Composable
 private fun BrewSessionSafety(messages: List<StageSafetyMessage>) {
     messages.forEach { message ->
-        val container = when (message.severity) {
-            StageSafetySeverity.CRITICAL -> MaterialTheme.colorScheme.errorContainer
-            StageSafetySeverity.WARNING -> MaterialTheme.colorScheme.tertiaryContainer
-            StageSafetySeverity.ADVICE -> MaterialTheme.colorScheme.secondaryContainer
+        val (container, content) = when (message.severity) {
+            StageSafetySeverity.CRITICAL -> MaterialTheme.colorScheme.errorContainer to
+                MaterialTheme.colorScheme.onErrorContainer
+
+            StageSafetySeverity.WARNING -> MaterialTheme.colorScheme.tertiaryContainer to
+                MaterialTheme.colorScheme.onTertiaryContainer
+
+            StageSafetySeverity.ADVICE -> MaterialTheme.colorScheme.secondaryContainer to
+                MaterialTheme.colorScheme.onSecondaryContainer
         }
-        Card(colors = CardDefaults.cardColors(containerColor = container)) {
-            Text(
-                text = stringResource(message.messageRes()),
+        Card(
+            colors = CardDefaults.cardColors(
+                containerColor = container,
+                contentColor = content,
+            ),
+            modifier = Modifier.semantics(mergeDescendants = true) {
+                liveRegion = if (message.severity == StageSafetySeverity.CRITICAL) {
+                    LiveRegionMode.Assertive
+                } else {
+                    LiveRegionMode.Polite
+                }
+            },
+        ) {
+            Row(
                 modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.bodyMedium,
-            )
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.Top,
+            ) {
+                Icon(
+                    imageVector = message.severity.icon(),
+                    contentDescription = null,
+                    modifier = Modifier.padding(top = 2.dp),
+                )
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        text = stringResource(message.severity.labelRes()),
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    Text(
+                        text = stringResource(message.messageRes()),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
         }
     }
+}
+
+internal fun StageSafetySeverity.labelRes(): Int = when (this) {
+    StageSafetySeverity.CRITICAL -> R.string.label_brew_safety_critical
+    StageSafetySeverity.WARNING -> R.string.label_brew_safety_warning
+    StageSafetySeverity.ADVICE -> R.string.label_brew_safety_note
+}
+
+private fun StageSafetySeverity.icon() = when (this) {
+    StageSafetySeverity.CRITICAL -> Icons.Filled.Warning
+    StageSafetySeverity.WARNING -> Icons.Outlined.WarningAmber
+    StageSafetySeverity.ADVICE -> Icons.Outlined.Info
 }
 
 internal enum class BrewSessionPrimaryAction {

@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Дръжте уреда и съда за сервиране стабилни, преди да продължите.</string>
     <string name="warning_brew_safety_food_storage">Покривайте продължителните студени приготвяния и ги съхранявайте в хладилник, когато е необходимо.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Критична безопасност</string>
+    <string name="label_brew_safety_warning">Предупреждение за безопасност</string>
+    <string name="label_brew_safety_note">Бележка за безопасност</string>
 </resources>

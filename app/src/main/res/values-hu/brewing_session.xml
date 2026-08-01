@@ -76,4 +76,7 @@
     <string name="warning_brew_safety_stability">Folytatás előtt tartsa stabilan a készüléket és a tálalóedényt.</string>
     <string name="warning_brew_safety_food_storage">A hosszú hideg főzeteket tartsa lefedve és szükség esetén hűtőben.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
+    <string name="label_brew_safety_critical">Kritikus biztonság</string>
+    <string name="label_brew_safety_warning">Biztonsági figyelmeztetés</string>
+    <string name="label_brew_safety_note">Biztonsági megjegyzés</string>
 </resources>
