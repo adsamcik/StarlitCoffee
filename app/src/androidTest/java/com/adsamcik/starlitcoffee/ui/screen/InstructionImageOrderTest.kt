@@ -7,8 +7,12 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
+import com.adsamcik.starlitcoffee.domain.brewing.InstructionAssetId
+import com.adsamcik.starlitcoffee.domain.brewing.MethodFamilyId
+import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
+import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInGuidancePlacement
-import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceAvailability
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceVisualStatus
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolution
@@ -16,6 +20,7 @@ import com.adsamcik.starlitcoffee.ui.guidance.GuidancePolicySource
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetRecord
+import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetProvenance
 import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetReview
 import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetReviewStatus
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogAvailability
@@ -38,7 +43,7 @@ class InstructionImageOrderTest {
 
     @Test
     fun learnPlacesApprovedIllustrationBeforeItsInstructionAndWarning() {
-        val asset = approvedAsset()
+        val asset = approvedTestInstructionAsset()
         val instruction = "Learn image-first instruction"
         val warning = "Learn warning after instruction"
 
@@ -66,7 +71,6 @@ class InstructionImageOrderTest {
                             ),
                         ),
                     ),
-                    hasPendingVisualAssets = false,
                     onBack = {},
                     instructionAssets = InstructionAssetCatalog(listOf(asset)),
                 )
@@ -77,10 +81,11 @@ class InstructionImageOrderTest {
     }
 
     @Test
-    fun liveBrewPlacesApprovedIllustrationAndInstructionBeforeGuidanceControl() {
-        val asset = approvedAsset()
-        val instruction = "Live image-first instruction"
-        val target = "Live target after instruction"
+    fun liveBrewPlacesApprovedIllustrationBeforePrimaryCriticalAndSupportingContent() {
+        val asset = approvedTestInstructionAsset()
+        val primaryInstruction = "Live image-first instruction"
+        val criticalWarning = "Live critical warning after illustrated instruction"
+        val supportingInstruction = "Live supporting instruction after warning"
         val guidanceLevel = guidanceLevelLabel()
 
         composeRule.setContent {
@@ -95,23 +100,26 @@ class InstructionImageOrderTest {
                         ),
                         availability = DurableBrewGuidanceAvailability.Available,
                         routineContent = listOf(
-                            ResolvedBrewGuidanceContent(
+                            brewGuidanceContent(
                                 id = asset.contentId,
                                 placement = BuiltInGuidancePlacement.LIVE_STAGE,
-                                instruction = instruction,
-                                target = target,
-                                completionCue = null,
-                                explanation = null,
-                                tip = null,
-                                nextAction = null,
-                                controlRequirements = emptyList(),
-                                warning = null,
-                                utilities = emptyList(),
-                                altText = "Approved instructional illustration",
-                                safetyCritical = false,
+                                instruction = primaryInstruction,
+                            ),
+                            brewGuidanceContent(
+                                id = StageContentId("test_supporting_content"),
+                                placement = BuiltInGuidancePlacement.UTILITY,
+                                instruction = supportingInstruction,
                             ),
                         ),
-                        criticalContent = emptyList(),
+                        criticalContent = listOf(
+                            brewGuidanceContent(
+                                id = StageContentId("test_critical_content"),
+                                placement = BuiltInGuidancePlacement.GLOBAL_SAFETY,
+                                instruction = "",
+                                warning = criticalWarning,
+                                safetyCritical = true,
+                            ),
+                        ),
                         stageSafetyMessages = emptyList(),
                         visualStatus = DurableBrewGuidanceVisualStatus.Approved(asset),
                     ),
@@ -122,18 +130,67 @@ class InstructionImageOrderTest {
             }
         }
 
-        assertTopToBottom(asset, instruction, target, guidanceLevel)
+        assertTopToBottom(
+            asset,
+            primaryInstruction,
+            criticalWarning,
+            supportingInstruction,
+            guidanceLevel,
+        )
     }
 
-    private fun approvedAsset(): InstructionAssetRecord = BuiltInInstructionAssetCatalog.catalog.assets
-        .first { asset -> asset.altTextRes == R.string.action_brew_add_coffee }
-        .copy(
-            review = InstructionAssetReview(
-                status = InstructionAssetReviewStatus.APPROVED,
-                reviewer = "test",
-                reviewedOn = LocalDate.of(2026, 8, 1),
-            ),
+    private fun brewGuidanceContent(
+        id: StageContentId,
+        placement: BuiltInGuidancePlacement,
+        instruction: String,
+        warning: String? = null,
+        safetyCritical: Boolean = false,
+    ): ResolvedBrewGuidanceContent = ResolvedBrewGuidanceContent(
+        id = id,
+        placement = placement,
+        instruction = instruction,
+        target = null,
+        completionCue = null,
+        explanation = null,
+        tip = null,
+        nextAction = null,
+        controlRequirements = emptyList(),
+        warning = warning,
+        utilities = emptyList(),
+        altText = "Approved instructional illustration",
+        safetyCritical = safetyCritical,
+    )
+
+    private fun approvedTestInstructionAsset(): InstructionAssetRecord = InstructionAssetRecord(
+        id = InstructionAssetId(
+            "instruction_${TEST_FAMILY.value}_${TEST_PROFILE.value}_${TEST_CONTENT.value}_default",
+        ),
+        familyId = TEST_FAMILY,
+        profileId = TEST_PROFILE,
+        stageId = TEST_STAGE,
+        contentId = TEST_CONTENT,
+        drawableRes = R.drawable.vessel_icon_mug,
+        altTextRes = R.string.app_name,
+        companionInstructionRes = R.string.app_name,
+        mandatoryForFullGuidance = false,
+        safetySensitive = false,
+        provenance = InstructionAssetProvenance(
+            promptDocument = "android-test-fixture",
+            promptRevision = "instruction-image-order-v1",
+        ),
+        review = InstructionAssetReview(
+            status = InstructionAssetReviewStatus.APPROVED,
+            reviewer = "test",
+            reviewedOn = LocalDate.of(2026, 8, 1),
         )
+    )
+
+    private companion object {
+        val TEST_FAMILY = MethodFamilyId("manual_gravity")
+        val TEST_PROFILE = BrewerProfileId("v60_02")
+        val TEST_STAGE = StageId("test_live_stage")
+        val TEST_CONTENT = StageContentId("test_live_stage_content")
+    }
 
     private fun guidanceLevelLabel(): String {
         val context = InstrumentationRegistry.getInstrumentation().targetContext

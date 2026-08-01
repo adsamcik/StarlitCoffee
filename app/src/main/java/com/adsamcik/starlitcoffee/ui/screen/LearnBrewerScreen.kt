@@ -43,12 +43,10 @@ import com.adsamcik.starlitcoffee.ui.guidance.findApprovedAssetForContent
  * A timer-free view of the same profile-scoped curriculum used by a durable
  * session. It does not create, resume, or mutate any brew state.
  */
-@Suppress("UNUSED_PARAMETER")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LearnBrewerScreen(
     resolution: LearnGuidanceCatalogResolution,
-    hasPendingVisualAssets: Boolean,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     instructionAssets: InstructionAssetCatalog? = null,

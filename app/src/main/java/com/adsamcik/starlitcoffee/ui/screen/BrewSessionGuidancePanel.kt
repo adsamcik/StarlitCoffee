@@ -24,11 +24,48 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
+import com.adsamcik.starlitcoffee.ui.guidance.BuiltInGuidancePlacement
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceAvailability
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceVisualStatus
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolution
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.ResolvedBrewGuidanceContent
+
+/**
+ * Keeps ordinary live guidance safety-first, but lets an approved stage visual
+ * introduce the exact action it depicts.
+ *
+ * Critical catalogue content is always retained. Only routine content is
+ * deduplicated after the illustrated primary item has been selected, so a
+ * safety warning cannot disappear because of the visual presentation order.
+ */
+internal fun orderedLiveGuidanceContent(
+    routineContent: List<ResolvedBrewGuidanceContent>,
+    criticalContent: List<ResolvedBrewGuidanceContent>,
+    illustratedContentId: StageContentId?,
+): List<ResolvedBrewGuidanceContent> {
+    val safetyFirstContent = (criticalContent + routineContent)
+        .distinctBy(ResolvedBrewGuidanceContent::id)
+    val illustratedPrimary = illustratedContentId?.let { contentId ->
+        routineContent.firstOrNull { content ->
+            content.id == contentId &&
+                content.placement == BuiltInGuidancePlacement.LIVE_STAGE
+        }
+    } ?: return safetyFirstContent
+
+    return buildList {
+        add(illustratedPrimary)
+        addAll(criticalContent)
+        val renderedRoutineContentIds = buildSet {
+            add(illustratedPrimary.id)
+            addAll(criticalContent.map(ResolvedBrewGuidanceContent::id))
+        }
+        routineContent.forEach { content ->
+            if (content.id !in renderedRoutineContentIds) add(content)
+        }
+    }
+}
 
 /**
  * Renders the policy-selected shared guidance beside a live durable session.
@@ -46,10 +83,18 @@ fun BrewSessionGuidancePanel(
     onRememberForBrewer: (GuidancePresentationLevel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val visibleContent = remember(resolution.routineContent, resolution.criticalContent) {
-        (resolution.criticalContent + resolution.routineContent).distinctBy(ResolvedBrewGuidanceContent::id)
-    }
     val approvedVisual = resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved
+    val visibleContent = remember(
+        resolution.routineContent,
+        resolution.criticalContent,
+        approvedVisual?.asset?.contentId,
+    ) {
+        orderedLiveGuidanceContent(
+            routineContent = resolution.routineContent,
+            criticalContent = resolution.criticalContent,
+            illustratedContentId = approvedVisual?.asset?.contentId,
+        )
+    }
     val shouldRender = resolution.policy != null ||
         visibleContent.isNotEmpty() ||
         approvedVisual != null

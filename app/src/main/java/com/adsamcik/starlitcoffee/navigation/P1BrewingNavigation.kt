@@ -205,7 +205,6 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
         }
         LearnBrewerScreen(
             resolution = resolution,
-            hasPendingVisualAssets = false,
             onBack = { navController.popBackStack() },
             instructionAssets = BuiltInInstructionAssetCatalog.catalog,
         )
