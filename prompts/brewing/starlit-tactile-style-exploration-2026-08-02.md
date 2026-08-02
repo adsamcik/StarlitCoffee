@@ -314,3 +314,55 @@ edge and no cropped content. Production promotion still requires stage-specific
 mechanics review. The alpha master was also reduced to 384 by 288 and
 composited over `#F2E0D5` and `#52443C`; its teaching hierarchy and transparent
 corners remained legible in both theme previews.
+
+## Continuous-flow correction
+
+The user correctly identified that v4 showed the downstream stream without a
+clearly visible upstream path through the base. The official Hario manual was
+downloaded from `https://www.hario.cc/Items/manual_pdf/SSD.pdf`, rendered, and
+reviewed together with its extracted English assembly text. It states that hot
+water flows from the bottom if the stainless-steel ball is not in place, and
+describes inserting the switch's long narrow end into the base. This supports a
+simple gravity passage controlled by the loose ball, but does not publish a
+literal internal cross-section.
+
+Input image: `switch_style_master_v4_modern_chroma.png`, reloaded into the
+conversation as the sole edit target. Request option:
+`num_last_images_to_include = 1`.
+
+Output:
+
+- Cache file: `exec-b43daf68-fe93-4be1-b77d-11652d62b1fe.png`
+- Preserved chroma file: `switch_style_master_v5_continuous_flow_chroma.png`
+- Chroma SHA-256: `48c4b2019987be52233618192bfb3635005817d2da65414c7f6d4f868b3e1c43`
+
+Exact prompt:
+
+    Use case: precise-object-edit
+    Asset type: text-free 4:3 in-app coffee-brewing instruction illustration
+    Input image: Image 1 is the sole edit target, the accepted modern Hario Switch style master.
+    Primary request: Correct only the liquid-flow continuity inside the existing central cutaway. The amber brewed liquid must form one visibly uninterrupted gravity path from the pointed bottom of the paper-filtered V60 cone, through the central opening in the glass bowl, down the short central cavity of the silicone base above the steel ball, around the lifted loose ball, through the plain circular bottom outlet, and into the existing falling stream. Show a narrow amber column entering the valve cavity from directly above. At the lifted ball, show the liquid dividing naturally into two small clean amber ribbons around the sides of the sphere, then rejoining at the open outlet and continuing as the existing single stream. There must be no gap, teleportation, hidden jump, second reservoir, or disconnected stream.
+    Mechanical accuracy: preserve one loose stainless-steel ball only. It remains displaced upward and slightly sideways by the long narrow inner end of the flush cobalt switch. The ball is not mounted to a post. The base contains only a simple central gravity passage and circular outlet—no pipework, pump, piston, disk, fork, shaft, spring, or invented linkage. Keep this an explanatory functional cutaway, not a manufacturer engineering cross-section.
+    Preserve unchanged: exact overall composition, modern vector-3D editorial style, camera angle, large mobile-readable scale, grounded base seated on server rim, glass and paper geometry outside the narrow central cutaway, coffee bed and liquid level, finger and switch position, server, shallow collected pool, dark rounded stage, flat green perimeter, palette, lighting, and all exterior silhouettes.
+    Backdrop: keep the outer #00ff00 background perfectly flat and uniform for local removal, with no shadows, gradients, texture, reflections, or lighting variation.
+    Constraints: change only the central liquid path and the minimal cutaway needed to expose it. No text, labels, arrows, icons, bubbles, splashes, extra streams below the outlet, extra hardware, border, ornament, logo, or watermark. Nothing touches the outer canvas edges. Do not use #00ff00 inside the subject.
+
+Transparency conversion:
+
+    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v5_continuous_flow_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v5_continuous_flow_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+
+Helper and integrity results:
+
+- Detected key color: `#0fdc17`
+- Transparent pixels: `460918 / 1572528`
+- Partially transparent pixels: `4080 / 1572528`
+- Alpha bounding box: `(179, 32, 1268, 1055)` on a 1448 by 1086 canvas
+- All four corner alpha values: `0`
+- Preserved alpha file: `switch_style_master_v5_continuous_flow_alpha.png`
+- Alpha SHA-256: `51b819283203fa3ca720ff6cf708257c831e3a891850f5b6b875a4fb8be2e4bc`
+
+Phone-size QA reduced the alpha master to 384 by 288 and composited it over
+`#F2E0D5` and `#52443C`. Both previews retained the narrow upstream amber
+channel above the ball, the two short side paths around the displaced ball,
+the rejoined outlet stream, transparent corners, and the existing teaching
+hierarchy.

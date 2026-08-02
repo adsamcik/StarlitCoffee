@@ -28,9 +28,10 @@ The user preferred the textured `switch_style_master_v1_chroma.png` over the
 flatter experiment. `switch_style_master_v2_chroma.png` applied the requested
 larger scale and removed the outer cream rim. The grounded v3 revision made the
 silicone base visibly rest on a realistically proportioned receiving server.
-The current preferred revision, `switch_style_master_v4_modern_alpha.png`,
-replaces the retro textured treatment with a contemporary vector-3D editorial
-finish and removes unverified linkage geometry from the explanatory cutaway.
+The v4 revision replaced the retro textured treatment with a contemporary
+vector-3D editorial finish and removed unverified linkage geometry. The current
+preferred revision, `switch_style_master_v5_continuous_flow_alpha.png`, also
+makes the complete upstream-to-downstream liquid path visible.
 
 ## Clarity budget
 
@@ -51,7 +52,7 @@ find. Text remains outside the image and immediately below it in the app.
 
 ## Theme behavior
 
-The v4 alpha master was composited at 384 by 288 over the app's fallback
+The v5 alpha master was composited at 384 by 288 over the app's fallback
 `surfaceVariant` colors:
 
 - Light: `#F2E0D5`
@@ -73,12 +74,20 @@ stream inside the glass, and restored a shallow initial pool.
 The Switch's documented functional story is a stainless-steel ball blocking
 flow in the silicone base until the external switch is pressed, after which
 coffee drains. Hario also states that drawdown continues after the finger is
-released. The v4 cutaway therefore shows only the switch, a displaced loose
+released. Hario's official manual further warns that hot water flows from the
+bottom when the ball is absent and describes inserting the switch's long narrow
+end into the base. The v5 cutaway therefore shows only the switch, a displaced loose
 ball, the open outlet, and the resulting stream. It intentionally does not
 claim a literal manufacturer cross-section or depict the earlier unverified
 fork-and-shaft linkage. Sources: [Hario USA Switch product page](https://www.hario-usa.com/products/switch-immersion-dripper),
 [Hario Europe Switch product page](https://www.hario-europe.com/collections/03-size/products/v60-immersion-dripper-switch),
+the [official Hario instruction manual](https://www.hario.cc/Items/manual_pdf/SSD.pdf),
 and the [official Hario 2024 coffee catalog](https://www.hario.cc/PDF/pdf2024Eng/4.COFFEE_P48-83.pdf).
+
+V5 exposes a single continuous gravity path from the filtered glass-bowl outlet,
+around the lifted ball, through the bottom outlet, and into the server. The
+visible internal liquid path is explanatory; its exact cutaway shape is not a
+manufacturer-published cross-section.
 
 The grounded server relationship is consistent with Hario's official Switch
 server set, in which the dripper sits directly on the included glass server.
@@ -121,6 +130,8 @@ RGBA.
 | `switch_style_modern_mechanics_intermediate_chroma.png` | Corrected loose-ball mechanism before style simplification | `687f100d36977f4b1ed326799cb54f7098961db3ea1bf051a026b71226c32ce6` |
 | `switch_style_master_v4_modern_chroma.png` | Preferred modern, mechanically restrained chroma master | `078ee9e8c5086c51a4836d9c0b34ae6662d8b39537dde83bd307928e0ea7d973` |
 | `switch_style_master_v4_modern_alpha.png` | Preferred modern transparent master | `ed38072305320e57af73d0869e7e046a312c3df9733155b693ea65bd5c3ccaf6` |
+| `switch_style_master_v5_continuous_flow_chroma.png` | Preferred continuous-flow chroma master | `48c4b2019987be52233618192bfb3635005817d2da65414c7f6d4f868b3e1c43` |
+| `switch_style_master_v5_continuous_flow_alpha.png` | Preferred continuous-flow transparent master | `51b819283203fa3ca720ff6cf708257c831e3a891850f5b6b875a4fb8be2e4bc` |
 
 ## Reproduction record
 
