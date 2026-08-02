@@ -217,3 +217,100 @@ The alpha output was inspected at 384 by 288 over `#F2E0D5` and `#52443C`.
 Both theme previews preserved visible base-to-rim contact, plausible relative
 scale, the lifted-ball cutaway, single internal stream, shallow pool, and clear
 finger-to-trigger action.
+
+## Modern mechanics and rendering revision
+
+Research against Hario's current product pages and 2024 catalog confirmed the
+functional story but not the earlier illustrated fork-and-shaft linkage. The
+confirmed parts and behavior are a glass bowl, silicone base, PCT-resin switch,
+stainless-steel ball that blocks flow, and drawdown after the switch is
+pressed. Hario states that dripping continues after the finger is released.
+The v4 image is therefore an explanatory functional cutaway, not a literal
+manufacturer cross-section.
+
+Primary sources:
+
+- `https://www.hario-usa.com/products/switch-immersion-dripper`
+- `https://www.hario-europe.com/collections/03-size/products/v60-immersion-dripper-switch`
+- `https://www.hario.cc/PDF/pdf2024Eng/4.COFFEE_P48-83.pdf`
+- `https://www.hario-usa.com/products/switch-server-set`
+
+Direct local-reference handoff failed under the Windows split-root sandbox, so
+the modern seed was generated from the verified scene specification. Each
+subsequent edit used the immediately preceding conversation image with
+`num_last_images_to_include = 1`.
+
+### Rejected modern seed
+
+- Cache file: `exec-c0d24f2d-4dee-4a89-ad40-73b19e24c963.png`
+- Preserved file: `switch_style_modern_seed_rejected.png`
+- SHA-256: `a1465b95a4b30c776a998a2f729d7a1bdd7a26508a9deb89f414d1242f3be4cc`
+- Rejection: too close to product photography and invented a ball-on-post,
+  piston, and disk assembly.
+
+Exact prompt:
+
+    Use case: stylized-concept
+    Asset type: text-free in-app coffee-brewing instruction illustration for a compact mobile learning card
+    Primary request: A clear functional cutaway of a Hario-style glass immersion switch dripper at the exact moment drainage begins. The glass cone with white paper filter, wet coffee bed and amber brew water is seated directly and physically on the rim of a proportionally sized clear glass coffee server; nothing floats. A single simplified fingertip presses the cool external switch lever. Inside the dark silicone base, show only the confirmed functional relationship: the lever's short inner end has lifted a small stainless-steel ball just clear of the circular outlet seal, allowing one clean amber stream to pass through the outlet into a shallow, correctly scaled pool in the server. Treat this as a simplified explanatory cutaway, not a literal engineering cross-section.
+    Style/medium: contemporary high-fidelity stylized 3D editorial illustration aligned with polished Material 3 Expressive UI; precise CAD-like simplified geometry; soft matte materials; controlled translucent glass; broad intentional highlights; crisp layered silhouettes; subtly rounded friendly proportions; refined but unmistakably illustrated, not photorealistic.
+    Composition/framing: portrait 4:3 asset; three-quarter front view; apparatus large and centered while fully contained; base rests convincingly on server rim; fingertip may extend slightly beyond the dark stage but remains well inside the outer image boundary; at least 4.5 percent clear perimeter on every side; strong readability at 384 by 288 pixels.
+    Color palette: near-black warm espresso rounded-rectangle stage behind the apparatus; warm cream paper, amber coffee, muted cobalt switch accent, restrained coral fingertip, stainless-steel ball. The dark stage provides contrast in both light and dark app themes.
+    Scene/backdrop: outside the dark rounded stage, perfectly flat uniform #00ff00 for local chroma-key removal. No shadow, gradient, texture, reflection, floor plane, or lighting variation outside the stage.
+    Constraints: no text, numbers, labels, arrows, icons, logos, white border, frame, ornament, extra hardware, detached parts, steam, beans, plants, splashes, or watermark. Nothing touches the outer canvas edges. No invented fork, shaft, spring, hinge maze, or elaborate linkage. No use of #00ff00 inside the subject. Crisp antialiased edges.
+    Avoid: retro poster, 1940s advertising, gouache, watercolor, paper grain, print texture, stipple, halftone, sepia, vintage palette, hand-painted brushwork, flat mid-century illustration, photorealism, camera noise, lens effects, realistic skin pores, busy reflections, visual noise.
+
+### Mechanically restrained intermediate
+
+- Cache file: `exec-196b5033-33ba-49e6-9fb5-808203581760.png`
+- Preserved file: `switch_style_modern_mechanics_intermediate_chroma.png`
+- SHA-256: `687f100d36977f4b1ed326799cb54f7098961db3ea1bf051a026b71226c32ce6`
+
+Exact prompt:
+
+    Use case: precise-object-edit
+    Input image: Image 1 is the edit target.
+    Primary request: Change only the exposed valve cutaway. Remove the vertical metal post, piston, disk, gasket stack, circular pivot cap, and all extra mechanical hardware. Show one loose stainless-steel sphere and one simple cobalt switch lever only: the lever's short inner tip directly nudges the loose sphere upward and slightly sideways, leaving a visibly open plain circular drainage aperture beneath it. Coffee flows through that aperture. The sphere is not mounted to anything. No other internal parts are visible. This is a simplified functional diagram, not literal manufacturer internals.
+    Preserve unchanged: framing, grounded brewer on server rim, proportions, glass cone, paper filter, coffee bed, server, finger, stream, shallow pool, dark rounded stage, chroma background, outer safe area, and all other object geometry.
+    Constraints: no post beneath the ball; no stem; no pedestal; no piston; no disk; no fork; no shaft; no spring; no hinge maze; no extra screw or ring; no text, arrows, labels, logos, border, decoration, or watermark. Keep the #00ff00 outer background perfectly flat and uniform with no lighting variation. Nothing touches the outer canvas edge.
+
+### Accepted modern master
+
+- Cache file: `exec-41cc5705-84e8-4d81-accd-34d0458d83e8.png`
+- Preserved chroma file: `switch_style_master_v4_modern_chroma.png`
+- Chroma SHA-256: `078ee9e8c5086c51a4836d9c0b34ae6662d8b39537dde83bd307928e0ea7d973`
+
+Exact prompt:
+
+    Use case: style-transfer
+    Input image: Image 1 is the edit target.
+    Primary request: Change only the rendering style from near-photorealistic product visualization to a contemporary high-fidelity stylized 3D editorial illustration for a polished Material 3 Expressive mobile app.
+    Style/medium: vector-3D fusion; crisp simplified CAD-like forms; deliberately reduced material detail; smooth matte color planes; controlled translucent glass represented by two or three broad clean highlight shapes; precise soft tonal gradients; subtle ambient depth; rounded expressive geometry; premium modern app-illustration finish. Clearly illustrated at first glance, never mistaken for a photograph.
+    Preserve unchanged: exact subject geometry, functional relationship, loose steel ball lifted by the lever tip, open aperture, coffee stream, composition, scale, camera angle, grounded contact on server rim, finger pose, proportions, color assignments, dark rounded stage, flat green outer background, safe area, and absence of text.
+    Reduce: microtexture in coffee, paper, glass, metal, silicone and skin; realistic reflections; surface pores; tiny bubbles; optical caustics; photographic depth and glare. Simplify the coffee bed and liquid into clean readable layered shapes while retaining the wet bed and drainage action.
+    Constraints: no text, labels, numbers, arrows, icons, logos, border, ornament, additional parts, scene props, or watermark. Keep the outside #00ff00 perfectly uniform and flat. Nothing touches the canvas edge.
+    Avoid: photorealism, product photography, ray-traced realism, skin pores, lens effects, camera noise, glossy showroom render, retro poster, mid-century advertising, 1940s illustration, gouache, watercolor, paper grain, print texture, halftone, stipple, sepia, vintage palette, flat clip art.
+
+### V4 transparency and QA
+
+Conversion command:
+
+    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v4_modern_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v4_modern_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+
+Helper and integrity results:
+
+- Detected key color: `#10e012`
+- Transparent pixels: `460882 / 1572528`
+- Partially transparent pixels: `4065 / 1572528`
+- Alpha bounding box: `(179, 32, 1268, 1055)` on a 1448 by 1086 canvas
+- Minimum transparent perimeter: approximately `2.9%`
+- All four corner alpha values: `0`
+- Preserved alpha file: `switch_style_master_v4_modern_alpha.png`
+- Alpha SHA-256: `ed38072305320e57af73d0869e7e046a312c3df9733155b693ea65bd5c3ccaf6`
+
+The approximately 2.9% stage perimeter intentionally lets the apparatus read
+larger than the earlier 4.5% contract while retaining a complete transparent
+edge and no cropped content. Production promotion still requires stage-specific
+mechanics review. The alpha master was also reduced to 384 by 288 and
+composited over `#F2E0D5` and `#52443C`; its teaching hierarchy and transparent
+corners remained legible in both theme previews.

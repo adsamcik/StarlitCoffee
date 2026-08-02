@@ -13,8 +13,9 @@ transparent 4:3 canvas:
 - A deep espresso, softly asymmetric stage isolates the instructional action.
 - Equipment stays inside the stage. A hand or other action element may break
   the stage boundary when that makes the interaction clearer.
-- Every visible pixel stays inside a 4.5% minimum canvas safe area. Nothing is
-  cropped by or visually terminates at the asset edge.
+- The current v4 stage uses a measured 2.9% minimum transparent perimeter so
+  it reads confidently at phone size. Nothing is cropped by or visually
+  terminates at the asset edge.
 - The area outside the stage is transparent, with no border. The containing
   Material surface therefore remains native to light, dark, and dynamic-color
   themes.
@@ -25,10 +26,11 @@ transparent 4:3 canvas:
 
 The user preferred the textured `switch_style_master_v1_chroma.png` over the
 flatter experiment. `switch_style_master_v2_chroma.png` applied the requested
-larger scale and removed the outer cream rim. The current preferred revision,
-`switch_style_master_v3_grounded_alpha.png`, additionally makes the silicone
-base visibly rest on a realistically proportioned receiving server while
-retaining the larger, borderless composition.
+larger scale and removed the outer cream rim. The grounded v3 revision made the
+silicone base visibly rest on a realistically proportioned receiving server.
+The current preferred revision, `switch_style_master_v4_modern_alpha.png`,
+replaces the retro textured treatment with a contemporary vector-3D editorial
+finish and removes unverified linkage geometry from the explanatory cutaway.
 
 ## Clarity budget
 
@@ -49,25 +51,41 @@ find. Text remains outside the image and immediately below it in the app.
 
 ## Theme behavior
 
-The alpha master was composited at 384 by 288 over the app's fallback
+The v4 alpha master was composited at 384 by 288 over the app's fallback
 `surfaceVariant` colors:
 
 - Light: `#F2E0D5`
 - Dark: `#52443C`
 
 The transparent perimeter worked on both. The near-black stage intentionally
-has stronger boundary contrast in light theme; in dark theme the brighter
-equipment, gold mechanism focus, and hand preserve the subject hierarchy.
-There is no fixed light halo or border that would fight dynamic color.
+has stronger boundary contrast in light theme. In dark theme, the brighter
+glass, cream filter, cobalt control, steel ball, amber flow, and fingertip
+preserve the subject hierarchy. There is no fixed light halo or border that
+would fight dynamic color.
 
 ## Accuracy status
 
 These images establish art direction and placement, not release approval. The
-grounded v3 master corrects the floating-brewer illusion, normalizes the
-server-to-brewer scale, places the silicone base on the server rim, carries the
-stream inside the glass, and restores a shallow initial pool. A production
-candidate must still pass exact equipment, mechanism, liquid-state, and
-mobile-size review before promotion.
+grounded v3 master corrected the floating-brewer illusion, normalized the
+server-to-brewer scale, placed the silicone base on the server rim, carried the
+stream inside the glass, and restored a shallow initial pool.
+
+The Switch's documented functional story is a stainless-steel ball blocking
+flow in the silicone base until the external switch is pressed, after which
+coffee drains. Hario also states that drawdown continues after the finger is
+released. The v4 cutaway therefore shows only the switch, a displaced loose
+ball, the open outlet, and the resulting stream. It intentionally does not
+claim a literal manufacturer cross-section or depict the earlier unverified
+fork-and-shaft linkage. Sources: [Hario USA Switch product page](https://www.hario-usa.com/products/switch-immersion-dripper),
+[Hario Europe Switch product page](https://www.hario-europe.com/collections/03-size/products/v60-immersion-dripper-switch),
+and the [official Hario 2024 coffee catalog](https://www.hario.cc/PDF/pdf2024Eng/4.COFFEE_P48-83.pdf).
+
+The grounded server relationship is consistent with Hario's official Switch
+server set, in which the dripper sits directly on the included glass server.
+Source: [Hario USA Switch Server Set](https://www.hario-usa.com/products/switch-server-set).
+
+A production candidate must still pass exact equipment, mechanism,
+liquid-state, and mobile-size review before promotion.
 
 The Chemex pilot demonstrates the same style on a passive setup stage. Its
 three-leaf side, one-leaf side, and open spout channel still require the normal
@@ -99,6 +117,10 @@ RGBA.
 | `switch_style_grounded_pilot_v1_chroma.png` | First physically grounded edit | `1eb052b5eddc77577c465c31570c5e7b368d1fc2fa9161fa1292f8bf37b81a73` |
 | `switch_style_master_v3_grounded_chroma.png` | Preferred grounded and scaled chroma master | `c2aff9335ac7cad488a20354a2b2f79c740111cbe5f984b94cce8c16d3dfef20` |
 | `switch_style_master_v3_grounded_alpha.png` | Preferred grounded and scaled alpha master | `089e215658f2ee6d7cf69b51eee0ef6894072944d3a5875319429b0b65339b50` |
+| `switch_style_modern_seed_rejected.png` | Rejected near-photorealistic modern seed with invented valve hardware | `a1465b95a4b30c776a998a2f729d7a1bdd7a26508a9deb89f414d1242f3be4cc` |
+| `switch_style_modern_mechanics_intermediate_chroma.png` | Corrected loose-ball mechanism before style simplification | `687f100d36977f4b1ed326799cb54f7098961db3ea1bf051a026b71226c32ce6` |
+| `switch_style_master_v4_modern_chroma.png` | Preferred modern, mechanically restrained chroma master | `078ee9e8c5086c51a4836d9c0b34ae6662d8b39537dde83bd307928e0ea7d973` |
+| `switch_style_master_v4_modern_alpha.png` | Preferred modern transparent master | `ed38072305320e57af73d0869e7e046a312c3df9733155b693ea65bd5c3ccaf6` |
 
 ## Reproduction record
 
