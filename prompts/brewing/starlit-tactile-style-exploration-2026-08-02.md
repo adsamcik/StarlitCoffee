@@ -5,6 +5,25 @@ Date: 2026-08-02
 This record preserves the exact accepted image-generation requests and the
 local transparency conversion used for the preferred instruction-art style.
 
+## Locked production master
+
+The selected production reference is
+`docs/brewing/illustration-style-explorations/starlit-tactile-2026-08-02/switch_style_master_v8_verified_flow_topology_alpha.png`.
+
+V8 is the only retained candidate that passes all of the selection gates
+together: modern Starlit Tactile rendering, a large self-contained dark stage,
+clean transparent perimeter, legibility on both light and dark app themes,
+granular grounds distinct from smooth liquid, a supported centered valve ball,
+a visibly hollow seat, and one continuous upstream-to-server flow path that
+does not overlap solid mechanism geometry. It is therefore the visual and
+mechanical calibration reference for the remaining production queue.
+
+Earlier versions remain provenance and comparison material. They must not be
+used as the primary style reference for new assets, and their rejected valve
+topologies must not be copied. New illustrations may simplify irrelevant
+internal mechanics, but any mechanism they do expose must remain physically
+continuous and source-faithful at phone-card size.
+
 ## Generator and reproducibility limits
 
 - Generator: built-in `image_gen` tool.
