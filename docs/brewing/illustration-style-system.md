@@ -1,5 +1,13 @@
 # In-app brewing illustration system
 
+> 2026-08-02 exploration: the preferred next-generation visual direction is
+> documented in
+> `illustration-style-explorations/starlit-tactile-2026-08-02/README.md`.
+> It uses a borderless transparent canvas, a contained deep-espresso stage,
+> larger mobile-scale subjects, and a strict instructional-clarity budget. It
+> remains an art-direction exploration until each exact stage passes the
+> existing mechanics, accessibility, placement, and approval gates.
+
 Status: draft replacement system; no asset in this document is approved or
 registered for release.
 
