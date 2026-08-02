@@ -8,15 +8,16 @@ local transparency conversion used for the preferred instruction-art style.
 ## Locked production master
 
 The selected production reference is
-`docs/brewing/illustration-style-explorations/starlit-tactile-2026-08-02/switch_style_master_v8_verified_flow_topology_alpha.png`.
+`docs/brewing/illustration-style-explorations/starlit-tactile-2026-08-02/switch_style_master_v9_fresh_expressive_alpha.png`.
 
-V8 is the only retained candidate that passes all of the selection gates
-together: modern Starlit Tactile rendering, a large self-contained dark stage,
-clean transparent perimeter, legibility on both light and dark app themes,
-granular grounds distinct from smooth liquid, a supported centered valve ball,
-a visibly hollow seat, and one continuous upstream-to-server flow path that
-does not overlap solid mechanism geometry. It is therefore the visual and
-mechanical calibration reference for the remaining production queue.
+V9 is the retained candidate that passes all of the selection gates together:
+modern Starlit Tactile rendering, a large self-contained dark stage, clean
+transparent perimeter, legibility on both light and dark app themes, granular
+grounds distinct from smooth liquid, a supported centered valve ball, a
+visibly hollow seat, and one continuous upstream-to-server flow path that does
+not overlap solid mechanism geometry. Its asymmetric, subject-responsive stage
+also replaces the rigid rounded-rectangle treatment. It is therefore the
+visual and mechanical calibration reference for the remaining production queue.
 
 Earlier versions remain provenance and comparison material. They must not be
 used as the primary style reference for new assets, and their rejected valve
@@ -821,3 +822,65 @@ Phone-size QA reduced the alpha master to 384 by 288 and composited it over
 `#F2E0D5` and `#52443C`. Both previews retained the centered ball, lower
 pin contact, two seat shoulders, open amber-filled bore, continuous single jet,
 granular grounds, and clean transparent perimeter.
+
+## Fresh expressive v9 production master
+
+V9 was generated as a new composition from a blank canvas after rejecting two
+attempts that inherited visual or mechanical degradation. It did not edit a
+previous Switch scene.
+
+Generator request:
+
+- Built-in `image_gen` tool.
+- Request option: `num_last_images_to_include = 2`.
+- Exact prompt:
+  `prompts/brewing/assets/instruction_p1_switch_official_20_240_stage_04_instruction_default/starlit_tactile_v9.txt`.
+- Model/build and seed: not exposed.
+
+Exact input images, in conversation order:
+
+1. `switch_v9_input_truth_reference.jpg` — functional topology only; SHA-256
+   `6535d73604ece61a7dcecde4a32244af328ea3903692362a628646182ab8ad47`.
+2. `switch_v9_input_style_reference.jpg` — modern tactile rendering and
+   expressive-stage language only; SHA-256
+   `1ed09e943d73674b9f1fb0ace8ca76198d962782fd3160293fe3ac77c650c83c`.
+
+The proxy inputs are preserved beside the master under
+`docs/brewing/illustration-style-explorations/starlit-tactile-2026-08-02`.
+They are the exact JPEG payloads supplied to the generator, not merely links to
+their higher-resolution ancestors.
+
+Output:
+
+- Cache file: `exec-55238134-5d48-40fe-99bc-0d505123cc1b.png`.
+- Preserved chroma file: `switch_style_master_v9_fresh_expressive_chroma.png`.
+- Chroma SHA-256:
+  `6a7c2984bef29b72f07ee431fca35d93884732db57c4bc055bfd88b911c29e2b`.
+- Preserved alpha file: `switch_style_master_v9_fresh_expressive_alpha.png`.
+- Alpha SHA-256:
+  `cf0c7b412a64f7bbfc001886190dd82b02929726df5ec45d57853d4d311fa24f`.
+
+Transparency conversion:
+
+    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v9_fresh_expressive_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v9_fresh_expressive_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+
+Transparency and phone-card QA:
+
+- Detected key color: `#02e512`.
+- Transparent pixels: `586590 / 1572528`.
+- Partially transparent pixels: `4153 / 1572528`.
+- Alpha bounding box: `(184, 20, 1366, 1069)` on 1448 by 1086.
+- All four corner alpha values: `0`.
+- Reviewed at 384 by 288 over `#F2E0D5` and `#52443C`.
+- Both themes retain the complete organic stage, supported server, fingertip
+  action, centered ball, narrow cobalt lift point, open amber passage, single
+  stream, and granular slurry.
+
+Rejected unpreserved attempts:
+
+- `exec-0d010ea7-868a-4ca5-bffd-b07dbd4df675.png`: background-only edit of a
+  compressed v8 proxy; rejected because the broad lever obstructed the valve
+  topology and the rendering visibly degraded.
+- `exec-306f9d9f-fd16-4fa7-badb-db66432f1c4f.png`: blank-canvas attempt without
+  references; rejected because the server was cropped and the valve read as an
+  amber cup rather than a supported ball above a hollow seat.

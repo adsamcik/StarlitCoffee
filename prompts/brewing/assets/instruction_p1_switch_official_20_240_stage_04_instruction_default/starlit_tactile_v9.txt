@@ -1,0 +1,74 @@
+Use case: scientific-educational
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration
+Generation mode: compose a completely new image from a blank canvas. This is not an edit, trace, or continuation of either reference.
+
+Input images:
+- Image 1 is a functional valve-topology reference only. Transfer its centered loose ball, narrow lower-right supporting pin, visibly hollow seat, and continuous liquid-through-bore relationship. Do not copy its white background, silver housing, isolated-diagram composition, scale, or realistic rendering.
+- Image 2 is a visual-language and expressive-stage reference only. Transfer its modern illustrated tactility, warm palette, clean silhouettes, contained organic dark stage, transparent-key perimeter, and calm mobile readability. Do not copy its Chemex carafe, folded filter, collar, finger placement, or equipment geometry.
+
+LESSON
+Show a Switch 02-style immersion dripper in the open state over a stable server. A fingertip presses the cool lever; that lever ends in a narrow internal tip that raises a loose centered steel ball slightly; brewed coffee follows one visible gravity path around the ball, through a hollow seat, and into one stream.
+
+FULL SCENE
+- Elevated front three-quarter 4:3 view.
+- One unbranded handleless ribbed glass V60 02 cone with correctly seated white conical paper.
+- Inside: a modest wet slurry with clearly particulate medium-fine grounds and generous headroom. The granular grounds are visually distinct from the smooth amber liquid beneath.
+- One compact matte charcoal silicone base rests firmly across the full rim of one broad heat-safe glass server. No floating brewer.
+- The server is realistically scaled, completely visible including its rounded bottom, and contains only a shallow coffee pool.
+- One relaxed fingertip from the right contacts only the cool outer cobalt lever and stays away from hot glass, liquid, and steel.
+
+COMPACT CENTRAL CUTAWAY
+- Reveal only a small front section inside the silicone base.
+- Recreate Image 1's functional relationship at miniature scale:
+  1. one loose steel ball centered on the vertical outlet axis;
+  2. ball raised only 10–12 percent of its diameter above the seat;
+  3. one narrow cobalt pin contacts the lower-right underside below the ball equator and visibly supports it;
+  4. most of the pin is hidden behind the ball;
+  5. one dark annular seat appears as two charcoal shoulders with a clearly hollow central bore between them;
+  6. the internal pin is no wider than one eighth of the ball diameter and occupies only a small rear-right sector of the bore.
+- Connect the broad outer lever to the narrow inner pin through a subtle pivot in the right silicone wall. The broad part stops at the wall. It never enters, crosses, underlies, or spans the outlet.
+- No stem through ball, post, fork, cradle, shelf, spring, piston, pump, or extra linkage.
+
+CONTINUOUS LIQUID PATH
+- Smooth amber coffee visibly descends from the glass throat into the chamber above and around the ball.
+- Liquid never overlaps or passes through steel, cobalt, charcoal, glass, or silicone solids.
+- A thin amber annular sheet passes through the actual open clearance between the lower sphere and seat rim.
+- The visible front half reads as one connected horseshoe, displaced only by the tiny rear-right pin.
+- The sheet curves inward through the hollow bore between the two seat shoulders.
+- Amber remains visibly continuous through the height of the bore, flows around the narrow pin, and only below the seat contracts into exactly one centered stream.
+- The stream remains attached to the bore above and the shallow server pool below.
+- Required unbroken route: glass throat → chamber around ball → clearance below ball → open bore between two shoulders → one stream → server pool.
+- No amber cup supporting the ball, no solid disk, no teleporting jet, no disconnected ribbons, no twin streams, no liquid painted over solids.
+
+MODERN ILLUSTRATION
+- Match Image 2's contemporary Starlit Tactile feel, but refine it for a premium Material 3 Expressive app.
+- Polished vector-like 3D forms with restrained gouache/cut-paper tactility; crisp simplified geometry; controlled soft gradients; gentle contact shadows; selective rather than uniform texture.
+- Clearly illustrated, not photographic and not glossy CGI.
+- Warm cream paper, cocoa granular grounds, smooth translucent amber, matte charcoal/espresso, simplified steel silver, restrained cobalt action accent.
+- Fresh modern color and material handling. No vintage poster, sepia, heavy grain, hyperreal glass reflections, or over-detailed surfaces.
+
+EXPRESSIVE STAGE
+- One borderless deep-espresso organic shape behind the whole subject.
+- Its silhouette adapts to this scene: broad upper lobe around cone, inward pinch near valve focus, lower support lobe around server, subtle outward curve toward fingertip.
+- Few generous asymmetric curves; unmistakably fluid and tailored.
+- Not a rectangle, rounded rectangle, squircle, frame, badge, cloud, splash, flower, or decorative motif.
+- Complete silhouette visible at least 4.5 percent inside every edge.
+
+COMPOSITION AND TRANSPARENCY
+- Subject large and centered but every part remains fully inside a 4.5 percent safe area.
+- Entire cone, base, server bottom, stage, lever, and fingertip visible. Nothing cropped or touching an edge.
+- Mechanism legible at 384 by 288.
+- Outside the dark stage and protruding fingertip: perfectly flat uniform #00FF00 with no gradient, texture, noise, shadow, reflection, floor, halo, or spill.
+- No green inside the illustration.
+
+VALIDATION
+- Ball centered and visibly supported from below by a very narrow pin.
+- Real gap below ball; hollow bore between two seat shoulders.
+- Broad lever stops outside outlet.
+- One continuous amber route through empty space only.
+- Brewer rests on server; server not tiny; grounds not oversized.
+- Expressive stage flows around subject and has no border.
+- Image remains self-explanatory at phone size.
+
+CONSTRAINTS
+No text, letters, numbers, labels, arrows, symbols, measurements, logo, watermark, extra mechanism, extra finger, extra stream, extra prop, kettle, spoon, multiple panels, inset, exploded view, crop, floating equipment, photorealism, vintage treatment, or visual clutter.
