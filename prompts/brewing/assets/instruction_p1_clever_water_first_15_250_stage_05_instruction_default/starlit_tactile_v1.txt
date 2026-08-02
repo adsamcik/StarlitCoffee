@@ -1,0 +1,67 @@
+Use case: scientific-educational
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration
+Generation mode: compose a completely new Clever scene from a blank canvas. Do not edit or copy the Switch equipment in Image 1.
+
+Input image:
+- Image 1 is rendering and composition calibration only: match its modern illustrated tactility, simplified material handling, warm palette, clean mobile silhouette, subject scale, organic borderless dark stage, and flat green transparency field.
+- Do not copy its glass cone, Switch base, ball, lever, server shape, fingertip pose, coffee quantities, or mechanism.
+
+LESSON
+A Clever-style bottom-actuated immersion dripper is placed squarely on a wide compatible server. The server rim lifts the dripper's release ring, opens its bottom valve, and one coffee stream begins. Stable support and contact actuation must be obvious without symbols.
+
+EQUIPMENT
+- One unbranded translucent smoke-gray Clever-style dripper with its characteristic tapered wedge body and a modest side handle.
+- One correctly seated wet white #4 wedge paper, visibly following the two sloped walls and flat seam; never conical V60 paper.
+- Inside: modest brewed slurry with granular cocoa grounds, smooth amber liquid, and generous headroom.
+- One broad heat-safe glass server below, naturally scaled and wide enough to support the dripper evenly.
+- Dripper sits vertical and centered with both sides of its bottom ring resting fully on the server rim.
+- A small relaxed hand holds only the cool handle; show just the necessary fingers, subordinate to the brewer. No finger near the underside.
+
+ACTUATION AND FLOW
+- Show the actual physical contact clearly: the server rim pushes the broad bottom release ring upward by a small distance.
+- Use visible nested edges and a narrow compression gap at the left and right contacts to communicate upward travel through geometry alone.
+- At the center, a compact simple outlet is visibly open because the ring is raised.
+- Show only the minimum internal section needed: a small central valve plug lifted clear of a round outlet. No elaborate machinery.
+- Smooth amber liquid above the valve visibly connects through the open outlet into exactly one vertical stream.
+- The stream reaches a shallow pool in the server.
+- No arrows, motion marks, labels, colored indicators, comparison panels, or cutaway inset.
+- No external lever, steel ball, tap, pump, lateral pipe, spring, gears, pistons, or industrial assembly.
+
+COMPOSITION
+- Elevated front three-quarter 4:3 view.
+- Complete dripper, wedge paper, handle, release-ring contact, full server including rounded bottom, hand, stream, and pool visible.
+- Subject large at 384 by 288 but every non-background pixel at least 4.5 percent from an edge.
+- Nothing cropped, floating, tilted, off-center, or touching an edge.
+- Server rim visibly overlaps under and supports the release ring.
+
+VISUAL STYLE
+- Follow Image 1: polished vector-like 3D editorial illustration with restrained gouache/cut-paper tactility, crisp simplified forms, controlled soft gradients, gentle contact shadows, and selective texture.
+- Clearly illustrated, never product photography, glossy CGI, or hyperrealism.
+- Warm cream paper, cocoa particulate grounds, smooth translucent amber, warm smoke-gray plastic, deep espresso/charcoal, and restrained copper accents.
+- Grounds visibly granular; liquid smooth; plastic matte-translucent; glass simplified.
+- No vintage poster, sepia, heavy grain, excessive reflections, or surface noise.
+
+EXPRESSIVE STAGE
+- One borderless deep-espresso organic shape behind the stack.
+- Tailor it with a wider upper lobe around the wedge body, a clear inward pinch around the actuator contact, a stable lower lobe around the server, and a small side gesture for the handle/hand.
+- Few broad asymmetric curves; fluid, calm, and custom.
+- Not a rectangle, rounded rectangle, squircle, frame, badge, cloud, splash, flower, star, or decorative motif.
+- Full silhouette visible inside the safe area; no outline, rim, halo, or outside shadow.
+
+TRANSPARENCY
+- Outside the dark stage and any protruding hand: perfectly flat uniform #00FF00.
+- No gradient, texture, noise, shadow, reflection, floor plane, variation, halo, or green spill.
+- No green inside the subject.
+
+VALIDATION
+- Clever identity and wedge paper read immediately.
+- Wide server supports the dripper evenly.
+- Server rim visibly raises the release ring.
+- Central valve visibly open because of that contact.
+- Exactly one continuous stream.
+- Hand only on cool handle.
+- No arrows or Switch mechanism.
+- Stage is organic, borderless, contained, and readable in both themes.
+
+CONSTRAINTS
+Absolutely no arrows, triangles, chevrons, motion marks, text, letters, numbers, labels, callouts, symbols, measurements, logo, watermark, extra brewer, kettle, spoon, second hand, external lever, steel ball, tap, industrial machinery, undersized cup, unstable server, no-flow state, overflow, crop, floating equipment, photorealism, vintage treatment, or visual clutter.

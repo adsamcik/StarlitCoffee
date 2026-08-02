@@ -1,0 +1,22 @@
+Use case: precise-object-edit
+Input image: Image 1 is the nearly corrected screw-insert phin illustration.
+
+There is still a clearly visible dark air gap beneath the perforated disc. Eliminate it completely.
+
+MAKE ONE GEOMETRY MOVE
+- Move the entire perforated disc, central hub, upper knob, and engaged lower threaded tip straight downward together by approximately 7 percent of the visible chamber interior height.
+- Stop when the metal underside visibly touches multiple tallest coffee-particle peaks across the bed.
+- At the contact line, some individual loose particles may visually overlap the disc underside edge by one or two pixels to prove contact.
+- Do not move, flatten, smooth, lower, raise, compress, or reshape the coffee bed.
+- Do not sink the disc into the bed; only first contact.
+- Keep the disc perfectly level.
+- Preserve the hub/post engagement and shorten only the visible thread length naturally.
+- Keep the fingertips in the same relaxed turning pose, following the knob downward without adding pressure cues.
+
+PRESERVE EVERYTHING ELSE EXACTLY
+Same chamber, cutaway, integrated floor, base plate, cup, scale, crop, safe margins, materials, lighting, modern illustrated style, organic stage, and flat green perimeter. No other redraw or composition change.
+
+PASS/FAIL TEST
+Pass only if no uninterrupted black/brown air band is visible between the disc underside and the highest grounds. The disc rests on loose particles without a depression.
+
+No text, arrows, labels, new objects, water, lid, extra hand, or visual changes beyond this downward translation.

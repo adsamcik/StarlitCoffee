@@ -1,0 +1,44 @@
+Use case: scientific-educational
+Asset type: text-free 4:3 mobile coffee-brewing instruction illustration
+Input image: Image 1 is the locked Starlit Tactile production style and composition reference only. Do not reproduce its Switch brewer, hand pose, valve, server, or liquid scene.
+
+Lesson objective: show the correct orientation of a thick folded bonded paper filter in an unbranded six-cup Chemex-style hourglass borosilicate carafe so its spout air channel stays open.
+
+Required subject and geometry:
+- One empty six-cup hourglass glass carafe, stable and upright, shown in an elevated front three-quarter close view.
+- The upper bowl, pouring spout, rim, narrow waist, wooden collar and tied leather cord are recognizable, but no logo or brand mark.
+- One dry, thick, correctly folded bonded paper filter seated inside the upper bowl.
+- The filter is asymmetrical: exactly three paper layers lie on the pouring-spout side; exactly one paper layer lies on the opposite side.
+- Make the three-layer side visibly thicker through three clean nested cut-paper edges at the top fold, without numbers or labels.
+- The thicker three-layer fold bridges over the inner spout groove instead of being pressed into it.
+- Show a clear, continuous dark negative-space air passage between the filter and the full length of the spout channel down to the carafe interior.
+- The paper must not seal or collapse into the spout.
+- One relaxed fingertip may lightly steady the outer top edge of the dry filter, but it must not hide the fold, spout, or air channel.
+- No coffee, water, kettle, steam, or active brewing.
+
+Visual language:
+- Match Image 1's contemporary Starlit Tactile educational rendering: polished vector-3D forms with subtle gouache/cut-paper tactility, crisp silhouettes, controlled soft gradients, restrained warm cream, copper, amber, cocoa, deep espresso, and small cobalt accents only where useful.
+- Use a single deep-espresso organic rounded stage behind the carafe. The stage is a self-contained dark illustration island, large enough to fill the mobile card confidently.
+- The glass may be translucent but must remain illustrated, simplified, and high-fidelity rather than photorealistic or vintage.
+- Keep the lesson visually minimal.
+
+Composition:
+- Centered 4:3 landscape.
+- The complete carafe, stage, filter, spout, and optional fingertip are fully visible.
+- Keep all non-background pixels at least 4.5 percent from every canvas edge.
+- Nothing touches or ends at an edge.
+- The spout and filter fold must remain legible when reduced to 384 by 288.
+- No white or cream border around the dark stage.
+
+Backdrop for transparency:
+- Outside the contained dark stage and any deliberately protruding fingertip, use perfectly flat uniform chroma green #00FF00.
+- No gradient, texture, noise, shadow, glow, reflection, floor plane, or green spill.
+- Do not use green anywhere inside the illustration.
+
+Validation:
+- A novice can trace open air from the top of the spout channel into the carafe.
+- Three-layer filter thickness is on the spout side; one layer is opposite.
+- The carafe is empty, stable, and clearly six-cup hourglass geometry.
+
+Constraints:
+No text, letters, numbers, measurement marks, labels, arrows, callouts, comparison panels, logo, watermark, decorative props, second filter, V60 cone, separate dripper, metal filter, basket paper, coffee, water, steam, active pour, sealed air channel, flattened equal-thickness filter, unstable vessel, crop, white outline, photorealism, vintage poster treatment, or visual noise.

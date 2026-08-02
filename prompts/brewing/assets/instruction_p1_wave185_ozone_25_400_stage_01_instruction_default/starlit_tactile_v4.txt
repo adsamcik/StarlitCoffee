@@ -1,0 +1,18 @@
+Use case: precise-object-edit
+Input image: Image 1 is the Wave 185 rinse illustration with a supported but right-edge-cropped kettle hand.
+
+Change only the kettle, supporting hand/wrist, and connected incoming water stream.
+
+- Treat kettle plus hand/wrist as one locked group.
+- Scale that complete group down uniformly to 78 percent of its current size.
+- Move the scaled group leftward and slightly downward until the entire wrist has a clean rounded end and every hand/kettle pixel is at least 5 percent from the right and top canvas edges.
+- Keep the hand naturally gripping the handle, realistic in scale, and subordinate to the dripper.
+- Keep the full kettle body, lid, handle, hand, fingers, and short wrist visible. Nothing may be cropped or touch an edge.
+- Adjust the gooseneck position with the group and reconnect one narrow stream from its spout to the same landing point inside the filter.
+- Preserve the current pour angle and gentle flow.
+
+ABSOLUTE INVARIANTS
+Do not move, resize, redraw, or alter the Wave 185 dripper, wet open pleats, level flat bottom, support flange, server, centered drainage stream, shallow pool, dark organic stage, green perimeter, lighting, palette, or illustrated style.
+
+PASS/FAIL
+Pass only when the kettle is supported and the entire hand/wrist is visibly contained with safe green space to the right and top. No text, arrows, extra objects, or other changes.

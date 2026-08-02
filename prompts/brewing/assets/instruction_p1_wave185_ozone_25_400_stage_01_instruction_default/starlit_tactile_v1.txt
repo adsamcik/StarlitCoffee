@@ -1,0 +1,63 @@
+Use case: scientific-educational
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration
+Generation mode: compose a completely new Wave 185 rinse scene from a blank canvas. Do not edit either reference.
+
+Input images:
+- Image 1 is equipment/action geometry only. Preserve the recognizable Wave 185 metal dripper proportions, flat-bottom white crimped paper, open accordion pleats, side handle, broad support flange, gooseneck rinse stream, centered glass server, and light drainage. Do not copy its photographic rendering, room, wood surface, exact crop, lighting, or branding.
+- Image 2 is visual-language calibration only. Match its modern Starlit Tactile illustration, simplified materials, warm palette, clean mobile silhouette, organic borderless dark stage, subject scale, and flat green transparency field. Do not copy its Switch equipment, valve, slurry, lever, or finger.
+
+LESSON
+Show a gentle rinse of a correctly seated Kalita Wave 185 paper while its flat bottom stays level and all wet pleats remain open. The water wets the paper without flattening, crushing, folding, or sticking the pleats to the metal wall.
+
+EXACT EQUIPMENT AND STATE
+- One unbranded stainless-steel Wave 185 flat-bottom dripper centered securely on one stable heat-safe glass server.
+- Dripper has credible 185 size/proportions, low flared/conical metal body, horizontal wave/ridge cues, broad support flange, modest side handle, and flat bottom.
+- One correct white Wave 185 paper inside: a level circular flat bottom and evenly spaced tall accordion pleats around the full circumference.
+- Pleats are clearly open with visible narrow air channels between wet paper folds and the metal wall. They are not pasted flat.
+- Paper is wet with subtle translucent darkening, but its folded structure remains crisp.
+- No coffee grounds.
+- One plain gooseneck kettle enters only partially from the upper-right. Show the spout and just enough kettle body/hand grip for believable control; keep it subordinate.
+- One narrow gentle water stream lands near the inner paper wall and moves naturally across the paper without force. No splash or spray.
+- A small continuous drainage stream leaves the center below the dripper and enters the server.
+- Server contains only a very shallow clear rinse-water pool and has ample capacity.
+- No hand touches the paper or dripper.
+
+COMPOSITION
+- Elevated front three-quarter 4:3 view similar to Image 1, but fully contained and illustrated.
+- Flat paper bottom, open pleats, kettle stream, dripper body, support flange, handle, full server bottom, drainage, and organic stage all visible.
+- Subject large at 384 by 288 but every non-background pixel at least 4.5 percent from every edge.
+- Nothing cropped, floating, off-center, unstable, or touching an edge.
+- Keep kettle spout clear of the paper; water alone contacts it.
+
+VISUAL STYLE
+- Follow Image 2: premium contemporary Material 3 Expressive editorial illustration.
+- Polished vector-like 3D forms with restrained gouache/cut-paper tactility, crisp simplified geometry, controlled soft gradients, gentle contact shadows, and selective texture.
+- Clearly illustrated, not product photography or glossy CGI.
+- Warm cream wet paper, soft steel silver, clear pale water with restrained cool tint, deep espresso/charcoal stage, small copper/cobalt accent only if natural.
+- Metal uses broad simplified highlights; paper has subtle fiber tactility; water smooth and minimal; glass simplified.
+- No hyperreal reflections, wood counter, beige room, vintage poster, sepia, heavy grain, or excessive detail.
+
+MATERIAL 3 EXPRESSIVE STAGE
+- One borderless deep-espresso organic shape behind the setup.
+- Broad upper lobe follows the open paper/dripper rim, a gentle outward gesture accommodates the kettle spout, an inward pinch emphasizes the pleat/metal air gap, and a stable lower lobe wraps the server.
+- Few generous asymmetric curves; fluid, custom, calm, and intentional.
+- Not a rectangle, rounded rectangle, squircle, frame, badge, splash, cloud, flower, star, or arbitrary motif.
+- Complete stage silhouette visible inside the safe area; no outline, cream rim, halo, or outer shadow.
+
+TRANSPARENCY
+- Outside the dark stage and any deliberately protruding kettle/hand: perfectly flat uniform #00FF00.
+- No gradient, texture, noise, lighting variation, shadow, reflection, floor plane, halo, or green spill.
+- No green inside the illustration.
+
+VALIDATION
+- Wave 185 identity and flat-bottom geometry clear.
+- Correct 185 crimped paper centered and level.
+- All pleats remain evenly open after wetting.
+- Gentle narrow rinse stream; no paper contact by hardware or fingers.
+- Light centered drainage into stable server.
+- No grounds.
+- Expressive stage contained and borderless.
+- Self-explanatory at phone size.
+
+CONSTRAINTS
+No text, letters, numbers, labels, arrows, symbols, motion marks, measurements, logo, watermark, V60 cone paper, wedge paper, generic basket paper, Wave 155, reusable metal filter, grounds, flattened/closed pleats, fingers pressing paper, kettle touching paper, off-center flat bottom, floating paper, unstable server, overflow, spray, extra brewer, crop, floating equipment, photorealism, vintage treatment, or clutter.

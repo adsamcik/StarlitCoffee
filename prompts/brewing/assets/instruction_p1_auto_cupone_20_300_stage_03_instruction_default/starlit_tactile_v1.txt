@@ -1,0 +1,62 @@
+Use case: scientific-educational
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration
+Generation mode: compose a completely new Cup-One setup scene from a blank canvas. Do not edit either reference.
+
+Input images:
+- Image 1 is equipment-geometry reference only. Preserve the recognizable compact single-cup machine proportions and functional relationships: rear-left clear water reservoir, tall narrow body, hinged reservoir lid, removable horizontal metal outlet arm over the small #1 filter holder, broad mug centered on the base. Do not copy its photographic lighting, beige room, exact hand, pitcher, branding, surface wear, or composition.
+- Image 2 is rendering and composition reference only. Match its modern Starlit Tactile illustration, simplified material handling, warm palette, clean mobile silhouette, organic borderless dark stage, subject scale, and flat green transparency field. Do not copy its Switch equipment, valve, liquid scene, or finger pose.
+
+LESSON
+Show the safe pre-cycle arrangement for an unbranded Moccamaster Cup-One-style single-cup brewer: fresh cold water is poured into the open reservoir to its subtle molded fill level, the removable outlet arm is installed and centered over a correctly seated #1 paper filter holder, and a broad heat-safe mug is stable below. The machine is off.
+
+EXACT MACHINE AND STATE
+- One compact tall Cup-One-style machine, stable on its full base, elevated front three-quarter view similar to Image 1.
+- Rear-left transparent rectangular water reservoir integrated against the machine body, lid hinged open.
+- One small plain pitcher at upper left pours a controlled clear stream of fresh cold water into the reservoir opening, never into the filter holder or mug.
+- Reservoir shows a clear qualitative water level meeting one subtle molded ridge/line in the plastic. No printed tick, number, letter, symbol, or exact quantity.
+- One removable polished metal outlet arm/tube is fully inserted into the top-side socket and extends horizontally over the filter holder.
+- The outlet end is centered directly above the middle of the holder. It is installed, level, and not tilted or missing.
+- One small black/dark holder contains a correctly seated white No. 1 cone paper. The dry paper rim is visible; no larger filter and no pod.
+- One broad warm-cream heat-safe mug sits centered and flat on the cup platform directly below the holder with comfortable clearance.
+- Machine off: switch unlit, no steam, no hot flow, no coffee, no moving parts.
+- One relaxed hand holds only the pitcher handle. Keep the hand small and subordinate; no hand touches the outlet arm or hot-area parts.
+
+COMPOSITION
+- Full machine, reservoir, open lid, outlet arm, filter holder, #1 paper, mug, platform, pitcher, water stream, hand, and organic stage fully visible.
+- Keep the key diagonal reading clear: pitcher → reservoir; installed arm → filter holder → mug.
+- 4:3 landscape; subject large at 384 by 288 but every non-background pixel at least 4.5 percent from every edge.
+- Nothing cropped, floating, misaligned, unstable, or touching an edge.
+- Do not use arrows or multiple panels; relationships must read through real alignment.
+
+VISUAL STYLE
+- Follow Image 2: contemporary premium editorial illustration for a Material 3 Expressive app.
+- Polished vector-like 3D forms with restrained gouache/cut-paper tactility, crisp simplified geometry, controlled soft gradients, gentle contact shadows, and selective material texture.
+- Clearly illustrated, not product photography and not glossy CGI.
+- Palette: warm cream mug/paper, matte charcoal base and holder, muted warm silver body and outlet arm, pale cobalt-gray clear reservoir/water, deep espresso stage, small copper/amber accents only where natural.
+- Metal uses broad simplified highlights; plastic/glass uses restrained transparency; water is smooth and clean.
+- No hyperreal reflections, beige room, floor plane, vintage poster, sepia, heavy grain, or excessive detail.
+
+MATERIAL 3 EXPRESSIVE STAGE
+- One borderless deep-espresso organic shape behind the entire setup.
+- Shape adapts to the tall machine: upper-left lobe around pitcher and open lid, narrow inward curve near reservoir fill, outward lobe following the outlet arm/filter holder, and broad lower lobe grounding base and mug.
+- Few generous asymmetric curves; fluid, tailored, calm, and intentional.
+- Not a rectangle, rounded rectangle, squircle, frame, badge, splash, cloud, flower, star, or arbitrary motif.
+- Complete stage silhouette visible inside the safe area; no outline, cream rim, halo, or outside shadow.
+
+TRANSPARENCY
+- Outside the stage and any deliberately protruding hand/pitcher: perfectly flat uniform #00FF00.
+- No gradient, texture, noise, lighting variation, shadow, reflection, floor plane, halo, or green spill.
+- No green inside the illustration.
+
+VALIDATION
+- Cup-One silhouette and component layout match Image 1's functional geometry.
+- Cold water enters only open reservoir and meets an unlabeled molded level.
+- Outlet arm installed and centered over No. 1 paper holder.
+- Broad mug centered below.
+- Machine visibly off, no hot flow.
+- Hand only on pitcher.
+- Organic stage clean and contained.
+- Self-explanatory at phone size.
+
+CONSTRAINTS
+No text, letters, numbers, printed marks, labels, arrows, symbols, measurements, logo, watermark, pod, capsule, carafe batch machine, generic showerhead, wrong filter size, missing or misaligned outlet arm, water poured into basket/mug/arm, overfill, active brew, steam, illuminated switch, hot-part handling, extra hand, extra tools, crop, floating equipment, photorealism, vintage treatment, or clutter.

@@ -1,0 +1,24 @@
+Use case: precise-object-edit
+Input image: Image 1 is the Wave 185 rinse draft.
+
+Change only the kettle and its connected incoming water stream.
+
+CONTAINMENT CORRECTION
+- Replace the cropped upper-right kettle fragment with a complete compact plain gooseneck kettle, reduced to approximately 55 percent of the current visible kettle scale.
+- Position the entire kettle in the upper-right quadrant, fully visible with its small body, lid, gooseneck spout, and simple handle.
+- Keep every kettle pixel at least 5 percent from the top and right canvas edges.
+- The kettle may sit partly outside the dark stage over the green key field, but it must be completely contained and must not touch any edge.
+- Keep the spout tip safely above the paper and aimed at the exact same gentle landing point inside the Wave filter.
+- Reconnect one narrow smooth water stream from the repositioned spout tip to that landing point.
+- Keep the kettle subordinate to the dripper; no large hand is necessary. If a hand is shown, include only small relaxed fingers on the handle, also fully inside the safe area.
+
+ABSOLUTE INVARIANTS
+Preserve the complete Wave 185 dripper, open wet pleats, level flat paper bottom, support flange, side handle, server, centered drainage stream, shallow rinse pool, organic dark stage, composition, modern Starlit Tactile rendering, palette, lighting, and flat #00FF00 perimeter. Do not resize or move the dripper/server cluster.
+
+VALIDATION
+- Complete kettle silhouette visible.
+- No kettle, hand, stream, stage, dripper, or server touches any edge.
+- Pleats remain open and unchanged.
+- Exactly one incoming rinse stream and one centered drainage stream.
+
+No text, arrows, labels, extra objects, new splashes, photorealism, or any change beyond kettle containment and the connected incoming stream.

@@ -1,0 +1,15 @@
+Use case: precise-object-edit
+Input image: Image 1 is the contained Wave 185 rinse illustration.
+
+Add exactly one small supporting hand to the kettle handle and change nothing else.
+
+- A relaxed adult right hand enters from the upper-right but remains fully visible and at least 5 percent from the top and right canvas edges.
+- Fingers wrap naturally around the kettle's existing handle; thumb rests on top of the handle.
+- The grip visibly supports and tilts the kettle in its current position.
+- Hand scale must be realistic relative to the small kettle and remain visually subordinate to the dripper.
+- Do not cover the lid, spout, water stream, filter pleats, or dripper.
+- No extra arm beyond a short wrist, no second hand, no jewelry, sleeve, tool, steam, or motion marks.
+
+Preserve the exact kettle position and size, incoming stream, Wave 185 dripper, wet open pleats, flat bottom, server, drainage stream, shallow pool, dark organic stage, green perimeter, composition, lighting, and modern Starlit Tactile rendering.
+
+Pass only if the kettle no longer appears to float and all pixels remain safely inside the canvas. No text, arrows, labels, or other changes.

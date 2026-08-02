@@ -1,0 +1,31 @@
+Use case: precise-object-edit
+Asset type: text-free 4:3 mobile coffee-brewing instruction illustration
+Input image: Image 1 is the Chemex instruction draft. Preserve its carafe identity, scale, viewpoint, contemporary Starlit Tactile rendering, transparency-ready green perimeter, empty state, and minimal object count.
+
+Make exactly two corrections.
+
+1. FILTER-TO-SPOUT MECHANICS
+- Rebuild only the folded filter orientation so the visibly thicker three-layer wall is directly on the pouring-spout side of the carafe, covering and bridging across that side.
+- Show three clean nested paper edges at the top of the thick wall.
+- The opposite wall must visibly be only one paper layer.
+- Keep the thick wall lifted slightly away from the inner spout groove so a clear continuous dark air passage remains visible between paper and glass.
+- The air passage must be traceable from the open top of the spout groove down into the carafe.
+- Do not place the three-layer stack merely beside the spout, and do not center the fold seam inside the air channel.
+- Preserve the relaxed fingertip only if it does not hide this relationship.
+
+2. EXPRESSIVE DARK STAGE
+- Replace the current rigid rounded rectangle with one contained, asymmetric, naturally flowing deep-espresso Material 3 Expressive shape.
+- Tailor the shape around the Chemex silhouette: a gentle wider lobe around the filter bowl, a soft inward waist echo near the wooden collar, and a grounded lower lobe around the carafe base.
+- Use only one continuous stage shape with calm broad curves. It should feel fluid and custom, not like a rectangle, squircle, frame, splash, cloud, flower, or random decoration.
+- Keep the full stage silhouette visible, borderless, and at least 4.5 percent from every canvas edge.
+- Keep the subject large and readable; do not shrink it unnecessarily.
+- The fingertip may project slightly beyond the dark stage but must remain fully inside the safe area.
+- Outside the dark stage and fingertip, retain perfectly flat uniform #00FF00 with no variation.
+
+Validation:
+- Three paper layers are on the spout side; one layer is opposite.
+- The spout air channel is visibly open and continuous.
+- The dark stage is distinctly asymmetric and flowy, responds to the hourglass subject, and does not read as a rounded rectangle.
+- Nothing touches a canvas edge.
+
+Preserve all other visual qualities. No text, letters, numbers, labels, arrows, callouts, logos, watermark, second filter, coffee, water, kettle, steam, extra props, white outline, border, crop, photorealism, vintage treatment, or visual noise.

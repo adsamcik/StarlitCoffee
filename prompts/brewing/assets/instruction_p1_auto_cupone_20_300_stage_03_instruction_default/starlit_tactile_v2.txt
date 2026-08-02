@@ -1,0 +1,15 @@
+Use case: precise-object-edit
+Input image: Image 1 is the accepted Cup-One setup draft.
+
+Make one localized edit to the transparent water reservoir only.
+
+- Add one subtle molded horizontal fill ridge in the clear reservoir plastic exactly aligned with the current water surface.
+- The ridge is a shallow unprinted manufacturing emboss/deboss line, visible mainly through a restrained highlight and refraction.
+- It spans the visible front and side walls consistently in perspective.
+- The current water surface meets this ridge.
+- Do not add a number, letter, tick series, icon, symbol, label, colored ink, sticker, or measurement scale.
+- Do not change the water amount, water stream, reservoir shape, pitcher, hand, lid, machine, outlet arm, filter holder, No. 1 paper, mug, switch, composition, stage, or style.
+
+Preserve all existing modern Starlit Tactile rendering, safe margins, flat green background, machine-off state, alignment, and object geometry exactly.
+
+Pass if a viewer can see one qualitative molded fill reference at the waterline without reading any printed information. No other changes.

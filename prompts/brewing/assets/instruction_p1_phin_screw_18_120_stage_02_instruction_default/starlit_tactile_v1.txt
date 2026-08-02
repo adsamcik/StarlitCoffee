@@ -1,0 +1,72 @@
+Use case: scientific-educational
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration
+Generation mode: compose a completely new screw-insert phin scene from a blank canvas.
+
+Input image:
+- Image 1 is rendering and composition calibration only. Match its modern illustrated tactility, simplified materials, warm palette, clear mobile silhouette, contained organic dark stage, subject scale, and flat green transparency field.
+- Do not copy its Switch brewer, glass cone, paper, valve, ball, lever, server, liquid, or finger pose.
+
+LESSON
+Show how to engage the threaded insert of a single-serving Vietnamese screw-insert phin only lightly: the perforated disc stays level, its threads are just engaged on the central post, and it rests gently on a dry level coffee bed without compacting it. The posture must communicate gravity brewing, not tamping or pressure.
+
+EXACT PHIN GEOMETRY
+- One unbranded stainless-steel Vietnamese phin sized like a 120–150 ml chamber, centered securely on a broad stable heat-safe cup.
+- A wide perforated base plate spans the cup rim; the cylindrical brew chamber rises from it.
+- Inside the chamber, show a level bed of dry medium-fine ground coffee above the integrated perforated floor. Grounds have clear irregular particulate texture and a loose porous surface.
+- One central vertical threaded post rises from the integrated base through the center of the bed.
+- One matching circular perforated screw insert sits level inside the chamber. It has a small central threaded hub engaged on the post and a modest cool upper turning tab/knob.
+- The disc is only at the top surface of the bed: gentle contact, no depression, no compacted puck, and generous empty headroom above for swelling.
+- Show credible fine thread engagement at the central hub, but keep it simplified and readable rather than microscopic.
+- Use a restrained front-quarter cutaway of the chamber wall to reveal the level bed, insert underside, central post, and headroom in one coherent view. Do not use an inset, exploded diagram, or multiple panel.
+
+HAND ACTION
+- Show only a relaxed thumb and forefinger lightly holding the cool upper turning tab.
+- Fingers make a small gentle turn with neutral posture: soft fingertips, no clenched hand, force, white knuckles, palm pressure, tool, or downward push.
+- The hand stays away from sharp edges and does not touch the coffee bed.
+- No second hand.
+
+STABLE DRY STATE
+- Phin base lies flat across the broad cup rim; chamber is upright and centered.
+- Cup is realistically proportioned and fully visible with a stable rounded base.
+- No water, liquid, kettle, steam, lid, drips, condensed milk, ice, or serving.
+- No implied sealed chamber or pressure.
+
+COMPOSITION
+- Elevated close front three-quarter 4:3 view with the phin interior and thread relationship as the focal point.
+- Complete cup, phin base, chamber, insert, post, headroom, fingertips, and organic stage visible.
+- Subject large at 384 by 288 but all non-background pixels at least 4.5 percent from every edge.
+- Nothing cropped, floating, tilted, off-center, or touching an edge.
+- Keep the coffee bed proportionate: a shallow loose bed, not half the chamber.
+
+VISUAL STYLE
+- Follow Image 1's contemporary Starlit Tactile editorial illustration: polished vector-like 3D forms, restrained gouache/cut-paper tactility, crisp simplified geometry, controlled soft gradients, gentle contact shadows, and selective texture.
+- Clearly illustrated, not product photography, not metallic CGI, and not vintage.
+- Stainless steel is warm silver with simplified broad highlights and matte-brushed cues; cup warm cream/cocoa; grounds textured cocoa; dark espresso structure; one restrained cobalt accent only if useful.
+- Grounds particulate and porous; metal smooth but illustrated.
+- Avoid hyperreal reflections, heavy grain, sepia, excessive shine, etched ornament, and visual noise.
+
+EXPRESSIVE STAGE
+- One borderless deep-espresso organic shape tailored around the phin and cup.
+- A compact upper lobe surrounds the fingertips and open chamber, a gentle inward pinch focuses on the threaded insert, and a broad stable lower lobe supports the cup.
+- Few generous asymmetric curves; fluid, calm, and custom.
+- Not a rectangle, rounded rectangle, squircle, frame, badge, splash, cloud, flower, star, or decorative motif.
+- Full stage silhouette visible inside the safe area; no outline, cream rim, halo, or outer shadow.
+
+TRANSPARENCY
+- Outside the dark stage and any deliberately protruding fingertips: perfectly flat uniform #00FF00.
+- No gradient, texture, noise, shadow, reflection, floor plane, variation, halo, or green spill.
+- No green inside the illustration.
+
+VALIDATION
+- Screw insert, not loose gravity disc.
+- Central threaded post and matching hub visibly engaged.
+- Disc level and barely resting on loose grounds.
+- Bed uncompressed with headroom.
+- Relaxed fingers turn only the top tab without downward force.
+- Stable wide cup support.
+- Dry pre-wet state.
+- Organic stage contained and borderless.
+- Self-explanatory at phone size.
+
+CONSTRAINTS
+No text, letters, numbers, labels, arrows, symbols, motion marks, measurements, logo, watermark, loose drop-in disc, unthreaded insert, spring, plunger, tamper, paper filter, sealed pressure vessel, espresso mechanism, forceful palm, tool, compacted puck, water, kettle, steam, lid, drips, milk, ice, extra hand, second phin, narrow cup, crop, floating equipment, photorealism, vintage treatment, or clutter.

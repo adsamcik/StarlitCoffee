@@ -1,0 +1,28 @@
+Use case: precise-object-edit
+Input image: Image 1 is the screw-insert phin instruction draft.
+
+Change only the vertical position of the perforated screw insert and the corresponding visible length of the central threaded post.
+
+CORRECTION
+- Lower the entire level perforated disc straight down until its underside just makes gentle first contact with the tallest loose coffee particles across the bed.
+- Remove the visible air gap between the disc and the coffee.
+- The disc must rest lightly on the bed without entering it.
+- Preserve the bed's current loose, irregular, porous granular texture and current height.
+- Do not flatten, depress, compact, smooth, compress, or displace the grounds.
+- Keep the disc perfectly level.
+- Keep the central threaded hub visibly engaged on the post.
+- Shorten the visible threaded section beneath the disc naturally as the disc moves down; the post still connects toward the integrated base through the center of the bed.
+- Preserve generous empty headroom above the disc.
+- Preserve the relaxed thumb-and-forefinger contact on the upper knob with no added force or downward-pressure cues.
+
+ABSOLUTE INVARIANTS
+Preserve the exact phin body, cutaway, integrated perforated floor, wide base plate, stable cup, fingertips, dry state, composition, scale, modern Starlit Tactile illustrated rendering, material palette, organic dark stage, and flat green perimeter. Do not alter the cup, chamber, base, hand, holes, background, crop, or lighting. No new objects.
+
+VALIDATION
+- No visible air gap beneath the disc.
+- Disc underside just touches loose particle peaks.
+- No depression or compacted puck.
+- Thread engaged; disc level; headroom visible.
+
+CONSTRAINTS
+No arrows, text, labels, motion marks, logo, water, lid, tool, extra hand, new mechanism, visual noise, photorealism, or any change beyond the insert height and corresponding post length.
