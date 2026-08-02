@@ -30,9 +30,12 @@ larger scale and removed the outer cream rim. The grounded v3 revision made the
 silicone base visibly rest on a realistically proportioned receiving server.
 The v4 revision replaced the retro textured treatment with a contemporary
 vector-3D editorial finish and removed unverified linkage geometry. V5 made the
-complete upstream-to-downstream liquid path visible. The current preferred
-revision, `switch_style_master_v6_ground_texture_alpha.png`, additionally gives
-the ground-coffee mass a restrained granular material treatment.
+complete upstream-to-downstream liquid path visible. V6 gave the ground-coffee
+mass a restrained granular material treatment. The current preferred revision,
+`switch_style_master_v7_verified_ball_physics_alpha.png`, corrects the valve
+physics: the one-piece switch pivots, its inner end supports the ball from
+below, the ball lifts only slightly above the centered seat, and liquid passes
+through the resulting annular gap into one outlet.
 
 ## Clarity budget
 
@@ -57,7 +60,7 @@ find. Text remains outside the image and immediately below it in the app.
 
 ## Theme behavior
 
-The v6 alpha master was composited at 384 by 288 over the app's fallback
+The v7 alpha master was composited at 384 by 288 over the app's fallback
 `surfaceVariant` colors:
 
 - Light: `#F2E0D5`
@@ -81,18 +84,22 @@ flow in the silicone base until the external switch is pressed, after which
 coffee drains. Hario also states that drawdown continues after the finger is
 released. Hario's official manual further warns that hot water flows from the
 bottom when the ball is absent and describes inserting the switch's long narrow
-end into the base. The v5 cutaway therefore shows only the switch, a displaced loose
-ball, the open outlet, and the resulting stream. It intentionally does not
-claim a literal manufacturer cross-section or depict the earlier unverified
-fork-and-shaft linkage. Sources: [Hario USA Switch product page](https://www.hario-usa.com/products/switch-immersion-dripper),
+end into the base. Its assembly diagram also shows the molded switch seated in
+the base and moving up and down. V7 therefore presents one continuous molded
+switch as a seesaw: the pressed external end moves down while the long inner
+end rises beneath the loose ball. The ball remains centered and lifts only
+enough to expose the annular opening around the circular seat. The cutaway
+intentionally does not claim a literal manufacturer cross-section. Sources:
+[Hario USA Switch product page](https://www.hario-usa.com/products/switch-immersion-dripper),
 [Hario Europe Switch product page](https://www.hario-europe.com/collections/03-size/products/v60-immersion-dripper-switch),
 the [official Hario instruction manual](https://www.hario.cc/Items/manual_pdf/SSD.pdf),
 and the [official Hario 2024 coffee catalog](https://www.hario.cc/PDF/pdf2024Eng/4.COFFEE_P48-83.pdf).
 
-V5 exposes a single continuous gravity path from the filtered glass-bowl outlet,
-around the lifted ball, through the bottom outlet, and into the server. The
-visible internal liquid path is explanatory; its exact cutaway shape is not a
-manufacturer-published cross-section.
+V7 exposes a single continuous gravity path from the filtered glass-bowl
+outlet, into the upstream valve chamber, through the annular gap around the
+slightly lifted ball, through the centered bottom outlet, and into the server.
+The visible internal liquid path is explanatory; its exact cutaway shape is not
+a manufacturer-published cross-section.
 
 The grounded server relationship is consistent with Hario's official Switch
 server set, in which the dripper sits directly on the included glass server.
@@ -140,6 +147,8 @@ RGBA.
 | `switch_style_ground_texture_seed_rejected_chroma.png` | Rejected bean-like texture edit | `f1ac8690d7ccd0c94d6b4610bd126a32220ce7dd7a7f2e1b3b1814cee0456a8b` |
 | `switch_style_master_v6_ground_texture_chroma.png` | Preferred textured-ground chroma master | `766672eece22a6550c440fc5d7f7a8a873c4b1b6f01cb5eee75ab289eb2e2d3e` |
 | `switch_style_master_v6_ground_texture_alpha.png` | Preferred textured-ground transparent master | `084d79887fab1f27890c7d6917c003b647d98b3c5a1c377784741eeaa03f89ea` |
+| `switch_style_master_v7_verified_ball_physics_chroma.png` | Preferred verified ball-valve physics chroma master | `ca8a781f7134155685582cd36aa79ce64ddd8347c6e65bb65f48fb5c70d6a8bf` |
+| `switch_style_master_v7_verified_ball_physics_alpha.png` | Preferred verified ball-valve physics transparent master | `5371d8ce80c8923b177d912880e9317a8efc31d65fe2e29e5c9dd0eca2ca3852` |
 
 ## Reproduction record
 

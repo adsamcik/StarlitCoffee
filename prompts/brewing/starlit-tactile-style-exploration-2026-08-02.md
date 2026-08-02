@@ -427,3 +427,129 @@ Phone-size QA reduced the alpha master to 384 by 288 and composited it over
 both previews; the brew water, valve flow, and server pool remained smooth and
 visually distinct. The continuous flow path and transparent corners were also
 preserved.
+
+## Verified ball-valve physics correction
+
+A closer visual review found that v6 incorrectly implied the external switch
+pushed the ball from the side. The official Hario assembly diagram shows the
+long narrow end of the same molded switch entering the base and the installed
+switch moving up and down. The accepted explanatory interpretation is a
+one-piece seesaw: pressing the outer handle down raises its inner end beneath
+the loose ball. The ball remains centered, lifts only slightly above a smaller
+circular seat, and exposes an annular gravity-flow opening. This is a
+source-constrained functional explanation, not a claim about Hario's
+unpublished internal dimensions.
+
+Source reviewed:
+
+- Official Hario Switch manual:
+  `https://www.hario.cc/Items/manual_pdf/SSD.pdf`
+
+Input image:
+`switch_style_master_v6_ground_texture_chroma.png`, reloaded into the
+conversation as the sole edit target after direct local-reference handoff was
+blocked by the Windows split-root sandbox.
+
+Request option: `num_last_images_to_include = 1`.
+
+Output:
+
+- Cache file: `exec-6f87cdca-35f1-4e6d-a96a-975e78313a17.png`
+- Preserved chroma file:
+  `switch_style_master_v7_verified_ball_physics_chroma.png`
+- Chroma SHA-256:
+  `ca8a781f7134155685582cd36aa79ce64ddd8347c6e65bb65f48fb5c70d6a8bf`
+
+Exact prompt:
+
+    Use case: precise-object-edit
+    Asset type: text-free 4:3 in-app coffee-brewing instruction illustration
+    Input image: Image 1 is the sole edit target. It is the accepted textured-ground Hario Switch instructional master. Preserve it except for the valve cutaway described below.
+
+    PRIMARY REQUEST
+    Replace only the exposed valve-mechanism cutaway inside the dark silicone base. Rebuild that small area as one mechanically coherent vertical section through the centerline of the glass-bowl outlet, stainless-steel ball, circular valve seat, one-piece PCT switch lever, and bottom outlet. This frame shows the OPEN and draining state at the instant the user has pressed the broad external handle down until it sits flush with the upper rim of the silicone base.
+
+    COORDINATE SYSTEM AND SPATIAL RELATIONSHIPS
+    - Vertical means gravity and downstream flow.
+    - The glass brewer, filter, coffee bed, and upstream brew liquid are above.
+    - The receiving server and downstream outlet are below.
+    - The user-facing external switch handle extends to the right.
+    - The sphere, circular seat, throat, bottom outlet, and falling stream must remain centered on one vertical axis beneath the brewer.
+    - The cutaway is a simplified functional explanation, but every visible contact, support, passage, and motion must be physically coherent.
+
+    ONE-PIECE SWITCH LEVER — CRITICAL
+    - The cobalt-blue switch is exactly one continuous molded PCT-resin lever, not several connected pieces.
+    - Its broad outer handle remains on the right and is shown pressed down and flush by the fingertip.
+    - Inside the base, that very same blue molded part narrows into one long, slender inner arm running inward toward the central valve.
+    - The lever rotates around one small molded fulcrum or convex bearing seated in a matching recess of the silicone base near the base wall.
+    - This is a seesaw relationship: pressing the outer handle downward rotates the outer arm down while rotating the inner arm upward.
+    - The upward-moving inner tip reaches the ball from BELOW and contacts the underside of the loose stainless-steel sphere.
+    - The inner tip visibly supports and lifts the ball from below.
+    - The inner tip must never push the ball from its side.
+    - Do not invent a separate shaft, fork, piston, vertical post, spring, screw, axle, disk, hinge assembly, cradle, cage, or multi-part linkage.
+    - Do not make the ball look attached to the lever.
+
+    BALL MOTION AND VALVE SEAT — CRITICAL
+    - Use exactly one loose stainless-steel sphere.
+    - Keep it centered directly above one circular valve seat and outlet on the brewer's vertical axis.
+    - The seat is a simple circular opening smaller in diameter than the sphere. In the closed state gravity would let the sphere rest on this seat and seal it.
+    - This image is the open state: the rising inner lever tip lifts the ball nearly straight upward by only a small distance, approximately 10–15 percent of the ball diameter.
+    - The ball remains nearly centered over the seat. Do not show conspicuous sideways displacement.
+    - Show a clear, even annular opening between the ball's lower hemisphere and the circular seat.
+    - The ball is mechanically supported from below by the lever tip. It must not appear to float.
+    - No stem passes through the ball. No post holds it from beneath other than the contacting tip of the one-piece lever.
+
+    LIQUID PHYSICS — CRITICAL
+    - Smooth amber filtered coffee descends continuously from the pointed filter and glass throat into the compact upstream valve chamber above the seat.
+    - That upstream chamber visibly contains liquid around the sides of the wet steel ball.
+    - Liquid must not pass through the sphere, through the lever, or through solid silicone.
+    - With the ball raised, gravity drives liquid inward and downward through the 360-degree annular gap between the sphere and the circular seat.
+    - In the sectional cutaway, depict that ring flow as one continuous amber crescent wrapping around the underside of the ball, not as two unrelated decorative ribbons.
+    - Immediately below the seat, all of that liquid converges into one centered vertical outlet passage.
+    - That outlet continues directly into the existing single falling stream entering the server.
+    - Every amber segment must visibly connect: upstream liquid chamber → annular gap around the underside of the ball → centered passage below the seat → one falling stream.
+    - No teleporting liquid, disconnected amber patches, lateral pipes, two independent side streams, pumps, siphons, hidden reservoirs, or liquid appearing below the ball without a visible upstream route.
+
+    CUTAWAY PRESENTATION
+    - Reveal only a compact central section of the dark silicone base.
+    - Make the silicone wall, liquid-filled chamber, circular seat, cobalt lever arm, steel ball, annular amber path, and centered lower outlet visually distinct at small mobile-card size.
+    - Use clean explanatory sectional geometry rather than decorative plumbing.
+    - Do not add arrows, labels, letters, numbers, symbols, legends, or callouts.
+    - Do not claim an exact proprietary manufacturer cross-section; show only the verified functional relationship.
+
+    PRESERVE UNCHANGED
+    - Preserve the exact overall composition, viewpoint, crop, scale, and modern high-fidelity vector-3D rendering style of Image 1.
+    - Preserve the textured damp medium-fine coffee grounds; they must remain visibly granular and distinct from the smooth amber liquid.
+    - Preserve the paper filter, transparent glass cone, liquid level, glass ribs, and upstream liquid path.
+    - Preserve the fingertip pose and the outer handle's down/flush position.
+    - Preserve the dark silicone base resting firmly on the server rim, the receiving server, and its shallow amber pool.
+    - Preserve the contained dark stage, transparent-ready perimeter composition, palette, lighting, shadows, and silhouettes.
+    - Nothing should touch the canvas edge.
+
+    BACKDROP
+    - Outside the contained dark stage, use a perfectly flat uniform chroma green #00FF00 with no gradient, texture, noise, shadow, spill, or variation so it can be removed cleanly.
+
+    NEGATIVE CONSTRAINTS
+    No side-pushed ball. No horizontally displaced ball. No floating ball. No ball-on-post. No fork under ball. No multi-part linkage. No exaggerated lift. No two independent amber ribbons. No disconnected flow. No extra mechanism. No text. No arrows. No logo. No border. No white outline. No vintage poster treatment. No photorealism. No visual noise. No unnecessary props. No change outside the compact valve cutaway.
+
+Transparency conversion:
+
+    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v7_verified_ball_physics_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v7_verified_ball_physics_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+
+Helper and integrity results:
+
+- Detected key color: `#0de211`
+- Transparent pixels: `461129 / 1572528`
+- Partially transparent pixels: `4047 / 1572528`
+- Alpha bounding box: `(179, 32, 1268, 1055)` on a 1448 by 1086 canvas
+- All four corner alpha values: `0`
+- Preserved alpha file:
+  `switch_style_master_v7_verified_ball_physics_alpha.png`
+- Alpha SHA-256:
+  `5371d8ce80c8923b177d912880e9317a8efc31d65fe2e29e5c9dd0eca2ca3852`
+
+Phone-size QA reduced the alpha master to 384 by 288 and composited it over
+`#F2E0D5` and `#52443C`. In both previews, the external handle read as
+pressed, the inner lever remained visible beneath the centered ball, the
+annular amber passage stayed connected to the single outlet stream, the
+grounds remained particulate, and the transparent perimeter remained clean.
