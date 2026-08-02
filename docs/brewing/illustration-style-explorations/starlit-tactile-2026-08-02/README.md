@@ -31,11 +31,11 @@ silicone base visibly rest on a realistically proportioned receiving server.
 The v4 revision replaced the retro textured treatment with a contemporary
 vector-3D editorial finish and removed unverified linkage geometry. V5 made the
 complete upstream-to-downstream liquid path visible. V6 gave the ground-coffee
-mass a restrained granular material treatment. The current preferred revision,
-`switch_style_master_v7_verified_ball_physics_alpha.png`, corrects the valve
-physics: the one-piece switch pivots, its inner end supports the ball from
-below, the ball lifts only slightly above the centered seat, and liquid passes
-through the resulting annular gap into one outlet.
+mass a restrained granular material treatment. V7 corrected the lever and ball
+relationship. The current preferred revision,
+`switch_style_master_v8_verified_flow_topology_alpha.png`, additionally makes
+the seat a visibly hollow ring: liquid enters its open bore around the narrow
+lifting pin before contracting into the single outlet jet.
 
 ## Clarity budget
 
@@ -60,7 +60,7 @@ find. Text remains outside the image and immediately below it in the app.
 
 ## Theme behavior
 
-The v7 alpha master was composited at 384 by 288 over the app's fallback
+The v8 alpha master was composited at 384 by 288 over the app's fallback
 `surfaceVariant` colors:
 
 - Light: `#F2E0D5`
@@ -95,11 +95,13 @@ intentionally does not claim a literal manufacturer cross-section. Sources:
 the [official Hario instruction manual](https://www.hario.cc/Items/manual_pdf/SSD.pdf),
 and the [official Hario 2024 coffee catalog](https://www.hario.cc/PDF/pdf2024Eng/4.COFFEE_P48-83.pdf).
 
-V7 exposes a single continuous gravity path from the filtered glass-bowl
-outlet, into the upstream valve chamber, through the annular gap around the
-slightly lifted ball, through the centered bottom outlet, and into the server.
-The visible internal liquid path is explanatory; its exact cutaway shape is not
-a manufacturer-published cross-section.
+V8 exposes a single continuous gravity path from the filtered glass-bowl
+outlet, into the upstream valve chamber, through the clearance around the
+slightly lifted ball, into a visibly hollow bore between two seat shoulders,
+and then into the server. A narrow inner pin occupies only a small sector of
+that bore; the visible liquid routes around it before rejoining as one jet. The
+internal liquid path is explanatory; its exact cutaway shape is not a
+manufacturer-published cross-section.
 
 The grounded server relationship is consistent with Hario's official Switch
 server set, in which the dripper sits directly on the included glass server.
@@ -149,6 +151,10 @@ RGBA.
 | `switch_style_master_v6_ground_texture_alpha.png` | Preferred textured-ground transparent master | `084d79887fab1f27890c7d6917c003b647d98b3c5a1c377784741eeaa03f89ea` |
 | `switch_style_master_v7_verified_ball_physics_chroma.png` | Preferred verified ball-valve physics chroma master | `ca8a781f7134155685582cd36aa79ce64ddd8347c6e65bb65f48fb5c70d6a8bf` |
 | `switch_style_master_v7_verified_ball_physics_alpha.png` | Preferred verified ball-valve physics transparent master | `5371d8ce80c8923b177d912880e9317a8efc31d65fe2e29e5c9dd0eca2ca3852` |
+| `switch_style_valve_flow_truth_seed_rejected.png` | Rejected truth-model seed with a solid seat disk | `aa800ca3989e40573f4cf44107e9313f34191022e8870bef4b35a09f8f0a422a` |
+| `switch_style_valve_flow_truth_model.png` | Corrected hollow-seat valve truth model | `8780c72c77f5856a48f76f3ea75ba2c9422aa5bf8e58a422fec0213cb75b1e4b` |
+| `switch_style_master_v8_verified_flow_topology_chroma.png` | Preferred verified flow-topology chroma master | `a82352100a3a544b28917d326dd916f33d0c818bb2cadf32b60656e7fd245936` |
+| `switch_style_master_v8_verified_flow_topology_alpha.png` | Preferred verified flow-topology transparent master | `c991b4fd8a6379a344d88dab31ee282d62d3d6d9a87bc2066cccbc39141dbc35` |
 
 ## Reproduction record
 

@@ -553,3 +553,252 @@ Phone-size QA reduced the alpha master to 384 by 288 and composited it over
 pressed, the inner lever remained visible beneath the centered ball, the
 annular amber passage stayed connected to the single outlet stream, the
 grounds remained particulate, and the transparent perimeter remained clean.
+
+## Hollow-bore flow-topology correction
+
+V7 still allowed the liquid and the broad inner lever to occupy the same visual
+volume. A direct-edit strategy repeatedly preserved that malformed topology, so
+the accepted workflow separated physics verification from scene rendering:
+
+1. Review the official Hario manual and a real disassembled-parts photograph.
+2. Generate a standalone valve truth model.
+3. Reject its solid-disk seat.
+4. Correct the truth model to a hollow annular seat and continuous bore.
+5. Use the corrected truth model with v7 to rebuild only the polished cutaway.
+
+Research references:
+
+- Official Hario manual:
+  `https://www.hario.cc/Items/manual_pdf/SSD.pdf`
+- Disassembled-parts photograph:
+  `https://www.poru-coffee.com/wp-content/uploads/04_hario-switch-parts.jpg`
+- Local research crop used for visual review only:
+  `C:/tmp/hario-switch-lever-reference-crop.jpg`
+- Crop rectangle on the 1920 by 1080 source: `(480, 560, 1450, 1080)`
+
+Rejected direct-edit cache files, not preserved:
+
+- `exec-50aae6ae-1e37-43a6-8f0b-f65ddfd1a6b5.png`: retained
+  equator contact and an amber bowl.
+- `exec-b4b95649-499f-4708-bee2-fb10fe94deb5.png`: retained
+  equator contact and removed useful upstream continuity.
+- `exec-a62663f5-93e7-452d-b734-eaf5a7dc26d8.png`: real-parts
+  reference improved topology, but the inner arm still spanned the outlet.
+
+### Rejected valve truth-model seed
+
+Request option: no input images.
+
+Output:
+
+- Cache file: `exec-94997e8a-55ab-4ef3-b5f5-6c7c9eaca54d.png`
+- Preserved file: `switch_style_valve_flow_truth_seed_rejected.png`
+- SHA-256:
+  `aa800ca3989e40573f4cf44107e9313f34191022e8870bef4b35a09f8f0a422a`
+- Rejection: the dark seat rendered as a solid disk while the jet appeared
+  beneath it, implying flow through solid material.
+
+Exact prompt:
+
+    Use case: scientific-educational
+    Asset type: text-free mechanism truth reference for a mobile coffee-brewing illustration
+    Primary request: Create one clean, isolated, mechanically accurate sectional diagram of an open gravity ball valve used in an immersion coffee dripper. This is a reference image for another illustrator, not a finished poster.
+
+    COMPOSITION
+    - Square canvas.
+    - Center one compact valve section large on the canvas.
+    - Pure flat white background.
+    - Straight-on vertical section with slight three-quarter depth only where needed to show the rear lifting pin.
+    - No brewer cone, no server, no hand, no exterior handle, no scenery.
+
+    GEOMETRY
+    - At top: a short vertical amber-filled inlet chamber.
+    - At center: exactly one loose silver steel sphere, centered on the vertical flow axis.
+    - Below sphere: one dark charcoal circular valve seat shown as a shallow ellipse; the opening is smaller than the sphere.
+    - Ball is lifted straight upward by exactly 12 percent of its diameter above the seat.
+    - Clearly show the narrow clearance between lower hemisphere and seat rim.
+    - At lower rear-right: one slender cobalt rounded lifting pin, only 10 percent of ball diameter in width.
+    - Pin approaches from behind at a shallow upward angle and contacts the lower rear-right underside of the sphere at the 5-o’clock position.
+    - Contact point is clearly below the ball’s horizontal centerline.
+    - Most of the pin is hidden by the ball; only a short tip is visible below the lower hemisphere.
+    - Ball visibly rests on the solid pin tip. It does not float and is not attached.
+    - Pin occupies only a small rear-right sector of the circular opening.
+    - No broad arm, blade, spoon, fork, cradle, shelf, disk, post, piston, spring, or linkage.
+
+    FLUID PHYSICS
+    - Amber liquid fills the inlet chamber around the upper and side surfaces of the wet ball.
+    - Liquid flows downward through the narrow annular clearance around the ball.
+    - Show the visible front half of this annular sheet as a thin amber horseshoe precisely between ball and seat.
+    - At the tiny rear-right sector occupied by the solid cobalt pin, the amber sheet is interrupted and splits around the pin.
+    - Immediately below the seat, the annular sheet bends inward and downward, flows around the narrow pin, and merges into one centered vertical gravity jet.
+    - The jet narrows slightly as it falls.
+    - Amber never overlays or passes through cobalt, silver, or charcoal solids.
+    - No amber bowl, saucer, puddle, platform, disk, floating ring, disconnected ribbon, or separate pipes.
+    - One continuous topology: filled inlet → thin annular gap → circular outlet around narrow pin → single jet.
+
+    STYLE
+    - Contemporary high-fidelity vector-3D educational cutaway.
+    - Crisp simplified geometry, controlled soft gradients, strong material separation.
+    - Amber liquid semi-translucent; steel sphere reflective but illustrated; pin matte cobalt; seat matte charcoal.
+    - Minimal, self-explanatory, no decorative elements.
+
+    VALIDATION
+    - With amber mentally removed, the narrow cobalt pin visibly supports the ball from below.
+    - With cobalt mentally removed, the amber path remains continuous through the open seat into one jet.
+    - The pin is much narrower than the outlet and does not span it.
+    - The ball remains centered and lifted only slightly.
+
+    CONSTRAINTS
+    No text, labels, arrows, numbers, symbols, logo, border, hands, brewer, server, extra parts, noise, photorealism, vintage style, or visual clutter.
+
+### Corrected hollow-seat valve truth model
+
+Input image:
+`switch_style_valve_flow_truth_seed_rejected.png`, reloaded as the sole edit
+target.
+
+Request option: `num_last_images_to_include = 1`.
+
+Output:
+
+- Cache file: `exec-95a5f321-ebcf-45fa-b7d8-698f7445a227.png`
+- Preserved file: `switch_style_valve_flow_truth_model.png`
+- SHA-256:
+  `8780c72c77f5856a48f76f3ea75ba2c9422aa5bf8e58a422fec0213cb75b1e4b`
+
+Exact prompt:
+
+    Use case: precise-object-edit
+    Input image: Image 1 is a rejected mechanism truth reference. Correct only the valve seat, the ball-to-seat spacing, and the local liquid through the outlet. Preserve the chamber, steel ball, small cobalt lifting pin, overall section, white background, palette, and rendering.
+
+    CRITICAL ERROR
+    The dark valve seat currently reads as a solid black disk, while the amber jet appears below it. That implies liquid teleports through solid material. Replace it with a visibly hollow circular seat and open bore.
+
+    HOLLOW SEAT GEOMETRY
+    - The valve seat is an annular torus or thick circular gasket ring, never a disk.
+    - In front section, show two dark charcoal seat shoulders: one on the left and one on the right.
+    - Between those shoulders, show a clearly open central bore.
+    - In shallow three-quarter depth, the rear half of the ring may appear as a dark ellipse behind the opening, but the center must remain visibly hollow.
+    - The bore diameter is approximately 55–65 percent of the ball diameter.
+    - The ball diameter remains larger than the outer sealing diameter so it could close against the upper inner rim.
+    - Raise the ball so the bottom of its sphere is visibly 10–12 percent of ball diameter above the upper seat rim.
+    - Show a real open vertical clearance between lower hemisphere and seat shoulders.
+    - Do not draw any dark material across the center of the bore.
+
+    PIN
+    - Preserve one slender cobalt pin contacting the lower rear-right underside of the ball.
+    - Keep contact below the ball equator.
+    - Pin occupies only a small rear-right sector of the open bore.
+    - Ball hides most of pin.
+    - Do not widen the pin and do not turn it into a support disk.
+
+    LIQUID CONTINUITY
+    - Amber liquid flows around the lower sphere through the narrow clearance above the annular seat.
+    - Show the liquid crossing the plane of the seat ONLY through the visible open bore.
+    - The amber sheets from the left and right gap curve inward into the hollow center.
+    - Inside the bore, they visibly converge around the narrow rear pin.
+    - Continue the converging amber volume through the full height of the open bore.
+    - Only after leaving the lower edge of the bore may the flow contract into one vertical jet.
+    - The jet must touch/connect to the liquid inside the bore with no gap.
+    - Liquid must not pass through either dark seat shoulder or through the cobalt pin.
+    - Use clean occlusion where solids displace the liquid.
+
+    VISUAL TEST
+    A straight vertical sightline through the center must show: amber chamber above → clear gap beneath ball → amber inside an open hole between two charcoal shoulders → one amber jet below. At no point may a solid dark disk block this sightline.
+
+    CONSTRAINTS
+    No solid seat disk. No teleporting jet. No amber painted over dark material. No bowl, puddle, saucer, decorative halo, new hardware, text, arrows, labels, border, logo, or other changes.
+
+### Accepted v8 flow-topology master
+
+Input images, in order:
+
+1. `switch_style_master_v7_verified_ball_physics_chroma.png` — sole
+   polished edit target.
+2. `switch_style_valve_flow_truth_model.png` — functional geometry
+   reference only.
+
+Request option: `num_last_images_to_include = 2`.
+
+Output:
+
+- Cache file: `exec-997c6f01-2e95-473d-8d04-d67fb34b6163.png`
+- Preserved chroma file:
+  `switch_style_master_v8_verified_flow_topology_chroma.png`
+- Chroma SHA-256:
+  `a82352100a3a544b28917d326dd916f33d0c818bb2cadf32b60656e7fd245936`
+
+Exact prompt:
+
+    Use case: precise-object-edit
+    Asset type: text-free 4:3 mobile coffee-brewing instruction illustration
+    Input images:
+    - Image 1 is the sole edit target: the accepted polished Switch illustration.
+    - Image 2 is the verified functional valve truth model. Use Image 2 only for the exact local ball, pin, hollow seat, and liquid topology. Restyle that geometry to Image 1. Do not copy Image 2's white background, silver housing, scale, or standalone composition.
+
+    PRIMARY REQUEST
+    Replace only the compact central cutaway inside Image 1's dark silicone base with a simplified miniature version of Image 2's verified open valve. Preserve all other parts of Image 1.
+
+    TRANSPLANT THESE RELATIONSHIPS FROM IMAGE 2
+    - One centered loose steel ball.
+    - Ball lifted only slightly above the seat.
+    - A very narrow cobalt pin contacts the lower-right underside below the ball's equator and supports it.
+    - Most of the pin is behind and occluded by the ball.
+    - A dark annular seat with two visible shoulders and a clearly hollow central bore. Never a solid disk.
+    - Amber liquid fills the chamber above and around the ball.
+    - Liquid passes through the narrow ball-to-seat clearance.
+    - Liquid then visibly enters the hollow bore between the two dark seat shoulders.
+    - Liquid continues through the bore and only then contracts into one downward jet.
+    - The narrow pin occupies only a small right-rear portion of the bore; liquid flows around it.
+    - Solid cobalt, silver, and charcoal regions displace and occlude amber liquid; they never overlap it.
+
+    ADAPTATION TO IMAGE 1
+    - Keep Image 1's current front three-quarter camera, compact cutaway size, cobalt external handle, fingertip, and dark silicone housing.
+    - Connect Image 1's broad external handle to the narrow inner pin through one subtle pivot inside the right wall, but do not let the broad handle enter or span the outlet.
+    - Inside the chamber, only the narrow final pin tip may be visible.
+    - Keep the pin at no more than one eighth of the ball diameter.
+    - Make the hollow bore readable at phone size as an amber-filled open gap between left and right charcoal seat shoulders.
+    - Show the upstream amber column from the glass throat visibly joining the liquid around the ball.
+    - Show the amber inside the bore visibly touching the top of the existing single stream.
+    - Preserve a small dark outline between steel ball, amber sheet, charcoal seat, and cobalt pin for clarity.
+
+    REQUIRED VERTICAL SIGHTLINE
+    Along the central axis the viewer must see, in order:
+    1. upstream amber from the glass throat;
+    2. amber chamber around the ball;
+    3. the bottom of the centered steel ball;
+    4. a small amber clearance below the ball;
+    5. an open amber-filled bore between two dark seat shoulders;
+    6. the same amber contracting into one stream;
+    7. the stream continuing into the server.
+    No solid disk or broad lever may interrupt this sightline.
+
+    PRESERVE IMAGE 1 UNCHANGED
+    Exact composition, crop, scale, modern vector-3D finish, textured damp grounds, smooth liquid, filter, glass, base exterior, server, pool, fingertip, outer handle, dark rounded stage, flat green perimeter, palette, lighting, and silhouettes. Nothing touches the canvas edge.
+
+    BACKDROP
+    Keep the outer perimeter perfectly flat uniform #00FF00 with no gradient, shadow, reflection, texture, noise, or spill.
+
+    CONSTRAINTS
+    No side contact at the ball equator. No broad blue arm beneath the ball. No ball sitting in an amber cup. No solid seat disk. No teleporting stream. No liquid painted through solids. No extra mechanism, pipe, reservoir, stream, hardware, text, arrows, labels, numbers, symbols, logo, border, white outline, vintage treatment, photorealism, or visual noise.
+
+Transparency conversion:
+
+    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v8_verified_flow_topology_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v8_verified_flow_topology_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+
+Helper and integrity results:
+
+- Detected key color: `#0fdc13`
+- Transparent pixels: `461862 / 1572528`
+- Partially transparent pixels: `3706 / 1572528`
+- Alpha bounding box: `(179, 32, 1268, 1055)` on a 1448 by 1086 canvas
+- All four corner alpha values: `0`
+- Preserved alpha file:
+  `switch_style_master_v8_verified_flow_topology_alpha.png`
+- Alpha SHA-256:
+  `c991b4fd8a6379a344d88dab31ee282d62d3d6d9a87bc2066cccbc39141dbc35`
+
+Phone-size QA reduced the alpha master to 384 by 288 and composited it over
+`#F2E0D5` and `#52443C`. Both previews retained the centered ball, lower
+pin contact, two seat shoulders, open amber-filled bore, continuous single jet,
+granular grounds, and clean transparent perimeter.
