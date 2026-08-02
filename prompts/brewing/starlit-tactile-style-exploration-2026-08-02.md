@@ -366,3 +366,64 @@ Phone-size QA reduced the alpha master to 384 by 288 and composited it over
 channel above the ball, the two short side paths around the displaced ball,
 the rejoined outlet stream, transparent corners, and the existing teaching
 hierarchy.
+
+## Ground-coffee material correction
+
+The user requested enough ground-coffee texture to distinguish the particulate
+coffee mass from the smooth brew water. The v5 chroma master was reloaded into
+the conversation as the sole edit target. Both edits used
+`num_last_images_to_include = 1`.
+
+### Rejected bean-like texture seed
+
+- Cache file: `exec-e9309261-fbff-4c0c-9864-da5105e23b7c.png`
+- Preserved file: `switch_style_ground_texture_seed_rejected_chroma.png`
+- SHA-256: `f1ac8690d7ccd0c94d6b4610bd126a32220ce7dd7a7f2e1b3b1814cee0456a8b`
+- Rejection: repeated oval forms and center grooves read as whole coffee beans,
+  not ground coffee.
+
+Exact prompt:
+
+    Use case: precise-object-edit
+    Asset type: text-free 4:3 in-app coffee-brewing instruction illustration
+    Input image: Image 1 is the sole edit target, the accepted v5 continuous-flow Switch master.
+    Primary request: Change only the visible ground-coffee mass at the top of the brew. Give the wet grounds a restrained but unmistakably granular texture so they cannot be confused with liquid: irregular medium-fine coffee particles, small moist clumps, a gently uneven porous surface, and a slightly ragged granular edge where the grounds meet the brew water. Use a controlled range of deep and medium coffee browns with a few broad soft highlights indicating moisture. Make the particle clusters large and simplified enough to remain legible at 384 by 288 pixels.
+    Material hierarchy: the grounds must read as opaque, particulate, damp coffee; the brew water beneath and around them must remain smooth, translucent, continuous amber liquid with no particle texture. Texture is localized only to the ground-coffee mass.
+    Preserve unchanged: exact ground-coffee quantity and position; liquid level; paper filter; glass dripper; continuous amber flow path from filter tip around the lifted ball through the outlet; ball, switch, finger, base, server, shallow pool, composition, proportions, camera angle, modern vector-3D editorial style, dark rounded stage, flat green perimeter, lighting, and all exterior silhouettes.
+    Backdrop: keep the outer #00ff00 background perfectly flat and uniform for local removal, with no shadows, gradients, texture, reflections, or lighting variation.
+    Constraints: change only coffee-ground material texture. Do not add foam, crema, large bubbles, beans, floating debris, sediment in the server, texture in the liquid, paper grain, background noise, halftone, stipple, vintage print texture, text, labels, arrows, icons, logo, border, ornament, or watermark. Do not make the grounds photorealistic or noisy. Nothing touches the canvas edges. Do not use #00ff00 inside the subject.
+
+### Accepted ground-coffee correction
+
+- Cache file: `exec-7904ca40-1bfc-4ee5-b93b-62107f6941f5.png`
+- Preserved chroma file: `switch_style_master_v6_ground_texture_chroma.png`
+- Chroma SHA-256: `766672eece22a6550c440fc5d7f7a8a873c4b1b6f01cb5eee75ab289eb2e2d3e`
+
+Exact prompt:
+
+    Use case: precise-object-edit
+    Input image: Image 1 is the edit target.
+    Primary request: Correct only the coffee-ground texture. Replace every bean-like shape with genuinely ground coffee: much smaller irregular angular crumbs, tiny fractured particles, and a limited number of softly merged damp clumps. No individual particle may resemble a whole or partial coffee bean. Remove all oval bean silhouettes, center grooves, paired lobes, polished shells, and repeated seed shapes. The surface should read as a moist medium-fine coffee crust, not a pile of beans.
+    Rendering: use simplified clustered texture with low-to-moderate visual density, broad dark-brown massing, subtle size variation, restrained highlights, and enough relief to remain distinct from the perfectly smooth liquid at 384 by 288 pixels. Keep the granular edge slightly uneven but not jagged or noisy.
+    Preserve unchanged: exact coffee quantity and position; smooth amber liquid; paper filter; glass; continuous flow path above, around, and below the ball; loose ball; switch; finger; base; server; shallow pool; composition; modern vector-3D style; dark stage; green perimeter; geometry; lighting; and all other materials.
+    Constraints: no whole beans, bean fragments, bean-shaped ovals, center creases, foam, bubbles, splashes, floating grounds, server sediment, micro-noise, photorealism, vintage texture, paper grain, text, labels, arrows, border, logo, or watermark. Change only the ground-coffee material.
+
+Transparency conversion:
+
+    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v6_ground_texture_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v6_ground_texture_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+
+Helper and integrity results:
+
+- Detected key color: `#12d014`
+- Transparent pixels: `461839 / 1572528`
+- Partially transparent pixels: `3954 / 1572528`
+- Alpha bounding box: `(179, 32, 1268, 1055)` on a 1448 by 1086 canvas
+- All four corner alpha values: `0`
+- Preserved alpha file: `switch_style_master_v6_ground_texture_alpha.png`
+- Alpha SHA-256: `084d79887fab1f27890c7d6917c003b647d98b3c5a1c377784741eeaa03f89ea`
+
+Phone-size QA reduced the alpha master to 384 by 288 and composited it over
+`#F2E0D5` and `#52443C`. The irregular grounds remained visibly particulate in
+both previews; the brew water, valve flow, and server pool remained smooth and
+visually distinct. The continuous flow path and transparent corners were also
+preserved.

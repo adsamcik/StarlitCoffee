@@ -29,15 +29,20 @@ flatter experiment. `switch_style_master_v2_chroma.png` applied the requested
 larger scale and removed the outer cream rim. The grounded v3 revision made the
 silicone base visibly rest on a realistically proportioned receiving server.
 The v4 revision replaced the retro textured treatment with a contemporary
-vector-3D editorial finish and removed unverified linkage geometry. The current
-preferred revision, `switch_style_master_v5_continuous_flow_alpha.png`, also
-makes the complete upstream-to-downstream liquid path visible.
+vector-3D editorial finish and removed unverified linkage geometry. V5 made the
+complete upstream-to-downstream liquid path visible. The current preferred
+revision, `switch_style_master_v6_ground_texture_alpha.png`, additionally gives
+the ground-coffee mass a restrained granular material treatment.
 
 ## Clarity budget
 
 Texture is permitted only when it separates an instructional material or
 state: paper, glass, silicone, metal, coffee, wood, or skin. It must never
 become ambient decoration.
+
+Ground coffee uses simplified irregular particles and damp clumps that survive
+phone-size reduction. It must not use whole-bean silhouettes, center grooves,
+repeated seed shapes, photorealistic micro-detail, or texture in the liquid.
 
 Each illustration must have one visual hierarchy:
 
@@ -52,7 +57,7 @@ find. Text remains outside the image and immediately below it in the app.
 
 ## Theme behavior
 
-The v5 alpha master was composited at 384 by 288 over the app's fallback
+The v6 alpha master was composited at 384 by 288 over the app's fallback
 `surfaceVariant` colors:
 
 - Light: `#F2E0D5`
@@ -132,6 +137,9 @@ RGBA.
 | `switch_style_master_v4_modern_alpha.png` | Preferred modern transparent master | `ed38072305320e57af73d0869e7e046a312c3df9733155b693ea65bd5c3ccaf6` |
 | `switch_style_master_v5_continuous_flow_chroma.png` | Preferred continuous-flow chroma master | `48c4b2019987be52233618192bfb3635005817d2da65414c7f6d4f868b3e1c43` |
 | `switch_style_master_v5_continuous_flow_alpha.png` | Preferred continuous-flow transparent master | `51b819283203fa3ca720ff6cf708257c831e3a891850f5b6b875a4fb8be2e4bc` |
+| `switch_style_ground_texture_seed_rejected_chroma.png` | Rejected bean-like texture edit | `f1ac8690d7ccd0c94d6b4610bd126a32220ce7dd7a7f2e1b3b1814cee0456a8b` |
+| `switch_style_master_v6_ground_texture_chroma.png` | Preferred textured-ground chroma master | `766672eece22a6550c440fc5d7f7a8a873c4b1b6f01cb5eee75ab289eb2e2d3e` |
+| `switch_style_master_v6_ground_texture_alpha.png` | Preferred textured-ground transparent master | `084d79887fab1f27890c7d6917c003b647d98b3c5a1c377784741eeaa03f89ea` |
 
 ## Reproduction record
 
