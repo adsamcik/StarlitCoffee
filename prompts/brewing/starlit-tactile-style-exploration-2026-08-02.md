@@ -127,3 +127,93 @@ After generation, visually inspect the chroma source, remove the key with the
 recorded helper command, and inspect the alpha result at phone size on both
 light and dark surfaces. Art-direction approval never substitutes for the
 existing mechanics, safety, accessibility, placement, and release gates.
+
+## Grounded support revision
+
+The user identified that the brewer appeared to float above an unrealistically
+scaled receiving server. The preferred v2 alpha master was the sole edit
+target. Request option: `num_last_images_to_include = 1`.
+
+Output:
+
+- Cache file: `exec-74c5f408-d763-4ba7-abae-334688829992.png`
+- Preserved file: `switch_style_grounded_pilot_v1_chroma.png`
+- SHA-256: `1eb052b5eddc77577c465c31570c5e7b368d1fc2fa9161fa1292f8bf37b81a73`
+
+Exact prompt:
+
+    Use case: precise-object-edit
+    Asset type: chroma-keyed 4:3 mobile coffee-brewing instruction illustration
+    Input images: Image 1 is the sole edit target: the preferred borderless Starlit Tactile Switch illustration.
+
+    Primary request: Correct only the physical support relationship and realistic relative scale. The Switch brewer must no longer float above the receiving server.
+
+    Required geometry:
+    - Move and proportion the receiving glass server so its upper rim sits directly beneath and visibly supports the broad silicone base/flange of the Switch brewer. The base must overlap/rest on the server rim as real brewing equipment would; there must be no open-air gap between them and no invisible stand.
+    - Keep the explanatory valve cutaway visible. Show the single coffee stream continuing from the open valve down inside the transparent server, visible through its glass.
+    - Make the receiving server realistically proportioned to the brewer: its mouth should be about 60–70 percent of the base width, its body about 80–90 percent of the base width, and its height below the rim about two-thirds of the dripper height. It should read as a normal stable coffee server, neither miniature nor oversized.
+    - Show only a very shallow initial coffee pool at the absolute bottom, no more than 6–8 percent of the server-bowl height.
+    - Reduce the fingertip slightly if needed so it reads at a believable scale against the side trigger, while preserving clear contact with only the cool control.
+
+    Teaching hierarchy: first the fingertip moving the side trigger; second the lifted stainless ball above the open circular seat; third the single stream entering the supported server. The equipment must look stable, load-bearing, and physically plausible.
+
+    Invariants: Preserve the preferred textured dimensional Starlit Tactile rendering, elevated three-quarter view, exact paper filter and wet slurry, ribbed glass dripper, dark silicone base, trigger linkage, lifted ball, open seat, one stream, server handle, deep espresso organic stage, localized gold focus light, warm palette, lighting, and material textures. Do not change the taught valve action.
+
+    Containment and backdrop: Keep the complete dark stage, brewer, server, and hand fully visible. The fingertip may break outside the dark stage, but every non-green pixel must remain at least 4.5 percent from every canvas edge. Nothing may be cropped or touch an edge. Use no outer border. Every area outside the dark stage and protruding fingertip must be perfectly flat solid #00FF00 chroma-key color with no shadow, gradient, texture, glow, halo, reflection, or lighting variation. Do not use #00FF00 inside the illustration island.
+
+    Constraints: no floating brewer, no visible gap between base and server rim, no stand, no countertop, no extra equipment, no extra fingers, no extra streams, no deep coffee fill, no text, labels, numbers, arrows, logos, watermark, decorative stars, noise, or edge contact. Change only support geometry, receiving-server scale, shallow pool, and fingertip scale.
+
+## Grounded scale revision
+
+The grounded pilot was enlarged after phone-size QA. Input order used
+`num_last_images_to_include = 3`: Image 1 was the chroma edit target; Images 2
+and 3 were light/dark QA previews and explicitly ignored.
+
+Output:
+
+- Cache file: `exec-d2d9e377-4feb-41da-9cd0-c28681b7d58f.png`
+- Preserved file: `switch_style_master_v3_grounded_chroma.png`
+- SHA-256: `c2aff9335ac7cad488a20354a2b2f79c740111cbe5f984b94cce8c16d3dfef20`
+
+Exact prompt:
+
+    Use case: precise-object-edit
+    Asset type: chroma-keyed 4:3 mobile coffee-brewing instruction illustration
+    Input images: Image 1 is the green-background grounded Switch revision and is the sole edit target. Images 2 and 3 are light/dark QA previews only; ignore them completely.
+
+    Primary request: Enlarge the complete illustration island from Image 1 by approximately 10 percent so it regains the confident mobile-card scale of the prior preferred master.
+
+    Change only uniform scale and centering. Treat the dark stage, supported brewer, server, hand, mechanism, and all lighting as one locked group. Preserve exactly:
+    - the silicone base visibly resting on and overlapping the receiving server rim;
+    - no air gap and no floating equipment;
+    - the realistic server-to-brewer proportions;
+    - the single stream running inside the glass server;
+    - the shallow initial pool;
+    - the fingertip scale and contact with the cool side trigger;
+    - the lifted stainless ball, open circular seat, linkage, paper filter, slurry, glass, textures, gold focus glow, warm palette, and Starlit Tactile rendering.
+
+    Containment: Keep every non-green pixel at least 4.5 percent away from every canvas edge. Keep the complete dark-stage silhouette, server bottom, brewer top, and hand visible. Nothing may be cropped or touch an edge.
+
+    Backdrop: Preserve a perfectly flat solid #00FF00 chroma-key perimeter outside the dark stage and protruding fingertip. No border, halo, shadow, gradient, texture, reflection, or lighting variation in the green area. Do not use #00FF00 inside the illustration island.
+
+    Constraints: no geometry changes, no redrawing, no restyling, no floating brewer, no server resizing independent of the brewer, no deepened pool, no new objects, extra fingers, extra streams, text, labels, numbers, arrows, logos, watermark, decoration, noise, or edge contact.
+
+## Grounded v3 transparency and QA
+
+Conversion command:
+
+    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'C:\tmp\starlit_tactile_switch_grounded_scaled_source.png' --out 'C:\tmp\starlit_tactile_switch_grounded_scaled_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+
+Helper result:
+
+- Detected key color: `#0ae41c`
+- Transparent pixels: `848807 / 1572528`
+- Partially transparent pixels: `3312 / 1572528`
+- All four corner alpha values: `0`
+- Preserved output: `switch_style_master_v3_grounded_alpha.png`
+- SHA-256: `089e215658f2ee6d7cf69b51eee0ef6894072944d3a5875319429b0b65339b50`
+
+The alpha output was inspected at 384 by 288 over `#F2E0D5` and `#52443C`.
+Both theme previews preserved visible base-to-rim contact, plausible relative
+scale, the lifted-ball cutaway, single internal stream, shallow pool, and clear
+finger-to-trigger action.

@@ -24,9 +24,11 @@ transparent 4:3 canvas:
   focus lighting align the art with the app's expressive cup and bloom assets.
 
 The user preferred the textured `switch_style_master_v1_chroma.png` over the
-flatter experiment. `switch_style_master_v2_chroma.png` applies the requested
-larger scale and removes the outer cream rim. Its processed-alpha counterpart
-is `switch_style_master_v2_alpha.png`.
+flatter experiment. `switch_style_master_v2_chroma.png` applied the requested
+larger scale and removed the outer cream rim. The current preferred revision,
+`switch_style_master_v3_grounded_alpha.png`, additionally makes the silicone
+base visibly rest on a realistically proportioned receiving server while
+retaining the larger, borderless composition.
 
 ## Clarity budget
 
@@ -61,10 +63,11 @@ There is no fixed light halo or border that would fight dynamic color.
 ## Accuracy status
 
 These images establish art direction and placement, not release approval. The
-Switch style master still shows more collected coffee than the exact first
-drawdown moment calls for. A production candidate must reduce that to a
-shallow initial pool while preserving the preferred style, scale, containment,
-trigger-to-ball linkage, lifted ball, open seat, and single vertical stream.
+grounded v3 master corrects the floating-brewer illusion, normalizes the
+server-to-brewer scale, places the silicone base on the server rim, carries the
+stream inside the glass, and restores a shallow initial pool. A production
+candidate must still pass exact equipment, mechanism, liquid-state, and
+mobile-size review before promotion.
 
 The Chemex pilot demonstrates the same style on a passive setup stage. Its
 three-leaf side, one-leaf side, and open spout channel still require the normal
@@ -93,6 +96,9 @@ RGBA.
 | `switch_style_flat_experiment_rejected.png` | Rejected over-simplified variant | `250d295b6337afd331ebd26b878944771a718ffc602f77e9dcb1b1ea675f2179` |
 | `switch_style_master_v2_chroma.png` | Preferred larger, borderless chroma master | `f0914400afc865d5cd852ba0a2308ca55fc08b1b0325e790b0659c7d73dd2248` |
 | `switch_style_master_v2_alpha.png` | Preferred larger, borderless alpha master | `1af5536d0402c105d8064e8aa9143f86bbe96b70363fb97ba1d9fd6990427d4e` |
+| `switch_style_grounded_pilot_v1_chroma.png` | First physically grounded edit | `1eb052b5eddc77577c465c31570c5e7b368d1fc2fa9161fa1292f8bf37b81a73` |
+| `switch_style_master_v3_grounded_chroma.png` | Preferred grounded and scaled chroma master | `c2aff9335ac7cad488a20354a2b2f79c740111cbe5f984b94cce8c16d3dfef20` |
+| `switch_style_master_v3_grounded_alpha.png` | Preferred grounded and scaled alpha master | `089e215658f2ee6d7cf69b51eee0ef6894072944d3a5875319429b0b65339b50` |
 
 ## Reproduction record
 
