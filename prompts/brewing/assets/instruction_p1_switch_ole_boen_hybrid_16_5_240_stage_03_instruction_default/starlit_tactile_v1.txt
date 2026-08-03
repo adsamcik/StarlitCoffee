@@ -1,0 +1,74 @@
+Use case: scientific-educational
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration
+Generation mode: compose a completely new retained Switch-hybrid pour scene from a blank canvas.
+
+Input images:
+- Image 1 is state/action geometry only. Preserve the handleless ribbed Switch 02 cone, seated V60 02 paper, wet slurry, stable empty server, closed ball outlet, active kettle pour, and total absence of drainage below. Do not copy its photographic counter, cropped kettle, scale platform, branding, lighting, or exact composition.
+- Image 2 is rendering/composition calibration only. Match its modern Starlit Tactile illustration, warm palette, granular-ground/smooth-liquid separation, simplified materials, clean mobile silhouette, organic borderless dark stage, contained scale, and flat green transparency field. Do not copy its open valve, pressed lever, falling stream, server pool, or finger pose.
+
+LESSON
+Show the retained final phase of a Switch 02 hybrid brew: the lever is in the closed state, the loose steel ball seals the outlet, a controlled circular pour continues into the slurry, liquid remains above the valve, and absolutely nothing drains into the server.
+
+EXACT SWITCH AND CLOSED STATE
+- One unbranded Switch 02-style brewer centered firmly over one broad stable heat-safe glass server.
+- Handleless ribbed borosilicate V60 02 cone, correctly seated white V60 02 paper, compact matte-charcoal silicone base, real side lever, and one loose stainless-steel ball valve.
+- Wet slurry has granular cocoa grounds, smooth amber liquid, and safe headroom. Do not imply exact quantity or fill marks.
+- Show a compact front opening in the base only where needed to reveal the closed mechanism.
+- Closed lever is released/raised rather than pressed down.
+- Ball rests naturally centered on the upper rim of the circular outlet seat under gravity.
+- Ball touches the seat continuously with no gap beneath it. The outlet is sealed.
+- No lifting pin supports the ball in this state.
+- Amber liquid reaches the chamber above and around the seated ball but stops at the seal.
+- No liquid appears in the outlet bore, below the seat, under the base, or in the server.
+- Do not copy Image 2's open annular path or falling stream.
+
+CONTROLLED POUR
+- One compact plain gooseneck kettle, completely visible in the upper-right safe area.
+- One small relaxed hand supports its handle; no floating kettle and no hot-part contact.
+- One narrow controlled water stream lands near the slurry center, with a subtle curved surface ripple that implies a small circular pour without any arrow or motion symbol.
+- No splash, overflow, stirring, or visible numeric amount.
+
+SERVER AND SCALE STATE
+- Brewer base rests fully across the server rim; nothing floats.
+- Complete server including rounded bottom is visible and contains no falling stream, drips, or coffee pool caused by this retained phase.
+- A simple dark scale platform may be visible under the server only if its display is completely absent or blank; omit it if it adds noise.
+- Stable vertical alignment: kettle stream ends in slurry; sealed ball blocks flow; empty server remains below.
+
+COMPOSITION
+- Elevated front three-quarter 4:3 view.
+- Full cone, paper, slurry, base, raised closed lever, seated ball, complete kettle/hand, complete server, and organic stage visible.
+- Subject large at 384 by 288, but every non-background pixel at least 4.5 percent from every edge.
+- Nothing cropped, floating, unstable, or touching an edge.
+
+VISUAL STYLE
+- Follow Image 2: premium modern Material 3 Expressive editorial illustration.
+- Polished vector-like 3D forms with restrained gouache/cut-paper tactility, crisp simplified geometry, controlled soft gradients, gentle contact shadows, selective texture.
+- Clearly illustrated, not product photography or glossy CGI.
+- Warm cream paper, cocoa granular grounds, smooth translucent amber, matte charcoal silicone, simplified steel silver, restrained cobalt lever accent, deep espresso stage.
+- No hyperreal glass reflections, vintage poster, sepia, heavy grain, or excessive surface detail.
+
+EXPRESSIVE STAGE
+- One borderless deep-espresso organic shape tailored around the retained-pour scene.
+- Broad upper lobe around cone/slurry, outward upper-right gesture around contained kettle/hand, inward pinch at sealed-valve focus, and lower lobe grounding the empty server.
+- Few generous asymmetric curves; fluid, calm, custom.
+- Not a rectangle, rounded rectangle, squircle, frame, badge, splash, cloud, flower, star, or arbitrary motif.
+- Full silhouette visible inside safe area; no outline, rim, halo, or outer shadow.
+
+TRANSPARENCY
+- Outside the stage and any protruding hand/kettle: perfectly flat uniform #00FF00.
+- No gradient, texture, noise, shadow, reflection, floor plane, variation, halo, or green spill.
+- No green inside the illustration.
+
+VALIDATION
+- Switch 02 identity and V60 02 paper.
+- Lever clearly closed/released.
+- Ball centered and seated with no clearance.
+- Liquid retained above ball.
+- Active controlled pour into slurry.
+- No drip, stream, or pool below.
+- Kettle fully contained and hand-supported.
+- Server stable.
+- Self-explanatory and opposite to open-release art at phone size.
+
+CONSTRAINTS
+No text, letters, numbers, scale reading, labels, arrows, symbols, measurements, logo, watermark, open/pressed lever, lifted ball, open outlet, drainage, below-brewer stream, retained chamber empty, Clever actuator, tap, generic V60 base, glass handle, hot-part contact, overflow, stirring, serving, cropped kettle/hand, floating equipment, cutaway inset, multiple panels, photorealism, vintage treatment, or clutter.

@@ -1,0 +1,45 @@
+Use case: safety-critical scientific-educational.
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration.
+Generation mode: COMPOSE A COMPLETELY NEW IMAGE FROM A BLANK CANVAS. Do not edit, trace, upscale, repaint, or preserve the pixels, beige background, crop, lighting, noise, or degradation of either reference.
+
+REFERENCE ROLES
+- Image 1 is equipment/action geometry reference only: a drained traditional Vietnamese gravity-insert phin, broad cup of black concentrate, dry protective cloth, calm short lift, and matching inverted lid used as coaster. Do not copy its photographic style, background, crop, or defects.
+- Image 2 is rendering-language reference only: modern premium illustrated finish, deep espresso organic Material 3 Expressive stage, green-key exterior, calm hierarchy, tactile material separation, and simplified high fidelity. Do not copy its Switch brewer, valve, finger, liquid stream, or action.
+
+ONE SAFETY LESSON
+Immediately after drainage, the metal phin is hot. A hand uses a small DRY folded heat-resistant cloth to move the drained phin only a short distance from the stable serving cup onto the phin's own inverted lid, which lies flat as a heat-safe coaster. The black concentrate remains untouched in the cup. The image must teach protected contact and the correct resting destination without text, arrows, or multiple panels.
+
+EXACT GRAVITY-PHIN STATE
+- Accurate unbranded small cylindrical brushed-stainless-steel traditional GRAVITY-INSERT phin with smooth solid chamber walls and wide integrated filter plate.
+- The chamber is fully drained and upright, not tipped. No water or coffee pours from it.
+- Its loose perforated gravity press remains safely inside the drained chamber. It has no screw threads, no long central screw post, no spring, and no pressure mechanism.
+- A broad stable heat-safe ceramic cup sits close beside the destination and contains finished smooth black coffee concentrate. The cup is not overflowing, tipped, moved, or touched.
+- The phin's matching metal lid is INVERTED: its shallow concave inside faces UP to receive drips, while its broad outer rim/base lies completely FLAT on the dark stage. The lid is correctly sized to support the phin's filter plate.
+- Position the hot phin directly above the center of the inverted lid, only a very small distance from final placement, so the short controlled motion is obvious from spatial proximity alone.
+- The phin and lid align vertically; the phin is not suspended over the coffee cup and has no spill path across it.
+
+SAFE HAND AND CLOTH
+- Show one complete calm hand entering from upper right or right, fully contained.
+- A small folded DRY heat-resistant cloth with visible clean woven texture completely separates the fingers and palm from the hot chamber wall and filter plate edge.
+- The protected hand grips both sides of the chamber securely through the folded cloth; no bare fingertip touches metal.
+- Cloth is compact, dry, and controlled—not dangling into the coffee, not wet, not used under the phin as a coaster.
+- Do not show tongs or a fabricated handle.
+- Use no warning icon and no symbolic steam. At most, a single faint natural wisp above the chamber may indicate residual heat, but omit it if it adds noise.
+
+COMPOSITION
+Close elevated three-quarter view showing, in one coherent scene: stable full cup of black concentrate at left; inverted lid flat at lower center/right; protected hand and drained upright phin aligned just above the lid. The short distance between cup and lid should be credible and safe. All objects are physically supported or actively held. Keep the complete hand, wrist, cloth, phin, cup, handle, lid, shadows, and organic stage comfortably away from every canvas edge. Make the safety grip, destination, and black service readable at phone size. Use generous negative space and no extra props.
+
+VISUAL STYLE
+Modern premium Material 3 Expressive editorial illustration. Polished vector-like 3D with restrained gouache/cut-paper tactility. Clearly illustrated, not photorealistic, not glossy CGI, not vintage, not retro poster art. Crisp intentional contours, soft dimensional lighting, carefully simplified brushed-metal reflections, warm matte ceramic, smooth nearly black coffee with one restrained highlight, and a muted warm-cloth accent. High fidelity only where it teaches safe contact, gravity-phin identity, and lid orientation. No grainy overlay, compression artifacts, warped circles, doubled rims, smeared edges, or unnecessary detail.
+
+EXPRESSIVE STAGE
+Place the complete scene over ONE borderless deep espresso-black organic stage custom-shaped around the cup, short transfer, and lid with a few broad asymmetric flowing Material 3 Expressive curves. It should feel fluid and subject-responsive, not a rectangle, rounded rectangle, squircle, oval, cloud, splash, badge, flower, or star. No outline, white border, shadow ring, frame, arrow, trail, panel, or inset. Leave breathable dark margin around every silhouette.
+
+TRANSPARENCY PREPARATION
+Outside the organic stage use perfectly uniform flat pure chroma green #00FF00. No green gradient, texture, noise, vignette, shadow, glow, reflection, spill, or semi-transparent halo. Nothing touches the canvas edges.
+
+VALIDATION CHECKLIST
+Before finalizing verify: gravity-insert phin, not screw phin; completed drained upright state; loose press contained; no screw post or threads; dry folded cloth fully between skin and hot metal; zero bare contact; stable complete cup of black concentrate untouched; very short movement; inverted lid concave side up and flat on stage; phin aligned over lid; no spill; all silhouettes contained; organic dark stage; pure green exterior; mobile-readable simplicity.
+
+CONSTRAINTS
+No text, letters, numbers, measurements, logos, marks, arrows, motion lines, callouts, icons, labels, multiple panels, decorative objects, bare hot-metal contact, wet cloth, tongs, long carry, tipping, spill, splashing, phin left on cup as completion, lid upside down incorrectly, unstable lid, milk, condensed-milk jar, ice, dilution water, tasting scene, kettle, screw post, threaded insert, spring, plunger, paper filter, moka pot, espresso basket, floating unsupported objects, cropped props, retro styling, photorealism, glossy product advertising, rectangular stage, white border, visual clutter, or unnecessary noise.

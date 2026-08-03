@@ -1,0 +1,66 @@
+Use case: scientific-educational
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration
+Generation mode: compose a completely new Cup-One holder inspection scene from a blank canvas.
+
+Input images:
+- Image 1 is equipment-geometry reference only. Preserve its exact small detached Cup-One-style filter-holder proportions, dark tapered No. 1 cone basket, rim tab, single narrow bottom outlet/nozzle, one correctly seated No. 1 paper, and nearby switched-off machine context. Do not copy its photographic room, crop, hand, lighting, branding, or surface finish.
+- Image 2 is rendering/composition calibration only. Match its modern Starlit Tactile illustration, warm palette, simplified materials, clean mobile silhouette, organic borderless stage, safe contained scale, and flat green transparency field. Do not copy its Switch equipment, slurry, valve, liquid, or finger pose.
+
+LESSON
+Show the dry final inspection state before brewing: exactly one No. 1 paper sits fully open and smooth in the detached Cup-One holder, and the holder's single tiny bottom drip hole is visibly clear and unobstructed. The machine is off. Both completion facts must survive phone size without an inset or arrow.
+
+FOCAL HOLDER
+- One accurate unbranded Cup-One-style detached dark filter holder, held close in an elevated three-quarter view.
+- Holder is a compact tapered cone basket with a broad circular top rim, small side grip/tab, short central bottom outlet boss, and exactly one tiny round drip hole.
+- Tilt the holder only about 20–25 degrees toward the viewer: enough to see the paper interior and the underside outlet simultaneously, but still clearly supported and dry.
+- Exactly one correctly shaped white No. 1 cone paper is fully opened and seated flush against the inner basket. Its top rim is smooth, complete, and clearly inside the holder.
+- No doubled, folded, torn, collapsed, oversized, or protruding paper.
+- The short bottom outlet points slightly toward the viewer. Its single tiny central hole is dark, round, crisp, empty, and visibly open.
+- Do not enlarge the hole beyond a plausible tiny drip outlet and do not add a second hole.
+- A small calm hand supports the cool holder from the side and beneath the solid outer wall. Fingers do not cover the paper rim, outlet boss, or hole.
+
+POWER-OFF CONTEXT
+- Place one recognizable Cup-One-style machine softly behind and offset from the holder, still illustrated and readable but secondary.
+- Machine stands dry and stable, with no illuminated switch, water, steam, coffee, or active flow.
+- Keep the filter-holder slot empty to reinforce that the inspected holder is detached.
+- No sink, basin, cleaning tool, cord action, or maintenance gesture; this is final inspection and paper seating.
+
+COMPOSITION
+- 4:3 landscape, holder large in foreground, machine smaller in background.
+- The paper rim and tiny open hole are both visible in one coherent physical view.
+- Entire hand, holder, outlet, machine, organic stage, and any base fully visible.
+- All non-background pixels at least 4.5 percent from every edge; nothing cropped, floating, or touching an edge.
+- No comparison, magnified inset, cutaway, callout, arrow, or diagram symbol.
+
+VISUAL STYLE
+- Follow Image 2: contemporary premium Material 3 Expressive editorial illustration.
+- Polished vector-like 3D forms with restrained gouache/cut-paper tactility, crisp simplified geometry, controlled soft gradients, gentle contact shadows, selective texture.
+- Clearly illustrated, not product photography and not glossy CGI.
+- Warm cream paper, matte charcoal holder/machine, muted warm silver accents, soft cocoa skin, deep espresso stage, restrained cobalt accent only if useful.
+- Paper subtly fibrous, plastic matte, metal broad-highlighted and simplified.
+- No hyperreal skin, beige room, floor plane, vintage poster, sepia, heavy grain, or excessive reflections.
+
+EXPRESSIVE STAGE
+- One borderless deep-espresso organic shape tailored around foreground holder and background machine.
+- Broad lobe behind paper rim, small inward pinch at the tiny outlet focus, taller rear lobe around the machine, and grounded lower curve under the hand.
+- Few generous asymmetric curves; fluid, calm, custom.
+- Not a rectangle, rounded rectangle, squircle, frame, badge, splash, cloud, flower, star, or arbitrary decoration.
+- Full silhouette visible in the safe area; no outline, rim, halo, or outer shadow.
+
+TRANSPARENCY
+- Outside the stage and any deliberately protruding hand: perfectly flat uniform #00FF00.
+- No gradient, texture, noise, shadow, reflection, floor plane, variation, halo, or green spill.
+- No green inside the illustration.
+
+VALIDATION
+- One No. 1 paper, fully seated.
+- One plausible tiny bottom hole, visibly open.
+- Hand hides neither.
+- Holder dry and detached.
+- Cup-One machine off in background.
+- No grounds, water, cleaning action, or active brewing.
+- Organic stage contained.
+- Self-explanatory at 384 by 288.
+
+CONSTRAINTS
+No text, letters, numbers, labels, arrows, symbols, measurements, logo, watermark, second/doubled paper, wrong filter size, grounds, water, steam, flow, overflow, glowing control, blocked/covered/oversized/multiple holes, generic basket, pod, capsule, reusable filter, sink, tool, second holder, cutaway, inset, multiple panel, crop, photorealism, vintage treatment, or clutter.

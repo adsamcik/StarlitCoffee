@@ -1,0 +1,40 @@
+Use case: scientific-educational.
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration.
+Generation mode: COMPOSE A COMPLETELY NEW IMAGE FROM A BLANK CANVAS. Do not edit, trace, upscale, repaint, or inherit the pixels, crop, lighting, background, noise, or defects of either reference.
+
+REFERENCE ROLES
+Image 1 is geometry/mechanics reference only for the Hario Switch 02-style glass cone, V60 paper, dark base, outward lever, ball valve, kettle, and receiving server. Image 2 is rendering-language reference only for modern premium illustration, Material 3 Expressive organic stage, palette, tactile finish, hierarchy, and pure green-key exterior. Do not copy Image 1's photographic rendering. Do not copy Image 2's coffee, closed valve, finger, or retained state.
+
+ONE LESSON
+A clean V60 02 paper is being rinsed while the Switch valve is OPEN. Clear water must visibly travel from kettle to paper, through the brewer, around a RAISED steel ball, through an OPEN circular valve seat, and down into the waste server. The valve physics must be self-explanatory without text and without any implied teleportation.
+
+MANDATORY OPEN-VALVE MECHANICAL CROSS-SECTION WITHIN THE REAL FRONT WINDOW
+- Accurate handleless ribbed glass V60 02 cone, one clean seated white V60 02 paper, dark charcoal silicone Switch base, muted cobalt side lever, one stainless steel ball, one amber-tinted circular seat/outlet.
+- Use the naturally visible front opening of the Switch base as an explanatory window; do not add a separate cutaway panel.
+- Put the steel ball HIGH in the upper half of that front window, mechanically supported/lifted by the lever cam.
+- Put the circular valve seat distinctly LOWER, centered beneath the ball.
+- Maintain a LARGE, UNAMBIGUOUS OPEN AIR/WATER GAP between the ball's lowest point and the seat's upper rim, at least one-quarter of the ball diameter.
+- The ball must not touch, overlap, plug, rest on, or visually merge with the seat.
+- The entire upper rim of the seat must remain visible below the ball.
+- Show two slender clear-water ribbons descending around the left and right sides of the raised ball, passing through the open annular space and visible seat opening, then recombining below as one vertical stream.
+- Show no stream emerging from the ball itself. Show no opaque solid between ball and seat.
+- Lever remains in the physically correct depressed/open position throughout; no finger touches it.
+- The geometry must make it impossible to read the ball as seated.
+
+CLEAR RINSE STATE
+A complete brushed-metal gooseneck kettle and a calm hand on its cool handle stay fully inside the upper-left safe area. One gentle CLEAR stream wets the inner wall of the empty clean paper. Paper appears lightly wet. No grounds, no slurry, no retained pool. Clear water continues through the cone, visible raised-ball gap, open seat, and outlet. One complete vertical clear stream reaches the center of a stable transparent waste server. A shallow transparent pool with one restrained ripple sits below. No amber, brown, or coffee-colored liquid anywhere.
+
+COMPOSITION
+Close elevated three-quarter view, centered vertical brewer-and-server system, slightly larger than the rendering reference so mechanics read at phone size. The base is physically supported by the server mouth; nothing floats. Keep complete kettle, hand, brewer, server, stream, and organic stage comfortably inside all edges. Use generous negative space and no secondary props.
+
+MODERN STYLING
+Modern premium Material 3 Expressive editorial illustration. Polished vector-like 3D with restrained gouache/cut-paper tactility; crisp intentional contours; soft dimensional lighting; carefully simplified reflections. Clearly illustrated, not photorealistic, not glossy CGI, not vintage, not retro. Charcoal silicone, warm-neutral glass, brushed steel, white fibrous paper, muted cobalt lever. Clear water is smooth and glasslike. Use high fidelity only to clarify parts and physics. No grain, compression artifacts, smeared edges, duplicated parts, or decorative noise.
+
+ORGANIC STAGE AND KEY
+One deep espresso-black borderless organic stage tailored around the silhouette with a few broad asymmetric flowing Material 3 Expressive curves. Fluid and subject-responsive, not a rectangle, rounded rectangle, squircle, oval, cloud, splash, badge, flower, or star. No white border, outline, shadow ring, or frame. Outside it use perfectly uniform flat pure #00FF00 with no gradient, texture, noise, shadow, glow, reflection, spill, or halo. Nothing touches canvas edges.
+
+FINAL PHYSICS CHECK
+Before finalizing, mentally trace one continuous clear path: kettle stream -> wet clean paper -> cone outlet -> left/right ribbons around ball -> clearly open gap beneath ball -> visible circular seat opening -> lower outlet -> vertical stream -> server pool. If the ball touches or overlaps the seat, move the ball much higher. If the liquid appears to pass through the ball, reroute it visibly around both sides. If the lever and ball relationship is unclear, expose the simple lifting cam in the real front window. Exactly one paper, no grounds, no retained pool, no brown liquid.
+
+NO
+No text, letters, numbers, measurement marks, logos, brand marks, arrows, callouts, icons, labels, panels, inset diagrams, decorative objects, extra hands, hot-part contact, cropped props, floating parts, Clever actuator, generic V60-only base, glass handle, other filter shapes, screw mechanisms, distorted geometry, retro poster style, photorealism, glossy advertising CGI, rectangular stage, white border, visual clutter, or unnecessary noise.

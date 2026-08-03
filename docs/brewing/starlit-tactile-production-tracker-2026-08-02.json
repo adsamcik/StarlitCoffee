@@ -82,178 +82,308 @@
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_01_instruction_default",
       "batch": 2,
-      "status": "review_pending",
+      "status": "accepted_candidate",
       "research": "complete",
       "attempts": [
         {
           "revision": "v1",
           "raw_cache": "exec-41aa5373-1b7a-45d3-9aac-207c7ff81abb.png",
-          "verdict": "provisionally_accepted",
+          "verdict": "accepted",
           "full_resolution_review": "pass",
-          "notes": "One seated No. 1 paper, one open bottom hole, detached dry holder, and machine-off state are clear."
+          "notes": "One seated No. 1 paper, one open bottom hole, detached dry holder, and machine-off state are clear.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
         }
       ],
-      "open_todos": ["record_exact_prompt", "process_transparency", "review_phone_light", "review_phone_dark", "verify_final_artifact"]
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_01_instruction_default/starlit_tactile_v1.webp",
+      "qa": "complete",
+      "notes": "Single seated No. 1 paper and open bottom hole remain clear in both phone themes."
     },
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_06_instruction_default",
       "batch": 2,
-      "status": "review_pending",
+      "status": "accepted_candidate",
       "research": "complete",
       "attempts": [
         {
           "revision": "v1",
           "raw_cache": "exec-7fb7aca2-8e05-4b9b-914c-6fa2ace27a74.png",
-          "verdict": "provisionally_accepted",
+          "verdict": "accepted",
           "full_resolution_review": "pass",
-          "notes": "Unplugged dry machine, detached empty holder, and tool passing through the bottom hole are visible."
+          "notes": "Unplugged dry machine, detached empty holder, and tool passing through the bottom hole are visible.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
         }
       ],
-      "open_todos": ["record_exact_prompt", "process_transparency", "review_phone_light", "review_phone_dark", "verify_final_artifact"]
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_06_instruction_default/starlit_tactile_v1.webp",
+      "qa": "complete",
+      "notes": "Unplugged dry cleaning path remains continuous and readable in both phone themes."
     },
     {
       "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default",
       "batch": 2,
-      "status": "review_pending",
+      "status": "accepted_candidate",
       "research": "complete",
       "attempts": [
         {
           "revision": "v1",
           "raw_cache": "exec-dfbf0310-84c3-45f9-96e2-6626e6e4fb0a.png",
-          "verdict": "provisionally_accepted",
+          "verdict": "accepted",
           "full_resolution_review": "pass",
-          "notes": "Closed retained pour shows a seated ball, no drainage, an empty server, safe hand position, and complete props."
+          "notes": "Closed retained pour shows a seated ball, no drainage, an empty server, safe hand position, and complete props.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
         }
       ],
-      "open_todos": ["record_exact_prompt", "process_transparency", "review_phone_light", "review_phone_dark", "verify_final_artifact"]
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default/starlit_tactile_v1.webp",
+      "qa": "complete",
+      "notes": "Seated ball, retained slurry, no drainage, and empty server remain distinct in both phone themes."
     },
     {
       "asset_id": "instruction_p1_switch_gravity_15_250_stage_01_instruction_default",
       "batch": 2,
-      "status": "review_pending",
+      "status": "accepted_candidate",
       "research": "complete",
       "attempts": [
         {
           "revision": "v1",
           "raw_cache": "exec-be984d3f-221f-4f2d-8992-78430075fa3f.png",
           "verdict": "rejected",
-          "issues": ["Ball reads as seated while liquid emerges below it, creating false teleporting flow physics."],
-          "regeneration_todo": {"status": "resolved", "resolved_by": "v2"}
+          "issues": [
+            "Ball reads as seated while liquid emerges below it, creating false teleporting flow physics."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
         },
         {
           "revision": "v2",
           "raw_cache": "exec-748ac3d1-a602-4df2-8cbf-3771ce49692d.png",
           "verdict": "rejected",
-          "issues": ["Valve topology is correct, but the kettle hand is clipped by the upper-left canvas edge."],
-          "regeneration_todo": {"status": "resolved", "resolved_by": "v3"}
+          "issues": [
+            "Valve topology is correct, but the kettle hand is clipped by the upper-left canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
         },
         {
           "revision": "v3",
           "raw_cache": "exec-9aebbea8-1c8a-4008-821b-5fa35ecaba46.png",
-          "verdict": "provisionally_accepted",
+          "verdict": "accepted",
           "full_resolution_review": "pass",
-          "notes": "Raised ball, separate open seat, continuous clear flow, complete hand/kettle, and safe perimeter are visible."
+          "notes": "Raised ball, separate open seat, continuous clear flow, complete hand/kettle, and safe perimeter are visible.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
         }
       ],
-      "open_todos": ["record_all_exact_prompts", "process_transparency", "review_phone_light", "review_phone_dark", "verify_final_artifact"]
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_gravity_15_250_stage_01_instruction_default/starlit_tactile_v3.webp",
+      "qa": "complete",
+      "notes": "Raised ball, separate open seat, and continuous clear flow remain legible in both phone themes."
     },
     {
       "asset_id": "instruction_p1_phin_gravity_14_118_stage_01_instruction_default",
       "batch": 2,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "open_todos": ["generate_from_blank_canvas", "full_resolution_review", "guidance_and_mechanics_review", "process_transparency", "review_phone_light", "review_phone_dark", "verify_final_artifact"]
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-678088de-a403-4fd5-bec6-73be9e0f9d4e.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Stable broad-cup support, level granular dry bed, smooth chamber walls, and separate unthreaded press."
+        }
+      ],
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_01_instruction_default/starlit_tactile_v1.webp",
+      "qa": "complete",
+      "notes": "Full cup-rim support, level dry bed, and separate loose press remain clear in both phone themes."
     },
     {
       "asset_id": "instruction_p1_phin_gravity_14_118_stage_07_instruction_default",
       "batch": 2,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "open_todos": ["generate_from_blank_canvas", "full_resolution_review", "guidance_and_safety_review", "process_transparency", "review_phone_light", "review_phone_dark", "verify_final_artifact"]
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-25a55e5a-9391-4d4f-aa79-2ae96625d97c.png",
+          "verdict": "rejected",
+          "issues": [
+            "The phin reads as resting on its own filter plate while the inverted lid sits separately in front, so the short safe transfer and destination are unclear."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-5768dce6-c183-43a3-be60-df811d33c99f.png",
+          "verdict": "rejected",
+          "issues": [
+            "The lid remains in front rather than under the phin landing axis, and the wrist reaches the right canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "raw_cache": "exec-df25ab3e-26d2-4076-8ae6-5965f48b8edd.png",
+          "verdict": "rejected",
+          "issues": [
+            "The phin is correctly supported inside the inverted lid-coaster, but the hand and forearm are cropped by the right canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v4"
+          }
+        },
+        {
+          "revision": "v4",
+          "raw_cache": "exec-373e72c1-fda2-44f2-a942-f2e1fc28a88b.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Complete contained hand, dry protected contact, supported nested lid-coaster, and untouched black concentrate."
+        }
+      ],
+      "accepted_revision": "v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_07_instruction_default/starlit_tactile_v4.webp",
+      "qa": "complete",
+      "notes": "Dry protected grip, untouched black concentrate, contained press, and lid-coaster support remain clear in both phone themes."
     },
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_04_instruction_default",
       "batch": 3,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_clever_water_first_15_250_stage_01_instruction_default",
       "batch": 3,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_phin_screw_18_120_stage_01_instruction_default",
       "batch": 3,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_phin_screw_18_120_stage_05_instruction_default",
       "batch": 3,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_switch_official_20_240_stage_01_instruction_default",
       "batch": 3,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_v60_official_15_250_stage_01_instruction_default",
       "batch": 3,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_05_instruction_default",
       "batch": 4,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_clever_water_first_15_250_stage_02_instruction_default",
       "batch": 4,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_phin_gravity_14_118_stage_02_instruction_default",
       "batch": 4,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default",
       "batch": 4,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_v60_official_15_250_stage_04_instruction_default",
       "batch": 4,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     },
     {
       "asset_id": "instruction_p1_v60_rao_20_330_stage_01_instruction_default",
       "batch": 4,
       "status": "generation_pending",
       "research": "pending",
-      "open_todos": ["research_and_fact_check", "generate_and_run_full_qa_loop"]
+      "open_todos": [
+        "research_and_fact_check",
+        "generate_and_run_full_qa_loop"
+      ]
     }
   ]
 }

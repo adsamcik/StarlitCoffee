@@ -1,0 +1,41 @@
+Use case: safety-critical scientific-educational.
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration.
+Generation mode: COMPOSE A COMPLETELY NEW IMAGE FROM A BLANK CANVAS. Do not edit or imitate the rejected draft. Do not trace, upscale, repaint, or preserve pixels, crop, background, lighting, or defects from either reference.
+
+REFERENCE ROLES
+Image 1 is equipment/action geometry reference only: drained traditional Vietnamese gravity-insert phin, cup of black concentrate, dry cloth grip, and matching lid. Image 2 is rendering-language reference only: modern premium editorial illustration, tactile materials, deep espresso organic Material 3 Expressive stage, and pure green-key exterior. Do not copy its Switch brewer, valve, coffee flow, finger, or action.
+
+ONE SAFETY LESSON
+A hand protected by a dry folded cloth is completing a very short controlled lift of a hot drained gravity phin FROM the serving cup TO its own inverted metal lid. The destination must be unmistakable: the entire phin is already vertically aligned over the lid and is hovering only a few millimetres above its center, immediately before safe touchdown. The cup of black concentrate remains separate and untouched.
+
+MANDATORY DESTINATION GEOMETRY
+- Place the broad stable ceramic serving cup at LEFT, containing smooth black coffee concentrate. Leave visible empty space above its rim: the phin is no longer on the cup.
+- Place the phin's matching metal lid at RIGHT/LOWER-RIGHT, fully separate from the cup.
+- The lid is INVERTED FOR USE AS A COASTER: shallow concave bowl faces UP, outer rim/base lies perfectly FLAT on the dark stage. Its entire circular silhouette is visible.
+- Directly above the lid on the SAME vertical center axis, show the complete drained phin held upright.
+- The phin's wide integrated filter plate is horizontal and centered over the lid.
+- Preserve a small but unmistakable dark air gap, about 5 to 8 millimetres, between the underside of the phin's filter plate and the upward-facing concave center of the lid. The gap proves the phin is actively held and about to land.
+- The filter plate must not touch the stage, another plate, or an invented support. It is part of the held phin.
+- No extra metal plate exists between phin and lid. Exactly one integrated phin filter plate and exactly one separate inverted lid.
+- This should read as near-touchdown, not as the phin resting elsewhere with an unrelated lid nearby.
+
+EXACT PHIN STATE
+Accurate unbranded small cylindrical brushed-stainless-steel GRAVITY-INSERT phin with smooth solid chamber walls, wide integrated bottom filter plate, and no handle. Chamber remains upright and fully drained. Its loose perforated gravity press stays safely inside. It may have a very small low lift knob, but NO long screw post, threads, spring, plunger, or pressure mechanism. No liquid falls from the phin and no spill is present.
+
+SAFE HAND AND CLOTH
+One complete calm hand enters from upper right, fully inside the safe area. A compact folded DRY heat-resistant cloth with clean woven texture wraps the chamber's upper outside wall on both sides. Fingers and palm grip only through cloth. No bare skin touches chamber wall, rim, internal press, filter plate, underside, lid, or any metal. Cloth does not dangle into the cup or under the phin; it is not the coaster. No tongs, no fabricated handle.
+
+COMPOSITION
+Close elevated three-quarter view. Cup of black concentrate is the stable completed drink at left. Protected hand and upright held phin occupy upper-right. Inverted lid is fully visible directly beneath the phin at lower-right. The tiny vertical landing gap must survive phone reduction. Keep complete hand, wrist, cloth, phin, filter plate, cup, lid, and dark organic stage comfortably away from all canvas edges. All non-held objects lie physically flat and stable. Generous negative space; no props.
+
+VISUAL STYLE
+Modern premium Material 3 Expressive editorial illustration. Polished vector-like 3D with restrained gouache/cut-paper tactility. Clearly illustrated, not photorealistic, not glossy CGI, not vintage, not retro. Crisp intentional contours, soft dimensional lighting, simplified brushed-metal reflections, warm matte ceramic, smooth near-black coffee with one restrained highlight, and a muted warm woven cloth. High fidelity only where it teaches contact safety, filter-plate/lid separation, and lid orientation. No grain, compression artifacts, warped circles, doubled rims, smeared edges, or unnecessary detail.
+
+ORGANIC STAGE AND KEY
+One deep espresso-black borderless organic stage custom-shaped around the cup and short right-side touchdown path with a few broad asymmetric flowing Material 3 Expressive curves. Fluid and subject-responsive, not rectangle, rounded rectangle, squircle, oval, cloud, splash, badge, flower, or star. No outline, white border, shadow ring, frame, arrow, motion line, panel, or inset. Outside it use perfectly uniform flat pure #00FF00: no gradient, texture, noise, shadow, glow, spill, reflection, or halo. Nothing touches canvas edges.
+
+FINAL VALIDATION
+Before finalizing: cup at left is uncovered and separate; black concentrate untouched; phin at right is visibly held; cloth blocks ALL skin-metal contact; phin plate is centered directly over exactly one inverted lid; lid concavity faces up and lid rests flat; small open air gap visibly separates phin plate from lid; no other plate/support; contained gravity press; no screw geometry; no spill; complete silhouettes; organic stage; pure green exterior.
+
+NO
+No text, letters, numbers, measurements, logos, arrows, icons, warnings, callouts, labels, multiple panels, service options, milk, condensed milk, ice, dilution water, kettle, bare metal contact, wet cloth, tongs, long carry, tipping, spill, phin resting directly on stage, phin still on cup, unrelated lid, extra plate, screw post, threads, spring, plunger, paper filter, moka pot, espresso basket, cropped props, floating unheld objects, retro poster style, photorealism, glossy product ad, rectangular stage, white border, clutter, or noise.

@@ -1,0 +1,47 @@
+Use case: scientific-educational.
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration.
+Generation mode: COMPOSE A COMPLETELY NEW IMAGE FROM A BLANK CANVAS. Do not edit, trace, upscale, repaint, or preserve the pixels, background, lighting, cropping, noise, or degradation of either reference.
+
+REFERENCE ROLES
+- Image 1 is GEOMETRY/MECHANICS REFERENCE ONLY: it identifies a glass Hario Switch 02-style cone, clean V60 02 paper, black silicone base, side lever, stainless ball valve, server, kettle, and the open/free-draining rinse state. Do not copy its photographic style, beige background, crop, shadows, or imperfections.
+- Image 2 is RENDERING-LANGUAGE REFERENCE ONLY: use its modern premium illustrated finish, warm glass and metal palette, tactile granular-versus-smooth material separation, deep espresso organic stage, green-key exterior, calm hierarchy, and Material 3 Expressive curves. Do not copy its closed-valve coffee-brewing action or finger.
+
+LESSON
+Show the Switch being used continuously OPEN like a conventional gravity dripper while a clean paper is rinsed. A viewer must understand without text: clear water enters the empty clean paper, the real steel ball is mechanically held lifted above its circular seat, and clear rinse water passes continuously through the open gap and outlet into the waste server. This must be visually opposite to a retained/closed Switch.
+
+EXACT BREWER AND FILTER
+- Accurate unbranded handleless ribbed glass V60 02-style cone.
+- Exactly one correctly seated clean white V60 02 paper, visibly wet where rinsed.
+- Dark charcoal silicone Switch base.
+- Real blue-black side lever in the physically correct DEPRESSED/DOWN open position, held there by the mechanism; no hand operates it.
+- One stainless-steel ball visibly LIFTED ABOVE the amber circular valve seat. Preserve a clear, readable air/water gap under the ball. The ball must not touch, plug, or overlap the seat.
+- Show the outlet centered directly below the open gap.
+- Stable transparent heat-safe waste server directly beneath.
+
+CONTINUOUS CLEAR-WATER TOPOLOGY
+- One complete gooseneck kettle enters from upper left, fully inside the safe area; include its complete spout and a calm hand holding only the cool handle.
+- One slender CLEAR rinse stream enters the clean paper near the upper wall.
+- Show a light clear wet sheen on the paper, but NO retained pool.
+- Show one unbroken aligned path: clear water passes through the paper and cone, around/under the raised ball through the visible open gap, through the outlet, then falls as one vertical CLEAR stream into the server.
+- A shallow pool of clear rinse water may be visible in the server with one subtle ripple.
+- No brown or amber liquid anywhere. No coffee grounds, slurry, bloom, or dose.
+- No teleportation: inlet, open gap, outlet, falling stream, and receiving pool align plausibly under gravity.
+- No splashing or overflow.
+
+COMPOSITION
+Elevated close three-quarter view, centered brewer and server as one supported vertical system. The black silicone base rests on the server mouth; nothing floats. Make the raised ball, open gap, depressed lever, clean paper, and clear drain stream legible at mobile card size. Keep the complete brewer, server, kettle, hand, and organic stage comfortably away from all canvas edges. Use strong simple silhouettes and generous negative space. No secondary props.
+
+VISUAL STYLE
+Modern premium Material 3 Expressive editorial illustration, polished vector-like 3D with restrained gouache/cut-paper tactility. Clearly illustrated, not photorealistic, not glossy CGI, not vintage, not retro poster art. Crisp intentional contours, soft dimensional lighting, carefully simplified reflections, restrained warm glass highlights, charcoal silicone, brushed steel ball, a single muted cobalt lever accent. Clean paper has subtle fiber tactility; clear water is smooth and glasslike. High fidelity only where it teaches mechanics. No grainy filter, compression artifacts, smeared edges, duplicated parts, or visual noise.
+
+EXPRESSIVE STAGE
+Place the entire teaching scene over ONE borderless deep-espresso-black organic stage, custom-shaped around this composition with a few broad asymmetric flowing Material 3 Expressive curves. It should feel fluid and subject-responsive, not a rectangle, rounded rectangle, squircle, oval, cloud, splash, badge, star, or flower. No outline, no white border, no shadow ring. Leave breathable black margin around all objects.
+
+TRANSPARENCY PREPARATION
+Outside the organic dark stage use perfectly uniform flat pure chroma green #00FF00. No green gradient, texture, noise, vignette, shadow, glow, reflection, green spill, or semi-transparent halo. The green region is only a removable key. The dark stage must have a crisp but naturally curved edge. Nothing may touch the canvas edge.
+
+VALIDATION CHECKLIST
+Before finalizing, verify: exactly one clean V60 02 paper; no grounds; lever depressed/open; ball visibly lifted; clear gap beneath ball; seat unobstructed; continuous clear path through outlet; visible clear falling stream; stable server; complete kettle and safe hand; no retained pool in cone; no brown liquid; all silhouettes contained; organic dark stage; uniform #00FF00 exterior.
+
+CONSTRAINTS
+No text, letters, numbers, measurement marks, logos, brand marks, arrows, callouts, icons, symbols, panels, cutaways, labels, decoration, extra objects, extra hands, fingertips on hot glass or metal, cropped props, floating parts, screw mechanisms, Clever-style actuator, generic V60-only base, glass handle, metal or cloth filter, warped geometry, retro styling, photorealism, glossy advertising CGI, background clutter, white border, rectangular stage, or unnecessary noise.

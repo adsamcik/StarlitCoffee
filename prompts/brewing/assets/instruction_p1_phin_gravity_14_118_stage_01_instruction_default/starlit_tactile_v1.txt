@@ -1,0 +1,39 @@
+Use case: safety-critical scientific-educational.
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration.
+Generation mode: COMPOSE A COMPLETELY NEW IMAGE FROM A BLANK CANVAS. Do not edit, trace, upscale, repaint, or preserve the pixels, beige background, crop, lighting, noise, or degradation of either reference.
+
+REFERENCE ROLES
+- Image 1 is equipment/geometry reference only: a traditional single-serving Vietnamese GRAVITY-INSERT phin, wide integrated filter plate on a broad cup, dry level grounds, separate loose perforated press disc resting in its lid. Do not copy its photographic style or background.
+- Image 2 is rendering-language reference only: modern premium illustrated finish, deep espresso organic Material 3 Expressive stage, green-key exterior, calm hierarchy, tactile grounds, and simplified high-fidelity materials. Do not copy its Switch brewer, finger, liquid, or valve.
+
+ONE LESSON
+Before any water is added, the gravity phin is centered, level, and securely supported around its entire wide filter plate by a broad heat-safe cup. A shallow level bed of dry coffee is in the chamber. The loose unthreaded gravity press is separate on the matching lid, ready for the next stage. Stability must read more strongly than dose.
+
+EXACT GRAVITY-PHIN GEOMETRY
+- Accurate unbranded small cylindrical brushed-stainless-steel phin chamber with smooth solid vertical walls.
+- One wide integrated horizontal filter plate/flange at the chamber base. It extends beyond the cup rim and lies flat.
+- The broad heat-safe ceramic cup has a wide circular rim that supports the filter plate continuously all the way around. Show clear overlap/contact around the visible front, left, and right rim. The plate is centered and level, never cantilevered.
+- Cup has a complete stable base and a complete handle, all fully visible.
+- Inside the open chamber show a shallow, perfectly level DRY coffee bed with ample empty headroom above it. Grounds are irregular granular particles with restrained natural texture; not smooth liquid, not cake, not soil, not powdery noise.
+- Keep the chamber wall smooth and unperforated. Perforations belong only to the hidden bottom filtering surface and the loose press disc, never the vertical wall.
+- Beside the cup, place the matching metal lid flat and fully supported on the dark stage. On the lid rests one separate loose circular perforated gravity press disc. Its many small holes and low flat profile must be legible.
+- The press disc has NO central screw post, NO threads, NO spring, NO plunger, and is NOT installed in the chamber.
+- No water, no kettle, no steam, no drips, no wet sheen.
+
+COMPOSITION
+Close elevated three-quarter view so the dry bed, full cup-rim support, stable cup base, and separate loose disc can all be read in one coherent scene. Center the phin-and-cup as the primary object; place lid/disc nearby as a quiet secondary object for the next stage. All objects are physically supported; nothing floats. Make the scene slightly larger than Image 2 but keep the entire cup, handle, phin, lid, disc, shadows, and organic stage comfortably away from every canvas edge. Generous negative space, strong simple silhouettes, no extra props.
+
+VISUAL STYLE
+Modern premium Material 3 Expressive editorial illustration. Polished vector-like 3D with restrained gouache/cut-paper tactility. Clearly illustrated, not photorealistic, not glossy CGI, not vintage, not retro poster art. Crisp intentional contours, soft dimensional lighting, carefully simplified metal reflections, warm matte ceramic, charcoal shadow accents, and rich medium-brown granular grounds. High fidelity only where it teaches geometry, support, and texture. No grainy overlay, noisy stippling, compression artifacts, warped circles, doubled rims, smeared edges, or unnecessary detail.
+
+EXPRESSIVE STAGE
+Place the complete scene over ONE borderless deep espresso-black organic stage custom-shaped around the cup and separate lid with a few broad asymmetric flowing Material 3 Expressive curves. It should feel fluid and subject-responsive, not a rectangle, rounded rectangle, squircle, oval, cloud, splash, badge, flower, or star. No outline, white border, shadow ring, frame, panel, or inset. Leave breathable dark margin around every silhouette.
+
+TRANSPARENCY PREPARATION
+Outside the organic stage use perfectly uniform flat pure chroma green #00FF00. No green gradient, texture, noise, vignette, shadow, glow, reflection, spill, or semi-transparent halo. Nothing touches the canvas edges.
+
+VALIDATION CHECKLIST
+Before finalizing verify: gravity-insert phin, not screw phin; smooth chamber walls; broad cup; full filter-plate support; centered level chamber; stable complete cup; shallow level dry textured bed; ample headroom; exactly one loose perforated disc separate on its lid; no threads/post/spring; no water; no installed press; no spills; all silhouettes contained; organic dark stage; pure green exterior; mobile-readable simplicity.
+
+CONSTRAINTS
+No text, letters, numbers, measurements, readable scale, logos, marks, arrows, callouts, icons, labels, multiple panels, decorative objects, scoop, kettle, water, steam, condensation, condensed milk, ice, service action, narrow or cracked cup, tilted cup, unsupported plate, uneven or mounded bed, compressed puck, sidewall perforations, paper filter, espresso basket, moka pot, pressure seal, floating objects, cropped props, retro styling, photorealism, glossy product advertising, rectangular stage, white border, visual clutter, or unnecessary noise.

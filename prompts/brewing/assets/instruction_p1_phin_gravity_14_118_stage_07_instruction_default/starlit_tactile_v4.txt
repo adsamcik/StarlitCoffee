@@ -1,0 +1,26 @@
+Make ONE safe-area composition correction to the provided illustration. Preserve the successful brewing mechanics, supported metal stack, modern rendering, palette, and all other content.
+
+KEEP EXACTLY
+- Keep the stable black-concentrate cup at left.
+- Keep the upright drained smooth-walled gravity phin at right.
+- Keep its loose perforated gravity press inside with no screw threads or long post.
+- Keep the phin's attached wide filter plate as the upper metal flange.
+- Keep exactly one separate inverted lid-coaster beneath it as the lower, slightly larger shallow dish with a visible outer lip.
+- Keep the upper attached plate fully nested and supported inside the lower inverted lid; no detached lid and no air gap.
+- Keep the dry woven cloth fully separating skin from every hot metal part.
+- Keep the calm, simple, text-free safety lesson and clean low-noise premium Material 3 Expressive illustration.
+
+FIX ONLY THE HAND/EDGE
+- Scale the complete teaching scene down an additional 12 percent and recenter it slightly left.
+- Reconstruct the complete hand and a short natural wrist/forearm segment entirely inside the deep espresso-black stage.
+- Terminate the visible forearm with a clean rounded illustrated silhouette inside the stage, at least 8 percent of canvas width away from the right canvas edge. It may read as a deliberately contained instructional hand cutout; it must not continue to or be clipped by the canvas.
+- Preserve all fingers and thumb anatomically; keep their contact only through the cloth.
+- Expand the black organic stage to surround the hand and forearm with breathable dark margin.
+- Keep all other objects and the entire stage at least 5 percent from every canvas edge.
+- Nothing—hand, wrist, cup, phin, lid, cloth, shadow, or stage—may touch or cross the canvas boundary.
+
+STYLE/KEY
+One borderless deep espresso-black organic stage with a few broad asymmetric flowing Material 3 Expressive curves; not rectangle, squircle, oval, cloud, splash, badge, flower, or star. No outline, white border, shadow ring, frame, panel, or inset. Outside remains perfectly uniform pure #00FF00 with no gradient, texture, shadow, glow, reflection, spill, halo, or noise.
+Modern premium vector-like 3D with restrained tactile finish; clearly illustrated, not photorealistic, glossy CGI, vintage, retro, grainy, or degraded.
+
+Do not change the lid orientation, metal count, cup contents, phin geometry, cloth protection, lighting, viewing angle, or material hierarchy. Do not add text, arrows, icons, labels, logos, warnings, props, hands, service options, water, milk, ice, steam symbols, panels, decorations, clutter, or noise.
