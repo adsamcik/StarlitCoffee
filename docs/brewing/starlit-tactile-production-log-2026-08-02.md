@@ -454,3 +454,35 @@ prompt for these events.
   coffee texture; the heating frame preserves stable support, confined flame,
   handle-away orientation, and first foam ring; the lift-off frame preserves
   a readable air gap, burner-off state, safe grip, and below-rim foam.
+
+
+## Batch 06 retained candidates — 2026-08-03
+
+Batch 06 closes the remaining three frames in the one-cup Cezve recipe. All
+six stages of `cezve_turkish_single_rise_6_65` now have accepted exact-stage
+candidates; this does not relax the separate runtime localization gate.
+
+| Asset | Accepted | Generator lineage | WebP SHA-256 |
+| --- | --- | --- | --- |
+| `instruction_p1_cezve_turkish_single_rise_6_65_stage_02_instruction_default` | `v3` | `exec-a3e91816-b552-426b-8357-f22c36509bbb.png` → `exec-be116041-6c13-4b3b-a22d-c24111ecd2d5.png` → `exec-e333c082-198d-45be-9a5a-7d0026ba7a2c.png` | `afe4d116699994d0d4a22c53057ea054e6f85c01565061f2d906a073cbc3bd72` |
+| `instruction_p1_cezve_turkish_single_rise_6_65_stage_05_instruction_default` | `v2` | `exec-ba1cb187-ad40-49b9-bbfe-79ae329d8aff.png` → `exec-d569ba88-075a-49b9-b3c6-9756c00d8b35.png` | `a733f367497ca2e42b3ca932a44e3a98e5bd8f9c8023b8b7d5452a81e02ee6a0` |
+| `instruction_p1_cezve_turkish_single_rise_6_65_stage_06_instruction_default` | `v1` | `exec-7664fa82-d4fa-4deb-b929-a56867dc1e83.png` | `6083f7cde7264c434638c576f48ddf1f2233da1dd8c48b4c3005db8c9e38b53b` |
+
+The first mixing render was rejected for portrait orientation, photographic
+materials, and edge crowding. V2 restored landscape/editorial treatment but
+showed a grounds clump, excess rim lobes, and noisy background ribbons. V3 has
+exactly two spouts, a smooth evenly dispersed cold slurry, a partly submerged
+spoon, a quiet single organic stage, and no heat. A reference-conditioned edit
+failed in the Windows image sandbox before producing a payload and is not a
+visual attempt.
+
+The first serving render was rejected because the receiving cup was nearly
+full while the stream remained active and the wrist crowded the edge. V2 keeps
+one continuous spout-to-cup stream, gravity-correct liquid in the tilted pot,
+a stable cup/saucer, half-to-two-thirds fill, and generous perimeter margin.
+The settling frame uses a clean educational cup section: smooth coffee remains
+above a thin dense granular bottom layer, the cup is undisturbed, and a single
+faint wisp preserves the still-hot warning without visual noise.
+
+Every retained frame passed raw mechanics, transparency, 1024 by 768 static
+WebP validation, and separate light- and dark-theme phone review.

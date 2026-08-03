@@ -1643,19 +1643,53 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 367,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-a3e91816-b552-426b-8357-f22c36509bbb.png",
+          "issues": [
+            "Rejected during raw visual QA: generator emitted portrait rather than required landscape 4:3; hand and metal treatment are photorealistic/CGI; pot, handle, and organic stage crowd the canvas edges. Uniform slurry and off-heat pad state are conceptually correct but must be recomposed and restyled."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-be116041-6c13-4b3b-a22d-c24111ecd2d5.png",
+          "issues": [
+            "Rejected during raw visual QA: spoon appears to lift a dense grounds/paste clump instead of showing the completed uniform slurry; pot rim has more than the resolved two spouts; layered brown ribbons inside the organic stage add unnecessary noise. Landscape, off-heat support, hand style, and safe margins are correct and must be preserved."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_02_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-e333c082-198d-45be-9a5a-7d0026ba7a2c.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Exact two-spout one-cup Cezve rests on a solid off-heat pad; simplified hand holds the spoon clear of hot metal; spoon is partly submerged in a smooth low slurry with evenly dispersed fine particles and a restrained wake; no dry clump, heat, or excess background noise remains."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_turkish_single_rise_6_65_stage_02_instruction_default/starlit_tactile_v3.webp",
+      "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Exact two-spout one-cup Cezve rests on a solid off-heat pad; simplified hand holds the spoon clear of hot metal; spoon is partly submerged in a smooth low slurry with evenly dispersed fine particles and a restrained wake; no dry clump, heat, or excess background noise remains."
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_03_instruction_default",
@@ -1745,19 +1779,40 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 370,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-ba1cb187-ad40-49b9-bbfe-79ae329d8aff.png",
+          "issues": [
+            "Rejected during raw visual QA: receiving cup is nearly full while the stream remains active, weakening the no-spill safety cue; hand/wrist is too close to the right canvas edge and lacks the required generous transparent margin. Continuous spout-to-cup stream, gravity-aware pot liquid, stable saucer, and illustrated hand are correct and must be preserved."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_05_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-d569ba88-075a-49b9-b3c6-9756c00d8b35.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. One narrow stream remains continuously attached from the lower spout to a stable demitasse; tilted-pot liquid follows gravity; receiving cup stays roughly half full with clear headroom; simplified hand grips the cool outer handle; all elements retain generous perimeter margin."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_turkish_single_rise_6_65_stage_05_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. One narrow stream remains continuously attached from the lower spout to a stable demitasse; tilted-pot liquid follows gravity; receiving cup stays roughly half full with clear headroom; simplified hand grips the cool outer handle; all elements retain generous perimeter margin."
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_06_instruction_default",
@@ -1765,17 +1820,25 @@
       "blocker": "NONE-SERVE-FRAME",
       "matrix_line": 371,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-7664fa82-d4fa-4deb-b929-a56867dc1e83.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Stable undisturbed demitasse uses a clean educational section; smooth coffee remains above a thin dense granular layer following the cup bottom; broad rim headroom and only a faint cooling wisp preserve the hot-drink warning without visual noise."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_turkish_single_rise_6_65_stage_06_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Stable undisturbed demitasse uses a clean educational section; smooth coffee remains above a thin dense granular layer following the cup bottom; broad rim headroom and only a faint cooling wisp preserve the hot-drink warning without visual noise."
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_01_instruction_default",

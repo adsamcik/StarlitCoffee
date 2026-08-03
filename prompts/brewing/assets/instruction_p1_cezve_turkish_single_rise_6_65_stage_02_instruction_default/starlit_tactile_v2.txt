@@ -1,0 +1,26 @@
+Generate this image fresh on an exact LANDSCAPE 4:3 canvas. Do not use portrait orientation. The composition must be wider than tall and suitable for the app's 1024×768 card asset.
+
+Create one text-free modern Material 3 Expressive editorial illustration of pre-heat Cezve mixing.
+
+Exact equipment and state:
+- Small one-cup hammered-copper, tin-lined, double-spout Cezve/STC-Pro-1-class pot with a long straight matte-charcoal alloy handle.
+- Pot firmly centered on a simple solid charcoal ceramic pad, visibly OFF HEAT. No burner, grate, hob, hotplate, flame, glow, foam rise, or steam.
+- Low cold mixture of 65 g water and 6 g very-fine coffee, safely below the narrow neck with broad silver-lined headroom.
+- Mixture is a smooth dark-brown slurry with subtle fine particles evenly dispersed. No dry mound, powder island, large clump, floating cake, whole beans, clear-water layer, or foam cap.
+- One slender matte-steel teaspoon at a natural angle, bowl partly submerged. One subtle curved liquid wake around the bowl communicates mixing without arrows or motion lines.
+- One simplified editorial adult hand holds only the cool outer spoon end. Use broad warm skin-tone planes, clean rounded contours, minimal joint/nail detail, and no photographic pores or CGI anatomy. Hand stays well away from the pot body.
+- Long pot handle stays horizontal and unobstructed.
+
+Composition:
+- Three-quarter side view; pot, pad, spoon, and hand occupy about 70–78% of canvas height and no more than 78% of canvas width.
+- Entire hand, wrist crop, spoon, pot handle, pot, pad, shadows, and background stage must have generous margin from every edge. Nothing touches or nearly touches an edge.
+- One borderless deep-espresso organic background stage with broad natural flowing Material 3 Expressive lobes, not a rectangle and not an edge-to-edge field.
+- Everything outside the stage is perfectly flat exact chroma-key green #00FF00 for later removal to transparency.
+
+Art direction:
+- Polished 2026 mobile-learning editorial illustration: broad matte copper planes, sparse low-contrast hammered marks, restrained cut-paper/gouache tactility, crisp illustrated contours.
+- Absolutely not photorealistic, not product-render CGI, not glossy metal, not photographic skin, and not retro poster art.
+- Liquid smooth; fine grounds subtly granular.
+- No text, numbers, arrows, timer, labels, logos, ingredient containers, cup, sugar, spill, splash, extra utensils, border, white frame, decoration, or irrelevant props.
+
+The final landscape image must teach one unambiguous state: a uniform cold slurry is being gently mixed off heat before any heating begins.
