@@ -388,3 +388,69 @@ The drawable payloads are integrated, but exact-stage runtime approval remains
 fail-closed. The app does not yet contain localized exact-stage companion text
 and alt text for every supported locale, so this image pass does not invent
 accessibility copy or bypass `P1ExactRecipeLocalizationCoverage`.
+
+
+## Batch 05 retained candidates — 2026-08-03
+
+This batch extends the tracker from 24 to 29 accepted exact-stage assets. It
+also introduces `tools/record_starlit_tactile_attempt.py`, so every accepted or
+rejected revision updates the asset's attempt history and regeneration todo in
+one deterministic operation. The prompt files contain the exact generator
+input used for each call; the generator did not expose a separate revised
+prompt for these events.
+
+| Asset | Accepted | Generator / reuse lineage | WebP SHA-256 |
+| --- | --- | --- | --- |
+| `instruction_p1_clever_coffee_first_15_250_stage_04_instruction_default` | `v2` | rejected `exec-bc7a02e8-771b-47c8-9073-5b27bcd781f4.png`; then exact-state byte reuse from `instruction_p1_clever_water_first_15_250_stage_05_instruction_default` | `5377ccb0545febb43f0674a8572d42ef1883f4bc80b40071be5472b69173ccee` |
+| `instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction_default` | `v1` | exact-state byte reuse from `instruction_p1_switch_official_20_240_stage_04_instruction_default` | `17e443be3c46e986a4eeadb03f1180d79290db10ca806268f6b0ffe5c5e720d2` |
+| `instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default` | `v2` | `exec-f073e82a-9f74-4ec0-948d-49ac1320aeec.png` → `exec-8c65ea0f-34f7-4218-a6a3-228da28ce107.png` | `3c553131d1df04bb7c097128c6864377aaa0b3efea76b500a92d0aff2a23d23f` |
+| `instruction_p1_cezve_turkish_single_rise_6_65_stage_03_instruction_default` | `v2` | `exec-9bede8d3-ef08-4906-9890-a8c8a58ff701.png` → `exec-b9a84f94-4e4c-4242-be27-a1f50e683d9c.png` | `e7ce406e9bc1061e9990d7980ecd7f18cb0e3e3b58189463754799be773e3483` |
+| `instruction_p1_cezve_turkish_single_rise_6_65_stage_04_instruction_default` | `v2` | `exec-180e7458-0c79-4550-8d23-c014890e9311.png` → `exec-d53b5050-58ce-4f8a-bdb1-f38c34d0c1dd.png` | `67b311c28541c9e2f6f78b2ddaf98596bcb5b8f0b102ce8b48bde5628f6f127f` |
+
+### Exact-state reuse decisions
+
+- Clever coffee-first stage 04 and Clever water-first stage 05 have the same
+  visible release state: the bottom-actuated dripper is squarely seated on a
+  stable server, its valve is open, and retained slurry drains continuously.
+  Their recipe IDs, stage IDs, text, timing, quantities, and runtime asset IDs
+  remain separate.
+- Ole Bøen hybrid stage 04 and official Switch stage 04 have the same visible
+  valve-release state: the lever raises the steel ball clear of its seat and a
+  continuous outlet path drains to the server. The hybrid recipe's 2:10 cue
+  remains text/runtime data and is not implied by the bitmap.
+
+### Rejected outputs and closed regeneration todos
+
+- Clever coffee-first v1 looked like a glossy glass V60, made the bottom
+  actuator ambiguous, and rendered the slurry/grounds relationship poorly.
+  The exact-state reuse removes that equipment error without duplicating an
+  already verified physical state.
+- Cezve preparation v1 rendered a thick floating coffee cake, a wood-like
+  handle, and an ambiguous open trivet. V2 uses thin granular coffee texture
+  over cold liquid, a matte alloy handle, a solid off-heat pad, and ample
+  headroom.
+- Cezve heating v1 used glossy product-render materials, a visually excessive
+  full burner ring, and a slurry/foam level too high for the first-ring cue.
+  V2 uses matte illustrated planes, a low flame confined beneath the base, a
+  calm low slurry, and a thin perimeter foam ring.
+- Cezve lift-off v1 pasted a photorealistic hand over otherwise illustrated
+  equipment. V2 uses a simplified editorial hand, a credible cool-end grip, a
+  visible pot-to-grate gap, an extinguished burner, and controlled foam below
+  both spouts.
+
+### Source, mechanics, transparency, and phone QA
+
+- The Cezve frames use the resolved STC-Pro-1-class one-cup geometry: a
+  tin-lined copper body, secure long alloy handle, sufficient neck headroom,
+  and low gas heat contained within the base. The canonical recipe remains the
+  authority for 65 g water, 6 g coffee, cold start, observation-driven foam
+  cue, and immediate removal before rolling boil.
+- Every newly generated accepted bitmap passed full-resolution mechanics and
+  artifact inspection, chroma-key removal with soft matte and despill, static
+  1024 by 768 WebP validation, transparent corners, and separate light- and
+  dark-theme phone review. Reused WebPs retain the previously accepted alpha
+  and phone-QA results byte-for-byte.
+- At phone size the preparation frame preserves visible headroom and granular
+  coffee texture; the heating frame preserves stable support, confined flame,
+  handle-away orientation, and first foam ring; the lift-off frame preserves
+  a readable air gap, burner-off state, safe grip, and below-rim foam.

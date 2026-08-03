@@ -1,0 +1,10 @@
+No generator call was made for this revision.
+
+The accepted bitmap for
+`instruction_p1_clever_water_first_15_250_stage_05_instruction_default`
+is reused byte-for-byte because both exact stages have the same visible physical
+state: one Clever-style bottom-actuated dripper seated squarely on a wide stable
+server, the server rim actuating the release ring, the valve open, wet granular
+slurry retained in the paper, and one continuous coffee stream entering the
+server. Recipe identity, stage identity, guidance text, and runtime asset IDs
+remain separate. Reuse does not combine quantities or recipe semantics.

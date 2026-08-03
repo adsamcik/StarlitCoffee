@@ -1,0 +1,17 @@
+Revise the immediately preceding Cezve lift-off image. Preserve its correct safety mechanics exactly: same one-cup copper pot, same visible air gap above the grate, burner fully off, handle horizontal, controlled foam below the rim, and hand gripping only the far cool handle end.
+
+Mandatory art-direction corrections:
+- Redraw the hand as a simplified modern editorial hand consistent with the pot illustration: broad warm skin-tone shapes, clean rounded contour, minimal joint shading, subtle cut-paper/gouache tactility. Remove photographic pores, nail-bed realism, wrinkles, glossy skin, and CGI anatomy. It must read as an intentional app illustration, not a pasted photograph.
+- Keep the grip physically credible: one thumb on top/near side and fingers naturally wrapping beneath the far outer handle. Do not add fingers, merge fingers, bend joints unnaturally, or let skin touch the hot metal pot or handle root.
+- Enlarge and reshape the deep-espresso organic Material 3 Expressive stage with a soft flowing lobe behind most of the hand and wrist. A small outer fingertip or wrist contour may extend beyond the dark stage for depth, but most of the hand must be supported by the dark shape.
+- Keep the full hand, wrist crop, handle, pot, burner, shadows, and organic stage comfortably away from every canvas edge. Nothing may touch an edge.
+- Retain broad matte copper planes with sparse low-contrast hammered texture. No photorealism, specular glare, micro-scratches, or appliance-advertisement CGI.
+
+Foam and physics:
+- Keep the tan-brown fine-bubble foam visibly risen into the lower-to-middle neck yet clearly below both spouts, leaving a generous empty silver-lined rim zone.
+- No spill, overflow, rolling boil, giant bubbles, steam cloud, splash, or liquid outside the pot.
+- Burner remains visibly off with no flame. Pot remains actively held above the grate; do not lower it onto the support and do not make it float without the hand.
+
+Retain exact #00FF00 as a perfectly flat field everywhere outside the dark organic stage and illustrated objects for later transparency. No text, numbers, arrows, timer, labels, logos, borders, white frame, props, decoration, or clutter.
+
+The final image should feel cohesive with a polished 2026 Material 3 Expressive mobile-learning card: contemporary, tactile, simplified, high-fidelity, and immediately clear in both light and dark themes.

@@ -1,0 +1,10 @@
+No generator call was made for this revision.
+
+The accepted bitmap for
+`instruction_p1_switch_official_20_240_stage_04_instruction_default` is reused
+byte-for-byte because both exact stages depict the same visible physical state:
+the Hario Switch 02 lever opens the steel-ball valve, the ball is raised clear
+of its circular seat, the outlet path is continuous, and retained coffee drains
+in one uninterrupted stream into the stable server. The hybrid recipe's 2:10
+start cue remains text/runtime data and is not encoded in the image. Recipe,
+stage, guidance, and asset identities remain separate.

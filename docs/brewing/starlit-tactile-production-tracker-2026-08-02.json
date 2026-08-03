@@ -1219,17 +1219,40 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 307,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_coffee_first_15_250_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-bc7a02e8-771b-47c8-9073-5b27bcd781f4.png",
+          "issues": [
+            "Glossy photorealistic CGI rendering violates the modern illustrated Starlit Tactile style.",
+            "The brewer reads as a glass V60 rather than a wedge-bodied Clever, and the server-actuated release ring is ambiguous.",
+            "The slurry is overfilled and the distinct granular grounds versus smooth retained liquid state is unclear."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_coffee_first_15_250_stage_04_instruction_default/starlit_tactile_v2_reuse.txt",
+          "verdict": "accepted",
+          "reused_from": "instruction_p1_clever_water_first_15_250_stage_05_instruction_default",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Exact-state reuse: stable wide server fully actuates the Clever release ring; wet granular slurry, open outlet, and continuous centered stream remain clear in both reviewed phone themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_coffee_first_15_250_stage_04_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Exact-state reuse: stable wide server fully actuates the Clever release ring; wet granular slurry, open outlet, and continuous centered stream remain clear in both reviewed phone themes."
     },
     {
       "asset_id": "instruction_p1_switch_official_20_240_stage_01_instruction_default",
@@ -1431,17 +1454,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 338,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction_default/starlit_tactile_v1_reuse.txt",
+          "verdict": "accepted",
+          "reused_from": "instruction_p1_switch_official_20_240_stage_04_instruction_default",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Exact-state reuse: raised steel ball, separate circular seat, open path, granular retained slurry, continuous centered stream, stable server, and safe perimeter already passed full-size and dual-theme phone review."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Exact-state reuse: raised steel ball, separate circular seat, open path, granular retained slurry, continuous centered stream, stable server, and safe perimeter already passed full-size and dual-theme phone review."
     },
     {
       "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default",
@@ -1569,19 +1600,42 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 366,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-f073e82a-9f74-4ec0-948d-49ac1320aeec.png",
+          "issues": [
+            "The 6 g fine coffee appears as an unrealistically thick floating solid cake rather than a thin powder layer on cold water.",
+            "The handle reads as wood grain instead of heat-resistant dark alloy.",
+            "The open-spoke trivet resembles a burner, making the required off-heat state ambiguous."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-8c65ea0f-34f7-4218-a6a3-228da28ce107.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed full-resolution, transparency, light-theme, and dark-theme visual QA. Cold 65 g water and 6 g fine coffee are shown as a low smooth liquid with thin granular coffee texture; one-cup tin-lined copper cezve is off heat on a solid pad with ample safe headroom and a cool matte-alloy handle."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Passed full-resolution, transparency, light-theme, and dark-theme visual QA. Cold 65 g water and 6 g fine coffee are shown as a low smooth liquid with thin granular coffee texture; one-cup tin-lined copper cezve is off heat on a solid pad with ample safe headroom and a cool matte-alloy handle."
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_02_instruction_default",
@@ -1609,19 +1663,40 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 368,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-9bede8d3-ef08-4906-9890-a8c8a58ff701.png",
+          "issues": [
+            "Rejected during raw visual QA: glossy photorealistic/CGI product-render treatment conflicts with the approved modern editorial art direction; bright continuous flame ring is visually excessive; slurry and foam sit too high for an early dark-foam-ring completion cue."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-b9a84f94-4e4c-4242-be27-a1f50e683d9c.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. The one-cup Cezve is visibly supported on a compact grate; restrained blue flame is confined inside the base footprint; handle points away from heat; calm low slurry and thin perimeter foam ring preserve safe headroom and communicate watched gentle heating before boil."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_turkish_single_rise_6_65_stage_03_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. The one-cup Cezve is visibly supported on a compact grate; restrained blue flame is confined inside the base footprint; handle points away from heat; calm low slurry and thin perimeter foam ring preserve safe headroom and communicate watched gentle heating before boil."
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_04_instruction_default",
@@ -1629,19 +1704,40 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 369,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-180e7458-0c79-4550-8d23-c014890e9311.png",
+          "issues": [
+            "Rejected during raw visual QA: hand is photorealistic with photographic skin/nail detail and visually mismatched to the illustrated equipment; too much of the hand sits outside the organic dark stage, producing a pasted/composited appearance. Lift gap, burner-off state, safe grip location, and below-rim foam topology are correct and must be preserved."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_turkish_single_rise_6_65_stage_04_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-d53b5050-58ce-4f8a-bdb1-f38c34d0c1dd.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Simplified editorial hand grips only the cool outer handle; the one-cup Cezve is visibly lifted clear of an extinguished burner; controlled fine-bubble foam is visibly risen into the neck yet remains below both spouts with no spill."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_turkish_single_rise_6_65_stage_04_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Simplified editorial hand grips only the cool outer handle; the one-cup Cezve is visibly lifted clear of an extinguished burner; controlled fine-bubble foam is visibly risen into the neck yet remains below both spouts with no spill."
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_05_instruction_default",

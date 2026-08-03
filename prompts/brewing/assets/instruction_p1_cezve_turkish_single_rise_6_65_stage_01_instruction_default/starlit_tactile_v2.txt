@@ -1,0 +1,10 @@
+Use case: precise-object-edit.
+Asset type: text-free 4:3 in-app brewing instruction card.
+Edit target: the immediately preceding one-cup copper cezve cutaway illustration.
+
+Make exactly three corrections:
+1. Replace the thick floating coffee cake with a physically plausible very thin, uneven dusting of extremely fine cocoa-brown coffee particles resting on and lightly darkening the smooth cold-water surface. It should read as roughly 6 g in 65 g water, not a puck, disk, crust, or deep layer. Keep the liquid level low and the entire narrowed neck empty.
+2. Change the long handle material from wood-grain brown to smooth matte charcoal heat-resistant alloy. Preserve its exact length, curve, fasteners, and safe contained position.
+3. Replace the open-spoke burner-like trivet with a simple solid rounded heat-safe ceramic pad, clearly not a stove or active heat source.
+
+Preserve everything else: the same STC-Pro-1-style 150 ml hammered copper body, tin-lined cutaway, two opposed spouts, generous safe headroom, off-heat state, centered composition, contemporary illustrated Material 3 Expressive style, borderless flowing deep-espresso organic stage, perfectly flat #00ff00 exterior chroma field, and generous perimeter. No flame, coil, stove, steam, foam, bubbling, hand, spoon, extra prop, text, number, arrow, logo, watermark, border, white outline, edge contact, photorealism, glossy CGI, or vintage styling.

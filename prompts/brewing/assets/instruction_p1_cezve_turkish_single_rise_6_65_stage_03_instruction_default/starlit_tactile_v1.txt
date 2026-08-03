@@ -1,0 +1,24 @@
+Create a single text-free in-app instructional illustration for a coffee-brewing stage. Match the immediately preceding approved Cezve illustration's modern premium Material 3 Expressive editorial language and its exact one-cup pot design, but depict the next physical state accurately.
+
+Instructional meaning: heat a 65 g water plus 6 g very-fine-coffee slurry slowly while watching continuously. Completion cue: a dark foam ring has just formed and is beginning to rise toward the narrow neck. Safety: the pot is stable, the low gas flame stays completely within the footprint of the base, the long handle points away from the flame, and no hand touches hot metal.
+
+Required scene and topology:
+- Three-quarter side view, large and easy to read at phone-card size.
+- The same small one-cup hammered-copper, tin-lined, double-spout Cezve/STC-Pro-1-class vessel with a long straight matte-charcoal alloy handle.
+- Pot resting physically on a compact stable black gas-burner grate; show enough contact/support that it cannot look as if it floats.
+- One small restrained blue flame directly under the pot, fully narrower than the copper base. No flames beside the base or under the handle.
+- Inside the pot, show a smooth dark-brown coffee slurry with subtle fine granular texture, not dry grounds and not a solid cake.
+- At the inner wall, show one thin dark tan foam ring beginning to lift toward the neck. The foam stays well below the rim and occupies only a modest fraction of the available headroom.
+- Handle extends horizontally away from the burner. No hand, spoon, cup, ingredients, labels, arrows, timer, steam clouds, splashes, or unattended kitchen clutter.
+- Make the current state unmistakably gentle heating, not boiling: no rolling bubbles, no eruption, no overflow, no liquid outside the pot.
+
+Composition and style:
+- One borderless deep-espresso organic background shape with broad flowing Material 3 Expressive curves behind the equipment; it should adapt around the silhouette, not be a rectangle.
+- Everything outside that dark organic stage is a perfectly flat chroma-key green field, exact #00FF00, for later removal to transparency.
+- Keep every object, flame, shadow, and stage shape comfortably inside the canvas with generous margin; nothing touches or ends at an image edge.
+- Modern high-fidelity editorial illustration, not photorealistic, not CGI, not retro, not 1940s poster art. Flat-to-soft geometric forms, restrained gouache/cut-paper tactility, precise clean edges, subtle controlled material shading.
+- Coffee grounds/particles must read granular while liquid reads smooth.
+- Warm copper and coffee browns, charcoal handle/grate, small cool-blue flame; high contrast in both light and dark app themes.
+- No text, numbers, letters, logos, border, white frame, arrows, icons, extra decoration, visual noise, or irrelevant props.
+
+Physics and safety are more important than beauty. The image must teach stable support, confined low heat, handle-away orientation, and the first observable foam-ring cue without implying a rolling boil.
