@@ -2,9 +2,9 @@
 """Verify the delivery contract for every committed instruction illustration.
 
 Tracker-approved exact-stage assets use transparency so their expressive dark
-stage can sit naturally on both light and dark app surfaces. Older generic
-assets remain intentionally opaque until they pass through the same production
-and review loop.
+stage can sit naturally on both light and dark app surfaces. Untracked review
+inputs remain opaque until they pass through the same production loop. Retired
+legacy resource names are rejected so obsolete artwork cannot be repackaged.
 """
 
 from __future__ import annotations
@@ -26,6 +26,16 @@ TRACKER_PATH = (
 EXPECTED_SIZE = (1024, 768)
 MAX_ENCODED_BYTES = 300_000
 RESOURCE_NAME = re.compile(r"[a-z][a-z0-9_]*")
+RETIRED_RESOURCE_NAMES = frozenset(
+    {
+        "instruction_steep_and_release_clever_style_"
+        "clever_style_insert_and_rinse_filter_default",
+        "instruction_steep_and_release_hario_switch_"
+        "hario_switch_add_coffee_default",
+        "instruction_restricted_flow_gravity_concentrate_vietnamese_phin_"
+        "vietnamese_phin_place_on_stable_cup_default",
+    }
+)
 
 
 def sha256(path: Path) -> str:
@@ -132,6 +142,8 @@ def main() -> int:
 
     approved_candidates, errors = load_approved_candidates()
     deployed_names = {asset.stem for asset in assets}
+    for retired_name in RETIRED_RESOURCE_NAMES & deployed_names:
+        errors.append(f"{retired_name}: retired legacy instruction asset is packaged")
     for asset_id in approved_candidates.keys() - deployed_names:
         errors.append(f"{asset_id}: approved tracker asset has no deployed drawable")
 
@@ -153,7 +165,7 @@ def main() -> int:
         f"{EXPECTED_SIZE[0]}x{EXPECTED_SIZE[1]}; largest is "
         f"{largest.name} ({largest.stat().st_size:,} bytes). "
         f"{len(approved_candidates)} tracker-approved exact assets are transparent; "
-        f"{len(assets) - len(approved_candidates)} legacy assets are opaque.",
+        f"{len(assets) - len(approved_candidates)} untracked review inputs are opaque.",
     )
     return 0
 

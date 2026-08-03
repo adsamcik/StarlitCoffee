@@ -1,12 +1,13 @@
 # Instruction asset production workflow
 
 > **Product-direction reset — 1 August 2026.** The 27 prior semi-real or
-> realistically rendered candidates are rejected for this app surface. They
-> remain in the repository only as unapproved technical/provenance candidates
-> until a documented archive pass; none may be registered, promoted, or used as
-> a style reference. Replacement work follows the clean 2D editorial system in
-> `illustration-style-system.md` and is staged outside `drawable-nodpi` until
-> product, brewer-mechanics, accessibility, and placement review pass.
+> realistically rendered candidates are rejected for this app surface. Their
+> prompt and production history remains below as provenance. Rejected shipping
+> drawables are removed during documented archive passes; none may be
+> registered, promoted, or used as a style reference. Replacement work follows
+> the clean 2D editorial system in `illustration-style-system.md` and is staged
+> outside `drawable-nodpi` until product, brewer-mechanics, accessibility, and
+> placement review pass.
 
 ## Prompt template
 
@@ -60,7 +61,7 @@ For every asset record:
   > infographic, arrows, multiple panels, decorative kitchen clutter, floating
   > paper, cone-shaped paper, unsafe grip, unstable vessel, or implied recipe
   > quantities.
-- Final drawable:
+- Retired drawable (removed from app resources on 3 August 2026):
   `app/src/main/res/drawable-nodpi/instruction_steep_and_release_clever_style_clever_style_insert_and_rinse_filter_default.webp`
 - Delivery: opaque RGB WebP, 1024 × 768 px, 79,850 bytes, exact 4:3.
 - Accessibility: uses the existing `prep_tip_pour_over_paper` resource, which
@@ -69,9 +70,10 @@ For every asset record:
 - Inspection: no embedded text, numbers, labels, logos, extra panels, or visual
   noise; action remains legible at phone size. The dripper, wedge-like paper,
   supported waste server, and rinse flow are visually coherent.
-- Review status: **pending brewer-expert review**. Do not mark approved until a
-  reviewer confirms the exact paper seating, bottom-actuator/server contact,
-  hot-water handling, and canonical stage fit.
+- Retirement: **rejected and removed from app resources/catalog on 3 August
+  2026** after the flat-illustration visual audit. Historical prompt, delivery,
+  and inspection details remain for provenance only; this asset is not a
+  runtime input or exact-stage coverage.
 
 ### `hario-switch-add-coffee-imagegen-v2`
 
@@ -112,7 +114,7 @@ For every asset record:
   > arrows, extra panels, clutter, extra hands, or a handle.
 - Rejected draft: the initial render added a handled glass cone, so it was not
   copied into the repository or manifest.
-- Final drawable:
+- Retired drawable (removed from app resources on 3 August 2026):
   `app/src/main/res/drawable-nodpi/instruction_steep_and_release_hario_switch_hario_switch_add_coffee_default.webp`
 - Delivery: opaque RGB WebP, 1024 × 768 px, 84,364 bytes, exact 4:3.
 - Accessibility: uses the existing `action_brew_add_coffee` resource, present
@@ -120,9 +122,10 @@ For every asset record:
 - Inspection: no handle, valve, lever, text, logo, water, or extra action is
   shown. The seated cone paper, falling grounds, level bed, stable support, and
   hand placement remain clear at phone size.
-- Review status: **pending brewer-expert review**. Confirm the handleless glass
-  cone/rib geometry, paper seating, server support, and cross-recipe framing
-  before approval.
+- Retirement: **rejected and removed from app resources/catalog on 3 August
+  2026** after the flat-illustration visual audit. Historical prompt, delivery,
+  and inspection details remain for provenance only; this asset is not a
+  runtime input or exact-stage coverage.
 
 ### `phin-stable-cup-imagegen-v2`
 
@@ -160,7 +163,7 @@ For every asset record:
   > floating parts, or impossible fused geometry.
 - Rejected draft: the initial render hid the perforated floor and added plants,
   pottery, and a tray, so it was not copied into the repository or manifest.
-- Final drawable:
+- Retired drawable (removed from app resources on 3 August 2026):
   `app/src/main/res/drawable-nodpi/instruction_restricted_flow_gravity_concentrate_vietnamese_phin_vietnamese_phin_place_on_stable_cup_default.webp`
 - Delivery: opaque RGB WebP, 1024 × 768 px, 86,592 bytes, exact 4:3.
 - Accessibility: uses the existing `warning_brew_safety_stability` resource,
@@ -169,9 +172,10 @@ For every asset record:
 - Inspection: the empty perforated floor, upright chamber, full flange overlap,
   wide stable cup, and hand kept off metal are legible at phone size; the frame
   contains no decorative objects or second action.
-- Review status: **pending brewer-expert safety review**. Confirm the phin's
-  integrated base/perforation geometry, flange overlap, cup support, and absence
-  of implied pressure before approval.
+- Retirement: **rejected and removed from app resources/catalog on 3 August
+  2026** after the flat-illustration visual audit. Historical prompt, delivery,
+  and inspection details remain for provenance only; this asset is not a
+  runtime input or exact-stage coverage.
 
 ### `p1-chemex-filter-air-channel-imagegen-v2`
 
@@ -2572,8 +2576,9 @@ For every asset record:
 Assets must be local optimized WebP files in `drawable-nodpi` where appropriate.
 Run `python tools/verify_instruction_assets.py` after every asset batch. It
 fails on a malformed Android resource name, non-WebP content, a size other than
-1024 × 768, a non-RGB or animated payload, or an encoded size above 300,000
-bytes.
+1024 × 768, an invalid colour mode, animation, an encoded size above 300,000
+bytes, deployed bytes that differ from an accepted tracker candidate, or any
+explicitly retired legacy resource name.
 
 No asset is release-complete until the manifest and automated validation pass and
 the physical review is signed off.

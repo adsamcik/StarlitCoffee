@@ -53,9 +53,9 @@ The six produced, pending-review batch-01 exact-stage drawables are excluded:
 - `instruction_p1_auto_cupone_20_300_stage_03_instruction_default`
 - `instruction_p1_wave185_ozone_25_400_stage_01_instruction_default`
 
-The pending generic phin stable-cup candidate
+The now-retired generic phin stable-cup asset
 `instruction_restricted_flow_gravity_concentrate_vietnamese_phin_vietnamese_phin_place_on_stable_cup_default`
-is not exact coverage for the composite gravity-phin stage selected here.
+was never exact coverage for the composite gravity-phin stage selected here.
 
 ## Placement verification
 

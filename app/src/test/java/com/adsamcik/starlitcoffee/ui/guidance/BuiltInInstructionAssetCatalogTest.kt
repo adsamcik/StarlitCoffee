@@ -14,28 +14,23 @@ import org.junit.Test
 class BuiltInInstructionAssetCatalogTest {
 
     @Test
-    fun `production source validates pending inputs without presenting them`() {
-        val catalog = BuiltInInstructionAssetCatalog.catalog
-        val assets = catalog.assets
+    fun `production source excludes retired legacy inputs`() {
+        val retiredIds = setOf(
+            "instruction_steep_and_release_clever_style_" +
+                "clever_style_insert_and_rinse_filter_default",
+            "instruction_steep_and_release_hario_switch_" +
+                "hario_switch_add_coffee_default",
+            "instruction_restricted_flow_gravity_concentrate_vietnamese_phin_" +
+                "vietnamese_phin_place_on_stable_cup_default",
+        )
 
         assertEquals(
-            setOf(
-                "instruction_steep_and_release_clever_style_" +
-                    "clever_style_insert_and_rinse_filter_default",
-                "instruction_steep_and_release_hario_switch_" +
-                    "hario_switch_add_coffee_default",
-                "instruction_restricted_flow_gravity_concentrate_vietnamese_phin_" +
-                    "vietnamese_phin_place_on_stable_cup_default",
-            ),
-            assets.mapTo(linkedSetOf()) { asset -> asset.id.value },
+            emptySet<String>(),
+            BuiltInInstructionAssetCatalog.catalog.assets
+                .mapTo(linkedSetOf()) { asset -> asset.id.value }
+                .intersect(retiredIds),
         )
-        assets.forEach { asset ->
-            assertEquals(InstructionAssetReviewStatus.PENDING_REVIEW, asset.review.status)
-            assertEquals(asset.id.value, asset.expectedDrawableResourceName())
-            assertNull(catalog.findApprovedAssetForContent(asset.contentId))
-        }
     }
-
     @Test
     fun `content lookup returns a reviewed default and never a pending record`() {
         val pending = asset(

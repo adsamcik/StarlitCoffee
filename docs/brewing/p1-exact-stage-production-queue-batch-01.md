@@ -28,7 +28,8 @@ Canonical source:
 - Schema: `1.0.0`
 - Verification date: `2026-07-27`
 
-The batch excludes the three current `PENDING_REVIEW` assets:
+The batch excludes three legacy assets that were then `PENDING_REVIEW` and are
+now retired:
 
 - Clever filter rinse
   (`instruction_steep_and_release_clever_style_clever_style_insert_and_rinse_filter_default`)
@@ -39,8 +40,8 @@ The batch excludes the three current `PENDING_REVIEW` assets:
 
 The selected Clever, Switch, and phin stages teach different mechanisms:
 bottom-actuated release, lever/ball release, and light threaded-insert
-engagement respectively. A pending generic asset is not treated as coverage
-for an exact recipe stage.
+engagement respectively. Those generic assets never counted as coverage for an
+exact recipe stage.
 
 ## Placement verification
 

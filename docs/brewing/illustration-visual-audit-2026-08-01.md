@@ -8,6 +8,11 @@ in the app. Five text-free flat editorial candidates remain for formal review;
 they are still outside `drawable-nodpi` and none is registered or counted as
 exact-stage coverage.
 
+Archive follow-up — 3 August 2026: the three generic legacy
+`PENDING_REVIEW` drawables and their catalog records were removed from app
+runtime/resources. Their prompt and production records remain in
+`asset-production.md` as historical provenance.
+
 ## Review method
 
 - Reviewed the 79 raw generator outputs in
