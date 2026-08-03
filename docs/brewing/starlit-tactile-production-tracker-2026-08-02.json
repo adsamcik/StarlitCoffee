@@ -289,17 +289,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 182,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_02_instruction_default",
@@ -307,17 +309,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 183,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_03_instruction_default",
@@ -325,17 +329,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 184,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_04_instruction_default",
@@ -343,17 +349,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 185,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_05_instruction_default",
@@ -361,17 +369,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 186,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_06_instruction_default",
@@ -379,17 +389,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 187,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_07_instruction_default",
@@ -397,17 +409,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 188,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_01_instruction_default",
@@ -415,17 +429,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 200,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_02_instruction_default",
@@ -433,17 +449,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 201,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_03_instruction_default",
@@ -451,17 +469,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 202,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_04_instruction_default",
@@ -469,17 +489,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 203,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_05_instruction_default",
@@ -487,17 +509,19 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 204,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "hario-kasuya-kdc-02-b",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_06_instruction_default",
@@ -661,17 +685,19 @@
       "blocker": "BLOCK-WEDGE-VARIANT",
       "matrix_line": 236,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "melitta-one-cup-number-2",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_02_instruction_default",
@@ -679,17 +705,19 @@
       "blocker": "BLOCK-WEDGE-VARIANT",
       "matrix_line": 237,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "melitta-one-cup-number-2",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_03_instruction_default",
@@ -697,17 +725,19 @@
       "blocker": "BLOCK-WEDGE-VARIANT",
       "matrix_line": 238,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "melitta-one-cup-number-2",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default",
@@ -715,17 +745,19 @@
       "blocker": "BLOCK-WEDGE-VARIANT",
       "matrix_line": 239,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "melitta-one-cup-number-2",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_05_instruction_default",
@@ -733,17 +765,19 @@
       "blocker": "BLOCK-WEDGE-VARIANT",
       "matrix_line": 240,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "melitta-one-cup-number-2",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default",
@@ -751,17 +785,19 @@
       "blocker": "BLOCK-WEDGE-VARIANT",
       "matrix_line": 241,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "melitta-one-cup-number-2",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_chemex_42_700_stage_01_instruction_default",
@@ -889,17 +925,19 @@
       "blocker": "BLOCK-GENERIC-CONE",
       "matrix_line": 271,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-GENERIC-CONE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "bounded-app-reference-cone-02",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_02_instruction_default",
@@ -907,17 +945,19 @@
       "blocker": "BLOCK-GENERIC-CONE",
       "matrix_line": 272,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-GENERIC-CONE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "bounded-app-reference-cone-02",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_03_instruction_default",
@@ -925,17 +965,19 @@
       "blocker": "BLOCK-GENERIC-CONE",
       "matrix_line": 273,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-GENERIC-CONE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "bounded-app-reference-cone-02",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_04_instruction_default",
@@ -943,17 +985,19 @@
       "blocker": "BLOCK-GENERIC-CONE",
       "matrix_line": 274,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-GENERIC-CONE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "bounded-app-reference-cone-02",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_05_instruction_default",
@@ -961,17 +1005,19 @@
       "blocker": "BLOCK-GENERIC-CONE",
       "matrix_line": 275,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-GENERIC-CONE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "bounded-app-reference-cone-02",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_clever_water_first_15_250_stage_01_instruction_default",
@@ -1523,17 +1569,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 366,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_02_instruction_default",
@@ -1541,17 +1589,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 367,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_03_instruction_default",
@@ -1559,17 +1609,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 368,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_04_instruction_default",
@@ -1577,17 +1629,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 369,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_05_instruction_default",
@@ -1595,17 +1649,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 370,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_06_instruction_default",
@@ -1631,17 +1687,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 383,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_02_instruction_default",
@@ -1649,17 +1707,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 384,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default",
@@ -1667,17 +1727,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 385,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_04_instruction_default",
@@ -1685,17 +1747,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 386,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_05_instruction_default",
@@ -1703,17 +1767,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 387,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_06_instruction_default",
@@ -1721,17 +1787,19 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 388,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "stc-pro-1-or-2-low-gas",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_01_instruction_default",
@@ -1739,17 +1807,19 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 400,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_02_instruction_default",
@@ -1757,17 +1827,19 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 401,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_03_instruction_default",
@@ -1775,17 +1847,19 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 402,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_04_instruction_default",
@@ -1793,17 +1867,19 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 403,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_05_instruction_default",
@@ -1811,17 +1887,19 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 404,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_01_instruction_default",
@@ -1829,17 +1907,19 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 416,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_02_instruction_default",
@@ -1847,17 +1927,19 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 417,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_03_instruction_default",
@@ -1865,17 +1947,19 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 418,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_04_instruction_default",
@@ -1883,17 +1967,19 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 419,
       "batch": null,
-      "status": "research_blocked",
-      "research": "blocked",
+      "status": "generation_pending",
+      "research": "complete",
       "attempts": [],
       "open_todos": [
         {
-          "kind": "resolve_research_blocker",
+          "kind": "generate_and_review",
           "status": "open",
-          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+          "detail": "Generate the resolved configuration and complete every visual QA gate."
         }
       ],
-      "qa": "pending"
+      "qa": "pending",
+      "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
     },
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_01_instruction_default",

@@ -13,6 +13,14 @@ MATRIX = ROOT / "docs" / "brewing" / "p1-exact-stage-matrix.md"
 TRACKER = ROOT / "docs" / "brewing" / "starlit-tactile-production-tracker-2026-08-02.json"
 ASSET_RE = re.compile(r"instruction_p1_[a-z0-9_]+_default")
 BLOCKER_RE = re.compile(r"`((?:NONE|BLOCK)-[A-Z0-9-]+)`")
+RESOLUTIONS = {
+    "BLOCK-V60-VARIANT": "hario-kasuya-kdc-02-b",
+    "BLOCK-WEDGE-VARIANT": "melitta-one-cup-number-2",
+    "BLOCK-GENERIC-CONE": "bounded-app-reference-cone-02",
+    "BLOCK-CEZVE-HARDWARE": "stc-pro-1-or-2-low-gas",
+    "BLOCK-AUTO-BATCH-HARDWARE": "moccamaster-kbgv-select-cone-glass",
+}
+RESOLUTION_DOCUMENT = "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
 
 
 def matrix_rows() -> list[dict[str, str | int]]:
@@ -46,38 +54,60 @@ def matrix_rows() -> list[dict[str, str | int]]:
     return rows
 
 
+def production_todo(resolved: bool) -> list[dict[str, str]]:
+    return [
+        {
+            "kind": "generate_and_review" if resolved else "research_and_generate",
+            "status": "open",
+            "detail": (
+                "Generate the resolved configuration and complete every visual QA gate."
+                if resolved
+                else "Research mechanics, generate, and complete every visual QA gate."
+            ),
+        },
+    ]
+
+
 def main() -> int:
     data = json.loads(TRACKER.read_text(encoding="utf-8"))
     existing = {row["asset_id"]: row for row in data["assets"]}
     reconciled: list[dict[str, object]] = []
     for matrix_row in matrix_rows():
         asset_id = str(matrix_row["asset_id"])
+        blocker = str(matrix_row["blocker"])
+        resolution = RESOLUTIONS.get(blocker)
         if asset_id in existing:
             row = existing[asset_id]
             row.update(matrix_row)
+            if row.get("status") == "research_blocked" and resolution:
+                row.update(
+                    {
+                        "status": "generation_pending",
+                        "research": "complete",
+                        "blocker_resolution": resolution,
+                        "resolution_document": RESOLUTION_DOCUMENT,
+                        "open_todos": production_todo(resolved=True),
+                    },
+                )
             reconciled.append(row)
             continue
 
-        blocker = str(matrix_row["blocker"])
-        blocked = blocker.startswith("BLOCK-")
         reconciled.append(
             {
                 **matrix_row,
                 "batch": None,
-                "status": "research_blocked" if blocked else "generation_pending",
-                "research": "blocked" if blocked else "queued",
-                "attempts": [],
-                "open_todos": [
+                "status": "generation_pending",
+                "research": "complete" if resolution else "queued",
+                **(
                     {
-                        "kind": "resolve_research_blocker" if blocked else "research_and_generate",
-                        "status": "open",
-                        "detail": (
-                            f"Resolve {blocker} without inventing equipment compatibility."
-                            if blocked
-                            else "Research mechanics, generate, and complete every visual QA gate."
-                        ),
-                    },
-                ],
+                        "blocker_resolution": resolution,
+                        "resolution_document": RESOLUTION_DOCUMENT,
+                    }
+                    if resolution
+                    else {}
+                ),
+                "attempts": [],
+                "open_todos": production_todo(resolved=resolution is not None),
                 "qa": "pending",
             },
         )
