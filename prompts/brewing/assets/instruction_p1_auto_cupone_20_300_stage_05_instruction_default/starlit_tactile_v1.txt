@@ -1,0 +1,26 @@
+Create a brand-new instructional illustration from a blank canvas.
+
+REFERENCE ROLES:
+- Image 1 is EQUIPMENT GEOMETRY ONLY: use it to understand a compact Cup-One single-cup brewer, current installed single-hole outlet arm, model-specific small holder with No. 1 paper, reservoir/lid, base, switch, and broad mug centered below. Do not copy its photographic style, beige background, dry grounds, or exact proportions.
+- Image 2 is STYLE ONLY: match its modern premium Material 3 Expressive "Starlit Tactile" rendering language, organic deep-espresso stage, polished vector-like 3D illustration, restrained gouache/cut-paper tactility, material clarity, and app-card readability. Do not copy its Switch brewer, hand, valve, or stream.
+
+INSTRUCTIONAL STATE — CUP-ONE RESIDUAL-DRIP WAIT AFTER AUTO-OFF:
+Show one accurate unbranded current Cup-One-style single-cup brewer immediately after automatic water transfer has ended.
+- The reservoir lid is installed.
+- The current model-specific SINGLE-HOLE metal outlet arm is fully installed and correctly aligned above the seated brew basket/filter holder. Do not show a multi-hole shower bar or end spray.
+- Exactly one No. 1 paper remains inside the installed holder around a settled wet granular coffee bed.
+- A broad heat-safe ceramic mug is centered, stable, and directly beneath the holder outlet. It contains brewed coffee at a modest plausible level.
+- There is NO active water transfer from the arm and NO falling coffee stream or falling droplet.
+- At most show exactly one tiny residual bead still attached to the underside of the holder outlet. The bead must cling to the outlet, not fall through the air.
+- The non-text power indicator is dark/off. No glowing switch and no active-cycle cue.
+- Absolutely no hands, fingers, reaching, lifting, tilting, serving, or contact with hot parts.
+- No steam plume, overflow, splash, grounds escaping, disassembly, loose plug, or cleaning tool.
+
+COMPOSITION:
+Large elevated front three-quarter view at phone-card scale. Make the current arm, holder, attached residual bead, dark indicator, centered mug, and hands-off pause readable. Keep the entire machine, arm, mug handle, stage, and shadows within generous safe margins; nothing touches a canvas edge.
+Use one borderless deep espresso-brown organic stage with a few broad asymmetric flowing curves tailored around the machine silhouette. Not a rectangle, rounded rectangle, squircle, oval, circle, badge, cloud, splash, flower, or star. No white border.
+Outside the stage is perfectly flat pure #00FF00 chroma key with no texture, grain, gradient, shadow, halo, glow, reflection, or green spill.
+
+STYLE AND CLARITY:
+Modern high-fidelity editorial instructional illustration aligned with Material 3 Expressive. Polished vector-like 3D with restrained tactile gouache/cut-paper texture. Clearly illustrated, not photorealistic, not glossy CGI, not vintage or retro. Distinguish brushed metal, clear reservoir, matte holder, damp paper, granular wet bed, ceramic mug, and smooth coffee.
+No text, numbers, timers, progress UI, arrows, labels, icons, logos, warning symbols, decorative beans, extra props, or visual noise. Communicate only: automatic transfer is over; keep the centered mug in place and wait for the last attached bead to stop.

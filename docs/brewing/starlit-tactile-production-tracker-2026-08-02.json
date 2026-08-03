@@ -472,62 +472,210 @@
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_05_instruction_default",
       "batch": 4,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-76c21f87-ae32-420d-a358-218d9e84404b.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The current single-hole arm and holder remain installed; the indicator is dark and exactly one residual bead clings above the centered mug.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "qa": "complete",
+      "notes": "Current single-hole arm, dark indicator, centered mug, hands-off state, and one attached residual bead remain clear in both themes."
     },
     {
       "asset_id": "instruction_p1_clever_water_first_15_250_stage_02_instruction_default",
       "batch": 4,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-19684e38-45d6-488e-9bd6-6dc1c8b3fdcf.png",
+          "verdict": "rejected",
+          "issues": [
+            "The hand is cropped at the top-right edge, the folded paper seams are not legible, and the center actuator appears too close to or touching the scale."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-59259ff8-a78b-4440-8d0b-cd5eb9233dd3.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "Clear water only is retained; the complete hand is contained, the paper side fold is visible, and the unpressed actuator has a broad dry gap above the scale.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_02_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "Clear-water-only retention, complete safe hand, seated paper, dry scale, and unpressed actuator gap remain clear in both themes."
     },
     {
       "asset_id": "instruction_p1_phin_gravity_14_118_stage_02_instruction_default",
       "batch": 4,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-eb002de7-a965-4311-8833-d79b6432742c.png",
+          "verdict": "rejected",
+          "full_resolution_review": "pass",
+          "notes": "The loose unthreaded perforated disc rests flat above a visible ring of uncompressed dry grounds with full cup-rim support and no hand.",
+          "issues": [
+            "The instructional content is correct, but the generated master is portrait 1122 by 1402 rather than the required landscape 4:3 card."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-1b1299ff-6992-4d1f-98b5-e86c79238313.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "True landscape 4:3; loose unthreaded disc rests flat above a visible ring of uncompressed dry grounds with full cup-rim support.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_02_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "Landscape 4:3 framing, flat unthreaded disc, loose ground ring, headroom, and full rim support remain legible in both themes."
     },
     {
       "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default",
       "batch": 4,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-9073d887-6776-4a0a-8a4a-22583f987312.png",
+          "verdict": "rejected",
+          "issues": [
+            "The shallow bloom is correct, but the stainless ball appears slightly suspended above the circular seat, so the closed seal is ambiguous."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-ad5728cb-3415-4eb3-9757-a38d06693aeb.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The ball visibly contacts the circular seat with zero gap; the low uniformly wet bloom is retained and the server remains empty.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "A shallow uniformly wet first bloom, direct ball-to-seat seal, untouched lever, dry outlet, and empty server remain distinct in both themes."
     },
     {
       "asset_id": "instruction_p1_v60_official_15_250_stage_04_instruction_default",
       "batch": 4,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-f80b0348-bcbf-4379-929b-5b476b25e3a2.png",
+          "verdict": "rejected",
+          "issues": [
+            "The pour path is correct, but the hand and forearm are cropped by the right canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-5582545f-6bd6-4f20-99dd-4edfc90886b2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The complete hand and kettle are contained; one low continuous stream lands wholly inside the bed boundary and away from paper.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_official_15_250_stage_04_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "The complete kettle hand, continuous low stream, center-to-mid-bed landing, and clean paper band remain readable in both themes."
     },
     {
       "asset_id": "instruction_p1_v60_rao_20_330_stage_01_instruction_default",
       "batch": 4,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-8d4db884-1126-4667-b804-ca3b082a512d.png",
+          "verdict": "rejected",
+          "full_resolution_review": "pass",
+          "notes": "The molded-plastic V60 contains a dry broadly level granular bed with one broad shallow coffee-covered central dimple.",
+          "issues": [
+            "The shallow nest is legible, but the transparent dripper can be mistaken for glass at phone size, failing the exact plastic-V60 identity gate."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-5d845f12-927b-4a19-9f5c-8dd6a8765266.png",
+          "verdict": "rejected",
+          "issues": [
+            "The smoky molded-plastic identity is corrected, but the organic stage fills and touches the canvas perimeter, leaving no transparent-ready margin."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "raw_cache": "exec-b898fb9d-d49f-4722-8263-70bd536749fa.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "Smoky satin molded plastic contrasts with the clear glass server; one broad shallow coffee-covered nest and generous perimeter margins are preserved.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_rao_20_330_stage_01_instruction_default/starlit_tactile_v3.webp",
+      "qa": "complete",
+      "notes": "Smoky molded-plastic identity, clear-glass server contrast, one shallow coffee-covered nest, and safe perimeter remain clear in both themes."
     }
   ]
 }

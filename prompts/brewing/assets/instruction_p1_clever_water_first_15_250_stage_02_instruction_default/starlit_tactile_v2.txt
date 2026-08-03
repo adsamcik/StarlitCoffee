@@ -1,0 +1,23 @@
+Correct the immediately preceding Clever water-first illustration while preserving its clear-water-only pour, retained transparent pool, dripper, scale, modern Starlit Tactile style, organic deep-espresso stage, and pure-green exterior.
+
+1. COMPLETE HAND/KETTLE MARGIN:
+- Move and slightly scale down the kettle-and-hand group inward and down-left.
+- Show the complete hand, all fingers, and a natural rounded wrist/short-sleeve termination fully inside the organic stage.
+- Leave a generous visible #00FF00 margin between every skin/kettle pixel and every canvas edge. Nothing may be cropped or touch an edge.
+- Keep hand on the kettle handle only and preserve one continuous clear stream into the brewer.
+
+2. MAKE THE #4 PAPER PREPARATION LEGIBLE:
+- Keep exactly one white wedge #4 paper.
+- Add one narrow doubled SIDE factory seam folded flat against one sloped wall.
+- Add one narrow doubled BOTTOM factory seam folded flat across the lower paper edge.
+- Show the two small folds turning in opposite directions at their lower corner.
+- Do not create a second filter, loose flap, pleats, V60 cone, tear, or paper above the rim.
+
+3. FIX ACTUATOR CLEARANCE:
+- Raise/recess the central bottom actuator so its lowest tip ends clearly above the scale surface.
+- Increase the support-foot height if necessary.
+- Show a broad, dark, unmistakable dry air gap between the actuator tip and the scale.
+- Only the two outer feet contact the scale. The center actuator is unpressed/down in its natural closed state but touches nothing.
+- No drip, droplet, stream, wet trail, or shadow bridge may connect the outlet to the scale.
+
+Keep the retained liquid clear and colorless with no coffee grounds or brown tint. Keep scale display hidden/blank. No cup or carafe, text, numbers, arrows, icons, labels, logos, extra props, overflow, splash, green spill, or visual noise.

@@ -269,3 +269,100 @@ logo, arrow, label, frame, or unrelated prop.
 - Nguyen Coffee Supply's phin guidance supports level grounds, clean dry holes,
   restrained insert pressure, and an observation-driven slow drip. Recipe-
   specific screw-phin dose and timing remain those in the canonical library.
+
+
+## Batch 04 retained candidates
+
+This closes the 24-asset production tracker. Every final-batch image passed the
+same independent source, mechanics, prompt, full-resolution, aspect-ratio,
+transparency, dual-theme phone, and final-artifact gates. Failed gates reopened
+their asset until a later revision resolved them.
+
+| Asset | Accepted | Generator cache lineage | Prompt lineage | Alpha / WebP SHA-256 |
+| --- | --- | --- | --- | --- |
+| `instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default` | `v2` | `exec-9073d887-6776-4a0a-8a4a-22583f987312.png` → `exec-ad5728cb-3415-4eb3-9757-a38d06693aeb.png` | `v1` → `v2` | `fafd9145b4048cfd5b4613d49498838823c2602e7bf3132dc9b36de01d349f4b` / `fdb74f907c323e806f620bf428ef6927cb138cbc208c86b6152ae37786ae0496` |
+| `instruction_p1_v60_official_15_250_stage_04_instruction_default` | `v2` | `exec-f80b0348-bcbf-4379-929b-5b476b25e3a2.png` → `exec-5582545f-6bd6-4f20-99dd-4edfc90886b2.png` | `v1` → `v2` | `71989ee2922bfdb8393a0731b5d8065f65dcf3334a2cf3e662ba793a1ae6b8ff` / `9eb929d743c9e567972f6b45b08cba025d2ca28c09b275bd093b4b319e29e293` |
+| `instruction_p1_v60_rao_20_330_stage_01_instruction_default` | `v3` | `exec-8d4db884-1126-4667-b804-ca3b082a512d.png` → `exec-5d845f12-927b-4a19-9f5c-8dd6a8765266.png` → `exec-b898fb9d-d49f-4722-8263-70bd536749fa.png` | `v1` → `v2` → `v3` | `27f12213cd9ff92f0d5be497f41704fb1ab7d58c3f60dfa50802866901a1edf4` / `1154d0387fa8a0f7762902c9478c7432c7f4b0f3383650fe858f7bc20aff7478` |
+| `instruction_p1_phin_gravity_14_118_stage_02_instruction_default` | `v2` | `exec-eb002de7-a965-4311-8833-d79b6432742c.png` → `exec-1b1299ff-6992-4d1f-98b5-e86c79238313.png` | `v1` → `v2` | `a239cc1b293ed79bee7aafaad2b8b638cbf0d9ac847c3d0cb4b176a151e3c431` / `95bff7d208c70c73fdacd3cdfcf868d307829a375e9bb039fc411b5e7f22036a` |
+| `instruction_p1_auto_cupone_20_300_stage_05_instruction_default` | `v1` | `exec-76c21f87-ae32-420d-a358-218d9e84404b.png` | `v1` | `7094b2269b292a7b608cfe5264f379c3f24b33463036d7a25e413d6b8eb4d645` / `f520f23978807d9c3aaf602b55170c25cea96abf9b9ac0decf3de0accc426c4f` |
+| `instruction_p1_clever_water_first_15_250_stage_02_instruction_default` | `v2` | `exec-19684e38-45d6-488e-9bd6-6dc1c8b3fdcf.png` → `exec-59259ff8-a78b-4440-8d0b-cd5eb9233dd3.png` | `v1` → `v2` | `9af8a126816041a0af5deb6ba253de925f37813f15afcad44c770ca2b957adad` / `e9bacb8d5f539b1453f329f9b3449cd3c06a9558e2e17aef42fdd5f79e217bf1` |
+
+Every successful generator event's untruncated `revised_prompt` is committed.
+Upstream 500 responses produced no image payload and therefore are recorded as
+infrastructure events rather than image revisions.
+
+### Exact reference inputs
+
+Committed 480 by 360 geometry-reference hashes are:
+
+- Switch first bloom: `188bcfee62cc890ac66c7908403fa874e6a7b4d320fddabe9ca7e9a43eccf152`.
+- official V60 pour: `edc75d169ea46c95cc5b225f1fec82cdb1ab1e0e88919bd9cdb655b4377b2bc5`.
+- Rao shallow nest: `d4a00b018d6397935dd8fb9fb34960db5b10dbf63fe5b36c55e0f3e0c33e664b`.
+- gravity-phin disc: `925845f8b99dfa067a1203efe670c1ad0c9a3c45b5adc1b95e43cafdce5eb02e`.
+- Cup-One residual wait: `8eefa667b7d12564336b532699035f901ea1f08a7bbc61c3fb06a891fce5ff48`.
+- Clever water-first fill: `3dbc450ed619de46247f298e69246deb103addf48222bd2af43762ed4c48a286`.
+
+Switch, official V60, gravity-phin v1, Cup-One, and Clever v1 used their
+geometry reference for equipment/action and the shared v9 reference for style.
+Switch v2, official V60 v2, Clever v2, and Rao v3 used the preceding raw draft
+as their edit target. Successful Rao v1/v2 and gravity-phin v2 were generated
+from fully specified blank-canvas prompts after reference-conditioned calls
+failed upstream; their exact prompts are the complete reproducible input.
+
+### Transparency and phone QA
+
+| Asset | Key | Transparent / partial pixels | Alpha bounding box | Phone-review result |
+| --- | --- | --- | --- | --- |
+| Switch first bloom | `#04d31d` | `576353 / 3859` | `(180, 29, 1375, 1065)` | Shallow wet bloom, seated ball, dry outlet, and empty server remain distinct. |
+| official V60 pour | `#03d316` | `694853 / 3512` | `(231, 45, 1320, 1063)` | Complete hand, low stream, bed landing, and clean paper band remain visible. |
+| Rao shallow nest | `#09ee0f` | `852997 / 3020` | `(192, 98, 1261, 994)` | Smoky molded plastic, clear glass, shallow nest, and perimeter remain clear. |
+| gravity-phin disc | `#02fa02` | `392613 / 4500` | `(73, 29, 1380, 1047)` | Flat unthreaded disc, ground ring, headroom, and rim support remain legible. |
+| Cup-One residual wait | `#02db0b` | `637250 / 3813` | `(191, 32, 1318, 1070)` | Single-hole arm, dark indicator, centered mug, and attached bead remain clear. |
+| Clever retained fill | `#07cd1b` | `583900 / 3734` | `(152, 67, 1393, 1034)` | Clear water, complete hand, seated paper, dry scale, and actuator gap remain clear. |
+
+All four corner alpha values are zero. Every WebP is below 134 KB. Both theme
+reviews show clean perimeter blending with no green residue, text, logo, arrow,
+label, frame, or unrelated prop.
+
+### Rejected outputs and closed regeneration todos
+
+- Switch v1 `exec-9073d887-6776-4a0a-8a4a-22583f987312.png` showed the ball
+  slightly above its seat. V2 places the ball directly on the annular ring.
+- Official V60 v1 `exec-f80b0348-bcbf-4379-929b-5b476b25e3a2.png` cropped the
+  hand/forearm at the right edge. V2 contains the complete hand and kettle.
+- Rao v1 `exec-8d4db884-1126-4667-b804-ca3b082a512d.png` left the exact plastic
+  identity ambiguous at phone size. V2 corrected the smoky molded-plastic
+  material but let the organic stage touch every canvas edge. V3 preserves the
+  material contrast and restores generous perimeter transparency.
+- Gravity-phin v1 `exec-eb002de7-a965-4311-8833-d79b6432742c.png` was emitted
+  at 1122 by 1402 portrait despite correct mechanics. V2 is exact landscape
+  4:3 with the same loose unthreaded-disc state.
+- Clever v1 `exec-19684e38-45d6-488e-9bd6-6dc1c8b3fdcf.png` cropped the hand,
+  hid the paper-seam preparation, and placed the actuator too close to the
+  scale. V2 contains the hand, exposes the side fold, and leaves a broad dry
+  actuator gap.
+- Three Rao reference-conditioned calls and one gravity-phin composition-edit
+  call returned upstream 500 errors before producing an image. They are not
+  counted as visual attempts or accepted lineage.
+
+### Source and mechanics checks used by batch 04
+
+- The exact-stage queue and canonical library remain authoritative for recipe-
+  specific quantities, timing, temperature, states, and registered evidence.
+- HARIO Europe's current Ole Bøen recipe specifies a Switch 02, a closed
+  dripper, a low first bloom, and 40-second retention; HARIO's product page
+  confirms the steel-ball/button release mechanism.
+- Hario UK's current intermediate V60 guide specifies V60 02/paper 02 and a
+  slow small-circle pour. The accepted stream stays wholly over the bed.
+- Hario UK's Scott Rao interview specifies a plastic V60 and a central
+  bird's-nest preparation. The canonical normalized cue bounds it as shallow,
+  not a deep crater.
+- Nguyen Coffee Supply's current phin guide says to level the coffee and drop
+  the gravity press on top. The accepted disc is loose, unthreaded, and free of
+  tamping pressure.
+- Moccamaster's May 2026 Cup-One guide specifies the current single-hole outlet
+  arm, No. 1 paper, centered cup, hot-arm warning, and approximately four-minute
+  cycle. The accepted post-auto-off frame shows no active stream or handling.
+- Clever's current instructions specify a standard #4 paper, folded seams,
+  water added before coffee, and a drain valve activated only on a cup/carafe.
+  The accepted frame contains clear water only and keeps the actuator off-vessel.
