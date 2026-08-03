@@ -11,7 +11,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
  */
 object BuiltInInstructionAssetCatalog {
     val catalog: InstructionAssetCatalog = InstructionAssetCatalog(
-        assets = emptyList(),
+        assets = P1TrackerAcceptedInstructionAssetCatalog.runtimeAssets(),
     )
 }
 
