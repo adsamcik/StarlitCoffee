@@ -486,3 +486,33 @@ faint wisp preserves the still-hot warning without visual noise.
 
 Every retained frame passed raw mechanics, transparency, 1024 by 768 static
 WebP validation, and separate light- and dark-theme phone review.
+
+
+## Batch 07 retained candidates — 2026-08-03
+
+Batch 07 closes all six stages of `cezve_bounded_repeated_rise_12_130`.
+
+| Asset | Accepted | Generator / reuse lineage | WebP SHA-256 |
+| --- | --- | --- | --- |
+| `instruction_p1_cezve_bounded_repeated_rise_12_130_stage_01_instruction_default` | `v2` | `exec-01e07fce-c4e0-4b8d-a218-a488f6ed35c4.png` → `exec-2efede55-1e99-4631-a8d4-ab61c96727ca.png` | `85d046c63f4415180fe96f24b774cfbb31f529ce0d1f4eb67eac9acd061c5cc2` |
+| `instruction_p1_cezve_bounded_repeated_rise_12_130_stage_02_instruction_default` | `v3` | `exec-44f3b0f5-5844-4d4f-a4d5-4c90c00e6eff.png` → `exec-bb944a5e-6068-4741-b2bc-4ef3768179c6.png` → `exec-61d0e14a-dd0f-462b-b744-f29787016352.png` | `26948823bc79e155808588fd39d37156638b760b1353b7abd5cc39f899d71f9c` |
+| `instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default` | `v1` | `exec-afc20dd6-e6dc-4546-858b-d8920e703f10.png` | `0d5bad4c856253f88ecabad676c5958b634b714d73c58dff8d3e4f188a426f03` |
+| `instruction_p1_cezve_bounded_repeated_rise_12_130_stage_04_instruction_default` | `v1` | `exec-cf586cd8-d1d0-4f63-b545-884f04d64d92.png` | `55c236aa92828b02e5cd8dd145f344ad7b52b323f60b7583357d0c2bedd1a970` |
+| `instruction_p1_cezve_bounded_repeated_rise_12_130_stage_05_instruction_default` | `v1` | exact-state byte reuse from stage 03 | `0d5bad4c856253f88ecabad676c5958b634b714d73c58dff8d3e4f188a426f03` |
+| `instruction_p1_cezve_bounded_repeated_rise_12_130_stage_06_instruction_default` | `v1` | `exec-74b598cc-30f7-4262-a748-8bf1f33b743d.png` | `e150b21d3b49aeef551407c780c99b39c2c0db50587bc8c475448a544363fa75` |
+
+Preparation v1 was rejected for three rim lips, an interior background ribbon,
+and glossy rendering. V2 has one front/one rear spout, smooth side rim, low cold
+mixture, and a quiet stage. Mixing v1 crowded the top edge; v2 over-shrank the
+card gesture; v3 balances phone readability with a complete transparent
+perimeter while keeping a uniform clump-free slurry.
+
+The first and second bounded rises intentionally share a bitmap: in the same
+pot, grate, low flame, handle orientation, and below-spout foam state, the
+ordinal event is not visually distinguishable. Stage identity, timing,
+completion semantics, and warnings remain separate. The off-heat frame uses a
+heat-safe pad and residual foam ring. The final frame shows exactly two equal
+stable servings with smooth coffee above equal settled granular layers.
+
+Every retained frame passed raw mechanics, transparency, static 1024 by 768
+WebP validation, and separate light- and dark-theme phone review.

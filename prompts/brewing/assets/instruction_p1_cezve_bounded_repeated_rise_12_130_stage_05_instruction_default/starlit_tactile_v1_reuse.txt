@@ -1,0 +1,12 @@
+No generator call was made for this revision.
+
+The accepted bitmap for
+`instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default`
+is reused byte-for-byte because stage 03's first bounded rise and stage 05's
+second bounded rise have the same visible physical state in the same exact
+two-cup equipment: the STC-Pro-2-class pot is stable on low gas heat, the flame
+is confined within the base, the handle points away, and fine foam has begun
+to rise toward the lower neck while remaining safely below both spouts. The
+ordinal event (first versus second rise), timing, completion semantics,
+warnings, stage identity, guidance text, and runtime asset ID remain separate
+and are not encoded in the bitmap.

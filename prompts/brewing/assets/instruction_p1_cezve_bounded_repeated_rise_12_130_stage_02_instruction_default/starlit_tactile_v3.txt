@@ -1,0 +1,19 @@
+Revise the immediately preceding contained two-cup mixing image by enlarging the complete illustrated composition approximately 16–18% around its current center. Preserve every brewing, equipment, anatomy, and art-direction detail exactly.
+
+Balanced scale requirement:
+- The last revision is too small for phone-card teaching. Enlarge the hand, spoon, pot, handle, pad, shadows, and organic stage together so the main equipment/action fills roughly 72–78% of canvas height.
+- Keep a genuine uninterrupted flat-green perimeter. At 1448×1086 source size, no object or stage contour may come within about 65 pixels of any canvas edge.
+- Center the enlarged gesture so top, right, bottom, and left margins remain visually balanced. Nothing touches or nearly touches an edge.
+
+Do not change:
+- Exact landscape 4:3.
+- Larger two-cup STC-Pro-2-class copper/tin vessel with exactly two opposite spouts and smooth side rim.
+- Solid off-heat pad contact; no heat, flame, or steam.
+- Low uniform fine-particle slurry below the neck, no clumps.
+- Spoon partly submerged with one shallow wake and no mound on the bowl.
+- Simplified correct five-finger hand holding the outer spoon end away from the pot.
+- Long horizontal matte-charcoal handle.
+- One quiet deep-espresso Material 3 Expressive organic stage; perfectly flat exact #00FF00 outside it.
+- Modern matte cut-paper/gouache editorial style, no photorealism or CGI.
+
+No text, numbers, arrows, timer, labels, logos, cups, ingredients, extra utensils, spill, splash, border, white frame, decoration, or props. This is only a balanced enlargement for phone readability.

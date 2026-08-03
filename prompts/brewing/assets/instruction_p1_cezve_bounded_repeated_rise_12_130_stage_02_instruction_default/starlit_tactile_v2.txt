@@ -1,0 +1,17 @@
+Revise the immediately preceding two-cup Cezve mixing image by scaling the complete composition down and shifting it slightly down-left. Preserve every correct mechanical and stylistic detail.
+
+Hard containment requirement:
+- The full hand and wrist crop currently sit too close to the top/right edge. Move and scale the entire hand-spoon-pot-handle-pad-stage composition so every object, shadow, and organic-stage contour has a generous uninterrupted chroma-green margin on all four sides.
+- At the original 1448×1086 source scale, keep at least about 75 pixels of flat green above the highest hand/wrist point and at least 75 pixels of flat green to the right of the wrist/handle. Maintain similarly comfortable left and bottom margins.
+- Nothing may touch or nearly touch an edge. Do not crop the wrist differently; keep the whole simplified gesture intact within the canvas.
+
+Preserve exactly:
+- Landscape 4:3 canvas.
+- Larger two-cup STC-Pro-2-class copper/tin vessel with exactly one front and one opposite rear spout, smooth side rim, and long horizontal matte-charcoal handle.
+- Firm contact with the solid off-heat ceramic pad; no burner, flame, heat, or steam.
+- Low smooth cold slurry with evenly dispersed fine particles, no clumps, broad headroom.
+- Slender spoon partly submerged with one restrained curved wake and no mound on the bowl.
+- Simplified editorial five-finger hand holding only the outer spoon end and staying away from the pot.
+- Quiet single deep-espresso Material 3 Expressive organic stage, exact flat #00FF00 outside it, modern matte cut-paper/gouache art direction.
+
+No text, numbers, arrows, timer, labels, logos, cups, ingredients, extra utensils, spill, splash, border, white frame, decoration, or props. This revision is a containment fix only; do not alter the verified brewing state.

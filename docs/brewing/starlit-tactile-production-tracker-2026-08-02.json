@@ -1846,19 +1846,40 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 383,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_01_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-01e07fce-c4e0-4b8d-a218-a488f6ed35c4.png",
+          "issues": [
+            "Rejected during raw visual QA: rim shows a front spout plus left and right side lips, exceeding the resolved exactly-two-opposite-spout geometry; dark interior ribbon across the lower organic stage adds unnecessary background noise; copper treatment is somewhat glossy. Larger two-cup scale, low uniform mixture, headroom, off-heat contact, and margins are correct and must be preserved."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_01_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-2efede55-1e99-4631-a8d4-ab61c96727ca.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Larger two-cup STC-Pro-2-class vessel has exactly one front and one opposite rear spout with smooth side rim; cold uniform mixture remains safely below the neck; broad headroom, off-heat pad contact, horizontal handle, quiet stage, and margins remain legible at phone size."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_01_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Larger two-cup STC-Pro-2-class vessel has exactly one front and one opposite rear spout with smooth side rim; cold uniform mixture remains safely below the neck; broad headroom, off-heat pad contact, horizontal handle, quiet stage, and margins remain legible at phone size."
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_02_instruction_default",
@@ -1866,19 +1887,53 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 384,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-44f3b0f5-5844-4d4f-a4d5-4c90c00e6eff.png",
+          "issues": [
+            "Rejected after alpha/full-resolution QA: highest hand/wrist point leaves only a 14-pixel source margin, violating the required generous transparent perimeter. Mixing mechanics, two-spout geometry, uniform slurry, off-heat support, and art direction are correct and must be preserved while scaling/positioning the gesture."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-bb944a5e-6068-4741-b2bc-4ef3768179c6.png",
+          "issues": [
+            "Rejected during raw/card-scale QA: containment correction over-shrank the complete gesture, leaving excessive unused perimeter and reducing phone-card instructional readability. Mechanics and margins are correct; enlarge the entire composition in balance without approaching edges."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_02_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-61d0e14a-dd0f-462b-b744-f29787016352.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed raw, transparency, balanced source-margin, light-theme, and dark-theme visual QA. Larger two-cup exact-two-spout vessel remains off heat on a stable pad; simplified hand and partly submerged spoon show one shallow wake in a low uniform clump-free slurry; composition is contained and phone-readable without edge crowding."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_02_instruction_default/starlit_tactile_v3.webp",
+      "notes": "Passed raw, transparency, balanced source-margin, light-theme, and dark-theme visual QA. Larger two-cup exact-two-spout vessel remains off heat on a stable pad; simplified hand and partly submerged spoon show one shallow wake in a low uniform clump-free slurry; composition is contained and phone-readable without edge crowding."
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default",
@@ -1886,19 +1941,27 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 385,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-afc20dd6-e6dc-4546-858b-d8920e703f10.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Larger exact-two-spout pot is visibly supported on a stable grate; tiny blue flame stays within the base footprint; handle points away; fine first-rise foam is visible toward the lower neck with broad below-rim headroom and no boiling or spill."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Larger exact-two-spout pot is visibly supported on a stable grate; tiny blue flame stays within the base footprint; handle points away; fine first-rise foam is visible toward the lower neck with broad below-rim headroom and no boiling or spill."
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_04_instruction_default",
@@ -1906,19 +1969,27 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 386,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-cf586cd8-d1d0-4f63-b545-884f04d64d92.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Exact two-cup pot is stable on a thick heat-safe pad with burner/flame absent; liquid has receded to a calm low surface while a thin fine-bubble perimeter ring remains; broad headroom, exact spouts, and handle are clear at phone size."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_04_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Exact two-cup pot is stable on a thick heat-safe pad with burner/flame absent; liquid has receded to a calm low surface while a thin fine-bubble perimeter ring remains; broad headroom, exact spouts, and handle are clear at phone size."
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_05_instruction_default",
@@ -1926,19 +1997,27 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 387,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_05_instruction_default/starlit_tactile_v1_reuse.txt",
+          "verdict": "accepted",
+          "reused_from": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Exact-state reuse: the first and second bounded foam-rise events are visually identical in the same pot, grate, low flame, handle orientation, and safe below-spout foam state. Ordinal event, timing, warnings, guidance, and runtime IDs remain separate."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Exact-state reuse: the first and second bounded foam-rise events are visually identical in the same pot, grate, low flame, handle orientation, and safe below-spout foam state. Ordinal event, timing, warnings, guidance, and runtime IDs remain separate."
     },
     {
       "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_06_instruction_default",
@@ -1946,19 +2025,27 @@
       "blocker": "BLOCK-CEZVE-HARDWARE",
       "matrix_line": 388,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-74b598cc-30f7-4262-a748-8bf1f33b743d.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Exactly two matching demitasses are stable on separate saucers, equally filled with equal fine foam; educational sections show smooth coffee above equal thin granular bottom layers; broad headroom, faint hot wisps, clean separation, and complete perimeter remain legible."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "stc-pro-1-or-2-low-gas",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_06_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Passed raw, transparency, light-theme, and dark-theme visual QA. Exactly two matching demitasses are stable on separate saucers, equally filled with equal fine foam; educational sections show smooth coffee above equal thin granular bottom layers; broad headroom, faint hot wisps, clean separation, and complete perimeter remain legible."
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_01_instruction_default",
