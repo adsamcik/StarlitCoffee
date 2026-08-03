@@ -366,3 +366,25 @@ label, frame, or unrelated prop.
 - Clever's current instructions specify a standard #4 paper, folded seams,
   water added before coffee, and a drain valve activated only on a cup/carafe.
   The accepted frame contains clear water only and keeps the actuator off-vessel.
+
+
+## Android drawable integration
+
+All 24 tracker-approved candidates are installed byte-for-byte under their
+exact `instruction_<content-id>` resource names in
+`app/src/main/res/drawable-nodpi`. The deterministic command is:
+
+```text
+python tools/install_starlit_tactile_candidates.py --write
+```
+
+Running the same tool without `--write` verifies installation without changing
+files. `python tools/verify_instruction_assets.py` additionally checks the
+tracker completion state, source/destination SHA-256 identity, static WebP
+encoding, 1024 by 768 dimensions, encoded-size ceiling, RGBA mode, fully
+transparent corners, and the presence of both transparent and opaque pixels.
+
+The drawable payloads are integrated, but exact-stage runtime approval remains
+fail-closed. The app does not yet contain localized exact-stage companion text
+and alt text for every supported locale, so this image pass does not invent
+accessibility copy or bypass `P1ExactRecipeLocalizationCoverage`.
