@@ -1,0 +1,34 @@
+Use case: safety-critical scientific-educational.
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration.
+Generation mode: COMPOSE A COMPLETELY NEW IMAGE FROM A BLANK CANVAS. Do not edit, trace, upscale, repaint, or preserve pixels, background, crop, lighting, noise, or defects from either reference.
+
+REFERENCE ROLES
+Image 1 is equipment/proportion reference only for a Cup-One-style machine: clear reservoir with fitted lid, warm-silver tower and base, installed horizontal outlet arm, supported small No. 1 holder, broad centered mug, active lower coffee drip, and low on switch. Image 2 is rendering-language reference only for the modern premium illustrated finish, tactile materials, organic deep-espresso Material 3 Expressive stage, pure green-key exterior, calm hierarchy, and contained scale. Do not copy Image 1's photographic style or Image 2's Switch brewer/action.
+
+ONE SAFETY LESSON
+Show a normal hands-off active Cup-One cycle. All components remain installed and stable. No hand approaches the hot outlet arm, holder, mug, or machine. Timing and temperature stay in text.
+
+CORRECT OUTLET ARM
+- Use a credible Cup-One NINE-HOLE outlet arm: a slim bent horizontal metal arm fully installed at the reservoir and centered above the paper/grounds.
+- The delivery perforations are a short row distributed on the UNDERSIDE of the arm above the basket, not one hole or nozzle at the arm tip.
+- Show no single water stream coming from the arm's end.
+- To avoid inventing an exact shower pattern, show the machine between upper water pulses: the grounds look evenly wet, but NO visible water falls from the outlet arm.
+- The only visible moving liquid is coffee leaving the holder below.
+
+EXACT ACTIVE STATE
+Accurate unbranded compact Cup-One-style machine with tall warm-silver rectangular body, stable complete base, clear top reservoir holding some clear water, dark fitted lid, and low front power control. The correct outlet arm is fully installed and level. Directly below it, one small dark tapered No. 1 brew holder is fully seated on its support. Exactly one No. 1 paper contains an evenly wet granular coffee bed; nothing escapes. A broad complete heat-safe ceramic mug is centered directly below, stable on the base. Show one slender continuous dark coffee stream or two close aligned dark drops from the holder's tiny bottom outlet into the center of the mug. The lower fluid path must be physically continuous and vertical, with no spill, splash, overflow, or missed cup. Mug coffee surface remains well below the rim. Power control is visibly ON with one tiny warm amber indicator point, no symbol or text. Absolutely no hands, arms, tools, towels, spoons, or human contact.
+
+COMPOSITION
+Close elevated front three-quarter view, full machine as one supported vertical system. Make the installed arm, seated holder, paper/grounds, lower coffee path, centered mug, reservoir lid, and on indicator readable at phone size. Keep the complete machine, mug, shadows, and stage comfortably away from all canvas edges. No props.
+
+VISUAL STYLE
+Modern premium Material 3 Expressive editorial illustration. Polished vector-like 3D with restrained gouache/cut-paper tactility; clearly illustrated, not photorealistic, not glossy CGI, not vintage, not retro. Crisp intentional contours, soft dimensional lighting, simplified brushed-metal highlights, matte charcoal plastic, warm cream ceramic, clear reservoir, granular wet grounds, smooth dark coffee, one restrained amber indicator. High fidelity only for correct equipment and fluid topology. No grain, compression artifacts, duplicate parts, warped perspective, smeared edges, or visual noise.
+
+ORGANIC STAGE AND KEY
+One borderless deep espresso-black organic stage tailored to the tall machine with a few broad asymmetric flowing Material 3 Expressive curves, including a tall reservoir lobe, a gentle inward waist by the holder, and a grounded curve under base/mug. Not rectangle, rounded rectangle, squircle, oval, cloud, splash, badge, flower, star, frame, panel, or inset. No outline, white border, shadow ring, or halo. Outside it use perfectly uniform flat pure #00FF00 with no gradient, texture, noise, shadow, glow, reflection, green spill, or semi-transparent fringe. Nothing touches any canvas edge.
+
+FINAL CHECK
+Nine-hole underside delivery arm, never an end nozzle; no upper water stream; evenly wet bed; one lower coffee path; stable centered mug; active amber point; no hands; no motion of components; reservoir not empty; full contained silhouettes; organic stage; pure green exterior.
+
+NO
+No text, letters, numbers, measurements, labels, logos, arrows, icons, warning signs, callouts, panels, clock, thermometer, pod, capsule, carafe, generic showerhead, wrong paper, narrow cup, detached or single-nozzle arm, tip stream, detached holder, empty active reservoir, off state, simultaneous on/off cues, missing lower stream, violent steam, escaping grounds, overflow, hot-part handling, decorative objects, crop, floating parts, photorealism, glossy ad CGI, retro styling, rectangular stage, white border, clutter, or unnecessary noise.

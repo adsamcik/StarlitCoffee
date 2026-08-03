@@ -1,0 +1,42 @@
+Use case: safety-critical scientific-educational.
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration.
+Generation mode: COMPOSE A COMPLETELY NEW IMAGE FROM A BLANK CANVAS. Do not edit, trace, upscale, repaint, or preserve pixels, beige background, crop, lighting, noise, or defects from either reference.
+
+REFERENCE ROLES
+- Image 1 is exact equipment/state geometry reference only: clean empty Hario Switch 02-style cone, one clean paper, dark base, closed lever, seated steel ball, empty server, no flow, no hand/kettle. Do not copy its photographic style.
+- Image 2 is rendering-language and valve-detail reference only: modern premium illustrated finish, tactile materials, visible ball/seat window, deep espresso organic Material 3 Expressive stage, pure green-key exterior, safe contained scale, and calm hierarchy. Do not copy its coffee slurry, finger, open flow, or amber beverage.
+
+ONE LESSON
+Show the completed preparation state AFTER paper rinsing and discard: the clean paper is uniformly wet, the server is empty, the Switch is now closed, the stainless ball physically seals the outlet seat, and no new drip occurs. This must be visually opposite to the open clear-water rinse and open coffee-release scenes.
+
+EXACT SWITCH AND CLOSED TOPOLOGY
+- Accurate unbranded handleless ribbed glass V60 02-style cone.
+- Exactly one correctly seated clean white V60 02 paper, smoothly contacting the cone, with subtle uniform translucent wet sheen/fiber darkening. No folds, gaps, buckle, tear, or coffee.
+- Dark charcoal silicone Switch base supported stably on the empty transparent heat-safe server.
+- Real side lever in the physically correct CLOSED position. Use muted cobalt accent.
+- One stainless-steel ball in the real front mechanism window.
+- Ball sits firmly ON the circular valve seat: lower ball surface and seat rim are in clear continuous contact, centered and sealed.
+- No open gap beneath ball. No lifted/suspended ball. No liquid ribbon around ball.
+- Outlet directly below is dry and closed.
+- Server is visibly empty: no pool, coffee, rinse water, droplets, splash, or condensation that resembles retained liquid.
+- Above ball, paper and cone contain NO retained rinse pool. Wet paper only.
+- No droplet hanging below outlet and no stream anywhere.
+- Absolutely no kettle, hands, fingers, tools, coffee grounds, slurry, bloom, serving, or active action.
+
+COMPOSITION
+Close elevated three-quarter view centered on stable brewer/server system. Slightly enlarge the mechanism area so closed ball-to-seat contact, lever state, wet clean paper, dry outlet, and empty server remain legible at phone size. Keep complete cone, paper, base, lever, ball, server, shadows, and organic stage away from every canvas edge. Nothing floats. No props.
+
+VISUAL STYLE
+Modern premium Material 3 Expressive editorial illustration. Polished vector-like 3D with restrained gouache/cut-paper tactility; clearly illustrated, not photorealistic, glossy CGI, vintage, or retro. Crisp intentional contours, soft dimensional lighting, simplified glass reflections, charcoal silicone, brushed steel ball, white fibrous wet paper, muted cobalt lever. Use high fidelity only for filter fit and closed valve physics. No grain, compression artifacts, duplicated parts, warped glass, smeared edges, or unnecessary detail.
+
+EXPRESSIVE STAGE
+One borderless deep espresso-black organic stage tailored around the vertical brewer/server silhouette with a few broad asymmetric flowing Material 3 Expressive curves. Fluid and subject-responsive, not rectangle, rounded rectangle, squircle, oval, cloud, splash, badge, flower, star, frame, panel, or inset. No outline, white border, shadow ring, or halo. Breathable dark margin around all silhouettes.
+
+TRANSPARENCY PREPARATION
+Outside stage use perfectly uniform flat pure #00FF00. No gradient, texture, noise, shadow, glow, reflection, green spill, or semi-transparent fringe. Nothing touches canvas edges.
+
+VALIDATION CHECKLIST
+Switch 02 cone; one clean uniformly wet seated paper; no coffee; closed lever; ball centered and touching seat; no gap; dry outlet; no retained pool; no drip/stream; empty stable server; no hands/kettle; full contained organic stage; pure green exterior.
+
+CONSTRAINTS
+No text, letters, numbers, measurements, labels, logos, arrows, icons, warnings, callouts, multiple panels, cutaways, insets, open lever, depressed open button, lifted ball, released outlet, gap under ball, liquid collecting, dripping, stream, retained rinse, coffee-colored liquid, grounds, slurry, bloom, kettle, hand, Clever actuator, generic V60-only base, glass handle, tap, clamp, wrong filter, decorative props, crop, floating parts, photorealism, glossy ad CGI, retro styling, rectangular stage, white border, clutter, or noise.

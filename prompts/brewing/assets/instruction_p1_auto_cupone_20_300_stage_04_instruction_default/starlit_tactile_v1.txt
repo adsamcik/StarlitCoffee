@@ -1,0 +1,40 @@
+Use case: safety-critical scientific-educational.
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration.
+Generation mode: COMPOSE A COMPLETELY NEW IMAGE FROM A BLANK CANVAS. Do not edit, trace, upscale, repaint, or preserve pixels, background, crop, lighting, noise, or degradation from either reference.
+
+REFERENCE ROLES
+- Image 1 is equipment/action geometry reference only: compact Moccamaster Cup-One-style single-cup brewer, top reservoir, installed bent outlet arm, model-specific small brew holder, broad mug, low power switch, and one active coffee stream. Do not copy its photograph, beige room, shadows, branding, or crop.
+- Image 2 is rendering-language reference only: modern premium illustration, restrained tactile finish, deep espresso organic Material 3 Expressive stage, pure green-key exterior, safe contained scale, and calm hierarchy. Do not copy its Switch brewer, hand, valve, slurry, or pour.
+
+ONE SAFETY LESSON
+The Cup-One is midway through a normal automatic hot brewing cycle. Every component stays installed and still, the mug remains centered, and NO HAND approaches the machine. The image must reinforce hands-off operation, not show starting, removal, or completion. Timing and temperature remain in text.
+
+EXACT ACTIVE-CYCLE EQUIPMENT
+- Accurate unbranded compact Cup-One-style machine with tall warm-silver rectangular body, stable full base, clear top water reservoir, dark fitted reservoir lid, low front power control, and one model-specific bent horizontal outlet arm projecting from the reservoir toward the brew holder.
+- Outlet arm is fully installed, level, and centered over the small black tapered No. 1 brew basket/filter holder.
+- Holder is fully seated in its support below the outlet arm, not detached, tilted, or moving.
+- Exactly one No. 1 paper and contained granular coffee bed sit safely inside the holder; paper rim may be subtly visible but no paper protrudes or collapses.
+- A broad complete heat-safe ceramic mug is centered directly beneath the holder, stable on the machine base, with full handle and base visible.
+- Show one slender continuous dark coffee stream—or two closely aligned drops—from the holder's tiny outlet into the center of the mug. The stream must connect physically from outlet to mug; no teleporting, missing target, splashing, overflow, or spill.
+- Show a modest dark coffee surface in the mug well below the rim.
+- The low power control is in a credible ON state with one tiny warm amber indicator point. No digits, symbols, words, clock, thermometer, progress ring, or display.
+- Reservoir may show some clear remaining water; lid stays fitted. No empty active reservoir.
+- Absolutely no hands, fingers, arms, tools, towels, spoons, or human contact anywhere.
+
+COMPOSITION
+Elevated front three-quarter view, slightly closer than Image 1. Center the full machine as one stable vertical system; keep outlet arm, holder, coffee path, mug, reservoir lid, base, and on indicator readable at phone size. Make the active stream and absence of handling the only story. Keep the complete machine, mug, shadows, and organic stage comfortably away from all canvas edges. No counter objects or secondary props.
+
+VISUAL STYLE
+Modern premium Material 3 Expressive editorial illustration. Polished vector-like 3D with restrained gouache/cut-paper tactility. Clearly illustrated, not photorealistic, not glossy CGI, not vintage, not retro poster art. Crisp intentional contours, soft dimensional lighting, simplified brushed-metal highlights, matte charcoal plastics, warm cream ceramic, clear reservoir, rich dark coffee, subtle granular grounds, one restrained amber on-state accent. High fidelity only where it clarifies Cup-One geometry and the safe fluid path. No grainy overlay, compression artifacts, duplicated parts, warped perspective, smeared edges, or unnecessary detail.
+
+EXPRESSIVE STAGE
+One borderless deep espresso-black organic stage custom-shaped around the tall machine with a few broad asymmetric flowing Material 3 Expressive curves: taller rear lobe around reservoir, gentle inward waist beside holder, grounded lower curve beneath base and mug. Fluid and subject-responsive, not rectangle, rounded rectangle, squircle, oval, cloud, splash, badge, flower, or star. No outline, white border, frame, shadow ring, inset, or panel. Leave breathable dark margin around every silhouette.
+
+TRANSPARENCY PREPARATION
+Outside the organic stage use perfectly uniform flat pure #00FF00. No gradient, texture, noise, vignette, shadow, glow, reflection, green spill, or semi-transparent halo. Nothing touches any canvas edge.
+
+VALIDATION CHECKLIST
+Before finalizing verify: exact Cup-One silhouette; reservoir and fitted lid; installed centered outlet arm; seated No. 1 holder; one paper and contained grounds; broad centered stable mug; active dark coffee path entering mug; no overflow; on-state indicator; no hands; no component movement; no timer/temperature; complete contained silhouettes; organic stage; pure green exterior.
+
+CONSTRAINTS
+No text, letters, numbers, measurement marks, labels, logos, brand marks, arrows, callouts, icons, warning signs, panels, insets, clock, thermometer, carafe, pod, capsule, generic showerhead, batch basket, wrong filter size, narrow/unstable cup, second machine, detached outlet, removed holder, empty active reservoir, off state, simultaneous on/off cues, missing stream, violent steam, grounds escaping, splashing, overflow, hot-part contact, hands, tools, decorative props, crop, floating machine, photorealism, glossy ad CGI, retro styling, rectangular stage, white border, clutter, or visual noise.

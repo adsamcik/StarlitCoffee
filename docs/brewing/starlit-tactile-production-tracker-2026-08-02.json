@@ -268,62 +268,206 @@
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_04_instruction_default",
       "batch": 3,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-95c658af-f1ee-4bd2-85c9-7af5dc829288.png",
+          "verdict": "rejected",
+          "issues": [
+            "The installed nine-hole outlet arm is rendered as a single end nozzle and stream, teaching incorrect water-delivery geometry."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-cac6832b-75f9-42c3-94dc-eb3695277469.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The installed outlet arm uses multiple underside perforations over a wet bed; the only visible stream is brewed coffee entering the centered mug.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_04_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "Distributed outlet-arm perforations, wet bed, brewed-coffee stream, on indicator, and centered mug remain distinct in both phone themes."
     },
     {
       "asset_id": "instruction_p1_clever_water_first_15_250_stage_01_instruction_default",
       "batch": 3,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-82020e7e-baab-4eaf-8c4b-b1d9dc58e63f.png",
+          "verdict": "rejected",
+          "issues": [
+            "The #4 paper reads as an unmodified wedge because its folded side and bottom factory seams are not visually legible."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-8dd11c9e-df97-459e-82df-daeb7652b4aa.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "Folded side and bottom seams are distinct; the hand supports only the handle while the closed actuator remains untouched above a clear air gap.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_01_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "Opposite folded seams, handle-only support, unpressed actuator, and open vessel gap remain readable in both phone themes."
     },
     {
       "asset_id": "instruction_p1_phin_screw_18_120_stage_01_instruction_default",
       "batch": 3,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-b0ee61df-31f0-4e25-89d9-56904c9c0fa2.png",
+          "verdict": "rejected",
+          "issues": [
+            "The separate threaded insert is propped at an angle and can read as leaning or floating instead of resting flat on its lid."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-c4d36fa1-cc39-4811-aa06-37353f6f61b4.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The phin is fully supported on a broad cup, the dry granular bed is level around the threaded post, and the separate threaded insert rests flat on the lid.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_01_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "Full cup-rim support, level textured dry bed, threaded post, and insert lying flat on its lid remain clear in both themes."
     },
     {
       "asset_id": "instruction_p1_phin_screw_18_120_stage_05_instruction_default",
       "batch": 3,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-f63a67ef-1c6e-4746-a730-bc57b7dc3b00.png",
+          "verdict": "rejected",
+          "issues": [
+            "Five droplets form a near-continuous beaded column instead of a clearly slow separated cadence."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-e9a93509-7775-4465-adbf-45f521a1694f.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "Exactly three widely separated droplets communicate a slow passive drip from the covered, fully supported phin.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_05_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "Exactly three separated droplets, covered phin, stable support, and modest concentrate remain clear in both themes."
     },
     {
       "asset_id": "instruction_p1_switch_official_20_240_stage_01_instruction_default",
       "batch": 3,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-def626e4-8ed2-46e6-a60d-541d62dfafd0.png",
+          "verdict": "rejected",
+          "issues": [
+            "The ball appears supported by a generic rectangular shelf because the circular outlet seat and sealing contact are not explicit."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-aa7e21c5-a0a6-4c12-b894-88919dee74b6.png",
+          "verdict": "rejected",
+          "issues": [
+            "The circular seat is corrected, but a finger is shown pressing the lever, contradicting the settled closed post-rinse state."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "raw_cache": "exec-6c8070db-e9f1-4710-a5b0-d10ee8e267a0.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The ball visibly seals a distinct circular seat with zero gap; the resting lever is untouched, the outlet is dry, and the server is empty.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_01_instruction_default/starlit_tactile_v3.webp",
+      "qa": "complete",
+      "notes": "Seated ball-to-ring contact, untouched resting lever, dry outlet, wet clean paper, and empty server remain legible in both themes."
     },
     {
       "asset_id": "instruction_p1_v60_official_15_250_stage_01_instruction_default",
       "batch": 3,
-      "status": "generation_pending",
-      "research": "pending",
-      "open_todos": [
-        "research_and_fact_check",
-        "generate_and_run_full_qa_loop"
-      ]
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-71e631eb-ba1a-4a36-bb6d-12b55b9ba75a.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "One folded wet V60 02 paper is evenly seated; no grounds or retained rinse remain and the supported glass server is empty.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_official_15_250_stage_01_instruction_default/starlit_tactile_v1.webp",
+      "qa": "complete",
+      "notes": "The folded seam, evenly damp seated paper, empty supported server, and discarded-rinse state remain readable in both themes."
     },
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_05_instruction_default",

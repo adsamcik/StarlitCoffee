@@ -184,3 +184,88 @@ in an accepted candidate.
   press. The setup image therefore keeps the press separate and the hot-removal
   image keeps it contained, while the matching inverted lid supports the hot
   phin and the serving choice remains outside the image.
+
+## Batch 03 retained candidates
+
+All six assets completed the tracker loop independently: source/mechanics
+review, exact prompt capture, full-resolution inspection, chroma removal,
+transparent-edge verification, both 384 by 288 theme reviews, and final WebP
+verification. A failed draft reopened its asset until a later revision passed.
+
+| Asset | Accepted | Generator cache lineage | Prompt lineage | Alpha / WebP SHA-256 |
+| --- | --- | --- | --- | --- |
+| `instruction_p1_auto_cupone_20_300_stage_04_instruction_default` | `v2` | `exec-95c658af-f1ee-4bd2-85c9-7af5dc829288.png` → `exec-cac6832b-75f9-42c3-94dc-eb3695277469.png` | `v1` → `v2` | `4ead237e84a26f5ba5f008e041b8e39bbd52140eff2dc43f1b51263260a73d7c` / `7a905b6a634db7848a9800bf0ccf467fd2d60b22452f6b9ef93abd7a1b3753dc` |
+| `instruction_p1_clever_water_first_15_250_stage_01_instruction_default` | `v2` | `exec-82020e7e-baab-4eaf-8c4b-b1d9dc58e63f.png` → `exec-8dd11c9e-df97-459e-82df-daeb7652b4aa.png` | `v1` → `v2` | `cc9b9d674defbfdcfc54aaa50d1f6a31e7136ca9f7317e8c59389355af5e72ac` / `2a9c7bcb90b2244cd9a2a2dd7cda1b5026b4991194f44a0065b8af67cb88a04e` |
+| `instruction_p1_phin_screw_18_120_stage_01_instruction_default` | `v2` | `exec-b0ee61df-31f0-4e25-89d9-56904c9c0fa2.png` → `exec-c4d36fa1-cc39-4811-aa06-37353f6f61b4.png` | `v1` → `v2` | `16da25dfaadf680739c72f1326c53f31ff441954f0878d0b62e014e55393e03c` / `de916a2998cd1b2c9c55abe7b3ad0bef60d5145cba4fe8040ff09afe607167cb` |
+| `instruction_p1_phin_screw_18_120_stage_05_instruction_default` | `v2` | `exec-f63a67ef-1c6e-4746-a730-bc57b7dc3b00.png` → `exec-e9a93509-7775-4465-adbf-45f521a1694f.png` | `v1` → `v2` | `b43bec209b25713d56984295a609c8b067014c8467e5b340f5d2a69e10958fab` / `115e57346091ba6a0f150b7d2f9c0a03c2a0c4e321e1edd8af9cc1cab21196aa` |
+| `instruction_p1_switch_official_20_240_stage_01_instruction_default` | `v3` | `exec-def626e4-8ed2-46e6-a60d-541d62dfafd0.png` → `exec-aa7e21c5-a0a6-4c12-b894-88919dee74b6.png` → `exec-6c8070db-e9f1-4710-a5b0-d10ee8e267a0.png` | `v1` → `v2` → `v3` | `c2bfa551e2732865e42eea668c2facf6d2a6fcaa2f23e47a1f81c4044380b941` / `dc23d56bc15fea052a659ba1436c6a14c19ec4a4377c2a4ae3074081086aac77` |
+| `instruction_p1_v60_official_15_250_stage_01_instruction_default` | `v1` | `exec-71e631eb-ba1a-4a36-bb6d-12b55b9ba75a.png` | `v1` | `6fa0db74f824d7b1b58e4725de1f4b9147141f070238413e50809a8ab8cef6a7` / `062f919801fed18e942632326c21d42c8285a080e94c3ecc614f031ada953b88` |
+
+Every completed generator event's untruncated `revised_prompt`, including all
+rejected attempts, was exported verbatim from the local Codex session record.
+
+### Exact reference inputs
+
+Every blank-canvas Batch 03 generation used its committed 480 by 360
+`input_geometry_reference.jpg` for equipment/action geometry and the shared v9
+rendering reference for style only. Edit revisions used the preceding raw
+chroma output as their sole composition target. Geometry-reference hashes are:
+
+- Cup-One active brew: `e43c024614696931ed778f46cb5cb5289cda8e32837e9223bd6c0749b0514407`.
+- Clever post-rinse: `7c366f3e8dd72aab9fb587247e6eb34ddf6166e1273796ffaa43fb1ab03ea1bc`.
+- screw-phin dry setup: `8b339a0be41906089db55bc38a617900f1eaaac43a966679da518ec7d83e1a14`.
+- screw-phin slow drip: `b58f08ee230b971a099f7ce70087160241bd62739fcbb383d458bf8239c7da0e`.
+- Switch closed post-rinse: `4d065ff141a7779187a779ee783707f6d7064a62df08c0229b1b9618e1199033`.
+- V60 post-rinse: `07233a6a36f1e0d3a048c73ecc0335b570998f5ccd0736b625676f2d8023c1f8`.
+
+### Transparency and phone QA
+
+| Asset | Key | Transparent / partial pixels | Alpha bounding box | Phone-review result |
+| --- | --- | --- | --- | --- |
+| Cup-One active brew | `#0adc1b` | `741858 / 3662` | `(226, 24, 1246, 1060)` | Distributed arm, wet bed, lower coffee stream, indicator, and centered mug remain distinct. |
+| Clever post-rinse | `#03d720` | `536969 / 4554` | `(163, 16, 1385, 1075)` | Opposite seams, handle support, unpressed actuator, and air gap remain readable. |
+| screw-phin setup | `#10d218` | `470322 / 4002` | `(40, 12, 1410, 1046)` | Full rim support, textured bed, threaded post, and insert flat on its lid remain clear. |
+| screw-phin slow drip | `#03da1e` | `666174 / 3741` | `(192, 19, 1309, 1065)` | Exactly three separated drops, covered phin, and stable support remain clear. |
+| Switch closed post-rinse | `#08ea16` | `628212 / 4244` | `(168, 28, 1264, 1058)` | Ball-to-seat contact, untouched lever, dry outlet, and empty server remain legible. |
+| V60 post-rinse | `#02d727` | `610987 / 3963` | `(194, 30, 1353, 1061)` | Folded seam, damp seated paper, and empty supported server survive reduction. |
+
+All four corner alpha values are zero. Every WebP is below 113 KB. Both theme
+reviews show clean, borderless perimeter blending with no green residue, text,
+logo, arrow, label, frame, or unrelated prop.
+
+### Rejected outputs and closed regeneration todos
+
+- Cup-One v1 `exec-95c658af-f1ee-4bd2-85c9-7af5dc829288.png` rendered the
+  nine-hole arm as a single end nozzle. V2 keeps the upper path implicit and
+  shows distributed underside perforations.
+- Clever v1 `exec-82020e7e-baab-4eaf-8c4b-b1d9dc58e63f.png` did not make the
+  folded #4 side and bottom seams legible. V2 exposes both without adding a
+  second filter.
+- screw-phin setup v1 `exec-b0ee61df-31f0-4e25-89d9-56904c9c0fa2.png` left
+  the threaded insert tilted and visually unsupported. V2 rests it flat on the
+  lid.
+- screw-phin drip v1 `exec-f63a67ef-1c6e-4746-a730-bc57b7dc3b00.png` formed
+  a near-continuous five-drop column. V2 uses exactly three separated drops.
+- Switch v1 `exec-def626e4-8ed2-46e6-a60d-541d62dfafd0.png` used an ambiguous
+  rectangular shelf instead of a circular valve seat. V2 corrected the seat
+  but introduced a finger pressing the lever. V3 keeps the corrected seal and
+  removes the hand entirely.
+
+### Source and mechanics checks used by batch 03
+
+- The exact-stage queue and canonical library remain authoritative for recipe-
+  specific quantities, stages, equipment states, and registered evidence IDs.
+- Moccamaster's current Cup-One quick guide confirms the installed nine-hole
+  outlet arm, No. 1 holder/filter, centered cup, power-on brew, hot-arm warning,
+  and approximately four-minute cycle context.
+- HARIO's current Switch description confirms that the steel ball blocks the
+  base and the button releases it. The accepted closed scene therefore shows
+  direct ball-to-seat contact, no actuation, and no drainage.
+- Hario's current V60 guide says to fold the paper seam, soak the whole paper,
+  and discard the rinse water before brewing.
+- Clever's current guidance specifies a standard No. 4 filter and a drain valve
+  activated only when the brewer is placed on a mug or carafe. The accepted
+  post-rinse scene keeps the actuator off-vessel and visibly unpressed.
+- Nguyen Coffee Supply's phin guidance supports level grounds, clean dry holes,
+  restrained insert pressure, and an observation-driven slow drip. Recipe-
+  specific screw-phin dose and timing remain those in the canonical library.

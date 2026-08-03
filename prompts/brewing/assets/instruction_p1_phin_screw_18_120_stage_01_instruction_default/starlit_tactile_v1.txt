@@ -1,0 +1,42 @@
+Use case: safety-critical scientific-educational.
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration.
+Generation mode: COMPOSE A COMPLETELY NEW IMAGE FROM A BLANK CANVAS. Do not edit, trace, upscale, repaint, or preserve pixels, beige background, crop, lighting, noise, or degradation from either reference.
+
+REFERENCE ROLES
+- Image 1 is exact equipment/state geometry reference only: traditional single-serving Vietnamese SCREW-INSERT phin, central threaded post, shallow level dry grounds around the post, wide integrated plate fully supported by a broad cup, and matching perforated threaded insert separate on its lid. Do not copy its photographic style or background.
+- Image 2 is rendering-language reference only: modern premium illustrated finish, tactile granular grounds, simplified high-fidelity materials, deep espresso organic Material 3 Expressive stage, pure green-key exterior, calm hierarchy, and contained scale. Do not copy its Switch brewer, finger, liquid, or valve.
+
+ONE SAFETY LESSON
+Before water, the screw-insert phin is centered and securely supported by a broad heat-safe cup. The dry bed is level around a real central threaded post. The matching threaded insert remains separate for the next step. Stable support and screw mechanism identity must be more obvious than dose.
+
+EXACT SCREW-PHIN GEOMETRY
+- Accurate unbranded approximately 120–150 ml cylindrical brushed-stainless-steel phin chamber with smooth solid vertical walls.
+- One wide integrated horizontal filter plate/flange at the chamber base, centered and level.
+- Broad complete heat-safe ceramic cup whose circular rim supports the filter plate continuously all the way around. Show clear contact/overlap across visible front and sides. Cup has full stable base and full handle.
+- Inside the open chamber show a shallow perfectly level DRY coffee bed with ample headroom.
+- A real short central threaded metal post rises vertically from the middle of the integrated perforated bottom and projects clearly above the grounds. Show believable fine helical screw ridges on the exposed portion.
+- Grounds surround the post evenly without burying, bending, or coating it. Grounds are restrained irregular granular particles, visibly different from smooth liquid or a compressed puck.
+- Chamber sidewall stays smooth and unperforated.
+- Beside cup, place matching metal lid flat and supported on the dark stage.
+- On the lid rests exactly one separate circular perforated SCREW INSERT. It has many small holes and a visible internally threaded center collar/opening that mechanically matches the chamber post.
+- The separate insert is NOT installed, not tilted, not tightened, and not used to press the grounds.
+- Do not depict a loose plain gravity disc; the threaded center collar is essential.
+- No water, kettle, steam, drips, wet sheen, or hot handling.
+
+COMPOSITION
+Close elevated three-quarter view so level bed, exposed threaded post, complete cup-rim support, stable cup base, and separate matching threaded insert are legible in one scene. Center phin-and-cup as primary; lid/insert nearby as quiet next-step object. Nothing floats. Make scene large enough for post ridges and insert collar to survive phone size, while keeping complete cup, handle, phin, lid, insert, shadows, and stage away from all canvas edges. No extra props.
+
+VISUAL STYLE
+Modern premium Material 3 Expressive editorial illustration. Polished vector-like 3D with restrained gouache/cut-paper tactility; clearly illustrated, not photorealistic, not glossy CGI, not vintage, not retro. Crisp intentional contours, soft dimensional lighting, simplified brushed-steel highlights, warm matte ceramic, rich medium-brown granular grounds. High fidelity only for support, thread geometry, insert match, and texture. No grain overlay, noisy stippling, compression artifacts, warped circles, doubled rims, smeared edges, or unnecessary detail.
+
+EXPRESSIVE STAGE
+One borderless deep espresso-black organic stage custom-shaped around cup and separate lid with a few broad asymmetric flowing Material 3 Expressive curves. Fluid and subject-responsive, not rectangle, rounded rectangle, squircle, oval, cloud, splash, badge, flower, star, frame, panel, or inset. No outline, white border, shadow ring, or halo. Breathable dark margin around all silhouettes.
+
+TRANSPARENCY PREPARATION
+Outside stage use perfectly uniform flat pure #00FF00. No gradient, texture, noise, shadow, glow, reflection, green spill, or semi-transparent fringe. Nothing touches canvas edges.
+
+VALIDATION CHECKLIST
+Screw-insert phin, not gravity phin; short exposed threaded post centered in level dry granular bed; smooth chamber wall; wide plate fully supported by broad stable cup; separate perforated insert on lid with matching internal threaded collar; insert not installed; no water; no pressure/tamping; all contained; organic stage; pure green exterior.
+
+CONSTRAINTS
+No text, letters, numbers, readable scale, measurements, labels, logos, arrows, icons, warning symbols, callouts, multiple panels, narrow/unstable cup, unsupported plate, mounded/uneven/wet/compressed grounds, blocked post, sidewall holes, loose plain gravity press, unthreaded disc, spring, plunger, tamper, paper filter, moka pot, espresso basket, sealed pressure chamber, installed/tightened insert, kettle, water, steam, drips, active brewing, decorative objects, crop, floating parts, photorealism, glossy ad CGI, retro styling, rectangular stage, white border, clutter, or noise.

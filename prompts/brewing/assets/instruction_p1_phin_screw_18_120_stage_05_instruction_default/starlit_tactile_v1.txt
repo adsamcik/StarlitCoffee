@@ -1,0 +1,41 @@
+Use case: safety-critical scientific-educational.
+Asset type: original text-free 4:3 mobile coffee-brewing instruction illustration.
+Generation mode: COMPOSE A COMPLETELY NEW IMAGE FROM A BLANK CANVAS. Do not edit, trace, upscale, repaint, or preserve pixels, beige background, crop, lighting, noise, or defects from either reference.
+
+REFERENCE ROLES
+- Image 1 is action/proportion reference only: covered cylindrical metal phin fully supported on broad cup, short visible underside-to-cup gap, and a few vertically separated dark droplets. Do not copy its photographic style or background.
+- Image 2 is rendering-language reference only: modern premium illustrated finish, restrained tactile materials, deep espresso organic Material 3 Expressive stage, pure green-key exterior, calm hierarchy, and contained scale. Do not copy its Switch brewer, valve, hand, slurry, or stream.
+
+ONE SAFETY LESSON
+Show the safe normal case for a screw-insert phin: the covered hot brewer remains stable and completely untouched while slow, separated gravity droplets fall into the cup. Do not illustrate exceptional screw adjustment, forced flow, time windows, or troubleshooting.
+
+EXACT SCREW-PHIN STATE
+- Accurate unbranded approximately 120–150 ml cylindrical brushed-stainless-steel Vietnamese SCREW-INSERT phin.
+- Smooth solid vertical chamber walls, wide integrated filter plate, and matching metal lid seated flat on top.
+- The internal threaded insert is lightly engaged and contained inside; do not expose it with a cutaway and do not add loose-disc cues. Preserve screw-phin identity through the same proportions, wide plate, cylindrical chamber, and lid geometry as the setup asset.
+- Center the wide filter plate fully and continuously on a broad stable heat-safe clear glass or ceramic cup. Show full support overlap across visible cup rim and a complete stable cup base.
+- Keep the phin upright, level, untouched, and motionless.
+- Expose a short clean air gap between the phin's bottom outlet and the visible coffee surface inside the cup.
+- Show exactly THREE or FOUR distinct dark coffee droplets distributed vertically in that short gap. Droplets are round/teardrop-shaped, clearly separated by air, aligned on one vertical gravity axis, and descending into the center of the cup.
+- No continuous stream, spray, mist, extra side drip, long drop distance, complete stall, overflow, or spill.
+- Show a modest smooth dark coffee pool well below the cup rim with one subtle central ripple.
+- Absolutely no hands, fingers, arms, tools, spoon, cloth, tongs, or contact.
+- No steam jet, pressure bulge, lid lift, squeezing, twisting, shaking, or movement.
+
+COMPOSITION
+Close elevated front three-quarter view. Center phin and cup as one stable vertical system. Make full cup-rim support, seated lid, short outlet gap, separated droplets, and spill-free receiving pool readable at phone size. Keep complete phin, lid, cup, droplets, shadows, and organic stage away from every canvas edge. Use generous negative space, no secondary props, no timer.
+
+VISUAL STYLE
+Modern premium Material 3 Expressive editorial illustration. Polished vector-like 3D with restrained gouache/cut-paper tactility; clearly illustrated, not photorealistic, glossy CGI, vintage, or retro. Crisp intentional contours, soft dimensional lighting, simplified brushed-metal reflections, warm clear glass or matte ceramic, smooth dark coffee. Droplets are glossy and simple, not decorative beads. High fidelity only for support, slow-flow cadence, and screw-phin silhouette. No grain, compression artifacts, warped circles, doubled rims, smeared edges, or unnecessary detail.
+
+EXPRESSIVE STAGE
+One borderless deep espresso-black organic stage tailored around the vertical phin/cup system with a few broad asymmetric flowing Material 3 Expressive curves. Fluid and subject-responsive, not rectangle, rounded rectangle, squircle, oval, cloud, splash, badge, flower, star, frame, panel, or inset. No outline, white border, shadow ring, or halo. Breathable dark margin around all silhouettes.
+
+TRANSPARENCY PREPARATION
+Outside stage use perfectly uniform flat pure #00FF00. No gradient, texture, noise, shadow, glow, reflection, green spill, or semi-transparent fringe. Nothing touches canvas edges.
+
+VALIDATION CHECKLIST
+Covered screw-insert phin; broad stable cup; plate fully supported; lid flat; internal insert implied but not exposed; exactly 3–4 separated vertical dark droplets; short drop distance; no stream/stall/overflow; modest pool; no hands; no intervention; no timing graphics; complete contained scene; organic stage; pure green exterior.
+
+CONSTRAINTS
+No text, letters, numbers, clock, timer, progress ring, measurement marks, labels, logos, arrows, icons, warning signs, callouts, multiple panels, cutaways, insets, hands, touching, squeezing, pressing, twisting, loosening, lifting, shaking, tapping, tilting, continuous fast stream, spray, no-flow stall, sealed pressure, bulging lid, steam jet, loose gravity disc, unthreaded insert, plunger, tamper, moka pot, espresso basket, paper filter, plastic dripper, sidewall holes, narrow/unstable cup, off-center support, long fall, spill, exact beverage level, decorative props, crop, floating parts, photorealism, glossy ad CGI, retro styling, rectangular stage, white border, clutter, or noise.

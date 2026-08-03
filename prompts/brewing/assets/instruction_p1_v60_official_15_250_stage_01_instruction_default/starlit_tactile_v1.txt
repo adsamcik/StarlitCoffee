@@ -1,0 +1,24 @@
+Create a brand-new instructional illustration from a blank canvas.
+
+REFERENCE ROLES:
+- Image 1 is GEOMETRY ONLY: use it to understand a standard transparent HARIO V60 02 cone, its spiral ribs, clear handle, circular base, and the glass server beneath. Do not copy its photographic style, background, lighting, or exact composition.
+- Image 2 is STYLE ONLY: match its modern premium Material 3 Expressive "Starlit Tactile" visual language, organic deep-espresso stage, polished vector-like 3D illustration, restrained gouache/cut-paper tactility, material clarity, and clean app-card readability. Do not copy its Switch brewer, hand, coffee, valve, or brewing state.
+
+INSTRUCTIONAL STATE — V60 OFFICIAL, STAGE 01, AFTER RINSING:
+Show one transparent V60 02 dripper resting stably and concentrically on an empty transparent glass server. Inside is exactly one standard white V60 02 conical paper filter.
+- The paper seam is visibly folded flat before placement: show one small, neat doubled seam/crease along a single side of the filter. It must read as a folded factory seam, not torn or doubled filters.
+- The paper is fully wet and evenly seated against the dripper interior and spiral ribs. It follows the cone cleanly with no large air pockets, collapse, wrinkles, tears, or lifted sections.
+- Indicate wetness only through a slightly warm translucent paper tone and a few restrained tiny water beads; do not show active pouring.
+- All rinse water has already been discarded. The server is visibly empty and dry-looking except for extremely subtle preheat haze if needed. No retained rinse pool in the filter, no water layer, no stream, no drip, no droplet below the outlet.
+- No coffee grounds are present. No kettle and no hands.
+- The dripper and server must have complete, physically plausible contact and support; nothing floats.
+- Keep the V60 recognizable: clear conical body, spiral ribs, open central outlet, clear handle, circular support base, compatible glass server. Avoid logos or text.
+
+COMPOSITION:
+Large centered three-quarter front view at concise instructional-card scale. The brewer should fill the space better while retaining generous safe margins. Every object is complete and contained. Nothing touches or is cropped by any canvas edge.
+Place the brewer on one borderless deep espresso-brown organic stage with a few broad asymmetric flowing curves tailored around the silhouette. It must not be a rectangle, rounded rectangle, squircle, oval, circle, badge, cloud, splash, flower, or star. No white border or outline around the stage.
+Outside the organic stage must be a perfectly flat pure #00FF00 chroma-key field with no texture, grain, gradient, shadow, reflection, halo, edge glow, or green spill.
+
+STYLE AND CLARITY:
+Modern, high-fidelity editorial instructional illustration aligned with Material 3 Expressive. Polished vector-like 3D forms with restrained tactile gouache/cut-paper texture. Clearly illustrated, not photorealistic, not glossy CGI, not vintage, not retro, not a 1940s poster. Accurate transparent glass and damp paper, clean silhouettes, gentle warm highlights, restrained shadows only inside the stage.
+No text, numbers, arrows, icons, labels, logos, decorative beans, steam curls, splashes, extra props, visual noise, or unnecessary detail. The image must communicate only: folded wet paper correctly seated, rinse discarded, ready for coffee.

@@ -1,0 +1,27 @@
+Create a brand-new instructional illustration from a blank canvas.
+
+REFERENCE ROLES:
+- Image 1 is GEOMETRY ONLY: use it to understand a transparent Clever Dripper with a broad trapezoidal/wedge-shaped body, #4 paper filter, clear side handle, short support feet, and the small spring-loaded bottom drain actuator. Do not copy its photographic style, beige background, lighting, or floating shadow.
+- Image 2 is STYLE ONLY: match its modern premium Material 3 Expressive "Starlit Tactile" rendering language, organic deep-espresso stage, polished vector-like 3D illustration, restrained gouache/cut-paper tactility, material clarity, and clean app-card readability. Do not copy its Switch brewer, valve, finger pose, coffee, or flowing liquid.
+
+INSTRUCTIONAL STATE — CLEVER WATER-FIRST, STAGE 01, AFTER RINSING:
+Show one transparent Clever-style steep-and-release dripper held securely by one human hand using only its cool side handle. The hand must not touch the hot/wet body, filter, base, feet, or bottom actuator.
+Inside is exactly one clean white standard #4 wedge/basket paper filter:
+- Both factory seams are folded neatly and flat in the conventional opposite-direction fold so the filter opens and seats cleanly.
+- The paper is fully wet and fitted against the wedge-shaped interior without tears, collapse, severe wrinkles, or large air pockets.
+- Indicate dampness through a slightly warm translucent paper tone and only a few restrained tiny water beads; no active pouring.
+- All rinse water has already been discarded. No retained pool inside, no stream, no drip, and no droplet below the outlet. No coffee grounds.
+- The dripper is OFF every cup, mug, server, counter, or other vessel. Show a generous, unmistakable open air gap beneath its lowest feet and valve actuator.
+- The bottom actuator is clearly visible in its natural unpressed/down closed state, untouched by anything. It must not contact a rim or surface and must not look compressed.
+- Include one empty broad mug lower and slightly to the side as a contextual receiving vessel, but keep it physically separated: its rim must be clearly below and laterally offset from the dripper feet/actuator. No part of the dripper rests on it.
+- The hand and handle provide the only support, so the dripper does not appear to float.
+- No kettle or second hand.
+
+COMPOSITION:
+Large three-quarter front view at concise instructional-card scale, centered as a coherent held-object scene. Fill the available area confidently but retain generous safe margins. Every object and the complete hand silhouette must be contained; no wrist, finger, handle, mug, dripper, stage, or shadow may touch or be cropped by any canvas edge.
+Place the scene on one borderless deep espresso-brown organic stage with a few broad asymmetric flowing curves tailored around the hand, dripper, and offset mug. It must not be a rectangle, rounded rectangle, squircle, oval, circle, badge, cloud, splash, flower, or star. No white border.
+Outside the organic stage must be a perfectly flat pure #00FF00 chroma-key field with no texture, grain, gradient, shadow, reflection, halo, edge glow, or green spill.
+
+STYLE AND CLARITY:
+Modern, high-fidelity editorial instructional illustration aligned with Material 3 Expressive. Polished vector-like 3D forms with restrained tactile gouache/cut-paper texture. Clearly illustrated, not photorealistic, not glossy CGI, not vintage, not retro. Accurate transparent polymer, damp paper, soft matte skin, and ceramic mug. Clean silhouettes and restrained shadows only within the stage.
+No text, numbers, arrows, icons, labels, logos, decorative beans, steam, splashes, extra props, visual noise, or unnecessary detail. Communicate only: wet folded filter, rinse discarded, dripper held off-vessel, valve unpressed and closed.
