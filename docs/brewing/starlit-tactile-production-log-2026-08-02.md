@@ -576,3 +576,20 @@ All five retained frames passed full-resolution mechanics review, chroma-key
 removal, static 1024 by 768 WebP and alpha checks, and individual light- and
 dark-theme phone review. The generated fail-closed runtime catalog was then
 refreshed to the same 46 tracker-accepted assets.
+
+
+## Batch 10 retained candidate and open Kasuya iterations — 2026-08-03
+
+The preparation frame for `v60_kasuya_4_6_20_300` is accepted as `v1`
+(`exec-a80c062b-387e-4b08-8028-00bfbfbe01ca.png`, WebP SHA-256
+`cf016da6744424a9b1067e0269631dc184e1c062bef7e0e8539025fe6c422e7b`).
+It preserves the resolved KDC-02-B opaque black porcelain body, customized
+ribs, smooth size-02 cone paper, level coarse dose, empty server, and dual-theme
+phone readability.
+
+Pour stages remain open rather than accepting misleading frames. Rejections
+recorded in the tracker cover accordion/scalloped paper, visibly dry grounds
+during active pours, cropped kettle-hand gestures, lost KDC rib geometry, a
+noisy wet-coffee background, and an otherwise correct frame that became too
+small at phone scale. Exact prompts and raw cache identifiers are retained for
+every revision. The synchronized checkpoint is 47 accepted and 67 open.

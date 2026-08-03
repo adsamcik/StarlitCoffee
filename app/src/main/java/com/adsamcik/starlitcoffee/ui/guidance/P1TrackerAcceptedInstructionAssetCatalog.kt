@@ -449,6 +449,17 @@ object P1TrackerAcceptedInstructionAssetCatalog {
             trackerRevision = "v1",
         ),
         P1TrackerAcceptedInstructionAsset(
+            recipeId = BuiltInRecipeId("v60_kasuya_4_6_20_300"),
+            id = InstructionAssetId("instruction_p1_v60_kasuya_4_6_20_300_stage_01_instruction_default"),
+            familyId = MethodFamilyId("manual_gravity"),
+            profileId = BrewerProfileId("hario_v60"),
+            stageId = StageId("p1_v60_kasuya_4_6_20_300_stage_01"),
+            contentId = StageContentId("p1_v60_kasuya_4_6_20_300_stage_01_instruction"),
+            visualPriority = P1ExactVisualPriority.OPTIONAL,
+            drawableRes = R.drawable.instruction_p1_v60_kasuya_4_6_20_300_stage_01_instruction_default,
+            trackerRevision = "v1",
+        ),
+        P1TrackerAcceptedInstructionAsset(
             recipeId = BuiltInRecipeId("v60_official_15_250"),
             id = InstructionAssetId("instruction_p1_v60_official_15_250_stage_01_instruction_default"),
             familyId = MethodFamilyId("manual_gravity"),

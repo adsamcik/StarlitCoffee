@@ -405,19 +405,27 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 182,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_01_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-a80c062b-387e-4b08-8028-00bfbfbe01ca.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The opaque matte-black porcelain KDC-02-B silhouette, smooth conical paper, level coarse granular dose, empty server, customized ribs and contained stage remain distinct in both app themes."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kasuya_4_6_20_300_stage_01_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The opaque matte-black porcelain KDC-02-B silhouette, smooth conical paper, level coarse granular dose, empty server, customized ribs and contained stage remain distinct in both app themes."
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_02_instruction_default",
@@ -425,14 +433,66 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 183,
       "batch": null,
-      "status": "generation_pending",
+      "status": "regeneration_required",
       "research": "complete",
-      "attempts": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-9b492864-21da-48c6-baec-610abb3d5652.png",
+          "issues": [
+            "The size-02 V60 paper is rendered as a scalloped accordion basket filter rather than one smooth conical sheet with a folded seam."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-3e81b5f8-a508-4b1b-928a-01d9363a86d2.png",
+          "issues": [
+            "The smooth cone paper is corrected, but most grounds remain light and visibly dry during the active first pulse rather than uniformly saturated."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_02_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-237d4975-cb4b-4c5a-87fd-266625a9fe95.png",
+          "issues": [
+            "The coffee and filter states are corrected, but the kettle body is cropped by the top canvas edge and the hand is omitted."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v4"
+          }
+        },
+        {
+          "revision": "v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_02_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-f1ccffa0-45e5-4350-b0f6-a9a0cdb797ee.png",
+          "issues": [
+            "The forearm reaches the right canvas edge and the KDC-02-B customized rib geometry has disappeared."
+          ],
+          "regeneration_todo": {
+            "status": "open"
+          }
+        }
+      ],
       "open_todos": [
         {
-          "kind": "generate_and_review",
+          "kind": "regenerate",
           "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "detail": "The forearm reaches the right canvas edge and the KDC-02-B customized rib geometry has disappeared."
         }
       ],
       "qa": "pending",
@@ -445,14 +505,66 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 184,
       "batch": null,
-      "status": "generation_pending",
+      "status": "regeneration_required",
       "research": "complete",
-      "attempts": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-63232fc3-07af-4e2b-87dd-c5acac309a85.png",
+          "issues": [
+            "The paper has accordion pleats and a scalloped top, which is incompatible with smooth conical V60 02 paper."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-9bc51d59-e525-4b13-91a2-74645781bbeb.png",
+          "issues": [
+            "The second-pulse bed still reads as dry granular grounds with no unambiguous wet slurry or local pool."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_03_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-c44b1f9d-9324-4061-a44d-763e1aec24f1.png",
+          "issues": [
+            "The kettle touches the top and right canvas edges and its hand is omitted, violating the contained-object requirement."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v4"
+          }
+        },
+        {
+          "revision": "v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_03_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-60b6eba0-82f1-4713-bc9f-a7e5f61db99a.png",
+          "issues": [
+            "Mechanics are correct, but the full instructional group is undersized at phone scale and the slurry cue is no longer comfortably readable."
+          ],
+          "regeneration_todo": {
+            "status": "open"
+          }
+        }
+      ],
       "open_todos": [
         {
-          "kind": "generate_and_review",
+          "kind": "regenerate",
           "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "detail": "Mechanics are correct, but the full instructional group is undersized at phone scale and the slurry cue is no longer comfortably readable."
         }
       ],
       "qa": "pending",
@@ -465,14 +577,40 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 185,
       "batch": null,
-      "status": "generation_pending",
+      "status": "regeneration_required",
       "research": "complete",
-      "attempts": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-efe46df1-9a84-4707-a673-4253d1cae214.png",
+          "issues": [
+            "The kettle and pouring hand are both cropped by the left canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_04_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-a56a276d-d096-46a1-bf83-6f16b2f531fd.png",
+          "issues": [
+            "The quiet organic backing became a huge wet coffee-textured surface with severe noise, and the KDC customized ribs disappeared."
+          ],
+          "regeneration_todo": {
+            "status": "open"
+          }
+        }
+      ],
       "open_todos": [
         {
-          "kind": "generate_and_review",
+          "kind": "regenerate",
           "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "detail": "The quiet organic backing became a huge wet coffee-textured surface with severe noise, and the KDC customized ribs disappeared."
         }
       ],
       "qa": "pending",
