@@ -57,17 +57,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 150,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_official_15_250_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-3fad40cf-290e-44c1-a14e-6d9d3155e439.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The dry granular coffee is visibly level and below the seated paper rim; the supported V60, empty server, blank scale, contained organic field, and transparent exterior remain clear in both light and dark phone previews."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_official_15_250_stage_02_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The dry granular coffee is visibly level and below the seated paper rim; the supported V60, empty server, blank scale, contained organic field, and transparent exterior remain clear in both light and dark phone previews."
     },
     {
       "asset_id": "instruction_p1_v60_official_15_250_stage_03_instruction_default",
@@ -75,17 +83,38 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 151,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_official_15_250_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-be9671c1-bd80-4ae3-97a6-31eb617a6d25.png",
+          "issues": [
+            "The server contains far too much brewed coffee for a minimal bloom, so the water state is physically misleading."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_official_15_250_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-1e4daba0-259b-4f2b-87a4-3a82136a8c2d.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "All visible grounds are uniformly wet with a modest bubbled bloom; the server holds only a thin puddle, one aligned drop preserves the flow path, and the cue remains legible in light and dark phone previews."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_official_15_250_stage_03_instruction_default/starlit_tactile_v2.webp",
+      "notes": "All visible grounds are uniformly wet with a modest bubbled bloom; the server holds only a thin puddle, one aligned drop preserves the flow path, and the cue remains legible in light and dark phone previews."
     },
     {
       "asset_id": "instruction_p1_v60_official_15_250_stage_04_instruction_default",
@@ -130,17 +159,38 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 153,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_official_15_250_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-eab76fb9-4043-4774-91f6-0983d2323fd4.png",
+          "issues": [
+            "The illustration shows a vertical sequence of several simultaneous drops rather than one isolated intermittent final drop."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_official_15_250_stage_05_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-910ac44c-2db9-4e95-a95e-cca6c5e3211d.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The complete contained hand lifts the upright dripper by its side handle; the drained granular bed and exactly one isolated aligned final drop remain clear in both app themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_official_15_250_stage_05_instruction_default/starlit_tactile_v2.webp",
+      "notes": "The complete contained hand lifts the upright dripper by its side handle; the drained granular bed and exactly one isolated aligned final drop remain clear in both app themes."
     },
     {
       "asset_id": "instruction_p1_v60_rao_20_330_stage_01_instruction_default",
@@ -199,17 +249,51 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 166,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_rao_20_330_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-70a89f7d-31c1-40c9-ab2a-b38332ecd83b.png",
+          "issues": [
+            "The server contains numerous suspended coffee speckles and droplets in midair, creating physically impossible flow and visual noise."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_rao_20_330_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-922c12d0-4256-4106-82ee-11255d8ceaab.png",
+          "issues": [
+            "The slurry is rendered as a deep central whirlpool instead of a brief banked spin, and two simultaneous outlet drops remain visible."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_rao_20_330_stage_02_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-aada9b83-651b-4442-9539-9ac34a3df4e3.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The complete supported grip and simple diagonal wet-bloom bank communicate the brief spin without a whirlpool; the clean server, few bubbles, contained stage and smoky plastic identity remain clear in both themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_rao_20_330_stage_02_instruction_default/starlit_tactile_v3.webp",
+      "notes": "The complete supported grip and simple diagonal wet-bloom bank communicate the brief spin without a whirlpool; the clean server, few bubbles, contained stage and smoky plastic identity remain clear in both themes."
     },
     {
       "asset_id": "instruction_p1_v60_rao_20_330_stage_03_instruction_default",
@@ -217,17 +301,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 167,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_rao_20_330_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-c459aabd-0cb5-4ba7-9c87-4f088f70048c.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The smoky plastic V60 remains distinct from the clear server; one low nearly vertical stream lands inside the bed and the full contained gesture remains legible in both themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_rao_20_330_stage_03_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The smoky plastic V60 remains distinct from the clear server; one low nearly vertical stream lands inside the bed and the full contained gesture remains legible in both themes."
     },
     {
       "asset_id": "instruction_p1_v60_rao_20_330_stage_04_instruction_default",
@@ -235,17 +327,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 168,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_rao_20_330_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-ea1ce8d1-6823-4248-92c8-32818dcd4b63.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "A light handle pinch, nearly level wet bed, subtle perimeter meniscus and absence of a vortex clearly distinguish the sub-second gentle settling spin in both app themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_rao_20_330_stage_04_instruction_default/starlit_tactile_v1.webp",
+      "notes": "A light handle pinch, nearly level wet bed, subtle perimeter meniscus and absence of a vortex clearly distinguish the sub-second gentle settling spin in both app themes."
     },
     {
       "asset_id": "instruction_p1_v60_rao_20_330_stage_05_instruction_default",
@@ -253,17 +353,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 169,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_rao_20_330_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-9da5c928-9673-4bf5-90ed-dc8457ba5137.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The low steady stream lands within a shallow partially drained bed, the hand and kettle are contained, and an unobstructed continuous outlet path remains readable at phone scale in both themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_rao_20_330_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The low steady stream lands within a shallow partially drained bed, the hand and kettle are contained, and an unobstructed continuous outlet path remains readable at phone scale in both themes."
     },
     {
       "asset_id": "instruction_p1_v60_rao_20_330_stage_06_instruction_default",
@@ -271,17 +379,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 170,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_rao_20_330_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-a0e826b3-2dbd-4202-8a67-938652d2edb1.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The low generally level drained bed, single isolated finishing drop, clear server coffee and absence of further pouring remain unambiguous in both phone themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_rao_20_330_stage_06_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The low generally level drained bed, single isolated finishing drop, clear server coffee and absence of further pouring remain unambiguous in both phone themes."
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_01_instruction_default",

@@ -516,3 +516,63 @@ stable servings with smooth coffee above equal settled granular layers.
 
 Every retained frame passed raw mechanics, transparency, static 1024 by 768
 WebP validation, and separate light- and dark-theme phone review.
+
+
+## Batch 08 retained candidates — 2026-08-03
+
+Batch 08 closes the three remaining stages of `v60_official_15_250`. All five
+official V60 stages now have accepted exact-stage candidates. The exact prompts
+used for every generated revision are retained beside the asset prompt records.
+
+| Asset | Accepted | Generator lineage | WebP SHA-256 |
+| --- | --- | --- | --- |
+| `instruction_p1_v60_official_15_250_stage_02_instruction_default` | `v1` | `exec-3fad40cf-290e-44c1-a14e-6d9d3155e439.png` | `17396461cb744e82f86e08fb3a5959049cd546fd98741695e2e46e52f76fb066` |
+| `instruction_p1_v60_official_15_250_stage_03_instruction_default` | `v2` | `exec-be9671c1-bd80-4ae3-97a6-31eb617a6d25.png` → `exec-1e4daba0-259b-4f2b-87a4-3a82136a8c2d.png` | `f0e55314cda6cd59b5e88c5d7985f50a33d1c9f76c41ca1780d03a0cccd0b16c` |
+| `instruction_p1_v60_official_15_250_stage_05_instruction_default` | `v2` | `exec-eab76fb9-4043-4774-91f6-0983d2323fd4.png` → `exec-910ac44c-2db9-4e95-a95e-cca6c5e3211d.png` | `ea3528abdb57e4bcaca2a840d7e98db14870ba2e62bafb05fb45e5f20c8c3a36` |
+
+The level-bed frame preserves a dry granular horizontal dose, correctly seated
+paper, empty server, and blank scale. Bloom v1 was rejected because a minimal
+wetting was paired with a cup-sized server volume; v2 restricts the beverage to
+a thin floor puddle, keeps the entire bed wet with only a few late-bloom
+bubbles, and aligns one quiet drop with the outlet. Finish v1 was rejected for
+a misleading vertical chain of simultaneous drops; v2 contains the complete
+lifting hand, keeps the upright dripper aligned above the server, and shows
+exactly one isolated final drop.
+
+Each accepted frame passed raw full-resolution inspection, chroma-key removal,
+transparent-corner and static-WebP checks, and separate light- and dark-theme
+phone review. The tracker, packaged drawables, and implementation matrix now
+agree on 41 accepted exact-stage assets and 73 open assets.
+
+
+## Batch 09 retained candidates — 2026-08-03
+
+Batch 09 closes the five remaining stages of `v60_rao_20_330`, bringing the
+tracker to 46 accepted exact-stage assets and 68 open assets.
+
+| Asset | Accepted | Generator lineage | WebP SHA-256 |
+| --- | --- | --- | --- |
+| `instruction_p1_v60_rao_20_330_stage_02_instruction_default` | `v3` | `exec-70a89f7d-31c1-40c9-ab2a-b38332ecd83b.png` → `exec-922c12d0-4256-4106-82ee-11255d8ceaab.png` → `exec-aada9b83-651b-4442-9539-9ac34a3df4e3.png` | `3ff976a1fbcf289239c145fedc8b1a3de462bdd485d844f4f96cfd2431a47a36` |
+| `instruction_p1_v60_rao_20_330_stage_03_instruction_default` | `v1` | `exec-c459aabd-0cb5-4ba7-9c87-4f088f70048c.png` | `e45c478b96d64b40e71f02a3b38babe80f994ca2fc66538f7ef334e265a245b9` |
+| `instruction_p1_v60_rao_20_330_stage_04_instruction_default` | `v1` | `exec-ea1ce8d1-6823-4248-92c8-32818dcd4b63.png` | `b9b1b133953ffadf8cb045aa45769d76514f43c78d6cef8ebceb6d0512d2f4d2` |
+| `instruction_p1_v60_rao_20_330_stage_05_instruction_default` | `v1` | `exec-9da5c928-9673-4bf5-90ed-dc8457ba5137.png` | `dc1b47bd2ecf8fa3abc7047b39b914980ec3701c788c040f788bbf8121bd5e3d` |
+| `instruction_p1_v60_rao_20_330_stage_06_instruction_default` | `v1` | `exec-a0e826b3-2dbd-4202-8a67-938652d2edb1.png` | `da790e3a945b5709a2c43474c8b5c2162bf28a29582bec01373393dcd82ebb82` |
+
+The official Hario UK Scott Rao recipe was rechecked for the plastic V60 02,
+20 g dose, 60 mL aggressive bloom spin, 40-second wait, 200 mL first pour,
+sub-second gentle settling spin, 70-percent-drained observation, low steady
+330 mL pour, final gentle spin, and 4:00–4:30 completion range. The bitmaps do
+not turn timing or scale values into visual claims.
+
+Bloom-spin v1 was rejected for suspended coffee droplets inside the server.
+V2 removed that noise but introduced a deep spiral whirlpool and simultaneous
+outlet drops. V3 uses one broad diagonally banked wet bed, a few small bubbles,
+a clean server, and no falling drops. The steady-pour frames preserve low,
+nearly vertical kettle streams; the first and final settling states remain
+visibly gentler than the bloom spin. The completion frame has a low generally
+level drained bed and one isolated finishing drop.
+
+All five retained frames passed full-resolution mechanics review, chroma-key
+removal, static 1024 by 768 WebP and alpha checks, and individual light- and
+dark-theme phone review. The generated fail-closed runtime catalog was then
+refreshed to the same 46 tracker-accepted assets.
