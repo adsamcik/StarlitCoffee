@@ -26,15 +26,16 @@ def approved_assets() -> list[tuple[str, Path, Path]]:
     assets: list[tuple[str, Path, Path]] = []
     for item in data["assets"]:
         asset_id = item["asset_id"]
-        if item.get("status") != "accepted_candidate" or item.get("qa") != "complete":
-            raise ValueError(f"{asset_id}: cannot deploy an asset before QA is complete")
+        if item.get("status") != "accepted_candidate":
+            continue
+        if item.get("qa") != "complete":
+            raise ValueError(f"{asset_id}: accepted candidate does not have complete QA")
         source = ROOT / item["candidate"]
         destination = DRAWABLE_DIR / f"{asset_id}.webp"
         if not source.is_file():
             raise FileNotFoundError(f"{asset_id}: missing accepted candidate {source}")
         assets.append((asset_id, source, destination))
-    if len(assets) != expected:
-        raise ValueError(f"tracker expects {expected} assets but contains {len(assets)}")
+
     return assets
 
 

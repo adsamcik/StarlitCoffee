@@ -12,16 +12,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACKER = ROOT / "docs/brewing/starlit-tactile-production-tracker-2026-08-02.json"
-QUEUE_GLOB = "p1-exact-stage-production-queue-batch-*.md"
+MATRIX = ROOT / "docs/brewing/p1-exact-stage-matrix.md"
 ASSET_RE = re.compile(r"instruction_p1_[a-z0-9_]+_default")
-VALID_STATUSES = {"generation_pending", "regeneration_required", "review_pending", "accepted_candidate"}
+VALID_STATUSES = {"research_blocked", "generation_pending", "regeneration_required", "review_pending", "accepted_candidate"}
 
 
 def queue_assets() -> set[str]:
-    assets: set[str] = set()
-    for path in (ROOT / "docs/brewing").glob(QUEUE_GLOB):
-        assets.update(ASSET_RE.findall(path.read_text(encoding="utf-8")))
-    return assets
+    return set(ASSET_RE.findall(MATRIX.read_text(encoding="utf-8")))
 
 
 def validate(require_complete: bool) -> tuple[list[str], list[str]]:
@@ -95,6 +92,8 @@ def validate(require_complete: bool) -> tuple[list[str], list[str]]:
         if status == "review_pending":
             if not attempts or attempts[-1].get("verdict") != "provisionally_accepted":
                 errors.append(f"{asset_id}: review_pending without a provisionally accepted latest attempt")
+        if status == "research_blocked" and not str(row.get("blocker", "")).startswith("BLOCK-"):
+            errors.append(f"{asset_id}: research_blocked without a BLOCK-* reason")
 
     if require_complete and warnings:
         errors.append(f"{len(warnings)} assets are not accepted candidates")
@@ -116,7 +115,8 @@ def main() -> int:
         print(f"ERROR: {error}", file=sys.stderr)
     if errors:
         return 1
-    print(f"Tracker valid: {24 - len(warnings)}/24 accepted; {len(warnings)} still open.")
+    total = len(json.loads(TRACKER.read_text(encoding="utf-8")).get("assets", []))
+    print(f"Tracker valid: {total - len(warnings)}/{total} accepted; {len(warnings)} still open.")
     return 0
 
 

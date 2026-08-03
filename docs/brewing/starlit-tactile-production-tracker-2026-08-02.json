@@ -1,11 +1,12 @@
 {
-  "schema_version": 1,
-  "updated_on": "2026-08-02",
+  "schema_version": 2,
+  "updated_on": "2026-08-03",
   "scope": {
     "queue_glob": "docs/brewing/p1-exact-stage-production-queue-batch-*.md",
-    "expected_asset_count": 24,
+    "expected_asset_count": 114,
     "style_contract": "docs/brewing/illustration-style-system.md",
-    "production_log": "docs/brewing/starlit-tactile-production-log-2026-08-02.md"
+    "production_log": "docs/brewing/starlit-tactile-production-log-2026-08-02.md",
+    "source_matrix": "docs/brewing/p1-exact-stage-matrix.md"
   },
   "policy": {
     "generated_is_not_complete": true,
@@ -26,49 +27,495 @@
   },
   "assets": [
     {
-      "asset_id": "instruction_p1_chemex_42_700_stage_01_instruction_default",
-      "batch": 1,
+      "asset_id": "instruction_p1_v60_official_15_250_stage_01_instruction_default",
+      "batch": 3,
       "status": "accepted_candidate",
-      "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_chemex_42_700_stage_01_instruction_default/starlit_tactile_v2.webp",
-      "qa": "complete",
-      "notes": "Three filter layers face the spout; air channel remains open at phone size in both themes."
-    },
-    {
-      "asset_id": "instruction_p1_clever_water_first_15_250_stage_05_instruction_default",
-      "batch": 1,
-      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-71e631eb-ba1a-4a36-bb6d-12b55b9ba75a.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "One folded wet V60 02 paper is evenly seated; no grounds or retained rinse remain and the supported glass server is empty.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
       "accepted_revision": "v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_official_15_250_stage_01_instruction_default/starlit_tactile_v1.webp",
       "qa": "complete",
-      "notes": "Release ring is supported by the server and the outlet/stream axis remains centered."
+      "notes": "The folded seam, evenly damp seated paper, empty supported server, and discarded-rinse state remain readable in both themes.",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 149
     },
     {
-      "asset_id": "instruction_p1_switch_official_20_240_stage_04_instruction_default",
-      "batch": 1,
-      "status": "accepted_candidate",
-      "accepted_revision": "v9",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_04_instruction_default/starlit_tactile_v9.webp",
-      "qa": "complete",
-      "notes": "Lever, supported ball, open path, granular slurry, and continuous stream remain legible."
+      "asset_id": "instruction_p1_v60_official_15_250_stage_02_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 150,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
     },
     {
-      "asset_id": "instruction_p1_phin_screw_18_120_stage_02_instruction_default",
-      "batch": 1,
-      "status": "accepted_candidate",
-      "accepted_revision": "v3",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_02_instruction_default/starlit_tactile_v3.webp",
-      "qa": "complete",
-      "notes": "Threaded disc rests lightly on loose grounds without tamping or compression."
+      "asset_id": "instruction_p1_v60_official_15_250_stage_03_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 151,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
     },
     {
-      "asset_id": "instruction_p1_auto_cupone_20_300_stage_03_instruction_default",
-      "batch": 1,
+      "asset_id": "instruction_p1_v60_official_15_250_stage_04_instruction_default",
+      "batch": 4,
       "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-f80b0348-bcbf-4379-929b-5b476b25e3a2.png",
+          "verdict": "rejected",
+          "issues": [
+            "The pour path is correct, but the hand and forearm are cropped by the right canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-5582545f-6bd6-4f20-99dd-4edfc90886b2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The complete hand and kettle are contained; one low continuous stream lands wholly inside the bed boundary and away from paper.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
       "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_03_instruction_default/starlit_tactile_v2.webp",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_official_15_250_stage_04_instruction_default/starlit_tactile_v2.webp",
       "qa": "complete",
-      "notes": "Reservoir ridge, outlet arm, No. 1 paper, stable mug, and off state remain unambiguous."
+      "notes": "The complete kettle hand, continuous low stream, center-to-mid-bed landing, and clean paper band remain readable in both themes.",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 152
+    },
+    {
+      "asset_id": "instruction_p1_v60_official_15_250_stage_05_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 153,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_rao_20_330_stage_01_instruction_default",
+      "batch": 4,
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-8d4db884-1126-4667-b804-ca3b082a512d.png",
+          "verdict": "rejected",
+          "full_resolution_review": "pass",
+          "notes": "The molded-plastic V60 contains a dry broadly level granular bed with one broad shallow coffee-covered central dimple.",
+          "issues": [
+            "The shallow nest is legible, but the transparent dripper can be mistaken for glass at phone size, failing the exact plastic-V60 identity gate."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-5d845f12-927b-4a19-9f5c-8dd6a8765266.png",
+          "verdict": "rejected",
+          "issues": [
+            "The smoky molded-plastic identity is corrected, but the organic stage fills and touches the canvas perimeter, leaving no transparent-ready margin."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "raw_cache": "exec-b898fb9d-d49f-4722-8263-70bd536749fa.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "Smoky satin molded plastic contrasts with the clear glass server; one broad shallow coffee-covered nest and generous perimeter margins are preserved.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_rao_20_330_stage_01_instruction_default/starlit_tactile_v3.webp",
+      "qa": "complete",
+      "notes": "Smoky molded-plastic identity, clear-glass server contrast, one shallow coffee-covered nest, and safe perimeter remain clear in both themes.",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 165
+    },
+    {
+      "asset_id": "instruction_p1_v60_rao_20_330_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 166,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_rao_20_330_stage_03_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 167,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_rao_20_330_stage_04_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 168,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_rao_20_330_stage_05_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 169,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_rao_20_330_stage_06_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 170,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_01_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 182,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 183,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_03_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 184,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_04_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 185,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_05_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 186,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_06_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 187,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_07_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 188,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_01_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 200,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 201,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_03_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 202,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_04_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 203,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_05_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-V60-VARIANT",
+      "matrix_line": 204,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-V60-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_06_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-SERVE-FRAME",
+      "matrix_line": 205,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
     },
     {
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_01_instruction_default",
@@ -77,49 +524,836 @@
       "accepted_revision": "v4",
       "candidate": "docs/brewing/illustration-candidates/instruction_p1_wave185_ozone_25_400_stage_01_instruction_default/starlit_tactile_v4.webp",
       "qa": "complete",
-      "notes": "Supported kettle, open pleats, level bottom, and both water paths survive phone reduction."
+      "notes": "Supported kettle, open pleats, level bottom, and both water paths survive phone reduction.",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 217
     },
     {
-      "asset_id": "instruction_p1_auto_cupone_20_300_stage_01_instruction_default",
-      "batch": 2,
+      "asset_id": "instruction_p1_wave185_ozone_25_400_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 218,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wave185_ozone_25_400_stage_03_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 219,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wave185_ozone_25_400_stage_04_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 220,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wave185_ozone_25_400_stage_05_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 221,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wave185_ozone_25_400_stage_06_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 222,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wave185_ozone_25_400_stage_07_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 223,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wave185_ozone_25_400_stage_08_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 224,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_01_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-WEDGE-VARIANT",
+      "matrix_line": 236,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-WEDGE-VARIANT",
+      "matrix_line": 237,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_03_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-WEDGE-VARIANT",
+      "matrix_line": 238,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-WEDGE-VARIANT",
+      "matrix_line": 239,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_05_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-WEDGE-VARIANT",
+      "matrix_line": 240,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-WEDGE-VARIANT",
+      "matrix_line": 241,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-WEDGE-VARIANT without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_chemex_42_700_stage_01_instruction_default",
+      "batch": 1,
+      "status": "accepted_candidate",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_chemex_42_700_stage_01_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "Three filter layers face the spout; air channel remains open at phone size in both themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 253
+    },
+    {
+      "asset_id": "instruction_p1_chemex_42_700_stage_02_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 254,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_chemex_42_700_stage_03_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 255,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_chemex_42_700_stage_04_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 256,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_chemex_42_700_stage_05_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 257,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_chemex_42_700_stage_06_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 258,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_chemex_42_700_stage_07_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 259,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_01_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-GENERIC-CONE",
+      "matrix_line": 271,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-GENERIC-CONE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-GENERIC-CONE",
+      "matrix_line": 272,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-GENERIC-CONE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_03_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-GENERIC-CONE",
+      "matrix_line": 273,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-GENERIC-CONE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_04_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-GENERIC-CONE",
+      "matrix_line": 274,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-GENERIC-CONE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_05_instruction_default",
+      "priority": "optional",
+      "blocker": "BLOCK-GENERIC-CONE",
+      "matrix_line": 275,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-GENERIC-CONE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_clever_water_first_15_250_stage_01_instruction_default",
+      "batch": 3,
       "status": "accepted_candidate",
       "research": "complete",
+      "open_todos": [],
       "attempts": [
         {
           "revision": "v1",
-          "raw_cache": "exec-41aa5373-1b7a-45d3-9aac-207c7ff81abb.png",
+          "raw_cache": "exec-82020e7e-baab-4eaf-8c4b-b1d9dc58e63f.png",
+          "verdict": "rejected",
+          "issues": [
+            "The #4 paper reads as an unmodified wedge because its folded side and bottom factory seams are not visually legible."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-8dd11c9e-df97-459e-82df-daeb7652b4aa.png",
           "verdict": "accepted",
           "full_resolution_review": "pass",
-          "notes": "One seated No. 1 paper, one open bottom hole, detached dry holder, and machine-off state are clear.",
+          "notes": "Folded side and bottom seams are distinct; the hand supports only the handle while the closed actuator remains untouched above a clear air gap.",
           "phone_light_review": "pass",
           "phone_dark_review": "pass"
         }
       ],
-      "accepted_revision": "v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_01_instruction_default/starlit_tactile_v1.webp",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_01_instruction_default/starlit_tactile_v2.webp",
       "qa": "complete",
-      "notes": "Single seated No. 1 paper and open bottom hole remain clear in both phone themes."
+      "notes": "Opposite folded seams, handle-only support, unpressed actuator, and open vessel gap remain readable in both phone themes.",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 287
     },
     {
-      "asset_id": "instruction_p1_auto_cupone_20_300_stage_06_instruction_default",
-      "batch": 2,
+      "asset_id": "instruction_p1_clever_water_first_15_250_stage_02_instruction_default",
+      "batch": 4,
       "status": "accepted_candidate",
       "research": "complete",
+      "open_todos": [],
       "attempts": [
         {
           "revision": "v1",
-          "raw_cache": "exec-7fb7aca2-8e05-4b9b-914c-6fa2ace27a74.png",
+          "raw_cache": "exec-19684e38-45d6-488e-9bd6-6dc1c8b3fdcf.png",
+          "verdict": "rejected",
+          "issues": [
+            "The hand is cropped at the top-right edge, the folded paper seams are not legible, and the center actuator appears too close to or touching the scale."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-59259ff8-a78b-4440-8d0b-cd5eb9233dd3.png",
           "verdict": "accepted",
           "full_resolution_review": "pass",
-          "notes": "Unplugged dry machine, detached empty holder, and tool passing through the bottom hole are visible.",
+          "notes": "Clear water only is retained; the complete hand is contained, the paper side fold is visible, and the unpressed actuator has a broad dry gap above the scale.",
           "phone_light_review": "pass",
           "phone_dark_review": "pass"
         }
       ],
-      "accepted_revision": "v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_06_instruction_default/starlit_tactile_v1.webp",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_02_instruction_default/starlit_tactile_v2.webp",
       "qa": "complete",
-      "notes": "Unplugged dry cleaning path remains continuous and readable in both phone themes."
+      "notes": "Clear-water-only retention, complete safe hand, seated paper, dry scale, and unpressed actuator gap remain clear in both themes.",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 288
+    },
+    {
+      "asset_id": "instruction_p1_clever_water_first_15_250_stage_03_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 289,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_clever_water_first_15_250_stage_04_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 290,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_clever_water_first_15_250_stage_05_instruction_default",
+      "batch": 1,
+      "status": "accepted_candidate",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "qa": "complete",
+      "notes": "Release ring is supported by the server and the outlet/stream axis remains centered.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 291
+    },
+    {
+      "asset_id": "instruction_p1_clever_water_first_15_250_stage_06_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 292,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_clever_coffee_first_15_250_stage_01_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 304,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_clever_coffee_first_15_250_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 305,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_clever_coffee_first_15_250_stage_03_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 306,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_clever_coffee_first_15_250_stage_04_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 307,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_switch_official_20_240_stage_01_instruction_default",
+      "batch": 3,
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-def626e4-8ed2-46e6-a60d-541d62dfafd0.png",
+          "verdict": "rejected",
+          "issues": [
+            "The ball appears supported by a generic rectangular shelf because the circular outlet seat and sealing contact are not explicit."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-aa7e21c5-a0a6-4c12-b894-88919dee74b6.png",
+          "verdict": "rejected",
+          "issues": [
+            "The circular seat is corrected, but a finger is shown pressing the lever, contradicting the settled closed post-rinse state."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "raw_cache": "exec-6c8070db-e9f1-4710-a5b0-d10ee8e267a0.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The ball visibly seals a distinct circular seat with zero gap; the resting lever is untouched, the outlet is dry, and the server is empty.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_01_instruction_default/starlit_tactile_v3.webp",
+      "qa": "complete",
+      "notes": "Seated ball-to-ring contact, untouched resting lever, dry outlet, wet clean paper, and empty server remain legible in both themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 319
+    },
+    {
+      "asset_id": "instruction_p1_switch_official_20_240_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 320,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_switch_official_20_240_stage_03_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 321,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_switch_official_20_240_stage_04_instruction_default",
+      "batch": 1,
+      "status": "accepted_candidate",
+      "accepted_revision": "v9",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_04_instruction_default/starlit_tactile_v9.webp",
+      "qa": "complete",
+      "notes": "Lever, supported ball, open path, granular slurry, and continuous stream remain legible.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 322
+    },
+    {
+      "asset_id": "instruction_p1_switch_official_20_240_stage_05_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 323,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default",
+      "batch": 4,
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-9073d887-6776-4a0a-8a4a-22583f987312.png",
+          "verdict": "rejected",
+          "issues": [
+            "The shallow bloom is correct, but the stainless ball appears slightly suspended above the circular seat, so the closed seal is ambiguous."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-ad5728cb-3415-4eb3-9757-a38d06693aeb.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The ball visibly contacts the circular seat with zero gap; the low uniformly wet bloom is retained and the server remains empty.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "A shallow uniformly wet first bloom, direct ball-to-seat seal, untouched lever, dry outlet, and empty server remain distinct in both themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 335
+    },
+    {
+      "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 336,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
     },
     {
       "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default",
@@ -140,7 +1374,46 @@
       "accepted_revision": "v1",
       "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default/starlit_tactile_v1.webp",
       "qa": "complete",
-      "notes": "Seated ball, retained slurry, no drainage, and empty server remain distinct in both phone themes."
+      "notes": "Seated ball, retained slurry, no drainage, and empty server remain distinct in both phone themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 337
+    },
+    {
+      "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 338,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 339,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
     },
     {
       "asset_id": "instruction_p1_switch_gravity_15_250_stage_01_instruction_default",
@@ -185,7 +1458,582 @@
       "accepted_revision": "v3",
       "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_gravity_15_250_stage_01_instruction_default/starlit_tactile_v3.webp",
       "qa": "complete",
-      "notes": "Raised ball, separate open seat, and continuous clear flow remain legible in both phone themes."
+      "notes": "Raised ball, separate open seat, and continuous clear flow remain legible in both phone themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 351
+    },
+    {
+      "asset_id": "instruction_p1_switch_gravity_15_250_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 352,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_switch_gravity_15_250_stage_03_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 353,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_switch_gravity_15_250_stage_04_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 354,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 366,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 367,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_03_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 368,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_04_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 369,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_05_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 370,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_06_instruction_default",
+      "priority": "optional",
+      "blocker": "NONE-SERVE-FRAME",
+      "matrix_line": 371,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_01_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 383,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 384,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 385,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_04_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 386,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_05_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 387,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_06_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-CEZVE-HARDWARE",
+      "matrix_line": 388,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-CEZVE-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_batch_500_30_stage_01_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
+      "matrix_line": 400,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_batch_500_30_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
+      "matrix_line": 401,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_batch_500_30_stage_03_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
+      "matrix_line": 402,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_batch_500_30_stage_04_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
+      "matrix_line": 403,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_batch_500_30_stage_05_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
+      "matrix_line": 404,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_batch_1000_60_stage_01_instruction_default",
+      "priority": "safety-critical",
+      "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
+      "matrix_line": 416,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_batch_1000_60_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
+      "matrix_line": 417,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_batch_1000_60_stage_03_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
+      "matrix_line": 418,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_batch_1000_60_stage_04_instruction_default",
+      "priority": "mandatory",
+      "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
+      "matrix_line": 419,
+      "batch": null,
+      "status": "research_blocked",
+      "research": "blocked",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "resolve_research_blocker",
+          "status": "open",
+          "detail": "Resolve BLOCK-AUTO-BATCH-HARDWARE without inventing equipment compatibility."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_cupone_20_300_stage_01_instruction_default",
+      "batch": 2,
+      "status": "accepted_candidate",
+      "research": "complete",
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-41aa5373-1b7a-45d3-9aac-207c7ff81abb.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "One seated No. 1 paper, one open bottom hole, detached dry holder, and machine-off state are clear.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_01_instruction_default/starlit_tactile_v1.webp",
+      "qa": "complete",
+      "notes": "Single seated No. 1 paper and open bottom hole remain clear in both phone themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 431
+    },
+    {
+      "asset_id": "instruction_p1_auto_cupone_20_300_stage_02_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 432,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_auto_cupone_20_300_stage_03_instruction_default",
+      "batch": 1,
+      "status": "accepted_candidate",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_03_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "Reservoir ridge, outlet arm, No. 1 paper, stable mug, and off state remain unambiguous.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 433
+    },
+    {
+      "asset_id": "instruction_p1_auto_cupone_20_300_stage_04_instruction_default",
+      "batch": 3,
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-95c658af-f1ee-4bd2-85c9-7af5dc829288.png",
+          "verdict": "rejected",
+          "issues": [
+            "The installed nine-hole outlet arm is rendered as a single end nozzle and stream, teaching incorrect water-delivery geometry."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-cac6832b-75f9-42c3-94dc-eb3695277469.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The installed outlet arm uses multiple underside perforations over a wet bed; the only visible stream is brewed coffee entering the centered mug.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_04_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "Distributed outlet-arm perforations, wet bed, brewed-coffee stream, on indicator, and centered mug remain distinct in both phone themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 434
+    },
+    {
+      "asset_id": "instruction_p1_auto_cupone_20_300_stage_05_instruction_default",
+      "batch": 4,
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-76c21f87-ae32-420d-a358-218d9e84404b.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "The current single-hole arm and holder remain installed; the indicator is dark and exactly one residual bead clings above the centered mug.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "qa": "complete",
+      "notes": "Current single-hole arm, dark indicator, centered mug, hands-off state, and one attached residual bead remain clear in both themes.",
+      "priority": "mandatory",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 435
+    },
+    {
+      "asset_id": "instruction_p1_auto_cupone_20_300_stage_06_instruction_default",
+      "batch": 2,
+      "status": "accepted_candidate",
+      "research": "complete",
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-7fb7aca2-8e05-4b9b-914c-6fa2ace27a74.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "Unplugged dry machine, detached empty holder, and tool passing through the bottom hole are visible.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_06_instruction_default/starlit_tactile_v1.webp",
+      "qa": "complete",
+      "notes": "Unplugged dry cleaning path remains continuous and readable in both phone themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-BOUNDED",
+      "matrix_line": 436
     },
     {
       "asset_id": "instruction_p1_phin_gravity_14_118_stage_01_instruction_default",
@@ -206,7 +2054,121 @@
       "accepted_revision": "v1",
       "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_01_instruction_default/starlit_tactile_v1.webp",
       "qa": "complete",
-      "notes": "Full cup-rim support, level dry bed, and separate loose press remain clear in both phone themes."
+      "notes": "Full cup-rim support, level dry bed, and separate loose press remain clear in both phone themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 448
+    },
+    {
+      "asset_id": "instruction_p1_phin_gravity_14_118_stage_02_instruction_default",
+      "batch": 4,
+      "status": "accepted_candidate",
+      "research": "complete",
+      "open_todos": [],
+      "attempts": [
+        {
+          "revision": "v1",
+          "raw_cache": "exec-eb002de7-a965-4311-8833-d79b6432742c.png",
+          "verdict": "rejected",
+          "full_resolution_review": "pass",
+          "notes": "The loose unthreaded perforated disc rests flat above a visible ring of uncompressed dry grounds with full cup-rim support and no hand.",
+          "issues": [
+            "The instructional content is correct, but the generated master is portrait 1122 by 1402 rather than the required landscape 4:3 card."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "raw_cache": "exec-1b1299ff-6992-4d1f-98b5-e86c79238313.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "notes": "True landscape 4:3; loose unthreaded disc rests flat above a visible ring of uncompressed dry grounds with full cup-rim support.",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass"
+        }
+      ],
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_02_instruction_default/starlit_tactile_v2.webp",
+      "qa": "complete",
+      "notes": "Landscape 4:3 framing, flat unthreaded disc, loose ground ring, headroom, and full rim support remain legible in both themes.",
+      "priority": "mandatory",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 449
+    },
+    {
+      "asset_id": "instruction_p1_phin_gravity_14_118_stage_03_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 450,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_phin_gravity_14_118_stage_04_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 451,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_phin_gravity_14_118_stage_05_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 452,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_phin_gravity_14_118_stage_06_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 453,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
     },
     {
       "asset_id": "instruction_p1_phin_gravity_14_118_stage_07_instruction_default",
@@ -263,75 +2225,10 @@
       "accepted_revision": "v4",
       "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_07_instruction_default/starlit_tactile_v4.webp",
       "qa": "complete",
-      "notes": "Dry protected grip, untouched black concentrate, contained press, and lid-coaster support remain clear in both phone themes."
-    },
-    {
-      "asset_id": "instruction_p1_auto_cupone_20_300_stage_04_instruction_default",
-      "batch": 3,
-      "status": "accepted_candidate",
-      "research": "complete",
-      "open_todos": [],
-      "attempts": [
-        {
-          "revision": "v1",
-          "raw_cache": "exec-95c658af-f1ee-4bd2-85c9-7af5dc829288.png",
-          "verdict": "rejected",
-          "issues": [
-            "The installed nine-hole outlet arm is rendered as a single end nozzle and stream, teaching incorrect water-delivery geometry."
-          ],
-          "regeneration_todo": {
-            "status": "resolved",
-            "resolved_by": "v2"
-          }
-        },
-        {
-          "revision": "v2",
-          "raw_cache": "exec-cac6832b-75f9-42c3-94dc-eb3695277469.png",
-          "verdict": "accepted",
-          "full_resolution_review": "pass",
-          "notes": "The installed outlet arm uses multiple underside perforations over a wet bed; the only visible stream is brewed coffee entering the centered mug.",
-          "phone_light_review": "pass",
-          "phone_dark_review": "pass"
-        }
-      ],
-      "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_04_instruction_default/starlit_tactile_v2.webp",
-      "qa": "complete",
-      "notes": "Distributed outlet-arm perforations, wet bed, brewed-coffee stream, on indicator, and centered mug remain distinct in both phone themes."
-    },
-    {
-      "asset_id": "instruction_p1_clever_water_first_15_250_stage_01_instruction_default",
-      "batch": 3,
-      "status": "accepted_candidate",
-      "research": "complete",
-      "open_todos": [],
-      "attempts": [
-        {
-          "revision": "v1",
-          "raw_cache": "exec-82020e7e-baab-4eaf-8c4b-b1d9dc58e63f.png",
-          "verdict": "rejected",
-          "issues": [
-            "The #4 paper reads as an unmodified wedge because its folded side and bottom factory seams are not visually legible."
-          ],
-          "regeneration_todo": {
-            "status": "resolved",
-            "resolved_by": "v2"
-          }
-        },
-        {
-          "revision": "v2",
-          "raw_cache": "exec-8dd11c9e-df97-459e-82df-daeb7652b4aa.png",
-          "verdict": "accepted",
-          "full_resolution_review": "pass",
-          "notes": "Folded side and bottom seams are distinct; the hand supports only the handle while the closed actuator remains untouched above a clear air gap.",
-          "phone_light_review": "pass",
-          "phone_dark_review": "pass"
-        }
-      ],
-      "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_01_instruction_default/starlit_tactile_v2.webp",
-      "qa": "complete",
-      "notes": "Opposite folded seams, handle-only support, unpressed actuator, and open vessel gap remain readable in both phone themes."
+      "notes": "Dry protected grip, untouched black concentrate, contained press, and lid-coaster support remain clear in both phone themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 454
     },
     {
       "asset_id": "instruction_p1_phin_screw_18_120_stage_01_instruction_default",
@@ -365,7 +2262,58 @@
       "accepted_revision": "v2",
       "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_01_instruction_default/starlit_tactile_v2.webp",
       "qa": "complete",
-      "notes": "Full cup-rim support, level textured dry bed, threaded post, and insert lying flat on its lid remain clear in both themes."
+      "notes": "Full cup-rim support, level textured dry bed, threaded post, and insert lying flat on its lid remain clear in both themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 466
+    },
+    {
+      "asset_id": "instruction_p1_phin_screw_18_120_stage_02_instruction_default",
+      "batch": 1,
+      "status": "accepted_candidate",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_02_instruction_default/starlit_tactile_v3.webp",
+      "qa": "complete",
+      "notes": "Threaded disc rests lightly on loose grounds without tamping or compression.",
+      "priority": "safety-critical",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 467
+    },
+    {
+      "asset_id": "instruction_p1_phin_screw_18_120_stage_03_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 468,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
+    },
+    {
+      "asset_id": "instruction_p1_phin_screw_18_120_stage_04_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 469,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
+        {
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
+        }
+      ],
+      "qa": "pending"
     },
     {
       "asset_id": "instruction_p1_phin_screw_18_120_stage_05_instruction_default",
@@ -399,283 +2347,28 @@
       "accepted_revision": "v2",
       "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_05_instruction_default/starlit_tactile_v2.webp",
       "qa": "complete",
-      "notes": "Exactly three separated droplets, covered phin, stable support, and modest concentrate remain clear in both themes."
+      "notes": "Exactly three separated droplets, covered phin, stable support, and modest concentrate remain clear in both themes.",
+      "priority": "safety-critical",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 470
     },
     {
-      "asset_id": "instruction_p1_switch_official_20_240_stage_01_instruction_default",
-      "batch": 3,
-      "status": "accepted_candidate",
-      "research": "complete",
-      "open_todos": [],
-      "attempts": [
+      "asset_id": "instruction_p1_phin_screw_18_120_stage_06_instruction_default",
+      "priority": "mandatory",
+      "blocker": "NONE-PHIN-MECHANISM",
+      "matrix_line": 471,
+      "batch": null,
+      "status": "generation_pending",
+      "research": "queued",
+      "attempts": [],
+      "open_todos": [
         {
-          "revision": "v1",
-          "raw_cache": "exec-def626e4-8ed2-46e6-a60d-541d62dfafd0.png",
-          "verdict": "rejected",
-          "issues": [
-            "The ball appears supported by a generic rectangular shelf because the circular outlet seat and sealing contact are not explicit."
-          ],
-          "regeneration_todo": {
-            "status": "resolved",
-            "resolved_by": "v2"
-          }
-        },
-        {
-          "revision": "v2",
-          "raw_cache": "exec-aa7e21c5-a0a6-4c12-b894-88919dee74b6.png",
-          "verdict": "rejected",
-          "issues": [
-            "The circular seat is corrected, but a finger is shown pressing the lever, contradicting the settled closed post-rinse state."
-          ],
-          "regeneration_todo": {
-            "status": "resolved",
-            "resolved_by": "v3"
-          }
-        },
-        {
-          "revision": "v3",
-          "raw_cache": "exec-6c8070db-e9f1-4710-a5b0-d10ee8e267a0.png",
-          "verdict": "accepted",
-          "full_resolution_review": "pass",
-          "notes": "The ball visibly seals a distinct circular seat with zero gap; the resting lever is untouched, the outlet is dry, and the server is empty.",
-          "phone_light_review": "pass",
-          "phone_dark_review": "pass"
+          "kind": "research_and_generate",
+          "status": "open",
+          "detail": "Research mechanics, generate, and complete every visual QA gate."
         }
       ],
-      "accepted_revision": "v3",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_01_instruction_default/starlit_tactile_v3.webp",
-      "qa": "complete",
-      "notes": "Seated ball-to-ring contact, untouched resting lever, dry outlet, wet clean paper, and empty server remain legible in both themes."
-    },
-    {
-      "asset_id": "instruction_p1_v60_official_15_250_stage_01_instruction_default",
-      "batch": 3,
-      "status": "accepted_candidate",
-      "research": "complete",
-      "open_todos": [],
-      "attempts": [
-        {
-          "revision": "v1",
-          "raw_cache": "exec-71e631eb-ba1a-4a36-bb6d-12b55b9ba75a.png",
-          "verdict": "accepted",
-          "full_resolution_review": "pass",
-          "notes": "One folded wet V60 02 paper is evenly seated; no grounds or retained rinse remain and the supported glass server is empty.",
-          "phone_light_review": "pass",
-          "phone_dark_review": "pass"
-        }
-      ],
-      "accepted_revision": "v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_official_15_250_stage_01_instruction_default/starlit_tactile_v1.webp",
-      "qa": "complete",
-      "notes": "The folded seam, evenly damp seated paper, empty supported server, and discarded-rinse state remain readable in both themes."
-    },
-    {
-      "asset_id": "instruction_p1_auto_cupone_20_300_stage_05_instruction_default",
-      "batch": 4,
-      "status": "accepted_candidate",
-      "research": "complete",
-      "open_todos": [],
-      "attempts": [
-        {
-          "revision": "v1",
-          "raw_cache": "exec-76c21f87-ae32-420d-a358-218d9e84404b.png",
-          "verdict": "accepted",
-          "full_resolution_review": "pass",
-          "notes": "The current single-hole arm and holder remain installed; the indicator is dark and exactly one residual bead clings above the centered mug.",
-          "phone_light_review": "pass",
-          "phone_dark_review": "pass"
-        }
-      ],
-      "accepted_revision": "v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_05_instruction_default/starlit_tactile_v1.webp",
-      "qa": "complete",
-      "notes": "Current single-hole arm, dark indicator, centered mug, hands-off state, and one attached residual bead remain clear in both themes."
-    },
-    {
-      "asset_id": "instruction_p1_clever_water_first_15_250_stage_02_instruction_default",
-      "batch": 4,
-      "status": "accepted_candidate",
-      "research": "complete",
-      "open_todos": [],
-      "attempts": [
-        {
-          "revision": "v1",
-          "raw_cache": "exec-19684e38-45d6-488e-9bd6-6dc1c8b3fdcf.png",
-          "verdict": "rejected",
-          "issues": [
-            "The hand is cropped at the top-right edge, the folded paper seams are not legible, and the center actuator appears too close to or touching the scale."
-          ],
-          "regeneration_todo": {
-            "status": "resolved",
-            "resolved_by": "v2"
-          }
-        },
-        {
-          "revision": "v2",
-          "raw_cache": "exec-59259ff8-a78b-4440-8d0b-cd5eb9233dd3.png",
-          "verdict": "accepted",
-          "full_resolution_review": "pass",
-          "notes": "Clear water only is retained; the complete hand is contained, the paper side fold is visible, and the unpressed actuator has a broad dry gap above the scale.",
-          "phone_light_review": "pass",
-          "phone_dark_review": "pass"
-        }
-      ],
-      "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_02_instruction_default/starlit_tactile_v2.webp",
-      "qa": "complete",
-      "notes": "Clear-water-only retention, complete safe hand, seated paper, dry scale, and unpressed actuator gap remain clear in both themes."
-    },
-    {
-      "asset_id": "instruction_p1_phin_gravity_14_118_stage_02_instruction_default",
-      "batch": 4,
-      "status": "accepted_candidate",
-      "research": "complete",
-      "open_todos": [],
-      "attempts": [
-        {
-          "revision": "v1",
-          "raw_cache": "exec-eb002de7-a965-4311-8833-d79b6432742c.png",
-          "verdict": "rejected",
-          "full_resolution_review": "pass",
-          "notes": "The loose unthreaded perforated disc rests flat above a visible ring of uncompressed dry grounds with full cup-rim support and no hand.",
-          "issues": [
-            "The instructional content is correct, but the generated master is portrait 1122 by 1402 rather than the required landscape 4:3 card."
-          ],
-          "regeneration_todo": {
-            "status": "resolved",
-            "resolved_by": "v2"
-          }
-        },
-        {
-          "revision": "v2",
-          "raw_cache": "exec-1b1299ff-6992-4d1f-98b5-e86c79238313.png",
-          "verdict": "accepted",
-          "full_resolution_review": "pass",
-          "notes": "True landscape 4:3; loose unthreaded disc rests flat above a visible ring of uncompressed dry grounds with full cup-rim support.",
-          "phone_light_review": "pass",
-          "phone_dark_review": "pass"
-        }
-      ],
-      "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_02_instruction_default/starlit_tactile_v2.webp",
-      "qa": "complete",
-      "notes": "Landscape 4:3 framing, flat unthreaded disc, loose ground ring, headroom, and full rim support remain legible in both themes."
-    },
-    {
-      "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default",
-      "batch": 4,
-      "status": "accepted_candidate",
-      "research": "complete",
-      "open_todos": [],
-      "attempts": [
-        {
-          "revision": "v1",
-          "raw_cache": "exec-9073d887-6776-4a0a-8a4a-22583f987312.png",
-          "verdict": "rejected",
-          "issues": [
-            "The shallow bloom is correct, but the stainless ball appears slightly suspended above the circular seat, so the closed seal is ambiguous."
-          ],
-          "regeneration_todo": {
-            "status": "resolved",
-            "resolved_by": "v2"
-          }
-        },
-        {
-          "revision": "v2",
-          "raw_cache": "exec-ad5728cb-3415-4eb3-9757-a38d06693aeb.png",
-          "verdict": "accepted",
-          "full_resolution_review": "pass",
-          "notes": "The ball visibly contacts the circular seat with zero gap; the low uniformly wet bloom is retained and the server remains empty.",
-          "phone_light_review": "pass",
-          "phone_dark_review": "pass"
-        }
-      ],
-      "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default/starlit_tactile_v2.webp",
-      "qa": "complete",
-      "notes": "A shallow uniformly wet first bloom, direct ball-to-seat seal, untouched lever, dry outlet, and empty server remain distinct in both themes."
-    },
-    {
-      "asset_id": "instruction_p1_v60_official_15_250_stage_04_instruction_default",
-      "batch": 4,
-      "status": "accepted_candidate",
-      "research": "complete",
-      "open_todos": [],
-      "attempts": [
-        {
-          "revision": "v1",
-          "raw_cache": "exec-f80b0348-bcbf-4379-929b-5b476b25e3a2.png",
-          "verdict": "rejected",
-          "issues": [
-            "The pour path is correct, but the hand and forearm are cropped by the right canvas edge."
-          ],
-          "regeneration_todo": {
-            "status": "resolved",
-            "resolved_by": "v2"
-          }
-        },
-        {
-          "revision": "v2",
-          "raw_cache": "exec-5582545f-6bd6-4f20-99dd-4edfc90886b2.png",
-          "verdict": "accepted",
-          "full_resolution_review": "pass",
-          "notes": "The complete hand and kettle are contained; one low continuous stream lands wholly inside the bed boundary and away from paper.",
-          "phone_light_review": "pass",
-          "phone_dark_review": "pass"
-        }
-      ],
-      "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_official_15_250_stage_04_instruction_default/starlit_tactile_v2.webp",
-      "qa": "complete",
-      "notes": "The complete kettle hand, continuous low stream, center-to-mid-bed landing, and clean paper band remain readable in both themes."
-    },
-    {
-      "asset_id": "instruction_p1_v60_rao_20_330_stage_01_instruction_default",
-      "batch": 4,
-      "status": "accepted_candidate",
-      "research": "complete",
-      "open_todos": [],
-      "attempts": [
-        {
-          "revision": "v1",
-          "raw_cache": "exec-8d4db884-1126-4667-b804-ca3b082a512d.png",
-          "verdict": "rejected",
-          "full_resolution_review": "pass",
-          "notes": "The molded-plastic V60 contains a dry broadly level granular bed with one broad shallow coffee-covered central dimple.",
-          "issues": [
-            "The shallow nest is legible, but the transparent dripper can be mistaken for glass at phone size, failing the exact plastic-V60 identity gate."
-          ],
-          "regeneration_todo": {
-            "status": "resolved",
-            "resolved_by": "v2"
-          }
-        },
-        {
-          "revision": "v2",
-          "raw_cache": "exec-5d845f12-927b-4a19-9f5c-8dd6a8765266.png",
-          "verdict": "rejected",
-          "issues": [
-            "The smoky molded-plastic identity is corrected, but the organic stage fills and touches the canvas perimeter, leaving no transparent-ready margin."
-          ],
-          "regeneration_todo": {
-            "status": "resolved",
-            "resolved_by": "v3"
-          }
-        },
-        {
-          "revision": "v3",
-          "raw_cache": "exec-b898fb9d-d49f-4722-8263-70bd536749fa.png",
-          "verdict": "accepted",
-          "full_resolution_review": "pass",
-          "notes": "Smoky satin molded plastic contrasts with the clear glass server; one broad shallow coffee-covered nest and generous perimeter margins are preserved.",
-          "phone_light_review": "pass",
-          "phone_dark_review": "pass"
-        }
-      ],
-      "accepted_revision": "v3",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_rao_20_330_stage_01_instruction_default/starlit_tactile_v3.webp",
-      "qa": "complete",
-      "notes": "Smoky molded-plastic identity, clear-glass server contrast, one shallow coffee-covered nest, and safe perimeter remain clear in both themes."
+      "qa": "pending"
     }
   ]
 }

@@ -45,8 +45,10 @@ def load_approved_candidates() -> tuple[dict[str, Path], list[str]]:
     candidates: dict[str, Path] = {}
     for item in tracker.get("assets", []):
         asset_id = item.get("asset_id")
-        if item.get("status") != "accepted_candidate" or item.get("qa") != "complete":
-            errors.append(f"{asset_id or '<missing id>'}: tracker item is not QA-complete")
+        if item.get("status") != "accepted_candidate":
+            continue
+        if item.get("qa") != "complete":
+            errors.append(f"{asset_id or '<missing id>'}: accepted candidate is not QA-complete")
             continue
         candidate_value = item.get("candidate")
         if not asset_id or not candidate_value:
@@ -61,10 +63,7 @@ def load_approved_candidates() -> tuple[dict[str, Path], list[str]]:
             continue
         candidates[asset_id] = candidate
 
-    if expected_count != len(candidates):
-        errors.append(
-            f"tracker expected {expected_count} approved assets, found {len(candidates)}",
-        )
+
     return candidates, errors
 
 
