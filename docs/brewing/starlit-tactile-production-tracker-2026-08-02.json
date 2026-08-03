@@ -731,19 +731,66 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 200,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_01_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-682b59f2-bb10-4153-8594-c3354aa098dd.png",
+          "issues": [
+            "Mechanically coherent, but the glass and ice are glossy photorealistic CGI rather than the approved flat-to-soft tactile editorial treatment; regenerate in the app art style."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_01_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-2447eb17-3cd1-4a5c-b949-6c917d01eb56.png",
+          "issues": [
+            "Correct flatter tactile style, but the generator produced a portrait 2:3 canvas instead of the required horizontal 4:3 app card; regenerate landscape."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_01_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-f472cc42-a95e-40e2-a856-7e856553884f.png",
+          "issues": [
+            "Raw mechanics and style pass, but the source is 1536x1024 (3:2), so the strict 4:3 production processor rejected it. Regenerate the same composition at true 4:3 without crop loss."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v4"
+          }
+        },
+        {
+          "revision": "v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_01_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-ae383d47-8ab1-45c2-8077-2245eee40df4.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Raw mechanics pass; true 4:3; clean alpha; individual light and dark phone previews pass."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kurasu_flash_16_150_70_stage_01_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Raw mechanics pass; true 4:3; clean alpha; individual light and dark phone previews pass."
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_02_instruction_default",
@@ -751,19 +798,66 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 201,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-5e487fc2-14e9-43b1-9727-89f35d41b125.png",
+          "issues": [
+            "Photorealistic CGI drift and the wrist/forearm is cropped by the right canvas edge, violating transparent perimeter containment."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-7459b107-0ab4-4f88-a57b-e3c2217b0546.png",
+          "issues": [
+            "The gesture and style pass, but most of the coffee bed remains visibly dry around only a tiny wet center, contradicting the first-pour completion cue that grounds are evenly wet."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_02_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-27e5b27a-e6a8-4482-94f3-e9003184e7a1.png",
+          "issues": [
+            "The coffee bed is now evenly wet and the gesture passes, but the original brew ice renders as opaque brown stones/discs rather than recognizable clear ice; regenerate with pale blue-white faceted cubes."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v4"
+          }
+        },
+        {
+          "revision": "v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_02_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-44721384-16d8-4dfb-999c-97849ed063fb.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Uniformly wet bloom, recognizable original ice, clean alpha, light and dark phone previews pass."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kurasu_flash_16_150_70_stage_02_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Uniformly wet bloom, recognizable original ice, clean alpha, light and dark phone previews pass."
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_03_instruction_default",
@@ -771,19 +865,40 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 202,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-c8941ca3-81d1-458a-ad2c-9657c8fc25e5.png",
+          "issues": [
+            "Photorealistic CGI drift and the wrist/forearm is cropped by the right canvas edge; simplify slurry activity and preserve full contained gesture."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-a8d94711-bb10-4dc8-9de4-3ed08f87f0cd.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Raw mechanics pass; clean alpha; light and dark phone previews pass."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kurasu_flash_16_150_70_stage_03_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Raw mechanics pass; clean alpha; light and dark phone previews pass."
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_04_instruction_default",
@@ -791,19 +906,66 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 203,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-5fa8672a-8c89-4a1b-a384-56a41da1704f.png",
+          "issues": [
+            "Photorealistic CGI drift and the wrist/forearm is cropped by the right canvas edge, so the otherwise plausible gentle-pour state cannot ship."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_04_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-220a0dc7-ae9e-4c7a-9e25-8595ac0421be.png",
+          "issues": [
+            "Raw mechanics pass, but in both phone previews the four remaining ice pieces become opaque brown discs and are not recognizable as melting ice; regenerate with pale translucent facets that survive theme downscaling."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_04_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-b8b03c9e-4a04-44cb-90aa-359db619596f.png",
+          "issues": [
+            "The three melting ice pieces are now legible, but the exterior chroma field is a dark-to-light green gradient instead of exact uniform #00FF00, which would contaminate transparency edges."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v4"
+          }
+        },
+        {
+          "revision": "v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_04_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-bb9b7ec2-658a-484c-ab70-0e37511d7a90.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Three smaller melting ice pieces remain phone-readable; uniform chroma, clean alpha, light and dark phone previews pass."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kurasu_flash_16_150_70_stage_04_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Three smaller melting ice pieces remain phone-readable; uniform chroma, clean alpha, light and dark phone previews pass."
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_05_instruction_default",
@@ -811,19 +973,40 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 204,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-3825221a-f425-4f3a-900f-65ef41744b14.png",
+          "issues": [
+            "Photorealistic CGI drift, oversized spoon treatment, and the wrist/forearm is cropped by the right canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_05_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-54bbc664-3fef-4bb6-8099-54bc07469661.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Raw mechanics pass; no ice remains; clean alpha; light and dark phone previews pass."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kurasu_flash_16_150_70_stage_05_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Raw mechanics pass; no ice remains; clean alpha; light and dark phone previews pass."
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_06_instruction_default",
@@ -831,17 +1014,51 @@
       "blocker": "NONE-SERVE-FRAME",
       "matrix_line": 205,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-0c0ce6d4-94c0-4945-b7e5-be59f61f5fb3.png",
+          "issues": [
+            "Photorealistic CGI drift and the wrist/forearm is cropped by the right canvas edge; regenerate the complete serving gesture with wider margin."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_06_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-270c6c3c-7e8f-46bb-85aa-765446dbb7c6.png",
+          "issues": [
+            "The serving mechanics and containment mostly pass, but an unrequested opaque black lid/collar appears on the server opening, implying leftover dripper hardware in a no-dripper serving state."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kurasu_flash_16_150_70_stage_06_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-a11b2d50-1c56-4ba3-b1c4-9d568ac9f5e6.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Open plain server, continuous serving stream, fresh ice only in glass; clean alpha; light and dark phone previews pass."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kurasu_flash_16_150_70_stage_06_instruction_default/starlit_tactile_v3.webp",
+      "notes": "Open plain server, continuous serving stream, fresh ice only in glass; clean alpha; light and dark phone previews pass."
     },
     {
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_01_instruction_default",

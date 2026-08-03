@@ -617,3 +617,35 @@ stream and ordered server progression without embedding quantities; the finish
 frame shows one isolated aligned drop. All passed raw and dual-theme phone QA.
 Tracker, matrix, drawables and generated runtime catalog now agree at 53
 accepted and 61 open.
+
+## Batch 12 completed Kurasu iced V60 sequence — 2026-08-03
+
+The primary Kurasu iced-pour-over guide was rechecked before production. It
+specifies the Hario V60 02 Tetsu Kasuya model, conical paper, 16 g coffee,
+150 g water at 91 °C, 70 g brew ice in the server, three pours to 40 g,
+100 g, and 150 g, approximately 2:10 total drawdown, complete melting of the
+original brew ice, and separate fresh serving ice. The bitmaps keep quantities
+out of the artwork while preserving those equipment and material states.
+
+| Stage | Accepted | Raw cache | WebP SHA-256 |
+| --- | --- | --- | --- |
+| 01 | v4 | exec-ae383d47-8ab1-45c2-8077-2245eee40df4.png | 40aebbd158f68951e6cc1c7ad06b778a0e1ea80ae407c569f53382143d249d3b |
+| 02 | v4 | exec-44721384-16d8-4dfb-999c-97849ed063fb.png | d2399d6bbea8b58ede9aac851fce0dfdfcb10e27d96cfff695bd5bd155183346 |
+| 03 | v2 | exec-a8d94711-bb10-4dc8-9de4-3ed08f87f0cd.png | b65c344aa138a8403e66699963dd21cef0aad7c2724456d1af48953fedc38923 |
+| 04 | v4 | exec-bb9b7ec2-658a-484c-ab70-0e37511d7a90.png | 7c46b8c437ad2f3702c439540a34b20f1e099fc976e0f239ec8b3c41ead7ef2f |
+| 05 | v2 | exec-54bbc664-3fef-4bb6-8099-54bc07469661.png | c81697840a0a63a1b5172884459ea7bd16ce6389208f752aee80f316e1e91ce1 |
+| 06 | v3 | exec-a11b2d50-1c56-4ba3-b1c4-9d568ac9f5e6.png | 1893d29ff6df4732c447da69b09e7697724d7e09ed5241ae15d7702cc8afeb40 |
+
+The first complete pass was rejected for glossy CGI materials and cropped
+forearms. Later tracked rejections cover portrait and 3:2 canvases, a mostly
+dry bloom, phone-size ice that read as brown discs, a non-uniform green chroma
+field, and an invented black server lid. Exact prompts and every raw cache ID
+remain beside the asset records so each correction is reproducible.
+
+The retained sequence uses one consistent flat-to-soft Material 3 Expressive
+hardware family. It shows ice only in the prepared server, a thin first coffee
+puddle, increasing beverage with visibly melting ice, no original ice after
+stirring, and fresh ice only in the serving glass. All six frames passed raw
+mechanics review, strict 4:3 and alpha processing, and individual light- and
+dark-theme phone review. Tracker, matrix, drawables and generated runtime
+catalog agree at 59 accepted and 55 open.
