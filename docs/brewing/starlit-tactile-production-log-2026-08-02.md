@@ -593,3 +593,27 @@ during active pours, cropped kettle-hand gestures, lost KDC rib geometry, a
 noisy wet-coffee background, and an otherwise correct frame that became too
 small at phone scale. Exact prompts and raw cache identifiers are retained for
 every revision. The synchronized checkpoint is 47 accepted and 67 open.
+
+
+## Batch 11 completed Kasuya sequence — 2026-08-03
+
+Reference conditioning against the accepted preparation frame resolved the
+remaining KDC-02-B consistency problems. All seven `v60_kasuya_4_6_20_300`
+stages now have accepted exact-stage candidates.
+
+| Stage | Accepted | Raw cache | WebP SHA-256 |
+| --- | --- | --- | --- |
+| 02 | `v5` | `exec-8d8431e7-aa99-4012-b535-50a65e7c2d47.png` | `8e19f64df2420db850ebf9db19f1ec5b93a9c5910c037fd83e906245f0fd7dc6` |
+| 03 | `v5` | `exec-536fb79e-bd8c-43b7-8568-2c5eacf1c9ff.png` | `31ff35acfee213642f760c99205d185b960e7e83075ca3d81ca48816d2f4d862` |
+| 04 | `v3` | `exec-738dd172-30fd-457e-b13a-9d7e4c7fd3cb.png` | `6b7cc9dbde2a8294df15ab99229159dd13da24d117520a136118f2d01846aec9` |
+| 05 | `v1` | `exec-9bd15662-4d8c-4ff6-8986-cde43c15e89b.png` | `cccd50d46d326728eda0cdae80d6a6b976010d1c6b2aae9370399876eb378646` |
+| 06 | `v1` | `exec-a93d0c2d-0aa3-40dd-b948-dee5431fd4a5.png` | `4050c06610762ddea24a1c2de129879bfcff800809d0e10c40e99000db2af087` |
+| 07 | `v1` | `exec-9e287de3-5641-4942-a422-e16e6c2cc576.png` | `6e2a9b455fca0213573c0c2702f7224554dc1a8539ed26c52104423be01db842` |
+
+Every retained frame preserves opaque black porcelain, customized ribs, one
+smooth cone paper, granular grounds distinct from smooth liquid, a contained
+organic stage and transparent exterior. Pulse frames show one continuous low
+stream and ordered server progression without embedding quantities; the finish
+frame shows one isolated aligned drop. All passed raw and dual-theme phone QA.
+Tracker, matrix, drawables and generated runtime catalog now agree at 53
+accepted and 61 open.

@@ -433,7 +433,7 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 183,
       "batch": null,
-      "status": "regeneration_required",
+      "status": "accepted_candidate",
       "research": "complete",
       "attempts": [
         {
@@ -484,20 +484,28 @@
             "The forearm reaches the right canvas edge and the KDC-02-B customized rib geometry has disappeared."
           ],
           "regeneration_todo": {
-            "status": "open"
+            "status": "resolved",
+            "resolved_by": "v5"
           }
-        }
-      ],
-      "open_todos": [
+        },
         {
-          "kind": "regenerate",
-          "status": "open",
-          "detail": "The forearm reaches the right canvas edge and the KDC-02-B customized rib geometry has disappeared."
+          "revision": "v5",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_02_instruction_default/starlit_tactile_v5.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-8d8431e7-aa99-4012-b535-50a65e7c2d47.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Reference-conditioned KDC ribs, smooth paper, uniformly wet first bloom, thin server puddle, contained single stream and theme contrast pass at phone size."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v5",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kasuya_4_6_20_300_stage_02_instruction_default/starlit_tactile_v5.webp",
+      "notes": "Reference-conditioned KDC ribs, smooth paper, uniformly wet first bloom, thin server puddle, contained single stream and theme contrast pass at phone size."
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_03_instruction_default",
@@ -505,7 +513,7 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 184,
       "batch": null,
-      "status": "regeneration_required",
+      "status": "accepted_candidate",
       "research": "complete",
       "attempts": [
         {
@@ -556,20 +564,28 @@
             "Mechanics are correct, but the full instructional group is undersized at phone scale and the slurry cue is no longer comfortably readable."
           ],
           "regeneration_todo": {
-            "status": "open"
+            "status": "resolved",
+            "resolved_by": "v5"
           }
-        }
-      ],
-      "open_todos": [
+        },
         {
-          "kind": "regenerate",
-          "status": "open",
-          "detail": "Mechanics are correct, but the full instructional group is undersized at phone scale and the slurry cue is no longer comfortably readable."
+          "revision": "v5",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_03_instruction_default/starlit_tactile_v5.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-536fb79e-bd8c-43b7-8568-2c5eacf1c9ff.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The complete low pour, wet shallow slurry, smooth cone paper, ribbed black porcelain and modest second-pulse server volume remain clear in both themes."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v5",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kasuya_4_6_20_300_stage_03_instruction_default/starlit_tactile_v5.webp",
+      "notes": "The complete low pour, wet shallow slurry, smooth cone paper, ribbed black porcelain and modest second-pulse server volume remain clear in both themes."
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_04_instruction_default",
@@ -577,7 +593,7 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 185,
       "batch": null,
-      "status": "regeneration_required",
+      "status": "accepted_candidate",
       "research": "complete",
       "attempts": [
         {
@@ -602,20 +618,28 @@
             "The quiet organic backing became a huge wet coffee-textured surface with severe noise, and the KDC customized ribs disappeared."
           ],
           "regeneration_todo": {
-            "status": "open"
+            "status": "resolved",
+            "resolved_by": "v3"
           }
-        }
-      ],
-      "open_todos": [
+        },
         {
-          "kind": "regenerate",
-          "status": "open",
-          "detail": "The quiet organic backing became a huge wet coffee-textured surface with severe noise, and the KDC customized ribs disappeared."
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_04_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-738dd172-30fd-457e-b13a-9d7e4c7fd3cb.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The third-pulse frame preserves exact KDC geometry, a single low stream, wet bed and increased sub-half server level with clear light/dark phone readability."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kasuya_4_6_20_300_stage_04_instruction_default/starlit_tactile_v3.webp",
+      "notes": "The third-pulse frame preserves exact KDC geometry, a single low stream, wet bed and increased sub-half server level with clear light/dark phone readability."
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_05_instruction_default",
@@ -623,19 +647,27 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 186,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-9bd15662-4d8c-4ff6-8986-cde43c15e89b.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The fourth-pulse single stream, wet bed, ribbed KDC and increased server level remain clear and contained in both phone themes."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kasuya_4_6_20_300_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The fourth-pulse single stream, wet bed, ribbed KDC and increased server level remain clear and contained in both phone themes."
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_06_instruction_default",
@@ -643,19 +675,27 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 187,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-a93d0c2d-0aa3-40dd-b948-dee5431fd4a5.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The final-pulse frame preserves exact hardware, smooth paper, one low stream, wet slurry and the sequence's highest safe server level in both themes."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kasuya_4_6_20_300_stage_06_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The final-pulse frame preserves exact hardware, smooth paper, one low stream, wet slurry and the sequence's highest safe server level in both themes."
     },
     {
       "asset_id": "instruction_p1_v60_kasuya_4_6_20_300_stage_07_instruction_default",
@@ -663,19 +703,27 @@
       "blocker": "BLOCK-V60-VARIANT",
       "matrix_line": 188,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_v60_kasuya_4_6_20_300_stage_07_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-9e287de3-5641-4942-a422-e16e6c2cc576.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The complete hand lifts the upright ribbed KDC above the server; a low drained granular bed and exactly one aligned final drop remain legible in light and dark themes."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "hario-kasuya-kdc-02-b",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kasuya_4_6_20_300_stage_07_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The complete hand lifts the upright ribbed KDC above the server; a low drained granular bed and exactly one aligned final drop remain legible in light and dark themes."
     },
     {
       "asset_id": "instruction_p1_v60_kurasu_flash_16_150_70_stage_01_instruction_default",
