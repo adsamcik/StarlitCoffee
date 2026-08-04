@@ -171,8 +171,17 @@ class InstructionAssetCatalogTest {
         contentId = contentId,
         namingConvention = namingConvention,
         drawableRes = drawableRes,
-        altTextRes = R.string.app_name,
-        companionInstructionRes = R.string.instruction_pour_total,
+        altTextRes = if (namingConvention == InstructionAssetNamingConvention.SCOPED_SLOT) {
+            R.string.app_name
+        } else {
+            null
+        },
+        companionInstructionRes =
+            if (namingConvention == InstructionAssetNamingConvention.SCOPED_SLOT) {
+                R.string.instruction_pour_total
+            } else {
+                null
+            },
         mandatoryForFullGuidance = mandatoryForFullGuidance,
         safetySensitive = safetySensitive,
         provenance = InstructionAssetProvenance(

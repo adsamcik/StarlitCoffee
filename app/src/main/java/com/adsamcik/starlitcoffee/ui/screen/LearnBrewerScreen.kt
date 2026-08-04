@@ -143,7 +143,12 @@ private fun LearnGuidanceCard(
             )
             // The illustration introduces the stage; the concise action immediately
             // below it confirms what the learner should do.
-            visualAsset?.let { asset -> ApprovedInstructionAssetImage(asset) }
+            visualAsset?.let { asset ->
+                ApprovedInstructionAssetImage(
+                    asset = asset,
+                    contentDescription = content.altText,
+                )
+            }
             content.instruction.takeIf(String::isNotBlank)?.let { instruction ->
                 Text(
                     text = instruction,

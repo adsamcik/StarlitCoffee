@@ -20,8 +20,23 @@ class P1ExactRecipeReleaseGateTest {
         get() = BuiltInP1ExactGuidanceLoadResult.Loaded(exactCatalog)
 
     @Test
-    fun `approved visuals without reviewed localization remain gated`() {
+    fun `approved visuals and reviewed English guidance unlock the recipe`() {
         val gate = gate(
+            instructionAssets = approvedAssetsFor(PRIMARY_RECIPE),
+            localizationCoverage = P1ExactRecipeLocalizationCoverage.production,
+        )
+
+        assertTrue(gate.isEligible(PRIMARY_RECIPE))
+        assertEquals(setOf(PRIMARY_RECIPE), gate.eligibleRecipeIds)
+    }
+
+    @Test
+    fun `unreviewed active locale remains gated without English fallback`() {
+        val gate = P1ExactRecipeReleaseGate(
+            guidanceLoadResult = BuiltInP1ExactGuidanceLoadResult.Loaded(
+                catalog = exactCatalog,
+                localeTag = "cs",
+            ),
             instructionAssets = approvedAssetsFor(PRIMARY_RECIPE),
             localizationCoverage = P1ExactRecipeLocalizationCoverage.production,
         )
@@ -30,8 +45,7 @@ class P1ExactRecipeReleaseGateTest {
         assertTrue(gate.eligibleRecipeIds.isEmpty())
     }
 
-    @Test
-    fun `pending exact visuals fail closed even with complete localization`() {
+    @Test    fun `pending exact visuals fail closed even with complete localization`() {
         val pendingAssets = requiredStages(PRIMARY_RECIPE).map { stage ->
             stage.toAsset(
                 review = InstructionAssetReview(InstructionAssetReviewStatus.PENDING_REVIEW),
@@ -132,7 +146,7 @@ class P1ExactRecipeReleaseGateTest {
         P1ExactRecipeLocalizationCoverage(
             supportedLocaleTags = P1ExactRecipeLocalizationCoverage.supportedAppLocaleTags,
             coveredLocaleTagsByRecipe = mapOf(
-                recipeId to P1ExactRecipeLocalizationCoverage.supportedAppLocaleTags,
+                recipeId to setOf("en"),
             ),
         )
 
@@ -156,8 +170,6 @@ class P1ExactRecipeReleaseGateTest {
         contentId = contentId,
         namingConvention = InstructionAssetNamingConvention.EXACT_CONTENT_ID,
         drawableRes = R.drawable.vessel_icon_mug,
-        altTextRes = R.string.app_name,
-        companionInstructionRes = R.string.instruction_pour_total,
         mandatoryForFullGuidance = true,
         safetySensitive = visualPriority == P1ExactVisualPriority.SAFETY_CRITICAL,
         provenance = InstructionAssetProvenance(

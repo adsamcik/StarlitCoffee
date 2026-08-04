@@ -99,6 +99,9 @@ fun BrewSessionGuidancePanel(
         visibleContent.isNotEmpty() ||
         approvedVisual != null
     if (!shouldRender) return
+    val illustratedAltText = approvedVisual?.asset?.contentId?.let { contentId ->
+        visibleContent.firstOrNull { content -> content.id == contentId }?.altText
+    }
 
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -117,7 +120,12 @@ fun BrewSessionGuidancePanel(
             )
             // An approved visual introduces the active stage before its concise
             // instruction; unapproved art remains absent.
-            approvedVisual?.let { approved -> ApprovedInstructionAssetImage(approved.asset) }
+            if (approvedVisual != null && !illustratedAltText.isNullOrBlank()) {
+                ApprovedInstructionAssetImage(
+                    asset = approvedVisual.asset,
+                    contentDescription = illustratedAltText,
+                )
+            }
 
             if (approvedVisual == null) {
                 resolution.policy?.let { policy ->

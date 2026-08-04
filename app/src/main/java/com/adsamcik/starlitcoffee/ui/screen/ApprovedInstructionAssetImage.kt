@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetGeometry
 import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetRecord
 
@@ -26,13 +25,17 @@ import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetRecord
 @Composable
 fun ApprovedInstructionAssetImage(
     asset: InstructionAssetRecord,
+    contentDescription: String,
     modifier: Modifier = Modifier,
 ) {
     if (!asset.review.isApproved) return
+    require(contentDescription.isNotBlank()) {
+        "Approved instructional art requires localized accessibility text"
+    }
 
     Image(
         painter = painterResource(asset.drawableRes),
-        contentDescription = stringResource(asset.altTextRes),
+        contentDescription = contentDescription,
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(

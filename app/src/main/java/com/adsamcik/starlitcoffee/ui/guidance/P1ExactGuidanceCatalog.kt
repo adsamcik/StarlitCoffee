@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.ui.guidance
 
 import android.content.Context
 import android.util.Log
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
@@ -264,7 +265,10 @@ object BuiltInP1ExactGuidanceCatalog {
 }
 
 sealed interface BuiltInP1ExactGuidanceLoadResult {
-    data class Loaded(val catalog: P1ExactGuidanceCatalog) : BuiltInP1ExactGuidanceLoadResult
+    data class Loaded(
+        val catalog: P1ExactGuidanceCatalog,
+        val localeTag: String = "en",
+    ) : BuiltInP1ExactGuidanceLoadResult
 
     data class Unavailable(val reason: String) : BuiltInP1ExactGuidanceLoadResult
 }
@@ -273,20 +277,23 @@ sealed interface BuiltInP1ExactGuidanceLoadResult {
 object BuiltInP1ExactGuidanceLoader {
     private const val TAG = "P1ExactGuidance"
 
-    @Volatile
-    private var cached: BuiltInP1ExactGuidanceLoadResult? = null
+    private val cacheByLocale = mutableMapOf<String, BuiltInP1ExactGuidanceLoadResult>()
 
-    fun getInstance(context: Context): BuiltInP1ExactGuidanceLoadResult =
-        cached ?: synchronized(this) {
-            cached ?: load(context.applicationContext).also { cached = it }
+    fun getInstance(context: Context): BuiltInP1ExactGuidanceLoadResult {
+        val applicationContext = context.applicationContext
+        val localeKey = applicationContext.resources.configuration.locales[0].language
+        return synchronized(this) {
+            cacheByLocale.getOrPut(localeKey) { load(applicationContext) }
         }
+    }
 
     private fun load(context: Context): BuiltInP1ExactGuidanceLoadResult = try {
-        val encoded = context.assets.open(BuiltInP1ExactGuidanceCatalog.ASSET_NAME)
+        val encoded = context.resources.openRawResource(R.raw.p1_exact_guidance)
             .bufferedReader()
             .use { reader -> reader.readText() }
         BuiltInP1ExactGuidanceLoadResult.Loaded(
             BuiltInP1ExactGuidanceCatalog.decode(encoded),
+            context.resources.configuration.locales[0].language,
         )
     } catch (exception: IOException) {
         unavailable(exception)

@@ -135,9 +135,9 @@ data class InstructionAssetProvenance(
 /**
  * A compile-time-safe manifest record for one local instruction illustration.
  *
- * The app must reference [drawableRes] and [altTextRes] directly. Runtime
- * name lookup is deliberately not supported, so a missing resource is caught
- * by Android compilation. [id] is also the expected drawable resource stem,
+ * The app references [drawableRes] directly. Scoped legacy assets also use
+ * [altTextRes], while exact-content assets receive accessibility copy from the
+ * locale-selected exact guidance record. [id] is the expected drawable resource stem,
  * which makes the file name auditable without duplicating another string.
  */
 @Suppress("LongParameterList")
@@ -150,8 +150,8 @@ data class InstructionAssetRecord(
     val variant: InstructionAssetVariant = InstructionAssetVariant.DEFAULT,
     val namingConvention: InstructionAssetNamingConvention = InstructionAssetNamingConvention.SCOPED_SLOT,
     @param:DrawableRes val drawableRes: Int,
-    @param:StringRes val altTextRes: Int,
-    @param:StringRes val companionInstructionRes: Int,
+    @param:StringRes val altTextRes: Int? = null,
+    @param:StringRes val companionInstructionRes: Int? = null,
     val geometry: InstructionAssetGeometry = InstructionAssetGeometry(),
     val mandatoryForFullGuidance: Boolean,
     val safetySensitive: Boolean,
@@ -160,9 +160,17 @@ data class InstructionAssetRecord(
 ) {
     init {
         require(drawableRes != 0) { "Instruction assets must use a drawable resource" }
-        require(altTextRes != 0) { "Instruction assets must use a localized alt-text resource" }
-        require(companionInstructionRes != 0) {
-            "Instruction assets must use a localized companion instruction"
+        if (namingConvention == InstructionAssetNamingConvention.SCOPED_SLOT) {
+            require(altTextRes != null && altTextRes != 0) {
+                "Scoped instruction assets must use a localized alt-text resource"
+            }
+            require(companionInstructionRes != null && companionInstructionRes != 0) {
+                "Scoped instruction assets must use a localized companion instruction"
+            }
+        } else {
+            require(altTextRes == null && companionInstructionRes == null) {
+                "Exact-content assets must source accessibility copy from exact guidance"
+            }
         }
         require(id.value == expectedDrawableResourceName()) {
             "Instruction asset ID '${id.value}' must match expected drawable name " +

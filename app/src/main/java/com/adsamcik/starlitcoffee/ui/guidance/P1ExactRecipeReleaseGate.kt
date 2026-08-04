@@ -36,8 +36,9 @@ data class P1ExactRecipeLocalizationCoverage(
         }
     }
 
-    fun isComplete(recipeId: BuiltInRecipeId): Boolean =
-        coveredLocaleTagsByRecipe[recipeId]?.containsAll(supportedLocaleTags) == true
+    fun isComplete(recipeId: BuiltInRecipeId, localeTag: String): Boolean =
+        localeTag in supportedLocaleTags &&
+            coveredLocaleTagsByRecipe[recipeId]?.contains(localeTag) == true
 
     companion object {
         val supportedAppLocaleTags: Set<String> = linkedSetOf(
@@ -67,13 +68,15 @@ data class P1ExactRecipeLocalizationCoverage(
         )
 
         /**
-         * No exact recipe is translated today. This is deliberately not
-         * inferred from unrelated resource-key parity.
+         * Canonical English has passed the exact-copy checks. Other locales
+         * remain fail-closed until their professional review is recorded.
          */
         val production: P1ExactRecipeLocalizationCoverage =
             P1ExactRecipeLocalizationCoverage(
                 supportedLocaleTags = supportedAppLocaleTags,
-                coveredLocaleTagsByRecipe = emptyMap(),
+                coveredLocaleTagsByRecipe = BuiltInP1RecipeCatalog.recipes.associate { recipe ->
+                    recipe.id to setOf("en")
+                },
             )
     }
 }
@@ -82,7 +85,7 @@ data class P1ExactRecipeLocalizationCoverage(
  * Recipe-level release authority for exact P1 Learn, setup, and live sessions.
  *
  * Eligibility requires one canonical recipe, its exact ordered plan, its
- * exact-recipe guidance, reviewed localization for every supported locale, and
+ * exact-recipe guidance, reviewed localization for the active locale, and
  * an approved exact illustration for every required stage. Nothing is inferred
  * from another recipe that shares the same physical brewer profile.
  */
@@ -96,6 +99,8 @@ class P1ExactRecipeReleaseGate(
 ) {
     private val guidanceCatalog = (guidanceLoadResult as? BuiltInP1ExactGuidanceLoadResult.Loaded)
         ?.catalog
+    private val activeLocaleTag =
+        (guidanceLoadResult as? BuiltInP1ExactGuidanceLoadResult.Loaded)?.localeTag
     private val definitionsById = BuiltInP1RecipeCatalog.recipes.associateBy { recipe -> recipe.id }
     private val exactProfileIds = BuiltInP1RecipeCatalog.recipes
         .mapTo(linkedSetOf(), BuiltInP1RecipeDefinition::brewerProfileId)
@@ -119,7 +124,7 @@ class P1ExactRecipeReleaseGate(
             }
 
         return listOf(
-            localizationCoverage.isComplete(recipeId),
+            activeLocaleTag != null && localizationCoverage.isComplete(recipeId, activeLocaleTag),
             plan.id.value == "builtin_recipe_${recipeId.value}",
             planStages.size == plan.nodes.size,
             planStages.size == definition.orderedStageCount,
