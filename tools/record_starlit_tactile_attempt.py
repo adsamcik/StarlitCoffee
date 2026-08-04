@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import date
 import json
 from pathlib import Path
 
@@ -106,7 +107,7 @@ def main() -> int:
         )
 
     attempts.append(attempt)
-    data["updated_on"] = "2026-08-03"
+    data["updated_on"] = date.today().isoformat()
     TRACKER.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"Recorded {args.asset} {args.revision}: {args.verdict}.")
     return 0

@@ -27,8 +27,10 @@ Sources:
 
 ## `BLOCK-WEDGE-VARIANT`
 
-Use the black Melitta 1-Cup Pour-Over cone with one folded white Melitta #2
-paper. Do not combine #2 and #4 geometry in one frame.
+Use the current bright-red Melitta 1-Cup Pour-Over cone (product 64008/640820)
+with one folded white Melitta #2 paper. The cone is handleless and uses its
+broad support flange over the receiving vessel. Do not combine #2 and #4
+geometry in one frame.
 
 Melitta states that this brewer accepts #2 or #4 cone papers and ships with #2
 papers. Selecting the supplied #2 option creates one source-supported exact
@@ -36,7 +38,8 @@ configuration while preserving the source's unresolved alternative.
 
 Source:
 
-- https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black
+- https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-red
+- https://shop.melitta.ca/products/plastic-pour-over%E2%84%A2-coffeemaker-1-cup
 
 ## `BLOCK-GENERIC-CONE`
 

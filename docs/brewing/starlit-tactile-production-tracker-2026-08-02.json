@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_on": "2026-08-03",
+  "updated_on": "2026-08-04",
   "scope": {
     "queue_glob": "docs/brewing/p1-exact-stage-production-queue-batch-*.md",
     "expected_asset_count": 114,
@@ -1465,122 +1465,315 @@
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_01_instruction_default",
       "priority": "mandatory",
-      "blocker": "BLOCK-WEDGE-VARIANT",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 236,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_01_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-c224a485-7175-411d-b23c-a5ee6a27b3bf.png",
+          "issues": [
+            "Mechanically plausible red one-cup wedge brewer, but the plastic and server read as glossy CGI rather than the accepted flat tactile app style, and the paper has a misleading central vertical seam instead of only folded bottom and side seams."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_01_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-2190eb0b-928b-494d-85b8-ed0c50755fca.png",
+          "issues": [
+            "The flat tactile brewer and true wedge paper are improved, but the intended isolated residual droplet became an impossible continuous clear thread from outlet to the bottom of the empty server."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_01_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-91d53649-2c6d-4f60-a805-338b16f1633a.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The bound red one-cup wedge brewer, correctly seated side-seam #2 paper, empty server, transparent perimeter, and both theme previews pass."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "melitta-one-cup-number-2",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wedge_pulse_23_5_400_stage_01_instruction_default/starlit_tactile_v3.webp",
+      "notes": "The bound red one-cup wedge brewer, correctly seated side-seam #2 paper, empty server, transparent perimeter, and both theme previews pass."
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_02_instruction_default",
       "priority": "mandatory",
-      "blocker": "BLOCK-WEDGE-VARIANT",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 237,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-17b2e212-5092-486b-b576-74f2d35151a6.png",
+          "issues": [
+            "The complete pouring arm is cropped by the right canvas edge, violating the transparent perimeter and making the gesture feel cut off; skin rendering is also too photographic."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-fc4c16b4-02f3-4767-b289-c0c3e6ccabe0.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The centered bloom stream reaches the fully wet granular bed, the first server puddle stays thin, the simplified hand and full forearm remain within the blob, and both theme previews pass."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "melitta-one-cup-number-2",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wedge_pulse_23_5_400_stage_02_instruction_default/starlit_tactile_v2.webp",
+      "notes": "The centered bloom stream reaches the fully wet granular bed, the first server puddle stays thin, the simplified hand and full forearm remain within the blob, and both theme previews pass."
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_03_instruction_default",
       "priority": "optional",
-      "blocker": "BLOCK-WEDGE-VARIANT",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 238,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-bb485701-07de-4b28-aa11-07ef1e072cc4.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The first separated pulse is mostly drained with a wet granular bed, one isolated outlet drop, the lowest post-bloom server level, and clean dual-theme rendering."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "melitta-one-cup-number-2",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wedge_pulse_23_5_400_stage_03_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The first separated pulse is mostly drained with a wet granular bed, one isolated outlet drop, the lowest post-bloom server level, and clean dual-theme rendering."
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default",
       "priority": "optional",
-      "blocker": "BLOCK-WEDGE-VARIANT",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 239,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-fbc3c451-7b61-419b-a656-3db7a2a205d8.png",
+          "issues": [
+            "The mostly-drained state contains a vertical chain of multiple simultaneous drops instead of at most one isolated drop."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-191eebc8-39c9-4186-ac5c-2630b41f8691.png",
+          "issues": [
+            "A large opaque beige rectangular panel surrounds the organic blob instead of exact uniform green, so transparent processing would retain an unwanted poster rectangle."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-463f99b4-bc80-4cd6-84d5-d032d79f19ca.png",
+          "issues": [
+            "Attempt was conservatively invalidated after the first large review transfer appeared truncated. A later transfer-safe proxy confirmed the source pixels were intact; the attempt remains superseded by v5, which completed the corrected raw and dual-theme review workflow."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-9a76fe7d-f3fc-46e9-a47f-30406d32a0aa.png",
+          "issues": [
+            "Wrong brewer geometry: the render adds a side handle absent from the bound current Melitta one-cup cone.",
+            "The flange sits flush across the server opening so the single outlet and required empty air gap are not visible, making the drainage path unreadable."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v5"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v5",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default/starlit_tactile_v5.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-a0eecc75-146c-426c-ade0-4f9727c49761.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The 200 g checkpoint preserves the exact handleless wedge hardware, shows a wet granular bed, an empty outlet air gap, a middle server level, and clean light/dark phone rendering."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "melitta-one-cup-number-2",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v5",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default/starlit_tactile_v5.webp",
+      "notes": "The 200 g checkpoint preserves the exact handleless wedge hardware, shows a wet granular bed, an empty outlet air gap, a middle server level, and clean light/dark phone rendering."
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_05_instruction_default",
       "priority": "optional",
-      "blocker": "BLOCK-WEDGE-VARIANT",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 240,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-8fedfdcf-77e7-4af2-92e5-3d5f215340c5.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The 300 g pulse is mostly drained with a wet granular bed, one isolated outlet drop, a server level clearly above stage 3, and clean dual-theme rendering."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "melitta-one-cup-number-2",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wedge_pulse_23_5_400_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The 300 g pulse is mostly drained with a wet granular bed, one isolated outlet drop, a server level clearly above stage 3, and clean dual-theme rendering."
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default",
       "priority": "mandatory",
-      "blocker": "BLOCK-WEDGE-VARIANT",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 241,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-122574ac-4d52-4798-9439-5db6c7063677.png",
+          "issues": [
+            "The final drawdown shows one drop attached at the outlet plus a second falling drop, contradicting the exact one-isolated-final-drop cue."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-a84456f2-a132-4e10-8791-651727a94faa.png",
+          "issues": [
+            "The final state again contains two simultaneous drops (one attached and one falling), and the bed reads dry and light rather than damp-dark after drawdown."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-562a7832-2ef4-4651-9270-2841db093d58.png",
+          "issues": [
+            "Attempt was conservatively invalidated after the first large review transfer appeared truncated. A later transfer-safe proxy confirmed the source pixels were intact; the attempt remains superseded by v5, which completed the corrected raw and dual-theme review workflow."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-bd5bd5c4-1e5d-4797-bf0d-b1715349dbd2.png",
+          "issues": [
+            "Wrong brewer geometry: the render adds a side handle absent from the bound current Melitta one-cup cone.",
+            "The flange sits flush across the server opening so the single outlet and empty air gap are hidden, making the drainage path unreadable."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v5"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v5",
+          "prompt": "prompts/brewing/assets/instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default/starlit_tactile_v5.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-cd10dd2a-72b2-466e-96a6-b1a9951854fd.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The final drawdown preserves the exact handleless wedge hardware, shows a low damp-dark granular bed, an empty outlet air gap, the highest server level, and clean light/dark phone rendering."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "melitta-one-cup-number-2",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v5",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default/starlit_tactile_v5.webp",
+      "notes": "The final drawdown preserves the exact handleless wedge hardware, shows a low damp-dark granular bed, an empty outlet air gap, the highest server level, and clean light/dark phone rendering."
     },
     {
       "asset_id": "instruction_p1_chemex_42_700_stage_01_instruction_default",

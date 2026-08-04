@@ -70,7 +70,7 @@ object P1ExactInstructionAssetLocalizations {
 }
 
 object P1TrackerAcceptedInstructionAssetCatalog {
-    const val TRACKER_UPDATED_ON = "2026-08-03"
+    const val TRACKER_UPDATED_ON = "2026-08-04"
     const val TRACKER_PATH = "docs/brewing/starlit-tactile-production-tracker-2026-08-02.json"
 
     val assets: List<P1TrackerAcceptedInstructionAsset> = listOf(
@@ -799,6 +799,72 @@ object P1TrackerAcceptedInstructionAssetCatalog {
             visualPriority = P1ExactVisualPriority.OPTIONAL,
             drawableRes = R.drawable.instruction_p1_wave185_ozone_25_400_stage_08_instruction_default,
             trackerRevision = "v2",
+        ),
+        P1TrackerAcceptedInstructionAsset(
+            recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
+            id = InstructionAssetId("instruction_p1_wedge_pulse_23_5_400_stage_01_instruction_default"),
+            familyId = MethodFamilyId("manual_gravity"),
+            profileId = BrewerProfileId("melitta_style_wedge_dripper_with_2_or_compatible_4_paper"),
+            stageId = StageId("p1_wedge_pulse_23_5_400_stage_01"),
+            contentId = StageContentId("p1_wedge_pulse_23_5_400_stage_01_instruction"),
+            visualPriority = P1ExactVisualPriority.MANDATORY,
+            drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_01_instruction_default,
+            trackerRevision = "v3",
+        ),
+        P1TrackerAcceptedInstructionAsset(
+            recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
+            id = InstructionAssetId("instruction_p1_wedge_pulse_23_5_400_stage_02_instruction_default"),
+            familyId = MethodFamilyId("manual_gravity"),
+            profileId = BrewerProfileId("melitta_style_wedge_dripper_with_2_or_compatible_4_paper"),
+            stageId = StageId("p1_wedge_pulse_23_5_400_stage_02"),
+            contentId = StageContentId("p1_wedge_pulse_23_5_400_stage_02_instruction"),
+            visualPriority = P1ExactVisualPriority.MANDATORY,
+            drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_02_instruction_default,
+            trackerRevision = "v2",
+        ),
+        P1TrackerAcceptedInstructionAsset(
+            recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
+            id = InstructionAssetId("instruction_p1_wedge_pulse_23_5_400_stage_03_instruction_default"),
+            familyId = MethodFamilyId("manual_gravity"),
+            profileId = BrewerProfileId("melitta_style_wedge_dripper_with_2_or_compatible_4_paper"),
+            stageId = StageId("p1_wedge_pulse_23_5_400_stage_03"),
+            contentId = StageContentId("p1_wedge_pulse_23_5_400_stage_03_instruction"),
+            visualPriority = P1ExactVisualPriority.OPTIONAL,
+            drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_03_instruction_default,
+            trackerRevision = "v1",
+        ),
+        P1TrackerAcceptedInstructionAsset(
+            recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
+            id = InstructionAssetId("instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default"),
+            familyId = MethodFamilyId("manual_gravity"),
+            profileId = BrewerProfileId("melitta_style_wedge_dripper_with_2_or_compatible_4_paper"),
+            stageId = StageId("p1_wedge_pulse_23_5_400_stage_04"),
+            contentId = StageContentId("p1_wedge_pulse_23_5_400_stage_04_instruction"),
+            visualPriority = P1ExactVisualPriority.OPTIONAL,
+            drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default,
+            trackerRevision = "starlit_tactile_v5",
+        ),
+        P1TrackerAcceptedInstructionAsset(
+            recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
+            id = InstructionAssetId("instruction_p1_wedge_pulse_23_5_400_stage_05_instruction_default"),
+            familyId = MethodFamilyId("manual_gravity"),
+            profileId = BrewerProfileId("melitta_style_wedge_dripper_with_2_or_compatible_4_paper"),
+            stageId = StageId("p1_wedge_pulse_23_5_400_stage_05"),
+            contentId = StageContentId("p1_wedge_pulse_23_5_400_stage_05_instruction"),
+            visualPriority = P1ExactVisualPriority.OPTIONAL,
+            drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_05_instruction_default,
+            trackerRevision = "v1",
+        ),
+        P1TrackerAcceptedInstructionAsset(
+            recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
+            id = InstructionAssetId("instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default"),
+            familyId = MethodFamilyId("manual_gravity"),
+            profileId = BrewerProfileId("melitta_style_wedge_dripper_with_2_or_compatible_4_paper"),
+            stageId = StageId("p1_wedge_pulse_23_5_400_stage_06"),
+            contentId = StageContentId("p1_wedge_pulse_23_5_400_stage_06_instruction"),
+            visualPriority = P1ExactVisualPriority.MANDATORY,
+            drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default,
+            trackerRevision = "starlit_tactile_v5",
         ),
     )
 

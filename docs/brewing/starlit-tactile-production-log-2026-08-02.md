@@ -695,3 +695,48 @@ processing, 1024 by 768 static WebP validation, and individual light- and
 dark-theme phone inspection. Exact prompts, raw cache IDs, rejected sources,
 and per-attempt issues remain in the production tracker. Tracker, matrix,
 drawables, and generated runtime catalog now agree at 66 accepted and 48 open.
+
+
+## Batch 14 completed Melitta wedge sequence - 2026-08-04
+
+The Voltage Coffee recipe was rechecked for a 23.5 g medium dose, 400 g water
+at 195-205 degrees F, a 50 g / 40-second bloom, separated cumulative pulses to
+100 g, 200 g, 300 g, and 400 g, mostly-drained pulse cues, and approximately
+3:30-4:00 total completion. Current first-party Melitta product records bind
+the illustration set to the bright-red, handleless 1-Cup plastic cone (product
+64008/640820) with one folded white #2 wedge paper. The canonical profile ID
+continues to preserve the broader source taxonomy; only this illustration
+implementation is bounded to the exact current configuration.
+
+Sources rechecked:
+
+- https://voltagecoffee.com/melitta/
+- https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-red
+- https://shop.melitta.ca/products/plastic-pour-over%E2%84%A2-coffeemaker-1-cup
+- https://cafec-jp.com/products/filterpaper/
+
+| Stage | Accepted | Raw cache | WebP SHA-256 |
+| --- | --- | --- | --- |
+| 01 | v3 | exec-91d53649-2c6d-4f60-a805-338b16f1633a.png | 54c71922466274d90fb99142b3b4a400014832019ad0200b7a0f43734167c230 |
+| 02 | v2 | exec-fc4c16b4-02f3-4767-b289-c0c3e6ccabe0.png | 267210636cc2a99113c037916b1cc67c3a5be7cc90006785f589c4364a08fffb |
+| 03 | v1 | exec-bb485701-07de-4b28-aa11-07ef1e072cc4.png | e96202de3fa3bbff1c40b9accfc37067592dc1f5f100c403e40114b77b920af6 |
+| 04 | starlit_tactile_v5 | exec-a0eecc75-146c-426c-ade0-4f9727c49761.png | 67edc9251dc02a2bdbc6a7a4a2919c6c40d5898c13d33022adae21a74a01bb87 |
+| 05 | v1 | exec-8fedfdcf-77e7-4af2-92e5-3d5f215340c5.png | 60464c63363ace01bb7c86f04d127832968712d20e0a6a79d020f5eec9372ead |
+| 06 | starlit_tactile_v5 | exec-cd10dd2a-72b2-466e-96a6-b1a9951854fd.png | 9557aca342f6a82fb36377f6870b864dd03a5323a8308658ecad1febb98bca40 |
+
+Tracked rejections cover glossy CGI materials, a false central paper seam,
+an impossible continuous outlet thread, cropped or photographic hands,
+multiple-drop chains, an opaque rectangular panel, dry-looking grounds, and
+redraws that invented a brewer handle or concealed the outlet air gap. Two v3
+attempts were conservatively invalidated when an oversized base64 review
+transfer appeared truncated; transfer-safe proxies later proved the source
+pixels intact. They remain superseded by v5, and the review process now uses
+size-bounded proxies before drawing any corruption conclusion.
+
+Every retained frame was reread for correct wedge geometry, one side seam,
+granular grounds, smooth liquid, continuous gravity, and ordered server-level
+progression. All six also passed chroma removal, transparent-corner and static
+WebP checks, plus separate light- and dark-theme phone inspection. Exact prompts,
+raw cache IDs, and all rejection/regeneration todos remain in the tracker.
+Tracker, matrix, drawables, and generated runtime catalog now agree at 72
+accepted and 42 open.
