@@ -10,6 +10,7 @@ import json
 import re
 import sys
 import time
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -248,6 +249,13 @@ def fill_memory(
             raise LocalizationError(f"{locale}: batch {index} failed: {last_error}") from last_error
 
 
+def sanitize_translated_text(value: str) -> str:
+    return "".join(
+        character for character in value
+        if unicodedata.category(character) != "Cf"
+    )
+
+
 def localized_document(source: dict, locale: str, memory: dict) -> dict:
     if locale == "en":
         return copy.deepcopy(source)
@@ -258,7 +266,7 @@ def localized_document(source: dict, locale: str, memory: dict) -> dict:
         if source_value == SOURCE_NONE:
             continue
         try:
-            container[key] = translations[source_value]
+            container[key] = sanitize_translated_text(translations[source_value])
         except KeyError as error:
             raise LocalizationError(f"{locale}: missing translation for {source_value!r}") from error
     for recipe in localized["recipes"]:
@@ -299,6 +307,8 @@ def validate_document(source: dict, localized: dict, locale: str) -> None:
         localized_value = localized_container[localized_key]
         if not isinstance(localized_value, str) or not localized_value.strip():
             raise LocalizationError(f"{locale}: blank localized value for {source_key}")
+        if any(unicodedata.category(character) == "Cf" for character in localized_value):
+            raise LocalizationError(f"{locale}: invisible formatting character in {source_key}")
         if source_value == SOURCE_NONE and localized_value != SOURCE_NONE:
             raise LocalizationError(f"{locale}: sentinel None was translated")
         if NUMBER_RE.findall(source_value) != NUMBER_RE.findall(localized_value):
