@@ -166,7 +166,9 @@ data class P1ExactStageGuidance(
         get() = utilitiesOnly.map(GuidanceOperationalCue::requireFromStableId)
 
     /** Compatibility adapter for the existing shared Learn/live catalogue. */
-    fun toBuiltInGuidanceContent(): BuiltInGuidanceContent = BuiltInGuidanceContent(
+    fun toBuiltInGuidanceContent(
+        terminologyCatalog: P1ExactTerminologyCatalog? = null,
+    ): BuiltInGuidanceContent = BuiltInGuidanceContent(
         id = contentId,
         familyId = methodFamilyId,
         profileId = brewerProfileId,
@@ -188,6 +190,7 @@ data class P1ExactStageGuidance(
         authoredPresentations = GuidancePresentationLevel.entries.associateWith { level ->
             presentation(level).toAuthoredPresentation()
         },
+        terminologyReferences = terminologyCatalog?.referencesFor(contentId).orEmpty(),
     )
 
     private fun P1ExactGuidancePresentation.toAuthoredPresentation() =
@@ -240,12 +243,19 @@ class P1ExactGuidanceCatalog internal constructor(
 
     fun findStage(contentId: StageContentId): P1ExactStageGuidance? = stagesByContentId[contentId]
 
-    fun forRecipe(recipeId: BuiltInRecipeId): BuiltInGuidanceCatalog? =
-        findRecipe(recipeId)?.stages?.map(P1ExactStageGuidance::toBuiltInGuidanceContent)
-            ?.let(::BuiltInGuidanceCatalog)
+    fun forRecipe(
+        recipeId: BuiltInRecipeId,
+        terminologyCatalog: P1ExactTerminologyCatalog? = null,
+    ): BuiltInGuidanceCatalog? = findRecipe(recipeId)
+        ?.stages
+        ?.map { stage -> stage.toBuiltInGuidanceContent(terminologyCatalog) }
+        ?.let(::BuiltInGuidanceCatalog)
 
-    fun asBuiltInGuidanceCatalog(): BuiltInGuidanceCatalog =
-        BuiltInGuidanceCatalog(stages.map(P1ExactStageGuidance::toBuiltInGuidanceContent))
+    fun asBuiltInGuidanceCatalog(
+        terminologyCatalog: P1ExactTerminologyCatalog? = null,
+    ): BuiltInGuidanceCatalog = BuiltInGuidanceCatalog(
+        stages.map { stage -> stage.toBuiltInGuidanceContent(terminologyCatalog) },
+    )
 }
 
 /** Strict decoder for the generated built-in asset. Invalid content fails closed. */

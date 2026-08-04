@@ -1,0 +1,625 @@
+{
+  "schema_version": 1,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "concepts": [
+    {
+      "id": "brewer_dripper",
+      "canonical_english": "brewer / dripper"
+    },
+    {
+      "id": "coffee_bed",
+      "canonical_english": "coffee bed"
+    },
+    {
+      "id": "bloom",
+      "canonical_english": "bloom"
+    },
+    {
+      "id": "grounds",
+      "canonical_english": "coffee grounds"
+    },
+    {
+      "id": "fines",
+      "canonical_english": "coffee fines"
+    },
+    {
+      "id": "slurry",
+      "canonical_english": "coffee slurry"
+    },
+    {
+      "id": "drawdown",
+      "canonical_english": "drawdown"
+    },
+    {
+      "id": "swirl_spin",
+      "canonical_english": "swirl / spin"
+    },
+    {
+      "id": "server_carafe",
+      "canonical_english": "server / carafe"
+    },
+    {
+      "id": "steep_immersion",
+      "canonical_english": "steep / immersion"
+    },
+    {
+      "id": "valve",
+      "canonical_english": "valve"
+    },
+    {
+      "id": "filter_paper",
+      "canonical_english": "filter paper"
+    }
+  ],
+  "stage_references": [
+    {
+      "content_id": "p1_v60_official_15_250_stage_01_instruction",
+      "concept_ids": [
+        "server_carafe",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_v60_official_15_250_stage_02_instruction",
+      "concept_ids": [
+        "brewer_dripper",
+        "coffee_bed"
+      ]
+    },
+    {
+      "content_id": "p1_v60_official_15_250_stage_03_instruction",
+      "concept_ids": [
+        "bloom",
+        "grounds"
+      ]
+    },
+    {
+      "content_id": "p1_v60_official_15_250_stage_04_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_v60_official_15_250_stage_05_instruction",
+      "concept_ids": [
+        "brewer_dripper",
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_v60_rao_20_330_stage_01_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_v60_rao_20_330_stage_02_instruction",
+      "concept_ids": [
+        "brewer_dripper",
+        "bloom",
+        "grounds",
+        "fines",
+        "swirl_spin",
+        "server_carafe"
+      ]
+    },
+    {
+      "content_id": "p1_v60_rao_20_330_stage_04_instruction",
+      "concept_ids": [
+        "slurry",
+        "swirl_spin"
+      ]
+    },
+    {
+      "content_id": "p1_v60_rao_20_330_stage_05_instruction",
+      "concept_ids": [
+        "slurry",
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_v60_rao_20_330_stage_06_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "drawdown",
+        "swirl_spin"
+      ]
+    },
+    {
+      "content_id": "p1_v60_kasuya_4_6_20_300_stage_01_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "server_carafe",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_v60_kasuya_4_6_20_300_stage_02_instruction",
+      "concept_ids": [
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_v60_kasuya_4_6_20_300_stage_03_instruction",
+      "concept_ids": [
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_v60_kasuya_4_6_20_300_stage_07_instruction",
+      "concept_ids": [
+        "brewer_dripper"
+      ]
+    },
+    {
+      "content_id": "p1_v60_kurasu_flash_16_150_70_stage_01_instruction",
+      "concept_ids": [
+        "server_carafe",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_v60_kurasu_flash_16_150_70_stage_02_instruction",
+      "concept_ids": [
+        "grounds"
+      ]
+    },
+    {
+      "content_id": "p1_v60_kurasu_flash_16_150_70_stage_05_instruction",
+      "concept_ids": [
+        "brewer_dripper",
+        "drawdown",
+        "server_carafe"
+      ]
+    },
+    {
+      "content_id": "p1_wave185_ozone_25_400_stage_01_instruction",
+      "concept_ids": [
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_wave185_ozone_25_400_stage_02_instruction",
+      "concept_ids": [
+        "bloom"
+      ]
+    },
+    {
+      "content_id": "p1_wave185_ozone_25_400_stage_08_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_wedge_pulse_23_5_400_stage_01_instruction",
+      "concept_ids": [
+        "brewer_dripper",
+        "server_carafe",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_wedge_pulse_23_5_400_stage_02_instruction",
+      "concept_ids": [
+        "bloom",
+        "grounds"
+      ]
+    },
+    {
+      "content_id": "p1_wedge_pulse_23_5_400_stage_03_instruction",
+      "concept_ids": [
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_wedge_pulse_23_5_400_stage_04_instruction",
+      "concept_ids": [
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_wedge_pulse_23_5_400_stage_05_instruction",
+      "concept_ids": [
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_wedge_pulse_23_5_400_stage_06_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "fines",
+        "drawdown",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_chemex_42_700_stage_01_instruction",
+      "concept_ids": [
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_chemex_42_700_stage_02_instruction",
+      "concept_ids": [
+        "server_carafe",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_chemex_42_700_stage_03_instruction",
+      "concept_ids": [
+        "bloom"
+      ]
+    },
+    {
+      "content_id": "p1_chemex_42_700_stage_04_instruction",
+      "concept_ids": [
+        "slurry"
+      ]
+    },
+    {
+      "content_id": "p1_chemex_42_700_stage_06_instruction",
+      "concept_ids": [
+        "drawdown",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_chemex_42_700_stage_07_instruction",
+      "concept_ids": [
+        "swirl_spin",
+        "server_carafe"
+      ]
+    },
+    {
+      "content_id": "p1_generic_conical_low_agitation_20_320_stage_01_instruction",
+      "concept_ids": [
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_generic_conical_low_agitation_20_320_stage_02_instruction",
+      "concept_ids": [
+        "bloom",
+        "grounds"
+      ]
+    },
+    {
+      "content_id": "p1_generic_conical_low_agitation_20_320_stage_04_instruction",
+      "concept_ids": [
+        "slurry"
+      ]
+    },
+    {
+      "content_id": "p1_generic_conical_low_agitation_20_320_stage_05_instruction",
+      "concept_ids": [
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_clever_water_first_15_250_stage_01_instruction",
+      "concept_ids": [
+        "server_carafe",
+        "valve",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_clever_water_first_15_250_stage_02_instruction",
+      "concept_ids": [
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_clever_water_first_15_250_stage_03_instruction",
+      "concept_ids": [
+        "grounds",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_clever_water_first_15_250_stage_04_instruction",
+      "concept_ids": [
+        "steep_immersion",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_clever_water_first_15_250_stage_05_instruction",
+      "concept_ids": [
+        "drawdown",
+        "server_carafe"
+      ]
+    },
+    {
+      "content_id": "p1_clever_water_first_15_250_stage_06_instruction",
+      "concept_ids": [
+        "brewer_dripper",
+        "drawdown",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_clever_coffee_first_15_250_stage_01_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "server_carafe",
+        "valve",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_clever_coffee_first_15_250_stage_02_instruction",
+      "concept_ids": [
+        "fines",
+        "valve",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_clever_coffee_first_15_250_stage_03_instruction",
+      "concept_ids": [
+        "steep_immersion",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_clever_coffee_first_15_250_stage_04_instruction",
+      "concept_ids": [
+        "drawdown",
+        "server_carafe",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_switch_official_20_240_stage_01_instruction",
+      "concept_ids": [
+        "drawdown",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_switch_official_20_240_stage_02_instruction",
+      "concept_ids": [
+        "grounds",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_switch_official_20_240_stage_03_instruction",
+      "concept_ids": [
+        "steep_immersion",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_switch_official_20_240_stage_04_instruction",
+      "concept_ids": [
+        "brewer_dripper",
+        "drawdown",
+        "server_carafe",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_switch_official_20_240_stage_05_instruction",
+      "concept_ids": [
+        "brewer_dripper",
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction",
+      "concept_ids": [
+        "bloom",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_switch_ole_boen_hybrid_16_5_240_stage_02_instruction",
+      "concept_ids": [
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction",
+      "concept_ids": [
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction",
+      "concept_ids": [
+        "drawdown",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_switch_gravity_15_250_stage_01_instruction",
+      "concept_ids": [
+        "drawdown",
+        "valve",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_switch_gravity_15_250_stage_02_instruction",
+      "concept_ids": [
+        "bloom",
+        "grounds",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_switch_gravity_15_250_stage_03_instruction",
+      "concept_ids": [
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_switch_gravity_15_250_stage_04_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "drawdown"
+      ]
+    },
+    {
+      "content_id": "p1_cezve_turkish_single_rise_6_65_stage_01_instruction",
+      "concept_ids": [
+        "fines"
+      ]
+    },
+    {
+      "content_id": "p1_cezve_turkish_single_rise_6_65_stage_02_instruction",
+      "concept_ids": [
+        "slurry"
+      ]
+    },
+    {
+      "content_id": "p1_cezve_turkish_single_rise_6_65_stage_05_instruction",
+      "concept_ids": [
+        "grounds"
+      ]
+    },
+    {
+      "content_id": "p1_cezve_turkish_single_rise_6_65_stage_06_instruction",
+      "concept_ids": [
+        "grounds"
+      ]
+    },
+    {
+      "content_id": "p1_cezve_bounded_repeated_rise_12_130_stage_01_instruction",
+      "concept_ids": [
+        "fines"
+      ]
+    },
+    {
+      "content_id": "p1_cezve_bounded_repeated_rise_12_130_stage_06_instruction",
+      "concept_ids": [
+        "grounds"
+      ]
+    },
+    {
+      "content_id": "p1_auto_batch_500_30_stage_01_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "grounds",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_auto_batch_500_30_stage_03_instruction",
+      "concept_ids": [
+        "drawdown",
+        "server_carafe",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_auto_batch_500_30_stage_04_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "bloom"
+      ]
+    },
+    {
+      "content_id": "p1_auto_batch_500_30_stage_05_instruction",
+      "concept_ids": [
+        "swirl_spin",
+        "server_carafe"
+      ]
+    },
+    {
+      "content_id": "p1_auto_batch_1000_60_stage_01_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "grounds",
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_auto_batch_1000_60_stage_02_instruction",
+      "concept_ids": [
+        "server_carafe",
+        "valve"
+      ]
+    },
+    {
+      "content_id": "p1_auto_batch_1000_60_stage_04_instruction",
+      "concept_ids": [
+        "swirl_spin",
+        "server_carafe"
+      ]
+    },
+    {
+      "content_id": "p1_auto_cupone_20_300_stage_01_instruction",
+      "concept_ids": [
+        "filter_paper"
+      ]
+    },
+    {
+      "content_id": "p1_auto_cupone_20_300_stage_02_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "grounds"
+      ]
+    },
+    {
+      "content_id": "p1_auto_cupone_20_300_stage_06_instruction",
+      "concept_ids": [
+        "brewer_dripper",
+        "grounds"
+      ]
+    },
+    {
+      "content_id": "p1_phin_gravity_14_118_stage_01_instruction",
+      "concept_ids": [
+        "coffee_bed"
+      ]
+    },
+    {
+      "content_id": "p1_phin_gravity_14_118_stage_02_instruction",
+      "concept_ids": [
+        "coffee_bed"
+      ]
+    },
+    {
+      "content_id": "p1_phin_gravity_14_118_stage_03_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "bloom"
+      ]
+    },
+    {
+      "content_id": "p1_phin_screw_18_120_stage_01_instruction",
+      "concept_ids": [
+        "coffee_bed"
+      ]
+    },
+    {
+      "content_id": "p1_phin_screw_18_120_stage_02_instruction",
+      "concept_ids": [
+        "coffee_bed"
+      ]
+    },
+    {
+      "content_id": "p1_phin_screw_18_120_stage_03_instruction",
+      "concept_ids": [
+        "coffee_bed",
+        "bloom"
+      ]
+    }
+  ]
+}

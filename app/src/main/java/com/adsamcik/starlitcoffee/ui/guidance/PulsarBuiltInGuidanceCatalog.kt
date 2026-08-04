@@ -132,6 +132,7 @@ data class BuiltInGuidanceContent(
     override val safetyCritical: Boolean = false,
     val authoredPresentations: Map<GuidancePresentationLevel, AuthoredGuidancePresentation> =
         emptyMap(),
+    val terminologyReferences: List<BrewingTerminologyReference> = emptyList(),
 ) : GuidanceVisibilityItem {
     init {
         require(placement != BuiltInGuidancePlacement.LIVE_STAGE || stageId != null) {
@@ -148,6 +149,12 @@ data class BuiltInGuidanceContent(
                 authoredPresentations.keys == GuidancePresentationLevel.entries.toSet(),
         ) {
             "Authored guidance must cover every presentation level"
+        }
+        require(
+            terminologyReferences.map(BrewingTerminologyReference::conceptId).distinct().size ==
+                terminologyReferences.size,
+        ) {
+            "Guidance terminology references cannot contain duplicate concepts"
         }
     }
 }

@@ -75,6 +75,7 @@ import com.adsamcik.starlitcoffee.ui.screen.BrewSessionScreen
 import com.adsamcik.starlitcoffee.ui.screen.BloomTimerScreen
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInP1ExactGuidanceLoader
+import com.adsamcik.starlitcoffee.ui.guidance.BuiltInP1ExactTerminologyLoader
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferences
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
@@ -186,10 +187,17 @@ fun StarlitNavHost() {
     val exactGuidanceLoadResult = remember(context) {
         BuiltInP1ExactGuidanceLoader.getInstance(context)
     }
-    val exactRecipeReleaseGate = remember(exactGuidanceLoadResult) {
+    val exactTerminologyLoadResult = remember(context) {
+        BuiltInP1ExactTerminologyLoader.getInstance(context)
+    }
+    val exactRecipeReleaseGate = remember(
+        exactGuidanceLoadResult,
+        exactTerminologyLoadResult,
+    ) {
         P1ExactRecipeReleaseGate(
             guidanceLoadResult = exactGuidanceLoadResult,
             instructionAssets = BuiltInInstructionAssetCatalog.catalog,
+            terminologyLoadResult = exactTerminologyLoadResult,
         )
     }
     val recoverableSessionId = remember(recoverableSessions, exactRecipeReleaseGate) {

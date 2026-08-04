@@ -52,6 +52,7 @@ data class ResolvedBrewGuidanceContent(
     val utilities: List<GuidanceOperationalCue>,
     val altText: String,
     val safetyCritical: Boolean,
+    val terminologyReferences: List<BrewingTerminologyReference> = emptyList(),
 )
 
 /**
@@ -428,6 +429,7 @@ class DurableBrewSessionGuidanceResolver(
                 utilities = authored.utilities,
                 altText = authored.accessibleAltText,
                 safetyCritical = safetyCritical,
+                terminologyReferences = terminologyReferences,
             )
         }
         val showSupportingCopy = level in setOf(
@@ -457,6 +459,7 @@ class DurableBrewSessionGuidanceResolver(
             utilities = emptyList(),
             altText = text.altText,
             safetyCritical = safetyCritical,
+            terminologyReferences = terminologyReferences,
         )
     }
 

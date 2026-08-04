@@ -92,6 +92,7 @@ data class P1ExactRecipeLocalizationCoverage(
 class P1ExactRecipeReleaseGate(
     guidanceLoadResult: BuiltInP1ExactGuidanceLoadResult,
     private val instructionAssets: InstructionAssetCatalog,
+    terminologyLoadResult: BuiltInP1ExactTerminologyLoadResult? = null,
     private val localizationCoverage: P1ExactRecipeLocalizationCoverage =
         P1ExactRecipeLocalizationCoverage.production,
     private val stagePlanFor: (BuiltInRecipeId) -> BrewStagePlan? =
@@ -101,6 +102,10 @@ class P1ExactRecipeReleaseGate(
         ?.catalog
     private val activeLocaleTag =
         (guidanceLoadResult as? BuiltInP1ExactGuidanceLoadResult.Loaded)?.localeTag
+    private val terminologyCatalog =
+        (terminologyLoadResult as? BuiltInP1ExactTerminologyLoadResult.Loaded)?.catalog
+    private val terminologyMatchesActiveLocale =
+        terminologyCatalog?.localeTag == activeLocaleTag
     private val definitionsById = BuiltInP1RecipeCatalog.recipes.associateBy { recipe -> recipe.id }
     private val exactProfileIds = BuiltInP1RecipeCatalog.recipes
         .mapTo(linkedSetOf(), BuiltInP1RecipeDefinition::brewerProfileId)
@@ -125,6 +130,7 @@ class P1ExactRecipeReleaseGate(
 
         return listOf(
             activeLocaleTag != null && localizationCoverage.isComplete(recipeId, activeLocaleTag),
+            activeLocaleTag == "en" || terminologyMatchesActiveLocale,
             plan.id.value == "builtin_recipe_${recipeId.value}",
             planStages.size == plan.nodes.size,
             planStages.size == definition.orderedStageCount,
@@ -161,7 +167,11 @@ class P1ExactRecipeReleaseGate(
         if (isEligible(recipeId)) guidanceCatalog?.findRecipe(recipeId) else null
 
     fun catalogFor(recipeId: BuiltInRecipeId): BuiltInGuidanceCatalog? =
-        if (isEligible(recipeId)) guidanceCatalog?.forRecipe(recipeId) else null
+        if (isEligible(recipeId)) {
+            guidanceCatalog?.forRecipe(recipeId, terminologyCatalog)
+        } else {
+            null
+        }
 
     /**
      * Only exact-P1 identities are gated. Recipe-less legacy sessions and

@@ -45,6 +45,39 @@ class P1ExactRecipeReleaseGateTest {
         assertTrue(gate.eligibleRecipeIds.isEmpty())
     }
 
+    @Test
+    fun `reviewed non-English guidance also requires its approved terminology glossary`() {
+        val guidance = BuiltInP1ExactGuidanceLoadResult.Loaded(
+            catalog = exactCatalog,
+            localeTag = "cs",
+        )
+        val coverage = fullyLocalized(PRIMARY_RECIPE, localeTag = "cs")
+        val withoutTerminology = P1ExactRecipeReleaseGate(
+            guidanceLoadResult = guidance,
+            instructionAssets = approvedAssetsFor(PRIMARY_RECIPE),
+            localizationCoverage = coverage,
+        )
+        val withTerminology = P1ExactRecipeReleaseGate(
+            guidanceLoadResult = guidance,
+            instructionAssets = approvedAssetsFor(PRIMARY_RECIPE),
+            terminologyLoadResult = BuiltInP1ExactTerminologyLoadResult.Loaded(
+                P1ExactTerminologyCatalog(
+                    localeTag = "cs",
+                    uiCopy = BrewingTerminologyUiCopy(
+                        showEnglishTerms = "Zobrazit anglické termíny",
+                        hideEnglishTerms = "Skrýt anglické termíny",
+                        heading = "Anglická terminologie",
+                    ),
+                    referencesByContentId = emptyMap(),
+                ),
+            ),
+            localizationCoverage = coverage,
+        )
+
+        assertFalse(withoutTerminology.isEligible(PRIMARY_RECIPE))
+        assertTrue(withTerminology.isEligible(PRIMARY_RECIPE))
+    }
+
     @Test    fun `pending exact visuals fail closed even with complete localization`() {
         val pendingAssets = requiredStages(PRIMARY_RECIPE).map { stage ->
             stage.toAsset(
@@ -142,13 +175,15 @@ class P1ExactRecipeReleaseGateTest {
         localizationCoverage = localizationCoverage,
     )
 
-    private fun fullyLocalized(recipeId: BuiltInRecipeId) =
-        P1ExactRecipeLocalizationCoverage(
-            supportedLocaleTags = P1ExactRecipeLocalizationCoverage.supportedAppLocaleTags,
-            coveredLocaleTagsByRecipe = mapOf(
-                recipeId to setOf("en"),
-            ),
-        )
+    private fun fullyLocalized(
+        recipeId: BuiltInRecipeId,
+        localeTag: String = "en",
+    ) = P1ExactRecipeLocalizationCoverage(
+        supportedLocaleTags = P1ExactRecipeLocalizationCoverage.supportedAppLocaleTags,
+        coveredLocaleTagsByRecipe = mapOf(
+            recipeId to setOf(localeTag),
+        ),
+    )
 
     private fun approvedAssetsFor(recipeId: BuiltInRecipeId): InstructionAssetCatalog =
         InstructionAssetCatalog(

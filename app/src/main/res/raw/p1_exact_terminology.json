@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "en",
+  "review_status": "approved",
+  "reviewer": "Canonical evidence library and Starlit Coffee implementation review",
+  "reviewed_on": "2026-08-04",
+  "ui_copy": {
+    "show_english_terms": "Show English terms",
+    "hide_english_terms": "Hide English terms",
+    "heading": "English terminology"
+  },
+  "terms": [
+    { "concept_id": "brewer_dripper", "preferred_local": "brewer / dripper" },
+    { "concept_id": "coffee_bed", "preferred_local": "coffee bed" },
+    { "concept_id": "bloom", "preferred_local": "bloom" },
+    { "concept_id": "grounds", "preferred_local": "coffee grounds" },
+    { "concept_id": "fines", "preferred_local": "coffee fines" },
+    { "concept_id": "slurry", "preferred_local": "coffee slurry" },
+    { "concept_id": "drawdown", "preferred_local": "drawdown" },
+    { "concept_id": "swirl_spin", "preferred_local": "swirl / spin" },
+    { "concept_id": "server_carafe", "preferred_local": "server / carafe" },
+    { "concept_id": "steep_immersion", "preferred_local": "steep / immersion" },
+    { "concept_id": "valve", "preferred_local": "valve" },
+    { "concept_id": "filter_paper", "preferred_local": "filter paper" }
+  ]
+}
