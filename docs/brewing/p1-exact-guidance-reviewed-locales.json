@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "source_sha256": "4811810d2b6e2e4739bb507a95e0e427c170efcd0d0d795c2f417a6012a48228",
+  "locales": {
+    "en": {
+      "status": "approved",
+      "reviewer": "Canonical evidence library and Starlit Coffee implementation review",
+      "reviewed_on": "2026-08-04",
+      "recipe_count": 20,
+      "stage_count": 114
+    }
+  }
+}

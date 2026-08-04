@@ -15,7 +15,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "app/src/main/assets/p1_exact_guidance_2026_07_27.json"
 RES = ROOT / "app/src/main/res"
-MEMORY = ROOT / "docs/brewing/p1-exact-guidance-translation-memory.json"
+DRAFT_ROOT = ROOT / "build/p1-exact-guidance-localization-drafts"
+DRAFT_MEMORY = DRAFT_ROOT / "translation-memory.json"
+REVIEWED_MEMORY = ROOT / "docs/brewing/p1-exact-guidance-translation-memory.json"
+REVIEW_LEDGER = ROOT / "docs/brewing/p1-exact-guidance-reviewed-locales.json"
 LOCALES = (
     "en", "bg", "cs", "da", "de", "el", "es", "et", "fi", "fr", "hr", "hu",
     "it", "lt", "lv", "nl", "pl", "pt", "ro", "sk", "sl", "sv", "zh",
@@ -53,6 +56,10 @@ def parse_args() -> argparse.Namespace:
         help="fill missing draft translation-memory entries with Google Translate",
     )
     parser.add_argument(
+        "--promote-reviewed", action="store_true",
+        help="write reviewed memory to Android resources after ledger approval",
+    )
+    parser.add_argument(
         "--locales", nargs="+", choices=LOCALES, default=list(LOCALES),
         help="locales to generate or validate (default: every supported locale)",
     )
@@ -75,6 +82,10 @@ def read_json(path: Path) -> dict:
 def resource_path(locale: str) -> Path:
     qualifier = "raw" if locale == "en" else f"raw-{locale}"
     return RES / qualifier / "p1_exact_guidance.json"
+
+
+def draft_resource_path(locale: str) -> Path:
+    return DRAFT_ROOT / locale / "p1_exact_guidance.json"
 
 
 def iter_text_slots(document: dict):
@@ -181,15 +192,15 @@ def source_sha256() -> str:
     return hashlib.sha256(SOURCE.read_bytes()).hexdigest()
 
 
-def load_memory() -> dict:
-    if not MEMORY.exists():
+def load_memory(memory_path: Path) -> dict:
+    if not memory_path.exists():
         return {
             "schema_version": 1,
             "source_sha256": source_sha256(),
             "engine": "deep-translator 1.11.4 / Google Translate",
             "translations": {},
         }
-    memory = read_json(MEMORY)
+    memory = read_json(memory_path)
     if memory.get("source_sha256") != source_sha256():
         raise LocalizationError("Translation memory belongs to a different canonical source")
     return memory
@@ -203,7 +214,12 @@ def write_json(path: Path, document: dict) -> None:
     )
 
 
-def fill_memory(locale: str, sources: list[str], memory: dict) -> None:
+def fill_memory(
+    locale: str,
+    sources: list[str],
+    memory: dict,
+    memory_path: Path,
+) -> None:
     if locale == "en":
         return
     try:
@@ -221,7 +237,7 @@ def fill_memory(locale: str, sources: list[str], memory: dict) -> None:
         for attempt in range(1, 4):
             try:
                 locale_memory.update(translate_batch(translator, batch))
-                write_json(MEMORY, memory)
+                write_json(memory_path, memory)
                 print(f"{locale}: translated batch {index}/{len(batches)}")
                 last_error = None
                 break
@@ -322,26 +338,58 @@ def validate_resource(source: dict, locale: str, expected: dict | None = None) -
         raise LocalizationError(f"{locale}: checked-in resource is stale; regenerate it")
 
 
+def validate_review_approval(locale: str) -> None:
+    ledger = read_json(REVIEW_LEDGER)
+    if ledger.get("source_sha256") != source_sha256():
+        raise LocalizationError("Review ledger belongs to a different canonical source")
+    approval = ledger.get("locales", {}).get(locale)
+    if not isinstance(approval, dict) or approval.get("status") != "approved":
+        raise LocalizationError(f"{locale}: reviewed-locale approval is missing")
+    if not isinstance(approval.get("reviewer"), str) or not approval["reviewer"].strip():
+        raise LocalizationError(f"{locale}: approval reviewer is missing")
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(approval.get("reviewed_on", ""))):
+        raise LocalizationError(f"{locale}: approval date must use YYYY-MM-DD")
+    if approval.get("recipe_count") != 20 or approval.get("stage_count") != 114:
+        raise LocalizationError(f"{locale}: approval must cover all 20 recipes and 114 stages")
+
+
+def validate_expected_path(source: dict, locale: str, path: Path, expected: dict) -> None:
+    actual = read_json(path)
+    validate_document(source, actual, locale)
+    if actual != expected:
+        raise LocalizationError(f"{locale}: generated output is stale")
+
+
 def main() -> int:
     args = parse_args()
     try:
         source = read_json(SOURCE)
         if args.check:
+            if args.translate or args.promote_reviewed:
+                raise LocalizationError("--check cannot be combined with a write mode")
             for locale in args.locales:
                 validate_resource(source, locale)
             print(f"Validated exact P1 guidance for {len(args.locales)} locales.")
             return 0
-        memory = load_memory()
+        if args.translate == args.promote_reviewed:
+            raise LocalizationError("Choose exactly one of --translate or --promote-reviewed")
+
+        memory_path = DRAFT_MEMORY if args.translate else REVIEWED_MEMORY
+        memory = load_memory(memory_path)
         sources = translatable_strings(source)
         for locale in args.locales:
             if args.translate:
-                fill_memory(locale, sources, memory)
+                fill_memory(locale, sources, memory, memory_path)
+                output_path = draft_resource_path(locale)
+            else:
+                validate_review_approval(locale)
+                output_path = resource_path(locale)
             document = localized_document(source, locale, memory)
             validate_document(source, document, locale)
-            write_json(resource_path(locale), document)
-            validate_resource(source, locale, expected=document)
-            print(f"Wrote {resource_path(locale)}")
-        write_json(MEMORY, memory)
+            write_json(output_path, document)
+            validate_expected_path(source, locale, output_path, document)
+            print(f"Wrote {output_path}")
+        write_json(memory_path, memory)
         return 0
     except LocalizationError as error:
         print(error, file=sys.stderr)

@@ -26,7 +26,8 @@ warning, and accessibility description always share one localized source.
 
 `tools/generate_p1_exact_guidance_localizations.py` inventories 827 unique
 user-facing source strings, maintains a source-hash-bound translation memory,
-generates Android locale-qualified JSON, and validates the immutable fields.
+generates draft or explicitly approved Android JSON, and validates immutable
+fields.
 
 Machine output is a draft only. The tested setup was an isolated virtual
 environment with Python and `deep-translator==1.11.4` using Google Translate:
@@ -43,10 +44,15 @@ grounds from land, bloom from flowers, fines from penalties, and drawdown from
 an unrelated general-language meaning. It also restores every numeric token
 from the canonical source after translation.
 
-Draft translations are stored in
-`docs/brewing/p1-exact-guidance-translation-memory.json`. A reviewer should edit
-the translation memory, regenerate the locale without `--translate`, and repeat
-review until every issue is resolved.
+Machine drafts and draft memory are written only under
+`build/p1-exact-guidance-localization-drafts`; `--translate` cannot write Android
+resources. After reviewing all 114 stages, copy the corrected memory to
+`docs/brewing/p1-exact-guidance-translation-memory.json`, add the locale approval
+to `docs/brewing/p1-exact-guidance-reviewed-locales.json`, and promote explicitly:
+
+```powershell
+python tools\generate_p1_exact_guidance_localizations.py --promote-reviewed --locales cs
+```
 
 ## Required human review
 
