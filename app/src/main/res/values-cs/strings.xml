@@ -834,4 +834,12 @@
     <string name="label_brewer_profile_cezve_heat_open_flame">Otevřený plamen</string>
     <string name="label_brewer_profile_cezve_heat_portable_heater">Přenosný ohřívač</string>
     <string name="msg_brewer_profile_cezve_heat_source_required">Chcete-li pokračovat, vyberte zdroj tepla.</string>
+    <string name="guidance_cue_beverage_yield_target">Cílové množství nápoje</string>
+    <string name="guidance_cue_countdown_or_timestamp">Odpočet nebo časový údaj</string>
+    <string name="guidance_cue_cumulative_water_target">Celkové množství vody</string>
+    <string name="guidance_cue_current_pour_target">Cílové množství aktuálního nálevu</string>
+    <string name="guidance_cue_elapsed_timer">Uplynulý čas</string>
+    <string name="guidance_cue_heat_state">Stav ohřevu</string>
+    <string name="guidance_cue_stage_advance">Ovládání dalšího kroku</string>
+    <string name="guidance_cue_valve_state">Stav ventilu</string>
 </resources>

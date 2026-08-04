@@ -241,7 +241,7 @@ private fun GuidanceContent(content: ResolvedBrewGuidanceContent) {
             GuidanceDetail(nextAction)
         }
         content.controlRequirements.forEach { cue ->
-            GuidanceDetail(cue.fallbackLabel)
+            GuidanceDetail(cue.localizedLabel())
         }
         content.warning?.let { warning ->
             Text(
@@ -255,7 +255,7 @@ private fun GuidanceContent(content: ResolvedBrewGuidanceContent) {
             )
         }
         content.utilities.forEach { utility ->
-            GuidanceDetail(utility.fallbackLabel)
+            GuidanceDetail(utility.localizedLabel())
         }
     }
 }

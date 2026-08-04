@@ -188,10 +188,10 @@ private fun LearnGuidanceCard(
                 LearnGuidanceDetail(nextAction)
             }
             content.controlRequirements.forEach { cue ->
-                LearnGuidanceDetail(cue.fallbackLabel)
+                LearnGuidanceDetail(cue.localizedLabel())
             }
             content.utilities.forEach { utility ->
-                LearnGuidanceDetail(utility.fallbackLabel)
+                LearnGuidanceDetail(utility.localizedLabel())
             }
         }
     }
