@@ -649,3 +649,49 @@ stirring, and fresh ice only in the serving glass. All six frames passed raw
 mechanics review, strict 4:3 and alpha processing, and individual light- and
 dark-theme phone review. Tracker, matrix, drawables and generated runtime
 catalog agree at 59 accepted and 55 open.
+
+## Batch 13 completed Ozone Wave 185 sequence - 2026-08-04
+
+The official Ozone Wave guide and Ozone's brewer specification were rechecked
+before production. The retained sequence uses a stainless Kalita Wave 185,
+one correctly seated and rinsed 20-wave paper, 25 g medium-ground coffee,
+400 g water at 93 degrees C, a 50 g / 30-second bloom, successive cumulative
+targets of 160 g, 220 g, 280 g, 340 g, and 400 g, and an observation-driven
+drawdown ending at about 3:00. The artwork intentionally leaves quantities and
+timing to the stage text while preserving equipment, material, flow, and
+completion states.
+
+| Stage | Accepted | Raw cache | WebP SHA-256 |
+| --- | --- | --- | --- |
+| 01 | v6 | exec-433e0584-ae4f-4597-8c13-ddeca9be28e7.png | 1bb269fe50b14e1db141918031a447588f2d5f981c86d58eb36679cda77ed9af |
+| 02 | v2 | exec-7d2a3d8e-735d-4ec1-83c0-c7932a8980f7.png | ec25ed118e53d51df83b6036c0643b203aa9ccbb6caa572a88d77fe109695b77 |
+| 03 | v3 | exec-04368bbc-8b01-48f8-9fab-87714ecae030.png | 50cd451f0424f650b424b6dd11ed1da1e95f540ff7194e1704f269d895b788c0 |
+| 04 | v3 | exec-97f207af-7df5-40db-84cb-dc756f052f57.png | 80028cebec25f807f1a2d6c544579e88f24bd1da33a685d322395dd0a9202ae0 |
+| 05 | v4 | exec-2a6f946b-56d8-45ee-b576-94f871d676e0.png | 778be8d51c26ba914820c0e5476f08fc9f0bf6caf4b131b6c13545b9df4d2d7b |
+| 06 | v3 | exec-6535f889-0460-4889-8527-34577631de0f.png | 7984de0286d5b8642aa60992606d437ca103c16aa4efaafa2d45d29c7a6a75dd |
+| 07 | v3 | exec-7e3e5a4b-9ce6-4d36-abe8-054ea8449624.png | a1335fd6b794f95233b8f1a6018ec3b5fad9a212685ef1afe8b130442f8c2525 |
+| 08 | v2 | exec-1a4a1fc0-42b5-4cf0-99ae-7ca946b65b48.png | beac0c510fac51cc7c8414a7c3afaf6b456f50d059b7491314aae142c78c2559 |
+
+QA reopened the earlier stage-01 acceptance after a complete visual reread
+found an opaque grey lower-half rectangle in the raw generator output. That
+source is quarantined as rejected; the next frame was also rejected for a
+cropped forearm. V6 restores an intact stainless Wave 185, broad flange, loop
+handle, open pleats, clear server, blank scale, complete hand, and generous
+transparent perimeter.
+
+The first full-sequence pass was rejected for photographic rendering,
+background-room noise, cropped gestures, inconsistent hardware, or missing
+scale state. The second pass exposed a more subtle instructional error in
+theme previews: stages 03 and 04 showed coffee leaving the brewer without a
+water stream entering the bed. Their replacements explicitly preserve two
+separate continuous paths, pale water from spout to slurry and amber coffee
+from outlet to server. Stages 05-07 were iterated until normalized phone cards
+showed a strictly increasing server level; stage-05 v3 was specifically
+rejected after it regressed below stage 04, and v4 now sits between accepted
+stages 04 and 06.
+
+Every retained frame passed full-resolution mechanics review, chroma and alpha
+processing, 1024 by 768 static WebP validation, and individual light- and
+dark-theme phone inspection. Exact prompts, raw cache IDs, rejected sources,
+and per-attempt issues remain in the production tracker. Tracker, matrix,
+drawables, and generated runtime catalog now agree at 66 accepted and 48 open.

@@ -1064,13 +1064,52 @@
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_01_instruction_default",
       "batch": 1,
       "status": "accepted_candidate",
-      "accepted_revision": "v4",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wave185_ozone_25_400_stage_01_instruction_default/starlit_tactile_v4.webp",
+      "accepted_revision": "v6",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wave185_ozone_25_400_stage_01_instruction_default/starlit_tactile_v6.webp",
       "qa": "complete",
-      "notes": "Supported kettle, open pleats, level bottom, and both water paths survive phone reduction.",
+      "notes": "Regenerated from scratch after gray-block corruption; exact Wave geometry, clean alpha, light and dark phone previews pass.",
       "priority": "mandatory",
       "blocker": "NONE-BOUNDED",
-      "matrix_line": 217
+      "matrix_line": 217,
+      "attempts": [
+        {
+          "revision": "v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_01_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "rejected",
+          "raw_cache": "starlit_tactile_v4_chroma.png",
+          "issues": [
+            "Full visual reread found a large opaque gray rectangle covering the entire lower half of the raw render and packaged asset; the frame is unusable and must be regenerated from scratch."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v5"
+          }
+        },
+        {
+          "revision": "v5",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_01_instruction_default/starlit_tactile_v5.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-b6632eca-adbe-4806-80f6-9803b0d4c287.png",
+          "issues": [
+            "Hardware and rinse path are plausible, but the forearm is cropped by the right canvas edge and the kettle dominates the card; regenerate with full contained gesture in the app style."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v6"
+          }
+        },
+        {
+          "revision": "v6",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_01_instruction_default/starlit_tactile_v6.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-433e0584-ae4f-4597-8c13-ddeca9be28e7.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Regenerated from scratch after gray-block corruption; exact Wave geometry, clean alpha, light and dark phone previews pass."
+        }
+      ],
+      "open_todos": []
     },
     {
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_02_instruction_default",
@@ -1078,17 +1117,38 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 218,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-3f30b27b-a06f-42e4-b929-40f7076112ce.png",
+          "issues": [
+            "Uses a beige rectangular room/table scene with green border instead of one deep-espresso organic stage and transparent exterior; photorealistic drift."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-7d2a3d8e-735d-4ec1-83c0-c7932a8980f7.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Bloom completion state clearly shows the entire 25 g bed wetted with a small first drainage pool; no active stream is needed for this observed completion cue. Light and dark theme previews passed."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wave185_ozone_25_400_stage_02_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Bloom completion state clearly shows the entire 25 g bed wetted with a small first drainage pool; no active stream is needed for this observed completion cue. Light and dark theme previews passed."
     },
     {
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_03_instruction_default",
@@ -1096,17 +1156,51 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 219,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-95f4d068-c884-4cd3-8fae-e30180d2e81f.png",
+          "issues": [
+            "Beige/wood textured stage instead of the approved dark organic stage, photorealistic drift, and the forearm is cropped at the right edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-052186af-5313-4f90-b2ff-09f38875af83.png",
+          "issues": [
+            "Theme previews show coffee draining into the server but no visible water stream from the kettle to the bed, so the active 110 g pour is visually incomplete and could imply impossible flow."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_03_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-04368bbc-8b01-48f8-9fab-87714ecae030.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The first main pour now has continuous water-to-slurry and coffee-to-server paths, open Wave pleats, a low post-bloom beverage level, and clean light/dark rendering."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wave185_ozone_25_400_stage_03_instruction_default/starlit_tactile_v3.webp",
+      "notes": "The first main pour now has continuous water-to-slurry and coffee-to-server paths, open Wave pleats, a low post-bloom beverage level, and clean light/dark rendering."
     },
     {
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_04_instruction_default",
@@ -1114,17 +1208,51 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 220,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-1c644868-e598-46d1-a616-e686f8a3decb.png",
+          "issues": [
+            "Photorealistic product scene with wood tabletop, no organic stage, and cropped right forearm; cannot fit the app style or transparency workflow."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_04_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-5a4c3983-32fb-4ca5-b051-69ee44fbe2c9.png",
+          "issues": [
+            "Theme previews show coffee draining into the server but no visible water stream from the kettle to the bed, so the active 60 g pour is visually incomplete and could imply impossible flow."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_04_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-97f207af-7df5-40db-84cb-dc756f052f57.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The 220 g pulse has both continuous fluid paths, correct Wave hardware, a server level above stage 3, and clean light/dark rendering."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wave185_ozone_25_400_stage_04_instruction_default/starlit_tactile_v3.webp",
+      "notes": "The 220 g pulse has both continuous fluid paths, correct Wave hardware, a server level above stage 3, and clean light/dark rendering."
     },
     {
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_05_instruction_default",
@@ -1132,17 +1260,64 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 221,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-3b48471b-f594-4b48-b57d-76605ef4d274.png",
+          "issues": [
+            "Photorealistic rendering on bare green with no deep-espresso organic stage, missing scale, and cropped right forearm."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_05_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-fcee5623-b278-4ee3-b8a4-0ab402377109.png",
+          "issues": [
+            "Style and hardware pass, but the server beverage level falls below stage 04 instead of increasing for the 280 g cumulative pulse."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_05_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-fd2c9d88-879b-4c7b-9228-b4f3998ddecd.png",
+          "issues": [
+            "The normalized light and dark previews make the server beverage level fractionally lower than accepted stage 4, breaking the required monotonic 160→220→280→340→400 g sequence."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v4"
+          }
+        },
+        {
+          "revision": "v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_05_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-2a6f946b-56d8-45ee-b576-94f871d676e0.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Both normalized theme previews place the 280 g beverage surface clearly between accepted 220 g stage 04 and 340 g stage 06; both fluid paths, Wave geometry, pleats, grounds texture, margins, and contrast pass."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wave185_ozone_25_400_stage_05_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Both normalized theme previews place the 280 g beverage surface clearly between accepted 220 g stage 04 and 340 g stage 06; both fluid paths, Wave geometry, pleats, grounds texture, margins, and contrast pass."
     },
     {
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_06_instruction_default",
@@ -1150,17 +1325,51 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 222,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-d58cf220-2726-45ec-89b2-4115cdeb42d3.png",
+          "issues": [
+            "Photorealistic rendering on bare green with no organic stage, missing scale, and cropped right forearm."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_06_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-83287a1e-d71c-4910-824f-677f271cc164.png",
+          "issues": [
+            "Style and hardware pass, but the server stays near one-quarter full instead of rising above stage 05 toward the 340 g cumulative state."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_06_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-6535f889-0460-4889-8527-34577631de0f.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The 340 g pulse has continuous fluid paths, correct Wave hardware, a server level clearly above stage 4, and clean light/dark rendering."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wave185_ozone_25_400_stage_06_instruction_default/starlit_tactile_v3.webp",
+      "notes": "The 340 g pulse has continuous fluid paths, correct Wave hardware, a server level clearly above stage 4, and clean light/dark rendering."
     },
     {
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_07_instruction_default",
@@ -1168,17 +1377,51 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 223,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_07_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-a401dda6-3e85-48c0-9364-a6c3c22969a4.png",
+          "issues": [
+            "Textured green full-background scene rather than exact chroma plus organic stage, photorealistic drift, missing scale, and cropped right forearm."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_07_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-69879d7b-6db5-4820-bfda-9ead6adae022.png",
+          "issues": [
+            "Style and hardware pass, but the final-pour server level is only about one-third and does not establish the required ordered rise toward the completed beverage."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v3"
+          }
+        },
+        {
+          "revision": "v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_07_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-7e3e5a4b-9ce6-4d36-abe8-054ea8449624.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The final 400 g pulse has continuous fluid paths, correct Wave hardware, the highest active-pour server level, and clean light/dark rendering."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wave185_ozone_25_400_stage_07_instruction_default/starlit_tactile_v3.webp",
+      "notes": "The final 400 g pulse has continuous fluid paths, correct Wave hardware, the highest active-pour server level, and clean light/dark rendering."
     },
     {
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_08_instruction_default",
@@ -1186,17 +1429,38 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 224,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_08_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-4b032401-aff2-4dfa-aec1-dea1f8076055.png",
+          "issues": [
+            "Photorealistic close-up on textured green with no organic stage and no blank scale; unsuitable for the app and transparency workflow."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "v2"
+          }
+        },
+        {
+          "revision": "v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_wave185_ozone_25_400_stage_08_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-1a4a1fc0-42b5-4cf0-99ae-7ca946b65b48.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Drawdown completion is unambiguous: no kettle or hand, drained exposed bed, one final isolated outlet drop, and finished beverage in the server. Light and dark theme previews passed."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_wave185_ozone_25_400_stage_08_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Drawdown completion is unambiguous: no kettle or hand, drained exposed bed, one final isolated outlet drop, and finished beverage in the server. Light and dark theme previews passed."
     },
     {
       "asset_id": "instruction_p1_wedge_pulse_23_5_400_stage_01_instruction_default",
