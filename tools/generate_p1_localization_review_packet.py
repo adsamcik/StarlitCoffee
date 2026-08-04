@@ -136,15 +136,22 @@ def render_packet(
         1 for stage_review in stage_reviews.values()
         if stage_review.get("status") == "approved"
     )
-    action_warning_count = sum(
-        1 for stage_review in stage_reviews.values()
-        if {"action", "warning"}.issubset(stage_review.get("reviewed_fields", []))
-    )
+    category_counts = {
+        field: sum(
+            1 for stage_review in stage_reviews.values()
+            if field in stage_review.get("reviewed_fields", [])
+        )
+        for field in sorted(LOCALIZER.REQUIRED_EDITORIAL_FIELDS)
+    }
     lines.extend([
         f"- Recipes: {len(source['recipes'])}",
         f"- Stages: {len(stages)}",
         f"- Fully approved stages: {approved_count}/{len(stages)}",
-        f"- Action and warning reviewed: {action_warning_count}/{len(stages)}",
+        *(
+            f"- {field.replace('_', ' ').title()} reviewed: "
+            f"{count}/{len(stages)}"
+            for field, count in category_counts.items()
+        ),
         "",
     ])
     for index, (recipe, source_stage, draft_stage) in enumerate(stages, start=1):

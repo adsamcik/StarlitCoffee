@@ -8,1065 +8,1699 @@
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Přeložený šev kuželového filtru; filtr přiléhá k žebrům; servírovací nádoba je po propláchnutí prázdná.",
+        "completion_criterion": "Papírový filtr je zcela mokrý a servírovací nádoba předehřátá."
+      }
     },
     "v60_official_15_250/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Přidejte 15 g kávy a zarovnejte kávové lože."
+        "action": "Přidejte 15 g kávy a zarovnejte kávové lože.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Dripper stojí na váze.",
+        "completion_criterion": "Kávové lože je rovné."
       }
     },
     "v60_official_15_250/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Proveďte předspaření a navlhčete veškerou kávu."
+        "action": "Proveďte předspaření a navlhčete veškerou kávu.",
+        "start_time_or_preceding_condition": "Spusťte časovač při prvním nalití vody.",
+        "added_water_target": "Dostatek k navlhčení veškeré kávy; přesná hmotnost vody pro předspaření není uvedena.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Po úvodním navlhčení již nenalévejte.",
+        "completion_criterion": "Veškerá viditelná káva je mokrá a uvolňování plynu se zpomalilo."
       }
     },
     "v60_official_15_250/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Vodu lijte hlavně na kávové lože, ne přímo po stěně papírového filtru."
+        "warning": "Vodu lijte hlavně na kávové lože, ne přímo po stěně papírového filtru.",
+        "start_time_or_preceding_condition": "Po předspaření.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Jemné nepřetržité nebo téměř nepřetržité nalévání."
       }
     },
     "v60_official_15_250/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Počkejte na dokapání a dripper sejměte."
+        "action": "Počkejte na dokapání a dripper sejměte.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Bez dalšího zakružování nebo míchání.",
+        "completion_criterion": "Voda odtekla; proud přešel v jednotlivé kapky."
       }
     },
     "v60_rao_20_330/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Plastový V60 02; kávové lože je rovné kromě mělké prohlubně uprostřed."
+      }
     },
     "v60_rao_20_330/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Nalijte 60 g a při předspaření dripper důrazně zakružte.",
-        "warning": "Důrazné zakroužení při předspaření patří jen k tomuto receptu; příliš dlouhé kroužení může přesunout jemné částice kávy."
+        "warning": "Důrazné zakroužení při předspaření patří jen k tomuto receptu; příliš dlouhé kroužení může přesunout jemné částice kávy.",
+        "start_time_or_preceding_condition": "Spusťte časovač.",
+        "target_duration_or_range": "Počkejte do 0:40.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Dripper je stabilně usazený na servírovací nádobě.",
+        "completion_criterion": "Veškerá káva je nasycená a předspaření se do 0:40 ustálí."
       }
     },
     "v60_rao_20_330/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Nízký, téměř svislý proud z konvice."
+      }
     },
     "v60_rao_20_330/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Velmi jemně zakružte, aby se kávové lože usadilo."
+        "action": "Velmi jemně zakružte, aby se kávové lože usadilo.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Minimální pohyb směsi.",
+        "completion_criterion": "Směs kávy a vody se dotýká žebrovaných kanálků bez silného víru."
       }
     },
     "v60_rao_20_330/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Počkejte, až odteče asi 70% vody, potom dolijte do 330 g."
+        "action": "Počkejte, až odteče asi 70% vody, potom dolijte do 330 g.",
+        "start_time_or_preceding_condition": "Podle pozorovaného průběhu.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Stálý nízký proud."
       }
     },
     "v60_rao_20_330/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Naposledy velmi jemně zakružte a nechte kávu dokapat."
+        "action": "Naposledy velmi jemně zakružte a nechte kávu dokapat.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Dále již nenalévejte.",
+        "completion_criterion": "Kávové lože je odkapané a převážně rovné."
       }
     },
     "v60_kasuya_4_6_20_300/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "V60 a odpovídající papírový filtr.",
+        "completion_criterion": "Kávové lože je rovné a servírovací nádoba neobsahuje proplachovou vodu."
+      }
     },
     "v60_kasuya_4_6_20_300/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "První nálev z větší části odtekl."
+      }
     },
     "v60_kasuya_4_6_20_300/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "Druhý nálev z větší části odtekl."
+      }
     },
     "v60_kasuya_4_6_20_300/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "v60_kasuya_4_6_20_300/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "v60_kasuya_4_6_20_300/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "v60_kasuya_4_6_20_300/stage_07": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "V cílovém čase dripper sejměte."
+        "action": "V cílovém čase dripper sejměte.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Nenechte neúměrně pomalé poslední kapky slepě určovat konec přípravy.",
+        "completion_criterion": "Bylo dosaženo cílového času a hlavní proud skončil."
       }
     },
     "v60_kurasu_flash_16_150_70/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Servírovací nádoba je stabilní; proplachová voda je vylitá; kuželový filtr je správně usazený.",
+        "completion_criterion": "V servírovací nádobě zůstává přesně led určený k přípravě, nikoli proplachová voda."
+      }
     },
     "v60_kurasu_flash_16_150_70/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "Mletá káva je rovnoměrně mokrá."
+      }
     },
     "v60_kurasu_flash_16_150_70/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "v60_kurasu_flash_16_150_70/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "optional_tip": "Zdroj používá poslední nálev k úpravě koncentrace.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "v60_kurasu_flash_16_150_70/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Nechte kávu dokapat a rozpustit led určený k přípravě."
+        "action": "Nechte kávu dokapat a rozpustit led určený k přípravě.",
+        "target_duration_or_range": "Příprava trvá asi 2:10; kávu v servírovací nádobě míchejte, dokud se původní led nerozpustí.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Po dokapání je dripper sejmutý.",
+        "completion_criterion": "Původní led určený k přípravě se všechen rozpustil; nápoj je vychlazený."
       }
     },
     "v60_kurasu_flash_16_150_70/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Čerstvý led k podávání se nezapočítává do poměru přípravy.",
+        "completion_criterion": "Nápoj byl přelit bez přetečení sklenice."
+      }
     },
     "wave185_ozone_25_400/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Správný zvlněný filtr 185; ploché dno je vystředěné.",
+        "completion_criterion": "Papírový filtr je mokrý a záhyby zůstávají otevřené."
+      }
     },
     "wave185_ozone_25_400/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Předspařte 50 g vody."
+        "action": "Předspařte 50 g vody.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
       }
     },
     "wave185_ozone_25_400/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "wave185_ozone_25_400/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "wave185_ozone_25_400/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "wave185_ozone_25_400/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "wave185_ozone_25_400/stage_07": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "wave185_ozone_25_400/stage_08": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Nechte kávu dokapat."
+        "action": "Nechte kávu dokapat.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Bez dalšího míchání.",
+        "completion_criterion": "Kávové lože dokapalo."
       }
     },
     "wedge_pulse_23_5_400/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Tvar papírového filtru odpovídá dripperu i výstupu; servírovací nádoba je prázdná.",
+        "completion_criterion": "Papírový filtr přiléhá ke klínovým stěnám a nepřehýbá se přes výstup."
+      }
     },
     "wedge_pulse_23_5_400/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Předspařte 50 g vody."
+        "action": "Předspařte 50 g vody.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
       }
     },
     "wedge_pulse_23_5_400/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "start_time_or_preceding_condition": "Po předspaření.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "Nálev z větší části odtekl."
+      }
     },
     "wedge_pulse_23_5_400/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "Nálev z větší části odtekl."
+      }
     },
     "wedge_pulse_23_5_400/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "Nálev z větší části odtekl."
+      }
     },
     "wedge_pulse_23_5_400/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Dolijte 100 g do celkových 400 g a nechte kávu dokapat.",
-        "warning": "Nelijte přímo na papír po stranách, kde se u zúženého výstupu mohou hromadit jemné částice kávy."
+        "warning": "Nelijte přímo na papír po stranách, kde se u zúženého výstupu mohou hromadit jemné částice kávy.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "Kávové lože dokapalo bez zahlcení výstupu."
       }
     },
     "chemex_42_700/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Složený filtr vložte tak, aby tři vrstvy překrývaly výlevku.",
-        "warning": "Uzavřený vzduchový kanál může zastavit průtok nebo způsobit náhlé vychrstnutí horké kávy."
+        "warning": "Uzavřený vzduchový kanál může zastavit průtok nebo způsobit náhlé vychrstnutí horké kávy.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Vzduchový kanál zůstává otevřený; naproti výlevce je jedna vrstva papíru.",
+        "completion_criterion": "Filtr se nemůže zhroutit do výlevky a utěsnit ji."
       }
     },
     "chemex_42_700/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Karafa je předehřátá; výlevka zůstává odvětraná.",
+        "completion_criterion": "Papírový filtr je zcela mokrý a v nádobě nezůstala proplachová voda."
+      }
     },
     "chemex_42_700/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Předspařte 100–125 g vody."
+        "action": "Předspařte 100–125 g vody.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
       }
     },
     "chemex_42_700/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "start_time_or_preceding_condition": "Po předspaření.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Směs kávy a vody držte pod okrajem filtru a vzduchový kanál výlevky ponechte otevřený."
+      }
     },
     "chemex_42_700/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Filtr nepřeplňujte vodou."
+      }
     },
     "chemex_42_700/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "target_duration_or_range": "Obvykle 5:00–6:30; žádný univerzální oficiální cíl není stanoven.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Vzduchový kanál je otevřený.",
+        "completion_criterion": "Hlavní proud skončil; pokud tomu nasvědčuje chuť, sejměte filtr dříve, než se příprava protáhne do příliš hořkých posledních kapek."
+      }
     },
     "chemex_42_700/stage_07": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Před podáváním karafou jemně zakružte."
+        "action": "Před podáváním karafou jemně zakružte.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Filtr je vyjmutý; karafu držte za objímku nebo rukojeť.",
+        "completion_criterion": "Nápoj je rovnoměrně promíchaný."
       }
     },
     "generic_conical_low_agitation_20_320/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Papírový filtr kopíruje stěny a neblokuje výstup.",
+        "completion_criterion": "Filtr není prohnutý a nikde neodstává."
+      }
     },
     "generic_conical_low_agitation_20_320/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Předspařte 50–60 g vody a navlhčete veškerou kávu."
+        "action": "Předspařte 50–60 g vody a navlhčete veškerou kávu.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "Nezůstávají žádná suchá místa."
       }
     },
     "generic_conical_low_agitation_20_320/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "start_time_or_preceding_condition": "Po předspaření.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Minimální pohyb směsi; nelijte silným proudem na stěny filtru."
+      }
     },
     "generic_conical_low_agitation_20_320/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "start_time_or_preceding_condition": "Než se odkryje kávové lože.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu."
+      }
     },
     "generic_conical_low_agitation_20_320/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "target_duration_or_range": "Žádný univerzální cíl; podle geometrie často 2:30–4:00.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "Hlavní proud skončil bez zastavení."
+      }
     },
     "clever_water_first_15_250/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Clever není na servírovací nádobě; spodní ovladač není stlačený.",
+        "completion_criterion": "Po vylití proplachové vody již nic neodkapává."
+      }
     },
     "clever_water_first_15_250/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je zavřený.",
+        "completion_criterion": "Voda zůstává v dripperu."
+      }
     },
     "clever_water_first_15_250/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "target_duration_or_range": "Dokončete bez prodlení.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je zavřený.",
+        "completion_criterion": "Veškerá káva je mokrá bez intenzivního míchání."
+      }
     },
     "clever_water_first_15_250/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Nechte kávu louhovat a potom ji jemně promíchejte."
+        "action": "Nechte kávu louhovat a potom ji jemně promíchejte.",
+        "target_duration_or_range": "Kolem 1:45 promíchejte a ve 2:00 se připravte otevřít ventil.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je zavřený."
       }
     },
     "clever_water_first_15_250/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Postavte Clever na servírovací nádobu a otevřete tak ventil.",
-        "warning": "Servírovací nádoba musí být stabilní a dostatečně velká."
+        "warning": "Servírovací nádoba musí být stabilní a dostatečně velká.",
+        "start_time_or_preceding_condition": "Ve 2:00.",
+        "target_duration_or_range": "Cílová doba dokapání je asi 40 sekund.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Spodní ovladač je stlačený a ventil otevřený.",
+        "completion_criterion": "Průtok začne okamžitě a skončí přibližně ve 2:40."
       }
     },
     "clever_water_first_15_250/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Po úplném dokapání dripper sejměte."
+        "action": "Po úplném dokapání dripper sejměte.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Zvedněte svisle, aby se ventil uzavřel.",
+        "completion_criterion": "V dripperu nezůstává žádná voda."
       }
     },
     "clever_coffee_first_15_250/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Clever není na servírovací nádobě.",
+        "completion_criterion": "Papírový filtr je správně usazený a kávové lože rovné."
+      }
     },
     "clever_coffee_first_15_250/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Příliš intenzivní míchání může zanést jemné částice kávy na papírový filtr."
+        "warning": "Příliš intenzivní míchání může zanést jemné částice kávy na papírový filtr.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je zavřený."
       }
     },
     "clever_coffee_first_15_250/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Nechte kávu louhovat."
+        "action": "Nechte kávu louhovat.",
+        "target_duration_or_range": "Přibližně do 2:15.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je zavřený.",
+        "completion_criterion": "Bylo dosaženo cílové doby louhování."
       }
     },
     "clever_coffee_first_15_250/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Postavte dripper na servírovací nádobu a nechte jej dokapat.",
-        "warning": "Nepoužívejte příliš malý nebo nestabilní šálek."
+        "warning": "Nepoužívejte příliš malý nebo nestabilní šálek.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ovladač otevřel ventil.",
+        "completion_criterion": "Dokapávání skončilo."
       }
     },
     "switch_official_20_240/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Vložte a propláchněte papírový filtr V60 02 a potom uzavřete ventil Switche."
+        "action": "Vložte a propláchněte papírový filtr V60 02 a potom uzavřete ventil Switche.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Páka je zavřená; kulička dosedá do sedla.",
+        "completion_criterion": "Proplachová voda odtekla před uzavřením ventilu a další voda již neodkapává."
       }
     },
     "switch_official_20_240/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je zavřený.",
+        "completion_criterion": "Veškerá káva je mokrá a voda zůstává v dripperu."
+      }
     },
     "switch_official_20_240/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Nechte kávu louhovat."
+        "action": "Nechte kávu louhovat.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je zavřený."
       }
     },
     "switch_official_20_240/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Nedotýkejte se horkého skla ani kovu."
+        "warning": "Nedotýkejte se horkého skla ani kovu.",
+        "start_time_or_preceding_condition": "Ve 2:00.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je otevřený; dripper stojí na servírovací nádobě.",
+        "completion_criterion": "Dokapávání začne okamžitě."
       }
     },
     "switch_official_20_240/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Sledujte dokapávání a poté Switch sejměte."
+        "action": "Sledujte dokapávání a poté Switch sejměte.",
+        "target_duration_or_range": "Obvykle méně než přibližně jedna minuta; řiďte se průtokem.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "V dripperu nezůstává žádná voda."
       }
     },
     "switch_ole_boen_hybrid_16_5_240/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Uzavřete ventil Switche a předspařte 50 g vody."
+        "action": "Uzavřete ventil Switche a předspařte 50 g vody.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je zavřený.",
+        "completion_criterion": "Voda pro předspaření zůstává v dripperu do 0:40."
       }
     },
     "switch_ole_boen_hybrid_16_5_240/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je otevřený; nalévejte samospádem převážně do středu."
+      }
     },
     "switch_ole_boen_hybrid_16_5_240/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je zavřený.",
+        "completion_criterion": "Váha ukazuje 240 g a voda v závěrečné fázi zůstává v dripperu."
+      }
     },
     "switch_ole_boen_hybrid_16_5_240/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je otevřený.",
+        "completion_criterion": "Dokapávání se obnoví."
+      }
     },
     "switch_ole_boen_hybrid_16_5_240/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Nechte kávu zcela dokapat."
+        "action": "Nechte kávu zcela dokapat.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "Kávové lože dokapalo."
       }
     },
     "switch_gravity_15_250/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Otevřete ventil Switche a propláchněte papírový filtr V60 02."
+        "action": "Otevřete ventil Switche a propláchněte papírový filtr V60 02.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Páka zůstává po celou dobu otevřená.",
+        "completion_criterion": "Proplachová voda volně odtéká."
       }
     },
     "switch_gravity_15_250/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "added_water_target": "Dostatek k úplnému nasycení; přesná hmotnost není stanovena.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je otevřený."
+      }
     },
     "switch_gravity_15_250/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "start_time_or_preceding_condition": "Po předspaření.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Ventil je otevřený."
+      }
     },
     "switch_gravity_15_250/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Nechte kávu zcela dokapat."
+        "action": "Nechte kávu zcela dokapat.",
+        "target_duration_or_range": "Výchozí cíl je přibližně 2:30.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Podle receptu.",
+        "completion_criterion": "Kávové lože dokapalo."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Do džezvy přidejte 65 g studené vody, 6 g velmi jemně mleté kávy a případně cukr.",
-        "warning": "Malá přeplněná nádoba může náhle překypět."
+        "warning": "Malá přeplněná nádoba může náhle překypět.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Džezva je mimo zdroj tepla a má dostatečnou volnou kapacitu.",
+        "completion_criterion": "Suroviny jsou v džezvě pod bezpečnou úrovní naplnění."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "start_time_or_preceding_condition": "Před zahříváním.",
+        "target_duration_or_range": "Krátce.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "optional_tip": "Po zahájení ohřevu zbytečně nemíchejte, pokud chcete zachovat vrstvu pěny.",
+        "equipment_state": "Nádoba je mimo zdroj tepla.",
+        "completion_criterion": "Vznikla rovnoměrná směs kávy a vody."
+      }
     },
     "cezve_turkish_single_rise_6_65/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Nenechávejte bez dozoru; plamen nesmí přesahovat dno a ruce držte dál od horkého kovu."
+        "warning": "Nenechávejte bez dozoru; plamen nesmí přesahovat dno a ruce držte dál od horkého kovu.",
+        "target_duration_or_range": "Podle pozorovaného průběhu.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Mírný kontrolovaný plamen nebo varná zóna; nádoba je stabilní; rukojeť směřuje mimo zdroj tepla.",
+        "completion_criterion": "Vytvořil se tmavý prstenec pěny a stoupá k hrdlu."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Odstavte z ohřevu při prvním kontrolovaném vzedmutí pěny.",
-        "warning": "Nečekejte na prudký var; káva může během několika sekund překypět."
+        "warning": "Nečekejte na prudký var; káva může během několika sekund překypět.",
+        "start_time_or_preceding_condition": "Jakmile pěna začne stoupat.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Nádoba je bezpečně odstavená před plným varem nebo přetečením."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Sedlina i nápoj jsou velmi horké."
+        "warning": "Sedlina i nápoj jsou velmi horké.",
+        "start_time_or_preceding_condition": "Ihned po odstavení.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Šálek je stabilní a dostatečně velký.",
+        "completion_criterion": "Pěna i nápoj jsou rozdělené bez rozlití."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Před pitím nechte sedlinu usadit.",
-        "warning": "Nepijte sedlinu a dokud je nápoj velmi horký, nezačínejte velkým douškem."
+        "warning": "Nepijte sedlinu a dokud je nápoj velmi horký, nezačínejte velkým douškem.",
+        "target_duration_or_range": "Přibližně 1–2 minuty nebo dokud nápoj nemá bezpečnou teplotu a sedlina se neusadí.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Se šálkem nehýbejte.",
+        "completion_criterion": "Povrch chladne a sedlina se shromažďuje na dně."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Nádobu nepřeplňujte."
+        "warning": "Nádobu nepřeplňujte.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Nádoba je mimo zdroj tepla; volný prostor nad nápojem je viditelný.",
+        "completion_criterion": "Rovnoměrná směs je pod bezpečnou úrovní naplnění."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Mimo zdroj tepla.",
+        "completion_criterion": "Nezůstaly žádné suché hrudky."
+      }
     },
     "cezve_bounded_repeated_rise_12_130/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Odstavte ještě před plným varem nebo přetečením."
+        "warning": "Odstavte ještě před plným varem nebo přetečením.",
+        "target_duration_or_range": "Podle pozorovaného průběhu.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Mírný kontrolovaný ohřev pod stálým dohledem.",
+        "completion_criterion": "Pěna stoupá k hrdlu."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Na chvíli odstavte, dokud pěna neklesne.",
-        "warning": "Horkou kovovou nádobu nepokládejte na povrch citlivý na teplo."
+        "warning": "Horkou kovovou nádobu nepokládejte na povrch citlivý na teplo.",
+        "start_time_or_preceding_condition": "Při prvním vzedmutí pěny.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Nádoba je mimo zdroj tepla a stojí stabilně.",
+        "completion_criterion": "Pěna klesla, ale zcela se nerozpadla."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Vraťte na mírný ohřev a nechte pěnu naposledy kontrolovaně vystoupat.",
-        "warning": "Po druhém vzedmutí skončete; opakovaný var zvyšuje riziko rozlití a poškození chuti."
+        "warning": "Po druhém vzedmutí skončete; opakovaný var zvyšuje riziko rozlití a poškození chuti.",
+        "start_time_or_preceding_condition": "Po opadnutí pěny.",
+        "target_duration_or_range": "Podle pozorovaného průběhu.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Mírný ohřev.",
+        "completion_criterion": "Začíná druhé vzedmutí pěny."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Odstavte, rozdělte pěnu i nápoj a nechte sedlinu usadit.",
-        "warning": "Horký nápoj podávejte opatrně."
+        "warning": "Horký nápoj podávejte opatrně.",
+        "start_time_or_preceding_condition": "Při druhém vzedmutí pěny.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Dva stabilní šálky.",
+        "completion_criterion": "Porce jsou rozlité bez přetečení a sedlina se usazuje."
       }
     },
     "auto_batch_500_30/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Nevhodný filtr nebo ucpaný výstup může způsobit přetečení."
+        "warning": "Nevhodný filtr nebo ucpaný výstup může způsobit přetečení.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Správný tvar košíku; na okraji není mletá káva; výstup je průchodný.",
+        "completion_criterion": "Košík je usazený a kávové lože rovné."
       }
     },
     "auto_batch_500_30/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Používejte pouze vodu a nepřekračujte maximální kapacitu kávovaru."
+        "warning": "Používejte pouze vodu a nepřekračujte maximální kapacitu kávovaru.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Zásobník je naplněný po značku 500 g a nepřekračuje kapacitu."
       }
     },
     "auto_batch_500_30/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Pokud návod kávovaru zakazuje vyjmout během přípravy košík nebo karafu, nevyjímejte je."
+        "warning": "Pokud návod kávovaru zakazuje vyjmout během přípravy košík nebo karafu, nevyjímejte je.",
+        "target_duration_or_range": "Řídí kávovar.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Víko nebo ventil karafy podle potřeby správně ovládá košík.",
+        "completion_criterion": "Voda se začala rozvádět a káva odtéká bez přetečení."
       }
     },
     "auto_batch_500_30/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "target_duration_or_range": "Podle kávovaru.",
+        "observable_signs": "Kávové lože je navlhčené po celé ploše, na kterou dopadá voda; přetečení nebo suchá místa ukazují na chybu kávovaru nebo konfigurace.",
+        "equipment_state": "Neuvádějte nepodložené údaje o skrytém předspaření, teplotě ani pulzech.",
+        "completion_criterion": "Přečerpávání ze zásobníku skončilo a košík dokapal."
+      }
     },
     "auto_batch_500_30/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Karafou zakružte nebo kávu promíchejte a ihned podávejte.",
-        "warning": "Kávu nenechávejte na plotýnce déle, než je nutné; termokonvice další ohřev nepotřebuje, ale musí zůstat čistá."
+        "warning": "Kávu nenechávejte na plotýnce déle, než je nutné; termokonvice další ohřev nepotřebuje, ale musí zůstat čistá.",
+        "start_time_or_preceding_condition": "Po skončení odkapávání.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Karafa je bezpečně vyjmutá.",
+        "completion_criterion": "Nápoj je rovnoměrně promíchaný."
       }
     },
     "auto_batch_1000_60/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Košík nepřeplňujte; mletá káva během přípravy nabobtná."
+        "warning": "Košík nepřeplňujte; mletá káva během přípravy nabobtná.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Košík není přeplněný; papírový filtr je správně usazený.",
+        "completion_criterion": "Kávové lože je rovné a výstup průchodný."
       }
     },
     "auto_batch_1000_60/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Zásobník nepřekračuje maximum; víko nebo ventil karafy je správně nastavený.",
+        "completion_criterion": "Všechny součásti jsou připravené."
+      }
     },
     "auto_batch_1000_60/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Spusťte cyklus řízený kávovarem a nechte jej doběhnout."
+        "action": "Spusťte cyklus řízený kávovarem a nechte jej doběhnout.",
+        "target_duration_or_range": "Podle kávovaru.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Automatická distribuce vody.",
+        "completion_criterion": "Nedošlo k přetečení; přečerpávání ze zásobníku skončilo."
       }
     },
     "auto_batch_1000_60/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Počkejte, až košík dokape, potom kávu v karafě promíchejte.",
-        "warning": "Víko termokonvice používejte podle návodu; kávu nenechávejte dlouho na plotýnce."
+        "warning": "Víko termokonvice používejte podle návodu; kávu nenechávejte dlouho na plotýnce.",
+        "start_time_or_preceding_condition": "Po ukončení přečerpávání vody.",
+        "target_duration_or_range": "Dokud odkapávání téměř neskončí.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Karafa zůstává správně usazená až do bezpečného vyjmutí.",
+        "completion_criterion": "Káva v karafě je promíchaná zakroužením nebo zamícháním."
       }
     },
     "auto_cupone_20_300/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Ucpaný výstup může způsobit přetečení a opaření."
+        "warning": "Ucpaný výstup může způsobit přetečení a opaření.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Napájení je vypnuté; malý spodní otvor je viditelně průchodný.",
+        "completion_criterion": "Papírový filtr je správně usazený a výstup průchodný."
       }
     },
     "auto_cupone_20_300/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Přidejte 20 g kávy namleté na filtr."
+        "action": "Přidejte 20 g kávy namleté na filtr.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Dávka je v oficiálním rozmezí 18–21 g; kávové lože je rovné.",
+        "completion_criterion": "Na okraji není mletá káva."
       }
     },
     "auto_cupone_20_300/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Kávovar nespouštějte bez výstupní trubice a během cyklu nevyjímejte horké součásti."
+        "warning": "Kávovar nespouštějte bez výstupní trubice a během cyklu nevyjímejte horké součásti.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Zásobník je naplněný po značku; trubice je vystředěná nad držákem.",
+        "completion_criterion": "Hrnek i držák stojí stabilně."
       }
     },
     "auto_cupone_20_300/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Během přípravy nevyjímejte spařovací košík ani hrnek."
+        "warning": "Během přípravy nevyjímejte spařovací košík ani hrnek.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Kávovar automaticky přečerpává vodu o teplotě přibližně 92–96 °C.",
+        "completion_criterion": "Po přečerpání vody se kávovar vypnul."
       }
     },
     "auto_cupone_20_300/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Počkejte na poslední kapky, potom vyjměte hrnek a podávejte.",
-        "warning": "Výstupní trubice i káva jsou horké."
+        "warning": "Výstupní trubice i káva jsou horké.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Hrnek zůstává pod držákem.",
+        "completion_criterion": "Káva již výrazně neodkapává."
       }
     },
     "auto_cupone_20_300/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Vyhoďte sedlinu a výstup vyčistěte kartáčkem.",
-        "warning": "Kávovar neponořujte do vody."
+        "warning": "Kávovar neponořujte do vody.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Kávovar je před čištěním odpojený ze zásuvky.",
+        "completion_criterion": "Nezůstala žádná sedlina a výstup je průchodný."
       }
     },
     "phin_gravity_14_118/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Phin bezpečně postavte na tepelně odolný šálek a přidejte 14 g zarovnané kávy.",
-        "warning": "Nepoužívejte šálek, jehož okraj phin bezpečně neudrží."
+        "warning": "Nepoužívejte šálek, jehož okraj phin bezpečně neudrží.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Základna plně spočívá na okraji šálku; otvory jsou průchodné.",
+        "completion_criterion": "Phin stojí stabilně a kávové lože je rovné."
       }
     },
     "phin_gravity_14_118/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Netlačte tak silně, aby se průtok zastavil."
+        "warning": "Netlačte tak silně, aby se průtok zastavil.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Volná vložka leží rovně; káva není silně stlačená."
       }
     },
     "phin_gravity_14_118/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Přidejte přibližně 30 g horké vody a nechte kávu předspařit."
+        "action": "Přidejte přibližně 30 g horké vody a nechte kávu předspařit.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Víko je sejmuté; kávové lože se předmáčí.",
+        "completion_criterion": "Káva bobtná a voda jí proniká."
       }
     },
     "phin_gravity_14_118/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Víko je nasazené; káva samospádem odkapává.",
+        "completion_criterion": "Komora je naplněná bez přetečení."
+      }
     },
     "phin_gravity_14_118/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Ověřte, že první kapka proteče do dvou minut.",
-        "warning": "Pokud káva nekape, nevytvářejte tlak ani phin nemačkejte; počkejte a pro příští přípravu upravte hrubost mletí nebo usazení vložky."
+        "warning": "Pokud káva nekape, nevytvářejte tlak ani phin nemačkejte; počkejte a pro příští přípravu upravte hrubost mletí nebo usazení vložky.",
+        "target_duration_or_range": "Před 2:00 od začátku receptu podle konvence zdroje.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "S phinem nehýbejte.",
+        "completion_criterion": "První kapka dopadla do šálku."
       }
     },
     "phin_gravity_14_118/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Nechte phin dokapat přibližně za pět minut."
+        "action": "Nechte phin dokapat přibližně za pět minut.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Šálek je stabilní; nedotýkejte se horkého kovu.",
+        "completion_criterion": "Poslední kapka protekla přibližně za pět minut."
       }
     },
     "phin_gravity_14_118/stage_07": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Horký phin sejměte a zvolte způsob podávání.",
-        "warning": "Komora i vložka jsou horké."
+        "warning": "Komora i vložka jsou horké.",
+        "start_time_or_preceding_condition": "Po dokapání.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Phin položte na obrácené víko nebo tepelně odolnou podložku.",
+        "completion_criterion": "Koncentrát je podaný černý, zředěný, s ledem nebo s odměřeným kondenzovaným mlékem."
       }
     },
     "phin_screw_18_120/stage_01": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Phin stabilně usaďte na šálek a přidejte 18 g zarovnané kávy.",
-        "warning": "Horký kov a úzký šálek zvyšují riziko převrácení."
+        "warning": "Horký kov a úzký šálek zvyšují riziko převrácení.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Otvory jsou průchodné; podložka je stabilní.",
+        "completion_criterion": "Kávové lože je rovné."
       }
     },
     "phin_screw_18_120/stage_02": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "warning": "Vložku neutahujte příliš; phin funguje samospádem a nesmí se změnit v uzavřenou tlakovou nádobu."
+        "warning": "Vložku neutahujte příliš; phin funguje samospádem a nesmí se změnit v uzavřenou tlakovou nádobu.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Vložka je rovná; závity zabírají bez silného stlačení.",
+        "completion_criterion": "Kotouč spočívá na kávovém loži, ale nechává kávě prostor nabobtnat."
       }
     },
     "phin_screw_18_120/stage_03": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
-        "action": "Přelijte kávu 25 g horké vody."
+        "action": "Přelijte kávu 25 g horké vody.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Káva se pod vložkou předspařuje.",
+        "completion_criterion": "Voda proniká kávou a ta bobtná."
       }
     },
     "phin_screw_18_120/stage_04": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
-      "overrides": {}
+      "overrides": {
+        "start_time_or_preceding_condition": "Po předmáčení.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Samospádové odkapávání.",
+        "completion_criterion": "Komora je naplněná pod okraj."
+      }
     },
     "phin_screw_18_120/stage_05": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Sledujte první kapku a celkovou dobu přípravy.",
-        "warning": "Pokud se průtok zcela zastaví, phin nemačkejte. Můžete zkusit šroub jen nepatrně a bezpečně povolit, aniž byste se dotkli horkého kovu; jinak počkejte a pro příští přípravu upravte nastavení."
+        "warning": "Pokud se průtok zcela zastaví, phin nemačkejte. Můžete zkusit šroub jen nepatrně a bezpečně povolit, aniž byste se dotkli horkého kovu; jinak počkejte a pro příští přípravu upravte nastavení.",
+        "target_duration_or_range": "První kapka ideálně přibližně za 1–2 minuty; konec přibližně za 5–8 minut.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "S phinem nehýbejte, pokud se průtok zjevně nezastavil.",
+        "completion_criterion": "Pomalé rovnoměrné odkapávání skončilo."
       }
     },
     "phin_screw_18_120/stage_06": {
       "status": "in_progress",
       "reviewed_fields": [
         "action",
-        "warning"
+        "warning",
+        "operational_fields",
+        "completion"
       ],
       "overrides": {
         "action": "Sejměte phin na obrácené víko a podávejte.",
-        "warning": "Používejte tepelně odolnou ochranu."
+        "warning": "Používejte tepelně odolnou ochranu.",
+        "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
+        "equipment_state": "Horký phin stojí na tepelně odolném víku.",
+        "completion_criterion": "Koncentrát je připravený ke zvolenému způsobu podávání."
       }
     }
   }
