@@ -789,3 +789,49 @@ carafe, bloom puddle, middle level, high final-pour level, completed drawdown,
 and filter-free gentle swirl. Exact prompts, raw lineage, and every rejected
 attempt remain tracked. Tracker, matrix, drawables, and generated runtime
 catalog now agree at 78 accepted and 36 open.
+
+
+## Batch 16 completed generic-conical schematic sequence - 2026-08-04
+
+The canonical evidence and the app's existing `BLOCK-GENERIC-CONE` resolution
+were reread before production. The source recipe remains intentionally generic:
+real 60-degree cones differ in ribs, outlets, paper fit, capacity, and bypass.
+The illustration set therefore binds only to one explicit app-defined
+schematic: an unbranded translucent smoke-blue handleless polymer cone, broad
+circular flange, restrained straight support ribs, one circular apex outlet,
+and one smooth white size-02-class paper. This closes illustration ambiguity
+without claiming compatibility or equivalent flow for any real brewer.
+
+The visual sequence preserves the source's 20 g dose, fully wet 50-60 g bloom,
+low centered pour to about 200 g, observation-driven second pour to 320 g
+before bed exposure, and geometry-dependent drawdown. Approximate quantities,
+temperature, and time remain in text rather than being encoded as universal
+visual claims.
+
+Evidence retained:
+
+- https://www.hario.co.uk/pages/brew-guides-v60-intermediate
+- https://pmc.ncbi.nlm.nih.gov/articles/PMC10418593/
+- https://coffeeadastra.com/2019/02/25/the-mechanism-behind-astringency-in-coffee/
+
+| Stage | Accepted | Raw cache | WebP SHA-256 |
+| --- | --- | --- | --- |
+| 01 | starlit_tactile_v1 | exec-528aaf2d-1714-4ceb-828d-08b9c837a311.png | f73821d7819b1dcbe870d42fe4f126bca056d114e6bfe4136a7462c61a2a8acc |
+| 02 | starlit_tactile_v2 | exec-e59131a5-cd17-48e5-a76a-08ca2d226ec1.png | 4f0013ec831c0555d0b21f76a195e9b2f16c03918254759bf7659f4d66aa80fb |
+| 03 | starlit_tactile_v1 | exec-ffe6df14-7f30-4885-864b-6e5386a0ec88.png | 6b26f954a7eac51787a9e794887627ef6ee10373ebb08c9ae9d080b5bfec9ea1 |
+| 04 | starlit_tactile_v1 | exec-9709f7ac-3809-4fd7-b687-7b5466a09f81.png | 5c698d638d6f50a4b49d26f6bb7ce7550b34ebeece43ce4a4fd715fd8677a291 |
+| 05 | starlit_tactile_v1 | exec-fb4254e8-3cfa-474a-b2f2-4535a3062353.png | f2b2c67c9118fd836e7710f30523301e3518133798867c689fbc806a8dd1cb5c |
+
+Bloom v1 was rejected because the outlet thread stopped above a separate drop
+and puddle, visually teleporting coffee through the air gap. V2 makes the pale
+inlet-water and amber outlet-coffee paths separately continuous. The retained
+pours stay low and near the center rather than teaching hard wall pouring or
+vigorous agitation. The server level rises strictly from bloom through the two
+pours, while completion shows a damp granular bed, no standing slurry, and one
+isolated final drop.
+
+Every frame passed full-resolution mechanics review, chroma and alpha
+processing, static 1024 by 768 WebP validation, and individual light- and
+dark-theme phone inspection. Exact prompts, raw lineage, the rejected bloom,
+and its resolved regeneration todo remain in the tracker. Tracker, matrix,
+drawables, and generated runtime catalog now agree at 83 accepted and 31 open.

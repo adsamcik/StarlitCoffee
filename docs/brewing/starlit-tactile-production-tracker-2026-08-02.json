@@ -1986,102 +1986,155 @@
     {
       "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_01_instruction_default",
       "priority": "mandatory",
-      "blocker": "BLOCK-GENERIC-CONE",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 271,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_generic_conical_low_agitation_20_320_stage_01_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-528aaf2d-1714-4ceb-828d-08b9c837a311.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The exact unbranded smoke-blue reference cone holds one smooth wet size-02 paper without gaps or buckling over an empty server, and both themes pass."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "bounded-app-reference-cone-02",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_generic_conical_low_agitation_20_320_stage_01_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The exact unbranded smoke-blue reference cone holds one smooth wet size-02 paper without gaps or buckling over an empty server, and both themes pass."
     },
     {
       "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_02_instruction_default",
       "priority": "mandatory",
-      "blocker": "BLOCK-GENERIC-CONE",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 272,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_generic_conical_low_agitation_20_320_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-f882f735-40a3-4db5-8610-0632e8b5a218.png",
+          "issues": [
+            "The outlet coffee path is physically discontinuous: a hanging thread ends above a separated drop and puddle, making liquid appear to teleport through the air gap."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_generic_conical_low_agitation_20_320_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-e59131a5-cd17-48e5-a76a-08ca2d226ec1.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The bloom has no dry islands, a contained low inlet stream, one continuous outlet path to the thin first puddle, and clean light/dark rendering."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "bounded-app-reference-cone-02",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_generic_conical_low_agitation_20_320_stage_02_instruction_default/starlit_tactile_v2.webp",
+      "notes": "The bloom has no dry islands, a contained low inlet stream, one continuous outlet path to the thin first puddle, and clean light/dark rendering."
     },
     {
       "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_03_instruction_default",
       "priority": "mandatory",
-      "blocker": "BLOCK-GENERIC-CONE",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 273,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_generic_conical_low_agitation_20_320_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-ffe6df14-7f30-4885-864b-6e5386a0ec88.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The first low steady pour stays near center with calm slurry, continuous gravity paths, a middle-low server level, and dual-theme legibility."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "bounded-app-reference-cone-02",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_generic_conical_low_agitation_20_320_stage_03_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The first low steady pour stays near center with calm slurry, continuous gravity paths, a middle-low server level, and dual-theme legibility."
     },
     {
       "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_04_instruction_default",
       "priority": "optional",
-      "blocker": "BLOCK-GENERIC-CONE",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 274,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_generic_conical_low_agitation_20_320_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-9709f7ac-3809-4fd7-b687-7b5466a09f81.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The second low pour begins over a shallow fallen slurry before bed exposure, preserves centered continuous flows, raises the server level, and passes both themes."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "bounded-app-reference-cone-02",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_generic_conical_low_agitation_20_320_stage_04_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The second low pour begins over a shallow fallen slurry before bed exposure, preserves centered continuous flows, raises the server level, and passes both themes."
     },
     {
       "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_05_instruction_default",
       "priority": "optional",
-      "blocker": "BLOCK-GENERIC-CONE",
+      "blocker": "NONE-BOUNDED",
       "matrix_line": 275,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_generic_conical_low_agitation_20_320_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-fb4254e8-3cfa-474a-b2f2-4535a3062353.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The still completion frame has a low damp granular bed, one isolated final drop, the highest clear beverage level, and clean dual-theme rendering."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "bounded-app-reference-cone-02",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_generic_conical_low_agitation_20_320_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The still completion frame has a low damp granular bed, one isolated final drop, the highest clear beverage level, and clean dual-theme rendering."
     },
     {
       "asset_id": "instruction_p1_clever_water_first_15_250_stage_01_instruction_default",
