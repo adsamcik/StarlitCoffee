@@ -1015,3 +1015,40 @@ and individual light- and dark-theme phone inspection. Exact prompts, raw
 lineage, rejected candidates, and resolved regeneration todos remain in the
 tracker. Tracker, matrix, drawables, and runtime catalog now agree at 111
 accepted and 3 open.
+
+
+## Batch 21 completed 120-150 ml screw-insert phin sequence - 2026-08-04
+
+The remaining screw-phin states were kept mechanically separate from the
+loose-disc gravity profile. The canonical card remains bound to an 18 g dose,
+120 g total water, a lightly engaged threaded insert, a 25 g pre-wet for
+30-45 seconds, and observation-driven slow drainage. The fixed stud is hidden
+inside the engaged center collar; no accepted frame depicts a long exposed
+shaft, a sealed pressure vessel, or forceful compression.
+
+Sources rechecked:
+
+- https://trung-nguyen-coffee.co.uk/page_brewing.php
+- https://www.gourmetkava.cz/en/blog/making-coffee/preparation-of--vietnamese-coffee
+- https://nguyencoffeesupply.com/blogs/news/dialing-in-your-phin-how-to-make-the-best-vietnamese-phin-coffee
+
+| Sequence / stage | Accepted | Raw cache | WebP SHA-256 |
+| --- | --- | --- | --- |
+| Screw phin 03 | starlit_tactile_v8 | exec-f735b78a-dcde-45cc-ae29-50703e0c9de8.png | 6594bb2ea8ef42447d23df5d593398eda4b325c33225f9cc2c6cc6187e1998a8 |
+| Screw phin 04 | starlit_tactile_v5 | exec-1687257e-33ee-4250-8537-a3f5261faa3b.png | e084442183ef02c2defa3f8a473c76aea118c40089d5e6395102fa9dec4ea556 |
+| Screw phin 06 | starlit_tactile_v3 | exec-b49b5366-c325-4966-9aab-295c2a286d99.png | 23576971cfd9ce7ecbd439ed2a45600df390fcd0513c9324fd32143708c0d1cf |
+
+Thirteen rejected attempts remain reproducibly recorded with resolved todos.
+They cover disconnected or exaggerated screw rods, an invented outlet spout,
+grounds above the press, false side handles, missing protected hands, cropped
+wrists, an extra bowl, a cut-away receiving cup, a floating filled brewer,
+missing or gradient chroma stages, and an undersized press disc. The accepted
+bloom uses a complete standalone tactile hand glyph so the pour remains
+physically readable without any anatomy crossing an image edge.
+
+All three retained frames passed full-resolution mechanics review, exact 4:3
+validation, chroma and alpha processing, static 1024 by 768 WebP validation,
+and individual light- and dark-theme phone inspection. Exact prompts, raw
+lineage, rejected candidates, and every resolved regeneration todo remain in
+the tracker. Tracker, matrix, drawables, and runtime catalog now agree at 114
+accepted and 0 open.

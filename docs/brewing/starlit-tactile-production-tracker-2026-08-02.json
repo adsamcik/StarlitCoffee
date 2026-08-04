@@ -4582,17 +4582,116 @@
       "blocker": "NONE-PHIN-MECHANISM",
       "matrix_line": 468,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "1",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-fc6d720b-7765-4e26-a3af-57e885bf6f23.png",
+          "issues": [
+            "Raw QA: generator invents an exaggerated threaded rod protruding above the insert and a second screw-like extension through the bed; the screw collar is not the accepted lightly engaged geometry, and the hand is cropped at the right edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "2"
+          }
+        },
+        {
+          "revision": "2",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-b65990b0-c479-41f2-917b-7f53a571caf5.png",
+          "issues": [
+            "Raw QA: screw-collar and shallow bloom are now coherent, but the complete hand and wrist are again cropped at the right canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "3"
+          }
+        },
+        {
+          "revision": "3",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_03_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-a462481a-e81a-47ff-abf8-4bfb3764dc82.png",
+          "issues": [
+            "Raw QA: contained bloom gesture and screw collar are coherent, but the generator adds an unexplained second cream bowl in front of the brewer, creating unnecessary and misleading clutter."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "4"
+          }
+        },
+        {
+          "revision": "4",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_03_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-0c5984be-ceeb-4f0f-a877-60b755fcfabc.png",
+          "issues": [
+            "Raw QA: object count and screw-phin mechanics are now coherent, but the hand and forearm still exit through the right canvas edge instead of ending within the transparent margin."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "5"
+          }
+        },
+        {
+          "revision": "5",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_03_instruction_default/starlit_tactile_v5.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-e008304c-136d-4288-9f33-bb75f924a177.png",
+          "issues": [
+            "Raw QA: sleeve and arm still exit the left canvas edge, and the perforated press disc is incorrectly reduced to a small center disc with exposed grounds around it instead of spanning nearly the full chamber."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "6"
+          }
+        },
+        {
+          "revision": "6",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_03_instruction_default/starlit_tactile_v6.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-d094f9cf-586a-4110-80ad-f3cee5797b7d.png",
+          "issues": [
+            "Raw QA: edit contains the hand and full-width disc but replaces exact #00FF00 with a green gradient, shrinks the instructional subject excessively, and leaves the kettle group disconnected from the deep-espresso stage."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "7"
+          }
+        },
+        {
+          "revision": "7",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_03_instruction_default/starlit_tactile_v7.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-77359844-1bcc-4da1-9fd2-d173f4ab7008.png",
+          "issues": [
+            "Raw QA: extra bowl is removed and screw insert is coherent, but the source wrist still exits the left canvas edge and therefore fails the safe-margin rule."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "8"
+          }
+        },
+        {
+          "revision": "8",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_03_instruction_default/starlit_tactile_v8.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-f735b78a-dcde-45cc-ae29-50703e0c9de8.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Accepted after raw and one-by-one light/dark phone QA: fully contained standalone tactile hand holds the kettle, shallow pre-wet reaches a near-full-width perforated screw insert with hidden stud, cup remains empty, and both themes remain clear."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "8",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_03_instruction_default/starlit_tactile_v8.webp",
+      "notes": "Accepted after raw and one-by-one light/dark phone QA: fully contained standalone tactile hand holds the kettle, shallow pre-wet reaches a near-full-width perforated screw insert with hidden stud, cup remains empty, and both themes remain clear."
     },
     {
       "asset_id": "instruction_p1_phin_screw_18_120_stage_04_instruction_default",
@@ -4600,17 +4699,77 @@
       "blocker": "NONE-PHIN-MECHANISM",
       "matrix_line": 469,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "1",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-9d9e2e3c-4404-4dc2-8762-c4399be5a6cf.png",
+          "issues": [
+            "Raw QA: the female collar appears open while a disconnected threaded rod runs into the bed, and the integrated perforated base is replaced by an invented rectangular outlet spout."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "2"
+          }
+        },
+        {
+          "revision": "2",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_04_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-1a552deb-fd77-4f4f-80d3-fd8f8a54b57c.png",
+          "issues": [
+            "Raw QA: screw stack and direct perforation drips are coherent, but an impossible large cutaway notch is removed from the receiving cup and introduces misleading geometry."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "3"
+          }
+        },
+        {
+          "revision": "3",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_04_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-8c2dc055-68a7-411d-a629-142c66af065f.png",
+          "issues": [
+            "Raw QA: the organic deep-espresso stage is entirely missing and the receiving cup reads nearly full instead of containing only a very shallow early puddle."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "4"
+          }
+        },
+        {
+          "revision": "4",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_04_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-a081d00c-9878-4bba-9a63-9889c1cc37d8.png",
+          "issues": [
+            "Raw QA: fill, cover, cup level, and screw collar are coherent, but the filled phin floats above the receiving cup rather than resting its support flange securely on the rim."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "5"
+          }
+        },
+        {
+          "revision": "5",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_04_instruction_default/starlit_tactile_v5.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-1687257e-33ee-4250-8537-a3f5261faa3b.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Accepted after raw and one-by-one light/dark phone QA: filled chamber is physically seated flush on the mug, pale below-rim water sits above the nearly full-width screw insert and granular bed, lid is poised to cover, and both themes retain clean readable contrast."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "5",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_04_instruction_default/starlit_tactile_v5.webp",
+      "notes": "Accepted after raw and one-by-one light/dark phone QA: filled chamber is physically seated flush on the mug, pale below-rim water sits above the nearly full-width screw insert and granular bed, lid is poised to cover, and both themes retain clean readable contrast."
     },
     {
       "asset_id": "instruction_p1_phin_screw_18_120_stage_05_instruction_default",
@@ -4655,17 +4814,51 @@
       "blocker": "NONE-PHIN-MECHANISM",
       "matrix_line": 471,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "1",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-f84be2ad-63ec-4ae3-991c-c7b770e1e5b3.png",
+          "issues": [
+            "Raw QA: grounds incorrectly surround and sit above the press disc, the phin gains false side handles, the threaded stud is exaggerated, and the heat-protected hand is cropped at the right edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "2"
+          }
+        },
+        {
+          "revision": "2",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_06_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-3732c5e1-ef05-4427-bf96-344e4fe64283.png",
+          "issues": [
+            "Raw QA: hot phin and inverted lid are coherent, but the hand is absent and the cloth merely drapes over the brewer, so the required protected handling action is not self-explanatory."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "3"
+          }
+        },
+        {
+          "revision": "3",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_screw_18_120_stage_06_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-b49b5366-c325-4966-9aab-295c2a286d99.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Accepted after raw and one-by-one light/dark phone QA: protected hand clearly grips the handleless hot chamber through cloth, chamber rests on exactly one inverted lid, screw collar covers the drained bed, and concentrate remains separate."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_06_instruction_default/starlit_tactile_v3.webp",
+      "notes": "Accepted after raw and one-by-one light/dark phone QA: protected hand clearly grips the handleless hot chamber through cloth, chamber rests on exactly one inverted lid, screw collar covers the drained bed, and concentrate remains separate."
     }
   ]
 }
