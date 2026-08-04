@@ -10,8 +10,9 @@ The brewing-platform architecture and the complete exact-stage illustration
 production pass are implemented. The product now has stable brewing identities,
 validated equipment and recipe models, versioned persistence, a durable staged
 session engine, shared Learn/live guidance policies, exact P1 recipe setup, and
-compile-time-bound instructional assets. Incomplete P1 profiles remain hidden by
-the exact-recipe release gate.
+compile-time-bound instructional assets. All exact P1 recipes and illustrations
+are enabled for reviewed English guidance. Other app locales remain fail-closed
+until their exact-stage copy receives native-language editorial approval.
 
 The illustration inventory is complete:
 
@@ -43,25 +44,33 @@ described Room 15 and an in-memory timer. The current database is Room 18 and
 active sessions persist recipe, compiled-plan, execution-context, and runtime
 snapshots.
 
-## Localization and release gate
+## Localization, accessibility, and release gate
 
 All 23 supported locales contain the same 73 exact-recipe setup resources.
 English and Czech setup copy are present, and locale key parity is intact.
 
-The 114-stage curriculum itself remains canonical English JSON. It supplies
-multiple guidance densities and source alt text, but it is not an Android
-localization catalogue. There is no authoritative reviewed translation source
-for the per-stage instructions, explanations, warnings, completion cues, and
-accessible descriptions. Production therefore deliberately keeps:
+The canonical English curriculum remains in the versioned asset for tooling and
+source validation. The reviewed runtime copy is also packaged as Android raw
+resource `res/raw/p1_exact_guidance.json`; Android resource selection and the
+application-scoped loader are locale-aware.
 
-- `P1ExactRecipeLocalizationCoverage.production` empty; and
-- `P1ExactInstructionAssetLocalizations.production` empty.
+`P1ExactRecipeLocalizationCoverage.production` records English for all 20
+recipes. Eligibility now checks the active app locale instead of requiring an
+all-or-nothing 23-locale launch. This enables the complete exact setup, Learn,
+and live-session experience in reviewed English while keeping unreviewed locales
+on existing localized flows. There is no silent English exact-guidance fallback.
 
-This is a release gate, not a runtime defect. Marking all locales complete,
-copying English into locale folders, or accepting unreviewed machine translation
-would contradict the product's safety and accessibility requirements. P1 setup,
-Learn, and live-session routes remain unavailable until editorial review provides
-the missing resources. Existing released brewing flows are unaffected.
+All 114 accepted assets now produce approved runtime metadata. Exact images take
+their nonblank content description from the same locale-selected stage record
+rendered beneath them, eliminating duplicate XML/JSON accessibility copy and
+preventing illustration/text drift. Scoped legacy assets retain their existing
+compile-time string-resource contract.
+
+A Czech machine-translation pilot was visually and linguistically audited,
+rejected, and removed after polysemous coffee terms were mistranslated. No draft
+translation or machine memory is shipped. The reproducible draft-generation,
+structural validation, per-stage native review, and promotion process is recorded
+in `docs/brewing/p1-exact-guidance-localization-workflow.md`.
 
 ## Verification
 
@@ -72,6 +81,8 @@ Passed locally:
 - `gradlew :app:connectedDebugAndroidTest --no-daemon --console=plain`
 - `python tools/verify_starlit_tactile_production_tracker.py`
 - `python tools/verify_instruction_assets.py`
+- `python tools/generate_p1_tracker_accepted_asset_catalog.py --check`
+- `python tools/generate_p1_exact_guidance_localizations.py --check --locales en`
 - exact-recipe setup resource count and key-parity audit across all 23 locales
 
 The static build emits existing Detekt baseline findings but no failing finding.
@@ -82,19 +93,20 @@ the separately pushed synthetic image corpus, generated OCR fixtures, per-bag
 instrumentation arguments, or a running and approved Mindlayer model service.
 They are not brewing, Room migration, or Compose release tests.
 
-The first complete device run exposed one test interaction defect: the Cezve
+An earlier complete device run exposed one test interaction defect: the Cezve
 setup test used `performScrollTo()` for an uncomposed lazy-list item. The test now
 scrolls the `LazyColumn` to the semantics matcher, and both the focused test and
-the complete connected suite pass. No release version was assigned and no
-deployment was performed.
+the complete connected suite pass. The activation run also updated the image
+ordering assertions to inspect the localized stage alt text actually rendered by
+Learn/live Brew. The final complete connected suite passed. No release version
+was assigned and no deployment was performed.
 
-## Remaining release requirement
+## Remaining localized rollout
 
-Commission and review the exact-stage curriculum for every supported locale,
-with high-quality Czech editorial review, then bind the reviewed string
-resources to the 114 asset records and populate recipe-level locale coverage.
-After that change, rerun unit, lint, Detekt, debug assembly, instrumentation,
-migration, accessibility, large-text, and light/dark checks before enabling any
-P1 profile or preparing a versioned changelog entry. The current device and
-static validation establish a clean implementation baseline but cannot replace
-native-language editorial approval.
+There is no remaining English implementation or illustration-production work.
+Expanding exact P1 guidance to another supported locale requires a native
+coffee-domain editorial review of all 114 stages, generation of that locale's raw
+resource, and explicit coverage promotion. Each promoted locale must repeat the
+unit, lint, Detekt, assembly, instrumentation, accessibility, large-text, and
+light/dark checks. The current validators establish structural and numerical
+safety but cannot replace native-language editorial approval.
