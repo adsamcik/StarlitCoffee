@@ -39,6 +39,7 @@ data class UserPreferences(
     val dimModeFullscreen: Boolean = true,
     val dimModeForceDarkInLight: Boolean = true,
     val showBrewingInstructions: Boolean = true,
+    val showEnglishBrewingTerms: Boolean = false,
     val bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
     // How many times each spritesheet has been picked for a brew. Used by the
     // domain selector to bias future picks toward under-shown flowers, so
@@ -89,6 +90,7 @@ interface UserPreferencesStore {
     suspend fun updateSelectedGrinder(grinderId: String?)
     suspend fun updateSkipMethodSelection(enabled: Boolean)
     suspend fun updateShowBrewingInstructions(enabled: Boolean)
+    suspend fun updateShowEnglishBrewingTerms(enabled: Boolean)
     suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>)
     suspend fun updateRatingReminderEnabled(enabled: Boolean)
     suspend fun updateBrewVibrationTheme(theme: BrewVibrationTheme)
@@ -118,6 +120,7 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         val DIM_MODE_FULLSCREEN = booleanPreferencesKey("dim_mode_fullscreen")
         val DIM_MODE_FORCE_DARK_IN_LIGHT = booleanPreferencesKey("dim_mode_force_dark_in_light")
         val SHOW_BREWING_INSTRUCTIONS = booleanPreferencesKey("show_brewing_instructions")
+        val SHOW_ENGLISH_BREWING_TERMS = booleanPreferencesKey("show_english_brewing_terms")
         val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
         val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
         val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
@@ -169,6 +172,7 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
                 dimModeFullscreen = prefs[Keys.DIM_MODE_FULLSCREEN] ?: true,
                 dimModeForceDarkInLight = prefs[Keys.DIM_MODE_FORCE_DARK_IN_LIGHT] ?: true,
                 showBrewingInstructions = prefs[Keys.SHOW_BREWING_INSTRUCTIONS] ?: true,
+                showEnglishBrewingTerms = prefs[Keys.SHOW_ENGLISH_BREWING_TERMS] ?: false,
                 bloomSpritesheetWeights = parseBloomSpritesheetWeights(
                     prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS].orEmpty(),
                 ),
@@ -349,6 +353,12 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
     override suspend fun updateShowBrewingInstructions(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.SHOW_BREWING_INSTRUCTIONS] = enabled
+        }
+    }
+
+    override suspend fun updateShowEnglishBrewingTerms(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.SHOW_ENGLISH_BREWING_TERMS] = enabled
         }
     }
 

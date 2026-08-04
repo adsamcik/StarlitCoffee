@@ -29,6 +29,7 @@ internal open class TestUserPreferencesStore(
     override suspend fun updateSelectedGrinder(grinderId: String?) = Unit
     override suspend fun updateSkipMethodSelection(enabled: Boolean) = Unit
     override suspend fun updateShowBrewingInstructions(enabled: Boolean) = Unit
+    override suspend fun updateShowEnglishBrewingTerms(enabled: Boolean) = Unit
     override suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) = Unit
     override suspend fun updateRatingReminderEnabled(enabled: Boolean) = Unit
     override suspend fun updateScanCorrectionLoggingEnabled(enabled: Boolean) = Unit

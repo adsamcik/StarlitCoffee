@@ -2,10 +2,16 @@ package com.adsamcik.starlitcoffee.data.repository
 
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class UserPreferencesPolicyTest {
+
+    @Test
+    fun `English terminology references are opt-in`() {
+        assertFalse(UserPreferences().showEnglishBrewingTerms)
+    }
 
     @Test
     fun `disabled requested default is normalized into enabled methods`() {

@@ -89,6 +89,7 @@ import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
 import com.adsamcik.starlitcoffee.ui.session.CurrentBrewStagePresentation
 import com.adsamcik.starlitcoffee.ui.session.DurableBrewSessionFeedback
 import com.adsamcik.starlitcoffee.ui.session.StageActualInputKind
+import com.adsamcik.starlitcoffee.ui.guidance.BrewingTerminologyUiCopy
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferences
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceRequest
@@ -125,6 +126,8 @@ fun BrewSessionScreen(
     guidancePreferences: DurableBrewSessionGuidancePreferences,
     exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
     onRememberGuidanceForProfile: suspend (String, GuidancePresentationLevel) -> Unit,
+    showEnglishBrewingTerms: Boolean = false,
+    onShowEnglishBrewingTerms: suspend (Boolean) -> Unit = {},
     dimModeEnabled: Boolean = true,
     dimModeTrueBlack: Boolean = false,
     dimModeReduceBrightness: Boolean = false,
@@ -140,6 +143,7 @@ fun BrewSessionScreen(
     var dispatching by remember(sessionId) { mutableStateOf(false) }
     var showCancelDialog by remember(sessionId) { mutableStateOf(false) }
     var sessionGuidanceOverride by remember(sessionId) { mutableStateOf<GuidancePresentationLevel?>(null) }
+    var sessionTerminologyOverride by remember(sessionId) { mutableStateOf<Boolean?>(null) }
     var savingGuidance by remember(sessionId) { mutableStateOf(false) }
     var actionFailureMessageResId by remember(sessionId) { mutableStateOf<Int?>(null) }
     var autoReconcileRequestedStageId by remember(sessionId) { mutableStateOf<StageInstanceId?>(null) }
@@ -164,6 +168,8 @@ fun BrewSessionScreen(
                 ?.takeIf { recipeId -> BuiltInP1RecipeCatalog.find(recipeId) != null }
         }
     }
+    val terminologyUiCopy = exactRecipeId?.let(exactRecipeReleaseGate::terminologyUiCopyFor)
+    val showEnglishTerminology = sessionTerminologyOverride ?: showEnglishBrewingTerms
     val isReleaseGatedExactSession = persistedRecipe?.let { recipe ->
         exactRecipeReleaseGate.shouldGatePersistedSession(
             rawRecipeId = recipe.builtInRecipeId,
@@ -428,6 +434,12 @@ fun BrewSessionScreen(
                         }
                     }
                 },
+                terminologyUiCopy = terminologyUiCopy,
+                showEnglishTerminology = showEnglishTerminology,
+                onShowEnglishTerminology = { enabled ->
+                    sessionTerminologyOverride = enabled
+                    scope.launch { onShowEnglishBrewingTerms(enabled) }
+                },
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
@@ -553,6 +565,9 @@ private fun BrewSessionContent(
     sessionGuidanceOverride: GuidancePresentationLevel?,
     onSessionGuidanceOverride: (GuidancePresentationLevel?) -> Unit,
     onRememberGuidanceForProfile: (GuidancePresentationLevel) -> Unit,
+    terminologyUiCopy: BrewingTerminologyUiCopy?,
+    showEnglishTerminology: Boolean,
+    onShowEnglishTerminology: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val stage = presentation.currentStage
@@ -634,6 +649,9 @@ private fun BrewSessionContent(
                 sessionOverride = sessionGuidanceOverride,
                 onSessionOverride = onSessionGuidanceOverride,
                 onRememberForBrewer = onRememberGuidanceForProfile,
+                terminologyUiCopy = terminologyUiCopy,
+                showEnglishTerminology = showEnglishTerminology,
+                onShowEnglishTerminology = onShowEnglishTerminology,
             )
         }
         BrewSessionSecondaryControls(

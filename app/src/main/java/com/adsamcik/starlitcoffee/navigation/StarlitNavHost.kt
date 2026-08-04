@@ -566,6 +566,9 @@ fun StarlitNavHost() {
                                 guidanceLevel = level.name,
                             )
                         },
+                        showEnglishBrewingTerms = prefs.showEnglishBrewingTerms,
+                        onShowEnglishBrewingTerms =
+                            userPreferencesRepository::updateShowEnglishBrewingTerms,
                         dimModeEnabled = prefs.dimModeEnabled,
                         dimModeTrueBlack = prefs.dimModeTrueBlack,
                         dimModeReduceBrightness = prefs.dimModeReduceBrightness,

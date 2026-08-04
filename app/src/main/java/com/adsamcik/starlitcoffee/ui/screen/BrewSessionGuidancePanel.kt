@@ -11,6 +11,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -25,6 +26,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
+import com.adsamcik.starlitcoffee.ui.guidance.BrewingTerminologyReference
+import com.adsamcik.starlitcoffee.ui.guidance.BrewingTerminologyUiCopy
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInGuidancePlacement
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceAvailability
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceVisualStatus
@@ -40,6 +43,17 @@ import com.adsamcik.starlitcoffee.ui.guidance.ResolvedBrewGuidanceContent
  * deduplicated after the illustrated primary item has been selected, so a
  * safety warning cannot disappear because of the visual presentation order.
  */
+internal fun distinctTerminologyReferences(
+    content: List<ResolvedBrewGuidanceContent>,
+): List<BrewingTerminologyReference> = buildList {
+    val seenConceptIds = mutableSetOf<String>()
+    content.forEach { item ->
+        item.terminologyReferences.forEach { reference ->
+            if (seenConceptIds.add(reference.conceptId)) add(reference)
+        }
+    }
+}
+
 internal fun orderedLiveGuidanceContent(
     routineContent: List<ResolvedBrewGuidanceContent>,
     criticalContent: List<ResolvedBrewGuidanceContent>,
@@ -81,6 +95,9 @@ fun BrewSessionGuidancePanel(
     sessionOverride: GuidancePresentationLevel?,
     onSessionOverride: (GuidancePresentationLevel?) -> Unit,
     onRememberForBrewer: (GuidancePresentationLevel) -> Unit,
+    terminologyUiCopy: BrewingTerminologyUiCopy? = null,
+    showEnglishTerminology: Boolean = false,
+    onShowEnglishTerminology: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val approvedVisual = resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved
@@ -101,6 +118,9 @@ fun BrewSessionGuidancePanel(
     if (!shouldRender) return
     val illustratedAltText = approvedVisual?.asset?.contentId?.let { contentId ->
         visibleContent.firstOrNull { content -> content.id == contentId }?.altText
+    }
+    val terminologyReferences = remember(visibleContent) {
+        distinctTerminologyReferences(visibleContent)
     }
 
     Card(
@@ -151,6 +171,14 @@ fun BrewSessionGuidancePanel(
             // Production/review state is intentionally not user-facing. Missing or
             // unapproved art fails closed while the localized instruction remains.
             visibleContent.forEach { content -> GuidanceContent(content) }
+            if (terminologyUiCopy != null && terminologyReferences.isNotEmpty()) {
+                TerminologyReferenceControl(
+                    references = terminologyReferences,
+                    uiCopy = terminologyUiCopy,
+                    expanded = showEnglishTerminology,
+                    onExpandedChange = onShowEnglishTerminology,
+                )
+            }
             if (approvedVisual != null) {
                 resolution.policy?.let { policy ->
                     GuidanceLevelControl(
@@ -162,6 +190,45 @@ fun BrewSessionGuidancePanel(
                 }
             }
 
+        }
+    }
+}
+
+@Composable
+private fun TerminologyReferenceControl(
+    references: List<BrewingTerminologyReference>,
+    uiCopy: BrewingTerminologyUiCopy,
+    expanded: Boolean,
+    onExpandedChange: (Boolean) -> Unit,
+) {
+    TextButton(onClick = { onExpandedChange(!expanded) }) {
+        Text(
+            text = if (expanded) uiCopy.hideEnglishTerms else uiCopy.showEnglishTerms,
+        )
+    }
+    if (expanded) {
+        Surface(
+            color = MaterialTheme.colorScheme.surface,
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Column(
+                modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                Text(
+                    text = uiCopy.heading,
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.semantics { heading() },
+                )
+                references.forEach { reference ->
+                    Text(
+                        text = "${reference.preferredLocal} — ${reference.canonicalEnglish}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
         }
     }
 }

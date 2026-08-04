@@ -173,6 +173,13 @@ class P1ExactRecipeReleaseGate(
             null
         }
 
+    fun terminologyUiCopyFor(recipeId: BuiltInRecipeId): BrewingTerminologyUiCopy? =
+        terminologyCatalog?.uiCopy?.takeIf {
+            isEligible(recipeId) &&
+                activeLocaleTag != "en" &&
+                terminologyCatalog.hasDistinctEnglishReferences
+        }
+
     /**
      * Only exact-P1 identities are gated. Recipe-less legacy sessions and
      * unrelated built-ins remain resumable.
