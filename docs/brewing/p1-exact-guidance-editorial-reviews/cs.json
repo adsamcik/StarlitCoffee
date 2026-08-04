@@ -7,6 +7,11 @@
     "status": "ready_for_native_review",
     "prepared_by": "Codex-assisted Czech specialty-coffee terminology research",
     "prepared_on": "2026-08-04",
+    "ui_copy": {
+      "show_english_terms": "Zobrazit anglické termíny",
+      "hide_english_terms": "Skrýt anglické termíny",
+      "heading": "Anglická terminologie"
+    },
     "sources": [
       {
         "id": "hario_cz",

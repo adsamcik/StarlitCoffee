@@ -21,6 +21,9 @@ DRAFT_MEMORY = DRAFT_ROOT / "translation-memory.json"
 REVIEWED_MEMORY = ROOT / "docs/brewing/p1-exact-guidance-translation-memory.json"
 REVIEW_LEDGER = ROOT / "docs/brewing/p1-exact-guidance-reviewed-locales.json"
 EDITORIAL_REVIEW_DIR = ROOT / "docs/brewing/p1-exact-guidance-editorial-reviews"
+TERMINOLOGY_REFERENCE_MANIFEST = (
+    ROOT / "app/src/main/assets/p1_exact_terminology_references_2026_07_27.json"
+)
 LOCALES = (
     "en", "bg", "cs", "da", "de", "el", "es", "et", "fi", "fr", "hr", "hu",
     "it", "lt", "lv", "nl", "pl", "pt", "ro", "sk", "sl", "sv", "zh",
@@ -101,6 +104,11 @@ def read_json(path: Path) -> dict:
 def resource_path(locale: str) -> Path:
     qualifier = "raw" if locale == "en" else f"raw-{locale}"
     return RES / qualifier / "p1_exact_guidance.json"
+
+
+def terminology_resource_path(locale: str) -> Path:
+    qualifier = "raw" if locale == "en" else f"raw-{locale}"
+    return RES / qualifier / "p1_exact_terminology.json"
 
 
 def draft_resource_path(locale: str) -> Path:
@@ -292,6 +300,19 @@ def validate_terminology_review(
     status = terminology.get("status")
     if status not in TERMINOLOGY_REVIEW_STATUSES:
         raise LocalizationError(f"{locale}: terminology review status is invalid")
+    ui_copy = terminology.get("ui_copy")
+    required_ui_copy = {
+        "show_english_terms", "hide_english_terms", "heading",
+    }
+    if (
+        not isinstance(ui_copy, dict)
+        or set(ui_copy) != required_ui_copy
+        or any(
+            not isinstance(ui_copy[key], str) or not ui_copy[key].strip()
+            for key in required_ui_copy
+        )
+    ):
+        raise LocalizationError(f"{locale}: terminology UI copy is incomplete")
     sources = terminology.get("sources")
     if not isinstance(sources, list) or len(sources) < 2:
         raise LocalizationError(
@@ -385,6 +406,120 @@ def validate_terminology_review(
             raise LocalizationError(
                 f"{locale}: terminology review date must use YYYY-MM-DD",
             )
+
+
+def canonical_terminology_concepts(source: dict) -> list[dict]:
+    manifest = read_json(TERMINOLOGY_REFERENCE_MANIFEST)
+    if manifest.get("schema_version") != 1:
+        raise LocalizationError("Unsupported terminology reference schema")
+    for key in ("source_schema_version", "source_execution_date", "source_sha256"):
+        if manifest.get(key) != source.get(key):
+            raise LocalizationError(f"Terminology reference {key} differs from exact guidance")
+    concepts = manifest.get("concepts")
+    if not isinstance(concepts, list) or not concepts:
+        raise LocalizationError("Canonical terminology concepts are missing")
+    concept_ids = [concept.get("id") for concept in concepts if isinstance(concept, dict)]
+    if (
+        len(concept_ids) != len(concepts)
+        or len(set(concept_ids)) != len(concept_ids)
+        or set(concept_ids) != REQUIRED_TERMINOLOGY_CONCEPTS
+        or any(
+            not isinstance(concept.get("canonical_english"), str)
+            or not concept["canonical_english"].strip()
+            for concept in concepts
+        )
+    ):
+        raise LocalizationError("Canonical terminology concepts are invalid")
+    return concepts
+
+
+def terminology_resource_document(
+    source: dict,
+    locale: str,
+    review: dict | None = None,
+) -> dict:
+    review = review or read_json(editorial_review_path(locale))
+    validate_terminology_review(review, locale, require_approved=True)
+    terminology = review["terminology_review"]
+    concepts = canonical_terminology_concepts(source)
+    return {
+        "schema_version": 1,
+        "source_schema_version": source["source_schema_version"],
+        "source_execution_date": source["source_execution_date"],
+        "source_sha256": source["source_sha256"],
+        "locale": locale,
+        "review_status": terminology["status"],
+        "reviewer": terminology["reviewer"],
+        "reviewed_on": terminology["reviewed_on"],
+        "ui_copy": terminology["ui_copy"],
+        "terms": [
+            {
+                "concept_id": concept["id"],
+                "preferred_local": terminology["concepts"][concept["id"]][
+                    "preferred_terms"
+                ][0],
+            }
+            for concept in concepts
+        ],
+    }
+
+
+def validate_terminology_resource_document(
+    source: dict,
+    localized: dict,
+    locale: str,
+) -> None:
+    if localized.get("schema_version") != 1:
+        raise LocalizationError(f"{locale}: runtime terminology schema is invalid")
+    for key in ("source_schema_version", "source_execution_date", "source_sha256"):
+        if localized.get(key) != source.get(key):
+            raise LocalizationError(f"{locale}: runtime terminology {key} differs")
+    if localized.get("locale") != locale:
+        raise LocalizationError(f"{locale}: runtime terminology locale differs")
+    if localized.get("review_status") != "approved":
+        raise LocalizationError(f"{locale}: runtime terminology is not approved")
+    if not isinstance(localized.get("reviewer"), str) or not localized["reviewer"].strip():
+        raise LocalizationError(f"{locale}: runtime terminology reviewer is missing")
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(localized.get("reviewed_on", ""))):
+        raise LocalizationError(f"{locale}: runtime terminology review date is invalid")
+    ui_copy = localized.get("ui_copy")
+    required_ui_copy = {
+        "show_english_terms", "hide_english_terms", "heading",
+    }
+    if (
+        not isinstance(ui_copy, dict)
+        or set(ui_copy) != required_ui_copy
+        or any(
+            not isinstance(ui_copy[key], str) or not ui_copy[key].strip()
+            for key in required_ui_copy
+        )
+    ):
+        raise LocalizationError(f"{locale}: runtime terminology UI copy is invalid")
+
+    expected_concepts = canonical_terminology_concepts(source)
+    terms = localized.get("terms")
+    if not isinstance(terms, list):
+        raise LocalizationError(f"{locale}: runtime terminology terms are missing")
+    if [term.get("concept_id") for term in terms if isinstance(term, dict)] != [
+        concept["id"] for concept in expected_concepts
+    ]:
+        raise LocalizationError(f"{locale}: runtime terminology concept order differs")
+    if any(
+        not isinstance(term, dict)
+        or set(term) != {"concept_id", "preferred_local"}
+        or not isinstance(term["preferred_local"], str)
+        or not term["preferred_local"].strip()
+        for term in terms
+    ):
+        raise LocalizationError(f"{locale}: runtime terminology term is invalid")
+
+
+def validate_terminology_resource(source: dict, locale: str) -> None:
+    validate_terminology_resource_document(
+        source,
+        read_json(terminology_resource_path(locale)),
+        locale,
+    )
 
 
 def apply_editorial_review(
@@ -662,7 +797,11 @@ def main() -> int:
                 raise LocalizationError("--check cannot be combined with a write mode")
             for locale in args.locales:
                 validate_resource(source, locale)
-            print(f"Validated exact P1 guidance for {len(args.locales)} locales.")
+                validate_terminology_resource(source, locale)
+            print(
+                "Validated exact P1 guidance and terminology for "
+                f"{len(args.locales)} locales.",
+            )
             return 0
         if args.translate == args.promote_reviewed:
             raise LocalizationError("Choose exactly one of --translate or --promote-reviewed")
@@ -687,6 +826,19 @@ def main() -> int:
             write_json(output_path, document)
             validate_expected_path(source, locale, output_path, document)
             print(f"Wrote {output_path}")
+            if args.promote_reviewed:
+                if locale == "en":
+                    validate_terminology_resource(source, locale)
+                else:
+                    terminology_document = terminology_resource_document(source, locale)
+                    terminology_path = terminology_resource_path(locale)
+                    write_json(terminology_path, terminology_document)
+                    validate_terminology_resource_document(
+                        source,
+                        read_json(terminology_path),
+                        locale,
+                    )
+                    print(f"Wrote {terminology_path}")
         write_json(memory_path, memory)
         return 0
     except LocalizationError as error:

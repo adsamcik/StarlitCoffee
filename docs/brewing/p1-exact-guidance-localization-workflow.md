@@ -11,7 +11,9 @@ or illustration linkage.
 - `app/src/main/res/raw/p1_exact_guidance.json` is the reviewed English runtime
   resource selected by Android.
 - A reviewed translation belongs at
-  `app/src/main/res/raw-<locale>/p1_exact_guidance.json`.
+  `app/src/main/res/raw-<locale>/p1_exact_guidance.json`; its reviewed
+  terminology and contextual-control copy belong beside it at
+  `app/src/main/res/raw-<locale>/p1_exact_terminology.json`.
 - `P1ExactRecipeLocalizationCoverage.production` is the release authority. Add
   a locale to a recipe only after every stage in that recipe has passed the
   reviews below.
@@ -60,6 +62,12 @@ review file, add the locale approval to
 ```powershell
 python tools\generate_p1_exact_guidance_localizations.py --promote-reviewed --locales cs
 ```
+
+Promotion writes the exact guidance and locale glossary together. The glossary
+is ordered by the canonical semantic sidecar, carries the same source identity,
+and contains only the first approved preferred term for each concept. A missing,
+stale, unapproved, or wrong-locale glossary keeps non-English exact recipes
+release-gated.
 
 ## Required human review
 

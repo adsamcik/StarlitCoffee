@@ -46,9 +46,9 @@ intent, not recipe state, but the affordance is contextual:
 3. Omit concepts whose preferred local term equals the canonical English term.
 4. Hide the terminology control when the result is empty.
 5. When collapsed, show one low-emphasis text action after ordinary guidance.
-6. When expanded, show compact `local — English` rows after the instruction and
-   before no safety content. Structured and authored warnings remain visually
-   separate and unchanged.
+6. When expanded, show compact `local — English` rows after the complete
+   guidance block. References never interrupt structured or authored warnings,
+   which remain visually separate and unchanged.
 7. Persist the preference only when the user explicitly changes it.
 
 The reference rows are supplementary semantics. They never enter the live-region

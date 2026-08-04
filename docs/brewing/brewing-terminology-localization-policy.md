@@ -40,7 +40,7 @@ Do not implement English terminology by replacing words inside localized
 sentences. Inflection, agreement, compound terms, and warning phrasing make that
 approach grammatically unreliable and potentially unsafe.
 
-The safe future preference is **Terminology: Local / Local + English reference**:
+The implemented preference is **Terminology: Local / Local + English reference**:
 
 - `Local` is the default and shows only approved localized guidance.
 - `Local + English reference` keeps the localized instruction unchanged and
@@ -52,11 +52,12 @@ The safe future preference is **Terminology: Local / Local + English reference**
 - Users who want entirely English instructions should change the app language;
   that is a language choice, not terminology substitution.
 
-No permanent setting is added while English is the only production-approved
-exact-guidance locale: it would have no effect and add avoidable complexity. The
-first approved non-English locale is the implementation trigger for the
-contextual preference and its accessibility, text-scaling, and comprehension
-validation.
+No permanent settings row is added while English is the only production-approved
+exact-guidance locale. The default-off preference is persisted only after a user
+interacts with the contextual control, and the control remains absent until the
+active approved locale and current stage provide at least one distinct term pair.
+The first approved non-English locale remains the trigger for device-level
+accessibility, text-scaling, and comprehension validation of its reviewed copy.
 
 ## Maintenance
 
