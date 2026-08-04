@@ -1,7 +1,8 @@
 # Brewing platform expansion implementation plan
 
-**Status:** Proposed  
+**Status:** Implemented behind release gates; localization review remains
 **Planning date:** 2026-07-27  
+**Implementation review:** 2026-08-04
 **Audited branch:** `main`  
 **Audited SHA:** `3ca386081447f7365a05457e98eb88b6de2ea4b3`  
 **Source brief:** “StarlitCoffee brewing platform expansion”
@@ -28,6 +29,23 @@ The common path remains short:
 Equipment details, recipe editing, guidance controls, and utilities are
 progressively disclosed. Incomplete profiles stay unavailable rather than
 appearing with generic or misleading behavior.
+
+### Implementation outcome
+
+The stable brewing taxonomy, exact equipment and recipe selection, versioned
+snapshots, Room 18 active-session persistence, pure session reducer, shared
+Learn/live guidance, four guidance levels, P1 stage plans, and release gates are
+implemented. The complete P1 visual inventory contains 114 reviewed, transparent
+1024 x 768 WebP assets, with prompt provenance and accepted/rejected review
+history retained in `docs/brewing`.
+
+The P1 selection, Learn, and live-session routes intentionally remain hidden.
+Recipe setup copy is present in all 23 locales, but the 114-stage curriculum is
+still canonical English JSON. Reviewed per-stage instruction and alt-text
+resources do not yet exist for every supported locale, so the exact-recipe gate
+continues to fail closed instead of treating English fallback or machine
+translation as release-ready safety guidance. See the dated implementation
+report for the completed validation and the remaining external editorial gate.
 
 ## 2. Verified baseline
 

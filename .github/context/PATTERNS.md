@@ -68,8 +68,10 @@
 
 | Convention | Status | Evidence |
 |------------|--------|----------|
-| `BrewMethod` enum owns brew defaults | Follow | `BrewMethod.kt:5-138` |
-| Ratio presets derive from each method default ratio | Follow | `BrewMethod.kt:129-137` |
+| Stable brewing identities, equipment, recipes, and stage plans own new brewing behavior | Follow | `domain/brewing`, `domain/brewing/session` |
+| `BrewMethod` and `FilterType` remain compatibility inputs for legacy flows only | Preserve through adapters; do not extend as the new domain model | `LegacyBrewingAdapter.kt`, `LegacyStagePlanFactory.kt` |
+| Session transitions are pure and external effects are persisted/idempotent | Follow | `SessionReducer.kt`, `BrewSessionCoordinator.kt` |
+| Exact P1 routes fail closed until recipe, plan, localized guidance, and reviewed assets all match | Follow | `P1ExactRecipeReleaseGate.kt`, `P1TrackerAcceptedInstructionAssetCatalog.kt` |
 | `FilterType` contains display, description, and cup profile | Follow | `FilterType.kt` |
 | `StrengthPreset.ratioOffset` is `Int` | Follow | `StrengthPreset.kt` |
 | Default grinder data is a fallback provider | Follow | `DefaultGrinders.kt:3-8` |

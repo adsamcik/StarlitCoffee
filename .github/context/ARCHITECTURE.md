@@ -21,9 +21,11 @@ Core feature layers:
   UI screens/components
     -> ViewModels
       -> domain/BrewCalculator, calculator/CalcEvaluator
+      -> domain/brewing taxonomy, equipment, recipes, stage plans, session reducer
       -> repositories
         -> Room DAOs/entities
-      -> scan/network/util pipelines
+        -> versioned brewing/session snapshot mappers
+      -> guidance, scan/network/util pipelines
 ```
 
 ## Entry Points
@@ -42,15 +44,17 @@ Core feature layers:
 |---------|------|-----------|
 | `calculator` | Pure calculator expression evaluation for dose/water preview. | `CalcEvaluator.kt` |
 | `data/db` | Room database, converters, DAOs, entities, migrations. | `AppDatabase.kt`, `dao/*Dao.kt`, `entity/*Entity.kt` |
-| `data/model` | Brew methods, grinder data, coffee metadata, scan models, UI domain models. | `BrewMethod.kt`, `FilterType.kt`, `DefaultGrinders.kt` |
+| `data/brewing` | Legacy adapters plus versioned recipe, log, stage-plan, and active-session persistence mapping. | `LegacyBrewingAdapter.kt`, `snapshot/*`, `session/*` |
+| `data/model` | Legacy brew-method compatibility, grinder data, coffee metadata, scan models, UI domain models. | `BrewMethod.kt`, `FilterType.kt`, `DefaultGrinders.kt` |
 | `data/network` | Coffee metadata lookups and on-device LLM abstraction. | `OpenFoodFactsClient.kt`, `QrLinkMetadataExplorer.kt`, `llm/*` |
 | `data/repository` | Thin wrappers over DAOs/DataStore with domain mapping where needed. | `BrewLogRepository.kt`, `CoffeeBagRepository.kt`, `UserPreferencesRepository.kt` |
-| `domain` | Pure brew calculation engine. | `BrewCalculator.kt` |
+| `domain` | Pure calculation plus stable brewing taxonomy, equipment, recipes, stage plans, clocks, and session reducer. | `BrewCalculator.kt`, `brewing/*`, `brewing/session/*` |
 | `navigation` | Type-safe routes and single NavHost. | `Routes.kt`, `StarlitNavHost.kt` |
 | `scan` | Live scan consensus, side detection, telemetry, benchmarking, observability. | `FrameEvidenceAccumulator.kt`, `ConsensusEngine.kt`, `SideDetector.kt` |
 | `service` | Foreground timer notification and post-brew rating reminder. | `BrewTimerService.kt`, `RatingReminderWorker.kt`, `TimerStateHolder.kt` |
 | `ui/component` | Shared Compose components, cards, sheets, dialogs, indicators. | `BagCard.kt`, `BrewRatingSheet.kt`, `ScreenTopBar.kt` |
-| `ui/screen` | Full-screen Compose destinations. | `CalculatorBrewScreen.kt`, `BrewTimerScreen.kt`, `LiveScanScreen.kt` |
+| `ui/guidance` | Shared Learn/live content, guidance policy, exact-recipe release gates, and compile-time instruction-asset catalogues. | `DurableBrewSessionGuidanceResolver.kt`, `P1ExactRecipeReleaseGate.kt`, `InstructionAssetCatalog.kt` |
+| `ui/screen` | Full-screen Compose destinations, including durable sessions and progressively disclosed brewer setup. | `CalculatorBrewScreen.kt`, `BrewSessionScreen.kt`, `P1BrewerProfileSetupScreen.kt`, `LiveScanScreen.kt` |
 | `ui/theme` | Material theme, colors, typography, shapes. | `Theme.kt`, `Color.kt`, `Type.kt`, `Shape.kt` |
 | `util` | OCR, parsing, normalization, inventory insights, image preprocessing, vibration. | `OcrFieldExtractor.kt`, `CoffeeMetadataNormalizer.kt`, `InventoryAlertEngine.kt` |
 | `viewmodel` | App-facing orchestration and screen state. | `BrewViewModel.kt`, `CalculatorViewModel.kt`, `LiveScanViewModel.kt` |
@@ -101,10 +105,12 @@ Key properties:
 
 ### Persistence
 
-- `AppDatabase.kt` is Room with `exportSchema = true`; current code declares version 15 and exports schemas under `app/schemas/`.
+- `AppDatabase.kt` is Room with `exportSchema = true`; current code declares version 18 and exports schemas under `app/schemas/`.
+- `ActiveBrewSessionEntity` stores versioned recipe, compiled-plan, execution-context, and runtime snapshots so stage progress survives process death.
+- Saved recipes and brew logs retain legacy columns while optional versioned brewing snapshots preserve stable identities and unknown values without inventing detail.
 - DAOs return `Flow` for observable collections and `suspend` functions for inserts/updates/deletes.
-- Repositories wrap DAOs and keep ViewModels away from direct database details.
-- `UserPreferencesRepository` uses DataStore for onboarding, enabled methods, default method/filter/grinder, ratio, input direction, and quick-brew preference.
+- Repositories and snapshot mappers isolate Room DTOs from the brewing domain.
+- `UserPreferencesRepository` uses DataStore for onboarding, legacy method settings, grinder and calculator choices, quick-brew behavior, and per-family/profile guidance preferences.
 
 ## Primary Flows
 
@@ -119,19 +125,25 @@ OnboardingMethods -> OnboardingPersonalize
 
 Onboarding selections are held in `remember { mutableStateOf(...) }` inside `StarlitNavHost` until the user finishes.
 
-### Brew planning and timer flow
+### Brew planning and durable-session flow
 
 ```text
 CalculatorBrewScreen
   -> CalculatorViewModel previews dose/water from tokens and ratio
   -> BrewViewModel owns method/filter/grinder/bag and receives synced ratio/dose
-  -> startNewBrewSession()
-  -> GrindPrep or BrewTimer depending on quick-brew preference
-  -> BrewTimerScreen
-  -> BrewViewModel.logBrew()
+  -> legacy or exact built-in session-start factory validates the complete input
+  -> StagePlan compiler + SessionReducer create a persisted active session
+  -> GrindPrep or BrewSession depending on quick-brew preference
+  -> BrewSessionCoordinator persists transitions before draining idempotent effects
+  -> BrewSessionFinalizer writes one immutable log and inventory effect
   -> snackbar can navigate to BrewLogList
   -> RatingReminderWorker may prompt for later rating
 ```
+
+Exact P1 routes are reachable only through `P1ExactRecipeReleaseGate`. The gate
+requires matching recipe, plan, guidance, reviewed locale coverage, and approved
+stage art. Incomplete vertical slices are absent rather than substituted with a
+generic recipe, instruction, or illustration.
 
 ### Bag inventory flow
 
@@ -166,5 +178,8 @@ warnings -> ratio, bloom, capacity, decaf mismatch
 - Manual DI is intentional for now; do not partly introduce a second injection style.
 - Live scan is session-scoped and should be recreated for each camera destination.
 - Room migrations and `app/schemas/` exports must be updated together for entity changes.
+- Exact P1 guidance currently remains release-gated: visual coverage is complete,
+  but canonical English stage JSON is not a substitute for reviewed resources in
+  every supported locale.
 
 <!-- context-init:user-content-below -->

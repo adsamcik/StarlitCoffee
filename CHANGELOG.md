@@ -32,11 +32,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Release status
 
-- **P1 brewer profiles remain unavailable.** Their required instructional
-  illustrations are not yet packaged and physically reviewed. The profiles stay
-  release-gated until local optimized assets, manifest and accessibility records,
-  and review sign-off provide complete visual coverage; no placeholders are
-  presented as finished brewing guidance.
+- **P1 brewer profiles remain unavailable.** All 114 exact-stage instructional
+  illustrations are now packaged, optimized, and physically reviewed, with no
+  open visual-production items. The profiles remain release-gated because the
+  canonical stage curriculum is still English source copy and does not yet have
+  reviewed instruction and accessibility resources for all 23 supported locales.
+  No English fallback or unreviewed translation is presented as finished brewing
+  guidance.
 
 ## [1.4.0] — 2026-07-25
 
