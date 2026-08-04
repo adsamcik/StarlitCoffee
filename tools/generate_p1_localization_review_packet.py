@@ -116,6 +116,7 @@ def render_packet(
 ) -> str:
     stages: list[tuple[dict, dict, dict]] = []
     stage_reviews = (review or {}).get("stages", {})
+    recipe_reviews = (review or {}).get("recipes", {})
     issue_count = 0
     lines = [
         f"# Exact P1 {locale} localization review packet",
@@ -136,6 +137,14 @@ def render_packet(
         1 for stage_review in stage_reviews.values()
         if stage_review.get("status") == "approved"
     )
+    native_ready_count = sum(
+        1 for stage_review in stage_reviews.values()
+        if stage_review.get("status") == "ready_for_native_review"
+    )
+    recipe_native_ready_count = sum(
+        1 for recipe_review in recipe_reviews.values()
+        if recipe_review.get("status") == "ready_for_native_review"
+    )
     category_counts = {
         field: sum(
             1 for stage_review in stage_reviews.values()
@@ -147,6 +156,9 @@ def render_packet(
         f"- Recipes: {len(source['recipes'])}",
         f"- Stages: {len(stages)}",
         f"- Fully approved stages: {approved_count}/{len(stages)}",
+        f"- Ready for native review stages: {native_ready_count}/{len(stages)}",
+        f"- Ready for native review recipes: "
+        f"{recipe_native_ready_count}/{len(source['recipes'])}",
         *(
             f"- {field.replace('_', ' ').title()} reviewed: "
             f"{count}/{len(stages)}"

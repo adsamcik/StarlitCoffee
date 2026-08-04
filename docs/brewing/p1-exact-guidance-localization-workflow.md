@@ -102,6 +102,22 @@ or practical tips. It also rejects blank output and excessive English fallback.
 These checks establish structural and numerical safety. They do not replace the
 native-language and brewing-domain review above.
 
+## Czech editorial package, 2026-08-04
+
+The current Czech editorial review is source-hash-bound at
+`docs/brewing/p1-exact-guidance-editorial-reviews/cs.json`. All 20 recipe names
+and approaches and all eight mandatory categories for 114 stages have completed
+the internal editorial pass. The generated packet reports zero automated
+findings. Terminology decisions and Czech coffee-usage references are recorded
+in `p1-exact-guidance-cs-terminology.md`.
+
+Its status is `ready_for_native_review`, not `approved`. No `raw-cs` production
+resource exists, Czech is absent from the reviewed-locale ledger, and runtime
+coverage therefore remains fail-closed. An independent native Czech
+coffee-domain reviewer must check every row, record their identity and date,
+change all recipe and stage statuses plus the top-level status to `approved`,
+and only then authorize memory promotion and Android UI/device validation.
+
 ## Rejected Czech pilot, 2026-08-04
 
 The first Google-translated Czech pilot was rejected and removed. It translated

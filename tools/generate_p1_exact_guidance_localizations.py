@@ -49,6 +49,7 @@ REQUIRED_EDITORIAL_FIELDS = frozenset({
     "action", "warning", "completion", "operational_fields",
     "explanation", "alt_text", "concise", "focused",
 })
+REQUIRED_RECIPE_EDITORIAL_FIELDS = frozenset({"recipe_name", "recipe_approach"})
 
 
 class LocalizationError(RuntimeError):
@@ -299,6 +300,58 @@ def apply_editorial_review(
         for recipe in localized["recipes"]
         for stage in recipe["stages"]
     }
+    recipe_reviews = review.get("recipes")
+    if not isinstance(recipe_reviews, dict):
+        raise LocalizationError(f"{locale}: editorial recipe reviews are missing")
+    source_recipes = {recipe["recipe_id"]: recipe for recipe in source["recipes"]}
+    localized_recipes = {
+        recipe["recipe_id"]: recipe for recipe in localized["recipes"]
+    }
+    unknown_recipes = set(recipe_reviews) - set(source_recipes)
+    if unknown_recipes:
+        raise LocalizationError(
+            f"{locale}: editorial review contains unknown recipes: "
+            f"{sorted(unknown_recipes)}",
+        )
+    if require_approved:
+        missing_recipes = set(source_recipes) - set(recipe_reviews)
+        unapproved_recipes = [
+            recipe_id for recipe_id, recipe_review in recipe_reviews.items()
+            if not isinstance(recipe_review, dict)
+            or recipe_review.get("status") != "approved"
+            or not REQUIRED_RECIPE_EDITORIAL_FIELDS.issubset(
+                recipe_review.get("reviewed_fields", []),
+            )
+        ]
+        if missing_recipes or unapproved_recipes:
+            raise LocalizationError(
+                f"{locale}: editorial recipe review is incomplete "
+                f"({len(missing_recipes)} missing, "
+                f"{len(unapproved_recipes)} unapproved)",
+            )
+    for recipe_id, recipe_review in recipe_reviews.items():
+        if not isinstance(recipe_review, dict):
+            raise LocalizationError(f"{locale}: invalid review for {recipe_id}")
+        overrides = recipe_review.get("overrides", {})
+        if not isinstance(overrides, dict):
+            raise LocalizationError(f"{locale}: invalid overrides for {recipe_id}")
+        for field, value in overrides.items():
+            if field not in REQUIRED_RECIPE_EDITORIAL_FIELDS:
+                raise LocalizationError(
+                    f"{locale}: unsupported recipe editorial field "
+                    f"{recipe_id}/{field}",
+                )
+            if not isinstance(value, str) or not value.strip():
+                raise LocalizationError(
+                    f"{locale}: blank recipe editorial override {recipe_id}/{field}",
+                )
+            if NUMBER_RE.findall(source_recipes[recipe_id][field]) != NUMBER_RE.findall(value):
+                raise LocalizationError(
+                    f"{locale}: recipe editorial override changed numbers in "
+                    f"{recipe_id}/{field}",
+                )
+            localized_recipes[recipe_id][field] = sanitize_translated_text(value)
+
     unknown = set(reviews) - set(source_stages)
     if unknown:
         raise LocalizationError(

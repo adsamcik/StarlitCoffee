@@ -2,44 +2,66 @@
   "schema_version": 1,
   "source_sha256": "4811810d2b6e2e4739bb507a95e0e427c170efcd0d0d795c2f417a6012a48228",
   "locale": "cs",
-  "status": "in_progress",
+  "status": "ready_for_native_review",
   "stages": {
     "v60_official_15_250/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Přeložený šev kuželového filtru; filtr přiléhá k žebrům; servírovací nádoba je po propláchnutí prázdná.",
-        "completion_criterion": "Papírový filtr je zcela mokrý a servírovací nádoba předehřátá."
+        "completion_criterion": "Papírový filtr je zcela mokrý a servírovací nádoba předehřátá.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Papírový filtr je zcela mokrý a servírovací nádoba předehřátá.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Vložte a opláchněte papír V60 02“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Papírový filtr je zcela mokrý a servírovací nádoba předehřátá.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Přeložený šev kuželového filtru; filtr přiléhá k žebrům; servírovací nádoba je po propláchnutí prázdná.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_official_15_250/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Přidejte 15 g kávy a zarovnejte kávové lože.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Dripper stojí na váze.",
-        "completion_criterion": "Kávové lože je rovné."
+        "completion_criterion": "Kávové lože je rovné.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Kávové lože je rovné.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte 15 g kávy a zarovnejte kávové lože“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Kávové lože je rovné.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Dripper stojí na váze.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_official_15_250/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Proveďte předspaření a navlhčete veškerou kávu.",
@@ -47,59 +69,95 @@
         "added_water_target": "Dostatek k navlhčení veškeré kávy; přesná hmotnost vody pro předspaření není uvedena.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Po úvodním navlhčení již nenalévejte.",
-        "completion_criterion": "Veškerá viditelná káva je mokrá a uvolňování plynu se zpomalilo."
+        "completion_criterion": "Veškerá viditelná káva je mokrá a uvolňování plynu se zpomalilo.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Veškerá viditelná káva je mokrá a uvolňování plynu se zpomalilo.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Proveďte předspaření a navlhčete veškerou kávu“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Veškerá viditelná káva je mokrá a uvolňování plynu se zpomalilo.",
+        "concise.current_target": "Dostatek k navlhčení veškeré kávy; přesná hmotnost vody pro předspaření není uvedena.",
+        "focused.numerical_or_state_target": "Dostatek k navlhčení veškeré kávy; přesná hmotnost vody pro předspaření není uvedena.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_official_15_250/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Vodu lijte hlavně na kávové lože, ne přímo po stěně papírového filtru.",
         "start_time_or_preceding_condition": "Po předspaření.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Jemné nepřetržité nebo téměř nepřetržité nalévání."
+        "equipment_state": "Jemné nepřetržité nebo téměř nepřetržité nalévání.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 250 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalévejte pomalu v malých kroužcích, dokud váha neukáže 250 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 250 g.",
+        "concise.current_target": "250 g",
+        "focused.numerical_or_state_target": "250 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_official_15_250/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Počkejte na dokapání a dripper sejměte.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Bez dalšího zakružování nebo míchání.",
-        "completion_criterion": "Voda odtekla; proud přešel v jednotlivé kapky."
+        "completion_criterion": "Voda odtekla; proud přešel v jednotlivé kapky.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Voda odtekla; proud přešel v jednotlivé kapky.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Počkejte na dokapání a dripper sejměte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Voda odtekla; proud přešel v jednotlivé kapky.",
+        "concise.current_target": "Cíl celkem asi 2:30",
+        "focused.numerical_or_state_target": "Bez dalšího zakružování nebo míchání.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_rao_20_330/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Plastový V60 02; kávové lože je rovné kromě mělké prohlubně uprostřed."
+        "equipment_state": "Plastový V60 02; kávové lože je rovné kromě mělké prohlubně uprostřed.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Papír je usazený a hnízdo je mělké, ne hluboký kráter.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Opláchněte papír a ve vrstvě mleté kávy si připravte mělké hnízdo“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Papír je usazený a hnízdo je mělké, ne hluboký kráter.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Plastový V60 02; kávové lože je rovné kromě mělké prohlubně uprostřed.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_rao_20_330/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Nalijte 60 g a při předspaření dripper důrazně zakružte.",
@@ -108,681 +166,1114 @@
         "target_duration_or_range": "Počkejte do 0:40.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Dripper je stabilně usazený na servírovací nádobě.",
-        "completion_criterion": "Veškerá káva je nasycená a předspaření se do 0:40 ustálí."
+        "completion_criterion": "Veškerá káva je nasycená a předspaření se do 0:40 ustálí.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Veškerá káva je nasycená a předspaření se do 0:40 ustálí.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 60 g a při předspaření dripper důrazně zakružte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Veškerá káva je nasycená a předspaření se do 0:40 ustálí.",
+        "concise.current_target": "60 g",
+        "focused.numerical_or_state_target": "60 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_rao_20_330/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Nízký, téměř svislý proud z konvice."
+        "equipment_state": "Nízký, téměř svislý proud z konvice.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 200 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte rovnoměrně, dokud váha neukáže 200 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 200 g.",
+        "concise.current_target": "200 g",
+        "focused.numerical_or_state_target": "200 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_rao_20_330/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Velmi jemně zakružte, aby se kávové lože usadilo.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Minimální pohyb směsi.",
-        "completion_criterion": "Směs kávy a vody se dotýká žebrovaných kanálků bez silného víru."
+        "completion_criterion": "Směs kávy a vody se dotýká žebrovaných kanálků bez silného víru.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Směs kávy a vody se dotýká žebrovaných kanálků bez silného víru.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Velmi jemně zakružte, aby se kávové lože usadilo“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Směs kávy a vody se dotýká žebrovaných kanálků bez silného víru.",
+        "concise.current_target": "Méně než jedna sekunda",
+        "focused.numerical_or_state_target": "Minimální pohyb směsi.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_rao_20_330/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Počkejte, až odteče asi 70% vody, potom dolijte do 330 g.",
         "start_time_or_preceding_condition": "Podle pozorovaného průběhu.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Stálý nízký proud."
+        "equipment_state": "Stálý nízký proud.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 330 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Počkejte, až odteče asi 70% vody, potom dolijte do 330 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 330 g.",
+        "concise.current_target": "330 g",
+        "focused.numerical_or_state_target": "330 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_rao_20_330/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Naposledy velmi jemně zakružte a nechte kávu dokapat.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Dále již nenalévejte.",
-        "completion_criterion": "Kávové lože je odkapané a převážně rovné."
+        "completion_criterion": "Kávové lože je odkapané a převážně rovné.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Kávové lože je odkapané a převážně rovné.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Naposledy velmi jemně zakružte a nechte kávu dokapat“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Kávové lože je odkapané a převážně rovné.",
+        "concise.current_target": "Cíl celkem 4:00–4:30",
+        "focused.numerical_or_state_target": "Dále již nenalévejte.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kasuya_4_6_20_300/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "V60 a odpovídající papírový filtr.",
-        "completion_criterion": "Kávové lože je rovné a servírovací nádoba neobsahuje proplachovou vodu."
+        "completion_criterion": "Kávové lože je rovné a servírovací nádoba neobsahuje proplachovou vodu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Kávové lože je rovné a servírovací nádoba neobsahuje proplachovou vodu.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Opláchněte papír a zarovnejte 20 g kávy“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Kávové lože je rovné a servírovací nádoba neobsahuje proplachovou vodu.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "V60 a odpovídající papírový filtr.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kasuya_4_6_20_300/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "První nálev z větší části odtekl."
+        "completion_criterion": "První nálev z větší části odtekl.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: První nálev z větší části odtekl.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 50 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: První nálev z větší části odtekl.",
+        "concise.current_target": "50 g",
+        "focused.numerical_or_state_target": "50 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kasuya_4_6_20_300/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "Druhý nálev z větší části odtekl."
+        "completion_criterion": "Druhý nálev z větší části odtekl.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Druhý nálev z větší části odtekl.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 70 g, dokud váha neukáže kumulativní hodnotu 120 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Druhý nálev z větší části odtekl.",
+        "concise.current_target": "120 g",
+        "focused.numerical_or_state_target": "120 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kasuya_4_6_20_300/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 180 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 60 g, dokud váha neukáže kumulativní 180 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 180 g.",
+        "concise.current_target": "180 g",
+        "focused.numerical_or_state_target": "180 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kasuya_4_6_20_300/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 240 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 60 g, dokud váha neukáže kumulativní hodnotu 240 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 240 g.",
+        "concise.current_target": "240 g",
+        "focused.numerical_or_state_target": "240 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kasuya_4_6_20_300/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 300 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 60 g, dokud váha neukáže kumulativní 300 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 300 g.",
+        "concise.current_target": "300 g",
+        "focused.numerical_or_state_target": "300 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kasuya_4_6_20_300/stage_07": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "V cílovém čase dripper sejměte.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Nenechte neúměrně pomalé poslední kapky slepě určovat konec přípravy.",
-        "completion_criterion": "Bylo dosaženo cílového času a hlavní proud skončil."
+        "completion_criterion": "Bylo dosaženo cílového času a hlavní proud skončil.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Bylo dosaženo cílového času a hlavní proud skončil.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „V cílovém čase dripper sejměte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Bylo dosaženo cílového času a hlavní proud skončil.",
+        "concise.current_target": "Celkem asi 3:30",
+        "focused.numerical_or_state_target": "Nenechte neúměrně pomalé poslední kapky slepě určovat konec přípravy.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kurasu_flash_16_150_70/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Servírovací nádoba je stabilní; proplachová voda je vylitá; kuželový filtr je správně usazený.",
-        "completion_criterion": "V servírovací nádobě zůstává přesně led určený k přípravě, nikoli proplachová voda."
+        "completion_criterion": "V servírovací nádobě zůstává přesně led určený k přípravě, nikoli proplachová voda.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: V servírovací nádobě zůstává přesně led určený k přípravě, nikoli proplachová voda.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Do servírovací nádoby na kávu vložte 70 g ledu a propláchnutou V60 postavte nad ni“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: V servírovací nádobě zůstává přesně led určený k přípravě, nikoli proplachová voda.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Servírovací nádoba je stabilní; proplachová voda je vylitá; kuželový filtr je správně usazený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kurasu_flash_16_150_70/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "Mletá káva je rovnoměrně mokrá."
+        "completion_criterion": "Mletá káva je rovnoměrně mokrá.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Mletá káva je rovnoměrně mokrá.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 40 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Mletá káva je rovnoměrně mokrá.",
+        "concise.current_target": "40 g",
+        "focused.numerical_or_state_target": "40 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kurasu_flash_16_150_70/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 100 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 60 g, dokud váha neukáže kumulativní hodnotu 100 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 100 g.",
+        "concise.current_target": "100 g",
+        "focused.numerical_or_state_target": "100 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kurasu_flash_16_150_70/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "optional_tip": "Zdroj používá poslední nálev k úpravě koncentrace.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 150 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Posledních 50 g jemně nalijte, dokud váha neukáže 150 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 150 g.",
+        "concise.current_target": "150 g",
+        "focused.numerical_or_state_target": "150 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kurasu_flash_16_150_70/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Nechte kávu dokapat a rozpustit led určený k přípravě.",
         "target_duration_or_range": "Příprava trvá asi 2:10; kávu v servírovací nádobě míchejte, dokud se původní led nerozpustí.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Po dokapání je dripper sejmutý.",
-        "completion_criterion": "Původní led určený k přípravě se všechen rozpustil; nápoj je vychlazený."
+        "completion_criterion": "Původní led určený k přípravě se všechen rozpustil; nápoj je vychlazený.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Původní led určený k přípravě se všechen rozpustil; nápoj je vychlazený.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte kávu dokapat a rozpustit led určený k přípravě“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Původní led určený k přípravě se všechen rozpustil; nápoj je vychlazený.",
+        "concise.current_target": "Příprava trvá asi 2:10; kávu v servírovací nádobě míchejte, dokud se původní led nerozpustí.",
+        "focused.numerical_or_state_target": "Po dokapání je dripper sejmutý.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "v60_kurasu_flash_16_150_70/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Čerstvý led k podávání se nezapočítává do poměru přípravy.",
-        "completion_criterion": "Nápoj byl přelit bez přetečení sklenice."
+        "completion_criterion": "Nápoj byl přelit bez přetečení sklenice.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Nápoj byl přelit bez přetečení sklenice.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Podávejte na čerstvém ledu“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Nápoj byl přelit bez přetečení sklenice.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Čerstvý led k podávání se nezapočítává do poměru přípravy.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wave185_ozone_25_400/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Správný zvlněný filtr 185; ploché dno je vystředěné.",
-        "completion_criterion": "Papírový filtr je mokrý a záhyby zůstávají otevřené."
+        "completion_criterion": "Papírový filtr je mokrý a záhyby zůstávají otevřené.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Papírový filtr je mokrý a záhyby zůstávají otevřené.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Opláchněte papír Wave 185, aniž byste srovnali jeho záhyby“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Papírový filtr je mokrý a záhyby zůstávají otevřené.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Správný zvlněný filtr 185; ploché dno je vystředěné.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wave185_ozone_25_400/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Předspařte 50 g vody.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Všechna káva je mokrá.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Předspařte 50 g vody“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Všechna káva je mokrá.",
+        "concise.current_target": "50 g",
+        "focused.numerical_or_state_target": "50 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wave185_ozone_25_400/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 160 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 110 g, dokud váha neukáže kumulativní hodnotu 160 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 160 g.",
+        "concise.current_target": "160 g",
+        "focused.numerical_or_state_target": "160 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wave185_ozone_25_400/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 220 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 60 g, dokud váha neukáže kumulativní 220 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 220 g.",
+        "concise.current_target": "220 g",
+        "focused.numerical_or_state_target": "220 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wave185_ozone_25_400/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 280 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 60 g, dokud váha neukáže kumulativní 280 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 280 g.",
+        "concise.current_target": "280 g",
+        "focused.numerical_or_state_target": "280 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wave185_ozone_25_400/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 340 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 60 g, dokud váha neukáže kumulativní hodnotu 340 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 340 g.",
+        "concise.current_target": "340 g",
+        "focused.numerical_or_state_target": "340 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wave185_ozone_25_400/stage_07": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 400 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte 60 g, dokud váha neukáže kumulativní hodnotu 400 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 400 g.",
+        "concise.current_target": "400 g",
+        "focused.numerical_or_state_target": "400 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wave185_ozone_25_400/stage_08": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Nechte kávu dokapat.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Bez dalšího míchání.",
-        "completion_criterion": "Kávové lože dokapalo."
+        "completion_criterion": "Kávové lože dokapalo.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Kávové lože dokapalo.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte kávu dokapat“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Kávové lože dokapalo.",
+        "concise.current_target": "Cíl celkem kolem 3:00",
+        "focused.numerical_or_state_target": "Bez dalšího míchání.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wedge_pulse_23_5_400/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Tvar papírového filtru odpovídá dripperu i výstupu; servírovací nádoba je prázdná.",
-        "completion_criterion": "Papírový filtr přiléhá ke klínovým stěnám a nepřehýbá se přes výstup."
+        "completion_criterion": "Papírový filtr přiléhá ke klínovým stěnám a nepřehýbá se přes výstup.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Papírový filtr přiléhá ke klínovým stěnám a nepřehýbá se přes výstup.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Usaďte a opláchněte správný klínový papír“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Papírový filtr přiléhá ke klínovým stěnám a nepřehýbá se přes výstup.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Tvar papírového filtru odpovídá dripperu i výstupu; servírovací nádoba je prázdná.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wedge_pulse_23_5_400/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Předspařte 50 g vody.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Veškerá káva je mokrá.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Předspařte 50 g vody“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Veškerá káva je mokrá.",
+        "concise.current_target": "50 g",
+        "focused.numerical_or_state_target": "50 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem.",
+        "completion_criterion": "Veškerá káva je mokrá."
       }
     },
     "wedge_pulse_23_5_400/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "start_time_or_preceding_condition": "Po předspaření.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "Nálev z větší části odtekl."
+        "completion_criterion": "Nálev z větší části odtekl.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Nálev z větší části odtekl.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte 50 g, dokud váha neukáže kumulativní hodnotu 100 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Nálev z větší části odtekl.",
+        "concise.current_target": "100 g",
+        "focused.numerical_or_state_target": "100 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wedge_pulse_23_5_400/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "Nálev z větší části odtekl."
+        "completion_criterion": "Nálev z větší části odtekl.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Nálev z větší části odtekl.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte 100 g, dokud váha neukáže kumulativní hodnotu 200 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Nálev z větší části odtekl.",
+        "concise.current_target": "200 g",
+        "focused.numerical_or_state_target": "200 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wedge_pulse_23_5_400/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "Nálev z větší části odtekl."
+        "completion_criterion": "Nálev z větší části odtekl.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Nálev z větší části odtekl.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte 100 g, dokud váha neukáže kumulativní hodnotu 300 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Nálev z větší části odtekl.",
+        "concise.current_target": "300 g",
+        "focused.numerical_or_state_target": "300 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "wedge_pulse_23_5_400/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Dolijte 100 g do celkových 400 g a nechte kávu dokapat.",
         "warning": "Nelijte přímo na papír po stranách, kde se u zúženého výstupu mohou hromadit jemné částice kávy.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "Kávové lože dokapalo bez zahlcení výstupu."
+        "completion_criterion": "Kávové lože dokapalo bez zahlcení výstupu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Kávové lože dokapalo bez zahlcení výstupu.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Dolijte 100 g do celkových 400 g a nechte kávu dokapat“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Kávové lože dokapalo bez zahlcení výstupu.",
+        "concise.current_target": "400 g",
+        "focused.numerical_or_state_target": "400 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "chemex_42_700/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Složený filtr vložte tak, aby tři vrstvy překrývaly výlevku.",
         "warning": "Uzavřený vzduchový kanál může zastavit průtok nebo způsobit náhlé vychrstnutí horké kávy.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Vzduchový kanál zůstává otevřený; naproti výlevce je jedna vrstva papíru.",
-        "completion_criterion": "Filtr se nemůže zhroutit do výlevky a utěsnit ji."
+        "completion_criterion": "Filtr se nemůže zhroutit do výlevky a utěsnit ji.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Filtr se nemůže zhroutit do výlevky a utěsnit ji.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Složený filtr vložte tak, aby tři vrstvy překrývaly výlevku“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Filtr se nemůže zhroutit do výlevky a utěsnit ji.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Vzduchový kanál zůstává otevřený; naproti výlevce je jedna vrstva papíru.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "chemex_42_700/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Karafa je předehřátá; výlevka zůstává odvětraná.",
-        "completion_criterion": "Papírový filtr je zcela mokrý a v nádobě nezůstala proplachová voda."
+        "completion_criterion": "Papírový filtr je zcela mokrý a v nádobě nezůstala proplachová voda.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Papírový filtr je zcela mokrý a v nádobě nezůstala proplachová voda.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Opláchněte filtr a oplach zlikvidujte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Papírový filtr je zcela mokrý a v nádobě nezůstala proplachová voda.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Karafa je předehřátá; výlevka zůstává odvětraná.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "chemex_42_700/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Předspařte 100–125 g vody.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Všech 42 g kávy je nasycených.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Předspařte 100–125 g vody“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Všech 42 g kávy je nasycených.",
+        "concise.current_target": "100–125 g",
+        "focused.numerical_or_state_target": "100–125 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "chemex_42_700/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "start_time_or_preceding_condition": "Po předspaření.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Směs kávy a vody držte pod okrajem filtru a vzduchový kanál výlevky ponechte otevřený."
+        "equipment_state": "Směs kávy a vody držte pod okrajem filtru a vzduchový kanál výlevky ponechte otevřený.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 400 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalévejte v kontrolovaných krocích, dokud váha neukáže kumulativní 400 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 400 g.",
+        "concise.current_target": "400 g",
+        "focused.numerical_or_state_target": "400 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "chemex_42_700/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Filtr nepřeplňujte vodou."
+        "equipment_state": "Filtr nepřeplňujte vodou.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 700 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Pokračujte v postupném nalévání, dokud váha neukáže 700 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 700 g.",
+        "concise.current_target": "700 g",
+        "focused.numerical_or_state_target": "700 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "chemex_42_700/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "target_duration_or_range": "Obvykle 5:00–6:30; žádný univerzální oficiální cíl není stanoven.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Vzduchový kanál je otevřený.",
-        "completion_criterion": "Hlavní proud skončil; pokud tomu nasvědčuje chuť, sejměte filtr dříve, než se příprava protáhne do příliš hořkých posledních kapek."
+        "completion_criterion": "Hlavní proud skončil; pokud tomu nasvědčuje chuť, sejměte filtr dříve, než se příprava protáhne do příliš hořkých posledních kapek.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Hlavní proud skončil; pokud tomu nasvědčuje chuť, sejměte filtr dříve, než se příprava protáhne do příliš hořkých posledních kapek.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte tlustý papír vykapat“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Hlavní proud skončil; pokud tomu nasvědčuje chuť, sejměte filtr dříve, než se příprava protáhne do příliš hořkých posledních kapek.",
+        "concise.current_target": "Obvykle 5:00–6:30; žádný univerzální oficiální cíl není stanoven.",
+        "focused.numerical_or_state_target": "Vzduchový kanál je otevřený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "chemex_42_700/stage_07": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Před podáváním karafou jemně zakružte.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Filtr je vyjmutý; karafu držte za objímku nebo rukojeť.",
-        "completion_criterion": "Nápoj je rovnoměrně promíchaný."
+        "completion_criterion": "Nápoj je rovnoměrně promíchaný.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Nápoj je rovnoměrně promíchaný.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Před podáváním karafou jemně zakružte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Nápoj je rovnoměrně promíchaný.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Filtr je vyjmutý; karafu držte za objímku nebo rukojeť.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "generic_conical_low_agitation_20_320/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Papírový filtr kopíruje stěny a neblokuje výstup.",
-        "completion_criterion": "Filtr není prohnutý a nikde neodstává."
+        "completion_criterion": "Filtr není prohnutý a nikde neodstává.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Filtr není prohnutý a nikde neodstává.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Ověřte a opláchněte přesně kompatibilní kuželový papír“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Filtr není prohnutý a nikde neodstává.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Papírový filtr kopíruje stěny a neblokuje výstup.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "generic_conical_low_agitation_20_320/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Předspařte 50–60 g vody a navlhčete veškerou kávu.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "Nezůstávají žádná suchá místa."
+        "completion_criterion": "Nezůstávají žádná suchá místa.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Nezůstávají žádná suchá místa.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Předspařte 50–60 g vody a navlhčete veškerou kávu“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Nezůstávají žádná suchá místa.",
+        "concise.current_target": "50–60 g",
+        "focused.numerical_or_state_target": "50–60 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "generic_conical_low_agitation_20_320/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "start_time_or_preceding_condition": "Po předspaření.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Minimální pohyb směsi; nelijte silným proudem na stěny filtru."
+        "equipment_state": "Minimální pohyb směsi; nelijte silným proudem na stěny filtru.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje asi 200 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nalijte do kumulativního množství asi 200 g nízkým stálým proudem“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje asi 200 g.",
+        "concise.current_target": "200 g",
+        "focused.numerical_or_state_target": "200 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "generic_conical_low_agitation_20_320/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "start_time_or_preceding_condition": "Než se odkryje kávové lože.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Podle receptu."
+        "equipment_state": "Podle receptu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 320 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Když směs kávy a vody klesne, nalévejte, dokud váha neukáže kumulativní 320 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 320 g.",
+        "concise.current_target": "320 g",
+        "focused.numerical_or_state_target": "320 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "generic_conical_low_agitation_20_320/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "target_duration_or_range": "Žádný univerzální cíl; podle geometrie často 2:30–4:00.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "Hlavní proud skončil bez zastavení."
+        "completion_criterion": "Hlavní proud skončil bez zastavení.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Hlavní proud skončil bez zastavení.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte vytéct přes filtr a zaznamenejte skutečný čas“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Hlavní proud skončil bez zastavení.",
+        "concise.current_target": "Žádný univerzální cíl; podle geometrie často 2:30–4:00.",
+        "focused.numerical_or_state_target": "Podle receptu.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "clever_water_first_15_250/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Clever není na servírovací nádobě; spodní ovladač není stlačený.",
-        "completion_criterion": "Po vylití proplachové vody již nic neodkapává."
+        "completion_criterion": "Po vylití proplachové vody již nic neodkapává.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Po vylití proplachové vody již nic neodkapává.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Vložte a opláchněte klínový papír, poté se ujistěte, že je ventil uzavřen“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Po vylití proplachové vody již nic neodkapává.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Clever není na servírovací nádobě; spodní ovladač není stlačený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "clever_water_first_15_250/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Ventil je zavřený.",
-        "completion_criterion": "Voda zůstává v dripperu."
+        "completion_criterion": "Voda zůstává v dripperu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Voda zůstává v dripperu.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Před přidáním kávy přidejte 250 g vody“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Voda zůstává v dripperu.",
+        "concise.current_target": "250 g",
+        "focused.numerical_or_state_target": "250 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "clever_water_first_15_250/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "target_duration_or_range": "Dokončete bez prodlení.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Ventil je zavřený.",
-        "completion_criterion": "Veškerá káva je mokrá bez intenzivního míchání."
+        "completion_criterion": "Veškerá káva je mokrá bez intenzivního míchání.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Veškerá káva je mokrá bez intenzivního míchání.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte 15 g kávy a jemně promíchejte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Veškerá káva je mokrá bez intenzivního míchání.",
+        "concise.current_target": "Dokončete bez prodlení.",
+        "focused.numerical_or_state_target": "Ventil je zavřený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "clever_water_first_15_250/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Nechte kávu louhovat a potom ji jemně promíchejte.",
         "target_duration_or_range": "Kolem 1:45 promíchejte a ve 2:00 se připravte otevřít ventil.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Ventil je zavřený."
+        "equipment_state": "Ventil je zavřený.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Po jemném promíchání se povrch usadí.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte kávu louhovat a potom ji jemně promíchejte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Po jemném promíchání se povrch usadí.",
+        "concise.current_target": "Kolem 1:45 promíchejte a ve 2:00 se připravte otevřít ventil.",
+        "focused.numerical_or_state_target": "Ventil je zavřený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "clever_water_first_15_250/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Postavte Clever na servírovací nádobu a otevřete tak ventil.",
@@ -791,312 +1282,502 @@
         "target_duration_or_range": "Cílová doba dokapání je asi 40 sekund.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Spodní ovladač je stlačený a ventil otevřený.",
-        "completion_criterion": "Průtok začne okamžitě a skončí přibližně ve 2:40."
+        "completion_criterion": "Průtok začne okamžitě a skončí přibližně ve 2:40.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Průtok začne okamžitě a skončí přibližně ve 2:40.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Postavte Clever na servírovací nádobu a otevřete tak ventil“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Průtok začne okamžitě a skončí přibližně ve 2:40.",
+        "concise.current_target": "Cílová doba dokapání je asi 40 sekund.",
+        "focused.numerical_or_state_target": "Spodní ovladač je stlačený a ventil otevřený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "clever_water_first_15_250/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Po úplném dokapání dripper sejměte.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Zvedněte svisle, aby se ventil uzavřel.",
-        "completion_criterion": "V dripperu nezůstává žádná voda."
+        "completion_criterion": "V dripperu nezůstává žádná voda.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: V dripperu nezůstává žádná voda.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Po úplném dokapání dripper sejměte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: V dripperu nezůstává žádná voda.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Zvedněte svisle, aby se ventil uzavřel.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "clever_coffee_first_15_250/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Clever není na servírovací nádobě.",
-        "completion_criterion": "Papírový filtr je správně usazený a kávové lože rovné."
+        "completion_criterion": "Papírový filtr je správně usazený a kávové lože rovné.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Papírový filtr je správně usazený a kávové lože rovné.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Opláchněte papír, zavřete ventil a přidejte 15 g kávy“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Papírový filtr je správně usazený a kávové lože rovné.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Clever není na servírovací nádobě.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "clever_coffee_first_15_250/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Příliš intenzivní míchání může zanést jemné částice kávy na papírový filtr.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Ventil je zavřený."
+        "equipment_state": "Ventil je zavřený.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Všechna káva je mokrá.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte 250 g vody a míchejte asi 15 sekund“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Všechna káva je mokrá.",
+        "concise.current_target": "250 g",
+        "focused.numerical_or_state_target": "250 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "clever_coffee_first_15_250/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Nechte kávu louhovat.",
         "target_duration_or_range": "Přibližně do 2:15.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Ventil je zavřený.",
-        "completion_criterion": "Bylo dosaženo cílové doby louhování."
+        "completion_criterion": "Bylo dosaženo cílové doby louhování.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Bylo dosaženo cílové doby louhování.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte kávu louhovat“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Bylo dosaženo cílové doby louhování.",
+        "concise.current_target": "Přibližně do 2:15.",
+        "focused.numerical_or_state_target": "Ventil je zavřený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "clever_coffee_first_15_250/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Postavte dripper na servírovací nádobu a nechte jej dokapat.",
         "warning": "Nepoužívejte příliš malý nebo nestabilní šálek.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Ovladač otevřel ventil.",
-        "completion_criterion": "Dokapávání skončilo."
+        "completion_criterion": "Dokapávání skončilo.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Dokapávání skončilo.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Postavte dripper na servírovací nádobu a nechte jej dokapat“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Dokapávání skončilo.",
+        "concise.current_target": "Konec kolem 3:00–3:30",
+        "focused.numerical_or_state_target": "Ovladač otevřel ventil.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_official_20_240/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Vložte a propláchněte papírový filtr V60 02 a potom uzavřete ventil Switche.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Páka je zavřená; kulička dosedá do sedla.",
-        "completion_criterion": "Proplachová voda odtekla před uzavřením ventilu a další voda již neodkapává."
+        "completion_criterion": "Proplachová voda odtekla před uzavřením ventilu a další voda již neodkapává.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Proplachová voda odtekla před uzavřením ventilu a další voda již neodkapává.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Vložte a propláchněte papírový filtr V60 02 a potom uzavřete ventil Switche“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Proplachová voda odtekla před uzavřením ventilu a další voda již neodkapává.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Páka je zavřená; kulička dosedá do sedla.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_official_20_240/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Ventil je zavřený.",
-        "completion_criterion": "Veškerá káva je mokrá a voda zůstává v dripperu."
+        "completion_criterion": "Veškerá káva je mokrá a voda zůstává v dripperu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Veškerá káva je mokrá a voda zůstává v dripperu.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte 20 g kávy a 240 g vody“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Veškerá káva je mokrá a voda zůstává v dripperu.",
+        "concise.current_target": "240 g",
+        "focused.numerical_or_state_target": "240 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_official_20_240/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Nechte kávu louhovat.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Ventil je zavřený."
+        "equipment_state": "Ventil je zavřený.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Uběhly dvě minuty.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte kávu louhovat“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Uběhly dvě minuty.",
+        "concise.current_target": "2:00",
+        "focused.numerical_or_state_target": "Ventil je zavřený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_official_20_240/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Nedotýkejte se horkého skla ani kovu.",
         "start_time_or_preceding_condition": "Ve 2:00.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Ventil je otevřený; dripper stojí na servírovací nádobě.",
-        "completion_criterion": "Dokapávání začne okamžitě."
+        "completion_criterion": "Dokapávání začne okamžitě.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Dokapávání začne okamžitě.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Pohybem páky otevřete ventil“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Dokapávání začne okamžitě.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Ventil je otevřený; dripper stojí na servírovací nádobě.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_official_20_240/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Sledujte dokapávání a poté Switch sejměte.",
         "target_duration_or_range": "Obvykle méně než přibližně jedna minuta; řiďte se průtokem.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "V dripperu nezůstává žádná voda."
+        "completion_criterion": "V dripperu nezůstává žádná voda.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: V dripperu nezůstává žádná voda.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Sledujte dokapávání a poté Switch sejměte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: V dripperu nezůstává žádná voda.",
+        "concise.current_target": "Obvykle méně než přibližně jedna minuta; řiďte se průtokem.",
+        "focused.numerical_or_state_target": "Podle receptu.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_ole_boen_hybrid_16_5_240/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Uzavřete ventil Switche a předspařte 50 g vody.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Ventil je zavřený.",
-        "completion_criterion": "Voda pro předspaření zůstává v dripperu do 0:40."
+        "completion_criterion": "Voda pro předspaření zůstává v dripperu do 0:40.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Voda pro předspaření zůstává v dripperu do 0:40.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Uzavřete ventil Switche a předspařte 50 g vody“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Voda pro předspaření zůstává v dripperu do 0:40.",
+        "concise.current_target": "50 g",
+        "focused.numerical_or_state_target": "50 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_ole_boen_hybrid_16_5_240/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Ventil je otevřený; nalévejte samospádem převážně do středu."
+        "equipment_state": "Ventil je otevřený; nalévejte samospádem převážně do středu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 150 g a perkolace pokračuje.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Otevřete ventil a nalijte 100 g, dokud váha neukáže kumulativní hodnotu 150 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 150 g a perkolace pokračuje.",
+        "concise.current_target": "150 g",
+        "focused.numerical_or_state_target": "150 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_ole_boen_hybrid_16_5_240/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Ventil je zavřený.",
-        "completion_criterion": "Váha ukazuje 240 g a voda v závěrečné fázi zůstává v dripperu."
+        "completion_criterion": "Váha ukazuje 240 g a voda v závěrečné fázi zůstává v dripperu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 240 g a voda v závěrečné fázi zůstává v dripperu.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Zavřete ventil a nalijte 90 g, dokud váha neukáže kumulativní hodnotu 240 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 240 g a voda v závěrečné fázi zůstává v dripperu.",
+        "concise.current_target": "240 g",
+        "focused.numerical_or_state_target": "240 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_ole_boen_hybrid_16_5_240/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Ventil je otevřený.",
-        "completion_criterion": "Dokapávání se obnoví."
+        "completion_criterion": "Dokapávání se obnoví.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Dokapávání se obnoví.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Otevřete ventil pro konečné uvolnění“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Dokapávání se obnoví.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Ventil je otevřený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_ole_boen_hybrid_16_5_240/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Nechte kávu zcela dokapat.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "Kávové lože dokapalo."
+        "completion_criterion": "Kávové lože dokapalo.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Kávové lože dokapalo.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte kávu zcela dokapat“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Kávové lože dokapalo.",
+        "concise.current_target": "Cíl celkem 3:00–3:15",
+        "focused.numerical_or_state_target": "Podle receptu.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_gravity_15_250/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Otevřete ventil Switche a propláchněte papírový filtr V60 02.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Páka zůstává po celou dobu otevřená.",
-        "completion_criterion": "Proplachová voda volně odtéká."
+        "completion_criterion": "Proplachová voda volně odtéká.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Proplachová voda volně odtéká.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Otevřete ventil Switche a propláchněte papírový filtr V60 02“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Proplachová voda volně odtéká.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Páka zůstává po celou dobu otevřená.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_gravity_15_250/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "added_water_target": "Dostatek k úplnému nasycení; přesná hmotnost není stanovena.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Ventil je otevřený."
+        "equipment_state": "Ventil je otevřený.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Uvolňování plynu se zpomaluje.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Proveďte předspaření a navlhčete veškerou kávu“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Uvolňování plynu se zpomaluje.",
+        "concise.current_target": "Dostatek k úplnému nasycení; přesná hmotnost není stanovena.",
+        "focused.numerical_or_state_target": "Dostatek k úplnému nasycení; přesná hmotnost není stanovena.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem.",
+        "action": "Proveďte předspaření a navlhčete veškerou kávu."
       }
     },
     "switch_gravity_15_250/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "start_time_or_preceding_condition": "Po předspaření.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Ventil je otevřený."
+        "equipment_state": "Ventil je otevřený.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Váha ukazuje 250 g.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Pomalu nalévejte, dokud váha neukáže 250 g“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Váha ukazuje 250 g.",
+        "concise.current_target": "250 g",
+        "focused.numerical_or_state_target": "250 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "switch_gravity_15_250/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Nechte kávu zcela dokapat.",
         "target_duration_or_range": "Výchozí cíl je přibližně 2:30.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Podle receptu.",
-        "completion_criterion": "Kávové lože dokapalo."
+        "completion_criterion": "Kávové lože dokapalo.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Kávové lože dokapalo.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte kávu zcela dokapat“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Kávové lože dokapalo.",
+        "concise.current_target": "Výchozí cíl je přibližně 2:30.",
+        "focused.numerical_or_state_target": "Podle receptu.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Do džezvy přidejte 65 g studené vody, 6 g velmi jemně mleté kávy a případně cukr.",
         "warning": "Malá přeplněná nádoba může náhle překypět.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Džezva je mimo zdroj tepla a má dostatečnou volnou kapacitu.",
-        "completion_criterion": "Suroviny jsou v džezvě pod bezpečnou úrovní naplnění."
+        "completion_criterion": "Suroviny jsou v džezvě pod bezpečnou úrovní naplnění.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Suroviny jsou v džezvě pod bezpečnou úrovní naplnění.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Do džezvy přidejte 65 g studené vody, 6 g velmi jemně mleté kávy a případně cukr“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Suroviny jsou v džezvě pod bezpečnou úrovní naplnění.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Džezva je mimo zdroj tepla a má dostatečnou volnou kapacitu.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "start_time_or_preceding_condition": "Před zahříváním.",
@@ -1104,64 +1785,100 @@
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "optional_tip": "Po zahájení ohřevu zbytečně nemíchejte, pokud chcete zachovat vrstvu pěny.",
         "equipment_state": "Nádoba je mimo zdroj tepla.",
-        "completion_criterion": "Vznikla rovnoměrná směs kávy a vody."
+        "completion_criterion": "Vznikla rovnoměrná směs kávy a vody.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Vznikla rovnoměrná směs kávy a vody.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Před zahřátím promíchejte, dokud nezůstanou suché hrudky“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Vznikla rovnoměrná směs kávy a vody.",
+        "concise.current_target": "Krátce.",
+        "focused.numerical_or_state_target": "Nádoba je mimo zdroj tepla.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Nenechávejte bez dozoru; plamen nesmí přesahovat dno a ruce držte dál od horkého kovu.",
         "target_duration_or_range": "Podle pozorovaného průběhu.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Mírný kontrolovaný plamen nebo varná zóna; nádoba je stabilní; rukojeť směřuje mimo zdroj tepla.",
-        "completion_criterion": "Vytvořil se tmavý prstenec pěny a stoupá k hrdlu."
+        "completion_criterion": "Vytvořil se tmavý prstenec pěny a stoupá k hrdlu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Vytvořil se tmavý prstenec pěny a stoupá k hrdlu.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Zahřívejte pomalu a přitom neustále sledujte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Vytvořil se tmavý prstenec pěny a stoupá k hrdlu.",
+        "concise.current_target": "Podle pozorovaného průběhu.",
+        "focused.numerical_or_state_target": "Mírný kontrolovaný plamen nebo varná zóna; nádoba je stabilní; rukojeť směřuje mimo zdroj tepla.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Odstavte z ohřevu při prvním kontrolovaném vzedmutí pěny.",
         "warning": "Nečekejte na prudký var; káva může během několika sekund překypět.",
         "start_time_or_preceding_condition": "Jakmile pěna začne stoupat.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Nádoba je bezpečně odstavená před plným varem nebo přetečením."
+        "equipment_state": "Nádoba je bezpečně odstavená před plným varem nebo přetečením.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Pěna se viditelně zvedla, ale nerozlila se.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Odstavte z ohřevu při prvním kontrolovaném vzedmutí pěny“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Pěna se viditelně zvedla, ale nerozlila se.",
+        "concise.current_target": "Okamžitě",
+        "focused.numerical_or_state_target": "Nádoba je bezpečně odstavená před plným varem nebo přetečením.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Sedlina i nápoj jsou velmi horké.",
         "start_time_or_preceding_condition": "Ihned po odstavení.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Šálek je stabilní a dostatečně velký.",
-        "completion_criterion": "Pěna i nápoj jsou rozdělené bez rozlití."
+        "completion_criterion": "Pěna i nápoj jsou rozdělené bez rozlití.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Pěna i nápoj jsou rozdělené bez rozlití.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Jemně nalévejte, aby se pěna udržela“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Pěna i nápoj jsou rozdělené bez rozlití.",
+        "concise.current_target": "Pomalé kontrolované nalévání",
+        "focused.numerical_or_state_target": "Šálek je stabilní a dostatečně velký.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_turkish_single_rise_6_65/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Před pitím nechte sedlinu usadit.",
@@ -1169,61 +1886,97 @@
         "target_duration_or_range": "Přibližně 1–2 minuty nebo dokud nápoj nemá bezpečnou teplotu a sedlina se neusadí.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Se šálkem nehýbejte.",
-        "completion_criterion": "Povrch chladne a sedlina se shromažďuje na dně."
+        "completion_criterion": "Povrch chladne a sedlina se shromažďuje na dně.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Povrch chladne a sedlina se shromažďuje na dně.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Před pitím nechte sedlinu usadit“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Povrch chladne a sedlina se shromažďuje na dně.",
+        "concise.current_target": "Přibližně 1–2 minuty nebo dokud nápoj nemá bezpečnou teplotu a sedlina se neusadí.",
+        "focused.numerical_or_state_target": "Se šálkem nehýbejte.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Nádobu nepřeplňujte.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Nádoba je mimo zdroj tepla; volný prostor nad nápojem je viditelný.",
-        "completion_criterion": "Rovnoměrná směs je pod bezpečnou úrovní naplnění."
+        "completion_criterion": "Rovnoměrná směs je pod bezpečnou úrovní naplnění.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Rovnoměrná směs je pod bezpečnou úrovní naplnění.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Smíchejte 130 g studené vody, 12 g velmi jemné kávy a volitelný cukr“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Rovnoměrná směs je pod bezpečnou úrovní naplnění.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Nádoba je mimo zdroj tepla; volný prostor nad nápojem je viditelný.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Mimo zdroj tepla.",
-        "completion_criterion": "Nezůstaly žádné suché hrudky."
+        "completion_criterion": "Nezůstaly žádné suché hrudky.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Nezůstaly žádné suché hrudky.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Před zahřátím promíchejte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Nezůstaly žádné suché hrudky.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Mimo zdroj tepla.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Odstavte ještě před plným varem nebo přetečením.",
         "target_duration_or_range": "Podle pozorovaného průběhu.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Mírný kontrolovaný ohřev pod stálým dohledem.",
-        "completion_criterion": "Pěna stoupá k hrdlu."
+        "completion_criterion": "Pěna stoupá k hrdlu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Pěna stoupá k hrdlu.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Pomalu zahřívejte do prvního vzestupu pěny“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Pěna stoupá k hrdlu.",
+        "concise.current_target": "Podle pozorovaného průběhu.",
+        "focused.numerical_or_state_target": "Mírný kontrolovaný ohřev pod stálým dohledem.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Na chvíli odstavte, dokud pěna neklesne.",
@@ -1231,16 +1984,25 @@
         "start_time_or_preceding_condition": "Při prvním vzedmutí pěny.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Nádoba je mimo zdroj tepla a stojí stabilně.",
-        "completion_criterion": "Pěna klesla, ale zcela se nerozpadla."
+        "completion_criterion": "Pěna klesla, ale zcela se nerozpadla.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Pěna klesla, ale zcela se nerozpadla.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Na chvíli odstavte, dokud pěna neklesne“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Pěna klesla, ale zcela se nerozpadla.",
+        "concise.current_target": "Pár sekund",
+        "focused.numerical_or_state_target": "Nádoba je mimo zdroj tepla a stojí stabilně.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Vraťte na mírný ohřev a nechte pěnu naposledy kontrolovaně vystoupat.",
@@ -1249,16 +2011,25 @@
         "target_duration_or_range": "Podle pozorovaného průběhu.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Mírný ohřev.",
-        "completion_criterion": "Začíná druhé vzedmutí pěny."
+        "completion_criterion": "Začíná druhé vzedmutí pěny.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Začíná druhé vzedmutí pěny.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Vraťte na mírný ohřev a nechte pěnu naposledy kontrolovaně vystoupat“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Začíná druhé vzedmutí pěny.",
+        "concise.current_target": "Podle pozorovaného průběhu.",
+        "focused.numerical_or_state_target": "Mírný ohřev.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "cezve_bounded_repeated_rise_12_130/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Odstavte, rozdělte pěnu i nápoj a nechte sedlinu usadit.",
@@ -1266,76 +2037,121 @@
         "start_time_or_preceding_condition": "Při druhém vzedmutí pěny.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Dva stabilní šálky.",
-        "completion_criterion": "Porce jsou rozlité bez přetečení a sedlina se usazuje."
+        "completion_criterion": "Porce jsou rozlité bez přetečení a sedlina se usazuje.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Porce jsou rozlité bez přetečení a sedlina se usazuje.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Odstavte, rozdělte pěnu i nápoj a nechte sedlinu usadit“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Porce jsou rozlité bez přetečení a sedlina se usazuje.",
+        "concise.current_target": "Řízené nalévání, poté 1–2 minuty usazení",
+        "focused.numerical_or_state_target": "Dva stabilní šálky.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_batch_500_30/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Nevhodný filtr nebo ucpaný výstup může způsobit přetečení.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Správný tvar košíku; na okraji není mletá káva; výstup je průchodný.",
-        "completion_criterion": "Košík je usazený a kávové lože rovné."
+        "completion_criterion": "Košík je usazený a kávové lože rovné.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Košík je usazený a kávové lože rovné.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Vložte přesný papír do košíku a přidejte 30 g zarovnané kávy“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Košík je usazený a kávové lože rovné.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Správný tvar košíku; na okraji není mletá káva; výstup je průchodný.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_batch_500_30/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Používejte pouze vodu a nepřekračujte maximální kapacitu kávovaru.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Zásobník je naplněný po značku 500 g a nepřekračuje kapacitu."
+        "equipment_state": "Zásobník je naplněný po značku 500 g a nepřekračuje kapacitu.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Víko a výstupní rameno jsou správně umístěny.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte 500 g čerstvé studené vody do zásobníku“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Víko a výstupní rameno jsou správně umístěny.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Zásobník je naplněný po značku 500 g a nepřekračuje kapacitu.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_batch_500_30/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Pokud návod kávovaru zakazuje vyjmout během přípravy košík nebo karafu, nevyjímejte je.",
         "target_duration_or_range": "Řídí kávovar.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Víko nebo ventil karafy podle potřeby správně ovládá košík.",
-        "completion_criterion": "Voda se začala rozvádět a káva odtéká bez přetečení."
+        "completion_criterion": "Voda se začala rozvádět a káva odtéká bez přetečení.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Voda se začala rozvádět a káva odtéká bez přetečení.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Umístěte karafu a spusťte stroj“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Voda se začala rozvádět a káva odtéká bez přetečení.",
+        "concise.current_target": "Řídí kávovar.",
+        "focused.numerical_or_state_target": "Víko nebo ventil karafy podle potřeby správně ovládá košík.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_batch_500_30/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "target_duration_or_range": "Podle kávovaru.",
         "observable_signs": "Kávové lože je navlhčené po celé ploše, na kterou dopadá voda; přetečení nebo suchá místa ukazují na chybu kávovaru nebo konfigurace.",
         "equipment_state": "Neuvádějte nepodložené údaje o skrytém předspaření, teplotě ani pulzech.",
-        "completion_criterion": "Přečerpávání ze zásobníku skončilo a košík dokapal."
+        "completion_criterion": "Přečerpávání ze zásobníku skončilo a košík dokapal.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Přečerpávání ze zásobníku skončilo a košík dokapal.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte automatický cyklus dokončit“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Přečerpávání ze zásobníku skončilo a košík dokapal.",
+        "concise.current_target": "Podle kávovaru.",
+        "focused.numerical_or_state_target": "Neuvádějte nepodložené údaje o skrytém předspaření, teplotě ani pulzech.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_batch_500_30/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Karafou zakružte nebo kávu promíchejte a ihned podávejte.",
@@ -1343,61 +2159,97 @@
         "start_time_or_preceding_condition": "Po skončení odkapávání.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Karafa je bezpečně vyjmutá.",
-        "completion_criterion": "Nápoj je rovnoměrně promíchaný."
+        "completion_criterion": "Nápoj je rovnoměrně promíchaný.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Nápoj je rovnoměrně promíchaný.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Karafou zakružte nebo kávu promíchejte a ihned podávejte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Nápoj je rovnoměrně promíchaný.",
+        "concise.current_target": "Okamžitě",
+        "focused.numerical_or_state_target": "Karafa je bezpečně vyjmutá.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_batch_1000_60/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Košík nepřeplňujte; mletá káva během přípravy nabobtná.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Košík není přeplněný; papírový filtr je správně usazený.",
-        "completion_criterion": "Kávové lože je rovné a výstup průchodný."
+        "completion_criterion": "Kávové lože je rovné a výstup průchodný.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Kávové lože je rovné a výstup průchodný.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Připravte si správný koš se 60 g zarovnané kávy“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Kávové lože je rovné a výstup průchodný.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Košík není přeplněný; papírový filtr je správně usazený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_batch_1000_60/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Zásobník nepřekračuje maximum; víko nebo ventil karafy je správně nastavený.",
-        "completion_criterion": "Všechny součásti jsou připravené."
+        "completion_criterion": "Všechny součásti jsou připravené.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Všechny součásti jsou připravené.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Naplňte nádržku 1,000 g studené vody a umístěte karafu“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Všechny součásti jsou připravené.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Zásobník nepřekračuje maximum; víko nebo ventil karafy je správně nastavený.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_batch_1000_60/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Spusťte cyklus řízený kávovarem a nechte jej doběhnout.",
         "target_duration_or_range": "Podle kávovaru.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Automatická distribuce vody.",
-        "completion_criterion": "Nedošlo k přetečení; přečerpávání ze zásobníku skončilo."
+        "completion_criterion": "Nedošlo k přetečení; přečerpávání ze zásobníku skončilo.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Nedošlo k přetečení; přečerpávání ze zásobníku skončilo.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Spusťte cyklus řízený kávovarem a nechte jej doběhnout“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Nedošlo k přetečení; přečerpávání ze zásobníku skončilo.",
+        "concise.current_target": "Podle kávovaru.",
+        "focused.numerical_or_state_target": "Automatická distribuce vody.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_batch_1000_60/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Počkejte, až košík dokape, potom kávu v karafě promíchejte.",
@@ -1406,167 +2258,266 @@
         "target_duration_or_range": "Dokud odkapávání téměř neskončí.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Karafa zůstává správně usazená až do bezpečného vyjmutí.",
-        "completion_criterion": "Káva v karafě je promíchaná zakroužením nebo zamícháním."
+        "completion_criterion": "Káva v karafě je promíchaná zakroužením nebo zamícháním.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Káva v karafě je promíchaná zakroužením nebo zamícháním.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Počkejte, až košík dokape, potom kávu v karafě promíchejte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Káva v karafě je promíchaná zakroužením nebo zamícháním.",
+        "concise.current_target": "Dokud odkapávání téměř neskončí.",
+        "focused.numerical_or_state_target": "Karafa zůstává správně usazená až do bezpečného vyjmutí.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_cupone_20_300/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Ucpaný výstup může způsobit přetečení a opaření.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Napájení je vypnuté; malý spodní otvor je viditelně průchodný.",
-        "completion_criterion": "Papírový filtr je správně usazený a výstup průchodný."
+        "completion_criterion": "Papírový filtr je správně usazený a výstup průchodný.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Papírový filtr je správně usazený a výstup průchodný.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Vyčistěte výstup držáku filtru a vložte jeden papír č. 1“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Papírový filtr je správně usazený a výstup průchodný.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Napájení je vypnuté; malý spodní otvor je viditelně průchodný.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_cupone_20_300/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Přidejte 20 g kávy namleté na filtr.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Dávka je v oficiálním rozmezí 18–21 g; kávové lože je rovné.",
-        "completion_criterion": "Na okraji není mletá káva."
+        "completion_criterion": "Na okraji není mletá káva.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Na okraji není mletá káva.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte 20 g kávy namleté na filtr“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Na okraji není mletá káva.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Dávka je v oficiálním rozmezí 18–21 g; kávové lože je rovné.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_cupone_20_300/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Kávovar nespouštějte bez výstupní trubice a během cyklu nevyjímejte horké součásti.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Zásobník je naplněný po značku; trubice je vystředěná nad držákem.",
-        "completion_criterion": "Hrnek i držák stojí stabilně."
+        "completion_criterion": "Hrnek i držák stojí stabilně.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Hrnek i držák stojí stabilně.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Naplňte po vyznačenou hladinu čerstvou studenou vodou a umístěte výstupní trubku“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Hrnek i držák stojí stabilně.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Zásobník je naplněný po značku; trubice je vystředěná nad držákem.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_cupone_20_300/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Během přípravy nevyjímejte spařovací košík ani hrnek.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Kávovar automaticky přečerpává vodu o teplotě přibližně 92–96 °C.",
-        "completion_criterion": "Po přečerpání vody se kávovar vypnul."
+        "completion_criterion": "Po přečerpání vody se kávovar vypnul.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Po přečerpání vody se kávovar vypnul.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Zapněte a nechte běžet automatický cyklus“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Po přečerpání vody se kávovar vypnul.",
+        "concise.current_target": "Asi 4 minuty",
+        "focused.numerical_or_state_target": "Kávovar automaticky přečerpává vodu o teplotě přibližně 92–96 °C.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_cupone_20_300/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Počkejte na poslední kapky, potom vyjměte hrnek a podávejte.",
         "warning": "Výstupní trubice i káva jsou horké.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Hrnek zůstává pod držákem.",
-        "completion_criterion": "Káva již výrazně neodkapává."
+        "completion_criterion": "Káva již výrazně neodkapává.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Káva již výrazně neodkapává.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Počkejte na poslední kapky, potom vyjměte hrnek a podávejte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Káva již výrazně neodkapává.",
+        "concise.current_target": "Dokud neskončí tok tekutiny do hrnku",
+        "focused.numerical_or_state_target": "Hrnek zůstává pod držákem.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "auto_cupone_20_300/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Vyhoďte sedlinu a výstup vyčistěte kartáčkem.",
         "warning": "Kávovar neponořujte do vody.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Kávovar je před čištěním odpojený ze zásuvky.",
-        "completion_criterion": "Nezůstala žádná sedlina a výstup je průchodný."
+        "completion_criterion": "Nezůstala žádná sedlina a výstup je průchodný.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Nezůstala žádná sedlina a výstup je průchodný.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Vyhoďte sedlinu a výstup vyčistěte kartáčkem“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Nezůstala žádná sedlina a výstup je průchodný.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Kávovar je před čištěním odpojený ze zásuvky.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_gravity_14_118/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Phin bezpečně postavte na tepelně odolný šálek a přidejte 14 g zarovnané kávy.",
         "warning": "Nepoužívejte šálek, jehož okraj phin bezpečně neudrží.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Základna plně spočívá na okraji šálku; otvory jsou průchodné.",
-        "completion_criterion": "Phin stojí stabilně a kávové lože je rovné."
+        "completion_criterion": "Phin stojí stabilně a kávové lože je rovné.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Phin stojí stabilně a kávové lože je rovné.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Phin bezpečně postavte na tepelně odolný šálek a přidejte 14 g zarovnané kávy“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Phin stojí stabilně a kávové lože je rovné.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Základna plně spočívá na okraji šálku; otvory jsou průchodné.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_gravity_14_118/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Netlačte tak silně, aby se průtok zastavil.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
-        "equipment_state": "Volná vložka leží rovně; káva není silně stlačená."
+        "equipment_state": "Volná vložka leží rovně; káva není silně stlačená.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Vložka leží naplocho.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Disk gravitačního lisu jemně položte na vrstvu mleté kávy“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Vložka leží naplocho.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Volná vložka leží rovně; káva není silně stlačená.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_gravity_14_118/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Přidejte přibližně 30 g horké vody a nechte kávu předspařit.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Víko je sejmuté; kávové lože se předmáčí.",
-        "completion_criterion": "Káva bobtná a voda jí proniká."
+        "completion_criterion": "Káva bobtná a voda jí proniká.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Káva bobtná a voda jí proniká.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte přibližně 30 g horké vody a nechte kávu předspařit“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Káva bobtná a voda jí proniká.",
+        "concise.current_target": "30 g",
+        "focused.numerical_or_state_target": "30 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_gravity_14_118/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Víko je nasazené; káva samospádem odkapává.",
-        "completion_criterion": "Komora je naplněná bez přetečení."
+        "completion_criterion": "Komora je naplněná bez přetečení.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Komora je naplněná bez přetečení.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přidejte zbývající vodu, dokud váha neukáže celkem 118 g, a přikryjte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Komora je naplněná bez přetečení.",
+        "concise.current_target": "118 g",
+        "focused.numerical_or_state_target": "118 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_gravity_14_118/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Ověřte, že první kapka proteče do dvou minut.",
@@ -1574,31 +2525,49 @@
         "target_duration_or_range": "Před 2:00 od začátku receptu podle konvence zdroje.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "S phinem nehýbejte.",
-        "completion_criterion": "První kapka dopadla do šálku."
+        "completion_criterion": "První kapka dopadla do šálku.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: První kapka dopadla do šálku.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Ověřte, že první kapka proteče do dvou minut“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: První kapka dopadla do šálku.",
+        "concise.current_target": "Před 2:00 od začátku receptu podle konvence zdroje.",
+        "focused.numerical_or_state_target": "S phinem nehýbejte.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_gravity_14_118/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Nechte phin dokapat přibližně za pět minut.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Šálek je stabilní; nedotýkejte se horkého kovu.",
-        "completion_criterion": "Poslední kapka protekla přibližně za pět minut."
+        "completion_criterion": "Poslední kapka protekla přibližně za pět minut.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Poslední kapka protekla přibližně za pět minut.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Nechte phin dokapat přibližně za pět minut“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Poslední kapka protekla přibližně za pět minut.",
+        "concise.current_target": "Poslední kapky kolem 5:00",
+        "focused.numerical_or_state_target": "Šálek je stabilní; nedotýkejte se horkého kovu.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_gravity_14_118/stage_07": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Horký phin sejměte a zvolte způsob podávání.",
@@ -1606,77 +2575,122 @@
         "start_time_or_preceding_condition": "Po dokapání.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Phin položte na obrácené víko nebo tepelně odolnou podložku.",
-        "completion_criterion": "Koncentrát je podaný černý, zředěný, s ledem nebo s odměřeným kondenzovaným mlékem."
+        "completion_criterion": "Koncentrát je podaný černý, zředěný, s ledem nebo s odměřeným kondenzovaným mlékem.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Koncentrát je podaný černý, zředěný, s ledem nebo s odměřeným kondenzovaným mlékem.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Horký phin sejměte a zvolte způsob podávání“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Koncentrát je podaný černý, zředěný, s ledem nebo s odměřeným kondenzovaným mlékem.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Phin položte na obrácené víko nebo tepelně odolnou podložku.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_screw_18_120/stage_01": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Phin stabilně usaďte na šálek a přidejte 18 g zarovnané kávy.",
         "warning": "Horký kov a úzký šálek zvyšují riziko převrácení.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Otvory jsou průchodné; podložka je stabilní.",
-        "completion_criterion": "Kávové lože je rovné."
+        "completion_criterion": "Kávové lože je rovné.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Kávové lože je rovné.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Phin stabilně usaďte na šálek a přidejte 18 g zarovnané kávy“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Kávové lože je rovné.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Otvory jsou průchodné; podložka je stabilní.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_screw_18_120/stage_02": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "warning": "Vložku neutahujte příliš; phin funguje samospádem a nesmí se změnit v uzavřenou tlakovou nádobu.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Vložka je rovná; závity zabírají bez silného stlačení.",
-        "completion_criterion": "Kotouč spočívá na kávovém loži, ale nechává kávě prostor nabobtnat."
+        "completion_criterion": "Kotouč spočívá na kávovém loži, ale nechává kávě prostor nabobtnat.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Kotouč spočívá na kávovém loži, ale nechává kávě prostor nabobtnat.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Lehce zasuňte šroubovací vložku“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Kotouč spočívá na kávovém loži, ale nechává kávě prostor nabobtnat.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Vložka je rovná; závity zabírají bez silného stlačení.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_screw_18_120/stage_03": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Přelijte kávu 25 g horké vody.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Káva se pod vložkou předspařuje.",
-        "completion_criterion": "Voda proniká kávou a ta bobtná."
+        "completion_criterion": "Voda proniká kávou a ta bobtná.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Voda proniká kávou a ta bobtná.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Přelijte kávu 25 g horké vody“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Voda proniká kávou a ta bobtná.",
+        "concise.current_target": "25 g",
+        "focused.numerical_or_state_target": "25 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_screw_18_120/stage_04": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "start_time_or_preceding_condition": "Po předmáčení.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Samospádové odkapávání.",
-        "completion_criterion": "Komora je naplněná pod okraj."
+        "completion_criterion": "Komora je naplněná pod okraj.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Komora je naplněná pod okraj.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Naplňte, dokud váha neukáže celkem 120 g, a přikryjte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Komora je naplněná pod okraj.",
+        "concise.current_target": "120 g",
+        "focused.numerical_or_state_target": "120 g",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_screw_18_120/stage_05": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Sledujte první kapku a celkovou dobu přípravy.",
@@ -1684,24 +2698,262 @@
         "target_duration_or_range": "První kapka ideálně přibližně za 1–2 minuty; konec přibližně za 5–8 minut.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "S phinem nehýbejte, pokud se průtok zjevně nezastavil.",
-        "completion_criterion": "Pomalé rovnoměrné odkapávání skončilo."
+        "completion_criterion": "Pomalé rovnoměrné odkapávání skončilo.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Pomalé rovnoměrné odkapávání skončilo.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Sledujte první kapku a celkovou dobu přípravy“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Pomalé rovnoměrné odkapávání skončilo.",
+        "concise.current_target": "První kapka ideálně přibližně za 1–2 minuty; konec přibližně za 5–8 minut.",
+        "focused.numerical_or_state_target": "S phinem nehýbejte, pokud se průtok zjevně nezastavil.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     },
     "phin_screw_18_120/stage_06": {
-      "status": "in_progress",
+      "status": "ready_for_native_review",
       "reviewed_fields": [
         "action",
         "warning",
         "operational_fields",
-        "completion"
+        "completion",
+        "explanation",
+        "alt_text",
+        "concise",
+        "focused"
       ],
       "overrides": {
         "action": "Sejměte phin na obrácené víko a podávejte.",
         "warning": "Používejte tepelně odolnou ochranu.",
         "observable_signs": "Sledujte fyzický stav popsaný v ukazateli dokončení.",
         "equipment_state": "Horký phin stojí na tepelně odolném víku.",
-        "completion_criterion": "Koncentrát je připravený ke zvolenému způsobu podávání."
+        "completion_criterion": "Koncentrát je připravený ke zvolenému způsobu podávání.",
+        "full.concise_explanation": "Dokončete tento krok po splnění uvedeného cíle: Koncentrát je připravený ke zvolenému způsobu podávání.",
+        "full.accessible_alt_text": "Názorné zobrazení kroku „Sejměte phin na obrácené víko a podávejte“ s přesným typem kávovaru a filtrem určeným v receptu; stav po dokončení: Koncentrát je připravený ke zvolenému způsobu podávání.",
+        "concise.current_target": "Závisí na podmínkách",
+        "focused.numerical_or_state_target": "Horký phin stojí na tepelně odolném víku.",
+        "focused.next_action": "Po splnění ukazatele pokračujte dalším krokem."
       }
     }
-  }
+  },
+  "recipes": {
+    "v60_official_15_250": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Oficiální základní recept Hario V60 střední obtížnosti",
+        "recipe_approach": "Předspaření a pomalé souvislé nalévání krouživým pohybem."
+      }
+    },
+    "v60_rao_20_330": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Metoda Scotta Raa pro V60 se dvěma hlavními nálevy",
+        "recipe_approach": "Důrazné zakroužení při předspaření, dva hlavní nálevy a jemné zakroužení k usazení lože."
+      }
+    },
+    "v60_kasuya_4_6_20_300": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Metoda Tetsu Kasuyi 4:6",
+        "recipe_approach": "Pět oddělených nálevů; prvních 40% určuje vyvážení a zbývajících 60% sílu nápoje."
+      }
+    },
+    "v60_kurasu_flash_16_150_70": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Japonská ledová příprava Kurasu na V60",
+        "recipe_approach": "Koncentrovaná horká perkolace přímo na odměřený led."
+      }
+    },
+    "wave185_ozone_25_400": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Základní pulzní recept pro Kalita Wave 185",
+        "recipe_approach": "Předspaření a pět postupných nálevů do dripperu s plochým dnem."
+      }
+    },
+    "wedge_pulse_23_5_400": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Základní pulzní recept pro klínový/lichoběžníkový dripper",
+        "recipe_approach": "Předspaření a oddělené nálevy po 50–100 g."
+      }
+    },
+    "chemex_42_700": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Základní velkoobjemový recept pro karafu se silným papírovým filtrem",
+        "recipe_approach": "Předspaření a několik kontrolovaných nálevů přes silný lepený papírový filtr."
+      }
+    },
+    "generic_conical_low_agitation_20_320": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Obecný základní recept pro kuželový dripper s minimálním pohybem směsi",
+        "recipe_approach": "Důkladné předspaření a dva nálevy z malé výšky; bez zakroužení, pokud není potřeba."
+      }
+    },
+    "clever_water_first_15_250": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Základní recept Clever: nejprve voda, menší riziko ucpání",
+        "recipe_approach": "Nejprve voda, poté jemné přidání kávy, imerzní louhování a vypuštění v určeném čase."
+      }
+    },
+    "clever_coffee_first_15_250": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Běžný imerzní recept Clever: nejprve káva",
+        "recipe_approach": "Nejprve káva, poté voda, krátké promíchání, úplné imerzní louhování a vypuštění v určeném čase."
+      }
+    },
+    "switch_official_20_240": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Oficiální základní plně imerzní recept Hario Switch",
+        "recipe_approach": "Jednorázové imerzní louhování se zavřeným ventilem a následné otevření pákou."
+      }
+    },
+    "switch_ole_boen_hybrid_16_5_240": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Hybridní postup pro Switch od Oleho Bøena",
+        "recipe_approach": "Zavřené předspaření, otevřená gravitační fáze, uzavřená závěrečná imerzní fáze a konečné vypuštění."
+      }
+    },
+    "switch_gravity_15_250": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Běžný gravitační režim Switche",
+        "recipe_approach": "Běžné předspaření ve stylu V60 a gravitační perkolace s trvale otevřeným ventilem."
+      }
+    },
+    "cezve_turkish_single_rise_6_65": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Střídmá turecká metoda pro džezvu s jedním vzedmutím",
+        "recipe_approach": "Káva, voda a případně cukr se smíchají před mírným ohřevem; odstavte při prvním kontrolovaném vzedmutí pěny."
+      }
+    },
+    "cezve_bounded_repeated_rise_12_130": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Varianta pro džezvu s opakovaným kontrolovaným vzedmutím pěny",
+        "recipe_approach": "Mírný ohřev se dvěma kontrolovanými vzedmutími pěny a odstavením nádoby mezi nimi; bez plného varu."
+      }
+    },
+    "auto_batch_500_30": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Základní půllitrový automatický recept certifikovaného typu",
+        "recipe_approach": "Dávka 60 g/L, ohřev a distribuce řízené kávovarem, okamžité promíchání po přípravě."
+      }
+    },
+    "auto_batch_1000_60": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Základní automatický recept na jeden litr",
+        "recipe_approach": "Plná dávka 60 g/L, automatický cyklus a promíchání po přípravě."
+      }
+    },
+    "auto_cupone_20_300": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Automatický postup Cup-One pro jeden šálek bez kapslí",
+        "recipe_approach": "18–21 g kávy namleté na filtr, jeden plný zásobník a přibližně čtyřminutový automatický cyklus."
+      }
+    },
+    "phin_gravity_14_118": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Základní recept pro phin s gravitační vložkou",
+        "recipe_approach": "14 g kávy, 30 g vody na předspaření, doplnění do celkových 118 g, první kapka do dvou minut a dokončení přibližně za pět minut."
+      }
+    },
+    "phin_screw_18_120": {
+      "status": "ready_for_native_review",
+      "reviewed_fields": [
+        "recipe_name",
+        "recipe_approach"
+      ],
+      "overrides": {
+        "recipe_name": "Profil řízeného odkapávání pro phin se šroubovací vložkou",
+        "recipe_approach": "18 g kávy, lehké utažení šroubovací vložky, 25 g vody na předmáčení, celkem 120 g a samospádové odkapávání po dobu pěti až osmi minut."
+      }
+    }
+  },
+  "prepared_by": "Codex-assisted source-bound Czech editorial and brewing-domain pass",
+  "prepared_on": "2026-08-04"
 }
