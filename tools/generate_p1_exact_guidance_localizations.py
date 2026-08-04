@@ -50,6 +50,18 @@ REQUIRED_EDITORIAL_FIELDS = frozenset({
     "explanation", "alt_text", "concise", "focused",
 })
 REQUIRED_RECIPE_EDITORIAL_FIELDS = frozenset({"recipe_name", "recipe_approach"})
+REQUIRED_TERMINOLOGY_CONCEPTS = frozenset({
+    "brewer_dripper", "coffee_bed", "bloom", "grounds", "fines", "slurry",
+    "drawdown", "swirl_spin", "server_carafe", "steep_immersion", "valve",
+    "filter_paper",
+})
+TERMINOLOGY_REVIEW_STATUSES = frozenset({
+    "draft", "ready_for_native_review", "approved",
+})
+TERMINOLOGY_SOURCE_CATEGORIES = frozenset({
+    "manufacturer", "coffee_association", "specialty_educator",
+    "specialty_retailer", "academic",
+})
 
 
 class LocalizationError(RuntimeError):
@@ -266,6 +278,115 @@ def sanitize_translated_text(value: str) -> str:
     )
 
 
+def validate_terminology_review(
+    review: dict,
+    locale: str,
+    require_approved: bool,
+) -> None:
+    terminology = review.get("terminology_review")
+    if not isinstance(terminology, dict):
+        if require_approved:
+            raise LocalizationError(f"{locale}: terminology review is missing")
+        return
+
+    status = terminology.get("status")
+    if status not in TERMINOLOGY_REVIEW_STATUSES:
+        raise LocalizationError(f"{locale}: terminology review status is invalid")
+    sources = terminology.get("sources")
+    if not isinstance(sources, list) or len(sources) < 2:
+        raise LocalizationError(
+            f"{locale}: terminology review requires at least two sources",
+        )
+    source_ids: set[str] = set()
+    for source in sources:
+        if not isinstance(source, dict):
+            raise LocalizationError(f"{locale}: invalid terminology source")
+        source_id = source.get("id")
+        title = source.get("title")
+        url = source.get("url")
+        category = source.get("category")
+        if (
+            not isinstance(source_id, str) or not source_id.strip()
+            or not isinstance(title, str) or not title.strip()
+            or not isinstance(url, str) or not re.fullmatch(r"https://.+", url)
+            or category not in TERMINOLOGY_SOURCE_CATEGORIES
+        ):
+            raise LocalizationError(f"{locale}: incomplete terminology source")
+        if source_id in source_ids:
+            raise LocalizationError(f"{locale}: duplicate terminology source {source_id}")
+        source_ids.add(source_id)
+    if len({source["category"] for source in sources}) < 2:
+        raise LocalizationError(
+            f"{locale}: terminology sources must span at least two source categories",
+        )
+
+    concepts = terminology.get("concepts")
+    if not isinstance(concepts, dict):
+        raise LocalizationError(f"{locale}: terminology concepts are missing")
+    missing = REQUIRED_TERMINOLOGY_CONCEPTS - set(concepts)
+    if missing:
+        raise LocalizationError(
+            f"{locale}: terminology review is missing concepts: {sorted(missing)}",
+        )
+    for concept_id, concept in concepts.items():
+        if concept_id not in REQUIRED_TERMINOLOGY_CONCEPTS:
+            raise LocalizationError(
+                f"{locale}: unknown terminology concept {concept_id}",
+            )
+        if not isinstance(concept, dict):
+            raise LocalizationError(
+                f"{locale}: invalid terminology concept {concept_id}",
+            )
+        english = concept.get("canonical_english")
+        preferred = concept.get("preferred_terms")
+        accepted = concept.get("accepted_alternatives")
+        avoid = concept.get("avoid")
+        rationale = concept.get("rationale")
+        evidence = concept.get("evidence_source_ids")
+        if not isinstance(english, str) or not english.strip():
+            raise LocalizationError(
+                f"{locale}: {concept_id} canonical English term is missing",
+            )
+        if (
+            not isinstance(preferred, list) or not preferred
+            or any(not isinstance(term, str) or not term.strip() for term in preferred)
+        ):
+            raise LocalizationError(
+                f"{locale}: {concept_id} preferred terminology is missing",
+            )
+        if not isinstance(accepted, list) or any(
+            not isinstance(term, str) or not term.strip() for term in accepted
+        ):
+            raise LocalizationError(
+                f"{locale}: {concept_id} accepted alternatives are invalid",
+            )
+        if not isinstance(avoid, list) or any(
+            not isinstance(term, str) or not term.strip() for term in avoid
+        ):
+            raise LocalizationError(f"{locale}: {concept_id} avoid list is invalid")
+        if not isinstance(rationale, str) or not rationale.strip():
+            raise LocalizationError(f"{locale}: {concept_id} rationale is missing")
+        if (
+            not isinstance(evidence, list) or len(evidence) < 2
+            or any(source_id not in source_ids for source_id in evidence)
+        ):
+            raise LocalizationError(
+                f"{locale}: {concept_id} evidence sources are invalid",
+            )
+
+    if require_approved:
+        reviewer = terminology.get("reviewer")
+        reviewed_on = terminology.get("reviewed_on")
+        if status != "approved":
+            raise LocalizationError(f"{locale}: terminology review is not approved")
+        if not isinstance(reviewer, str) or not reviewer.strip():
+            raise LocalizationError(f"{locale}: terminology reviewer is missing")
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(reviewed_on or "")):
+            raise LocalizationError(
+                f"{locale}: terminology review date must use YYYY-MM-DD",
+            )
+
+
 def apply_editorial_review(
     source: dict,
     localized: dict,
@@ -286,6 +407,7 @@ def apply_editorial_review(
         raise LocalizationError(f"{locale}: editorial review belongs to another source")
     if review.get("locale") != locale:
         raise LocalizationError(f"{locale}: editorial review locale does not match")
+    validate_terminology_review(review, locale, require_approved)
     reviews = review.get("stages")
     if not isinstance(reviews, dict):
         raise LocalizationError(f"{locale}: editorial stage reviews are missing")

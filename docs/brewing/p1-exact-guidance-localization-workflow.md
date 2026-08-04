@@ -76,7 +76,11 @@ few stages.
    exactly match the canonical source.
 6. Confirm coffee-community terminology is natural for the target language;
    avoid literal general-language senses of brewer, grounds, bed, bloom, fines,
-   slurry, drawdown, spin, swirl, server, and dripper.
+   slurry, drawdown, spin, swirl, server, and dripper. Record the decision in
+   the editorial review's `terminology_review` crosswalk, including preferred
+   terms, accepted alternatives, misleading terms to avoid, and at least two
+   corroborating local-market sources per concept. Retain an English loanword
+   when independent evidence shows that it is the normal local coffee term.
 7. Confirm brand and model names remain correct.
 8. Confirm alt text accurately describes the accepted image without adding
    unsupported actions or invisible details.
@@ -98,6 +102,10 @@ The localization validator fails if a translation changes stable IDs, JSON
 structure, provenance, evidence, utilities, visual priority, source metadata,
 numeric tokens, `None` sentinels, correlated actions, completion cues, warnings,
 or practical tips. It also rejects blank output and excessive English fallback.
+Production promotion additionally requires a complete terminology crosswalk for
+all canonical brewing concepts, at least two cited sources from at least two
+source categories, two or more corroborating sources per concept, and a named,
+dated native coffee-domain approval.
 
 These checks establish structural and numerical safety. They do not replace the
 native-language and brewing-domain review above.
