@@ -66,7 +66,7 @@ class InstructionImageOrderTest {
                                 controlRequirements = emptyList(),
                                 warning = warning,
                                 utilities = emptyList(),
-                                altText = "Approved instructional illustration",
+                                altText = TEST_ALT_TEXT,
                                 safetyCritical = true,
                             ),
                         ),
@@ -77,7 +77,7 @@ class InstructionImageOrderTest {
             }
         }
 
-        assertTopToBottom(asset, instruction, warning)
+        assertTopToBottom(TEST_ALT_TEXT, instruction, warning)
     }
 
     @Test
@@ -131,7 +131,7 @@ class InstructionImageOrderTest {
         }
 
         assertTopToBottom(
-            asset,
+            TEST_ALT_TEXT,
             primaryInstruction,
             criticalWarning,
             supportingInstruction,
@@ -157,7 +157,7 @@ class InstructionImageOrderTest {
         controlRequirements = emptyList(),
         warning = warning,
         utilities = emptyList(),
-        altText = "Approved instructional illustration",
+        altText = TEST_ALT_TEXT,
         safetyCritical = safetyCritical,
     )
 
@@ -190,6 +190,7 @@ class InstructionImageOrderTest {
         val TEST_PROFILE = BrewerProfileId("v60_02")
         val TEST_STAGE = StageId("test_live_stage")
         val TEST_CONTENT = StageContentId("test_live_stage_content")
+        const val TEST_ALT_TEXT = "Approved instructional illustration"
     }
 
     private fun guidanceLevelLabel(): String {
@@ -200,10 +201,9 @@ class InstructionImageOrderTest {
         )
     }
 
-    private fun assertTopToBottom(asset: InstructionAssetRecord, vararg labels: String) {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
+    private fun assertTopToBottom(contentDescription: String, vararg labels: String) {
         val imageTop = composeRule
-            .onNodeWithContentDescription(context.getString(asset.altTextRes))
+            .onNodeWithContentDescription(contentDescription)
             .getBoundsInRoot()
             .top
         var previousTop = imageTop
