@@ -807,4 +807,12 @@
     <string name="label_brewer_profile_cezve_heat_open_flame">Open flame</string>
     <string name="label_brewer_profile_cezve_heat_portable_heater">Portable heater</string>
     <string name="msg_brewer_profile_cezve_heat_source_required">Select a heat source to continue.</string>
+    <string name="guidance_cue_beverage_yield_target">Tikslinis gėrimo kiekis</string>
+    <string name="guidance_cue_countdown_or_timestamp">Atgalinis skaičiavimas arba laiko žyma</string>
+    <string name="guidance_cue_cumulative_water_target">Tikslinis bendras vandens kiekis</string>
+    <string name="guidance_cue_current_pour_target">Dabartinio pylimo tikslas</string>
+    <string name="guidance_cue_elapsed_timer">Praėjęs laikas</string>
+    <string name="guidance_cue_heat_state">Kaitinimo būsena</string>
+    <string name="guidance_cue_stage_advance">Pereiti prie kito veiksmo</string>
+    <string name="guidance_cue_valve_state">Vožtuvo būsena</string>
 </resources>

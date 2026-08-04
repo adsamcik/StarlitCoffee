@@ -803,4 +803,12 @@
     <string name="label_brewer_profile_cezve_heat_open_flame">Open flame</string>
     <string name="label_brewer_profile_cezve_heat_portable_heater">Portable heater</string>
     <string name="msg_brewer_profile_cezve_heat_source_required">Select a heat source to continue.</string>
+    <string name="guidance_cue_beverage_yield_target">Zielmenge des Getränks</string>
+    <string name="guidance_cue_countdown_or_timestamp">Countdown oder Zeitmarke</string>
+    <string name="guidance_cue_cumulative_water_target">Kumulatives Wasserziel</string>
+    <string name="guidance_cue_current_pour_target">Ziel des aktuellen Aufgusses</string>
+    <string name="guidance_cue_elapsed_timer">Verstrichene Zeit</string>
+    <string name="guidance_cue_heat_state">Heizzustand</string>
+    <string name="guidance_cue_stage_advance">Weiter zum nächsten Schritt</string>
+    <string name="guidance_cue_valve_state">Ventilstatus</string>
 </resources>

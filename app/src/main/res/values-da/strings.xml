@@ -802,4 +802,12 @@
     <string name="label_brewer_profile_cezve_heat_open_flame">Open flame</string>
     <string name="label_brewer_profile_cezve_heat_portable_heater">Portable heater</string>
     <string name="msg_brewer_profile_cezve_heat_source_required">Select a heat source to continue.</string>
+    <string name="guidance_cue_beverage_yield_target">Mål for drikkeudbytte</string>
+    <string name="guidance_cue_countdown_or_timestamp">Nedtælling eller tidsmærke</string>
+    <string name="guidance_cue_cumulative_water_target">Mål for samlet vandmængde</string>
+    <string name="guidance_cue_current_pour_target">Mål for aktuel hældning</string>
+    <string name="guidance_cue_elapsed_timer">Forløbet tid</string>
+    <string name="guidance_cue_heat_state">Opvarmningstilstand</string>
+    <string name="guidance_cue_stage_advance">Fortsæt til næste trin</string>
+    <string name="guidance_cue_valve_state">Ventilstatus</string>
 </resources>

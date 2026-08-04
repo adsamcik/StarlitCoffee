@@ -799,4 +799,12 @@
     <string name="label_brewer_profile_cezve_heat_open_flame">Open flame</string>
     <string name="label_brewer_profile_cezve_heat_portable_heater">Portable heater</string>
     <string name="msg_brewer_profile_cezve_heat_source_required">Select a heat source to continue.</string>
+    <string name="guidance_cue_beverage_yield_target">目标饮品量</string>
+    <string name="guidance_cue_countdown_or_timestamp">倒计时或时间点</string>
+    <string name="guidance_cue_cumulative_water_target">累计注水目标</string>
+    <string name="guidance_cue_current_pour_target">当前注水目标</string>
+    <string name="guidance_cue_elapsed_timer">已用时间</string>
+    <string name="guidance_cue_heat_state">加热状态</string>
+    <string name="guidance_cue_stage_advance">进入下一步骤</string>
+    <string name="guidance_cue_valve_state">阀门状态</string>
 </resources>
