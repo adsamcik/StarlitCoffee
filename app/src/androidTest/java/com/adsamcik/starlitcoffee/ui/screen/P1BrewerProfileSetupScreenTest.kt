@@ -6,10 +6,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.hasScrollAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToNode
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.adsamcik.starlitcoffee.R
@@ -65,11 +68,14 @@ class P1BrewerProfileSetupScreenTest {
         setScreen(state)
 
         composeRule.onNodeWithText(sugarLabel).assertDoesNotExist()
-        composeRule.onNodeWithText(heatSourceTitle).performScrollTo().assertIsDisplayed()
+        composeRule.onNode(hasScrollAction()).performScrollToNode(hasText(heatSourceTitle))
+        composeRule.onNodeWithText(heatSourceTitle).assertIsDisplayed()
         composeRule.onNodeWithText(startLabel).assertIsDisplayed().assertIsNotEnabled()
 
-        composeRule.onNodeWithText(optionsTitle).performScrollTo().performClick()
-        composeRule.onNodeWithText(sugarLabel).performScrollTo().assertIsDisplayed()
+        composeRule.onNode(hasScrollAction()).performScrollToNode(hasText(optionsTitle))
+        composeRule.onNodeWithText(optionsTitle).performClick()
+        composeRule.onNode(hasScrollAction()).performScrollToNode(hasText(sugarLabel))
+        composeRule.onNodeWithText(sugarLabel).assertIsDisplayed()
     }
 
     @Test
