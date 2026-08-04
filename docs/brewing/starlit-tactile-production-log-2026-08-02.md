@@ -977,3 +977,41 @@ and individual light- and dark-theme phone inspection. Exact prompts, raw
 lineage, rejected candidates, and resolved regeneration todos remain in the
 tracker. Tracker, matrix, drawables, and runtime catalog now agree at 107
 accepted and 7 open.
+
+
+## Batch 20 completed 4 oz loose-disc gravity-phin sequence - 2026-08-04
+
+Nguyen Coffee Supply's current gravity-phin guidance was rechecked before the
+remaining stages were illustrated. This sequence remains bound to a compact
+4 oz stainless gravity phin, 14 g coffee, 118 g total water at 91-93 C, a loose
+perforated press with a center tab, a 30 g / 45 second bloom, first drip before
+two minutes, and an observation-driven last drop near five minutes. It does
+not transfer to threaded screw-insert phins or imply pressure brewing.
+
+Sources rechecked:
+
+- https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin
+- https://nguyencoffeesupply.com/blogs/news/how-to-make-vietnamese-coffee-use-the-phin-filter
+- https://nguyencoffeesupply.com/blogs/news/dialing-in-your-phin-how-to-make-the-best-vietnamese-phin-coffee
+
+| Sequence / stage | Accepted | Raw cache | WebP SHA-256 |
+| --- | --- | --- | --- |
+| Gravity phin 03 | starlit_tactile_v4 | exec-f275e993-1647-4598-9694-ca179f9a14d1.png | 85b5c2af7ea58d42aad6fd6ef8ac04b6d88a151526776ac3ef0057078c8ad149 |
+| Gravity phin 04 | starlit_tactile_v3 | exec-482a1ec3-f7c6-4876-a1cf-0be2e6ddd3df.png | 74f86b896524e9e234a709fea00aa65eb4dff6c8ffa42100376e422d1410dd33 |
+| Gravity phin 05 | starlit_tactile_v1 | exec-67011f15-9dd9-480d-b2df-01b725636013.png | 8cee0e6d97357cd2947775d08ad95ae1b1118eddaabeb7a208e5ccc0f43d8a32 |
+| Gravity phin 06 | starlit_tactile_v1 | exec-7f15b233-dd7b-4bd4-9937-c14e43a5d4cc.png | 7c95ea55631193a440280ba6ced1d0a03a2b387607bc39c2625df3c09eb95af4 |
+
+Five rejected attempts remain in the tracker with resolved regeneration todos.
+They cover cropped kettles and hands, an already-full receiving cup during the
+bloom, a physically impossible kettle charging base under a hand-held pour,
+opaque upper-reservoir liquid, and inverted chroma/background surfaces. The
+accepted fill frame uses a clean explanatory cutaway to keep the clear
+below-rim water level, loose disc, granular bed, continuous outlet, and nearly
+empty receiving cup legible at phone size.
+
+All four retained frames passed full-resolution mechanics review, exact 4:3
+validation, chroma and alpha processing, static 1024 by 768 WebP validation,
+and individual light- and dark-theme phone inspection. Exact prompts, raw
+lineage, rejected candidates, and resolved regeneration todos remain in the
+tracker. Tracker, matrix, drawables, and runtime catalog now agree at 111
+accepted and 3 open.

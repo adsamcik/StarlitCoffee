@@ -4304,17 +4304,64 @@
       "blocker": "NONE-PHIN-MECHANISM",
       "matrix_line": 450,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_gravity_14_118_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-15a1ad13-c4db-4b42-9fd2-84d10420f0fe.png",
+          "issues": [
+            "The gravity-disc bloom state is mechanically plausible, but the kettle body is cut by the top and right canvas edges and overwhelms the contained app-card composition."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "2"
+          }
+        },
+        {
+          "revision": "2",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_gravity_14_118_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-6ab36b1e-44c9-4bba-9a4b-5c2e28f623c8.png",
+          "issues": [
+            "Raw QA: bloom state is inaccurate because the cup is already nearly full; the hand is cropped at the right canvas edge, violating the safe-margin composition."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "3"
+          }
+        },
+        {
+          "revision": "3",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_gravity_14_118_stage_03_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-db050604-5bee-47c8-9890-2ff5f75deca4.png",
+          "issues": [
+            "Raw QA: an unnecessary electric-kettle charging base remains below the hand-held kettle during the pour, creating a physically impossible floating relationship and avoidable visual noise."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "4"
+          }
+        },
+        {
+          "revision": "4",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_gravity_14_118_stage_03_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-f275e993-1647-4598-9694-ca179f9a14d1.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Accepted after raw and one-by-one light/dark phone QA: complete hand-held kettle with no impossible base, empty receiving cup, shallow loose-disc bloom, no screw hardware, clean safe margins and theme-readable matte."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_03_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Accepted after raw and one-by-one light/dark phone QA: complete hand-held kettle with no impossible base, empty receiving cup, shallow loose-disc bloom, no screw hardware, clean safe margins and theme-readable matte."
     },
     {
       "asset_id": "instruction_p1_phin_gravity_14_118_stage_04_instruction_default",
@@ -4322,17 +4369,51 @@
       "blocker": "NONE-PHIN-MECHANISM",
       "matrix_line": 451,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_gravity_14_118_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-4693ac21-92c7-4e2d-9c05-9c028e8f873a.png",
+          "issues": [
+            "Filled chamber reads as dark coffee instead of clear hot water, and the cup is already too full for the just-completed main fill."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "2"
+          }
+        },
+        {
+          "revision": "2",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_gravity_14_118_stage_04_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-e86ac9bf-0489-40c6-8f96-5c1442e79bb5.png",
+          "issues": [
+            "Raw QA: main-fill state does not show clear water in the chamber, the receiving cup is already too full, and the generator inverted the pure-green chroma background into an internal blob."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "3"
+          }
+        },
+        {
+          "revision": "3",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_gravity_14_118_stage_04_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-482a1ec3-f7c6-4876-a1cf-0be2e6ddd3df.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Accepted after raw and one-by-one light/dark phone QA: exact loose-disc no-screw stack, clear below-rim fill, lid poised to cover, nearly empty cup, continuous central drip, clean transparent matte in both themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_04_instruction_default/starlit_tactile_v3.webp",
+      "notes": "Accepted after raw and one-by-one light/dark phone QA: exact loose-disc no-screw stack, clear below-rim fill, lid poised to cover, nearly empty cup, continuous central drip, clean transparent matte in both themes."
     },
     {
       "asset_id": "instruction_p1_phin_gravity_14_118_stage_05_instruction_default",
@@ -4340,17 +4421,25 @@
       "blocker": "NONE-PHIN-MECHANISM",
       "matrix_line": 452,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_gravity_14_118_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-67011f15-9dd9-480d-b2df-01b725636013.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Both phone themes preserve the covered undisturbed gravity phin, stable flange, exactly one first drop, nearly empty cup, clean perimeter, and readable contrast."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Both phone themes preserve the covered undisturbed gravity phin, stable flange, exactly one first drop, nearly empty cup, clean perimeter, and readable contrast."
     },
     {
       "asset_id": "instruction_p1_phin_gravity_14_118_stage_06_instruction_default",
@@ -4358,17 +4447,25 @@
       "blocker": "NONE-PHIN-MECHANISM",
       "matrix_line": 453,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_phin_gravity_14_118_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-7f15b233-dd7b-4bd4-9937-c14e43a5d4cc.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Both phone themes preserve the covered drained gravity phin, isolated final drop, clearly higher smooth concentrate level, stable cup, clean perimeter, and readable contrast."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_gravity_14_118_stage_06_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Both phone themes preserve the covered drained gravity phin, isolated final drop, clearly higher smooth concentrate level, stable cup, clean perimeter, and readable contrast."
     },
     {
       "asset_id": "instruction_p1_phin_gravity_14_118_stage_07_instruction_default",
