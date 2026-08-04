@@ -2539,17 +2539,51 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 320,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_official_20_240_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-e79fa15c-fff2-4ba2-b702-73c9d815fb08.png",
+          "issues": [
+            "Granular coffee texture fills the retained 240 g volume, so the smooth liquid body is not safely distinguishable from grounds."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_official_20_240_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-c47e8799-80ab-4505-99f0-e4edc6fe962d.png",
+          "issues": [
+            "The organic espresso stage is entirely missing, and the kettle is severely cropped at the canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_official_20_240_stage_02_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-4cd66972-cc04-4f6c-bfc9-20a588403927.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Third revision passes full-resolution and both phone-theme reviews: contained water-in action, smooth retained liquid with thin granular surface, seated closed ball, dry outlet, and empty server remain readable."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_02_instruction_default/starlit_tactile_v3.webp",
+      "notes": "Third revision passes full-resolution and both phone-theme reviews: contained water-in action, smooth retained liquid with thin granular surface, seated closed ball, dry outlet, and empty server remain readable."
     },
     {
       "asset_id": "instruction_p1_switch_official_20_240_stage_03_instruction_default",
@@ -2557,17 +2591,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 321,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_official_20_240_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-7fe64912-4d70-4583-852c-0107710715df.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Full-resolution and both phone-theme reviews pass: smooth quiet retained liquid, thin surface raft, seated ball, dry outlet, and empty server communicate the closed steep."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_03_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Full-resolution and both phone-theme reviews pass: smooth quiet retained liquid, thin surface raft, seated ball, dry outlet, and empty server communicate the closed steep."
     },
     {
       "asset_id": "instruction_p1_switch_official_20_240_stage_04_instruction_default",
@@ -2587,17 +2629,64 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 323,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_official_20_240_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-279496e5-5254-4210-88dd-617d659a08a9.png",
+          "issues": [
+            "The supposedly open completion state depicts the steel ball visibly seated on the outlet rather than raised clear by the lever."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_official_20_240_stage_05_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-ce8a0973-53de-478c-833d-a23acf63e01b.png",
+          "issues": [
+            "The frame has a black full-canvas background plus an unrelated bright-green blob inside it, and the spent bed remains implausibly deep."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_official_20_240_stage_05_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-bf230ba4-4cb5-4817-a71a-86845c0d116d.png",
+          "issues": [
+            "The organic composition is corrected, but the 20 g spent bed still appears as a deep opaque grounds column occupying much of the cone."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_official_20_240_stage_05_instruction_default/starlit_tactile_v4_reuse.txt",
+          "verdict": "accepted",
+          "reused_from": "instruction_p1_switch_gravity_15_250_stage_04_instruction_default",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Qualified identical completion-state reuse passes both themes: open raised-ball mechanism, drained bed, final isolated drop, and finished server encode the official no-standing-water cue; removal wording remains in text."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_05_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Qualified identical completion-state reuse passes both themes: open raised-ball mechanism, drained bed, final isolated drop, and finished server encode the official no-standing-water cue; removal wording remains in text."
     },
     {
       "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default",
@@ -2642,17 +2731,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 336,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-5f106445-45cb-4781-b710-91641b5a16d9.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Full-resolution and both phone-theme reviews pass: contained center pour, raised-ball gap, continuous inlet and outlet paths, and low early server level communicate open hybrid percolation."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_02_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Full-resolution and both phone-theme reviews pass: contained center pour, raised-ball gap, continuous inlet and outlet paths, and low early server level communicate open hybrid percolation."
     },
     {
       "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default",
@@ -2710,17 +2807,64 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 339,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-9b21409d-d700-4d14-a796-8af86fe4a636.png",
+          "issues": [
+            "The open lever is paired with a steel ball visibly seated on the outlet, and the drained 16.5 g bed is depicted as an implausibly deep granular mass."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-b8e11cd0-f4c0-4a83-806e-57f264a719c8.png",
+          "issues": [
+            "An unnecessary cropped finger touches the lever at the canvas edge and the close crop leaves inadequate transparent breathing room."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-f6cbadf8-f4f2-4d7f-a4ce-71e4264a1d3f.png",
+          "issues": [
+            "The hand is removed and valve is clear, but the drained 16.5 g bed remains an implausibly deep grounds mass."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default/starlit_tactile_v4_reuse.txt",
+          "verdict": "accepted",
+          "reused_from": "instruction_p1_switch_gravity_15_250_stage_04_instruction_default",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Qualified identical completion-state reuse passes both themes: open raised-ball mechanism, drained bed, final isolated drop, and finished server communicate completed hybrid drawdown without making quantity or timing claims."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Qualified identical completion-state reuse passes both themes: open raised-ball mechanism, drained bed, final isolated drop, and finished server communicate completed hybrid drawdown without making quantity or timing claims."
     },
     {
       "asset_id": "instruction_p1_switch_gravity_15_250_stage_01_instruction_default",
@@ -2776,17 +2920,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 352,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_gravity_15_250_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-9b282007-43b5-4cf9-b4e7-dddcce4694fb.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Full-resolution and both phone-theme reviews pass: modest wet bloom, raised ball, continuous water-in and coffee-out paths, and very low server level communicate open gravity blooming."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_gravity_15_250_stage_02_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Full-resolution and both phone-theme reviews pass: modest wet bloom, raised ball, continuous water-in and coffee-out paths, and very low server level communicate open gravity blooming."
     },
     {
       "asset_id": "instruction_p1_switch_gravity_15_250_stage_03_instruction_default",
@@ -2794,17 +2946,77 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 353,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_gravity_15_250_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-caf47a26-97ab-4dca-98f4-166f8b11825e.png",
+          "issues": [
+            "The ball-to-seat gap is visually ambiguous: the ball appears seated even though an outlet stream is shown, so the open-valve physics are self-contradictory."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_gravity_15_250_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-96473cdf-9856-4153-a9ac-9cbfeba39933.png",
+          "issues": [
+            "The organic espresso stage is missing; the inlet stream and finger are cropped by canvas edges, so the action will not survive transparent integration."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_gravity_15_250_stage_03_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-5a98558a-a8b9-4046-82ea-6aae717ffa65.png",
+          "issues": [
+            "The revision again omits the espresso organic stage, and the forearm terminates at the right canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_gravity_15_250_stage_03_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-1a027f52-e724-4aa5-aef0-062d9966fcc8.png",
+          "issues": [
+            "The contained composition is restored, but the ball still reads as resting on a dark pedestal rather than clearly separated from the seat by an air gap."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v5"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v5",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_gravity_15_250_stage_03_instruction_default/starlit_tactile_v5.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-2a20a7e8-86fa-4b5e-86aa-012dad8436c2.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Fifth revision passes full-resolution and both phone-theme reviews: complete contained kettle action, separate continuous inlet/outlet paths, raised ball with visible gap, and mid-level server communicate the main open-gravity pour."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v5",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_gravity_15_250_stage_03_instruction_default/starlit_tactile_v5.webp",
+      "notes": "Fifth revision passes full-resolution and both phone-theme reviews: complete contained kettle action, separate continuous inlet/outlet paths, raised ball with visible gap, and mid-level server communicate the main open-gravity pour."
     },
     {
       "asset_id": "instruction_p1_switch_gravity_15_250_stage_04_instruction_default",
@@ -2812,17 +3024,38 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 354,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_gravity_15_250_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-9654d4c2-6660-4e48-9808-b90f5b48faf4.png",
+          "issues": [
+            "The steel ball is visibly seated despite the required open-throughout state, and the drained 15 g bed is depicted much too deep."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_switch_gravity_15_250_stage_04_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-fe36176c-dd80-4c8c-b31b-713193f33046.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Second revision passes full-resolution and both phone-theme reviews: shallow drained bed, raised ball with visible gap, one isolated final drop, and high finished server communicate completed open gravity drawdown."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_gravity_15_250_stage_04_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Second revision passes full-resolution and both phone-theme reviews: shallow drained bed, raised ball with visible gap, one isolated final drop, and high finished server communicate completed open gravity drawdown."
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default",

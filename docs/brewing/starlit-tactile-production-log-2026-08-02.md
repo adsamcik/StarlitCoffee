@@ -882,3 +882,49 @@ processing, static 1024 by 768 WebP validation, and separate light- and
 dark-theme phone inspection. Exact prompts, rejected raws, lineage, and every
 resolved regeneration todo remain in the tracker. Tracker, matrix, drawables,
 and generated runtime catalog now agree at 89 accepted and 25 open.
+
+## Batch 18 completed Hario Switch official, hybrid, and gravity sequences - 2026-08-04
+
+Hario and Kurasu guidance were rechecked before completing the three distinct
+Switch workflows. The official baseline retains 20 g coffee and 240 g water
+behind a seated steel ball for two minutes, then opens the valve. The Ole
+Kristian Boen hybrid preserves a retained bloom, an open 100 g percolation
+phase to 150 g cumulative, a separately retained final pour to 240 g, and a
+final open release. Gravity mode keeps the same Switch 02 and V60 02 paper but
+holds the valve open throughout, so bloom and main pour both show simultaneous
+water-in and coffee-out paths rather than an immersion pool.
+
+Sources rechecked:
+
+- https://global.hario.com/pdf2019/2019HARIO_GC_COFFEE_EN.pdf
+- https://kurasu.kyoto/blogs/kurasu-journal/switch
+- https://global.hario.com/pdf2020/2020catalog.pdf
+
+| Sequence / stage | Accepted | Raw cache or reuse | WebP SHA-256 |
+| --- | --- | --- | --- |
+| Official 02 | starlit_tactile_v3 | exec-4cd66972-cc04-4f6c-bfc9-20a588403927.png | 869c4dff62f9e28680f61537bff950988ac7e4080ab9d57b71667c55247aa76f |
+| Official 03 | starlit_tactile_v1 | exec-7fe64912-4d70-4583-852c-0107710715df.png | 2b88996ddff36b7fc9b38c5e77a37cee9fc38e4af813139297f14830153fd6cf |
+| Official 05 | starlit_tactile_v4 | Qualified reuse of gravity 04 | a41f247a9d6d070365ecb4a5de3bef24f3bbf520a6921195b90401ae08aeca77 |
+| Hybrid 02 | starlit_tactile_v1 | exec-5f106445-45cb-4781-b710-91641b5a16d9.png | 2a8ede8c047d4415b8672ff0f219fc82a52b6b20c2de9a396e0627a34f3f54a1 |
+| Hybrid 05 | starlit_tactile_v4 | Qualified reuse of gravity 04 | a41f247a9d6d070365ecb4a5de3bef24f3bbf520a6921195b90401ae08aeca77 |
+| Gravity 02 | starlit_tactile_v1 | exec-9b282007-43b5-4cf9-b4e7-dddcce4694fb.png | 5eff219316ef166577c55ea5c6fff1b151e09ba9f32529d9bddceee3da3e515e |
+| Gravity 03 | starlit_tactile_v5 | exec-2a20a7e8-86fa-4b5e-86aa-012dad8436c2.png | 6badafba4a95a2510d5418a78d32dcda1d8dd8c4b505d2696fc3a633d4fc25db |
+| Gravity 04 | starlit_tactile_v2 | exec-fe36176c-dd80-4c8c-b31b-713193f33046.png | a41f247a9d6d070365ecb4a5de3bef24f3bbf520a6921195b90401ae08aeca77 |
+
+The central ball-valve mechanics required repeated rejection. Failed frames
+paired an open lever with a seated ball, showed coffee despite no visible
+ball-seat gap, or fixed the gap while dropping the organic stage and cropping
+kettle or hand gestures. Other rejections covered granular texture through a
+full retained liquid volume, implausibly deep drained beds, and a stray green
+shape inside a black full-canvas background. Gravity main-pour v5 is the first
+candidate that preserves a contained complete gesture, separate continuous
+inlet and outlet paths, and a visibly raised ball at once.
+
+The official and hybrid completion cards reuse the accepted gravity-completion
+art because their visible completion state is identical: the same Switch 02
+hardware is open, the ball is raised, the bed is drained, and the finished
+server is below. Recipe-specific dose, water, timing, and removal wording remain
+in text; the shared visual makes no numeric claim. Every retained state passed
+full-resolution mechanics review, transparent processing, static 1024 by 768
+WebP validation, and separate light- and dark-theme phone inspection. Tracker,
+matrix, drawables, and runtime catalog now agree at 97 accepted and 17 open.
