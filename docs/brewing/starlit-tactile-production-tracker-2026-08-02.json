@@ -1793,17 +1793,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 254,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_chemex_42_700_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-2659f34e-6419-492a-aeb9-6c72b7188049.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The bonded filter is uniformly wet, three layers preserve the visible spout vent, the preheated carafe is empty, and both phone themes pass."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_chemex_42_700_stage_02_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The bonded filter is uniformly wet, three layers preserve the visible spout vent, the preheated carafe is empty, and both phone themes pass."
     },
     {
       "asset_id": "instruction_p1_chemex_42_700_stage_03_instruction_default",
@@ -1811,17 +1819,39 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 255,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_chemex_42_700_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-51248dfc-ff87-416e-8da6-9198ce541c35.png",
+          "issues": [
+            "The pouring sleeve is visibly cut by the left canvas edge, violating the required transparent perimeter and contained gesture.",
+            "Coffee below the filter is depicted as multiple disconnected simultaneous drops instead of one continuous gravity-readable outlet path."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_chemex_42_700_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-b495cabf-e76e-4ca0-92be-670bc288b4cd.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The contained bloom gesture shows a fully wet granular bed, continuous inlet and outlet paths, a thin first puddle, open vent, and clean dual-theme rendering."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_chemex_42_700_stage_03_instruction_default/starlit_tactile_v2.webp",
+      "notes": "The contained bloom gesture shows a fully wet granular bed, continuous inlet and outlet paths, a thin first puddle, open vent, and clean dual-theme rendering."
     },
     {
       "asset_id": "instruction_p1_chemex_42_700_stage_04_instruction_default",
@@ -1829,17 +1859,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 256,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_chemex_42_700_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-70bff835-f948-4c29-b7a0-dbb57a29340f.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The controlled mid-pour keeps safe slurry headroom and the vent open while continuous water and coffee paths lead to a middle beverage level in both themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_chemex_42_700_stage_04_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The controlled mid-pour keeps safe slurry headroom and the vent open while continuous water and coffee paths lead to a middle beverage level in both themes."
     },
     {
       "asset_id": "instruction_p1_chemex_42_700_stage_05_instruction_default",
@@ -1847,17 +1885,38 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 257,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_chemex_42_700_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-406e0885-27d2-4bf6-9c4d-25db40383ecc.png",
+          "issues": [
+            "The purported 700 g final-pour state leaves the lower bulb only around half full, visibly below the accepted final drawdown level and inconsistent with ordered liquid progression."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_chemex_42_700_stage_05_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-b941be82-724a-440e-842d-4d2792321a01.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The final controlled pour preserves safe slurry headroom, open vent and continuous flows while the carafe reaches the correct high final level in both themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_chemex_42_700_stage_05_instruction_default/starlit_tactile_v2.webp",
+      "notes": "The final controlled pour preserves safe slurry headroom, open vent and continuous flows while the carafe reaches the correct high final level in both themes."
     },
     {
       "asset_id": "instruction_p1_chemex_42_700_stage_06_instruction_default",
@@ -1865,17 +1924,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 258,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_chemex_42_700_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-d1445594-a77d-42c0-b753-a1b2f7189608.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The no-kettle completion frame shows a low damp granular bed, open spout vent, one isolated final drop and the high finished beverage in both themes."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_chemex_42_700_stage_06_instruction_default/starlit_tactile_v1.webp",
+      "notes": "The no-kettle completion frame shows a low damp granular bed, open spout vent, one isolated final drop and the high finished beverage in both themes."
     },
     {
       "asset_id": "instruction_p1_chemex_42_700_stage_07_instruction_default",
@@ -1883,17 +1950,38 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 259,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_chemex_42_700_stage_07_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-fcc4815d-2a8b-4070-ae15-3baad90a2bf4.png",
+          "issues": [
+            "The carafe is upright and the beverage surface is flat, so the card reads as merely holding the carafe rather than gently swirling it."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_chemex_42_700_stage_07_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-3e1b6635-88d8-4051-bfea-dfd40552d558.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The filter-free carafe is safely held at the wooden collar with a slight tilt and banked liquid that reads as a gentle swirl without arrows or splashing in either theme."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_chemex_42_700_stage_07_instruction_default/starlit_tactile_v2.webp",
+      "notes": "The filter-free carafe is safely held at the wooden collar with a slight tilt and banked liquid that reads as a gentle swirl without arrows or splashing in either theme."
     },
     {
       "asset_id": "instruction_p1_generic_conical_low_agitation_20_320_stage_01_instruction_default",

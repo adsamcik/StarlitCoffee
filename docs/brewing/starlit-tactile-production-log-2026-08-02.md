@@ -740,3 +740,52 @@ WebP checks, plus separate light- and dark-theme phone inspection. Exact prompts
 raw cache IDs, and all rejection/regeneration todos remain in the tracker.
 Tracker, matrix, drawables, and generated runtime catalog now agree at 72
 accepted and 42 open.
+
+
+## Batch 15 completed six-cup Chemex sequence - 2026-08-04
+
+Current first-party Chemex guidance was rechecked before production. The
+retained sequence uses the six-cup Classic carafe, a bonded filter with three
+leaves over the pouring spout and one opposite, and a visibly open spout air
+channel. Rinsing remains optional in the manufacturer guidance; this recipe's
+rinse stage ends only after the rinse is discarded. Chemex's current guide
+also corroborates medium-coarse grounds, a fully wet bloom, safe headroom, slow
+controlled pouring, and filter removal after the desired brew is complete.
+
+The 42 g / 700 g schedule, 100-125 g bloom, 400 g intermediate target,
+94-96 degrees C starting range, and common 5:00-6:30 completion range remain
+explicitly classified as expert synthesis rather than an official named
+Chemex recipe. The artwork encodes only supported equipment and observable
+physical states; quantities and timing remain in stage text.
+
+Sources rechecked:
+
+- https://chemexcoffeemaker.com/pages/faq
+- https://chemexcoffeemaker.com/pages/filter-series-support-page
+- https://chemexcoffeemaker.com/pages/classic-series-product-support
+- https://chemexcoffeemaker.com/collections/classic-series-nav/products/six-cup-classic-chemex
+
+| Stage | Accepted | Raw cache | WebP SHA-256 |
+| --- | --- | --- | --- |
+| 02 | starlit_tactile_v1 | exec-2659f34e-6419-492a-aeb9-6c72b7188049.png | 1d63a8df04253bcb7bdf480c3b1ba8f640b3587a477cde4adce87ac5505d5ea6 |
+| 03 | starlit_tactile_v2 | exec-b495cabf-e76e-4ca0-92be-670bc288b4cd.png | ee6e2cf90feda0fa6d92c5d0789aac5054cdeb16bd4c66871377a44611290e3c |
+| 04 | starlit_tactile_v1 | exec-70bff835-f948-4c29-b7a0-dbb57a29340f.png | 195e416467ea65e5294b97449ce6f24ee7ff38570f760a89ff37bb2fc2b6c32d |
+| 05 | starlit_tactile_v2 | exec-b941be82-724a-440e-842d-4d2792321a01.png | d3dc2e0af6083266c0edd1ae2cb2e3e294c05db5d5d8b623b9647fc4a1257edf |
+| 06 | starlit_tactile_v1 | exec-d1445594-a77d-42c0-b753-a1b2f7189608.png | e6e4c7666c016e3ab8d597db351d3f9143823091ab11833498dda22c42d9e729 |
+| 07 | starlit_tactile_v2 | exec-3e1b6635-88d8-4051-bfea-dfd40552d558.png | 0fc6f4b8d42c4f6498661d761bfffda388c005332cc887e90911030a84ce8135 |
+
+Bloom v1 was rejected because its sleeve was cut by the canvas and its outlet
+coffee became multiple disconnected drops. V2 contains the complete gesture
+and separate continuous water-in and coffee-out paths. Final-pour v1 was
+rejected for a beverage level visibly below the finished frame; v2 restores
+strict liquid progression. Swirl v1 read only as holding an upright carafe;
+v2 uses a slight safe tilt and restrained banked liquid surface to communicate
+gentle mixing without arrows, splashing, or clutter.
+
+All retained frames passed full-resolution mechanics review, transparent-edge
+processing, static 1024 by 768 WebP validation, and individual light- and
+dark-theme phone inspection. The sequence reads at card size as empty rinsed
+carafe, bloom puddle, middle level, high final-pour level, completed drawdown,
+and filter-free gentle swirl. Exact prompts, raw lineage, and every rejected
+attempt remain tracked. Tracker, matrix, drawables, and generated runtime
+catalog now agree at 78 accepted and 36 open.
