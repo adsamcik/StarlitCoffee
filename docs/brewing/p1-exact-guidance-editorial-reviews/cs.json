@@ -1,0 +1,1073 @@
+{
+  "schema_version": 1,
+  "source_sha256": "4811810d2b6e2e4739bb507a95e0e427c170efcd0d0d795c2f417a6012a48228",
+  "locale": "cs",
+  "status": "in_progress",
+  "stages": {
+    "v60_official_15_250/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_official_15_250/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Přidejte 15 g kávy a zarovnejte kávové lože."
+      }
+    },
+    "v60_official_15_250/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Proveďte předspaření a navlhčete veškerou kávu."
+      }
+    },
+    "v60_official_15_250/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Vodu lijte hlavně na kávové lože, ne přímo po stěně papírového filtru."
+      }
+    },
+    "v60_official_15_250/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Počkejte na dokapání a dripper sejměte."
+      }
+    },
+    "v60_rao_20_330/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_rao_20_330/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Nalijte 60 g a při předspaření dripper důrazně zakružte.",
+        "warning": "Důrazné zakroužení při předspaření patří jen k tomuto receptu; příliš dlouhé kroužení může přesunout jemné částice kávy."
+      }
+    },
+    "v60_rao_20_330/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_rao_20_330/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Velmi jemně zakružte, aby se kávové lože usadilo."
+      }
+    },
+    "v60_rao_20_330/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Počkejte, až odteče asi 70% vody, potom dolijte do 330 g."
+      }
+    },
+    "v60_rao_20_330/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Naposledy velmi jemně zakružte a nechte kávu dokapat."
+      }
+    },
+    "v60_kasuya_4_6_20_300/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_kasuya_4_6_20_300/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_kasuya_4_6_20_300/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_kasuya_4_6_20_300/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_kasuya_4_6_20_300/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_kasuya_4_6_20_300/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_kasuya_4_6_20_300/stage_07": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "V cílovém čase dripper sejměte."
+      }
+    },
+    "v60_kurasu_flash_16_150_70/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_kurasu_flash_16_150_70/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_kurasu_flash_16_150_70/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_kurasu_flash_16_150_70/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "v60_kurasu_flash_16_150_70/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Nechte kávu dokapat a rozpustit led určený k přípravě."
+      }
+    },
+    "v60_kurasu_flash_16_150_70/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wave185_ozone_25_400/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wave185_ozone_25_400/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Předspařte 50 g vody."
+      }
+    },
+    "wave185_ozone_25_400/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wave185_ozone_25_400/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wave185_ozone_25_400/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wave185_ozone_25_400/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wave185_ozone_25_400/stage_07": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wave185_ozone_25_400/stage_08": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Nechte kávu dokapat."
+      }
+    },
+    "wedge_pulse_23_5_400/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wedge_pulse_23_5_400/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Předspařte 50 g vody."
+      }
+    },
+    "wedge_pulse_23_5_400/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wedge_pulse_23_5_400/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wedge_pulse_23_5_400/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "wedge_pulse_23_5_400/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Dolijte 100 g do celkových 400 g a nechte kávu dokapat.",
+        "warning": "Nelijte přímo na papír po stranách, kde se u zúženého výstupu mohou hromadit jemné částice kávy."
+      }
+    },
+    "chemex_42_700/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Složený filtr vložte tak, aby tři vrstvy překrývaly výlevku.",
+        "warning": "Uzavřený vzduchový kanál může zastavit průtok nebo způsobit náhlé vychrstnutí horké kávy."
+      }
+    },
+    "chemex_42_700/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "chemex_42_700/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Předspařte 100–125 g vody."
+      }
+    },
+    "chemex_42_700/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "chemex_42_700/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "chemex_42_700/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "chemex_42_700/stage_07": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Před podáváním karafou jemně zakružte."
+      }
+    },
+    "generic_conical_low_agitation_20_320/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "generic_conical_low_agitation_20_320/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Předspařte 50–60 g vody a navlhčete veškerou kávu."
+      }
+    },
+    "generic_conical_low_agitation_20_320/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "generic_conical_low_agitation_20_320/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "generic_conical_low_agitation_20_320/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "clever_water_first_15_250/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "clever_water_first_15_250/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "clever_water_first_15_250/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "clever_water_first_15_250/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Nechte kávu louhovat a potom ji jemně promíchejte."
+      }
+    },
+    "clever_water_first_15_250/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Postavte Clever na servírovací nádobu a otevřete tak ventil.",
+        "warning": "Servírovací nádoba musí být stabilní a dostatečně velká."
+      }
+    },
+    "clever_water_first_15_250/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Po úplném dokapání dripper sejměte."
+      }
+    },
+    "clever_coffee_first_15_250/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "clever_coffee_first_15_250/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Příliš intenzivní míchání může zanést jemné částice kávy na papírový filtr."
+      }
+    },
+    "clever_coffee_first_15_250/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Nechte kávu louhovat."
+      }
+    },
+    "clever_coffee_first_15_250/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Postavte dripper na servírovací nádobu a nechte jej dokapat.",
+        "warning": "Nepoužívejte příliš malý nebo nestabilní šálek."
+      }
+    },
+    "switch_official_20_240/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Vložte a propláchněte papírový filtr V60 02 a potom uzavřete ventil Switche."
+      }
+    },
+    "switch_official_20_240/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "switch_official_20_240/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Nechte kávu louhovat."
+      }
+    },
+    "switch_official_20_240/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Nedotýkejte se horkého skla ani kovu."
+      }
+    },
+    "switch_official_20_240/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Sledujte dokapávání a poté Switch sejměte."
+      }
+    },
+    "switch_ole_boen_hybrid_16_5_240/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Uzavřete ventil Switche a předspařte 50 g vody."
+      }
+    },
+    "switch_ole_boen_hybrid_16_5_240/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "switch_ole_boen_hybrid_16_5_240/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "switch_ole_boen_hybrid_16_5_240/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "switch_ole_boen_hybrid_16_5_240/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Nechte kávu zcela dokapat."
+      }
+    },
+    "switch_gravity_15_250/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Otevřete ventil Switche a propláchněte papírový filtr V60 02."
+      }
+    },
+    "switch_gravity_15_250/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "switch_gravity_15_250/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "switch_gravity_15_250/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Nechte kávu zcela dokapat."
+      }
+    },
+    "cezve_turkish_single_rise_6_65/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Do džezvy přidejte 65 g studené vody, 6 g velmi jemně mleté kávy a případně cukr.",
+        "warning": "Malá přeplněná nádoba může náhle překypět."
+      }
+    },
+    "cezve_turkish_single_rise_6_65/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "cezve_turkish_single_rise_6_65/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Nenechávejte bez dozoru; plamen nesmí přesahovat dno a ruce držte dál od horkého kovu."
+      }
+    },
+    "cezve_turkish_single_rise_6_65/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Odstavte z ohřevu při prvním kontrolovaném vzedmutí pěny.",
+        "warning": "Nečekejte na prudký var; káva může během několika sekund překypět."
+      }
+    },
+    "cezve_turkish_single_rise_6_65/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Sedlina i nápoj jsou velmi horké."
+      }
+    },
+    "cezve_turkish_single_rise_6_65/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Před pitím nechte sedlinu usadit.",
+        "warning": "Nepijte sedlinu a dokud je nápoj velmi horký, nezačínejte velkým douškem."
+      }
+    },
+    "cezve_bounded_repeated_rise_12_130/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Nádobu nepřeplňujte."
+      }
+    },
+    "cezve_bounded_repeated_rise_12_130/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "cezve_bounded_repeated_rise_12_130/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Odstavte ještě před plným varem nebo přetečením."
+      }
+    },
+    "cezve_bounded_repeated_rise_12_130/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Na chvíli odstavte, dokud pěna neklesne.",
+        "warning": "Horkou kovovou nádobu nepokládejte na povrch citlivý na teplo."
+      }
+    },
+    "cezve_bounded_repeated_rise_12_130/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Vraťte na mírný ohřev a nechte pěnu naposledy kontrolovaně vystoupat.",
+        "warning": "Po druhém vzedmutí skončete; opakovaný var zvyšuje riziko rozlití a poškození chuti."
+      }
+    },
+    "cezve_bounded_repeated_rise_12_130/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Odstavte, rozdělte pěnu i nápoj a nechte sedlinu usadit.",
+        "warning": "Horký nápoj podávejte opatrně."
+      }
+    },
+    "auto_batch_500_30/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Nevhodný filtr nebo ucpaný výstup může způsobit přetečení."
+      }
+    },
+    "auto_batch_500_30/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Používejte pouze vodu a nepřekračujte maximální kapacitu kávovaru."
+      }
+    },
+    "auto_batch_500_30/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Pokud návod kávovaru zakazuje vyjmout během přípravy košík nebo karafu, nevyjímejte je."
+      }
+    },
+    "auto_batch_500_30/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "auto_batch_500_30/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Karafou zakružte nebo kávu promíchejte a ihned podávejte.",
+        "warning": "Kávu nenechávejte na plotýnce déle, než je nutné; termokonvice další ohřev nepotřebuje, ale musí zůstat čistá."
+      }
+    },
+    "auto_batch_1000_60/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Košík nepřeplňujte; mletá káva během přípravy nabobtná."
+      }
+    },
+    "auto_batch_1000_60/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "auto_batch_1000_60/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Spusťte cyklus řízený kávovarem a nechte jej doběhnout."
+      }
+    },
+    "auto_batch_1000_60/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Počkejte, až košík dokape, potom kávu v karafě promíchejte.",
+        "warning": "Víko termokonvice používejte podle návodu; kávu nenechávejte dlouho na plotýnce."
+      }
+    },
+    "auto_cupone_20_300/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Ucpaný výstup může způsobit přetečení a opaření."
+      }
+    },
+    "auto_cupone_20_300/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Přidejte 20 g kávy namleté na filtr."
+      }
+    },
+    "auto_cupone_20_300/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Kávovar nespouštějte bez výstupní trubice a během cyklu nevyjímejte horké součásti."
+      }
+    },
+    "auto_cupone_20_300/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Během přípravy nevyjímejte spařovací košík ani hrnek."
+      }
+    },
+    "auto_cupone_20_300/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Počkejte na poslední kapky, potom vyjměte hrnek a podávejte.",
+        "warning": "Výstupní trubice i káva jsou horké."
+      }
+    },
+    "auto_cupone_20_300/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Vyhoďte sedlinu a výstup vyčistěte kartáčkem.",
+        "warning": "Kávovar neponořujte do vody."
+      }
+    },
+    "phin_gravity_14_118/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Phin bezpečně postavte na tepelně odolný šálek a přidejte 14 g zarovnané kávy.",
+        "warning": "Nepoužívejte šálek, jehož okraj phin bezpečně neudrží."
+      }
+    },
+    "phin_gravity_14_118/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Netlačte tak silně, aby se průtok zastavil."
+      }
+    },
+    "phin_gravity_14_118/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Přidejte přibližně 30 g horké vody a nechte kávu předspařit."
+      }
+    },
+    "phin_gravity_14_118/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "phin_gravity_14_118/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Ověřte, že první kapka proteče do dvou minut.",
+        "warning": "Pokud káva nekape, nevytvářejte tlak ani phin nemačkejte; počkejte a pro příští přípravu upravte hrubost mletí nebo usazení vložky."
+      }
+    },
+    "phin_gravity_14_118/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Nechte phin dokapat přibližně za pět minut."
+      }
+    },
+    "phin_gravity_14_118/stage_07": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Horký phin sejměte a zvolte způsob podávání.",
+        "warning": "Komora i vložka jsou horké."
+      }
+    },
+    "phin_screw_18_120/stage_01": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Phin stabilně usaďte na šálek a přidejte 18 g zarovnané kávy.",
+        "warning": "Horký kov a úzký šálek zvyšují riziko převrácení."
+      }
+    },
+    "phin_screw_18_120/stage_02": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "warning": "Vložku neutahujte příliš; phin funguje samospádem a nesmí se změnit v uzavřenou tlakovou nádobu."
+      }
+    },
+    "phin_screw_18_120/stage_03": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Přelijte kávu 25 g horké vody."
+      }
+    },
+    "phin_screw_18_120/stage_04": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {}
+    },
+    "phin_screw_18_120/stage_05": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Sledujte první kapku a celkovou dobu přípravy.",
+        "warning": "Pokud se průtok zcela zastaví, phin nemačkejte. Můžete zkusit šroub jen nepatrně a bezpečně povolit, aniž byste se dotkli horkého kovu; jinak počkejte a pro příští přípravu upravte nastavení."
+      }
+    },
+    "phin_screw_18_120/stage_06": {
+      "status": "in_progress",
+      "reviewed_fields": [
+        "action",
+        "warning"
+      ],
+      "overrides": {
+        "action": "Sejměte phin na obrácené víko a podávejte.",
+        "warning": "Používejte tepelně odolnou ochranu."
+      }
+    }
+  }
+}

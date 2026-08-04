@@ -67,8 +67,16 @@ def automated_issues(locale: str, source_stage: dict, stage: dict) -> list[str]:
     for field, value in user_visible_values(stage):
         if value == LOCALIZER.SOURCE_NONE:
             continue
-        if DOMAIN_ENGLISH.search(value):
-            issues.add(f"{field}: untranslated ambiguous English coffee term")
+        english_terms = {
+            match.group(0).lower() for match in DOMAIN_ENGLISH.finditer(value)
+        }
+        if locale == "cs":
+            english_terms.discard("dripper")
+        if english_terms:
+            issues.add(
+                f"{field}: untranslated ambiguous English coffee term "
+                f"({', '.join(sorted(english_terms))})",
+            )
         if any(unicodedata.category(character) == "Cf" for character in value):
             issues.add(f"{field}: invisible formatting character")
         if locale == "cs":
@@ -81,12 +89,12 @@ def automated_issues(locale: str, source_stage: dict, stage: dict) -> list[str]:
         if draft_action and draft_action[0].islower():
             issues.add("action: sentence begins with a lowercase letter")
         concept_checks = (
-            ("level", r"(?:za|vy|s)?rovn|rovnoměr", "level/flatten concept may be missing"),
+            ("level the bed", r"(?:za|vy|s)?rovn|rovnoměr", "level/flatten concept may be missing"),
             ("bloom", r"bloom|smáčen|předspař|navlh", "coffee bloom concept may be missing"),
             ("spin", r"otoč|krouživ|zakruž|promíchej", "spin motion may be missing"),
             ("swirl", r"otoč|krouživ|zakruž|promíchej", "swirl motion may be missing"),
-            ("drawdown", r"odte|odtok|odvod|sceď|vykap|okap", "drawdown concept may be missing"),
-            ("drain", r"odte|odtok|odvod|sceď|vykap|okap", "drainage concept may be missing"),
+            ("drawdown", r"odte|odtok|odvod|sceď|vykap|okap|vyt[eé]", "drawdown concept may be missing"),
+            ("drain", r"odte|odtok|odvod|sceď|vykap|okap|vyt[eé]", "drainage concept may be missing"),
         )
         for source_term, expected, description in concept_checks:
             if source_term in source_action and not re.search(expected, draft_action, re.IGNORECASE):
@@ -103,8 +111,11 @@ def escape_cell(value: str) -> str:
     return value.replace("|", "\\|").replace("\n", "<br>")
 
 
-def render_packet(source: dict, draft: dict, locale: str) -> str:
+def render_packet(
+    source: dict, draft: dict, locale: str, review: dict | None = None,
+) -> str:
     stages: list[tuple[dict, dict, dict]] = []
+    stage_reviews = (review or {}).get("stages", {})
     issue_count = 0
     lines = [
         f"# Exact P1 {locale} localization review packet",
@@ -121,18 +132,32 @@ def render_packet(source: dict, draft: dict, locale: str) -> str:
             source_recipe["stages"], draft_recipe["stages"], strict=True,
         ):
             stages.append((source_recipe, source_stage, draft_stage))
+    approved_count = sum(
+        1 for stage_review in stage_reviews.values()
+        if stage_review.get("status") == "approved"
+    )
+    action_warning_count = sum(
+        1 for stage_review in stage_reviews.values()
+        if {"action", "warning"}.issubset(stage_review.get("reviewed_fields", []))
+    )
     lines.extend([
         f"- Recipes: {len(source['recipes'])}",
         f"- Stages: {len(stages)}",
-        "- Review status: 0 approved; all stages remain open until explicitly checked.",
+        f"- Fully approved stages: {approved_count}/{len(stages)}",
+        f"- Action and warning reviewed: {action_warning_count}/{len(stages)}",
         "",
     ])
     for index, (recipe, source_stage, draft_stage) in enumerate(stages, start=1):
         issues = automated_issues(locale, source_stage, draft_stage)
         issue_count += len(issues)
         full = draft_stage["guidance"]["full"]
+        stage_key = f"{recipe['recipe_id']}/{source_stage['stage_id']}"
+        stage_review = stage_reviews.get(stage_key, {})
+        status = stage_review.get("status", "not_started")
+        reviewed_fields = ", ".join(stage_review.get("reviewed_fields", [])) or "none"
+        mark = "x" if status == "approved" else " "
         lines.extend([
-            f"## [ ] {index:03d} · {recipe['recipe_id']} · {source_stage['stage_id']}",
+            f"## [{mark}] {index:03d} · {recipe['recipe_id']} · {source_stage['stage_id']}",
             "",
             "| Field | Canonical English | Draft |",
             "|---|---|---|",
@@ -146,6 +171,7 @@ def render_packet(source: dict, draft: dict, locale: str) -> str:
             f"{escape_cell(full['accessible_alt_text'])} |",
             "",
             "Automated findings: " + ("; ".join(issues) if issues else "none"),
+            f"Editorial status: {status}; reviewed fields: {reviewed_fields}",
             "",
         ])
     lines.insert(11, f"- Automated findings: {issue_count}")
@@ -161,7 +187,9 @@ def main() -> int:
     )
     draft = LOCALIZER.read_json(draft_path)
     LOCALIZER.validate_document(source, draft, args.locale)
-    packet = render_packet(source, draft, args.locale)
+    review_path = LOCALIZER.editorial_review_path(args.locale)
+    review = LOCALIZER.read_json(review_path) if review_path.exists() else None
+    packet = render_packet(source, draft, args.locale, review)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(packet, encoding="utf-8", newline="\n")
     print(f"Wrote {output}")

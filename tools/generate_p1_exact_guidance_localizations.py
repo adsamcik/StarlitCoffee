@@ -45,6 +45,10 @@ FOCUSED_TEXT_KEYS = ("action_label", "numerical_or_state_target", "next_action")
 NUMBER_RE = re.compile(r"\d+(?:(?:[.,]\d+)|(?:[ \u00a0]\d{3}))*")
 MARKER_RE = re.compile(r"ZXQMARK(\d{4})QXZ")
 SOURCE_NONE = "None"
+REQUIRED_EDITORIAL_FIELDS = frozenset({
+    "action", "warning", "completion", "operational_fields",
+    "explanation", "alt_text", "concise", "focused",
+})
 
 
 class LocalizationError(RuntimeError):
@@ -306,6 +310,9 @@ def apply_editorial_review(
             stage_key for stage_key, stage_review in reviews.items()
             if not isinstance(stage_review, dict)
             or stage_review.get("status") != "approved"
+            or not REQUIRED_EDITORIAL_FIELDS.issubset(
+                stage_review.get("reviewed_fields", []),
+            )
         ]
         if review.get("status") != "approved" or missing or unapproved:
             raise LocalizationError(
