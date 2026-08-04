@@ -28,6 +28,7 @@ class P1ExactRecipeReleaseGateTest {
 
         assertTrue(gate.isEligible(PRIMARY_RECIPE))
         assertEquals(setOf(PRIMARY_RECIPE), gate.eligibleRecipeIds)
+        assertNull(gate.terminologyUiCopyFor(PRIMARY_RECIPE))
     }
 
     @Test
@@ -52,6 +53,17 @@ class P1ExactRecipeReleaseGateTest {
             localeTag = "cs",
         )
         val coverage = fullyLocalized(PRIMARY_RECIPE, localeTag = "cs")
+        val primaryStage = requireNotNull(exactCatalog.findRecipe(PRIMARY_RECIPE)).stages.first()
+        val reference = BrewingTerminologyReference(
+            conceptId = "drawdown",
+            preferredLocal = "dokapání",
+            canonicalEnglish = "drawdown",
+        )
+        val uiCopy = BrewingTerminologyUiCopy(
+            showEnglishTerms = "Zobrazit anglické termíny",
+            hideEnglishTerms = "Skrýt anglické termíny",
+            heading = "Anglická terminologie",
+        )
         val withoutTerminology = P1ExactRecipeReleaseGate(
             guidanceLoadResult = guidance,
             instructionAssets = approvedAssetsFor(PRIMARY_RECIPE),
@@ -63,12 +75,10 @@ class P1ExactRecipeReleaseGateTest {
             terminologyLoadResult = BuiltInP1ExactTerminologyLoadResult.Loaded(
                 P1ExactTerminologyCatalog(
                     localeTag = "cs",
-                    uiCopy = BrewingTerminologyUiCopy(
-                        showEnglishTerms = "Zobrazit anglické termíny",
-                        hideEnglishTerms = "Skrýt anglické termíny",
-                        heading = "Anglická terminologie",
+                    uiCopy = uiCopy,
+                    referencesByContentId = mapOf(
+                        primaryStage.contentId to listOf(reference),
                     ),
-                    referencesByContentId = emptyMap(),
                 ),
             ),
             localizationCoverage = coverage,
@@ -76,9 +86,17 @@ class P1ExactRecipeReleaseGateTest {
 
         assertFalse(withoutTerminology.isEligible(PRIMARY_RECIPE))
         assertTrue(withTerminology.isEligible(PRIMARY_RECIPE))
+        assertEquals(uiCopy, withTerminology.terminologyUiCopyFor(PRIMARY_RECIPE))
+        assertEquals(
+            listOf(reference),
+            withTerminology.catalogFor(PRIMARY_RECIPE)
+                ?.find(primaryStage.contentId)
+                ?.terminologyReferences,
+        )
     }
 
-    @Test    fun `pending exact visuals fail closed even with complete localization`() {
+    @Test
+    fun `pending exact visuals fail closed even with complete localization`() {
         val pendingAssets = requiredStages(PRIMARY_RECIPE).map { stage ->
             stage.toAsset(
                 review = InstructionAssetReview(InstructionAssetReviewStatus.PENDING_REVIEW),
