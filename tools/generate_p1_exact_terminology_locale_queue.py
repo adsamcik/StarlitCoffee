@@ -103,6 +103,7 @@ def missing_requirements(
         [
             "reviewed-locale ledger approval",
             "atomic guidance and terminology resource promotion",
+            "exact-recipe production coverage registration",
             "device accessibility, text-scaling, and theme validation",
         ],
     )
