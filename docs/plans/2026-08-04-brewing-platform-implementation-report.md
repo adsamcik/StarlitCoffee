@@ -1,7 +1,7 @@
 # Brewing platform implementation report
 
-**Reviewed:** 2026-08-04  
-**Branch:** `main`  
+**Reviewed:** 2026-08-04
+**Branch:** `main`
 **App version:** 1.4.0 (development remains under `Unreleased`)
 
 ## Outcome
