@@ -3516,19 +3516,66 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 400,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_01_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-92e26c6f-299c-4149-9063-b2a78ed58f5b.png",
+          "issues": [
+            "The hand and forearm terminate at the bottom-right canvas edge, and the 30 g bed appears overlarge for a half batch."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_01_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-5fcbe3c3-24b7-49dc-8aef-3a88518ea697.png",
+          "issues": [
+            "Strict processor rejection: the raw canvas is portrait 1024x1536 rather than the required landscape 4:3 app card."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_01_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-06781bb2-7928-4f1c-961a-0af61623567c.png",
+          "issues": [
+            "Exact 4:3 and basket dose pass, but the preparation frame contains a half-filled brewed-coffee carafe behind the dry dose, introducing a false leftover-beverage state before brewing."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_01_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-72b49ac4-5555-4767-99c8-b5ebf69997c1.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Exact 4:3 raw and both phone themes preserve the shallow granular 30 g bed, No. 4 paper and basket, fully empty carafe and reservoir, powered-off preparation state, clean perimeter, and readable contrast."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_500_30_stage_01_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Exact 4:3 raw and both phone themes preserve the shallow granular 30 g bed, No. 4 paper and basket, fully empty carafe and reservoir, powered-off preparation state, clean perimeter, and readable contrast."
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_02_instruction_default",
@@ -3536,19 +3583,92 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 401,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-0914eafd-f9e9-43f1-8de6-33d35c845640.png",
+          "issues": [
+            "The pouring hand and forearm are cropped at the left canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-bd0391de-ec2f-45bb-b6ab-303866a98800.png",
+          "issues": [
+            "Full-resolution review: the hand and forearm terminate at the left canvas edge, violating the transparent-perimeter containment rule; the pitcher is also held beside rather than visibly filling the reservoir."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_02_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-9bec2585-d432-4c50-ab79-2d5573ebd20a.png",
+          "issues": [
+            "Raw mechanics pass, but the strict processor rejects the 1535x1024 3:2 canvas; regenerate at exact landscape 4:3 without losing any content."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_02_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-6b54dc28-394c-4107-adc1-beed8f83f7c6.png",
+          "issues": [
+            "Exact 4:3 and reservoir fill pass, but the powered-off machine shows an amber drop leaving the basket, contradicting the required no-flow ready state."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v5"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v5",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_02_instruction_default/starlit_tactile_v5.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-160e154f-a857-442e-a385-acb6c628db9f.png",
+          "issues": [
+            "The exact-4:3 frame routes the clear pitcher stream into a half-filled brown carafe instead of the left reservoir, reversing the instructed preparation state and introducing coffee before brewing."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v6"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v6",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_02_instruction_default/starlit_tactile_v6.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-eeff6abf-1a68-4c4d-b6ca-be6e3d3586d6.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Both phone themes preserve the clear pitcher-to-left-reservoir path, half reservoir, completely dry closed basket, empty seated carafe, powered-off state, clean perimeter, and contrast."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v6",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_500_30_stage_02_instruction_default/starlit_tactile_v6.webp",
+      "notes": "Both phone themes preserve the clear pitcher-to-left-reservoir path, half reservoir, completely dry closed basket, empty seated carafe, powered-off state, clean perimeter, and contrast."
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_03_instruction_default",
@@ -3556,19 +3676,66 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 402,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-20e2e1e9-2c2c-4ee7-8d3a-b24d991d6ec7.png",
+          "issues": [
+            "The control hand and forearm are cropped at the left canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-c0f9f2c1-9fcc-46ff-9ebd-467f7deb131b.png",
+          "issues": [
+            "Full-resolution review: the generator replaced the specified pure-green keyed exterior and organic espresso blob with a flat cream background, so transparent production processing cannot meet the style contract."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_03_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-7005d4ac-e9cb-432e-ad6e-0961efed5b9c.png",
+          "issues": [
+            "Raw mechanics pass, but the strict processor rejects the 1535x1024 3:2 canvas; regenerate at exact landscape 4:3 without losing any content."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_03_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-d4761d7d-ac9f-4a1d-bfa3-9c4b9308c0f0.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Both phone themes preserve half-reservoir start state, visible inlet and outlet paths, low initial carafe level, readable grounds texture, clean perimeter, and contrast."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_500_30_stage_03_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Both phone themes preserve half-reservoir start state, visible inlet and outlet paths, low initial carafe level, readable grounds texture, clean perimeter, and contrast."
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_04_instruction_default",
@@ -3576,19 +3743,27 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 403,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-0119099f-df67-4f8b-8135-4fb06ab83dd5.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Exact 4:3 raw and both phone themes preserve the empty reservoir, stopped outlet arm, isolated final drop, half-batch carafe level, KBGV geometry, clean transparent perimeter, and readable contrast."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_500_30_stage_04_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Exact 4:3 raw and both phone themes preserve the empty reservoir, stopped outlet arm, isolated final drop, half-batch carafe level, KBGV geometry, clean transparent perimeter, and readable contrast."
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_05_instruction_default",
@@ -3596,19 +3771,79 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 404,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_05_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-aafc6c2f-5b99-4256-beef-e1e7a321a20a.png",
+          "issues": [
+            "The pure green-key exterior is missing, a table-like scene is introduced, and the wrist is cropped at the right canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_05_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-ef4039ab-6f4e-46b1-93c9-2925128dddfe.png",
+          "issues": [
+            "Raw mechanics pass, but the strict processor rejects the 1536x1024 3:2 canvas; regenerate at exact landscape 4:3 without losing any content."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_05_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-35975584-ca7e-4053-a187-b1cc8d02593c.png",
+          "issues": [
+            "Exact 4:3, half-carafe level, cup, and grip pass, but the forearm terminates at the right canvas edge and cannot produce a polished transparent perimeter."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_05_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-0905ba6f-5703-4e75-98bd-dffe81bb25a1.png",
+          "issues": [
+            "The hand is finally contained, but the half-filled carafe remains flat and seated on the hotplate with a level surface. It does not visually show the required lift-and-gentle-swirl action."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v5"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v5",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_500_30_stage_05_instruction_default/starlit_tactile_v5.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-3856cc51-cb2c-4edc-8d67-c1b2eb437900.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Both phone themes preserve the lifted half-filled carafe, visible gap over the hotplate, tilted vessel and opposing liquid slope, complete handle grip, arm ending before the canvas edge, empty cup, clean perimeter, and contrast."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v5",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_500_30_stage_05_instruction_default/starlit_tactile_v5.webp",
+      "notes": "Both phone themes preserve the lifted half-filled carafe, visible gap over the hotplate, tilted vessel and opposing liquid slope, complete handle grip, arm ending before the canvas edge, empty cup, clean perimeter, and contrast."
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_01_instruction_default",
@@ -3616,19 +3851,27 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 416,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_01_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-802206bf-ba8d-4f73-a112-9f7de511bf19.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Exact 4:3 raw and both phone themes clearly distinguish the deeper 60 g granular bed in a No. 4 paper and basket, preserve the machine context, transparent perimeter, and contrast."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_1000_60_stage_01_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Exact 4:3 raw and both phone themes clearly distinguish the deeper 60 g granular bed in a No. 4 paper and basket, preserve the machine context, transparent perimeter, and contrast."
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_02_instruction_default",
@@ -3636,19 +3879,53 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 417,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-23920865-6137-4b73-a112-9f7de511bf19.png",
+          "issues": [
+            "The exterior is cream rather than green-key and the filling arm is cropped at the left canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-5b7f8702-cb68-45f0-adf7-e1f4616cca83.png",
+          "issues": [
+            "Raw mechanics pass, but the strict processor rejects the 1535x1024 3:2 canvas; regenerate at exact landscape 4:3 without losing any content."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_02_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-027dbf1b-da32-4ac8-9cef-1057d8502873.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Both phone themes preserve the high full-batch reservoir, seated empty carafe, installed closed basket, no-flow powered-off state, transparent perimeter, and contrast."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_1000_60_stage_02_instruction_default/starlit_tactile_v3.webp",
+      "notes": "Both phone themes preserve the high full-batch reservoir, seated empty carafe, installed closed basket, no-flow powered-off state, transparent perimeter, and contrast."
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_03_instruction_default",
@@ -3656,19 +3933,53 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 418,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-64628aaf-ddb2-4924-b33c-a0de041cbd0c.png",
+          "issues": [
+            "The frame invents impossible plumbing: the basket sits above shower streams that spray directly into an exposed slurry/carafe area."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-5ca4bd77-8083-4157-9f5b-36107f193ed1.png",
+          "issues": [
+            "Raw mechanics pass, but the strict processor rejects the 1535x1024 3:2 canvas; regenerate at exact landscape 4:3 without losing any content."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_03_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-aeab23e5-bf5f-4ad6-bdde-aa7dd328ead6.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Both phone themes preserve the depleted reservoir, shower-to-basket and basket-to-carafe flow paths, mid-high beverage level, clean perimeter, and readable contrast."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_1000_60_stage_03_instruction_default/starlit_tactile_v3.webp",
+      "notes": "Both phone themes preserve the depleted reservoir, shower-to-basket and basket-to-carafe flow paths, mid-high beverage level, clean perimeter, and readable contrast."
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_04_instruction_default",
@@ -3676,19 +3987,66 @@
       "blocker": "BLOCK-AUTO-BATCH-HARDWARE",
       "matrix_line": 419,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "complete",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "generate_and_review",
-          "status": "open",
-          "detail": "Generate the resolved configuration and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-7f3ba285-6c97-488e-bf91-6dbb645272fe.png",
+          "issues": [
+            "The swirling hand and wrist terminate at the right canvas edge."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_04_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-8f89fe8d-e5aa-47cf-af28-49501c44e3e4.png",
+          "issues": [
+            "Full-resolution review: the completed 1,000 g batch is shown at only roughly half-carafe volume, materially contradicting the full-batch final-drain state."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_04_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-2768aa95-64da-47ab-8b11-221f6e0bb5f9.png",
+          "issues": [
+            "Raw mechanics and full-batch level pass, but the strict processor rejects the 1535x1024 3:2 canvas; regenerate at exact landscape 4:3 without losing any content."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_batch_1000_60_stage_04_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-ccdeafaf-29d1-4a07-9294-1ae49759e92d.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Both phone themes preserve the empty reservoir, isolated final drop, high completed-batch carafe, gentle sloped surface, safe handle grip, contained arm, clean perimeter, and contrast."
         }
       ],
-      "qa": "pending",
+      "open_todos": [],
+      "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
-      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md"
+      "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
+      "accepted_revision": "starlit_tactile_v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_1000_60_stage_04_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Both phone themes preserve the empty reservoir, isolated final drop, high completed-batch carafe, gentle sloped surface, safe handle grip, contained arm, clean perimeter, and contrast."
     },
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_01_instruction_default",
@@ -3720,17 +4078,64 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 432,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_cupone_20_300_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-64fcc41b-e336-43d5-98f9-5fec57dd3d2e.png",
+          "issues": [
+            "The generated machine uses KBGV batch-brewer geometry instead of the exact compact Cup-One profile and model-specific holder."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_cupone_20_300_stage_02_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-cfa58bfd-5cf0-4e77-a052-b486032fd6c7.png",
+          "issues": [
+            "Full-resolution review: the compact Cup-One body contains a second installed filter holder and paper while another filled removable holder is shown in front, falsely implying duplicate hardware."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_cupone_20_300_stage_02_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-963b6041-063e-4d09-bc94-478e165152a0.png",
+          "issues": [
+            "Full-resolution and official-parts review: the machine shows a square-walled receptacle under the outlet, but the fixed Cup-One brew-basket bracket has a circular opening; the frame therefore invents a second basket-like component."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v4"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v4",
+          "prompt": "prompts/brewing/assets/instruction_p1_auto_cupone_20_300_stage_02_instruction_default/starlit_tactile_v4.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-22123567-9129-447d-8940-215a521d7f41.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Manufacturer topology and both phone themes pass: one removed No. 1 basket with granular 20 g bed, the fixed circular-opening support ring remains empty, and there is no duplicate basket or visual noise."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v4",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_02_instruction_default/starlit_tactile_v4.webp",
+      "notes": "Manufacturer topology and both phone themes pass: one removed No. 1 basket with granular 20 g bed, the fixed circular-opening support ring remains empty, and there is no duplicate basket or visual noise."
     },
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_03_instruction_default",

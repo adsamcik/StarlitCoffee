@@ -928,3 +928,52 @@ in text; the shared visual makes no numeric claim. Every retained state passed
 full-resolution mechanics review, transparent processing, static 1024 by 768
 WebP validation, and separate light- and dark-theme phone inspection. Tracker,
 matrix, drawables, and runtime catalog now agree at 97 accepted and 17 open.
+
+## Batch 19 completed KBGV Select automatic-batch and Cup-One dose states - 2026-08-04
+
+Current Moccamaster documentation was rechecked before resolving the earlier
+generic automatic-brewer blocker. Both batch recipes are now explicitly bound
+to one Moccamaster KBGV Select 1.25 L configuration: glass carafe and hotplate,
+automatic drip-stop, black cone basket, one #4 paper, nine-hole outlet arm, and
+the half-carafe selector for 500 g or full-carafe selector for 1,000 g. This
+does not transfer the artwork to flat baskets, thermal carafes, permanent
+filters, or different brewer geometry. The Cup-One dose frame remains bound to
+its compact single-cup body, #1 paper, one removable basket, and the fixed
+circular-opening basket bracket.
+
+Sources rechecked:
+
+- https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002
+- https://us.moccamaster.com/blogs/blog/brewing-with-your-moccamaster-coffee-brewer
+- https://www.moccamaster.eu/faq
+- https://support.moccamaster.com/hc/en-us/article_attachments/1500014620701
+- https://us.moccamaster.com/products/bracket-for-cup-one-brew-basket
+- https://sca.coffee/s/2017-SCA-CHB-Program-Requirements-ba6g.pdf
+
+| Sequence / stage | Accepted | Raw cache | WebP SHA-256 |
+| --- | --- | --- | --- |
+| Half batch 01 | starlit_tactile_v4 | exec-72b49ac4-5555-4767-99c8-b5ebf69997c1.png | 114794db6d910723b91f1240c5b100c09a329128f8ceed287df47bbec4e9d18f |
+| Half batch 02 | starlit_tactile_v6 | exec-eeff6abf-1a68-4c4d-b6ca-be6e3d3586d6.png | 4468ca2464ba23b320fcfad0d031247d1d5ad552d8924b8c18cdd78b094925be |
+| Half batch 03 | starlit_tactile_v4 | exec-d4761d7d-ac9f-4a1d-bfa3-9c4b9308c0f0.png | c2b482532cc98f3c39480912cf7f1595a68c521437aff1fd1a888b2fce0574e3 |
+| Half batch 04 | starlit_tactile_v1 | exec-0119099f-df67-4f8b-8135-4fb06ab83dd5.png | 68534f7e98da28ab531d1ef24ab0eb443ea27c1fefc15738ecc1c7d67a7bdd74 |
+| Half batch 05 | starlit_tactile_v5 | exec-3856cc51-cb2c-4edc-8d67-c1b2eb437900.png | 39d58c976a19fe495cf2fb0f879d6facd94ff88a4067cd7fed4144ea3b9c47b8 |
+| Full batch 01 | starlit_tactile_v1 | exec-802206bf-ba8d-4f73-a112-9f7de511bf19.png | 3ec5da28044ae8c3fdad881a6b3348b1fcc9261235343f0340efe0f472e85e97 |
+| Full batch 02 | starlit_tactile_v3 | exec-027dbf1b-da32-4ac8-9cef-1057d8502873.png | 2e3bf8e61a9c267539e322edf9b46206875bc9aa8dd8822d0c75476f08e54d17 |
+| Full batch 03 | starlit_tactile_v3 | exec-aeab23e5-bf5f-4ad6-bdde-aa7dd328ead6.png | e21ed28da230cfec60bbdc67e6081b9e3cf91adba66baaa378191d3df85bba45 |
+| Full batch 04 | starlit_tactile_v4 | exec-ccdeafaf-29d1-4a07-9294-1ae49759e92d.png | 57d134288e5ef85ddf5da45ce6eebb93828203fd34a51503dbeb7a796509cfaa |
+| Cup-One 02 | starlit_tactile_v4 | exec-22123567-9129-447d-8940-215a521d7f41.png | b244800be02653abe61c78008cf31f9f5650b918ab153a057410ca815c7b7875 |
+
+Twenty-five rejected attempts remain reproducibly recorded. They cover cropped
+hands, portrait or 3:2 canvases, missing keyed perimeters, wrong batch volume,
+impossible shower/basket topology, liquid entering the carafe during reservoir
+fill, flow from a powered-off basket, and incomplete lift-and-swirl gestures.
+Cup-One attempts were reopened until the artwork showed exactly one removable
+basket and the manufacturer's fixed circular-opening support bracket rather
+than an invented second receptacle.
+
+All ten retained frames passed full-resolution mechanics review, exact 4:3
+validation, chroma and alpha processing, static 1024 by 768 WebP validation,
+and individual light- and dark-theme phone inspection. Exact prompts, raw
+lineage, rejected candidates, and resolved regeneration todos remain in the
+tracker. Tracker, matrix, drawables, and runtime catalog now agree at 107
+accepted and 7 open.
