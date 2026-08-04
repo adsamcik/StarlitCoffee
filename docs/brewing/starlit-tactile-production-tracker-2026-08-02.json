@@ -2216,17 +2216,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 289,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_water_first_15_250_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-7b872b54-36ff-4d71-9a42-f956ed437dce.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Full-resolution and both phone-theme reviews pass: granular coffee falls into retained clear water while the off-server bottom valve remains visibly closed and dry."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_03_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Full-resolution and both phone-theme reviews pass: granular coffee falls into retained clear water while the off-server bottom valve remains visibly closed and dry."
     },
     {
       "asset_id": "instruction_p1_clever_water_first_15_250_stage_04_instruction_default",
@@ -2234,17 +2242,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 290,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_water_first_15_250_stage_04_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-ae4f1679-a373-4800-9b16-b3c4562f83f2.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Full-resolution and both phone-theme reviews pass: a shallow gentle spoon movement is readable without vortex or splash, retained liquid is distinct from the textured surface, and the closed outlet stays dry."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_04_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Full-resolution and both phone-theme reviews pass: a shallow gentle spoon movement is readable without vortex or splash, retained liquid is distinct from the textured surface, and the closed outlet stays dry."
     },
     {
       "asset_id": "instruction_p1_clever_water_first_15_250_stage_05_instruction_default",
@@ -2264,17 +2280,51 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 292,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_water_first_15_250_stage_06_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-c4a6a32a-ce28-44c9-bdd1-23927aa88fe2.png",
+          "issues": [
+            "The drained 15 g coffee bed is depicted as an implausibly deep mass occupying roughly half of the Clever body, which misrepresents dose scale after drawdown."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_water_first_15_250_stage_06_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-20c27c11-f727-4be8-9fa5-b63f80c5c49d.png",
+          "issues": [
+            "The revision reduces the spent bed but still renders a deep opaque grounds plug through roughly a quarter of the filter height instead of a shallow 15 g bed."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_water_first_15_250_stage_06_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-a18d2435-ecfa-4abd-949c-0ba624d68cfa.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Third revision passes full-resolution and both phone-theme reviews: the lifted brewer has a realistically shallow 15 g spent bed, an unpressed closed outlet, a dry air gap, and a stable server of finished coffee."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_water_first_15_250_stage_06_instruction_default/starlit_tactile_v3.webp",
+      "notes": "Third revision passes full-resolution and both phone-theme reviews: the lifted brewer has a realistically shallow 15 g spent bed, an unpressed closed outlet, a dry air gap, and a stable server of finished coffee."
     },
     {
       "asset_id": "instruction_p1_clever_coffee_first_15_250_stage_01_instruction_default",
@@ -2282,17 +2332,51 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 304,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_coffee_first_15_250_stage_01_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-3122f84f-457b-4070-9a35-a398e2651deb.png",
+          "issues": [
+            "The dry 15 g dose is depicted as an implausibly deep bed occupying roughly two fifths of the Clever body, which could teach a materially wrong dose scale."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_coffee_first_15_250_stage_01_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-96a6dfda-17c9-4a9f-a370-f3af0b01a47b.png",
+          "issues": [
+            "The revision still depicts the 15 g dry dose as a deep opaque plug rather than a thin loose layer at the bottom of the paper."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v3"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v3",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_coffee_first_15_250_stage_01_instruction_default/starlit_tactile_v3.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-bb9bdb67-b3bd-48e5-8e39-c8931709fd55.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Third revision passes full-resolution and both phone-theme reviews: the dry 15 g dose is a thin loose level granular layer in wet paper and the off-server valve is closed with no water or drip."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v3",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_coffee_first_15_250_stage_01_instruction_default/starlit_tactile_v3.webp",
+      "notes": "Third revision passes full-resolution and both phone-theme reviews: the dry 15 g dose is a thin loose level granular layer in wet paper and the off-server valve is closed with no water or drip."
     },
     {
       "asset_id": "instruction_p1_clever_coffee_first_15_250_stage_02_instruction_default",
@@ -2300,17 +2384,25 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 305,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_coffee_first_15_250_stage_02_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-26d7c8c2-8b12-4896-9760-8f3af8b904d3.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Full-resolution and both phone-theme reviews pass: the retained coffee-first slurry is gently stirred with no splash or vortex, the surface remains textured, and the closed outlet stays dry."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v1",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_coffee_first_15_250_stage_02_instruction_default/starlit_tactile_v1.webp",
+      "notes": "Full-resolution and both phone-theme reviews pass: the retained coffee-first slurry is gently stirred with no splash or vortex, the surface remains textured, and the closed outlet stays dry."
     },
     {
       "asset_id": "instruction_p1_clever_coffee_first_15_250_stage_03_instruction_default",
@@ -2318,17 +2410,38 @@
       "blocker": "NONE-BOUNDED",
       "matrix_line": 306,
       "batch": null,
-      "status": "generation_pending",
+      "status": "accepted_candidate",
       "research": "queued",
-      "attempts": [],
-      "open_todos": [
+      "attempts": [
         {
-          "kind": "research_and_generate",
-          "status": "open",
-          "detail": "Research mechanics, generate, and complete every visual QA gate."
+          "revision": "starlit_tactile_v1",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_coffee_first_15_250_stage_03_instruction_default/starlit_tactile_v1.txt",
+          "verdict": "rejected",
+          "raw_cache": "exec-5a1e0722-8b7f-4312-9a0b-361c29a8799b.png",
+          "issues": [
+            "At phone scale in both themes, granular texture fills the entire retained volume, making 250 g of brewed liquid look like a brewer full of dry grounds; liquid and coffee particles are not safely distinguishable."
+          ],
+          "regeneration_todo": {
+            "status": "resolved",
+            "resolved_by": "starlit_tactile_v2"
+          }
+        },
+        {
+          "revision": "starlit_tactile_v2",
+          "prompt": "prompts/brewing/assets/instruction_p1_clever_coffee_first_15_250_stage_03_instruction_default/starlit_tactile_v2.txt",
+          "verdict": "accepted",
+          "raw_cache": "exec-eaa7a191-86ca-4af6-87a2-3701aadec3f1.png",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Second revision passes full-resolution and both phone-theme reviews: the quiet retained steep clearly separates a smooth translucent liquid body from a thin granular surface raft while the off-server valve remains closed."
         }
       ],
-      "qa": "pending"
+      "open_todos": [],
+      "qa": "complete",
+      "accepted_revision": "starlit_tactile_v2",
+      "candidate": "docs/brewing/illustration-candidates/instruction_p1_clever_coffee_first_15_250_stage_03_instruction_default/starlit_tactile_v2.webp",
+      "notes": "Second revision passes full-resolution and both phone-theme reviews: the quiet retained steep clearly separates a smooth translucent liquid body from a thin granular surface raft while the off-server valve remains closed."
     },
     {
       "asset_id": "instruction_p1_clever_coffee_first_15_250_stage_04_instruction_default",

@@ -835,3 +835,50 @@ processing, static 1024 by 768 WebP validation, and individual light- and
 dark-theme phone inspection. Exact prompts, raw lineage, the rejected bloom,
 and its resolved regeneration todo remain in the tracker. Tracker, matrix,
 drawables, and generated runtime catalog now agree at 83 accepted and 31 open.
+
+
+## Batch 17 completed Clever water-first and coffee-first sequences - 2026-08-04
+
+The current Clever product instructions and the canonical James Hoffmann
+water-first technique were rechecked before filling the remaining states. The
+illustrations are bound to one translucent handled wedge-shaped immersion
+dripper with folded white wedge/#4 paper, support feet, and a spring-loaded
+bottom actuator. Off-server frames keep that actuator visibly unpressed and
+the outlet dry. Placement on a broad stable server is the only state that
+opens the valve; lifting the brewer closes it again.
+
+The water-first sequence preserves 15 g coffee and 250 g water, water before
+coffee, gentle mixing, a retained closed-valve steep, placement to release,
+and vertical removal only after drawdown. The coffee-first sequence keeps the
+same exact equipment but preserves its distinct order: rinsed paper and a
+shallow 15 g dry bed, 250 g water, brief gentle mixing, and a quiet retained
+steep. Quantities and approximate timing remain in text; the artwork encodes
+equipment state, material differences, safe handling, and observable cues.
+
+Sources rechecked:
+
+- https://cleverbrewing.coffee/products/clever-dripper-black
+- https://www.youtube.com/watch?v=RpOdennxP24
+
+| Sequence / stage | Accepted | Raw cache | WebP SHA-256 |
+| --- | --- | --- | --- |
+| Water-first 03 | starlit_tactile_v1 | exec-7b872b54-36ff-4d71-9a42-f956ed437dce.png | 573f1fb25a2f4ce317d7ba95cd577d49178efc37b7163d302e3d82711b890b45 |
+| Water-first 04 | starlit_tactile_v1 | exec-ae4f1679-a373-4800-9b16-b3c4562f83f2.png | 134214136b10c4373c7bd114ef82a5801db5230d91e84709d677b950776f7663 |
+| Water-first 06 | starlit_tactile_v3 | exec-a18d2435-ecfa-4abd-949c-0ba624d68cfa.png | 90d6f17db8c3c1726fcfd8bcb775f4e7ce4680c47b89610bd7d6007eeb0e224a |
+| Coffee-first 01 | starlit_tactile_v3 | exec-bb9bdb67-b3bd-48e5-8e39-c8931709fd55.png | 10a2579c643b6173a76f918cc4d4398d751bf3d869a5b650415c48d798384d37 |
+| Coffee-first 02 | starlit_tactile_v1 | exec-26d7c8c2-8b12-4896-9760-8f3af8b904d3.png | becd2e413ced78ab0d76000218cf4bf560b66c43e16908a05ba858a07734d68f |
+| Coffee-first 03 | starlit_tactile_v2 | exec-eaa7a191-86ca-4af6-87a2-3701aadec3f1.png | b1eda94bed092b24ed048a4c4e50469130ddc7f200656e94813273de592d9664 |
+
+Two initial dry/finished-bed frames and their second revisions were rejected
+because a 15 g dose appeared as a tall opaque plug occupying much of the
+filter. The retained coffee-first steep was also reopened after its first
+phone previews revealed granular texture throughout the full 250 g retained
+volume, making liquid read as an impossible brewer full of grounds. The final
+frames bound the dry and spent bed to a shallow realistic layer and separate
+smooth translucent liquid from a thin textured surface raft.
+
+All six new frames passed full-resolution mechanics review, chroma and alpha
+processing, static 1024 by 768 WebP validation, and separate light- and
+dark-theme phone inspection. Exact prompts, rejected raws, lineage, and every
+resolved regeneration todo remain in the tracker. Tracker, matrix, drawables,
+and generated runtime catalog now agree at 89 accepted and 25 open.
