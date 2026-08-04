@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "fr",
+  "status": "research_required",
+  "ui_copy": {
+    "show_english_terms": null,
+    "hide_english_terms": null,
+    "heading": null
+  },
+  "sources": [],
+  "concepts": [
+    {
+      "concept_id": "brewer_dripper",
+      "canonical_english": "brewer / dripper",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "coffee_bed",
+      "canonical_english": "coffee bed",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "bloom",
+      "canonical_english": "bloom",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "grounds",
+      "canonical_english": "coffee grounds",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "fines",
+      "canonical_english": "coffee fines",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "slurry",
+      "canonical_english": "coffee slurry",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "drawdown",
+      "canonical_english": "drawdown",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "swirl_spin",
+      "canonical_english": "swirl / spin",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "server_carafe",
+      "canonical_english": "server / carafe",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "steep_immersion",
+      "canonical_english": "steep / immersion",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "valve",
+      "canonical_english": "valve",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    },
+    {
+      "concept_id": "filter_paper",
+      "canonical_english": "filter paper",
+      "preferred_terms": [],
+      "accepted_alternatives": [],
+      "avoid": [],
+      "rationale": null,
+      "evidence_source_ids": [],
+      "resolution": "unresolved"
+    }
+  ],
+  "reviewer": null,
+  "reviewed_on": null,
+  "blocking_requirements": [
+    "add at least two corroborating local-market sources across two categories",
+    "resolve all preferred, accepted, and avoided terminology",
+    "localize the contextual-control copy",
+    "obtain independent native coffee-domain approval",
+    "complete exact-guidance review, promotion, and device validation"
+  ]
+}

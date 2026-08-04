@@ -103,6 +103,9 @@ Run the offline validator for reviewed locales:
 
 ```powershell
 python tools\generate_p1_exact_guidance_localizations.py --check --locales en cs
+python tools\generate_p1_exact_terminology_references.py --check
+python tools\generate_p1_exact_terminology_review_packets.py --check
+python tools\generate_p1_exact_terminology_locale_queue.py --check
 python tools\generate_p1_tracker_accepted_asset_catalog.py --check
 ```
 

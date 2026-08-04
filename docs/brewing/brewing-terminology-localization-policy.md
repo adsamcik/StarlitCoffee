@@ -59,6 +59,36 @@ active approved locale and current stage provide at least one distinct term pair
 The first approved non-English locale remains the trigger for device-level
 accessibility, text-scaling, and comprehension validation of its reviewed copy.
 
+## All-locale support contract
+
+The runtime decoder, semantic sidecar, preference, contextual disclosure, and
+promotion path support every locale declared in `res/xml/locales_config.xml`:
+English, Bulgarian, Czech, Danish, German, Greek, Spanish, Estonian, Finnish,
+French, Croatian, Hungarian, Italian, Lithuanian, Latvian, Dutch, Polish,
+Portuguese, Romanian, Slovak, Slovenian, Swedish, and Simplified Chinese.
+
+Each locale has a source-bound packet under
+`p1-exact-terminology-review-packets`. Approved and review-ready packets contain
+their evidence and resolved vocabulary; research-required packets enumerate all
+12 concepts and preserve every unresolved field explicitly for a future native
+reviewer.
+
+`p1-exact-terminology-locale-queue.json` is the generated release-readiness
+authority for those 23 locales. It records the exact-guidance editorial state,
+terminology state, expected 12 concept IDs, review-packet path, Android resource
+presence, ledger approval, production readiness, and every remaining
+requirement. The generators fail if the Android locale list changes, concepts
+are duplicated or reordered, packets drift, or the checked-in ledger becomes
+stale.
+
+Software support does not imply linguistic approval. A locale can carry any
+reviewed Unicode vocabulary and control copy through the strict decoder, but it
+becomes user-visible only after its complete guidance, glossary, ledger entry,
+and Android resources are approved. As of 2026-08-04, English is production
+ready, Czech is ready for independent native review, and the remaining 21
+non-English locales are explicitly marked `research_required` rather than being
+silently filled with English or machine-approved terminology.
+
 ## Maintenance
 
 Re-review terminology when manufacturer vocabulary changes, strong local usage
