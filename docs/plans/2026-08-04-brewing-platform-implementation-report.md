@@ -69,20 +69,24 @@ Passed locally:
 
 - `gradlew :app:testDebugUnitTest --no-daemon --console=plain`
 - `gradlew :app:detekt :app:lintDebug :app:assembleDebug --no-daemon --console=plain`
+- `gradlew :app:connectedDebugAndroidTest --no-daemon --console=plain`
 - `python tools/verify_starlit_tactile_production_tracker.py`
 - `python tools/verify_instruction_assets.py`
 - exact-recipe setup resource count and key-parity audit across all 23 locales
 
 The static build emits existing Detekt baseline findings but no failing finding.
-No release version was assigned and no deployment was performed.
+The connected suite completed on a cold-started Android 16 `Medium_Phone` AVD:
+48 tests were discovered, 36 executed, 12 intentionally skipped, and 0 failed.
+The skipped cases are opt-in bag-scan quality and benchmark probes that require
+the separately pushed synthetic image corpus, generated OCR fixtures, per-bag
+instrumentation arguments, or a running and approved Mindlayer model service.
+They are not brewing, Room migration, or Compose release tests.
 
-`connectedDebugAndroidTest` did not reach test execution. The booted emulator's
-package manager stopped responding while Gradle attempted to uninstall/install
-the debug package; ADB timed out after 360 seconds with
-`ShellCommandUnresponsiveException`. This is recorded as an environment failure,
-not a passing instrumentation result or an app assertion failure. Instrumented
-migration, Compose, and manual assistive-technology checks must be rerun on a
-responsive emulator or physical device before a release claim.
+The first complete device run exposed one test interaction defect: the Cezve
+setup test used `performScrollTo()` for an uncomposed lazy-list item. The test now
+scrolls the `LazyColumn` to the semantics matcher, and both the focused test and
+the complete connected suite pass. No release version was assigned and no
+deployment was performed.
 
 ## Remaining release requirement
 
@@ -91,4 +95,6 @@ with high-quality Czech editorial review, then bind the reviewed string
 resources to the 114 asset records and populate recipe-level locale coverage.
 After that change, rerun unit, lint, Detekt, debug assembly, instrumentation,
 migration, accessibility, large-text, and light/dark checks before enabling any
-P1 profile or preparing a versioned changelog entry.
+P1 profile or preparing a versioned changelog entry. The current device and
+static validation establish a clean implementation baseline but cannot replace
+native-language editorial approval.
