@@ -46,9 +46,16 @@ from the canonical source after translation.
 
 Machine drafts and draft memory are written only under
 `build/p1-exact-guidance-localization-drafts`; `--translate` cannot write Android
-resources. After reviewing all 114 stages, copy the corrected memory to
-`docs/brewing/p1-exact-guidance-translation-memory.json`, add the locale approval
-to `docs/brewing/p1-exact-guidance-reviewed-locales.json`, and promote explicitly:
+resources. Field corrections and per-stage decisions belong in the locale's
+source-hash-bound file under
+`docs/brewing/p1-exact-guidance-editorial-reviews`. Draft generation applies
+partial corrections, but production promotion additionally requires that file's
+top-level status and all 114 stable-ID stage records to be `approved`.
+
+After reviewing all 114 stages, copy the machine memory to
+`docs/brewing/p1-exact-guidance-translation-memory.json`, approve the editorial
+review file, add the locale approval to
+`docs/brewing/p1-exact-guidance-reviewed-locales.json`, and promote explicitly:
 
 ```powershell
 python tools\generate_p1_exact_guidance_localizations.py --promote-reviewed --locales cs

@@ -20,6 +20,7 @@ DRAFT_ROOT = ROOT / "build/p1-exact-guidance-localization-drafts"
 DRAFT_MEMORY = DRAFT_ROOT / "translation-memory.json"
 REVIEWED_MEMORY = ROOT / "docs/brewing/p1-exact-guidance-translation-memory.json"
 REVIEW_LEDGER = ROOT / "docs/brewing/p1-exact-guidance-reviewed-locales.json"
+EDITORIAL_REVIEW_DIR = ROOT / "docs/brewing/p1-exact-guidance-editorial-reviews"
 LOCALES = (
     "en", "bg", "cs", "da", "de", "el", "es", "et", "fi", "fr", "hr", "hu",
     "it", "lt", "lv", "nl", "pl", "pt", "ro", "sk", "sl", "sv", "zh",
@@ -87,6 +88,10 @@ def resource_path(locale: str) -> Path:
 
 def draft_resource_path(locale: str) -> Path:
     return DRAFT_ROOT / locale / "p1_exact_guidance.json"
+
+
+def editorial_review_path(locale: str) -> Path:
+    return EDITORIAL_REVIEW_DIR / f"{locale}.json"
 
 
 def iter_text_slots(document: dict):
@@ -256,7 +261,102 @@ def sanitize_translated_text(value: str) -> str:
     )
 
 
-def localized_document(source: dict, locale: str, memory: dict) -> dict:
+def apply_editorial_review(
+    source: dict,
+    localized: dict,
+    locale: str,
+    require_approved: bool,
+) -> None:
+    if locale == "en":
+        return
+    path = editorial_review_path(locale)
+    if not path.exists():
+        if require_approved:
+            raise LocalizationError(f"{locale}: editorial review file is missing")
+        return
+    review = read_json(path)
+    if review.get("schema_version") != 1:
+        raise LocalizationError(f"{locale}: unsupported editorial review schema")
+    if review.get("source_sha256") != source_sha256():
+        raise LocalizationError(f"{locale}: editorial review belongs to another source")
+    if review.get("locale") != locale:
+        raise LocalizationError(f"{locale}: editorial review locale does not match")
+    reviews = review.get("stages")
+    if not isinstance(reviews, dict):
+        raise LocalizationError(f"{locale}: editorial stage reviews are missing")
+
+    source_stages = {
+        f"{recipe['recipe_id']}/{stage['stage_id']}": stage
+        for recipe in source["recipes"]
+        for stage in recipe["stages"]
+    }
+    localized_stages = {
+        f"{recipe['recipe_id']}/{stage['stage_id']}": stage
+        for recipe in localized["recipes"]
+        for stage in recipe["stages"]
+    }
+    unknown = set(reviews) - set(source_stages)
+    if unknown:
+        raise LocalizationError(
+            f"{locale}: editorial review contains unknown stages: {sorted(unknown)}",
+        )
+    if require_approved:
+        missing = set(source_stages) - set(reviews)
+        unapproved = [
+            stage_key for stage_key, stage_review in reviews.items()
+            if not isinstance(stage_review, dict)
+            or stage_review.get("status") != "approved"
+        ]
+        if review.get("status") != "approved" or missing or unapproved:
+            raise LocalizationError(
+                f"{locale}: editorial review is incomplete "
+                f"({len(missing)} missing, {len(unapproved)} unapproved)",
+            )
+
+    allowed_fields = set(STAGE_TEXT_KEYS) | {
+        f"full.{key}" for key in FULL_TEXT_KEYS
+    } | {
+        f"concise.{key}" for key in CONCISE_TEXT_KEYS
+    } | {
+        f"focused.{key}" for key in FOCUSED_TEXT_KEYS
+    }
+    for stage_key, stage_review in reviews.items():
+        if not isinstance(stage_review, dict):
+            raise LocalizationError(f"{locale}: invalid review for {stage_key}")
+        overrides = stage_review.get("overrides", {})
+        if not isinstance(overrides, dict):
+            raise LocalizationError(f"{locale}: invalid overrides for {stage_key}")
+        source_stage = source_stages[stage_key]
+        localized_stage = localized_stages[stage_key]
+        for field, value in overrides.items():
+            if field not in allowed_fields:
+                raise LocalizationError(
+                    f"{locale}: unsupported editorial field {stage_key}/{field}",
+                )
+            if not isinstance(value, str) or not value.strip():
+                raise LocalizationError(
+                    f"{locale}: blank editorial override {stage_key}/{field}",
+                )
+            source_container = source_stage
+            localized_container = localized_stage
+            key = field
+            if "." in field:
+                mode, key = field.split(".", 1)
+                source_container = source_stage["guidance"][mode]
+                localized_container = localized_stage["guidance"][mode]
+            if NUMBER_RE.findall(source_container[key]) != NUMBER_RE.findall(value):
+                raise LocalizationError(
+                    f"{locale}: editorial override changed numbers in {stage_key}/{field}",
+                )
+            localized_container[key] = sanitize_translated_text(value)
+
+
+def localized_document(
+    source: dict,
+    locale: str,
+    memory: dict,
+    require_approved_review: bool = False,
+) -> dict:
     if locale == "en":
         return copy.deepcopy(source)
     translations = memory["translations"].get(locale, {})
@@ -269,6 +369,7 @@ def localized_document(source: dict, locale: str, memory: dict) -> dict:
             container[key] = sanitize_translated_text(translations[source_value])
         except KeyError as error:
             raise LocalizationError(f"{locale}: missing translation for {source_value!r}") from error
+    apply_editorial_review(source, localized, locale, require_approved_review)
     for recipe in localized["recipes"]:
         for stage in recipe["stages"]:
             full = stage["guidance"]["full"]
@@ -394,7 +495,12 @@ def main() -> int:
             else:
                 validate_review_approval(locale)
                 output_path = resource_path(locale)
-            document = localized_document(source, locale, memory)
+            document = localized_document(
+                source,
+                locale,
+                memory,
+                require_approved_review=args.promote_reviewed,
+            )
             validate_document(source, document, locale)
             write_json(output_path, document)
             validate_expected_path(source, locale, output_path, document)
