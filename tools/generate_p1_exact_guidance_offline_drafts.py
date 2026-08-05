@@ -178,7 +178,7 @@ def translate_locales(
         ]
         for index, batch in enumerate(batches, start=1):
             inputs = tokenizer(
-                [disambiguate_coffee_english(value) for value in batch],
+                [re.sub(r"(?<=\d)[–—-](?=\d)", " to ", disambiguate_coffee_english(value)) for value in batch],
                 return_tensors="pt", padding=True, truncation=True, max_length=384,
             )
             with torch.inference_mode():
