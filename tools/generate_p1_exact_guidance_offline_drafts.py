@@ -102,6 +102,52 @@ def restore_protected_numbers(
     return normalize_numbers(source, translated, locale)
 
 
+def translate_numeric_fragments(
+    source: str,
+    locale: str,
+    tokenizer,
+    model,
+    torch,
+    forced_bos_token_id: int,
+) -> str:
+    """Fallback that cannot lose or reorder canonical numeric tokens."""
+    prepared = re.sub(
+        r"(?<=\d)[–—-](?=\d)",
+        " to ",
+        disambiguate_coffee_english(source),
+    )
+    numbers = NUMBER_RE.findall(prepared)
+    fragments = NUMBER_RE.split(prepared)
+    nonblank = [fragment for fragment in fragments if fragment.strip()]
+    localized_fragments: list[str] = []
+    if nonblank:
+        inputs = tokenizer(
+            nonblank,
+            return_tensors="pt",
+            padding=True,
+            truncation=True,
+            max_length=384,
+        )
+        with torch.inference_mode():
+            generated = model.generate(
+                **inputs,
+                forced_bos_token_id=forced_bos_token_id,
+                max_new_tokens=192,
+                num_beams=1,
+            )
+        localized_fragments = tokenizer.batch_decode(
+            generated,
+            skip_special_tokens=True,
+        )
+    localized_iterator = iter(localized_fragments)
+    rebuilt: list[str] = []
+    for index, fragment in enumerate(fragments):
+        rebuilt.append(next(localized_iterator) if fragment.strip() else fragment)
+        if index < len(numbers):
+            rebuilt.append(numbers[index])
+    return normalize_numbers(source, " ".join(rebuilt), locale)
+
+
 def normalize_numbers(source: str, translated: str, locale: str) -> str:
     """Keep canonical numeric tokens and spell model-added small numbers as words."""
     source_numbers = NUMBER_RE.findall(source)
@@ -239,9 +285,23 @@ def translate_locales(
             for source, localized, (_, replacements) in zip(
                 batch, translated, protected, strict=True
             ):
-                locale_memory[source] = restore_protected_numbers(
-                    source, localized, replacements, locale
-                )
+                try:
+                    locale_memory[source] = restore_protected_numbers(
+                        source, localized, replacements, locale
+                    )
+                except LocalizationError:
+                    locale_memory[source] = translate_numeric_fragments(
+                        source,
+                        locale,
+                        tokenizer,
+                        model,
+                        torch,
+                        tokenizer.convert_tokens_to_ids(LOCALE_TARGETS[locale]),
+                    )
+                    print(
+                        f"{locale}: used measurement-safe fallback for {source!r}",
+                        flush=True,
+                    )
             write_json(MEMORY_PATH, memory)
             print(f"{locale}: local batch {index}/{len(batches)}", flush=True)
 
