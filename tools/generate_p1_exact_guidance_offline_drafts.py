@@ -167,7 +167,7 @@ def normalize_numbers(source: str, translated: str, locale: str) -> str:
             normalized = token.replace(" ", "").replace("\u00a0", "")
             if not normalized.isdigit() or int(normalized) >= len(NUMBER_WORDS[locale]):
                 raise LocalizationError(
-                    f"{locale}: local model introduced unsupported number {token!r}"
+                    f"{locale}: local model introduced unsupported number {token!r} in {source!r}: {translated!r}"
                 )
             replacements.append(
                 (match.start(), match.end(), NUMBER_WORDS[locale][int(normalized)])
