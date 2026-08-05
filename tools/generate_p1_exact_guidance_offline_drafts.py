@@ -95,7 +95,7 @@ def restore_protected_numbers(
     for placeholder, number in replacements:
         if translated.count(placeholder) != 1:
             raise LocalizationError(
-                f"{locale}: local model changed numeric placeholder {placeholder}"
+                f"{locale}: local model changed numeric placeholder {placeholder} in {source!r}: {translated!r}"
             )
         translated = translated.replace(placeholder, number)
     return normalize_numbers(source, translated, locale)
