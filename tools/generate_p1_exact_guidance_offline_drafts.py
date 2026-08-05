@@ -132,7 +132,7 @@ def translate_numeric_fragments(
             generated = model.generate(
                 **inputs,
                 forced_bos_token_id=forced_bos_token_id,
-                max_new_tokens=192,
+                max_new_tokens=96,
                 num_beams=1,
             )
         localized_fragments = tokenizer.batch_decode(
@@ -272,7 +272,7 @@ def translate_locales(
                     forced_bos_token_id=tokenizer.convert_tokens_to_ids(
                         LOCALE_TARGETS[locale]
                     ),
-                    max_new_tokens=384,
+                    max_new_tokens=160,
                     num_beams=1,
                 )
             translated = tokenizer.batch_decode(
