@@ -80,6 +80,11 @@ def prepare_english(source: str) -> str:
         )
     if source == "Machine-controlled":
         return "Controlled automatically by the coffee brewing machine"
+    if source == "Paper seated and outlet unobstructed":
+        return (
+            "Coffee filter paper is correctly seated and the liquid outlet "
+            "is not blocked"
+        )
     return prepared
 
 
