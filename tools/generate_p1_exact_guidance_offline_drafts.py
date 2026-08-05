@@ -323,7 +323,7 @@ def main() -> int:
             translate_locales(
                 args.model_path, args.locales, sources, memory, args.batch_size, args.memory_path
             )
-            write_json(memory_path, memory)
+            write_json(args.memory_path, memory)
 
         validate_memory(memory, args.locales, sources)
         for locale in args.locales:
