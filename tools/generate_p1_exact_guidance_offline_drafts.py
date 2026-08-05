@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -110,6 +111,9 @@ def translate_locales(
 
     for locale in locales:
         locale_memory = memory["translations"].setdefault(locale, {})
+        for source in sources:
+            if not re.search(r"[A-Za-z]{2,}", source):
+                locale_memory.setdefault(source, source)
         missing = [source for source in sources if source not in locale_memory]
         batches = [
             missing[index:index + batch_size]
