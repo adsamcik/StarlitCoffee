@@ -71,6 +71,16 @@ NUMBER_WORDS = {
 }
 
 
+def prepare_english(source: str) -> str:
+    prepared = disambiguate_coffee_english(source)
+    if source == "Reservoir within maximum; carafe lid/valve correct":
+        return (
+            "Water reservoir is not over its maximum fill line; "
+            "coffee carafe lid and valve are correctly positioned"
+        )
+    return prepared
+
+
 def protect_numbers(source: str) -> tuple[str, list[tuple[str, str]]]:
     """Replace source numeric tokens with opaque words before local inference."""
     prepared = re.sub(r"(?<=\d)[–—-](?=\d)", " to ", source)
@@ -114,7 +124,7 @@ def translate_numeric_fragments(
     prepared = re.sub(
         r"(?<=\d)[–—-](?=\d)",
         " to ",
-        disambiguate_coffee_english(source),
+        prepare_english(source),
     )
     numbers = NUMBER_RE.findall(prepared)
     fragments = NUMBER_RE.split(prepared)
@@ -265,7 +275,7 @@ def translate_locales(
         ]
         for index, batch in enumerate(batches, start=1):
             protected = [
-                protect_numbers(disambiguate_coffee_english(value))
+                protect_numbers(prepare_english(value))
                 for value in batch
             ]
             inputs = tokenizer(
