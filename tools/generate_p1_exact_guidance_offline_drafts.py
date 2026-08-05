@@ -133,7 +133,7 @@ def translate_numeric_fragments(
                 **inputs,
                 forced_bos_token_id=forced_bos_token_id,
                 max_new_tokens=96,
-                num_beams=1,
+                num_beams=1,`n                no_repeat_ngram_size=3,
             )
         localized_fragments = tokenizer.batch_decode(
             generated,
@@ -278,7 +278,7 @@ def translate_locales(
                         LOCALE_TARGETS[locale]
                     ),
                     max_new_tokens=96,
-                    num_beams=1,
+                    num_beams=1,`n                    no_repeat_ngram_size=3,
                 )
             translated = tokenizer.batch_decode(
                 generated, skip_special_tokens=True
