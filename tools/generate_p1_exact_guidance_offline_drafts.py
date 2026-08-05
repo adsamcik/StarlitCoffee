@@ -78,6 +78,8 @@ def prepare_english(source: str) -> str:
             "Water reservoir is not over its maximum fill line; "
             "coffee carafe lid and valve are correctly positioned"
         )
+    if source == "Machine-controlled":
+        return "Controlled automatically by the coffee brewing machine"
     return prepared
 
 
