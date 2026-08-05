@@ -4,141 +4,164 @@
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
   "locale": "zh",
-  "status": "research_required",
+  "status": "local_draft_complete",
   "ui_copy": {
-    "show_english_terms": null,
-    "hide_english_terms": null,
-    "heading": null
+    "show_english_terms": "显示英文咖啡术语",
+    "hide_english_terms": "隐藏英文咖啡术语",
+    "heading": "英文咖啡术语"
   },
   "sources": [],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "咖啡冲煮器 / 滤杯"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "咖啡粉床"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "闷蒸"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "grounds",
       "canonical_english": "coffee grounds",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "咖啡粉"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "细粉"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "咖啡粉水混合液"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "下滤阶段"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "轻柔摇匀 / 旋转"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "分享壶 / 咖啡壶"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "浸泡 / 浸泡式冲煮"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "阀门"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "咖啡滤纸"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
     "add at least two corroborating local-market sources across two categories",
-    "resolve all preferred, accepted, and avoided terminology",
-    "localize the contextual-control copy",
+    "review preferred, accepted, and avoided terminology",
     "obtain independent native coffee-domain approval",
     "complete exact-guidance review, promotion, and device validation"
   ]

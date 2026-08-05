@@ -4,141 +4,164 @@
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
   "locale": "lt",
-  "status": "research_required",
+  "status": "local_draft_complete",
   "ui_copy": {
-    "show_english_terms": null,
-    "hide_english_terms": null,
-    "heading": null
+    "show_english_terms": "Rodyti angliškus kavos terminus",
+    "hide_english_terms": "Slėpti angliškus kavos terminus",
+    "heading": "Angliški kavos terminai"
   },
   "sources": [],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "kavos ruošimo įrenginys / piltuvėlis"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "maltos kavos sluoksnis"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "pirminis sudrėkinimas / bloom"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "grounds",
       "canonical_english": "coffee grounds",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "malta kava"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "smulkios kavos dalelės"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "kavos ir vandens mišinys"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "nubėgimas per filtrą"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "švelnus sukimas ratu"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "serviravimo indas / grafinas"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "mirkymas / imersinis ruošimas"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "vožtuvas"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
-      "preferred_terms": [],
+      "preferred_terms": [
+        "kavos filtravimo popierius"
+      ],
       "accepted_alternatives": [],
       "avoid": [],
-      "rationale": null,
+      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
       "evidence_source_ids": [],
-      "resolution": "unresolved"
+      "resolution": "local_draft_complete"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
     "add at least two corroborating local-market sources across two categories",
-    "resolve all preferred, accepted, and avoided terminology",
-    "localize the contextual-control copy",
+    "review preferred, accepted, and avoided terminology",
     "obtain independent native coffee-domain approval",
     "complete exact-guidance review, promotion, and device validation"
   ]

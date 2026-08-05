@@ -15,6 +15,7 @@ REFERENCE_MANIFEST = (
     ROOT / "app/src/main/assets/p1_exact_terminology_references_2026_07_27.json"
 )
 ENGLISH_GLOSSARY = ROOT / "app/src/main/res/raw/p1_exact_terminology.json"
+OFFLINE_DRAFTS = ROOT / "docs/brewing/p1-exact-terminology-offline-drafts.json"
 EDITORIAL_REVIEW_DIR = ROOT / "docs/brewing/p1-exact-guidance-editorial-reviews"
 OUTPUT_DIR = ROOT / "docs/brewing/p1-exact-terminology-review-packets"
 ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
@@ -144,6 +145,48 @@ def czech_packet(references: dict) -> dict:
     }
 
 
+def local_draft_packet(references: dict, drafts: dict, locale: str) -> dict:
+    draft = drafts["locales"][locale]
+    local_by_id = {
+        term["concept_id"]: term["preferred_local"]
+        for term in draft["terms"]
+    }
+    return {
+        "schema_version": 1,
+        "source_schema_version": references["source_schema_version"],
+        "source_execution_date": references["source_execution_date"],
+        "source_sha256": references["source_sha256"],
+        "locale": locale,
+        "status": "local_draft_complete",
+        "ui_copy": draft["ui_copy"],
+        "sources": [],
+        "concepts": [
+            {
+                "concept_id": concept["id"],
+                "canonical_english": concept["canonical_english"],
+                "preferred_terms": [local_by_id[concept["id"]]],
+                "accepted_alternatives": [],
+                "avoid": [],
+                "rationale": (
+                    "Source-aware local draft; independent local-market "
+                    "terminology evidence and native review are still required."
+                ),
+                "evidence_source_ids": [],
+                "resolution": "local_draft_complete",
+            }
+            for concept in references["concepts"]
+        ],
+        "reviewer": None,
+        "reviewed_on": None,
+        "blocking_requirements": [
+            "add at least two corroborating local-market sources across two categories",
+            "review preferred, accepted, and avoided terminology",
+            "obtain independent native coffee-domain approval",
+            "complete exact-guidance review, promotion, and device validation",
+        ],
+    }
+
+
 def research_packet(references: dict, locale: str) -> dict:
     return {
         "schema_version": 1,
@@ -179,6 +222,9 @@ def packets() -> dict[str, dict]:
     concepts = references.get("concepts")
     if not isinstance(concepts, list) or not concepts:
         raise ReviewPacketError("Canonical terminology concepts are missing")
+    drafts = read_json(OFFLINE_DRAFTS)
+    if drafts.get("source_sha256") != references.get("source_sha256"):
+        raise ReviewPacketError("Offline terminology drafts belong to another source")
     result: dict[str, dict] = {}
     for locale in locales():
         if locale == "en":
@@ -186,7 +232,7 @@ def packets() -> dict[str, dict]:
         elif locale == "cs":
             result[locale] = czech_packet(references)
         else:
-            result[locale] = research_packet(references, locale)
+            result[locale] = local_draft_packet(references, drafts, locale)
     return result
 
 

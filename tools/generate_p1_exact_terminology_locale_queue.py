@@ -17,6 +17,8 @@ REFERENCE_MANIFEST = (
 REVIEW_LEDGER = ROOT / "docs/brewing/p1-exact-guidance-reviewed-locales.json"
 EDITORIAL_REVIEW_DIR = ROOT / "docs/brewing/p1-exact-guidance-editorial-reviews"
 REVIEW_PACKET_DIR = ROOT / "docs/brewing/p1-exact-terminology-review-packets"
+EXACT_DRAFTS = ROOT / "docs/brewing/p1-exact-guidance-offline-draft-translation-memory.json"
+TERMINOLOGY_DRAFTS = ROOT / "docs/brewing/p1-exact-terminology-offline-drafts.json"
 OUTPUT = ROOT / "docs/brewing/p1-exact-terminology-locale-queue.json"
 ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
 EXPECTED_LOCALE_COUNT = 23
@@ -95,8 +97,17 @@ def missing_requirements(
                 "localized contextual-control copy",
             ],
         )
+    elif terminology_status == "local_draft_complete":
+        missing.extend(
+            [
+                "local-market terminology sources",
+                "native review of preferred, accepted, and avoided terminology",
+            ],
+        )
     if exact_status == "not_started":
         missing.append("complete 114-stage source-bound editorial review")
+    elif exact_status == "local_draft_complete":
+        missing.append("native editorial review of all 20 recipes and 114 stages")
     if exact_status != "approved" or terminology_status != "approved":
         missing.append("independent native coffee-domain approval")
     missing.extend(
@@ -122,6 +133,8 @@ def generate() -> dict:
 
     ledger = read_json(REVIEW_LEDGER)
     approvals = ledger.get("locales", {})
+    exact_drafts = read_json(EXACT_DRAFTS).get("translations", {})
+    terminology_drafts = read_json(TERMINOLOGY_DRAFTS).get("locales", {})
     records: list[dict] = []
     for locale in locales:
         editorial_status, terminology_status = editorial_state(locale)
@@ -131,8 +144,14 @@ def generate() -> dict:
             exact_status = "approved"
             terminology_status = "approved"
         else:
-            exact_status = editorial_status or "not_started"
-            terminology_status = terminology_status or "research_required"
+            exact_status = editorial_status or (
+                "local_draft_complete" if locale in exact_drafts else "not_started"
+            )
+            terminology_status = terminology_status or (
+                "local_draft_complete"
+                if locale in terminology_drafts
+                else "research_required"
+            )
         packet_path = REVIEW_PACKET_DIR / f"{locale}.json"
         packet = read_json(packet_path)
         if packet.get("locale") != locale:
