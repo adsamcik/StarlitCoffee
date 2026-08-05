@@ -11,6 +11,7 @@ from pathlib import Path
 from generate_p1_exact_guidance_localizations import (
     DRAFT_ROOT,
     LocalizationError,
+    NUMBER_RE,
     SOURCE,
     disambiguate_coffee_english,
     load_memory,
@@ -40,6 +41,62 @@ ENGINE = (
     "facebook/nllb-200-distilled-600M; local-only inference; "
     "transformers 4.53.2; torch 2.7.1+cpu"
 )
+NUMBER_WORDS = {
+    "bg": "нула един два три четири пет шест седем осем девет десет единадесет дванадесет".split(),
+    "cs": "nula jeden dva tři čtyři pět šest sedm osm devět deset jedenáct dvanáct".split(),
+    "da": "nul en to tre fire fem seks syv otte ni ti elleve tolv".split(),
+    "de": "null ein zwei drei vier fünf sechs sieben acht neun zehn elf zwölf".split(),
+    "el": "μηδέν ένα δύο τρία τέσσερα πέντε έξι επτά οκτώ εννέα δέκα έντεκα δώδεκα".split(),
+    "es": "cero uno dos tres cuatro cinco seis siete ocho nueve diez once doce".split(),
+    "et": "null üks kaks kolm neli viis kuus seitse kaheksa üheksa kümme üksteist kaksteist".split(),
+    "fi": "nolla yksi kaksi kolme neljä viisi kuusi seitsemän kahdeksan yhdeksän kymmenen yksitoista kaksitoista".split(),
+    "fr": "zéro un deux trois quatre cinq six sept huit neuf dix onze douze".split(),
+    "hr": "nula jedan dva tri četiri pet šest sedam osam devet deset jedanaest dvanaest".split(),
+    "hu": "nulla egy kettő három négy öt hat hét nyolc kilenc tíz tizenegy tizenkettő".split(),
+    "it": "zero uno due tre quattro cinque sei sette otto nove dieci undici dodici".split(),
+    "lt": "nulis vienas du trys keturi penki šeši septyni aštuoni devyni dešimt vienuolika dvylika".split(),
+    "lv": "nulle viens divi trīs četri pieci seši septiņi astoņi deviņi desmit vienpadsmit divpadsmit".split(),
+    "nl": "nul een twee drie vier vijf zes zeven acht negen tien elf twaalf".split(),
+    "pl": "zero jeden dwa trzy cztery pięć sześć siedem osiem dziewięć dziesięć jedenaście dwanaście".split(),
+    "pt": "zero um dois três quatro cinco seis sete oito nove dez onze doze".split(),
+    "ro": "zero unu doi trei patru cinci șase șapte opt nouă zece unsprezece doisprezece".split(),
+    "sk": "nula jeden dva tri štyri päť šesť sedem osem deväť desať jedenásť dvanásť".split(),
+    "sl": "nič ena dve tri štiri pet šest sedem osem devet deset enajst dvanajst".split(),
+    "sv": "noll en två tre fyra fem sex sju åtta nio tio elva tolv".split(),
+    "zh": list("零一二三四五六七八九") + ["十", "十一", "十二"],
+}
+
+
+def normalize_numbers(source: str, translated: str, locale: str) -> str:
+    """Keep canonical numeric tokens and spell model-added small numbers as words."""
+    source_numbers = NUMBER_RE.findall(source)
+    translated_matches = list(NUMBER_RE.finditer(translated))
+    extra = len(translated_matches) - len(source_numbers)
+    if extra < 0:
+        return restore_numbers(source, translated)
+    if extra:
+        source_cursor = 0
+        replacements: list[tuple[int, int, str]] = []
+        for match in translated_matches:
+            token = match.group()
+            if source_cursor < len(source_numbers) and token == source_numbers[source_cursor]:
+                source_cursor += 1
+                continue
+            normalized = token.replace(" ", "").replace("\u00a0", "")
+            if not normalized.isdigit() or int(normalized) >= len(NUMBER_WORDS[locale]):
+                raise LocalizationError(
+                    f"{locale}: local model introduced unsupported number {token!r}"
+                )
+            replacements.append(
+                (match.start(), match.end(), NUMBER_WORDS[locale][int(normalized)])
+            )
+        if source_cursor != len(source_numbers) or len(replacements) != extra:
+            raise LocalizationError(
+                f"{locale}: local model reordered canonical numeric tokens"
+            )
+        for start, end, replacement in reversed(replacements):
+            translated = translated[:start] + replacement + translated[end:]
+    return restore_numbers(source, translated)
 
 
 def parse_args() -> argparse.Namespace:
@@ -141,7 +198,7 @@ def translate_locales(
                     f"{locale}: local model changed batch cardinality"
                 )
             for source, localized in zip(batch, translated, strict=True):
-                locale_memory[source] = restore_numbers(source, localized)
+                locale_memory[source] = normalize_numbers(source, localized, locale)
             write_json(MEMORY_PATH, memory)
             print(f"{locale}: local batch {index}/{len(batches)}", flush=True)
 
