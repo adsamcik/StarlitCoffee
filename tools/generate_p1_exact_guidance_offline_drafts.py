@@ -41,6 +41,10 @@ ENGINE = (
     "facebook/nllb-200-distilled-600M; local-only inference; "
     "transformers 4.53.2; torch 2.7.1+cpu"
 )
+NUMBER_PLACEHOLDERS = (
+    "StarlitAlpha", "StarlitBeta", "StarlitGamma", "StarlitDelta",
+    "StarlitEpsilon", "StarlitZeta", "StarlitEta", "StarlitTheta",
+)
 NUMBER_WORDS = {
     "bg": "нула един два три четири пет шест седем осем девет десет единадесет дванадесет".split(),
     "cs": "nula jeden dva tři čtyři pět šest sedm osm devět deset jedenáct dvanáct".split(),
@@ -65,6 +69,36 @@ NUMBER_WORDS = {
     "sv": "noll en två tre fyra fem sex sju åtta nio tio elva tolv".split(),
     "zh": list("零一二三四五六七八九") + ["十", "十一", "十二"],
 }
+
+
+def protect_numbers(source: str) -> tuple[str, list[tuple[str, str]]]:
+    """Replace source numeric tokens with opaque words before local inference."""
+    prepared = re.sub(r"(?<=\d)[–—-](?=\d)", " to ", source)
+    matches = list(NUMBER_RE.finditer(prepared))
+    if len(matches) > len(NUMBER_PLACEHOLDERS):
+        raise LocalizationError("Guidance value has too many numeric tokens")
+    replacements = [
+        (NUMBER_PLACEHOLDERS[index], match.group())
+        for index, match in enumerate(matches)
+    ]
+    for match, (placeholder, _) in reversed(list(zip(matches, replacements, strict=True))):
+        prepared = prepared[:match.start()] + placeholder + prepared[match.end():]
+    return prepared, replacements
+
+
+def restore_protected_numbers(
+    source: str,
+    translated: str,
+    replacements: list[tuple[str, str]],
+    locale: str,
+) -> str:
+    for placeholder, number in replacements:
+        if translated.count(placeholder) != 1:
+            raise LocalizationError(
+                f"{locale}: local model changed numeric placeholder {placeholder}"
+            )
+        translated = translated.replace(placeholder, number)
+    return normalize_numbers(source, translated, locale)
 
 
 def normalize_numbers(source: str, translated: str, locale: str) -> str:
@@ -177,8 +211,12 @@ def translate_locales(
             for index in range(0, len(missing), batch_size)
         ]
         for index, batch in enumerate(batches, start=1):
+            protected = [
+                protect_numbers(disambiguate_coffee_english(value))
+                for value in batch
+            ]
             inputs = tokenizer(
-                [re.sub(r"(?<=\d)[–—-](?=\d)", " to ", disambiguate_coffee_english(value)) for value in batch],
+                [value for value, _ in protected],
                 return_tensors="pt", padding=True, truncation=True, max_length=384,
             )
             with torch.inference_mode():
@@ -197,8 +235,12 @@ def translate_locales(
                 raise LocalizationError(
                     f"{locale}: local model changed batch cardinality"
                 )
-            for source, localized in zip(batch, translated, strict=True):
-                locale_memory[source] = normalize_numbers(source, localized, locale)
+            for source, localized, (_, replacements) in zip(
+                batch, translated, protected, strict=True
+            ):
+                locale_memory[source] = restore_protected_numbers(
+                    source, localized, replacements, locale
+                )
             write_json(MEMORY_PATH, memory)
             print(f"{locale}: local batch {index}/{len(batches)}", flush=True)
 
