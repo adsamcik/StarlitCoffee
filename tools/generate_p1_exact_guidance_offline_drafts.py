@@ -277,7 +277,7 @@ def translate_locales(
                     forced_bos_token_id=tokenizer.convert_tokens_to_ids(
                         LOCALE_TARGETS[locale]
                     ),
-                    max_new_tokens=160,
+                    max_new_tokens=96,
                     num_beams=1,
                 )
             translated = tokenizer.batch_decode(
