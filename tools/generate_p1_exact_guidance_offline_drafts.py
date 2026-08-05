@@ -258,7 +258,7 @@ def translate_locales(
         for source in sources:
             if not re.search(r"[A-Za-z]{2,}", source):
                 locale_memory.setdefault(source, source)
-        missing = [source for source in sources if source not in locale_memory]
+        missing = sorted((source for source in sources if source not in locale_memory), key=len)
         batches = [
             missing[index:index + batch_size]
             for index in range(0, len(missing), batch_size)
