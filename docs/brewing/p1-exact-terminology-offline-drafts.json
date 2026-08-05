@@ -1,0 +1,1228 @@
+{
+  "schema_version": 1,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "engine": "manual local terminology draft; source-aware normalization; native coffee-domain review required",
+  "status": "local_draft_complete",
+  "locales": {
+    "bg": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Показване на английските термини за кафе",
+        "hide_english_terms": "Скриване на английските термини за кафе",
+        "heading": "Английска терминология за кафе"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "уред за приготвяне / дрипър"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "слой смляно кафе"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "предварително намокряне / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "смляно кафе"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "фини частици кафе"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "смес от кафе и вода"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "оттичане през филтъра"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "леко завъртане / кръгово движение"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "кана / сървър за кафе"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "накисване / имерсионно приготвяне"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "клапан"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "хартиен филтър за кафе"
+        }
+      ]
+    },
+    "da": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Vis engelske kaffetermer",
+        "hide_english_terms": "Skjul engelske kaffetermer",
+        "heading": "Engelske kaffetermer"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "kaffebrygger / kaffetragt"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "kaffebed"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "forvædning / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "malet kaffe"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "fine kaffepartikler"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "blanding af kaffe og vand"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "afløb gennem filteret"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "forsigtig cirkelbevægelse / rotation"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "serveringskande / glaskande"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "trækning / immersionsbrygning"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "ventil"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "kaffefilterpapir"
+        }
+      ]
+    },
+    "de": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Englische Kaffeebegriffe anzeigen",
+        "hide_english_terms": "Englische Kaffeebegriffe ausblenden",
+        "heading": "Englische Kaffeebegriffe"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "Kaffeebereiter / Dripper"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "Kaffeebett"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "Vorbrühen / Bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "Kaffeemehl"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "Feinanteil"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "Kaffee-Wasser-Gemisch"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "Durchlaufphase"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "Schwenken / Drehen"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "Server / Karaffe"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "Ziehenlassen / Immersion"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "Ventil"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "Filterpapier"
+        }
+      ]
+    },
+    "el": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Εμφάνιση αγγλικών όρων καφέ",
+        "hide_english_terms": "Απόκρυψη αγγλικών όρων καφέ",
+        "heading": "Αγγλική ορολογία καφέ"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "συσκευή εκχύλισης / κώνος φίλτρου"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "στρώμα αλεσμένου καφέ"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "προδιαβροχή / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "αλεσμένος καφές"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "λεπτά σωματίδια καφέ"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "μείγμα καφέ και νερού"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "αποστράγγιση μέσω του φίλτρου"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "απαλή κυκλική κίνηση / περιστροφή"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "κανάτα σερβιρίσματος / καράφα"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "εμβάπτιση / παραμονή στο νερό"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "βαλβίδα"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "χάρτινο φίλτρο καφέ"
+        }
+      ]
+    },
+    "es": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Mostrar términos de café en inglés",
+        "hide_english_terms": "Ocultar términos de café en inglés",
+        "heading": "Terminología de café en inglés"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "cafetera / gotero"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "lecho de café"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "preinfusión / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "café molido"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "partículas finas de café"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "mezcla de café y agua"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "fase de drenaje"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "movimiento circular / giro"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "servidor / jarra"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "infusión / inmersión"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "válvula"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "papel de filtro"
+        }
+      ]
+    },
+    "et": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Kuva ingliskeelsed kohviterminid",
+        "hide_english_terms": "Peida ingliskeelsed kohviterminid",
+        "heading": "Ingliskeelsed kohviterminid"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "kohvivalmistaja / tilguti"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "kohvipuru kiht"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "eelniisutus / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "jahvatatud kohv"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "peened kohviosakesed"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "kohvi ja vee segu"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "filtrist läbinõrgumine"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "õrn keerutamine / ringliigutus"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "serveerimiskann / karahvin"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "leotamine / immersioonmeetod"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "ventiil"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "kohvifiltri paber"
+        }
+      ]
+    },
+    "fi": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Näytä englanninkieliset kahvitermit",
+        "hide_english_terms": "Piilota englanninkieliset kahvitermit",
+        "heading": "Englanninkieliset kahvitermit"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "kahvinvalmistin / suodatinsuppilo"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "kahvipeti"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "esikostutus / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "jauhettu kahvi"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "hienot kahvihiukkaset"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "kahvin ja veden seos"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "suodattuminen / valumisvaihe"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "hellä pyöräytys / kiertoliike"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "tarjoilukannu / karahvi"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "haudutus / immersiouutto"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "venttiili"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "kahvinsuodatinpaperi"
+        }
+      ]
+    },
+    "fr": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Afficher les termes anglais du café",
+        "hide_english_terms": "Masquer les termes anglais du café",
+        "heading": "Terminologie anglaise du café"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "cafetière / porte-filtre"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "lit de café"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "pré-infusion / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "café moulu"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "particules fines"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "mélange café-eau"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "écoulement"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "mouvement circulaire / rotation"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "verseuse / carafe"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "infusion / immersion"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "valve"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "papier filtre"
+        }
+      ]
+    },
+    "hr": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Prikaži engleske termine za kavu",
+        "hide_english_terms": "Sakrij engleske termine za kavu",
+        "heading": "Engleska terminologija kave"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "aparat za pripremu / dripper"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "sloj mljevene kave"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "prednamakanje / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "mljevena kava"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "sitne čestice kave"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "mješavina kave i vode"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "otjecanje kroz filtar"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "lagano kružno okretanje"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "poslužna posuda / karafa"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "namakanje / imerzijska priprema"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "ventil"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "papirnati filtar za kavu"
+        }
+      ]
+    },
+    "hu": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Angol kávés szakkifejezések megjelenítése",
+        "hide_english_terms": "Angol kávés szakkifejezések elrejtése",
+        "heading": "Angol kávés szakkifejezések"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "kávékészítő / filtertartó"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "kávéágy"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "előáztatás / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "őrölt kávé"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "finom kávészemcsék"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "kávé-víz keverék"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "lefolyás a szűrőn"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "óvatos körkörös forgatás"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "kiöntő / szerverkancsó"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "áztatás / immerziós készítés"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "szelep"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "kávéfilterpapír"
+        }
+      ]
+    },
+    "it": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Mostra i termini inglesi del caffè",
+        "hide_english_terms": "Nascondi i termini inglesi del caffè",
+        "heading": "Terminologia inglese del caffè"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "caffettiera / dripper"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "letto di caffè"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "preinfusione / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "caffè macinato"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "particelle fini di caffè"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "miscela di caffè e acqua"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "fase di drenaggio"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "movimento circolare / rotazione"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "server / caraffa"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "infusione / immersione"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "valvola"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "filtro di carta"
+        }
+      ]
+    },
+    "lt": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Rodyti angliškus kavos terminus",
+        "hide_english_terms": "Slėpti angliškus kavos terminus",
+        "heading": "Angliški kavos terminai"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "kavos ruošimo įrenginys / piltuvėlis"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "maltos kavos sluoksnis"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "pirminis sudrėkinimas / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "malta kava"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "smulkios kavos dalelės"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "kavos ir vandens mišinys"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "nubėgimas per filtrą"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "švelnus sukimas ratu"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "serviravimo indas / grafinas"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "mirkymas / imersinis ruošimas"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "vožtuvas"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "kavos filtravimo popierius"
+        }
+      ]
+    },
+    "lv": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Rādīt kafijas terminus angļu valodā",
+        "hide_english_terms": "Paslēpt kafijas terminus angļu valodā",
+        "heading": "Kafijas terminoloģija angļu valodā"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "kafijas pagatavotājs / filtrpiltuve"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "maltās kafijas slānis"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "sākotnējā samitrināšana / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "maltā kafija"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "smalkās kafijas daļiņas"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "kafijas un ūdens maisījums"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "notecēšana caur filtru"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "viegla apļveida pagriešana"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "servēšanas kanna / karafe"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "mērcēšana / iegremdēšanas metode"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "vārsts"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "kafijas filtrpapīrs"
+        }
+      ]
+    },
+    "nl": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Engelse koffietermen tonen",
+        "hide_english_terms": "Engelse koffietermen verbergen",
+        "heading": "Engelse koffietermen"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "koffiezetter / dripper"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "koffiebed"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "voorbevochtiging / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "gemalen koffie"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "fijne koffiedeeltjes"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "mengsel van koffie en water"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "doorloopfase"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "zwenken / ronddraaien"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "server / karaf"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "weken / immersiebereiding"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "ventiel"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "koffiefilterpapier"
+        }
+      ]
+    },
+    "pl": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Pokaż angielskie terminy kawowe",
+        "hide_english_terms": "Ukryj angielskie terminy kawowe",
+        "heading": "Angielska terminologia kawowa"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "zaparzacz / dripper"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "łoże kawy"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "preinfuzja / blooming"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "zmielona kawa"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "drobne cząstki kawy"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "zawiesina kawy i wody"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "spływanie przez filtr"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "delikatny ruch okrężny / obrót"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "serwer / karafka"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "parzenie immersyjne / zanurzanie"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "zawór"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "filtr papierowy"
+        }
+      ]
+    },
+    "pt": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Mostrar termos de café em inglês",
+        "hide_english_terms": "Ocultar termos de café em inglês",
+        "heading": "Terminologia de café em inglês"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "cafeteira / porta-filtro"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "cama de café"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "pré-infusão / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "café moído"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "partículas finas de café"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "mistura de café e água"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "fase de escoamento"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "movimento circular / rotação"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "servidor / jarra"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "infusão / imersão"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "válvula"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "papel de filtro de café"
+        }
+      ]
+    },
+    "ro": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Afișează termenii de cafea în engleză",
+        "hide_english_terms": "Ascunde termenii de cafea în engleză",
+        "heading": "Terminologie de cafea în engleză"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "dispozitiv de preparare / dripper"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "pat de cafea"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "preinfuzie / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "cafea măcinată"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "particule fine de cafea"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "amestec de cafea și apă"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "scurgere prin filtru"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "rotire ușoară / mișcare circulară"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "vas de servire / carafă"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "infuzare / preparare prin imersie"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "supapă"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "hârtie de filtru pentru cafea"
+        }
+      ]
+    },
+    "sk": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Zobraziť anglické kávové termíny",
+        "hide_english_terms": "Skryť anglické kávové termíny",
+        "heading": "Anglické kávové termíny"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "zariadenie na prípravu / dripper"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "kávové lôžko"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "predmáčanie / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "mletá káva"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "jemné častice kávy"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "zmes kávy a vody"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "odtekanie cez filter"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "jemné krúživé otočenie"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "servírovacia nádoba / karafa"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "lúhovanie / imerzná príprava"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "ventil"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "papierový filter na kávu"
+        }
+      ]
+    },
+    "sl": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Prikaži angleške izraze za kavo",
+        "hide_english_terms": "Skrij angleške izraze za kavo",
+        "heading": "Angleški izrazi za kavo"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "pripomoček za pripravo / dripper"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "kavna posteljica"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "predmočenje / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "mleta kava"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "drobni delci kave"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "mešanica kave in vode"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "odtekanje skozi filter"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "nežno krožno vrtenje"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "strežna posoda / karafa"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "namakanje / imerzijska priprava"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "ventil"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "papirnati filter za kavo"
+        }
+      ]
+    },
+    "sv": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "Visa engelska kaffetermer",
+        "hide_english_terms": "Dölj engelska kaffetermer",
+        "heading": "Engelska kaffetermer"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "kaffebryggare / filterhållare"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "kaffebädd"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "förblötning / bloom"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "malet kaffe"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "fina kaffepartiklar"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "blandning av kaffe och vatten"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "avrinningsfas"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "försiktig cirkelrörelse / rotation"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "serveringskanna / karaff"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "blötläggning / immersionsbryggning"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "ventil"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "kaffefilterpapper"
+        }
+      ]
+    },
+    "zh": {
+      "status": "local_draft_complete",
+      "ui_copy": {
+        "show_english_terms": "显示英文咖啡术语",
+        "hide_english_terms": "隐藏英文咖啡术语",
+        "heading": "英文咖啡术语"
+      },
+      "terms": [
+        {
+          "concept_id": "brewer_dripper",
+          "preferred_local": "咖啡冲煮器 / 滤杯"
+        },
+        {
+          "concept_id": "coffee_bed",
+          "preferred_local": "咖啡粉床"
+        },
+        {
+          "concept_id": "bloom",
+          "preferred_local": "闷蒸"
+        },
+        {
+          "concept_id": "grounds",
+          "preferred_local": "咖啡粉"
+        },
+        {
+          "concept_id": "fines",
+          "preferred_local": "细粉"
+        },
+        {
+          "concept_id": "slurry",
+          "preferred_local": "咖啡粉水混合液"
+        },
+        {
+          "concept_id": "drawdown",
+          "preferred_local": "下滤阶段"
+        },
+        {
+          "concept_id": "swirl_spin",
+          "preferred_local": "轻柔摇匀 / 旋转"
+        },
+        {
+          "concept_id": "server_carafe",
+          "preferred_local": "分享壶 / 咖啡壶"
+        },
+        {
+          "concept_id": "steep_immersion",
+          "preferred_local": "浸泡 / 浸泡式冲煮"
+        },
+        {
+          "concept_id": "valve",
+          "preferred_local": "阀门"
+        },
+        {
+          "concept_id": "filter_paper",
+          "preferred_local": "咖啡滤纸"
+        }
+      ]
+    }
+  }
+}

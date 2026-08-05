@@ -13,10 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 LOCALE_CONFIG = ROOT / "app/src/main/res/xml/locales_config.xml"
 REFERENCE_MANIFEST = ROOT / "app/src/main/assets/p1_exact_terminology_references_2026_07_27.json"
 OUTPUT = ROOT / "docs/brewing/p1-exact-terminology-offline-drafts.json"
+OVERRIDES = ROOT / "docs/brewing/p1-exact-terminology-local-draft-overrides.json"
 ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
 ENGINE = (
-    "facebook/nllb-200-distilled-600M; local-only inference; "
-    "transformers 4.53.2; torch 2.7.1+cpu"
+    "manual local terminology draft; source-aware normalization; "
+    "native coffee-domain review required"
 )
 TARGETS = {
     "bg": "bul_Cyrl", "da": "dan_Latn", "de": "deu_Latn",
@@ -54,7 +55,6 @@ class DraftError(RuntimeError):
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model-path", type=Path)
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
 
@@ -119,57 +119,42 @@ def validate(document: dict, references: dict) -> None:
             raise DraftError(f"{locale}: terminology draft is incomplete")
 
 
-def generate(model_path: Path, references: dict) -> dict:
-    try:
-        import torch
-        from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-    except ImportError as error:
-        raise DraftError("Install the pinned local translation runtime") from error
-    if not model_path.is_dir():
-        raise DraftError(f"Local model directory does not exist: {model_path}")
-
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_path, src_lang="eng_Latn", local_files_only=True
-    )
-    model = AutoModelForSeq2SeqLM.from_pretrained(
-        model_path, local_files_only=True
-    )
-    model.eval()
+def generate(references: dict) -> dict:
+    overrides = read_json(OVERRIDES)
+    if set(overrides) != set(TARGETS):
+        raise DraftError("Manual terminology override locale coverage differs")
     concept_ids = [concept["id"] for concept in references["concepts"]]
     if concept_ids != list(CONCEPT_INPUTS):
-        raise DraftError("Canonical terminology concepts differ from local prompts")
-    inputs = list(CONCEPT_INPUTS.values()) + list(UI_INPUTS.values())
+        raise DraftError("Canonical terminology concepts differ from local drafts")
+    ui_keys = list(UI_INPUTS)
     result = {**expected_header(references), "locales": {}}
 
     for locale in configured_locales():
-        encoded = tokenizer(inputs, return_tensors="pt", padding=True, truncation=True)
-        with torch.inference_mode():
-            generated = model.generate(
-                **encoded,
-                forced_bos_token_id=tokenizer.convert_tokens_to_ids(TARGETS[locale]),
-                max_new_tokens=48,
-                num_beams=1,
-                no_repeat_ngram_size=3,
-            )
-        translations = [
-            value.strip()
-            for value in tokenizer.batch_decode(generated, skip_special_tokens=True)
-        ]
-        if len(translations) != len(inputs) or any(not value for value in translations):
-            raise DraftError(f"{locale}: local terminology generation is incomplete")
-        term_values = translations[:len(concept_ids)]
-        ui_values = translations[len(concept_ids):]
+        override = overrides[locale]
+        ui_values = override.get("ui")
+        term_values = override.get("terms")
+        if (
+            not isinstance(ui_values, list)
+            or len(ui_values) != len(ui_keys)
+            or not isinstance(term_values, list)
+            or len(term_values) != len(concept_ids)
+            or any(not isinstance(value, str) or not value.strip() for value in ui_values)
+            or any(not isinstance(value, str) or not value.strip() for value in term_values)
+        ):
+            raise DraftError(f"{locale}: manual terminology draft is incomplete")
         result["locales"][locale] = {
             "status": "local_draft_complete",
-            "ui_copy": dict(zip(UI_INPUTS, ui_values, strict=True)),
+            "ui_copy": dict(zip(ui_keys, ui_values, strict=True)),
             "terms": [
                 {"concept_id": concept_id, "preferred_local": value}
                 for concept_id, value in zip(concept_ids, term_values, strict=True)
             ],
         }
-        print(f"{locale}: drafted {len(concept_ids)} terms and {len(UI_INPUTS)} UI strings", flush=True)
+        print(
+            f"{locale}: drafted {len(concept_ids)} terms and {len(ui_keys)} UI strings",
+            flush=True,
+        )
     return result
-
 
 def encoded(document: dict) -> str:
     return json.dumps(document, ensure_ascii=False, indent=2) + "\n"
@@ -184,9 +169,7 @@ def main() -> int:
             validate(document, references)
             print(f"Validated local-only terminology drafts for {len(TARGETS)} locales.")
             return 0
-        if args.model_path is None:
-            raise DraftError("--model-path is required unless --check is used")
-        document = generate(args.model_path, references)
+        document = generate(references)
         validate(document, references)
         OUTPUT.write_text(encoded(document), encoding="utf-8", newline="\n")
         print(f"Wrote {OUTPUT}")
