@@ -192,6 +192,10 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument(
+        "--memory-path", type=Path, default=MEMORY_PATH,
+        help="checkpoint path; separate paths allow isolated local workers",
+    )
+    parser.add_argument(
         "--check", action="store_true",
         help="validate committed memory and drafts without loading a model",
     )
@@ -225,6 +229,7 @@ def translate_locales(
     sources: list[str],
     memory: dict,
     batch_size: int,
+    memory_path: Path,
 ) -> None:
     try:
         import torch
@@ -302,7 +307,7 @@ def translate_locales(
                         f"{locale}: used measurement-safe fallback for {source!r}",
                         flush=True,
                     )
-            write_json(MEMORY_PATH, memory)
+            write_json(memory_path, memory)
             print(f"{locale}: local batch {index}/{len(batches)}", flush=True)
 
 
@@ -311,14 +316,14 @@ def main() -> int:
     try:
         source = read_json(SOURCE)
         sources = translatable_strings(source)
-        memory = load_memory(MEMORY_PATH)
+        memory = load_memory(args.memory_path)
         memory["engine"] = ENGINE
 
         if not args.check:
             translate_locales(
-                args.model_path, args.locales, sources, memory, args.batch_size
+                args.model_path, args.locales, sources, memory, args.batch_size, args.memory_path
             )
-            write_json(MEMORY_PATH, memory)
+            write_json(memory_path, memory)
 
         validate_memory(memory, args.locales, sources)
         for locale in args.locales:
