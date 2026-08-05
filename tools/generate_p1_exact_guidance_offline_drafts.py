@@ -93,11 +93,12 @@ def restore_protected_numbers(
     locale: str,
 ) -> str:
     for placeholder, number in replacements:
-        if translated.count(placeholder) != 1:
+        pattern = re.compile(re.escape(placeholder), flags=re.IGNORECASE)
+        if len(pattern.findall(translated)) != 1:
             raise LocalizationError(
                 f"{locale}: local model changed numeric placeholder {placeholder} in {source!r}: {translated!r}"
             )
-        translated = translated.replace(placeholder, number)
+        translated = pattern.sub(number, translated)
     return normalize_numbers(source, translated, locale)
 
 
