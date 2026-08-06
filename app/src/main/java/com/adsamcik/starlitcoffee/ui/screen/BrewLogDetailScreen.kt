@@ -432,7 +432,8 @@ fun BrewLogDetailScreen(
                                     log = entity.copy(coffeeBagId = bagId)
                                 } catch (error: CancellationException) {
                                     throw error
-                                } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                                } catch (error: Exception) {
+                                    Log.e(TAG, "Failed to update brew log coffee bag", error)
                                     Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
                                 } finally {
                                     isUpdatingBag = false
@@ -448,7 +449,8 @@ fun BrewLogDetailScreen(
                                     log = entity.copy(coffeeBagId = null)
                                 } catch (error: CancellationException) {
                                     throw error
-                                } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                                } catch (error: Exception) {
+                                    Log.e(TAG, "Failed to clear brew log coffee bag", error)
                                     Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
                                 } finally {
                                     isUpdatingBag = false

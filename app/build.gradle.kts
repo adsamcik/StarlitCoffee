@@ -28,19 +28,32 @@ extensions.configure<ApplicationExtension>("android") {
         manifestPlaceholders["appLabel"] = "@string/app_name"
     }
 
-    // Sign debug builds with the shared Mindlayer "knownCertsOwner" keystore
-    // (`G:/Github/Mindlayer/app/keystores/knowncerts-owner.jks`) when present so
-    // local debug installs satisfy Mindlayer's `signature|knownSigner` BIND_ML_SERVICE
-    // permission gate. Falls back to the default Android Studio debug keystore when
-    // the Mindlayer keystore is unavailable (CI, contributors without that repo).
-    val mindlayerKeystore = rootProject.file("../Mindlayer/app/keystores/knowncerts-owner.jks")
+    // An optional known-signer keystore lets local builds bind to Mindlayer's
+    // signature-protected service. Credentials are never stored in the repository.
+    val mindlayerKeystore = providers.gradleProperty("starlit.knownSigner.keystore")
+        .orElse(providers.environmentVariable("STARLIT_KNOWN_SIGNER_KEYSTORE"))
+        .orNull
+        ?.let(rootProject::file)
+    val mindlayerStorePassword = providers.gradleProperty("starlit.knownSigner.storePassword")
+        .orElse(providers.environmentVariable("STARLIT_KNOWN_SIGNER_STORE_PASSWORD"))
+        .orNull
+    val mindlayerKeyAlias = providers.gradleProperty("starlit.knownSigner.keyAlias")
+        .orElse(providers.environmentVariable("STARLIT_KNOWN_SIGNER_KEY_ALIAS"))
+        .orNull
+    val mindlayerKeyPassword = providers.gradleProperty("starlit.knownSigner.keyPassword")
+        .orElse(providers.environmentVariable("STARLIT_KNOWN_SIGNER_KEY_PASSWORD"))
+        .orNull
+    val hasMindlayerSigning = mindlayerKeystore?.isFile == true &&
+        !mindlayerStorePassword.isNullOrBlank() &&
+        !mindlayerKeyAlias.isNullOrBlank() &&
+        !mindlayerKeyPassword.isNullOrBlank()
     signingConfigs {
-        if (mindlayerKeystore.exists()) {
+        if (hasMindlayerSigning) {
             create("mindlayerKnownCerts") {
                 storeFile = mindlayerKeystore
-                storePassword = "knowncertstest"
-                keyAlias = "knowncerts-owner"
-                keyPassword = "knowncertstest"
+                storePassword = mindlayerStorePassword
+                keyAlias = mindlayerKeyAlias
+                keyPassword = mindlayerKeyPassword
             }
         }
     }
@@ -51,7 +64,7 @@ extensions.configure<ApplicationExtension>("android") {
             // alongside a release build instead of replacing it.
             applicationIdSuffix = ".debug"
             manifestPlaceholders["appLabel"] = "Starlit Coffee (Debug)"
-            if (mindlayerKeystore.exists()) {
+            if (hasMindlayerSigning) {
                 signingConfig = signingConfigs.getByName("mindlayerKnownCerts")
             }
         }
@@ -112,6 +125,7 @@ ksp {
 
 detekt {
     config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+    baseline = file("$rootDir/config/detekt/baseline.xml")
     buildUponDefaultConfig = true
     allRules = false
 }

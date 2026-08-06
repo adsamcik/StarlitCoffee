@@ -17,6 +17,7 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.io.IOException
 
 /**
  * Characterization tests for the Open Food Facts barcode-enrichment branch of
@@ -124,7 +125,7 @@ class BrewBagScanTest {
 
     @Test
     fun `OFF lookup failure degrades to an empty summary without crashing`() = runTest {
-        val vm = BrewViewModel(openFoodFactsLookup = { throw RuntimeException("network down") })
+        val vm = BrewViewModel(openFoodFactsLookup = { throw IOException("network down") })
         val candidates = mutableListOf<BagFieldCandidate>()
 
         val summary = vm.addOpenFoodFactsCandidates(candidates, "1234567890")

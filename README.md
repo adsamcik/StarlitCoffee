@@ -39,6 +39,20 @@ contributors.
 Android Studio normally creates `local.properties` with the local SDK path. The
 file is intentionally ignored and must never be committed.
 
+Local builds that need to bind to Mindlayer's signature-protected service can
+provide an approved known-signer keystore through Gradle properties or the
+equivalent environment variables:
+
+| Gradle property | Environment variable |
+| --- | --- |
+| `starlit.knownSigner.keystore` | `STARLIT_KNOWN_SIGNER_KEYSTORE` |
+| `starlit.knownSigner.storePassword` | `STARLIT_KNOWN_SIGNER_STORE_PASSWORD` |
+| `starlit.knownSigner.keyAlias` | `STARLIT_KNOWN_SIGNER_KEY_ALIAS` |
+| `starlit.knownSigner.keyPassword` | `STARLIT_KNOWN_SIGNER_KEY_PASSWORD` |
+
+When the complete signing configuration is absent, debug builds use Android's
+standard debug keystore and all ordinary app development remains available.
+
 ## Build and test
 
 On Windows:
@@ -72,6 +86,9 @@ implementation report in
 [docs/plans/2026-08-04-brewing-platform-implementation-report.md](docs/plans/2026-08-04-brewing-platform-implementation-report.md).
 
 ## Contributing and security
+
+The quality ratchet and baseline policy are documented in
+[docs/code-quality.md](docs/code-quality.md).
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing changes. Report
 security or privacy issues through the process in [SECURITY.md](SECURITY.md),

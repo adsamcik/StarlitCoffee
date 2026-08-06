@@ -1,9 +1,9 @@
-# Detekt configuration — baseline setup
-# All rule sets enabled via buildUponDefaultConfig; maxIssues set high
-# to establish a baseline without failing the build immediately.
+# Detekt configuration
+# Historical findings are captured in baseline.xml. New findings fail the build,
+# so the baseline can only stay stable or shrink.
 
 build:
-  maxIssues: 999
+  maxIssues: 0
 
 complexity:
   active: true
@@ -108,5 +108,3 @@ style:
     ignoreAnnotated:
       - "Preview"
       - "androidx.compose.ui.tooling.preview.Preview"
-
-
