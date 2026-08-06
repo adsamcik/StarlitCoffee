@@ -1,0 +1,1285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 9.3.1" type="baseline" client="gradle" dependencies="false" name="AGP (9.3.1)" variant="all" version="9.3.1">
+
+    <issue
+        id="EmptySuperCall"
+        message="No need to call `super.onCleared`; the super method is defined to be empty"
+        errorLine1="        super.onCleared()"
+        errorLine2="              ~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt"
+            line="445"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="        preferences(context).edit().remove(reviewContextKey(workId)).commit()"
+        errorLine2="                                                                     ~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagReviewQueue.kt"
+            line="73"
+            column="70"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="            .commit()"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagReviewQueue.kt"
+            line="95"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="        preferences(context).edit().putString(reviewContextKey(workId), encoded).commit()"
+        errorLine2="                                                                                 ~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagReviewQueue.kt"
+            line="108"
+            column="82"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="        preferences(context).edit().remove(reviewContextKey(workId)).commit()"
+        errorLine2="                                                                     ~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagReviewQueue.kt"
+            line="113"
+            column="70"/>
+    </issue>
+
+    <issue
+        id="PictureInPictureIssue"
+        message="An activity in this app supports picture-in-picture and the targetSdkVersion is 31 or above; it is therefore strongly recommended to call both `setAutoEnterEnabled(true)` and `setSourceRectHint(...)`"
+        errorLine1="    &lt;application"
+        errorLine2="     ~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="40"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ConfigurationScreenWidthHeight"
+        message="Using Configuration.screenWidthDp instead of LocalWindowInfo.current.containerSize"
+        errorLine1="    val widthDp = LocalConfiguration.current.screenWidthDp"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/ui/adaptive/WindowWidthClass.kt"
+            line="54"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/ui/screen/BrewSessionGuidancePanel.kt"
+            line="101"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/ui/screen/P1BrewerProfileSetupScreen.kt"
+            line="99"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;es&quot; (Spanish) the following quantity should also be defined: `many`"
+        errorLine1="&lt;plurals name=&quot;format_selected&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/values-es/strings.xml"
+            line="52"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;fr&quot; (French) the following quantity should also be defined: `many` (e.g. &quot;1000000 de jours&quot;)"
+        errorLine1="&lt;plurals name=&quot;format_selected&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/values-fr/strings.xml"
+            line="52"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;it&quot; (Italian) the following quantity should also be defined: `many`"
+        errorLine1="&lt;plurals name=&quot;format_selected&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/values-it/strings.xml"
+            line="52"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;pt&quot; (Portuguese) the following quantity should also be defined: `many`"
+        errorLine1="&lt;plurals name=&quot;format_selected&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/values-pt/strings.xml"
+            line="52"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;es&quot; (Spanish) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;format_coffee_dose_cd&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-es/strings.xml"
+            line="95"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;fr&quot; (French) the following quantity should also be defined: `many` (e.g. &quot;1000000 de jours&quot;)"
+        errorLine1="    &lt;plurals name=&quot;format_coffee_dose_cd&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-fr/strings.xml"
+            line="95"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;it&quot; (Italian) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;format_coffee_dose_cd&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-it/strings.xml"
+            line="95"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;pt&quot; (Portuguese) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;format_coffee_dose_cd&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-pt/strings.xml"
+            line="95"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;cafe&quot; is a common misspelling; did you mean &quot;café&quot;?"
+        errorLine1="    &lt;string name=&quot;action_add_coffee&quot;>agregar cafe&lt;/string>"
+        errorLine2="                                             ~~~~">
+        <location
+            file="src/main/res/values-es/release_1_4_strings.xml"
+            line="58"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 26"
+        errorLine1="        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/MainActivity.kt"
+            line="55"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="AutoboxingStateCreation"
+        message="Prefer `mutableLongStateOf` instead of `mutableStateOf`"
+        errorLine1="    var nowWallClockMillis by remember(sessionId) { mutableStateOf(System.currentTimeMillis()) }"
+        errorLine2="                                                    ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/ui/screen/BrewSessionScreen.kt"
+            line="142"
+            column="53"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_current_step` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_current_step&quot;>Current step&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/brewing_session.xml"
+            line="5"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_recorded` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_recorded&quot;>Recorded&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/brewing_session.xml"
+            line="10"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brew_session_ready` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brew_session_ready&quot;>Ready to start.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/brewing_session.xml"
+            line="37"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.cd_open_bloom_animation_settings` appears to be unused"
+        errorLine1="    &lt;string name=&quot;cd_open_bloom_animation_settings&quot;>Open bloom animation settings&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="168"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.notif_rating_emoji_1` appears to be unused"
+        errorLine1="    &lt;string name=&quot;notif_rating_emoji_1&quot;>☹️&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="339"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.notif_rating_emoji_2` appears to be unused"
+        errorLine1="    &lt;string name=&quot;notif_rating_emoji_2&quot;>😐&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="340"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.notif_rating_emoji_3` appears to be unused"
+        errorLine1="    &lt;string name=&quot;notif_rating_emoji_3&quot;>😀&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="341"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.notif_rating_emoji_4` appears to be unused"
+        errorLine1="    &lt;string name=&quot;notif_rating_emoji_4&quot;>😋&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="342"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_how_was_it` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_how_was_it&quot;>How was it?&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="508"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_rate_brew_fresh` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_rate_brew_fresh&quot;>Rate this brew while the taste is still fresh.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="509"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_flavor_notes_section` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_flavor_notes_section&quot;>Flavor notes&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="510"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.hint_what_stood_out` appears to be unused"
+        errorLine1="    &lt;string name=&quot;hint_what_stood_out&quot;>Optional note - what stood out?&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="511"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_save_rating` appears to be unused"
+        errorLine1="    &lt;string name=&quot;action_save_rating&quot;>Save rating&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="512"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_other` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_other&quot;>Other&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="519"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_add_bag_gallery` appears to be unused"
+        errorLine1="    &lt;string name=&quot;action_add_bag_gallery&quot;>From gallery&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="579"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_add_bag_camera` appears to be unused"
+        errorLine1="    &lt;string name=&quot;action_add_bag_camera&quot;>Scan with camera&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="580"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_add_coffee_hint` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_add_coffee_hint&quot;>Add your coffee to track freshness and get brew suggestions&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="587"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.cd_toggle_debug_overlay` appears to be unused"
+        errorLine1="    &lt;string name=&quot;cd_toggle_debug_overlay&quot;>Toggle debug overlay&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="614"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_both_sides_scanned` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_both_sides_scanned&quot;>Both sides of the bag have been scanned&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="615"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_scanning_front_side` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_scanning_front_side&quot;>Scanning front side of bag&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="616"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_quick_save` appears to be unused"
+        errorLine1="&lt;string name=&quot;action_quick_save&quot;>Quick Save&lt;/string>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="617"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_repackaged_product` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_repackaged_product&quot;>This may be a repackaged or imported product&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="618"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_use_barcode` appears to be unused"
+        errorLine1="    &lt;string name=&quot;action_use_barcode&quot;>Use barcode&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="619"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_use_label` appears to be unused"
+        errorLine1="    &lt;string name=&quot;action_use_label&quot;>Use label&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="620"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_confirmed` appears to be unused"
+        errorLine1="&lt;string name=&quot;label_confirmed&quot;>Confirmed&lt;/string>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="621"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_ai_contributed` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_ai_contributed&quot;>AI contributed&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="622"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.cd_manual_capture` appears to be unused"
+        errorLine1="    &lt;string name=&quot;cd_manual_capture&quot;>Manual capture — force process current frame&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="623"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_add_cup_preset` appears to be unused"
+        errorLine1="    &lt;string name=&quot;action_add_cup_preset&quot;>Add cup preset&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="644"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.dialog_edit_cup_preset_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;dialog_edit_cup_preset_title&quot;>Edit cup preset&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="650"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.heading_brewer_profile_starting_defaults` appears to be unused"
+        errorLine1="    &lt;string name=&quot;heading_brewer_profile_starting_defaults&quot;>Starting defaults&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="856"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_input_water` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_input_water&quot;>Water added to the brewer&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="859"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_brewer_profile_expected_result` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_brewer_profile_expected_result&quot;>Expected result&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="861"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_brewer_profile_output_estimated_beverage_yield` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_brewer_profile_output_estimated_beverage_yield&quot;>Estimated beverage yield&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="862"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_brewer_profile_output_collected_concentrate` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_brewer_profile_output_collected_concentrate&quot;>Collected concentrate&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="863"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_brewer_profile_output_prepared_unfiltered_volume` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_brewer_profile_output_prepared_unfiltered_volume&quot;>Prepared unfiltered coffee&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="864"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_serving_separate` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_serving_separate&quot;>Serving is a separate choice after extraction.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="865"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.heading_brewer_profile_equipment_check` appears to be unused"
+        errorLine1="    &lt;string name=&quot;heading_brewer_profile_equipment_check&quot;>Equipment check&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="866"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_capacity_needs_confirmation` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_capacity_needs_confirmation&quot;>Capacity is not preset. Check your brewer’s marked capacity before using these amounts.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="867"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.format_brewer_profile_capacity_range` appears to be unused"
+        errorLine1="    &lt;string name=&quot;format_brewer_profile_capacity_range&quot;>Capacity: %1$s to %2$s&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="868"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.format_brewer_profile_capacity_up_to` appears to be unused"
+        errorLine1="    &lt;string name=&quot;format_brewer_profile_capacity_up_to&quot;>Capacity: up to %1$s&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="869"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.format_brewer_profile_capacity_from` appears to be unused"
+        errorLine1="    &lt;string name=&quot;format_brewer_profile_capacity_from&quot;>Capacity: from %1$s&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="870"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_capacity_configured` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_capacity_configured&quot;>Capacity is configured for this brewer.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="871"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_filter_compatible` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_filter_compatible&quot;>Use a filter compatible with this brewer.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="872"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_filter_unfiltered` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_filter_unfiltered&quot;>This profile is intentionally unfiltered.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="873"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_filter_confirm` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_filter_confirm&quot;>Confirm the required filter before starting.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="874"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.heading_brewer_profile_hario_switch_style` appears to be unused"
+        errorLine1="    &lt;string name=&quot;heading_brewer_profile_hario_switch_style&quot;>Hario Switch brew style&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="875"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_hario_switch_style_hint` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_hario_switch_style_hint&quot;>Choose the valve behaviour for this brew. Steep and release is the default.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="876"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_brewer_profile_hario_switch_steep_release` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_brewer_profile_hario_switch_steep_release&quot;>Steep &amp;amp; release&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="877"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_brewer_profile_hario_switch_manual_gravity` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_brewer_profile_hario_switch_manual_gravity&quot;>Manual gravity&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="878"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_temperature_machine_controlled` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_temperature_machine_controlled&quot;>Managed by the heat source or machine&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="879"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_brew_time_observed` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_brew_time_observed&quot;>Finish by observation&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="880"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_brew_time_machine_controlled` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_brew_time_machine_controlled&quot;>Machine-controlled cycle&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="881"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_brewer_profile_valve_release_generic` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_brewer_profile_valve_release_generic&quot;>Generic valve-release brewer&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="885"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brew_guidance_asset_pending` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brew_guidance_asset_pending&quot;>The visual guide for this step is still being prepared.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="903"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brew_guidance_asset_unavailable` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brew_guidance_asset_unavailable&quot;>The visual guide for this step is unavailable.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="904"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.msg_brewer_profile_cezve_choices_hint` appears to be unused"
+        errorLine1="    &lt;string name=&quot;msg_brewer_profile_cezve_choices_hint&quot;>Choose whether to add sugar and how many times to let the foam rise.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="918"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_brewer_profile_cezve_foam_rises` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_brewer_profile_cezve_foam_rises&quot;>Foam rises&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="922"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_brewer_profile_cezve_one_foam_rise` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_brewer_profile_cezve_one_foam_rise&quot;>1 rise&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="923"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.label_brewer_profile_cezve_two_foam_rises` appears to be unused"
+        errorLine1="    &lt;string name=&quot;label_brewer_profile_cezve_two_foam_rises&quot;>2 rises&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="924"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default.webp, instruction_p1_cezve_bounded_repeated_rise_12_130_stage_05_instruction_default.webp">
+        <location
+            file="src/main/res/drawable-nodpi/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_05_instruction_default.webp"/>
+        <location
+            file="src/main/res/drawable-nodpi/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default.webp"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: instruction_p1_clever_coffee_first_15_250_stage_04_instruction_default.webp, instruction_p1_clever_water_first_15_250_stage_05_instruction_default.webp">
+        <location
+            file="src/main/res/drawable-nodpi/instruction_p1_clever_water_first_15_250_stage_05_instruction_default.webp"/>
+        <location
+            file="src/main/res/drawable-nodpi/instruction_p1_clever_coffee_first_15_250_stage_04_instruction_default.webp"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: instruction_p1_switch_official_20_240_stage_04_instruction_default.webp, instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction_default.webp">
+        <location
+            file="src/main/res/drawable-nodpi/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction_default.webp"/>
+        <location
+            file="src/main/res/drawable-nodpi/instruction_p1_switch_official_20_240_stage_04_instruction_default.webp"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: instruction_p1_switch_gravity_15_250_stage_04_instruction_default.webp, instruction_p1_switch_official_20_240_stage_05_instruction_default.webp, instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default.webp">
+        <location
+            file="src/main/res/drawable-nodpi/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default.webp"/>
+        <location
+            file="src/main/res/drawable-nodpi/instruction_p1_switch_official_20_240_stage_05_instruction_default.webp"/>
+        <location
+            file="src/main/res/drawable-nodpi/instruction_p1_switch_gravity_15_250_stage_04_instruction_default.webp"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            DeliveryState.preferences(context)"
+        errorLine2="            ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="215"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            preferences.edit()"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="230"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            DeliveryState.preferences(context)"
+        errorLine2="            ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="251"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        preferences.edit().putLong(claimKey, nowMillis).commit()"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="274"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            DeliveryState.preferences(context)"
+        errorLine2="            ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="279"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        DeliveryState.preferences(context)"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="288"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            DeliveryState.preferences(context)"
+        errorLine2="            ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="323"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        DeliveryState.preferences(context)"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="331"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        val editor = preferences.edit()"
+        errorLine2="                     ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="403"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        if (!preferences.edit()"
+        errorLine2="             ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="450"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            if (!preferences.edit().remove(manifestKey).commit()) {"
+        errorLine2="                 ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="494"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="                    preferences.edit()"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="617"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="                    val editor = preferences.edit()"
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="634"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        val editor = preferences.edit()"
+        errorLine2="                     ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="752"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        val editor = preferences.edit()"
+        errorLine2="                     ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="942"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        context.getSharedPreferences(LEGACY_BAG_SCAN_PREFERENCES, Context.MODE_PRIVATE)"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagExtractionScheduler.kt"
+            line="1012"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        preferences(context).edit().remove(reviewContextKey(workId)).commit()"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagReviewQueue.kt"
+            line="73"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        preferences(context)"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagReviewQueue.kt"
+            line="92"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        preferences(context).edit().putString(reviewContextKey(workId), encoded).commit()"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagReviewQueue.kt"
+            line="108"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        preferences(context).edit().remove(reviewContextKey(workId)).commit()"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/work/BagReviewQueue.kt"
+            line="113"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        application"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt"
+            line="2194"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        application"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt"
+            line="2480"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        application"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewViewModel.kt"
+            line="2495"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `Bitmap.scale` instead?"
+        errorLine1="            Bitmap.createScaledBitmap(baseCrop, newW, newH, /* filter = */ true).also {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/data/network/ocr/HierarchicalOcrService.kt"
+            line="189"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                data = Uri.parse(&quot;starlitcoffee://bag-analysis/$workId&quot;)"
+        errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/MainActivity.kt"
+            line="196"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                data = Uri.parse(&quot;starlitcoffee://bag-analysis/$workId&quot;)"
+        errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/MainActivity.kt"
+            line="196"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="    private val playStoreUri: Uri = Uri.parse(PLAY_STORE_URI)"
+        errorLine2="                                    ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/util/MindlayerStartup.kt"
+            line="48"
+            column="37"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="    private val webStoreUri: Uri = Uri.parse(&quot;https://play.google.com/store/apps/details?id=$PACKAGE_NAME&quot;)"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/util/MindlayerStartup.kt"
+            line="49"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/scan/observability/ScanLlmDiagnostics.kt"
+            line="52"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="                preferences"
+        errorLine2="                ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/util/ScanPhotoStorage.kt"
+            line="442"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="                context.getSharedPreferences(SAVE_JOURNAL_PREFERENCES, Context.MODE_PRIVATE)"
+        errorLine2="                ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/util/ScanPhotoStorage.kt"
+            line="479"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `Bitmap.scale` instead?"
+        errorLine1="                Bitmap.createScaledBitmap(source, dimensions.width, dimensions.height, true)"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/util/ScanPhotoStorage.kt"
+            line="817"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/scan/observability/ScanSessionRingBuffer.kt"
+            line="45"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `Bitmap.scale` instead?"
+        errorLine1="            val resized = Bitmap.createScaledBitmap("
+        errorLine2="                          ^">
+        <location
+            file="src/main/java/com/adsamcik/starlitcoffee/util/ThumbnailLoader.kt"
+            line="141"
+            column="27"/>
+    </issue>
+
+</issues>

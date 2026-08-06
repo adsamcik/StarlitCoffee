@@ -3,6 +3,11 @@
 Starlit Coffee treats automated checks as a ratchet: new issues fail the build,
 while larger historical refactors remain explicit and reviewable.
 
+Formatting, Kotlin, and Compose conventions are defined in
+[code-style.md](code-style.md). `.editorconfig` keeps IDE formatting consistent,
+and the code-quality workflow enforces Detekt and Android lint on every relevant
+pull request.
+
 ## Required checks
 
 Run the following before opening a pull request:
@@ -20,6 +25,25 @@ checks in the localization workflow and release workflow.
 `config/detekt/baseline.xml` records the static-analysis findings that existed
 when the public cleanup baseline was established. `maxIssues` remains zero, so
 Detekt reports no accepted historical noise and fails on every new finding.
+
+## Android lint baseline
+
+`app/lint-baseline.xml` records 117 findings that predate strict warning
+enforcement. The largest groups are 59 unused resources, 34 KTX modernization
+suggestions, eight locale plural-quantity gaps, and four intentionally
+duplicated illustration pairs; the remaining 12 are focused Compose, PiP,
+preferences, SDK, typo, and lifecycle findings.
+
+All new Android lint warnings are errors. Regenerate the baseline only after a
+reviewed fix removes entries:
+
+```powershell
+.\gradlew.bat :app:updateLintBaseline
+.\gradlew.bat :app:lintDebug
+```
+
+Treat this baseline with the same ratchet policy as Detekt: do not add or replace
+entries merely to make CI pass.
 
 ## Current debt snapshot
 

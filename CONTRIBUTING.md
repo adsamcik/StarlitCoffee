@@ -7,7 +7,8 @@ disclosure.
 ## Before you start
 
 1. Read [README.md](README.md) and the relevant decision records in
-   [docs/adr](docs/adr).
+   [docs/adr](docs/adr), then follow the repository's
+   [code-style policy](docs/code-style.md).
 2. Open an issue before a large product, schema, dependency, or architecture
    change so its user value and migration cost can be discussed.
 3. Keep pull requests focused. Do not mix generated artifacts, broad formatting,

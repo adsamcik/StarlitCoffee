@@ -1,0 +1,27 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{kt,kts}]
+max_line_length = 160
+ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+
+[*.{json,yml,yaml}]
+indent_size = 2
+
+[*.xml]
+indent_size = 4
+
+[*.{bat,ps1}]
+end_of_line = crlf
+
+[*.sh]
+end_of_line = lf

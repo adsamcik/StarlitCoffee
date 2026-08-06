@@ -107,6 +107,13 @@ extensions.configure<ApplicationExtension>("android") {
             isReturnDefaultValues = true
         }
     }
+
+    lint {
+        abortOnError = true
+        baseline = file("lint-baseline.xml")
+        checkReleaseBuilds = true
+        warningsAsErrors = true
+    }
 }
 
 kotlin {
