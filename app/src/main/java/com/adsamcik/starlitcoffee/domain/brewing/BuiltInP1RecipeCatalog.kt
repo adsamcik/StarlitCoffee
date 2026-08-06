@@ -620,6 +620,8 @@ object BuiltInP1RecipeCatalog {
 
     fun find(id: BuiltInRecipeId): BuiltInP1RecipeDefinition? = recipesById[id]
 
+    // This factory mirrors the immutable, source-faithful recipe record. Keeping every
+    // quantity and ratio semantic named prevents accidental averaging or unit conflation.
     @Suppress("LongParameterList")
     private fun recipe(
         id: String,

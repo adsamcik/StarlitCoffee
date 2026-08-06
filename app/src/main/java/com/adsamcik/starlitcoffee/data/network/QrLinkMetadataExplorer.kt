@@ -61,6 +61,11 @@ interface QrLinkMetadataExplorer {
     suspend fun explore(url: String): QrLinkExploreResult
 }
 
+/**
+ * Security boundary for public-web QR exploration. The linear guards deliberately keep DNS,
+ * redirect, scheme, size, and content validation in request order; extracting them into a
+ * generic client would make the SSRF invariants harder to audit.
+ */
 @Suppress("LongMethod", "ReturnCount", "TooManyFunctions")
 class SafeQrLinkMetadataExplorer(
     private val connectionFactory: (URL) -> HttpURLConnection = { url ->

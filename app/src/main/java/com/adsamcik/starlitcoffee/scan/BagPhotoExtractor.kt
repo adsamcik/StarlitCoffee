@@ -92,6 +92,11 @@ internal class ScanProgressReporter(
     }
 }
 
+/**
+ * Stateful scan-pipeline boundary. Stage ordering, circuit breakers, evidence accumulation, and
+ * injectable native/network seams share one per-scan lifecycle; method-level complexity rules
+ * remain active and the constructor parameters are explicit test seams rather than user state.
+ */
 @Suppress("LargeClass", "TooManyFunctions", "UnusedPrivateProperty")
 class BagPhotoExtractor @Suppress("LongParameterList") constructor(
     private val appContext: Context?,

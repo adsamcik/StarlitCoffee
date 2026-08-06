@@ -191,6 +191,8 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         internal val MIGRATION_17_18 = object : Migration(17, 18) {
+            // One ordered Room transaction owns this schema step; extracting individual SQL
+            // statements would obscure the atomic migration and its review order.
             @Suppress("LongMethod")
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE saved_recipes ADD COLUMN methodFamilyId TEXT")

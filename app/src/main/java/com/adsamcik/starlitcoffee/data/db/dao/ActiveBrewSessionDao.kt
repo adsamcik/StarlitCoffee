@@ -44,6 +44,8 @@ interface ActiveBrewSessionDao {
         WHERE sessionId = :sessionId AND revision = :expectedRevision
         """,
     )
+    // Room binds this flat optimistic-lock update directly to named SQL columns; a wrapper
+    // object would hide the query contract without reducing the database API.
     @Suppress("LongParameterList")
     suspend fun updateIfRevision(
         sessionId: String,

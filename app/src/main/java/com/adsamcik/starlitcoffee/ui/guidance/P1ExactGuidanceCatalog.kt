@@ -70,6 +70,7 @@ data class P1ExactGuidancePresentation(
     val accessibleAltText: String,
 )
 
+/** Flat source-faithful stage record; grouping fields would hide quantity and cue semantics. */
 @Suppress("LongParameterList")
 data class P1ExactStageGuidance(
     val recipeId: BuiltInRecipeId,
@@ -434,6 +435,7 @@ private fun P1ExactRecipeDto.requireRecipeCopy() {
     ).forEach { value -> require(value.isNotBlank()) { "Exact recipe copy cannot be blank" } }
 }
 
+// Validation intentionally stays beside mapping so no unverified source field can enter runtime.
 @Suppress("LongMethod", "LongParameterList")
 private fun P1ExactStageDto.toDomain(
     recipeId: BuiltInRecipeId,
@@ -626,6 +628,7 @@ private data class P1ExactRecipeDto(
 )
 
 @Serializable
+// Mirrors the canonical JSON schema exactly; nested convenience DTOs would fragment compatibility.
 @Suppress("LongParameterList")
 private data class P1ExactStageDto(
     @SerialName("stage_id") val stageId: String,

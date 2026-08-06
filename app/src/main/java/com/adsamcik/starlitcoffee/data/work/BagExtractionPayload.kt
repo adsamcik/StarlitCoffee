@@ -1,3 +1,5 @@
+// Worker payloads mirror a versioned flat serialization contract; grouping fields would alter
+// compatibility and make WorkManager size limits harder to audit.
 @file:Suppress("LongParameterList")
 
 package com.adsamcik.starlitcoffee.data.work

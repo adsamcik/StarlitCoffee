@@ -493,6 +493,7 @@ object CoffeeMetadataNormalizer {
         )
     }
 
+    // Explicit field arguments keep cross-field normalization visible at the entity boundary.
     @Suppress("LongParameterList")
     fun applyToBagEntity(
         bag: CoffeeBagEntity,
@@ -1143,6 +1144,7 @@ object CoffeeMetadataNormalizer {
         return countryName ?: CoffeeOrigin.Known.valueOf(originId).displayName
     }
 
+    // Locale labels form one canonical flavor-note row; a map-only API would lose named defaults.
     @Suppress("LongParameterList")
     private fun note(
         id: String,
