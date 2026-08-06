@@ -839,46 +839,8 @@ object CoffeeMetadataNormalizer {
         }
 
         // Rule 2 — cross-field reclassification.
-        for (sourceField in listOf("region", "processType", "roastLevel", "variety", "origin")) {
-            val value = values[sourceField] ?: continue
-            val belongsTo = classifyControlledValue(value)
-            if (belongsTo.isEmpty() || sourceField in belongsTo) continue
-            val target = reclassifyTargetPriority.firstOrNull { it in belongsTo } ?: continue
-            val targetValue = values[target]
-            when {
-                targetValue == null -> {
-                    values[target] = value
-                    values[sourceField] = null
-                    corrections += ScanFieldCorrection(
-                        field = sourceField,
-                        action = ScanFieldCorrectionAction.RELOCATED,
-                        from = value,
-                        to = target,
-                        reason = "value belongs to $target, which was empty",
-                    )
-                }
-                canonicalIdFor(target, targetValue) != null &&
-                    canonicalIdFor(target, targetValue) == canonicalIdFor(target, value) -> {
-                    values[sourceField] = null
-                    corrections += ScanFieldCorrection(
-                        field = sourceField,
-                        action = ScanFieldCorrectionAction.DROPPED,
-                        from = value,
-                        to = null,
-                        reason = "duplicates $target",
-                    )
-                }
-                else -> {
-                    values[sourceField] = null
-                    corrections += ScanFieldCorrection(
-                        field = sourceField,
-                        action = ScanFieldCorrectionAction.DROPPED,
-                        from = value,
-                        to = null,
-                        reason = "belongs to $target, which already holds a different value",
-                    )
-                }
-            }
+        listOf("region", "processType", "roastLevel", "variety", "origin").forEach { sourceField ->
+            reclassifyControlledField(values, corrections, sourceField)
         }
 
         // Rule 3 — weight format recovery.
@@ -920,6 +882,48 @@ object CoffeeMetadataNormalizer {
      * from roast date" or a garbled OCR token, which is exactly how a
      * hallucinated expiry date would otherwise reach the saved bag.
      */
+    private fun reclassifyControlledField(
+        values: MutableMap<String, String?>,
+        corrections: MutableList<ScanFieldCorrection>,
+        sourceField: String,
+    ) {
+        val value = values[sourceField] ?: return
+        val belongsTo = classifyControlledValue(value)
+        if (belongsTo.isEmpty() || sourceField in belongsTo) return
+        val target = reclassifyTargetPriority.firstOrNull { it in belongsTo } ?: return
+        val targetValue = values[target]
+        val duplicatesTarget = targetValue != null &&
+            canonicalIdFor(target, targetValue) != null &&
+            canonicalIdFor(target, targetValue) == canonicalIdFor(target, value)
+        values[sourceField] = null
+        when {
+            targetValue == null -> {
+                values[target] = value
+                corrections += ScanFieldCorrection(
+                    field = sourceField,
+                    action = ScanFieldCorrectionAction.RELOCATED,
+                    from = value,
+                    to = target,
+                    reason = "value belongs to $target, which was empty",
+                )
+            }
+            duplicatesTarget -> corrections += ScanFieldCorrection(
+                field = sourceField,
+                action = ScanFieldCorrectionAction.DROPPED,
+                from = value,
+                to = null,
+                reason = "duplicates $target",
+            )
+            else -> corrections += ScanFieldCorrection(
+                field = sourceField,
+                action = ScanFieldCorrectionAction.DROPPED,
+                from = value,
+                to = null,
+                reason = "belongs to $target, which already holds a different value",
+            )
+        }
+    }
+
     fun sanitizeDate(value: String?): String? {
         val trimmed = value?.trim()?.takeIf(String::isNotBlank) ?: return null
         val isValid = DateParser.parse(trimmed) != null || yearMonthPattern.matches(trimmed)

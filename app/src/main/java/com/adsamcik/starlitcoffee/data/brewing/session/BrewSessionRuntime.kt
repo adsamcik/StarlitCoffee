@@ -69,23 +69,29 @@ class BrewSessionRuntime private constructor(
 
     private suspend fun enqueuePersistedDeadline(session: ActiveBrewSession) {
         if (session.runtime.status != BrewSessionStatus.RUNNING) return
-        val stage = session.runtime.currentStage ?: return
-        val deadline = scheduledDeadline(session.runtime.sessionId) ?: return
-        val token = deadline.scheduleToken ?: return
-        val dueAt = deadline.dueAtWallClockMillis ?: return
-        if (
-            deadline.status != BrewSessionStatus.RUNNING.name ||
-                deadline.stageInstanceKey != stage.instanceId.persistentKey
-        ) return
-        scheduler.schedule(
-            sessionId = session.runtime.sessionId,
-            stageInstanceId = stage.instanceId,
-            scheduleToken = token,
-            dueAtWallClockMillis = dueAt,
-            effectId = SessionEffectId(
-                "${session.runtime.sessionId.value}:startup_schedule:$token",
-            ),
-        )
+        val stage = session.runtime.currentStage
+        val deadline = scheduledDeadline(session.runtime.sessionId)
+        val matchesCurrentStage = deadline?.status == BrewSessionStatus.RUNNING.name &&
+            deadline.stageInstanceKey == stage?.instanceId?.persistentKey
+        val scheduleToken = deadline?.scheduleToken
+        val dueAt = deadline?.dueAtWallClockMillis
+        val hasCompleteSchedule = listOf(
+            stage != null,
+            matchesCurrentStage,
+            scheduleToken != null,
+            dueAt != null,
+        ).all { it }
+        if (hasCompleteSchedule) {
+            scheduler.schedule(
+                sessionId = session.runtime.sessionId,
+                stageInstanceId = requireNotNull(stage).instanceId,
+                scheduleToken = requireNotNull(scheduleToken),
+                dueAtWallClockMillis = requireNotNull(dueAt),
+                effectId = SessionEffectId(
+                    "${session.runtime.sessionId.value}:startup_schedule:$scheduleToken",
+                ),
+            )
+        }
     }
 
     companion object {

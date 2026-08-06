@@ -633,62 +633,65 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         return BagPhotoBarcodeDetection(barcode = barcode, qrUrl = qrUrl)
     }
 
-    private fun decodeBagPhotoBitmap(uriStr: String): Bitmap? {
-        val uri = uriStr.toUri()
+    private fun decodeBagPhotoBitmap(uriString: String): Bitmap? {
+        val uri = uriString.toUri()
         return if (uri.scheme == "content") {
-            val resolver = appContext?.contentResolver ?: run {
-                Log.w(BAG_PHOTO_TAG, "Cannot decode content URI: appContext is null in BagPhotoExtractor")
-                return null
-            }
-            val orientation = try {
-                resolver.openInputStream(uri)?.use { input ->
-                    ExifInterface(input).getAttributeInt(
-                        ExifInterface.TAG_ORIENTATION,
-                        ExifInterface.ORIENTATION_NORMAL,
-                    )
-                }
-            } catch (e: Exception) {
-                Log.w(BAG_PHOTO_TAG, "Failed to read content URI EXIF orientation", e)
-                null
-            } ?: ExifInterface.ORIENTATION_NORMAL
-            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-            resolver.openInputStream(uri)?.use { input -> BitmapFactory.decodeStream(input, null, bounds) }
-            val sourceLongEdge = maxOf(bounds.outWidth, bounds.outHeight)
-            if (sourceLongEdge <= 0) return null
-            val options = BitmapFactory.Options().apply {
-                inSampleSize = PhotoStoragePolicy.boundedDecodeSampleSize(
-                    sourceLongEdgePx = sourceLongEdge,
-                    maxLongEdgePx = MAX_BAG_PHOTO_DECODE_LONG_EDGE_PX,
-                )
-                inPreferredConfig = Bitmap.Config.ARGB_8888
-            }
-            resolver.openInputStream(uri)?.use { input ->
-                BitmapFactory.decodeStream(input, null, options)
-            }?.let { rawBitmap ->
-                ImagePreprocessor.applyExifOrientation(rawBitmap, orientation).also { oriented ->
-                    if (oriented !== rawBitmap && !rawBitmap.isRecycled) rawBitmap.recycle()
-                }
-            }
+            decodeContentPhoto(uri)
         } else {
-            val file = java.io.File(uri.path ?: uriStr)
-            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-            BitmapFactory.decodeFile(file.absolutePath, bounds)
-            val sourceLongEdge = maxOf(bounds.outWidth, bounds.outHeight)
-            if (sourceLongEdge <= 0) return null
-            val options = BitmapFactory.Options().apply {
-                inSampleSize = PhotoStoragePolicy.boundedDecodeSampleSize(
-                    sourceLongEdgePx = sourceLongEdge,
-                    maxLongEdgePx = MAX_BAG_PHOTO_DECODE_LONG_EDGE_PX,
+            decodeFilePhoto(uri.path ?: uriString)
+        }
+    }
+
+    private fun decodeContentPhoto(uri: android.net.Uri): Bitmap? {
+        val resolver = appContext?.contentResolver ?: run {
+            Log.w(BAG_PHOTO_TAG, "Cannot decode content URI: appContext is null in BagPhotoExtractor")
+            return null
+        }
+        val orientation = try {
+            resolver.openInputStream(uri)?.use { input ->
+                ExifInterface(input).getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL,
                 )
-                inPreferredConfig = Bitmap.Config.ARGB_8888
             }
-            val rawBitmap = BitmapFactory.decodeFile(file.absolutePath, options) ?: return null
-            ImagePreprocessor.applyExifRotation(rawBitmap, file.absolutePath).also { oriented ->
+        } catch (error: Exception) {
+            Log.w(BAG_PHOTO_TAG, "Failed to read content URI EXIF orientation", error)
+            null
+        } ?: ExifInterface.ORIENTATION_NORMAL
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        resolver.openInputStream(uri)?.use { input -> BitmapFactory.decodeStream(input, null, bounds) }
+        val options = boundedPhotoDecodeOptions(bounds) ?: return null
+        return resolver.openInputStream(uri)?.use { input ->
+            BitmapFactory.decodeStream(input, null, options)
+        }?.let { rawBitmap ->
+            ImagePreprocessor.applyExifOrientation(rawBitmap, orientation).also { oriented ->
                 if (oriented !== rawBitmap && !rawBitmap.isRecycled) rawBitmap.recycle()
             }
         }
     }
 
+    private fun decodeFilePhoto(path: String): Bitmap? {
+        val file = java.io.File(path)
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeFile(file.absolutePath, bounds)
+        val options = boundedPhotoDecodeOptions(bounds) ?: return null
+        val rawBitmap = BitmapFactory.decodeFile(file.absolutePath, options) ?: return null
+        return ImagePreprocessor.applyExifRotation(rawBitmap, file.absolutePath).also { oriented ->
+            if (oriented !== rawBitmap && !rawBitmap.isRecycled) rawBitmap.recycle()
+        }
+    }
+
+    private fun boundedPhotoDecodeOptions(bounds: BitmapFactory.Options): BitmapFactory.Options? {
+        val sourceLongEdge = maxOf(bounds.outWidth, bounds.outHeight)
+        if (sourceLongEdge <= 0) return null
+        return BitmapFactory.Options().apply {
+            inSampleSize = PhotoStoragePolicy.boundedDecodeSampleSize(
+                sourceLongEdgePx = sourceLongEdge,
+                maxLongEdgePx = MAX_BAG_PHOTO_DECODE_LONG_EDGE_PX,
+            )
+            inPreferredConfig = Bitmap.Config.ARGB_8888
+        }
+    }
     private fun buildScanPass(
         label: String,
         bitmap: Bitmap,

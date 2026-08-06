@@ -78,6 +78,17 @@ data class LearnGuidanceCatalogResolution(
     val content: List<ResolvedLearnGuidanceContent>,
 )
 
+private sealed interface LearnGuidanceScopeResolution {
+    data class Ready(
+        val methodFamilyId: MethodFamilyId,
+        val brewerProfileId: BrewerProfileId,
+    ) : LearnGuidanceScopeResolution
+
+    data class Unavailable(
+        val availability: LearnGuidanceCatalogAvailability,
+    ) : LearnGuidanceScopeResolution
+}
+
 /**
  * Resolves an entire profile curriculum for Learn without creating or changing
  * a brew session. It shares policy precedence with live Brew and refuses to
@@ -95,25 +106,13 @@ class LearnGuidanceCatalogResolver(
         .also(::requireUniqueLearnContentIds)
 
     fun resolve(request: LearnGuidanceCatalogRequest): LearnGuidanceCatalogResolution {
-        val methodFamilyId = request.methodFamilyId.toLearnMethodFamilyIdOrNull()
-            ?: return unavailable(
-                LearnGuidanceCatalogAvailability.InvalidMethodFamilyId(request.methodFamilyId),
-            )
-        val brewerProfileId = request.brewerProfileId.toLearnBrewerProfileIdOrNull()
-            ?: return unavailable(
-                LearnGuidanceCatalogAvailability.InvalidBrewerProfileId(request.brewerProfileId),
-            )
-        val profile = brewingCatalog.findBrewerProfile(brewerProfileId)
-            ?: return unavailable(LearnGuidanceCatalogAvailability.UnknownBrewerProfile(brewerProfileId))
-        if (profile.familyId != methodFamilyId) {
-            return unavailable(
-                LearnGuidanceCatalogAvailability.ProfileFamilyMismatch(
-                    profileId = brewerProfileId,
-                    requestedFamilyId = methodFamilyId,
-                    catalogueFamilyId = profile.familyId,
-                ),
-            )
+        val scope = resolveScope(request)
+        if (scope is LearnGuidanceScopeResolution.Unavailable) {
+            return unavailable(scope.availability)
         }
+        require(scope is LearnGuidanceScopeResolution.Ready)
+        val methodFamilyId = scope.methodFamilyId
+        val brewerProfileId = scope.brewerProfileId
 
         val policy = GuidancePolicyResolver.resolve(
             GuidancePolicyContext(
@@ -162,6 +161,31 @@ class LearnGuidanceCatalogResolver(
                 .filter { content -> policy.isVisible(content.visibility, content.safetyCritical) }
                 .map { content -> content.toLearnContent(policy.level) },
         )
+    }
+
+    private fun resolveScope(request: LearnGuidanceCatalogRequest): LearnGuidanceScopeResolution {
+        val methodFamilyId = request.methodFamilyId.toLearnMethodFamilyIdOrNull()
+        val brewerProfileId = request.brewerProfileId.toLearnBrewerProfileIdOrNull()
+        val profile = brewerProfileId?.let(brewingCatalog::findBrewerProfile)
+        return when {
+            methodFamilyId == null -> LearnGuidanceScopeResolution.Unavailable(
+                LearnGuidanceCatalogAvailability.InvalidMethodFamilyId(request.methodFamilyId),
+            )
+            brewerProfileId == null -> LearnGuidanceScopeResolution.Unavailable(
+                LearnGuidanceCatalogAvailability.InvalidBrewerProfileId(request.brewerProfileId),
+            )
+            profile == null -> LearnGuidanceScopeResolution.Unavailable(
+                LearnGuidanceCatalogAvailability.UnknownBrewerProfile(brewerProfileId),
+            )
+            profile.familyId != methodFamilyId -> LearnGuidanceScopeResolution.Unavailable(
+                LearnGuidanceCatalogAvailability.ProfileFamilyMismatch(
+                    profileId = brewerProfileId,
+                    requestedFamilyId = methodFamilyId,
+                    catalogueFamilyId = profile.familyId,
+                ),
+            )
+            else -> LearnGuidanceScopeResolution.Ready(methodFamilyId, brewerProfileId)
+        }
     }
 
     private fun selectExactContent(

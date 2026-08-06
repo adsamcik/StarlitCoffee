@@ -33,36 +33,32 @@ object P1ExactRecipeStartInputFactory {
             BuiltInP1ExactStagePlanCatalog.find(recipeId) != null
         },
     ): P1ExactRecipeStartInputResult {
-        val recipe = recipeFor(selection.builtInRecipeId) ?: return P1ExactRecipeStartInputResult.Unavailable
-        if (recipe.brewerProfileId != selection.brewerProfileId || !hasExactPlan(recipe.id)) {
-            return P1ExactRecipeStartInputResult.Unavailable
-        }
-        if (selection.equipmentOption !in recipe.equipmentOptions) {
-            return P1ExactRecipeStartInputResult.Unavailable
-        }
-        val primaryRatio = recipe.ratios.firstOrNull() ?: return P1ExactRecipeStartInputResult.Unavailable
-        if (
-            primaryRatio.definition.numerator != QuantityRole.DRY_COFFEE_DOSE ||
-            primaryRatio.definition.denominator !in PRIMARY_INPUT_ROLES
-        ) {
-            return P1ExactRecipeStartInputResult.Unavailable
-        }
+        val recipe = recipeFor(selection.builtInRecipeId)
+        val recipeMatchesSelection = recipe != null &&
+            recipe.brewerProfileId == selection.brewerProfileId &&
+            hasExactPlan(recipe.id) &&
+            selection.equipmentOption in recipe.equipmentOptions
+        if (!recipeMatchesSelection) return P1ExactRecipeStartInputResult.Unavailable
+        requireNotNull(recipe)
+
+        val primaryRatio = recipe.ratios.firstOrNull()
+        val ratioUsesSupportedInputs = primaryRatio != null &&
+            primaryRatio.definition.numerator == QuantityRole.DRY_COFFEE_DOSE &&
+            primaryRatio.definition.denominator in PRIMARY_INPUT_ROLES
+        if (!ratioUsesSupportedInputs) return P1ExactRecipeStartInputResult.Unavailable
+        requireNotNull(primaryRatio)
+
         val sourceInputG = recipe.quantities.valueFor(primaryRatio.definition.denominator)
         val primaryInputG = when {
-            sourceInputG != null -> sourceInputG
-                .takeIf { value -> value.isFinite() && value > 0.0 }
-                ?: return P1ExactRecipeStartInputResult.Unavailable
-
+            sourceInputG != null -> sourceInputG.takeIf(::isPositiveFinite)
             primaryRatio.definition.denominator == QuantityRole.RESERVOIR_INPUT ->
-                selection.measuredReservoirInputG
-                    ?.takeIf { value -> value.isFinite() && value > 0.0 }
-                    ?: return P1ExactRecipeStartInputResult.Unavailable
-
-            else -> return P1ExactRecipeStartInputResult.Unavailable
+                selection.measuredReservoirInputG?.takeIf(::isPositiveFinite)
+            else -> null
         }
-        val canonicalDoseG = recipe.quantities.dryCoffeeDoseG
-            .takeIf { value -> value.isFinite() && value > 0.0 }
-            ?: return P1ExactRecipeStartInputResult.Unavailable
+        val canonicalDoseG = recipe.quantities.dryCoffeeDoseG.takeIf(::isPositiveFinite)
+        if (primaryInputG == null || canonicalDoseG == null) {
+            return P1ExactRecipeStartInputResult.Unavailable
+        }
         val equipment = EquipmentConfiguration(
             brewerProfileId = selection.brewerProfileId,
             capacityOverrideG = selection.equipmentCapacityG,
@@ -88,6 +84,8 @@ object P1ExactRecipeStartInputFactory {
             ),
         )
     }
+
+    private fun isPositiveFinite(value: Double): Boolean = value.isFinite() && value > 0.0
 
     private fun BuiltInP1RecipeDefinition.exactUserTemperatureC(): Int? =
         if (temperature.basis == P1TemperatureBasis.USER_EXACT) {

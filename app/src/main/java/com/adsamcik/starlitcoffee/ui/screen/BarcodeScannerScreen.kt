@@ -323,86 +323,181 @@ private fun createPreviewView(
     val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
     cameraProviderFuture.addListener(
         {
-            if (!lifecyclePolicy.isActive) return@addListener
-            val cameraProvider = cameraProviderFuture.get()
-            val preview = Preview.Builder().build().also {
-                it.surfaceProvider = previewView.surfaceProvider
-            }
-            if (!lifecyclePolicy.continueOrRelease { cameraProvider.unbindAll() }) {
-                return@addListener
-            }
-            val barcodeScanner = BarcodeScanning.getClient()
-            if (!lifecyclePolicy.continueOrRelease {
-                    releaseCameraResources(cameraProvider, null, barcodeScanner)
-                }
-            ) {
-                return@addListener
-            }
-            val analysis = ImageAnalysis.Builder()
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .build()
-            if (!lifecyclePolicy.continueOrRelease {
-                    releaseCameraResources(cameraProvider, analysis, barcodeScanner)
-                }
-            ) {
-                return@addListener
-            }
-            try {
-                analysis.also { imageAnalysis ->
-                    imageAnalysis.setAnalyzer(analysisExecutor) { imageProxy ->
-                        if (!lifecyclePolicy.isActive) {
-                            imageProxy.close()
-                            return@setAnalyzer
-                        }
-                        analyzeBarcode(
-                            imageProxy = imageProxy,
-                            hasDetected = hasDetected(),
-                            mainExecutor = mainExecutor,
-                            onDetected = onBarcodeDetected,
-                            scanner = barcodeScanner,
-                            lifecyclePolicy = lifecyclePolicy,
-                        )
-                    }
-                }
-            } catch (error: Exception) {
-                releaseCameraResources(cameraProvider, analysis, barcodeScanner)
-                if (lifecyclePolicy.isActive) {
-                    Log.w(TAG, "Failed to install barcode analyzer", error)
-                }
-                return@addListener
-            }
-            if (!resources.install(cameraProvider, analysis, barcodeScanner)) {
-                releaseCameraResources(cameraProvider, analysis, barcodeScanner)
-                return@addListener
-            }
-            if (!lifecyclePolicy.continueOrRelease(resources::release)) {
-                return@addListener
-            }
-            // Boundary catch: `bindToLifecycle` can raise IllegalState,
-            // CameraInfoUnavailable, or various initialization errors that
-            // the user can't act on — graceful degradation (no scanner) is
-            // the desired UX.
-            @Suppress("TooGenericExceptionCaught")
-            try {
-                cameraProvider.unbindAll()
-                if (!lifecyclePolicy.continueOrRelease(resources::release)) {
-                    return@addListener
-                }
-                cameraProvider.bindToLifecycle(
-                    lifecycleOwner,
-                    CameraSelector.DEFAULT_BACK_CAMERA,
-                    preview,
-                    analysis,
-                )
-                if (!lifecyclePolicy.isActive) {
-                    resources.release()
-                }
-            } catch (e: Exception) {
-                resources.release()
-                Log.w(TAG, "Failed to bind camera for barcode scanning", e)
-            }
+            initializeBarcodeCamera(
+                cameraProviderFuture = cameraProviderFuture,
+                previewView = previewView,
+                lifecycleOwner = lifecycleOwner,
+                analysisExecutor = analysisExecutor,
+                mainExecutor = mainExecutor,
+                resources = resources,
+                lifecyclePolicy = lifecyclePolicy,
+                hasDetected = hasDetected,
+                onBarcodeDetected = onBarcodeDetected,
+            )
         },
         mainExecutor,
     )
     return previewView
+}
+
+private fun initializeBarcodeCamera(
+    cameraProviderFuture: com.google.common.util.concurrent.ListenableFuture<ProcessCameraProvider>,
+    previewView: PreviewView,
+    lifecycleOwner: androidx.lifecycle.LifecycleOwner,
+    analysisExecutor: java.util.concurrent.Executor,
+    mainExecutor: java.util.concurrent.Executor,
+    resources: BarcodeCameraResources,
+    lifecyclePolicy: BarcodeCameraLifecyclePolicy,
+    hasDetected: () -> Boolean,
+    onBarcodeDetected: (String) -> Unit,
+) {
+    if (lifecyclePolicy.isActive) {
+        val cameraProvider = cameraProviderFuture.get()
+        val preview = Preview.Builder().build().also {
+            it.surfaceProvider = previewView.surfaceProvider
+        }
+        if (lifecyclePolicy.continueOrRelease { cameraProvider.unbindAll() }) {
+            initializeBarcodeScanner(
+                cameraProvider = cameraProvider,
+                preview = preview,
+                lifecycleOwner = lifecycleOwner,
+                analysisExecutor = analysisExecutor,
+                mainExecutor = mainExecutor,
+                resources = resources,
+                lifecyclePolicy = lifecyclePolicy,
+                hasDetected = hasDetected,
+                onBarcodeDetected = onBarcodeDetected,
+            )
+        }
+    }
+}
+
+private fun initializeBarcodeScanner(
+    cameraProvider: ProcessCameraProvider,
+    preview: Preview,
+    lifecycleOwner: androidx.lifecycle.LifecycleOwner,
+    analysisExecutor: java.util.concurrent.Executor,
+    mainExecutor: java.util.concurrent.Executor,
+    resources: BarcodeCameraResources,
+    lifecyclePolicy: BarcodeCameraLifecyclePolicy,
+    hasDetected: () -> Boolean,
+    onBarcodeDetected: (String) -> Unit,
+) {
+    val barcodeScanner = BarcodeScanning.getClient()
+    if (lifecyclePolicy.continueOrRelease {
+            releaseCameraResources(cameraProvider, null, barcodeScanner)
+        }
+    ) {
+        val analysis = ImageAnalysis.Builder()
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .build()
+        if (lifecyclePolicy.continueOrRelease {
+                releaseCameraResources(cameraProvider, analysis, barcodeScanner)
+            }
+        ) {
+            val analyzerInstalled = installBarcodeAnalyzer(
+                analysis = analysis,
+                analysisExecutor = analysisExecutor,
+                mainExecutor = mainExecutor,
+                cameraProvider = cameraProvider,
+                barcodeScanner = barcodeScanner,
+                lifecyclePolicy = lifecyclePolicy,
+                hasDetected = hasDetected,
+                onBarcodeDetected = onBarcodeDetected,
+            )
+            if (analyzerInstalled && resources.install(cameraProvider, analysis, barcodeScanner)) {
+                bindBarcodeCamera(
+                    cameraProvider = cameraProvider,
+                    preview = preview,
+                    analysis = analysis,
+                    lifecycleOwner = lifecycleOwner,
+                    resources = resources,
+                    lifecyclePolicy = lifecyclePolicy,
+                )
+            } else {
+                releaseCameraResources(cameraProvider, analysis, barcodeScanner)
+            }
+        }
+    }
+}
+
+private fun installBarcodeAnalyzer(
+    analysis: ImageAnalysis,
+    analysisExecutor: java.util.concurrent.Executor,
+    mainExecutor: java.util.concurrent.Executor,
+    cameraProvider: ProcessCameraProvider,
+    barcodeScanner: com.google.mlkit.vision.barcode.BarcodeScanner,
+    lifecyclePolicy: BarcodeCameraLifecyclePolicy,
+    hasDetected: () -> Boolean,
+    onBarcodeDetected: (String) -> Unit,
+): Boolean = try {
+    analysis.setAnalyzer(analysisExecutor) { imageProxy ->
+        if (!lifecyclePolicy.isActive) {
+            imageProxy.close()
+        } else {
+            analyzeBarcode(
+                imageProxy = imageProxy,
+                hasDetected = hasDetected(),
+                mainExecutor = mainExecutor,
+                onDetected = onBarcodeDetected,
+                scanner = barcodeScanner,
+                lifecyclePolicy = lifecyclePolicy,
+            )
+        }
+    }
+    true
+} catch (error: Exception) {
+    releaseCameraResources(cameraProvider, analysis, barcodeScanner)
+    if (lifecyclePolicy.isActive) {
+        Log.w(TAG, "Failed to install barcode analyzer", error)
+    }
+    false
+}
+
+private fun bindBarcodeCamera(
+    cameraProvider: ProcessCameraProvider,
+    preview: Preview,
+    analysis: ImageAnalysis,
+    lifecycleOwner: androidx.lifecycle.LifecycleOwner,
+    resources: BarcodeCameraResources,
+    lifecyclePolicy: BarcodeCameraLifecyclePolicy,
+) {
+    if (lifecyclePolicy.continueOrRelease(resources::release)) {
+        bindActiveBarcodeCamera(
+            cameraProvider = cameraProvider,
+            preview = preview,
+            analysis = analysis,
+            lifecycleOwner = lifecycleOwner,
+            resources = resources,
+            lifecyclePolicy = lifecyclePolicy,
+        )
+    }
+}
+private fun bindActiveBarcodeCamera(
+    cameraProvider: ProcessCameraProvider,
+    preview: Preview,
+    analysis: ImageAnalysis,
+    lifecycleOwner: androidx.lifecycle.LifecycleOwner,
+    resources: BarcodeCameraResources,
+    lifecyclePolicy: BarcodeCameraLifecyclePolicy,
+) {
+    // Boundary catch: `bindToLifecycle` can raise several initialization errors
+    // that the user cannot act on; graceful degradation is the intended UX.
+    try {
+        cameraProvider.unbindAll()
+        if (lifecyclePolicy.continueOrRelease(resources::release)) {
+            cameraProvider.bindToLifecycle(
+                lifecycleOwner,
+                CameraSelector.DEFAULT_BACK_CAMERA,
+                preview,
+                analysis,
+            )
+            if (!lifecyclePolicy.isActive) {
+                resources.release()
+            }
+        }
+    } catch (error: Exception) {
+        resources.release()
+        Log.w(TAG, "Failed to bind camera for barcode scanning", error)
+    }
 }

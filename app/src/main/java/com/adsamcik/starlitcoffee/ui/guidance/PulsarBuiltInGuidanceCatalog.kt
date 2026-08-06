@@ -248,7 +248,7 @@ object PulsarBuiltInGuidanceCatalog {
                     altText =
                         "A hand closing the valve on a Pulsar brewer while bloom water is retained above the coffee bed.",
                 ),
-                visibility = visibilityAt(*GuidancePresentationLevel.entries.toTypedArray()),
+                visibility = visibilityAtAllLevels(),
             ),
             BuiltInGuidanceContent(
                 id = StageContentId("pulsar_manual_brew"),
@@ -264,7 +264,7 @@ object PulsarBuiltInGuidanceCatalog {
                     altText =
                         "A hand opening the valve on a Pulsar brewer on a stable server while coffee draws down into the server.",
                 ),
-                visibility = visibilityAt(*GuidancePresentationLevel.entries.toTypedArray()),
+                visibility = visibilityAtAllLevels(),
             ),
             BuiltInGuidanceContent(
                 id = StageContentId("pulsar_live_targets"),
@@ -280,7 +280,7 @@ object PulsarBuiltInGuidanceCatalog {
                     altText =
                         "A Pulsar brewer on a scale beside visible coffee, water, and timer targets.",
                 ),
-                visibility = visibilityAt(*GuidancePresentationLevel.entries.toTypedArray()),
+                visibility = visibilityAtAllLevels(),
             ),
             BuiltInGuidanceContent(
                 id = StageContentId("pulsar_finish"),
@@ -337,6 +337,10 @@ object PulsarBuiltInGuidanceCatalog {
     private fun visibilityAt(
         vararg levels: GuidancePresentationLevel,
     ): GuidanceVisibilityPolicy = GuidanceVisibilityPolicy(visibleIn = levels.toSet())
+
+    private fun visibilityAtAllLevels(): GuidanceVisibilityPolicy = GuidanceVisibilityPolicy(
+        visibleIn = GuidancePresentationLevel.entries.toSet(),
+    )
 
     private fun alwaysVisibleSafety(): GuidanceVisibilityPolicy = GuidanceVisibilityPolicy(
         visibleIn = emptySet(),

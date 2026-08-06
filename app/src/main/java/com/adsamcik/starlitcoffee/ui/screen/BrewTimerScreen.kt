@@ -227,11 +227,9 @@ fun BrewTimerScreen(
 
 
     LaunchedEffect(state.elapsedSeconds, state.timeTargetHighS) {
-        if (usesActiveTimer &&
-            state.timerRunning &&
-            state.timeTargetHighS > 0 &&
+        val reachedUpperTarget = state.timeTargetHighS > 0 &&
             state.elapsedSeconds == state.timeTargetHighS
-        ) {
+        if (usesActiveTimer && state.timerRunning && reachedUpperTarget) {
             vibrator?.vibrate(
                 VibrationEffect.createWaveform(
                     vibrationTheme.patternFor(BrewVibrationEvent.TARGET_REACHED),

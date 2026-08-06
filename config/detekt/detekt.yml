@@ -1,6 +1,5 @@
 # Detekt configuration
-# Historical findings are captured in baseline.xml. New findings fail the build,
-# so the baseline can only stay stable or shrink.
+# The project carries no static-analysis baseline: every finding fails the build.
 
 build:
   maxIssues: 0
@@ -8,7 +7,8 @@ build:
 complexity:
   active: true
   LongMethod:
-    threshold: 80
+    # Detekt reports values equal to the threshold; 81 enforces a maximum of 80 lines.
+    threshold: 81
     excludes: ['**/test/**', '**/androidTest/**']
     # @Composable functions describe entire screens; their length reflects
     # the UI tree, not poor decomposition. Compose's recommended pattern is
@@ -18,7 +18,9 @@ complexity:
       - "Composable"
       - "androidx.compose.runtime.Composable"
   LongParameterList:
-    functionThreshold: 8
+    # Detekt reports values equal to the threshold; 10 enforces a maximum of 9 parameters.
+    # Nine is reserved for internal orchestration and injectable I/O seams; user-facing APIs stay smaller.
+    functionThreshold: 10
     constructorThreshold: 10
     excludes: ['**/test/**', '**/androidTest/**']
     # Compose stateless composables surface state + multiple callbacks per
@@ -28,7 +30,8 @@ complexity:
       - "Composable"
       - "androidx.compose.runtime.Composable"
   CyclomaticComplexMethod:
-    threshold: 20
+    # Detekt reports values equal to the threshold; 21 enforces a maximum complexity of 20.
+    threshold: 21
     excludes: ['**/test/**', '**/androidTest/**']
     ignoreAnnotated:
       - "Composable"
@@ -36,6 +39,8 @@ complexity:
   TooManyFunctions:
     thresholdInFiles: 30
     thresholdInClasses: 25
+    thresholdInObjects: 25
+    thresholdInInterfaces: 15
     excludes: ['**/test/**', '**/androidTest/**']
   LargeClass:
     excludes: ['**/test/**', '**/androidTest/**']

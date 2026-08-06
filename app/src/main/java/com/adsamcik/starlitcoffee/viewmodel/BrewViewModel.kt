@@ -1264,7 +1264,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
         // Learn barcode→roaster mapping for future scans
         val stemDao = userBarcodeStemDao
-        if (insertResult.wasInserted && stemDao != null && normalizedBarcode != null && input.roaster != null) {
+        val canLearnBarcodeStem = stemDao != null &&
+            normalizedBarcode != null &&
+            input.roaster != null
+        if (insertResult.wasInserted && canLearnBarcodeStem) {
             viewModelScope.launch {
                 try {
                     BarcodeInsights.learnStem(normalizedBarcode, input.roaster, stemDao)

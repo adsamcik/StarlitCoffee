@@ -136,6 +136,20 @@ internal fun performExpiredWorkCleanup(
     }
 }
 
+private data class PersistedManifest(
+    val path: String?,
+    val input: BagExtractionInput?,
+    val state: ManifestReconciliationState,
+)
+
+/**
+ * Atomic coordinator for the persisted WorkManager extraction state machine.
+ *
+ * Its enqueue, reconciliation, notification, and cleanup operations intentionally share one
+ * durability boundary so recovery invariants remain reviewable in one place. Method-level
+ * complexity limits still apply; splitting this facade would distribute atomic state transitions.
+ */
+@Suppress("LargeClass", "TooManyFunctions")
 object BagExtractionScheduler {
     suspend fun enqueue(
         context: Context,
@@ -565,49 +579,13 @@ object BagExtractionScheduler {
         nowMillis: Long,
     ) {
         val preferences = DeliveryState.preferences(context)
-        val manifestPath = preferences.getString(DeliveryState.inputManifestKey(workId), null)
-        val input = manifestPath?.let { path ->
-            runCatching { BagExtractionInputStore.read(context, path) }
-                .onFailure { error ->
-                    Log.w(TAG, "Could not read persisted bag extraction manifest", error)
-                }
-                .getOrNull()
-        }
-        val manifestState = when {
-            input == null -> ManifestReconciliationState.MISSING
-            runCatching { BagExtractionInputStore.isExpired(context, requireNotNull(manifestPath), nowMillis) }
-                .getOrDefault(true) -> ManifestReconciliationState.EXPIRED
-            else -> ManifestReconciliationState.PRESENT
-        }
+        val manifest = loadPersistedManifest(context, workId, nowMillis)
+        val manifestPath = manifest.path
+        val input = manifest.input
         val workInfo = workInfoFlow(context, workId).first()
         val storedResult = BagExtractionResultStore.read(context, workId)
-        when (terminalWorkReconciliationAction(workInfo?.state, storedResult != null)) {
-            TerminalWorkReconciliationAction.RETAIN -> Unit
-            TerminalWorkReconciliationAction.HANDLE_RESULT_AND_CLEAN -> {
-                reconcileStoredTerminalResult(
-                    context = context,
-                    workId = workId,
-                    storedResult = requireNotNull(storedResult),
-                    input = input,
-                    manifestPath = manifestPath,
-                )
-                return
-            }
-            TerminalWorkReconciliationAction.SURFACE_FAILURE_AND_CLEAN -> {
-                surfaceRecoverableWorkFailure(
-                    context = context,
-                    workId = workId,
-                    input = input?.let { resolvePersistedInput(context, workId, it) },
-                    manifestPath = manifestPath,
-                )
-                return
-            }
-            TerminalWorkReconciliationAction.DISCARD_CANCELLED -> {
-                discardCancelledWorkState(context, workId, manifestPath)
-                return
-            }
-        }
-        when (persistedWorkReconciliationAction(workInfo != null, manifestState)) {
+        if (reconcileTerminalWork(context, workId, workInfo, storedResult, manifest)) return
+        when (persistedWorkReconciliationAction(workInfo != null, manifest.state)) {
             PersistedWorkReconciliationAction.KEEP -> {
                 val pendingEnqueue =
                     preferences.getBoolean(DeliveryState.pendingEnqueueKey(workId), false)
@@ -655,6 +633,59 @@ object BagExtractionScheduler {
                 )
             }
             PersistedWorkReconciliationAction.EXPIRE -> expireWorkState(context, workId)
+        }
+    }
+
+    private fun loadPersistedManifest(
+        context: Context,
+        workId: String,
+        nowMillis: Long,
+    ): PersistedManifest {
+        val preferences = DeliveryState.preferences(context)
+        val path = preferences.getString(DeliveryState.inputManifestKey(workId), null)
+        val input = path?.let { manifestPath ->
+            runCatching { BagExtractionInputStore.read(context, manifestPath) }
+                .onFailure { error ->
+                    Log.w(TAG, "Could not read persisted bag extraction manifest", error)
+                }
+                .getOrNull()
+        }
+        val state = when {
+            input == null -> ManifestReconciliationState.MISSING
+            runCatching { BagExtractionInputStore.isExpired(context, requireNotNull(path), nowMillis) }
+                .getOrDefault(true) -> ManifestReconciliationState.EXPIRED
+            else -> ManifestReconciliationState.PRESENT
+        }
+        return PersistedManifest(path, input, state)
+    }
+
+    private fun reconcileTerminalWork(
+        context: Context,
+        workId: String,
+        workInfo: WorkInfo?,
+        storedResult: StoredBagExtractionResult?,
+        manifest: PersistedManifest,
+    ): Boolean = when (terminalWorkReconciliationAction(workInfo?.state, storedResult != null)) {
+        TerminalWorkReconciliationAction.RETAIN -> false
+        TerminalWorkReconciliationAction.HANDLE_RESULT_AND_CLEAN -> true.also {
+            reconcileStoredTerminalResult(
+                context = context,
+                workId = workId,
+                storedResult = requireNotNull(storedResult),
+                input = manifest.input,
+                manifestPath = manifest.path,
+            )
+        }
+        TerminalWorkReconciliationAction.SURFACE_FAILURE_AND_CLEAN -> true.also {
+            surfaceRecoverableWorkFailure(
+                context = context,
+                workId = workId,
+                input = manifest.input?.let { resolvePersistedInput(context, workId, it) },
+                manifestPath = manifest.path,
+            )
+        }
+        TerminalWorkReconciliationAction.DISCARD_CANCELLED -> true.also {
+            discardCancelledWorkState(context, workId, manifest.path)
         }
     }
 

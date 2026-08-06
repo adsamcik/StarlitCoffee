@@ -103,37 +103,167 @@ interface UserPreferencesStore {
     suspend fun updateDimModeForceDarkInLight(enabled: Boolean)
 }
 
-class UserPreferencesRepository(private val context: Context) : UserPreferencesStore, BrewingPreferenceStore {
-
-    private object Keys {
-        val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
-        val ENABLED_METHODS = stringSetPreferencesKey("enabled_methods")
-        val DEFAULT_METHOD = stringPreferencesKey("default_method")
-        val DEFAULT_FILTER_TYPE = stringPreferencesKey("default_filter_type")
-        val SELECTED_GRINDER_ID = stringPreferencesKey("selected_grinder_id")
-        val QR_LINK_EXPLORER_ENABLED = booleanPreferencesKey("qr_link_explorer_enabled")
-        val LAST_USED_RATIO = floatPreferencesKey("last_used_ratio")
-        val DEFAULT_INPUT_DIRECTION = stringPreferencesKey("default_input_direction")
-        val SKIP_METHOD_SELECTION = booleanPreferencesKey("skip_method_selection")
-        val DIM_MODE_ENABLED = booleanPreferencesKey("dim_mode_enabled")
-        val DIM_MODE_TRUE_BLACK = booleanPreferencesKey("dim_mode_true_black")
-        val DIM_MODE_REDUCE_BRIGHTNESS = booleanPreferencesKey("dim_mode_reduce_brightness")
-        val DIM_MODE_FULLSCREEN = booleanPreferencesKey("dim_mode_fullscreen")
-        val DIM_MODE_FORCE_DARK_IN_LIGHT = booleanPreferencesKey("dim_mode_force_dark_in_light")
-        val SHOW_BREWING_INSTRUCTIONS = booleanPreferencesKey("show_brewing_instructions")
-        val SHOW_ENGLISH_BREWING_TERMS = booleanPreferencesKey("show_english_brewing_terms")
-        val EXACT_GUIDANCE_PREVIEW_ENABLED = booleanPreferencesKey("exact_guidance_preview_enabled")
-        val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
-        val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
-        val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
-        val BREW_VIBRATION_THEME = stringPreferencesKey("brew_vibration_theme")
-        val SCAN_CORRECTION_LOGGING_ENABLED = booleanPreferencesKey("scan_correction_logging_enabled")
-        val ENABLED_BREWER_PROFILE_IDS = stringSetPreferencesKey("enabled_brewer_profile_ids")
-        val DEFAULT_BREWER_PROFILE_ID = stringPreferencesKey("default_brewer_profile_id")
-        val GUIDANCE_BY_METHOD_FAMILY = stringSetPreferencesKey("guidance_by_method_family")
-        val GUIDANCE_BY_BREWER_PROFILE = stringSetPreferencesKey("guidance_by_brewer_profile")
-        val UTILITY_MODULES_BY_METHOD_FAMILY = stringSetPreferencesKey("utility_modules_by_method_family")
+private object UserPreferenceKeys {
+    val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
+    val ENABLED_METHODS = stringSetPreferencesKey("enabled_methods")
+    val DEFAULT_METHOD = stringPreferencesKey("default_method")
+    val DEFAULT_FILTER_TYPE = stringPreferencesKey("default_filter_type")
+    val SELECTED_GRINDER_ID = stringPreferencesKey("selected_grinder_id")
+    val QR_LINK_EXPLORER_ENABLED = booleanPreferencesKey("qr_link_explorer_enabled")
+    val LAST_USED_RATIO = floatPreferencesKey("last_used_ratio")
+    val DEFAULT_INPUT_DIRECTION = stringPreferencesKey("default_input_direction")
+    val SKIP_METHOD_SELECTION = booleanPreferencesKey("skip_method_selection")
+    val DIM_MODE_ENABLED = booleanPreferencesKey("dim_mode_enabled")
+    val DIM_MODE_TRUE_BLACK = booleanPreferencesKey("dim_mode_true_black")
+    val DIM_MODE_REDUCE_BRIGHTNESS = booleanPreferencesKey("dim_mode_reduce_brightness")
+    val DIM_MODE_FULLSCREEN = booleanPreferencesKey("dim_mode_fullscreen")
+    val DIM_MODE_FORCE_DARK_IN_LIGHT = booleanPreferencesKey("dim_mode_force_dark_in_light")
+    val SHOW_BREWING_INSTRUCTIONS = booleanPreferencesKey("show_brewing_instructions")
+    val SHOW_ENGLISH_BREWING_TERMS = booleanPreferencesKey("show_english_brewing_terms")
+    val EXACT_GUIDANCE_PREVIEW_ENABLED = booleanPreferencesKey("exact_guidance_preview_enabled")
+    val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
+    val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
+    val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
+    val BREW_VIBRATION_THEME = stringPreferencesKey("brew_vibration_theme")
+    val SCAN_CORRECTION_LOGGING_ENABLED = booleanPreferencesKey("scan_correction_logging_enabled")
+    val ENABLED_BREWER_PROFILE_IDS = stringSetPreferencesKey("enabled_brewer_profile_ids")
+    val DEFAULT_BREWER_PROFILE_ID = stringPreferencesKey("default_brewer_profile_id")
+    val GUIDANCE_BY_METHOD_FAMILY = stringSetPreferencesKey("guidance_by_method_family")
+    val GUIDANCE_BY_BREWER_PROFILE = stringSetPreferencesKey("guidance_by_brewer_profile")
+    val UTILITY_MODULES_BY_METHOD_FAMILY = stringSetPreferencesKey("utility_modules_by_method_family")
+}
+abstract class UserPreferencesWriter protected constructor(
+    protected val context: Context,
+) : UserPreferencesStore {
+    override suspend fun updateDefaultFilterType(filterType: FilterType?) {
+        context.dataStore.edit { prefs ->
+            if (filterType != null) {
+                prefs[UserPreferenceKeys.DEFAULT_FILTER_TYPE] = filterType.name
+            } else {
+                prefs.remove(UserPreferenceKeys.DEFAULT_FILTER_TYPE)
+            }
+        }
     }
+
+    override suspend fun updateSelectedGrinder(grinderId: String?) {
+        context.dataStore.edit { prefs ->
+            if (grinderId != null) {
+                prefs[UserPreferenceKeys.SELECTED_GRINDER_ID] = grinderId
+            } else {
+                prefs.remove(UserPreferenceKeys.SELECTED_GRINDER_ID)
+            }
+        }
+    }
+
+    suspend fun updateQrLinkExplorerEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.QR_LINK_EXPLORER_ENABLED] = enabled
+        }
+    }
+
+    suspend fun updateLastUsedRatio(ratio: Float) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.LAST_USED_RATIO] = ratio
+        }
+    }
+
+    suspend fun updateDefaultInputDirection(direction: String) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.DEFAULT_INPUT_DIRECTION] = direction
+        }
+    }
+
+    override suspend fun updateSkipMethodSelection(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.SKIP_METHOD_SELECTION] = enabled
+        }
+    }
+
+    override suspend fun updateDimModeEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.DIM_MODE_ENABLED] = enabled
+        }
+    }
+
+    override suspend fun updateDimModeTrueBlack(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.DIM_MODE_TRUE_BLACK] = enabled
+        }
+    }
+
+    override suspend fun updateDimModeReduceBrightness(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.DIM_MODE_REDUCE_BRIGHTNESS] = enabled
+        }
+    }
+
+    override suspend fun updateDimModeFullscreen(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.DIM_MODE_FULLSCREEN] = enabled
+        }
+    }
+
+    override suspend fun updateDimModeForceDarkInLight(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.DIM_MODE_FORCE_DARK_IN_LIGHT] = enabled
+        }
+    }
+
+    override suspend fun updateShowBrewingInstructions(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.SHOW_BREWING_INSTRUCTIONS] = enabled
+        }
+    }
+
+    override suspend fun updateShowEnglishBrewingTerms(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.SHOW_ENGLISH_BREWING_TERMS] = enabled
+        }
+    }
+
+    suspend fun updateExactGuidancePreviewEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.EXACT_GUIDANCE_PREVIEW_ENABLED] = enabled
+        }
+    }
+
+    override suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) {
+        context.dataStore.edit { prefs ->
+            val persistedWeights = weights
+                .mapValues { (_, weight) -> weight.coerceIn(0, 2) }
+                .filterValues { weight -> weight != 1 }
+                .map { (id, weight) -> "$id=$weight" }
+                .toSet()
+
+            if (persistedWeights.isEmpty()) {
+                prefs.remove(UserPreferenceKeys.BLOOM_SPRITESHEET_WEIGHTS)
+            } else {
+                prefs[UserPreferenceKeys.BLOOM_SPRITESHEET_WEIGHTS] = persistedWeights
+            }
+        }
+    }
+
+    override suspend fun updateRatingReminderEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.RATING_REMINDER_ENABLED] = enabled
+        }
+    }
+    override suspend fun updateBrewVibrationTheme(theme: BrewVibrationTheme) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.BREW_VIBRATION_THEME] = theme.name
+        }
+    }
+
+
+    override suspend fun updateScanCorrectionLoggingEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.SCAN_CORRECTION_LOGGING_ENABLED] = enabled
+        }
+    }
+}
+class UserPreferencesRepository(context: Context) :
+    UserPreferencesWriter(context),
+    BrewingPreferenceStore {
 
     override val userPreferences: Flow<UserPreferences> = context.dataStore.data
         .catch { exception ->
@@ -148,45 +278,45 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
             }
         }
         .map { prefs ->
-            val enabledMethods = prefs[Keys.ENABLED_METHODS]
+            val enabledMethods = prefs[UserPreferenceKeys.ENABLED_METHODS]
                 ?.mapNotNull { name -> BrewMethod.entries.find { it.name == name } }
                 ?.toSet()
                 ?: BrewMethod.entries.toSet()
-            val requestedDefault = prefs[Keys.DEFAULT_METHOD]
+            val requestedDefault = prefs[UserPreferenceKeys.DEFAULT_METHOD]
                 ?.let { name -> BrewMethod.entries.find { it.name == name } }
                 ?: BrewMethod.PULSAR
             val methodSelection = normalizeMethodSelection(enabledMethods, requestedDefault)
             UserPreferences(
-                onboardingCompleted = prefs[Keys.ONBOARDING_COMPLETED] ?: false,
+                onboardingCompleted = prefs[UserPreferenceKeys.ONBOARDING_COMPLETED] ?: false,
                 enabledMethods = methodSelection.enabledMethods,
                 defaultMethod = methodSelection.defaultMethod,
-                defaultFilterType = prefs[Keys.DEFAULT_FILTER_TYPE]
+                defaultFilterType = prefs[UserPreferenceKeys.DEFAULT_FILTER_TYPE]
                     ?.let { name -> FilterType.entries.find { it.name == name } }
                     ?.takeIf { methodSelection.enabledMethods.contains(BrewMethod.PULSAR) },
-                selectedGrinderId = prefs[Keys.SELECTED_GRINDER_ID],
-                qrLinkExplorerEnabled = prefs[Keys.QR_LINK_EXPLORER_ENABLED] ?: false,
-                lastUsedRatio = prefs[Keys.LAST_USED_RATIO] ?: 17f,
-                defaultInputDirection = prefs[Keys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",
-                skipMethodSelection = prefs[Keys.SKIP_METHOD_SELECTION] ?: false,
-                dimModeEnabled = prefs[Keys.DIM_MODE_ENABLED] ?: true,
-                dimModeTrueBlack = prefs[Keys.DIM_MODE_TRUE_BLACK] ?: true,
-                dimModeReduceBrightness = prefs[Keys.DIM_MODE_REDUCE_BRIGHTNESS] ?: true,
-                dimModeFullscreen = prefs[Keys.DIM_MODE_FULLSCREEN] ?: true,
-                dimModeForceDarkInLight = prefs[Keys.DIM_MODE_FORCE_DARK_IN_LIGHT] ?: true,
-                showBrewingInstructions = prefs[Keys.SHOW_BREWING_INSTRUCTIONS] ?: true,
-                showEnglishBrewingTerms = prefs[Keys.SHOW_ENGLISH_BREWING_TERMS] ?: false,
-                exactGuidancePreviewEnabled = prefs[Keys.EXACT_GUIDANCE_PREVIEW_ENABLED] ?: false,
+                selectedGrinderId = prefs[UserPreferenceKeys.SELECTED_GRINDER_ID],
+                qrLinkExplorerEnabled = prefs[UserPreferenceKeys.QR_LINK_EXPLORER_ENABLED] ?: false,
+                lastUsedRatio = prefs[UserPreferenceKeys.LAST_USED_RATIO] ?: 17f,
+                defaultInputDirection = prefs[UserPreferenceKeys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",
+                skipMethodSelection = prefs[UserPreferenceKeys.SKIP_METHOD_SELECTION] ?: false,
+                dimModeEnabled = prefs[UserPreferenceKeys.DIM_MODE_ENABLED] ?: true,
+                dimModeTrueBlack = prefs[UserPreferenceKeys.DIM_MODE_TRUE_BLACK] ?: true,
+                dimModeReduceBrightness = prefs[UserPreferenceKeys.DIM_MODE_REDUCE_BRIGHTNESS] ?: true,
+                dimModeFullscreen = prefs[UserPreferenceKeys.DIM_MODE_FULLSCREEN] ?: true,
+                dimModeForceDarkInLight = prefs[UserPreferenceKeys.DIM_MODE_FORCE_DARK_IN_LIGHT] ?: true,
+                showBrewingInstructions = prefs[UserPreferenceKeys.SHOW_BREWING_INSTRUCTIONS] ?: true,
+                showEnglishBrewingTerms = prefs[UserPreferenceKeys.SHOW_ENGLISH_BREWING_TERMS] ?: false,
+                exactGuidancePreviewEnabled = prefs[UserPreferenceKeys.EXACT_GUIDANCE_PREVIEW_ENABLED] ?: false,
                 bloomSpritesheetWeights = parseBloomSpritesheetWeights(
-                    prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS].orEmpty(),
+                    prefs[UserPreferenceKeys.BLOOM_SPRITESHEET_WEIGHTS].orEmpty(),
                 ),
                 bloomSpritesheetDisplayCounts = parseBloomSpritesheetDisplayCounts(
-                    prefs[Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS].orEmpty(),
+                    prefs[UserPreferenceKeys.BLOOM_SPRITESHEET_DISPLAY_COUNTS].orEmpty(),
                 ),
-                ratingReminderEnabled = prefs[Keys.RATING_REMINDER_ENABLED] ?: false,
-                brewVibrationTheme = prefs[Keys.BREW_VIBRATION_THEME]
+                ratingReminderEnabled = prefs[UserPreferenceKeys.RATING_REMINDER_ENABLED] ?: false,
+                brewVibrationTheme = prefs[UserPreferenceKeys.BREW_VIBRATION_THEME]
                     ?.let { name -> BrewVibrationTheme.entries.find { it.name == name } }
                     ?: BrewVibrationTheme.CLASSIC,
-                scanCorrectionLoggingEnabled = prefs[Keys.SCAN_CORRECTION_LOGGING_ENABLED] ?: false,
+                scanCorrectionLoggingEnabled = prefs[UserPreferenceKeys.SCAN_CORRECTION_LOGGING_ENABLED] ?: false,
             )
         }
         .distinctUntilChanged()
@@ -204,19 +334,19 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
 
     override suspend fun updateBrewingPreferences(preferences: StableBrewingPreferences) {
         context.dataStore.edit { prefs ->
-            prefs[Keys.ENABLED_BREWER_PROFILE_IDS] = preferences.enabledBrewerProfileIds
+            prefs[UserPreferenceKeys.ENABLED_BREWER_PROFILE_IDS] = preferences.enabledBrewerProfileIds
             if (preferences.defaultBrewerProfileId == null) {
-                prefs.remove(Keys.DEFAULT_BREWER_PROFILE_ID)
+                prefs.remove(UserPreferenceKeys.DEFAULT_BREWER_PROFILE_ID)
             } else {
-                prefs[Keys.DEFAULT_BREWER_PROFILE_ID] = preferences.defaultBrewerProfileId
+                prefs[UserPreferenceKeys.DEFAULT_BREWER_PROFILE_ID] = preferences.defaultBrewerProfileId
             }
-            prefs[Keys.GUIDANCE_BY_METHOD_FAMILY] = encodeKeyValueMap(
+            prefs[UserPreferenceKeys.GUIDANCE_BY_METHOD_FAMILY] = encodeKeyValueMap(
                 preferences.guidanceByMethodFamilyId,
             )
-            prefs[Keys.GUIDANCE_BY_BREWER_PROFILE] = encodeKeyValueMap(
+            prefs[UserPreferenceKeys.GUIDANCE_BY_BREWER_PROFILE] = encodeKeyValueMap(
                 preferences.guidanceByBrewerProfileId,
             )
-            prefs[Keys.UTILITY_MODULES_BY_METHOD_FAMILY] = encodeUtilityModules(
+            prefs[UserPreferenceKeys.UTILITY_MODULES_BY_METHOD_FAMILY] = encodeUtilityModules(
                 preferences.utilityModulesByMethodFamilyId,
             )
         }
@@ -232,8 +362,8 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         guidanceLevel: String,
     ) {
         context.dataStore.edit { prefs ->
-            val existing = parseKeyValueMap(prefs[Keys.GUIDANCE_BY_BREWER_PROFILE].orEmpty())
-            prefs[Keys.GUIDANCE_BY_BREWER_PROFILE] = encodeKeyValueMap(
+            val existing = parseKeyValueMap(prefs[UserPreferenceKeys.GUIDANCE_BY_BREWER_PROFILE].orEmpty())
+            prefs[UserPreferenceKeys.GUIDANCE_BY_BREWER_PROFILE] = encodeKeyValueMap(
                 existing + (profileId to guidanceLevel),
             )
         }
@@ -247,21 +377,21 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
     ) {
         val methodSelection = normalizeMethodSelection(enabledMethods, defaultMethod)
         context.dataStore.edit { prefs ->
-            prefs[Keys.ONBOARDING_COMPLETED] = true
-            prefs[Keys.ENABLED_METHODS] = methodSelection.enabledMethods.map { it.name }.toSet()
-            prefs[Keys.DEFAULT_METHOD] = methodSelection.defaultMethod.name
+            prefs[UserPreferenceKeys.ONBOARDING_COMPLETED] = true
+            prefs[UserPreferenceKeys.ENABLED_METHODS] = methodSelection.enabledMethods.map { it.name }.toSet()
+            prefs[UserPreferenceKeys.DEFAULT_METHOD] = methodSelection.defaultMethod.name
             writeStableSelection(prefs, methodSelection)
             if (defaultFilterType != null &&
                 methodSelection.enabledMethods.contains(BrewMethod.PULSAR)
             ) {
-                prefs[Keys.DEFAULT_FILTER_TYPE] = defaultFilterType.name
+                prefs[UserPreferenceKeys.DEFAULT_FILTER_TYPE] = defaultFilterType.name
             } else {
-                prefs.remove(Keys.DEFAULT_FILTER_TYPE)
+                prefs.remove(UserPreferenceKeys.DEFAULT_FILTER_TYPE)
             }
             if (selectedGrinderId != null) {
-                prefs[Keys.SELECTED_GRINDER_ID] = selectedGrinderId
+                prefs[UserPreferenceKeys.SELECTED_GRINDER_ID] = selectedGrinderId
             } else {
-                prefs.remove(Keys.SELECTED_GRINDER_ID)
+                prefs.remove(UserPreferenceKeys.SELECTED_GRINDER_ID)
             }
         }
     }
@@ -274,140 +404,14 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         context.dataStore.edit { prefs ->
             writeMethodSelection(prefs, methodSelection)
             if (!methodSelection.enabledMethods.contains(BrewMethod.PULSAR)) {
-                prefs.remove(Keys.DEFAULT_FILTER_TYPE)
+                prefs.remove(UserPreferenceKeys.DEFAULT_FILTER_TYPE)
             }
-        }
-    }
-
-    override suspend fun updateDefaultFilterType(filterType: FilterType?) {
-        context.dataStore.edit { prefs ->
-            if (filterType != null) {
-                prefs[Keys.DEFAULT_FILTER_TYPE] = filterType.name
-            } else {
-                prefs.remove(Keys.DEFAULT_FILTER_TYPE)
-            }
-        }
-    }
-
-    override suspend fun updateSelectedGrinder(grinderId: String?) {
-        context.dataStore.edit { prefs ->
-            if (grinderId != null) {
-                prefs[Keys.SELECTED_GRINDER_ID] = grinderId
-            } else {
-                prefs.remove(Keys.SELECTED_GRINDER_ID)
-            }
-        }
-    }
-
-    suspend fun updateQrLinkExplorerEnabled(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.QR_LINK_EXPLORER_ENABLED] = enabled
-        }
-    }
-
-    suspend fun updateLastUsedRatio(ratio: Float) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.LAST_USED_RATIO] = ratio
-        }
-    }
-
-    suspend fun updateDefaultInputDirection(direction: String) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.DEFAULT_INPUT_DIRECTION] = direction
-        }
-    }
-
-    override suspend fun updateSkipMethodSelection(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.SKIP_METHOD_SELECTION] = enabled
-        }
-    }
-
-    override suspend fun updateDimModeEnabled(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.DIM_MODE_ENABLED] = enabled
-        }
-    }
-
-    override suspend fun updateDimModeTrueBlack(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.DIM_MODE_TRUE_BLACK] = enabled
-        }
-    }
-
-    override suspend fun updateDimModeReduceBrightness(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.DIM_MODE_REDUCE_BRIGHTNESS] = enabled
-        }
-    }
-
-    override suspend fun updateDimModeFullscreen(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.DIM_MODE_FULLSCREEN] = enabled
-        }
-    }
-
-    override suspend fun updateDimModeForceDarkInLight(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.DIM_MODE_FORCE_DARK_IN_LIGHT] = enabled
-        }
-    }
-
-    override suspend fun updateShowBrewingInstructions(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.SHOW_BREWING_INSTRUCTIONS] = enabled
-        }
-    }
-
-    override suspend fun updateShowEnglishBrewingTerms(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.SHOW_ENGLISH_BREWING_TERMS] = enabled
-        }
-    }
-
-    suspend fun updateExactGuidancePreviewEnabled(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.EXACT_GUIDANCE_PREVIEW_ENABLED] = enabled
-        }
-    }
-
-    override suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) {
-        context.dataStore.edit { prefs ->
-            val persistedWeights = weights
-                .mapValues { (_, weight) -> weight.coerceIn(0, 2) }
-                .filterValues { weight -> weight != 1 }
-                .map { (id, weight) -> "$id=$weight" }
-                .toSet()
-
-            if (persistedWeights.isEmpty()) {
-                prefs.remove(Keys.BLOOM_SPRITESHEET_WEIGHTS)
-            } else {
-                prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS] = persistedWeights
-            }
-        }
-    }
-
-    override suspend fun updateRatingReminderEnabled(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.RATING_REMINDER_ENABLED] = enabled
-        }
-    }
-    override suspend fun updateBrewVibrationTheme(theme: BrewVibrationTheme) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.BREW_VIBRATION_THEME] = theme.name
-        }
-    }
-
-
-    override suspend fun updateScanCorrectionLoggingEnabled(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[Keys.SCAN_CORRECTION_LOGGING_ENABLED] = enabled
         }
     }
 
     suspend fun resetOnboarding() {
         context.dataStore.edit { prefs ->
-            prefs[Keys.ONBOARDING_COMPLETED] = false
+            prefs[UserPreferenceKeys.ONBOARDING_COMPLETED] = false
         }
     }
 
@@ -420,11 +424,11 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         if (id.isEmpty()) return
         context.dataStore.edit { prefs ->
             val existing = parseBloomSpritesheetDisplayCounts(
-                prefs[Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS].orEmpty(),
+                prefs[UserPreferenceKeys.BLOOM_SPRITESHEET_DISPLAY_COUNTS].orEmpty(),
             ).toMutableMap()
             val nextCount = (existing[id] ?: 0) + 1
             existing[id] = nextCount
-            prefs[Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS] = existing
+            prefs[UserPreferenceKeys.BLOOM_SPRITESHEET_DISPLAY_COUNTS] = existing
                 .filterValues { it > 0 }
                 .map { (k, v) -> "$k=$v" }
                 .toSet()
@@ -437,7 +441,7 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
      */
     suspend fun resetBloomSpritesheetDisplayCounts() {
         context.dataStore.edit { prefs ->
-            prefs.remove(Keys.BLOOM_SPRITESHEET_DISPLAY_COUNTS)
+            prefs.remove(UserPreferenceKeys.BLOOM_SPRITESHEET_DISPLAY_COUNTS)
         }
     }
 
@@ -468,38 +472,38 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         prefs: androidx.datastore.preferences.core.MutablePreferences,
         selection: MethodSelection,
     ) {
-        prefs[Keys.ENABLED_METHODS] = selection.enabledMethods.map { it.name }.toSet()
-        prefs[Keys.DEFAULT_METHOD] = selection.defaultMethod.name
+        prefs[UserPreferenceKeys.ENABLED_METHODS] = selection.enabledMethods.map { it.name }.toSet()
+        prefs[UserPreferenceKeys.DEFAULT_METHOD] = selection.defaultMethod.name
         writeStableSelection(prefs, selection)
     }
     private fun readStableBrewingPreferences(prefs: Preferences): StableBrewingPreferences {
-        val enabledProfileIds = prefs[Keys.ENABLED_BREWER_PROFILE_IDS]
+        val enabledProfileIds = prefs[UserPreferenceKeys.ENABLED_BREWER_PROFILE_IDS]
             ?: legacyEnabledBrewerProfileIds(prefs)
-        val defaultProfileId = prefs[Keys.DEFAULT_BREWER_PROFILE_ID]
+        val defaultProfileId = prefs[UserPreferenceKeys.DEFAULT_BREWER_PROFILE_ID]
             ?: legacyDefaultBrewerProfileId(prefs)
-        val guidanceByFamily = prefs[Keys.GUIDANCE_BY_METHOD_FAMILY]
+        val guidanceByFamily = prefs[UserPreferenceKeys.GUIDANCE_BY_METHOD_FAMILY]
             ?.let(::parseKeyValueMap)
-            ?: legacyGuidanceByFamily(enabledProfileIds, prefs[Keys.SHOW_BREWING_INSTRUCTIONS] ?: true)
+            ?: legacyGuidanceByFamily(enabledProfileIds, prefs[UserPreferenceKeys.SHOW_BREWING_INSTRUCTIONS] ?: true)
         return StableBrewingPreferences(
             enabledBrewerProfileIds = enabledProfileIds,
             defaultBrewerProfileId = defaultProfileId,
             guidanceByMethodFamilyId = guidanceByFamily,
             guidanceByBrewerProfileId = parseKeyValueMap(
-                prefs[Keys.GUIDANCE_BY_BREWER_PROFILE].orEmpty(),
+                prefs[UserPreferenceKeys.GUIDANCE_BY_BREWER_PROFILE].orEmpty(),
             ),
             utilityModulesByMethodFamilyId = parseUtilityModules(
-                prefs[Keys.UTILITY_MODULES_BY_METHOD_FAMILY].orEmpty(),
+                prefs[UserPreferenceKeys.UTILITY_MODULES_BY_METHOD_FAMILY].orEmpty(),
             ),
         )
     }
 
     private fun legacyEnabledBrewerProfileIds(prefs: Preferences): Set<String> {
-        val rawMethods = prefs[Keys.ENABLED_METHODS] ?: BrewMethod.entries.map(BrewMethod::name).toSet()
+        val rawMethods = prefs[UserPreferenceKeys.ENABLED_METHODS] ?: BrewMethod.entries.map(BrewMethod::name).toSet()
         return rawMethods.map(::legacyBrewerProfileId).toSet()
     }
 
     private fun legacyDefaultBrewerProfileId(prefs: Preferences): String =
-        legacyBrewerProfileId(prefs[Keys.DEFAULT_METHOD] ?: BrewMethod.PULSAR.name)
+        legacyBrewerProfileId(prefs[UserPreferenceKeys.DEFAULT_METHOD] ?: BrewMethod.PULSAR.name)
 
     private fun legacyBrewerProfileId(rawMethodId: String): String = when (
         val resolution = BuiltinBrewingCatalog.instance.resolveLegacyMethod(rawMethodId)
@@ -528,14 +532,14 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         val profileIds = selection.enabledMethods.map { method ->
             legacyBrewerProfileId(method.name)
         }.toSet()
-        prefs[Keys.ENABLED_BREWER_PROFILE_IDS] = profileIds
-        prefs[Keys.DEFAULT_BREWER_PROFILE_ID] = legacyBrewerProfileId(selection.defaultMethod.name)
-        if (prefs[Keys.GUIDANCE_BY_METHOD_FAMILY] == null) {
+        prefs[UserPreferenceKeys.ENABLED_BREWER_PROFILE_IDS] = profileIds
+        prefs[UserPreferenceKeys.DEFAULT_BREWER_PROFILE_ID] = legacyBrewerProfileId(selection.defaultMethod.name)
+        if (prefs[UserPreferenceKeys.GUIDANCE_BY_METHOD_FAMILY] == null) {
             val guidance = legacyGuidanceByFamily(
                 profileIds = profileIds,
-                showInstructions = prefs[Keys.SHOW_BREWING_INSTRUCTIONS] ?: true,
+                showInstructions = prefs[UserPreferenceKeys.SHOW_BREWING_INSTRUCTIONS] ?: true,
             )
-            prefs[Keys.GUIDANCE_BY_METHOD_FAMILY] = encodeKeyValueMap(guidance)
+            prefs[UserPreferenceKeys.GUIDANCE_BY_METHOD_FAMILY] = encodeKeyValueMap(guidance)
         }
     }
 

@@ -49,105 +49,10 @@ object LegacyBuiltInGuidanceCatalog {
         val sources = sourceStages()
         val pulsarSources = sources.filter { source -> source.method == BrewMethod.PULSAR }
         val authoredSources = sources.filterNot { source -> source.method == BrewMethod.PULSAR }
-        val authoredContentIds = authoredSources
-            .map { source -> source.definition.contentId }
-            .toSet()
-
-        require(stageCopyByContentId.keys == authoredContentIds) {
-            "Legacy guidance must cover every non-Pulsar source stage without extras"
-        }
-        require(stageSafetyCopyByContentId.keys.all { contentId -> contentId in authoredContentIds }) {
-            "Legacy stage safety must belong to a legacy source stage"
-        }
-        val requiredStageSafetyContentIds = authoredSources
-            .filter { source -> source.definition.safetyMessages.isNotEmpty() }
-            .map { source -> source.definition.contentId }
-            .toSet()
-        require(requiredStageSafetyContentIds.all { contentId ->
-            contentId in stageSafetyCopyByContentId
-        }) {
-            "Legacy guidance must explain every stage-plan safety-bearing stage"
-        }
-        require(profileCopyById.map(ProfileCopy::profileId).toSet() ==
-            authoredSources.map { source -> source.profile.id }.toSet()) {
-            "Legacy guidance needs preparation, completion, utility, and safety copy per profile"
-        }
-        require(pulsarSources.all { source ->
-            PulsarBuiltInGuidanceCatalog.catalog.content.any { item ->
-                item.profileId == source.profile.id &&
-                    item.stageId == source.definition.id &&
-                    item.id == source.definition.contentId &&
-                    !item.safetyCritical
-            }
-        }) {
-            "Pulsar guidance must cover every current legacy Pulsar source stage"
-        }
-
-        val stageEntries = authoredSources.map { source ->
-            val copy = requireNotNull(stageCopyByContentId[source.definition.contentId])
-            BuiltInGuidanceContent(
-                id = source.definition.contentId,
-                familyId = source.profile.familyId,
-                profileId = source.profile.id,
-                stageId = source.definition.id,
-                placement = BuiltInGuidancePlacement.LIVE_STAGE,
-                text = copy.toGuidanceText(),
-                visibility = routineVisibility(),
-            )
-        }
-        val stageSafetyEntries = authoredSources.mapNotNull { source ->
-            stageSafetyCopyByContentId[source.definition.contentId]?.let { copy ->
-                BuiltInGuidanceContent(
-                    id = StageContentId("${source.definition.contentId.value}_safety"),
-                    familyId = source.profile.familyId,
-                    profileId = source.profile.id,
-                    stageId = source.definition.id,
-                    placement = BuiltInGuidancePlacement.LIVE_STAGE,
-                    text = copy.toGuidanceText(),
-                    visibility = alwaysVisibleSafety(),
-                    safetyCritical = true,
-                )
-            }
-        }
-        val profileEntries = profileCopyById.flatMap { copy ->
-            val profile = profile(copy.profileId)
-            listOf(
-                BuiltInGuidanceContent(
-                    id = StageContentId("${profile.id.value}_prepare"),
-                    familyId = profile.familyId,
-                    profileId = profile.id,
-                    placement = BuiltInGuidancePlacement.PREPARATION,
-                    text = copy.preparation.toGuidanceText(),
-                    visibility = learnOverviewVisibility(),
-                ),
-                BuiltInGuidanceContent(
-                    id = StageContentId("${profile.id.value}_finish"),
-                    familyId = profile.familyId,
-                    profileId = profile.id,
-                    placement = BuiltInGuidancePlacement.COMPLETION,
-                    text = copy.completion.toGuidanceText(),
-                    visibility = learnOverviewVisibility(),
-                ),
-                BuiltInGuidanceContent(
-                    id = StageContentId("${profile.id.value}_live_targets"),
-                    familyId = profile.familyId,
-                    profileId = profile.id,
-                    placement = BuiltInGuidancePlacement.UTILITY,
-                    text = copy.utility.toGuidanceText(),
-                    visibility = utilityVisibility(),
-                ),
-                BuiltInGuidanceContent(
-                    id = StageContentId("${profile.id.value}_global_safety"),
-                    familyId = profile.familyId,
-                    profileId = profile.id,
-                    placement = BuiltInGuidancePlacement.GLOBAL_SAFETY,
-                    text = copy.globalSafety.toGuidanceText(),
-                    visibility = alwaysVisibleSafety(),
-                    safetyCritical = true,
-                ),
-            )
-        }
-
+        validateCoverage(pulsarSources, authoredSources)
+        val stageEntries = authoredSources.map(::stageContent)
+        val stageSafetyEntries = authoredSources.mapNotNull(::stageSafetyContent)
+        val profileEntries = profileCopyById.flatMap(::profileContent)
         return BuiltInGuidanceCatalog(
             PulsarBuiltInGuidanceCatalog.catalog.content +
                 stageEntries +
@@ -156,6 +61,101 @@ object LegacyBuiltInGuidanceCatalog {
         )
     }
 
+    private fun validateCoverage(
+        pulsarSources: List<LegacySourceStage>,
+        authoredSources: List<LegacySourceStage>,
+    ) {
+        val authoredContentIds = authoredSources.map { source -> source.definition.contentId }.toSet()
+        require(stageCopyByContentId.keys == authoredContentIds) {
+            "Legacy guidance must cover every non-Pulsar source stage without extras"
+        }
+        require(stageSafetyCopyByContentId.keys.all(authoredContentIds::contains)) {
+            "Legacy stage safety must belong to a legacy source stage"
+        }
+        val requiredSafetyIds = authoredSources
+            .filter { source -> source.definition.safetyMessages.isNotEmpty() }
+            .map { source -> source.definition.contentId }
+            .toSet()
+        require(requiredSafetyIds.all(stageSafetyCopyByContentId::containsKey)) {
+            "Legacy guidance must explain every stage-plan safety-bearing stage"
+        }
+        require(profileCopyById.map(ProfileCopy::profileId).toSet() ==
+            authoredSources.map { source -> source.profile.id }.toSet()) {
+            "Legacy guidance needs preparation, completion, utility, and safety copy per profile"
+        }
+        require(pulsarSources.all(::hasPulsarGuidance)) {
+            "Pulsar guidance must cover every current legacy Pulsar source stage"
+        }
+    }
+
+    private fun hasPulsarGuidance(source: LegacySourceStage): Boolean =
+        PulsarBuiltInGuidanceCatalog.catalog.content.any { item ->
+            item.profileId == source.profile.id &&
+                item.stageId == source.definition.id &&
+                item.id == source.definition.contentId &&
+                !item.safetyCritical
+        }
+
+    private fun stageContent(source: LegacySourceStage): BuiltInGuidanceContent {
+        val copy = requireNotNull(stageCopyByContentId[source.definition.contentId])
+        return BuiltInGuidanceContent(
+            id = source.definition.contentId,
+            familyId = source.profile.familyId,
+            profileId = source.profile.id,
+            stageId = source.definition.id,
+            placement = BuiltInGuidancePlacement.LIVE_STAGE,
+            text = copy.toGuidanceText(),
+            visibility = routineVisibility(),
+        )
+    }
+
+    private fun stageSafetyContent(source: LegacySourceStage): BuiltInGuidanceContent? =
+        stageSafetyCopyByContentId[source.definition.contentId]?.let { copy ->
+            BuiltInGuidanceContent(
+                id = StageContentId("${source.definition.contentId.value}_safety"),
+                familyId = source.profile.familyId,
+                profileId = source.profile.id,
+                stageId = source.definition.id,
+                placement = BuiltInGuidancePlacement.LIVE_STAGE,
+                text = copy.toGuidanceText(),
+                visibility = alwaysVisibleSafety(),
+                safetyCritical = true,
+            )
+        }
+
+    private fun profileContent(copy: ProfileCopy): List<BuiltInGuidanceContent> {
+        val profile = profile(copy.profileId)
+        return listOf(
+            profileContent(profile, "prepare", BuiltInGuidancePlacement.PREPARATION, copy.preparation, learnOverviewVisibility()),
+            profileContent(profile, "finish", BuiltInGuidancePlacement.COMPLETION, copy.completion, learnOverviewVisibility()),
+            profileContent(profile, "live_targets", BuiltInGuidancePlacement.UTILITY, copy.utility, utilityVisibility()),
+            profileContent(
+                profile,
+                "global_safety",
+                BuiltInGuidancePlacement.GLOBAL_SAFETY,
+                copy.globalSafety,
+                alwaysVisibleSafety(),
+                safetyCritical = true,
+            ),
+        )
+    }
+
+    private fun profileContent(
+        profile: BrewerProfile,
+        idSuffix: String,
+        placement: BuiltInGuidancePlacement,
+        copy: InstructionCopy,
+        visibility: GuidanceVisibilityPolicy,
+        safetyCritical: Boolean = false,
+    ): BuiltInGuidanceContent = BuiltInGuidanceContent(
+        id = StageContentId("${profile.id.value}_$idSuffix"),
+        familyId = profile.familyId,
+        profileId = profile.id,
+        placement = placement,
+        text = copy.toGuidanceText(),
+        visibility = visibility,
+        safetyCritical = safetyCritical,
+    )
     private fun sourceStages(): List<LegacySourceStage> = legacyMethodProfileIds.flatMap {
             (method, profileId) ->
         val profile = profile(profileId)

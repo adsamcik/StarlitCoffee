@@ -72,20 +72,28 @@ object SessionStorageMapper {
         )
     }
 
-    fun restore(snapshots: SessionStorageSnapshots): SessionStorageRestoreResult {
-        val plan = when (val result = mapDocument(SessionStorageDocument.COMPILED_PLAN) {
+    fun restore(snapshots: SessionStorageSnapshots): SessionStorageRestoreResult =
+        restoreSnapshots(snapshots)
+
+    private fun restoreSnapshots(
+        snapshots: SessionStorageSnapshots,
+        compiledPlanJson: String? = null,
+        runtimeJson: String? = null,
+        executionContextJson: String? = null,
+    ): SessionStorageRestoreResult {
+        val plan = when (val result = mapDocument(SessionStorageDocument.COMPILED_PLAN, compiledPlanJson) {
             CompiledStagePlanSnapshotMapperV1.toDomain(snapshots.compiledPlan)
         }) {
             is SessionStorageDocumentResult.Value -> result.value
             is SessionStorageDocumentResult.Failure -> return result.result
         }
-        val runtime = when (val result = mapDocument(SessionStorageDocument.RUNTIME) {
+        val runtime = when (val result = mapDocument(SessionStorageDocument.RUNTIME, runtimeJson) {
             SessionRuntimeSnapshotMapperV1.toDomain(snapshots.runtime, plan)
         }) {
             is SessionStorageDocumentResult.Value -> result.value
             is SessionStorageDocumentResult.Failure -> return result.result
         }
-        val context = when (val result = mapDocument(SessionStorageDocument.EXECUTION_CONTEXT) {
+        val context = when (val result = mapDocument(SessionStorageDocument.EXECUTION_CONTEXT, executionContextJson) {
             SessionExecutionContextSnapshotValidatorV1.validate(snapshots.executionContext)
         }) {
             is SessionStorageDocumentResult.Value -> result.value
@@ -98,56 +106,48 @@ object SessionStorageMapper {
         compiledPlanJson: String,
         runtimeJson: String,
         executionContextJson: String,
-    ): SessionStorageRestoreResult {
+    ): SessionStorageRestoreResult = when (
+        val result = decodeSnapshots(compiledPlanJson, runtimeJson, executionContextJson)
+    ) {
+        is SessionStorageDocumentResult.Value -> restoreSnapshots(
+            snapshots = result.value,
+            compiledPlanJson = compiledPlanJson,
+            runtimeJson = runtimeJson,
+            executionContextJson = executionContextJson,
+        )
+        is SessionStorageDocumentResult.Failure -> result.result
+    }
+
+    private fun decodeSnapshots(
+        compiledPlanJson: String,
+        runtimeJson: String,
+        executionContextJson: String,
+    ): SessionStorageDocumentResult<SessionStorageSnapshots> {
         val planSnapshot = when (
             val result = SessionStorageSnapshotCodec.decodeCompiledPlan(compiledPlanJson)
                 .decodedOrFailure(SessionStorageDocument.COMPILED_PLAN)
         ) {
             is SessionStorageDocumentResult.Value -> result.value
-            is SessionStorageDocumentResult.Failure -> return result.result
+            is SessionStorageDocumentResult.Failure -> return result
         }
         val runtimeSnapshot = when (
             val result = SessionStorageSnapshotCodec.decodeRuntime(runtimeJson)
                 .decodedOrFailure(SessionStorageDocument.RUNTIME)
         ) {
             is SessionStorageDocumentResult.Value -> result.value
-            is SessionStorageDocumentResult.Failure -> return result.result
+            is SessionStorageDocumentResult.Failure -> return result
         }
         val contextSnapshot = when (
             val result = SessionStorageSnapshotCodec.decodeExecutionContext(executionContextJson)
                 .decodedOrFailure(SessionStorageDocument.EXECUTION_CONTEXT)
         ) {
             is SessionStorageDocumentResult.Value -> result.value
-            is SessionStorageDocumentResult.Failure -> return result.result
+            is SessionStorageDocumentResult.Failure -> return result
         }
-
-        val plan = when (
-            val result = mapDocument(SessionStorageDocument.COMPILED_PLAN, compiledPlanJson) {
-            CompiledStagePlanSnapshotMapperV1.toDomain(planSnapshot)
-        }
-        ) {
-            is SessionStorageDocumentResult.Value -> result.value
-            is SessionStorageDocumentResult.Failure -> return result.result
-        }
-        val runtime = when (
-            val result = mapDocument(SessionStorageDocument.RUNTIME, runtimeJson) {
-            SessionRuntimeSnapshotMapperV1.toDomain(runtimeSnapshot, plan)
-        }
-        ) {
-            is SessionStorageDocumentResult.Value -> result.value
-            is SessionStorageDocumentResult.Failure -> return result.result
-        }
-        val context = when (
-            val result = mapDocument(SessionStorageDocument.EXECUTION_CONTEXT, executionContextJson) {
-            SessionExecutionContextSnapshotValidatorV1.validate(contextSnapshot)
-        }
-        ) {
-            is SessionStorageDocumentResult.Value -> result.value
-            is SessionStorageDocumentResult.Failure -> return result.result
-        }
-        return SessionStorageRestoreResult.Restored(RestoredSessionStorage(runtime, context))
+        return SessionStorageDocumentResult.Value(
+            SessionStorageSnapshots(planSnapshot, runtimeSnapshot, contextSnapshot),
+        )
     }
-
     private fun <T> mapDocument(
         document: SessionStorageDocument,
         rawJson: String? = null,

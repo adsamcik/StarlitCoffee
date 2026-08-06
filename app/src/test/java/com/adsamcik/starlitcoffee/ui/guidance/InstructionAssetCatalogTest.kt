@@ -207,9 +207,7 @@ class InstructionAssetCatalogTest {
 }
 
 object FakeDrawableResources {
-    @JvmField
-    val instruction_manual_gravity_v60_02_pour_bloom_default = 101
+    const val instruction_manual_gravity_v60_02_pour_bloom_default = 101
 
-    @JvmField
-    val wrong_instruction_name = 102
+    const val wrong_instruction_name = 102
 }

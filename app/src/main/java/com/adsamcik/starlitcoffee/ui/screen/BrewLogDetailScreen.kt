@@ -259,24 +259,24 @@ fun BrewLogDetailScreen(
                         val entity = log ?: return@TextButton
                         isDeleting = true
                         scope.launch {
-                            try {
-                                check(brewViewModel.deleteBrewLogAndWait(entity)) {
-                                    "Brew log repository is unavailable"
-                                }
-                                showDeleteDialog = false
-                                onBack()
-                            } catch (error: CancellationException) {
-                                throw error
-                            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
-                                Log.e(TAG, "Failed to delete brew log", error)
-                                Toast.makeText(
-                                    context,
-                                    R.string.msg_could_not_delete,
-                                    Toast.LENGTH_LONG,
-                                ).show()
-                            } finally {
-                                isDeleting = false
-                            }
+                            runBrewLogMutation(
+                                action = {
+                                    check(brewViewModel.deleteBrewLogAndWait(entity)) {
+                                        "Brew log repository is unavailable"
+                                    }
+                                    showDeleteDialog = false
+                                    onBack()
+                                },
+                                onFailure = { error ->
+                                    Log.e(TAG, "Failed to delete brew log", error)
+                                    Toast.makeText(
+                                        context,
+                                        R.string.msg_could_not_delete,
+                                        Toast.LENGTH_LONG,
+                                    ).show()
+                                },
+                                onFinished = { isDeleting = false },
+                            )
                         }
                     },
                 ) {
@@ -427,34 +427,42 @@ fun BrewLogDetailScreen(
                             if (isUpdatingBag) return@CoffeeBagSelector
                             isUpdatingBag = true
                             scope.launch {
-                                try {
-                                    check(brewViewModel.updateBrewLogBagAndWait(entity.id, bagId))
-                                    log = entity.copy(coffeeBagId = bagId)
-                                } catch (error: CancellationException) {
-                                    throw error
-                                } catch (error: Exception) {
-                                    Log.e(TAG, "Failed to update brew log coffee bag", error)
-                                    Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
-                                } finally {
-                                    isUpdatingBag = false
-                                }
+                                runBrewLogMutation(
+                                    action = {
+                                        check(brewViewModel.updateBrewLogBagAndWait(entity.id, bagId))
+                                        log = entity.copy(coffeeBagId = bagId)
+                                    },
+                                    onFailure = { error ->
+                                        Log.e(TAG, "Failed to update brew log coffee bag", error)
+                                        Toast.makeText(
+                                            context,
+                                            R.string.msg_could_not_save_changes,
+                                            Toast.LENGTH_LONG,
+                                        ).show()
+                                    },
+                                    onFinished = { isUpdatingBag = false },
+                                )
                             }
                         },
                         onClearBag = {
                             if (isUpdatingBag) return@CoffeeBagSelector
                             isUpdatingBag = true
                             scope.launch {
-                                try {
-                                    check(brewViewModel.updateBrewLogBagAndWait(entity.id, null))
-                                    log = entity.copy(coffeeBagId = null)
-                                } catch (error: CancellationException) {
-                                    throw error
-                                } catch (error: Exception) {
-                                    Log.e(TAG, "Failed to clear brew log coffee bag", error)
-                                    Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
-                                } finally {
-                                    isUpdatingBag = false
-                                }
+                                runBrewLogMutation(
+                                    action = {
+                                        check(brewViewModel.updateBrewLogBagAndWait(entity.id, null))
+                                        log = entity.copy(coffeeBagId = null)
+                                    },
+                                    onFailure = { error ->
+                                        Log.e(TAG, "Failed to clear brew log coffee bag", error)
+                                        Toast.makeText(
+                                            context,
+                                            R.string.msg_could_not_save_changes,
+                                            Toast.LENGTH_LONG,
+                                        ).show()
+                                    },
+                                    onFinished = { isUpdatingBag = false },
+                                )
                             }
                         },
                     )
@@ -591,5 +599,20 @@ fun BrewLogDetailScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
         }
+    }
+}
+private suspend fun runBrewLogMutation(
+    action: suspend () -> Unit,
+    onFailure: (Exception) -> Unit,
+    onFinished: () -> Unit,
+) {
+    try {
+        action()
+    } catch (error: CancellationException) {
+        throw error
+    } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+        onFailure(error)
+    } finally {
+        onFinished()
     }
 }

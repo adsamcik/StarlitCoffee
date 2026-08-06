@@ -193,7 +193,10 @@ class MindlayerOcrService(
          */
         internal fun rectFromBox(box: List<Int>): Rect? {
             if (box.size != BOX_COMPONENT_COUNT) return null
-            val (left, top, right, bottom) = box
+            val left = box[0]
+            val top = box[1]
+            val right = box[2]
+            val bottom = box[3]
             if (left >= right || top >= bottom) return null
             return Rect(left, top, right, bottom)
         }

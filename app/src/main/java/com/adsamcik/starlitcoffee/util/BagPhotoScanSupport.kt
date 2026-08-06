@@ -296,48 +296,6 @@ object BagPhotoScanSupport {
             isDecaf = isDecaf,
         )
 
-        fun sourceEvidence(fieldName: String, outputValue: String): BagFieldEvidence? {
-            resolvedFields[fieldName]
-                ?.takeIf { it.value.trim() == outputValue }
-                ?.let { return it }
-
-            val relocatedFrom = sanitized.corrections.firstOrNull { correction ->
-                correction.action == ScanFieldCorrectionAction.RELOCATED &&
-                    correction.to == fieldName &&
-                    correction.from?.trim() == outputValue
-            }?.field
-            if (relocatedFrom != null) return resolvedFields[relocatedFrom]
-
-            if (fieldName == "isDecaf" && sanitized.isDecaf == true) {
-                val decafSource = sanitized.corrections.firstOrNull { correction ->
-                    correction.action == ScanFieldCorrectionAction.FLAGGED_DECAF
-                }?.field
-                if (decafSource != null) return resolvedFields[decafSource]
-            }
-
-            return resolvedFields[fieldName]
-        }
-
-        fun sanitizedEvidence(fieldName: String, outputValue: String): BagFieldEvidence? {
-            val source = sourceEvidence(fieldName, outputValue) ?: return null
-            val normalized = when (fieldName) {
-                "origin", "region", "processType", "roastLevel", "variety" ->
-                    CoffeeMetadataNormalizer.normalizeField(fieldName, outputValue, Locale.ENGLISH)
-                else -> null
-            }
-            return source.copy(
-                fieldName = fieldName,
-                value = outputValue,
-                canonicalKey = when (fieldName) {
-                    "isDecaf" -> outputValue
-                    else -> normalized?.canonicalKey
-                        ?: source.canonicalKey.takeIf { source.fieldName == fieldName }
-                },
-                matchStrategy = normalized?.matchStrategy
-                    ?: source.matchStrategy.takeIf { source.fieldName == fieldName },
-            )
-        }
-
         val sanitizedValues = mapOf(
             "origin" to sanitized.origin,
             "region" to sanitized.region,
@@ -360,10 +318,64 @@ object BagPhotoScanSupport {
             }
             sanitizedValues.forEach { (fieldName, outputValue) ->
                 outputValue?.let { value ->
-                    sanitizedEvidence(fieldName, value)?.let { put(fieldName, it) }
+                    sanitizedEvidence(
+                        resolvedFields = resolvedFields,
+                        sanitized = sanitized,
+                        fieldName = fieldName,
+                        outputValue = value,
+                    )?.let { put(fieldName, it) }
                 }
             }
         }
+    }
+
+    private fun sourceEvidence(
+        resolvedFields: Map<String, BagFieldEvidence>,
+        sanitized: SanitizedExtraction,
+        fieldName: String,
+        outputValue: String,
+    ): BagFieldEvidence? {
+        resolvedFields[fieldName]
+            ?.takeIf { it.value.trim() == outputValue }
+            ?.let { return it }
+        val relocatedFrom = sanitized.corrections.firstOrNull { correction ->
+            correction.action == ScanFieldCorrectionAction.RELOCATED &&
+                correction.to == fieldName &&
+                correction.from?.trim() == outputValue
+        }?.field
+        if (relocatedFrom != null) return resolvedFields[relocatedFrom]
+        if (fieldName == "isDecaf" && sanitized.isDecaf == true) {
+            val decafSource = sanitized.corrections.firstOrNull { correction ->
+                correction.action == ScanFieldCorrectionAction.FLAGGED_DECAF
+            }?.field
+            if (decafSource != null) return resolvedFields[decafSource]
+        }
+        return resolvedFields[fieldName]
+    }
+
+    private fun sanitizedEvidence(
+        resolvedFields: Map<String, BagFieldEvidence>,
+        sanitized: SanitizedExtraction,
+        fieldName: String,
+        outputValue: String,
+    ): BagFieldEvidence? {
+        val source = sourceEvidence(resolvedFields, sanitized, fieldName, outputValue) ?: return null
+        val normalized = when (fieldName) {
+            "origin", "region", "processType", "roastLevel", "variety" ->
+                CoffeeMetadataNormalizer.normalizeField(fieldName, outputValue, Locale.ENGLISH)
+            else -> null
+        }
+        return source.copy(
+            fieldName = fieldName,
+            value = outputValue,
+            canonicalKey = when (fieldName) {
+                "isDecaf" -> outputValue
+                else -> normalized?.canonicalKey
+                    ?: source.canonicalKey.takeIf { source.fieldName == fieldName }
+            },
+            matchStrategy = normalized?.matchStrategy
+                ?: source.matchStrategy.takeIf { source.fieldName == fieldName },
+        )
     }
 
     fun buildPrefill(resolvedFields: Map<String, BagFieldEvidence>): OcrFieldExtractor.OcrExtractionResult {

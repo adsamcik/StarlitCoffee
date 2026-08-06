@@ -49,9 +49,10 @@ fun DurableBrewSessionFeedback(
         val priorStageId = previousStageId
         val priorStageAction = previousStageAction
         val priorStatus = observedStatus
-        if (enabled && presentation.status == BrewSessionStatus.RUNNING && priorStageId != null &&
+        val runningStageChanged = presentation.status == BrewSessionStatus.RUNNING &&
+            priorStageId != null &&
             priorStageId != stage?.stageInstanceId
-        ) {
+        if (enabled && runningStageChanged) {
             if (priorStageAction == BrewStageAction.BLOOM) {
                 vibrator.playDurableCue(vibrationTheme, BrewVibrationEvent.BLOOM_COMPLETE)
                 playDurableTone(ToneGenerator.TONE_PROP_BEEP2, 250)
@@ -61,9 +62,7 @@ fun DurableBrewSessionFeedback(
             }
             dimController.wake()
         } else if (
-            enabled && priorStatus != null &&
-                priorStatus != BrewSessionStatus.COMPLETED &&
-                presentation.status == BrewSessionStatus.COMPLETED
+            enabled && presentation.justCompletedFrom(priorStatus)
         ) {
             vibrator.playDurableCue(vibrationTheme, BrewVibrationEvent.TARGET_REACHED)
             playDurableTone(ToneGenerator.TONE_PROP_BEEP2, 250)
@@ -152,5 +151,11 @@ private fun Context.durableBrewVibrator(): Vibrator? = if (Build.VERSION.SDK_INT
     @Suppress("DEPRECATION")
     getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
 }
+
+private fun ActiveBrewSessionPresentation.Available.justCompletedFrom(
+    priorStatus: BrewSessionStatus?,
+): Boolean = priorStatus != null &&
+    priorStatus != BrewSessionStatus.COMPLETED &&
+    status == BrewSessionStatus.COMPLETED
 
 private const val MILLIS_PER_MINUTE = 60_000L

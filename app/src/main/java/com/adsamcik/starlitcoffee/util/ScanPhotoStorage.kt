@@ -92,6 +92,14 @@ internal suspend fun commitDeletionWithDeferredCleanup(
  * ([com.adsamcik.starlitcoffee.viewmodel.BrewViewModel] `decodeBagPhotoBitmap`)
  * can decode them via `contentResolver.openInputStream`.
  */
+/**
+ * Single ownership boundary for staged and permanent scan-photo files.
+ *
+ * Promotion, replacement, rollback, and deferred deletion must use the same path-validation and
+ * durability rules. Keeping that atomic contract together is safer than exposing partially valid
+ * storage states across collaborators; method-level complexity limits remain fully enforced.
+ */
+@Suppress("LargeClass", "TooManyFunctions")
 object ScanPhotoStorage {
     private const val TAG = "ScanPhotoStorage"
     private const val STAGING_DIR = "bag_scan_captures"
@@ -260,27 +268,29 @@ object ScanPhotoStorage {
         val destination = File(storageDir, fileName)
         val temporary = File(storageDir, ".$fileName.tmp")
         try {
-            input.use { source ->
-                FileOutputStream(temporary).use { destinationStream ->
-                    val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-                    var copiedBytes = 0L
-                    while (true) {
-                        val bytesRead = source.read(buffer)
-                        if (bytesRead < 0) break
-                        copiedBytes += bytesRead
-                        if (copiedBytes > MAX_IMPORTED_PHOTO_BYTES) {
-                            throw IOException("Selected photo exceeds the import limit")
-                        }
-                        destinationStream.write(buffer, 0, bytesRead)
-                    }
-                    destinationStream.flush()
-                    destinationStream.fd.sync()
-                }
-            }
+            input.use { source -> copyStreamWithLimit(source, temporary) }
             replaceFileDurably(temporary, destination, directorySync = directorySync)
             return destination
         } finally {
             temporary.delete()
+        }
+    }
+
+    private fun copyStreamWithLimit(source: InputStream, temporary: File) {
+        FileOutputStream(temporary).use { destinationStream ->
+            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+            var copiedBytes = 0L
+            while (true) {
+                val bytesRead = source.read(buffer)
+                if (bytesRead < 0) break
+                copiedBytes += bytesRead
+                if (copiedBytes > MAX_IMPORTED_PHOTO_BYTES) {
+                    throw IOException("Selected photo exceeds the import limit")
+                }
+                destinationStream.write(buffer, 0, bytesRead)
+            }
+            destinationStream.flush()
+            destinationStream.fd.sync()
         }
     }
 
@@ -995,11 +1005,10 @@ object ScanPhotoStorage {
     internal fun resolveOwnedPhoto(ownedDirectory: File, uriString: String): File? =
         runCatching {
             val uri = URI(uriString)
-            if (!uri.scheme.equals("file", ignoreCase = true) ||
-                !uri.rawAuthority.isNullOrEmpty() ||
-                uri.rawQuery != null ||
-                uri.rawFragment != null
-            ) {
+            val hasUnsupportedLocation = !uri.scheme.equals("file", ignoreCase = true) ||
+                !uri.rawAuthority.isNullOrEmpty()
+            val hasUnsupportedComponents = uri.rawQuery != null || uri.rawFragment != null
+            if (hasUnsupportedLocation || hasUnsupportedComponents) {
                 return@runCatching null
             }
             val decodedPath = uri.path ?: return@runCatching null

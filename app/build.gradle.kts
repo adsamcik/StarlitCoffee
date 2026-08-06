@@ -131,7 +131,6 @@ ksp {
 
 detekt {
     config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
-    baseline = file("$rootDir/config/detekt/baseline.xml")
     buildUponDefaultConfig = true
     allRules = false
 }
@@ -338,7 +337,7 @@ tasks.register("scanBenchmark") {
     }
 }
 
-val verifyReleaseOptimization by tasks.registering {
+tasks.register("verifyReleaseOptimization") {
     group = "verification"
     description = "Build the release APK and verify R8 code/resource optimization artifacts"
     dependsOn("assembleRelease")

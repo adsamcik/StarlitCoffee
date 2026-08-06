@@ -177,33 +177,35 @@ def render(tracker: dict, accepted: list[AcceptedAsset]) -> str:
         "    }",
         "}",
         "",
-        "object P1TrackerAcceptedInstructionAssetCatalog {",
-        f"    const val TRACKER_UPDATED_ON = {kotlin_string(updated_on)}",
-        "    const val TRACKER_PATH = \"docs/brewing/starlit-tactile-production-tracker-2026-08-02.json\"",
-        "",
-        "    val assets: List<P1TrackerAcceptedInstructionAsset> = listOf(",
+        "private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = listOf(",
     ]
     for item in accepted:
         stage = item.stage
         priority = stage.priority.upper().replace("-", "_")
         lines.extend(
             [
-                "        P1TrackerAcceptedInstructionAsset(",
-                f"            recipeId = BuiltInRecipeId({kotlin_string(stage.recipe_id)}),",
-                f"            id = InstructionAssetId({kotlin_string(stage.asset_id)}),",
-                f"            familyId = MethodFamilyId({kotlin_string(stage.method_family_id)}),",
-                f"            profileId = BrewerProfileId({kotlin_string(stage.brewer_profile_id)}),",
-                f"            stageId = StageId({kotlin_string(stage.stage_id)}),",
-                f"            contentId = StageContentId({kotlin_string(stage.content_id)}),",
-                f"            visualPriority = P1ExactVisualPriority.{priority},",
-                f"            drawableRes = R.drawable.{stage.asset_id},",
-                f"            trackerRevision = {kotlin_string(item.revision)},",
-                "        ),",
+                "    P1TrackerAcceptedInstructionAsset(",
+                f"        recipeId = BuiltInRecipeId({kotlin_string(stage.recipe_id)}),",
+                f"        id = InstructionAssetId({kotlin_string(stage.asset_id)}),",
+                f"        familyId = MethodFamilyId({kotlin_string(stage.method_family_id)}),",
+                f"        profileId = BrewerProfileId({kotlin_string(stage.brewer_profile_id)}),",
+                f"        stageId = StageId({kotlin_string(stage.stage_id)}),",
+                f"        contentId = StageContentId({kotlin_string(stage.content_id)}),",
+                f"        visualPriority = P1ExactVisualPriority.{priority},",
+                f"        drawableRes = R.drawable.{stage.asset_id},",
+                f"        trackerRevision = {kotlin_string(item.revision)},",
+                "    ),",
             ],
         )
     lines.extend(
         [
-            "    )",
+            ")",
+            "",
+            "object P1TrackerAcceptedInstructionAssetCatalog {",
+            f"    const val TRACKER_UPDATED_ON = {kotlin_string(updated_on)}",
+            "    const val TRACKER_PATH = \"docs/brewing/starlit-tactile-production-tracker-2026-08-02.json\"",
+            "",
+            "    val assets: List<P1TrackerAcceptedInstructionAsset> = trackerAcceptedAssets",
             "",
             "    /** Accepted art is safe metadata; localized copy is enforced by the recipe gate. */",
             "    fun runtimeAssets(): List<InstructionAssetRecord> = assets.map { candidate ->",

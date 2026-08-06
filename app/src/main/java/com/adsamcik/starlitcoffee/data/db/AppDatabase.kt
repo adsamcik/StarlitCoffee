@@ -382,8 +382,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "starlit_coffee.db",
-                ).addMigrations(*ALL_MIGRATIONS)
-                    .build().also { INSTANCE = it }
+                ).apply {
+                    ALL_MIGRATIONS.forEach { migration -> addMigrations(migration) }
+                }.build().also { INSTANCE = it }
             }
         }
     }

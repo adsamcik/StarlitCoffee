@@ -33,7 +33,7 @@ import com.adsamcik.starlitcoffee.ui.util.labelRes
 import com.adsamcik.starlitcoffee.ui.util.selectContentDescriptionRes
 
 private val RatingFaceTouchTarget = 48.dp
-private val UnselectedFaceAlpha = 0.45f
+private const val UnselectedFaceAlpha = 0.45f
 private val SelectedFaceSize = 40.dp
 private val UnselectedFaceSize = 34.dp
 
