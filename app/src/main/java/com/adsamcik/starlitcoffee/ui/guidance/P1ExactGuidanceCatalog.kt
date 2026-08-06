@@ -168,6 +168,7 @@ data class P1ExactStageGuidance(
     /** Compatibility adapter for the existing shared Learn/live catalogue. */
     fun toBuiltInGuidanceContent(
         terminologyCatalog: P1ExactTerminologyCatalog? = null,
+        englishSafetyWarning: String? = null,
     ): BuiltInGuidanceContent = BuiltInGuidanceContent(
         id = contentId,
         familyId = methodFamilyId,
@@ -179,7 +180,7 @@ data class P1ExactStageGuidance(
             conciseInstruction = concise.currentAction,
             explanation = full.conciseExplanation,
             tip = full.optionalPracticalTip,
-            warning = warning,
+            warning = combinedSafetyWarning(englishSafetyWarning),
             altText = full.accessibleAltText,
         ),
         visibility = GuidanceVisibilityPolicy(
@@ -188,13 +189,16 @@ data class P1ExactStageGuidance(
         ),
         safetyCritical = isAuthoredCriticalWarning,
         authoredPresentations = GuidancePresentationLevel.entries.associateWith { level ->
-            presentation(level).toAuthoredPresentation()
+            presentation(level).toAuthoredPresentation(
+                warningOverride = combinedSafetyWarning(englishSafetyWarning),
+            )
         },
         terminologyReferences = terminologyCatalog?.referencesFor(contentId).orEmpty(),
     )
 
-    private fun P1ExactGuidancePresentation.toAuthoredPresentation() =
-        AuthoredGuidancePresentation(
+    private fun P1ExactGuidancePresentation.toAuthoredPresentation(
+        warningOverride: String? = warning,
+    ) = AuthoredGuidancePresentation(
             instruction = instruction,
             target = target,
             completionCue = completionCue,
@@ -202,10 +206,20 @@ data class P1ExactStageGuidance(
             practicalTip = practicalTip,
             nextAction = nextAction,
             controlRequirements = controlRequirements,
-            warning = warning,
+            warning = warningOverride,
             utilities = utilities,
             accessibleAltText = accessibleAltText,
         )
+
+    private fun combinedSafetyWarning(englishSafetyWarning: String?): String? {
+        val localWarning = warning
+        if (!isAuthoredCriticalWarning || englishSafetyWarning.isNullOrBlank()) return localWarning
+        if (localWarning == englishSafetyWarning) return localWarning
+        return listOfNotNull(
+            localWarning,
+            "English safety reference: $englishSafetyWarning",
+        ).joinToString("\n\n")
+    }
 
     private val isAuthoredCriticalWarning: Boolean
         get() = requiresSafetyCriticalExpertReview && warning != null
@@ -246,9 +260,17 @@ class P1ExactGuidanceCatalog internal constructor(
     fun forRecipe(
         recipeId: BuiltInRecipeId,
         terminologyCatalog: P1ExactTerminologyCatalog? = null,
+        englishSafetyCatalog: P1ExactGuidanceCatalog? = null,
     ): BuiltInGuidanceCatalog? = findRecipe(recipeId)
         ?.stages
-        ?.map { stage -> stage.toBuiltInGuidanceContent(terminologyCatalog) }
+        ?.map { stage ->
+            stage.toBuiltInGuidanceContent(
+                terminologyCatalog = terminologyCatalog,
+                englishSafetyWarning = englishSafetyCatalog
+                    ?.findStage(stage.contentId)
+                    ?.warning,
+            )
+        }
         ?.let(::BuiltInGuidanceCatalog)
 
     fun asBuiltInGuidanceCatalog(
@@ -278,6 +300,7 @@ sealed interface BuiltInP1ExactGuidanceLoadResult {
     data class Loaded(
         val catalog: P1ExactGuidanceCatalog,
         val localeTag: String = "en",
+        val canonicalEnglishCatalog: P1ExactGuidanceCatalog? = null,
     ) : BuiltInP1ExactGuidanceLoadResult
 
     data class Unavailable(val reason: String) : BuiltInP1ExactGuidanceLoadResult
@@ -293,17 +316,28 @@ object BuiltInP1ExactGuidanceLoader {
         val applicationContext = context.applicationContext
         val localeKey = applicationContext.resources.configuration.locales[0].language
         return synchronized(this) {
-            cacheByLocale.getOrPut(localeKey) { load(applicationContext) }
+            cacheByLocale.getOrPut(localeKey) { load(applicationContext, localeKey) }
         }
     }
 
-    private fun load(context: Context): BuiltInP1ExactGuidanceLoadResult = try {
+    private fun load(
+        context: Context,
+        localeTag: String,
+    ): BuiltInP1ExactGuidanceLoadResult = try {
         val encoded = context.resources.openRawResource(R.raw.p1_exact_guidance)
             .bufferedReader()
             .use { reader -> reader.readText() }
+        val canonicalEnglishCatalog = if (localeTag == "en") {
+            null
+        } else {
+            context.assets.open(BuiltInP1ExactGuidanceCatalog.ASSET_NAME)
+                .bufferedReader()
+                .use { reader -> BuiltInP1ExactGuidanceCatalog.decode(reader.readText()) }
+        }
         BuiltInP1ExactGuidanceLoadResult.Loaded(
-            BuiltInP1ExactGuidanceCatalog.decode(encoded),
-            context.resources.configuration.locales[0].language,
+            catalog = BuiltInP1ExactGuidanceCatalog.decode(encoded),
+            localeTag = localeTag,
+            canonicalEnglishCatalog = canonicalEnglishCatalog,
         )
     } catch (exception: IOException) {
         unavailable(exception)

@@ -53,6 +53,20 @@ class P1ExactTerminologyCatalogTest {
     }
 
     @Test
+    fun `preview glossary decodes without claiming review`() {
+        val catalog = BuiltInP1ExactTerminologyCatalog.decode(
+            encodedReferences = referenceAsset().readText(),
+            encodedGlossary = projectFile(
+                "src/main/res/raw-cs/p1_exact_terminology.json",
+                "app/src/main/res/raw-cs/p1_exact_terminology.json",
+            ).readText(),
+            activeLocaleTag = "cs",
+        )
+
+        assertEquals(P1ExactLocalizationStatus.PREVIEW, catalog.localizationStatus)
+    }
+
+    @Test
     fun `fallback glossary for another locale fails closed`() {
         assertThrows(IllegalArgumentException::class.java) {
             BuiltInP1ExactTerminologyCatalog.decode(

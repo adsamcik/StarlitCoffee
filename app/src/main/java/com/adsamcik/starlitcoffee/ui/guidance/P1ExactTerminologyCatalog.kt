@@ -9,6 +9,20 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
+enum class P1ExactLocalizationStatus {
+    REVIEWED,
+    PREVIEW,
+    ;
+
+    companion object {
+        fun fromEncoded(value: String): P1ExactLocalizationStatus = when (value) {
+            "approved" -> REVIEWED
+            "preview" -> PREVIEW
+            else -> throw IllegalArgumentException("Unknown exact-guidance localization status: $value")
+        }
+    }
+}
+
 enum class BrewingEnglishReferencePolicy(val encodedValue: String) {
     GLOSSARY_AND_SEARCH("glossary_and_search"),
     ESTABLISHED_LOCAL_USAGE("established_local_usage"),
@@ -51,6 +65,7 @@ data class BrewingTerminologyUiCopy(
 
 class P1ExactTerminologyCatalog internal constructor(
     val localeTag: String,
+    val localizationStatus: P1ExactLocalizationStatus = P1ExactLocalizationStatus.REVIEWED,
     val uiCopy: BrewingTerminologyUiCopy,
     referencesByContentId: Map<StageContentId, List<BrewingTerminologyReference>>,
 ) {
@@ -97,7 +112,7 @@ object BuiltInP1ExactTerminologyCatalog {
         val references = json.decodeFromString<TerminologyReferenceManifestDto>(encodedReferences)
         val glossary = json.decodeFromString<TerminologyGlossaryDto>(encodedGlossary)
         references.requireCanonicalIdentity()
-        glossary.requireCanonicalIdentity(activeLocaleTag)
+        val localizationStatus = glossary.requireCanonicalIdentity(activeLocaleTag)
 
         val canonicalById = references.concepts.associate { concept ->
             require(concept.id.matches(stableId)) { "Invalid terminology concept ID: ${concept.id}" }
@@ -161,6 +176,7 @@ object BuiltInP1ExactTerminologyCatalog {
 
         return P1ExactTerminologyCatalog(
             localeTag = glossary.locale,
+            localizationStatus = localizationStatus,
             uiCopy = BrewingTerminologyUiCopy(
                 showEnglishTerms = glossary.uiCopy.showEnglishTerms,
                 hideEnglishTerms = glossary.uiCopy.hideEnglishTerms,
@@ -185,7 +201,9 @@ object BuiltInP1ExactTerminologyCatalog {
         require(stageReferences.isNotEmpty()) { "Terminology stage references cannot be empty" }
     }
 
-    private fun TerminologyGlossaryDto.requireCanonicalIdentity(activeLocaleTag: String) {
+    private fun TerminologyGlossaryDto.requireCanonicalIdentity(
+        activeLocaleTag: String,
+    ): P1ExactLocalizationStatus {
         require(schemaVersion == GLOSSARY_SCHEMA_VERSION) { "Terminology glossary schema mismatch" }
         require(sourceSchemaVersion == BuiltInP1ExactGuidanceCatalog.SOURCE_SCHEMA_VERSION) {
             "Terminology glossary source schema mismatch"
@@ -199,9 +217,20 @@ object BuiltInP1ExactTerminologyCatalog {
         require(locale == activeLocaleTag) {
             "Terminology glossary locale does not match the active locale"
         }
-        require(reviewStatus == "approved") { "Terminology glossary is not approved" }
-        require(reviewer.isNotBlank()) { "Terminology glossary reviewer is missing" }
-        require(reviewedOn.matches(reviewDate)) { "Terminology glossary review date is invalid" }
+        val localizationStatus = P1ExactLocalizationStatus.fromEncoded(reviewStatus)
+        when (localizationStatus) {
+            P1ExactLocalizationStatus.REVIEWED -> {
+                require(!reviewer.isNullOrBlank()) { "Terminology glossary reviewer is missing" }
+                require(reviewedOn?.matches(reviewDate) == true) {
+                    "Terminology glossary review date is invalid"
+                }
+            }
+            P1ExactLocalizationStatus.PREVIEW -> {
+                require(reviewer == null && reviewedOn == null) {
+                    "Preview terminology cannot claim specialist review"
+                }
+            }
+        }
         require(
             uiCopy.showEnglishTerms.isNotBlank() &&
                 uiCopy.hideEnglishTerms.isNotBlank() &&
@@ -209,6 +238,7 @@ object BuiltInP1ExactTerminologyCatalog {
         ) {
             "Terminology glossary UI copy cannot be blank"
         }
+        return localizationStatus
     }
 }
 
@@ -286,8 +316,8 @@ private data class TerminologyGlossaryDto(
     @SerialName("source_sha256") val sourceSha256: String,
     val locale: String,
     @SerialName("review_status") val reviewStatus: String,
-    val reviewer: String,
-    @SerialName("reviewed_on") val reviewedOn: String,
+    val reviewer: String?,
+    @SerialName("reviewed_on") val reviewedOn: String?,
     @SerialName("ui_copy") val uiCopy: TerminologyUiCopyDto,
     val terms: List<LocalizedTerminologyTermDto>,
 )
