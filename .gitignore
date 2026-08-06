@@ -13,7 +13,9 @@ build/
 local.properties
 
 # Build artifacts
-/app/build
+/app/build/
+*.apk
+*.aab
 
 # Log files
 *.log
@@ -46,10 +48,13 @@ __diff_output.txt
 # Diagnostic notes
 METHODPICKERSCREEN_DIAGNOSTIC.md
 gemini_brief.md
+.incomplete.md
 
 # Misc artifacts
 classes.jar
 *.litertlm
+hs_err_pid*
+replay_pid*
 
 # External tool / agent markers
 .codex
@@ -83,3 +88,17 @@ __pycache__/
 # app/src/main/res/drawable-nodpi.
 /docs/assets/vessel-icons/
 /tools/bloom-validation/
+
+# Python bytecode
+*.py[cod]
+
+# One-off local helper scripts
+/do_commit.py
+/git_commit.py
+/find_asset_delivery.ps1
+/temp_*.py
+
+# Illustration generation intermediates
+/docs/brewing/illustration-candidates/**/*_chroma.png
+/docs/brewing/illustration-candidates/**/*_alpha.png
+/docs/brewing/illustration-candidates/**/*_rejected*.png

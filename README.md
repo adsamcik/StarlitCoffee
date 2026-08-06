@@ -1,0 +1,84 @@
+# Starlit Coffee
+
+Starlit Coffee is a native Android companion for guided brewing, repeatable
+recipes, and useful brew records. It combines a simple everyday brew flow with
+progressively disclosed controls for people who want to understand or tune each
+stage.
+
+## Highlights
+
+- Guided, durable brew sessions with observable completion cues and recovery.
+- Evidence-bound exact recipes across multiple brewer families.
+- Concise stage guidance with purpose-built, text-free illustrations.
+- Coffee-bag inventory, barcode/OCR-assisted capture, and brew history.
+- Material 3 Expressive UI with light, dark, dynamic-color, accessibility, and
+  large-text support.
+- Reviewed English guidance plus clearly labelled, opt-in translation previews
+  for the other supported app locales.
+
+## Project status
+
+The app is under active development. The `main` branch is expected to build and
+pass its automated validation, but non-English exact-guidance previews are not
+presented as editorially reviewed translations. See [CHANGELOG.md](CHANGELOG.md)
+for current release status and upgrade notes.
+
+## Requirements
+
+- Android Studio with Android SDK 37
+- JDK 17
+- Git
+- Access to the public Mindlayer GitHub Packages dependency
+
+GitHub Packages requires authentication even for public Maven packages. The
+build checks `GITHUB_TOKEN` and then an authenticated GitHub CLI session
+(`gh auth token`). A token used for package downloads needs `read:packages`.
+Local Maven artifacts remain available through `mavenLocal()` for Mindlayer
+contributors.
+
+Android Studio normally creates `local.properties` with the local SDK path. The
+file is intentionally ignored and must never be committed.
+
+## Build and test
+
+On Windows:
+
+```powershell
+.\gradlew.bat testDebugUnitTest
+.\gradlew.bat :app:detekt :app:lintDebug :app:assembleDebug
+```
+
+On macOS or Linux, use `./gradlew` with the same tasks.
+
+The debug APK is written beneath `app/build/outputs/apk/debug/`. Device-backed
+OCR/LLM benchmarks require a connected Android device and the committed
+synthetic corpus; see [testdata/README.md](testdata/README.md).
+
+## Repository guide
+
+| Path | Purpose |
+| --- | --- |
+| `app/src/main` | Application code, resources, Room schemas, and shipped assets |
+| `app/src/test` | JVM unit and contract tests |
+| `app/src/androidTest` | Device and migration tests |
+| `docs/adr` | Architecture decision records |
+| `docs/brewing` | Brewing taxonomy, guidance, localization, and illustration contracts |
+| `prompts/brewing` | Reproducible illustration briefs and accepted prompt history |
+| `testdata` | Synthetic coffee-bag evaluation corpus |
+| `tools` | Deterministic generators and repository validation scripts |
+
+Start with the architecture decisions in [docs/adr](docs/adr) and the current
+implementation report in
+[docs/plans/2026-08-04-brewing-platform-implementation-report.md](docs/plans/2026-08-04-brewing-platform-implementation-report.md).
+
+## Contributing and security
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing changes. Report
+security or privacy issues through the process in [SECURITY.md](SECURITY.md),
+not through a public issue.
+
+## License
+
+An open-source license has not yet been selected. Until a license is added, the
+repository is publicly readable but no permission to copy, modify, or
+redistribute the work is granted beyond rights provided by applicable law.
