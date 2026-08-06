@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!--
+      These illustrations intentionally reuse accepted artwork. Their distinct resource names are
+      stable instruction-stage identifiers required by the generated catalogue and verification
+      tools; the reuse relationship is recorded in the asset tracker.
+    -->
+    <issue id="IconDuplicates">
+        <ignore path="src/main/res/drawable-nodpi/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default.webp" />
+        <ignore path="src/main/res/drawable-nodpi/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_05_instruction_default.webp" />
+        <ignore path="src/main/res/drawable-nodpi/instruction_p1_clever_coffee_first_15_250_stage_04_instruction_default.webp" />
+        <ignore path="src/main/res/drawable-nodpi/instruction_p1_clever_water_first_15_250_stage_05_instruction_default.webp" />
+        <ignore path="src/main/res/drawable-nodpi/instruction_p1_switch_gravity_15_250_stage_04_instruction_default.webp" />
+        <ignore path="src/main/res/drawable-nodpi/instruction_p1_switch_official_20_240_stage_04_instruction_default.webp" />
+        <ignore path="src/main/res/drawable-nodpi/instruction_p1_switch_official_20_240_stage_05_instruction_default.webp" />
+        <ignore path="src/main/res/drawable-nodpi/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction_default.webp" />
+        <ignore path="src/main/res/drawable-nodpi/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default.webp" />
+    </issue>
+</lint>

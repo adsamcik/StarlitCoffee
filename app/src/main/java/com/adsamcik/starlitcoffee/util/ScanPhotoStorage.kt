@@ -7,6 +7,7 @@ import android.graphics.ImageDecoder
 import android.os.Build
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import androidx.core.graphics.scale
 import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
@@ -440,9 +441,9 @@ object ScanPhotoStorage {
                 .orEmpty() + sessionId
             check(
                 preferences
-                .edit()
-                .putStringSet(KEY_PENDING_SAVE_SESSIONS, pending)
-                .commit(),
+                .commitSynchronously {
+                    putStringSet(KEY_PENDING_SAVE_SESSIONS, pending)
+                },
             ) { "Could not persist scan-photo save journal" }
         }
     }
@@ -453,9 +454,9 @@ object ScanPhotoStorage {
             val pending = preferences.getStringSet(KEY_PENDING_SAVE_SESSIONS, emptySet())
                 ?.toSet()
                 .orEmpty() - sessionId
-            val cleared = preferences.edit()
-                .putStringSet(KEY_PENDING_SAVE_SESSIONS, pending)
-                .commit()
+            val cleared = preferences.commitSynchronously {
+                putStringSet(KEY_PENDING_SAVE_SESSIONS, pending)
+            }
             if (!cleared) {
                 Log.w(TAG, "Could not clear scan-photo save journal for $sessionId")
             }
@@ -477,12 +478,12 @@ object ScanPhotoStorage {
         synchronized(saveJournalLock) {
             check(
                 context.getSharedPreferences(SAVE_JOURNAL_PREFERENCES, Context.MODE_PRIVATE)
-                    .edit()
-                    .putString(
-                        "$KEY_PENDING_DELETE_PREFIX${deletion.deletionId}",
-                        encodePendingBagPhotoDeletion(deletion),
-                    )
-                    .commit(),
+                    .commitSynchronously {
+                        putString(
+                            "$KEY_PENDING_DELETE_PREFIX${deletion.deletionId}",
+                            encodePendingBagPhotoDeletion(deletion),
+                        )
+                    },
             ) { "Could not persist deleted-bag photo cleanup journal" }
         }
     }
@@ -490,9 +491,9 @@ object ScanPhotoStorage {
     fun clearPendingBagPhotoDeletion(context: Context, deletionId: String): Boolean =
         synchronized(saveJournalLock) {
             val cleared = context.getSharedPreferences(SAVE_JOURNAL_PREFERENCES, Context.MODE_PRIVATE)
-                    .edit()
-                    .remove("$KEY_PENDING_DELETE_PREFIX$deletionId")
-                    .commit()
+                .commitSynchronously {
+                    remove("$KEY_PENDING_DELETE_PREFIX$deletionId")
+                }
             if (!cleared) {
                 Log.w(TAG, "Could not clear deleted-bag photo cleanup journal for $deletionId")
             }
@@ -814,7 +815,7 @@ object ScanPhotoStorage {
             resized = if (source.width == dimensions.width && source.height == dimensions.height) {
                 source
             } else {
-                Bitmap.createScaledBitmap(source, dimensions.width, dimensions.height, true)
+                source.scale(dimensions.width, dimensions.height)
             }
             FileOutputStream(temporary).use { output ->
                 check(requireNotNull(resized).compress(webpCompressFormat(), quality, output)) {

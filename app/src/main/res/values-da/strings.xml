@@ -160,7 +160,6 @@
     <string name="format_edit_preset">Rediger %1$s</string>
     <string name="label_bloom_animation_settings">Bloom-animationer</string>
     <string name="msg_bloom_animation_settings_subtitle">Vælg hvor ofte hver bloom-sprite vises</string>
-    <string name="cd_open_bloom_animation_settings">Åbn indstillinger for bloom-animationer</string>
     <string name="screen_bloom_animation_settings_title">Bloom-animationer</string>
     <string name="msg_bloom_animation_settings_hint">Tryk på hver kontrol for at skifte mellem normal chance, dobbelt chance og udelukket. Hvis alle sprites er udelukket, skjuler bloom-timere animationen.</string>
     <string name="label_bloom_weight_1x">1×</string>
@@ -282,10 +281,6 @@
     <string name="notif_rating_title">Hvordan var dit bryg?</string>
     <string name="format_notif_rating_title">Hvordan var dit %1$s-bryg?</string>
     <string name="notif_rating_body">Tryk på en emoji for at bedømme det, eller åbn appen for mere.</string>
-    <string name="notif_rating_emoji_1">☹️</string>
-    <string name="notif_rating_emoji_2">😐</string>
-    <string name="notif_rating_emoji_3">😀</string>
-    <string name="notif_rating_emoji_4">😋</string>
     <string name="cd_notif_rating_1">Bedøm som dårlig</string>
     <string name="cd_notif_rating_2">Bedøm som nogenlunde</string>
     <string name="cd_notif_rating_3">Bedøm som god</string>
@@ -450,18 +445,12 @@
     <string name="label_brew_history">Bryghistorik</string>
 
     <!-- BrewRatingSheet -->
-    <string name="label_how_was_it">Hvordan var det?</string>
-    <string name="msg_rate_brew_fresh">Bedøm dette bryg, mens smagen stadig er frisk i hukommelsen.</string>
-    <string name="label_flavor_notes_section">Smagsnoter</string>
-    <string name="hint_what_stood_out">Valgfri note - hvad skilte sig ud?</string>
-    <string name="action_save_rating">Gem bedømmelse</string>
 
     <!-- EmptyStateBox -->
 <!-- FavoritesRow -->
     <string name="label_your_favorites_section">Dine favoritter</string>
 
     <!-- FieldChipPicker -->
-    <string name="label_other">Andet</string>
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI-tjeneste (Mindlayer)</string>
@@ -520,12 +509,9 @@
     <!-- BagInventoryScreen -->
     <string name="action_from_photo">Fra foto</string>
     <string name="action_scan_label">Scan label</string>
-    <string name="action_add_bag_gallery">Fra galleri</string>
-    <string name="action_add_bag_camera">Scan med kamera</string>
     <string name="action_add_bag_barcode">Scan stregkode</string>
     <string name="action_add_bag_manual">Tilføj manuelt</string>
     <string name="msg_no_beans_yet">Ingen bønner endnu</string>
-    <string name="msg_add_coffee_hint">Tilføj din kaffe for at følge friskhed og få brygforslag</string>
     <string name="action_brew_now">Bryg nu</string>
     <string name="msg_could_not_read_label">Kunne ikke læse labelen</string>
     <string name="action_retake_photo">Tag foto igen</string>
@@ -547,16 +533,6 @@
     <string name="action_keep_scanning">Fortsæt scanning</string>
     <string name="msg_camera_permission_required">Kameratilladelse kræves</string>
     <string name="screen_scan_bag_title">Scan kaffepose</string>
-    <string name="cd_toggle_debug_overlay">Slå debug-overlay til/fra</string>
-    <string name="msg_both_sides_scanned">Begge sider af posen er scannet</string>
-    <string name="msg_scanning_front_side">Scanner forsiden af posen</string>
-    <string name="action_quick_save">Gem hurtigt</string>
-    <string name="msg_repackaged_product">Dette kan være et ompakket eller importeret produkt</string>
-    <string name="action_use_barcode">Brug stregkode</string>
-    <string name="action_use_label">Brug label</string>
-    <string name="label_confirmed">Bekræftet</string>
-    <string name="label_ai_contributed">AI bidrog</string>
-    <string name="cd_manual_capture">Manuel optagelse — gennemtving behandling af aktuelt billede</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Synkroniser med pose</string>
@@ -577,13 +553,11 @@
     <string name="msg_dim_mode_fullscreen_hint">Skjul også statuslinjen og navigationslinjen, mens skærmen er dæmpet. Swipe fra en kant for at kigge; ethvert tryk på skærmen vækker tilbage til normal.</string>
     <string name="label_dim_mode_force_dark_in_light">Brug mørk stil ved dæmpning</string>
     <string name="msg_dim_mode_force_dark_in_light_hint">Skift til dæmpet visning i mørkt tema, selv når systemet er i lyst tema. Passer naturligt med Ægte sort baggrund for altid mørk dæmpning.</string>
-    <string name="action_add_cup_preset">Tilføj kopforudindstilling</string>
     <string name="label_volume_ml">Volumen (ml)</string>
     <string name="msg_dose_from_ratio">Kaffedosis beregnes ud fra dit forhold</string>
     <string name="label_icon">Ikon</string>
     <string name="label_color">Farve</string>
     <string name="action_add">Tilføj</string>
-    <string name="dialog_edit_cup_preset_title">Rediger kopforudindstilling</string>
     <string name="screen_add_cup_preset_title">Tilføj kopforudindstilling</string>
     <string name="screen_edit_cup_preset_title">Rediger kopforudindstilling</string>
     <string name="msg_cup_preset_name_required">Tilføj et navn for at fortsætte</string>
@@ -727,36 +701,12 @@
     <string name="msg_brewer_profile_choose_hint">Start with the brewer in front of you. Its defaults stay visible before a session begins.</string>
     <string name="label_brewer_profile_starting">Starting…</string>
     <string name="msg_brewer_profile_empty">No supported brewer profiles are available yet.</string>
-    <string name="heading_brewer_profile_starting_defaults">Starting defaults</string>
     <string name="label_brewer_profile_input_water">Water input</string>
     <string name="label_brewer_profile_input_reservoir_water">Reservoir water</string>
-    <string name="msg_brewer_profile_input_water">Water added to the brewer</string>
     <string name="msg_brewer_profile_input_reservoir_water">Water added to the machine reservoir</string>
-    <string name="label_brewer_profile_expected_result">Expected result</string>
-    <string name="label_brewer_profile_output_estimated_beverage_yield">Estimated beverage yield</string>
-    <string name="label_brewer_profile_output_collected_concentrate">Collected concentrate</string>
-    <string name="label_brewer_profile_output_prepared_unfiltered_volume">Prepared unfiltered coffee</string>
-    <string name="msg_brewer_profile_serving_separate">Serving is a separate choice after extraction.</string>
-    <string name="heading_brewer_profile_equipment_check">Equipment check</string>
-    <string name="msg_brewer_profile_capacity_needs_confirmation">Capacity is not preset. Check your brewer’s marked capacity before using these amounts.</string>
-    <string name="format_brewer_profile_capacity_range">Capacity: %1$s to %2$s</string>
-    <string name="format_brewer_profile_capacity_up_to">Capacity: up to %1$s</string>
-    <string name="format_brewer_profile_capacity_from">Capacity: from %1$s</string>
-    <string name="msg_brewer_profile_capacity_configured">Capacity is configured for this brewer.</string>
-    <string name="msg_brewer_profile_filter_compatible">Use a filter compatible with this brewer.</string>
-    <string name="msg_brewer_profile_filter_unfiltered">This profile is intentionally unfiltered.</string>
-    <string name="msg_brewer_profile_filter_confirm">Confirm the required filter before starting.</string>
-    <string name="heading_brewer_profile_hario_switch_style">Hario Switch brew style</string>
-    <string name="msg_brewer_profile_hario_switch_style_hint">Choose the valve behaviour for this brew. Steep and release is the default.</string>
-    <string name="label_brewer_profile_hario_switch_steep_release">Steep &amp; release</string>
-    <string name="label_brewer_profile_hario_switch_manual_gravity">Manual gravity</string>
-    <string name="msg_brewer_profile_temperature_machine_controlled">Managed by the heat source or machine</string>
-    <string name="msg_brewer_profile_brew_time_observed">Finish by observation</string>
-    <string name="msg_brewer_profile_brew_time_machine_controlled">Machine-controlled cycle</string>
     <string name="format_brewer_profile_mass">%1$s %2$s</string>
     <string name="label_brewer_profile_clever_style">Clever-style brewer</string>
     <string name="label_brewer_profile_hario_switch">Hario Switch</string>
-    <string name="label_brewer_profile_valve_release_generic">Generic valve-release brewer</string>
     <string name="label_brewer_profile_cezve_generic">Cezve / ibrik</string>
     <string name="label_brewer_profile_automatic_batch_generic">Automatic batch brewer</string>
     <string name="label_brewer_profile_automatic_single_cup_generic">Podless single-cup brewer</string>
@@ -774,8 +724,6 @@
     <string name="guidance_level_focused">Focused</string>
     <string name="guidance_level_utilities">Utilities</string>
     <string name="msg_brew_guidance_unavailable">Guidance is not available for this brew yet.</string>
-    <string name="msg_brew_guidance_asset_pending">The visual guide for this step is still being prepared.</string>
-    <string name="msg_brew_guidance_asset_unavailable">The visual guide for this step is unavailable.</string>
 
 
 
@@ -789,13 +737,9 @@
     <string name="label_brewer_profile_capacity_grams">Capacity (g)</string>
     <string name="msg_brewer_profile_capacity_required">Enter a positive capacity in grams to continue.</string>
     <string name="heading_brewer_profile_cezve_choices">Cezve choices</string>
-    <string name="msg_brewer_profile_cezve_choices_hint">Choose whether to add sugar and how many times to let the foam rise.</string>
     <string name="label_brewer_profile_cezve_sugar">Optional sugar</string>
     <string name="label_brewer_profile_cezve_without_sugar">No sugar</string>
     <string name="label_brewer_profile_cezve_with_sugar">Add sugar</string>
-    <string name="label_brewer_profile_cezve_foam_rises">Foam rises</string>
-    <string name="label_brewer_profile_cezve_one_foam_rise">1 rise</string>
-    <string name="label_brewer_profile_cezve_two_foam_rises">2 rises</string>
     <string name="heading_brewer_profile_cezve_heat_source">Heat source</string>
     <string name="msg_brewer_profile_cezve_heat_source_hint">Select the actual heat source. It remains part of this brew’s safety record.</string>
     <string name="label_brewer_profile_cezve_heat_hob">Hob</string>

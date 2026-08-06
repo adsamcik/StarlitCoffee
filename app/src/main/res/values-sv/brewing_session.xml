@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Brygg</string>
-    <string name="label_current_step">Aktuellt steg</string>
     <string name="format_brew_stage_progress">Steg %1$d av %2$d</string>
     <string name="label_elapsed">Förfluten tid</string>
     <string name="label_remaining">Återstående</string>
     <string name="format_brew_stage_remaining_time">%1$s återstår</string>
-    <string name="label_recorded">Registrerat</string>
     <string name="label_measured_amount">Uppmätt mängd (g)</string>
     <string name="action_brew_prepare">Förbered</string>
     <string name="action_brew_rinse">Skölj</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Den här sparade bryggningen kan inte öppnas på ett säkert sätt. Den har lämnats oförändrad.</string>
     <string name="msg_brew_session_finished">Bryggning sparad.</string>
     <string name="msg_brew_session_finishing">Sparar bryggning…</string>
-    <string name="msg_brew_session_ready">Klar att starta.</string>
     <string name="msg_brew_session_paused">Bryggning pausad.</string>
     <string name="msg_brew_stage_manual">Slutför det här steget när den fysiska handlingen är klar.</string>
     <string name="msg_brew_stage_observation">Markera det här steget när du ser den förväntade fysiska förändringen.</string>

@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import androidx.core.net.toUri
 import com.adsamcik.starlitcoffee.BuildConfig
 
 object MindlayerAvailability {
@@ -45,8 +46,8 @@ object MindlayerInstallLink {
     const val PACKAGE_NAME = "com.adsamcik.mindlayer"
     const val PLAY_STORE_URI = "market://details?id=$PACKAGE_NAME"
 
-    private val playStoreUri: Uri = Uri.parse(PLAY_STORE_URI)
-    private val webStoreUri: Uri = Uri.parse("https://play.google.com/store/apps/details?id=$PACKAGE_NAME")
+    private val playStoreUri: Uri = PLAY_STORE_URI.toUri()
+    private val webStoreUri: Uri = "https://play.google.com/store/apps/details?id=$PACKAGE_NAME".toUri()
 
     fun open(context: Context): Boolean {
         val marketIntent = Intent(Intent.ACTION_VIEW, playStoreUri)

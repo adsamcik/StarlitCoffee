@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Főzés</string>
-    <string name="label_current_step">Aktuális lépés</string>
     <string name="format_brew_stage_progress">Lépés %1$d / %2$d</string>
     <string name="label_elapsed">Eltelt idő</string>
     <string name="label_remaining">Hátralévő</string>
     <string name="format_brew_stage_remaining_time">%1$s van hátra</string>
-    <string name="label_recorded">Rögzítve</string>
     <string name="label_measured_amount">Mért mennyiség (g)</string>
     <string name="action_brew_prepare">Készítsd elő</string>
     <string name="action_brew_rinse">Öblítsd át</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Ez a mentett főzés nem nyitható meg biztonságosan. Változatlanul maradt.</string>
     <string name="msg_brew_session_finished">Főzés elmentve.</string>
     <string name="msg_brew_session_finishing">A főzés mentése…</string>
-    <string name="msg_brew_session_ready">Indításra kész.</string>
     <string name="msg_brew_session_paused">A főzés szünetel.</string>
     <string name="msg_brew_stage_manual">Fejezze be ezt a lépést, amikor a fizikai művelet elkészült.</string>
     <string name="msg_brew_stage_observation">Jelölje ezt a lépést, amikor látja a várt fizikai változást.</string>

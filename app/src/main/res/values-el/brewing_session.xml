@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Παρασκευή</string>
-    <string name="label_current_step">Τρέχον βήμα</string>
     <string name="format_brew_stage_progress">Βήμα %1$d από %2$d</string>
     <string name="label_elapsed">Χρόνος που πέρασε</string>
     <string name="label_remaining">Απομένει</string>
     <string name="format_brew_stage_remaining_time">Απομένει %1$s</string>
-    <string name="label_recorded">Καταγράφηκε</string>
     <string name="label_measured_amount">Μετρημένη ποσότητα (g)</string>
     <string name="action_brew_prepare">Προετοίμασε</string>
     <string name="action_brew_rinse">Ξέπλυνε</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Αυτή η αποθηκευμένη παρασκευή δεν μπορεί να ανοίξει με ασφάλεια. Παρέμεινε χωρίς αλλαγές.</string>
     <string name="msg_brew_session_finished">Η παρασκευή αποθηκεύτηκε.</string>
     <string name="msg_brew_session_finishing">Αποθήκευση παρασκευής…</string>
-    <string name="msg_brew_session_ready">Έτοιμο για έναρξη.</string>
     <string name="msg_brew_session_paused">Η παρασκευή είναι σε παύση.</string>
     <string name="msg_brew_stage_manual">Ολοκληρώστε αυτό το βήμα όταν ολοκληρωθεί η φυσική ενέργεια.</string>
     <string name="msg_brew_stage_observation">Σημειώστε αυτό το βήμα όταν δείτε την αναμενόμενη φυσική αλλαγή.</string>

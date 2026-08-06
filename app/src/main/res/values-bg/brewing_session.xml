@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Приготвяне</string>
-    <string name="label_current_step">Текуща стъпка</string>
     <string name="format_brew_stage_progress">Стъпка %1$d от %2$d</string>
     <string name="label_elapsed">Изминало време</string>
     <string name="label_remaining">Оставащо време</string>
     <string name="format_brew_stage_remaining_time">Остава %1$s</string>
-    <string name="label_recorded">Записано</string>
     <string name="label_measured_amount">Измерено количество (g)</string>
     <string name="action_brew_prepare">Подготви</string>
     <string name="action_brew_rinse">Изплакни</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Тази запазена сесия за приготвяне не може да се отвори безопасно. Оставена е без промяна.</string>
     <string name="msg_brew_session_finished">Приготвянето е запазено.</string>
     <string name="msg_brew_session_finishing">Запазване на приготвянето…</string>
-    <string name="msg_brew_session_ready">Готово за започване.</string>
     <string name="msg_brew_session_paused">Приготвянето е паузирано.</string>
     <string name="msg_brew_stage_manual">Завършете тази стъпка, когато физическото действие е приключило.</string>
     <string name="msg_brew_stage_observation">Отбележете тази стъпка, когато видите очакваната физическа промяна.</string>

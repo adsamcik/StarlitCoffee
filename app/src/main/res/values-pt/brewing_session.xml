@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Preparar</string>
-    <string name="label_current_step">Etapa atual</string>
     <string name="format_brew_stage_progress">Etapa %1$d de %2$d</string>
     <string name="label_elapsed">Decorrido</string>
     <string name="label_remaining">Restante</string>
     <string name="format_brew_stage_remaining_time">Restam %1$s</string>
-    <string name="label_recorded">Registado</string>
     <string name="label_measured_amount">Quantidade medida (g)</string>
     <string name="action_brew_prepare">Preparar</string>
     <string name="action_brew_rinse">Enxaguar</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Esta preparação guardada não pode ser aberta em segurança. Foi deixada inalterada.</string>
     <string name="msg_brew_session_finished">Preparação guardada.</string>
     <string name="msg_brew_session_finishing">A guardar a preparação…</string>
-    <string name="msg_brew_session_ready">Pronta para começar.</string>
     <string name="msg_brew_session_paused">Preparação em pausa.</string>
     <string name="msg_brew_stage_manual">Conclua esta etapa quando a ação física estiver concluída.</string>
     <string name="msg_brew_stage_observation">Marque esta etapa quando vir a alteração física esperada.</string>

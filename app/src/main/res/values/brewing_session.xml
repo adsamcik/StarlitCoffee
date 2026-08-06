@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Brew</string>
-    <string name="label_current_step">Current step</string>
     <string name="format_brew_stage_progress">Step %1$d of %2$d</string>
     <string name="label_elapsed">Elapsed</string>
     <string name="label_remaining">Remaining</string>
     <string name="format_brew_stage_remaining_time">Remaining %1$s</string>
-    <string name="label_recorded">Recorded</string>
     <string name="label_measured_amount">Measured amount (g)</string>
     <string name="action_brew_prepare">Prepare</string>
     <string name="action_brew_rinse">Rinse</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">This saved brew cannot be opened safely. It has been left unchanged.</string>
     <string name="msg_brew_session_finished">Brew saved.</string>
     <string name="msg_brew_session_finishing">Saving your brew…</string>
-    <string name="msg_brew_session_ready">Ready to start.</string>
     <string name="msg_brew_session_paused">Brew paused.</string>
     <string name="msg_brew_stage_manual">Complete this step when the physical action is done.</string>
     <string name="msg_brew_stage_observation">Mark this step when you see the expected physical change.</string>

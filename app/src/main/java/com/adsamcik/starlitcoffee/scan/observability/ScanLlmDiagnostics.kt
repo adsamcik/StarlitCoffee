@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.scan.observability
 
 import android.content.Context
 import androidx.core.content.edit
+import com.adsamcik.starlitcoffee.util.commitSynchronously
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmPassDiagnostic
 import kotlinx.serialization.encodeToString
@@ -50,9 +51,9 @@ object ScanLlmDiagnosticsStore {
 
     fun clear(context: Context): Boolean =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit()
-            .remove(KEY_PASSES)
-            .commit()
+            .commitSynchronously {
+                remove(KEY_PASSES)
+            }
 
     fun getForReport(context: Context, count: Int = 15): String {
         val passes = getAll(context).take(count)

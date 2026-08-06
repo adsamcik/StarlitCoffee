@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Priprema</string>
-    <string name="label_current_step">Trenutačni korak</string>
     <string name="format_brew_stage_progress">Korak %1$d od %2$d</string>
     <string name="label_elapsed">Proteklo</string>
     <string name="label_remaining">Preostalo</string>
     <string name="format_brew_stage_remaining_time">Preostalo %1$s</string>
-    <string name="label_recorded">Zabilježeno</string>
     <string name="label_measured_amount">Izmjerena količina (g)</string>
     <string name="action_brew_prepare">Pripremi</string>
     <string name="action_brew_rinse">Isperi</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Ova spremljena priprema ne može se sigurno otvoriti. Ostavljena je nepromijenjena.</string>
     <string name="msg_brew_session_finished">Priprema je spremljena.</string>
     <string name="msg_brew_session_finishing">Spremanje pripreme…</string>
-    <string name="msg_brew_session_ready">Spremno za početak.</string>
     <string name="msg_brew_session_paused">Priprema je pauzirana.</string>
     <string name="msg_brew_stage_manual">Dovršite ovaj korak kada je fizička radnja obavljena.</string>
     <string name="msg_brew_stage_observation">Označite ovaj korak kada vidite očekivanu fizičku promjenu.</string>

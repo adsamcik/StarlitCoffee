@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Parzenie</string>
-    <string name="label_current_step">Bieżący krok</string>
     <string name="format_brew_stage_progress">Krok %1$d z %2$d</string>
     <string name="label_elapsed">Upłynęło</string>
     <string name="label_remaining">Pozostało</string>
     <string name="format_brew_stage_remaining_time">Pozostało %1$s</string>
-    <string name="label_recorded">Zapisano</string>
     <string name="label_measured_amount">Zmierzona ilość (g)</string>
     <string name="action_brew_prepare">Przygotuj</string>
     <string name="action_brew_rinse">Przepłucz</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Tego zapisanego parzenia nie można bezpiecznie otworzyć. Pozostawiono je bez zmian.</string>
     <string name="msg_brew_session_finished">Parzenie zapisane.</string>
     <string name="msg_brew_session_finishing">Zapisywanie parzenia…</string>
-    <string name="msg_brew_session_ready">Gotowe do rozpoczęcia.</string>
     <string name="msg_brew_session_paused">Parzenie wstrzymane.</string>
     <string name="msg_brew_stage_manual">Zakończ ten krok, gdy fizyczna czynność zostanie wykonana.</string>
     <string name="msg_brew_stage_observation">Oznacz ten krok, gdy zobaczysz oczekiwaną zmianę fizyczną.</string>

@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.util.LruCache
+import androidx.core.graphics.scale
 import androidx.core.net.toUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -138,12 +139,7 @@ object ThumbnailLoader {
                 height = oriented.height,
                 maxLongEdgePx = targetSizePx,
             )
-            val resized = Bitmap.createScaledBitmap(
-                oriented,
-                target.width,
-                target.height,
-                true,
-            )
+            val resized = oriented.scale(target.width, target.height)
             if (resized !== oriented && !oriented.isRecycled) oriented.recycle()
             resized
         } catch (error: OutOfMemoryError) {

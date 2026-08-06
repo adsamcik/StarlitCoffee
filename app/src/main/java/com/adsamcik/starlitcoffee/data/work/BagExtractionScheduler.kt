@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.data.work
 
 import android.content.Context
 import android.util.Log
+import androidx.core.content.edit
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -14,6 +15,7 @@ import com.adsamcik.starlitcoffee.notification.AndroidBagAnalysisNotifier
 import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewUris
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
+import com.adsamcik.starlitcoffee.util.commitSynchronously
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
@@ -212,10 +214,9 @@ object BagExtractionScheduler {
         if (workId != null) {
             cancel(context, workId)
         } else {
-            DeliveryState.preferences(context)
-                .edit()
-                .remove(DeliveryState.sessionGenerationKey(sessionId))
-                .apply()
+            DeliveryState.preferences(context).edit {
+                remove(DeliveryState.sessionGenerationKey(sessionId))
+            }
         }
     }
 
@@ -227,13 +228,13 @@ object BagExtractionScheduler {
                 DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId),
                 false,
             )
-            preferences.edit()
-                .putBoolean(DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId), true)
-                .putBoolean(
+            preferences.commitSynchronously {
+                putBoolean(DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId), true)
+                putBoolean(
                     DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId),
                     delivered,
                 )
-                .commit()
+            }
         }
         enqueueCompletionNotification(context, workId, waitForTerminal = false)
     }
@@ -248,12 +249,11 @@ object BagExtractionScheduler {
 
     fun markCompletionNotificationDelivered(context: Context, workId: String) {
         synchronized(deliveryStateLock) {
-            DeliveryState.preferences(context)
-                .edit()
-                .putBoolean(DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId), true)
-                .putBoolean(DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId), true)
-                .remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
-                .commit()
+            DeliveryState.preferences(context).commitSynchronously {
+                putBoolean(DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId), true)
+                putBoolean(DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId), true)
+                remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
+            }
         }
     }
 
@@ -271,26 +271,24 @@ object BagExtractionScheduler {
         if (claimedAt > 0L && nowMillis - claimedAt < NOTIFICATION_CLAIM_TIMEOUT_MS) {
             return@synchronized false
         }
-        preferences.edit().putLong(claimKey, nowMillis).commit()
+        preferences.commitSynchronously { putLong(claimKey, nowMillis) }
     }
 
     fun releaseCompletionNotificationClaim(context: Context, workId: String) {
         synchronized(deliveryStateLock) {
-            DeliveryState.preferences(context)
-                .edit()
-                .remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
-                .commit()
+            DeliveryState.preferences(context).commitSynchronously {
+                remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
+            }
         }
     }
 
     /** Clears the persisted background-delivery state after its review is opened. */
     fun consumeCompletionNotificationRequest(context: Context, workId: String) {
-        DeliveryState.preferences(context)
-            .edit()
-            .remove(DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId))
-            .remove(DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId))
-            .remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
-            .apply()
+        DeliveryState.preferences(context).edit {
+            remove(DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId))
+            remove(DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId))
+            remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
+        }
         AndroidBagAnalysisNotifier.cancel(context, workId)
         BagExtractionResultStore.delete(context, workId)
         clearAllWorkMetadata(context, workId)
@@ -320,18 +318,16 @@ object BagExtractionScheduler {
 
     fun rememberLatestGeneration(context: Context, sessionId: String, generationId: String) {
         check(
-            DeliveryState.preferences(context)
-                .edit()
-                .putString(DeliveryState.sessionGenerationKey(sessionId), generationId)
-                .commit(),
+            DeliveryState.preferences(context).commitSynchronously {
+                putString(DeliveryState.sessionGenerationKey(sessionId), generationId)
+            },
         ) { "Could not persist latest bag extraction generation" }
     }
 
     fun invalidateSessionGeneration(context: Context, sessionId: String) {
-        DeliveryState.preferences(context)
-            .edit()
-            .remove(DeliveryState.sessionGenerationKey(sessionId))
-            .apply()
+        DeliveryState.preferences(context).edit {
+            remove(DeliveryState.sessionGenerationKey(sessionId))
+        }
     }
 
     fun isLatestGeneration(context: Context, sessionId: String, generationId: String): Boolean =
@@ -400,22 +396,24 @@ object BagExtractionScheduler {
         input: BagExtractionInput,
     ) {
         val preferences = DeliveryState.preferences(context)
-        val editor = preferences.edit()
-            .putBoolean(DeliveryState.pendingEnqueueKey(workId), true)
-            .putString(DeliveryState.inputManifestKey(workId), manifestPath)
-            .putString(DeliveryState.sessionWorkKey(input.sessionId), workId)
-            .putString(DeliveryState.workSessionKey(workId), input.sessionId)
-            .putString(DeliveryState.workGenerationKey(workId), input.generationId)
-            .putBoolean(
-                DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId),
-                input.notifyOnCompletion,
-            )
-            .putBoolean(DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId), false)
-            .remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
-        encodeBagReviewContext(input.reviewContext)?.let { encoded ->
-            editor.putString(DeliveryState.workReviewContextKey(workId), encoded)
-        }
-        check(editor.commit()) { "Could not persist pending bag extraction enqueue" }
+        check(
+            preferences.commitSynchronously {
+                putBoolean(DeliveryState.pendingEnqueueKey(workId), true)
+                putString(DeliveryState.inputManifestKey(workId), manifestPath)
+                putString(DeliveryState.sessionWorkKey(input.sessionId), workId)
+                putString(DeliveryState.workSessionKey(workId), input.sessionId)
+                putString(DeliveryState.workGenerationKey(workId), input.generationId)
+                putBoolean(
+                    DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId),
+                    input.notifyOnCompletion,
+                )
+                putBoolean(DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId), false)
+                remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
+                encodeBagReviewContext(input.reviewContext)?.let { encoded ->
+                    putString(DeliveryState.workReviewContextKey(workId), encoded)
+                }
+            },
+        ) { "Could not persist pending bag extraction enqueue" }
     }
 
     private suspend fun enqueueDurably(
@@ -447,10 +445,10 @@ object BagExtractionScheduler {
             rollbackFailedEnqueue(context, workId, manifestPath, input)
             throw CancellationException("Bag extraction enqueue was superseded before activation")
         }
-        if (!preferences.edit()
-                .remove(DeliveryState.pendingEnqueueKey(workId))
-                .putString(KEY_ACTIVE_WORK_ID, workId)
-                .commit()
+        if (!preferences.commitSynchronously {
+                remove(DeliveryState.pendingEnqueueKey(workId))
+                putString(KEY_ACTIVE_WORK_ID, workId)
+            }
         ) {
             Log.w(TAG, "Durable enqueue succeeded but active state promotion did not commit")
         }
@@ -491,7 +489,7 @@ object BagExtractionScheduler {
         val manifestPath = preferences.getString(manifestKey, null) ?: fallbackPath
         return try {
             BagExtractionInputStore.delete(context, manifestPath)
-            if (!preferences.edit().remove(manifestKey).commit()) {
+            if (!preferences.commitSynchronously { remove(manifestKey) }) {
                 Log.w(TAG, "Could not clear bag extraction input manifest metadata")
                 false
             } else {
@@ -614,10 +612,10 @@ object BagExtractionScheduler {
                 val pendingEnqueue =
                     preferences.getBoolean(DeliveryState.pendingEnqueueKey(workId), false)
                 if (pendingEnqueue) {
-                    preferences.edit()
-                        .remove(DeliveryState.pendingEnqueueKey(workId))
-                        .putString(KEY_ACTIVE_WORK_ID, workId)
-                        .apply()
+                    preferences.edit {
+                        remove(DeliveryState.pendingEnqueueKey(workId))
+                        putString(KEY_ACTIVE_WORK_ID, workId)
+                    }
                 }
             }
             PersistedWorkReconciliationAction.RESCHEDULE -> {
@@ -631,16 +629,16 @@ object BagExtractionScheduler {
                             workId = UUID.fromString(workId),
                         ),
                     )
-                    val editor = preferences.edit()
-                        .remove(DeliveryState.pendingEnqueueKey(workId))
-                    if (activeWorkId(context) == workId ||
-                        preferences.getBoolean(DeliveryState.pendingEnqueueKey(workId), false)
-                    ) {
-                        editor.putString(KEY_ACTIVE_WORK_ID, workId)
-                    }
-                    check(editor.commit()) {
-                        "Could not finalize reconciled bag extraction enqueue"
-                    }
+                    check(
+                        preferences.commitSynchronously {
+                            remove(DeliveryState.pendingEnqueueKey(workId))
+                            if (activeWorkId(context) == workId ||
+                                preferences.getBoolean(DeliveryState.pendingEnqueueKey(workId), false)
+                            ) {
+                                putString(KEY_ACTIVE_WORK_ID, workId)
+                            }
+                        },
+                    ) { "Could not finalize reconciled bag extraction enqueue" }
                 } catch (error: CancellationException) {
                     throw error
                 } catch (error: Exception) {
@@ -749,13 +747,13 @@ object BagExtractionScheduler {
             ?: workId
         val reviewContext = input?.reviewContext ?: reviewContextForWork(context, workId)
         val preferences = DeliveryState.preferences(context)
-        val editor = preferences.edit()
-            .putString(DeliveryState.workSessionKey(workId), sessionId)
-            .putString(DeliveryState.workGenerationKey(workId), generationId)
-        encodeBagReviewContext(reviewContext)?.let { encoded ->
-            editor.putString(DeliveryState.workReviewContextKey(workId), encoded)
+        preferences.edit {
+            putString(DeliveryState.workSessionKey(workId), sessionId)
+            putString(DeliveryState.workGenerationKey(workId), generationId)
+            encodeBagReviewContext(reviewContext)?.let { encoded ->
+                putString(DeliveryState.workReviewContextKey(workId), encoded)
+            }
         }
-        editor.apply()
         val storedResult = BagExtractionResultStore.writeIfAbsent(
             context = context,
             workId = workId,
@@ -939,33 +937,32 @@ object BagExtractionScheduler {
         val preferences = DeliveryState.preferences(context)
         val sessionId = preferences.getString(DeliveryState.workSessionKey(workId), null)
         val workGenerationId = preferences.getString(DeliveryState.workGenerationKey(workId), null)
-        val editor = preferences.edit()
-            .remove(DeliveryState.inputManifestKey(workId))
-            .remove(DeliveryState.pendingEnqueueKey(workId))
-        if (!preserveLatestGeneration) {
-            editor
-                .remove(DeliveryState.workSessionKey(workId))
-                .remove(DeliveryState.workGenerationKey(workId))
-                .remove(DeliveryState.workReviewContextKey(workId))
-                .remove(DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId))
-                .remove(DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId))
-                .remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
-        }
-        if (preferences.getString(KEY_ACTIVE_WORK_ID, null) == workId) {
-            editor.remove(KEY_ACTIVE_WORK_ID)
-        }
-        if (sessionId != null &&
-            preferences.getString(DeliveryState.sessionWorkKey(sessionId), null) == workId
-        ) {
-            editor.remove(DeliveryState.sessionWorkKey(sessionId))
-            if (!preserveLatestGeneration &&
-                preferences.getString(DeliveryState.sessionGenerationKey(sessionId), null) ==
-                workGenerationId
+        preferences.edit {
+            remove(DeliveryState.inputManifestKey(workId))
+            remove(DeliveryState.pendingEnqueueKey(workId))
+            if (!preserveLatestGeneration) {
+                remove(DeliveryState.workSessionKey(workId))
+                remove(DeliveryState.workGenerationKey(workId))
+                remove(DeliveryState.workReviewContextKey(workId))
+                remove(DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId))
+                remove(DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId))
+                remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
+            }
+            if (preferences.getString(KEY_ACTIVE_WORK_ID, null) == workId) {
+                remove(KEY_ACTIVE_WORK_ID)
+            }
+            if (sessionId != null &&
+                preferences.getString(DeliveryState.sessionWorkKey(sessionId), null) == workId
             ) {
-                editor.remove(DeliveryState.sessionGenerationKey(sessionId))
+                remove(DeliveryState.sessionWorkKey(sessionId))
+                if (!preserveLatestGeneration &&
+                    preferences.getString(DeliveryState.sessionGenerationKey(sessionId), null) ==
+                    workGenerationId
+                ) {
+                    remove(DeliveryState.sessionGenerationKey(sessionId))
+                }
             }
         }
-        editor.apply()
     }
 
     private fun clearAllWorkMetadata(context: Context, workId: String) {
@@ -979,40 +976,42 @@ object BagExtractionScheduler {
             .keys
             .map { key -> key.removePrefix("$KEY_SESSION_WORK:") }
             .toSet()
-        val editor = preferences.edit()
-            .remove(DeliveryState.inputManifestKey(workId))
-            .remove(DeliveryState.pendingEnqueueKey(workId))
-            .remove(DeliveryState.workSessionKey(workId))
-            .remove(DeliveryState.workGenerationKey(workId))
-            .remove(DeliveryState.workReviewContextKey(workId))
-            .remove(DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId))
-            .remove(DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId))
-            .remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
-        if (preferences.getString(KEY_ACTIVE_WORK_ID, null) == workId) {
-            editor.remove(KEY_ACTIVE_WORK_ID)
-        }
-        (mappedSessions + listOfNotNull(sessionId)).forEach { mappedSessionId ->
-            if (preferences.getString(DeliveryState.sessionWorkKey(mappedSessionId), null) == workId) {
-                editor.remove(DeliveryState.sessionWorkKey(mappedSessionId))
-                if (generationId == null ||
-                    preferences.getString(DeliveryState.sessionGenerationKey(mappedSessionId), null) ==
-                    generationId
-                ) {
-                    editor.remove(DeliveryState.sessionGenerationKey(mappedSessionId))
+        val cleared = preferences.commitSynchronously {
+            remove(DeliveryState.inputManifestKey(workId))
+            remove(DeliveryState.pendingEnqueueKey(workId))
+            remove(DeliveryState.workSessionKey(workId))
+            remove(DeliveryState.workGenerationKey(workId))
+            remove(DeliveryState.workReviewContextKey(workId))
+            remove(DeliveryState.notificationKey(KEY_NOTIFY_ON_COMPLETE, workId))
+            remove(DeliveryState.notificationKey(KEY_NOTIFICATION_DELIVERED, workId))
+            remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
+            if (preferences.getString(KEY_ACTIVE_WORK_ID, null) == workId) {
+                remove(KEY_ACTIVE_WORK_ID)
+            }
+            (mappedSessions + listOfNotNull(sessionId)).forEach { mappedSessionId ->
+                if (preferences.getString(DeliveryState.sessionWorkKey(mappedSessionId), null) == workId) {
+                    remove(DeliveryState.sessionWorkKey(mappedSessionId))
+                    if (generationId == null ||
+                        preferences.getString(
+                            DeliveryState.sessionGenerationKey(mappedSessionId),
+                            null,
+                        ) == generationId
+                    ) {
+                        remove(DeliveryState.sessionGenerationKey(mappedSessionId))
+                    }
                 }
             }
         }
-        if (!editor.commit()) {
+        if (!cleared) {
             Log.w(TAG, "Could not clear expired extraction metadata for $workId")
         }
         forgetLegacyWorkSession(context, workId)
     }
 
     private fun forgetLegacyWorkSession(context: Context, workId: String) {
-        context.getSharedPreferences(LEGACY_BAG_SCAN_PREFERENCES, Context.MODE_PRIVATE)
-            .edit()
-            .remove("$LEGACY_WORK_SESSION_PREFIX$workId")
-            .apply()
+        context.getSharedPreferences(LEGACY_BAG_SCAN_PREFERENCES, Context.MODE_PRIVATE).edit {
+            remove("$LEGACY_WORK_SESSION_PREFIX$workId")
+        }
     }
 
     private const val DELIVERY_PREFERENCES = "bag_extraction_delivery"

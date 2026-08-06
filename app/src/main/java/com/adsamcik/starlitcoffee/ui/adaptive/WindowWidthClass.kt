@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
+import kotlin.math.roundToInt
 
 /**
  * Coarse window-width buckets used to drive adaptive layouts.
@@ -16,7 +18,7 @@ import androidx.compose.ui.platform.LocalConfiguration
  * tablets, foldables, and desktop mode; these buckets let key screens switch
  * to side-by-side and list-detail arrangements instead of a single column.
  *
- * The class is derived from `screenWidthDp`, which recomposes on rotation and
+ * The class is derived from the current window container, which recomposes on rotation and
  * window resize, so it tracks free-form multi-window resizing live.
  */
 enum class WindowWidthClass {
@@ -51,7 +53,9 @@ val LocalWindowWidthClass = staticCompositionLocalOf { WindowWidthClass.COMPACT 
 /** Computes the live [WindowWidthClass] from the current configuration. */
 @Composable
 fun rememberWindowWidthClass(): WindowWidthClass {
-    val widthDp = LocalConfiguration.current.screenWidthDp
+    val widthPx = LocalWindowInfo.current.containerSize.width
+    val density = LocalDensity.current
+    val widthDp = with(density) { widthPx.toDp().value.roundToInt() }
     return remember(widthDp) { windowWidthClassFor(widthDp) }
 }
 

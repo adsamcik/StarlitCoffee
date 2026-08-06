@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Zetten</string>
-    <string name="label_current_step">Huidige stap</string>
     <string name="format_brew_stage_progress">Stap %1$d van %2$d</string>
     <string name="label_elapsed">Verstreken</string>
     <string name="label_remaining">Resterend</string>
     <string name="format_brew_stage_remaining_time">%1$s resterend</string>
-    <string name="label_recorded">Vastgelegd</string>
     <string name="label_measured_amount">Gemeten hoeveelheid (g)</string>
     <string name="action_brew_prepare">Voorbereiden</string>
     <string name="action_brew_rinse">Spoelen</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Deze opgeslagen zetbeurt kan niet veilig worden geopend. Deze is ongewijzigd gelaten.</string>
     <string name="msg_brew_session_finished">Zetbeurt opgeslagen.</string>
     <string name="msg_brew_session_finishing">Zetbeurt opslaan…</string>
-    <string name="msg_brew_session_ready">Klaar om te starten.</string>
     <string name="msg_brew_session_paused">Zetbeurt gepauzeerd.</string>
     <string name="msg_brew_stage_manual">Voltooi deze stap wanneer de fysieke handeling klaar is.</string>
     <string name="msg_brew_stage_observation">Markeer deze stap wanneer u de verwachte fysieke verandering ziet.</string>

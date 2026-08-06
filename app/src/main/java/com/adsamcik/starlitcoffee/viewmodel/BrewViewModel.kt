@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.content.edit
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -442,7 +443,6 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             BagReviewQueue.preferences(app)
                 .unregisterOnSharedPreferenceChangeListener(bagReviewQueueListener)
         }
-        super.onCleared()
     }
 
     private fun CoffeeBagEntity.toPhotoOwnership(): BagPhotoOwnership =
@@ -2193,9 +2193,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private fun markBagExtractionWorkConsumed(workId: String) {
         application
             ?.getSharedPreferences(BAG_SCAN_PREFS, Context.MODE_PRIVATE)
-            ?.edit()
-            ?.putString(KEY_LAST_CONSUMED_WORK_ID, workId)
-            ?.apply()
+            ?.edit { putString(KEY_LAST_CONSUMED_WORK_ID, workId) }
     }
 
     private fun markBagExtractionReviewAccepted(workId: String) {
@@ -2479,9 +2477,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private fun rememberBagExtractionSession(workId: String, sessionId: String) {
         application
             ?.getSharedPreferences(BAG_SCAN_PREFS, Context.MODE_PRIVATE)
-            ?.edit()
-            ?.putString("$KEY_WORK_SESSION_PREFIX$workId", sessionId)
-            ?.apply()
+            ?.edit { putString("$KEY_WORK_SESSION_PREFIX$workId", sessionId) }
     }
 
     private fun bagExtractionSessionId(workId: String): String? =
@@ -2494,9 +2490,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private fun forgetBagExtractionSession(workId: String) {
         application
             ?.getSharedPreferences(BAG_SCAN_PREFS, Context.MODE_PRIVATE)
-            ?.edit()
-            ?.remove("$KEY_WORK_SESSION_PREFIX$workId")
-            ?.apply()
+            ?.edit { remove("$KEY_WORK_SESSION_PREFIX$workId") }
     }
 
     private fun bagExtractionGenerationId(workId: String, workInfo: WorkInfo?): String =

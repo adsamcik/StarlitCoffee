@@ -160,7 +160,6 @@
     <string name="format_edit_preset">%1$s szerkesztése</string>
     <string name="label_bloom_animation_settings">Bloom animációk</string>
     <string name="msg_bloom_animation_settings_subtitle">Válassza ki, milyen gyakran jelenjen meg az egyes bloom animációk</string>
-    <string name="cd_open_bloom_animation_settings">Bloom animációs beállítások megnyitása</string>
     <string name="screen_bloom_animation_settings_title">Bloom animációk</string>
     <string name="msg_bloom_animation_settings_hint">Koppintson az egyes vezérlőkre a normál esély, dupla esély és kizárva állapotok közötti váltáshoz. Ha minden animáció ki van zárva, a bloom-időzítők elrejtik az animációt.</string>
     <string name="label_bloom_weight_1x">1×</string>
@@ -282,10 +281,6 @@
     <string name="notif_rating_title">Milyen lett a kávéja?</string>
     <string name="format_notif_rating_title">Milyen lett a(z) %1$s kávéja?</string>
     <string name="notif_rating_body">Koppintson egy emojira az értékeléshez, vagy nyissa meg az alkalmazást a továbbiakért.</string>
-    <string name="notif_rating_emoji_1">☹️</string>
-    <string name="notif_rating_emoji_2">😐</string>
-    <string name="notif_rating_emoji_3">😀</string>
-    <string name="notif_rating_emoji_4">😋</string>
     <string name="cd_notif_rating_1">Értékelés: rossz</string>
     <string name="cd_notif_rating_2">Értékelés: közepes</string>
     <string name="cd_notif_rating_3">Értékelés: jó</string>
@@ -451,18 +446,12 @@
     <string name="label_brew_history">Főzési előzmények</string>
 
     <!-- BrewRatingSheet -->
-    <string name="label_how_was_it">Milyen lett?</string>
-    <string name="msg_rate_brew_fresh">Értékelje ezt a főzést, amíg az íz még friss.</string>
-    <string name="label_flavor_notes_section">Ízjegyek</string>
-    <string name="hint_what_stood_out">Nem kötelező jegyzet – mi volt kiemelkedő?</string>
-    <string name="action_save_rating">Értékelés mentése</string>
 
     <!-- EmptyStateBox -->
     <!-- FavoritesRow -->
     <string name="label_your_favorites_section">Kedvencek</string>
 
     <!-- FieldChipPicker -->
-    <string name="label_other">Egyéb</string>
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">MI-szolgáltatás (Mindlayer)</string>
@@ -521,12 +510,9 @@
     <!-- BagInventoryScreen -->
     <string name="action_from_photo">Fotóról</string>
     <string name="action_scan_label">Címke beolvasása</string>
-    <string name="action_add_bag_gallery">Galériából</string>
-    <string name="action_add_bag_camera">Beolvasás kamerával</string>
     <string name="action_add_bag_barcode">Vonalkód beolvasása</string>
     <string name="action_add_bag_manual">Kézi hozzáadás</string>
     <string name="msg_no_beans_yet">Még nincs kávé</string>
-    <string name="msg_add_coffee_hint">Adja hozzá a kávéját a frissesség követéséhez és a főzési javaslatokhoz</string>
     <string name="action_brew_now">Főzés most</string>
     <string name="msg_could_not_read_label">A címkét nem sikerült beolvasni</string>
     <string name="action_retake_photo">Fotó újrakészítése</string>
@@ -548,16 +534,6 @@
     <string name="action_keep_scanning">Beolvasás folytatása</string>
     <string name="msg_camera_permission_required">Kameraengedély szükséges</string>
     <string name="screen_scan_bag_title">Kávézacskó beolvasása</string>
-    <string name="cd_toggle_debug_overlay">Hibakeresési réteg be- és kikapcsolása</string>
-    <string name="msg_both_sides_scanned">A zacskó mindkét oldalát beolvastuk</string>
-    <string name="msg_scanning_front_side">A zacskó elülső oldalának beolvasása</string>
-    <string name="action_quick_save">Gyors mentés</string>
-    <string name="msg_repackaged_product">Ez lehet újracsomagolt vagy importált termék</string>
-    <string name="action_use_barcode">Vonalkód használata</string>
-    <string name="action_use_label">Címke használata</string>
-    <string name="label_confirmed">Megerősítve</string>
-    <string name="label_ai_contributed">MI közreműködött</string>
-    <string name="cd_manual_capture">Kézi rögzítés — az aktuális képkocka azonnali feldolgozása</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Szinkronizálás a zacskóval</string>
@@ -578,13 +554,11 @@
     <string name="msg_dim_mode_fullscreen_hint">Halványításkor az állapotsávot és a navigációs sávot is elrejti. Húzzon be a szélről a rápillantáshoz; a képernyő bármely koppintása visszaébreszti a normál állapotba.</string>
     <string name="label_dim_mode_force_dark_in_light">Sötét stílus használata halványításkor</string>
     <string name="msg_dim_mode_force_dark_in_light_hint">A sötét témájú halványított megjelenítésre vált akkor is, ha a rendszer világos módban van. Természetesen párosul a Valódi fekete háttérrel egy mindig sötét halványításhoz.</string>
-    <string name="action_add_cup_preset">Csésze-előbeállítás hozzáadása</string>
     <string name="label_volume_ml">Térfogat (ml)</string>
     <string name="msg_dose_from_ratio">A kávéadag az arányból számítódik ki</string>
     <string name="label_icon">Ikon</string>
     <string name="label_color">Szín</string>
     <string name="action_add">Hozzáadás</string>
-    <string name="dialog_edit_cup_preset_title">Csésze-előbeállítás szerkesztése</string>
     <string name="screen_add_cup_preset_title">Csésze-előbeállítás hozzáadása</string>
     <string name="screen_edit_cup_preset_title">Csésze-előbeállítás szerkesztése</string>
     <string name="msg_cup_preset_name_required">A folytatáshoz adjon meg egy nevet</string>
@@ -728,36 +702,12 @@
     <string name="msg_brewer_profile_choose_hint">Start with the brewer in front of you. Its defaults stay visible before a session begins.</string>
     <string name="label_brewer_profile_starting">Starting…</string>
     <string name="msg_brewer_profile_empty">No supported brewer profiles are available yet.</string>
-    <string name="heading_brewer_profile_starting_defaults">Starting defaults</string>
     <string name="label_brewer_profile_input_water">Water input</string>
     <string name="label_brewer_profile_input_reservoir_water">Reservoir water</string>
-    <string name="msg_brewer_profile_input_water">Water added to the brewer</string>
     <string name="msg_brewer_profile_input_reservoir_water">Water added to the machine reservoir</string>
-    <string name="label_brewer_profile_expected_result">Expected result</string>
-    <string name="label_brewer_profile_output_estimated_beverage_yield">Estimated beverage yield</string>
-    <string name="label_brewer_profile_output_collected_concentrate">Collected concentrate</string>
-    <string name="label_brewer_profile_output_prepared_unfiltered_volume">Prepared unfiltered coffee</string>
-    <string name="msg_brewer_profile_serving_separate">Serving is a separate choice after extraction.</string>
-    <string name="heading_brewer_profile_equipment_check">Equipment check</string>
-    <string name="msg_brewer_profile_capacity_needs_confirmation">Capacity is not preset. Check your brewer’s marked capacity before using these amounts.</string>
-    <string name="format_brewer_profile_capacity_range">Capacity: %1$s to %2$s</string>
-    <string name="format_brewer_profile_capacity_up_to">Capacity: up to %1$s</string>
-    <string name="format_brewer_profile_capacity_from">Capacity: from %1$s</string>
-    <string name="msg_brewer_profile_capacity_configured">Capacity is configured for this brewer.</string>
-    <string name="msg_brewer_profile_filter_compatible">Use a filter compatible with this brewer.</string>
-    <string name="msg_brewer_profile_filter_unfiltered">This profile is intentionally unfiltered.</string>
-    <string name="msg_brewer_profile_filter_confirm">Confirm the required filter before starting.</string>
-    <string name="heading_brewer_profile_hario_switch_style">Hario Switch brew style</string>
-    <string name="msg_brewer_profile_hario_switch_style_hint">Choose the valve behaviour for this brew. Steep and release is the default.</string>
-    <string name="label_brewer_profile_hario_switch_steep_release">Steep &amp; release</string>
-    <string name="label_brewer_profile_hario_switch_manual_gravity">Manual gravity</string>
-    <string name="msg_brewer_profile_temperature_machine_controlled">Managed by the heat source or machine</string>
-    <string name="msg_brewer_profile_brew_time_observed">Finish by observation</string>
-    <string name="msg_brewer_profile_brew_time_machine_controlled">Machine-controlled cycle</string>
     <string name="format_brewer_profile_mass">%1$s %2$s</string>
     <string name="label_brewer_profile_clever_style">Clever-style brewer</string>
     <string name="label_brewer_profile_hario_switch">Hario Switch</string>
-    <string name="label_brewer_profile_valve_release_generic">Generic valve-release brewer</string>
     <string name="label_brewer_profile_cezve_generic">Cezve / ibrik</string>
     <string name="label_brewer_profile_automatic_batch_generic">Automatic batch brewer</string>
     <string name="label_brewer_profile_automatic_single_cup_generic">Podless single-cup brewer</string>
@@ -775,8 +725,6 @@
     <string name="guidance_level_focused">Focused</string>
     <string name="guidance_level_utilities">Utilities</string>
     <string name="msg_brew_guidance_unavailable">Guidance is not available for this brew yet.</string>
-    <string name="msg_brew_guidance_asset_pending">The visual guide for this step is still being prepared.</string>
-    <string name="msg_brew_guidance_asset_unavailable">The visual guide for this step is unavailable.</string>
 
 
 
@@ -790,13 +738,9 @@
     <string name="label_brewer_profile_capacity_grams">Capacity (g)</string>
     <string name="msg_brewer_profile_capacity_required">Enter a positive capacity in grams to continue.</string>
     <string name="heading_brewer_profile_cezve_choices">Cezve choices</string>
-    <string name="msg_brewer_profile_cezve_choices_hint">Choose whether to add sugar and how many times to let the foam rise.</string>
     <string name="label_brewer_profile_cezve_sugar">Optional sugar</string>
     <string name="label_brewer_profile_cezve_without_sugar">No sugar</string>
     <string name="label_brewer_profile_cezve_with_sugar">Add sugar</string>
-    <string name="label_brewer_profile_cezve_foam_rises">Foam rises</string>
-    <string name="label_brewer_profile_cezve_one_foam_rise">1 rise</string>
-    <string name="label_brewer_profile_cezve_two_foam_rises">2 rises</string>
     <string name="heading_brewer_profile_cezve_heat_source">Heat source</string>
     <string name="msg_brewer_profile_cezve_heat_source_hint">Select the actual heat source. It remains part of this brew’s safety record.</string>
     <string name="label_brewer_profile_cezve_heat_hob">Hob</string>

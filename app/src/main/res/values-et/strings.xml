@@ -160,7 +160,6 @@
     <string name="format_edit_preset">Muuda %1$s</string>
     <string name="label_bloom_animation_settings">Bloomi animatsioonid</string>
     <string name="msg_bloom_animation_settings_subtitle">Vali, kui sageli iga bloomisprait ilmub</string>
-    <string name="cd_open_bloom_animation_settings">Ava bloomi animatsioonide seaded</string>
     <string name="screen_bloom_animation_settings_title">Bloomi animatsioonid</string>
     <string name="msg_bloom_animation_settings_hint">Puuduta iga juhtelementi, et vahetada tavalise tõenäosuse, kahekordse tõenäosuse ja välistatud oleku vahel. Kui kõik spraidid on välistatud, peidavad bloomitaimerid animatsiooni.</string>
     <string name="label_bloom_weight_1x">1×</string>
@@ -282,10 +281,6 @@
     <string name="notif_rating_title">Kuidas su kohv oli?</string>
     <string name="format_notif_rating_title">Kuidas su %1$s kohv oli?</string>
     <string name="notif_rating_body">Puuduta emojit, et hinnata, või ava rohkema jaoks rakendus.</string>
-    <string name="notif_rating_emoji_1">☹️</string>
-    <string name="notif_rating_emoji_2">😐</string>
-    <string name="notif_rating_emoji_3">😀</string>
-    <string name="notif_rating_emoji_4">😋</string>
     <string name="cd_notif_rating_1">Hinda halvaks</string>
     <string name="cd_notif_rating_2">Hinda keskmiseks</string>
     <string name="cd_notif_rating_3">Hinda heaks</string>
@@ -451,18 +446,12 @@
     <string name="label_brew_history">Valmistuse ajalugu</string>
 
     <!-- BrewRatingSheet -->
-    <string name="label_how_was_it">Kuidas oli?</string>
-    <string name="msg_rate_brew_fresh">Hinda seda valmistust, kuni maitse on veel värske.</string>
-    <string name="label_flavor_notes_section">Maitsenoodid</string>
-    <string name="hint_what_stood_out">Valikuline märkus – mis paistis silma?</string>
-    <string name="action_save_rating">Salvesta hinnang</string>
 
     <!-- EmptyStateBox -->
 <!-- FavoritesRow -->
     <string name="label_your_favorites_section">Sinu lemmikud</string>
 
     <!-- FieldChipPicker -->
-    <string name="label_other">Muu</string>
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI-teenus (Mindlayer)</string>
@@ -521,12 +510,9 @@
     <!-- BagInventoryScreen -->
     <string name="action_from_photo">Fotolt</string>
     <string name="action_scan_label">Skanni etikett</string>
-    <string name="action_add_bag_gallery">Galeriist</string>
-    <string name="action_add_bag_camera">Skanni kaameraga</string>
     <string name="action_add_bag_barcode">Skanni vöötkood</string>
     <string name="action_add_bag_manual">Lisa käsitsi</string>
     <string name="msg_no_beans_yet">Ube veel pole</string>
-    <string name="msg_add_coffee_hint">Lisa oma kohv, et jälgida värskust ja saada valmistussoovitusi</string>
     <string name="action_brew_now">Valmista kohe</string>
     <string name="msg_could_not_read_label">Etiketti ei õnnestunud lugeda</string>
     <string name="action_retake_photo">Tee foto uuesti</string>
@@ -548,16 +534,6 @@
     <string name="action_keep_scanning">Jätka skannimist</string>
     <string name="msg_camera_permission_required">Vajalik on kaamera luba</string>
     <string name="screen_scan_bag_title">Skanni kohvipakk</string>
-    <string name="cd_toggle_debug_overlay">Lülita silumiskate</string>
-    <string name="msg_both_sides_scanned">Paki mõlemad küljed on skannitud</string>
-    <string name="msg_scanning_front_side">Paki esikülje skannimine</string>
-<string name="action_quick_save">Kiirsalvestus</string>
-    <string name="msg_repackaged_product">See võib olla ümberpakendatud või imporditud toode</string>
-    <string name="action_use_barcode">Kasuta vöötkoodi</string>
-    <string name="action_use_label">Kasuta etiketti</string>
-<string name="label_confirmed">Kinnitatud</string>
-    <string name="label_ai_contributed">AI panustas</string>
-    <string name="cd_manual_capture">Käsitsi jäädvustus — töötle praegust kaadrit kohe</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Sünkrooni pakiga</string>
@@ -578,13 +554,11 @@
     <string name="msg_dim_mode_fullscreen_hint">Peidab tuhmimisel ka olekuriba ja navigeerimisriba. Vaatamiseks pühi servast; iga puudutus ekraanil äratab tavaseisu tagasi.</string>
     <string name="label_dim_mode_force_dark_in_light">Kasuta tuhmimisel tumedat stiili</string>
     <string name="msg_dim_mode_force_dark_in_light_hint">Lülitub tumeda teema tuhmesitusele ka siis, kui süsteem on heledas režiimis. Sobib loomulikult „Tõeliselt musta taustaga“, et tuhmimine oleks alati tume.</string>
-    <string name="action_add_cup_preset">Lisa tassi eelseade</string>
     <string name="label_volume_ml">Maht (ml)</string>
     <string name="msg_dose_from_ratio">Kohvikogus arvutatakse sinu suhte põhjal</string>
     <string name="label_icon">Ikoon</string>
     <string name="label_color">Värv</string>
     <string name="action_add">Lisa</string>
-    <string name="dialog_edit_cup_preset_title">Muuda tassi eelseadet</string>
     <string name="screen_add_cup_preset_title">Lisa tassi eelseade</string>
     <string name="screen_edit_cup_preset_title">Muuda tassi eelseadet</string>
     <string name="msg_cup_preset_name_required">Jätkamiseks lisa nimi</string>
@@ -728,36 +702,12 @@
     <string name="msg_brewer_profile_choose_hint">Start with the brewer in front of you. Its defaults stay visible before a session begins.</string>
     <string name="label_brewer_profile_starting">Starting…</string>
     <string name="msg_brewer_profile_empty">No supported brewer profiles are available yet.</string>
-    <string name="heading_brewer_profile_starting_defaults">Starting defaults</string>
     <string name="label_brewer_profile_input_water">Water input</string>
     <string name="label_brewer_profile_input_reservoir_water">Reservoir water</string>
-    <string name="msg_brewer_profile_input_water">Water added to the brewer</string>
     <string name="msg_brewer_profile_input_reservoir_water">Water added to the machine reservoir</string>
-    <string name="label_brewer_profile_expected_result">Expected result</string>
-    <string name="label_brewer_profile_output_estimated_beverage_yield">Estimated beverage yield</string>
-    <string name="label_brewer_profile_output_collected_concentrate">Collected concentrate</string>
-    <string name="label_brewer_profile_output_prepared_unfiltered_volume">Prepared unfiltered coffee</string>
-    <string name="msg_brewer_profile_serving_separate">Serving is a separate choice after extraction.</string>
-    <string name="heading_brewer_profile_equipment_check">Equipment check</string>
-    <string name="msg_brewer_profile_capacity_needs_confirmation">Capacity is not preset. Check your brewer’s marked capacity before using these amounts.</string>
-    <string name="format_brewer_profile_capacity_range">Capacity: %1$s to %2$s</string>
-    <string name="format_brewer_profile_capacity_up_to">Capacity: up to %1$s</string>
-    <string name="format_brewer_profile_capacity_from">Capacity: from %1$s</string>
-    <string name="msg_brewer_profile_capacity_configured">Capacity is configured for this brewer.</string>
-    <string name="msg_brewer_profile_filter_compatible">Use a filter compatible with this brewer.</string>
-    <string name="msg_brewer_profile_filter_unfiltered">This profile is intentionally unfiltered.</string>
-    <string name="msg_brewer_profile_filter_confirm">Confirm the required filter before starting.</string>
-    <string name="heading_brewer_profile_hario_switch_style">Hario Switch brew style</string>
-    <string name="msg_brewer_profile_hario_switch_style_hint">Choose the valve behaviour for this brew. Steep and release is the default.</string>
-    <string name="label_brewer_profile_hario_switch_steep_release">Steep &amp; release</string>
-    <string name="label_brewer_profile_hario_switch_manual_gravity">Manual gravity</string>
-    <string name="msg_brewer_profile_temperature_machine_controlled">Managed by the heat source or machine</string>
-    <string name="msg_brewer_profile_brew_time_observed">Finish by observation</string>
-    <string name="msg_brewer_profile_brew_time_machine_controlled">Machine-controlled cycle</string>
     <string name="format_brewer_profile_mass">%1$s %2$s</string>
     <string name="label_brewer_profile_clever_style">Clever-style brewer</string>
     <string name="label_brewer_profile_hario_switch">Hario Switch</string>
-    <string name="label_brewer_profile_valve_release_generic">Generic valve-release brewer</string>
     <string name="label_brewer_profile_cezve_generic">Cezve / ibrik</string>
     <string name="label_brewer_profile_automatic_batch_generic">Automatic batch brewer</string>
     <string name="label_brewer_profile_automatic_single_cup_generic">Podless single-cup brewer</string>
@@ -775,8 +725,6 @@
     <string name="guidance_level_focused">Focused</string>
     <string name="guidance_level_utilities">Utilities</string>
     <string name="msg_brew_guidance_unavailable">Guidance is not available for this brew yet.</string>
-    <string name="msg_brew_guidance_asset_pending">The visual guide for this step is still being prepared.</string>
-    <string name="msg_brew_guidance_asset_unavailable">The visual guide for this step is unavailable.</string>
 
 
 
@@ -790,13 +738,9 @@
     <string name="label_brewer_profile_capacity_grams">Capacity (g)</string>
     <string name="msg_brewer_profile_capacity_required">Enter a positive capacity in grams to continue.</string>
     <string name="heading_brewer_profile_cezve_choices">Cezve choices</string>
-    <string name="msg_brewer_profile_cezve_choices_hint">Choose whether to add sugar and how many times to let the foam rise.</string>
     <string name="label_brewer_profile_cezve_sugar">Optional sugar</string>
     <string name="label_brewer_profile_cezve_without_sugar">No sugar</string>
     <string name="label_brewer_profile_cezve_with_sugar">Add sugar</string>
-    <string name="label_brewer_profile_cezve_foam_rises">Foam rises</string>
-    <string name="label_brewer_profile_cezve_one_foam_rise">1 rise</string>
-    <string name="label_brewer_profile_cezve_two_foam_rises">2 rises</string>
     <string name="heading_brewer_profile_cezve_heat_source">Heat source</string>
     <string name="msg_brewer_profile_cezve_heat_source_hint">Select the actual heat source. It remains part of this brew’s safety record.</string>
     <string name="label_brewer_profile_cezve_heat_hob">Hob</string>

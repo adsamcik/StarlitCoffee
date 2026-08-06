@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.data.network.ocr
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.util.Log
+import androidx.core.graphics.scale
 import kotlin.math.max
 import kotlin.math.min
 
@@ -186,7 +187,7 @@ class HierarchicalOcrService(
         var scaledCrop: Bitmap? = null
         var returningBaseCrop = false
         return try {
-            Bitmap.createScaledBitmap(baseCrop, newW, newH, /* filter = */ true).also {
+            baseCrop.scale(newW, newH).also {
                 scaledCrop = it
             }
         } catch (_: IllegalArgumentException) {

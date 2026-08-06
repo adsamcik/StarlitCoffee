@@ -40,6 +40,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -139,7 +140,7 @@ fun BrewSessionScreen(
 ) {
     val entity by sessionFlow.collectAsStateWithLifecycle(initialValue = null)
     val lifecycleOwner = LocalLifecycleOwner.current
-    var nowWallClockMillis by remember(sessionId) { mutableStateOf(System.currentTimeMillis()) }
+    var nowWallClockMillis by remember(sessionId) { mutableLongStateOf(System.currentTimeMillis()) }
     var dispatching by remember(sessionId) { mutableStateOf(false) }
     var showCancelDialog by remember(sessionId) { mutableStateOf(false) }
     var sessionGuidanceOverride by remember(sessionId) { mutableStateOf<GuidancePresentationLevel?>(null) }

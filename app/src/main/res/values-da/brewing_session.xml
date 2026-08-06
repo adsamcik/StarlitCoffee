@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Bryg</string>
-    <string name="label_current_step">Aktuelt trin</string>
     <string name="format_brew_stage_progress">Trin %1$d af %2$d</string>
     <string name="label_elapsed">Forløbet tid</string>
     <string name="label_remaining">Resterende</string>
     <string name="format_brew_stage_remaining_time">%1$s tilbage</string>
-    <string name="label_recorded">Registreret</string>
     <string name="label_measured_amount">Målt mængde (g)</string>
     <string name="action_brew_prepare">Forbered</string>
     <string name="action_brew_rinse">Skyl</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Denne gemte brygning kan ikke åbnes sikkert. Den er ikke blevet ændret.</string>
     <string name="msg_brew_session_finished">Brygning gemt.</string>
     <string name="msg_brew_session_finishing">Gemmer brygning…</string>
-    <string name="msg_brew_session_ready">Klar til at starte.</string>
     <string name="msg_brew_session_paused">Brygning sat på pause.</string>
     <string name="msg_brew_stage_manual">Fuldfør dette trin, når den fysiske handling er udført.</string>
     <string name="msg_brew_stage_observation">Markér dette trin, når du ser den forventede fysiske ændring.</string>

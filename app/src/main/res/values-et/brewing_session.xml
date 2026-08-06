@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Valmista</string>
-    <string name="label_current_step">Praegune samm</string>
     <string name="format_brew_stage_progress">Samm %1$d / %2$d</string>
     <string name="label_elapsed">Kulunud aeg</string>
     <string name="label_remaining">Jäänud</string>
     <string name="format_brew_stage_remaining_time">Jäänud %1$s</string>
-    <string name="label_recorded">Salvestatud</string>
     <string name="label_measured_amount">Mõõdetud kogus (g)</string>
     <string name="action_brew_prepare">Valmista</string>
     <string name="action_brew_rinse">Loputa</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Seda salvestatud valmistamist ei saa turvaliselt avada. See jäeti muutmata.</string>
     <string name="msg_brew_session_finished">Valmistamine salvestatud.</string>
     <string name="msg_brew_session_finishing">Valmistamise salvestamine…</string>
-    <string name="msg_brew_session_ready">Valmis alustamiseks.</string>
     <string name="msg_brew_session_paused">Valmistamine on peatatud.</string>
     <string name="msg_brew_stage_manual">Lõpeta see samm, kui füüsiline toiming on tehtud.</string>
     <string name="msg_brew_stage_observation">Märgi see samm, kui näed oodatud füüsilist muutust.</string>

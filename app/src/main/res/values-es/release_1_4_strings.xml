@@ -55,7 +55,7 @@
     <string name="notif_brew_bloom_complete_body">Continúe vertiendo cuando esté listo.</string>
     <string name="notif_brew_target_reached_title">Se alcanzó el tiempo de preparación objetivo</string>
     <string name="format_notif_brew_target_reached_body">Se alcanzó el objetivo %1$s de su receta. Toque para comprobar la preparación.</string>
-    <string name="action_add_coffee">agregar cafe</string>
+    <string name="action_add_coffee">agregar café</string>
     <string name="action_read_bag_photos">Leer fotos de bolsos</string>
     <string name="action_scan_bag_ai">Escanear bolsa · La IA llena los detalles</string>
     <string name="action_scan_first_bag">Escanea mi primer bolso</string>

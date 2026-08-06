@@ -109,8 +109,8 @@ extensions.configure<ApplicationExtension>("android") {
 
     lint {
         abortOnError = true
-        baseline = file("lint-baseline.xml")
         checkReleaseBuilds = true
+        lintConfig = file("lint.xml")
         warningsAsErrors = true
     }
 }

@@ -160,7 +160,6 @@
     <string name="format_edit_preset">Редактирайте %1$s</string>
     <string name="label_bloom_animation_settings">Анимации на блум</string>
     <string name="msg_bloom_animation_settings_subtitle">Изберете колко често да се появява всеки блум спрайт</string>
-    <string name="cd_open_bloom_animation_settings">Отворете настройките за анимации на блум</string>
     <string name="screen_bloom_animation_settings_title">Анимации на блум</string>
     <string name="msg_bloom_animation_settings_hint">Докоснете всяка контрола, за да превключвате между нормален шанс, двоен шанс и изключено. Ако всички спрайтове са изключени, таймерите за блум скриват анимацията.</string>
     <string name="label_bloom_weight_1x">1×</string>
@@ -282,10 +281,6 @@
     <string name="notif_rating_title">Как беше Вашето кафе?</string>
     <string name="format_notif_rating_title">Как беше Вашето приготвяне с %1$s?</string>
     <string name="notif_rating_body">Докоснете емоджи, за да го оцените, или отворете приложението за още.</string>
-    <string name="notif_rating_emoji_1">☹️</string>
-    <string name="notif_rating_emoji_2">😐</string>
-    <string name="notif_rating_emoji_3">😀</string>
-    <string name="notif_rating_emoji_4">😋</string>
     <string name="cd_notif_rating_1">Оценете като лошо</string>
     <string name="cd_notif_rating_2">Оценете като така-така</string>
     <string name="cd_notif_rating_3">Оценете като добро</string>
@@ -451,18 +446,12 @@
     <string name="label_brew_history">История на приготвянията</string>
 
     <!-- BrewRatingSheet -->
-    <string name="label_how_was_it">Как беше?</string>
-    <string name="msg_rate_brew_fresh">Оценете това приготвяне, докато вкусът още е свеж.</string>
-    <string name="label_flavor_notes_section">Вкусови нотки</string>
-    <string name="hint_what_stood_out">Бележка по избор - какво изпъкна?</string>
-    <string name="action_save_rating">Запазете оценката</string>
 
     <!-- EmptyStateBox -->
 <!-- FavoritesRow -->
     <string name="label_your_favorites_section">Вашите любими</string>
 
     <!-- FieldChipPicker -->
-    <string name="label_other">Друго</string>
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">ИИ услуга (Mindlayer)</string>
@@ -521,12 +510,9 @@
     <!-- BagInventoryScreen -->
     <string name="action_from_photo">От снимка</string>
     <string name="action_scan_label">Сканирайте етикет</string>
-    <string name="action_add_bag_gallery">От галерия</string>
-    <string name="action_add_bag_camera">Сканирайте с камера</string>
     <string name="action_add_bag_barcode">Сканирайте баркод</string>
     <string name="action_add_bag_manual">Добавете ръчно</string>
     <string name="msg_no_beans_yet">Все още няма зърна</string>
-    <string name="msg_add_coffee_hint">Добавете кафето си, за да следите свежестта и да получавате предложения за приготвяне</string>
     <string name="action_brew_now">Пригответе сега</string>
     <string name="msg_could_not_read_label">Етикетът не можа да бъде разчетен</string>
     <string name="action_retake_photo">Заснемете отново</string>
@@ -548,16 +534,6 @@
     <string name="action_keep_scanning">Продължете сканирането</string>
     <string name="msg_camera_permission_required">Необходимо е разрешение за камерата</string>
     <string name="screen_scan_bag_title">Сканирайте пакет кафе</string>
-    <string name="cd_toggle_debug_overlay">Превключете диагностичния слой</string>
-    <string name="msg_both_sides_scanned">Двете страни на пакета са сканирани</string>
-    <string name="msg_scanning_front_side">Сканиране на предната страна на пакета</string>
-<string name="action_quick_save">Бързо запазване</string>
-    <string name="msg_repackaged_product">Това може да е препакетиран или внесен продукт</string>
-    <string name="action_use_barcode">Използвайте баркода</string>
-    <string name="action_use_label">Използвайте етикета</string>
-<string name="label_confirmed">Потвърдено</string>
-    <string name="label_ai_contributed">ИИ допринесе</string>
-    <string name="cd_manual_capture">Ръчно заснемане — принудителна обработка на текущия кадър</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Синхронизирайте с пакета</string>
@@ -578,13 +554,11 @@
     <string name="msg_dim_mode_fullscreen_hint">Скрива и статус лентата, и навигационната лента при затъмняване. Плъзнете от ръб, за да ги покажете за кратко; всяко докосване на екрана връща нормалния режим.</string>
     <string name="label_dim_mode_force_dark_in_light">Използване на тъмен стил при затъмняване</string>
     <string name="msg_dim_mode_force_dark_in_light_hint">Превключва към тъмното представяне за затъмняване дори когато системата е в светъл режим. Съчетава се естествено с Истински черен фон за винаги тъмно затъмняване.</string>
-    <string name="action_add_cup_preset">Добавете предварителна чаша</string>
     <string name="label_volume_ml">Обем (ml)</string>
     <string name="msg_dose_from_ratio">Дозата кафе се изчислява от Вашето съотношение</string>
     <string name="label_icon">Икона</string>
     <string name="label_color">Цвят</string>
     <string name="action_add">Добавете</string>
-    <string name="dialog_edit_cup_preset_title">Редактирайте предварителна чаша</string>
     <string name="screen_add_cup_preset_title">Добавете предварителна чаша</string>
     <string name="screen_edit_cup_preset_title">Редактирайте предварителна чаша</string>
     <string name="msg_cup_preset_name_required">Добавете име, за да продължите</string>
@@ -728,36 +702,12 @@
     <string name="msg_brewer_profile_choose_hint">Start with the brewer in front of you. Its defaults stay visible before a session begins.</string>
     <string name="label_brewer_profile_starting">Starting…</string>
     <string name="msg_brewer_profile_empty">No supported brewer profiles are available yet.</string>
-    <string name="heading_brewer_profile_starting_defaults">Starting defaults</string>
     <string name="label_brewer_profile_input_water">Water input</string>
     <string name="label_brewer_profile_input_reservoir_water">Reservoir water</string>
-    <string name="msg_brewer_profile_input_water">Water added to the brewer</string>
     <string name="msg_brewer_profile_input_reservoir_water">Water added to the machine reservoir</string>
-    <string name="label_brewer_profile_expected_result">Expected result</string>
-    <string name="label_brewer_profile_output_estimated_beverage_yield">Estimated beverage yield</string>
-    <string name="label_brewer_profile_output_collected_concentrate">Collected concentrate</string>
-    <string name="label_brewer_profile_output_prepared_unfiltered_volume">Prepared unfiltered coffee</string>
-    <string name="msg_brewer_profile_serving_separate">Serving is a separate choice after extraction.</string>
-    <string name="heading_brewer_profile_equipment_check">Equipment check</string>
-    <string name="msg_brewer_profile_capacity_needs_confirmation">Capacity is not preset. Check your brewer’s marked capacity before using these amounts.</string>
-    <string name="format_brewer_profile_capacity_range">Capacity: %1$s to %2$s</string>
-    <string name="format_brewer_profile_capacity_up_to">Capacity: up to %1$s</string>
-    <string name="format_brewer_profile_capacity_from">Capacity: from %1$s</string>
-    <string name="msg_brewer_profile_capacity_configured">Capacity is configured for this brewer.</string>
-    <string name="msg_brewer_profile_filter_compatible">Use a filter compatible with this brewer.</string>
-    <string name="msg_brewer_profile_filter_unfiltered">This profile is intentionally unfiltered.</string>
-    <string name="msg_brewer_profile_filter_confirm">Confirm the required filter before starting.</string>
-    <string name="heading_brewer_profile_hario_switch_style">Hario Switch brew style</string>
-    <string name="msg_brewer_profile_hario_switch_style_hint">Choose the valve behaviour for this brew. Steep and release is the default.</string>
-    <string name="label_brewer_profile_hario_switch_steep_release">Steep &amp; release</string>
-    <string name="label_brewer_profile_hario_switch_manual_gravity">Manual gravity</string>
-    <string name="msg_brewer_profile_temperature_machine_controlled">Managed by the heat source or machine</string>
-    <string name="msg_brewer_profile_brew_time_observed">Finish by observation</string>
-    <string name="msg_brewer_profile_brew_time_machine_controlled">Machine-controlled cycle</string>
     <string name="format_brewer_profile_mass">%1$s %2$s</string>
     <string name="label_brewer_profile_clever_style">Clever-style brewer</string>
     <string name="label_brewer_profile_hario_switch">Hario Switch</string>
-    <string name="label_brewer_profile_valve_release_generic">Generic valve-release brewer</string>
     <string name="label_brewer_profile_cezve_generic">Cezve / ibrik</string>
     <string name="label_brewer_profile_automatic_batch_generic">Automatic batch brewer</string>
     <string name="label_brewer_profile_automatic_single_cup_generic">Podless single-cup brewer</string>
@@ -775,8 +725,6 @@
     <string name="guidance_level_focused">Focused</string>
     <string name="guidance_level_utilities">Utilities</string>
     <string name="msg_brew_guidance_unavailable">Guidance is not available for this brew yet.</string>
-    <string name="msg_brew_guidance_asset_pending">The visual guide for this step is still being prepared.</string>
-    <string name="msg_brew_guidance_asset_unavailable">The visual guide for this step is unavailable.</string>
 
 
 
@@ -790,13 +738,9 @@
     <string name="label_brewer_profile_capacity_grams">Capacity (g)</string>
     <string name="msg_brewer_profile_capacity_required">Enter a positive capacity in grams to continue.</string>
     <string name="heading_brewer_profile_cezve_choices">Cezve choices</string>
-    <string name="msg_brewer_profile_cezve_choices_hint">Choose whether to add sugar and how many times to let the foam rise.</string>
     <string name="label_brewer_profile_cezve_sugar">Optional sugar</string>
     <string name="label_brewer_profile_cezve_without_sugar">No sugar</string>
     <string name="label_brewer_profile_cezve_with_sugar">Add sugar</string>
-    <string name="label_brewer_profile_cezve_foam_rises">Foam rises</string>
-    <string name="label_brewer_profile_cezve_one_foam_rise">1 rise</string>
-    <string name="label_brewer_profile_cezve_two_foam_rises">2 rises</string>
     <string name="heading_brewer_profile_cezve_heat_source">Heat source</string>
     <string name="msg_brewer_profile_cezve_heat_source_hint">Select the actual heat source. It remains part of this brew’s safety record.</string>
     <string name="label_brewer_profile_cezve_heat_hob">Hob</string>

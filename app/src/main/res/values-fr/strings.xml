@@ -51,6 +51,7 @@
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
 <plurals name="format_selected">
         <item quantity="one">%1$d sélectionné</item>
+        <item quantity="many">%1$d sélectionnés</item>
         <item quantity="other">%1$d sélectionnés</item>
     </plurals>
 
@@ -94,6 +95,7 @@
     <string name="cd_expand_advanced">Développer les options avancées</string>
     <plurals name="format_coffee_dose_cd">
         <item quantity="one">Dose de café : %1$d gramme</item>
+        <item quantity="many">Dose de café : %1$d grammes</item>
         <item quantity="other">Dose de café : %1$d grammes</item>
     </plurals>
     <string name="label_decrease">Diminuer %1$s</string>
@@ -160,7 +162,6 @@
     <string name="format_edit_preset">Modifier %1$s</string>
     <string name="label_bloom_animation_settings">Animations de pré-infusion</string>
     <string name="msg_bloom_animation_settings_subtitle">Choisissez la fréquence d\'apparition de chaque sprite de pré-infusion</string>
-    <string name="cd_open_bloom_animation_settings">Ouvrir les paramètres d\'animation de pré-infusion</string>
     <string name="screen_bloom_animation_settings_title">Animations de pré-infusion</string>
     <string name="msg_bloom_animation_settings_hint">Touchez chaque contrôle pour alterner entre chance normale, chance doublée et exclusion. Si tous les sprites sont exclus, les minuteurs de pré-infusion masquent l\'animation.</string>
     <string name="label_bloom_weight_1x">1×</string>
@@ -282,10 +283,6 @@
     <string name="notif_rating_title">Comment était votre préparation ?</string>
     <string name="format_notif_rating_title">Comment était votre préparation %1$s ?</string>
     <string name="notif_rating_body">Touchez un emoji pour la noter, ou ouvrez l\'app pour en savoir plus.</string>
-    <string name="notif_rating_emoji_1">☹️</string>
-    <string name="notif_rating_emoji_2">😐</string>
-    <string name="notif_rating_emoji_3">😀</string>
-    <string name="notif_rating_emoji_4">😋</string>
     <string name="cd_notif_rating_1">Noter comme mauvais</string>
     <string name="cd_notif_rating_2">Noter comme moyen</string>
     <string name="cd_notif_rating_3">Noter comme bon</string>
@@ -451,18 +448,12 @@
     <string name="label_brew_history">Historique des préparations</string>
 
     <!-- BrewRatingSheet -->
-    <string name="label_how_was_it">Comment était-ce ?</string>
-    <string name="msg_rate_brew_fresh">Notez cette préparation pendant que le goût est encore frais.</string>
-    <string name="label_flavor_notes_section">Notes de dégustation</string>
-    <string name="hint_what_stood_out">Note facultative - qu\'est-ce qui ressortait ?</string>
-    <string name="action_save_rating">Enregistrer la note</string>
 
     <!-- EmptyStateBox -->
 <!-- FavoritesRow -->
     <string name="label_your_favorites_section">Vos favoris</string>
 
     <!-- FieldChipPicker -->
-    <string name="label_other">Autre</string>
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Service IA (Mindlayer)</string>
@@ -521,12 +512,9 @@
     <!-- BagInventoryScreen -->
     <string name="action_from_photo">Depuis une photo</string>
     <string name="action_scan_label">Scanner l\'étiquette</string>
-    <string name="action_add_bag_gallery">Depuis la galerie</string>
-    <string name="action_add_bag_camera">Scanner avec la caméra</string>
     <string name="action_add_bag_barcode">Scanner le code-barres</string>
     <string name="action_add_bag_manual">Ajouter manuellement</string>
     <string name="msg_no_beans_yet">Aucun grain pour le moment</string>
-    <string name="msg_add_coffee_hint">Ajoutez votre café pour suivre sa fraîcheur et obtenir des suggestions de préparation</string>
     <string name="action_brew_now">Préparer maintenant</string>
     <string name="msg_could_not_read_label">Impossible de lire l\'étiquette</string>
     <string name="action_retake_photo">Reprendre la photo</string>
@@ -548,16 +536,6 @@
     <string name="action_keep_scanning">Continuer le scan</string>
     <string name="msg_camera_permission_required">Autorisation de la caméra requise</string>
     <string name="screen_scan_bag_title">Scanner un paquet de café</string>
-    <string name="cd_toggle_debug_overlay">Afficher ou masquer la surcouche de débogage</string>
-    <string name="msg_both_sides_scanned">Les deux côtés du paquet ont été scannés</string>
-    <string name="msg_scanning_front_side">Scan du recto du paquet</string>
-<string name="action_quick_save">Enregistrement rapide</string>
-    <string name="msg_repackaged_product">Il peut s\'agir d\'un produit reconditionné ou importé</string>
-    <string name="action_use_barcode">Utiliser le code-barres</string>
-    <string name="action_use_label">Utiliser l\'étiquette</string>
-<string name="label_confirmed">Confirmé</string>
-    <string name="label_ai_contributed">IA contributrice</string>
-    <string name="cd_manual_capture">Capture manuelle — forcer le traitement de l\'image actuelle</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Synchroniser avec le paquet</string>
@@ -578,13 +556,11 @@
     <string name="msg_dim_mode_fullscreen_hint">Masquer aussi la barre d\'état et la barre de navigation en mode atténué. Faites glisser depuis un bord pour les apercevoir ; tout toucher sur l\'écran revient à l\'affichage normal.</string>
     <string name="label_dim_mode_force_dark_in_light">Utiliser le style sombre en mode atténué</string>
     <string name="msg_dim_mode_force_dark_in_light_hint">Passer à la présentation atténuée du thème sombre même quand le système est en mode clair. S\'associe naturellement au fond noir pur pour un mode atténué toujours sombre.</string>
-    <string name="action_add_cup_preset">Ajouter un préréglage de tasse</string>
     <string name="label_volume_ml">Volume (ml)</string>
     <string name="msg_dose_from_ratio">La dose de café est calculée à partir de votre ratio</string>
     <string name="label_icon">Icône</string>
     <string name="label_color">Couleur</string>
     <string name="action_add">Ajouter</string>
-    <string name="dialog_edit_cup_preset_title">Modifier le préréglage de tasse</string>
     <string name="screen_add_cup_preset_title">Ajouter un préréglage de tasse</string>
     <string name="screen_edit_cup_preset_title">Modifier le préréglage de tasse</string>
     <string name="msg_cup_preset_name_required">Ajoutez un nom pour continuer</string>
@@ -728,36 +704,12 @@
     <string name="msg_brewer_profile_choose_hint">Start with the brewer in front of you. Its defaults stay visible before a session begins.</string>
     <string name="label_brewer_profile_starting">Starting…</string>
     <string name="msg_brewer_profile_empty">No supported brewer profiles are available yet.</string>
-    <string name="heading_brewer_profile_starting_defaults">Starting defaults</string>
     <string name="label_brewer_profile_input_water">Water input</string>
     <string name="label_brewer_profile_input_reservoir_water">Reservoir water</string>
-    <string name="msg_brewer_profile_input_water">Water added to the brewer</string>
     <string name="msg_brewer_profile_input_reservoir_water">Water added to the machine reservoir</string>
-    <string name="label_brewer_profile_expected_result">Expected result</string>
-    <string name="label_brewer_profile_output_estimated_beverage_yield">Estimated beverage yield</string>
-    <string name="label_brewer_profile_output_collected_concentrate">Collected concentrate</string>
-    <string name="label_brewer_profile_output_prepared_unfiltered_volume">Prepared unfiltered coffee</string>
-    <string name="msg_brewer_profile_serving_separate">Serving is a separate choice after extraction.</string>
-    <string name="heading_brewer_profile_equipment_check">Equipment check</string>
-    <string name="msg_brewer_profile_capacity_needs_confirmation">Capacity is not preset. Check your brewer’s marked capacity before using these amounts.</string>
-    <string name="format_brewer_profile_capacity_range">Capacity: %1$s to %2$s</string>
-    <string name="format_brewer_profile_capacity_up_to">Capacity: up to %1$s</string>
-    <string name="format_brewer_profile_capacity_from">Capacity: from %1$s</string>
-    <string name="msg_brewer_profile_capacity_configured">Capacity is configured for this brewer.</string>
-    <string name="msg_brewer_profile_filter_compatible">Use a filter compatible with this brewer.</string>
-    <string name="msg_brewer_profile_filter_unfiltered">This profile is intentionally unfiltered.</string>
-    <string name="msg_brewer_profile_filter_confirm">Confirm the required filter before starting.</string>
-    <string name="heading_brewer_profile_hario_switch_style">Hario Switch brew style</string>
-    <string name="msg_brewer_profile_hario_switch_style_hint">Choose the valve behaviour for this brew. Steep and release is the default.</string>
-    <string name="label_brewer_profile_hario_switch_steep_release">Steep &amp; release</string>
-    <string name="label_brewer_profile_hario_switch_manual_gravity">Manual gravity</string>
-    <string name="msg_brewer_profile_temperature_machine_controlled">Managed by the heat source or machine</string>
-    <string name="msg_brewer_profile_brew_time_observed">Finish by observation</string>
-    <string name="msg_brewer_profile_brew_time_machine_controlled">Machine-controlled cycle</string>
     <string name="format_brewer_profile_mass">%1$s %2$s</string>
     <string name="label_brewer_profile_clever_style">Clever-style brewer</string>
     <string name="label_brewer_profile_hario_switch">Hario Switch</string>
-    <string name="label_brewer_profile_valve_release_generic">Generic valve-release brewer</string>
     <string name="label_brewer_profile_cezve_generic">Cezve / ibrik</string>
     <string name="label_brewer_profile_automatic_batch_generic">Automatic batch brewer</string>
     <string name="label_brewer_profile_automatic_single_cup_generic">Podless single-cup brewer</string>
@@ -775,8 +727,6 @@
     <string name="guidance_level_focused">Focused</string>
     <string name="guidance_level_utilities">Utilities</string>
     <string name="msg_brew_guidance_unavailable">Guidance is not available for this brew yet.</string>
-    <string name="msg_brew_guidance_asset_pending">The visual guide for this step is still being prepared.</string>
-    <string name="msg_brew_guidance_asset_unavailable">The visual guide for this step is unavailable.</string>
 
 
 
@@ -790,13 +740,9 @@
     <string name="label_brewer_profile_capacity_grams">Capacity (g)</string>
     <string name="msg_brewer_profile_capacity_required">Enter a positive capacity in grams to continue.</string>
     <string name="heading_brewer_profile_cezve_choices">Cezve choices</string>
-    <string name="msg_brewer_profile_cezve_choices_hint">Choose whether to add sugar and how many times to let the foam rise.</string>
     <string name="label_brewer_profile_cezve_sugar">Optional sugar</string>
     <string name="label_brewer_profile_cezve_without_sugar">No sugar</string>
     <string name="label_brewer_profile_cezve_with_sugar">Add sugar</string>
-    <string name="label_brewer_profile_cezve_foam_rises">Foam rises</string>
-    <string name="label_brewer_profile_cezve_one_foam_rise">1 rise</string>
-    <string name="label_brewer_profile_cezve_two_foam_rises">2 rises</string>
     <string name="heading_brewer_profile_cezve_heat_source">Heat source</string>
     <string name="msg_brewer_profile_cezve_heat_source_hint">Select the actual heat source. It remains part of this brew’s safety record.</string>
     <string name="label_brewer_profile_cezve_heat_hob">Hob</string>

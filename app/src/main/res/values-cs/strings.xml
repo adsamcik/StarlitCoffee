@@ -153,7 +153,6 @@
     <string name="format_edit_preset">Upravit %1$s</string>
     <string name="label_bloom_animation_settings">Animace bloomu</string>
     <string name="msg_bloom_animation_settings_subtitle">Zvolte, jak často se má každá animace bloomu objevit.</string>
-    <string name="cd_open_bloom_animation_settings">Otevřít nastavení animací bloomu</string>
     <string name="screen_bloom_animation_settings_title">Animace bloomu</string>
     <string name="msg_bloom_animation_settings_hint">Klepnutím na každý ovladač přepnete běžnou šanci, dvojnásobnou šanci a vyřazení. Pokud vyřadíte všechny animace, časovače bloomu animaci skryjí.</string>
     <string name="label_bloom_weight_1x">1×</string>
@@ -275,10 +274,6 @@
     <string name="notif_rating_title">Jak vám káva chutnala?</string>
     <string name="format_notif_rating_title">Jak vám chutnala příprava — %1$s?</string>
     <string name="notif_rating_body">Klepnutím na emoji ohodnoťte přípravu, nebo otevřete aplikaci pro detail.</string>
-    <string name="notif_rating_emoji_1">☹️</string>
-    <string name="notif_rating_emoji_2">😐</string>
-    <string name="notif_rating_emoji_3">😀</string>
-    <string name="notif_rating_emoji_4">😋</string>
     <string name="cd_notif_rating_1">Ohodnotit jako špatné</string>
     <string name="cd_notif_rating_2">Ohodnotit jako nic moc</string>
     <string name="cd_notif_rating_3">Ohodnotit jako dobré</string>
@@ -482,18 +477,12 @@
     <string name="label_brew_history">Historie příprav</string>
 
     <!-- BrewRatingSheet -->
-    <string name="label_how_was_it">Jak to bylo?</string>
-    <string name="msg_rate_brew_fresh">Ohodnoťte várku, dokud máte chuť ještě čerstvou.</string>
-    <string name="label_flavor_notes_section">Chuťové poznámky</string>
-    <string name="hint_what_stood_out">Volitelná poznámka – co vynikalo?</string>
-    <string name="action_save_rating">Uložit hodnocení</string>
 
     <!-- EmptyStateBox -->
 <!-- FavoritesRow -->
     <string name="label_your_favorites_section">Vaše oblíbené</string>
 
     <!-- FieldChipPicker -->
-    <string name="label_other">Jiné</string>
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Služba AI (Mindlayer)</string>
@@ -552,12 +541,9 @@
     <!-- BagInventoryScreen -->
     <string name="action_from_photo">Z fotografie</string>
     <string name="action_scan_label">Naskenovat štítek</string>
-    <string name="action_add_bag_gallery">Z galerie</string>
-    <string name="action_add_bag_camera">Naskenovat fotoaparátem</string>
     <string name="action_add_bag_barcode">Naskenovat čárový kód</string>
     <string name="action_add_bag_manual">Přidat ručně</string>
     <string name="msg_no_beans_yet">Zatím žádná zrna</string>
-    <string name="msg_add_coffee_hint">Přidejte kávu pro sledování čerstvosti a doporučení přípravy</string>
     <string name="action_brew_now">Připravit nyní</string>
     <string name="msg_could_not_read_label">Štítek se nepodařilo přečíst</string>
     <string name="action_retake_photo">Vyfotit znovu</string>
@@ -579,16 +565,6 @@
     <string name="action_keep_scanning">Pokračovat ve skenování</string>
     <string name="msg_camera_permission_required">Vyžadováno oprávnění kamery</string>
     <string name="screen_scan_bag_title">Skenovat balení kávy</string>
-    <string name="cd_toggle_debug_overlay">Přepnout ladicí překryv</string>
-    <string name="msg_both_sides_scanned">Obě strany balení byly naskenovány</string>
-    <string name="msg_scanning_front_side">Skenování přední strany balení</string>
-<string name="action_quick_save">Rychle uložit</string>
-    <string name="msg_repackaged_product">Může se jednat o přebalený nebo dovážený produkt</string>
-    <string name="action_use_barcode">Použít čárový kód</string>
-    <string name="action_use_label">Použít štítek</string>
-<string name="label_confirmed">Potvrzeno</string>
-    <string name="label_ai_contributed">Přispěla AI</string>
-    <string name="cd_manual_capture">Ruční zachycení — vynutit zpracování aktuálního snímku</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Synchronizovat s balením</string>
@@ -609,13 +585,11 @@
     <string name="msg_dim_mode_fullscreen_hint">Při ztlumení také skryje stavovou a navigační lištu. Přejetím od okraje je dočasně zobrazíte; jakékoli klepnutí obrazovku probudí.</string>
     <string name="label_dim_mode_force_dark_in_light">Tmavý vzhled při ztlumení</string>
     <string name="msg_dim_mode_force_dark_in_light_hint">Při ztlumení použít tmavou prezentaci i ve světlém systémovém motivu. Přirozeně se kombinuje s čistě černým pozadím pro vždy-tmavé ztlumení.</string>
-    <string name="action_add_cup_preset">Přidat předvolbu šálku</string>
     <string name="label_volume_ml">Objem (ml)</string>
     <string name="msg_dose_from_ratio">Dávka kávy se vypočítá z vašeho poměru</string>
     <string name="label_icon">Ikona</string>
     <string name="label_color">Barva</string>
     <string name="action_add">Přidat</string>
-    <string name="dialog_edit_cup_preset_title">Upravit předvolbu šálku</string>
     <string name="screen_add_cup_preset_title">Přidat předvolbu šálku</string>
     <string name="screen_edit_cup_preset_title">Upravit předvolbu šálku</string>
     <string name="msg_cup_preset_name_required">Pro pokračování zadejte název</string>
@@ -759,36 +733,12 @@
     <string name="msg_brewer_profile_choose_hint">Začněte se zařízením, které máte před sebou. Jeho výchozí hodnoty zůstanou před zahájením přípravy viditelné.</string>
     <string name="label_brewer_profile_starting">Spouštění…</string>
     <string name="msg_brewer_profile_empty">Zatím nejsou k dispozici žádné podporované profily zařízení.</string>
-    <string name="heading_brewer_profile_starting_defaults">Výchozí hodnoty</string>
     <string name="label_brewer_profile_input_water">Vstupní voda</string>
     <string name="label_brewer_profile_input_reservoir_water">Voda v nádržce</string>
-    <string name="msg_brewer_profile_input_water">Voda přidaná do zařízení pro přípravu</string>
     <string name="msg_brewer_profile_input_reservoir_water">Voda přidaná do nádržky kávovaru</string>
-    <string name="label_brewer_profile_expected_result">Očekávaný výsledek</string>
-    <string name="label_brewer_profile_output_estimated_beverage_yield">Odhadovaný objem nápoje</string>
-    <string name="label_brewer_profile_output_collected_concentrate">Získaný koncentrát</string>
-    <string name="label_brewer_profile_output_prepared_unfiltered_volume">Připravená nefiltrovaná káva</string>
-    <string name="msg_brewer_profile_serving_separate">Velikost porce se volí zvlášť po extrakci.</string>
-    <string name="heading_brewer_profile_equipment_check">Kontrola vybavení</string>
-    <string name="msg_brewer_profile_capacity_needs_confirmation">Kapacita není přednastavená. Před použitím těchto množství zkontrolujte rysku kapacity na zařízení.</string>
-    <string name="format_brewer_profile_capacity_range">Kapacita: %1$s až %2$s</string>
-    <string name="format_brewer_profile_capacity_up_to">Kapacita: až %1$s</string>
-    <string name="format_brewer_profile_capacity_from">Kapacita: od %1$s</string>
-    <string name="msg_brewer_profile_capacity_configured">Kapacita je pro toto zařízení nastavená.</string>
-    <string name="msg_brewer_profile_filter_compatible">Použijte filtr kompatibilní s tímto zařízením.</string>
-    <string name="msg_brewer_profile_filter_unfiltered">Tento profil je záměrně bez filtru.</string>
-    <string name="msg_brewer_profile_filter_confirm">Před zahájením zkontrolujte požadovaný filtr.</string>
-    <string name="heading_brewer_profile_hario_switch_style">Styl přípravy Hario Switch</string>
-    <string name="msg_brewer_profile_hario_switch_style_hint">Zvolte chování ventilu pro tuto přípravu. Výchozí je louhování a uvolnění.</string>
-    <string name="label_brewer_profile_hario_switch_steep_release">Louhovat a uvolnit</string>
-    <string name="label_brewer_profile_hario_switch_manual_gravity">Manuální překapávání</string>
-    <string name="msg_brewer_profile_temperature_machine_controlled">Řízeno zdrojem tepla nebo kávovarem</string>
-    <string name="msg_brewer_profile_brew_time_observed">Dokončete podle pozorování</string>
-    <string name="msg_brewer_profile_brew_time_machine_controlled">Cyklus řízený kávovarem</string>
     <string name="format_brewer_profile_mass">%1$s %2$s</string>
     <string name="label_brewer_profile_clever_style">Dripper typu Clever</string>
     <string name="label_brewer_profile_hario_switch">Hario Switch</string>
-    <string name="label_brewer_profile_valve_release_generic">Obecný dripper s ventilem</string>
     <string name="label_brewer_profile_cezve_generic">Cezve / ibrik</string>
     <string name="label_brewer_profile_automatic_batch_generic">Automatický překapávač</string>
     <string name="label_brewer_profile_automatic_single_cup_generic">Jednoporcový kávovar bez kapslí</string>
@@ -806,8 +756,6 @@
     <string name="guidance_level_focused">Zaměřené</string>
     <string name="guidance_level_utilities">Pouze nástroje</string>
     <string name="msg_brew_guidance_unavailable">Pokyny pro tuto přípravu zatím nejsou k dispozici.</string>
-    <string name="msg_brew_guidance_asset_pending">Vizuální průvodce pro tento krok se ještě připravuje.</string>
-    <string name="msg_brew_guidance_asset_unavailable">Vizuální průvodce pro tento krok není k dispozici.</string>
 
 
 
@@ -821,13 +769,9 @@
     <string name="label_brewer_profile_capacity_grams">Kapacita (g)</string>
     <string name="msg_brewer_profile_capacity_required">Chcete-li pokračovat, zadejte kladnou kapacitu v gramech.</string>
     <string name="heading_brewer_profile_cezve_choices">Volby pro cezve</string>
-    <string name="msg_brewer_profile_cezve_choices_hint">Zvolte, zda přidat cukr a kolikrát nechat pěnu vystoupat.</string>
     <string name="label_brewer_profile_cezve_sugar">Volitelný cukr</string>
     <string name="label_brewer_profile_cezve_without_sugar">Bez cukru</string>
     <string name="label_brewer_profile_cezve_with_sugar">Přidat cukr</string>
-    <string name="label_brewer_profile_cezve_foam_rises">Vzestupy pěny</string>
-    <string name="label_brewer_profile_cezve_one_foam_rise">1 vzestup</string>
-    <string name="label_brewer_profile_cezve_two_foam_rises">2 vzestupy</string>
     <string name="heading_brewer_profile_cezve_heat_source">Zdroj tepla</string>
     <string name="msg_brewer_profile_cezve_heat_source_hint">Vyberte skutečný zdroj tepla. Zůstane součástí bezpečnostního záznamu přípravy.</string>
     <string name="label_brewer_profile_cezve_heat_hob">Varná deska</string>

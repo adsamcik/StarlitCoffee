@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.data.work
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 
 object BagReviewQueue {
     @Synchronized
@@ -70,7 +71,7 @@ object BagReviewQueue {
             KEY_RETAINED_FOREGROUND_WORK_IDS,
             retainedForeground(context).filterNot { it == workId },
         )
-        preferences(context).edit().remove(reviewContextKey(workId)).commit()
+        preferences(context).edit(commit = true) { remove(reviewContextKey(workId)) }
     }
 
     fun retainedForeground(context: Context): List<String> =
@@ -90,9 +91,9 @@ object BagReviewQueue {
         workIds: List<String>,
     ) {
         preferences(context)
-            .edit()
-            .putString(key, workIds.joinToString(","))
-            .commit()
+            .edit(commit = true) {
+                putString(key, workIds.joinToString(","))
+            }
     }
 
     private fun write(context: Context, workIds: List<String>) {
@@ -105,12 +106,12 @@ object BagReviewQueue {
         reviewContext: BagReviewContext?,
     ) {
         val encoded = encodeBagReviewContext(reviewContext) ?: return
-        preferences(context).edit().putString(reviewContextKey(workId), encoded).commit()
+        preferences(context).edit(commit = true) { putString(reviewContextKey(workId), encoded) }
     }
 
     private fun forgetReviewContextIfUnowned(context: Context, workId: String) {
         if (workId in list(context) || workId in retainedForeground(context)) return
-        preferences(context).edit().remove(reviewContextKey(workId)).commit()
+        preferences(context).edit(commit = true) { remove(reviewContextKey(workId)) }
     }
 
     private fun reviewContextKey(workId: String): String = "$KEY_REVIEW_CONTEXT_PREFIX$workId"

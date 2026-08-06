@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Příprava</string>
-    <string name="label_current_step">Aktuální krok</string>
     <string name="format_brew_stage_progress">Krok %1$d z %2$d</string>
     <string name="label_elapsed">Uplynulo</string>
     <string name="label_remaining">Zbývá</string>
     <string name="format_brew_stage_remaining_time">Zbývá %1$s</string>
-    <string name="label_recorded">Zaznamenáno</string>
     <string name="label_measured_amount">Naměřené množství (g)</string>
     <string name="action_brew_prepare">Připravit</string>
     <string name="action_brew_rinse">Propláchnout</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Tuto uloženou přípravu nelze bezpečně otevřít. Zůstala beze změny.</string>
     <string name="msg_brew_session_finished">Příprava uložena.</string>
     <string name="msg_brew_session_finishing">Ukládání přípravy…</string>
-    <string name="msg_brew_session_ready">Připraveno ke spuštění.</string>
     <string name="msg_brew_session_paused">Příprava je pozastavena.</string>
     <string name="msg_brew_stage_manual">Tento krok dokončete, až bude fyzický úkon hotový.</string>
     <string name="msg_brew_stage_observation">Tento krok označte, až uvidíte očekávanou fyzickou změnu.</string>

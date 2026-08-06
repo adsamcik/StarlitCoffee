@@ -2,12 +2,14 @@ package com.adsamcik.starlitcoffee
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.util.Rational
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.net.toUri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -52,17 +54,7 @@ class MainActivity : ComponentActivity() {
     fun setBrewPictureInPictureAvailable(available: Boolean) {
         brewPictureInPictureAvailable = available
         if (available) requestBrewNotificationPermissionIfNeeded()
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val params = android.app.PictureInPictureParams.Builder()
-                .setAspectRatio(Rational(1, 1))
-                .apply {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                        setAutoEnterEnabled(available)
-                    }
-                }
-                .build()
-            setPictureInPictureParams(params)
-        }
+        setPictureInPictureParams(buildBrewPictureInPictureParams(available))
     }
 
     /** Requests the platform alert permission when a durable brew begins. */
@@ -95,12 +87,25 @@ class MainActivity : ComponentActivity() {
             !isInPictureInPictureMode
         ) {
             enterPictureInPictureMode(
-                android.app.PictureInPictureParams.Builder()
-                    .setAspectRatio(Rational(1, 1))
-                    .build(),
+                buildBrewPictureInPictureParams(autoEnter = false),
             )
         }
     }
+
+    private fun buildBrewPictureInPictureParams(
+        autoEnter: Boolean,
+    ): android.app.PictureInPictureParams = android.app.PictureInPictureParams.Builder()
+        .setAspectRatio(Rational(1, 1))
+        .apply {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                setAutoEnterEnabled(autoEnter)
+            }
+            val sourceRect = Rect()
+            if (window.decorView.getGlobalVisibleRect(sourceRect) && !sourceRect.isEmpty) {
+                setSourceRectHint(sourceRect)
+            }
+        }
+        .build()
 
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,
@@ -193,7 +198,7 @@ class MainActivity : ComponentActivity() {
             reviewContext: BagReviewContext? = null,
         ): Intent =
             Intent(context, MainActivity::class.java).apply {
-                data = Uri.parse("starlitcoffee://bag-analysis/$workId")
+                data = "starlitcoffee://bag-analysis/$workId".toUri()
                 putExtra(EXTRA_OPEN_BAG_ANALYSIS, true)
                 putExtra(EXTRA_BAG_ANALYSIS_WORK_ID, workId)
                 encodeBagReviewContext(reviewContext)?.let { encoded ->

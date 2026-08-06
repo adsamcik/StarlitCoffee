@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Brühen</string>
-    <string name="label_current_step">Aktueller Schritt</string>
     <string name="format_brew_stage_progress">Schritt %1$d von %2$d</string>
     <string name="label_elapsed">Verstrichene Zeit</string>
     <string name="label_remaining">Verbleibend</string>
     <string name="format_brew_stage_remaining_time">Verbleibend %1$s</string>
-    <string name="label_recorded">Erfasst</string>
     <string name="label_measured_amount">Gemessene Menge (g)</string>
     <string name="action_brew_prepare">Vorbereiten</string>
     <string name="action_brew_rinse">Spülen</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Dieser gespeicherte Brühvorgang kann nicht sicher geöffnet werden. Er wurde unverändert gelassen.</string>
     <string name="msg_brew_session_finished">Brühvorgang gespeichert.</string>
     <string name="msg_brew_session_finishing">Brühvorgang wird gespeichert…</string>
-    <string name="msg_brew_session_ready">Bereit zum Starten.</string>
     <string name="msg_brew_session_paused">Brühvorgang pausiert.</string>
     <string name="msg_brew_stage_manual">Schließen Sie diesen Schritt ab, sobald die physische Handlung erledigt ist.</string>
     <string name="msg_brew_stage_observation">Markieren Sie diesen Schritt, wenn Sie die erwartete physische Veränderung sehen.</string>

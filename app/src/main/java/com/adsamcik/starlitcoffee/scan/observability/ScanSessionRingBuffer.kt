@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.scan.observability
 
 import android.content.Context
 import androidx.core.content.edit
+import com.adsamcik.starlitcoffee.util.commitSynchronously
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -43,9 +44,9 @@ object ScanSessionRingBuffer {
 
     fun clear(context: Context): Boolean =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit()
-            .remove(KEY_SESSIONS)
-            .commit()
+            .commitSynchronously {
+                remove(KEY_SESSIONS)
+            }
 
     fun getForReport(context: Context, count: Int = 5): String {
         val sessions = getAll(context).take(count)

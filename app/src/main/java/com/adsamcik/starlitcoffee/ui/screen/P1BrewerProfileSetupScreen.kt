@@ -93,10 +93,10 @@ fun P1BrewerProfileSetupScreen(
     onCezveHeatSourceSelected: (HeatSourceClass) -> Unit,
     onStart: (P1BrewerProfileStartSelection) -> Unit,
     onBack: () -> Unit,
+    modifier: Modifier = Modifier,
     onLearn: ((P1BrewerProfileStartSelection) -> Unit)? = null,
     isGuidancePreview: Boolean = false,
     onTurnOffPreview: (() -> Unit)? = null,
-    modifier: Modifier = Modifier,
 ) {
     val selectedProfile = state.selectedProfile
     val selectedRecipe = state.selectedRecipe

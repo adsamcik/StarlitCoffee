@@ -2,12 +2,10 @@
 <resources>
     <!-- Durable brew session. label_target is shared from strings.xml. -->
     <string name="screen_brew_session_title">Gatavošana</string>
-    <string name="label_current_step">Pašreizējais solis</string>
     <string name="format_brew_stage_progress">Solis %1$d no %2$d</string>
     <string name="label_elapsed">Pagājis</string>
     <string name="label_remaining">Atlicis</string>
     <string name="format_brew_stage_remaining_time">Atlicis %1$s</string>
-    <string name="label_recorded">Reģistrēts</string>
     <string name="label_measured_amount">Izmērītais daudzums (g)</string>
     <string name="action_brew_prepare">Sagatavot</string>
     <string name="action_brew_rinse">Izskalot</string>
@@ -34,7 +32,6 @@
     <string name="msg_brew_session_unavailable">Šo saglabāto gatavošanu nevar droši atvērt. Tā ir atstāta nemainīta.</string>
     <string name="msg_brew_session_finished">Gatavošana saglabāta.</string>
     <string name="msg_brew_session_finishing">Gatavošanas saglabāšana…</string>
-    <string name="msg_brew_session_ready">Gatavs sākt.</string>
     <string name="msg_brew_session_paused">Gatavošana ir apturēta.</string>
     <string name="msg_brew_stage_manual">Pabeidziet šo soli, kad fiziskā darbība ir veikta.</string>
     <string name="msg_brew_stage_observation">Atzīmējiet šo soli, kad redzat gaidīto fizisko izmaiņu.</string>

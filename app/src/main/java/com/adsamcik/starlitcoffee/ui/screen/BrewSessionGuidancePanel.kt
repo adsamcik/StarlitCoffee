@@ -95,10 +95,10 @@ fun BrewSessionGuidancePanel(
     sessionOverride: GuidancePresentationLevel?,
     onSessionOverride: (GuidancePresentationLevel?) -> Unit,
     onRememberForBrewer: (GuidancePresentationLevel) -> Unit,
+    modifier: Modifier = Modifier,
     terminologyUiCopy: BrewingTerminologyUiCopy? = null,
     showEnglishTerminology: Boolean = false,
     onShowEnglishTerminology: (Boolean) -> Unit = {},
-    modifier: Modifier = Modifier,
 ) {
     val approvedVisual = resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved
     val visibleContent = remember(
