@@ -1,0 +1,133 @@
+{
+  "schema_version": 2,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "bg",
+  "review_status": "preview",
+  "reviewer": null,
+  "reviewed_on": null,
+  "ui_copy": {
+    "show_english_terms": "Показване на английските термини за кафе",
+    "hide_english_terms": "Скриване на английските термини за кафе",
+    "heading": "Английска терминология за кафе"
+  },
+  "terms": [
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "дрипър",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "филтърен конус",
+        "капкова кафеварка",
+        "дрипъра",
+        "дрипърът"
+      ]
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "coffee bed",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "цъфтеж (bloom)",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "цъфтене",
+        "blooming",
+        "предварително намокряне",
+        "блуминг",
+        "blooming фаза"
+      ]
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "смляно кафе",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "кафеена утайка"
+      ]
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "фини частици",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "fines",
+        "кафеен прах"
+      ]
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "coffee slurry",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "време за отцеждане",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "отцеждане",
+        "drawdown"
+      ]
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "завъртане на дрипера",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "кръгово движение",
+        "Rao spin"
+      ]
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "кана",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "сървър",
+        "декантер"
+      ]
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "пълно потапяне",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "имерсия",
+        "накисване"
+      ]
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "клапан",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "вентил"
+      ]
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "хартиен филтър",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "филтърна хартия"
+      ]
+    }
+  ]
+}

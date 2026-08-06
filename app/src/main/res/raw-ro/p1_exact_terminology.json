@@ -1,0 +1,135 @@
+{
+  "schema_version": 2,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "ro",
+  "review_status": "preview",
+  "reviewer": null,
+  "reviewed_on": null,
+  "ui_copy": {
+    "show_english_terms": "Afișează termenii de cafea în engleză",
+    "hide_english_terms": "Ascunde termenii de cafea în engleză",
+    "heading": "Terminologie de cafea în engleză"
+  },
+  "terms": [
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "dripper / brewer",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": [
+        "brewer",
+        "con de filtrare",
+        "dripperul",
+        "brewerului"
+      ]
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "pat de cafea / strat de cafea",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "pat de cafea"
+      ]
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "bloom",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": [
+        "înflorire",
+        "preinfuzie",
+        "bloom-ul",
+        "al doilea bloom"
+      ]
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "cafea măcinată",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "zaț"
+      ]
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "particule fine",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "fines"
+      ]
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "amestecul de cafea și apă",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "accepted_aliases": [
+        "slurry"
+      ]
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "drenaj / scurgere",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "drenaj",
+        "drawdown"
+      ]
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "rotație a brewerului (swirl)",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "swirl",
+        "mișcare circulară"
+      ]
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "carafă / cană",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "cană",
+        "server"
+      ]
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "imersie",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "infuzare",
+        "imersie totală"
+      ]
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "supapă / valvă",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "valvă"
+      ]
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "filtru de hârtie",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "hârtie de filtru"
+      ]
+    }
+  ]
+}

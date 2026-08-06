@@ -1,0 +1,135 @@
+{
+  "schema_version": 2,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "it",
+  "review_status": "preview",
+  "reviewer": null,
+  "reviewed_on": null,
+  "ui_copy": {
+    "show_english_terms": "Mostra i termini inglesi del caffè",
+    "hide_english_terms": "Nascondi i termini inglesi del caffè",
+    "heading": "Terminologia inglese del caffè"
+  },
+  "terms": [
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "dripper",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": [
+        "cono filtro",
+        "portafiltro",
+        "il dripper",
+        "dei dripper"
+      ]
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "letto di caffè",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "pannello"
+      ]
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "blooming / pre-infusione",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "fioritura",
+        "bloom"
+      ]
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "caffè macinato",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "fondi di caffè"
+      ]
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "particelle fini (fines)",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "accepted_aliases": [
+        "fines",
+        "polvere di caffè"
+      ]
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "miscela acqua-caffè",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "accepted_aliases": [
+        "slurry"
+      ]
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "tempo di percolazione",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "tempo di deflusso",
+        "drawdown"
+      ]
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "ruotare il dripper / vortice",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "accepted_aliases": [
+        "Rao Spin",
+        "movimento circolare",
+        "vortice"
+      ]
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "caraffa / server",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "accepted_aliases": [
+        "server",
+        "bricco"
+      ]
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "immersione / infusione",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "full immersion",
+        "infusione"
+      ]
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "valvola",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "valvola di chiusura"
+      ]
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "filtro di carta",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "carta da filtro"
+      ]
+    }
+  ]
+}

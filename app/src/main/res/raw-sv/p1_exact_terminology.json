@@ -1,0 +1,133 @@
+{
+  "schema_version": 2,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "sv",
+  "review_status": "preview",
+  "reviewer": null,
+  "reviewed_on": null,
+  "ui_copy": {
+    "show_english_terms": "Visa engelska kaffetermer",
+    "hide_english_terms": "Dölj engelska kaffetermer",
+    "heading": "Engelska kaffetermer"
+  },
+  "terms": [
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "filterhållare",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "dripper",
+        "kaffebryggare"
+      ]
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "coffee bed",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "kaffebädd"
+      ]
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "bloom / förblötning",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "blomning",
+        "blooming"
+      ]
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "malet kaffe",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "kaffesump"
+      ]
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "coffee fines",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "fina partiklar",
+        "fines"
+      ]
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "kaffe-vattenblandningen",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "accepted_aliases": [
+        "slurry"
+      ]
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "genomrinningstid",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "avrinningstid",
+        "drawdown"
+      ]
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "snurra bryggaren",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "accepted_aliases": [
+        "swirl",
+        "Rao Spin",
+        "roterande rörelse"
+      ]
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "kanna",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "server",
+        "karaff"
+      ]
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "immersion / nedsänkning",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "låta kaffet dra",
+        "immersion-teknik"
+      ]
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "ventil",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "bottenventil"
+      ]
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "pappersfilter",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "filterpapper"
+      ]
+    }
+  ]
+}

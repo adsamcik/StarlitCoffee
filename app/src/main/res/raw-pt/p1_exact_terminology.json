@@ -1,0 +1,136 @@
+{
+  "schema_version": 2,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "pt",
+  "review_status": "preview",
+  "reviewer": null,
+  "reviewed_on": null,
+  "ui_copy": {
+    "show_english_terms": "Mostrar termos de café em inglês",
+    "hide_english_terms": "Ocultar termos de café em inglês",
+    "heading": "Terminologia de café em inglês"
+  },
+  "terms": [
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "coador / porta-filtro / dripper",
+      "display_policy": "region_and_context_required",
+      "english_reference_policy": "region_specific",
+      "accepted_aliases": [
+        "coador",
+        "porta-filtro",
+        "dripper",
+        "brewer"
+      ]
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "cama de café / camada de café",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "cama de café"
+      ]
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "pré-infusão (bloom)",
+      "display_policy": "region_and_context_required",
+      "english_reference_policy": "region_specific",
+      "accepted_aliases": [
+        "bloom",
+        "pré-extração"
+      ]
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "café moído / pó de café",
+      "display_policy": "region_and_context_required",
+      "english_reference_policy": "region_specific",
+      "accepted_aliases": [
+        "pó de café",
+        "borra de café"
+      ]
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "partículas finas",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "fines",
+        "pó fino"
+      ]
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "mistura de café e água",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "accepted_aliases": [
+        "slurry"
+      ]
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "tempo de escoamento / drawdown",
+      "display_policy": "region_and_context_required",
+      "english_reference_policy": "region_specific",
+      "accepted_aliases": [
+        "drawdown",
+        "tempo de gotejamento"
+      ]
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "girar o coador / movimentos circulares",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "Rao Spin",
+        "movimentos circulares"
+      ]
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "jarra / servidor",
+      "display_policy": "region_and_context_required",
+      "english_reference_policy": "region_specific",
+      "accepted_aliases": [
+        "servidor",
+        "jarro",
+        "decantador"
+      ]
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "imersão",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "infusão",
+        "deixar em contacto"
+      ]
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "válvula",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "válvula inferior"
+      ]
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "filtro de papel",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "papel de filtro"
+      ]
+    }
+  ]
+}

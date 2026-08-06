@@ -1,0 +1,139 @@
+{
+  "schema_version": 2,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "sk",
+  "review_status": "preview",
+  "reviewer": null,
+  "reviewed_on": null,
+  "ui_copy": {
+    "show_english_terms": "Zobraziť anglické kávové termíny",
+    "hide_english_terms": "Skryť anglické kávové termíny",
+    "heading": "Anglické kávové termíny"
+  },
+  "terms": [
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "dripper",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": [
+        "prekvapkávač",
+        "filtračný lievik",
+        "drippera",
+        "dripperom",
+        "drippery"
+      ]
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "kávové lôžko",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "rovné lôžko"
+      ]
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "blooming / predinfúzia",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "kvitnutie",
+        "bloom",
+        "bloomingu",
+        "blooming fáza"
+      ]
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "mletá káva",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "kávová usadenina"
+      ]
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "jemné kávové častice (fines)",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "fines",
+        "kávový prach"
+      ]
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "zmes kávy a vody",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "accepted_aliases": [
+        "slurry"
+      ]
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "odkvapkávanie",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "čas pretekania",
+        "drawdown"
+      ]
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "swirl / krúživý pohyb",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "swirl",
+        "Rao Spin"
+      ]
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "server / kanvička",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "accepted_aliases": [
+        "server",
+        "karafa",
+        "serveri",
+        "servera"
+      ]
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "imerzia / ponorenie",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "imerzná metóda",
+        "úplné ponorenie"
+      ]
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "ventil",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "uzáver"
+      ]
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "papierový filter",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "filtračný papier"
+      ]
+    }
+  ]
+}

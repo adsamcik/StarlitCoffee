@@ -1,0 +1,138 @@
+{
+  "schema_version": 2,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "hu",
+  "review_status": "preview",
+  "reviewer": null,
+  "reviewed_on": null,
+  "ui_copy": {
+    "show_english_terms": "Angol kávés szakkifejezések megjelenítése",
+    "hide_english_terms": "Angol kávés szakkifejezések elrejtése",
+    "heading": "Angol kávés szakkifejezések"
+  },
+  "terms": [
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "V60 tölcsér / dripper",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "accepted_aliases": [
+        "dripper",
+        "filtertartó",
+        "dripperben",
+        "dripperrel"
+      ]
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "kávéágy",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "egyenletes kávéágy"
+      ]
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "blooming / előáztatás",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "bloom",
+        "előnedvesítés",
+        "bloomnak",
+        "bloomingnak",
+        "blooming fázis"
+      ]
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "őrölt kávé / őrlemény",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "accepted_aliases": [
+        "őrlemény",
+        "kávézacc"
+      ]
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "coffee fines",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "finom szemcsék",
+        "fines"
+      ]
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "coffee slurry",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "kávé-víz keverék"
+      ]
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "lefolyási idő",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "drawdown",
+        "átfolyási idő"
+      ]
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "körkörös mozgatás / Rao spin",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "accepted_aliases": [
+        "Rao spin",
+        "megforgatás"
+      ]
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "server / carafe",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "kanna",
+        "server"
+      ]
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "áztatás / immerzió",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "accepted_aliases": [
+        "immerzió",
+        "teljes bemerítés"
+      ]
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "szelep",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "zárószelep"
+      ]
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "filterpapír",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "papírfilter"
+      ]
+    }
+  ]
+}

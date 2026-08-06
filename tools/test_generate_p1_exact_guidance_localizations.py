@@ -68,6 +68,27 @@ class TerminologyCatalogPromotionTest(unittest.TestCase):
         self.assertEqual("contextual_first_occurrence", drawdown["english_reference_policy"])
         self.assertEqual("Zobrazit anglické termíny", glossary["ui_copy"]["show_english_terms"])
 
+    def test_preview_glossary_is_explicitly_unreviewed_and_withholds_unknown_terms(self) -> None:
+        glossary = TOOL.terminology_resource_document(self.source, "bg", preview=True)
+        TOOL.validate_terminology_resource_document(self.source, glossary, "bg")
+
+        self.assertEqual("preview", glossary["review_status"])
+        self.assertIsNone(glossary["reviewer"])
+        self.assertIsNone(glossary["reviewed_on"])
+        source_catalog = TOOL.read_json(TOOL.LOCALIZATION_SOURCE)
+        unresolved_ids = {
+            term["concept_id"]
+            for term in source_catalog["locales"]["bg"]["terminology"]["terms"]
+            if term["classification"] == "INSUFFICIENT_EVIDENCE"
+        }
+        runtime_by_id = {term["concept_id"]: term for term in glossary["terms"]}
+        self.assertTrue(unresolved_ids)
+        for concept_id in unresolved_ids:
+            self.assertEqual(
+                "suppress_pending_review",
+                runtime_by_id[concept_id]["english_reference_policy"],
+            )
+
     def test_production_requires_native_catalog_approval(self) -> None:
         with self.assertRaisesRegex(TOOL.LocalizationError, "catalog is not approved"):
             TOOL.terminology_catalog_locale(self.source, "cs", require_approved=True)

@@ -1,0 +1,133 @@
+{
+  "schema_version": 2,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "hr",
+  "review_status": "preview",
+  "reviewer": null,
+  "reviewed_on": null,
+  "ui_copy": {
+    "show_english_terms": "Prikaži engleske termine za kavu",
+    "hide_english_terms": "Sakrij engleske termine za kavu",
+    "heading": "Engleska terminologija kave"
+  },
+  "terms": [
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "dripper / kapalica",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "accepted_aliases": [
+        "kapalica",
+        "filter za ručno prelijevanje",
+        "dripperu",
+        "drippera"
+      ]
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "sloj kave",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "posteljica kave"
+      ]
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "cvjetanje (blooming)",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "accepted_aliases": [
+        "predinfuzija",
+        "blooming"
+      ]
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "mljevena kava",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "talog kave"
+      ]
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "coffee fines",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "sitne čestice kave",
+        "fines"
+      ]
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "coffee slurry",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "mješavina kave i vode"
+      ]
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "drawdown",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "vrijeme otjecanja"
+      ]
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "lagano zavrtjeti dripper",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "protresti",
+        "Rao Spin"
+      ]
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "vrč / posuda",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "server",
+        "karafa"
+      ]
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "imerzija / potpuno uranjanje",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "accepted_aliases": [
+        "imerzija",
+        "namakanje"
+      ]
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "ventil",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "kuglični ventil"
+      ]
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "papirnati filter",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "filter papir"
+      ]
+    }
+  ]
+}

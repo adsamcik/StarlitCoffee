@@ -1,0 +1,132 @@
+{
+  "schema_version": 2,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "et",
+  "review_status": "preview",
+  "reviewer": null,
+  "reviewed_on": null,
+  "ui_copy": {
+    "show_english_terms": "Kuva ingliskeelsed kohviterminid",
+    "hide_english_terms": "Peida ingliskeelsed kohviterminid",
+    "heading": "Ingliskeelsed kohviterminid"
+  },
+  "terms": [
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "kohvifilter / tilguti",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "accepted_aliases": [
+        "tilguti",
+        "dripper"
+      ]
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "coffee bed",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "kohvikiht"
+      ]
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "bloom",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "bloom",
+        "eelniisutus"
+      ]
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "jahvatatud kohv",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "accepted_aliases": [
+        "kohvipuru",
+        "kohvipaks"
+      ]
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "coffee fines",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "peenosakesed",
+        "fines"
+      ]
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "No established conventional term",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "accepted_aliases": [
+        "kohvi ja vee segu"
+      ]
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "drawdown",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "tilkumisaeg"
+      ]
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "keerutage filtrit / kannu",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "ringikujuline liigutus",
+        "swirl"
+      ]
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "klaaskann / kann",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "klaaskann",
+        "server"
+      ]
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "steep / immersion",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "tõmbama",
+        "immersioon"
+      ]
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "valve",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "accepted_aliases": [
+        "ventiil"
+      ]
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "paberfilter",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "filterpaber"
+      ]
+    }
+  ]
+}

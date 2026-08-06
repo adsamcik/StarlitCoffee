@@ -1,0 +1,140 @@
+{
+  "schema_version": 2,
+  "source_schema_version": "1.0.0",
+  "source_execution_date": "2026-07-27",
+  "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "locale": "zh",
+  "review_status": "preview",
+  "reviewer": null,
+  "reviewed_on": null,
+  "ui_copy": {
+    "show_english_terms": "显示英文咖啡术语",
+    "hide_english_terms": "隐藏英文咖啡术语",
+    "heading": "英文咖啡术语"
+  },
+  "terms": [
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "滤杯",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "手冲滤杯",
+        "咖啡滤杯",
+        "dripper"
+      ]
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "粉床",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "粉层",
+        "咖啡粉床"
+      ]
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "闷蒸",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "预浸润",
+        "bloom"
+      ]
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "咖啡粉",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "研磨咖啡粉",
+        "咖啡渣"
+      ]
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "细粉",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "极细粉",
+        "微粉"
+      ]
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "粉水混合物",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "accepted_aliases": [
+        "咖啡粉水混合物",
+        "slurry"
+      ]
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "下水阶段 / 滴滤结束时间",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "accepted_aliases": [
+        "下水速度",
+        "滴滤完成时间",
+        "尾段下水"
+      ]
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "旋转／晃动滤杯",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "晃动滤杯",
+        "Rao Spin",
+        "摇匀分享壶"
+      ]
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "分享壶",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "下壶",
+        "咖啡壶"
+      ]
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "浸泡 / 浸泡式萃取",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "全浸泡",
+        "浸泡时间"
+      ]
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "阀门 / 止水阀",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "阀门",
+        "开关"
+      ]
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "滤纸",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "accepted_aliases": [
+        "咖啡滤纸",
+        "纸滤器"
+      ]
+    }
+  ]
+}
