@@ -100,16 +100,18 @@ few stages.
 
 ## Automated checks
 
-Run the offline validator for reviewed locales:
+The same fail-closed checks run for localization changes on pull requests and
+`main`, and again inside the release APK job before compilation:
 
 ```powershell
 python tools\generate_p1_exact_guidance_localizations.py --check --locales en cs
 python tools\generate_p1_exact_terminology_references.py --check
-python toolsalidate_p1_exact_terminology_catalog.py
-python toolsudit_p1_exact_terminology_prose.py --check
+python tools\validate_p1_exact_terminology_catalog.py
+python tools\audit_p1_exact_terminology_prose.py --check
 python tools\generate_p1_exact_terminology_review_packets.py --check
 python tools\generate_p1_exact_terminology_locale_queue.py --check
 python tools\generate_p1_tracker_accepted_asset_catalog.py --check
+python -m unittest tools/test_generate_p1_exact_guidance_localizations.py tools/test_generate_p1_exact_guidance_offline_drafts.py tools/test_audit_p1_exact_terminology_prose.py
 ```
 
 The localization validator fails if a translation changes stable IDs, JSON
@@ -119,7 +121,9 @@ or practical tips. It also rejects blank output and excessive English fallback.
 Production promotion additionally requires an approved canonical catalog entry
 for every brewing concept, at least two cited sources from at least two source
 categories, two or more corroborating sources per concept, a clean concept-to-
-prose audit, and a named, dated native coffee-domain approval.
+prose audit, and a named, dated native coffee-domain approval. A generic locale
+with region-dependent terminology cannot be promoted; it must first be split
+into complete reviewed regional records.
 
 These checks establish structural and numerical safety. They do not replace the
 native-language and brewing-domain review above.

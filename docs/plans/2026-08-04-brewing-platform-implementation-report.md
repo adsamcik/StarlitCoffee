@@ -110,3 +110,37 @@ resource, and explicit coverage promotion. Each promoted locale must repeat the
 unit, lint, Detekt, assembly, instrumentation, accessibility, large-text, and
 light/dark checks. The current validators establish structural and numerical
 safety but cannot replace native-language editorial approval.
+
+## Localization architecture completion, 2026-08-06
+
+The multilingual exact-guidance implementation is now consolidated around one
+canonical source, `docs/brewing/p1-exact-localizations.json`. It contains all 827
+source-bound sentence translations and the 12-concept terminology record for
+each of the 22 non-English app locales. Runtime word substitution is forbidden;
+terminology policy guides complete sentence translation and contextual glossary
+behavior instead.
+
+The supplied terminology research is imported with immutable provenance: 264
+locale/concept records and 115 sources pass structural QC. Forty records across
+11 locales remain `INSUFFICIENT_EVIDENCE` and are withheld. All non-English
+records remain explicitly `researched_not_native_reviewed`; the repository does
+not misrepresent automated translation or research as native approval.
+
+Generated review packets, the all-locale readiness ledger, terminology-to-prose
+audit, strict promotion validator, and policy-aware runtime glossary schema are
+current. Pull requests and `main` changes now run these checks automatically,
+and release-tag APK builds repeat them before compilation. Exact guidance and
+terminology can only be promoted atomically.
+
+Portuguese is additionally fail-closed at the regional boundary. The generic
+`pt` research record contains five `REGION_DEPENDENT` concepts, so promotion is
+blocked until complete `pt-BR` and `pt-PT` language records and device validation
+exist. This avoids silently imposing Brazilian terminology on Portugal or the
+reverse.
+
+No non-English exact-guidance resource is production-approved. The remaining
+work is release validation that cannot be truthfully automated away: resolve the
+40 evidence gaps, complete named native coffee-domain review of every sentence
+and term, promote each approved locale atomically, and run its accessibility,
+large-text, light/dark-theme, and device checks. The readiness ledger records
+those requirements per locale.
