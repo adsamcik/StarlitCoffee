@@ -43,3 +43,9 @@ Use descriptive commit messages. A pull request should explain the user-visible
 outcome, validation performed, known tradeoffs, and any migration or release
 notes. User-visible changes belong in the Unreleased section of
 [CHANGELOG.md](CHANGELOG.md).
+
+## Contribution license
+
+By submitting a contribution, you confirm that you have the right to provide it
+and agree that it will be licensed under the project's
+[PolyForm Noncommercial License 1.0.0](LICENSE).

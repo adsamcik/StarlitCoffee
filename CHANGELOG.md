@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Noncommercial project license** — Starlit Coffee is now source-available
+  under PolyForm Noncommercial 1.0.0. Commercial use requires a separate
+  license from the project owner.
 - **Existing brewer curricula** now resolve through the shared profile and
   guidance catalogue rather than falling back to a generic brewer experience.
 - **Active-brew Picture-in-Picture** is limited to bounded timed stages and

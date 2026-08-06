@@ -96,6 +96,10 @@ not through a public issue.
 
 ## License
 
-An open-source license has not yet been selected. Until a license is added, the
-repository is publicly readable but no permission to copy, modify, or
-redistribute the work is granted beyond rights provided by applicable law.
+Starlit Coffee is source-available under the
+[PolyForm Noncommercial License 1.0.0](LICENSE). You may use, modify, and
+redistribute the project for permitted noncommercial purposes. Commercial use
+requires a separate license from the project owner.
+
+This is not an open-source license as defined by the Open Source Initiative.
+Third-party components remain subject to their own license terms.
