@@ -29,11 +29,19 @@ class P1ExactTerminologyLocaleSupportTest {
                 .replace("Show English terms", "${fixture.uiLabel} · show")
                 .replace("Hide English terms", "${fixture.uiLabel} · hide")
                 .replace("English terminology", fixture.uiLabel)
-                .replace(
-                    "\"concept_id\": \"drawdown\", \"preferred_local\": \"drawdown\"",
-                    "\"concept_id\": \"drawdown\", " +
-                        "\"preferred_local\": \"${fixture.localTerm}\"",
-                )
+                .replace("\"preferred_local\": \"drawdown\"", "\"preferred_local\": \"${fixture.localTerm}\"")
+                .let { glossary ->
+                    val drawdown = glossary.indexOf("\"concept_id\": \"drawdown\"")
+                    val policy = glossary.indexOf(
+                        "\"english_reference_policy\": \"established_local_usage\"",
+                        startIndex = drawdown,
+                    )
+                    if (locale == "en") glossary else glossary.replaceRange(
+                        policy,
+                        policy + "\"english_reference_policy\": \"established_local_usage\"".length,
+                        "\"english_reference_policy\": \"contextual_first_occurrence\"",
+                    )
+                }
             val catalog = BuiltInP1ExactTerminologyCatalog.decode(
                 encodedReferences = references,
                 encodedGlossary = glossary,

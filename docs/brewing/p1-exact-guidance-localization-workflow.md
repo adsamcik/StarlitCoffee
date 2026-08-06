@@ -65,9 +65,9 @@ python tools\generate_p1_exact_guidance_localizations.py --promote-reviewed --lo
 
 Promotion writes the exact guidance and locale glossary together. The glossary
 is ordered by the canonical semantic sidecar, carries the same source identity,
-and contains only the first approved preferred term for each concept. A missing,
-stale, unapproved, or wrong-locale glossary keeps non-English exact recipes
-release-gated.
+and preserves the approved preferred term, display policy, English-reference
+policy, and accepted search aliases for every concept. A missing, stale,
+unapproved, or wrong-locale glossary keeps non-English exact recipes release-gated.
 
 ## Required human review
 
@@ -85,9 +85,10 @@ few stages.
 6. Confirm coffee-community terminology is natural for the target language;
    avoid literal general-language senses of brewer, grounds, bed, bloom, fines,
    slurry, drawdown, spin, swirl, server, and dripper. Record the decision in
-   the editorial review's `terminology_review` crosswalk, including preferred
-   terms, accepted alternatives, misleading terms to avoid, and at least two
-   corroborating local-market sources per concept. Retain an English loanword
+   the locale entry of `p1-exact-localizations.json`, including preferred
+   usage, accepted and inflected alternatives, terms to avoid, audience/context
+   policy, and at least two corroborating local-market sources per concept.
+   Retain an English loanword
    when independent evidence shows that it is the normal local coffee term.
 7. Confirm brand and model names remain correct.
 8. Confirm alt text accurately describes the accepted image without adding
@@ -104,6 +105,8 @@ Run the offline validator for reviewed locales:
 ```powershell
 python tools\generate_p1_exact_guidance_localizations.py --check --locales en cs
 python tools\generate_p1_exact_terminology_references.py --check
+python toolsalidate_p1_exact_terminology_catalog.py
+python toolsudit_p1_exact_terminology_prose.py --check
 python tools\generate_p1_exact_terminology_review_packets.py --check
 python tools\generate_p1_exact_terminology_locale_queue.py --check
 python tools\generate_p1_tracker_accepted_asset_catalog.py --check
@@ -113,10 +116,10 @@ The localization validator fails if a translation changes stable IDs, JSON
 structure, provenance, evidence, utilities, visual priority, source metadata,
 numeric tokens, `None` sentinels, correlated actions, completion cues, warnings,
 or practical tips. It also rejects blank output and excessive English fallback.
-Production promotion additionally requires a complete terminology crosswalk for
-all canonical brewing concepts, at least two cited sources from at least two
-source categories, two or more corroborating sources per concept, and a named,
-dated native coffee-domain approval.
+Production promotion additionally requires an approved canonical catalog entry
+for every brewing concept, at least two cited sources from at least two source
+categories, two or more corroborating sources per concept, a clean concept-to-
+prose audit, and a named, dated native coffee-domain approval.
 
 These checks establish structural and numerical safety. They do not replace the
 native-language and brewing-domain review above.
@@ -124,11 +127,13 @@ native-language and brewing-domain review above.
 ## Czech editorial package, 2026-08-04
 
 The current Czech editorial review is source-hash-bound at
-`docs/brewing/p1-exact-guidance-editorial-reviews/cs.json`. All 20 recipe names
+`docs/brewing/p1-exact-guidance-editorial-reviews/cs.json` and references the
+canonical terminology catalog by research hash. All 20 recipe names
 and approaches and all eight mandatory categories for 114 stages have completed
-the internal editorial pass. The generated packet reports zero automated
-findings. Terminology decisions and Czech coffee-usage references are recorded
-in `p1-exact-guidance-cs-terminology.md`.
+the internal editorial pass. The generated packet reports zero structural
+findings. Current terminology evidence and review state live only in
+`p1-exact-localizations.json`; the superseded Czech-only terminology note was
+removed to prevent a second glossary authority.
 
 Its status is `ready_for_native_review`, not `approved`. No `raw-cs` production
 resource exists, Czech is absent from the reviewed-locale ledger, and runtime

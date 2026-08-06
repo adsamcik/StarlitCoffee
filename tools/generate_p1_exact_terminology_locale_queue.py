@@ -17,8 +17,7 @@ REFERENCE_MANIFEST = (
 REVIEW_LEDGER = ROOT / "docs/brewing/p1-exact-guidance-reviewed-locales.json"
 EDITORIAL_REVIEW_DIR = ROOT / "docs/brewing/p1-exact-guidance-editorial-reviews"
 REVIEW_PACKET_DIR = ROOT / "docs/brewing/p1-exact-terminology-review-packets"
-EXACT_DRAFTS = ROOT / "docs/brewing/p1-exact-guidance-offline-draft-translation-memory.json"
-TERMINOLOGY_CATALOG = ROOT / "docs/brewing/p1-exact-terminology-catalog.json"
+LOCALIZATION_SOURCE = ROOT / "docs/brewing/p1-exact-localizations.json"
 OUTPUT = ROOT / "docs/brewing/p1-exact-terminology-locale-queue.json"
 ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
 EXPECTED_LOCALE_COUNT = 23
@@ -68,16 +67,11 @@ def resource_path(locale: str, name: str) -> Path:
     return ROOT / "app/src/main/res" / qualifier / name
 
 
-def editorial_state(locale: str) -> tuple[str | None, str | None]:
+def editorial_state(locale: str) -> str | None:
     path = EDITORIAL_REVIEW_DIR / f"{locale}.json"
     if not path.exists():
-        return None, None
-    review = read_json(path)
-    terminology = review.get("terminology_review")
-    terminology_status = (
-        terminology.get("status") if isinstance(terminology, dict) else None
-    )
-    return review.get("status"), terminology_status
+        return None
+    return read_json(path).get("status")
 
 
 def missing_requirements(
@@ -128,11 +122,11 @@ def generate() -> dict:
 
     ledger = read_json(REVIEW_LEDGER)
     approvals = ledger.get("locales", {})
-    exact_drafts = read_json(EXACT_DRAFTS).get("translations", {})
-    terminology_catalog = read_json(TERMINOLOGY_CATALOG).get("locales", {})
+    localization_source = read_json(LOCALIZATION_SOURCE).get("locales", {})
     records: list[dict] = []
     for locale in locales:
-        editorial_status, terminology_status = editorial_state(locale)
+        editorial_status = editorial_state(locale)
+        terminology_status = None
         approval = approvals.get(locale)
         ledger_approved = isinstance(approval, dict) and approval.get("status") == "approved"
         if locale == "en":
@@ -141,9 +135,9 @@ def generate() -> dict:
             terminology_completeness = "canonical_source"
         else:
             exact_status = editorial_status or (
-                "local_draft_complete" if locale in exact_drafts else "not_started"
+                localization_source.get(locale, {}).get("guidance", {}).get("status", "not_started")
             )
-            catalog_locale = terminology_catalog.get(locale)
+            catalog_locale = localization_source.get(locale, {}).get("terminology")
             if not isinstance(catalog_locale, dict):
                 raise LocaleQueueError(f"Terminology catalog locale is missing: {locale}")
             terminology_status = catalog_locale.get("status")

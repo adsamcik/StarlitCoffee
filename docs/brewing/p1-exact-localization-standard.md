@@ -15,11 +15,13 @@ P1 localization has one semantic model and one maintained terminology catalog:
 - no runtime or build-time word substitution is allowed inside translated
   guidance.
 
-The canonical multilingual catalog is
-`docs/brewing/p1-exact-terminology-catalog.json`. It contains the same 12
-concepts for every non-English app locale. Review packets, readiness ledgers,
-search/glossary metadata, English-reference behavior, and future Android locale
-resources are derived from it. They are not independent places to edit terms.
+The canonical multilingual source is
+`docs/brewing/p1-exact-localizations.json`. Each non-English locale has one
+record containing its complete guidance-string translations and the same 12
+terminology concepts with policy and evidence. Review packets, readiness
+ledgers, search/glossary metadata, English-reference behavior, rendered drafts,
+and future Android locale resources are derived from it. They are not
+independent places to edit translated language.
 
 The dated files under `docs/brewing/research/terminology-2026-08-06` are immutable
 provenance for the current catalog. They support audit and regeneration but are
@@ -40,6 +42,13 @@ not a second product glossary.
 8. Run concept-aware consistency validation, then native coffee-domain review.
 
 The catalog guides sentence translation; it never assembles sentences.
+
+`tools/audit_p1_exact_terminology_prose.py` checks every semantic stage/concept
+occurrence against the locale catalog. For unapproved drafts it creates a review
+queue, because inflection and indirect descriptions cannot be judged safely by
+substring matching. For an approved locale, withheld records, unmatched
+concepts, or terms marked to avoid are release-blocking. The audit never rewrites
+prose.
 
 ## English-reference behavior
 
@@ -65,8 +74,7 @@ select English as the app language.
 
 - Canonical English guidance: `app/src/main/assets/p1_exact_guidance_2026_07_27.json`.
 - Semantic stage/concept links: `app/src/main/assets/p1_exact_terminology_references_2026_07_27.json`.
-- Complete localized sentence drafts: `docs/brewing/p1-exact-guidance-offline-draft-translation-memory.json`.
-- Multilingual terminology and policy: `docs/brewing/p1-exact-terminology-catalog.json`.
+- All localized sentence drafts, terminology, and locale UI copy: `docs/brewing/p1-exact-localizations.json`.
 - Research provenance: the dated research directory.
 
 Generated review packets, locale queues, and Android `raw-*` resources must

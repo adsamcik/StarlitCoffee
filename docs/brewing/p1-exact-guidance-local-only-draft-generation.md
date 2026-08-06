@@ -26,7 +26,7 @@ Pinned local runtime:
 - sentencepiece 0.2.0
 - sacremoses 0.1.1
 
-Committed source-bound memory: docs/brewing/p1-exact-guidance-offline-draft-translation-memory.json
+Committed source-bound memory: docs/brewing/p1-exact-localizations.json
 
 Ephemeral rendered drafts: build/p1-exact-guidance-localization-drafts/<locale>/p1_exact_guidance.json
 
@@ -60,7 +60,7 @@ Validate without loading a model by running the same generator, model path, and 
 
 ## Terminology and contextual UI copy
 
-The initial model-generated terminology was rejected after representative review found incorrect and truncated terms. It has been replaced by the evidence-backed multilingual catalog at `docs/brewing/p1-exact-terminology-catalog.json`.
+The initial model-generated terminology was rejected after representative review found incorrect and truncated terms. It has been replaced by the evidence-backed multilingual catalog at `docs/brewing/p1-exact-localizations.json`.
 
 The catalog covers all 12 canonical concepts and all 22 non-English locales in one schema. It records preferred usage, beginner descriptions, professional usage, accepted and inflected forms, terms to avoid, regional variants, classification, confidence, display policy, English-reference policy, evidence IDs, and native-review state. Czech now uses the same catalog path as every other locale rather than a parallel terminology source.
 

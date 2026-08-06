@@ -16,17 +16,18 @@ localizing `coffee bed` and `drawdown`. Brand and model names are never translat
 
 ## Evidence and approval contract
 
-Every non-English editorial review must contain a source-bound
-`terminology_review` with these canonical concepts:
+Every non-English locale must contain source-bound records in the canonical
+`p1-exact-localizations.json` for these concepts:
 
 - brewer/dripper, coffee bed, bloom, grounds, fines, slurry;
 - drawdown, swirl/spin, server/carafe, steep/immersion, valve, filter paper.
 
-For each concept, record canonical English, preferred local terms, accepted
-alternatives, misleading terms to avoid, a concise rationale, and at least two
-evidence source IDs. The complete source set must contain at least two sources
-and span at least two categories, such as localized manufacturer material and
-an established local specialty-coffee educator or retailer.
+For each concept, the catalog records canonical English, preferred local usage,
+accepted and inflected alternatives, misleading terms to avoid, audience and
+regional context, confidence, display policy, and evidence source IDs. Native
+approval requires at least two corroborating sources for every concept and at
+least two source categories across the locale, such as localized manufacturer
+material and an established local specialty-coffee educator or retailer.
 
 Source counts are corroboration, not proof of popularity. A named native
 coffee-domain reviewer must assess whether the evidence reflects current common
@@ -47,7 +48,7 @@ English exposure is determined first by the locale × concept policy in the cano
 - Mixed, audience-dependent, context-dependent, and regional terms expose English only according to their recorded policy.
 - `NO_ESTABLISHED_TERM` uses a natural description; `INSUFFICIENT_EVIDENCE` exposes no isolated label.
 - The optional expanded reference keeps the localized instruction unchanged.
-- The preference is shown only when the active locale has an approved crosswalk
+- The preference is shown only when the active locale has an approved catalog
   and the current content contains mapped terminology.
 - Safety warnings and primary actions never become bilingual fragments.
 - Users who want entirely English instructions should change the app language;
@@ -68,7 +69,7 @@ English, Bulgarian, Czech, Danish, German, Greek, Spanish, Estonian, Finnish,
 French, Croatian, Hungarian, Italian, Lithuanian, Latvian, Dutch, Polish,
 Portuguese, Romanian, Slovak, Slovenian, Swedish, and Simplified Chinese.
 
-All non-English locales are maintained in `p1-exact-terminology-catalog.json`. Source-bound packets under `p1-exact-terminology-review-packets` are generated review views, not independent glossaries. The catalog preserves all 12 concepts, evidence, usage classification, display policy, and unresolved fields for every locale.
+All non-English locales are maintained in `p1-exact-localizations.json`. Source-bound packets under `p1-exact-terminology-review-packets` are generated review views, not independent glossaries. The catalog preserves all 12 concepts, evidence, usage classification, display policy, and unresolved fields for every locale.
 
 `p1-exact-terminology-locale-queue.json` is the generated release-readiness
 authority for those 23 locales. It records the exact-guidance editorial state,

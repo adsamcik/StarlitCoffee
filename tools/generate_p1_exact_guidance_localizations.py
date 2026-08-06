@@ -24,6 +24,7 @@ EDITORIAL_REVIEW_DIR = ROOT / "docs/brewing/p1-exact-guidance-editorial-reviews"
 TERMINOLOGY_REFERENCE_MANIFEST = (
     ROOT / "app/src/main/assets/p1_exact_terminology_references_2026_07_27.json"
 )
+LOCALIZATION_SOURCE = ROOT / "docs/brewing/p1-exact-localizations.json"
 LOCALES = (
     "en", "bg", "cs", "da", "de", "el", "es", "et", "fi", "fr", "hr", "hu",
     "it", "lt", "lv", "nl", "pl", "pt", "ro", "sk", "sl", "sv", "zh",
@@ -57,13 +58,6 @@ REQUIRED_TERMINOLOGY_CONCEPTS = frozenset({
     "brewer_dripper", "coffee_bed", "bloom", "grounds", "fines", "slurry",
     "drawdown", "swirl_spin", "server_carafe", "steep_immersion", "valve",
     "filter_paper",
-})
-TERMINOLOGY_REVIEW_STATUSES = frozenset({
-    "draft", "ready_for_native_review", "approved",
-})
-TERMINOLOGY_SOURCE_CATEGORIES = frozenset({
-    "manufacturer", "coffee_association", "specialty_educator",
-    "specialty_retailer", "academic",
 })
 
 
@@ -232,7 +226,12 @@ def load_memory(memory_path: Path) -> dict:
             "translations": {},
         }
     memory = read_json(memory_path)
-    if memory.get("source_sha256") != source_sha256():
+    memory_source = (
+        memory.get("guidance_translation_source_sha256")
+        if "locales" in memory
+        else memory.get("source_sha256")
+    )
+    if memory_source != source_sha256():
         raise LocalizationError("Translation memory belongs to a different canonical source")
     return memory
 
@@ -286,127 +285,63 @@ def sanitize_translated_text(value: str) -> str:
     )
 
 
-def validate_terminology_review(
-    review: dict,
+def terminology_catalog_locale(
+    source: dict,
     locale: str,
     require_approved: bool,
-) -> None:
-    terminology = review.get("terminology_review")
-    if not isinstance(terminology, dict):
-        if require_approved:
-            raise LocalizationError(f"{locale}: terminology review is missing")
-        return
-
-    status = terminology.get("status")
-    if status not in TERMINOLOGY_REVIEW_STATUSES:
-        raise LocalizationError(f"{locale}: terminology review status is invalid")
-    ui_copy = terminology.get("ui_copy")
-    required_ui_copy = {
-        "show_english_terms", "hide_english_terms", "heading",
-    }
-    if (
-        not isinstance(ui_copy, dict)
-        or set(ui_copy) != required_ui_copy
-        or any(
-            not isinstance(ui_copy[key], str) or not ui_copy[key].strip()
-            for key in required_ui_copy
-        )
+    override: dict | None = None,
+) -> dict:
+    catalog = read_json(LOCALIZATION_SOURCE)
+    for key in ("source_schema_version", "source_execution_date", "source_sha256"):
+        if catalog.get(key) != source.get(key):
+            raise LocalizationError(f"{locale}: terminology catalog {key} differs")
+    record = override or catalog.get("locales", {}).get(locale, {}).get("terminology")
+    if not isinstance(record, dict):
+        raise LocalizationError(f"{locale}: terminology catalog locale is missing")
+    status = record.get("status")
+    if status not in {"researched_not_native_reviewed", "approved"}:
+        raise LocalizationError(f"{locale}: terminology catalog status is invalid")
+    terms = record.get("terms")
+    if not isinstance(terms, list) or [term.get("concept_id") for term in terms if isinstance(term, dict)] != [
+        concept["id"] for concept in canonical_terminology_concepts(source)
+    ]:
+        raise LocalizationError(f"{locale}: terminology catalog concepts differ")
+    ui_copy = record.get("ui_copy")
+    required_ui_copy = {"show_english_terms", "hide_english_terms", "heading"}
+    if not isinstance(ui_copy, dict) or set(ui_copy) != required_ui_copy or any(
+        not isinstance(ui_copy[key], str) or not ui_copy[key].strip() for key in required_ui_copy
     ):
-        raise LocalizationError(f"{locale}: terminology UI copy is incomplete")
-    sources = terminology.get("sources")
-    if not isinstance(sources, list) or len(sources) < 2:
-        raise LocalizationError(
-            f"{locale}: terminology review requires at least two sources",
-        )
-    source_ids: set[str] = set()
-    for source in sources:
-        if not isinstance(source, dict):
-            raise LocalizationError(f"{locale}: invalid terminology source")
-        source_id = source.get("id")
-        title = source.get("title")
-        url = source.get("url")
-        category = source.get("category")
+        raise LocalizationError(f"{locale}: terminology catalog UI copy is incomplete")
+    for term in terms:
         if (
-            not isinstance(source_id, str) or not source_id.strip()
-            or not isinstance(title, str) or not title.strip()
-            or not isinstance(url, str) or not re.fullmatch(r"https://.+", url)
-            or category not in TERMINOLOGY_SOURCE_CATEGORIES
+            not isinstance(term.get("display_policy"), str)
+            or not term["display_policy"].strip()
+            or not isinstance(term.get("english_reference_policy"), str)
+            or not term["english_reference_policy"].strip()
+            or not isinstance(term.get("accepted_alternatives"), list)
+            or not isinstance(term.get("inflected_or_adapted_forms"), list)
         ):
-            raise LocalizationError(f"{locale}: incomplete terminology source")
-        if source_id in source_ids:
-            raise LocalizationError(f"{locale}: duplicate terminology source {source_id}")
-        source_ids.add(source_id)
-    if len({source["category"] for source in sources}) < 2:
-        raise LocalizationError(
-            f"{locale}: terminology sources must span at least two source categories",
-        )
-
-    concepts = terminology.get("concepts")
-    if not isinstance(concepts, dict):
-        raise LocalizationError(f"{locale}: terminology concepts are missing")
-    missing = REQUIRED_TERMINOLOGY_CONCEPTS - set(concepts)
-    if missing:
-        raise LocalizationError(
-            f"{locale}: terminology review is missing concepts: {sorted(missing)}",
-        )
-    for concept_id, concept in concepts.items():
-        if concept_id not in REQUIRED_TERMINOLOGY_CONCEPTS:
-            raise LocalizationError(
-                f"{locale}: unknown terminology concept {concept_id}",
-            )
-        if not isinstance(concept, dict):
-            raise LocalizationError(
-                f"{locale}: invalid terminology concept {concept_id}",
-            )
-        english = concept.get("canonical_english")
-        preferred = concept.get("preferred_terms")
-        accepted = concept.get("accepted_alternatives")
-        avoid = concept.get("avoid")
-        rationale = concept.get("rationale")
-        evidence = concept.get("evidence_source_ids")
-        if not isinstance(english, str) or not english.strip():
-            raise LocalizationError(
-                f"{locale}: {concept_id} canonical English term is missing",
-            )
-        if (
-            not isinstance(preferred, list) or not preferred
-            or any(not isinstance(term, str) or not term.strip() for term in preferred)
-        ):
-            raise LocalizationError(
-                f"{locale}: {concept_id} preferred terminology is missing",
-            )
-        if not isinstance(accepted, list) or any(
-            not isinstance(term, str) or not term.strip() for term in accepted
-        ):
-            raise LocalizationError(
-                f"{locale}: {concept_id} accepted alternatives are invalid",
-            )
-        if not isinstance(avoid, list) or any(
-            not isinstance(term, str) or not term.strip() for term in avoid
-        ):
-            raise LocalizationError(f"{locale}: {concept_id} avoid list is invalid")
-        if not isinstance(rationale, str) or not rationale.strip():
-            raise LocalizationError(f"{locale}: {concept_id} rationale is missing")
-        if (
-            not isinstance(evidence, list) or len(evidence) < 2
-            or any(source_id not in source_ids for source_id in evidence)
-        ):
-            raise LocalizationError(
-                f"{locale}: {concept_id} evidence sources are invalid",
-            )
-
+            raise LocalizationError(f"{locale}: terminology catalog term is incomplete")
     if require_approved:
-        reviewer = terminology.get("reviewer")
-        reviewed_on = terminology.get("reviewed_on")
         if status != "approved":
-            raise LocalizationError(f"{locale}: terminology review is not approved")
-        if not isinstance(reviewer, str) or not reviewer.strip():
-            raise LocalizationError(f"{locale}: terminology reviewer is missing")
-        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(reviewed_on or "")):
-            raise LocalizationError(
-                f"{locale}: terminology review date must use YYYY-MM-DD",
-            )
-
+            raise LocalizationError(f"{locale}: terminology catalog is not approved")
+        if record.get("insufficient_evidence_count") != 0:
+            raise LocalizationError(f"{locale}: terminology catalog retains insufficient evidence")
+        if not isinstance(record.get("reviewer"), str) or not record["reviewer"].strip():
+            raise LocalizationError(f"{locale}: terminology catalog reviewer is missing")
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(record.get("reviewed_on") or "")):
+            raise LocalizationError(f"{locale}: terminology catalog review date must use YYYY-MM-DD")
+        if any(
+            not isinstance(term.get("preferred_display_term"), str)
+            or not term["preferred_display_term"].strip()
+            or term.get("display_policy") == "withhold_pending_review"
+            or term.get("english_reference_policy") == "suppress_pending_review"
+            or not isinstance(term.get("evidence_source_ids"), list)
+            or len(set(term["evidence_source_ids"])) < 2
+            for term in terms
+        ):
+            raise LocalizationError(f"{locale}: approved terminology catalog contains unresolved terms or evidence")
+    return record
 
 def canonical_terminology_concepts(source: dict) -> list[dict]:
     manifest = read_json(TERMINOLOGY_REFERENCE_MANIFEST)
@@ -436,14 +371,18 @@ def canonical_terminology_concepts(source: dict) -> list[dict]:
 def terminology_resource_document(
     source: dict,
     locale: str,
-    review: dict | None = None,
+    catalog_locale: dict | None = None,
 ) -> dict:
-    review = review or read_json(editorial_review_path(locale))
-    validate_terminology_review(review, locale, require_approved=True)
-    terminology = review["terminology_review"]
+    terminology = terminology_catalog_locale(
+        source,
+        locale,
+        require_approved=True,
+        override=catalog_locale,
+    )
     concepts = canonical_terminology_concepts(source)
+    terms_by_id = {term["concept_id"]: term for term in terminology["terms"]}
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_schema_version": source["source_schema_version"],
         "source_execution_date": source["source_execution_date"],
         "source_sha256": source["source_sha256"],
@@ -455,21 +394,24 @@ def terminology_resource_document(
         "terms": [
             {
                 "concept_id": concept["id"],
-                "preferred_local": terminology["concepts"][concept["id"]][
-                    "preferred_terms"
-                ][0],
+                "preferred_local": terms_by_id[concept["id"]]["preferred_display_term"],
+                "display_policy": terms_by_id[concept["id"]]["display_policy"],
+                "english_reference_policy": terms_by_id[concept["id"]]["english_reference_policy"],
+                "accepted_aliases": list(dict.fromkeys(
+                    [item["term"] for item in terms_by_id[concept["id"]]["accepted_alternatives"]]
+                    + terms_by_id[concept["id"]]["inflected_or_adapted_forms"]
+                )),
             }
             for concept in concepts
         ],
     }
-
 
 def validate_terminology_resource_document(
     source: dict,
     localized: dict,
     locale: str,
 ) -> None:
-    if localized.get("schema_version") != 1:
+    if localized.get("schema_version") != 2:
         raise LocalizationError(f"{locale}: runtime terminology schema is invalid")
     for key in ("source_schema_version", "source_execution_date", "source_sha256"):
         if localized.get(key) != source.get(key):
@@ -506,9 +448,18 @@ def validate_terminology_resource_document(
         raise LocalizationError(f"{locale}: runtime terminology concept order differs")
     if any(
         not isinstance(term, dict)
-        or set(term) != {"concept_id", "preferred_local"}
+        or set(term) != {
+            "concept_id", "preferred_local", "display_policy",
+            "english_reference_policy", "accepted_aliases",
+        }
         or not isinstance(term["preferred_local"], str)
         or not term["preferred_local"].strip()
+        or not isinstance(term["display_policy"], str)
+        or not term["display_policy"].strip()
+        or not isinstance(term["english_reference_policy"], str)
+        or not term["english_reference_policy"].strip()
+        or not isinstance(term["accepted_aliases"], list)
+        or any(not isinstance(alias, str) or not alias.strip() for alias in term["accepted_aliases"])
         for term in terms
     ):
         raise LocalizationError(f"{locale}: runtime terminology term is invalid")
@@ -542,7 +493,15 @@ def apply_editorial_review(
         raise LocalizationError(f"{locale}: editorial review belongs to another source")
     if review.get("locale") != locale:
         raise LocalizationError(f"{locale}: editorial review locale does not match")
-    validate_terminology_review(review, locale, require_approved)
+    catalog_reference = review.get("terminology_catalog")
+    catalog = read_json(LOCALIZATION_SOURCE)
+    if not isinstance(catalog_reference, dict) or catalog_reference != {
+        "path": LOCALIZATION_SOURCE.relative_to(ROOT).as_posix(),
+        "research_records_sha256": catalog.get("terminology_research_records_sha256"),
+        "status": catalog.get("locales", {}).get(locale, {}).get("terminology", {}).get("status"),
+    }:
+        raise LocalizationError(f"{locale}: editorial terminology catalog reference differs")
+    terminology_catalog_locale(source, locale, require_approved)
     reviews = review.get("stages")
     if not isinstance(reviews, dict):
         raise LocalizationError(f"{locale}: editorial stage reviews are missing")
@@ -676,7 +635,10 @@ def localized_document(
 ) -> dict:
     if locale == "en":
         return copy.deepcopy(source)
-    translations = memory["translations"].get(locale, {})
+    if "locales" in memory:
+        translations = memory.get("locales", {}).get(locale, {}).get("guidance", {}).get("translations", {})
+    else:
+        translations = memory.get("translations", {}).get(locale, {})
     localized = copy.deepcopy(source)
     for container, key in iter_text_slots(localized):
         source_value = container[key]

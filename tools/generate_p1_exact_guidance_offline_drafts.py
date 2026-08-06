@@ -26,7 +26,7 @@ from generate_p1_exact_guidance_localizations import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-MEMORY_PATH = ROOT / "docs/brewing/p1-exact-guidance-offline-draft-translation-memory.json"
+MEMORY_PATH = ROOT / "docs/brewing/p1-exact-localizations.json"
 LOCALE_TARGETS = {
     "bg": "bul_Cyrl", "cs": "ces_Latn", "da": "dan_Latn",
     "de": "deu_Latn", "el": "ell_Grek", "es": "spa_Latn",
@@ -221,15 +221,16 @@ def parse_args() -> argparse.Namespace:
 
 
 def validate_memory(memory: dict, locales: list[str], sources: list[str]) -> None:
-    if memory.get("source_sha256") != source_sha256():
+    if memory.get("guidance_translation_source_sha256") != source_sha256():
         raise LocalizationError("Offline draft memory belongs to another canonical source")
-    if memory.get("engine") != ENGINE:
+    if memory.get("translation_engine") != ENGINE:
         raise LocalizationError("Offline draft memory has an unexpected engine identity")
-    translations = memory.get("translations")
-    if not isinstance(translations, dict):
-        raise LocalizationError("Offline draft memory translations are missing")
+    locale_records = memory.get("locales")
+    if not isinstance(locale_records, dict):
+        raise LocalizationError("Offline localization records are missing")
     for locale in locales:
-        localized = translations.get(locale)
+        locale_record = locale_records.get(locale)
+        localized = locale_record.get("guidance", {}).get("translations") if isinstance(locale_record, dict) else None
         if not isinstance(localized, dict):
             raise LocalizationError(f"{locale}: offline draft memory is missing")
         missing = set(sources) - set(localized)
@@ -268,10 +269,10 @@ def translate_locales(
         model_path, local_files_only=True
     )
     model.eval()
-    memory["engine"] = ENGINE
+    memory["translation_engine"] = ENGINE
 
     for locale in locales:
-        locale_memory = memory["translations"].setdefault(locale, {})
+        locale_memory = memory["locales"][locale]["guidance"]["translations"]
         for source in sources:
             if not re.search(r"[A-Za-z]{2,}", source):
                 locale_memory.setdefault(source, source)
@@ -336,7 +337,7 @@ def main() -> int:
         source = read_json(SOURCE)
         sources = translatable_strings(source)
         memory = load_memory(args.memory_path)
-        memory["engine"] = ENGINE
+        memory["translation_engine"] = ENGINE
 
         if not args.check:
             translate_locales(

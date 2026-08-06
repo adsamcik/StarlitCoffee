@@ -60,9 +60,9 @@ class OfflineExactGuidanceDraftTest(unittest.TestCase):
         memory = base.read_json(exact.MEMORY_PATH)
         locales = list(exact.LOCALE_TARGETS)
         exact.validate_memory(memory, locales, strings)
-        self.assertEqual(22, len(memory["translations"]))
+        self.assertEqual(22, len(memory["locales"]))
         self.assertTrue(
-            all(len(memory["translations"][locale]) == 827 for locale in locales)
+            all(len(memory["locales"][locale]["guidance"]["translations"]) == 827 for locale in locales)
         )
 
 
@@ -72,7 +72,7 @@ class CanonicalTerminologyCatalogTest(unittest.TestCase):
         document = terminology.read_json(terminology.CATALOG)
         self.assertEqual(22, len(document["locales"]))
         self.assertTrue(
-            all(len(locale["terms"]) == 12 for locale in document["locales"].values())
+            all(len(locale["terminology"]["terms"]) == 12 for locale in document["locales"].values())
         )
 
     def test_insufficient_evidence_is_withheld(self) -> None:
@@ -80,7 +80,7 @@ class CanonicalTerminologyCatalogTest(unittest.TestCase):
         insufficient = [
             term
             for locale in document["locales"].values()
-            for term in locale["terms"]
+            for term in locale["terminology"]["terms"]
             if term["classification"] == "INSUFFICIENT_EVIDENCE"
         ]
         self.assertEqual(40, len(insufficient))

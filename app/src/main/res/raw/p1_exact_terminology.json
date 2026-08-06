@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
@@ -13,17 +13,89 @@
     "heading": "English terminology"
   },
   "terms": [
-    { "concept_id": "brewer_dripper", "preferred_local": "brewer / dripper" },
-    { "concept_id": "coffee_bed", "preferred_local": "coffee bed" },
-    { "concept_id": "bloom", "preferred_local": "bloom" },
-    { "concept_id": "grounds", "preferred_local": "coffee grounds" },
-    { "concept_id": "fines", "preferred_local": "coffee fines" },
-    { "concept_id": "slurry", "preferred_local": "coffee slurry" },
-    { "concept_id": "drawdown", "preferred_local": "drawdown" },
-    { "concept_id": "swirl_spin", "preferred_local": "swirl / spin" },
-    { "concept_id": "server_carafe", "preferred_local": "server / carafe" },
-    { "concept_id": "steep_immersion", "preferred_local": "steep / immersion" },
-    { "concept_id": "valve", "preferred_local": "valve" },
-    { "concept_id": "filter_paper", "preferred_local": "filter paper" }
+    {
+      "concept_id": "brewer_dripper",
+      "preferred_local": "brewer / dripper",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "coffee_bed",
+      "preferred_local": "coffee bed",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "bloom",
+      "preferred_local": "bloom",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "grounds",
+      "preferred_local": "coffee grounds",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "fines",
+      "preferred_local": "coffee fines",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "slurry",
+      "preferred_local": "coffee slurry",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "drawdown",
+      "preferred_local": "drawdown",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "swirl_spin",
+      "preferred_local": "swirl / spin",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "server_carafe",
+      "preferred_local": "server / carafe",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "steep_immersion",
+      "preferred_local": "steep / immersion",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "valve",
+      "preferred_local": "valve",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    },
+    {
+      "concept_id": "filter_paper",
+      "preferred_local": "filter paper",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "established_local_usage",
+      "accepted_aliases": []
+    }
   ]
 }

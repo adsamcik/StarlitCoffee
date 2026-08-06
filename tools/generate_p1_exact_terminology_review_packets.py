@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOCALE_CONFIG = ROOT / "app/src/main/res/xml/locales_config.xml"
 REFERENCES = ROOT / "app/src/main/assets/p1_exact_terminology_references_2026_07_27.json"
 ENGLISH_GLOSSARY = ROOT / "app/src/main/res/raw/p1_exact_terminology.json"
-CATALOG = ROOT / "docs/brewing/p1-exact-terminology-catalog.json"
+CATALOG = ROOT / "docs/brewing/p1-exact-localizations.json"
 SOURCE_REGISTER = ROOT / "docs/brewing/research/terminology-2026-08-06/coffee_brewing_terminology_sources_2026-08-06.jsonl"
 OUTPUT_DIR = ROOT / "docs/brewing/p1-exact-terminology-review-packets"
 ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
@@ -89,7 +89,7 @@ def english_packet(references: dict) -> dict:
 
 
 def localized_packet(references: dict, catalog: dict, source_by_id: dict[str, dict], locale: str) -> dict:
-    locale_record = catalog["locales"][locale]
+    locale_record = catalog["locales"][locale]["terminology"]
     used_source_ids = list(dict.fromkeys(
         source_id
         for term in locale_record["terms"]
@@ -141,8 +141,8 @@ def localized_packet(references: dict, catalog: dict, source_by_id: dict[str, di
         "source_schema_version": references["source_schema_version"],
         "source_execution_date": references["source_execution_date"],
         "source_sha256": references["source_sha256"],
-        "research_execution_date": catalog["research_execution_date"],
-        "research_records_sha256": catalog["research_records_sha256"],
+        "research_execution_date": catalog["terminology_research_execution_date"],
+        "research_records_sha256": catalog["terminology_research_records_sha256"],
         "locale": locale,
         "status": locale_record["status"],
         "research_completeness": locale_record["research_completeness"],

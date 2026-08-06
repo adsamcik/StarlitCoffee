@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 LOCALE_CONFIG = ROOT / "app/src/main/res/xml/locales_config.xml"
 REFERENCES = ROOT / "app/src/main/assets/p1_exact_terminology_references_2026_07_27.json"
-CATALOG = ROOT / "docs/brewing/p1-exact-terminology-catalog.json"
+CATALOG = ROOT / "docs/brewing/p1-exact-localizations.json"
 RESEARCH_DIR = ROOT / "docs/brewing/research/terminology-2026-08-06"
 RECORDS = RESEARCH_DIR / "coffee_brewing_terminology_records_2026-08-06.jsonl"
 SOURCES = RESEARCH_DIR / "coffee_brewing_terminology_sources_2026-08-06.jsonl"
@@ -90,20 +90,25 @@ def validate() -> None:
     for key in ("source_schema_version", "source_execution_date", "source_sha256"):
         if catalog.get(key) != references.get(key):
             raise CatalogError(f"Catalog {key} differs from canonical guidance")
-    if catalog.get("research_records_sha256") != RECORDS_SHA256:
+    if catalog.get("terminology_research_records_sha256") != RECORDS_SHA256:
         raise CatalogError("Catalog research provenance differs")
     standard = catalog.get("translation_standard", {})
     if standard.get("runtime_substitution") != "forbidden" or standard.get("sentence_strategy") != "translate_complete_natural_sentences":
         raise CatalogError("Catalog translation standard permits fragmented sentences")
 
     locale_ids = locales()
-    locale_records = catalog.get("locales")
-    if not isinstance(locale_records, dict) or list(locale_records) != locale_ids:
+    localization_records = catalog.get("locales")
+    locale_records = {
+        locale: record.get("terminology")
+        for locale, record in localization_records.items()
+    } if isinstance(localization_records, dict) else None
+    if not isinstance(locale_records, dict) or list(locale_records) != locale_ids or any(not isinstance(record, dict) for record in locale_records.values()):
         raise CatalogError("Catalog locale coverage or order differs from the app")
     canonical = {item["id"]: item["canonical_english"] for item in references["concepts"]}
     canonical_order = list(canonical)
     research_by_key = {(app_locale(item["locale"]), concept_id(item["concept_id"])): item for item in research}
-    source_ids = {item["id"] for item in sources}
+    source_by_id = {item["id"]: item for item in sources}
+    source_ids = set(source_by_id)
     if len(research_by_key) != 264 or len(source_ids) != 115:
         raise CatalogError("Research matrix or source register is incomplete")
 
@@ -142,6 +147,8 @@ def validate() -> None:
             evidence_ids = term.get("evidence_source_ids")
             if not isinstance(evidence_ids, list) or any(value not in source_ids for value in evidence_ids):
                 raise CatalogError(f"{locale}/{term_id}: evidence source differs")
+            if status == "approved" and len(set(evidence_ids)) < 2:
+                raise CatalogError(f"{locale}/{term_id}: approved term lacks corroborating evidence")
             is_insufficient = term["classification"] == "INSUFFICIENT_EVIDENCE"
             insufficient += is_insufficient
             if is_insufficient:
@@ -154,6 +161,12 @@ def validate() -> None:
                 expected_preferred = None if source["classification"] == "INSUFFICIENT_EVIDENCE" else source["preferred_term"]
                 if term.get("preferred_display_term") != expected_preferred or term.get("classification") != source["classification"] or term.get("confidence") != source["confidence"]:
                     raise CatalogError(f"{locale}/{term_id}: unreviewed term differs from researched evidence")
+        if status == "approved":
+            approved_source_ids = {
+                source_id for term in terms for source_id in term["evidence_source_ids"]
+            }
+            if len({source_by_id[source_id]["source_type"] for source_id in approved_source_ids}) < 2:
+                raise CatalogError(f"{locale}: approved terms lack source-category diversity")
         if insufficient != locale_record.get("insufficient_evidence_count"):
             raise CatalogError(f"{locale}: insufficient-evidence count differs")
         if status == "approved" and insufficient:

@@ -9,10 +9,38 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
+enum class BrewingEnglishReferencePolicy(val encodedValue: String) {
+    GLOSSARY_AND_SEARCH("glossary_and_search"),
+    ESTABLISHED_LOCAL_USAGE("established_local_usage"),
+    CONTEXTUAL_FIRST_OCCURRENCE("contextual_first_occurrence"),
+    CONTEXTUAL_ADVANCED_GUIDANCE("contextual_advanced_guidance"),
+    CONTEXTUAL_WHEN_RELEVANT("contextual_when_relevant"),
+    REGION_SPECIFIC("region_specific"),
+    SUPPRESS_USE_DESCRIPTION("suppress_use_description"),
+    SUPPRESS_PENDING_REVIEW("suppress_pending_review"),
+    ;
+
+    val exposesReference: Boolean
+        get() = this !in setOf(
+            ESTABLISHED_LOCAL_USAGE,
+            SUPPRESS_USE_DESCRIPTION,
+            SUPPRESS_PENDING_REVIEW,
+        )
+
+    companion object {
+        fun fromEncoded(value: String): BrewingEnglishReferencePolicy =
+            entries.firstOrNull { policy -> policy.encodedValue == value }
+                ?: throw IllegalArgumentException("Unknown English-reference policy: $value")
+    }
+}
+
 data class BrewingTerminologyReference(
     val conceptId: String,
     val preferredLocal: String,
     val canonicalEnglish: String,
+    val englishReferencePolicy: BrewingEnglishReferencePolicy =
+        BrewingEnglishReferencePolicy.GLOSSARY_AND_SEARCH,
+    val acceptedAliases: List<String> = emptyList(),
 )
 
 data class BrewingTerminologyUiCopy(
@@ -39,7 +67,8 @@ class P1ExactTerminologyCatalog internal constructor(
 }
 
 private fun BrewingTerminologyReference.isDistinctFromEnglish(): Boolean =
-    preferredLocal.trim().lowercase() != canonicalEnglish.trim().lowercase()
+    englishReferencePolicy.exposesReference &&
+        preferredLocal.trim().lowercase() != canonicalEnglish.trim().lowercase()
 
 sealed interface BuiltInP1ExactTerminologyLoadResult {
     data class Loaded(
@@ -51,7 +80,8 @@ sealed interface BuiltInP1ExactTerminologyLoadResult {
 
 object BuiltInP1ExactTerminologyCatalog {
     const val REFERENCE_ASSET_NAME = "p1_exact_terminology_references_2026_07_27.json"
-    private const val SCHEMA_VERSION = 1
+    private const val REFERENCE_SCHEMA_VERSION = 1
+    private const val GLOSSARY_SCHEMA_VERSION = 2
     private val stableId = Regex("[a-z][a-z0-9]*(?:_[a-z0-9]+)*")
     private val reviewDate = Regex("\\d{4}-\\d{2}-\\d{2}")
     private val json = Json {
@@ -86,7 +116,16 @@ object BuiltInP1ExactTerminologyCatalog {
             require(term.preferredLocal.isNotBlank()) {
                 "Preferred localized terminology cannot be blank: ${term.conceptId}"
             }
-            term.conceptId to term.preferredLocal
+            require(term.displayPolicy.isNotBlank()) {
+                "Localized terminology display policy cannot be blank: ${term.conceptId}"
+            }
+            require(term.acceptedAliases.all(String::isNotBlank)) {
+                "Localized terminology aliases cannot be blank: ${term.conceptId}"
+            }
+            require(term.acceptedAliases.distinct().size == term.acceptedAliases.size) {
+                "Localized terminology aliases cannot be duplicated: ${term.conceptId}"
+            }
+            term.conceptId to term
         }
         require(localById.size == glossary.terms.size) {
             "Duplicate localized terminology concept ID"
@@ -107,8 +146,12 @@ object BuiltInP1ExactTerminologyCatalog {
             StageContentId(stage.contentId) to stage.conceptIds.map { conceptId ->
                 BrewingTerminologyReference(
                     conceptId = conceptId,
-                    preferredLocal = requireNotNull(localById[conceptId]),
+                    preferredLocal = requireNotNull(localById[conceptId]).preferredLocal,
                     canonicalEnglish = requireNotNull(canonicalById[conceptId]),
+                    englishReferencePolicy = BrewingEnglishReferencePolicy.fromEncoded(
+                        requireNotNull(localById[conceptId]).englishReferencePolicy,
+                    ),
+                    acceptedAliases = requireNotNull(localById[conceptId]).acceptedAliases,
                 )
             }
         }
@@ -128,7 +171,7 @@ object BuiltInP1ExactTerminologyCatalog {
     }
 
     private fun TerminologyReferenceManifestDto.requireCanonicalIdentity() {
-        require(schemaVersion == SCHEMA_VERSION) { "Terminology reference schema mismatch" }
+        require(schemaVersion == REFERENCE_SCHEMA_VERSION) { "Terminology reference schema mismatch" }
         require(sourceSchemaVersion == BuiltInP1ExactGuidanceCatalog.SOURCE_SCHEMA_VERSION) {
             "Terminology reference source schema mismatch"
         }
@@ -143,7 +186,7 @@ object BuiltInP1ExactTerminologyCatalog {
     }
 
     private fun TerminologyGlossaryDto.requireCanonicalIdentity(activeLocaleTag: String) {
-        require(schemaVersion == SCHEMA_VERSION) { "Terminology glossary schema mismatch" }
+        require(schemaVersion == GLOSSARY_SCHEMA_VERSION) { "Terminology glossary schema mismatch" }
         require(sourceSchemaVersion == BuiltInP1ExactGuidanceCatalog.SOURCE_SCHEMA_VERSION) {
             "Terminology glossary source schema mismatch"
         }
@@ -260,4 +303,7 @@ private data class TerminologyUiCopyDto(
 private data class LocalizedTerminologyTermDto(
     @SerialName("concept_id") val conceptId: String,
     @SerialName("preferred_local") val preferredLocal: String,
+    @SerialName("display_policy") val displayPolicy: String,
+    @SerialName("english_reference_policy") val englishReferencePolicy: String,
+    @SerialName("accepted_aliases") val acceptedAliases: List<String>,
 )

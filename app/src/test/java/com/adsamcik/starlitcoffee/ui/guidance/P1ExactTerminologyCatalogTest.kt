@@ -38,11 +38,13 @@ class P1ExactTerminologyCatalogTest {
                     conceptId = "brewer_dripper",
                     preferredLocal = "dripper",
                     canonicalEnglish = "brewer / dripper",
+                    englishReferencePolicy = BrewingEnglishReferencePolicy.CONTEXTUAL_WHEN_RELEVANT,
                 ),
                 BrewingTerminologyReference(
                     conceptId = "drawdown",
                     preferredLocal = "dokapání",
                     canonicalEnglish = "drawdown",
+                    englishReferencePolicy = BrewingEnglishReferencePolicy.CONTEXTUAL_FIRST_OCCURRENCE,
                 ),
             ),
             catalog.referencesFor(DRAWDOWN_STAGE),
@@ -79,23 +81,51 @@ class P1ExactTerminologyCatalogTest {
         }
     }
 
-    private fun czechGlossary(): String = englishGlossary().readText()
-        .replace("\"locale\": \"en\"", "\"locale\": \"cs\"")
-        .replace(
-            "Canonical evidence library and Starlit Coffee implementation review",
-            "Native Czech coffee reviewer",
+    private fun czechGlossary(): String {
+        var glossary = englishGlossary().readText()
+            .replace("\"locale\": \"en\"", "\"locale\": \"cs\"")
+            .replace(
+                "Canonical evidence library and Starlit Coffee implementation review",
+                "Native Czech coffee reviewer",
+            )
+            .replace("Show English terms", "Zobrazit anglické termíny")
+            .replace("Hide English terms", "Skrýt anglické termíny")
+            .replace("English terminology", "Anglická terminologie")
+        glossary = localizedTerm(
+            glossary,
+            conceptId = "brewer_dripper",
+            source = "brewer / dripper",
+            localized = "dripper",
+            policy = "contextual_when_relevant",
         )
-        .replace("Show English terms", "Zobrazit anglické termíny")
-        .replace("Hide English terms", "Skrýt anglické termíny")
-        .replace("English terminology", "Anglická terminologie")
-        .replace(
-            "\"concept_id\": \"brewer_dripper\", \"preferred_local\": \"brewer / dripper\"",
-            "\"concept_id\": \"brewer_dripper\", \"preferred_local\": \"dripper\"",
+        return localizedTerm(
+            glossary,
+            conceptId = "drawdown",
+            source = "drawdown",
+            localized = "dokapání",
+            policy = "contextual_first_occurrence",
         )
-        .replace(
-            "\"concept_id\": \"drawdown\", \"preferred_local\": \"drawdown\"",
-            "\"concept_id\": \"drawdown\", \"preferred_local\": \"dokapání\"",
-        )
+    }
+
+    private fun localizedTerm(
+        glossary: String,
+        conceptId: String,
+        source: String,
+        localized: String,
+        policy: String,
+    ): String {
+        val start = glossary.indexOf("\"concept_id\": \"$conceptId\"")
+        require(start >= 0)
+        val end = glossary.indexOf("}", start)
+        val block = glossary.substring(start, end)
+            .replace("\"preferred_local\": \"$source\"", "\"preferred_local\": \"$localized\"")
+            .replace(
+                "\"english_reference_policy\": \"established_local_usage\"",
+                "\"english_reference_policy\": \"$policy\"",
+            )
+        return glossary.replaceRange(start, end, block)
+    }
+
 
     private fun referenceAsset(): File = projectFile(
         "src/main/assets/${BuiltInP1ExactTerminologyCatalog.REFERENCE_ASSET_NAME}",
