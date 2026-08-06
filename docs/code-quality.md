@@ -18,7 +18,9 @@ Run the following before opening a pull request:
 ```
 
 Localization and generated brewing catalogs have additional deterministic
-checks in the localization workflow and release workflow.
+checks in the localization workflow and release workflow. Release optimization
+and retrace-artifact requirements are documented in
+[release-optimization.md](release-optimization.md).
 
 ## Detekt baseline
 

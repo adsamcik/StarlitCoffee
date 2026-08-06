@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Smaller, verifiable release builds** — production packages now use AGP 9.3's
+  integrated R8 code and resource optimizer, with automated checks that confirm
+  obfuscation and preserve the retrace mapping for diagnostics.
 - **Noncommercial project license** — Starlit Coffee is now source-available
   under PolyForm Noncommercial 1.0.0. Commercial use requires a separate
   license from the project owner.

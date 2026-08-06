@@ -69,12 +69,11 @@ extensions.configure<ApplicationExtension>("android") {
             }
         }
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            // AGP 9.3's unified optimizer enables R8 code shrinking,
+            // obfuscation, optimization, and optimized resource shrinking.
+            optimization {
+                enable = true
+            }
         }
     }
 
@@ -336,6 +335,54 @@ tasks.register("scanBenchmark") {
             pull("llm-fixture-quality-report")
             println("scanBenchmark: report pulled to $outDir")
         }
+    }
+}
+
+val verifyReleaseOptimization by tasks.registering {
+    group = "verification"
+    description = "Build the release APK and verify R8 code/resource optimization artifacts"
+    dependsOn("assembleRelease")
+
+    doLast {
+        val apk = layout.buildDirectory
+            .file("outputs/apk/release/app-release-unsigned.apk")
+            .get()
+            .asFile
+        val reportDirectory = layout.buildDirectory
+            .dir("outputs/mapping/release")
+            .get()
+            .asFile
+        val requiredReports = listOf(
+            reportDirectory.resolve("configuration.txt"),
+            reportDirectory.resolve("mapping.txt"),
+            reportDirectory.resolve("resources.txt"),
+            reportDirectory.resolve("usage.txt"),
+        )
+        val missingArtifacts = (listOf(apk) + requiredReports)
+            .filterNot { it.isFile && it.length() > 0L }
+        check(missingArtifacts.isEmpty()) {
+            "Release optimization did not produce: " +
+                missingArtifacts.joinToString { it.relativeTo(projectDir).path }
+        }
+
+        val obfuscatedClasses = requiredReports
+            .first { it.name == "mapping.txt" }
+            .useLines { lines ->
+                lines.count { line ->
+                    if (line.startsWith(' ') || !line.endsWith(':') || " -> " !in line) {
+                        false
+                    } else {
+                        val (original, optimized) = line.dropLast(1).split(" -> ", limit = 2)
+                        original != optimized
+                    }
+                }
+            }
+        check(obfuscatedClasses > 0) {
+            "R8 mapping contains no renamed classes; release obfuscation is not active"
+        }
+
+        val apkSizeMiB = apk.length().toDouble() / (1024.0 * 1024.0)
+        println("Verified optimized release: %.2f MiB, %,d obfuscated classes".format(apkSizeMiB, obfuscatedClasses))
     }
 }
 
