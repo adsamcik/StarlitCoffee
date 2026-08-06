@@ -1,0 +1,887 @@
+{
+  "execution_date": "2026-08-06",
+  "status": "PASS",
+  "required_records": 264,
+  "record_count": 264,
+  "unique_pair_count": 264,
+  "locale_count": 22,
+  "concept_count": 12,
+  "main_locale_table_rows": 264,
+  "concept_evidence_heading_count": 264,
+  "classification_counts": {
+    "LOCALIZED_DOMINANT": 116,
+    "ENGLISH_DOMINANT": 7,
+    "MIXED_STABLE": 32,
+    "AUDIENCE_DEPENDENT": 28,
+    "CONTEXT_DEPENDENT": 20,
+    "REGION_DEPENDENT": 5,
+    "NO_ESTABLISHED_TERM": 16,
+    "INSUFFICIENT_EVIDENCE": 40
+  },
+  "confidence_counts_after_qc": {
+    "HIGH": 122,
+    "MEDIUM": 91,
+    "LOW": 51
+  },
+  "insufficient_evidence_count": 40,
+  "native_review_pending_count": 264,
+  "source_count": 115,
+  "confidence_downgrades": [
+    {
+      "locale": "bg",
+      "concept_id": "coffee_grounds",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "bg",
+      "concept_id": "server_carafe",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "cs",
+      "concept_id": "valve",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "da",
+      "concept_id": "bloom",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "da",
+      "concept_id": "valve",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "de",
+      "concept_id": "fines",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "de",
+      "concept_id": "steeping_immersion",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "de",
+      "concept_id": "valve",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "es",
+      "concept_id": "valve",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "fi",
+      "concept_id": "swirl_spin",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "fi",
+      "concept_id": "steeping_immersion",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "fr",
+      "concept_id": "valve",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "hu",
+      "concept_id": "coffee_bed",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "it",
+      "concept_id": "steeping_immersion",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "it",
+      "concept_id": "valve",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "lv",
+      "concept_id": "coffee_grounds",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "pl",
+      "concept_id": "fines",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "pl",
+      "concept_id": "server_carafe",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "pl",
+      "concept_id": "valve",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "pt",
+      "concept_id": "steeping_immersion",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "pt",
+      "concept_id": "valve",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "ro",
+      "concept_id": "fines",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "ro",
+      "concept_id": "valve",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "sk",
+      "concept_id": "coffee_bed",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "sk",
+      "concept_id": "coffee_grounds",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "sk",
+      "concept_id": "fines",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "sk",
+      "concept_id": "drawdown",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "zh-CN",
+      "concept_id": "coffee_bed",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "zh-CN",
+      "concept_id": "bloom",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "zh-CN",
+      "concept_id": "fines",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "zh-CN",
+      "concept_id": "drawdown",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "zh-CN",
+      "concept_id": "steeping_immersion",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    },
+    {
+      "locale": "zh-CN",
+      "concept_id": "valve",
+      "warnings": [
+        "HIGH downgraded: fewer than two independent direct evidence chains or missing strong original evidence."
+      ]
+    }
+  ],
+  "errors": [],
+  "warnings": [
+    {
+      "source_id": "bg_forum",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "bg_forum",
+      "warning": "undated"
+    },
+    {
+      "source_id": "bg_dabov",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "bg_dabov",
+      "warning": "undated"
+    },
+    {
+      "source_id": "cs_gentlefox",
+      "warning": "accessed via indexed excerpt"
+    },
+    {
+      "source_id": "cs_kavaspojuje_fines",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "cs_kavaspojuje_fines",
+      "warning": "undated"
+    },
+    {
+      "source_id": "cs_kofio_orea",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "cs_kofio_orea",
+      "warning": "undated"
+    },
+    {
+      "source_id": "da_kaffelex",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "da_kaffelex",
+      "warning": "undated"
+    },
+    {
+      "source_id": "da_amokka",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "da_amokka",
+      "warning": "undated"
+    },
+    {
+      "source_id": "da_crema_switch",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "da_crema_switch",
+      "warning": "text status is translated"
+    },
+    {
+      "source_id": "da_crema_switch",
+      "warning": "translation status inferred from multi-market localization"
+    },
+    {
+      "source_id": "da_mokkahouse",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "da_mokkahouse",
+      "warning": "undated"
+    },
+    {
+      "source_id": "de_roestereiheer",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "de_roestereiheer",
+      "warning": "undated"
+    },
+    {
+      "source_id": "de_kaffeenetz",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "de_kaffeenetz",
+      "warning": "undated"
+    },
+    {
+      "source_id": "de_dieroester",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "de_dieroester",
+      "warning": "undated"
+    },
+    {
+      "source_id": "de_neuesschwarz",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "de_neuesschwarz",
+      "warning": "undated"
+    },
+    {
+      "source_id": "de_kaffeewiki_clever",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "de_kaffeewiki_clever",
+      "warning": "undated"
+    },
+    {
+      "source_id": "el_coffeeepirus",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "el_coffeeepirus",
+      "warning": "undated"
+    },
+    {
+      "source_id": "el_taresso",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "el_taresso",
+      "warning": "undated"
+    },
+    {
+      "source_id": "el_dimello",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "el_dimello",
+      "warning": "undated"
+    },
+    {
+      "source_id": "es_ineffable",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "es_ineffable",
+      "warning": "undated"
+    },
+    {
+      "source_id": "es_freedom_mexico",
+      "warning": "text status is unclear"
+    },
+    {
+      "source_id": "es_freedom_mexico",
+      "warning": "Spanish text under /en path; originality unclear"
+    },
+    {
+      "source_id": "es_laguashira",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "es_laguashira",
+      "warning": "undated"
+    },
+    {
+      "source_id": "es_forocafe",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "es_forocafe",
+      "warning": "undated"
+    },
+    {
+      "source_id": "et_greenplantation",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "et_greenplantation",
+      "warning": "text status is translated"
+    },
+    {
+      "source_id": "et_greenplantation",
+      "warning": "multi-market localization; likely translated"
+    },
+    {
+      "source_id": "et_ratio",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "et_ratio",
+      "warning": "text status is unclear"
+    },
+    {
+      "source_id": "et_ratio",
+      "warning": "undated; equipment UI terminology"
+    },
+    {
+      "source_id": "fi_johan_v60",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "fi_johan_v60",
+      "warning": "undated"
+    },
+    {
+      "source_id": "fi_crema_switch",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "fi_crema_switch",
+      "warning": "text status is translated"
+    },
+    {
+      "source_id": "fi_crema_switch",
+      "warning": "localized multi-market product text"
+    },
+    {
+      "source_id": "fi_johan_clever",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "fi_johan_clever",
+      "warning": "undated"
+    },
+    {
+      "source_id": "fr_sainthenri",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "fr_sainthenri",
+      "warning": "undated"
+    },
+    {
+      "source_id": "fr_corica",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "fr_corica",
+      "warning": "undated"
+    },
+    {
+      "source_id": "fr_utopia",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "fr_utopia",
+      "warning": "undated"
+    },
+    {
+      "source_id": "fr_coffeelab",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "fr_coffeelab",
+      "warning": "undated"
+    },
+    {
+      "source_id": "hr_gourmetkava",
+      "warning": "text status is translated"
+    },
+    {
+      "source_id": "hr_gourmetkava",
+      "warning": "multi-market retailer localization"
+    },
+    {
+      "source_id": "hr_greenplantation",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "hr_greenplantation",
+      "warning": "text status is translated"
+    },
+    {
+      "source_id": "hr_greenplantation",
+      "warning": "multi-market localization"
+    },
+    {
+      "source_id": "hr_switch",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "hr_switch",
+      "warning": "text status is translated"
+    },
+    {
+      "source_id": "hr_switch",
+      "warning": "translated retailer copy"
+    },
+    {
+      "source_id": "hu_bybeans",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "hu_bybeans",
+      "warning": "undated"
+    },
+    {
+      "source_id": "hu_bestmixer",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "hu_bestmixer",
+      "warning": "undated"
+    },
+    {
+      "source_id": "hu_immersion",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "hu_immersion",
+      "warning": "text status is unclear"
+    },
+    {
+      "source_id": "hu_immersion",
+      "warning": "undated; full text not reliably accessible"
+    },
+    {
+      "source_id": "it_filicori",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "it_filicori",
+      "warning": "undated"
+    },
+    {
+      "source_id": "it_costadoro",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "it_costadoro",
+      "warning": "undated"
+    },
+    {
+      "source_id": "it_essense",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "it_essense",
+      "warning": "undated"
+    },
+    {
+      "source_id": "lt_lapino",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "lt_lapino",
+      "warning": "undated"
+    },
+    {
+      "source_id": "lt_kavosdraugas",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "lt_kavosdraugas",
+      "warning": "undated"
+    },
+    {
+      "source_id": "lt_greenplantation",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "lt_greenplantation",
+      "warning": "text status is translated"
+    },
+    {
+      "source_id": "lt_greenplantation",
+      "warning": "multi-market localization"
+    },
+    {
+      "source_id": "lv_kafijasdraugs_bloom",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "lv_kafijasdraugs_bloom",
+      "warning": "undated"
+    },
+    {
+      "source_id": "lv_kafijasdraugs_v60",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "lv_kafijasdraugs_v60",
+      "warning": "undated"
+    },
+    {
+      "source_id": "lv_kuup",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "lv_kuup",
+      "warning": "undated"
+    },
+    {
+      "source_id": "lv_rocketbean",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "lv_rocketbean",
+      "warning": "undated"
+    },
+    {
+      "source_id": "nl_heeren",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "nl_heeren",
+      "warning": "undated"
+    },
+    {
+      "source_id": "nl_fines",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "nl_fines",
+      "warning": "undated; indexed title/usage retained"
+    },
+    {
+      "source_id": "pl_kawoznawca",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "pl_kawoznawca",
+      "warning": "undated"
+    },
+    {
+      "source_id": "pl_coffeedesk_v60",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "pl_coffeedesk_v60",
+      "warning": "undated"
+    },
+    {
+      "source_id": "pl_miga",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "pl_miga",
+      "warning": "undated"
+    },
+    {
+      "source_id": "pl_coffeedesk_drippers",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "pl_coffeedesk_drippers",
+      "warning": "undated"
+    },
+    {
+      "source_id": "pl_kafar",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "pl_kafar",
+      "warning": "undated"
+    },
+    {
+      "source_id": "pt_7g_recipe",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "pt_7g_recipe",
+      "warning": "undated"
+    },
+    {
+      "source_id": "pt_7g_filter",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "pt_7g_filter",
+      "warning": "undated"
+    },
+    {
+      "source_id": "pt_coffeejoy",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "pt_coffeejoy",
+      "warning": "undated"
+    },
+    {
+      "source_id": "pt_unique_switch",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "pt_unique_switch",
+      "warning": "undated"
+    },
+    {
+      "source_id": "pt_fines",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "pt_fines",
+      "warning": "undated; indexed usage retained"
+    },
+    {
+      "source_id": "ro_muse_clever",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "ro_muse_clever",
+      "warning": "undated"
+    },
+    {
+      "source_id": "ro_switch",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "ro_switch",
+      "warning": "undated"
+    },
+    {
+      "source_id": "sk_gpkava_v60",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "sk_gpkava_v60",
+      "warning": "undated"
+    },
+    {
+      "source_id": "sk_gpkava_lex",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "sk_gpkava_lex",
+      "warning": "undated"
+    },
+    {
+      "source_id": "sl_gourmetkava",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "sl_gourmetkava",
+      "warning": "text status is translated"
+    },
+    {
+      "source_id": "sl_gourmetkava",
+      "warning": "multi-market localization"
+    },
+    {
+      "source_id": "sl_webcenter",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "sl_webcenter",
+      "warning": "text status is unclear"
+    },
+    {
+      "source_id": "sl_webcenter",
+      "warning": "undated; authorship/domain expertise unclear"
+    },
+    {
+      "source_id": "sv_johan_v60",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "sv_johan_v60",
+      "warning": "undated"
+    },
+    {
+      "source_id": "sv_crema_v60",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "sv_crema_v60",
+      "warning": "text status is translated"
+    },
+    {
+      "source_id": "sv_crema_v60",
+      "warning": "multi-market localization"
+    },
+    {
+      "source_id": "sv_johan_switch",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "sv_johan_switch",
+      "warning": "undated"
+    },
+    {
+      "source_id": "sv_crema_switch",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "sv_crema_switch",
+      "warning": "text status is translated"
+    },
+    {
+      "source_id": "sv_crema_switch",
+      "warning": "multi-market localization"
+    },
+    {
+      "source_id": "zh_qianjie_bed",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "zh_qianjie_bed",
+      "warning": "undated"
+    },
+    {
+      "source_id": "zh_qianjie_clever",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "zh_qianjie_clever",
+      "warning": "undated"
+    },
+    {
+      "source_id": "zh_qianjie_end",
+      "warning": "publication date unavailable"
+    },
+    {
+      "source_id": "zh_qianjie_end",
+      "warning": "undated"
+    }
+  ],
+  "validation_rules": [
+    "22 exact locale codes and 12 exact concept IDs",
+    "264 unique locale–concept pairs",
+    "allowed enum values only",
+    "Unicode NFC and lowercase normalized form",
+    "no duplicate evidence URL within a record",
+    "non-insufficient records contain evidence",
+    "HIGH requires two independent direct publisher chains, one original source, and one strong example",
+    "valid JSON serialization/roundtrip"
+  ]
+}

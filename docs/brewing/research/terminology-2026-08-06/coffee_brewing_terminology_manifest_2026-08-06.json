@@ -1,0 +1,2029 @@
+{
+  "research_execution_date": "2026-08-06",
+  "access_date_range": {
+    "start": "2026-08-06",
+    "end": "2026-08-06"
+  },
+  "required_matrix_records": 264,
+  "records_accounted_for": 264,
+  "completed_with_supported_classification": 224,
+  "partially_completed_insufficient_evidence": 40,
+  "not_completed": 0,
+  "awaiting_native_review": 264,
+  "real_native_reviewers_available": false,
+  "regional_coverage": {
+    "de": [
+      "Germany",
+      "Austria",
+      "German-speaking Switzerland"
+    ],
+    "es": [
+      "Spain",
+      "Mexico",
+      "Colombia",
+      "Argentina",
+      "Chile",
+      "Peru"
+    ],
+    "fr": [
+      "France",
+      "Belgium",
+      "French-speaking Switzerland",
+      "Quebec"
+    ],
+    "pt": [
+      "Portugal",
+      "Brazil"
+    ],
+    "zh-CN": [
+      "Mainland China only; Traditional Chinese sources excluded"
+    ]
+  },
+  "researcher_and_tool_limitations": [
+    "No qualified human native-speaking specialty-coffee reviewer was available; model multilingual ability was not counted as native review.",
+    "Research was limited to web-accessible material. No interviews, private professional groups, offline books, paywalled training manuals, or in-person speech corpus were available.",
+    "Video and podcast evidence was used only where reliable searchable text was available; inaccessible captions were not treated as evidence.",
+    "Search-engine discovery is not a frequency corpus. Prevalence judgments rely on convergence and source diversity, not result counts.",
+    "Publisher-level deduplication reduces obvious dependence but cannot prove that every editorial source was independently authored.",
+    "Some markets have small native specialty-coffee web corpora and substantial translated retail content; those records were downgraded or marked insufficient.",
+    "Source pages can change after the access date; excerpts and metadata represent what was retained on 2026-08-06."
+  ],
+  "inaccessible_or_unsupported_source_types": [
+    "private social-media posts and closed community groups",
+    "unsearchable or unavailable video/podcast transcripts",
+    "offline and paywalled books or course materials not accessible in full",
+    "direct interviews and spoken-corpus elicitation",
+    "sources blocked or inaccessible in full were not used for substantive claims"
+  ],
+  "classification_counts": {
+    "LOCALIZED_DOMINANT": 116,
+    "ENGLISH_DOMINANT": 7,
+    "MIXED_STABLE": 32,
+    "AUDIENCE_DEPENDENT": 28,
+    "CONTEXT_DEPENDENT": 20,
+    "REGION_DEPENDENT": 5,
+    "NO_ESTABLISHED_TERM": 16,
+    "INSUFFICIENT_EVIDENCE": 40
+  },
+  "confidence_counts_after_qc": {
+    "HIGH": 122,
+    "MEDIUM": 91,
+    "LOW": 51
+  },
+  "source_count": 115,
+  "source_text_status_counts": {
+    "original": 101,
+    "translated": 10,
+    "unclear": 4
+  },
+  "locales": [
+    {
+      "locale": "bg",
+      "language": "Bulgarian",
+      "regional_markets_examined": [
+        "Bulgaria"
+      ],
+      "coverage_note": "Bulgaria; web-accessible Bulgarian specialty-coffee sources.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 10,
+      "partially_completed_insufficient_evidence": 2,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "cs",
+      "language": "Czech",
+      "regional_markets_examined": [
+        "Czechia"
+      ],
+      "coverage_note": "Czechia.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "da",
+      "language": "Danish",
+      "regional_markets_examined": [
+        "Denmark"
+      ],
+      "coverage_note": "Denmark.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "de",
+      "language": "German",
+      "regional_markets_examined": [
+        "Germany",
+        "Austria",
+        "German-speaking Switzerland"
+      ],
+      "coverage_note": "Germany, Austria, and German-speaking Switzerland.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "el",
+      "language": "Greek",
+      "regional_markets_examined": [
+        "Greece"
+      ],
+      "coverage_note": "Greece; Cyprus was not adequately covered.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 9,
+      "partially_completed_insufficient_evidence": 3,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "es",
+      "language": "Spanish",
+      "regional_markets_examined": [
+        "Spain",
+        "Mexico",
+        "Colombia",
+        "Argentina",
+        "Chile",
+        "Peru"
+      ],
+      "coverage_note": "Spain, Mexico, Colombia, Argentina, Chile, and Peru; not all Latin American markets.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 11,
+      "partially_completed_insufficient_evidence": 1,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "et",
+      "language": "Estonian",
+      "regional_markets_examined": [
+        "Estonia"
+      ],
+      "coverage_note": "Estonia; small web corpus, with several translated commerce pages.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 6,
+      "partially_completed_insufficient_evidence": 6,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "fi",
+      "language": "Finnish",
+      "regional_markets_examined": [
+        "Finland"
+      ],
+      "coverage_note": "Finland.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 10,
+      "partially_completed_insufficient_evidence": 2,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "fr",
+      "language": "French",
+      "regional_markets_examined": [
+        "France",
+        "Belgium",
+        "French-speaking Switzerland",
+        "Quebec"
+      ],
+      "coverage_note": "France primary; Belgium, Romandy, and Quebec screened.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "hr",
+      "language": "Croatian",
+      "regional_markets_examined": [
+        "Croatia"
+      ],
+      "coverage_note": "Croatia.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 9,
+      "partially_completed_insufficient_evidence": 3,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "hu",
+      "language": "Hungarian",
+      "regional_markets_examined": [
+        "Hungary"
+      ],
+      "coverage_note": "Hungary.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 9,
+      "partially_completed_insufficient_evidence": 3,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "it",
+      "language": "Italian",
+      "regional_markets_examined": [
+        "Italy"
+      ],
+      "coverage_note": "Italy.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "ENGLISH_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "lt",
+      "language": "Lithuanian",
+      "regional_markets_examined": [
+        "Lithuania"
+      ],
+      "coverage_note": "Lithuania; small native specialty corpus and substantial translated retail material.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 5,
+      "partially_completed_insufficient_evidence": 7,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "lv",
+      "language": "Latvian",
+      "regional_markets_examined": [
+        "Latvia"
+      ],
+      "coverage_note": "Latvia; small web corpus and substantial retailer/translation noise.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 6,
+      "partially_completed_insufficient_evidence": 6,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "nl",
+      "language": "Dutch",
+      "regional_markets_examined": [
+        "Netherlands",
+        "Dutch-language sources accessible in the market"
+      ],
+      "coverage_note": "Netherlands primary; Belgium/Flanders was not systematically covered.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "ENGLISH_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "pl",
+      "language": "Polish",
+      "regional_markets_examined": [
+        "Poland"
+      ],
+      "coverage_note": "Poland.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "ENGLISH_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "pt",
+      "language": "Portuguese",
+      "regional_markets_examined": [
+        "Portugal",
+        "Brazil"
+      ],
+      "coverage_note": "Portugal and Brazil researched separately.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "REGION_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "REGION_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "REGION_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "REGION_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "REGION_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "ro",
+      "language": "Romanian",
+      "regional_markets_examined": [
+        "Romania"
+      ],
+      "coverage_note": "Romania.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "ENGLISH_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "ENGLISH_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "sk",
+      "language": "Slovak",
+      "regional_markets_examined": [
+        "Slovakia"
+      ],
+      "coverage_note": "Slovakia.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "ENGLISH_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "sl",
+      "language": "Slovenian",
+      "regional_markets_examined": [
+        "Slovenia"
+      ],
+      "coverage_note": "Slovenia; limited specialist corpus.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 7,
+      "partially_completed_insufficient_evidence": 5,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "ENGLISH_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "sv",
+      "language": "Swedish",
+      "regional_markets_examined": [
+        "Sweden"
+      ],
+      "coverage_note": "Sweden.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 10,
+      "partially_completed_insufficient_evidence": 2,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "partially_completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "partially_completed",
+          "classification": "INSUFFICIENT_EVIDENCE",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "LOW",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "AUDIENCE_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "MIXED_STABLE",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    },
+    {
+      "locale": "zh-CN",
+      "language": "Simplified Chinese (Mainland China)",
+      "regional_markets_examined": [
+        "Mainland China"
+      ],
+      "coverage_note": "Mainland China only; Traditional Chinese sources from Taiwan/Hong Kong were excluded from conclusions.",
+      "required_concepts": 12,
+      "completed_with_supported_classification": 12,
+      "partially_completed_insufficient_evidence": 0,
+      "not_completed": 0,
+      "native_review_pending": 12,
+      "overall_research_status": "completed",
+      "concepts": {
+        "brewer_dripper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_bed": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "bloom": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "coffee_grounds": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "fines": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "slurry": {
+          "research_status": "completed",
+          "classification": "NO_ESTABLISHED_TERM",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "drawdown": {
+          "research_status": "completed",
+          "classification": "CONTEXT_DEPENDENT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "swirl_spin": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "server_carafe": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        },
+        "steeping_immersion": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "valve": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "MEDIUM",
+          "native_review_status": "pending_native_review"
+        },
+        "filter_paper": {
+          "research_status": "completed",
+          "classification": "LOCALIZED_DOMINANT",
+          "confidence": "HIGH",
+          "native_review_status": "pending_native_review"
+        }
+      }
+    }
+  ]
+}
