@@ -40,6 +40,28 @@ jobs:
         with:
           ref: ${{ github.event.inputs.tag || github.ref }}
 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Validate exact-guidance localization sources
+        run: |
+          python tools/generate_p1_exact_terminology_references.py --check
+          python tools/validate_p1_exact_terminology_catalog.py
+          python tools/audit_p1_exact_terminology_prose.py --check
+          python tools/generate_p1_exact_terminology_review_packets.py --check
+          python tools/generate_p1_exact_terminology_locale_queue.py --check
+          python tools/generate_p1_tracker_accepted_asset_catalog.py --check
+          python tools/generate_p1_exact_guidance_localizations.py --check --locales en
+
+      - name: Run localization unit tests
+        run: |
+          python -m unittest \
+            tools/test_generate_p1_exact_guidance_localizations.py \
+            tools/test_generate_p1_exact_guidance_offline_drafts.py \
+            tools/test_audit_p1_exact_terminology_prose.py
+
       - name: Set up JDK 21
         uses: actions/setup-java@v5.5.0
         with:
