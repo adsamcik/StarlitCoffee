@@ -11,6 +11,7 @@
       "exact_guidance_status": "approved",
       "terminology_status": "approved",
       "terminology_research_completeness": "canonical_source",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -39,6 +40,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -76,6 +78,7 @@
       "exact_guidance_status": "ready_for_native_review",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -111,6 +114,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -147,6 +151,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -183,6 +188,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -220,6 +226,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -257,6 +264,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -294,6 +302,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -331,6 +340,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -367,6 +377,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -404,6 +415,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -441,6 +453,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -477,6 +490,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -514,6 +528,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -551,6 +566,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -587,6 +603,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -623,6 +640,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": true,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -645,6 +663,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
+        "separate and review region-dependent locale variants",
         "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
@@ -659,6 +678,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -695,6 +715,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -731,6 +752,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -768,6 +790,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "partial",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -805,6 +828,7 @@
       "exact_guidance_status": "local_draft_complete",
       "terminology_status": "researched_not_native_reviewed",
       "terminology_research_completeness": "complete",
+      "requires_regional_resolution": false,
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",

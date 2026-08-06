@@ -93,3 +93,10 @@ The current catalog contains 264 records. Forty remain
 `INSUFFICIENT_EVIDENCE`; eleven locales therefore have partial research
 coverage. These records must remain visibly unresolved in maintenance tooling
 and absent from production glossary surfaces.
+
+The current generic Portuguese record contains five `REGION_DEPENDENT`
+concepts. It is research input, not a promotable production locale. Portuguese
+exact guidance must be split into complete `pt-BR` and `pt-PT` records (including
+full-sentence guidance, terminology, ordinary app copy, and device QA) before
+either regional variant can be approved. A combined `pt` glossary must never be
+promoted by choosing one market's wording for both.

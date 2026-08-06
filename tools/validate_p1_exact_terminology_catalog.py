@@ -134,6 +134,7 @@ def validate() -> None:
             raise CatalogError(f"{locale}: terminology UI copy is incomplete")
 
         insufficient = 0
+        region_dependent = 0
         for term in terms:
             term_id = term["concept_id"]
             if term.get("canonical_english") != canonical[term_id]:
@@ -151,6 +152,19 @@ def validate() -> None:
                 raise CatalogError(f"{locale}/{term_id}: approved term lacks corroborating evidence")
             is_insufficient = term["classification"] == "INSUFFICIENT_EVIDENCE"
             insufficient += is_insufficient
+            is_region_dependent = term["classification"] == "REGION_DEPENDENT"
+            region_dependent += is_region_dependent
+            if is_region_dependent:
+                variants = term.get("regional_variants")
+                if not isinstance(variants, list) or len(variants) < 2 or any(
+                    not isinstance(variant, dict)
+                    or not isinstance(variant.get("region"), str)
+                    or not variant["region"].strip()
+                    or not isinstance(variant.get("term"), str)
+                    or not variant["term"].strip()
+                    for variant in variants
+                ):
+                    raise CatalogError(f"{locale}/{term_id}: regional variants are incomplete")
             if is_insufficient:
                 if term.get("preferred_display_term") is not None or term.get("display_policy") != "withhold_pending_review":
                     raise CatalogError(f"{locale}/{term_id}: insufficient term is exposed")
@@ -171,6 +185,10 @@ def validate() -> None:
             raise CatalogError(f"{locale}: insufficient-evidence count differs")
         if status == "approved" and insufficient:
             raise CatalogError(f"{locale}: approved catalog retains insufficient evidence")
+        if status == "approved" and region_dependent and "-" not in locale:
+            raise CatalogError(
+                f"{locale}: generic locale cannot approve region-dependent terminology",
+            )
         total_insufficient += insufficient
     if total_insufficient != 40:
         raise CatalogError("Catalog insufficient-evidence total differs")

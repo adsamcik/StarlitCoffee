@@ -88,6 +88,29 @@ class TerminologyCatalogPromotionTest(unittest.TestCase):
         with self.assertRaisesRegex(TOOL.LocalizationError, "unresolved terms or evidence"):
             TOOL.terminology_catalog_locale(self.source, "cs", True, override=locale)
 
+    def test_generic_locale_cannot_promote_region_dependent_terms(self) -> None:
+        catalog = TOOL.read_json(TOOL.LOCALIZATION_SOURCE)
+        locale = copy.deepcopy(catalog["locales"]["pt"]["terminology"])
+        locale["status"] = "approved"
+        locale["reviewer"] = "Portuguese coffee reviewer"
+        locale["reviewed_on"] = "2026-08-06"
+        evidence_pool = list(dict.fromkeys(
+            source_id
+            for term in locale["terms"]
+            for source_id in term["evidence_source_ids"]
+        ))
+        for term in locale["terms"]:
+            term["review_status"] = "approved"
+            term["evidence_source_ids"] = list(dict.fromkeys(
+                term["evidence_source_ids"] + evidence_pool
+            ))[:2]
+
+        with self.assertRaisesRegex(TOOL.LocalizationError, "generic locale cannot promote"):
+            TOOL.terminology_catalog_locale(self.source, "pt", True, override=locale)
+
+        TOOL.terminology_catalog_locale(self.source, "pt-BR", True, override=locale)
+        TOOL.terminology_catalog_locale(self.source, "pt-PT", True, override=locale)
+
 
 if __name__ == "__main__":
     unittest.main()

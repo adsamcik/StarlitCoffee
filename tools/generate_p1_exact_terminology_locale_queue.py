@@ -79,10 +79,13 @@ def missing_requirements(
     exact_status: str,
     terminology_status: str,
     production_ready: bool,
+    requires_regional_resolution: bool,
 ) -> list[str]:
     if production_ready:
         return []
     missing: list[str] = []
+    if requires_regional_resolution:
+        missing.append("separate and review region-dependent locale variants")
     if terminology_status == "research_required":
         missing.extend(
             [
@@ -142,6 +145,10 @@ def generate() -> dict:
                 raise LocaleQueueError(f"Terminology catalog locale is missing: {locale}")
             terminology_status = catalog_locale.get("status")
             terminology_completeness = catalog_locale.get("research_completeness")
+        requires_regional_resolution = locale != "en" and any(
+            term.get("classification") == "REGION_DEPENDENT"
+            for term in catalog_locale.get("terms", [])
+        )
         packet_path = REVIEW_PACKET_DIR / f"{locale}.json"
         packet = read_json(packet_path)
         if packet.get("locale") != locale:
@@ -166,6 +173,7 @@ def generate() -> dict:
                 terminology_status == "approved",
                 guidance_resource,
                 terminology_resource,
+                not requires_regional_resolution,
             ),
         )
         records.append(
@@ -174,6 +182,7 @@ def generate() -> dict:
                 "exact_guidance_status": exact_status,
                 "terminology_status": terminology_status,
                 "terminology_research_completeness": terminology_completeness,
+                "requires_regional_resolution": requires_regional_resolution,
                 "canonical_concept_ids": concept_ids,
                 "review_packet": packet_path.relative_to(ROOT).as_posix(),
                 "recipe_count": EXPECTED_RECIPE_COUNT,
@@ -189,6 +198,7 @@ def generate() -> dict:
                         exact_status,
                         terminology_status,
                         production_ready,
+                        requires_regional_resolution,
                     )
                 ),
             },

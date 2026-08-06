@@ -341,6 +341,13 @@ def terminology_catalog_locale(
             for term in terms
         ):
             raise LocalizationError(f"{locale}: approved terminology catalog contains unresolved terms or evidence")
+        if "-" not in locale and any(
+            term.get("classification") == "REGION_DEPENDENT" for term in terms
+        ):
+            raise LocalizationError(
+                f"{locale}: generic locale cannot promote region-dependent terminology; "
+                "create reviewed regional locale records first",
+            )
     return record
 
 def canonical_terminology_concepts(source: dict) -> list[dict]:
