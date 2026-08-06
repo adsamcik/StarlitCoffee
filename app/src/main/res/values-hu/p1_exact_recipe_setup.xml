@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / a jelzésig töltött tartály</string>
     <string name="recipe_p1_phin_gravity_14_118">Gravitációs phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin csavaros betéttel · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">Fordítási előnézet</string>
+    <string name="msg_guidance_preview_consent">Ezeket az útmutatásokat automatikusan fordítottuk, és szakértő még nem ellenőrizte őket. A biztonságkritikus lépéseknél az angol figyelmeztetés is megjelenik.</string>
+    <string name="action_use_preview_translation">Előnézet használata</string>
+    <string name="action_keep_current_guidance">Most nem</string>
+    <string name="action_turn_off_preview_translation">Fordítási előnézet kikapcsolása</string>
 </resources>

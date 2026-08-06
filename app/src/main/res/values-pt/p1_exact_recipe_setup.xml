@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / reservatório cheio até à marca</string>
     <string name="recipe_p1_phin_gravity_14_118">Phin por gravidade · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin com prensa roscada · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">Tradução em pré-visualização</string>
+    <string name="msg_guidance_preview_consent">Estas instruções foram traduzidas automaticamente e ainda não passaram por revisão especializada. Nos passos críticos de segurança, também é apresentado o aviso em inglês.</string>
+    <string name="action_use_preview_translation">Usar pré-visualização</string>
+    <string name="action_keep_current_guidance">Agora não</string>
+    <string name="action_turn_off_preview_translation">Desativar pré-visualização</string>
 </resources>

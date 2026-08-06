@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / serbatoio pieno fino al contrassegno</string>
     <string name="recipe_p1_phin_gravity_14_118">Phin a gravità · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin con pressino a vite · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">Traduzione in anteprima</string>
+    <string name="msg_guidance_preview_consent">Queste istruzioni sono state tradotte automaticamente e non sono ancora state verificate da uno specialista. Nei passaggi critici per la sicurezza viene mostrato anche l’avviso in inglese.</string>
+    <string name="action_use_preview_translation">Usa anteprima</string>
+    <string name="action_keep_current_guidance">Non ora</string>
+    <string name="action_turn_off_preview_translation">Disattiva anteprima</string>
 </resources>

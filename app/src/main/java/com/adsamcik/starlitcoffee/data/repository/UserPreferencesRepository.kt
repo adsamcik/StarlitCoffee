@@ -40,6 +40,7 @@ data class UserPreferences(
     val dimModeForceDarkInLight: Boolean = true,
     val showBrewingInstructions: Boolean = true,
     val showEnglishBrewingTerms: Boolean = false,
+    val exactGuidancePreviewEnabled: Boolean = false,
     val bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
     // How many times each spritesheet has been picked for a brew. Used by the
     // domain selector to bias future picks toward under-shown flowers, so
@@ -121,6 +122,7 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
         val DIM_MODE_FORCE_DARK_IN_LIGHT = booleanPreferencesKey("dim_mode_force_dark_in_light")
         val SHOW_BREWING_INSTRUCTIONS = booleanPreferencesKey("show_brewing_instructions")
         val SHOW_ENGLISH_BREWING_TERMS = booleanPreferencesKey("show_english_brewing_terms")
+        val EXACT_GUIDANCE_PREVIEW_ENABLED = booleanPreferencesKey("exact_guidance_preview_enabled")
         val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
         val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
         val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
@@ -173,6 +175,7 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
                 dimModeForceDarkInLight = prefs[Keys.DIM_MODE_FORCE_DARK_IN_LIGHT] ?: true,
                 showBrewingInstructions = prefs[Keys.SHOW_BREWING_INSTRUCTIONS] ?: true,
                 showEnglishBrewingTerms = prefs[Keys.SHOW_ENGLISH_BREWING_TERMS] ?: false,
+                exactGuidancePreviewEnabled = prefs[Keys.EXACT_GUIDANCE_PREVIEW_ENABLED] ?: false,
                 bloomSpritesheetWeights = parseBloomSpritesheetWeights(
                     prefs[Keys.BLOOM_SPRITESHEET_WEIGHTS].orEmpty(),
                 ),
@@ -359,6 +362,12 @@ class UserPreferencesRepository(private val context: Context) : UserPreferencesS
     override suspend fun updateShowEnglishBrewingTerms(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[Keys.SHOW_ENGLISH_BREWING_TERMS] = enabled
+        }
+    }
+
+    suspend fun updateExactGuidancePreviewEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.EXACT_GUIDANCE_PREVIEW_ENABLED] = enabled
         }
     }
 

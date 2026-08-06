@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / rezervor plin până la marcaj</string>
     <string name="recipe_p1_phin_gravity_14_118">Phin gravitațional · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin cu presă filetată · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">Previzualizare traducere</string>
+    <string name="msg_guidance_preview_consent">Aceste instrucțiuni au fost traduse automat și nu au fost încă verificate de un specialist. La pașii critici pentru siguranță este afișat și avertismentul în limba engleză.</string>
+    <string name="action_use_preview_translation">Folosește previzualizarea</string>
+    <string name="action_keep_current_guidance">Nu acum</string>
+    <string name="action_turn_off_preview_translation">Dezactivează previzualizarea</string>
 </resources>

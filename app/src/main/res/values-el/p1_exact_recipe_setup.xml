@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / δοχείο γεμάτο έως την ένδειξη</string>
     <string name="recipe_p1_phin_gravity_14_118">Phin με βαρύτητα · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin με βιδωτό ένθετο · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">Προεπισκόπηση μετάφρασης</string>
+    <string name="msg_guidance_preview_consent">Αυτές οι οδηγίες μεταφράστηκαν αυτόματα και δεν έχουν ελεγχθεί από ειδικό. Στα κρίσιμα βήματα ασφαλείας εμφανίζεται επίσης η αγγλική προειδοποίηση.</string>
+    <string name="action_use_preview_translation">Χρήση προεπισκόπησης</string>
+    <string name="action_keep_current_guidance">Όχι τώρα</string>
+    <string name="action_turn_off_preview_translation">Απενεργοποίηση προεπισκόπησης</string>
 </resources>

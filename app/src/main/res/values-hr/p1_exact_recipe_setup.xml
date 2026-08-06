@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / spremnik napunjen do oznake</string>
     <string name="recipe_p1_phin_gravity_14_118">Gravitacijski phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin s navojnim umetkom · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">Pretpregled prijevoda</string>
+    <string name="msg_guidance_preview_consent">Ove su upute automatski prevedene i nisu prošle stručni pregled. Kod sigurnosno kritičnih koraka prikazuje se i upozorenje na engleskom.</string>
+    <string name="action_use_preview_translation">Upotrijebi pretpregled</string>
+    <string name="action_keep_current_guidance">Ne sada</string>
+    <string name="action_turn_off_preview_translation">Isključi pretpregled prijevoda</string>
 </resources>

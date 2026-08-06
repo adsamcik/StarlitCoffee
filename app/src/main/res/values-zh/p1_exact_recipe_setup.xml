@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / 水箱加满至标线</string>
     <string name="recipe_p1_phin_gravity_14_118">重力 Phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">旋压内芯 Phin · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">翻译预览</string>
+    <string name="msg_guidance_preview_consent">这些指南由系统自动翻译，尚未经过专业审核。涉及安全的重要步骤还会同时显示英文警告。</string>
+    <string name="action_use_preview_translation">使用预览翻译</string>
+    <string name="action_keep_current_guidance">暂不使用</string>
+    <string name="action_turn_off_preview_translation">关闭翻译预览</string>
 </resources>

@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / full marked reservoir</string>
     <string name="recipe_p1_phin_gravity_14_118">Gravity phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Screw-insert phin · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">Preview translation</string>
+    <string name="msg_guidance_preview_consent">This guidance was translated automatically and has not completed specialist review. Safety-critical steps also show the English warning.</string>
+    <string name="action_use_preview_translation">Use preview</string>
+    <string name="action_keep_current_guidance">Not now</string>
+    <string name="action_turn_off_preview_translation">Turn off preview</string>
 </resources>

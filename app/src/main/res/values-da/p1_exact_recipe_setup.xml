@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / beholder fyldt til markeringen</string>
     <string name="recipe_p1_phin_gravity_14_118">Phin med tyngdekraft · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin med skrueindsats · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">Forhåndsvisning af oversættelse</string>
+    <string name="msg_guidance_preview_consent">Denne vejledning er oversat automatisk og er endnu ikke blevet fagligt gennemgået. Sikkerhedskritiske trin viser også advarslen på engelsk.</string>
+    <string name="action_use_preview_translation">Brug forhåndsvisning</string>
+    <string name="action_keep_current_guidance">Ikke nu</string>
+    <string name="action_turn_off_preview_translation">Slå forhåndsvisning fra</string>
 </resources>

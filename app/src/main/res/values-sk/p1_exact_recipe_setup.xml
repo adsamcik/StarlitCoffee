@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / zásobník naplnený po značku</string>
     <string name="recipe_p1_phin_gravity_14_118">Gravitačný phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin so skrutkovacou vložkou · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">Náhľad prekladu</string>
+    <string name="msg_guidance_preview_consent">Tieto pokyny boli preložené automaticky a neprešli odbornou kontrolou. Pri krokoch kritických pre bezpečnosť sa zobrazí aj anglické varovanie.</string>
+    <string name="action_use_preview_translation">Použiť náhľad</string>
+    <string name="action_keep_current_guidance">Nie teraz</string>
+    <string name="action_turn_off_preview_translation">Vypnúť náhľad prekladu</string>
 </resources>

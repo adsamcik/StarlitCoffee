@@ -50,6 +50,7 @@ fun LearnBrewerScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     instructionAssets: InstructionAssetCatalog? = null,
+    isGuidancePreview: Boolean = false,
 ) {
     Scaffold(
         modifier = modifier,
@@ -79,6 +80,11 @@ fun LearnBrewerScreen(
             contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
+            if (isGuidancePreview) {
+                item(key = "guidance_preview_notice") {
+                    GuidancePreviewNotice()
+                }
+            }
             resolution.policy?.let { policy ->
                 item(key = "guidance_policy") {
                     Text(

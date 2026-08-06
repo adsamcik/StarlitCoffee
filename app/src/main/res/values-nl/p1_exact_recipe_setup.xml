@@ -79,4 +79,10 @@
     <string name="recipe_p1_auto_cupone_20_300">Cup-One · 20 g / reservoir gevuld tot de markering</string>
     <string name="recipe_p1_phin_gravity_14_118">Phin op zwaartekracht · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin met schroefinzet · 18 g / 120 g</string>
+
+    <string name="label_guidance_preview">Voorbeeldvertaling</string>
+    <string name="msg_guidance_preview_consent">Deze instructies zijn automatisch vertaald en nog niet door een vakspecialist beoordeeld. Bij veiligheidskritieke stappen wordt ook de Engelse waarschuwing getoond.</string>
+    <string name="action_use_preview_translation">Voorbeeld gebruiken</string>
+    <string name="action_keep_current_guidance">Niet nu</string>
+    <string name="action_turn_off_preview_translation">Voorbeeldvertaling uitschakelen</string>
 </resources>
