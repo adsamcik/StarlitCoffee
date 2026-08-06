@@ -575,18 +575,20 @@ fun StarlitNavHost() {
                     durableSessionRuntime = durableSessionRuntime,
                     guidancePreferences = durableGuidancePreferences,
                     snackbarHostState = snackbarHostState,
-                    unavailableMessage = sessionUnavailableMessage,
-                    exactRecipeReleaseGate = exactRecipeReleaseGate,
-                    onTurnOffPreview = {
-                        previewConsentOverride = false
-                        scope.launch {
-                            userPreferencesRepository.updateExactGuidancePreviewEnabled(false)
-                        }
-                        navController.navigate(CalculatorBrew) {
-                            popUpTo(CalculatorBrew) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                    },
+                    configuration = P1BrewingRouteConfiguration(
+                        unavailableMessage = sessionUnavailableMessage,
+                        exactRecipeReleaseGate = exactRecipeReleaseGate,
+                        onTurnOffPreview = {
+                            previewConsentOverride = false
+                            scope.launch {
+                                userPreferencesRepository.updateExactGuidancePreviewEnabled(false)
+                            }
+                            navController.navigate(CalculatorBrew) {
+                                popUpTo(CalculatorBrew) { inclusive = false }
+                                launchSingleTop = true
+                            }
+                        },
+                    ),
                 )
 
                 composable<BrewSession> { backStackEntry ->

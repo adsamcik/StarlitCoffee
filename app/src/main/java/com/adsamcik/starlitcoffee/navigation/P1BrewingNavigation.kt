@@ -33,25 +33,30 @@ import com.adsamcik.starlitcoffee.viewmodel.BuiltinBrewerSessionStartResult
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
+internal data class P1BrewingRouteConfiguration(
+    val unavailableMessage: String,
+    val exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
+    val onTurnOffPreview: () -> Unit,
+)
+
 /** Exact P1 setup and Learn routes. Neither permits profile, recipe, plan, or equipment fallback. */
-fun NavGraphBuilder.p1BrewingRoutes(
+internal fun NavGraphBuilder.p1BrewingRoutes(
     navController: NavHostController,
     brewViewModel: BrewViewModel,
     durableSessionRuntime: BrewSessionRuntime,
     guidancePreferences: DurableBrewSessionGuidancePreferences,
     snackbarHostState: SnackbarHostState,
-    unavailableMessage: String,
-    exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
-    onTurnOffPreview: () -> Unit,
+    configuration: P1BrewingRouteConfiguration,
 ) {
+    val exactRecipeReleaseGate = configuration.exactRecipeReleaseGate
     p1BrewerSetupRoute(
         navController = navController,
         brewViewModel = brewViewModel,
         durableSessionRuntime = durableSessionRuntime,
         snackbarHostState = snackbarHostState,
-        unavailableMessage = unavailableMessage,
+        unavailableMessage = configuration.unavailableMessage,
         exactRecipeReleaseGate = exactRecipeReleaseGate,
-        onTurnOffPreview = onTurnOffPreview,
+        onTurnOffPreview = configuration.onTurnOffPreview,
     )
     p1LearnBrewerRoute(
         navController = navController,
