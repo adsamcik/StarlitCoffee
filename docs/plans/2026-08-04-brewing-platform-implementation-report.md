@@ -144,3 +144,16 @@ work is release validation that cannot be truthfully automated away: resolve the
 and term, promote each approved locale atomically, and run its accessibility,
 large-text, light/dark-theme, and device checks. The readiness ledger records
 those requirements per locale.
+
+## Controlled translation preview, 2026-08-06
+
+All 22 non-English exact-guidance drafts are now packaged as explicitly
+unreviewed preview resources. They do not alter the reviewed locale ledger or
+production approval state. The feature stays unavailable until contextual user
+consent, is labelled in setup, Learn, and live brewing, and can be disabled from
+setup. Safety-critical translated warnings retain the canonical English warning,
+and the 40 insufficient-evidence glossary records remain suppressed.
+
+CI and release builds validate the guidance and terminology resources for all 23
+app locales. Reviewed promotion remains subject to every evidence, editorial,
+regional, accessibility, theme, and device gate recorded above.

@@ -83,11 +83,18 @@ source above and is regenerated downstream.
 
 ## Approval and failure behavior
 
-Research is not native approval. Every non-English locale remains fail-closed
-until its complete sentence set and terminology catalog are approved by a named
-native coffee-domain reviewer, recorded in the review ledger, promoted
-atomically, registered in the release gate, and validated on device for themes,
-text scaling, accessibility, and layout.
+Research is not native approval. Reviewed non-English rollout remains
+fail-closed until the complete sentence set and terminology catalog are approved
+by a named native coffee-domain reviewer, recorded in the review ledger,
+promoted atomically, registered in the release gate, and validated on device for
+themes, text scaling, accessibility, and layout.
+
+A separate preview status may package structurally validated local-only drafts.
+Preview content is default-off, requires contextual consent, remains visibly
+labelled in setup, Learn, and live sessions, can be disabled again, never claims
+a reviewer, suppresses unresolved glossary concepts, and includes the canonical
+English warning beside every safety-critical translated warning. Preview
+eligibility must never be counted as reviewed production coverage.
 
 The current catalog contains 264 records. Forty remain
 `INSUFFICIENT_EVIDENCE`; eleven locales therefore have partial research

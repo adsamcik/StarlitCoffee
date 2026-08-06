@@ -69,6 +69,28 @@ and preserves the approved preferred term, display policy, English-reference
 policy, and accepted search aliases for every concept. A missing, stale,
 unapproved, or wrong-locale glossary keeps non-English exact recipes release-gated.
 
+## Controlled preview rollout
+
+The 22 non-English local-only drafts are packaged as `preview`, not `approved`.
+Regenerate them without a network service:
+
+```powershell
+python tools\generate_p1_exact_guidance_localizations.py --promote-preview --locales bg cs da de el es et fi fr hr hu it lt lv nl pl pt ro sk sl sv zh
+python tools\generate_p1_exact_guidance_localizations.py --check
+```
+
+Preview promotion reads only `p1-exact-localizations.json`. It writes locale raw
+resources with null reviewer metadata, uses suppressed canonical placeholders
+for `INSUFFICIENT_EVIDENCE` glossary entries, and cannot update the reviewed
+locale ledger. Runtime eligibility remains closed until the user accepts the
+localized preview disclosure. Setup, Learn, and active sessions keep the preview
+notice visible; safety-critical warnings include canonical English beside the
+localized draft. Disabling preview immediately returns exact recipes to the
+reviewed-only gate and prevents preview sessions from being resumed.
+
+This preview path improves access without weakening the reviewed promotion
+contract below.
+
 ## Required human review
 
 Review all 114 stages in order for each recipe and locale. Do not sample only a

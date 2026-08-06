@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   brewing.
 - **Background continuation for bounded stages** — timed stage transitions can
   surface a direct-return alert when the relevant brew is not open on screen.
+- **Opt-in guidance translation previews** — all supported app languages can
+  preview the complete exact-recipe curriculum. Preview copy is clearly marked,
+  stays disabled until the user consents, can be turned off from brew setup, and
+  retains the canonical English warning beside safety-critical translations.
 
 ### Changed
 
@@ -32,13 +36,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Release status
 
-- **P1 brewer profiles remain unavailable.** All 114 exact-stage instructional
-  illustrations are now packaged, optimized, and physically reviewed, with no
-  open visual-production items. The profiles remain release-gated because the
-  canonical stage curriculum is still English source copy and does not yet have
-  reviewed instruction and accessibility resources for all 23 supported locales.
-  No English fallback or unreviewed translation is presented as finished brewing
-  guidance.
+- **P1 exact guidance is available in reviewed English.** The other 22 app
+  locales package complete, structurally validated preview translations behind
+  explicit consent. They are never labelled as reviewed, unresolved glossary
+  terms remain hidden, and safety-critical steps retain their English warning.
+  Promotion from preview to reviewed guidance still requires the locale-specific
+  editorial, evidence, accessibility, theme, and device gates.
 
 ## [1.4.0] — 2026-07-25
 
