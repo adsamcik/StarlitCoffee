@@ -610,7 +610,7 @@ private suspend fun runBrewLogMutation(
         action()
     } catch (error: CancellationException) {
         throw error
-    } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+    } catch (error: Exception) {
         onFailure(error)
     } finally {
         onFinished()

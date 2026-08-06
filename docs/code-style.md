@@ -40,11 +40,12 @@ Every change must pass:
 .\gradlew.bat :app:detekt :app:lintDebug testDebugUnitTest :app:assembleDebug
 ```
 
-Detekt rejects new maintainability findings against its reviewed baseline.
-Android lint treats warnings as errors, covering Kotlin, Compose, resources,
-the manifest, and shrinker configuration. Suppress a rule only at the narrowest
-scope and document why the rule does not apply.
+Detekt and Android lint run without baselines: every unsuppressed finding fails
+the build. Android lint treats warnings as errors across Kotlin, Compose,
+resources, the manifest, and shrinker configuration. Suppress a rule only at
+the narrowest source scope and document the concrete invariant or framework
+constraint that makes the rule inapplicable. Never create or regenerate a
+baseline to make a failing check disappear.
 
 Formatting-only changes should be isolated from behavioural changes whenever
-practical. Review generated output and baselines as source code; never update a
-baseline solely to make a failing check disappear.
+practical. Review generated output and policy exceptions as source code.

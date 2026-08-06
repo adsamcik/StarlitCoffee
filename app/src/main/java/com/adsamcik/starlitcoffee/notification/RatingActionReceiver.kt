@@ -36,7 +36,7 @@ class RatingActionReceiver : BroadcastReceiver() {
                 if (applyRating(appContext, brewLogId, ratingValue.toFloat())) {
                     RatingReminderScheduler(appContext).cancelReminder(brewLogId)
                 }
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            } catch (error: Exception) {
                 Log.e(TAG, "Failed to apply quick rating $ratingValue for brew $brewLogId", error)
             } finally {
                 pending.finish()

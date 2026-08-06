@@ -109,7 +109,7 @@ fun SavedRecipesScreen(
                             pendingDelete = null
                         } catch (error: CancellationException) {
                             throw error
-                        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                        } catch (error: Exception) {
                             Log.e("SavedRecipesScreen", "Failed to delete recipe", error)
                             Toast.makeText(context, R.string.msg_could_not_delete, Toast.LENGTH_LONG).show()
                         } finally {

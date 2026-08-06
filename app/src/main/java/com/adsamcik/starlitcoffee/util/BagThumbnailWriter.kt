@@ -23,7 +23,7 @@ object BagThumbnailWriter {
      *
      * Must be called off the main thread (decodes a bitmap + writes a file).
      */
-    @Suppress("TooGenericExceptionCaught", "ReturnCount")
+    @Suppress("ReturnCount")
     fun createFocusedThumbnail(
         context: Context,
         sourceUri: String,

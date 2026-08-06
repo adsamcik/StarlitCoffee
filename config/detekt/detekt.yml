@@ -57,15 +57,11 @@ empty-blocks:
 
 exceptions:
   active: true
-  # The codebase uses generic `catch (e: Exception)` extensively as a
-  # *boundary* pattern: log + degrade gracefully when crossing into native
-  # JPEG decoders, ML Kit, Mindlayer SDK, OkHttp, ExifInterface, etc., each
-  # of which raises a different exception hierarchy. Narrowing case-by-case
-  # would either let new exception types crash silently or require exhaustive
-  # multi-catch chains that obscure the boundary intent. Per-call-site
-  # @Suppress was applied across the scan/LLM hot path and shipped first;
-  # the rest of the codebase uses the same idiom and the rule's signal-to-
-  # noise was poor. Re-enable if a specific package starts being a hotspot.
+  # Generic catches are reserved for explicit integration boundaries that log and
+  # degrade safely across native decoders, ML Kit, Mindlayer, network, or Android
+  # framework calls with unrelated exception hierarchies. The rule's project-wide
+  # signal was poor, so the boundary policy lives here instead of being repeated as
+  # source annotation noise. Re-enable if a specific package becomes a hotspot.
   TooGenericExceptionCaught:
     active: false
 

@@ -73,7 +73,7 @@ class OnboardingViewModel(
                 }
             } catch (error: CancellationException) {
                 throw error
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            } catch (error: Exception) {
                 Log.e(TAG, "Failed to complete onboarding", error)
                 _uiState.update { it.copy(isSubmitting = false, failure = true) }
             }

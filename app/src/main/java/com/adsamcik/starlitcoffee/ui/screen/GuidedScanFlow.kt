@@ -468,7 +468,7 @@ fun ScanRescanReview(
                     }
                 } catch (error: CancellationException) {
                     throw error
-                } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                } catch (error: Exception) {
                     Log.e("ScanRescanReview", "Failed to update rescanned coffee bag", error)
                     Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
                 } finally {

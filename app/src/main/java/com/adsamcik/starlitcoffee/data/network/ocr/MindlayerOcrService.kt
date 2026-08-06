@@ -129,7 +129,6 @@ class MindlayerOcrService(
 
     private suspend fun ensureCapability(): Boolean {
         if (capabilityAvailable) return true
-        @Suppress("TooGenericExceptionCaught")
         return try {
             val caps = mindlayer.awaitConnected(Duration.INFINITE)
             val supported = caps.supports(ServiceCapabilities.FEATURE_OCR_IMAGE_ONESHOT)
@@ -151,7 +150,6 @@ class MindlayerOcrService(
         private const val PNG_QUALITY: Int = 100
 
         internal fun encodePng(bitmap: Bitmap): ByteArray? {
-            @Suppress("TooGenericExceptionCaught")
             return try {
                 val out = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.PNG, PNG_QUALITY, out)

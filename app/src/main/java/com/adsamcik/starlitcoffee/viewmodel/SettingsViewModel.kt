@@ -185,7 +185,7 @@ class SettingsViewModel(
                 }
             } catch (error: CancellationException) {
                 throw error
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            } catch (error: Exception) {
                 Log.e(TAG, "Settings persistence operation failed", error)
                 _uiState.update {
                     it.copy(

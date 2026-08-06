@@ -48,7 +48,7 @@ class BrewLogListViewModel(
                 }
             } catch (error: CancellationException) {
                 throw error
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            } catch (error: Exception) {
                 Log.e(TAG, "Failed to delete brew log", error)
                 _uiState.update {
                     it.copy(
@@ -136,7 +136,7 @@ class BrewLogFeedbackViewModel(
                 }
             } catch (error: CancellationException) {
                 throw error
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            } catch (error: Exception) {
                 Log.e(TAG, "Failed to save brew feedback", error)
                 val failedTarget = _uiState.value.pendingTarget
                 _uiState.update {

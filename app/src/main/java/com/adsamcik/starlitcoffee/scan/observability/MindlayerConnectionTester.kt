@@ -232,7 +232,6 @@ object MindlayerConnectionTester {
      * surfaces a clean error if the service is genuinely down.
      */
     private suspend fun Mindlayer.prewarmCpuBestEffort() {
-        @Suppress("TooGenericExceptionCaught")
         try {
             prewarm(InferenceBackend.CPU)
         } catch (e: kotlinx.coroutines.CancellationException) {

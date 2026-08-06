@@ -150,7 +150,6 @@ class MindlayerLlmInferenceProvider(
         if (ocrText.isBlank()) return ocrText
         val prompt = buildTranslatePrompt(ocrText)
         val startMs = System.currentTimeMillis()
-        @Suppress("TooGenericExceptionCaught")
         return try {
             val out = withTimeout(EXTRACTION_TIMEOUT_MS) {
                 val handle = mindlayer.infer {
@@ -250,7 +249,6 @@ class MindlayerLlmInferenceProvider(
         // can throw anything from JSON parsing failures to native crashes;
         // mapping all of them to a retryable Failed lets the consensus
         // engine try again on the next golden frame.
-        @Suppress("TooGenericExceptionCaught")
         try {
             // Stateless one-shot via the v1 canonical builder — a fresh
             // ephemeral session runs the inference and is torn down after.
@@ -329,7 +327,7 @@ class MindlayerLlmInferenceProvider(
             null
         } catch (error: kotlinx.coroutines.CancellationException) {
             throw error
-        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+        } catch (error: Exception) {
             LlmExtractionResult.Unavailable(
                 "Mindlayer service not available: ${error.message}",
             )
@@ -392,7 +390,7 @@ class MindlayerLlmInferenceProvider(
      * invoked; connection, prewarm, decode, prompt-building, and cancellation
      * failures before that point leave it available.
      */
-    @Suppress("TooGenericExceptionCaught", "ReturnCount")
+    @Suppress("ReturnCount")
     override suspend fun extractBagFieldsWithVision(
         request: LlmExtractionRequest,
     ): LlmExtractionResult = withContext(Dispatchers.IO) {
@@ -477,7 +475,7 @@ class MindlayerLlmInferenceProvider(
      * vocabulary, asks the model to pick the best value per field, and reuses
      * [parseResponse] so the chosen values fold back as LLM candidates.
      */
-    @Suppress("TooGenericExceptionCaught", "ReturnCount")
+    @Suppress("ReturnCount")
     override suspend fun combineBagFields(
         request: LlmCombineRequest,
     ): LlmExtractionResult = withContext(Dispatchers.IO) {
@@ -627,7 +625,6 @@ class MindlayerLlmInferenceProvider(
      * subsample so a 20 MP photo can't OOM, and apply EXIF orientation so the
      * model sees the label the right way up. Returns null on any decode failure.
      */
-    @Suppress("TooGenericExceptionCaught")
     private fun decodeOrientedDownscaled(bytes: ByteArray): Bitmap? {
         return try {
             val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
@@ -656,7 +653,6 @@ class MindlayerLlmInferenceProvider(
         return sample
     }
 
-    @Suppress("TooGenericExceptionCaught")
     private fun applyExifOrientation(bitmap: Bitmap, orientation: Int): Bitmap {
         val matrix = Matrix()
         when (orientation) {
@@ -1167,7 +1163,6 @@ class MindlayerLlmInferenceProvider(
             // else from the parser; the only useful product behaviour is to
             // surface a single Failed result and let the consensus engine
             // try the next golden frame.
-            @Suppress("TooGenericExceptionCaught")
             val jsonObj = try {
                 json.parseToJsonElement(cleaned).jsonObject
             } catch (e: Exception) {

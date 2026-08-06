@@ -140,7 +140,7 @@ class StarlitCoffeeApp : Application() {
                     ),
                     ocrService = HierarchicalOcrService(MindlayerOcrService(client)),
                 ).also { mindlayerServices = it }
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            } catch (error: Exception) {
                 Log.e(TAG, "Mindlayer service initialization failed", error)
                 null
             }

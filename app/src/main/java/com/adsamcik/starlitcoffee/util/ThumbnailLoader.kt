@@ -123,7 +123,6 @@ object ThumbnailLoader {
         // broken-file IO exceptions. ExifInterface adds another set of
         // failure modes. A null return is the documented contract; logging
         // the cause is enough for diagnostics.
-        @Suppress("TooGenericExceptionCaught")
         return try {
             val sampleSize = precomputedSampleSize ?: computeSampleSize(filePath, targetSizePx)
             val opts = BitmapFactory.Options().apply {

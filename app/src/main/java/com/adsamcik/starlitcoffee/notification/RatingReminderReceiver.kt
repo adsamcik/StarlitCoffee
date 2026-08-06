@@ -55,7 +55,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
                     return@launch
                 }
                 postNotification(appContext, brewLogId, methodLabel)
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            } catch (error: Exception) {
                 Log.e(TAG, "Failed to validate rating reminder for $brewLogId", error)
             } finally {
                 pending.finish()

@@ -83,7 +83,7 @@ internal suspend fun persistScannedBag(
             scanSessionId = scanSessionId,
             insertedBagId = insertResult.bagId,
         )
-    } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+    } catch (error: Exception) {
         resolveNewSaveFailure(
             context = context,
             brewViewModel = brewViewModel,
@@ -168,7 +168,7 @@ internal suspend fun persistRescannedBagUpdate(
             replacementCleanup = replacementCleanup,
             recovery = recovery,
         )
-    } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+    } catch (error: Exception) {
         val recovery = recoverRescannedSave(
             context = context,
             brewViewModel = brewViewModel,

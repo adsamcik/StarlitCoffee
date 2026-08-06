@@ -1,7 +1,7 @@
 # Code quality
 
-Starlit Coffee treats automated checks as a ratchet: new issues fail the build,
-while larger historical refactors remain explicit and reviewable.
+Starlit Coffee treats automated checks as release gates. The repository carries
+no Detekt or Android lint baseline: every unsuppressed finding fails the build.
 
 Formatting, Kotlin, and Compose conventions are defined in
 [code-style.md](code-style.md). `.editorconfig` keeps IDE formatting consistent,
@@ -18,61 +18,31 @@ Run the following before opening a pull request:
 ```
 
 Localization and generated brewing catalogs have additional deterministic
-checks in the localization workflow and release workflow. Release optimization
-and retrace-artifact requirements are documented in
+checks in the localization and release workflows. Release optimization and
+retrace-artifact requirements are documented in
 [release-optimization.md](release-optimization.md).
 
-## Detekt baseline
+## Zero-baseline enforcement
 
-`config/detekt/baseline.xml` records the static-analysis findings that existed
-when the public cleanup baseline was established. `maxIssues` remains zero, so
-Detekt reports no accepted historical noise and fails on every new finding.
+`config/detekt/detekt.yml` sets `maxIssues` to zero and
+`app/build.gradle.kts` enables Android lint's `warningsAsErrors` and
+`abortOnError` behavior. Do not create a baseline to accept existing or new
+findings. Fix the finding, improve the canonical generator, or—only when the
+rule genuinely does not model the code—add the narrowest source-local exception
+with a concrete rationale.
 
-## Android lint baseline
+Exceptions are part of the reviewed policy, not hidden debt. They must explain
+which invariant or framework constraint makes the rule inapplicable. Broad,
+undocumented, or convenience-only suppressions are rejected. Integration
+boundaries may catch the framework-level `Exception` type when their explicit
+contract is to log and degrade safely; this boundary policy is configured once
+rather than repeated as source annotation noise.
 
-`app/lint-baseline.xml` records 117 findings that predate strict warning
-enforcement. The largest groups are 59 unused resources, 34 KTX modernization
-suggestions, eight locale plural-quantity gaps, and four intentionally
-duplicated illustration pairs; the remaining 12 are focused Compose, PiP,
-preferences, SDK, typo, and lifecycle findings.
-
-All new Android lint warnings are errors. Regenerate the baseline only after a
-reviewed fix removes entries:
-
-```powershell
-.\gradlew.bat :app:updateLintBaseline
-.\gradlew.bat :app:lintDebug
-```
-
-Treat this baseline with the same ratchet policy as Detekt: do not add or replace
-entries merely to make CI pass.
-
-## Current debt snapshot
-
-The 2026-08-06 baseline contains 157 findings. Most are concentrated rather
-than spread evenly across the product:
-
-- 102 line-length findings in data-heavy brewing and guidance catalogs.
-- 37 size and API-shape findings: too many functions, long methods, long
-  parameter lists, and large orchestration classes.
-- 18 smaller complexity, return-count, allocation, and style findings.
-
-The highest-value refactor targets are the scan/extraction scheduler, photo
-storage, and LLM orchestration boundaries. Catalog formatting should be improved
-at the generator or data-model level instead of through hand-edited wrapping.
-This snapshot describes maintainability debt, not known user-facing defects.
-
-The baseline is not a waiver or a target. When a finding is fixed, regenerate
-the baseline with:
-
-```powershell
-.\gradlew.bat :app:detektBaseline
-.\gradlew.bat :app:detekt
-```
-
-Review baseline diffs like source code. A change should remove entries or
-accompany a clearly justified refactor; do not regenerate it merely to make a
-new warning disappear.
+Android lint has one reviewed configuration file, `app/lint.xml`. Its only
+resource exception covers generated WebP aliases that intentionally share bytes
+while retaining stable resource identifiers. New aliases must be added to the
+canonical asset tracker and independently reviewed; the exception must never be
+expanded into a general duplicate-resource waiver.
 
 ## Generated content
 

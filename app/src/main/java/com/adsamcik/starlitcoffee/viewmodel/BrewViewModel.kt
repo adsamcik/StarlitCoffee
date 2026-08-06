@@ -1273,7 +1273,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     BarcodeInsights.learnStem(normalizedBarcode, input.roaster, stemDao)
                 } catch (error: CancellationException) {
                     throw error
-                } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                } catch (error: Exception) {
                     Log.w("BrewViewModel", "Failed to learn barcode stem after saving bag", error)
                 }
             }
@@ -1571,7 +1571,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 observeBagExtractionWork(workId, context.sessionId, context.generationId)
             } catch (error: CancellationException) {
                 throw error
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            } catch (error: Exception) {
                 Log.e("BrewViewModel", "Could not enqueue bag extraction", error)
                 if (isLatestBagExtractionGeneration(context.sessionId, context.generationId)) {
                     deliverBagPhotoFailure(
@@ -2081,7 +2081,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             ?.let { previewJson ->
                 try {
                     updateBagAnalysisPreview(decodeBagExtractionResult(previewJson))
-                } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                } catch (error: Exception) {
                     Log.w("BrewViewModel", "Failed to decode bag extraction preview", error)
                 }
             }
@@ -2129,7 +2129,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 generationId = generationId,
                 reviewContext = reviewContext,
             )
-        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+        } catch (error: Exception) {
             Log.e("BrewViewModel", "Failed to decode bag extraction result", error)
             deliverBagPhotoFailure(
                 workId = workId,
@@ -2545,7 +2545,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
         return try {
             decodeBagExtractionResult(json)
-        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+        } catch (error: Exception) {
             Log.e("BrewViewModel", "Failed to decode deep-link bag result", error)
             BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE)
         }

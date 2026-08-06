@@ -53,7 +53,7 @@ class CupPresetEditorViewModel(
                 }
             } catch (error: CancellationException) {
                 throw error
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            } catch (error: Exception) {
                 Log.e(TAG, "Failed to save cup preset", error)
                 _uiState.update {
                     it.copy(
@@ -85,7 +85,7 @@ class CupPresetEditorViewModel(
                 }
             } catch (error: CancellationException) {
                 throw error
-            } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+            } catch (error: Exception) {
                 Log.e(TAG, "Failed to delete cup preset", error)
                 _uiState.update {
                     it.copy(

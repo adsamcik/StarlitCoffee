@@ -1112,7 +1112,7 @@ fun BagInventoryScreen(
                             selectedBagId = null
                         } catch (error: CancellationException) {
                             throw error
-                        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                        } catch (error: Exception) {
                             Log.e("BagInventoryScreen", "Failed to delete coffee bag", error)
                             Toast.makeText(
                                 context,
@@ -1162,7 +1162,7 @@ fun BagInventoryScreen(
                         editBagId = null
                     } catch (error: CancellationException) {
                         throw error
-                    } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+                    } catch (error: Exception) {
                         Log.e("BagInventoryScreen", "Failed to update coffee bag", error)
                         Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
                     } finally {

@@ -87,7 +87,7 @@ implementation report in
 
 ## Contributing and security
 
-The quality ratchet and baseline policy are documented in
+The baseline-free quality and exception policy is documented in
 [docs/code-quality.md](docs/code-quality.md).
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing changes. Report

@@ -1000,7 +1000,6 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         withContext(Dispatchers.IO) {
             val rect = labelRegionForVision(photo) ?: return@withContext null
             val bitmap = decodeBagPhotoBitmap(photo.uri) ?: return@withContext null
-            @Suppress("TooGenericExceptionCaught")
             try {
                 val cropped = cropBitmapToRect(bitmap, rect) ?: return@withContext null
                 ByteArrayOutputStream().use { out ->
@@ -1149,7 +1148,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 )
             } catch (e: CancellationException) {
                 throw e
-            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            } catch (e: Exception) {
                 LlmExtractionResult.Failed("Brew photo LLM enrichment threw: ${e.message}", retryable = true)
             }
 
@@ -1309,7 +1308,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             LlmExtractionResult.Failed("Combine enrichment timed out", retryable = false)
         } catch (e: CancellationException) {
             throw e
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+        } catch (e: Exception) {
             LlmExtractionResult.Failed("Combine enrichment threw: ${e.message}", retryable = false)
         }
 
@@ -1442,7 +1441,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             LlmExtractionResult.Failed("Refine enrichment timed out", retryable = false)
         } catch (e: CancellationException) {
             throw e
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+        } catch (e: Exception) {
             LlmExtractionResult.Failed("Refine enrichment threw: ${e.message}", retryable = false)
         }
 
@@ -1501,7 +1500,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 ?: bestPhotoUri?.let { readPhotoBytesForLlm(it) }
         } catch (e: CancellationException) {
             throw e
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+        } catch (e: Exception) {
             Log.w(BAG_PHOTO_TAG, "Failed to read photo bytes for vision pass", e)
             null
         } ?: return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
@@ -1537,7 +1536,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             LlmExtractionResult.Failed("Vision enrichment timed out", retryable = false)
         } catch (e: CancellationException) {
             throw e
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+        } catch (e: Exception) {
             LlmExtractionResult.Failed("Vision enrichment threw: ${e.message}", retryable = false)
         }
 

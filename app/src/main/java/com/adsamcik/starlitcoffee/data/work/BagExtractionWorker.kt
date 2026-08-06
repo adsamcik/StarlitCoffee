@@ -119,7 +119,7 @@ class BagExtractionWorker(
             )
         } catch (error: CancellationException) {
             throw error
-        } catch (@Suppress("TooGenericExceptionCaught") error: Exception) {
+        } catch (error: Exception) {
             Log.e(TAG, "Bag extraction worker failed", error)
             val failureResult = BagPhotoProcessingResult(
                 capturedPhotoUris = photosCsv,
@@ -137,7 +137,7 @@ class BagExtractionWorker(
                     workId = workId,
                     replay = storedResult.toTerminalReplay(reviewContext),
                 )
-            } catch (@Suppress("TooGenericExceptionCaught") persistenceError: Exception) {
+            } catch (persistenceError: Exception) {
                 Log.e(TAG, "Could not persist failed bag extraction result", persistenceError)
                 Result.retry()
             }
@@ -168,7 +168,6 @@ class BagExtractionWorker(
      * producing the result reliably matters more than the service guarantee.
      */
     private suspend fun enterForeground() {
-        @Suppress("TooGenericExceptionCaught")
         try {
             setForeground(getForegroundInfo())
         } catch (error: Exception) {
@@ -192,7 +191,6 @@ class BagExtractionWorker(
     private fun publishProgress(progress: ScanProgress) {
         latestProgress = progress
         publishWorkProgress(progress)
-        @Suppress("TooGenericExceptionCaught")
         try {
             NotificationManagerCompat.from(applicationContext)
                 .notify(foregroundNotificationId, buildProgressNotification(progress))
