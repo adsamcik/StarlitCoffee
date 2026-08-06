@@ -1,52 +1,130 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "et",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "partial",
   "ui_copy": {
     "show_english_terms": "Kuva ingliskeelsed kohviterminid",
     "hide_english_terms": "Peida ingliskeelsed kohviterminid",
     "heading": "Ingliskeelsed kohviterminid"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "et_rimi_paulig",
+      "title": "Unusta masinakohvi: V60 avardab su kohvimaailma",
+      "url": "https://www.rimi.ee/hea-toit/joogid/unusta-masinakohvi-v60-avardab-su-kohvimaailma",
+      "category": "coffee-expert consumer guide",
+      "audience": "beginner",
+      "region": "Estonia",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "et_greenplantation",
+      "title": "Kuidas valmistada täiuslik tass kohvi Hario V60-ga",
+      "url": "https://www.greenplantation.eu/et/a/kuidas-valmistada-taeiuslik-tass-kohvi-hario-v60-ga",
+      "category": "localized retailer guide",
+      "audience": "beginner",
+      "region": "Estonia",
+      "original_or_translated": "translated",
+      "source_flags": [
+        "multi-market localization; likely translated"
+      ]
+    },
+    {
+      "id": "et_ratio",
+      "title": "Ratio Six coffee maker",
+      "url": "https://www.kohvisemu.ee/tooted/ratio-six-kohvimasin/",
+      "category": "specialty retailer product page",
+      "audience": "enthusiast",
+      "region": "Estonia",
+      "original_or_translated": "unclear",
+      "source_flags": [
+        "undated; equipment UI terminology"
+      ]
+    },
+    {
+      "id": "et_kohvipaus",
+      "title": "Toidublogi: HARIO V60",
+      "url": "https://kohvipaus.ee/toidublogi-hario-v60/",
+      "category": "coffee retailer guide",
+      "audience": "beginner",
+      "region": "Estonia",
+      "original_or_translated": "original",
+      "source_flags": []
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "kohvivalmistaja / tilguti"
+        "kohvifilter / tilguti"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "tilguti",
+        "dripper"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: kohvifilter Professional: Native pages use kohvifilter; translated retail pages use tilguti. English dripper is product-specific.",
+      "evidence_source_ids": [
+        "et_rimi_paulig",
+        "et_greenplantation"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "LOW",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
-      "preferred_terms": [
-        "kohvipuru kiht"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "kohvikiht"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Explain descriptively as jahvatatud kohvi kiht after review. Professional: No reliable specialty convention was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
-      "preferred_terms": [
-        "eelniisutus / bloom"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "bloom",
+        "eelniisutus"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Do not ship a fixed term pending native review. Professional: Bloom appears in an equipment UI/translated context, while native recipes often describe the first pour without naming it.",
+      "evidence_source_ids": [
+        "et_ratio"
+      ],
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "grounds",
@@ -54,115 +132,220 @@
       "preferred_terms": [
         "jahvatatud kohv"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "kohvipuru",
+        "kohvipaks"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "kohvipaks"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "kohvipaks",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: jahvatatud kohv Professional: jahvatatud kohv is explicit dry ground coffee; kohvipuru can mean grounds/particles and risks spent-ground ambiguity.",
+      "evidence_source_ids": [
+        "et_rimi_paulig",
+        "et_kohvipaus",
+        "et_greenplantation"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
-      "preferred_terms": [
-        "peened kohviosakesed"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "peenosakesed",
+        "fines"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use a descriptive phrase only after review. Professional: Only translated or weak evidence for peenosakesed was found.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
+        "No established conventional term"
+      ],
+      "accepted_alternatives": [
         "kohvi ja vee segu"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use descriptive phrase kohvi ja vee segu. Professional: Across the small recipe corpus the mixture is described, not named.",
+      "evidence_source_ids": [
+        "et_ratio",
+        "et_rimi_paulig",
+        "et_greenplantation"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "LOW",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
-      "preferred_terms": [
-        "filtrist läbinõrgumine"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "tilkumisaeg"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: Sources state total preparation or dripping time but do not establish a drawdown phase label.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "õrn keerutamine / ringliigutus"
+        "keerutage filtrit / kannu"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "ringikujuline liigutus",
+        "swirl"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: keerutage õrnalt Professional: Instructions use keerutama; no stable English technique label was demonstrated.",
+      "evidence_source_ids": [
+        "et_greenplantation"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "LOW",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "serveerimiskann / karahvin"
+        "klaaskann / kann"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "klaaskann",
+        "server"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: kann Professional: kann/klaaskann is used in practical guides.",
+      "evidence_source_ids": [
+        "et_rimi_paulig",
+        "et_kohvipaus"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
-      "preferred_terms": [
-        "leotamine / immersioonmeetod"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "tõmbama",
+        "immersioon"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use a process sentence rather than a category label. Professional: Kohvi tõmbama describes steeping, but a stable specialty method-category label was not established.",
+      "evidence_source_ids": [
+        "et_rimi_paulig"
+      ],
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
-      "preferred_terms": [
+      "preferred_terms": [],
+      "accepted_alternatives": [
         "ventiil"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending native review. Professional: No reliable Estonian Switch/Clever terminology source was accessible.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "kohvifiltri paber"
+        "paberfilter"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "filterpaber"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: paberfilter Professional: paberfilter is consistent across native and localized guides.",
+      "evidence_source_ids": [
+        "et_rimi_paulig",
+        "et_kohvipaus",
+        "et_greenplantation"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "resolve 6 insufficient-evidence terminology records",
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

@@ -1,76 +1,273 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "pt",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "complete",
   "ui_copy": {
     "show_english_terms": "Mostrar termos de café em inglês",
     "hide_english_terms": "Ocultar termos de café em inglês",
     "heading": "Terminologia de café em inglês"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "pt_unity",
+      "title": "Hario V60 Brewing Guide",
+      "url": "https://unitycoffee.pt/pt/blogs/coffee-blog/hario-v60-brewing-guide",
+      "category": "Portuguese roaster guide",
+      "audience": "mixed",
+      "region": "Portugal",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "pt_7g_recipe",
+      "title": "El Negro Honduras brewing recipe",
+      "url": "https://roaster.7groaster.pt/loja/cafes/elnegro-honduras/",
+      "category": "Portuguese roaster recipe",
+      "audience": "enthusiast",
+      "region": "Portugal",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "pt_7g_filter",
+      "title": "Filtro Sibarist Cone M",
+      "url": "https://roaster.7groaster.pt/loja/filtros/filtro-sibarist-cone-m/",
+      "category": "Portuguese specialist retailer page",
+      "audience": "professional",
+      "region": "Portugal",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "pt_reidocafe",
+      "title": "Hario V60: como usar",
+      "url": "https://reidocafe.com.br/blogs/news/hario-v60-como-usar-para-extrair-o-melhor-cafe-em-casa",
+      "category": "Brazilian coffee guide",
+      "audience": "beginner",
+      "region": "Brazil",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "pt_coffeejoy",
+      "title": "Hario V60",
+      "url": "https://coffeeandjoy.com.br/hario-v60",
+      "category": "Brazilian specialty coffee guide",
+      "audience": "beginner",
+      "region": "Brazil",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "pt_fines",
+      "title": "Partículas finas na moagem do café",
+      "url": "https://uniquecafes.com.br/particulas-finas-moagem-cafe/",
+      "category": "Brazilian specialty explainer",
+      "audience": "enthusiast",
+      "region": "Brazil",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated; indexed usage retained"
+      ]
+    },
+    {
+      "id": "pt_unique_switch",
+      "title": "Review Hario Switch no V60",
+      "url": "https://uniquecafes.com.br/review-hario-switch-no-v60-descubra-o-que-muda-no-sabor-do-cafe/",
+      "category": "Brazilian specialty article",
+      "audience": "enthusiast",
+      "region": "Brazil",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "cafeteira / porta-filtro"
+        "coador / porta-filtro / dripper"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "coador",
+        "porta-filtro",
+        "dripper",
+        "brewer"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [
+        {
+          "region": "Brazil",
+          "term": "coador / porta-filtro",
+          "notes": "Beginner and editorial usage."
+        },
+        {
+          "region": "Portugal",
+          "term": "V60 / dripper / brewer",
+          "notes": "Specialist sources retain more English equipment language."
+        }
+      ],
+      "rationale": "Beginner: Brazil: coador/porta-filtro; Portugal: V60/dripper with explanation Professional: Portugal specialist sources often retain V60, brewer or dripper; Brazil commonly uses coador and porta-filtro alongside dripper.",
+      "evidence_source_ids": [
+        "pt_unity",
+        "pt_7g_recipe",
+        "pt_7g_filter",
+        "pt_reidocafe",
+        "pt_coffeejoy"
+      ],
+      "classification": "REGION_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "region_and_context_required",
+      "english_reference_policy": "region_specific",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
       "preferred_terms": [
+        "cama de café / camada de café"
+      ],
+      "accepted_alternatives": [
         "cama de café"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: camada de café Professional: Cama/camada de café is established in both markets.",
+      "evidence_source_ids": [
+        "pt_unity",
+        "pt_7g_recipe",
+        "pt_reidocafe",
+        "pt_coffeejoy"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "pré-infusão / bloom"
+        "pré-infusão (bloom)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "bloom",
+        "pré-extração"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [
+        {
+          "region": "Brazil",
+          "term": "pré-infusão (bloom)",
+          "notes": "Localized term foregrounded."
+        },
+        {
+          "region": "Portugal",
+          "term": "bloom / pré-infusão",
+          "notes": "English specialist term more visible."
+        }
+      ],
+      "rationale": "Beginner: pré-infusão; bloom as contextual alias Professional: Brazilian guides foreground pré-infusão and add bloom; Portuguese specialist recipes more readily use bloom directly.",
+      "evidence_source_ids": [
+        "pt_unity",
+        "pt_7g_recipe",
+        "pt_reidocafe",
+        "pt_coffeejoy"
+      ],
+      "classification": "REGION_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "region_and_context_required",
+      "english_reference_policy": "region_specific",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
       "canonical_english": "coffee grounds",
       "preferred_terms": [
-        "café moído"
+        "café moído / pó de café"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "pó de café",
+        "borra de café"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "borra"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "borra",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [
+        {
+          "region": "Brazil",
+          "term": "pó de café / café moído",
+          "notes": "Both common."
+        },
+        {
+          "region": "Portugal",
+          "term": "café moído",
+          "notes": "Preferred neutral form."
+        }
+      ],
+      "rationale": "Beginner: café moído Professional: Café moído is cross-market; pó de café is especially common in Brazil. Borra is spent grounds.",
+      "evidence_source_ids": [
+        "pt_unity",
+        "pt_reidocafe",
+        "pt_coffeejoy"
+      ],
+      "classification": "REGION_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "region_and_context_required",
+      "english_reference_policy": "region_specific",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
       "preferred_terms": [
-        "partículas finas de café"
+        "partículas finas"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "fines",
+        "pó fino"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: partículas finas Professional: Partículas finas is clear; fines is an advanced alias.",
+      "evidence_source_ids": [
+        "pt_fines"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
@@ -78,59 +275,155 @@
       "preferred_terms": [
         "mistura de café e água"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "slurry"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "lama"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "lama",
+          "reason": "literal “mud”; misleading"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: mistura de café e água Professional: No stable Portuguese coffee lexical item was established in either market.",
+      "evidence_source_ids": [
+        "pt_7g_recipe",
+        "pt_coffeejoy",
+        "pt_reidocafe"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "MEDIUM",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "fase de escoamento"
+        "tempo de escoamento / drawdown"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "drawdown",
+        "tempo de gotejamento"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [
+        {
+          "region": "Portugal",
+          "term": "drawdown / tempo total",
+          "notes": "English label directly attested in specialist product/recipe copy."
+        },
+        {
+          "region": "Brazil",
+          "term": "tempo de escoamento / gotejamento",
+          "notes": "Localized description favored."
+        }
+      ],
+      "rationale": "Beginner: tempo de escoamento Professional: Portugal specialist sources directly retain drawdown; Brazilian guidance more often describes escoamento/gotejamento.",
+      "evidence_source_ids": [
+        "pt_unity",
+        "pt_7g_filter"
+      ],
+      "classification": "REGION_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "region_and_context_required",
+      "english_reference_policy": "region_specific",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "movimento circular / rotação"
+        "girar o coador / movimentos circulares"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Rao Spin",
+        "movimentos circulares"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: gire suavemente o coador Professional: English technique names may appear, but action grammar is Portuguese in both markets.",
+      "evidence_source_ids": [
+        "pt_7g_recipe",
+        "pt_reidocafe",
+        "pt_coffeejoy"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "servidor / jarra"
+        "jarra / servidor"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "servidor",
+        "jarro",
+        "decantador"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [
+        {
+          "region": "Brazil",
+          "term": "jarra",
+          "notes": "Beginner/editorial default."
+        },
+        {
+          "region": "Portugal",
+          "term": "servidor / jarro",
+          "notes": "Specialist/product alternatives."
+        }
+      ],
+      "rationale": "Beginner: jarra Professional: Jarra is broad and especially visible in Brazil; servidor/jarro appears in Portugal specialist gear language.",
+      "evidence_source_ids": [
+        "pt_unity",
+        "pt_reidocafe",
+        "pt_coffeejoy"
+      ],
+      "classification": "REGION_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "region_and_context_required",
+      "english_reference_policy": "region_specific",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "infusão / imersão"
+        "imersão"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "infusão",
+        "deixar em contacto"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: imersão Professional: Extração por imersão is established in both markets.",
+      "evidence_source_ids": [
+        "pt_unique_switch"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
@@ -138,31 +431,57 @@
       "preferred_terms": [
         "válvula"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "válvula inferior"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: válvula Professional: Válvula is standard in both markets.",
+      "evidence_source_ids": [
+        "pt_unique_switch"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "papel de filtro de café"
+        "filtro de papel"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "papel de filtro"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: filtro de papel Professional: Filtro de papel is universal.",
+      "evidence_source_ids": [
+        "pt_unity",
+        "pt_7g_recipe",
+        "pt_7g_filter",
+        "pt_reidocafe",
+        "pt_coffeejoy"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

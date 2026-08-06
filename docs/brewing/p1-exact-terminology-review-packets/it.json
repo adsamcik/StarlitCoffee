@@ -1,28 +1,106 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "it",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "complete",
   "ui_copy": {
     "show_english_terms": "Mostra i termini inglesi del caffè",
     "hide_english_terms": "Nascondi i termini inglesi del caffè",
     "heading": "Terminologia inglese del caffè"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "it_tastecoffee",
+      "title": "Caffè con V60: la guida completa",
+      "url": "https://tastecoffee.it/blogs/news/caffe-con-v60-la-guida-completa-per-prepararlo-a-casa",
+      "category": "Italian roaster guide",
+      "audience": "mixed",
+      "region": "Italy",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "it_costadoro",
+      "title": "V60",
+      "url": "https://costadoro.it/caffe-metodi-estrazione/brewing/v60/",
+      "category": "Italian roaster brew guide",
+      "audience": "mixed",
+      "region": "Italy",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "it_coffish",
+      "title": "Caffè filtro Hario Switch",
+      "url": "https://www.coffish.it/metodi-di-estrazione/ricette-e-guide/caffe-filtro-hario-switch/",
+      "category": "specialty education article",
+      "audience": "enthusiast",
+      "region": "Italy",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "it_essense",
+      "title": "Pour-over dripper",
+      "url": "https://essense.coffee/it/brewing/pour-over-dripper/",
+      "category": "specialty educational page",
+      "audience": "professional",
+      "region": "Italy",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "it_filicori",
+      "title": "Pour Over V60",
+      "url": "https://filicorizecchini.com/pages/pour-over-v60",
+      "category": "established roaster guide",
+      "audience": "mixed",
+      "region": "Italy",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "caffettiera / dripper"
+        "dripper"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "cono filtro",
+        "portafiltro"
+      ],
+      "inflected_or_adapted_forms": [
+        "il dripper",
+        "dei dripper"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: dripper Professional: Dripper is the normal specialty label; cono/portafiltro explains form/function.",
+      "evidence_source_ids": [
+        "it_tastecoffee",
+        "it_costadoro",
+        "it_coffish",
+        "it_essense"
+      ],
+      "classification": "ENGLISH_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
@@ -30,23 +108,51 @@
       "preferred_terms": [
         "letto di caffè"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "pannello"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: letto di caffè Professional: letto di caffè is established; pannello occurs in some technical writing.",
+      "evidence_source_ids": [
+        "it_filicori",
+        "it_coffish",
+        "it_essense"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "preinfusione / bloom"
+        "blooming / pre-infusione"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "fioritura",
+        "bloom"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: pre-infusione (blooming) Professional: Blooming is conventional and often paired with pre-infusione or fioritura.",
+      "evidence_source_ids": [
+        "it_tastecoffee",
+        "it_filicori",
+        "it_costadoro",
+        "it_coffish"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
@@ -54,83 +160,188 @@
       "preferred_terms": [
         "caffè macinato"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "fondi di caffè"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "fondi"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "fondi",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: caffè macinato Professional: caffè macinato is dry grounds; fondi are spent.",
+      "evidence_source_ids": [
+        "it_tastecoffee",
+        "it_filicori",
+        "it_costadoro",
+        "it_coffish"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
       "preferred_terms": [
-        "particelle fini di caffè"
+        "particelle fini (fines)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "fines",
+        "polvere di caffè"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: particelle fini Professional: Fines occurs in advanced grinder/extraction discussion; particelle fini is clearer.",
+      "evidence_source_ids": [
+        "it_essense"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
-        "miscela di caffè e acqua"
+        "miscela acqua-caffè"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "slurry"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "poltiglia"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "poltiglia",
+          "reason": "pejorative mash/sludge"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: miscela acqua-caffè Professional: No stable Italian specialty lexical term converged; sources paraphrase.",
+      "evidence_source_ids": [
+        "it_essense"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "MEDIUM",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "fase di drenaggio"
+        "tempo di percolazione"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "tempo di deflusso",
+        "drawdown"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: tempo di percolazione Professional: Tempo di percolazione/deflusso is natural; drawdown is limited to English-heavy recipes.",
+      "evidence_source_ids": [
+        "it_tastecoffee",
+        "it_costadoro"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "movimento circolare / rotazione"
+        "ruotare il dripper / vortice"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Rao Spin",
+        "movimento circolare",
+        "vortice"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: ruotare delicatamente il dripper Professional: Rao Spin/swirl may name the technique; Italian instructions use ruotare/creare un vortice.",
+      "evidence_source_ids": [
+        "it_tastecoffee",
+        "it_filicori",
+        "it_costadoro"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "server / caraffa"
+        "caraffa / server"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "server",
+        "bricco"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: caraffa Professional: Server is a recognized specialty gear label; caraffa/bricco is clearer generally.",
+      "evidence_source_ids": [
+        "it_filicori",
+        "it_costadoro",
+        "it_coffish"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "infusione / immersione"
+        "immersione / infusione"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "full immersion",
+        "infusione"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: immersione Professional: Immersione is established as the method category; infusione describes steeping.",
+      "evidence_source_ids": [
+        "it_coffish"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
@@ -138,11 +349,22 @@
       "preferred_terms": [
         "valvola"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "valvola di chiusura"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: valvola Professional: valvola is standard.",
+      "evidence_source_ids": [
+        "it_coffish"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
@@ -150,19 +372,32 @@
       "preferred_terms": [
         "filtro di carta"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "carta da filtro"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: filtro di carta Professional: filtro di carta is universal.",
+      "evidence_source_ids": [
+        "it_filicori",
+        "it_costadoro",
+        "it_coffish"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

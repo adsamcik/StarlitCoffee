@@ -1,28 +1,148 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "es",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "partial",
   "ui_copy": {
     "show_english_terms": "Mostrar términos de café en inglés",
     "hide_english_terms": "Ocultar términos de café en inglés",
     "heading": "Terminología de café en inglés"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "es_nomad",
+      "title": "V60",
+      "url": "https://nomadcoffee.es/blogs/at-home/v60",
+      "category": "Spanish roaster brew guide",
+      "audience": "enthusiast",
+      "region": "Spain",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "es_ineffable",
+      "title": "Receta V60",
+      "url": "https://ineffablecoffee.com/pages/receta-v60",
+      "category": "Spanish roaster brew guide",
+      "audience": "beginner",
+      "region": "Spain",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "es_santocafe",
+      "title": "Cómo preparar café de filtro",
+      "url": "https://santocafe.cl/como-preparar-cafe-de-filtro/",
+      "category": "Chilean roaster guide",
+      "audience": "beginner",
+      "region": "Chile",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "es_freedom_mexico",
+      "title": "Métodos para preparar café en casa",
+      "url": "https://freedomsociety.club/en/blogs/freedom-society/metodos-para-preparar-cafe-en-casa-increibles-y-poderosos-guia-definitiva",
+      "category": "Mexican coffee article",
+      "audience": "beginner",
+      "region": "Mexico",
+      "original_or_translated": "unclear",
+      "source_flags": [
+        "Spanish text under /en path; originality unclear"
+      ]
+    },
+    {
+      "id": "es_laguashira",
+      "title": "V60 como método para preparar tu café",
+      "url": "https://laguashira.com/blogs/origen/v60-como-metodo-para-preparar-tu-cafe",
+      "category": "Colombian roaster guide",
+      "audience": "mixed",
+      "region": "Colombia",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "es_avocoffee",
+      "title": "¿Qué es V60?",
+      "url": "https://www.avocoffeeroasters.com.ar/blog/que-es-v60/",
+      "category": "Argentine roaster article",
+      "audience": "mixed",
+      "region": "Argentina",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "es_forocafe",
+      "title": "Glosario de café",
+      "url": "https://www.forocafe.es/foro/viewtopic.php?t=128",
+      "category": "professional forum glossary",
+      "audience": "professional",
+      "region": "Spain",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "es_lafazenda",
+      "title": "Cómo hacer café filtrado en casa",
+      "url": "https://www.lafazenda.com.ar/como-hacer-cafe-filtrado-en-casa-guia-paso-a-paso/",
+      "category": "Argentine coffee guide",
+      "audience": "beginner",
+      "region": "Argentina",
+      "original_or_translated": "original",
+      "source_flags": []
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "cafetera / gotero"
+        "dripper / cono de filtrado"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "dríper",
+        "portafiltro",
+        "cafetera V60"
+      ],
+      "inflected_or_adapted_forms": [
+        "el dripper",
+        "el dríper"
+      ],
+      "avoid": [
+        "cervecero"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "cervecero",
+          "reason": "person who brews beer"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: cono de filtrado (dripper) Professional: Dripper/dríper is widespread in specialty contexts; cono or portafiltro is clearer to beginners.",
+      "evidence_source_ids": [
+        "es_nomad",
+        "es_ineffable",
+        "es_santocafe",
+        "es_freedom_mexico",
+        "es_laguashira",
+        "es_avocoffee"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
@@ -30,23 +150,55 @@
       "preferred_terms": [
         "lecho de café"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "cama de café",
+        "lecho de café molido"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: lecho de café Professional: Lecho de café and cama de café are both established.",
+      "evidence_source_ids": [
+        "es_nomad",
+        "es_santocafe",
+        "es_forocafe",
+        "es_avocoffee"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "preinfusión / bloom"
+        "preinfusión (bloom)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "bloom",
+        "floración",
+        "desgasificación inicial"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: preinfusión Professional: Preinfusión is the broad local default; bloom/floración appears in specialty explanations.",
+      "evidence_source_ids": [
+        "es_nomad",
+        "es_ineffable",
+        "es_santocafe",
+        "es_lafazenda",
+        "es_freedom_mexico"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
@@ -54,83 +206,198 @@
       "preferred_terms": [
         "café molido"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "posos de café",
+        "borra de café"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "posos",
+        "borra"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "posos",
+          "reason": "spent grounds, not dry dose"
+        },
+        {
+          "term": "borra",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: café molido Professional: café molido is standard for dry grounds.",
+      "evidence_source_ids": [
+        "es_nomad",
+        "es_ineffable",
+        "es_santocafe",
+        "es_lafazenda",
+        "es_freedom_mexico"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
       "preferred_terms": [
-        "partículas finas de café"
+        "partículas finas (finos)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "finos",
+        "fines",
+        "polvo de café"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: partículas finas Professional: Specialists use finos/fines; general guidance explains partículas finas.",
+      "evidence_source_ids": [
+        "es_forocafe"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
-      "preferred_terms": [
-        "mezcla de café y agua"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "mezcla de café y agua",
+        "slurry"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "lechada"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "lechada",
+          "reason": "ordinary technical “slurry”; unnatural for coffee"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: Use mezcla de café y agua descriptively, not as a fixed label. Professional: The English term and several paraphrases occur too sparsely to establish a Spanish-wide convention.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "fase de drenaje"
+        "tiempo de drenaje (drawdown)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "drawdown",
+        "tiempo de goteo",
+        "escurrido"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: tiempo de drenaje Professional: Advanced recipes may retain drawdown; beginner material describes drenaje/tiempo de goteo.",
+      "evidence_source_ids": [
+        "es_laguashira",
+        "es_forocafe"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "movimiento circular / giro"
+        "girar el dripper / Rao Spin"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Rao Spin",
+        "movimiento circular",
+        "agitar en círculos"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: girar suavemente el cono Professional: Rao Spin/“spin” identifies the technique; instructions use girar or hacer círculos.",
+      "evidence_source_ids": [
+        "es_nomad",
+        "es_ineffable",
+        "es_santocafe",
+        "es_freedom_mexico"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "servidor / jarra"
+        "jarra / decantador"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "decantador",
+        "servidor",
+        "carafa"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: jarra Professional: Jarra is broadly understood; decantador/servidor appears in specialty equipment contexts.",
+      "evidence_source_ids": [
+        "es_nomad",
+        "es_ineffable",
+        "es_lafazenda",
+        "es_freedom_mexico"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "infusión / inmersión"
+        "inmersión"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "infusión",
+        "dejar reposar"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: inmersión Professional: método de inmersión is established; infusionar/dejar reposar describes the process.",
+      "evidence_source_ids": [
+        "es_freedom_mexico",
+        "es_forocafe"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
@@ -138,31 +405,60 @@
       "preferred_terms": [
         "válvula"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "compuerta"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: válvula Professional: válvula is ordinary brewer terminology.",
+      "evidence_source_ids": [
+        "es_avocoffee"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
+        "filtro de papel"
+      ],
+      "accepted_alternatives": [
         "papel de filtro"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: filtro de papel Professional: filtro de papel is universal across sampled markets.",
+      "evidence_source_ids": [
+        "es_nomad",
+        "es_ineffable",
+        "es_santocafe",
+        "es_lafazenda",
+        "es_freedom_mexico",
+        "es_laguashira",
+        "es_avocoffee"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "resolve 1 insufficient-evidence terminology records",
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

@@ -1,52 +1,128 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "sl",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "partial",
   "ui_copy": {
     "show_english_terms": "Prikaži angleške izraze za kavo",
     "hide_english_terms": "Skrij angleške izraze za kavo",
     "heading": "Angleški izrazi za kavo"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "sl_gourmetkava",
+      "title": "Priprava kave s Hario V60",
+      "url": "https://www.gourmetkava.si/si/blog/priprava-kave/priprava-kave-s-hario-v60",
+      "category": "localized specialty retailer guide",
+      "audience": "beginner",
+      "region": "Slovenia",
+      "original_or_translated": "translated",
+      "source_flags": [
+        "multi-market localization"
+      ]
+    },
+    {
+      "id": "sl_malaprazarna",
+      "title": "Vodnik za pripravo kave",
+      "url": "https://malaprazarna.si/vodnik/",
+      "category": "Slovenian specialty educator guide",
+      "audience": "mixed",
+      "region": "Slovenia",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "sl_webcenter",
+      "title": "Priprava filter kave",
+      "url": "https://blog.web-center.si/priprava-filter-kave/",
+      "category": "Slovenian coffee article",
+      "audience": "beginner",
+      "region": "Slovenia",
+      "original_or_translated": "unclear",
+      "source_flags": [
+        "undated; authorship/domain expertise unclear"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "pripomoček za pripravo / dripper"
+        "dripper"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "kapalnik",
+        "filter za prelivanje"
+      ],
+      "inflected_or_adapted_forms": [
+        "dripperju",
+        "dripperja"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: dripper Professional: Dripper is the visible specialty/product term and takes Slovene case endings; kapalnik is a possible explanation.",
+      "evidence_source_ids": [
+        "sl_gourmetkava",
+        "sl_malaprazarna",
+        "sl_webcenter"
+      ],
+      "classification": "ENGLISH_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
-      "preferred_terms": [
-        "kavna posteljica"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "kavna posteljica",
+        "sloj kave"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No reliable Slovene specialty convention was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "predmočenje / bloom"
+        "Coffee Bloom (kavni cvet)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "blooming",
+        "predinfuzija"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: kavni cvet; Coffee Bloom on first occurrence Professional: A native specialty educator explicitly pairs Coffee Bloom with kavni cvet; other guides use blooming.",
+      "evidence_source_ids": [
+        "sl_gourmetkava",
+        "sl_malaprazarna"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
@@ -54,115 +130,218 @@
       "preferred_terms": [
         "mleta kava"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "kavna usedlina"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "usedlina"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "usedlina",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: mleta kava Professional: Mleta kava is standard dry-ground wording.",
+      "evidence_source_ids": [
+        "sl_gourmetkava",
+        "sl_malaprazarna"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
-      "preferred_terms": [
-        "drobni delci kave"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "drobni delci kave",
+        "fines"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No adequate original Slovene evidence established drobni delci versus fines.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
+        "No established conventional term"
+      ],
+      "accepted_alternatives": [
         "mešanica kave in vode"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use mešanica kave in vode descriptively. Professional: Across accessible Slovene recipes the mixture is described, not named.",
+      "evidence_source_ids": [
+        "sl_malaprazarna",
+        "sl_gourmetkava",
+        "sl_webcenter"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "LOW",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
-      "preferred_terms": [
-        "odtekanje skozi filter"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "čas odtekanja"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No stable phase/time label was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "nežno krožno vrtenje"
+        "nežno zavrtite dripper"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "krožno gibanje",
+        "Rao Spin"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: nežno zavrtite dripper Professional: Local rotation verbs are usable; named English technique evidence is sparse.",
+      "evidence_source_ids": [
+        "sl_gourmetkava",
+        "sl_webcenter"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "LOW",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "strežna posoda / karafa"
+        "vrč / karafa"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "karafa",
+        "server"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: vrč Professional: General vessel labels are more natural than server.",
+      "evidence_source_ids": [
+        "sl_gourmetkava",
+        "sl_malaprazarna",
+        "sl_webcenter"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
-      "preferred_terms": [
-        "namakanje / imerzijska priprava"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "potopna metoda",
+        "imerzija"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: Potopna metoda/imerzija appears too sparsely to establish preference.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
-      "preferred_terms": [
+      "preferred_terms": [],
+      "accepted_alternatives": [
         "ventil"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: Generic ventil is available, but brewer-specific usage was not adequately documented.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "papirnati filter za kavo"
+        "papirnati filter"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "filtrirni papir"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: papirnati filter Professional: Papirnati filter is consistent.",
+      "evidence_source_ids": [
+        "sl_gourmetkava",
+        "sl_malaprazarna",
+        "sl_webcenter"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "resolve 5 insufficient-evidence terminology records",
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

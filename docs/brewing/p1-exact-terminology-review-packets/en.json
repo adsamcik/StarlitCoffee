@@ -1,10 +1,11 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
   "locale": "en",
   "status": "approved",
+  "research_completeness": "canonical_source",
   "ui_copy": {
     "show_english_terms": "Show English terms",
     "hide_english_terms": "Hide English terms",
@@ -30,6 +31,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -44,6 +49,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -58,6 +67,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -72,6 +85,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -86,6 +103,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -100,6 +121,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -114,6 +139,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -128,6 +157,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -142,6 +175,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -156,6 +193,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -170,6 +211,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     },
     {
@@ -184,6 +229,10 @@
       "evidence_source_ids": [
         "canonical_evidence_library"
       ],
+      "classification": "CANONICAL_ENGLISH",
+      "confidence": "HIGH",
+      "display_policy": "canonical_language",
+      "english_reference_policy": "not_applicable",
       "resolution": "approved"
     }
   ],

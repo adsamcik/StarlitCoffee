@@ -1,40 +1,138 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "zh",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "complete",
   "ui_copy": {
     "show_english_terms": "显示英文咖啡术语",
     "hide_english_terms": "隐藏英文咖啡术语",
     "heading": "英文咖啡术语"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "zh_qianjie_details",
+      "title": "手冲咖啡冲煮细节",
+      "url": "https://www.qianjiecoffee.com/shouchongkafeixj",
+      "category": "Mainland specialty-coffee educational article",
+      "audience": "mixed",
+      "region": "Mainland China",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "zh_qianjie_clever",
+      "title": "聪明杯冲煮指南",
+      "url": "https://www.qianjiecoffee.com/a539",
+      "category": "Mainland specialty brew guide",
+      "audience": "mixed",
+      "region": "Mainland China",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "zh_antai",
+      "title": "手冲咖啡器具与冲煮",
+      "url": "https://www.antaicoffee.com/sys-nd/1975.html",
+      "category": "Mainland coffee education article",
+      "audience": "mixed",
+      "region": "Mainland China",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "zh_qianjie_bed",
+      "title": "手冲咖啡粉床与闷蒸",
+      "url": "https://www.qianjiecoffee.com/a192",
+      "category": "Mainland specialty article",
+      "audience": "enthusiast",
+      "region": "Mainland China",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "zh_qianjie_end",
+      "title": "手冲咖啡滴滤时间",
+      "url": "https://www.qianjiecoffee.com/a491",
+      "category": "Mainland specialty article",
+      "audience": "enthusiast",
+      "region": "Mainland China",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "zh_zhihu_rao",
+      "title": "Rao Spin 手冲技巧",
+      "url": "https://zhuanlan.zhihu.com/p/158481111",
+      "category": "Mainland specialist community article",
+      "audience": "enthusiast",
+      "region": "Mainland China",
+      "original_or_translated": "original",
+      "source_flags": []
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "咖啡冲煮器 / 滤杯"
+        "滤杯"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "手冲滤杯",
+        "咖啡滤杯",
+        "dripper"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: 滤杯 Professional: 滤杯 is the stable Mainland specialty term; dripper appears mainly in brand/product English.",
+      "evidence_source_ids": [
+        "zh_qianjie_details",
+        "zh_qianjie_clever",
+        "zh_antai"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
       "preferred_terms": [
+        "粉床"
+      ],
+      "accepted_alternatives": [
+        "粉层",
         "咖啡粉床"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: 粉床 Professional: 粉床 and 粉层 are both established; 粉床 is more terminological.",
+      "evidence_source_ids": [
+        "zh_qianjie_details",
+        "zh_qianjie_bed"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
@@ -42,11 +140,25 @@
       "preferred_terms": [
         "闷蒸"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "预浸润",
+        "bloom"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: 闷蒸 Professional: 闷蒸 is the conventional Mainland hand-brewing term; English bloom may appear in bilingual training.",
+      "evidence_source_ids": [
+        "zh_qianjie_details",
+        "zh_qianjie_bed",
+        "zh_qianjie_clever"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
@@ -54,11 +166,33 @@
       "preferred_terms": [
         "咖啡粉"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "研磨咖啡粉",
+        "咖啡渣"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "咖啡渣"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "咖啡渣",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: 咖啡粉 Professional: 咖啡粉 is dry ground coffee; 咖啡渣 is spent grounds.",
+      "evidence_source_ids": [
+        "zh_qianjie_details",
+        "zh_qianjie_bed",
+        "zh_qianjie_clever",
+        "zh_antai"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
@@ -66,103 +200,214 @@
       "preferred_terms": [
         "细粉"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "极细粉",
+        "微粉"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: 细粉 Professional: 细粉/极细粉 is established for the fine particle fraction.",
+      "evidence_source_ids": [
+        "zh_qianjie_details",
+        "zh_qianjie_end"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
-        "咖啡粉水混合液"
+        "粉水混合物"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "咖啡粉水混合物",
+        "slurry"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "咖啡浆"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "咖啡浆",
+          "reason": "can suggest paste/pulp; not established for brewing mixture"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: 粉水混合物 Professional: Mainland sources describe the coffee-water mixture; no single lexical specialty term comparable to slurry dominates.",
+      "evidence_source_ids": [
+        "zh_qianjie_end"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "MEDIUM",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "下滤阶段"
+        "下水阶段 / 滴滤结束时间"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "下水速度",
+        "滴滤完成时间",
+        "尾段下水"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: 下水阶段 Professional: 下水 describes flow behavior; 滴滤完成/结束时间 describes the phase or endpoint. No one noun covers every English drawdown use.",
+      "evidence_source_ids": [
+        "zh_qianjie_details",
+        "zh_qianjie_end"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "轻柔摇匀 / 旋转"
+        "旋转／晃动滤杯"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "晃动滤杯",
+        "Rao Spin",
+        "摇匀分享壶"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: 轻轻旋转滤杯 Professional: Mainland advanced guides localize the action and may retain Rao Spin as a named technique.",
+      "evidence_source_ids": [
+        "zh_qianjie_details",
+        "zh_zhihu_rao"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "分享壶 / 咖啡壶"
+        "分享壶"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "下壶",
+        "咖啡壶"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: 分享壶 Professional: 分享壶 is the stable specialty receiving-vessel term.",
+      "evidence_source_ids": [
+        "zh_qianjie_details",
+        "zh_antai"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "浸泡 / 浸泡式冲煮"
+        "浸泡 / 浸泡式萃取"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "全浸泡",
+        "浸泡时间"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: 浸泡式萃取 Professional: 浸泡 and 浸泡式萃取 are established.",
+      "evidence_source_ids": [
+        "zh_qianjie_clever"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
       "preferred_terms": [
-        "阀门"
+        "阀门 / 止水阀"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "阀门",
+        "开关"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: 止水阀 Professional: 阀门 is generic; 止水阀 specifies the brewer flow-stop mechanism.",
+      "evidence_source_ids": [
+        "zh_qianjie_clever"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "咖啡滤纸"
+        "滤纸"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "咖啡滤纸",
+        "纸滤器"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: 滤纸 Professional: 滤纸 is universal.",
+      "evidence_source_ids": [
+        "zh_qianjie_details",
+        "zh_qianjie_clever",
+        "zh_antai"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

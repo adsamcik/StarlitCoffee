@@ -1,52 +1,122 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "lt",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "partial",
   "ui_copy": {
     "show_english_terms": "Rodyti angliškus kavos terminus",
     "hide_english_terms": "Slėpti angliškus kavos terminus",
     "heading": "Angliški kavos terminai"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "lt_lapino",
+      "title": "Kaip ruošti kavą drip filtru",
+      "url": "https://lapinoskrudykla.lt/kaip-ruosti-kava-drip-filtru/",
+      "category": "Lithuanian roaster guide",
+      "audience": "beginner",
+      "region": "Lithuania",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "lt_kavosdraugas",
+      "title": "Kaip filtriniai kavinukai keičia kavos skonį",
+      "url": "https://www.kavosdraugas.lt/blog/kaip-filtriniai-kavinukai-keicia-kavos-skoni/",
+      "category": "coffee specialist article",
+      "audience": "mixed",
+      "region": "Lithuania",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "lt_greenplantation",
+      "title": "Kaip paruošti tobulą kavos puodelį su Hario V60",
+      "url": "https://www.greenplantation.eu/lt/a/kaip-paruosti-tobula-kavos-puodeli-su-hario-v60",
+      "category": "localized retailer guide",
+      "audience": "beginner",
+      "region": "Lithuania",
+      "original_or_translated": "translated",
+      "source_flags": [
+        "multi-market localization"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "kavos ruošimo įrenginys / piltuvėlis"
+        "lašintuvas / filtrinis kavos ruošimo prietaisas"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "lašintuvas",
+        "dripper",
+        "drip filtras"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: filtrinis kavos ruošimo prietaisas Professional: Lašintuvas appears in localized product/guide text; descriptive device wording is safer for beginners.",
+      "evidence_source_ids": [
+        "lt_lapino",
+        "lt_kavosdraugas",
+        "lt_greenplantation"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
-      "preferred_terms": [
-        "maltos kavos sluoksnis"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "kavos sluoksnis"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No authentic Lithuanian specialty convention was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
-      "preferred_terms": [
-        "pirminis sudrėkinimas / bloom"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "bloom",
+        "pirminis sudrėkinimas"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No adequate original Lithuanian evidence established žydėjimas, pirminis sudrėkinimas, or bloom.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "grounds",
@@ -54,115 +124,213 @@
       "preferred_terms": [
         "malta kava"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "kavos tirščiai"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "kavos tirščiai"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "kavos tirščiai",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: malta kava Professional: malta kava is consistently used for dry ground coffee.",
+      "evidence_source_ids": [
+        "lt_lapino",
+        "lt_kavosdraugas",
+        "lt_greenplantation"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
-      "preferred_terms": [
-        "smulkios kavos dalelės"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "smulkios dalelės",
+        "fines"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No reliable specialty convention was found.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
+        "No established conventional term"
+      ],
+      "accepted_alternatives": [
         "kavos ir vandens mišinys"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use kavos ir vandens mišinys descriptively. Professional: Accessible Lithuanian instructions describe coffee and water without naming the mixture.",
+      "evidence_source_ids": [
+        "lt_kavosdraugas",
+        "lt_lapino",
+        "lt_greenplantation"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "LOW",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
-      "preferred_terms": [
-        "nubėgimas per filtrą"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "nubėgimo laikas"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: Total brew time is described, but no stable drawdown label was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
-      "preferred_terms": [
-        "švelnus sukimas ratu"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "pasukti lašintuvą",
+        "Rao spin"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No reliable Lithuanian specialty action label was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "serviravimo indas / grafinas"
+        "ąsotis / grafinas"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "grafinas",
+        "serveris"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: ąsotis Professional: General vessel labels occur; specialty receiving-vessel preference is weakly documented.",
+      "evidence_source_ids": [
+        "lt_lapino",
+        "lt_greenplantation"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "LOW",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
-      "preferred_terms": [
-        "mirkymas / imersinis ruošimas"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "mirkymas",
+        "imersija"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: Panardinamasis appears in translated product text, insufficient for a natural specialty convention.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
-      "preferred_terms": [
+      "preferred_terms": [],
+      "accepted_alternatives": [
         "vožtuvas"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: Generic vožtuvas is known, but brewer-specific usage was not authentically established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "kavos filtravimo popierius"
+        "popierinis filtras"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "filtravimo popierius"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: popierinis filtras Professional: popierinis filtras is consistent in native and localized sources.",
+      "evidence_source_ids": [
+        "lt_lapino",
+        "lt_kavosdraugas",
+        "lt_greenplantation"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "resolve 7 insufficient-evidence terminology records",
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

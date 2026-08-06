@@ -1,136 +1,319 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "fi",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "partial",
   "ui_copy": {
     "show_english_terms": "Näytä englanninkieliset kahvitermit",
     "hide_english_terms": "Piilota englanninkieliset kahvitermit",
     "heading": "Englanninkieliset kahvitermit"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "fi_johan_v60",
+      "title": "Hario V60 brygguide",
+      "url": "https://johanochnystrom.fi/blogs/reseptipankki/hario-v60",
+      "category": "roaster brew guide",
+      "audience": "mixed",
+      "region": "Finland",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "fi_crema_switch",
+      "title": "Hario V60 Immersion Dripper Switch",
+      "url": "https://www.crema.fi/fi/products/hario/immersion-dripper-switch",
+      "category": "specialist retailer product page",
+      "audience": "mixed",
+      "region": "Finland",
+      "original_or_translated": "translated",
+      "source_flags": [
+        "localized multi-market product text"
+      ]
+    },
+    {
+      "id": "fi_johan_clever",
+      "title": "Clever Dripper",
+      "url": "https://johanochnystrom.fi/products/kahvin-tiputin",
+      "category": "roaster product education",
+      "audience": "mixed",
+      "region": "Finland",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "fi_kaffa_v60",
+      "title": "Nauti täydellisestä kupillisesta: tutustu V60-kahvinkeittimeen",
+      "url": "https://kaffaroastery.fi/blogs/news/nauti-taydellisesta-kupillisesta-tutustu-v60-kahvinkeittimeen",
+      "category": "Finnish roaster article",
+      "audience": "beginner",
+      "region": "Finland",
+      "original_or_translated": "original",
+      "source_flags": []
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "kahvinvalmistin / suodatinsuppilo"
+        "suodatinsuppilo"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "dripper",
+        "kahvinhaudutin",
+        "suodatinkartio"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: suodatinsuppilo Professional: Suodatinsuppilo is natural; dripper and kahvinhaudutin occur in products.",
+      "evidence_source_ids": [
+        "fi_johan_v60",
+        "fi_crema_switch",
+        "fi_johan_clever",
+        "fi_kaffa_v60"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
-      "preferred_terms": [
-        "kahvipeti"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "kahvipeti",
+        "kahvikerros"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use descriptive kahvikerros only after native review. Professional: Kahvipeti/kahvikerros is plausible, but accessible evidence was not sufficient to establish a preferred specialty form.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "esikostutus / bloom"
+        "blooming / esiuutto"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "esikostutus",
+        "blooming-vaihe"
+      ],
+      "inflected_or_adapted_forms": [
+        "\"blooming\"-vaihe",
+        "blooming-vaiheen"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: esiuutto (blooming) Professional: Blooming is a stable specialist label; esiuutto/esikostutus provides Finnish explanation.",
+      "evidence_source_ids": [
+        "fi_johan_v60",
+        "fi_kaffa_v60"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
       "canonical_english": "coffee grounds",
       "preferred_terms": [
-        "jauhettu kahvi"
+        "jauhettu kahvi / kahvijauhe"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "kahvijauhe",
+        "kahvinporot"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "kahvinporot"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "kahvinporot",
+          "reason": "usually spent grounds"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: jauhettu kahvi Professional: Both are standard for dry grounds.",
+      "evidence_source_ids": [
+        "fi_johan_v60",
+        "fi_kaffa_v60"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
-      "preferred_terms": [
-        "hienot kahvihiukkaset"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "hienot hiukkaset",
+        "fines"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use descriptive erittäin hienot kahvihiukkaset after review. Professional: No two independent authentic sources established hienot hiukkaset versus fines.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
-        "kahvin ja veden seos"
+        "No established conventional term"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "kahvin ja veden seos",
+        "slurry"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use kahvin ja veden seos descriptively. Professional: Finnish recipes consistently describe water and coffee rather than lexicalizing slurry.",
+      "evidence_source_ids": [
+        "fi_johan_v60",
+        "fi_kaffa_v60",
+        "fi_crema_switch"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "MEDIUM",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "suodattuminen / valumisvaihe"
+        "valumisaika"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "läpimenoaika",
+        "drawdown"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: valumisaika Professional: Valumisaika/läpimenoaika are natural elapsed-drainage terms; drawdown is niche.",
+      "evidence_source_ids": [
+        "fi_johan_v60",
+        "fi_johan_clever"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "hellä pyöräytys / kiertoliike"
+        "pyöräytä suodatinta"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "pyörivä liike",
+        "Rao spin"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: pyöräytä suodatinta tai kannua Professional: Finnish guides use pyörivä liike/pyöräyttää.",
+      "evidence_source_ids": [
+        "fi_johan_v60"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "tarjoilukannu / karahvi"
+        "kannu"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "serveri",
+        "karahvi"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: kannu Professional: kannu is standard receiving-vessel wording.",
+      "evidence_source_ids": [
+        "fi_johan_v60",
+        "fi_kaffa_v60"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "haudutus / immersiouutto"
+        "haudutus / immersio"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "immersio",
+        "täysimmersio",
+        "antaa hautua"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: haudutus Professional: Haudutus and antaa hautua are natural; immersio names the specialist method category.",
+      "evidence_source_ids": [
+        "fi_crema_switch"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
@@ -138,31 +321,58 @@
       "preferred_terms": [
         "venttiili"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "pohjaventtiili"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: venttiili Professional: venttiili is standard in immersion-dripper descriptions.",
+      "evidence_source_ids": [
+        "fi_crema_switch",
+        "fi_johan_clever"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "kahvinsuodatinpaperi"
+        "suodatinpaperi"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "paperisuodatin"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: suodatinpaperi Professional: suodatinpaperi is routine.",
+      "evidence_source_ids": [
+        "fi_johan_v60",
+        "fi_crema_switch",
+        "fi_johan_clever",
+        "fi_kaffa_v60"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "resolve 2 insufficient-evidence terminology records",
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

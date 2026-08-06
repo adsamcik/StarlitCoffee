@@ -1,28 +1,110 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "de",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "complete",
   "ui_copy": {
     "show_english_terms": "Englische Kaffeebegriffe anzeigen",
     "hide_english_terms": "Englische Kaffeebegriffe ausblenden",
     "heading": "Englische Kaffeebegriffe"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "de_roestereiheer",
+      "title": "Hario V60",
+      "url": "https://roestereiheer.ch/hario-v60/",
+      "category": "Swiss roaster brew guide",
+      "audience": "mixed",
+      "region": "Switzerland",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "de_neuesschwarz",
+      "title": "Brew Guide V60",
+      "url": "https://www.neuesschwarz.de/Journal/Brew-Guide-V60",
+      "category": "German roaster brew guide",
+      "audience": "enthusiast",
+      "region": "Germany",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "de_kaffeewiki_clever",
+      "title": "Clever Coffee Dripper",
+      "url": "https://www.kaffeewiki.de/wiki/Clever_Coffee_Dripper",
+      "category": "specialist wiki",
+      "audience": "enthusiast",
+      "region": "Germany",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "de_kaffeenetz",
+      "title": "Erfahrungsaustausch zu Brew Advices bei Hario V60",
+      "url": "https://www.kaffee-netz.de/threads/erfahrungsaustausch-zu-brew-advices-bei-hario-v60.117317/page-17",
+      "category": "specialist community discussion",
+      "audience": "enthusiast",
+      "region": "Germany",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "de_dieroester",
+      "title": "Catuai brewing recipe",
+      "url": "https://www.dieroester.at/roester/goldkind/catuai",
+      "category": "Austrian roaster recipe",
+      "audience": "enthusiast",
+      "region": "Austria",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "Kaffeebereiter / Dripper"
+        "Handfilter / Dripper"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Dripper",
+        "Filterhalter",
+        "Kaffeefilter"
+      ],
+      "inflected_or_adapted_forms": [
+        "Drippers",
+        "Drippern"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Handfilter Professional: Dripper is standard in specialty/product talk; Handfilter or Filterhalter is natural general German.",
+      "evidence_source_ids": [
+        "de_roestereiheer",
+        "de_neuesschwarz",
+        "de_kaffeewiki_clever"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
@@ -30,107 +112,241 @@
       "preferred_terms": [
         "Kaffeebett"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "flaches Kaffeebett",
+        "Coffee Bed"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Kaffeebett Professional: Kaffeebett is established; coffee bed is unnecessary except in English-heavy training.",
+      "evidence_source_ids": [
+        "de_roestereiheer",
+        "de_neuesschwarz"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "Vorbrühen / Bloom"
+        "Bloom / Quellphase"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Blooming",
+        "Vorbrühen",
+        "Aufblühen"
+      ],
+      "inflected_or_adapted_forms": [
+        "der Bloom",
+        "beim Blooming"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Quellphase; Bloom on first occurrence Professional: Bloom/Blooming is conventional; Quellphase, Vorbrühen and Aufblühen explain it.",
+      "evidence_source_ids": [
+        "de_roestereiheer",
+        "de_kaffeenetz",
+        "de_neuesschwarz"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
       "canonical_english": "coffee grounds",
       "preferred_terms": [
-        "Kaffeemehl"
+        "Kaffeemehl / gemahlener Kaffee"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "Kaffeesatz"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "Kaffeesatz"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "Kaffeesatz",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: gemahlener Kaffee Professional: Kaffeemehl and gemahlener Kaffee are ordinary dry-ground terms.",
+      "evidence_source_ids": [
+        "de_roestereiheer",
+        "de_neuesschwarz"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
       "preferred_terms": [
+        "Feinstpartikel (Fines)"
+      ],
+      "accepted_alternatives": [
+        "Fines",
         "Feinanteil"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Feinstpartikel Professional: Fines is common among specialists; Feinstpartikel/Feinanteil is clearer generally.",
+      "evidence_source_ids": [
+        "de_kaffeenetz"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
-        "Kaffee-Wasser-Gemisch"
+        "Slurry / Kaffee-Wasser-Gemisch"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Slurry",
+        "Brühbrei"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Kaffee-Wasser-Gemisch Professional: Slurry appears in advanced forums/training; ordinary German paraphrases it.",
+      "evidence_source_ids": [
+        "de_kaffeenetz"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "Durchlaufphase"
+        "Durchlaufzeit / Drawdown"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Drawdown",
+        "Abtropfzeit",
+        "Ablaufzeit"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Durchlaufzeit Professional: Drawdown occurs in specialist recipes; Durchlaufzeit/Abtropfzeit dominate explanatory prose.",
+      "evidence_source_ids": [
+        "de_roestereiheer",
+        "de_dieroester"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "Schwenken / Drehen"
+        "schwenken / Rao Spin"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Rao Spin",
+        "Swirl",
+        "kreisende Bewegung"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: den Filter schwenken Professional: Technique names remain English; German instructions use schwenken, kreisen or drehen.",
+      "evidence_source_ids": [
+        "de_roestereiheer",
+        "de_kaffeenetz"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "Server / Karaffe"
+        "Kanne / Server"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "Server",
+        "Karaffe"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "Server ohne Kaffeekontext"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "Server ohne Kaffeekontext",
+          "reason": "IT/restaurant ambiguity"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: Kanne Professional: Kanne/Karaffe are normal prose; Server is a specialty product-category loan.",
+      "evidence_source_ids": [
+        "de_roestereiheer",
+        "de_neuesschwarz"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "Ziehenlassen / Immersion"
+        "Immersion / Vollimmersion"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Immersionsmethode",
+        "Ziehzeit"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Vollimmersion or ziehen lassen Professional: Immersion is established professionally; Ziehenlassen/Vollimmersion explains the process.",
+      "evidence_source_ids": [
+        "de_kaffeewiki_clever"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
@@ -138,31 +354,55 @@
       "preferred_terms": [
         "Ventil"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Ablassventil"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Ventil Professional: Ventil is standard hardware and brewer language.",
+      "evidence_source_ids": [
+        "de_kaffeewiki_clever"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
+        "Papierfilter"
+      ],
+      "accepted_alternatives": [
         "Filterpapier"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Papierfilter Professional: Papierfilter is normal for the formed filter; Filterpapier names material.",
+      "evidence_source_ids": [
+        "de_roestereiheer",
+        "de_neuesschwarz",
+        "de_kaffeewiki_clever"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

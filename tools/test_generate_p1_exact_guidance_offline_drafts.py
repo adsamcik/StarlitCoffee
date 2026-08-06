@@ -9,7 +9,7 @@ if str(TOOLS) not in sys.path:
 
 import generate_p1_exact_guidance_localizations as base
 import generate_p1_exact_guidance_offline_drafts as exact
-import generate_p1_exact_terminology_offline_drafts as terminology
+import validate_p1_exact_terminology_catalog as terminology
 
 
 class OfflineExactGuidanceDraftTest(unittest.TestCase):
@@ -66,20 +66,28 @@ class OfflineExactGuidanceDraftTest(unittest.TestCase):
         )
 
 
-class OfflineTerminologyDraftTest(unittest.TestCase):
-    def test_committed_drafts_cover_every_manual_locale(self) -> None:
-        references = terminology.read_json(terminology.REFERENCE_MANIFEST)
-        document = terminology.read_json(terminology.OUTPUT)
-        terminology.validate(document, references)
-        self.assertEqual(21, len(document["locales"]))
+class CanonicalTerminologyCatalogTest(unittest.TestCase):
+    def test_catalog_covers_every_non_english_locale(self) -> None:
+        terminology.validate()
+        document = terminology.read_json(terminology.CATALOG)
+        self.assertEqual(22, len(document["locales"]))
         self.assertTrue(
-            all(len(draft["terms"]) == 12 for draft in document["locales"].values())
+            all(len(locale["terms"]) == 12 for locale in document["locales"].values())
         )
 
-    def test_regeneration_from_explicit_overrides_is_stable(self) -> None:
-        references = terminology.read_json(terminology.REFERENCE_MANIFEST)
-        expected = terminology.read_json(terminology.OUTPUT)
-        self.assertEqual(expected, terminology.generate(references))
+    def test_insufficient_evidence_is_withheld(self) -> None:
+        document = terminology.read_json(terminology.CATALOG)
+        insufficient = [
+            term
+            for locale in document["locales"].values()
+            for term in locale["terms"]
+            if term["classification"] == "INSUFFICIENT_EVIDENCE"
+        ]
+        self.assertEqual(40, len(insufficient))
+        self.assertTrue(all(term["preferred_display_term"] is None for term in insufficient))
+        self.assertTrue(
+            all(term["display_policy"] == "withhold_pending_review" for term in insufficient)
+        )
 
 
 if __name__ == "__main__":

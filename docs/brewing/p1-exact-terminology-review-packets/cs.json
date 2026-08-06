@@ -1,10 +1,13 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "cs",
-  "status": "ready_for_native_review",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "complete",
   "ui_copy": {
     "show_english_terms": "Zobrazit anglické termíny",
     "hide_english_terms": "Skrýt anglické termíny",
@@ -12,34 +15,80 @@
   },
   "sources": [
     {
-      "id": "hario_cz",
-      "title": "Hario Europe Czech brewing material",
-      "url": "https://www.hario.eu/",
-      "category": "manufacturer"
+      "id": "cs_safron",
+      "title": "Příprava filtrované kávy metodou Hario V60",
+      "url": "https://www.safroncafe.cz/zajimavosti/jak-si-pripravit-filtrovanou-kavu-hario-v60/",
+      "category": "specialty retailer guide",
+      "audience": "beginner",
+      "region": "Czechia",
+      "original_or_translated": "original",
+      "source_flags": []
     },
     {
-      "id": "kofio_v60",
-      "title": "Kofio Czech V60 guide",
-      "url": "https://www.kofio.cz/blog/v60",
-      "category": "specialty_retailer"
+      "id": "cs_fathers",
+      "title": "Jak si doma připravit lepší V60?",
+      "url": "https://fathers.cz/blog/jak-si-doma-pripravit-lepsi-v60",
+      "category": "roaster brew guide",
+      "audience": "enthusiast",
+      "region": "Czechia",
+      "original_or_translated": "original",
+      "source_flags": []
     },
     {
-      "id": "coffeesquare_dripper",
-      "title": "CoffeeSquare Czech dripper guide",
-      "url": "https://www.coffeesquare.cz/o-kave-dripper",
-      "category": "specialty_educator"
-    },
-    {
-      "id": "ceskava_drip_assist",
-      "title": "Czecháva Hario V60 Drip Assist guide",
-      "url": "https://www.ceskava.cz/p/hario-v60-drip-assist-set",
-      "category": "specialty_retailer"
-    },
-    {
-      "id": "blogokave_switch",
-      "title": "Blog o káve Hario Switch guide",
+      "id": "cs_blogokave_switch",
+      "title": "Hario Switch: Neobvyklý dripper kombinující imerzi a perkolaci",
       "url": "https://blogokave.cz/hario-switch-neobvykly-dripper-kombinujici-imerzi-a-perkolaci/",
-      "category": "specialty_educator"
+      "category": "specialty article",
+      "audience": "enthusiast",
+      "region": "Czechia",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "cs_kavaspojuje_course",
+      "title": "Kurz filtrování a alternativní přípravy kávy",
+      "url": "https://kavaspojuje.cz/kurz/domaci-alternativni-priprava-kavy/",
+      "category": "professional training page",
+      "audience": "professional",
+      "region": "Czechia",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "cs_gentlefox",
+      "title": "Nejlepší ruční mlýnek na kávu pro espresso i filtr",
+      "url": "https://www.gentlefox.cz/a/nejlepsi-rucni-mlynek-na-kavu-pro-espresso-i-filtr",
+      "category": "specialist retailer article",
+      "audience": "enthusiast",
+      "region": "Czechia",
+      "original_or_translated": "original",
+      "source_flags": [
+        "accessed via indexed excerpt"
+      ]
+    },
+    {
+      "id": "cs_kavaspojuje_fines",
+      "title": "Obstála kempingová konvice z Decathlonu?",
+      "url": "https://kavaspojuje.cz/domaci-barista/obstala-kempingova-konvice-z-decathlonu-nase-recenzovani",
+      "category": "coffee educator article",
+      "audience": "enthusiast",
+      "region": "Czechia",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "cs_kofio_orea",
+      "title": "OREA Brewer V4 Wide",
+      "url": "https://www.kofio.cz/prislusenstvi/orea-brewer-v4-wide/18328",
+      "category": "specialist retailer product education",
+      "audience": "professional",
+      "region": "Czechia",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
     }
   ],
   "concepts": [
@@ -47,106 +96,156 @@
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "dripper",
-        "přesný název produktu"
+        "dripper / překapávač"
       ],
       "accepted_alternatives": [
-        "překapávač"
+        "dripper",
+        "překapávač",
+        "filtrační kužel"
+      ],
+      "inflected_or_adapted_forms": [
+        "dripperu",
+        "dripperem",
+        "drippery"
       ],
       "avoid": [
-        "sládek",
-        "zařízení na vaření kávy"
+        "sládek"
       ],
-      "rationale": "Česká komunita výběrové kávy běžně ponechává výraz dripper; konkrétní název produktu je ještě přesnější.",
+      "avoid_reasons": [
+        {
+          "term": "sládek",
+          "reason": "person who brews beer"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: překapávač (dripper) Professional: Dripper is fully conventional in specialty contexts; překapávač is equally useful explanatory Czech.",
       "evidence_source_ids": [
-        "kofio_v60",
-        "coffeesquare_dripper",
-        "ceskava_drip_assist"
+        "cs_safron",
+        "cs_fathers",
+        "cs_blogokave_switch",
+        "cs_kavaspojuje_course"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
       "preferred_terms": [
-        "kávové lože",
-        "povrch kávy"
+        "kávové lůžko"
       ],
       "accepted_alternatives": [
-        "vrstva mleté kávy"
+        "rovné lůžko",
+        "flat bed"
       ],
-      "avoid": [
-        "postel"
-      ],
-      "rationale": "Kávové lože je ustálený odborný výraz; povrch kávy je srozumitelný v pokynu k zarovnání.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [],
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: kávové lůžko Professional: kávové lůžko is established; flat bed appears as a named shape.",
       "evidence_source_ids": [
-        "kofio_v60",
-        "coffeesquare_dripper"
+        "cs_safron",
+        "cs_fathers"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "předspaření",
-        "předspařte"
+        "blooming (nakvetnutí)"
       ],
       "accepted_alternatives": [
-        "blooming"
+        "kvetení",
+        "preinfuze",
+        "bloom"
       ],
-      "avoid": [
-        "výkvět",
-        "květ"
+      "inflected_or_adapted_forms": [
+        "bloomingu",
+        "bloomingem"
       ],
-      "rationale": "Předspaření je přirozený a jednoznačný český termín pro první nasycení kávy vodou.",
+      "avoid": [],
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: nakvetnutí kávy; show blooming on first occurrence Professional: Blooming is conventional and commonly explained as kvetení/nakvetnutí or preinfuze.",
       "evidence_source_ids": [
-        "hario_cz",
-        "kofio_v60",
-        "ceskava_drip_assist"
+        "cs_safron",
+        "cs_fathers"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
       "canonical_english": "coffee grounds",
       "preferred_terms": [
-        "mletá káva",
-        "sedlina"
+        "mletá káva"
       ],
       "accepted_alternatives": [
-        "kávová sedlina"
+        "kávová sedlina",
+        "lógr"
       ],
+      "inflected_or_adapted_forms": [],
       "avoid": [
-        "pozemky",
-        "důvody"
+        "sedlina",
+        "lógr"
       ],
-      "rationale": "Volba termínu se řídí stavem kávy: před extrakcí mletá káva, po usazení sedlina.",
+      "avoid_reasons": [
+        {
+          "term": "sedlina",
+          "reason": "spent grounds, not dry grounds"
+        },
+        {
+          "term": "lógr",
+          "reason": "informal spent grounds, not dry grounds"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: mletá káva Professional: mletá/namletá káva is standard for dry material.",
       "evidence_source_ids": [
-        "hario_cz",
-        "kofio_v60"
+        "cs_safron",
+        "cs_fathers"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
       "preferred_terms": [
-        "jemné částice kávy"
+        "jemné částice (fines)"
       ],
       "accepted_alternatives": [
-        "jemné částice mleté kávy"
+        "fines",
+        "kávový prach"
       ],
-      "avoid": [
-        "pokuty",
-        "poplatky"
-      ],
-      "rationale": "Popis částic je pro české uživatele přesný a nezaměnitelný s obecným významem fines.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [],
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: jemné částice Professional: Enthusiasts use fines; general explanations use jemné/velmi jemné částice.",
       "evidence_source_ids": [
-        "kofio_v60",
-        "coffeesquare_dripper"
+        "cs_gentlefox",
+        "cs_kavaspojuje_fines"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
@@ -155,123 +254,173 @@
         "směs kávy a vody"
       ],
       "accepted_alternatives": [
-        "kávová suspenze"
+        "slurry"
       ],
+      "inflected_or_adapted_forms": [],
       "avoid": [
-        "kaše",
-        "kal"
+        "kašička",
+        "suspenze"
       ],
-      "rationale": "Pro uživatelský návod je prostý popis směsi jasnější než nevysvětlený odborný nebo anglický výraz.",
+      "avoid_reasons": [
+        {
+          "term": "kašička",
+          "reason": "informal and semantically pejorative"
+        },
+        {
+          "term": "suspenze",
+          "reason": "over-technical without established coffee convention"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: descriptive phrase: směs kávy a vody Professional: Slurry occurs sporadically in English-heavy advanced discussion, not as a stable Czech app label.",
       "evidence_source_ids": [
-        "kofio_v60",
-        "coffeesquare_dripper"
+        "cs_fathers",
+        "cs_safron",
+        "cs_blogokave_switch"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "MEDIUM",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "dokapání",
-        "nechte kávu dokapat"
+        "dokapání (drawdown)"
       ],
       "accepted_alternatives": [
-        "dokončení překapávání"
+        "drawdown",
+        "doba překapání",
+        "doba průtoku"
       ],
-      "avoid": [
-        "odvodnění",
-        "pokles hladiny"
-      ],
-      "rationale": "Dokapání přímo popisuje pozorovatelný konec průtoku přes filtr.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [],
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: dokapání Professional: Drawdown is understood by enthusiasts; dokapání/doba překapání are natural Czech.",
       "evidence_source_ids": [
-        "hario_cz",
-        "kofio_v60",
-        "coffeesquare_dripper"
+        "cs_safron",
+        "cs_kofio_orea"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "jemně zakružte"
+        "zakroužit dripperem"
       ],
       "accepted_alternatives": [
-        "krouživě promíchejte"
+        "swirl",
+        "Rao spin",
+        "zakroužení"
       ],
-      "avoid": [
-        "roztočte zařízení",
-        "centrifugujte"
-      ],
-      "rationale": "Zakroužení vystihuje krátký kruhový pohyb dripperu nebo karafy bez strojního významu.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [],
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: zakroužit dripperem Professional: Rao spin/swirl name the technique; Czech instructions use zakroužit/pootočit.",
       "evidence_source_ids": [
-        "kofio_v60",
-        "ceskava_drip_assist"
+        "cs_safron",
+        "cs_fathers"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "servírovací nádoba",
-        "karafa"
+        "konvička / server"
       ],
       "accepted_alternatives": [
-        "servírovací konvice",
-        "server"
+        "server",
+        "karafa",
+        "dekantér"
+      ],
+      "inflected_or_adapted_forms": [
+        "serveru",
+        "serverem"
       ],
       "avoid": [
-        "počítačový server"
+        "server bez kontextu"
       ],
-      "rationale": "Konkrétní nádoba zobrazená v receptu je pro začátečníka srozumitelnější; server je přijatelný komunitní výraz v odborném kontextu.",
+      "avoid_reasons": [
+        {
+          "term": "server bez kontextu",
+          "reason": "IT ambiguity in general UI"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: konvička Professional: Specialists and product listings use server; beginner recipes use konvička or nádoba.",
       "evidence_source_ids": [
-        "hario_cz",
-        "kofio_v60",
-        "coffeesquare_dripper"
+        "cs_safron",
+        "cs_fathers"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "nechte louhovat",
-        "imerzní příprava"
+        "imerze / louhování"
       ],
       "accepted_alternatives": [
-        "ponoření"
+        "imerzní metoda",
+        "úplné ponoření",
+        "macerace"
       ],
-      "avoid": [
-        "strmé",
-        "namočte bez určení času"
-      ],
-      "rationale": "Louhování je přirozený pokyn k době kontaktu; imerzní příprava je používaný název kategorie.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [],
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: louhování; imerze as glossary alias Professional: Imerze/perkolace is professional terminology; louhování or úplné ponoření is clearer for beginners.",
       "evidence_source_ids": [
-        "coffeesquare_dripper",
-        "blogokave_switch"
+        "cs_blogokave_switch",
+        "cs_kavaspojuje_course"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
       "preferred_terms": [
-        "ventil",
-        "ventil Switche"
+        "ventil"
       ],
       "accepted_alternatives": [
-        "uzávěr"
+        "spínač",
+        "zátka"
       ],
-      "avoid": [
-        "spínač"
-      ],
-      "rationale": "Ventil přesně popisuje průtokový mechanismus; Switch zůstává názvem modelu, nikoli elektrickým spínačem.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [],
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: ventil Professional: ventil is ordinary brewer terminology.",
       "evidence_source_ids": [
-        "hario_cz",
-        "blogokave_switch"
+        "cs_blogokave_switch"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
@@ -282,24 +431,29 @@
       "accepted_alternatives": [
         "filtrační papír"
       ],
-      "avoid": [
-        "papír"
-      ],
-      "rationale": "Papírový filtr je běžné a jednoznačné české označení kompatibilní filtrační vložky.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [],
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: papírový filtr Professional: papírový filtr is normal for formed filters.",
       "evidence_source_ids": [
-        "hario_cz",
-        "kofio_v60",
-        "ceskava_drip_assist"
+        "cs_safron",
+        "cs_fathers",
+        "cs_blogokave_switch"
       ],
-      "resolution": "ready_for_native_review"
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "independent native Czech coffee-domain approval",
-    "approval date and reviewer identity",
-    "complete exact-guidance approval and promotion",
-    "device accessibility and theme validation"
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

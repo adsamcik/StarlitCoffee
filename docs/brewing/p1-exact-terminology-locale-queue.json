@@ -10,6 +10,7 @@
       "locale": "en",
       "exact_guidance_status": "approved",
       "terminology_status": "approved",
+      "terminology_research_completeness": "canonical_source",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -36,7 +37,8 @@
     {
       "locale": "bg",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -59,8 +61,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -72,7 +74,8 @@
     {
       "locale": "cs",
       "exact_guidance_status": "ready_for_native_review",
-      "terminology_status": "ready_for_native_review",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -95,6 +98,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
+        "native review of researched terminology and display policy",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
         "atomic guidance and terminology resource promotion",
@@ -105,7 +109,8 @@
     {
       "locale": "da",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -128,8 +133,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -141,7 +145,8 @@
     {
       "locale": "de",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -164,8 +169,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -177,7 +181,8 @@
     {
       "locale": "el",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -200,8 +205,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -213,7 +218,8 @@
     {
       "locale": "es",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -236,8 +242,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -249,7 +255,8 @@
     {
       "locale": "et",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -272,8 +279,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -285,7 +292,8 @@
     {
       "locale": "fi",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -308,8 +316,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -321,7 +329,8 @@
     {
       "locale": "fr",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -344,8 +353,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -357,7 +365,8 @@
     {
       "locale": "hr",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -380,8 +389,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -393,7 +402,8 @@
     {
       "locale": "hu",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -416,8 +426,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -429,7 +439,8 @@
     {
       "locale": "it",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -452,8 +463,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -465,7 +475,8 @@
     {
       "locale": "lt",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -488,8 +499,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -501,7 +512,8 @@
     {
       "locale": "lv",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -524,8 +536,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -537,7 +549,8 @@
     {
       "locale": "nl",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -560,8 +573,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -573,7 +585,8 @@
     {
       "locale": "pl",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -596,8 +609,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -609,7 +621,8 @@
     {
       "locale": "pt",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -632,8 +645,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -645,7 +657,8 @@
     {
       "locale": "ro",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -668,8 +681,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -681,7 +693,8 @@
     {
       "locale": "sk",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -704,8 +717,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -717,7 +729,8 @@
     {
       "locale": "sl",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -740,8 +753,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -753,7 +766,8 @@
     {
       "locale": "sv",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "partial",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -776,8 +790,8 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "resolve insufficient-evidence terminology records",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",
@@ -789,7 +803,8 @@
     {
       "locale": "zh",
       "exact_guidance_status": "local_draft_complete",
-      "terminology_status": "local_draft_complete",
+      "terminology_status": "researched_not_native_reviewed",
+      "terminology_research_completeness": "complete",
       "canonical_concept_ids": [
         "brewer_dripper",
         "coffee_bed",
@@ -812,8 +827,7 @@
       "ledger_approved": false,
       "production_ready": false,
       "missing_requirements": [
-        "local-market terminology sources",
-        "native review of preferred, accepted, and avoided terminology",
+        "native review of researched terminology and display policy",
         "native editorial review of all 20 recipes and 114 stages",
         "independent native coffee-domain approval",
         "reviewed-locale ledger approval",

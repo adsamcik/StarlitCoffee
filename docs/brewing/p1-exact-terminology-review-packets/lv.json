@@ -1,168 +1,350 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "lv",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "partial",
   "ui_copy": {
     "show_english_terms": "Rādīt kafijas terminus angļu valodā",
     "hide_english_terms": "Paslēpt kafijas terminus angļu valodā",
     "heading": "Kafijas terminoloģija angļu valodā"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "lv_kafijasdraugs_v60",
+      "title": "Hario V60 kafijas pagatavošanas gids",
+      "url": "https://www.kafijasdraugs.lv/blogs/hario-v60-kafijas-pagatavosanas-gids/",
+      "category": "Latvian coffee guide",
+      "audience": "beginner",
+      "region": "Latvia",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "lv_kuup",
+      "title": "Hario V60-02 papīra filtri",
+      "url": "https://www.kuup.lv/produkti/item/bruvriki-un-piederumi/hario-v60-02-papira-filtri-3/",
+      "category": "Latvian specialist retailer page",
+      "audience": "enthusiast",
+      "region": "Latvia",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "lv_kafijasdraugs_bloom",
+      "title": "Zvaigzne, kas dzimusi tavā krūzē",
+      "url": "https://www.kafijasdraugs.lv/blogs/zvaigzne-kas-dzimusi-tava-kruze-kafijas-parsteidzosais-celojums/",
+      "category": "Latvian coffee article",
+      "audience": "mixed",
+      "region": "Latvia",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "lv_rocketbean",
+      "title": "Hario V60 Range Server",
+      "url": "https://rocketbean.lv/lv/products/hario-v60-range-server",
+      "category": "Latvian roaster product page",
+      "audience": "mixed",
+      "region": "Latvia",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "kafijas pagatavotājs / filtrpiltuve"
+        "kafijas filtrs / brūvrīks"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "brūvrīks",
+        "dripper"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: kafijas filtrs Professional: Kafijas filtrs and brūvrīks occur in Latvian specialist retail; dripper remains a product label.",
+      "evidence_source_ids": [
+        "lv_kafijasdraugs_v60",
+        "lv_kuup"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
-      "preferred_terms": [
-        "maltās kafijas slānis"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "kafijas slānis"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No reliable Latvian specialty convention was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "sākotnējā samitrināšana / bloom"
+        "ziedēšana"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "bloom",
+        "sākotnējā samitrināšana"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: ziedēšana Professional: A Latvian specialty explanation explicitly uses ziedēšana for bloom.",
+      "evidence_source_ids": [
+        "lv_kafijasdraugs_bloom"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
       "canonical_english": "coffee grounds",
       "preferred_terms": [
-        "maltā kafija"
+        "malta kafija"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "kafijas biezumi"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "kafijas biezumi"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "kafijas biezumi",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: malta kafija Professional: malta kafija is standard for dry ground coffee.",
+      "evidence_source_ids": [
+        "lv_kafijasdraugs_bloom",
+        "lv_kafijasdraugs_v60"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
-      "preferred_terms": [
-        "smalkās kafijas daļiņas"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "smalkās daļiņas"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No reliable specialty evidence established smalkās daļiņas or fines.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
+        "No established conventional term"
+      ],
+      "accepted_alternatives": [
         "kafijas un ūdens maisījums"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use kafijas un ūdens maisījums descriptively. Professional: Accessible Latvian recipes describe the mixture rather than naming it.",
+      "evidence_source_ids": [
+        "lv_kafijasdraugs_bloom",
+        "lv_kuup",
+        "lv_kafijasdraugs_v60"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "LOW",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
-      "preferred_terms": [
-        "notecēšana caur filtru"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "tecināšanas laiks"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: Tecināšana is attested as process, but a precise drawdown phase/time label is not established.",
+      "evidence_source_ids": [
+        "lv_kuup"
+      ],
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
-      "preferred_terms": [
-        "viegla apļveida pagriešana"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "pagriezt filtru",
+        "Rao spin"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No reliable Latvian specialty action term was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "servēšanas kanna / karafe"
+        "karafe"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "krūze",
+        "serveris"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: karafe Professional: karafe is used for the receiving vessel.",
+      "evidence_source_ids": [
+        "lv_kafijasdraugs_v60",
+        "lv_rocketbean"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
-      "preferred_terms": [
-        "mērcēšana / iegremdēšanas metode"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "mērcēšana",
+        "imersija"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No adequate original Latvian specialty evidence fixed mērcēšana versus imersija.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
-      "preferred_terms": [
+      "preferred_terms": [],
+      "accepted_alternatives": [
         "vārsts"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: Generic vārsts is available, but brewer-specific convention was not established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "kafijas filtrpapīrs"
+        "papīra filtrs"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "filtra papīrs"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: papīra filtrs Professional: papīra filtrs is consistently used.",
+      "evidence_source_ids": [
+        "lv_kafijasdraugs_v60",
+        "lv_kuup",
+        "lv_rocketbean"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "resolve 6 insufficient-evidence terminology records",
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

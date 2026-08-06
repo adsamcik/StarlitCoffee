@@ -1,136 +1,364 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "pl",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "complete",
   "ui_copy": {
     "show_english_terms": "Pokaż angielskie terminy kawowe",
     "hide_english_terms": "Ukryj angielskie terminy kawowe",
     "heading": "Angielska terminologia kawowa"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "pl_coffeedesk_v60",
+      "title": "Jak zaparzyć dripa V60?",
+      "url": "https://www.coffeedesk.pl/blog/jak-zaparzyc-dripa-v60-3-kultowe-przepisy/",
+      "category": "Polish specialty retailer guide",
+      "audience": "enthusiast",
+      "region": "Poland",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "pl_coffeedesk_drippers",
+      "title": "Drippery",
+      "url": "https://www.coffeedesk.pl/zaparzacze/drippery/",
+      "category": "specialist retailer category education",
+      "audience": "mixed",
+      "region": "Poland",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "pl_kafar",
+      "title": "Clever Dripper L",
+      "url": "https://palarniakafar.pl/produkt/clever-dripper-l-sepia-530ml/",
+      "category": "Polish roaster product education",
+      "audience": "mixed",
+      "region": "Poland",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "pl_kawoznawca",
+      "title": "Słownik kawowy",
+      "url": "https://kawoznawca.pl/slownik/",
+      "category": "Polish specialist glossary",
+      "audience": "professional",
+      "region": "Poland",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "pl_miga",
+      "title": "El Salvador Noruega recipe",
+      "url": "https://migacoffee.pl/products/el-salvador-noruega",
+      "category": "Polish roaster recipe",
+      "audience": "enthusiast",
+      "region": "Poland",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "pl_fines",
+      "title": "Perfekcyjne mielenie kawy",
+      "url": "https://swiezowypalana.pl/blog/post/perfekcyjne-mielenie-kawy",
+      "category": "Polish coffee education article",
+      "audience": "enthusiast",
+      "region": "Poland",
+      "original_or_translated": "original",
+      "source_flags": []
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "zaparzacz / dripper"
+        "dripper / zaparzacz przelewowy"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "drip",
+        "dripper"
+      ],
+      "inflected_or_adapted_forms": [
+        "drippera",
+        "dripperem",
+        "drippery"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: zaparzacz przelewowy (dripper) Professional: Dripper is fully conventional among specialty users; zaparzacz is clearer generally.",
+      "evidence_source_ids": [
+        "pl_coffeedesk_v60",
+        "pl_coffeedesk_drippers",
+        "pl_kafar"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
       "preferred_terms": [
-        "łoże kawy"
+        "złoże kawy"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "warstwa kawy"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: złoże kawy Professional: Złoże kawy is the professional local term; warstwa/cama-like descriptions also occur.",
+      "evidence_source_ids": [
+        "pl_kawoznawca",
+        "pl_coffeedesk_v60"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "preinfuzja / blooming"
+        "bloom / preinfuzja"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "kwitnienie",
+        "blooming"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: preinfuzja (bloom) Professional: Bloom is stabilized in specialist glossaries; preinfuzja is the local technical explanation.",
+      "evidence_source_ids": [
+        "pl_kawoznawca",
+        "pl_miga"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
       "canonical_english": "coffee grounds",
       "preferred_terms": [
-        "zmielona kawa"
+        "kawa mielona"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "fusy"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "fusy"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "fusy",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: kawa mielona Professional: Kawa mielona is dry grounds; fusy are spent.",
+      "evidence_source_ids": [
+        "pl_coffeedesk_v60",
+        "pl_coffeedesk_drippers",
+        "pl_fines"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
       "preferred_terms": [
-        "drobne cząstki kawy"
+        "drobne cząstki (fines)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "fines",
+        "pył kawowy"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: drobne cząstki Professional: Fines is common in advanced discussion; drobne cząstki/pył is explanatory.",
+      "evidence_source_ids": [
+        "pl_fines"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
-        "zawiesina kawy i wody"
+        "mieszanina kawy i wody"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "slurry",
+        "papka"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "papka"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "papka",
+          "reason": "informal and imprecise"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: mieszanina kawy i wody Professional: Slurry lacks a stable Polish equivalent; informal papka occurs but is not suitable UI terminology.",
+      "evidence_source_ids": [
+        "pl_coffeedesk_v60"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "MEDIUM",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "spływanie przez filtr"
+        "drawdown / czas spływania"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "czas ociekania",
+        "drawdown"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: czas spływania; drawdown in advanced mode Professional: Drawdown is a glossary-stabilized specialist term; Polish explanatory copy uses czas spływania.",
+      "evidence_source_ids": [
+        "pl_kawoznawca",
+        "pl_miga"
+      ],
+      "classification": "ENGLISH_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "delikatny ruch okrężny / obrót"
+        "swirl / kołysanie drippera"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "ruch okrężny",
+        "zakręcenie dripperem",
+        "Rao Spin"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: kołysanie drippera (swirl) Professional: Swirl is explicitly defined in Polish specialist material; instructions also use ruch okrężny/kołysanie.",
+      "evidence_source_ids": [
+        "pl_kawoznawca",
+        "pl_coffeedesk_v60",
+        "pl_miga"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "serwer / karafka"
+        "dzbanek / serwer"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "serwer",
+        "karafka"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "serwer bez kontekstu"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "serwer bez kontekstu",
+          "reason": "IT ambiguity"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: dzbanek Professional: Serwer is standard in specialty gear language; dzbanek is clearer generally.",
+      "evidence_source_ids": [
+        "pl_coffeedesk_v60",
+        "pl_coffeedesk_drippers"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "parzenie immersyjne / zanurzanie"
+        "immersja / parzenie zanurzeniowe"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "namaczanie"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: parzenie zanurzeniowe (immersja) Professional: Immersja is established in specialist glossaries; parzenie zanurzeniowe explains it.",
+      "evidence_source_ids": [
+        "pl_kawoznawca",
+        "pl_kafar"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
@@ -138,11 +366,22 @@
       "preferred_terms": [
         "zawór"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "zawór automatyczny"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: zawór Professional: Zawór is consistent in Clever/Switch descriptions.",
+      "evidence_source_ids": [
+        "pl_kafar"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
@@ -150,19 +389,32 @@
       "preferred_terms": [
         "filtr papierowy"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "papier filtracyjny"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: filtr papierowy Professional: Filtr papierowy is standard.",
+      "evidence_source_ids": [
+        "pl_coffeedesk_v60",
+        "pl_coffeedesk_drippers",
+        "pl_kafar"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

@@ -1,28 +1,113 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "nl",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "complete",
   "ui_copy": {
     "show_english_terms": "Engelse koffietermen tonen",
     "hide_english_terms": "Engelse koffietermen verbergen",
     "heading": "Engelse koffietermen"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "nl_koffietje_jens",
+      "title": "Het V60-recept van Jens Crabbé",
+      "url": "https://www.koffietje.nl/recepten/het-v60-recept-van-jens-crabbe/",
+      "category": "Dutch specialty recipe",
+      "audience": "enthusiast",
+      "region": "Netherlands",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "nl_koffietje_switch",
+      "title": "Drie recepten voor de Hario V60 Switch",
+      "url": "https://www.koffietje.nl/2024/deze-drie-recepten-moet-je-proberen-op-je-hario-v60-switch/",
+      "category": "Dutch specialty recipe",
+      "audience": "enthusiast",
+      "region": "Netherlands",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "nl_heeren",
+      "title": "Hario V60 Immersion Dripper Switch 02",
+      "url": "https://deheerenvan17.nl/overig/hario/v60-immersion-dripper-switch-02/",
+      "category": "Dutch specialty retailer page",
+      "audience": "mixed",
+      "region": "Netherlands",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "nl_zwarteroes",
+      "title": "Next level V60 koffie zetten",
+      "url": "https://zwarteroes.nl/blogs/koffie-zetten/next-level-v60-koffie-zetten-mijn-2-beste-recepten",
+      "category": "Dutch roaster guide",
+      "audience": "enthusiast",
+      "region": "Netherlands",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "nl_misterbarish",
+      "title": "Kalita filterkoffie zetten",
+      "url": "https://misterbarish.nl/koffie-kennisbank/koffie-zetten/kalita-filterkoffie-zetten/",
+      "category": "Dutch coffee knowledge article",
+      "audience": "beginner",
+      "region": "Netherlands",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "nl_fines",
+      "title": "Wat zijn fines in koffie?",
+      "url": "https://zwarteroes.nl/blogs/koffie-kennis/wat-zijn-fines-in-koffie",
+      "category": "Dutch specialty explainer",
+      "audience": "enthusiast",
+      "region": "Netherlands",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated; indexed title/usage retained"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "koffiezetter / dripper"
+        "dripper / filterhouder"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "koffiefilterhouder",
+        "dripper"
+      ],
+      "inflected_or_adapted_forms": [
+        "dripper",
+        "drippers"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: filterhouder (dripper) Professional: Dripper is the usual specialty/product term; filterhouder is transparent to beginners.",
+      "evidence_source_ids": [
+        "nl_koffietje_jens",
+        "nl_koffietje_switch",
+        "nl_heeren"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
@@ -30,23 +115,53 @@
       "preferred_terms": [
         "koffiebed"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "vlak koffiebed"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: koffiebed Professional: koffiebed is directly and repeatedly attested.",
+      "evidence_source_ids": [
+        "nl_koffietje_jens",
+        "nl_zwarteroes",
+        "nl_misterbarish"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "voorbevochtiging / bloom"
+        "bloom / bloomen"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "voorinfusie",
+        "bloomen"
+      ],
+      "inflected_or_adapted_forms": [
+        "de bloom",
+        "bloomen",
+        "gebloomd"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: bloom; explain as voorinfusie on first occurrence Professional: Bloom is established and produces the Dutch verb bloomen; voorinfusie is explanatory.",
+      "evidence_source_ids": [
+        "nl_koffietje_jens",
+        "nl_zwarteroes"
+      ],
+      "classification": "ENGLISH_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
@@ -54,115 +169,244 @@
       "preferred_terms": [
         "gemalen koffie"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "koffiedik"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "koffiedik"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "koffiedik",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: gemalen koffie Professional: gemalen koffie is dry grounds; koffiedik is spent.",
+      "evidence_source_ids": [
+        "nl_koffietje_jens",
+        "nl_misterbarish"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
       "preferred_terms": [
-        "fijne koffiedeeltjes"
+        "fijne deeltjes (fines)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "fines",
+        "koffiestof"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: fijne koffiedeeltjes Professional: Fines is specialist shorthand; fijne deeltjes is clearer.",
+      "evidence_source_ids": [
+        "nl_fines"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
-        "mengsel van koffie en water"
+        "koffie-watermengsel"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "slurry"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "pap"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "pap",
+          "reason": "porridge/mash; pejorative"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: koffie-watermengsel Professional: No stable Dutch coffee term converged; recipes paraphrase.",
+      "evidence_source_ids": [
+        "nl_koffietje_jens",
+        "nl_zwarteroes",
+        "nl_heeren"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "MEDIUM",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "doorloopfase"
+        "doorlooptijd"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "uitlooptijd",
+        "drawdown"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: doorlooptijd Professional: Doorlooptijd is repeatedly attested for brew/drain duration.",
+      "evidence_source_ids": [
+        "nl_koffietje_jens",
+        "nl_zwarteroes",
+        "nl_misterbarish"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "zwenken / ronddraaien"
+        "ronddraaien / swirl"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "swirl",
+        "Rao Spin",
+        "roterende beweging"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: draai de dripper zacht rond Professional: Swirl/Rao Spin labels the technique; Dutch instructions use roterende beweging or ronddraaien.",
+      "evidence_source_ids": [
+        "nl_koffietje_jens",
+        "nl_zwarteroes"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "server / karaf"
+        "kan / karaf"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "karaf",
+        "server"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: kan Professional: Kan/karaf are natural; server is a specialty product label.",
+      "evidence_source_ids": [
+        "nl_koffietje_jens"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "weken / immersiebereiding"
+        "immersie / onderdompeling"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "laten trekken",
+        "immersion"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: onderdompeling (immersie) Professional: Immersie is conventional in specialty contexts; onderdompeling and laten trekken explain it.",
+      "evidence_source_ids": [
+        "nl_koffietje_switch",
+        "nl_heeren"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
       "preferred_terms": [
-        "ventiel"
+        "ventiel / klep"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "klep"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: ventiel Professional: Ventiel and klep are both used depending mechanism.",
+      "evidence_source_ids": [
+        "nl_koffietje_switch",
+        "nl_heeren"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "koffiefilterpapier"
+        "papieren filter"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "filterpapier"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: papieren filter Professional: Papieren filter is routine; filterpapier names material.",
+      "evidence_source_ids": [
+        "nl_koffietje_jens",
+        "nl_koffietje_switch",
+        "nl_misterbarish"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

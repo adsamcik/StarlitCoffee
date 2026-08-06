@@ -1,28 +1,94 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "sk",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "complete",
   "ui_copy": {
     "show_english_terms": "Zobraziť anglické kávové termíny",
     "hide_english_terms": "Skryť anglické kávové termíny",
     "heading": "Anglické kávové termíny"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "sk_gpkava_v60",
+      "title": "V60 pour over návod",
+      "url": "https://www.gpkava.sk/a/v60-pour-over-navod",
+      "category": "Slovak specialty guide",
+      "audience": "mixed",
+      "region": "Slovakia",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "sk_blogokave_switch",
+      "title": "Hario Switch: dripper kombinujúci imerziu a perkoláciu",
+      "url": "https://blogokave.sk/hario-switch-nezvycajny-dripper-kombinujuci-imerziu-a-perkolaciu/",
+      "category": "Slovak specialty article",
+      "audience": "enthusiast",
+      "region": "Slovakia",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "sk_kavickari",
+      "title": "Hario V60 – ikona filtrovanej kávy",
+      "url": "https://kavickari.sk/hario-v60-ikona-filtrovanej-kavy-ktoru-si-zamiluje-kazdy-kavickar/",
+      "category": "Slovak coffee publication",
+      "audience": "beginner",
+      "region": "Slovakia",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "sk_gpkava_lex",
+      "title": "Kávový lexikón od A do Z",
+      "url": "https://www.gpkava.sk/a/kavovy-lexikon-od-a-do-z",
+      "category": "Slovak specialty glossary",
+      "audience": "mixed",
+      "region": "Slovakia",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "zariadenie na prípravu / dripper"
+        "dripper"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "prekvapkávač",
+        "filtračný lievik"
+      ],
+      "inflected_or_adapted_forms": [
+        "drippera",
+        "dripperom",
+        "drippery"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: dripper (prekvapkávač) Professional: Dripper is the normal specialty label; prekvapkávač is the accessible explanation.",
+      "evidence_source_ids": [
+        "sk_gpkava_v60",
+        "sk_blogokave_switch",
+        "sk_kavickari"
+      ],
+      "classification": "ENGLISH_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
@@ -30,23 +96,50 @@
       "preferred_terms": [
         "kávové lôžko"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "rovné lôžko"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: kávové lôžko Professional: Kávové lôžko is directly attested in specialist guidance.",
+      "evidence_source_ids": [
+        "sk_gpkava_v60"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "predmáčanie / bloom"
+        "blooming / predinfúzia"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "kvitnutie",
+        "bloom"
+      ],
+      "inflected_or_adapted_forms": [
+        "bloomingu",
+        "blooming fáza"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: predinfúzia (blooming) Professional: Blooming is conventional and paired with predinfúzia/kvitnutie.",
+      "evidence_source_ids": [
+        "sk_gpkava_v60",
+        "sk_kavickari"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
@@ -54,23 +147,55 @@
       "preferred_terms": [
         "mletá káva"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "kávová usadenina"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "usadenina"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "usadenina",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: mletá káva Professional: Mletá káva is standard dry-ground wording.",
+      "evidence_source_ids": [
+        "sk_gpkava_v60",
+        "sk_gpkava_lex"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
       "preferred_terms": [
-        "jemné častice kávy"
+        "jemné kávové častice (fines)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "fines",
+        "kávový prach"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: jemné kávové častice Professional: A specialist guide explicitly pairs the localized phrase with fines.",
+      "evidence_source_ids": [
+        "sk_gpkava_v60",
+        "sk_gpkava_lex"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
@@ -78,59 +203,140 @@
       "preferred_terms": [
         "zmes kávy a vody"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "slurry"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "kaša"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "kaša",
+          "reason": "porridge/mash; imprecise"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: zmes kávy a vody Professional: No stable Slovak lexical item converged; recipes paraphrase the mixture.",
+      "evidence_source_ids": [
+        "sk_gpkava_v60",
+        "sk_kavickari",
+        "sk_blogokave_switch"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "MEDIUM",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "odtekanie cez filter"
+        "odkvapkávanie"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "čas pretekania",
+        "drawdown"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: odkvapkávanie Professional: Odkvapkávanie/čas pretekania is directly used for the final drain.",
+      "evidence_source_ids": [
+        "sk_gpkava_v60"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "jemné krúživé otočenie"
+        "swirl / krúživý pohyb"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "swirl",
+        "Rao Spin"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: krúživý pohyb dripperom Professional: Specialist guidance explicitly uses swirl and local krúživé pohyby.",
+      "evidence_source_ids": [
+        "sk_gpkava_v60",
+        "sk_kavickari"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "servírovacia nádoba / karafa"
+        "server / kanvička"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "server",
+        "karafa"
+      ],
+      "inflected_or_adapted_forms": [
+        "serveri",
+        "servera"
+      ],
+      "avoid": [
+        "server bez kontextu"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "server bez kontextu",
+          "reason": "IT ambiguity"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: kanvička Professional: Server is conventional in specialist gear/recipe usage; kanvička is clearer generally.",
+      "evidence_source_ids": [
+        "sk_gpkava_v60",
+        "sk_kavickari"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "lúhovanie / imerzná príprava"
+        "imerzia / ponorenie"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "imerzná metóda",
+        "úplné ponorenie"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: ponorenie (imerzia) Professional: Imerzia is established in specialist education; ponorenie explains it.",
+      "evidence_source_ids": [
+        "sk_blogokave_switch",
+        "sk_gpkava_lex"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
@@ -138,31 +344,55 @@
       "preferred_terms": [
         "ventil"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "uzáver"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: ventil Professional: Ventil is ordinary brewer hardware wording.",
+      "evidence_source_ids": [
+        "sk_blogokave_switch"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "papierový filter na kávu"
+        "papierový filter"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "filtračný papier"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: papierový filter Professional: Papierový filter is standard.",
+      "evidence_source_ids": [
+        "sk_gpkava_v60",
+        "sk_blogokave_switch",
+        "sk_kavickari"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

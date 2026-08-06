@@ -1,52 +1,164 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "bg",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "partial",
   "ui_copy": {
     "show_english_terms": "Показване на английските термини за кафе",
     "hide_english_terms": "Скриване на английските термини за кафе",
     "heading": "Английска терминология за кафе"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "bg_espreso",
+      "title": "Beanbros specialty coffee guide",
+      "url": "https://espreso.bg/beanbros-specialty-coffee-guide/",
+      "category": "specialty guide",
+      "audience": "enthusiast",
+      "region": "Bulgaria",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "bg_forum",
+      "title": "Hario V60 discussion",
+      "url": "https://coffeeforums.bg/viewtopic.php?t=799",
+      "category": "specialist community discussion",
+      "audience": "enthusiast",
+      "region": "Bulgaria",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "bg_dabov",
+      "title": "Три лесни начина за приготвяне на кафе у дома",
+      "url": "https://dabov.coffee/article/tri-lesni-nachini-za-prigotvyane-na-kafe-u-doma-v60-chemex-i-frenska-presa",
+      "category": "roaster educational article",
+      "audience": "beginner",
+      "region": "Bulgaria",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "bg_coffeehouse",
+      "title": "Различни методи за приготвяне на кафе",
+      "url": "https://coffeehouse.bg/different-coffee-making-methods/",
+      "category": "specialty educational article",
+      "audience": "beginner",
+      "region": "Bulgaria",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "bg_fines",
+      "title": "Discussion of grinder particle distribution",
+      "url": "https://coffeeforums.bg/viewtopic.php?t=1284",
+      "category": "specialist community discussion",
+      "audience": "enthusiast",
+      "region": "Bulgaria",
+      "original_or_translated": "original",
+      "source_flags": []
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "уред за приготвяне / дрипър"
+        "дрипър"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "филтърен конус",
+        "капкова кафеварка"
+      ],
+      "inflected_or_adapted_forms": [
+        "дрипъра",
+        "дрипърът"
+      ],
+      "avoid": [
+        "пивовар"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "пивовар",
+          "reason": "means a brewer/person or brewery worker, not the device"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: дрипър or филтърен конус Professional: Specialists commonly use дрипър; филтърен конус is explanatory.",
+      "evidence_source_ids": [
+        "bg_espreso",
+        "bg_forum",
+        "bg_dabov"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
-      "preferred_terms": [
-        "слой смляно кафе"
-      ],
+      "preferred_terms": [],
       "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "кафе легло"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "кафе легло",
+          "reason": "literal machine-like calque not evidenced in authentic usage"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: Explain descriptively as слой от смляно кафе until reviewed. Professional: No reliable Bulgarian specialty convention was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "предварително намокряне / bloom"
+        "цъфтеж (bloom)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "цъфтене",
+        "blooming",
+        "предварително намокряне"
+      ],
+      "inflected_or_adapted_forms": [
+        "блуминг",
+        "blooming фаза"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: цъфтеж or първоначално намокряне Professional: Bloom/blooming is retained in specialist material, usually glossed with цъфтеж/цъфтене.",
+      "evidence_source_ids": [
+        "bg_coffeehouse",
+        "bg_espreso",
+        "bg_forum"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
@@ -54,83 +166,182 @@
       "preferred_terms": [
         "смляно кафе"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "кафеена утайка"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "утайка"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "утайка",
+          "reason": "spent grounds; wrong for dry grounds"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: смляно кафе Professional: смляно кафе is normal for dry brewing material.",
+      "evidence_source_ids": [
+        "bg_coffeehouse"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
       "preferred_terms": [
-        "фини частици кафе"
+        "фини частици"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "fines",
+        "кафеен прах"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: фини частици Professional: Specialists may add fines in parentheses.",
+      "evidence_source_ids": [
+        "bg_fines"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
-      "preferred_terms": [
-        "смес от кафе и вода"
-      ],
+      "preferred_terms": [],
       "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "суспензия"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "суспензия",
+          "reason": "technical chemistry term; not shown to be natural coffee wording"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: Use a descriptive phrase such as смес от кафе и вода only in explanatory prose. Professional: No conventional Bulgarian lexical label was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "оттичане през филтъра"
+        "време за отцеждане"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "отцеждане",
+        "drawdown"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: време за отцеждане Professional: Specialists may recognize drawdown, but Bulgarian instructions usually describe draining.",
+      "evidence_source_ids": [
+        "bg_coffeehouse",
+        "bg_forum"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "леко завъртане / кръгово движение"
+        "завъртане на дрипера"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "кръгово движение",
+        "Rao spin"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: леко завъртете дрипера Professional: Technique names may be English, but the action is normally expressed with a Bulgarian verb.",
+      "evidence_source_ids": [
+        "bg_espreso",
+        "bg_forum"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "кана / сървър за кафе"
+        "кана"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "сървър",
+        "декантер"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "сервер"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "сервер",
+          "reason": "strong IT ambiguity and not needed in beginner instructions"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: кана Professional: Product names may retain server, but prose uses кана.",
+      "evidence_source_ids": [
+        "bg_coffeehouse"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "накисване / имерсионно приготвяне"
+        "пълно потапяне"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "имерсия",
+        "накисване"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: пълно потапяне Professional: Specialists may use immersion; Bulgarian explanatory text favors потапяне/накисване.",
+      "evidence_source_ids": [
+        "bg_coffeehouse"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
@@ -138,31 +349,57 @@
       "preferred_terms": [
         "клапан"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "вентил"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: клапан Professional: Brewer descriptions use клапан.",
+      "evidence_source_ids": [
+        "bg_forum"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "хартиен филтър за кафе"
+        "хартиен филтър"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "филтърна хартия"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: хартиен филтър Professional: хартиен филтър is routine.",
+      "evidence_source_ids": [
+        "bg_coffeehouse",
+        "bg_espreso",
+        "bg_forum",
+        "bg_dabov"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "resolve 2 insufficient-evidence terminology records",
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

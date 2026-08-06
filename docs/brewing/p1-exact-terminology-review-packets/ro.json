@@ -1,52 +1,158 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "ro",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "complete",
   "ui_copy": {
     "show_english_terms": "Afișează termenii de cafea în engleză",
     "hide_english_terms": "Ascunde termenii de cafea în engleză",
     "heading": "Terminologie de cafea în engleză"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "ro_muse",
+      "title": "Cafea la Hario V60: ghid de preparare",
+      "url": "https://www.musecoffee.ro/ghid-preparare-cafea-hario-v60/",
+      "category": "Romanian roaster guide",
+      "audience": "mixed",
+      "region": "Romania",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "ro_shot",
+      "title": "V60 pour-over pas cu pas",
+      "url": "https://shotcuboabe.ro/blog/v60-pour-over-pas-cu-pas/",
+      "category": "Romanian specialty guide",
+      "audience": "beginner",
+      "region": "Romania",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "ro_incognito",
+      "title": "Ghid V60 pentru începători",
+      "url": "https://incognito-coffee.ro/blogs/news/ghid-v60-incepatori",
+      "category": "Romanian roaster beginner guide",
+      "audience": "beginner",
+      "region": "Romania",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "ro_muse_clever",
+      "title": "Clever Dripper L",
+      "url": "https://www.musecoffee.ro/product/clever-dripper-l-sepia-530ml/",
+      "category": "Romanian roaster product education",
+      "audience": "mixed",
+      "region": "Romania",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "ro_switch",
+      "title": "Hario Switch",
+      "url": "https://www.espressoman.ro/hario-switch/",
+      "category": "Romanian specialist article",
+      "audience": "enthusiast",
+      "region": "Romania",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "dispozitiv de preparare / dripper"
+        "dripper / brewer"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "brewer",
+        "con de filtrare"
+      ],
+      "inflected_or_adapted_forms": [
+        "dripperul",
+        "brewerului"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: dripper Professional: Romanian specialty guides openly use dripper and brewer; con/filtru manual can explain them.",
+      "evidence_source_ids": [
+        "ro_muse",
+        "ro_shot",
+        "ro_incognito",
+        "ro_muse_clever"
+      ],
+      "classification": "ENGLISH_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
       "preferred_terms": [
+        "pat de cafea / strat de cafea"
+      ],
+      "accepted_alternatives": [
         "pat de cafea"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: strat de cafea Professional: Pat de cafea and strat de cafea are both directly attested.",
+      "evidence_source_ids": [
+        "ro_muse",
+        "ro_incognito"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "preinfuzie / bloom"
+        "bloom"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "înflorire",
+        "preinfuzie"
+      ],
+      "inflected_or_adapted_forms": [
+        "bloom-ul",
+        "al doilea bloom"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: bloom; explain as înflorire on first occurrence Professional: Bloom is the stable specialty label and is explained with înflorire.",
+      "evidence_source_ids": [
+        "ro_muse",
+        "ro_shot",
+        "ro_incognito",
+        "ro_switch"
+      ],
+      "classification": "ENGLISH_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "established_english_default",
+      "english_reference_policy": "established_local_usage",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
@@ -54,115 +160,244 @@
       "preferred_terms": [
         "cafea măcinată"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "zaț"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "zaț"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "zaț",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: cafea măcinată Professional: Cafea măcinată is dry grounds; zaț is spent.",
+      "evidence_source_ids": [
+        "ro_muse",
+        "ro_shot",
+        "ro_incognito",
+        "ro_muse_clever"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
       "preferred_terms": [
-        "particule fine de cafea"
+        "particule fine"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "fines"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: particule fine Professional: Particule fine is directly used in native specialty guidance; fines may be added for specialists.",
+      "evidence_source_ids": [
+        "ro_muse"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
       "preferred_terms": [
-        "amestec de cafea și apă"
+        "amestecul de cafea și apă"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "slurry"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "nămol"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "nămol",
+          "reason": "mud/sludge; misleading"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: amestecul de cafea și apă Professional: No stable Romanian lexical term converged.",
+      "evidence_source_ids": [
+        "ro_switch",
+        "ro_incognito",
+        "ro_muse"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "MEDIUM",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "scurgere prin filtru"
+        "drenaj / scurgere"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "drenaj",
+        "drawdown"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: scurgere Professional: Drenaj and scurgere are both used as phase labels; drawdown is an advanced alias.",
+      "evidence_source_ids": [
+        "ro_muse",
+        "ro_shot",
+        "ro_incognito"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "rotire ușoară / mișcare circulară"
+        "rotație a brewerului (swirl)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "swirl",
+        "mișcare circulară"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: rotiți ușor dripperul Professional: Romanian action wording and English swirl coexist directly in specialty guides.",
+      "evidence_source_ids": [
+        "ro_muse",
+        "ro_shot"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "vas de servire / carafă"
+        "carafă / cană"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "cană",
+        "server"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: carafă Professional: Carafă/cană are normal; server appears as a specialty product label.",
+      "evidence_source_ids": [
+        "ro_muse",
+        "ro_incognito"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "infuzare / preparare prin imersie"
+        "imersie"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "infuzare",
+        "imersie totală"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: imersie Professional: Imersie/imersie totală is established.",
+      "evidence_source_ids": [
+        "ro_muse_clever",
+        "ro_switch"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
       "preferred_terms": [
-        "supapă"
+        "supapă / valvă"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "valvă"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: supapă Professional: Supapă and valvă both occur in brewer descriptions.",
+      "evidence_source_ids": [
+        "ro_switch"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "hârtie de filtru pentru cafea"
+        "filtru de hârtie"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "hârtie de filtru"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: filtru de hârtie Professional: Filtru de hârtie is universal.",
+      "evidence_source_ids": [
+        "ro_muse",
+        "ro_shot",
+        "ro_muse_clever"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

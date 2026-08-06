@@ -40,12 +40,13 @@ Do not implement English terminology by replacing words inside localized
 sentences. Inflection, agreement, compound terms, and warning phrasing make that
 approach grammatically unreliable and potentially unsafe.
 
-The implemented preference is **Terminology: Local / Local + English reference**:
+English exposure is determined first by the locale × concept policy in the canonical catalog. The optional contextual control is a secondary glossary aid:
 
-- `Local` is the default and shows only approved localized guidance.
-- `Local + English reference` keeps the localized instruction unchanged and
-  exposes the canonical English concept in a secondary, expandable terminology
-  surface.
+- Localized guidance is always the primary default.
+- Established English loans remain part of localized terminology where research supports them.
+- Mixed, audience-dependent, context-dependent, and regional terms expose English only according to their recorded policy.
+- `NO_ESTABLISHED_TERM` uses a natural description; `INSUFFICIENT_EVIDENCE` exposes no isolated label.
+- The optional expanded reference keeps the localized instruction unchanged.
 - The preference is shown only when the active locale has an approved crosswalk
   and the current content contains mapped terminology.
 - Safety warnings and primary actions never become bilingual fragments.
@@ -67,11 +68,7 @@ English, Bulgarian, Czech, Danish, German, Greek, Spanish, Estonian, Finnish,
 French, Croatian, Hungarian, Italian, Lithuanian, Latvian, Dutch, Polish,
 Portuguese, Romanian, Slovak, Slovenian, Swedish, and Simplified Chinese.
 
-Each locale has a source-bound packet under
-`p1-exact-terminology-review-packets`. Approved and review-ready packets contain
-their evidence and resolved vocabulary; research-required packets enumerate all
-12 concepts and preserve every unresolved field explicitly for a future native
-reviewer.
+All non-English locales are maintained in `p1-exact-terminology-catalog.json`. Source-bound packets under `p1-exact-terminology-review-packets` are generated review views, not independent glossaries. The catalog preserves all 12 concepts, evidence, usage classification, display policy, and unresolved fields for every locale.
 
 `p1-exact-terminology-locale-queue.json` is the generated release-readiness
 authority for those 23 locales. It records the exact-guidance editorial state,
@@ -81,13 +78,9 @@ requirement. The generators fail if the Android locale list changes, concepts
 are duplicated or reordered, packets drift, or the checked-in ledger becomes
 stale.
 
-Software support does not imply linguistic approval. A locale can carry any
-reviewed Unicode vocabulary and control copy through the strict decoder, but it
-becomes user-visible only after its complete guidance, glossary, ledger entry,
-and Android resources are approved. As of 2026-08-04, English is production
-ready, Czech is ready for independent native review, and the remaining 21
-non-English locales are explicitly marked `research_required` rather than being
-silently filled with English or machine-approved terminology.
+Software support does not imply linguistic approval. A locale becomes user-visible only after its complete guidance, catalog terminology, ledger entry, and Android resources are approved. As of 2026-08-06, English is production ready. All 22 non-English locales have researched catalog records but still require native approval; 40 locale/concept records remain insufficiently evidenced and are explicitly withheld.
+
+The detailed source-of-truth and sentence-translation rules are defined in `p1-exact-localization-standard.md`.
 
 ## Maintenance
 

@@ -60,21 +60,21 @@ Validate without loading a model by running the same generator, model path, and 
 
 ## Terminology and contextual UI copy
 
-Machine terminology was not retained after representative review found incorrect or truncated words. The final local terminology drafts are explicit, human-readable candidate mappings in docs/brewing/p1-exact-terminology-local-draft-overrides.json.
+The initial model-generated terminology was rejected after representative review found incorrect and truncated terms. It has been replaced by the evidence-backed multilingual catalog at `docs/brewing/p1-exact-terminology-catalog.json`.
 
-They cover 12 canonical coffee concepts and three contextual English-terminology UI strings for each of 21 locales. Czech continues to use its separately researched packet.
+The catalog covers all 12 canonical concepts and all 22 non-English locales in one schema. It records preferred usage, beginner descriptions, professional usage, accepted and inflected forms, terms to avoid, regional variants, classification, confidence, display policy, English-reference policy, evidence IDs, and native-review state. Czech now uses the same catalog path as every other locale rather than a parallel terminology source.
 
-Generator: tools/generate_p1_exact_terminology_offline_drafts.py
+Research provenance is preserved under `docs/brewing/research/terminology-2026-08-06`. The validator is `tools/validate_p1_exact_terminology_catalog.py`. Review packets and the locale readiness ledger are generated from the catalog and must not be edited as terminology authorities.
 
-Generated artifact: docs/brewing/p1-exact-terminology-offline-drafts.json
-
-Regenerate and validate by running the terminology generator once normally and once with --check.
+Forty of the 264 records remain `INSUFFICIENT_EVIDENCE`; their preferred display term is deliberately null and their policy is `withhold_pending_review`.
 
 ## Status semantics
 
 - approved: reviewed and eligible for production when all other gates pass.
 - ready_for_native_review: source and evidence work is complete but native coffee-domain approval is outstanding.
-- local_draft_complete: every required string or terminology concept has a local candidate, but independent native-market review and evidence are still outstanding.
+- local_draft_complete: every required guidance string has a local candidate, but native editorial review is outstanding.
+- researched_not_native_reviewed: terminology research is recorded but native coffee-domain approval is outstanding.
+- insufficient_evidence: the catalog deliberately withholds a term until targeted evidence or native resolution exists.
 - research_required or not_started: required candidate content is absent.
 
 A complete local draft must never be relabeled as approved. Promotion still requires local-market terminology evidence, independent native coffee-domain review of all 20 recipes and 114 stages, reviewed-locale ledger approval, atomic guidance and terminology resource promotion, release-gate registration, and device accessibility and theme validation.

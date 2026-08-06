@@ -18,7 +18,7 @@ REVIEW_LEDGER = ROOT / "docs/brewing/p1-exact-guidance-reviewed-locales.json"
 EDITORIAL_REVIEW_DIR = ROOT / "docs/brewing/p1-exact-guidance-editorial-reviews"
 REVIEW_PACKET_DIR = ROOT / "docs/brewing/p1-exact-terminology-review-packets"
 EXACT_DRAFTS = ROOT / "docs/brewing/p1-exact-guidance-offline-draft-translation-memory.json"
-TERMINOLOGY_DRAFTS = ROOT / "docs/brewing/p1-exact-terminology-offline-drafts.json"
+TERMINOLOGY_CATALOG = ROOT / "docs/brewing/p1-exact-terminology-catalog.json"
 OUTPUT = ROOT / "docs/brewing/p1-exact-terminology-locale-queue.json"
 ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
 EXPECTED_LOCALE_COUNT = 23
@@ -97,13 +97,8 @@ def missing_requirements(
                 "localized contextual-control copy",
             ],
         )
-    elif terminology_status == "local_draft_complete":
-        missing.extend(
-            [
-                "local-market terminology sources",
-                "native review of preferred, accepted, and avoided terminology",
-            ],
-        )
+    elif terminology_status == "researched_not_native_reviewed":
+        missing.append("native review of researched terminology and display policy")
     if exact_status == "not_started":
         missing.append("complete 114-stage source-bound editorial review")
     elif exact_status == "local_draft_complete":
@@ -134,7 +129,7 @@ def generate() -> dict:
     ledger = read_json(REVIEW_LEDGER)
     approvals = ledger.get("locales", {})
     exact_drafts = read_json(EXACT_DRAFTS).get("translations", {})
-    terminology_drafts = read_json(TERMINOLOGY_DRAFTS).get("locales", {})
+    terminology_catalog = read_json(TERMINOLOGY_CATALOG).get("locales", {})
     records: list[dict] = []
     for locale in locales:
         editorial_status, terminology_status = editorial_state(locale)
@@ -143,15 +138,16 @@ def generate() -> dict:
         if locale == "en":
             exact_status = "approved"
             terminology_status = "approved"
+            terminology_completeness = "canonical_source"
         else:
             exact_status = editorial_status or (
                 "local_draft_complete" if locale in exact_drafts else "not_started"
             )
-            terminology_status = terminology_status or (
-                "local_draft_complete"
-                if locale in terminology_drafts
-                else "research_required"
-            )
+            catalog_locale = terminology_catalog.get(locale)
+            if not isinstance(catalog_locale, dict):
+                raise LocaleQueueError(f"Terminology catalog locale is missing: {locale}")
+            terminology_status = catalog_locale.get("status")
+            terminology_completeness = catalog_locale.get("research_completeness")
         packet_path = REVIEW_PACKET_DIR / f"{locale}.json"
         packet = read_json(packet_path)
         if packet.get("locale") != locale:
@@ -183,6 +179,7 @@ def generate() -> dict:
                 "locale": locale,
                 "exact_guidance_status": exact_status,
                 "terminology_status": terminology_status,
+                "terminology_research_completeness": terminology_completeness,
                 "canonical_concept_ids": concept_ids,
                 "review_packet": packet_path.relative_to(ROOT).as_posix(),
                 "recipe_count": EXPECTED_RECIPE_COUNT,
@@ -191,11 +188,14 @@ def generate() -> dict:
                 "terminology_resource_present": terminology_resource,
                 "ledger_approved": ledger_approved,
                 "production_ready": production_ready,
-                "missing_requirements": missing_requirements(
-                    locale,
-                    exact_status,
-                    terminology_status,
-                    production_ready,
+                "missing_requirements": (
+                    (["resolve insufficient-evidence terminology records"] if terminology_completeness == "partial" else [])
+                    + missing_requirements(
+                        locale,
+                        exact_status,
+                        terminology_status,
+                        production_ready,
+                    )
                 ),
             },
         )

@@ -1,28 +1,133 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "fr",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "complete",
   "ui_copy": {
     "show_english_terms": "Afficher les termes anglais du café",
     "hide_english_terms": "Masquer les termes anglais du café",
     "heading": "Terminologie anglaise du café"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "fr_cafe1802",
+      "title": "Préparer un café V60 comme au Café 1802",
+      "url": "https://cafe1802.fr/blogs/infos/preparer-un-cafe-v60-comme-au-cafe-1802-lart-de-la-degustation-ultime",
+      "category": "French roaster guide",
+      "audience": "mixed",
+      "region": "France",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "fr_crack",
+      "title": "Préparer un café filtre",
+      "url": "https://www.crack-cafes.fr/post/preparer-cafe-filtre",
+      "category": "French roaster educational article",
+      "audience": "beginner",
+      "region": "France",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "fr_filtrecafe",
+      "title": "V60 : guide complet",
+      "url": "https://filtre.cafe/journal/v60-guide-complet",
+      "category": "specialty publication guide",
+      "audience": "enthusiast",
+      "region": "France",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "fr_corica",
+      "title": "Dripper et V60",
+      "url": "https://corica.be/blogs/news/dripper-et-v60",
+      "category": "Belgian roaster article",
+      "audience": "mixed",
+      "region": "Belgium",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "fr_utopia",
+      "title": "Kit Hario V60 4 tasses",
+      "url": "https://utopiacoffee.ch/slow-coffee/kit-hario-v60-4-tasses",
+      "category": "Swiss roaster product education",
+      "audience": "mixed",
+      "region": "French-speaking Switzerland",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "fr_sainthenri",
+      "title": "Guide d’infusion Chemex",
+      "url": "https://sainthenri.ca/pages/guide-infusion-chemex",
+      "category": "Quebec roaster guide",
+      "audience": "mixed",
+      "region": "Quebec, Canada",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "fr_coffeelab",
+      "title": "AeroPress",
+      "url": "https://lecoffeelab.fr/glossaire/aeropress/",
+      "category": "specialty glossary",
+      "audience": "enthusiast",
+      "region": "France",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "cafetière / porte-filtre"
+        "porte-filtre / dripper"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "dripper",
+        "cône V60"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "brasseur"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "brasseur",
+          "reason": "person/company that brews, not device"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: porte-filtre Professional: Dripper is conventional in specialty/product language; porte-filtre is natural and beginner-friendly.",
+      "evidence_source_ids": [
+        "fr_cafe1802",
+        "fr_crack",
+        "fr_filtrecafe",
+        "fr_corica",
+        "fr_utopia"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
@@ -30,23 +135,52 @@
       "preferred_terms": [
         "lit de café"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "lit de mouture"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: lit de café Professional: lit de café is established across France and Quebec.",
+      "evidence_source_ids": [
+        "fr_cafe1802",
+        "fr_crack",
+        "fr_filtrecafe",
+        "fr_sainthenri"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "pré-infusion / bloom"
+        "pré-infusion (bloom)"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "bloom",
+        "éclosion",
+        "dégazage initial"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: pré-infusion Professional: Pré-infusion is the local default; bloom is established in specialty contexts. Quebec also shows éclosion as explanation.",
+      "evidence_source_ids": [
+        "fr_cafe1802",
+        "fr_filtrecafe",
+        "fr_sainthenri"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
@@ -54,11 +188,34 @@
       "preferred_terms": [
         "café moulu"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "marc de café",
+        "mouture"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "marc"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "marc",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: café moulu Professional: café moulu is dry grounds; marc de café is spent.",
+      "evidence_source_ids": [
+        "fr_cafe1802",
+        "fr_crack",
+        "fr_sainthenri",
+        "fr_corica",
+        "fr_coffeelab"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
@@ -66,11 +223,23 @@
       "preferred_terms": [
         "particules fines"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "fines",
+        "poussière de café"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: particules fines Professional: Particules fines is natural; fines may appear in English-heavy advanced discussion.",
+      "evidence_source_ids": [
+        "fr_filtrecafe"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "slurry",
@@ -78,91 +247,195 @@
       "preferred_terms": [
         "mélange café-eau"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "slurry"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "bouillie"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "bouillie",
+          "reason": "pejorative “mash/porridge”"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: mélange café-eau Professional: No stable French specialty lexical item converged; explanatory prose paraphrases.",
+      "evidence_source_ids": [
+        "fr_cafe1802",
+        "fr_sainthenri",
+        "fr_filtrecafe"
+      ],
+      "classification": "NO_ESTABLISHED_TERM",
+      "confidence": "MEDIUM",
+      "display_policy": "descriptive_only",
+      "english_reference_policy": "suppress_use_description",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "écoulement"
+        "temps d’écoulement"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "égouttage",
+        "drawdown"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: temps d’écoulement Professional: French recipes describe écoulement/égouttage rather than relying on drawdown.",
+      "evidence_source_ids": [
+        "fr_filtrecafe"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "mouvement circulaire / rotation"
+        "faire tourner le porte-filtre"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Rao Spin",
+        "mouvement circulaire"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: faire tourner doucement le porte-filtre Professional: Named technique may remain Rao Spin; instructions use tourner/remuer/mouvement circulaire.",
+      "evidence_source_ids": [
+        "fr_cafe1802",
+        "fr_filtrecafe",
+        "fr_sainthenri"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "verseuse / carafe"
+        "carafe / verseuse"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "verseuse",
+        "serveur"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: carafe Professional: Carafe is general and cross-regional; verseuse is product/equipment wording; serveur appears only in some specialist contexts.",
+      "evidence_source_ids": [
+        "fr_cafe1802",
+        "fr_crack",
+        "fr_sainthenri",
+        "fr_corica",
+        "fr_utopia"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "infusion / immersion"
+        "immersion / infusion"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "infusion",
+        "laisser infuser"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: méthode par immersion Professional: Immersion names the method category; infuser/laisser infuser expresses steeping.",
+      "evidence_source_ids": [
+        "fr_crack",
+        "fr_coffeelab"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
       "canonical_english": "valve",
       "preferred_terms": [
+        "soupape / clapet"
+      ],
+      "accepted_alternatives": [
+        "clapet",
         "valve"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: soupape Professional: Soupape and clapet are both used depending mechanism; valve is generic but less preferred in French prose.",
+      "evidence_source_ids": [
+        "fr_crack"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
+        "filtre en papier"
+      ],
+      "accepted_alternatives": [
+        "filtre papier",
         "papier filtre"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: filtre en papier Professional: filtre en papier / filtre papier is universal.",
+      "evidence_source_ids": [
+        "fr_cafe1802",
+        "fr_crack",
+        "fr_sainthenri",
+        "fr_corica",
+        "fr_utopia",
+        "fr_coffeelab"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

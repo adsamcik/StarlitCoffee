@@ -1,28 +1,94 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "hu",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "partial",
   "ui_copy": {
     "show_english_terms": "Angol kávés szakkifejezések megjelenítése",
     "hide_english_terms": "Angol kávés szakkifejezések elrejtése",
     "heading": "Angol kávés szakkifejezések"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "hu_bybeans",
+      "title": "A tuti V60 recept",
+      "url": "https://bybeans.com/blogs/a-tuti-v60-recept",
+      "category": "Hungarian roaster guide",
+      "audience": "enthusiast",
+      "region": "Hungary",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "hu_baristaakademia",
+      "title": "A Hario V60-ról",
+      "url": "https://baristaakademia.hu/a-hario-v60-rol/",
+      "category": "professional training article",
+      "audience": "professional",
+      "region": "Hungary",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "hu_bestmixer",
+      "title": "Hario V60 kávékészítés",
+      "url": "https://www.bestmixer.hu/hario-v60-kavekeszites",
+      "category": "specialist retailer guide",
+      "audience": "beginner",
+      "region": "Hungary",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "hu_immersion",
+      "title": "Hario Switch",
+      "url": "https://www.kavetarsasag.hu/hario-switch",
+      "category": "specialist retailer product education",
+      "audience": "enthusiast",
+      "region": "Hungary",
+      "original_or_translated": "unclear",
+      "source_flags": [
+        "undated; full text not reliably accessible"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "kávékészítő / filtertartó"
+        "V60 tölcsér / dripper"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "dripper",
+        "filtertartó"
+      ],
+      "inflected_or_adapted_forms": [
+        "dripperben",
+        "dripperrel"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: V60 tölcsér Professional: Tölcsér is natural; dripper is standard specialist/product terminology.",
+      "evidence_source_ids": [
+        "hu_bybeans",
+        "hu_baristaakademia"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
@@ -30,107 +96,220 @@
       "preferred_terms": [
         "kávéágy"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "egyenletes kávéágy"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: kávéágy Professional: kávéágy is directly attested and natural.",
+      "evidence_source_ids": [
+        "hu_bybeans"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "előáztatás / bloom"
+        "blooming / előáztatás"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "bloom",
+        "előnedvesítés"
+      ],
+      "inflected_or_adapted_forms": [
+        "bloomnak",
+        "bloomingnak",
+        "blooming fázis"
+      ],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: előáztatás (blooming) Professional: Bloom/blooming is established and integrated into Hungarian grammar; előáztatás explains it.",
+      "evidence_source_ids": [
+        "hu_bybeans",
+        "hu_baristaakademia"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
       "canonical_english": "coffee grounds",
       "preferred_terms": [
-        "őrölt kávé"
+        "őrölt kávé / őrlemény"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "őrlemény",
+        "kávézacc"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "kávézacc"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "kávézacc",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: őrölt kávé Professional: őrölt kávé is plain; őrlemény is technical/productive. Kávézacc is spent.",
+      "evidence_source_ids": [
+        "hu_bybeans",
+        "hu_baristaakademia"
+      ],
+      "classification": "CONTEXT_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_when_relevant",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
-      "preferred_terms": [
-        "finom kávészemcsék"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "finom szemcsék",
+        "fines"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Withhold pending review. Professional: No adequate independent evidence fixed finom szemcsék, kávépor, or fines as the conventional label.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
-      "preferred_terms": [
+      "preferred_terms": [],
+      "accepted_alternatives": [
         "kávé-víz keverék"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use kávé-víz keverék descriptively only. Professional: No stable Hungarian coffee term was established.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
       "preferred_terms": [
-        "lefolyás a szűrőn"
+        "lefolyási idő"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "drawdown",
+        "átfolyási idő"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: lefolyási idő Professional: Lefolyási idő is directly and repeatedly attested.",
+      "evidence_source_ids": [
+        "hu_bybeans",
+        "hu_baristaakademia",
+        "hu_bestmixer"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "óvatos körkörös forgatás"
+        "körkörös mozgatás / Rao spin"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "Rao spin",
+        "megforgatás"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: körkörösen mozgassa meg a tölcsért Professional: Rao spin identifies the technique; Hungarian instructions use körkörös mozgatás.",
+      "evidence_source_ids": [
+        "hu_bybeans",
+        "hu_baristaakademia",
+        "hu_bestmixer"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "HIGH",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
-      "preferred_terms": [
-        "kiöntő / szerverkancsó"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "kanna",
+        "server"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use descriptive kiöntőkanna after native review. Professional: Kanna, kiöntő and server appear, but the specialty receiving-vessel preference was not established.",
+      "evidence_source_ids": [
+        "hu_bestmixer"
+      ],
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "áztatás / immerziós készítés"
+        "áztatás / immerzió"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "immerzió",
+        "teljes bemerítés"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: áztatás Professional: Áztatás is accessible; immerzió is specialist but sparsely documented in this corpus.",
+      "evidence_source_ids": [
+        "hu_immersion"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "LOW",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
@@ -138,31 +317,57 @@
       "preferred_terms": [
         "szelep"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "zárószelep"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: szelep Professional: szelep is ordinary brewer hardware wording.",
+      "evidence_source_ids": [
+        "hu_bestmixer",
+        "hu_immersion"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "kávéfilterpapír"
+        "filterpapír"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "papírfilter"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: filterpapír Professional: filterpapír is standard.",
+      "evidence_source_ids": [
+        "hu_bybeans",
+        "hu_baristaakademia",
+        "hu_bestmixer"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "resolve 3 insufficient-evidence terminology records",
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }

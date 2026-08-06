@@ -1,52 +1,142 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_schema_version": "1.0.0",
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
+  "research_execution_date": "2026-08-06",
+  "research_records_sha256": "56ad15814e02d5bc6a6f33f0428d4f78bc878bd85724f258757caa5eaba89e6f",
   "locale": "el",
-  "status": "local_draft_complete",
+  "status": "researched_not_native_reviewed",
+  "research_completeness": "partial",
   "ui_copy": {
     "show_english_terms": "Εμφάνιση αγγλικών όρων καφέ",
     "hide_english_terms": "Απόκρυψη αγγλικών όρων καφέ",
     "heading": "Αγγλική ορολογία καφέ"
   },
-  "sources": [],
+  "sources": [
+    {
+      "id": "el_coffeeepirus",
+      "title": "V60 preparation",
+      "url": "https://www.coffee-epirus.gr/preparations/v60",
+      "category": "specialty brew guide",
+      "audience": "mixed",
+      "region": "Greece",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "el_handpickers",
+      "title": "Πώς να φτιάξεις καφέ με Clever Dripper",
+      "url": "https://handpickerscoffee.gr/how-to-brew/pos-na-ftiaxeis-kafe-me-clever-dripper",
+      "category": "roaster brew guide",
+      "audience": "beginner",
+      "region": "Greece",
+      "original_or_translated": "original",
+      "source_flags": []
+    },
+    {
+      "id": "el_dimello",
+      "title": "Hario V60",
+      "url": "https://www.dimello.gr/blog/hario-v60/",
+      "category": "coffee-company guide",
+      "audience": "beginner",
+      "region": "Greece",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    },
+    {
+      "id": "el_taresso",
+      "title": "Methodology 04",
+      "url": "https://www.taresso.com/methology/methology-04/",
+      "category": "roaster brew guide",
+      "audience": "enthusiast",
+      "region": "Greece",
+      "original_or_translated": "original",
+      "source_flags": [
+        "undated"
+      ]
+    }
+  ],
   "concepts": [
     {
       "concept_id": "brewer_dripper",
       "canonical_english": "brewer / dripper",
       "preferred_terms": [
-        "συσκευή εκχύλισης / κώνος φίλτρου"
+        "dripper / κώνος φίλτρου"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "σταλακτήρας",
+        "dripper"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: κώνος φίλτρου (dripper) Professional: Specialty sources retain dripper; beginner wording uses κώνος/θήκη φίλτρου.",
+      "evidence_source_ids": [
+        "el_coffeeepirus",
+        "el_handpickers",
+        "el_dimello"
+      ],
+      "classification": "AUDIENCE_DEPENDENT",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_advanced_guidance",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "coffee_bed",
       "canonical_english": "coffee bed",
       "preferred_terms": [
-        "στρώμα αλεσμένου καφέ"
+        "στρώμα καφέ"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "κρεβάτι καφέ"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: στρώμα καφέ Professional: στρώμα καφέ is the natural descriptive term where the bed is discussed.",
+      "evidence_source_ids": [
+        "el_coffeeepirus",
+        "el_taresso"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "bloom",
       "canonical_english": "bloom",
       "preferred_terms": [
-        "προδιαβροχή / bloom"
+        "προεκχύλιση / blooming"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "άνθιση",
+        "blooming",
+        "προδιαβροχή"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: προεκχύλιση Professional: Blooming is retained in specialty guides and paired with προεκχύλιση or άνθιση.",
+      "evidence_source_ids": [
+        "el_coffeeepirus",
+        "el_taresso"
+      ],
+      "classification": "MIXED_STABLE",
+      "confidence": "MEDIUM",
+      "display_policy": "contextual_english",
+      "english_reference_policy": "contextual_first_occurrence",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "grounds",
@@ -54,83 +144,167 @@
       "preferred_terms": [
         "αλεσμένος καφές"
       ],
-      "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "accepted_alternatives": [
+        "κατακάθι καφέ"
+      ],
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "κατακάθι"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "κατακάθι",
+          "reason": "spent grounds, not dry dose"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: αλεσμένος καφές Professional: αλεσμένος καφές is routine for dry grounds.",
+      "evidence_source_ids": [
+        "el_taresso",
+        "el_handpickers",
+        "el_dimello"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "fines",
       "canonical_english": "coffee fines",
-      "preferred_terms": [
+      "preferred_terms": [],
+      "accepted_alternatives": [
         "λεπτά σωματίδια καφέ"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use a descriptive phrase only after native review. Professional: One weak source used λεπτά σωματίδια καφέ (fines), insufficient to establish convention.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "slurry",
       "canonical_english": "coffee slurry",
-      "preferred_terms": [
-        "μείγμα καφέ και νερού"
-      ],
+      "preferred_terms": [],
       "accepted_alternatives": [],
-      "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "inflected_or_adapted_forms": [],
+      "avoid": [
+        "πολτός"
+      ],
+      "avoid_reasons": [
+        {
+          "term": "πολτός",
+          "reason": "means pulp/mash and may mislead"
+        }
+      ],
+      "regional_variants": [],
+      "rationale": "Beginner: Explain as μείγμα καφέ και νερού only if needed. Professional: No dependable Greek specialty label was found.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "drawdown",
       "canonical_english": "drawdown",
-      "preferred_terms": [
-        "αποστράγγιση μέσω του φίλτρου"
+      "preferred_terms": [],
+      "accepted_alternatives": [
+        "χρόνος αποστράγγισης"
       ],
-      "accepted_alternatives": [],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: Use descriptive UI copy only after review. Professional: Sources describe draining or total brew time without a stable phase term.",
       "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "confidence": "LOW",
+      "display_policy": "withhold_pending_review",
+      "english_reference_policy": "suppress_pending_review",
+      "resolution": "insufficient_evidence"
     },
     {
       "concept_id": "swirl_spin",
       "canonical_english": "swirl / spin",
       "preferred_terms": [
-        "απαλή κυκλική κίνηση / περιστροφή"
+        "περιστρέψτε ελαφρά τον dripper"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "κυκλική κίνηση",
+        "Rao spin"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: περιστρέψτε ελαφρά τον κώνο Professional: Named techniques may remain English; instructions use Greek rotation/circular-motion verbs.",
+      "evidence_source_ids": [
+        "el_coffeeepirus",
+        "el_taresso"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "server_carafe",
       "canonical_english": "server / carafe",
       "preferred_terms": [
-        "κανάτα σερβιρίσματος / καράφα"
+        "κανάτα / καράφα"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "server",
+        "καράφα"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: κανάτα Professional: κανάτα/καράφα are natural receiving-vessel terms.",
+      "evidence_source_ids": [
+        "el_coffeeepirus",
+        "el_dimello"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "steep_immersion",
       "canonical_english": "steep / immersion",
       "preferred_terms": [
-        "εμβάπτιση / παραμονή στο νερό"
+        "εμβάπτιση"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "μέθοδος πλήρους εμβάπτισης",
+        "μούλιασμα"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: εμβάπτιση Professional: εμβάπτιση names the method; αφήνω να εκχυλιστεί/μουλιάσει explains the process.",
+      "evidence_source_ids": [
+        "el_handpickers"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "valve",
@@ -138,31 +312,56 @@
       "preferred_terms": [
         "βαλβίδα"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "κλείστρο"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: βαλβίδα Professional: βαλβίδα is normal device wording.",
+      "evidence_source_ids": [
+        "el_handpickers"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "MEDIUM",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     },
     {
       "concept_id": "filter_paper",
       "canonical_english": "filter paper",
       "preferred_terms": [
-        "χάρτινο φίλτρο καφέ"
+        "χάρτινο φίλτρο"
       ],
-      "accepted_alternatives": [],
+      "accepted_alternatives": [
+        "χαρτί φίλτρου"
+      ],
+      "inflected_or_adapted_forms": [],
       "avoid": [],
-      "rationale": "Source-aware local draft; independent local-market terminology evidence and native review are still required.",
-      "evidence_source_ids": [],
-      "resolution": "local_draft_complete"
+      "avoid_reasons": [],
+      "regional_variants": [],
+      "rationale": "Beginner: χάρτινο φίλτρο Professional: χάρτινο φίλτρο is routine.",
+      "evidence_source_ids": [
+        "el_coffeeepirus",
+        "el_handpickers",
+        "el_dimello"
+      ],
+      "classification": "LOCALIZED_DOMINANT",
+      "confidence": "HIGH",
+      "display_policy": "localized_default",
+      "english_reference_policy": "glossary_and_search",
+      "resolution": "researched_not_native_reviewed"
     }
   ],
   "reviewer": null,
   "reviewed_on": null,
   "blocking_requirements": [
-    "add at least two corroborating local-market sources across two categories",
-    "review preferred, accepted, and avoided terminology",
-    "obtain independent native coffee-domain approval",
-    "complete exact-guidance review, promotion, and device validation"
+    "resolve 3 insufficient-evidence terminology records",
+    "obtain independent native coffee-domain approval of every terminology record",
+    "complete native editorial review of all exact-guidance sentences",
+    "promote guidance and terminology resources atomically",
+    "validate accessibility, text scaling, layout, and both themes on device"
   ]
 }
