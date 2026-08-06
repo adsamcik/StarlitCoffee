@@ -235,7 +235,7 @@ For every asset record:
   the spout enough that the broad single sheet could be read as covering the
   air channel. It was not copied into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_AjIWZRF6721moi7VoFiKR7OI.png`
+  `<Codex image cache>/call_AjIWZRF6721moi7VoFiKR7OI.png`
   (opaque RGB PNG, 1448 × 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_chemex_42_700_stage_01_instruction_default.webp`
@@ -317,7 +317,7 @@ For every asset record:
   left the actuator hidden behind an outlet-pipe-like shape. It was not copied
   into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_odoQwDbXpF0OELrwPlAiZgXs.png`
+  `<Codex image cache>/call_odoQwDbXpF0OELrwPlAiZgXs.png`
   (opaque RGB PNG, 1448 × 1086 px, 1,956,836 bytes, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_clever_water_first_15_250_stage_05_instruction_default.webp`
@@ -418,7 +418,7 @@ For every asset record:
   and an ambiguous ball/seat gap. Neither draft was copied into the repository
   or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_PVSSv7fepwMHE5DIHSSXtm3T.png`
+  `<Codex image cache>/call_PVSSv7fepwMHE5DIHSSXtm3T.png`
   (opaque RGB PNG, 1448 × 1086 px, 2,164,880 bytes, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_switch_official_20_240_stage_04_instruction_default.webp`
@@ -481,7 +481,7 @@ For every asset record:
   > logos, arrows, callouts, diagrams, multiple panels, borders, or decorative
   > clutter.
 - Generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_4zFPSw44cwFgOu4sYwzeIyJ7.png`
+  `<Codex image cache>/call_4zFPSw44cwFgOu4sYwzeIyJ7.png`
   (opaque RGB PNG, 1448 × 1086 px, 2,059,862 bytes, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_phin_screw_18_120_stage_02_instruction_default.webp`
@@ -601,7 +601,7 @@ For every asset record:
   visually unsupported and the outlet pipe touching the paper. Neither draft
   was copied into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_IVaYQbahuIN4Hh617nDU9C3N.png`
+  `<Codex image cache>/call_IVaYQbahuIN4Hh617nDU9C3N.png`
   (opaque RGB PNG, 1448 × 1086 px, 1,998,431 bytes, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_auto_cupone_20_300_stage_03_instruction_default.webp`
@@ -664,7 +664,7 @@ For every asset record:
   > dripper, text, letters, numbers, labels, logos, arrows, callouts, diagrams,
   > multiple panels, borders, or decorative clutter.
 - Generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_TD1v5gzxfWFh902wMOgXZTIt.png`
+  `<Codex image cache>/call_TD1v5gzxfWFh902wMOgXZTIt.png`
   (opaque RGB PNG, 1448 × 1086 px, 2,184,148 bytes, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_wave185_ozone_25_400_stage_01_instruction_default.webp`
@@ -756,7 +756,7 @@ For every asset record:
   paper. It therefore taught the wrong filter type and geometry. That draft
   was not copied into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_UuGUUXQWn2hWJ6HIXEyPb8aD.png`
+  `<Codex image cache>/call_UuGUUXQWn2hWJ6HIXEyPb8aD.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_auto_cupone_20_300_stage_01_instruction_default.webp`
@@ -853,7 +853,7 @@ For every asset record:
   the model-specific maintenance state ambiguous. The draft was not copied
   into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_4IeUwQLJ1CINNXJQvWnk8YZy.png`
+  `<Codex image cache>/call_4IeUwQLJ1CINNXJQvWnk8YZy.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_auto_cupone_20_300_stage_06_instruction_default.webp`
@@ -922,7 +922,7 @@ For every asset record:
   > valve open, outlet open, drainage, or stream below. The final output must
   > be one opaque 1024 x 768 scene.
 - Generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_iF8m72QHN1Dn8OiaLeVsrGKK.png`
+  `<Codex image cache>/call_iF8m72QHN1Dn8OiaLeVsrGKK.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default.webp`
@@ -1014,7 +1014,7 @@ For every asset record:
   contradicting the visible drain stream. It was not copied into the
   repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_fMYjfQjFxI2YUgkIteyM7zj2.png`
+  `<Codex image cache>/call_fMYjfQjFxI2YUgkIteyM7zj2.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_switch_gravity_15_250_stage_01_instruction_default.webp`
@@ -1111,7 +1111,7 @@ For every asset record:
   details contradicted loose-disc phin geometry and removed necessary
   headroom. The draft was not copied into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_q5h48fQffPtFe3MCFKkLa0cX.png`
+  `<Codex image cache>/call_q5h48fQffPtFe3MCFKkLa0cX.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_phin_gravity_14_118_stage_01_instruction_default.webp`
@@ -1182,7 +1182,7 @@ For every asset record:
   > opaque 1024 x 768 scene whose only story is safe hot-phin removal onto its
   > lid-coaster.
 - Generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_MUwtpKjWLJarU57AH8yLolOb.png`
+  `<Codex image cache>/call_MUwtpKjWLJarU57AH8yLolOb.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_phin_gravity_14_118_stage_07_instruction_default.webp`
@@ -1302,7 +1302,7 @@ For every asset record:
   showed brown liquid leaving the hot-water outlet and made the paper appear
   empty. Neither draft was copied into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_03Sz71oZM2TNizqklM08OkFw.png`
+  `<Codex image cache>/call_03Sz71oZM2TNizqklM08OkFw.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_auto_cupone_20_300_stage_04_instruction_default.webp`
@@ -1385,7 +1385,7 @@ For every asset record:
   > dry bed and its matching threaded insert clearly separate for the next
   > step.
 - Generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_jTHuRAThIK0k1U0GEHNKVyJC.png`
+  `<Codex image cache>/call_jTHuRAThIK0k1U0GEHNKVyJC.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_phin_screw_18_120_stage_01_instruction_default.webp`
@@ -1533,7 +1533,7 @@ For every asset record:
   cutaway and visible floating liquid. Neither draft was copied into the
   repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_kyMUvUElzoiU17pxOgsSf27F.png`
+  `<Codex image cache>/call_kyMUvUElzoiU17pxOgsSf27F.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_phin_screw_18_120_stage_05_instruction_default.webp`
@@ -1666,7 +1666,7 @@ For every asset record:
   than one folded factory seam. Neither draft was copied into the repository
   or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_Gww98DkmNdeSAijFZiLeL663.png`
+  `<Codex image cache>/call_Gww98DkmNdeSAijFZiLeL663.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_switch_official_20_240_stage_01_instruction_default.webp`
@@ -1750,7 +1750,7 @@ For every asset record:
   > standard V60 02 with one neatly folded, fully wet paper above an emptied
   > preheated server after rinsing is complete.
 - Generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_u8lWPcaWE9MsPA5n9un4adAh.png`
+  `<Codex image cache>/call_u8lWPcaWE9MsPA5n9un4adAh.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_v60_official_15_250_stage_01_instruction_default.webp`
@@ -1872,7 +1872,7 @@ For every asset record:
   conical paper read as a V60 rather than a Clever wedge brewer. That draft was
   not copied into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_6Nkw4txTus0gMrlyP6HwyBXr.png`
+  `<Codex image cache>/call_6Nkw4txTus0gMrlyP6HwyBXr.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_clever_water_first_15_250_stage_01_instruction_default.webp`
@@ -1993,7 +1993,7 @@ For every asset record:
   cake and made the central ball/seat relationship read as a decorative front
   socket. That draft was not copied into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_xEWHIklZj3WcSQAl13jhERk1.png`
+  `<Codex image cache>/call_xEWHIklZj3WcSQAl13jhERk1.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default.webp`
@@ -2076,7 +2076,7 @@ For every asset record:
   > opaque 1024 x 768 scene whose only story is a low gentle small-circle pour
   > kept entirely over the coffee bed and away from the V60 paper wall.
 - Generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_4aH3DzA1KvmbdujlJJrPWxPn.png`
+  `<Codex image cache>/call_4aH3DzA1KvmbdujlJJrPWxPn.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_v60_official_15_250_stage_04_instruction_default.webp`
@@ -2190,7 +2190,7 @@ For every asset record:
   cue and would teach the exact novice error this stage prevents. The draft was
   not copied into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_Co9IpysuaMR3G0IZBqDE5HOn.png`
+  `<Codex image cache>/call_Co9IpysuaMR3G0IZBqDE5HOn.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_v60_rao_20_330_stage_01_instruction_default.webp`
@@ -2326,7 +2326,7 @@ For every asset record:
   a deep front scoop in the chamber wall, effectively creating a prohibited
   cutaway. Neither draft was copied into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_a0webCpiilcHlmrSLEyJJsHI.png`
+  `<Codex image cache>/call_a0webCpiilcHlmrSLEyJJsHI.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_phin_gravity_14_118_stage_02_instruction_default.webp`
@@ -2449,7 +2449,7 @@ For every asset record:
   basket, large paper, and broad shelf for the compact Cup-One No. 1 assembly.
   The draft was not copied into the repository or manifest.
 - Corrected generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_aL3aaxhxY4OEWi5X2BKCQMJF.png`
+  `<Codex image cache>/call_aL3aaxhxY4OEWi5X2BKCQMJF.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_auto_cupone_20_300_stage_05_instruction_default.webp`
@@ -2544,7 +2544,7 @@ For every asset record:
   The technically valid base is retained only as a pending review candidate;
   this limitation is not treated as approval.
 - Generated master:
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\call_GAH0bA5EsGnAeRDtsZfnltGS.png`
+  `<Codex image cache>/call_GAH0bA5EsGnAeRDtsZfnltGS.png`
   (opaque RGB PNG, 1448 x 1086 px, exact 4:3).
 - Final drawable:
   `app/src/main/res/drawable-nodpi/instruction_p1_clever_water_first_15_250_stage_02_instruction_default.webp`

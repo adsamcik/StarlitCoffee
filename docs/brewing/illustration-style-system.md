@@ -148,7 +148,7 @@ Prompt record: original wide 4:3 flat 2D editorial Chemex setup; cream artboard,
 
 `illustration-candidates/instruction_p1_chemex_42_700_stage_01_instruction_default/vector_v2.webp`
 
-- Generated master: `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\exec-d25f9a7c-8f81-48aa-88fe-0040113ce011.png`
+- Generated master: `<Codex image cache>/exec-d25f9a7c-8f81-48aa-88fe-0040113ce011.png`
 - Delivery: opaque static RGB WebP; 1024 by 768; 78,248 bytes.
 - SHA-256: `59575e1a4ee6b169bf893f6b202c48ab4eea6f01110aba5cfe60c788921c4cb9`.
 
@@ -156,7 +156,7 @@ Superseded v1 provenance:
 
 
 `illustration-candidates/instruction_p1_chemex_42_700_stage_01_instruction_default/vector_v1.webp`
-- Generated master: `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914\exec-aa7b58db-bbed-483b-b3cf-f542b6d60632.png`
+- Generated master: `<Codex image cache>/exec-aa7b58db-bbed-483b-b3cf-f542b6d60632.png`
 - Delivery: opaque static RGB WebP, 1024 × 768, 44,316 bytes.
 - SHA-256: `d386a1df39a64ebf18396c14c6b99c18cfec36d5b40ab0d40bc278e109c5d1e6`.
 

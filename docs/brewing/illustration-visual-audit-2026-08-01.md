@@ -16,7 +16,7 @@ runtime/resources. Their prompt and production records remain in
 ## Review method
 
 - Reviewed the 79 raw generator outputs in
-  `C:\Users\adam-\.codex\generated_images\019fa48e-1d5d-7560-b0de-f39fa2e8b914`:
+  `<Codex image cache>/starlit-tactile-2026-08-02`:
   51 `call_*.png` files and 28 `exec-*.png` files.
 - Opened each image separately at a 384 × 288 audit thumbnail, and checked the
   project-bound WebP candidates individually at their source size.

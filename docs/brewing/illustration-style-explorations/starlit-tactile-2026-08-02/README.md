@@ -2,8 +2,8 @@
 
 Date: 2026-08-02
 
-Status: preferred visual direction; not an approved instruction asset and not
-registered in the app catalog.
+Status: production visual reference. Individual stage assets still require
+their own evidence, mechanics, and mobile-size approval.
 
 ## Outcome
 
@@ -13,8 +13,8 @@ transparent 4:3 canvas:
 - A deep espresso, softly asymmetric stage isolates the instructional action.
 - Equipment stays inside the stage. A hand or other action element may break
   the stage boundary when that makes the interaction clearer.
-- The current v4 stage uses a measured 2.9% minimum transparent perimeter so
-  it reads confidently at phone size. Nothing is cropped by or visually
+- The production stage uses a measured transparent perimeter so it reads
+  confidently at phone size. Nothing is cropped by or visually
   terminates at the asset edge.
 - The area outside the stage is transparent, with no border. The containing
   Material surface therefore remains native to light, dark, and dynamic-color
@@ -123,10 +123,12 @@ resize and WebP encoding while continuing to validate dimensions, alpha
 corners, safe-area containment, hashes, and byte-exact lineage. Existing
 opaque candidates must remain reproducible without changes to their output.
 
-## Preserved artifacts
+## Lineage ledger
 
-All PNGs are 1448 by 1086. The chroma sources are RGB; the processed master is
-RGBA.
+The filenames and SHA-256 values below preserve the complete selection history.
+To keep ordinary clones lean, the current tree retains only the final v9 alpha
+master and its compact JPEG references. Earlier binaries remain recoverable
+from Git history; their prompts, review findings, and hashes remain here.
 
 | File | Role | SHA-256 |
 | --- | --- | --- |
@@ -163,6 +165,6 @@ lineage, and alpha conversion command are recorded in
 `prompts/brewing/starlit-tactile-style-exploration-2026-08-02.md`.
 
 The built-in generator did not expose a seed or model/build identifier. Prompt
-replay is therefore stochastic. Use the preserved PNG masters as edit/style
-references; use the recorded prompt to continue the visual system rather than
+replay is therefore stochastic. Use the retained v9 alpha master, the shipped
+stage WebPs, and the recorded prompts to continue the visual system rather than
 expecting byte-identical regeneration.

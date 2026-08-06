@@ -19,9 +19,9 @@ not overlap solid mechanism geometry. Its asymmetric, subject-responsive stage
 also replaces the rigid rounded-rectangle treatment. It is therefore the
 visual and mechanical calibration reference for the remaining production queue.
 
-Earlier versions remain provenance and comparison material. They must not be
-used as the primary style reference for new assets, and their rejected valve
-topologies must not be copied. New illustrations may simplify irrelevant
+Earlier revision records remain provenance and comparison material. They must
+not be used as the primary style reference for new assets, and their rejected
+valve topologies must not be copied. New illustrations may simplify irrelevant
 internal mechanics, but any mechanism they do expose must remain physically
 continuous and source-faithful at phone-card size.
 
@@ -31,16 +31,15 @@ continuous and source-faithful at phone-card size.
 - Model/build identifier: not exposed.
 - Seed: not exposed.
 - Output size from the built-in tool: 1448 by 1086.
-- Session cache:
-  `C:/Users/adam-/.codex/generated_images/019fa48e-1d5d-7560-b0de-f39fa2e8b914`.
-- Prompt replay is stochastic. The preserved PNG must be used when an exact
-  visual edit or deterministic downstream conversion is required.
+- Session cache filenames are recorded for provenance; cache locations are
+  intentionally machine-independent in this document.
+- Prompt replay is stochastic. The retained final alpha master should be used
+  when an exact visual edit or deterministic downstream conversion is required.
 
-Direct workspace reference paths failed under the Windows split-root sandbox.
-The accepted edits therefore used recent conversation images. The raw outputs
-were copied into
-`docs/brewing/illustration-style-explorations/starlit-tactile-2026-08-02`
-so future work can use durable local references.
+The final master and compact reference payloads are retained under
+`docs/brewing/illustration-style-explorations/starlit-tactile-2026-08-02`.
+Historical raw outputs remain available through Git history; exact prompts,
+hashes, and review decisions remain in this record.
 
 ## Accepted contained master
 
@@ -111,7 +110,7 @@ The chroma master was copied to
 `C:/tmp/starlit_tactile_switch_scaled_source.png` and processed with the
 installed image-generation helper:
 
-    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'C:\tmp\starlit_tactile_switch_scaled_source.png' --out 'C:\tmp\starlit_tactile_switch_scaled_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+    python '<imagegen-skill>\scripts\remove_chroma_key.py' --input '<temporary-dir>\starlit_tactile_switch_scaled_source.png' --out '<temporary-dir>\starlit_tactile_switch_scaled_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
 
 Helper result:
 
@@ -222,7 +221,7 @@ Exact prompt:
 
 Conversion command:
 
-    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'C:\tmp\starlit_tactile_switch_grounded_scaled_source.png' --out 'C:\tmp\starlit_tactile_switch_grounded_scaled_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+    python '<imagegen-skill>\scripts\remove_chroma_key.py' --input '<temporary-dir>\starlit_tactile_switch_grounded_scaled_source.png' --out '<temporary-dir>\starlit_tactile_switch_grounded_scaled_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
 
 Helper result:
 
@@ -315,7 +314,7 @@ Exact prompt:
 
 Conversion command:
 
-    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v4_modern_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v4_modern_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+    python '<imagegen-skill>\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v4_modern_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v4_modern_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
 
 Helper and integrity results:
 
@@ -369,7 +368,7 @@ Exact prompt:
 
 Transparency conversion:
 
-    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v5_continuous_flow_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v5_continuous_flow_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+    python '<imagegen-skill>\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v5_continuous_flow_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v5_continuous_flow_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
 
 Helper and integrity results:
 
@@ -430,7 +429,7 @@ Exact prompt:
 
 Transparency conversion:
 
-    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v6_ground_texture_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v6_ground_texture_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+    python '<imagegen-skill>\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v6_ground_texture_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v6_ground_texture_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
 
 Helper and integrity results:
 
@@ -554,7 +553,7 @@ Exact prompt:
 
 Transparency conversion:
 
-    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v7_verified_ball_physics_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v7_verified_ball_physics_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+    python '<imagegen-skill>\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v7_verified_ball_physics_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v7_verified_ball_physics_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
 
 Helper and integrity results:
 
@@ -804,7 +803,7 @@ Exact prompt:
 
 Transparency conversion:
 
-    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v8_verified_flow_topology_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v8_verified_flow_topology_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+    python '<imagegen-skill>\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v8_verified_flow_topology_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v8_verified_flow_topology_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
 
 Helper and integrity results:
 
@@ -853,7 +852,8 @@ their higher-resolution ancestors.
 Output:
 
 - Cache file: `exec-55238134-5d48-40fe-99bc-0d505123cc1b.png`.
-- Preserved chroma file: `switch_style_master_v9_fresh_expressive_chroma.png`.
+- Chroma cache filename: `switch_style_master_v9_fresh_expressive_chroma.png`
+  (hash retained below; binary available through Git history).
 - Chroma SHA-256:
   `6a7c2984bef29b72f07ee431fca35d93884732db57c4bc055bfd88b911c29e2b`.
 - Preserved alpha file: `switch_style_master_v9_fresh_expressive_alpha.png`.
@@ -862,7 +862,7 @@ Output:
 
 Transparency conversion:
 
-    python 'C:\Users\adam-\.codex\skills\.system\imagegen\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v9_fresh_expressive_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v9_fresh_expressive_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
+    python '<imagegen-skill>\scripts\remove_chroma_key.py' --input 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v9_fresh_expressive_chroma.png' --out 'docs\brewing\illustration-style-explorations\starlit-tactile-2026-08-02\switch_style_master_v9_fresh_expressive_alpha.png' --auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill
 
 Transparency and phone-card QA:
 

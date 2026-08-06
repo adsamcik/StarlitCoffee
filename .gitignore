@@ -77,7 +77,7 @@ tools/mindlayer_test_output.txt
 tools/adversarial_out.txt
 
 # Local-only emulator validation screenshots
-screenshots/
+/screenshots/
 
 # Python bytecode cache
 __pycache__/
@@ -86,7 +86,6 @@ __pycache__/
 # binary work products from icon/spritesheet generation that are not app
 # resources and should not bloat git history. The shipped assets live in
 # app/src/main/res/drawable-nodpi.
-/docs/assets/vessel-icons/
 /tools/bloom-validation/
 
 # Python bytecode
@@ -102,3 +101,7 @@ __pycache__/
 /docs/brewing/illustration-candidates/**/*_chroma.png
 /docs/brewing/illustration-candidates/**/*_alpha.png
 /docs/brewing/illustration-candidates/**/*_rejected*.png
+
+/docs/brewing/illustration-candidates/**/previews_*/
+/docs/brewing/illustration-style-explorations/**/*.png
+!/docs/brewing/illustration-style-explorations/starlit-tactile-2026-08-02/switch_style_master_v9_fresh_expressive_alpha.png

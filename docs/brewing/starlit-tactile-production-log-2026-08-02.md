@@ -2,19 +2,20 @@
 
 Date: 2026-08-02
 
-Status: batch 01 retained as transparent review candidates; promotion into
-`drawable-nodpi` remains a separate integration step.
+Status: all 114 stage candidates passed the recorded review loop and are
+mirrored into `drawable-nodpi` as shipped instruction assets.
 
 ## Reproducible generation contract
 
 - Generator: Codex built-in `image_gen` tool. The model/build identifier and
   seed are not exposed, so prompt replay is stochastic.
 - Exact prompts are committed under `prompts/brewing/assets/<asset-id>`.
-- Every accepted raw 1448 by 1086 chroma PNG is committed. When an accepted
-  image came from an edit, every raw parent in that accepted lineage is also
-  committed.
-- Exact reference-image payloads supplied to the generator are committed; a
-  higher-resolution ancestor is not treated as an equivalent input.
+- Accepted prompts, revision decisions, source hashes, and reference-image
+  payloads are committed.
+- The final v9 style master, accepted review WebPs, shipped app assets, and exact
+  compact reference payloads remain in the current tree. Large chroma/alpha
+  intermediates and rejected renders remain recoverable from Git history but
+  are excluded from ordinary clones going forward.
 - Transparency uses the installed image-generation helper with
   `--auto-key border --soft-matte --transparent-threshold 12
   --opaque-threshold 220 --despill`.
