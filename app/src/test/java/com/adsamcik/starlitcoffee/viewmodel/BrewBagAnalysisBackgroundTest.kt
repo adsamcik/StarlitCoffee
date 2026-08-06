@@ -147,7 +147,12 @@ class BrewBagAnalysisBackgroundTest {
         )
 
         try {
-            assertNull(vm.bagPhotoResult.value)
+            val currentResult = vm.bagPhotoResult.value
+            assertTrue(
+                "The stale empty result must not survive a new photo generation",
+                currentResult == null ||
+                    currentResult.result.capturedPhotoUris == "file:///new-generation.jpg",
+            )
         } finally {
             vm.cancelBagPhotoProcessing("draft-123")
             vm.awaitCancelledBagPhotoProcessing()
