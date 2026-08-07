@@ -717,7 +717,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
     <string name="label_guidance">Guidance</string>
-    <string name="action_learn_this_brewer">Learn this brewer</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>
     <string name="guidance_level_full">Full</string>
@@ -755,4 +754,10 @@
     <string name="guidance_cue_heat_state">Heizzustand</string>
     <string name="guidance_cue_stage_advance">Weiter zum nächsten Schritt</string>
     <string name="guidance_cue_valve_state">Ventilstatus</string>
+    <string name="screen_learning_title">Lernen</string>
+    <string name="msg_learning_subtitle">Anschauliche Schritt-für-Schritt-Brühanleitungen</string>
+    <string name="msg_learning_intro">Wähle einen Brühbereiter und ein Rezept und gehe dann einen klaren Schritt nach dem anderen durch.</string>
+    <string name="msg_learning_empty">Noch sind keine Lernanleitungen verfügbar.</string>
+    <string name="action_show_details">Details anzeigen</string>
+    <string name="action_hide_details">Details ausblenden</string>
 </resources>

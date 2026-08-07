@@ -347,8 +347,8 @@ fun StarlitNavHost() {
         }
     }
 
-    fun navigateToBrewerSetup() {
-        navController.navigate(BrewerProfileSetup) {
+    fun navigateToLearning() {
+        navController.navigate(Learning) {
             launchSingleTop = true
         }
     }
@@ -366,7 +366,7 @@ fun StarlitNavHost() {
                         scope.launch {
                             userPreferencesRepository.updateExactGuidancePreviewEnabled(true)
                         }
-                        navigateToBrewerSetup()
+                        navigateToLearning()
                     },
                 ) {
                     Text(stringResource(R.string.action_use_preview_translation))
@@ -751,6 +751,13 @@ fun StarlitNavHost() {
                 }
                 composable<More> {
                     MoreScreen(
+                        onNavigateToLearning = {
+                            if (exactRecipeReleaseGate.requiresPreviewConsent) {
+                                showGuidancePreviewConsent = true
+                            } else {
+                                navigateToLearning()
+                            }
+                        },
                         onNavigateToRecipes = { navController.navigate(SavedRecipes) },
                         onNavigateToBags = { navController.navigate(BagInventory) },
                         onNavigateToSettings = { navController.navigate(Settings) },

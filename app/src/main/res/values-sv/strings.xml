@@ -717,7 +717,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
     <string name="label_guidance">Guidance</string>
-    <string name="action_learn_this_brewer">Learn this brewer</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>
     <string name="guidance_level_full">Full</string>
@@ -755,4 +754,10 @@
     <string name="guidance_cue_heat_state">Uppvärmningsläge</string>
     <string name="guidance_cue_stage_advance">Gå vidare till nästa steg</string>
     <string name="guidance_cue_valve_state">Ventilstatus</string>
+    <string name="screen_learning_title">Lär dig</string>
+    <string name="msg_learning_subtitle">Visuella brygguider steg för steg</string>
+    <string name="msg_learning_intro">Välj en bryggare och ett recept och utforska ett tydligt steg i taget.</string>
+    <string name="msg_learning_empty">Det finns inga lärguider ännu.</string>
+    <string name="action_show_details">Visa detaljer</string>
+    <string name="action_hide_details">Dölj detaljer</string>
 </resources>

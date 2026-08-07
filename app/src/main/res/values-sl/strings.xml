@@ -721,7 +721,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
     <string name="label_guidance">Guidance</string>
-    <string name="action_learn_this_brewer">Learn this brewer</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>
     <string name="guidance_level_full">Full</string>
@@ -759,4 +758,10 @@
     <string name="guidance_cue_heat_state">Stanje segrevanja</string>
     <string name="guidance_cue_stage_advance">Nadaljuj na naslednji korak</string>
     <string name="guidance_cue_valve_state">Stanje ventila</string>
+    <string name="screen_learning_title">Nauči se</string>
+    <string name="msg_learning_subtitle">Slikovni vodniki za pripravo po korakih</string>
+    <string name="msg_learning_intro">Izberite pripravljalnik in recept, nato pa raziščite en jasen korak naenkrat.</string>
+    <string name="msg_learning_empty">Vodniki za učenje še niso na voljo.</string>
+    <string name="action_show_details">Pokaži podrobnosti</string>
+    <string name="action_hide_details">Skrij podrobnosti</string>
 </resources>

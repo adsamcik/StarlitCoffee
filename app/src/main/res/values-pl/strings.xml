@@ -720,7 +720,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
     <string name="label_guidance">Guidance</string>
-    <string name="action_learn_this_brewer">Learn this brewer</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>
     <string name="guidance_level_full">Full</string>
@@ -758,4 +757,10 @@
     <string name="guidance_cue_heat_state">Stan podgrzewania</string>
     <string name="guidance_cue_stage_advance">Przejdź do następnego kroku</string>
     <string name="guidance_cue_valve_state">Stan zaworu</string>
+    <string name="screen_learning_title">Nauka</string>
+    <string name="msg_learning_subtitle">Ilustrowane instrukcje parzenia krok po kroku</string>
+    <string name="msg_learning_intro">Wybierz zaparzacz i przepis, a następnie poznawaj kolejne jasne kroki.</string>
+    <string name="msg_learning_empty">Materiały edukacyjne nie są jeszcze dostępne.</string>
+    <string name="action_show_details">Pokaż szczegóły</string>
+    <string name="action_hide_details">Ukryj szczegóły</string>
 </resources>

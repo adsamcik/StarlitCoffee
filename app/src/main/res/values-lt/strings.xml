@@ -721,7 +721,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
     <string name="label_guidance">Guidance</string>
-    <string name="action_learn_this_brewer">Learn this brewer</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>
     <string name="guidance_level_full">Full</string>
@@ -759,4 +758,10 @@
     <string name="guidance_cue_heat_state">Kaitinimo būsena</string>
     <string name="guidance_cue_stage_advance">Pereiti prie kito veiksmo</string>
     <string name="guidance_cue_valve_state">Vožtuvo būsena</string>
+    <string name="screen_learning_title">Mokykitės</string>
+    <string name="msg_learning_subtitle">Vaizdiniai nuoseklūs kavos ruošimo vadovai</string>
+    <string name="msg_learning_intro">Pasirinkite kavos ruošimo įrenginį ir receptą, tada peržiūrėkite po vieną aiškų žingsnį.</string>
+    <string name="msg_learning_empty">Mokymosi vadovų dar nėra.</string>
+    <string name="action_show_details">Rodyti išsamią informaciją</string>
+    <string name="action_hide_details">Slėpti išsamią informaciją</string>
 </resources>

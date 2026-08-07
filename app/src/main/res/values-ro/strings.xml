@@ -719,7 +719,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
     <string name="label_guidance">Guidance</string>
-    <string name="action_learn_this_brewer">Learn this brewer</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>
     <string name="guidance_level_full">Full</string>
@@ -757,4 +756,10 @@
     <string name="guidance_cue_heat_state">Starea încălzirii</string>
     <string name="guidance_cue_stage_advance">Treci la pasul următor</string>
     <string name="guidance_cue_valve_state">Starea supapei</string>
+    <string name="screen_learning_title">Învață</string>
+    <string name="msg_learning_subtitle">Ghiduri vizuale de preparare pas cu pas</string>
+    <string name="msg_learning_intro">Alege un dispozitiv și o rețetă, apoi parcurge câte un pas clar.</string>
+    <string name="msg_learning_empty">Nu există încă ghiduri de învățare disponibile.</string>
+    <string name="action_show_details">Afișează detaliile</string>
+    <string name="action_hide_details">Ascunde detaliile</string>
 </resources>

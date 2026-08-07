@@ -717,7 +717,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
     <string name="label_guidance">Guidance</string>
-    <string name="action_learn_this_brewer">Learn this brewer</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>
     <string name="guidance_level_full">Full</string>
@@ -755,4 +754,10 @@
     <string name="guidance_cue_heat_state">Lämmityksen tila</string>
     <string name="guidance_cue_stage_advance">Siirry seuraavaan vaiheeseen</string>
     <string name="guidance_cue_valve_state">Venttiilin tila</string>
+    <string name="screen_learning_title">Opi</string>
+    <string name="msg_learning_subtitle">Havainnolliset vaiheittaiset valmistusohjeet</string>
+    <string name="msg_learning_intro">Valitse suodatinlaite ja resepti ja etene yksi selkeä vaihe kerrallaan.</string>
+    <string name="msg_learning_empty">Oppaita ei ole vielä saatavilla.</string>
+    <string name="action_show_details">Näytä tiedot</string>
+    <string name="action_hide_details">Piilota tiedot</string>
 </resources>

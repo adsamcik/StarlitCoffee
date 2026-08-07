@@ -748,7 +748,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatická dávková příprava</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Koncentrát s omezeným průtokem</string>
     <string name="label_guidance">Pokyny</string>
-    <string name="action_learn_this_brewer">Naučit se přípravu na tomto zařízení</string>
     <string name="action_remember_guidance_for_brewer">Zapamatovat pokyny pro toto zařízení</string>
     <string name="action_use_saved_guidance">Použít uložené pokyny</string>
     <string name="guidance_level_full">Úplné</string>
@@ -786,4 +785,10 @@
     <string name="guidance_cue_heat_state">Stav ohřevu</string>
     <string name="guidance_cue_stage_advance">Ovládání dalšího kroku</string>
     <string name="guidance_cue_valve_state">Stav ventilu</string>
+    <string name="screen_learning_title">Naučit se</string>
+    <string name="msg_learning_subtitle">Názorné návody k přípravě krok za krokem</string>
+    <string name="msg_learning_intro">Vyberte zařízení a recept a potom si projděte jeden srozumitelný krok po druhém.</string>
+    <string name="msg_learning_empty">Zatím nejsou k dispozici žádné výukové návody.</string>
+    <string name="action_show_details">Zobrazit podrobnosti</string>
+    <string name="action_hide_details">Skrýt podrobnosti</string>
 </resources>

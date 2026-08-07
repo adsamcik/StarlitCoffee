@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingBag
@@ -36,6 +37,7 @@ private val MoreContentMaxWidth = 600.dp
 
 @Composable
 fun MoreScreen(
+    onNavigateToLearning: () -> Unit,
     onNavigateToRecipes: () -> Unit,
     onNavigateToBags: () -> Unit,
     onNavigateToSettings: () -> Unit,
@@ -64,6 +66,12 @@ fun MoreScreen(
                     .padding(top = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
+                MoreItem(
+                    icon = Icons.Filled.AutoStories,
+                    title = stringResource(R.string.screen_learning_title),
+                    subtitle = stringResource(R.string.msg_learning_subtitle),
+                    onClick = onNavigateToLearning,
+                )
                 MoreItem(
                     icon = Icons.Filled.Bookmark,
                     title = stringResource(R.string.label_your_favorites),

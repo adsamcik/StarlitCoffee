@@ -713,7 +713,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
     <string name="label_guidance">Guidance</string>
-    <string name="action_learn_this_brewer">Learn this brewer</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>
     <string name="guidance_level_full">Full</string>
@@ -751,4 +750,10 @@
     <string name="guidance_cue_heat_state">加热状态</string>
     <string name="guidance_cue_stage_advance">进入下一步骤</string>
     <string name="guidance_cue_valve_state">阀门状态</string>
+    <string name="screen_learning_title">学习</string>
+    <string name="msg_learning_subtitle">图解分步冲煮指南</string>
+    <string name="msg_learning_intro">选择冲煮器具和配方，然后逐步查看清晰的操作说明。</string>
+    <string name="msg_learning_empty">暂时没有可用的学习指南。</string>
+    <string name="action_show_details">显示详细信息</string>
+    <string name="action_hide_details">隐藏详细信息</string>
 </resources>

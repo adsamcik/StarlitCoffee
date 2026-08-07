@@ -17,6 +17,9 @@ data class BrewSession(val sessionId: String)
 object BrewerProfileSetup
 
 @Serializable
+object Learning
+
+@Serializable
 data class LearnBrewer(
     val brewerProfileId: String,
     val builtInRecipeId: String? = null,

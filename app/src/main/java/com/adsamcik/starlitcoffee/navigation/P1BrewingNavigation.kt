@@ -22,11 +22,14 @@ import com.adsamcik.starlitcoffee.ui.brewerprofile.P1ExactRecipeStartInputResult
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1ExactRecipeStartMetadata
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferences
+import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogRequest
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogResolver
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
 import com.adsamcik.starlitcoffee.ui.screen.LearnBrewerScreen
+import com.adsamcik.starlitcoffee.ui.screen.LearningLibraryScreen
 import com.adsamcik.starlitcoffee.ui.screen.P1BrewerProfileSetupScreen
+import com.adsamcik.starlitcoffee.ui.screen.exactRecipeName
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BuiltinBrewerSessionStartFactory
 import com.adsamcik.starlitcoffee.viewmodel.BuiltinBrewerSessionStartResult
@@ -52,6 +55,10 @@ internal fun NavGraphBuilder.p1BrewingRoutes(
         unavailableMessage = configuration.unavailableMessage,
         exactRecipeReleaseGate = exactRecipeReleaseGate,
         onTurnOffPreview = configuration.onTurnOffPreview,
+    )
+    p1LearningLibraryRoute(
+        navController = navController,
+        exactRecipeReleaseGate = exactRecipeReleaseGate,
     )
     p1LearnBrewerRoute(
         navController = navController,
@@ -163,6 +170,32 @@ private fun P1BrewerProfileStartSelection.learnRoute(): LearnBrewer = LearnBrewe
     builtInRecipeId = builtInRecipeId.value,
 )
 
+private fun NavGraphBuilder.p1LearningLibraryRoute(
+    navController: NavHostController,
+    exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
+) {
+    composable<Learning> {
+        val eligibleRecipeIds = exactRecipeReleaseGate.eligibleRecipeIds
+        val profiles = remember(eligibleRecipeIds) {
+            P1BrewerProfileSetupStateFactory.create(
+                executableRecipeIds = eligibleRecipeIds,
+            ).profiles
+        }
+        LearningLibraryScreen(
+            profiles = profiles,
+            onOpenRecipe = { profile, recipe ->
+                navController.navigate(
+                    LearnBrewer(
+                        brewerProfileId = profile.profileId.value,
+                        builtInRecipeId = recipe.id.value,
+                    ),
+                )
+            },
+            onBack = { navController.popBackStack() },
+        )
+    }
+}
+
 private fun NavGraphBuilder.p1LearnBrewerRoute(
     navController: NavHostController,
     guidancePreferences: DurableBrewSessionGuidancePreferences,
@@ -203,12 +236,15 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
                 LearnGuidanceCatalogRequest(
                     methodFamilyId = exactRecipe.methodFamilyId.value,
                     brewerProfileId = route.brewerProfileId,
-                    preferences = guidancePreferences,
+                    preferences = guidancePreferences.copy(
+                        sessionOverride = GuidancePresentationLevel.FULL,
+                    ),
                     exactStageOrder = exactStageOrder,
                 ),
             )
         }
         LearnBrewerScreen(
+            title = exactRecipeName(exactRecipe.id),
             resolution = resolution,
             onBack = { navController.popBackStack() },
             instructionAssets = BuiltInInstructionAssetCatalog.catalog,

@@ -717,7 +717,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
     <string name="label_guidance">Guidance</string>
-    <string name="action_learn_this_brewer">Learn this brewer</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>
     <string name="guidance_level_full">Full</string>
@@ -755,4 +754,10 @@
     <string name="guidance_cue_heat_state">Κατάσταση θέρμανσης</string>
     <string name="guidance_cue_stage_advance">Μετάβαση στο επόμενο βήμα</string>
     <string name="guidance_cue_valve_state">Κατάσταση βαλβίδας</string>
+    <string name="screen_learning_title">Μάθηση</string>
+    <string name="msg_learning_subtitle">Οπτικοί οδηγοί παρασκευής βήμα προς βήμα</string>
+    <string name="msg_learning_intro">Επιλέξτε συσκευή και συνταγή και εξερευνήστε ένα σαφές βήμα κάθε φορά.</string>
+    <string name="msg_learning_empty">Δεν υπάρχουν ακόμη διαθέσιμοι οδηγοί εκμάθησης.</string>
+    <string name="action_show_details">Εμφάνιση λεπτομερειών</string>
+    <string name="action_hide_details">Απόκρυψη λεπτομερειών</string>
 </resources>

@@ -50,6 +50,7 @@ class InstructionImageOrderTest {
         composeRule.setContent {
             StarlitCoffeeTheme(dynamicColor = false) {
                 LearnBrewerScreen(
+                    title = "Test brewer",
                     resolution = LearnGuidanceCatalogResolution(
                         policy = null,
                         availability = LearnGuidanceCatalogAvailability.Available,

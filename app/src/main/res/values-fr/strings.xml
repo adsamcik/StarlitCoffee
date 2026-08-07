@@ -719,7 +719,6 @@
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
     <string name="label_guidance">Guidance</string>
-    <string name="action_learn_this_brewer">Learn this brewer</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>
     <string name="guidance_level_full">Full</string>
@@ -757,4 +756,10 @@
     <string name="guidance_cue_heat_state">État de chauffe</string>
     <string name="guidance_cue_stage_advance">Passer à l’étape suivante</string>
     <string name="guidance_cue_valve_state">État de la vanne</string>
+    <string name="screen_learning_title">Apprendre</string>
+    <string name="msg_learning_subtitle">Guides visuels de préparation étape par étape</string>
+    <string name="msg_learning_intro">Choisissez une cafetière et une recette, puis avancez clairement étape par étape.</string>
+    <string name="msg_learning_empty">Aucun guide pédagogique disponible pour le moment.</string>
+    <string name="action_show_details">Afficher les détails</string>
+    <string name="action_hide_details">Masquer les détails</string>
 </resources>
