@@ -104,8 +104,6 @@ fun CalculatorBrewScreen(
     onNavigateToBrew: () -> Unit,
     recoverableSessionId: String?,
     onResumeSession: (String) -> Unit,
-    showBrewerSetup: Boolean,
-    onNavigateToBrewerSetup: () -> Unit,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
     val brewState by brewViewModel.uiState.collectAsStateWithLifecycle()
@@ -261,11 +259,6 @@ fun CalculatorBrewScreen(
             onRatioChange = { calculatorViewModel.setRatio(it) },
             recoverableSessionId = recoverableSessionId,
             onResumeSession = onResumeSession,
-            showBrewerSetup = showBrewerSetup,
-            onOpenBrewerSetup = {
-                syncCalcDerivedState()
-                onNavigateToBrewerSetup()
-            },
         )
     }
 
@@ -691,8 +684,6 @@ private fun BrewSettingsPillBar(
     onRatioChange: (Float) -> Unit,
     recoverableSessionId: String?,
     onResumeSession: (String) -> Unit,
-    showBrewerSetup: Boolean,
-    onOpenBrewerSetup: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -723,13 +714,6 @@ private fun BrewSettingsPillBar(
         }
 
         // Ratio pill — always visible. Options match the legacy ratio dialog.
-        if (showBrewerSetup) {
-            AssistChip(
-                onClick = onOpenBrewerSetup,
-                label = { Text(stringResource(R.string.screen_brew_setup_title)) },
-            )
-        }
-
         val ratioOptions = listOf(2f, 8f, 10f, 15f, 16f, 17f, 18f)
         PillDropdown(
             label = "1:${ratio.toInt()}",

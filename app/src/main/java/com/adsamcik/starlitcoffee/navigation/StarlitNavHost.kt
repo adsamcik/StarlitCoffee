@@ -112,7 +112,6 @@ import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
 import java.util.HashMap
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.CancellationException
 
 private data class BottomNavItem(
     @StringRes val labelRes: Int,
@@ -256,46 +255,8 @@ fun StarlitNavHost() {
     val durableGuidancePreferences = remember(stableBrewingPreferences) {
         stableBrewingPreferences.toDurableGuidancePreferences()
     }
-    val p1BrewerSetupVisible = remember(exactRecipeReleaseGate) {
-        exactRecipeReleaseGate.eligibleRecipeIds.isNotEmpty() ||
-            exactRecipeReleaseGate.previewEligibleRecipeIds.isNotEmpty()
-    }
 
     val durableSessionRuntime = remember(context) { BrewSessionRuntime.create(context) }
-    val legacySessionStartFactory = remember {
-        com.adsamcik.starlitcoffee.viewmodel.LegacyBrewSessionStartFactory()
-    }
-    val startDurableSession: () -> Unit = {
-        scope.launch {
-            val start = legacySessionStartFactory.create(
-                state = brewViewModel.uiState.value,
-                selectedCoffeeBagId = brewViewModel.selectedBagId.value,
-                sourceRecipeId = null,
-            )
-            val request = (start as?
-                com.adsamcik.starlitcoffee.viewmodel.LegacyBrewSessionStartResult.Ready
-                )?.request
-            if (request == null) {
-                snackbarHostState.showSnackbar(sessionUnavailableMessage)
-                return@launch
-            }
-            try {
-                when (durableSessionRuntime.coordinator.createOrResume(request)) {
-                    is com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResult.Active,
-                    is com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResult.PendingEffect,
-                    -> navController.navigate(BrewSession(sessionId = request.sessionId.value)) {
-                        launchSingleTop = true
-                    }
-
-                    else -> snackbarHostState.showSnackbar(sessionUnavailableMessage)
-                }
-            } catch (error: CancellationException) {
-                throw error
-            } catch (_: Exception) {
-                snackbarHostState.showSnackbar(sessionUnavailableMessage)
-            }
-        }
-    }
 
     // Notification deep link → BrewLogDetail. The bus is owned by MainActivity;
     // we pop the pending id here, navigate, and clear it so a recompose doesn't
@@ -545,10 +506,8 @@ fun StarlitNavHost() {
                         userPreferencesRepository = userPreferencesRepository,
                         onNavigateToBrew = {
                             brewViewModel.startNewBrewSession()
-                            // Quick Brew begins the same durable session immediately;
-                            // the default flow keeps GrindPrep as its pre-flight checkpoint.
                             if (prefs.skipMethodSelection) {
-                                startDurableSession()
+                                navController.navigate(BrewTimer)
                             } else {
                                 navController.navigate(GrindPrep)
                             }
@@ -557,14 +516,6 @@ fun StarlitNavHost() {
                         onResumeSession = { sessionId ->
                             navController.navigate(BrewSession(sessionId = sessionId)) {
                                 launchSingleTop = true
-                            }
-                        },
-                        showBrewerSetup = p1BrewerSetupVisible,
-                        onNavigateToBrewerSetup = {
-                            if (exactRecipeReleaseGate.requiresPreviewConsent) {
-                                showGuidancePreviewConsent = true
-                            } else {
-                                navigateToBrewerSetup()
                             }
                         },
                     )
@@ -658,7 +609,7 @@ fun StarlitNavHost() {
                         dimModeFullscreen = prefs.dimModeFullscreen,
                         dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
                         showBrewingInstructions = prefs.showBrewingInstructions,
-                        onNavigateToBrew = startDurableSession,
+                        onNavigateToBrew = { navController.navigate(BrewTimer) },
                         onBack = { navController.popBackStack() },
                     )
                 }
