@@ -417,6 +417,7 @@
     <string name="label_best_before">Minőségét megőrzi</string>
     <string name="label_decaf_coffee">Koffeinmentes kávé</string>
     <string name="msg_decaf_guidance">A főzési útmutatót összhangban tartja a koffeinmentes babbal és a rövidebb áztatási célokkal.</string>
+    <string name="msg_decaf_grind_adjustment">Koffeinmentes kávé van kiválasztva. Az alábbi őrlési ajánlás durvábbra módosul, amikor ez előnyös az elkészítési módnak.</string>
     <string name="label_decaf_process_optional">Koffeinmentesítési eljárás (nem kötelező)</string>
     <string name="msg_decaf_process_hint">Lehetővé teszi, hogy a főzési szabály finoman igazítsa az őrlést: a vizes és CO₂-eljárású koffeinmentes kávék általában kevesebb durvítást igényelnek, mint az oldószeresek.</string>
     <string name="cd_captured_bag_photo">Rögzített zacskófotó</string>

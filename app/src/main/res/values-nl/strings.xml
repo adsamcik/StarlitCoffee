@@ -416,6 +416,7 @@
     <string name="label_best_before">Ten minste houdbaar tot</string>
     <string name="label_decaf_coffee">Cafeïnevrije koffie</string>
     <string name="msg_decaf_guidance">Zetadvies blijft afgestemd op cafeïnevrije bonen en kortere trektijden.</string>
+    <string name="msg_decaf_grind_adjustment">Cafeïnevrij is geselecteerd. Het maaladvies hieronder wordt grover afgesteld wanneer deze zetmethode daar baat bij heeft.</string>
     <string name="label_decaf_process_optional">Decaf-proces (optioneel)</string>
     <string name="msg_decaf_process_hint">Laat de zetregels de maling subtiel bijsturen: decafs met waterproces en CO₂ hoeven meestal minder grof gemalen te worden dan decafs met oplosmiddel.</string>
     <string name="cd_captured_bag_photo">Vastgelegde zakfoto</string>

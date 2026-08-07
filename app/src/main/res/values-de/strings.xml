@@ -417,6 +417,7 @@
     <string name="label_best_before">Mindestens haltbar bis</string>
     <string name="label_decaf_coffee">Entkoffeinierter Kaffee</string>
     <string name="msg_decaf_guidance">Hält Brühhinweise mit entkoffeinierten Bohnen und kürzeren Ziehzielen synchron.</string>
+    <string name="msg_decaf_grind_adjustment">Entkoffeiniert ist ausgewählt. Die Mahlgradeinstellung unten wird gröber angepasst, wenn diese Brühmethode davon profitiert.</string>
     <string name="label_decaf_process_optional">Entkoffeinierungsverfahren (optional)</string>
     <string name="msg_decaf_process_hint">Erlaubt der Brühregel, den Mahlgrad sanft zu beeinflussen: Wasserprozess- und CO₂-Decafs brauchen typischerweise weniger Vergröberung als lösungsmittelbasierte Verfahren.</string>
     <string name="cd_captured_bag_photo">Aufgenommenes Foto der Packung</string>

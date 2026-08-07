@@ -421,6 +421,7 @@
     <string name="label_best_before">Tinka iki</string>
     <string name="label_decaf_coffee">Kava be kofeino</string>
     <string name="msg_decaf_guidance">Suderina plikymo patarimus su kava be kofeino ir trumpesniu plikymo laiku.</string>
+    <string name="msg_decaf_grind_adjustment">Pasirinkta kava be kofeino. Toliau pateikta malimo rekomendacija koreguojama į stambesnę, kai tai naudinga šiam ruošimo būdui.</string>
     <string name="label_decaf_process_optional">Kofeino šalinimo būdas (nebūtina)</string>
     <string name="msg_decaf_process_hint">Leidžia plikymo taisyklei švelniai koreguoti malimą: vandeniu ir CO₂ apdorotai kavai be kofeino paprastai reikia mažiau stambinti nei apdorotai tirpikliais.</string>
     <string name="cd_captured_bag_photo">Nufotografuota pakuotė</string>

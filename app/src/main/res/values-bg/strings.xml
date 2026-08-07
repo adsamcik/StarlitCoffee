@@ -417,6 +417,7 @@
     <string name="label_best_before">Най-добър до</string>
     <string name="label_decaf_coffee">Безкофеиново кафе</string>
     <string name="msg_decaf_guidance">Поддържа насоките за приготвяне синхронизирани с декаф зърна и по-кратки цели за запарване.</string>
+    <string name="msg_decaf_grind_adjustment">Избрано е безкофеиново кафе. Препоръката за смилане по-долу е коригирана към по-едро, когато този метод има полза от това.</string>
     <string name="label_decaf_process_optional">Процес на декофеинизиране (по избор)</string>
     <string name="msg_decaf_process_hint">Позволява на правилото за приготвяне леко да насочи смилането: декафите с воден процес и CO₂ обикновено имат нужда от по-малко поедряване от тези с разтворител.</string>
     <string name="cd_captured_bag_photo">Заснета снимка на пакета</string>

@@ -471,6 +471,7 @@
     <string name="label_best_before">Best before</string>
     <string name="label_decaf_coffee">Decaf coffee</string>
     <string name="msg_decaf_guidance">Keeps brew guidance in sync with decaf beans and shorter steep targets.</string>
+    <string name="msg_decaf_grind_adjustment">Decaf selected. The grind recommendation below is adjusted coarser when this method benefits from it.</string>
     <string name="label_decaf_process_optional">Decaf process (optional)</string>
     <string name="msg_decaf_process_hint">Lets the brew rule soft-bias the grind: water-process and CO₂ decafs typically need less coarsening than solvent-process ones.</string>
     <string name="cd_captured_bag_photo">Captured bag photo</string>

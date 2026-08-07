@@ -417,6 +417,7 @@
     <string name="label_best_before">Parim enne</string>
     <string name="label_decaf_coffee">Kofeiinivaba kohv</string>
     <string name="msg_decaf_guidance">Hoiab valmistusjuhised kooskõlas kofeiinivabade ubade ja lühemate tõmbamisaegadega.</string>
+    <string name="msg_decaf_grind_adjustment">Valitud on kofeiinivaba kohv. Allolevat jahvatussoovitust kohandatakse jämedamaks, kui see valmistusviis sellest kasu saab.</string>
     <string name="label_decaf_process_optional">Kofeiinieemalduse viis (valikuline)</string>
     <string name="msg_decaf_process_hint">Laseb valmistusreeglil jahvatust pehmelt kohandada: vee- ja CO₂-töötlusega kofeiinivabad vajavad tavaliselt vähem jämestamist kui lahustiga töödeldud.</string>
     <string name="cd_captured_bag_photo">Jäädvustatud paki foto</string>

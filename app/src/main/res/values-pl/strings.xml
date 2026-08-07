@@ -420,6 +420,7 @@
     <string name="label_best_before">Najlepiej spożyć przed</string>
     <string name="label_decaf_coffee">Kawa bezkofeinowa</string>
     <string name="msg_decaf_guidance">Utrzymuje wskazówki parzenia zgodne z ziarnami decaf i krótszymi celami parzenia.</string>
+    <string name="msg_decaf_grind_adjustment">Wybrano kawę bezkofeinową. Poniższe zalecenie mielenia jest dostosowywane na grubsze, gdy ta metoda na tym korzysta.</string>
     <string name="label_decaf_process_optional">Proces dekofeinizacji (opcjonalnie)</string>
     <string name="msg_decaf_process_hint">Pozwala regule parzenia lekko skorygować mielenie: decafy wodne i CO₂ zwykle wymagają mniejszego pogrubienia niż te z procesów rozpuszczalnikowych.</string>
     <string name="cd_captured_bag_photo">Zdjęcie opakowania</string>

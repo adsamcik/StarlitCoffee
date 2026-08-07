@@ -413,6 +413,7 @@
     <string name="label_best_before">最佳赏味期</string>
     <string name="label_decaf_coffee">低因咖啡</string>
     <string name="msg_decaf_guidance">让冲煮指引与低因豆和更短浸泡目标保持同步。</string>
+    <string name="msg_decaf_grind_adjustment">已选择低因咖啡。若此冲煮方式适合较粗研磨，下方的研磨建议会相应调粗。</string>
     <string name="label_decaf_process_optional">脱咖啡因处理法（可选）</string>
     <string name="msg_decaf_process_hint">让冲煮规则对研磨做轻微偏置：水处理和CO₂低因通常比溶剂处理低因需要更少调粗。</string>
     <string name="cd_captured_bag_photo">已拍摄的咖啡袋照片</string>

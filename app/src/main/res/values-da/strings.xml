@@ -416,6 +416,7 @@
     <string name="label_best_before">Bedst før</string>
     <string name="label_decaf_coffee">Koffeinfri kaffe</string>
     <string name="msg_decaf_guidance">Holder bryggevejledning synkroniseret med koffeinfri bønner og kortere trækketider.</string>
+    <string name="msg_decaf_grind_adjustment">Koffeinfri er valgt. Maleanbefalingen nedenfor justeres grovere, når denne bryggemetode har gavn af det.</string>
     <string name="label_decaf_process_optional">Koffeinfri proces (valgfrit)</string>
     <string name="msg_decaf_process_hint">Lader brygreglen justere malingen let: vandproces- og CO₂-decaf kræver typisk mindre grov maling end solventprocesser.</string>
     <string name="cd_captured_bag_photo">Foto af kaffepose</string>

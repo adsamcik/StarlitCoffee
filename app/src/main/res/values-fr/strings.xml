@@ -419,6 +419,7 @@
     <string name="label_best_before">À consommer de préférence avant</string>
     <string name="label_decaf_coffee">Café décaféiné</string>
     <string name="msg_decaf_guidance">Garde les conseils de préparation synchronisés avec les grains déca et les cibles d\'infusion plus courtes.</string>
+    <string name="msg_decaf_grind_adjustment">Le décaféiné est sélectionné. Le réglage de mouture ci-dessous est ajusté plus grossièrement lorsque cette méthode en bénéficie.</string>
     <string name="label_decaf_process_optional">Procédé de décaféination (facultatif)</string>
     <string name="msg_decaf_process_hint">Permet à la règle de préparation d\'orienter légèrement la mouture : les décas Swiss Water, Mountain Water et CO₂ demandent généralement moins de grossissement que ceux aux solvants.</string>
     <string name="cd_captured_bag_photo">Photo du paquet capturée</string>

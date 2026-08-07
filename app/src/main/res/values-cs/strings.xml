@@ -448,6 +448,7 @@
     <string name="label_best_before">Minimální trvanlivost</string>
     <string name="label_decaf_coffee">Bezkofeinová káva</string>
     <string name="msg_decaf_guidance">Synchronizuje doporučení přípravy s bezkofeinovými zrny a kratšími dobami louhování.</string>
+    <string name="msg_decaf_grind_adjustment">Zvolena bezkofeinová káva. Níže uvedené doporučení mletí je nastaveno hruběji, pokud je to pro tento způsob přípravy vhodné.</string>
     <string name="label_decaf_process_optional">Způsob dekofeinizace (volitelné)</string>
     <string name="msg_decaf_process_hint">Umožňuje pravidlu přípravy mírně upravit mletí: vodní procesy a CO₂ dekofeinizace obvykle nevyžadují tak hrubé mletí jako solventní procesy.</string>
     <string name="cd_captured_bag_photo">Foto balení</string>

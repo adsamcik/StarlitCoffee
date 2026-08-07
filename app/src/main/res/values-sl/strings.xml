@@ -421,6 +421,7 @@
     <string name="label_best_before">Uporabno do</string>
     <string name="label_decaf_coffee">Brezkofeinska kava</string>
     <string name="msg_decaf_guidance">Uskladi navodila za pripravo z brezkofeinsko kavo in krajšimi ciljnimi časi namakanja.</string>
+    <string name="msg_decaf_grind_adjustment">Izbrana je brezkofeinska kava. Spodnje priporočilo za mletje se prilagodi na bolj grobo, kadar to koristi temu načinu priprave.</string>
     <string name="label_decaf_process_optional">Postopek dekofeinizacije (neobvezno)</string>
     <string name="msg_decaf_process_hint">Omogoča, da pravilo priprave nekoliko prilagodi mletje: vodni postopek in CO₂ običajno potrebujeta manj grobljenja kot postopki s topili.</string>
     <string name="cd_captured_bag_photo">Zajeta fotografija vrečke</string>

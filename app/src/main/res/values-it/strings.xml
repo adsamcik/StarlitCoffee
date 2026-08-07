@@ -419,6 +419,7 @@
     <string name="label_best_before">Da consumarsi preferibilmente entro</string>
     <string name="label_decaf_coffee">Caffè decaffeinato</string>
     <string name="msg_decaf_guidance">Mantiene i consigli di preparazione coerenti con chicchi decaffeinati e tempi target più brevi.</string>
+    <string name="msg_decaf_grind_adjustment">È selezionato il decaffeinato. La macinatura consigliata qui sotto viene regolata più grossa quando questo metodo ne beneficia.</string>
     <string name="label_decaf_process_optional">Processo decaffeinato (facoltativo)</string>
     <string name="msg_decaf_process_hint">Permette alla regola di preparazione di orientare leggermente la macinatura: i deca a processo ad acqua e CO₂ in genere richiedono meno grossolanità rispetto a quelli a solvente.</string>
     <string name="cd_captured_bag_photo">Foto confezione acquisita</string>

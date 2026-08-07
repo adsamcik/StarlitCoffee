@@ -419,6 +419,7 @@
     <string name="label_best_before">A se consuma de preferință înainte de</string>
     <string name="label_decaf_coffee">Cafea decaf</string>
     <string name="msg_decaf_guidance">Menține ghidajul de preparare sincronizat cu boabele decaf și cu ținte de infuzare mai scurte.</string>
+    <string name="msg_decaf_grind_adjustment">Este selectată cafeaua fără cofeină. Recomandarea de măcinare de mai jos este ajustată mai grosier când această metodă beneficiază de acest lucru.</string>
     <string name="label_decaf_process_optional">Proces decaf (opțional)</string>
     <string name="msg_decaf_process_hint">Permite regulii de preparare să ajusteze ușor măcinarea: decafurile procesate cu apă și CO₂ au de obicei nevoie de mai puțină grosierire decât cele procesate cu solvenți.</string>
     <string name="cd_captured_bag_photo">Fotografie capturată a pachetului</string>

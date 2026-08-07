@@ -417,6 +417,7 @@
     <string name="label_best_before">Parasta ennen</string>
     <string name="label_decaf_coffee">Kofeiiniton kahvi</string>
     <string name="msg_decaf_guidance">Pitää valmistusohjeet linjassa kofeiinittomien papujen ja lyhyempien haudutusaikojen kanssa.</string>
+    <string name="msg_decaf_grind_adjustment">Kofeiiniton kahvi on valittu. Alla olevaa jauhatussuositusta säädetään karkeammaksi, kun siitä on hyötyä tälle valmistustavalle.</string>
     <string name="label_decaf_process_optional">Kofeiininpoistomenetelmä (valinnainen)</string>
     <string name="msg_decaf_process_hint">Antaa valmistussäännön hienosäätää jauhatusta: vesi- ja CO₂-menetelmän kofeiinittomat vaativat yleensä vähemmän karkeutta kuin liuotinmenetelmällä käsitellyt.</string>
     <string name="cd_captured_bag_photo">Otettu kuva pussista</string>

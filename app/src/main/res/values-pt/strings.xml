@@ -419,6 +419,7 @@
     <string name="label_best_before">Consumir de preferência antes de</string>
     <string name="label_decaf_coffee">Café descafeinado</string>
     <string name="msg_decaf_guidance">Mantém as orientações de preparação alinhadas com grãos descafeinados e tempos de infusão mais curtos.</string>
+    <string name="msg_decaf_grind_adjustment">Foi selecionado café descafeinado. A recomendação de moagem abaixo é ajustada para mais grossa quando este método beneficia disso.</string>
     <string name="label_decaf_process_optional">Processo de descafeinação (opcional)</string>
     <string name="msg_decaf_process_hint">Permite que a regra de preparação ajuste suavemente a moagem: descafeinados por água e CO₂ costumam precisar de menos ajuste para mais grosso do que os de solvente.</string>
     <string name="cd_captured_bag_photo">Foto da embalagem captada</string>

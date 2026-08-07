@@ -419,6 +419,7 @@
     <string name="label_best_before">Ieteicams līdz</string>
     <string name="label_decaf_coffee">Bezkofeīna kafija</string>
     <string name="msg_decaf_guidance">Sinhronizē gatavošanas ieteikumus ar bezkofeīna pupiņām un īsākiem ievilkšanas mērķiem.</string>
+    <string name="msg_decaf_grind_adjustment">Izvēlēta bezkofeīna kafija. Tālāk norādītais maluma ieteikums tiek pielāgots rupjākam malumam, ja tas ir piemērots šai pagatavošanas metodei.</string>
     <string name="label_decaf_process_optional">Dekofeinizācijas process (neobligāti)</string>
     <string name="msg_decaf_process_hint">Ļauj gatavošanas noteikumam maigi koriģēt malumu: ūdens procesa un CO₂ decaf parasti nepieciešama mazāka maluma rupjināšana nekā šķīdinātāju procesa decaf.</string>
     <string name="cd_captured_bag_photo">Uzņemts iepakojuma fotoattēls</string>

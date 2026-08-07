@@ -419,6 +419,7 @@
     <string name="label_best_before">Najbolje upotrijebiti do</string>
     <string name="label_decaf_coffee">Kava bez kofeina</string>
     <string name="msg_decaf_guidance">Održava upute za pripremu usklađene sa zrnima bez kofeina i kraćim ciljanim vremenima namakanja.</string>
+    <string name="msg_decaf_grind_adjustment">Odabrana je kava bez kofeina. Preporuka za mljevenje u nastavku prilagođava se na grublje kada to odgovara ovoj metodi.</string>
     <string name="label_decaf_process_optional">Postupak dekofeinizacije (neobavezno)</string>
     <string name="msg_decaf_process_hint">Omogućuje pravilu pripreme da blago prilagodi mljevenje: kave bez kofeina obrađene vodom i CO₂ obično trebaju manje grubljeg mljevenja od onih obrađenih otapalima.</string>
     <string name="cd_captured_bag_photo">Snimljena fotografija vrećice</string>

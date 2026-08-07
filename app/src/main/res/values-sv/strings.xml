@@ -417,6 +417,7 @@
     <string name="label_best_before">Bäst före</string>
     <string name="label_decaf_coffee">Decaf-kaffe</string>
     <string name="msg_decaf_guidance">Håller bryggråden synkade med decaf-bönor och kortare dragtider.</string>
+    <string name="msg_decaf_grind_adjustment">Koffeinfritt är valt. Malningsrekommendationen nedan justeras grövre när den här bryggmetoden har nytta av det.</string>
     <string name="label_decaf_process_optional">Decaf-process (valfritt)</string>
     <string name="msg_decaf_process_hint">Låter bryggreglerna nyansera malningsrådet: vattenprocessade och CO₂-decaf behöver oftast mindre grov malning än lösningsmedelsprocessade.</string>
     <string name="cd_captured_bag_photo">Tagen bild av påsen</string>

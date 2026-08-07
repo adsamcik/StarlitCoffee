@@ -21,6 +21,9 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -159,6 +162,11 @@ fun GrindPrepScreen(
                     )
                 }
 
+                CoffeeTypeSelector(
+                    isDecaf = state.isDecafBrew,
+                    onTypeSelected = brewViewModel::setDecafBrew,
+                )
+
                 // Surface guardrail warnings so the user notices issues with the
                 // current setup (e.g. bloom > water, ratio outside sane range)
                 // before committing to a brew. Errors deliberately keep their
@@ -190,6 +198,56 @@ fun GrindPrepScreen(
                         coffeeG = state.coffeeG,
                     )
                 }
+            }
+        }
+    }
+}
+
+/**
+ * Keeps the regular/decaf decision at the moment it affects the user's setup.
+ * The view model owns the selection and recalculates grind guidance immediately.
+ */
+@Composable
+internal fun CoffeeTypeSelector(
+    isDecaf: Boolean,
+    onTypeSelected: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Text(
+            text = stringResource(R.string.label_coffee_type),
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold,
+        )
+        SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+            listOf(false, true).forEachIndexed { index, decaf ->
+                SegmentedButton(
+                    selected = isDecaf == decaf,
+                    onClick = { onTypeSelected(decaf) },
+                    shape = SegmentedButtonDefaults.itemShape(index = index, count = 2),
+                ) {
+                    Text(
+                        text = stringResource(
+                            if (decaf) R.string.label_decaf else R.string.label_regular,
+                        ),
+                    )
+                }
+            }
+        }
+        if (isDecaf) {
+            Surface(
+                color = MaterialTheme.colorScheme.tertiaryContainer,
+                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                shape = MaterialTheme.shapes.medium,
+            ) {
+                Text(
+                    text = stringResource(R.string.msg_decaf_grind_adjustment),
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                    style = MaterialTheme.typography.bodySmall,
+                )
             }
         }
     }
