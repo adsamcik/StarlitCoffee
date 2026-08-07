@@ -87,6 +87,9 @@ __pycache__/
 # resources and should not bloat git history. The shipped assets live in
 # app/src/main/res/drawable-nodpi.
 /tools/bloom-validation/
+/docs/assets/vessel-icons/
+/tools/pilot_vectorize_vessel_layers.py
+/tools/process_vessel_chroma_icons.py
 
 # Python bytecode
 *.py[cod]
