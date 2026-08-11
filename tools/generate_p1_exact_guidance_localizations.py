@@ -218,7 +218,8 @@ def translate_batch(translator, values: list[str]) -> dict[str, str]:
 
 
 def source_sha256() -> str:
-    return hashlib.sha256(SOURCE.read_bytes()).hexdigest()
+    source_bytes = SOURCE.read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(source_bytes).hexdigest()
 
 
 def load_memory(memory_path: Path) -> dict:

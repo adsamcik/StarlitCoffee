@@ -83,7 +83,8 @@ def validate() -> None:
     research = read_jsonl(RECORDS)
     sources = read_jsonl(SOURCES)
     qc = read_json(QC)
-    if hashlib.sha256(RECORDS.read_bytes()).hexdigest() != RECORDS_SHA256:
+    records_bytes = RECORDS.read_bytes().replace(b"\r\n", b"\n")
+    if hashlib.sha256(records_bytes).hexdigest() != RECORDS_SHA256:
         raise CatalogError("Imported terminology research hash differs")
     if qc.get("errors") != []:
         raise CatalogError("Imported terminology research has QC errors")

@@ -9,10 +9,12 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.LocalCafe
@@ -24,6 +26,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarDuration
@@ -131,6 +134,13 @@ private val bottomBarRoutes = setOf(
     More::class,
 )
 
+private val dimModeRoutes = setOf(
+    BrewTimer::class,
+    BrewSession::class,
+    GrindPrep::class,
+    BloomTimer::class,
+)
+
 private val BrewMethodSetStateSaver: Saver<MutableState<Set<BrewMethod>>, ArrayList<String>> = Saver(
     save = { state -> ArrayList(state.value.map { it.name }) },
     restore = { list ->
@@ -233,6 +243,9 @@ fun StarlitNavHost() {
 
     val showBottomBar = currentDestination?.let { dest ->
         bottomBarRoutes.any { dest.hasRoute(it) }
+    } ?: false
+    val supportsFullscreenDimMode = currentDestination?.let { destination ->
+        dimModeRoutes.any { destination.hasRoute(it) }
     } ?: false
 
     val widthClass = LocalWindowWidthClass.current
@@ -381,6 +394,18 @@ fun StarlitNavHost() {
     }
 
     Scaffold(
+        // Dim-capable screens deliberately hide the system bars while idle.
+        // `safeDrawing` keeps the display-cutout inset even after the status
+        // bar disappears, leaving the root scaffold's light surface visible
+        // above the dim screen. Use visibility-aware system-bar insets for
+        // these routes so their dim canvas can paint behind the cutout; the
+        // DimModeScaffold preserves the inset for controls to prevent layout
+        // movement during the transition.
+        contentWindowInsets = if (supportsFullscreenDimMode) {
+            WindowInsets.systemBars
+        } else {
+            ScaffoldDefaults.contentWindowInsets
+        },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
             if (showBottomBar && !useNavigationRail) {

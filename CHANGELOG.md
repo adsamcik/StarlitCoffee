@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] — 2026-08-11
+
 ### Added
 
 - **Durable staged brewing** — active brews now use an ordered, method-aware
@@ -39,6 +41,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatic stage deadlines are reconciled through the persisted session state
   when the brew screen becomes active again, so a completed foreground countdown
   does not wait for a separate recovery path.
+- **Readable full-screen dim mode** — brew timers now resolve status colors from
+  the active dim theme and paint the dark canvas behind display cutouts and hidden
+  system bars, keeping timer guidance legible without shifting controls.
 
 ### Release status
 
@@ -352,6 +357,9 @@ shipped in version `1.0.0` (`versionCode = 1`).
 - Background timer & rating-reminder services in favour of
   in-process state and `WorkManager` where appropriate.
 
+[Unreleased]: https://github.com/adsamcik/StarlitCoffee/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/adsamcik/StarlitCoffee/compare/v1.4.0...v1.5.0
+[1.4.0]: https://github.com/adsamcik/StarlitCoffee/compare/v1.2.0...v1.4.0
 [1.2.0]: https://github.com/adsamcik/StarlitCoffee/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/adsamcik/StarlitCoffee/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/adsamcik/StarlitCoffee/releases/tag/v1.0.0

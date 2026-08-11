@@ -277,37 +277,6 @@ fun BrewTimerScreen(
         state.method.hasBloom &&
         !bloomActive &&
         state.waterG > 0f
-    val timeWindowTarget = when {
-        !hasTarget -> MaterialTheme.colorScheme.onSurface
-        state.elapsedSeconds > state.timeTargetHighS ->
-            MaterialTheme.colorScheme.error
-        state.elapsedSeconds >= state.timeTargetLowS ->
-            MaterialTheme.colorScheme.tertiary
-        else -> MaterialTheme.colorScheme.onSurface
-    }
-    val heroColor by animateColorAsState(
-        targetValue = when {
-            // Static water-target hero is a recipe number, not a status
-            // readout — keep it readable in every theme and dim state.
-            heroIsTotal -> MaterialTheme.colorScheme.onSurface
-            bloomJustEndedFlash -> MaterialTheme.colorScheme.error
-            bloomActive -> MaterialTheme.colorScheme.tertiary
-            else -> timeWindowTarget
-        },
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioNoBouncy,
-            stiffness = Spring.StiffnessLow,
-        ),
-        label = "heroColor",
-    )
-    val timePillColor by animateColorAsState(
-        targetValue = timeWindowTarget,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioNoBouncy,
-            stiffness = Spring.StiffnessLow,
-        ),
-        label = "timePillColor",
-    )
 
     // ── Dim mode ─────────────────────────────────────────────
     // [DimModeScaffold] handles the touch+inactivity book-keeping and applies
@@ -336,6 +305,41 @@ fun BrewTimerScreen(
             hideSystemBars = dimModeFullscreen,
             forceDarkInLight = dimModeForceDarkInLight,
         ) {
+        // Resolve status colors inside DimModeScaffold's theme override. If
+        // these are read above the scaffold, forced-dark dim mode retains the
+        // light theme's dark `onSurface`, making the hero and emphasized
+        // "Now" metadata nearly disappear against the black canvas.
+        val timeWindowTarget = when {
+            !hasTarget -> MaterialTheme.colorScheme.onSurface
+            state.elapsedSeconds > state.timeTargetHighS ->
+                MaterialTheme.colorScheme.error
+            state.elapsedSeconds >= state.timeTargetLowS ->
+                MaterialTheme.colorScheme.tertiary
+            else -> MaterialTheme.colorScheme.onSurface
+        }
+        val heroColor by animateColorAsState(
+            targetValue = when {
+                // Static water-target hero is a recipe number, not a status
+                // readout — keep it readable in every theme and dim state.
+                heroIsTotal -> MaterialTheme.colorScheme.onSurface
+                bloomJustEndedFlash -> MaterialTheme.colorScheme.error
+                bloomActive -> MaterialTheme.colorScheme.tertiary
+                else -> timeWindowTarget
+            },
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioNoBouncy,
+                stiffness = Spring.StiffnessLow,
+            ),
+            label = "heroColor",
+        )
+        val timePillColor by animateColorAsState(
+            targetValue = timeWindowTarget,
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioNoBouncy,
+                stiffness = Spring.StiffnessLow,
+            ),
+            label = "timePillColor",
+        )
         Column(modifier = Modifier.fillMaxSize()) {
 
             // ── Top bar ─────────────────────────────────────────────
