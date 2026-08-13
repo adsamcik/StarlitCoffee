@@ -28,8 +28,8 @@ import kotlin.time.Duration.Companion.seconds
  * a meaningless stub.
  */
 private class FakeMindlayer(
-    private val supportedFeatures: () -> Set<String>,
     private val onAwaitConnected: (Duration) -> Unit = {},
+    private val supportedFeatures: () -> Set<String>,
 ) : Mindlayer {
 
     override val connectionState: StateFlow<ConnectionState> =
