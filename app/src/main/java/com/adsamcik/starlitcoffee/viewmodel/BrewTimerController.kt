@@ -126,4 +126,11 @@ internal class BrewTimerController(
             update { it.copy(bloomFinished = true, bloomCountdownSeconds = 0) }
         }
     }
+
+    fun startBloom() {
+        if (state().bloomMarkedAtSeconds != null) return
+
+        start()
+        markBloom()
+    }
 }

@@ -156,6 +156,30 @@ class BrewTimerTest {
     }
 
     @Test
+    fun `startBloom resumes a paused timer before marking bloom`() = runTest(dispatcher) {
+        val vm = createTimerViewModel()
+        runCurrent()
+
+        vm.startTimer()
+        advanceTimeBy(2_000)
+        runCurrent()
+        vm.pauseTimer()
+
+        vm.startBloom()
+        runCurrent()
+
+        val state = vm.uiState.value
+        assertTrue(state.timerRunning)
+        assertEquals(2, state.elapsedSeconds)
+        assertEquals(2, state.bloomMarkedAtSeconds)
+        assertEquals(state.effectiveBloomDurationSeconds, state.bloomCountdownSeconds)
+        assertFalse(state.bloomFinished)
+
+        vm.stopTimer()
+        advanceUntilIdle()
+    }
+
+    @Test
     fun `markBloom is a no-op when the timer is not running`() = runTest(dispatcher) {
         val vm = createTimerViewModel()
         runCurrent()

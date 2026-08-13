@@ -565,11 +565,8 @@ fun BrewTimerScreen(
                     Button(
                         onClick = {
                             // Start Bloom is the real "begin brew" moment for bloom methods —
-                            // start the timer first if it hasn't started yet.
-                            if (!state.timerRunning && state.elapsedSeconds == 0) {
-                                brewViewModel.startTimer()
-                            }
-                            brewViewModel.markBloom()
+                            // resume a paused timer before marking the bloom.
+                            brewViewModel.startBloom()
                         },
                         modifier = Modifier
                             .fillMaxWidth()

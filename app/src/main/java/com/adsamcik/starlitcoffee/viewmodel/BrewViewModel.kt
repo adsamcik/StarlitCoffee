@@ -654,6 +654,8 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     fun markBloom() = timerController.markBloom()
 
+    fun startBloom() = timerController.startBloom()
+
     fun toggleMinuteAlert() {
         _uiState.update { it.copy(minuteAlertEnabled = !it.minuteAlertEnabled) }
     }
