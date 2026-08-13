@@ -1218,21 +1218,6 @@ class MindlayerLlmInferenceProvider(
                         requireEvidence = fieldName in requireEvidenceFor,
                     )
                 }
-            }.toMutableList()
-
-            // Idea #1 — a coffee with no decaf marker is regular coffee. When
-            // isDecaf is explicitly requested but the model abstained (no
-            // candidate), default it to false rather than leaving it unknown:
-            // ground truth and users treat "no decaf marker visible" as regular.
-            // Gated on EXPLICIT membership so the all-fields (emptySet) callers in
-            // unit tests are unaffected.
-            if ("isDecaf" in fieldsNeeded && candidates.none { it.fieldName == "isDecaf" }) {
-                candidates += BagFieldCandidate(
-                    fieldName = "isDecaf",
-                    value = "false",
-                    sourceType = BagFieldSourceType.LLM,
-                    confidenceHint = BagFieldConfidence.MEDIUM,
-                )
             }
             return LlmExtractionResult.Success(fieldCandidates = candidates)
         }
@@ -1272,7 +1257,10 @@ class MindlayerLlmInferenceProvider(
             if (value.isNullOrBlank() || status == "not_visible") return null
             if (value.trim().lowercase() in SENTINEL_NON_VALUES) return null
             if (requireEvidence && !hasSubstantiveEvidence(fieldEntry)) return null
-            val normalized = normalizeControlledValue(fieldName, value.trim())
+            val normalized = when (fieldName) {
+                "isDecaf" -> normalizeDecafBoolean(value) ?: return null
+                else -> normalizeControlledValue(fieldName, value.trim())
+            }
             if (normalized.isBlank()) return null
             return BagFieldCandidate(
                 fieldName = fieldName,
@@ -1284,6 +1272,12 @@ class MindlayerLlmInferenceProvider(
                     else -> BagFieldConfidence.MEDIUM
                 },
             )
+        }
+
+        private fun normalizeDecafBoolean(value: String): String? = when (value.trim().lowercase()) {
+            "true" -> "true"
+            "false" -> "false"
+            else -> null
         }
 
         /**
@@ -1627,7 +1621,8 @@ Pick the single best value for each requested field:
   calendar date from either pass — never invent one, and never accept a
   relative/descriptive phrase ("3 months from roast date") as if it were a
   date; not_visible if neither pass has a real date.
-- isDecaf: true only if a pass clearly indicates decaf; otherwise keep false.
+- isDecaf: true only if a pass clearly indicates decaf; false only if a pass
+  clearly identifies regular coffee; otherwise not_visible.
 - If only ONE pass has a value, use it — UNLESS it is obviously a field label or a
   measurement leaking into a proper-noun field, in which case return not_visible.
 - NEVER invent a value that appears in neither pass. Use status "not_visible" with

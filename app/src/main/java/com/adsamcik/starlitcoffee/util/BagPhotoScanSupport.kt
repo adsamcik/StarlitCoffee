@@ -164,6 +164,12 @@ data class BagPhotoProcessingResult(
 }
 
 object BagPhotoScanSupport {
+    private val authoritativeSourceTypes = setOf(
+        BagFieldSourceType.LOCAL_BARCODE_MATCH,
+        BagFieldSourceType.BARCODE_LOOKUP,
+        BagFieldSourceType.QR_LINK_LOOKUP,
+    )
+
     private val sanitizedEvidenceFields = setOf(
         "origin",
         "region",
@@ -182,8 +188,11 @@ object BagPhotoScanSupport {
     ): BagFieldEvidence? {
         if (candidates.isEmpty()) return null
 
-        val grouped = candidates
-            .filter { it.fieldName == fieldName }
+        val fieldCandidates = candidates.filter { it.fieldName == fieldName }
+        val authoritativeCandidates = fieldCandidates.filter { it.sourceType in authoritativeSourceTypes }
+        val eligibleCandidates = authoritativeCandidates.ifEmpty { fieldCandidates }
+
+        val grouped = eligibleCandidates
             .groupBy { it.canonicalKey ?: normalizeValue(it.rawValue) }
             .mapValues { (_, group) -> scoreGroup(group) }
 
@@ -197,7 +206,9 @@ object BagPhotoScanSupport {
             canonicalKey = representative.canonicalKey,
             sourceType = if (winningGroup.isConsensus) BagFieldSourceType.CONSENSUS else representative.sourceType,
             confidence = when {
-                winningGroup.score >= 11 -> BagFieldConfidence.HIGH
+                winningGroup.isLlmOnly && winningGroup.score >= 8 -> BagFieldConfidence.MEDIUM
+                winningGroup.isLlmOnly && winningGroup.score >= 5 -> BagFieldConfidence.LOW
+                winningGroup.score >= 14 -> BagFieldConfidence.HIGH
                 winningGroup.score >= 8 -> BagFieldConfidence.MEDIUM
                 winningGroup.score >= 5 -> BagFieldConfidence.LOW
                 else -> BagFieldConfidence.NEEDS_REVIEW
@@ -268,16 +279,11 @@ object BagPhotoScanSupport {
         fun value(fieldName: String): String? = resolvedFields[fieldName]?.value
 
         // isDecaf is Boolean? with three-state semantics:
-        //   true  → definitely decaf  (LLM/OCR confirmed a decaf marker)
-        //   false → definitely regular (LLM explicitly returned `false`)
+        //   true  → definitely decaf
+        //   false → definitely regular
         //   null  → unknown / not visible
-        // The candidate value is the string the LLM or OCR emitted — "true",
-        // "false", "yes", "no", or a freeform marker. We only flip to true
-        // when the value parses as an affirmative; "false" must round-trip
-        // as false, not as "field present, therefore decaf". The earlier
-        // bug treated mere presence of the key as truth, which caused every
-        // bag where the LLM responded with `isDecaf: false` to render as
-        // decaf in the review sheet.
+        // Unknown or malformed candidate values are discarded instead of
+        // being interpreted as decaf.
         val isDecaf = value("isDecaf")?.let(::parseExtractedDecaf)
         // Enforce field contracts before the values reach the review chips and
         // the saved bag. The extraction step trusts the raw on-device-LLM
@@ -403,16 +409,17 @@ object BagPhotoScanSupport {
         )
     }
 
-    private fun parseExtractedDecaf(raw: String): Boolean = when (raw.trim().lowercase()) {
+    private fun parseExtractedDecaf(raw: String): Boolean? = when (raw.trim().lowercase()) {
         "true", "yes", "1", "y", "decaf", "decaffeinated", "bezkofeinová", "bezkofeinova" -> true
         "false", "no", "0", "n", "regular", "caffeinated" -> false
-        else -> true
+        else -> null
     }
 
     private data class ScoredGroup(
         val representative: BagFieldCandidate,
         val score: Int,
         val isConsensus: Boolean,
+        val isLlmOnly: Boolean,
     )
 
     private fun scoreGroup(group: List<BagFieldCandidate>): ScoredGroup {
@@ -432,18 +439,19 @@ object BagPhotoScanSupport {
             representative = bestCandidate,
             score = score,
             isConsensus = group.size > 1 || sides > 1 || sourceTypes > 1,
+            isLlmOnly = group.all { it.sourceType == BagFieldSourceType.LLM },
         )
     }
 
     private fun candidateWeight(it: BagFieldCandidate): Int {
         val sourceWeight = when (it.sourceType) {
-            BagFieldSourceType.BARCODE_LOOKUP -> 8
-            BagFieldSourceType.QR_LINK_LOOKUP -> 6
-            BagFieldSourceType.OBSERVED_BARCODE_STEM -> 2
-            BagFieldSourceType.LOCAL_BARCODE_MATCH -> 9
-            BagFieldSourceType.CONSENSUS -> 6
-            BagFieldSourceType.OCR -> 4
-            BagFieldSourceType.LLM -> 10
+            BagFieldSourceType.BARCODE_LOOKUP -> 18
+            BagFieldSourceType.QR_LINK_LOOKUP -> 16
+            BagFieldSourceType.OBSERVED_BARCODE_STEM -> 3
+            BagFieldSourceType.LOCAL_BARCODE_MATCH -> 20
+            BagFieldSourceType.CONSENSUS -> 10
+            BagFieldSourceType.OCR -> 6
+            BagFieldSourceType.LLM -> 4
         }
         val confidenceWeight = when (it.confidenceHint) {
             BagFieldConfidence.HIGH -> 4

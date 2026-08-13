@@ -123,6 +123,78 @@ class BagPhotoScanSupportTest {
     }
 
     @Test
+    fun `buildPrefill keeps malformed decaf evidence unknown`() {
+        val prefill = BagPhotoScanSupport.buildPrefill(
+            resolvedFields = mapOf(
+                "isDecaf" to BagFieldEvidence(
+                    fieldName = "isDecaf",
+                    value = "maybe",
+                    sourceType = BagFieldSourceType.LLM,
+                    confidence = BagFieldConfidence.MEDIUM,
+                ),
+            ),
+        )
+
+        assertEquals(null, prefill.isDecaf)
+    }
+
+    @Test
+    fun `authoritative barcode evidence wins over repeated LLM disagreement`() {
+        val resolved = BagPhotoScanSupport.resolveField(
+            fieldName = "origin",
+            candidates = listOf(
+                BagFieldCandidate(
+                    fieldName = "origin",
+                    value = "Colombia",
+                    sourceType = BagFieldSourceType.LOCAL_BARCODE_MATCH,
+                    confidenceHint = BagFieldConfidence.HIGH,
+                ),
+                BagFieldCandidate(
+                    fieldName = "origin",
+                    value = "Ethiopia",
+                    sourceType = BagFieldSourceType.LLM,
+                    confidenceHint = BagFieldConfidence.HIGH,
+                ),
+                BagFieldCandidate(
+                    fieldName = "origin",
+                    value = "Ethiopia",
+                    sourceType = BagFieldSourceType.LLM,
+                    confidenceHint = BagFieldConfidence.HIGH,
+                ),
+                BagFieldCandidate(
+                    fieldName = "origin",
+                    value = "Ethiopia",
+                    sourceType = BagFieldSourceType.LLM,
+                    confidenceHint = BagFieldConfidence.HIGH,
+                ),
+            ),
+        )
+
+        assertNotNull(resolved)
+        assertEquals("Colombia", resolved!!.value)
+        assertEquals(BagFieldSourceType.LOCAL_BARCODE_MATCH, resolved.sourceType)
+        assertEquals(BagFieldConfidence.HIGH, resolved.confidence)
+    }
+
+    @Test
+    fun `LLM-only evidence is capped below high confidence`() {
+        val resolved = BagPhotoScanSupport.resolveField(
+            fieldName = "origin",
+            candidates = listOf(
+                BagFieldCandidate(
+                    fieldName = "origin",
+                    value = "Ethiopia",
+                    sourceType = BagFieldSourceType.LLM,
+                    confidenceHint = BagFieldConfidence.HIGH,
+                ),
+            ),
+        )
+
+        assertNotNull(resolved)
+        assertEquals(BagFieldConfidence.MEDIUM, resolved!!.confidence)
+    }
+
+    @Test
     fun `resolveField keeps strongest representative while merging multilingual canonical aliases`() {
         val resolved = BagPhotoScanSupport.resolveField(
             fieldName = "origin",

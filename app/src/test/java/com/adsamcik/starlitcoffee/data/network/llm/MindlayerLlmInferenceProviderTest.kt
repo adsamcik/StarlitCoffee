@@ -906,15 +906,14 @@ class MindlayerLlmInferenceProviderTest {
         assertEquals("true", decaf?.value)
     }
 
-    // ==================== Idea #1 — isDecaf defaults to false ====================
-
     @Test
-    fun `parseResponse defaults isDecaf to false when requested but model abstained`() {
+    fun `parseResponse keeps isDecaf unknown when requested but model abstained`() {
         val json = """{ "fields": { "name": {"value": "X", "status": "found"} } }"""
         val result = MindlayerLlmInferenceProvider.parseResponse(json, setOf("name", "isDecaf"))
-        val decaf = (result as LlmExtractionResult.Success).fieldCandidates
-            .firstOrNull { it.fieldName == "isDecaf" }
-        assertEquals("absent isDecaf should default to false when explicitly requested", "false", decaf?.value)
+        assertTrue(
+            "absent isDecaf should remain unknown",
+            (result as LlmExtractionResult.Success).fieldCandidates.none { it.fieldName == "isDecaf" },
+        )
     }
 
     @Test
@@ -928,12 +927,23 @@ class MindlayerLlmInferenceProviderTest {
     }
 
     @Test
-    fun `parseResponse keeps explicit isDecaf true over the false default`() {
+    fun `parseResponse keeps explicit isDecaf true`() {
         val json = """{ "fields": { "isDecaf": {"value": true, "status": "found"} } }"""
         val result = MindlayerLlmInferenceProvider.parseResponse(json, setOf("isDecaf"))
         val decaf = (result as LlmExtractionResult.Success).fieldCandidates
             .first { it.fieldName == "isDecaf" }
         assertEquals("true", decaf.value)
+    }
+
+    @Test
+    fun `parseResponse rejects malformed isDecaf value`() {
+        val json = """{ "fields": { "isDecaf": {"value": "maybe", "status": "found"} } }"""
+        val result = MindlayerLlmInferenceProvider.parseResponse(json, setOf("isDecaf"))
+
+        assertTrue(
+            "malformed isDecaf must remain unknown",
+            (result as LlmExtractionResult.Success).fieldCandidates.none { it.fieldName == "isDecaf" },
+        )
     }
 
     // ==================== Idea #6 — roastLevel enum normalization ====================
