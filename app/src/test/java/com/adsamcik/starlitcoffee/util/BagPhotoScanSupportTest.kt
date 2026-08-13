@@ -195,7 +195,7 @@ class BagPhotoScanSupportTest {
     }
 
     @Test
-    fun `resolveField keeps strongest representative while merging multilingual canonical aliases`() {
+    fun `resolveField keeps authoritative representative over multilingual OCR alias`() {
         val resolved = BagPhotoScanSupport.resolveField(
             fieldName = "origin",
             candidates = listOf(
@@ -219,7 +219,7 @@ class BagPhotoScanSupportTest {
         )
 
         assertNotNull(resolved)
-        assertEquals(BagFieldSourceType.CONSENSUS, resolved!!.sourceType)
+        assertEquals(BagFieldSourceType.LOCAL_BARCODE_MATCH, resolved!!.sourceType)
         assertEquals("Ethiopia", resolved.value)
         assertEquals("Etiopie", resolved.rawValue)
         assertEquals("ETHIOPIA", resolved.canonicalKey)
