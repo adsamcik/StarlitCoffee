@@ -213,6 +213,7 @@ fun AddBagSheet(
     onExploreQrUrl: ((String, (QrCoffeeMetadata?) -> Unit) -> Unit)? = null,
     onRetryLlmEnrichment: (() -> Unit)? = null,
     onEnableAi: (() -> Unit)? = null,
+    onSetupAi: (() -> Unit)? = null,
     onScanMorePhotos: (() -> Unit)? = null,
 ) {
     val uriHandler = LocalUriHandler.current
@@ -720,6 +721,7 @@ fun AddBagSheet(
                             hasLlmEvidence = hasLlmEvidence,
                             onRetry = onRetryLlmEnrichment,
                             onEnableAi = onEnableAi,
+                            onSetupAi = onSetupAi,
                         )
                         if (!snapApproveMode) {
                             selectedEvidence?.let { evidence ->
@@ -1795,6 +1797,7 @@ private fun LlmEnrichmentStatusCard(
     hasLlmEvidence: Boolean,
     onRetry: (() -> Unit)?,
     onEnableAi: (() -> Unit)? = null,
+    onSetupAi: (() -> Unit)? = null,
 ) {
     // NOT_RUN has nothing to say, and a SUCCEEDED pass with no actual LLM evidence is
     // indistinguishable from "didn't run" — both stay silent. FAILED IS surfaced, but
@@ -1810,13 +1813,17 @@ private fun LlmEnrichmentStatusCard(
         LlmEnrichmentStatus.SUCCEEDED -> R.string.msg_llm_enrichment_succeeded
         LlmEnrichmentStatus.FAILED -> R.string.msg_llm_enrichment_failed
         LlmEnrichmentStatus.UNAVAILABLE -> R.string.msg_llm_enrichment_unavailable
+        LlmEnrichmentStatus.SETUP_REQUIRED -> R.string.msg_llm_model_setup_required
+        LlmEnrichmentStatus.TIMED_OUT -> R.string.msg_llm_enrichment_timed_out
         LlmEnrichmentStatus.NOT_RUN -> return
     }
     // Both FAILED and UNAVAILABLE offer a retry, but only UNAVAILABLE ("AI not set up
     // yet") gets attention colour; FAILED stays calm because it self-heals on retry.
     val canRetry = status == LlmEnrichmentStatus.FAILED ||
-        status == LlmEnrichmentStatus.UNAVAILABLE
-    val emphasize = status == LlmEnrichmentStatus.UNAVAILABLE
+        status == LlmEnrichmentStatus.UNAVAILABLE ||
+        status == LlmEnrichmentStatus.TIMED_OUT
+    val emphasize = status == LlmEnrichmentStatus.UNAVAILABLE ||
+        status == LlmEnrichmentStatus.SETUP_REQUIRED
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -1836,6 +1843,11 @@ private fun LlmEnrichmentStatusCard(
                 },
             )
             when {
+                status == LlmEnrichmentStatus.SETUP_REQUIRED && onSetupAi != null -> {
+                    TextButton(onClick = onSetupAi) {
+                        Text(stringResource(R.string.action_set_up_ai))
+                    }
+                }
                 // "Unavailable" is usually "Mindlayer is installed but this app
                 // was never authorised". Offer an explicit authorization prompt
                 // instead of a retry that can't succeed without consent;

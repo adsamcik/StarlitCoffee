@@ -907,6 +907,7 @@ fun BagInventoryScreen(
                 isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
             },
             onEnableAi = aiConsentFlow.request,
+            onSetupAi = brewViewModel::openMindlayerModelSetup,
             onDismiss = {
                 val discardedPhotoUris = capturedPhotoUris
                 val discardedSessionId = bagDraftSessionId

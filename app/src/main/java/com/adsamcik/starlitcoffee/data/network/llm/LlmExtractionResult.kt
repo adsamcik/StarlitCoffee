@@ -15,8 +15,15 @@ sealed interface LlmExtractionResult {
     ) : LlmExtractionResult
 
     /** LLM service is not configured or not reachable. */
-    data class Unavailable(val reason: String) : LlmExtractionResult
+    data class Unavailable(
+        val reason: String,
+        val setupRequired: Boolean = false,
+    ) : LlmExtractionResult
 
     /** LLM call failed (network error, rate limit, etc.). */
-    data class Failed(val error: String, val retryable: Boolean = false) : LlmExtractionResult
+    data class Failed(
+        val error: String,
+        val retryable: Boolean = false,
+        val retryAfterMs: Long? = null,
+    ) : LlmExtractionResult
 }

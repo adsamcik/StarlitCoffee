@@ -2054,6 +2054,24 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
+    /** Open Mindlayer's own model screen for the pending scan. */
+    fun openMindlayerModelSetup() {
+        val app = application as? com.adsamcik.starlitcoffee.StarlitCoffeeApp ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                app.getOrCreateMindlayerServices()
+                    ?.client
+                    ?.getModelSetupAction(com.adsamcik.mindlayer.ModelReadinessItem.FAMILY_CHAT)
+                    ?.setupIntent
+                    ?.send()
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Exception) {
+                Log.w("BrewViewModel", "Could not open Mindlayer model setup", error)
+            }
+        }
+    }
+
     private fun observeBagExtractionWork(
         workId: String,
         sessionId: String,

@@ -18,6 +18,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Fake [Mindlayer] exposing only what [MindlayerOcrService] actually calls
@@ -28,13 +29,16 @@ import kotlin.time.Duration
  */
 private class FakeMindlayer(
     private val supportedFeatures: () -> Set<String>,
+    private val onAwaitConnected: (Duration) -> Unit = {},
 ) : Mindlayer {
 
     override val connectionState: StateFlow<ConnectionState> =
         MutableStateFlow(ConnectionState.CONNECTED)
 
-    override suspend fun awaitConnected(timeout: Duration): Capabilities =
-        Capabilities(supportedFeatures())
+    override suspend fun awaitConnected(timeout: Duration): Capabilities {
+        onAwaitConnected(timeout)
+        return Capabilities(supportedFeatures())
+    }
 
     override fun disconnect(): Unit = error("not used in test")
 
@@ -110,5 +114,19 @@ class MindlayerOcrServiceTest {
 
         assertFalse(service.isAvailable())
         assertFalse(service.isAvailable())
+    }
+
+    @Test
+    fun `capability connection wait is bounded to five seconds`() = runTest {
+        var observedTimeout: Duration? = null
+        val service = MindlayerOcrService(
+            FakeMindlayer(
+                supportedFeatures = { emptySet() },
+                onAwaitConnected = { observedTimeout = it },
+            ),
+        )
+
+        assertFalse(service.isAvailable())
+        assertEquals(5.seconds, observedTimeout)
     }
 }

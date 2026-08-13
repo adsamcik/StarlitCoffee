@@ -323,6 +323,7 @@ fun ScanAddBagReview(
             isRetryingLlm = data.sessionId?.let(brewViewModel::retryBagPhotoLlm) == true
         },
         onEnableAi = aiConsentFlow.request,
+        onSetupAi = brewViewModel::openMindlayerModelSetup,
         onDismiss = callbacks.onExit,
         onSave = save@{ name, roaster, origin, region, farm, altitude, roastLevel, barcode, weightG, notes,
                    variety, processType, tastingNotes, isDecaf, decafProcess, roastDateMillis, expiryDateMillis ->

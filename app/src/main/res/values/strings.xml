@@ -584,6 +584,9 @@
     <string name="msg_llm_enrichment_succeeded">AI enrichment improved this label scan.</string>
     <string name="msg_llm_enrichment_failed">The AI couldn\'t finish reading this label this time — it timed out or hit a temporary error (it already retried automatically). Tap retry to try once more, or just fill in the fields below.</string>
     <string name="msg_llm_enrichment_unavailable">AI enrichment is not available right now. You can retry or continue editing manually.</string>
+    <string name="msg_llm_model_setup_required">Mindlayer needs its on-device model before AI can read this label. Open setup, then retry; the fields already found are safe to edit.</string>
+    <string name="msg_llm_enrichment_timed_out">The scan reached its five-minute limit. You can use the fields already found, edit them, or retry.</string>
+    <string name="action_set_up_ai">Open model setup</string>
     <string name="action_retry_llm_enrichment">Retry AI enrichment</string>
 
     <!-- BrewLogDetailScreen -->

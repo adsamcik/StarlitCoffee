@@ -19,11 +19,14 @@ import com.adsamcik.mindlayer.sdk.JsonOutputStrategy
 import com.adsamcik.mindlayer.sdk.JsonValidationDepth
 import com.adsamcik.mindlayer.sdk.Mindlayer
 import com.adsamcik.mindlayer.sdk.MindlayerException
+import com.adsamcik.mindlayer.ModelReadinessItem
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmPassDiagnostic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.json.Json
@@ -37,8 +40,18 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonObject
+import kotlin.time.Duration.Companion.seconds
 
 private const val MINDLAYER_LLM_TAG = "MindlayerLlm"
+
+private fun MindlayerException.isRetryableForScan(): Boolean = codeName in setOf(
+    "ENGINE_BUSY",
+    "FRAME_DROPPED_BUSY",
+    "TRANSIENT_RESOURCE_EXHAUSTED",
+    "ENGINE_INITIALIZING",
+    "SERVICE_UNAVAILABLE",
+    "SERVICE_DIED",
+)
 
 internal class VisionInferenceBudget(
     private val consumed: AtomicBoolean = AtomicBoolean(false),
@@ -175,6 +188,7 @@ class MindlayerLlmInferenceProvider(
             recordPass(LlmPassDiagnostic.Pass.TRANSLATE, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = normalized)
             normalized
         } catch (_: TimeoutCancellationException) {
+            currentCoroutineContext().ensureActive()
             recordPass(
                 LlmPassDiagnostic.Pass.TRANSLATE, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
                 error = "Translate timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
@@ -294,6 +308,7 @@ class MindlayerLlmInferenceProvider(
             recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
             parseResponse(responseText, request.fieldsNeeded)
         } catch (_: TimeoutCancellationException) {
+            currentCoroutineContext().ensureActive()
             recordPass(
                 LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
                 error = "Inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
@@ -311,7 +326,8 @@ class MindlayerLlmInferenceProvider(
             recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
             LlmExtractionResult.Failed(
                 "Inference failed: ${e.message}",
-                retryable = e.codeName != "UNSUPPORTED_TOOL_CALL",
+                retryable = e.isRetryableForScan(),
+                retryAfterMs = e.retryAfterMs,
             )
         } catch (e: Exception) {
             recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
@@ -333,6 +349,19 @@ class MindlayerLlmInferenceProvider(
             )
         }
         if (connectionFailure != null) return connectionFailure
+        val readiness = mindlayer.getModelReadiness()
+            .item(ModelReadinessItem.FAMILY_CHAT)
+        if (readiness?.state == ModelReadinessItem.STATE_SETUP_REQUIRED) {
+            return LlmExtractionResult.Unavailable(
+                reason = "Mindlayer chat model setup is required",
+                setupRequired = true,
+            )
+        }
+        if (readiness?.state == ModelReadinessItem.STATE_FAILED) {
+            return LlmExtractionResult.Unavailable(
+                "Mindlayer chat model is unavailable: ${readiness.reasonCode ?: "unknown error"}",
+            )
+        }
         if (request.rawOcrText.isNullOrBlank()) {
             return LlmExtractionResult.Unavailable(
                 "No OCR text available for LLM extraction (text-only mode)",
@@ -373,7 +402,7 @@ class MindlayerLlmInferenceProvider(
     }
 
     private suspend fun awaitMindlayerConnected() {
-        mindlayer.awaitConnected(kotlin.time.Duration.INFINITE)
+        mindlayer.awaitConnected(CONNECTION_TIMEOUT)
     }
 
     /**
@@ -447,6 +476,7 @@ class MindlayerLlmInferenceProvider(
             recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
             parseResponse(responseText, request.fieldsNeeded, requireEvidenceFor = EVIDENCE_REQUIRED_FIELDS)
         } catch (_: TimeoutCancellationException) {
+            currentCoroutineContext().ensureActive()
             recordPass(
                 LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
                 error = "Vision inference timed out after ${VISION_TIMEOUT_MS / 1000}s",
@@ -529,6 +559,7 @@ class MindlayerLlmInferenceProvider(
             recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
             parseResponse(responseText, request.fieldsNeeded)
         } catch (_: TimeoutCancellationException) {
+            currentCoroutineContext().ensureActive()
             recordPass(
                 LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
                 error = "Combine inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
@@ -601,6 +632,7 @@ class MindlayerLlmInferenceProvider(
             recordPass(LlmPassDiagnostic.Pass.REFINE, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
             parseResponse(responseText, request.fieldsNeeded)
         } catch (_: TimeoutCancellationException) {
+            currentCoroutineContext().ensureActive()
             recordPass(
                 LlmPassDiagnostic.Pass.REFINE, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
                 error = "Refine inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
@@ -719,6 +751,8 @@ class MindlayerLlmInferenceProvider(
          * for the JSON output, so general bags fit with wide margin.
          */
         private const val MAX_TOKENS = 8192
+
+        private val CONNECTION_TIMEOUT = 5.seconds
 
         /** Longest edge (px) the label image is downscaled to before the vision pass. */
         private const val MAX_VISION_IMAGE_DIM = 1024

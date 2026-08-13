@@ -6,6 +6,7 @@ import android.graphics.Point
 import android.graphics.Rect
 import android.util.Log
 import com.adsamcik.mindlayer.ServiceCapabilities
+import com.adsamcik.mindlayer.ModelReadinessItem
 import com.adsamcik.mindlayer.sdk.Mindlayer
 import com.adsamcik.mindlayer.sdk.OcrProfile
 import com.adsamcik.mindlayer.sdk.OcrResult
@@ -14,9 +15,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import java.io.ByteArrayOutputStream
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 private const val TAG = "MindlayerOcr"
+
+class MindlayerModelSetupRequiredException(
+    val family: String,
+) : Exception("Mindlayer model setup is required for $family")
 
 /**
  * OCR service that uses Mindlayer's PaddleOCR-backed one-shot image API
@@ -90,7 +95,7 @@ class MindlayerOcrService(
     }
 
     /** Cheap check used by callers that want to short-circuit empty bitmaps. */
-    override suspend fun isAvailable(): Boolean = ensureCapability()
+    override suspend fun isAvailable(): Boolean = ensureCapability(throwOnSetupRequired = false)
 
     /**
      * Recognise text in [bitmap]. Returns `null` if OCR is unavailable or the
@@ -98,7 +103,7 @@ class MindlayerOcrService(
      * cancellation propagates.
      */
     override suspend fun recognize(bitmap: Bitmap): RecognizedText? {
-        if (!ensureCapability()) {
+        if (!ensureCapability(throwOnSetupRequired = true)) {
             Log.w(TAG, "OCR capability not advertised by Mindlayer service")
             return null
         }
@@ -127,14 +132,23 @@ class MindlayerOcrService(
         }.getOrNull()
     }
 
-    private suspend fun ensureCapability(): Boolean {
+    private suspend fun ensureCapability(throwOnSetupRequired: Boolean): Boolean {
         if (capabilityAvailable) return true
         return try {
-            val caps = mindlayer.awaitConnected(Duration.INFINITE)
+            val caps = mindlayer.awaitConnected(CONNECTION_TIMEOUT)
             val supported = caps.supports(ServiceCapabilities.FEATURE_OCR_IMAGE_ONESHOT)
             if (supported) capabilityAvailable = true
+            if (!supported && throwOnSetupRequired) {
+                val readiness = mindlayer.getModelReadiness()
+                    .item(ModelReadinessItem.FAMILY_OCR)
+                if (readiness?.state == ModelReadinessItem.STATE_SETUP_REQUIRED) {
+                    throw MindlayerModelSetupRequiredException(ModelReadinessItem.FAMILY_OCR)
+                }
+            }
             supported
         } catch (e: CancellationException) {
+            throw e
+        } catch (e: MindlayerModelSetupRequiredException) {
             throw e
         } catch (e: Exception) {
             Log.w(TAG, "Capability check failed: ${e.message}", e)
@@ -145,6 +159,8 @@ class MindlayerOcrService(
     companion object {
         /** Overall budget for a single one-shot OCR call. */
         internal const val SESSION_TIMEOUT_MS: Long = 60_000L
+
+        private val CONNECTION_TIMEOUT = 5.seconds
 
         /** PNG quality — PNG is lossless so this is effectively the compression level. */
         private const val PNG_QUALITY: Int = 100

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Bag scans now use one five-minute deadline across WorkManager restarts, and
+  Mindlayer connection checks stop after five seconds instead of waiting
+  indefinitely. When time runs out, the editable fields already found are
+  returned rather than leaving analysis running forever.
+- Updated the Mindlayer SDK integration to `1.0.0-alpha.7` and now checks the
+  required OCR/chat model readiness before starting doomed AI work.
+
+### Fixed
+
+- Model setup failures now lead directly to Mindlayer's Models screen, while
+  transient busy/resource errors honor the SDK retry hint within a small cap.
+- Cancelling an outer scan deadline continues through provider-level timeout
+  handling so native Mindlayer inference receives the cancellation promptly.
+
 ## [1.5.0] — 2026-08-11
 
 ### Added

@@ -21,6 +21,7 @@ import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.notification.NotificationChannels
 import com.adsamcik.starlitcoffee.scan.BagPhotoExtractor
+import com.adsamcik.starlitcoffee.scan.ScanDeadline
 import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
 import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
@@ -102,6 +103,7 @@ class BagExtractionWorker(
                     photoUris = photoUris,
                     knownFieldValues = knownValues,
                     runLlm = runLlm,
+                    deadline = ScanDeadline.fromStartedAt(input.createdAtMillis),
                     onProgress = ::publishProgress,
                     onPartialResult = ::publishPreview,
                 )

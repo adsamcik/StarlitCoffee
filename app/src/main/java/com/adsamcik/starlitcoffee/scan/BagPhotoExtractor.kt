@@ -25,6 +25,7 @@ import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmCallGate
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.RecognizedText
+import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerModelSetupRequiredException
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.domain.scanfield.FieldContext
 import com.adsamcik.starlitcoffee.util.BagCaptureQuality
@@ -67,7 +68,9 @@ import java.io.InputStream
 import java.util.Locale
 import kotlin.coroutines.resume
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -132,6 +135,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         // many TOTAL attempts before giving up, with a short backoff between.
         private const val LLM_MAX_ATTEMPTS = 3
         private const val LLM_RETRY_BACKOFF_MS = 600L
+        private const val MAX_RETRY_HINT_MS = 5_000L
         // Outer safety-net cap for the multimodal vision call — same reasoning as
         // BAG_PHOTO_LLM_TIMEOUT_MS, above the inner vision generation timeout.
         private const val BAG_PHOTO_VISION_TIMEOUT_MS = 390_000L
@@ -184,6 +188,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         photoUris: List<String>,
         knownFieldValues: KnownFieldValues,
         runLlm: Boolean = true,
+        deadline: ScanDeadline = ScanDeadline.startingNow(),
         onProgress: (ScanProgress) -> Unit = {},
         onPartialResult: (BagPhotoProcessingResult) -> Unit = {},
     ): BagPhotoProcessingResult {
@@ -197,24 +202,43 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         val barcodeScannerProvider = {
             barcodeScanner ?: barcodeScannerFactory().also { barcodeScanner = it }
         }
+        var latestPartialResult: BagPhotoProcessingResult? = null
+        val publishPartialResult: (BagPhotoProcessingResult) -> Unit = { partial ->
+            latestPartialResult = partial
+            onPartialResult(partial)
+        }
         return try {
-            reporter.report(ScanStage.OCR)
-            val processedPhotos = photoUris.mapIndexedNotNull { index, uriStr ->
-                processBagPhoto(
-                    uriStr = uriStr,
-                    side = if (index == 0) BagCaptureSide.FRONT else BagCaptureSide.BACK,
-                    barcodeScannerProvider = barcodeScannerProvider,
+            deadline.run {
+                reporter.report(ScanStage.OCR)
+                val processedPhotos = photoUris.mapIndexedNotNull { index, uriStr ->
+                    processBagPhoto(
+                        uriStr = uriStr,
+                        side = if (index == 0) BagCaptureSide.FRONT else BagCaptureSide.BACK,
+                        barcodeScannerProvider = barcodeScannerProvider,
+                    )
+                }
+                emitBagPhotoResult(
+                    photoUriList = photoUris,
+                    processedPhotos = processedPhotos,
+                    runLlm = runLlm,
+                    reporter = reporter,
+                    onPartialResult = publishPartialResult,
                 )
             }
-            emitBagPhotoResult(
-                photoUriList = photoUris,
-                processedPhotos = processedPhotos,
-                runLlm = runLlm,
-                reporter = reporter,
-                onPartialResult = onPartialResult,
-            )
+        } catch (_: ScanDeadlineExceededException) {
+            reporter.report(ScanStage.FINALIZING)
+            (latestPartialResult ?: BagPhotoProcessingResult(
+                capturedPhotoUris = photoUris.joinToString(","),
+            )).copy(llmStatus = LlmEnrichmentStatus.TIMED_OUT)
+        } catch (_: MindlayerModelSetupRequiredException) {
+            reporter.report(ScanStage.FINALIZING)
+            (latestPartialResult ?: BagPhotoProcessingResult(
+                capturedPhotoUris = photoUris.joinToString(","),
+            )).copy(llmStatus = LlmEnrichmentStatus.SETUP_REQUIRED)
         } finally {
-            barcodeScanner?.close()
+            if (barcodeScanner != null) {
+                runCatching { barcodeScanner.close() }
+            }
         }
     }
 
@@ -603,6 +627,8 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 detectedQrUrl = detection.qrUrl,
             )
         } catch (e: CancellationException) {
+            throw e
+        } catch (e: MindlayerModelSetupRequiredException) {
             throw e
         } catch (e: Exception) {
             Log.w(BAG_PHOTO_TAG, "Failed to process bag photo for OCR and barcode extraction", e)
@@ -1118,7 +1144,13 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             }
             is LlmExtractionResult.Unavailable -> {
                 Log.w(BAG_PHOTO_TAG, "LLM enrichment unavailable: ${result.reason}")
-                LlmEnrichmentOutcome(status = LlmEnrichmentStatus.UNAVAILABLE)
+                LlmEnrichmentOutcome(
+                    status = if (result.setupRequired) {
+                        LlmEnrichmentStatus.SETUP_REQUIRED
+                    } else {
+                        LlmEnrichmentStatus.UNAVAILABLE
+                    },
+                )
             }
             is LlmExtractionResult.Failed -> {
                 Log.w(BAG_PHOTO_TAG, "LLM enrichment failed: ${result.error}")
@@ -1147,6 +1179,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                     }
                 }
             } catch (_: TimeoutCancellationException) {
+                currentCoroutineContext().ensureActive()
                 LlmExtractionResult.Failed(
                     "Brew photo LLM enrichment timed out after ${BAG_PHOTO_LLM_TIMEOUT_MS / 1000}s",
                     retryable = true,
@@ -1164,7 +1197,10 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 BAG_PHOTO_TAG,
                 "LLM enrichment attempt $attempt failed (retryable): ${result.error}; auto-retrying",
             )
-            delay(LLM_RETRY_BACKOFF_MS * attempt)
+            val retryDelayMs = result.retryAfterMs
+                ?.coerceIn(0L, MAX_RETRY_HINT_MS)
+                ?: (LLM_RETRY_BACKOFF_MS * attempt)
+            delay(retryDelayMs)
             attempt++
         }
     }
@@ -1202,6 +1238,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         )
         val textCandidates = attenuateLlmConfidenceForQuality(llmOutcome.candidates, goldenQuality)
         allCandidates += textCandidates
+        if (llmOutcome.status == LlmEnrichmentStatus.SETUP_REQUIRED) return llmOutcome
 
         reporter.report(ScanStage.VISION)
         val visionCandidates = attenuateLlmConfidenceForQuality(
@@ -1310,6 +1347,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 }
             }
         } catch (_: TimeoutCancellationException) {
+            currentCoroutineContext().ensureActive()
             LlmExtractionResult.Failed("Combine enrichment timed out", retryable = false)
         } catch (e: CancellationException) {
             throw e
@@ -1443,6 +1481,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 }
             }
         } catch (_: TimeoutCancellationException) {
+            currentCoroutineContext().ensureActive()
             LlmExtractionResult.Failed("Refine enrichment timed out", retryable = false)
         } catch (e: CancellationException) {
             throw e
@@ -1538,6 +1577,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 }
             }
         } catch (_: TimeoutCancellationException) {
+            currentCoroutineContext().ensureActive()
             LlmExtractionResult.Failed("Vision enrichment timed out", retryable = false)
         } catch (e: CancellationException) {
             throw e

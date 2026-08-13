@@ -139,6 +139,8 @@ enum class LlmEnrichmentStatus {
     SUCCEEDED,
     FAILED,
     UNAVAILABLE,
+    SETUP_REQUIRED,
+    TIMED_OUT,
 }
 
 data class BagPhotoProcessingResult(
