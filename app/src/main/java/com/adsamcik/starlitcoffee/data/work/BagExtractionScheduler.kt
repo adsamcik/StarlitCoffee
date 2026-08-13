@@ -216,6 +216,7 @@ object BagExtractionScheduler {
             )
         }
         if (cancelWork && workId != null) {
+            BagExtractionCheckpointStore.delete(context, workId)
             BagExtractionResultStore.delete(context, workId)
             BagReviewQueue.removeEverywhere(context, workId)
             AndroidBagAnalysisNotifier.cancel(context, workId)
@@ -304,6 +305,7 @@ object BagExtractionScheduler {
             remove(DeliveryState.notificationKey(KEY_NOTIFICATION_CLAIMED_AT, workId))
         }
         AndroidBagAnalysisNotifier.cancel(context, workId)
+        BagExtractionCheckpointStore.delete(context, workId)
         BagExtractionResultStore.delete(context, workId)
         clearAllWorkMetadata(context, workId)
     }

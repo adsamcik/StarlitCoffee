@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   returned rather than leaving analysis running forever.
 - Updated the Mindlayer SDK integration to `1.0.0-alpha.7` and now checks the
   required OCR/chat model readiness before starting doomed AI work.
+- Saved barcode and QR data now takes precedence over AI guesses, and AI-only
+  values no longer appear as high-confidence facts.
 
 ### Fixed
 
@@ -22,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   transient busy/resource errors honor the SDK retry hint within a small cap.
 - Cancelling an outer scan deadline continues through provider-level timeout
   handling so native Mindlayer inference receives the cancellation promptly.
+- Unknown or malformed decaf output stays unset instead of being guessed, and
+  Skip AI now opens the latest saved OCR/barcode result without rerunning OCR.
 
 ## [1.5.0] — 2026-08-11
 

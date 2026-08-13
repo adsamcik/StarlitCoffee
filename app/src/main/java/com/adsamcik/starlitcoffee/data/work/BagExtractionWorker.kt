@@ -150,6 +150,8 @@ class BagExtractionWorker(
         workId: String,
         replay: BagExtractionTerminalReplay,
     ): Result {
+        runCatching { BagExtractionCheckpointStore.delete(applicationContext, workId) }
+            .onFailure { error -> Log.w(TAG, "Could not delete terminal scan checkpoint", error) }
         BagExtractionScheduler.enqueueCompletionNotification(
             applicationContext,
             workId,
@@ -204,6 +206,17 @@ class BagExtractionWorker(
     }
 
     private fun publishPreview(result: BagPhotoProcessingResult) {
+        if (result.hasDeterministicScanData()) {
+            runCatching {
+                BagExtractionCheckpointStore.write(
+                    applicationContext,
+                    id.toString(),
+                    result.encodeToStoredJson(),
+                )
+            }.onFailure { error ->
+                Log.w(TAG, "Could not persist bag analysis checkpoint", error)
+            }
+        }
         latestPreviewJson = result.encodeForProgressJson()
         if (latestPreviewJson == null) {
             Log.w(TAG, "Bag analysis preview is too large for WorkManager progress data")

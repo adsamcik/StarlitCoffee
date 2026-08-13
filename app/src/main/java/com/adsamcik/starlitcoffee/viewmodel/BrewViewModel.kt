@@ -46,6 +46,7 @@ import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.data.work.BagExtractionScheduler
+import com.adsamcik.starlitcoffee.data.work.BagExtractionCheckpointStore
 import com.adsamcik.starlitcoffee.data.work.BagExtractionResultStore
 import com.adsamcik.starlitcoffee.data.work.BagExtractionWorker
 import com.adsamcik.starlitcoffee.data.work.BagReviewContext
@@ -53,6 +54,7 @@ import com.adsamcik.starlitcoffee.data.work.BagReviewQueue
 import com.adsamcik.starlitcoffee.data.work.decodeBagReviewContext
 import com.adsamcik.starlitcoffee.data.work.decodeBagExtractionResult
 import com.adsamcik.starlitcoffee.data.work.encodeToJson
+import com.adsamcik.starlitcoffee.data.work.hasDeterministicScanData
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.notification.BagAnalysisNotifier
 import com.adsamcik.starlitcoffee.notification.BrewSessionNotifier
@@ -2030,24 +2032,46 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
     }
 
-    /**
-     * "Skip AI" on the analyzing screen: cancels the in-flight LLM enrichment so
-     * the bag-photo pipeline settles immediately with the OCR/barcode
-     * candidates. Safe to call before the LLM phase starts (sets a flag the
-     * phase checks) or while it runs (cancels the child coroutine).
-     */
+    /** Finish from the latest OCR/barcode checkpoint, cancelling AI enrichment. */
     fun skipBagPhotoLlm() {
         bagPhotoSkipRequested = true
         bagPhotoLlmDeferred?.cancel()
         val sessionId = activeBagExtractionSessionId ?: return
         val previousContext = bagPhotoLlmRetryContexts[sessionId] ?: return
+        val app = application
+        val previousWorkId = if (app != null && useWorkManager) {
+            BagExtractionScheduler.workIdForSession(app, sessionId)
+                ?: bagExtractionWorkIdsBySession[sessionId]
+                ?: activeBagExtractionWorkId
+        } else {
+            null
+        }
+        val persistedCheckpoint = when {
+            app != null && previousWorkId != null -> runCatching {
+                BagExtractionCheckpointStore.read(app, previousWorkId)
+                    ?.let(::decodeBagExtractionResult)
+            }.getOrNull()
+            else -> null
+        }
+        val checkpoint = (persistedCheckpoint ?: _bagAnalysisPreview.value?.result)
+            ?.takeIf(BagPhotoProcessingResult::hasDeterministicScanData)
         val context = previousContext.copy(
             generationId = startNewBagExtractionGeneration(sessionId),
         )
         bagPhotoLlmRetryContexts[sessionId] = context
         cancelBagPhotoProcessJob()
         bagPhotoLlmDeferred = null
-        if (useWorkManager) {
+        if (checkpoint != null) {
+            deliverBagPhotoResult(
+                result = checkpoint.copy(
+                    capturedPhotoUris = context.photosCsv,
+                    llmStatus = LlmEnrichmentStatus.NOT_RUN,
+                ),
+                sessionId = sessionId,
+                generationId = context.generationId,
+                reviewContext = context.reviewContext,
+            )
+        } else if (useWorkManager) {
             enqueueBagExtraction(context, runLlm = false)
         } else {
             runBagPhotoProcessingInViewModel(context, runLlm = false)
