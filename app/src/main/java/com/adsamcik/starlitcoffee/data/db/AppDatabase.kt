@@ -10,6 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.adsamcik.starlitcoffee.data.db.dao.ActiveBrewSessionDao
 import com.adsamcik.starlitcoffee.data.db.dao.BrewLogDao
 import com.adsamcik.starlitcoffee.data.db.dao.CoffeeBagDao
+import com.adsamcik.starlitcoffee.data.db.dao.CoffeeUsageDao
 import com.adsamcik.starlitcoffee.data.db.dao.CustomBrewerProfileDao
 import com.adsamcik.starlitcoffee.data.db.dao.FlavorTagDao
 import com.adsamcik.starlitcoffee.data.db.dao.GrinderDao
@@ -20,6 +21,7 @@ import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
 import com.adsamcik.starlitcoffee.data.db.entity.ActiveBrewSessionEntity
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CoffeeUsageEntryEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CupPresetEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CustomBrewerProfileEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
@@ -33,6 +35,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
         ActiveBrewSessionEntity::class,
         SavedRecipeEntity::class,
         CoffeeBagEntity::class,
+        CoffeeUsageEntryEntity::class,
         BrewLogEntity::class,
         CustomBrewerProfileEntity::class,
         GrinderEntity::class,
@@ -41,13 +44,14 @@ import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
         UserBarcodeStemEntity::class,
         CupPresetEntity::class,
     ],
-    version = 18,
+    version = 19,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
     abstract fun coffeeBagDao(): CoffeeBagDao
+    abstract fun coffeeUsageDao(): CoffeeUsageDao
     abstract fun brewLogDao(): BrewLogDao
     abstract fun activeBrewSessionDao(): ActiveBrewSessionDao
     abstract fun customBrewerProfileDao(): CustomBrewerProfileDao
@@ -354,6 +358,26 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_18_19 = object : Migration(18, 19) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS coffee_usage_entries (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        coffeeBagId INTEGER NOT NULL,
+                        amountG REAL NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        FOREIGN KEY(coffeeBagId) REFERENCES coffee_bags(id) ON UPDATE NO ACTION ON DELETE CASCADE
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_coffee_usage_entries_coffeeBagId " +
+                        "ON coffee_usage_entries(coffeeBagId)",
+                )
+            }
+        }
+
         // Single source of truth for the migration set, shared by the
         // production builder and MigrationTest so the two cannot drift.
         internal val ALL_MIGRATIONS: Array<Migration> = arrayOf(
@@ -370,6 +394,7 @@ abstract class AppDatabase : RoomDatabase() {
             MIGRATION_15_16,
             MIGRATION_16_17,
             MIGRATION_17_18,
+            MIGRATION_18_19,
         )
 
         /**

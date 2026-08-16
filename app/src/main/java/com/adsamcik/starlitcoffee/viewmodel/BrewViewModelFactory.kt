@@ -9,6 +9,7 @@ import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
+import com.adsamcik.starlitcoffee.data.repository.CoffeeUsageRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
@@ -34,6 +35,11 @@ class BrewViewModelFactory(
                 recipeRepository = RecipeRepository(database.recipeDao()),
                 brewLogRepository = BrewLogRepository(database, database.brewLogDao(), database.flavorTagDao()),
                 coffeeBagRepository = CoffeeBagRepository(database.coffeeBagDao()),
+                coffeeUsageRepository = CoffeeUsageRepository(
+                    coffeeUsageDao = database.coffeeUsageDao(),
+                    coffeeBagDao = database.coffeeBagDao(),
+                    transactionRunner = TransactionRunner.room(database),
+                ),
                 ratioPresetRepository = RatioPresetRepository(database.ratioPresetDao()),
                 userPreferencesRepository = UserPreferencesRepository(application),
                 grinderData = GrinderDataSource.getInstance(application),

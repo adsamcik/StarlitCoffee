@@ -2,10 +2,12 @@ package com.adsamcik.starlitcoffee.testutil
 
 import com.adsamcik.starlitcoffee.data.db.dao.BrewLogDao
 import com.adsamcik.starlitcoffee.data.db.dao.CoffeeBagDao
+import com.adsamcik.starlitcoffee.data.db.dao.CoffeeUsageDao
 import com.adsamcik.starlitcoffee.data.db.dao.FlavorTagDao
 import com.adsamcik.starlitcoffee.data.db.dao.RecipeDao
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CoffeeUsageEntryEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import kotlinx.coroutines.flow.Flow
@@ -174,6 +176,39 @@ internal class FakeCoffeeBagDao(
     override suspend fun getDistinctRoastLevels(): List<String> = bags.mapNotNull { it.roastLevel }.distinct()
 
     override suspend fun getDistinctFarms(): List<String> = bags.mapNotNull { it.farm }.distinct()
+}
+
+internal class FakeCoffeeUsageDao : CoffeeUsageDao {
+    private val entries = mutableListOf<CoffeeUsageEntryEntity>()
+    private val flow = MutableStateFlow<List<CoffeeUsageEntryEntity>>(emptyList())
+    private var nextId = 1L
+
+    override suspend fun insert(entry: CoffeeUsageEntryEntity): Long {
+        val id = nextId++
+        entries += entry.copy(id = id)
+        publish()
+        return id
+    }
+
+    override suspend fun delete(entry: CoffeeUsageEntryEntity) {
+        entries.removeAll { it.id == entry.id }
+        publish()
+    }
+
+    override suspend fun getByIdOnce(id: Long): CoffeeUsageEntryEntity? =
+        entries.find { it.id == id }
+
+    override fun getAll(): Flow<List<CoffeeUsageEntryEntity>> = flow
+
+    override fun getByBag(bagId: Long): Flow<List<CoffeeUsageEntryEntity>> =
+        flow.map { list -> list.filter { it.coffeeBagId == bagId } }
+
+    private fun publish() {
+        flow.value = entries.sortedWith(
+            compareByDescending<CoffeeUsageEntryEntity> { it.createdAt }
+                .thenByDescending { it.id },
+        )
+    }
 }
 
 internal class FakeFlavorTagDao : FlavorTagDao {

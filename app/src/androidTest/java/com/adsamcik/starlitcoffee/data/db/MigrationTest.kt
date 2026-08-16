@@ -30,14 +30,56 @@ class MigrationTest {
      * drift (a forgotten column/index) that would crash on app upgrade.
      */
     @Test
-    fun migrateAll10To18_matchesExportedSchema() {
+    fun migrateAll10To19_matchesExportedSchema() {
         helper.createDatabase(MIGRATION_TEST_DB, 10).close()
         helper.runMigrationsAndValidate(
             MIGRATION_TEST_DB,
-            18,
+            19,
             true,
             *AppDatabase.ALL_MIGRATIONS,
         ).close()
+    }
+
+    @Test
+    fun migrate18to19_addsCoffeeUsageHistoryLinkedToBags() {
+        val databaseName = "starlit-test-db-v19"
+        helper.createDatabase(databaseName, 18).apply {
+            execSQL(
+                """
+                INSERT INTO coffee_bags (id, name, isDecaf, status, createdAt)
+                VALUES (7, 'Tracked coffee', 0, 'OPEN', 1735689600000)
+                """.trimIndent(),
+            )
+            close()
+        }
+
+        helper.runMigrationsAndValidate(
+            databaseName,
+            19,
+            true,
+            AppDatabase.MIGRATION_18_19,
+        ).use { db ->
+            db.execSQL(
+                """
+                INSERT INTO coffee_usage_entries (coffeeBagId, amountG, createdAt)
+                VALUES (7, 18.0, 1735689601000)
+                """.trimIndent(),
+            )
+            db.query(
+                "SELECT coffeeBagId, amountG, createdAt FROM coffee_usage_entries",
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals(7L, cursor.getLong(0))
+                assertEquals(18.0, cursor.getDouble(1), 0.001)
+                assertEquals(1735689601000L, cursor.getLong(2))
+            }
+
+            db.execSQL("DELETE FROM coffee_bags WHERE id = 7")
+            db.query("SELECT COUNT(*) FROM coffee_usage_entries").use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals(0, cursor.getInt(0))
+            }
+        }
     }
 
     @Test

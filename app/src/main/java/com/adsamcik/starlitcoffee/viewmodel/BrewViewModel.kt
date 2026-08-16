@@ -12,6 +12,7 @@ import androidx.work.WorkInfo
 import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CoffeeUsageEntryEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.R
@@ -41,6 +42,8 @@ import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
+import com.adsamcik.starlitcoffee.data.repository.CoffeeUsageLogResult
+import com.adsamcik.starlitcoffee.data.repository.CoffeeUsageRepository
 import com.adsamcik.starlitcoffee.data.repository.RatioPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
@@ -202,6 +205,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private val recipeRepository: RecipeRepository? = null,
     private val brewLogRepository: BrewLogRepository? = null,
     private val coffeeBagRepository: CoffeeBagRepository? = null,
+    private val coffeeUsageRepository: CoffeeUsageRepository? = null,
     private val ratioPresetRepository: RatioPresetRepository? = null,
     private val userPreferencesRepository: UserPreferencesRepository? = null,
     private val grinderData: GrinderDataProvider = DefaultGrinders,
@@ -260,6 +264,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     val flavorTags: StateFlow<List<FlavorTagEntity>> = _flavorTags.asStateFlow()
     private val _coffeeBags = MutableStateFlow(emptyList<CoffeeBagEntity>())
     val coffeeBags: StateFlow<List<CoffeeBagEntity>> = _coffeeBags.asStateFlow()
+    private val _coffeeUsageEntries = MutableStateFlow(emptyList<CoffeeUsageEntryEntity>())
+    val coffeeUsageEntries: StateFlow<List<CoffeeUsageEntryEntity>> =
+        _coffeeUsageEntries.asStateFlow()
     private val _isCoffeeBagInventoryLoaded = MutableStateFlow(false)
     val isCoffeeBagInventoryLoaded: StateFlow<Boolean> =
         _isCoffeeBagInventoryLoaded.asStateFlow()
@@ -394,6 +401,11 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 _isCoffeeBagInventoryLoaded.value = true
                 loadKnownFieldValues()
                 refreshInventoryAlerts()
+            }
+        }
+        viewModelScope.launch {
+            coffeeUsageRepository?.getAllEntries()?.collect { entries ->
+                _coffeeUsageEntries.value = entries
             }
         }
         collectRatioPresets(_uiState.value.method)
@@ -1380,6 +1392,47 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 updated = updated.copy(status = "FINISHED")
             }
             repository.updateBag(updated)
+        }
+    }
+
+    fun logCoffeeUse(
+        bagId: Long,
+        amountG: Float,
+        onResult: (CoffeeUsageLogResult) -> Unit,
+    ) {
+        val repository = coffeeUsageRepository
+        if (repository == null) {
+            onResult(CoffeeUsageLogResult.Failed)
+            return
+        }
+        viewModelScope.launch {
+            val result = try {
+                repository.logUse(bagId = bagId, amountG = amountG)
+            } catch (error: Exception) {
+                Log.e("BrewViewModel", "Failed to log coffee use", error)
+                CoffeeUsageLogResult.Failed
+            }
+            onResult(result)
+        }
+    }
+
+    fun undoCoffeeUse(
+        logged: CoffeeUsageLogResult.Logged,
+        onResult: (Boolean) -> Unit = {},
+    ) {
+        val repository = coffeeUsageRepository
+        if (repository == null) {
+            onResult(false)
+            return
+        }
+        viewModelScope.launch {
+            val undone = try {
+                repository.undo(logged)
+            } catch (error: Exception) {
+                Log.e("BrewViewModel", "Failed to undo coffee use", error)
+                false
+            }
+            onResult(undone)
         }
     }
 
