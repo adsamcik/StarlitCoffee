@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.LocalCafe
+import androidx.compose.material.icons.filled.Scale
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -46,6 +47,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CoffeeUsageEntryEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.CoffeeBagStatus
@@ -57,12 +59,14 @@ import java.util.Date
 import java.util.Locale
 
 private const val LOW_COFFEE_THRESHOLD_G = 30f
+private const val DEFAULT_COFFEE_USE_G = 20f
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun BagDetailSheet(
     bag: CoffeeBagEntity,
     brewLogs: List<BrewLogEntity>,
+    coffeeUsageEntries: List<CoffeeUsageEntryEntity> = emptyList(),
     flavorTags: List<FlavorTagEntity> = emptyList(),
     dateFormat: SimpleDateFormat,
     onDismiss: () -> Unit,
@@ -72,10 +76,12 @@ fun BagDetailSheet(
     onEdit: () -> Unit,
     onRescan: () -> Unit = {},
     onWeightAdjust: (Long, Float) -> Unit = { _, _ -> },
+    onLogCoffeeUsed: ((Long, Float) -> Unit)? = null,
     onSelectForBrewing: (() -> Unit)? = null,
 ){
     var statusMenuExpanded by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showCoffeeUseDialog by remember { mutableStateOf(false) }
     val localizedMetadata = CoffeeMetadataNormalizer.resolveBagMetadata(bag)
     val freshness = remember(bag.roastDate) {
         CoffeeBagInsights.freshnessInsight(bag.roastDate)
@@ -91,6 +97,26 @@ fun BagDetailSheet(
         CoffeeBagInsights.buildGrindInsight(
             bag = bag,
             brewLogs = brewLogs,
+        )
+    }
+    val suggestedCoffeeUseG = remember(brewLogs, coffeeUsageEntries) {
+        suggestedCoffeeUseAmount(brewLogs, coffeeUsageEntries)
+    }
+    val suggestedAvailableCoffeeUseG = bag.weightG
+        ?.let { remaining -> minOf(suggestedCoffeeUseG, remaining) }
+        ?: suggestedCoffeeUseG
+    val canLogCoffeeUse = bag.status != CoffeeBagStatus.FINISHED.name &&
+        (bag.weightG == null || bag.weightG > 0f)
+
+    if (showCoffeeUseDialog) {
+        LogCoffeeUseDialog(
+            suggestedAmountG = suggestedAvailableCoffeeUseG,
+            remainingG = bag.weightG,
+            onDismiss = { showCoffeeUseDialog = false },
+            onConfirm = { amountG ->
+                showCoffeeUseDialog = false
+                onLogCoffeeUsed?.invoke(bag.id, amountG)
+            },
         )
     }
 
@@ -395,9 +421,7 @@ fun BagDetailSheet(
                             )
                         }
                         // Estimated doses remaining
-                        val avgDose = brewLogs.takeIf { it.isNotEmpty() }
-                            ?.map { it.doseG }?.average()?.toFloat()
-                            ?: 20f
+                        val avgDose = averageLoggedCoffeeAmount(brewLogs, coffeeUsageEntries)
                         if (remaining > 0f) {
                             val estimatedDoses = (remaining / avgDose).toInt()
                             Text(
@@ -551,6 +575,71 @@ fun BagDetailSheet(
                         }
                     }
                 }
+
+                if (coffeeUsageEntries.isNotEmpty()) {
+                    item {
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+                        Text(
+                            text = stringResource(R.string.label_coffee_use_history),
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.padding(bottom = 8.dp),
+                        )
+                    }
+                    items(
+                        coffeeUsageEntries.sortedByDescending { it.createdAt },
+                        key = { entry -> entry.id },
+                    ) { entry ->
+                        ElevatedCard(
+                            shape = MaterialTheme.shapes.small,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 6.dp),
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            ) {
+                                Icon(
+                                    Icons.Filled.Scale,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary,
+                                )
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = stringResource(
+                                            R.string.format_grams_used,
+                                            entry.amountG,
+                                        ),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                    )
+                                    Text(
+                                        text = dateFormat.format(Date(entry.createdAt)),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (onLogCoffeeUsed != null && canLogCoffeeUse) {
+                OutlinedButton(
+                    onClick = { showCoffeeUseDialog = true },
+                    shape = MaterialTheme.shapes.large,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                        .height(48.dp),
+                ) {
+                    Icon(Icons.Filled.Scale, contentDescription = null)
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Text(stringResource(R.string.action_log_coffee_used))
+                }
             }
 
             // Brew with this bag — primary action when bag isn't finished
@@ -609,6 +698,27 @@ fun BagDetailSheet(
 
             Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+}
+
+internal fun averageLoggedCoffeeAmount(
+    brewLogs: List<BrewLogEntity>,
+    coffeeUsageEntries: List<CoffeeUsageEntryEntity>,
+): Float {
+    val amounts = brewLogs.map { it.doseG } + coffeeUsageEntries.map { it.amountG }
+    return amounts.takeIf { it.isNotEmpty() }?.average()?.toFloat() ?: DEFAULT_COFFEE_USE_G
+}
+
+internal fun suggestedCoffeeUseAmount(
+    brewLogs: List<BrewLogEntity>,
+    coffeeUsageEntries: List<CoffeeUsageEntryEntity>,
+): Float {
+    val latestBrew = brewLogs.maxByOrNull { it.createdAt }
+    val latestUse = coffeeUsageEntries.maxByOrNull { it.createdAt }
+    return when {
+        latestUse != null && (latestBrew == null || latestUse.createdAt >= latestBrew.createdAt) -> latestUse.amountG
+        latestBrew != null -> latestBrew.doseG
+        else -> DEFAULT_COFFEE_USE_G
     }
 }
 

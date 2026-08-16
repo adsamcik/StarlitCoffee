@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Kirjaa käytetty kahvi</string>
+    <string name="label_coffee_used_amount">Käytetty määrä (g)</string>
+    <string name="format_coffee_remaining">%1$.0f g jäljellä</string>
+    <string name="msg_enter_valid_coffee_amount">Anna nollaa suurempi määrä</string>
+    <string name="msg_coffee_use_exceeds_remaining">Vain %1$.0f g jäljellä</string>
+    <string name="format_coffee_use_logged">%1$.0f g kirjattu · %2$.0f g jäljellä</string>
+    <string name="format_coffee_use_logged_unknown_remaining">%1$.0f g kirjattu</string>
+    <string name="action_undo">Kumoa</string>
+    <string name="msg_could_not_log_coffee_use">Käytettyä kahvia ei voitu kirjata</string>
+    <string name="msg_could_not_undo_coffee_use">Kumoaminen ei onnistunut, koska tämä pussi muuttui</string>
+    <string name="label_coffee_use_history">Kahvin käyttö</string>
+    <string name="format_grams_used">%1$.0f g käytetty</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Запиши използваното кафе</string>
+    <string name="label_coffee_used_amount">Използвано количество (г)</string>
+    <string name="format_coffee_remaining">Остават %1$.0f г</string>
+    <string name="msg_enter_valid_coffee_amount">Въведете количество, по-голямо от 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Остават само %1$.0f г</string>
+    <string name="format_coffee_use_logged">Записани %1$.0f г · остават %2$.0f г</string>
+    <string name="format_coffee_use_logged_unknown_remaining">Записани %1$.0f г</string>
+    <string name="action_undo">Отмяна</string>
+    <string name="msg_could_not_log_coffee_use">Използваното кафе не можа да бъде записано</string>
+    <string name="msg_could_not_undo_coffee_use">Отмяната не е възможна, защото тази опаковка е променена</string>
+    <string name="label_coffee_use_history">Използвано кафе</string>
+    <string name="format_grams_used">Използвани %1$.0f г</string>
+</resources>

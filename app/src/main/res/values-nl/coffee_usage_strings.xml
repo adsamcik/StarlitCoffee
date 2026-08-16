@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Gebruikte koffie registreren</string>
+    <string name="label_coffee_used_amount">Gebruikte hoeveelheid (g)</string>
+    <string name="format_coffee_remaining">Nog %1$.0f g</string>
+    <string name="msg_enter_valid_coffee_amount">Voer een hoeveelheid groter dan 0 in</string>
+    <string name="msg_coffee_use_exceeds_remaining">Er is nog maar %1$.0f g</string>
+    <string name="format_coffee_use_logged">%1$.0f g geregistreerd · %2$.0f g over</string>
+    <string name="format_coffee_use_logged_unknown_remaining">%1$.0f g geregistreerd</string>
+    <string name="action_undo">Ongedaan maken</string>
+    <string name="msg_could_not_log_coffee_use">Gebruikte koffie kon niet worden geregistreerd</string>
+    <string name="msg_could_not_undo_coffee_use">Kan niet ongedaan maken omdat deze zak is gewijzigd</string>
+    <string name="label_coffee_use_history">Koffieverbruik</string>
+    <string name="format_grams_used">%1$.0f g gebruikt</string>
+</resources>

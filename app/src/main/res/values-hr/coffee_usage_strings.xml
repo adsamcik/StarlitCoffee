@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Zabilježi potrošenu kavu</string>
+    <string name="label_coffee_used_amount">Potrošena količina (g)</string>
+    <string name="format_coffee_remaining">Preostalo %1$.0f g</string>
+    <string name="msg_enter_valid_coffee_amount">Unesite količinu veću od 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Preostalo je samo %1$.0f g</string>
+    <string name="format_coffee_use_logged">Zabilježeno %1$.0f g · preostalo %2$.0f g</string>
+    <string name="format_coffee_use_logged_unknown_remaining">Zabilježeno %1$.0f g</string>
+    <string name="action_undo">Poništi</string>
+    <string name="msg_could_not_log_coffee_use">Potrošena kava nije se mogla zabilježiti</string>
+    <string name="msg_could_not_undo_coffee_use">Nije moguće poništiti jer se ova vrećica promijenila</string>
+    <string name="label_coffee_use_history">Potrošnja kave</string>
+    <string name="format_grams_used">Potrošeno %1$.0f g</string>
+</resources>

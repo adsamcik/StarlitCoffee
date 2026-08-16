@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Registrar café usado</string>
+    <string name="label_coffee_used_amount">Cantidad usada (g)</string>
+    <string name="format_coffee_remaining">Quedan %1$.0f g</string>
+    <string name="msg_enter_valid_coffee_amount">Introduce una cantidad mayor que 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Solo quedan %1$.0f g</string>
+    <string name="format_coffee_use_logged">%1$.0f g registrados · quedan %2$.0f g</string>
+    <string name="format_coffee_use_logged_unknown_remaining">%1$.0f g registrados</string>
+    <string name="action_undo">Deshacer</string>
+    <string name="msg_could_not_log_coffee_use">No se pudo registrar el café usado</string>
+    <string name="msg_could_not_undo_coffee_use">No se pudo deshacer porque esta bolsa cambió</string>
+    <string name="label_coffee_use_history">Uso de café</string>
+    <string name="format_grams_used">%1$.0f g usados</string>
+</resources>

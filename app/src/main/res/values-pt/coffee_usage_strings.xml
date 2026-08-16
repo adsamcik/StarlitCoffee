@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Registar café utilizado</string>
+    <string name="label_coffee_used_amount">Quantidade utilizada (g)</string>
+    <string name="format_coffee_remaining">Restam %1$.0f g</string>
+    <string name="msg_enter_valid_coffee_amount">Introduza uma quantidade superior a 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Restam apenas %1$.0f g</string>
+    <string name="format_coffee_use_logged">%1$.0f g registados · restam %2$.0f g</string>
+    <string name="format_coffee_use_logged_unknown_remaining">%1$.0f g registados</string>
+    <string name="action_undo">Anular</string>
+    <string name="msg_could_not_log_coffee_use">Não foi possível registar o café utilizado</string>
+    <string name="msg_could_not_undo_coffee_use">Não foi possível anular porque este saco foi alterado</string>
+    <string name="label_coffee_use_history">Utilização de café</string>
+    <string name="format_grams_used">%1$.0f g utilizados</string>
+</resources>

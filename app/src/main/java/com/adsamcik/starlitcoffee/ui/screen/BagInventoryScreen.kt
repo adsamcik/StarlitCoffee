@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -59,6 +60,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.inventory.CoffeeUsageRejection
+import com.adsamcik.starlitcoffee.data.repository.CoffeeUsageLogResult
 import com.adsamcik.starlitcoffee.navigation.ScanDraftTransfer
 import com.adsamcik.starlitcoffee.StarlitCoffeeApp
 import com.adsamcik.starlitcoffee.data.work.isAddNewBagReview
@@ -66,6 +69,7 @@ import com.adsamcik.starlitcoffee.ui.component.AddBagSheet
 import com.adsamcik.starlitcoffee.ui.component.BagAnalysisPreviewCard
 import com.adsamcik.starlitcoffee.ui.component.BagCard
 import com.adsamcik.starlitcoffee.ui.component.BagDetailSheet
+import com.adsamcik.starlitcoffee.ui.component.averageLoggedCoffeeAmount
 import com.adsamcik.starlitcoffee.ui.component.ConsentOutcome
 import com.adsamcik.starlitcoffee.ui.component.DecafFilter
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
@@ -143,6 +147,7 @@ fun BagInventoryScreen(
 ){
     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
     val allBrewLogs by brewViewModel.brewLogs.collectAsStateWithLifecycle()
+    val allCoffeeUsageEntries by brewViewModel.coffeeUsageEntries.collectAsStateWithLifecycle()
     val flavorTags by brewViewModel.flavorTags.collectAsStateWithLifecycle()
     val knownFieldValues by brewViewModel.knownFieldValues.collectAsStateWithLifecycle()
     val bagAnalysisPreview by brewViewModel.bagAnalysisPreview.collectAsStateWithLifecycle()
@@ -807,13 +812,12 @@ fun BagInventoryScreen(
                     key = { it.id },
                 ) { bag ->
                     val brewsRemaining = if (bag.weightG != null && bag.weightG > 0f) {
-                        val avgDose = allBrewLogs
-                            .filter { it.coffeeBagId == bag.id }
-                            .takeIf { it.isNotEmpty() }
-                            ?.map { it.doseG }
-                            ?.average()
-                            ?.toFloat()
-                            ?: 20f
+                        val avgDose = averageLoggedCoffeeAmount(
+                            brewLogs = allBrewLogs.filter { it.coffeeBagId == bag.id },
+                            coffeeUsageEntries = allCoffeeUsageEntries.filter {
+                                it.coffeeBagId == bag.id
+                            },
+                        )
                         (bag.weightG / avgDose).toInt()
                     } else null
 
@@ -1089,12 +1093,14 @@ fun BagInventoryScreen(
     // Bag detail bottom sheet
     selectedBag?.let { bag ->
         val bagBrewLogs = allBrewLogs.filter { it.coffeeBagId == bag.id }
+        val bagCoffeeUsageEntries = allCoffeeUsageEntries.filter { it.coffeeBagId == bag.id }
         val bagFlavorTags by brewViewModel.getFlavorTagsForBag(bag.id).collectAsStateWithLifecycle(
             initialValue = emptyList(),
         )
         BagDetailSheet(
             bag = bag,
             brewLogs = bagBrewLogs,
+            coffeeUsageEntries = bagCoffeeUsageEntries,
             flavorTags = bagFlavorTags,
             dateFormat = dateFormat,
             onDismiss = { selectedBagId = null },
@@ -1137,6 +1143,26 @@ fun BagInventoryScreen(
             onWeightAdjust = { bagId, weight ->
                 brewViewModel.adjustBagWeight(bagId, weight)
             },
+            onLogCoffeeUsed = { bagId, amountG ->
+                brewViewModel.logCoffeeUse(bagId, amountG) { result ->
+                    coroutineScope.launch {
+                        val logged = showCoffeeUsageResult(
+                            result = result,
+                            context = context,
+                            snackbarHostState = snackbarHostState,
+                        ) ?: return@launch
+                        brewViewModel.undoCoffeeUse(logged) { undone ->
+                            if (!undone) {
+                                coroutineScope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        context.getString(R.string.msg_could_not_undo_coffee_use),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             onSelectForBrewing = {
                 selectedBagId = null
                 onNavigateToBrewWithBag(bag.id)
@@ -1172,6 +1198,50 @@ fun BagInventoryScreen(
                 }
             },
         )
+    }
+}
+
+private suspend fun showCoffeeUsageResult(
+    result: CoffeeUsageLogResult,
+    context: Context,
+    snackbarHostState: SnackbarHostState,
+): CoffeeUsageLogResult.Logged? = when (result) {
+    is CoffeeUsageLogResult.Logged -> {
+        val remaining = result.updatedBag.weightG
+        val message = if (remaining != null) {
+            context.getString(
+                R.string.format_coffee_use_logged,
+                result.entry.amountG,
+                remaining,
+            )
+        } else {
+            context.getString(
+                R.string.format_coffee_use_logged_unknown_remaining,
+                result.entry.amountG,
+            )
+        }
+        val snackbarResult = snackbarHostState.showSnackbar(
+            message = message,
+            actionLabel = context.getString(R.string.action_undo),
+            duration = SnackbarDuration.Long,
+        )
+        result.takeIf { snackbarResult == SnackbarResult.ActionPerformed }
+    }
+    is CoffeeUsageLogResult.Rejected -> {
+        val message = if (
+            result.reason == CoffeeUsageRejection.EXCEEDS_REMAINING &&
+            result.remainingG != null
+        ) {
+            context.getString(R.string.msg_coffee_use_exceeds_remaining, result.remainingG)
+        } else {
+            context.getString(R.string.msg_could_not_log_coffee_use)
+        }
+        snackbarHostState.showSnackbar(message)
+        null
+    }
+    CoffeeUsageLogResult.Failed -> {
+        snackbarHostState.showSnackbar(context.getString(R.string.msg_could_not_log_coffee_use))
+        null
     }
 }
 

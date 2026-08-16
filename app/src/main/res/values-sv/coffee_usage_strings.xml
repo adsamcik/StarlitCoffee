@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Logga använd kaffe</string>
+    <string name="label_coffee_used_amount">Använd mängd (g)</string>
+    <string name="format_coffee_remaining">%1$.0f g kvar</string>
+    <string name="msg_enter_valid_coffee_amount">Ange en mängd större än 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Endast %1$.0f g återstår</string>
+    <string name="format_coffee_use_logged">%1$.0f g loggat · %2$.0f g kvar</string>
+    <string name="format_coffee_use_logged_unknown_remaining">%1$.0f g loggat</string>
+    <string name="action_undo">Ångra</string>
+    <string name="msg_could_not_log_coffee_use">Det gick inte att logga använt kaffe</string>
+    <string name="msg_could_not_undo_coffee_use">Det gick inte att ångra eftersom påsen har ändrats</string>
+    <string name="label_coffee_use_history">Kaffeåtgång</string>
+    <string name="format_grams_used">%1$.0f g använt</string>
+</resources>

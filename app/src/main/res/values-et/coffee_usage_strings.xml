@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Märgi kasutatud kohv</string>
+    <string name="label_coffee_used_amount">Kasutatud kogus (g)</string>
+    <string name="format_coffee_remaining">Alles %1$.0f g</string>
+    <string name="msg_enter_valid_coffee_amount">Sisesta kogus, mis on suurem kui 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Alles on ainult %1$.0f g</string>
+    <string name="format_coffee_use_logged">Märgitud %1$.0f g · alles %2$.0f g</string>
+    <string name="format_coffee_use_logged_unknown_remaining">Märgitud %1$.0f g</string>
+    <string name="action_undo">Võta tagasi</string>
+    <string name="msg_could_not_log_coffee_use">Kasutatud kohvi ei saanud märkida</string>
+    <string name="msg_could_not_undo_coffee_use">Tagasivõtmine ei õnnestunud, sest see pakk muutus</string>
+    <string name="label_coffee_use_history">Kohvikasutus</string>
+    <string name="format_grams_used">Kasutatud %1$.0f g</string>
+</resources>

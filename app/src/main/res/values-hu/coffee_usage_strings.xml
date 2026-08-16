@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Felhasznált kávé rögzítése</string>
+    <string name="label_coffee_used_amount">Felhasznált mennyiség (g)</string>
+    <string name="format_coffee_remaining">%1$.0f g maradt</string>
+    <string name="msg_enter_valid_coffee_amount">Adjon meg 0-nál nagyobb mennyiséget</string>
+    <string name="msg_coffee_use_exceeds_remaining">Csak %1$.0f g maradt</string>
+    <string name="format_coffee_use_logged">%1$.0f g rögzítve · %2$.0f g maradt</string>
+    <string name="format_coffee_use_logged_unknown_remaining">%1$.0f g rögzítve</string>
+    <string name="action_undo">Visszavonás</string>
+    <string name="msg_could_not_log_coffee_use">A felhasznált kávét nem sikerült rögzíteni</string>
+    <string name="msg_could_not_undo_coffee_use">Nem vonható vissza, mert ez a csomag megváltozott</string>
+    <string name="label_coffee_use_history">Kávéfogyasztás</string>
+    <string name="format_grams_used">%1$.0f g felhasználva</string>
+</resources>

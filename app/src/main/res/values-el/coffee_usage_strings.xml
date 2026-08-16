@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Καταγραφή καφέ που χρησιμοποιήθηκε</string>
+    <string name="label_coffee_used_amount">Ποσότητα που χρησιμοποιήθηκε (g)</string>
+    <string name="format_coffee_remaining">Απομένουν %1$.0f g</string>
+    <string name="msg_enter_valid_coffee_amount">Εισαγάγετε ποσότητα μεγαλύτερη από 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Απομένουν μόνο %1$.0f g</string>
+    <string name="format_coffee_use_logged">Καταγράφηκαν %1$.0f g · απομένουν %2$.0f g</string>
+    <string name="format_coffee_use_logged_unknown_remaining">Καταγράφηκαν %1$.0f g</string>
+    <string name="action_undo">Αναίρεση</string>
+    <string name="msg_could_not_log_coffee_use">Δεν ήταν δυνατή η καταγραφή του καφέ</string>
+    <string name="msg_could_not_undo_coffee_use">Δεν ήταν δυνατή η αναίρεση επειδή άλλαξε αυτή η συσκευασία</string>
+    <string name="label_coffee_use_history">Χρήση καφέ</string>
+    <string name="format_grams_used">Χρησιμοποιήθηκαν %1$.0f g</string>
+</resources>

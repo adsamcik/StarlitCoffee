@@ -62,7 +62,7 @@ object CoffeeUsagePlanner {
                 ?.coerceAtLeast(0f)
                 ?: 0f
             updated = updated.copy(weightG = nextWeight)
-            if (nextWeight == 0f && updated.status == CoffeeBagStatus.OPEN.name) {
+            if (nextWeight == 0f && updated.status != CoffeeBagStatus.FINISHED.name) {
                 updated = updated.copy(status = CoffeeBagStatus.FINISHED.name)
             }
         }

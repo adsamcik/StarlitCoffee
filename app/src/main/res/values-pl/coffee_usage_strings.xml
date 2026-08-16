@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Zapisz zużytą kawę</string>
+    <string name="label_coffee_used_amount">Zużyta ilość (g)</string>
+    <string name="format_coffee_remaining">Pozostało %1$.0f g</string>
+    <string name="msg_enter_valid_coffee_amount">Wpisz ilość większą niż 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Pozostało tylko %1$.0f g</string>
+    <string name="format_coffee_use_logged">Zapisano %1$.0f g · pozostało %2$.0f g</string>
+    <string name="format_coffee_use_logged_unknown_remaining">Zapisano %1$.0f g</string>
+    <string name="action_undo">Cofnij</string>
+    <string name="msg_could_not_log_coffee_use">Nie udało się zapisać zużytej kawy</string>
+    <string name="msg_could_not_undo_coffee_use">Nie można cofnąć, ponieważ ta paczka została zmieniona</string>
+    <string name="label_coffee_use_history">Zużycie kawy</string>
+    <string name="format_grams_used">Zużyto %1$.0f g</string>
+</resources>

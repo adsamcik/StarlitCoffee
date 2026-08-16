@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Įrašyti sunaudotą kavą</string>
+    <string name="label_coffee_used_amount">Sunaudotas kiekis (g)</string>
+    <string name="format_coffee_remaining">Liko %1$.0f g</string>
+    <string name="msg_enter_valid_coffee_amount">Įveskite didesnį nei 0 kiekį</string>
+    <string name="msg_coffee_use_exceeds_remaining">Liko tik %1$.0f g</string>
+    <string name="format_coffee_use_logged">Įrašyta %1$.0f g · liko %2$.0f g</string>
+    <string name="format_coffee_use_logged_unknown_remaining">Įrašyta %1$.0f g</string>
+    <string name="action_undo">Anuliuoti</string>
+    <string name="msg_could_not_log_coffee_use">Nepavyko įrašyti sunaudotos kavos</string>
+    <string name="msg_could_not_undo_coffee_use">Nepavyko anuliuoti, nes šis pakelis pasikeitė</string>
+    <string name="label_coffee_use_history">Kavos sunaudojimas</string>
+    <string name="format_grams_used">Sunaudota %1$.0f g</string>
+</resources>

@@ -499,6 +499,18 @@
     <string name="action_adjust_weight">Adjust weight</string>
     <string name="action_add_weight_tracking">Add weight tracking</string>
     <string name="label_brew_history">Brew History</string>
+    <string name="action_log_coffee_used">Log coffee used</string>
+    <string name="label_coffee_used_amount">Amount used (g)</string>
+    <string name="format_coffee_remaining">%1$.0f g remaining</string>
+    <string name="msg_enter_valid_coffee_amount">Enter an amount greater than 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Only %1$.0f g remains</string>
+    <string name="format_coffee_use_logged">%1$.0f g logged · %2$.0f g left</string>
+    <string name="format_coffee_use_logged_unknown_remaining">%1$.0f g logged</string>
+    <string name="action_undo">Undo</string>
+    <string name="msg_could_not_log_coffee_use">Couldn\'t log coffee used</string>
+    <string name="msg_could_not_undo_coffee_use">Couldn\'t undo because this bag changed</string>
+    <string name="label_coffee_use_history">Coffee use</string>
+    <string name="format_grams_used">%1$.0f g used</string>
 
     <!-- BrewRatingSheet -->
 

@@ -32,6 +32,18 @@ class CoffeeUsagePlannerTest {
     }
 
     @Test
+    fun `manual use finishes a depleted frozen bag`() {
+        val result = CoffeeUsagePlanner.plan(
+            bag = bag(status = "FROZEN", weightG = 18f),
+            amountG = 18f,
+            usedAt = USED_AT,
+        ) as CoffeeUsagePlanResult.Planned
+
+        assertEquals("FINISHED", result.plan.updatedBag.status)
+        assertEquals(0f, result.plan.updatedBag.weightG ?: -1f, 0.01f)
+    }
+
+    @Test
     fun `manual use retains unknown remaining weight while recording use`() {
         val result = CoffeeUsagePlanner.plan(
             bag = bag(status = "SEALED", weightG = null),

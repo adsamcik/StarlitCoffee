@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Reģistrēt izlietoto kafiju</string>
+    <string name="label_coffee_used_amount">Izlietotais daudzums (g)</string>
+    <string name="format_coffee_remaining">Atlikuši %1$.0f g</string>
+    <string name="msg_enter_valid_coffee_amount">Ievadiet daudzumu, kas lielāks par 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Atlikuši tikai %1$.0f g</string>
+    <string name="format_coffee_use_logged">Reģistrēti %1$.0f g · atlikuši %2$.0f g</string>
+    <string name="format_coffee_use_logged_unknown_remaining">Reģistrēti %1$.0f g</string>
+    <string name="action_undo">Atsaukt</string>
+    <string name="msg_could_not_log_coffee_use">Neizdevās reģistrēt izlietoto kafiju</string>
+    <string name="msg_could_not_undo_coffee_use">Neizdevās atsaukt, jo šis iepakojums ir mainījies</string>
+    <string name="label_coffee_use_history">Kafijas patēriņš</string>
+    <string name="format_grams_used">Izlietoti %1$.0f g</string>
+</resources>

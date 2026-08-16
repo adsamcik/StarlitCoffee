@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">Zapsat spotřebu kávy</string>
+    <string name="label_coffee_used_amount">Použité množství (g)</string>
+    <string name="format_coffee_remaining">Zbývá %1$.0f g</string>
+    <string name="msg_enter_valid_coffee_amount">Zadejte množství větší než 0</string>
+    <string name="msg_coffee_use_exceeds_remaining">Zbývá pouze %1$.0f g</string>
+    <string name="format_coffee_use_logged">Zapsáno %1$.0f g · zbývá %2$.0f g</string>
+    <string name="format_coffee_use_logged_unknown_remaining">Zapsáno %1$.0f g</string>
+    <string name="action_undo">Vrátit zpět</string>
+    <string name="msg_could_not_log_coffee_use">Spotřebu kávy se nepodařilo zapsat</string>
+    <string name="msg_could_not_undo_coffee_use">Změnu nelze vrátit, protože se tento sáček změnil</string>
+    <string name="label_coffee_use_history">Spotřeba kávy</string>
+    <string name="format_grams_used">Použito %1$.0f g</string>
+</resources>

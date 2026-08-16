@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_log_coffee_used">记录咖啡用量</string>
+    <string name="label_coffee_used_amount">使用量（克）</string>
+    <string name="format_coffee_remaining">剩余 %1$.0f 克</string>
+    <string name="msg_enter_valid_coffee_amount">请输入大于 0 的用量</string>
+    <string name="msg_coffee_use_exceeds_remaining">仅剩 %1$.0f 克</string>
+    <string name="format_coffee_use_logged">已记录 %1$.0f 克 · 剩余 %2$.0f 克</string>
+    <string name="format_coffee_use_logged_unknown_remaining">已记录 %1$.0f 克</string>
+    <string name="action_undo">撤销</string>
+    <string name="msg_could_not_log_coffee_use">无法记录咖啡用量</string>
+    <string name="msg_could_not_undo_coffee_use">此咖啡袋已发生变化，无法撤销</string>
+    <string name="label_coffee_use_history">咖啡用量</string>
+    <string name="format_grams_used">已使用 %1$.0f 克</string>
+</resources>

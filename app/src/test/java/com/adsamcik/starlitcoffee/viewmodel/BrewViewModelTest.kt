@@ -5,6 +5,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.testutil.FakeBrewLogDao
 import com.adsamcik.starlitcoffee.testutil.FakeCoffeeBagDao
+import com.adsamcik.starlitcoffee.testutil.FakeCoffeeUsageDao
 import com.adsamcik.starlitcoffee.testutil.FakeFlavorTagDao
 import com.adsamcik.starlitcoffee.testutil.FakeRecipeDao
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
@@ -17,6 +18,8 @@ import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
+import com.adsamcik.starlitcoffee.data.repository.CoffeeUsageLogResult
+import com.adsamcik.starlitcoffee.data.repository.CoffeeUsageRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
 import com.adsamcik.starlitcoffee.notification.RatingReminders
@@ -1906,6 +1909,42 @@ class BrewViewModelTest {
         assertEquals(0f, vm.coffeeBags.value.first().weightG!!, 0.01f)
     }
 
+    // --- Manual coffee use ---
+
+    @Test
+    fun `logCoffeeUse records history and updates remaining weight`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Tracked", weightG = 250f))
+        val bagId = vm.coffeeBags.value.first().id
+        var callbackResult: CoffeeUsageLogResult? = null
+
+        vm.logCoffeeUse(bagId, 18f) { callbackResult = it }
+
+        assertTrue(callbackResult is CoffeeUsageLogResult.Logged)
+        assertEquals(18f, vm.coffeeUsageEntries.value.single().amountG, 0.01f)
+        assertEquals(232f, vm.coffeeBags.value.first().weightG ?: 0f, 0.01f)
+        assertEquals("OPEN", vm.coffeeBags.value.first().status)
+    }
+
+    @Test
+    fun `undoCoffeeUse removes history and restores bag`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Tracked", weightG = 18f))
+        val bagId = vm.coffeeBags.value.first().id
+        var logged: CoffeeUsageLogResult.Logged? = null
+        vm.logCoffeeUse(bagId, 18f) { result ->
+            logged = result as? CoffeeUsageLogResult.Logged
+        }
+
+        var undone = false
+        vm.undoCoffeeUse(requireNotNull(logged)) { undone = it }
+
+        assertTrue(undone)
+        assertTrue(vm.coffeeUsageEntries.value.isEmpty())
+        assertEquals(18f, vm.coffeeBags.value.first().weightG ?: 0f, 0.01f)
+        assertEquals("SEALED", vm.coffeeBags.value.first().status)
+    }
+
     // --- loadRecipe preset matching ---
 
     @Test
@@ -2007,11 +2046,17 @@ class BrewViewModelTest {
     ): BrewViewModel {
         val recipeRepository = RecipeRepository(FakeRecipeDao())
         val brewLogRepository = BrewLogRepository(null, FakeBrewLogDao(), FakeFlavorTagDao())
-        val coffeeBagRepository = CoffeeBagRepository(FakeCoffeeBagDao())
+        val coffeeBagDao = FakeCoffeeBagDao()
+        val coffeeBagRepository = CoffeeBagRepository(coffeeBagDao)
+        val coffeeUsageRepository = CoffeeUsageRepository(
+            coffeeUsageDao = FakeCoffeeUsageDao(),
+            coffeeBagDao = coffeeBagDao,
+        )
         return BrewViewModel(
             recipeRepository = recipeRepository,
             brewLogRepository = brewLogRepository,
             coffeeBagRepository = coffeeBagRepository,
+            coffeeUsageRepository = coffeeUsageRepository,
             ratingReminderScheduler = ratingReminders,
         )
     }
