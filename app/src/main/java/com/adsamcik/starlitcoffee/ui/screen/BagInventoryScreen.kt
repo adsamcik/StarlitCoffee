@@ -1,6 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import android.content.Context
+import android.content.res.Resources
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -54,6 +54,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -225,6 +226,7 @@ fun BagInventoryScreen(
     var bagDraftSessionId by rememberSaveable { mutableStateOf(UUID.randomUUID().toString()) }
     var bagDraftGenerationId by rememberSaveable { mutableStateOf<String?>(null) }
     val context = LocalContext.current
+    val resources = LocalResources.current
     val mindlayerInstalled = rememberMindlayerInstalled()
     val mindlayerSupported = remember { MindlayerAvailability.isSupported() }
     val couldNotReadLabel = stringResource(R.string.msg_could_not_read_label)
@@ -1148,14 +1150,14 @@ fun BagInventoryScreen(
                     coroutineScope.launch {
                         val logged = showCoffeeUsageResult(
                             result = result,
-                            context = context,
+                            resources = resources,
                             snackbarHostState = snackbarHostState,
                         ) ?: return@launch
                         brewViewModel.undoCoffeeUse(logged) { undone ->
                             if (!undone) {
                                 coroutineScope.launch {
                                     snackbarHostState.showSnackbar(
-                                        context.getString(R.string.msg_could_not_undo_coffee_use),
+                                        resources.getString(R.string.msg_could_not_undo_coffee_use),
                                     )
                                 }
                             }
@@ -1203,26 +1205,26 @@ fun BagInventoryScreen(
 
 private suspend fun showCoffeeUsageResult(
     result: CoffeeUsageLogResult,
-    context: Context,
+    resources: Resources,
     snackbarHostState: SnackbarHostState,
 ): CoffeeUsageLogResult.Logged? = when (result) {
     is CoffeeUsageLogResult.Logged -> {
         val remaining = result.updatedBag.weightG
         val message = if (remaining != null) {
-            context.getString(
+            resources.getString(
                 R.string.format_coffee_use_logged,
                 result.entry.amountG,
                 remaining,
             )
         } else {
-            context.getString(
+            resources.getString(
                 R.string.format_coffee_use_logged_unknown_remaining,
                 result.entry.amountG,
             )
         }
         val snackbarResult = snackbarHostState.showSnackbar(
             message = message,
-            actionLabel = context.getString(R.string.action_undo),
+            actionLabel = resources.getString(R.string.action_undo),
             duration = SnackbarDuration.Long,
         )
         result.takeIf { snackbarResult == SnackbarResult.ActionPerformed }
@@ -1232,15 +1234,15 @@ private suspend fun showCoffeeUsageResult(
             result.reason == CoffeeUsageRejection.EXCEEDS_REMAINING &&
             result.remainingG != null
         ) {
-            context.getString(R.string.msg_coffee_use_exceeds_remaining, result.remainingG)
+            resources.getString(R.string.msg_coffee_use_exceeds_remaining, result.remainingG)
         } else {
-            context.getString(R.string.msg_could_not_log_coffee_use)
+            resources.getString(R.string.msg_could_not_log_coffee_use)
         }
         snackbarHostState.showSnackbar(message)
         null
     }
     CoffeeUsageLogResult.Failed -> {
-        snackbarHostState.showSnackbar(context.getString(R.string.msg_could_not_log_coffee_use))
+        snackbarHostState.showSnackbar(resources.getString(R.string.msg_could_not_log_coffee_use))
         null
     }
 }

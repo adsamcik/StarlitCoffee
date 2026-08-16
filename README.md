@@ -10,7 +10,8 @@ stage.
 - Guided, durable brew sessions with observable completion cues and recovery.
 - Evidence-bound exact recipes across multiple brewer families.
 - Concise stage guidance with purpose-built, text-free illustrations.
-- Coffee-bag inventory, barcode/OCR-assisted capture, and brew history.
+- Coffee-bag inventory, barcode/OCR-assisted capture, quick gram-based usage
+  tracking, and brew history.
 - Material 3 Expressive UI with light, dark, dynamic-color, accessibility, and
   large-text support.
 - Reviewed English guidance plus clearly labelled, opt-in translation previews

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Coffee-use tracking without guided brewing** — active bags now offer a quick
+  gram-based usage entry that updates remaining weight, contributes to dose
+  estimates, appears in the bag's history, and can be undone immediately.
+
 ### Changed
 
 - Bag scans now use one five-minute deadline across WorkManager restarts, and
