@@ -1258,7 +1258,7 @@ class MindlayerLlmInferenceProvider(
             if (value.trim().lowercase() in SENTINEL_NON_VALUES) return null
             if (requireEvidence && !hasSubstantiveEvidence(fieldEntry)) return null
             val normalized = when (fieldName) {
-                "isDecaf" -> normalizeDecafBoolean(value) ?: return null
+                "isDecaf" -> normalizeDecafBoolean(value).orEmpty()
                 else -> normalizeControlledValue(fieldName, value.trim())
             }
             if (normalized.isBlank()) return null

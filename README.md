@@ -37,6 +37,14 @@ build checks `GITHUB_TOKEN` and then an authenticated GitHub CLI session
 Local Maven artifacts remain available through `mavenLocal()` for Mindlayer
 contributors.
 
+The repository includes a one-time setup helper. It signs in through GitHub CLI,
+requests only package-read access, and keeps the token in GitHub CLI's credential
+store:
+
+```powershell
+.\scripts\setup-github-packages.ps1
+```
+
 Android Studio normally creates `local.properties` with the local SDK path. The
 file is intentionally ignored and must never be committed.
 

@@ -139,11 +139,7 @@ class MindlayerOcrService(
             val supported = caps.supports(ServiceCapabilities.FEATURE_OCR_IMAGE_ONESHOT)
             if (supported) capabilityAvailable = true
             if (!supported && throwOnSetupRequired) {
-                val readiness = mindlayer.getModelReadiness()
-                    .item(ModelReadinessItem.FAMILY_OCR)
-                if (readiness?.state == ModelReadinessItem.STATE_SETUP_REQUIRED) {
-                    throw MindlayerModelSetupRequiredException(ModelReadinessItem.FAMILY_OCR)
-                }
+                throwIfOcrModelSetupRequired()
             }
             supported
         } catch (e: CancellationException) {
@@ -153,6 +149,14 @@ class MindlayerOcrService(
         } catch (e: Exception) {
             Log.w(TAG, "Capability check failed: ${e.message}", e)
             false
+        }
+    }
+
+    private suspend fun throwIfOcrModelSetupRequired() {
+        val readiness = mindlayer.getModelReadiness()
+            .item(ModelReadinessItem.FAMILY_OCR)
+        if (readiness?.state == ModelReadinessItem.STATE_SETUP_REQUIRED) {
+            throw MindlayerModelSetupRequiredException(ModelReadinessItem.FAMILY_OCR)
         }
     }
 

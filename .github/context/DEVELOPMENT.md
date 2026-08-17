@@ -31,10 +31,11 @@ Credential lookup for Mindlayer is defined in `settings.gradle.kts`: `local.prop
 ```powershell
 git clone https://github.com/adsamcik/StarlitCoffee
 Set-Location StarlitCoffee
+.\scripts\setup-github-packages.ps1
 .\gradlew.bat assembleDebug
 ```
 
-The Mindlayer repo is public, but GitHub Packages Maven reads still require a token (a GitHub limitation, not a private-repo gate). Authenticate with `gh auth login` using any GitHub account, or provide `GITHUB_TOKEN`.
+The Mindlayer repo is public, but GitHub Packages Maven reads still require a token (a GitHub limitation, not a private-repo gate). The setup helper authenticates GitHub CLI and requests `read:packages` without writing the token into the repository. You can instead provide `GITHUB_TOKEN` directly.
 
 ## Common Commands
 
@@ -142,7 +143,7 @@ When adding new background work, foreground services, or LAN features, re-check 
 
 | Problem | Likely cause | Fix |
 |---------|--------------|-----|
-| Mindlayer dependency cannot resolve | No token (public repo, but GitHub Packages Maven still requires one) | Run `gh auth login` (any GitHub account) or set `GITHUB_TOKEN`. |
+| Mindlayer dependency cannot resolve | No token (public repo, but GitHub Packages Maven still requires one) | Run `.\scripts\setup-github-packages.ps1` or set `GITHUB_TOKEN`. |
 | Gradle uses wrong Java | `JAVA_HOME` points to a non-17 JDK | Set `JAVA_HOME` to JDK 17 and retry. |
 | Room build/KSP error after entity change | Migration/schema not updated | Update `AppDatabase` migration and exported schema. |
 | Test images missing | Synthetic corpus not pushed to device | Run `.\gradlew.bat pushTestImages`; corpus lives in `testdata\synthetic-coffee-bag-corpus\`. |
