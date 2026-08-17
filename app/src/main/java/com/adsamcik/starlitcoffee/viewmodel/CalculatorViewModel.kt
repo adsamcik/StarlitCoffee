@@ -4,23 +4,34 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator.InputDirection
+import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
 import com.adsamcik.starlitcoffee.data.model.CupPreset
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.domain.BeverageOutputEstimator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+enum class WaterAmountMode {
+    WATER_INPUT,
+    BEVERAGE_OUTPUT,
+}
+
 data class CalcUiState(
     val tokens: List<CalcToken> = emptyList(),
     val previewDoseG: Float = 0f,
     val previewWaterMl: Float = 0f,
+    val previewBeverageG: Float? = null,
+    val previewApparentLossG: Float? = null,
     val ratio: Float = 17f,
     val inputDirection: InputDirection = InputDirection.DOSE,
+    val waterAmountMode: WaterAmountMode = WaterAmountMode.WATER_INPUT,
+    val brewMethod: BrewMethod = BrewMethod.PULSAR,
     val availablePresets: List<CupPreset> = emptyList(),
     val hasValidExpression: Boolean = false,
 )
@@ -148,6 +159,8 @@ class CalculatorViewModel(
                 tokens = emptyList(),
                 previewDoseG = 0f,
                 previewWaterMl = 0f,
+                previewBeverageG = null,
+                previewApparentLossG = null,
                 hasValidExpression = false,
             )
         }
@@ -159,12 +172,41 @@ class CalculatorViewModel(
                 InputDirection.DOSE -> InputDirection.WATER
                 InputDirection.WATER -> InputDirection.DOSE
             }
-            recalculate(state.copy(inputDirection = newDirection))
+            recalculate(
+                state.copy(
+                    inputDirection = newDirection,
+                    waterAmountMode = WaterAmountMode.WATER_INPUT,
+                ),
+            )
         }
         viewModelScope.launch {
             userPreferencesRepository?.updateDefaultInputDirection(
                 _uiState.value.inputDirection.name,
             )
+        }
+    }
+
+    fun toggleBeverageOutputMode() {
+        _uiState.update { state ->
+            if (state.inputDirection != InputDirection.WATER) return@update state
+            if (BeverageOutputEstimator.modelFor(state.brewMethod) == null) return@update state
+
+            val mode = when (state.waterAmountMode) {
+                WaterAmountMode.WATER_INPUT -> WaterAmountMode.BEVERAGE_OUTPUT
+                WaterAmountMode.BEVERAGE_OUTPUT -> WaterAmountMode.WATER_INPUT
+            }
+            recalculate(state.copy(waterAmountMode = mode))
+        }
+    }
+
+    fun setBrewMethod(method: BrewMethod) {
+        _uiState.update { state ->
+            val mode = if (BeverageOutputEstimator.modelFor(method) == null) {
+                WaterAmountMode.WATER_INPUT
+            } else {
+                state.waterAmountMode
+            }
+            recalculate(state.copy(brewMethod = method, waterAmountMode = mode))
         }
     }
 
@@ -189,17 +231,50 @@ class CalculatorViewModel(
     }
 
     private fun recalculate(state: CalcUiState): CalcUiState {
-        val result = CalcEvaluator.evaluate(
+        val directResult = CalcEvaluator.evaluate(
             tokens = state.tokens,
             ratio = state.ratio,
             direction = state.inputDirection,
         )
 
-        val hasValid = result.totalDoseG > 0f || result.totalWaterMl > 0f
+        val isPlanningForOutput =
+            state.inputDirection == InputDirection.WATER &&
+            state.waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT
+        val plannedOutput = if (isPlanningForOutput) {
+            BeverageOutputEstimator.planForOutput(
+                method = state.brewMethod,
+                beverageOutputG = directResult.totalWaterMl,
+                brewRatio = state.ratio,
+            )
+        } else {
+            null
+        }
+        val previewDoseG = if (isPlanningForOutput) {
+            plannedOutput?.coffeeDoseG ?: 0f
+        } else {
+            directResult.totalDoseG
+        }
+        val previewWaterMl = if (isPlanningForOutput) {
+            plannedOutput?.brewWaterG ?: 0f
+        } else {
+            directResult.totalWaterMl
+        }
+        val hasValid = previewDoseG > 0f || previewWaterMl > 0f
+        val estimatedOutput = if (hasValid) {
+            BeverageOutputEstimator.estimateOutput(
+                method = state.brewMethod,
+                coffeeDoseG = previewDoseG,
+                brewWaterG = previewWaterMl,
+            )
+        } else {
+            null
+        }
 
         return state.copy(
-            previewDoseG = result.totalDoseG,
-            previewWaterMl = result.totalWaterMl,
+            previewDoseG = previewDoseG,
+            previewWaterMl = previewWaterMl,
+            previewBeverageG = estimatedOutput?.beverageOutputG,
+            previewApparentLossG = estimatedOutput?.apparentLossG,
             hasValidExpression = hasValid,
         )
     }

@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Кафе в чашата → Доза</string>
+    <string name="label_water_to_pour">вода за наливане</string>
+    <string name="label_target_coffee_out">Целево кафе в чашата</string>
+    <string name="format_estimated_coffee_out">Около %1$s в чашата</string>
+    <string name="format_water_to_pour">Налейте %1$s вода</string>
+    <string name="msg_enter_desired_coffee_out">Въведете желаното количество в чашата</string>
+    <string name="msg_coffee_output_estimate_empty">Планирайте количеството в чашата</string>
+    <string name="format_coffee_output_estimate_note">Оценка за %1$s; действителното количество варира.</string>
+    <string name="msg_french_press_output_estimate_note">Оценката не включва кафето, останало във френската преса.</string>
+</resources>

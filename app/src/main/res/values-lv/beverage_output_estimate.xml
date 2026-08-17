@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Kafija tasē → Deva</string>
+    <string name="label_water_to_pour">ielejamais ūdens</string>
+    <string name="label_target_coffee_out">Vēlamais kafijas daudzums tasē</string>
+    <string name="format_estimated_coffee_out">Aptuveni %1$s tasē</string>
+    <string name="format_water_to_pour">Ielejiet %1$s ūdens</string>
+    <string name="msg_enter_desired_coffee_out">Ievadiet vēlamo daudzumu tasē</string>
+    <string name="msg_coffee_output_estimate_empty">Plānojiet daudzumu tasē</string>
+    <string name="format_coffee_output_estimate_note">%1$s aprēķins; faktiskais daudzums var atšķirties.</string>
+    <string name="msg_french_press_output_estimate_note">Aprēķinā nav iekļauta kafija, kas paliek franču presē.</string>
+</resources>

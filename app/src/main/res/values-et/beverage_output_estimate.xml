@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Kohv tassis → Annus</string>
+    <string name="label_water_to_pour">valatav vesi</string>
+    <string name="label_target_coffee_out">Soovitud kohvikogus tassis</string>
+    <string name="format_estimated_coffee_out">Tassis umbes %1$s</string>
+    <string name="format_water_to_pour">Vala %1$s vett</string>
+    <string name="msg_enter_desired_coffee_out">Sisesta soovitud kogus tassis</string>
+    <string name="msg_coffee_output_estimate_empty">Plaani kogus tassis</string>
+    <string name="format_coffee_output_estimate_note">%1$s hinnang; tegelik kogus võib erineda.</string>
+    <string name="msg_french_press_output_estimate_note">Hinnang ei sisalda presskannu jäetud kohvi.</string>
+</resources>

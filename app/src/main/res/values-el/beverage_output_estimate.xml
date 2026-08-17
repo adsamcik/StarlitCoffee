@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Καφές στο φλιτζάνι → Δόση</string>
+    <string name="label_water_to_pour">νερό για προσθήκη</string>
+    <string name="label_target_coffee_out">Στόχος καφέ στο φλιτζάνι</string>
+    <string name="format_estimated_coffee_out">Περίπου %1$s στο φλιτζάνι</string>
+    <string name="format_water_to_pour">Προσθέστε %1$s νερό</string>
+    <string name="msg_enter_desired_coffee_out">Εισαγάγετε την ποσότητα που θέλετε στο φλιτζάνι</string>
+    <string name="msg_coffee_output_estimate_empty">Σχεδιάστε την ποσότητα στο φλιτζάνι</string>
+    <string name="format_coffee_output_estimate_note">Εκτίμηση για %1$s· η πραγματική ποσότητα διαφέρει.</string>
+    <string name="msg_french_press_output_estimate_note">Η εκτίμηση δεν περιλαμβάνει τον καφέ που μένει στη γαλλική πρέσα.</string>
+</resources>

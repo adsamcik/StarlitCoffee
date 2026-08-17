@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Kaffe i koppen → Dos</string>
+    <string name="label_water_to_pour">vatten att hälla på</string>
+    <string name="label_target_coffee_out">Önskad mängd kaffe i koppen</string>
+    <string name="format_estimated_coffee_out">Cirka %1$s i koppen</string>
+    <string name="format_water_to_pour">Häll på %1$s vatten</string>
+    <string name="msg_enter_desired_coffee_out">Ange önskad mängd i koppen</string>
+    <string name="msg_coffee_output_estimate_empty">Planera mängden i koppen</string>
+    <string name="format_coffee_output_estimate_note">Uppskattning för %1$s; den faktiska mängden varierar.</string>
+    <string name="msg_french_press_output_estimate_note">Uppskattningen omfattar inte kaffe som lämnas kvar i presskannan.</string>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Kávé a csészében → Adag</string>
+    <string name="label_water_to_pour">felöntendő víz</string>
+    <string name="label_target_coffee_out">Célzott kávémennyiség a csészében</string>
+    <string name="format_estimated_coffee_out">Körülbelül %1$s a csészében</string>
+    <string name="format_water_to_pour">Öntsön hozzá %1$s vizet</string>
+    <string name="msg_enter_desired_coffee_out">Adja meg a kívánt mennyiséget a csészében</string>
+    <string name="msg_coffee_output_estimate_empty">Tervezze meg a csészébe kerülő mennyiséget</string>
+    <string name="format_coffee_output_estimate_note">%1$s becslés; a tényleges mennyiség eltérhet.</string>
+    <string name="msg_french_press_output_estimate_note">A becslés nem tartalmazza a french pressben maradt kávét.</string>
+</resources>

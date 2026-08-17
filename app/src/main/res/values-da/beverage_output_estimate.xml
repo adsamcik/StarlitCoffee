@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Kaffe i koppen → Dosis</string>
+    <string name="label_water_to_pour">vand at hælde i</string>
+    <string name="label_target_coffee_out">Ønsket kaffe i koppen</string>
+    <string name="format_estimated_coffee_out">Ca. %1$s i koppen</string>
+    <string name="format_water_to_pour">Hæld %1$s vand i</string>
+    <string name="msg_enter_desired_coffee_out">Indtast den ønskede mængde i koppen</string>
+    <string name="msg_coffee_output_estimate_empty">Planlæg mængden i koppen</string>
+    <string name="format_coffee_output_estimate_note">Estimat for %1$s; den faktiske mængde varierer.</string>
+    <string name="msg_french_press_output_estimate_note">Estimatet omfatter ikke kaffe, der efterlades i stempelkanden.</string>
+</resources>

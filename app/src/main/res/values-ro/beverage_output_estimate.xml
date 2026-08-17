@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Cafea în ceașcă → Doză</string>
+    <string name="label_water_to_pour">apă de turnat</string>
+    <string name="label_target_coffee_out">Cantitatea dorită în ceașcă</string>
+    <string name="format_estimated_coffee_out">Aproximativ %1$s în ceașcă</string>
+    <string name="format_water_to_pour">Turnați %1$s de apă</string>
+    <string name="msg_enter_desired_coffee_out">Introduceți cantitatea dorită în ceașcă</string>
+    <string name="msg_coffee_output_estimate_empty">Planificați cantitatea din ceașcă</string>
+    <string name="format_coffee_output_estimate_note">Estimare pentru %1$s; cantitatea reală poate varia.</string>
+    <string name="msg_french_press_output_estimate_note">Estimarea nu include cafeaua rămasă în presa franceză.</string>
+</resources>

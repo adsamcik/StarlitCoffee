@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Kava puodelyje → Dozė</string>
+    <string name="label_water_to_pour">pilamas vanduo</string>
+    <string name="label_target_coffee_out">Tikslinis kavos kiekis puodelyje</string>
+    <string name="format_estimated_coffee_out">Puodelyje apie %1$s</string>
+    <string name="format_water_to_pour">Įpilkite %1$s vandens</string>
+    <string name="msg_enter_desired_coffee_out">Įveskite norimą kiekį puodelyje</string>
+    <string name="msg_coffee_output_estimate_empty">Planuokite kiekį puodelyje</string>
+    <string name="format_coffee_output_estimate_note">%1$s įvertis; tikrasis kiekis gali skirtis.</string>
+    <string name="msg_french_press_output_estimate_note">Įvertis neapima prancūziškame kavinuke likusios kavos.</string>
+</resources>

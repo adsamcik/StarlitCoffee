@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Kava u šalici → Doza</string>
+    <string name="label_water_to_pour">voda za ulijevanje</string>
+    <string name="label_target_coffee_out">Ciljana kava u šalici</string>
+    <string name="format_estimated_coffee_out">Oko %1$s u šalici</string>
+    <string name="format_water_to_pour">Ulijte %1$s vode</string>
+    <string name="msg_enter_desired_coffee_out">Unesite željenu količinu u šalici</string>
+    <string name="msg_coffee_output_estimate_empty">Planirajte količinu u šalici</string>
+    <string name="format_coffee_output_estimate_note">Procjena za %1$s; stvarna količina može varirati.</string>
+    <string name="msg_french_press_output_estimate_note">Procjena ne uključuje kavu ostavljenu u french pressu.</string>
+</resources>

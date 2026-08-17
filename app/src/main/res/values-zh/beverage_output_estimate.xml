@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">杯中咖啡 → 粉量</string>
+    <string name="label_water_to_pour">需注入的水</string>
+    <string name="label_target_coffee_out">目标杯中咖啡量</string>
+    <string name="format_estimated_coffee_out">杯中约有%1$s</string>
+    <string name="format_water_to_pour">注入%1$s水</string>
+    <string name="msg_enter_desired_coffee_out">输入杯中想要的咖啡量</string>
+    <string name="msg_coffee_output_estimate_empty">按杯中咖啡量规划</string>
+    <string name="format_coffee_output_estimate_note">%1$s估算值；实际出品量会有差异。</string>
+    <string name="msg_french_press_output_estimate_note">估算值不包括留在法压壶中的咖啡。</string>
+</resources>

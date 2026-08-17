@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.viewmodel
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator.InputDirection
 import com.adsamcik.starlitcoffee.data.db.dao.CupPresetDao
 import com.adsamcik.starlitcoffee.data.db.entity.CupPresetEntity
+import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
 import com.adsamcik.starlitcoffee.data.model.CupPreset
@@ -235,6 +236,67 @@ class CalculatorViewModelTest {
         assertEquals(InputDirection.WATER, viewModel.uiState.value.inputDirection)
         assertEquals(20f, viewModel.uiState.value.previewWaterMl, 0.01f)
         assertEquals(20f / 17f, viewModel.uiState.value.previewDoseG, 0.01f)
+    }
+
+    @Test
+    fun `coffee output mode plans dose and water for desired cup amount`() {
+        viewModel.setBrewMethod(BrewMethod.V60)
+        viewModel.setRatio(16f)
+        viewModel.toggleDirection()
+        viewModel.toggleBeverageOutputMode()
+
+        viewModel.appendDigit('3')
+        viewModel.appendDigit('0')
+        viewModel.appendDigit('0')
+
+        val state = viewModel.uiState.value
+        val expectedDose = 300f / (16f - 2.1f)
+        assertEquals(WaterAmountMode.BEVERAGE_OUTPUT, state.waterAmountMode)
+        assertEquals(expectedDose, state.previewDoseG, 0.01f)
+        assertEquals(expectedDose * 16f, state.previewWaterMl, 0.01f)
+        assertEquals(300f, requireNotNull(state.previewBeverageG), 0.01f)
+    }
+
+    @Test
+    fun `ordinary dose input previews method-specific coffee output`() {
+        viewModel.setBrewMethod(BrewMethod.AEROPRESS)
+        viewModel.setRatio(15f)
+        viewModel.appendDigit('2')
+        viewModel.appendDigit('0')
+
+        val state = viewModel.uiState.value
+        assertEquals(300f, state.previewWaterMl, 0.01f)
+        assertEquals(264f, requireNotNull(state.previewBeverageG), 0.01f)
+        assertEquals(36f, requireNotNull(state.previewApparentLossG), 0.01f)
+    }
+
+    @Test
+    fun `unsupported method disables coffee output mode and estimate`() {
+        viewModel.toggleDirection()
+        viewModel.toggleBeverageOutputMode()
+        assertEquals(WaterAmountMode.BEVERAGE_OUTPUT, viewModel.uiState.value.waterAmountMode)
+
+        viewModel.setBrewMethod(BrewMethod.MOKA_POT)
+        viewModel.appendDigit('3')
+        viewModel.appendDigit('0')
+        viewModel.appendDigit('0')
+
+        val state = viewModel.uiState.value
+        assertEquals(WaterAmountMode.WATER_INPUT, state.waterAmountMode)
+        assertEquals(300f, state.previewWaterMl, 0.01f)
+        assertEquals(null, state.previewBeverageG)
+    }
+
+    @Test
+    fun `leaving water input resets optional coffee output mode`() {
+        viewModel.toggleDirection()
+        viewModel.toggleBeverageOutputMode()
+
+        viewModel.toggleDirection()
+
+        val state = viewModel.uiState.value
+        assertEquals(InputDirection.DOSE, state.inputDirection)
+        assertEquals(WaterAmountMode.WATER_INPUT, state.waterAmountMode)
     }
 
     // --- Ratio ---

@@ -142,9 +142,18 @@
     <!-- Calculator Brew Screen -->
 <string name="label_water_to_dose">Water → Dose</string>
     <string name="label_dose_to_water">Dose → Water</string>
+    <string name="label_coffee_out_to_dose">Coffee out → Dose</string>
     <string name="cd_backspace">Backspace</string>
     <string name="action_brew">Start</string>
     <string name="label_total_water">total water</string>
+    <string name="label_water_to_pour">water to pour</string>
+    <string name="label_target_coffee_out">Target coffee out</string>
+    <string name="format_estimated_coffee_out">About %1$s in the cup</string>
+    <string name="format_water_to_pour">Pour %1$s water</string>
+    <string name="msg_enter_desired_coffee_out">Enter the amount you want in the cup</string>
+    <string name="msg_coffee_output_estimate_empty">Plan for the amount in your cup</string>
+    <string name="format_coffee_output_estimate_note">%1$s estimate; actual amount varies.</string>
+    <string name="msg_french_press_output_estimate_note">Estimate excludes coffee left in the press.</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Settings</string>
     <string name="label_settings_section_brewing">Brewing</string>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Koffie in kopje → Dosering</string>
+    <string name="label_water_to_pour">op te schenken water</string>
+    <string name="label_target_coffee_out">Gewenste koffie in kopje</string>
+    <string name="format_estimated_coffee_out">Ongeveer %1$s in het kopje</string>
+    <string name="format_water_to_pour">Schenk %1$s water op</string>
+    <string name="msg_enter_desired_coffee_out">Voer de gewenste hoeveelheid in het kopje in</string>
+    <string name="msg_coffee_output_estimate_empty">Plan de hoeveelheid in het kopje</string>
+    <string name="format_coffee_output_estimate_note">Schatting voor %1$s; de werkelijke hoeveelheid varieert.</string>
+    <string name="msg_french_press_output_estimate_note">De schatting sluit koffie uit die in de cafetière achterblijft.</string>
+</resources>

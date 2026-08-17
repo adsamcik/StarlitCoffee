@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Kahvi kupissa → Annos</string>
+    <string name="label_water_to_pour">kaadettava vesi</string>
+    <string name="label_target_coffee_out">Tavoite kahville kupissa</string>
+    <string name="format_estimated_coffee_out">Kupissa noin %1$s</string>
+    <string name="format_water_to_pour">Kaada %1$s vettä</string>
+    <string name="msg_enter_desired_coffee_out">Anna haluamasi määrä kupissa</string>
+    <string name="msg_coffee_output_estimate_empty">Suunnittele määrä kupissa</string>
+    <string name="format_coffee_output_estimate_note">Arvio menetelmälle %1$s; todellinen määrä vaihtelee.</string>
+    <string name="msg_french_press_output_estimate_note">Arvio ei sisällä pressopannuun jäävää kahvia.</string>
+</resources>

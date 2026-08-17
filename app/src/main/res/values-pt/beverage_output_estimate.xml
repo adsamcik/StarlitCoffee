@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Café na chávena → Dose</string>
+    <string name="label_water_to_pour">água a verter</string>
+    <string name="label_target_coffee_out">Café pretendido na chávena</string>
+    <string name="format_estimated_coffee_out">Cerca de %1$s na chávena</string>
+    <string name="format_water_to_pour">Verta %1$s de água</string>
+    <string name="msg_enter_desired_coffee_out">Introduza a quantidade pretendida na chávena</string>
+    <string name="msg_coffee_output_estimate_empty">Planeie a quantidade na chávena</string>
+    <string name="format_coffee_output_estimate_note">Estimativa para %1$s; a quantidade real pode variar.</string>
+    <string name="msg_french_press_output_estimate_note">A estimativa não inclui o café deixado na prensa francesa.</string>
+</resources>

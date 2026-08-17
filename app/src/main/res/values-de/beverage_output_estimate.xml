@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Kaffee in Tasse → Dosis</string>
+    <string name="label_water_to_pour">aufzugießendes Wasser</string>
+    <string name="label_target_coffee_out">Kaffee in Tasse planen</string>
+    <string name="format_estimated_coffee_out">Etwa %1$s in der Tasse</string>
+    <string name="format_water_to_pour">%1$s Wasser aufgießen</string>
+    <string name="msg_enter_desired_coffee_out">Gewünschte Menge in der Tasse eingeben</string>
+    <string name="msg_coffee_output_estimate_empty">Menge in der Tasse planen</string>
+    <string name="format_coffee_output_estimate_note">Schätzung für %1$s; die tatsächliche Menge variiert.</string>
+    <string name="msg_french_press_output_estimate_note">Schätzung ohne Kaffee, der in der French Press verbleibt.</string>
+</resources>

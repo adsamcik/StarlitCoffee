@@ -55,6 +55,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -88,12 +89,14 @@ import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.domain.BeverageOutputEstimator
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.CalculatorViewModel
+import com.adsamcik.starlitcoffee.viewmodel.WaterAmountMode
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -118,6 +121,10 @@ fun CalculatorBrewScreen(
     val selectedMethod = brewState.method
     val selectedFilter = brewState.filterType
     val selectedGrinderId = brewState.selectedGrinderId
+
+    LaunchedEffect(selectedMethod) {
+        calculatorViewModel.setBrewMethod(selectedMethod)
+    }
 
     val context = LocalContext.current
     val grinders = remember { GrinderDataSource.getInstance(context).grinders }
@@ -181,6 +188,7 @@ fun CalculatorBrewScreen(
         ExpressionHeader(
             tokens = state.tokens,
             direction = state.inputDirection,
+            waterAmountMode = state.waterAmountMode,
             canSaveFavorite = state.hasValidExpression && state.previewDoseG > 0f,
             showInlineResult = isCompactHeight && state.hasValidExpression,
             previewDoseG = state.previewDoseG,
@@ -206,7 +214,24 @@ fun CalculatorBrewScreen(
                 doseG = state.previewDoseG,
                 waterMl = state.previewWaterMl,
                 direction = state.inputDirection,
+                waterAmountMode = state.waterAmountMode,
                 onToggleDirection = { calculatorViewModel.toggleDirection() },
+            )
+        }
+
+        val outputModel = BeverageOutputEstimator.modelFor(state.brewMethod)
+        val showOutputEstimate = outputModel != null &&
+            (state.inputDirection == InputDirection.WATER ||
+                (state.hasValidExpression && state.previewBeverageG != null))
+        if (showOutputEstimate) {
+            BeverageOutputControl(
+                direction = state.inputDirection,
+                waterAmountMode = state.waterAmountMode,
+                methodName = state.brewMethod.displayName,
+                predictedBeverageG = state.previewBeverageG,
+                waterToPourG = state.previewWaterMl,
+                caveat = requireNotNull(outputModel).caveat,
+                onToggleMode = { calculatorViewModel.toggleBeverageOutputMode() },
             )
         }
 
@@ -352,6 +377,7 @@ fun CalculatorBrewScreen(
 private fun ExpressionHeader(
     tokens: List<CalcToken>,
     direction: InputDirection,
+    waterAmountMode: WaterAmountMode,
     canSaveFavorite: Boolean,
     showInlineResult: Boolean,
     previewDoseG: Float,
@@ -360,9 +386,11 @@ private fun ExpressionHeader(
     onToggleDirection: () -> Unit,
     onSaveFavorite: () -> Unit,
 ) {
-    val toggleDescription = when (direction) {
-        InputDirection.WATER -> stringResource(R.string.label_water_to_dose)
-        InputDirection.DOSE -> stringResource(R.string.label_dose_to_water)
+    val toggleDescription = when {
+        waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT ->
+            stringResource(R.string.label_coffee_out_to_dose)
+        direction == InputDirection.WATER -> stringResource(R.string.label_water_to_dose)
+        else -> stringResource(R.string.label_dose_to_water)
     }
     Row(
         modifier = Modifier
@@ -394,6 +422,7 @@ private fun ExpressionHeader(
             inlineResult = if (showInlineResult) {
                 buildInlineResult(
                     direction = direction,
+                    waterAmountMode = waterAmountMode,
                     doseG = previewDoseG,
                     waterMl = previewWaterMl,
                 )
@@ -442,15 +471,21 @@ private enum class ResultSide { COFFEE, WATER }
  */
 private fun buildInlineResult(
     direction: InputDirection,
+    waterAmountMode: WaterAmountMode,
     doseG: Float,
     waterMl: Float,
-): InlineResult = when (direction) {
-    InputDirection.DOSE -> InlineResult(
+): InlineResult = when {
+    direction == InputDirection.WATER && waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT -> InlineResult(
         icon = Icons.Filled.WaterDrop,
         value = formatAmount(waterMl),
         side = ResultSide.WATER,
     )
-    InputDirection.WATER -> InlineResult(
+    direction == InputDirection.DOSE -> InlineResult(
+        icon = Icons.Filled.WaterDrop,
+        value = formatAmount(waterMl),
+        side = ResultSide.WATER,
+    )
+    else -> InlineResult(
         icon = Icons.Filled.LocalCafe,
         value = formatAmount(doseG),
         side = ResultSide.COFFEE,
@@ -549,11 +584,14 @@ private fun LivePreviewCard(
     doseG: Float,
     waterMl: Float,
     direction: InputDirection,
+    waterAmountMode: WaterAmountMode,
     onToggleDirection: () -> Unit,
 ) {
-    val toggleDescription = when (direction) {
-        InputDirection.WATER -> stringResource(R.string.label_water_to_dose)
-        InputDirection.DOSE -> stringResource(R.string.label_dose_to_water)
+    val toggleDescription = when {
+        waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT ->
+            stringResource(R.string.label_coffee_out_to_dose)
+        direction == InputDirection.WATER -> stringResource(R.string.label_water_to_dose)
+        else -> stringResource(R.string.label_dose_to_water)
     }
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -612,11 +650,100 @@ private fun LivePreviewCard(
                     icon = Icons.Filled.WaterDrop,
                     value = formatAmount(waterMl),
                     tint = MaterialTheme.colorScheme.secondary,
-                    emphasised = direction == InputDirection.WATER,
-                    contentDescription = stringResource(R.string.label_total_water),
+                    emphasised = direction == InputDirection.WATER &&
+                        waterAmountMode == WaterAmountMode.WATER_INPUT,
+                    contentDescription = if (waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT) {
+                        stringResource(R.string.label_water_to_pour)
+                    } else {
+                        stringResource(R.string.label_total_water)
+                    },
                     iconLeading = false,
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun BeverageOutputControl(
+    direction: InputDirection,
+    waterAmountMode: WaterAmountMode,
+    methodName: String,
+    predictedBeverageG: Float?,
+    waterToPourG: Float,
+    caveat: BeverageOutputEstimator.Caveat,
+    onToggleMode: () -> Unit,
+) {
+    val isOutputMode = waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT
+    val detail = when {
+        isOutputMode && predictedBeverageG != null ->
+            stringResource(R.string.format_water_to_pour, formatAmount(waterToPourG))
+        isOutputMode -> stringResource(R.string.msg_enter_desired_coffee_out)
+        predictedBeverageG != null ->
+            stringResource(R.string.format_estimated_coffee_out, formatAmount(predictedBeverageG))
+        else -> stringResource(R.string.msg_coffee_output_estimate_empty)
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            if (direction == InputDirection.WATER) {
+                InputChip(
+                    selected = isOutputMode,
+                    onClick = onToggleMode,
+                    label = { Text(stringResource(R.string.label_target_coffee_out)) },
+                    leadingIcon = if (isOutputMode) {
+                        {
+                            Icon(
+                                imageVector = Icons.Filled.Check,
+                                contentDescription = null,
+                                modifier = Modifier.size(InputChipDefaults.IconSize),
+                            )
+                        }
+                    } else {
+                        null
+                    },
+                    modifier = Modifier.testTag("beverage_output_mode_toggle"),
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.Filled.LocalCafe,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(22.dp),
+                )
+            }
+            Text(
+                text = detail,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .weight(1f)
+                    .testTag("beverage_output_estimate"),
+            )
+        }
+
+        if (isOutputMode) {
+            val note = if (caveat == BeverageOutputEstimator.Caveat.EXCLUDES_DECANT_RESIDUAL) {
+                stringResource(R.string.msg_french_press_output_estimate_note)
+            } else {
+                stringResource(R.string.format_coffee_output_estimate_note, methodName)
+            }
+            Text(
+                text = note,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(start = 4.dp, top = 2.dp),
+            )
         }
     }
 }
@@ -1127,4 +1254,3 @@ private fun formatAmount(value: Float): String {
         "%.1fg".format(value)
     }
 }
-

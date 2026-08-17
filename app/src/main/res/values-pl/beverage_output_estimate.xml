@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Kawa w filiżance → Doza</string>
+    <string name="label_water_to_pour">woda do wlania</string>
+    <string name="label_target_coffee_out">Docelowa ilość kawy w filiżance</string>
+    <string name="format_estimated_coffee_out">Około %1$s w filiżance</string>
+    <string name="format_water_to_pour">Wlej %1$s wody</string>
+    <string name="msg_enter_desired_coffee_out">Wprowadź żądaną ilość w filiżance</string>
+    <string name="msg_coffee_output_estimate_empty">Zaplanuj ilość w filiżance</string>
+    <string name="format_coffee_output_estimate_note">Szacunek dla %1$s; rzeczywista ilość może się różnić.</string>
+    <string name="msg_french_press_output_estimate_note">Szacunek nie obejmuje kawy pozostawionej w zaparzaczu tłokowym.</string>
+</resources>

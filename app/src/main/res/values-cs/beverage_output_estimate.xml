@@ -1,0 +1,11 @@
+<resources>
+    <string name="label_coffee_out_to_dose">Káva v šálku → Dávka</string>
+    <string name="label_water_to_pour">voda k nalití</string>
+    <string name="label_target_coffee_out">Cílové množství v šálku</string>
+    <string name="format_estimated_coffee_out">V šálku asi %1$s</string>
+    <string name="format_water_to_pour">Nalijte %1$s vody</string>
+    <string name="msg_enter_desired_coffee_out">Zadejte požadované množství v šálku</string>
+    <string name="msg_coffee_output_estimate_empty">Naplánujte množství v šálku</string>
+    <string name="format_coffee_output_estimate_note">Odhad pro %1$s; skutečné množství se liší.</string>
+    <string name="msg_french_press_output_estimate_note">Odhad nezahrnuje kávu ponechanou ve french pressu.</string>
+</resources>
