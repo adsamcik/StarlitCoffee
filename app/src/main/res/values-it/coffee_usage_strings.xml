@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Impossibile annullare perché questo sacchetto è cambiato</string>
     <string name="label_coffee_use_history">Utilizzo del caffè</string>
     <string name="format_grams_used">%1$.0f g utilizzati</string>
+    <string name="msg_llm_model_setup_required">Mindlayer ha bisogno del suo modello sul dispositivo prima che l’IA possa leggere questa etichetta. Apri la configurazione e riprova; i campi già trovati possono essere modificati in sicurezza.</string>
+    <string name="msg_llm_enrichment_timed_out">La scansione ha raggiunto il limite di cinque minuti. Puoi usare i campi già trovati, modificarli o riprovare.</string>
+    <string name="action_set_up_ai">Apri configurazione modello</string>
 </resources>

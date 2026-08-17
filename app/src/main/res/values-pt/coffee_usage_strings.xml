@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Não foi possível anular porque este saco foi alterado</string>
     <string name="label_coffee_use_history">Utilização de café</string>
     <string name="format_grams_used">%1$.0f g utilizados</string>
+    <string name="msg_llm_model_setup_required">O Mindlayer precisa do respetivo modelo no dispositivo antes de a IA conseguir ler esta etiqueta. Abra a configuração e tente novamente; os campos já encontrados podem ser editados em segurança.</string>
+    <string name="msg_llm_enrichment_timed_out">A leitura atingiu o limite de cinco minutos. Pode utilizar os campos já encontrados, editá-los ou tentar novamente.</string>
+    <string name="action_set_up_ai">Abrir configuração do modelo</string>
 </resources>

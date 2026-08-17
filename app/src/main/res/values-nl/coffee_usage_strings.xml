@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Kan niet ongedaan maken omdat deze zak is gewijzigd</string>
     <string name="label_coffee_use_history">Koffieverbruik</string>
     <string name="format_grams_used">%1$.0f g gebruikt</string>
+    <string name="msg_llm_model_setup_required">Mindlayer heeft het model op het apparaat nodig voordat AI dit etiket kan lezen. Open de configuratie en probeer het opnieuw; de al gevonden velden kun je veilig bewerken.</string>
+    <string name="msg_llm_enrichment_timed_out">De scan heeft de limiet van vijf minuten bereikt. Je kunt de al gevonden velden gebruiken, bewerken of het opnieuw proberen.</string>
+    <string name="action_set_up_ai">Modelconfiguratie openen</string>
 </resources>

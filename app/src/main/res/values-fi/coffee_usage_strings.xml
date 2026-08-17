@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Kumoaminen ei onnistunut, koska tämä pussi muuttui</string>
     <string name="label_coffee_use_history">Kahvin käyttö</string>
     <string name="format_grams_used">%1$.0f g käytetty</string>
+    <string name="msg_llm_model_setup_required">Mindlayer tarvitsee laitteessa olevan mallinsa, ennen kuin tekoäly voi lukea tämän etiketin. Avaa määritys ja yritä sitten uudelleen; jo löydettyjä kenttiä voi muokata turvallisesti.</string>
+    <string name="msg_llm_enrichment_timed_out">Skannaus saavutti viiden minuutin aikarajan. Voit käyttää jo löydettyjä kenttiä, muokata niitä tai yrittää uudelleen.</string>
+    <string name="action_set_up_ai">Avaa mallin määritys</string>
 </resources>

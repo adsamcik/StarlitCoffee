@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Rückgängig nicht möglich, da sich diese Packung geändert hat</string>
     <string name="label_coffee_use_history">Kaffeeverbrauch</string>
     <string name="format_grams_used">%1$.0f g verwendet</string>
+    <string name="msg_llm_model_setup_required">Mindlayer benötigt sein Modell auf dem Gerät, bevor die KI dieses Etikett lesen kann. Öffne die Einrichtung und versuche es erneut; bereits gefundene Felder können sicher bearbeitet werden.</string>
+    <string name="msg_llm_enrichment_timed_out">Der Scan hat das Fünf-Minuten-Limit erreicht. Du kannst die bereits gefundenen Felder verwenden, bearbeiten oder es erneut versuchen.</string>
+    <string name="action_set_up_ai">Modelleinrichtung öffnen</string>
 </resources>

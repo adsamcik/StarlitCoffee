@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Tagasivõtmine ei õnnestunud, sest see pakk muutus</string>
     <string name="label_coffee_use_history">Kohvikasutus</string>
     <string name="format_grams_used">Kasutatud %1$.0f g</string>
+    <string name="msg_llm_model_setup_required">Mindlayer vajab oma seadmes olevat mudelit, enne kui AI saab seda silti lugeda. Ava seadistus ja proovi seejärel uuesti; juba leitud välju saab turvaliselt muuta.</string>
+    <string name="msg_llm_enrichment_timed_out">Skannimine jõudis viie minuti piirini. Võid kasutada juba leitud välju, neid muuta või uuesti proovida.</string>
+    <string name="action_set_up_ai">Ava mudeli seadistus</string>
 </resources>

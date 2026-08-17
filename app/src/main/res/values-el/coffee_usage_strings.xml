@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Δεν ήταν δυνατή η αναίρεση επειδή άλλαξε αυτή η συσκευασία</string>
     <string name="label_coffee_use_history">Χρήση καφέ</string>
     <string name="format_grams_used">Χρησιμοποιήθηκαν %1$.0f g</string>
+    <string name="msg_llm_model_setup_required">Το Mindlayer χρειάζεται το μοντέλο του στη συσκευή πριν η τεχνητή νοημοσύνη μπορέσει να διαβάσει αυτήν την ετικέτα. Ανοίξτε τη ρύθμιση και δοκιμάστε ξανά· τα πεδία που βρέθηκαν είναι ασφαλή για επεξεργασία.</string>
+    <string name="msg_llm_enrichment_timed_out">Η σάρωση έφτασε το όριο των πέντε λεπτών. Μπορείτε να χρησιμοποιήσετε τα πεδία που βρέθηκαν, να τα επεξεργαστείτε ή να δοκιμάσετε ξανά.</string>
+    <string name="action_set_up_ai">Άνοιγμα ρύθμισης μοντέλου</string>
 </resources>

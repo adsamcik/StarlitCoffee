@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Nie można cofnąć, ponieważ ta paczka została zmieniona</string>
     <string name="label_coffee_use_history">Zużycie kawy</string>
     <string name="format_grams_used">Zużyto %1$.0f g</string>
+    <string name="msg_llm_model_setup_required">Mindlayer potrzebuje modelu na urządzeniu, zanim AI będzie mogła odczytać tę etykietę. Otwórz konfigurację, a potem spróbuj ponownie; znalezione już pola można bezpiecznie edytować.</string>
+    <string name="msg_llm_enrichment_timed_out">Skanowanie osiągnęło limit pięciu minut. Możesz użyć znalezionych już pól, edytować je lub spróbować ponownie.</string>
+    <string name="action_set_up_ai">Otwórz konfigurację modelu</string>
 </resources>

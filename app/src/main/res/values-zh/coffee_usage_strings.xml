@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">此咖啡袋已发生变化，无法撤销</string>
     <string name="label_coffee_use_history">咖啡用量</string>
     <string name="format_grams_used">已使用 %1$.0f 克</string>
+    <string name="msg_llm_model_setup_required">Mindlayer 需要先在设备上准备好模型，AI 才能读取此标签。打开模型设置后重试；已找到的字段可以安全编辑。</string>
+    <string name="msg_llm_enrichment_timed_out">扫描已达到五分钟上限。你可以使用已找到的字段、进行编辑或重试。</string>
+    <string name="action_set_up_ai">打开模型设置</string>
 </resources>

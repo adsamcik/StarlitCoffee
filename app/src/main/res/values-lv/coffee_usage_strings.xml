@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Neizdevās atsaukt, jo šis iepakojums ir mainījies</string>
     <string name="label_coffee_use_history">Kafijas patēriņš</string>
     <string name="format_grams_used">Izlietoti %1$.0f g</string>
+    <string name="msg_llm_model_setup_required">Lai MI varētu nolasīt šo etiķeti, Mindlayer vispirms ir nepieciešams ierīcē esošais modelis. Atveriet iestatīšanu un mēģiniet vēlreiz; jau atrastos laukus var droši rediģēt.</string>
+    <string name="msg_llm_enrichment_timed_out">Skenēšana sasniedza piecu minūšu ierobežojumu. Varat izmantot jau atrastos laukus, tos rediģēt vai mēģināt vēlreiz.</string>
+    <string name="action_set_up_ai">Atvērt modeļa iestatīšanu</string>
 </resources>

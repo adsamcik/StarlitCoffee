@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Отмяната не е възможна, защото тази опаковка е променена</string>
     <string name="label_coffee_use_history">Използвано кафе</string>
     <string name="format_grams_used">Използвани %1$.0f г</string>
+    <string name="msg_llm_model_setup_required">Mindlayer се нуждае от своя модел на устройството, преди ИИ да може да прочете този етикет. Отворете настройката и опитайте отново; вече намерените полета могат безопасно да се редактират.</string>
+    <string name="msg_llm_enrichment_timed_out">Сканирането достигна петминутния си лимит. Можете да използвате вече намерените полета, да ги редактирате или да опитате отново.</string>
+    <string name="action_set_up_ai">Отваряне на настройката на модела</string>
 </resources>

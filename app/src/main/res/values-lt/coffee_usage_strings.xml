@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Nepavyko anuliuoti, nes šis pakelis pasikeitė</string>
     <string name="label_coffee_use_history">Kavos sunaudojimas</string>
     <string name="format_grams_used">Sunaudota %1$.0f g</string>
+    <string name="msg_llm_model_setup_required">Kad DI galėtų perskaityti šią etiketę, „Mindlayer“ pirmiausia reikia įrenginyje esančio modelio. Atidarykite sąranką ir bandykite dar kartą; jau rastus laukus galima saugiai redaguoti.</string>
+    <string name="msg_llm_enrichment_timed_out">Nuskaitymas pasiekė penkių minučių ribą. Galite naudoti jau rastus laukus, juos redaguoti arba bandyti dar kartą.</string>
+    <string name="action_set_up_ai">Atidaryti modelio sąranką</string>
 </resources>

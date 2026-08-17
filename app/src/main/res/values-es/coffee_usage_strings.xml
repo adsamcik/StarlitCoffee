@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">No se pudo deshacer porque esta bolsa cambió</string>
     <string name="label_coffee_use_history">Uso de café</string>
     <string name="format_grams_used">%1$.0f g usados</string>
+    <string name="msg_llm_model_setup_required">Mindlayer necesita su modelo en el dispositivo antes de que la IA pueda leer esta etiqueta. Abre la configuración y vuelve a intentarlo; puedes editar con seguridad los campos ya encontrados.</string>
+    <string name="msg_llm_enrichment_timed_out">El escaneo alcanzó el límite de cinco minutos. Puedes usar los campos ya encontrados, editarlos o volver a intentarlo.</string>
+    <string name="action_set_up_ai">Abrir configuración del modelo</string>
 </resources>

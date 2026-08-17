@@ -12,4 +12,7 @@
     <string name="msg_could_not_undo_coffee_use">Ni mogoče razveljaviti, ker se je ta vrečka spremenila</string>
     <string name="label_coffee_use_history">Poraba kave</string>
     <string name="format_grams_used">Porabljeno %1$.0f g</string>
+    <string name="msg_llm_model_setup_required">Mindlayer potrebuje svoj model v napravi, preden lahko UI prebere to etiketo. Odprite nastavitev in poskusite znova; že najdena polja lahko varno uredite.</string>
+    <string name="msg_llm_enrichment_timed_out">Optično branje je doseglo omejitev petih minut. Uporabite lahko že najdena polja, jih uredite ali poskusite znova.</string>
+    <string name="action_set_up_ai">Odpri nastavitev modela</string>
 </resources>
