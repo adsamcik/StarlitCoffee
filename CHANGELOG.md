@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Plan by coffee in the cup** — the preparation calculator can optionally
+  treat a water-side amount as desired beverage output, then estimate the dry
+  dose and water to pour with method-aware input-to-cup loss. The estimate is
+  available only where a defensible generic model exists and is clearly marked
+  as approximate.
 - **Coffee-use tracking without guided brewing** — active bags now offer a quick
   gram-based usage entry that updates remaining weight, contributes to dose
   estimates, appears in the bag's history, and can be undone immediately.
