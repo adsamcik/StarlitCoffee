@@ -63,7 +63,7 @@ jobs:
             tools/test_audit_p1_exact_terminology_prose.py
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v5.5.0
+        uses: actions/setup-java@v5.7.0
         with:
           distribution: temurin
           java-version: '21'
